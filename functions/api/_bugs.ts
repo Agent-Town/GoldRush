@@ -46,6 +46,21 @@ const MAX_SCREENSHOT_BYTES = 180 * 1024;
 const MAX_JSON_BYTES = 260 * 1024;
 const RATE_TTL_SECONDS = 60 * 60;
 const MAX_REPORTS_PER_IP = 5;
+// SEC-7 (outside review 2026-09-24): a bug report is the most personal thing this game stores — a
+// free-text description, an optional prospector NAME, and a JPEG of whatever was on screen (up to
+// 180 KB, which can include a browser window, a face on a call, anything) — and it was written with
+// no expiry at all, so the first complaint of 2026 would still be sitting in KV in 2036.
+//
+// NINETY DAYS, and the number is a triage window rather than a compliance figure: the office exists
+// so the owner can read a complaint, reproduce it and file the finding, which happens within days;
+// a quarter is generous headroom for a report filed while he is away from the desk, and it is short
+// enough that a screenshot the player forgot about does not outlive the build it was taken on.
+// Cloudflare deletes the key itself at the TTL — nothing has to remember to run a sweep, which is
+// the property that makes this durable. Reports that matter are already copied out of the office by
+// `scripts/fetch-bugs.mjs`, which prints each report's AGE so the owner can see what is close to
+// ageing out. Existing keys written before this change keep their infinite life: KV has no
+// retro-expiry, and re-writing every row to add one is an owner decision, not a slice's.
+const REPORT_TTL_SECONDS = 60 * 60 * 24 * 90;
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 
 export async function postBug(context: BugsContext): Promise<Response> {
@@ -64,7 +79,7 @@ export async function postBug(context: BugsContext): Promise<Response> {
 
     const id = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
     const stored: BugReport = { id, submittedAt: new Date().toISOString(), ...report };
-    await kv.put(`bug:${id}`, JSON.stringify(stored));
+    await kv.put(`bug:${id}`, JSON.stringify(stored), { expirationTtl: REPORT_TTL_SECONDS });
     return json(cors, { ok: true, id }, 201);
   } catch (cause) {
     if (cause instanceof HttpError) return error(cors, cause.status, cause.code, cause.message);

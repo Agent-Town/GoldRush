@@ -1,0 +1,12 @@
+GET / -> 200
+  cache-control: no-cache
+  connection: keep-alive
+  content-length: 2160
+  content-security-policy-report-only: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://agenttown.app wss://agenttown.app; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'
+  content-type: text/html; charset=utf-8
+  date: Thu, 24 Sep 2026 17:22:39 GMT
+  keep-alive: timeout=5
+  referrer-policy: strict-origin-when-cross-origin
+  strict-transport-security: max-age=2592000
+  x-content-type-options: nosniff
+  x-frame-options: DENY

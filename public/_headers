@@ -10,5 +10,80 @@
 /goldrush/*.html
   Cache-Control: no-cache
 
+# SEC-8 of the outside review (2026-09-24), task sec-headers-and-data-hygiene-1: this file was
+# Cache-Control ONLY, so the site shipped with no security header anywhere while the session token
+# and the signed-in email sit in localStorage. Every line below is measured against the built
+# bundle rather than copied from a checklist; scripts/site-security-headers.test.mjs asserts the
+# five of them and re-derives the CSP's directive set, so a header that goes missing reds a gate.
+#
+# THE CSP IS REPORT-ONLY ON PURPOSE AND MUST STAY THAT WAY UNTIL THE OWNER SAYS OTHERWISE.
+# Report-only means a violation is written to the browser console and nothing is blocked, so a
+# directive this file got wrong costs a log line instead of a black screen. The owner decides
+# whether it becomes enforcing after a week of report-only in production (task item 1). There is
+# deliberately NO report-uri / report-to: a collector is a new endpoint and a new decision about
+# where player data goes, which is the owner's, so today the reports are visible in the console of
+# whoever is looking (that is what the boot captures in artifacts/sec-headers-and-data-hygiene-1
+# read, and they are empty).
+#
+# WHY EACH DIRECTIVE, WITH THE THING IN THE TREE THAT NEEDS IT:
+#   default-src 'self'      every chunk, texture, GLB, atlas and .mp3 the bundle loads is
+#                           same-origin under /assets/ (dist/index.html loads ./assets/index-*.js
+#                           and one stylesheet, nothing else). It also covers font-src, media-src,
+#                           frame-src and manifest-src, which is why none of those are spelled out:
+#                           the tree has no @font-face (0 hits), no <audio>/<video> element (sounds
+#                           are fetched and decoded through AudioContext, src/audio/SoundSystem.ts
+#                           :506), no iframe and no web manifest.
+#   script-src 'self'       dist/index.html carries no inline <script>; the entry is an external
+#                           module. 'wasm-unsafe-eval' is required because
+#                           src/assets/AssetLoading.ts:10 wires MeshoptDecoder into every
+#                           GLTFLoader and node_modules/meshoptimizer/meshopt_decoder.mjs calls
+#                           WebAssembly.instantiate; Chromium refuses WebAssembly compilation under
+#                           any script-src that lacks it. It does NOT allow eval (the tree has
+#                           zero eval( and zero new Function().
+#   style-src 'self'        one external stylesheet, plus inline style attributes generated at
+#     'unsafe-inline'       runtime (the start menu's backdrop and emblem set
+#                           style="background-image:url(...)") and one created <style> element
+#                           (src/spikes/playbook/PlaybookLab.ts:406). CSP counts an inline style
+#                           ATTRIBUTE against style-src, so 'unsafe-inline' is what the current UI
+#                           costs; dropping it means moving those to CSS custom properties, which is
+#                           a separate slice and not this task's.
+#   img-src 'self' data:    data: for the two generated images the game shows: the SVG portrait
+#                           fallback (src/town/TownScene.ts:4736) and the complaint desk's JPEG
+#                           thumbnail of the moment (src/ui/ComplaintDesk.ts). blob: is NOT here:
+#                           the three createObjectURL sites are all download anchors, never an
+#                           <img src>.
+#   connect-src             'self' for every fetch the game makes against its own origin (GLB and
+#                           atlas loads go through three's FileLoader, sounds through fetch);
+#                           https://agenttown.app is src/app/GameApi.ts:5 (the county ledger,
+#                           accounts, telemetry and the bug office all ride that one origin) and
+#                           wss://agenttown.app is src/mp/LockstepClient.ts:240, which rewrites that
+#                           same origin's scheme to open the multiplayer relay socket.
+#   worker-src 'self'       dist/assets/BrowserAgentTapeWorker-*.js is a real same-origin module
+#     blob:                 worker (src/replay/BrowserAgentTapeReplay.ts:11). blob: is here for the
+#                           meshopt decoder's worker pool, which builds its workers with
+#                           URL.createObjectURL: dormant today (three's GLTFLoader never calls
+#                           useWorkers, so workers = 0) but present in the shipped bundle, and a
+#                           blob worker can only be minted by same-origin script that is already
+#                           running. Drop it if the owner prefers the tighter policy; nothing in a
+#                           plain boot exercises it.
+#   frame-ancestors 'none'  the game is never meant to be embedded. In a REPORT-ONLY policy this
+#                           protects nothing, which is why X-Frame-Options: DENY is set as well:
+#                           that one is enforcing today and is what actually stops the framing.
+#   base-uri 'self'         index.html has no <base> and the built asset URLs are RELATIVE
+#                           (./assets/...), so an injected <base> would repoint every chunk. Cheap,
+#                           and nothing in the tree needs a base element.
+#   form-action 'self'      the account and complaint forms are submitted by script (preventDefault
+#                           plus fetch) and never POST anywhere, so this costs nothing.
+#   object-src 'none'       no <object>, <embed> or applet in the tree.
+#
+# Strict-Transport-Security is deliberately MODEST: 30 days, no includeSubDomains, no preload. Six
+# months or a year is the usual number, but a first rollout should be reversible inside a month,
+# and includeSubDomains would speak for every agenttown.app subdomain including any the owner has
+# not told us about. Raise it once he is happy with a month of it.
 /*
   Cache-Control: no-cache
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Strict-Transport-Security: max-age=2592000
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://agenttown.app wss://agenttown.app; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'

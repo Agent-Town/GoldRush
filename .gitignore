@@ -159,3 +159,21 @@ artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/attempt-1-views.json
 # scripts/ledger-mirror-freshness-guard.test.mjs ("the DEFAULT destination is not inside the
 # public repo"), which reds if anything moves it back under this root.
 artifacts/ledger-backups/
+
+# SEC-5's other sink (outside review 2026-09-24, task sec-headers-and-data-hygiene-1). The ledger
+# mirror above got a rule and a re-home; `bug-reports/` — the complaints the bug office hands back —
+# had NEITHER, and it is the more personal of the two: each report carries free text the player
+# typed, an optional prospector NAME, and a JPEG of whatever was on their screen.
+# `scripts/fetch-bugs.mjs` defaulted to `resolve('bug-reports')`, i.e. the repo root, so a triage
+# session left a directory of player screenshots sitting in `git status` as addable content in a
+# PUBLIC origin (owner 2026-09-20), one `git add .` away from unretractable (force-push is
+# deny-listed, F-2353-2).
+# The DEFENCE IS THE RE-HOME, NOT THIS LINE, exactly as the s2672 note above says: the script now
+# writes to `~/.goldrush/bug-reports/`, outside any repo, and this rule only guards against a tool
+# or a habit that still writes here (`node scripts/fetch-bugs.mjs <url> bug-reports` is still a
+# thing a hand can type).
+# BLAST RADIUS MEASURED BEFORE LANDING, not assumed: `git ls-files -- bug-reports bug-reports/*`
+# returned 0 and the path does not exist on this disk, so this newly untracks NOTHING and is purely
+# forward-looking. Scoped to the exact directory name on purpose — a `*bug*` wildcard would swallow
+# the 54 tracked evidence JPEGs and every bug-named spec and script in the tree.
+bug-reports/

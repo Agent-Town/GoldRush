@@ -1,0 +1,25 @@
+{
+  "arm": "1280",
+  "map": "e1-dry-gulch",
+  "url": "http://127.0.0.1:5314/?contract=e1-dry-gulch",
+  "reached": "contract frame > 30",
+  "headers": {
+    "content-security-policy-report-only": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://agenttown.app wss://agenttown.app; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "strict-origin-when-cross-origin",
+    "x-frame-options": "DENY",
+    "strict-transport-security": "max-age=2592000"
+  },
+  "cspLines": [],
+  "consoleErrors": [
+    "error: Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "pageErrors": [],
+  "aborted": [],
+  "consoleAll": [
+    "info: [gold-rush] performance tier {tier: full, override: auto, source: auto, reason: desktop-class defaults, gpuRenderer: ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)}",
+    "error: Failed to load resource: the server responded with a status of 404 (Not Found)",
+    "info: [gold-rush] performance tier {tier: full, override: auto, source: auto, reason: desktop-class defaults, gpuRenderer: ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Max, Unspecified Version)}",
+    "warning: THREE.Clock: This module has been deprecated. Please use THREE.Timer instead."
+  ]
+}
