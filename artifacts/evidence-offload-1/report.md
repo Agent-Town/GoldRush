@@ -136,6 +136,13 @@ MOVABLE                  : 20386 file(s) 7616.2 MB across 493 subtree(s)
 oversize left in place   : 0 blob(s) over 95.0 MB
 ```
 
+Measured at `44a71093e`, one commit before this report existed. Re-measured at the report commit the
+figures read 26,350 / 8,657.2 MB tracked, must-stay 5,960 / 1,041.0 MB, movable 20,390 / 7,616.3 MB
+across 494 subtrees: this report directory itself is +5 files, its own `report.md` joining the
+must-stay set by the same law that keeps every other one, and its four evidence files joining the
+movable tail. Recorded rather than rounded away, because a plan that cannot account for its own
+report is a plan nobody should trust with 7.6 GB.
+
 | movable | files | keep | citations / reviews | subtree |
 | ---: | ---: | ---: | --- | --- |
 | 5878.2 MB | 10323 | 19 | 41 in 8 | `artifacts/sol/map-art-campaign-2` |
