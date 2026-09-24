@@ -29,13 +29,31 @@
 // and asked the next fire to "adopt it or fold it into a permanent script". This is that
 // fold — the per-session copies are what kept letting the defect back in.
 //
-// BELT AND BRACES: any full ISO stamp (YYYY-MM-DDTHH:MMZ) appearing anywhere in the new
-// line 1 is checked against now, and a FUTURE one is REFUSED even if the caller never
-// used {STAMP}. That is the actual failure mode, caught regardless of how it was written.
-// Past stamps pass freely (handoff prose legitimately cites earlier times), and the
-// short forms fires quote in prose ("claimed at 09:44:53") are not full ISO and do not
-// match. Local time labelled Z, matching every recent fire — protocol §1.1 fixes the
-// label on a flag day, never as a drive-by.
+// BELT AND BRACES: the new line's OWN stamp is checked against now and a FUTURE one is
+// REFUSED even if the caller never used {STAMP}. That is the actual failure mode, caught
+// regardless of how it was written. Past stamps pass freely (handoff prose legitimately
+// cites earlier times), and the short forms fires quote in prose ("claimed at 09:44:53")
+// are not full ISO and do not match. Local time labelled Z, matching every recent fire —
+// protocol §1.1 fixes the label on a flag day, never as a drive-by.
+//
+// F-2676-1 (filed s2676, CURED HERE s2677) — "ITS OWN STAMP" IS THE FIRST FULL ISO ON THE
+// LINE, AND THIS CHECK USED TO WALK EVERY ONE OF THEM. The belt-and-braces sentence above
+// said "appearing anywhere in the new line 1" and the loop meant it, so a handoff sentence
+// that merely CITED a future date — an RT-01 due date, a gate window, a veto window, all of
+// which have full-ISO shape — was refused with the hand-computed-stamp message, a message
+// about a different act entirely. s2676 hit it writing "the next RT-01 mint is due after
+// 2026-09-27T00:00Z" on a line whose own stamp was a lawful {STAMP}, and got past it only
+// by degrading the ISO form to prose. The old header had considered prose and concluded the
+// short forms "do not match": true, and it did not cover a fire citing a full ISO it never
+// claimed as the line's time.
+//
+// Scoping to the FIRST match is not a weakening, because the stamp that can HARM is the one
+// a reader takes as the line's time. Both lock shapes put it first (`ACTIVE <ISO> (sNNNN
+// fire)` and `Last updated: <ISO> sNNNN handoff`), and — verified s2677, not assumed — no
+// other script in this repo parses an ISO stamp out of line 1 at all: health-watch.sh:281
+// judges staleness by STATUS.md's MTIME, and protocol §1.1's 45-minute rule is read by a
+// fire BY EYE, off the front of the line. A future date in the tail stalls nothing; a future
+// date in front stalls the factory for the skew plus 45 minutes, and still refuses here.
 //
 // <textfile> may contain newlines; they are collapsed to single spaces, because
 // line 1 must stay exactly one line (the lock/staleness check reads head -1).
@@ -115,18 +133,26 @@ function nowStamp() {
 // Stamps are written local-labelled-Z, so compare in the same frame: parse the text
 // as if local. A stamp more than SKEW_MS ahead of now was hand-computed, not measured.
 const SKEW_MS = 2 * 60 * 1000;
+
+// The line's OWN stamp — the first full ISO on it — and nothing else (F-2676-1). Later
+// matches are prose the line CITES, not a time it CLAIMS, and refusing them cost precision
+// in the one surface the owner reads without a git command. See the header for why first.
+const ownStamp = (line) => (line.match(ISO_MIN) ?? [])[0] ?? null;
+
 function assertNoFutureStamp(line, now) {
   const nowMs = Date.parse(`${now.replace(/Z$/, '')}:00`);
   if (Number.isNaN(nowMs)) return; // never let the guard itself break a handoff
-  for (const found of line.match(ISO_MIN) ?? []) {
-    const ms = Date.parse(`${found.replace(/Z$/, '')}:00`);
-    if (Number.isNaN(ms)) continue;
-    if (ms - nowMs > SKEW_MS) {
-      throw new Error(
-        `refusing a FUTURE stamp ${found} (now ${now}, +${Math.round((ms - nowMs) / 60000)} min). ` +
-        'Stamps come from a command, never arithmetic — write {STAMP} and let this script fill it in (F-1039-2).',
-      );
-    }
+  const found = ownStamp(line);
+  if (found === null) return;
+  const ms = Date.parse(`${found.replace(/Z$/, '')}:00`);
+  if (Number.isNaN(ms)) return;
+  if (ms - nowMs > SKEW_MS) {
+    throw new Error(
+      `refusing a FUTURE stamp ${found} (now ${now}, +${Math.round((ms - nowMs) / 60000)} min). ` +
+      'Stamps come from a command, never arithmetic — write {STAMP} and let this script fill it in (F-1039-2). ' +
+      "Only the line's OWN stamp (the first full ISO on it) is checked — a future date CITED later in the " +
+      'line is lawful prose and passes (F-2676-1).',
+    );
   }
 }
 

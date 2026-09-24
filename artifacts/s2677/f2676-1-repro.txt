@@ -1,0 +1,17 @@
+F-2676-1 — the defect and its cure, measured side by side
+line under test : ACTIVE {STAMP} (s2677 fire) — the next RT-01 mint is due after 2031-09-27T00:00Z.
+measured at     : 2026-09-25T05:27Z
+
+--- PRE-CURE (git show 2e653b003:scripts/status-line1.mjs) ---
+rc              : 1
+stderr          : status-line1: refusing a FUTURE stamp 2031-09-27T00:00Z (now 2026-09-25T05:27Z, +2631993 min). Stamps come from a command, never arithmetic — write {STAMP} and let this script fill it in (F-1039-2).
+STATUS unchanged: true
+line 1 after    : Last updated: 2026-09-24T22:22Z s2676 handoff, lock CLEARED — the prior line.
+
+--- CURED (working tree) ---
+rc              : 0
+stderr          : (none)
+STATUS unchanged: false
+line 1 after    : ACTIVE 2026-09-25T05:27Z (s2677 fire) — the next RT-01 mint is due after 2031-09-27T00:00Z.
+
+VERDICT: pre-cure rc=1 (expected 1, the defect), cured rc=0 (expected 0).
