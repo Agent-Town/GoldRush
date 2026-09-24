@@ -62,6 +62,7 @@ try {
     } else {
       await page.waitForFunction(() => window.__ENTRY_CONTEXT__.rig.entryChecked);
       row.triggered = await page.evaluate(() => window.__ENTRY_RECORD__.samples.some(s => s.elapsed !== null));
+      row.targeted = await page.evaluate(mountId=>{const {rig,scene,camera}=window.__ENTRY_CONTEXT__,g=rig.entryGlance;if(!g)return false;const p=scene.getObjectByName(mountId).getWorldPosition(camera.position.clone());return [g.position,g.nextPosition].filter(Boolean).some(v=>v.distanceTo(p)<0.01)},entry.mountId);
       if (durationOnly) await page.waitForTimeout(4500);
       else {
         if (row.triggered) {

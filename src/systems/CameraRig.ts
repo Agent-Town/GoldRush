@@ -6,12 +6,13 @@ import farSide from '../../assets/pilots/map-rebuild-spike/far-side-terrain-cont
 import halfLifeHollow from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json' with { type: 'json' };
 import relayRush from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json' with { type: 'json' };
 
-// Variant pack contractIds name authoring verdicts, not the playable contracts.
 import night_shiftEntryPack from '../../assets/pilots/map-rebuild-spike/night-shift-terrain-contract.json' with { type: 'json' };
 import twin_banksEntryPack from '../../assets/pilots/map-rebuild-spike/twin-banks-terrain-contract.json' with { type: 'json' };
 import baronEntryPack from '../../assets/pilots/map-rebuild-spike/baron-terrain-contract.json' with { type: 'json' };
 import trestleEntryPack from '../../assets/pilots/map-rebuild-spike/trestle-terrain-contract.json' with { type: 'json' };
-const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string; reason: string } }>> = {
+type EntryLandmark = { mountId: string; reason: string };
+// Variant pack contractIds name authoring verdicts, not the playable contracts.
+const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: EntryLandmark; entryLandmarks?: readonly EntryLandmark[] }>> = {
   'e1-night-shift': night_shiftEntryPack,
   'e1-twin-banks': twin_banksEntryPack,
   'e1-baron': baronEntryPack,
@@ -33,8 +34,9 @@ export class CameraRig {
   private impulseRemaining = 0;
   private glanceTarget: { position: THREE.Vector3; velocity: THREE.Vector3 } | null = null;
   private entryChecked = false;
-  private entryGlance: { position: THREE.Vector3; elapsed: number; seconds: number } | null = null;
+  private entryGlance: { position: THREE.Vector3; nextPosition?: THREE.Vector3; elapsed: number; seconds: number } | null = null;
   private readonly entryFocus = new THREE.Vector3();
+  private readonly entryDestination = new THREE.Vector3();
   private readonly entryVelocity = new THREE.Vector3();
 
   constructor(
@@ -78,11 +80,16 @@ export class CameraRig {
   tryEntryGlance(contractId: string, scene: THREE.Scene, renderer: THREE.WebGLRenderer): void {
     if (this.entryChecked) return;
     this.entryChecked = true;
-    const entry = entryPacks[contractId]?.entryLandmark;
-    if (!entry || this.glanceTarget) return;
-    const model = scene.getObjectByName(entry.mountId);
-    if (!model || !model.userData.landmarkAsset || this.bodyPixels(model, scene, renderer) > 0) return;
-    this.entryGlance = { position: model.getWorldPosition(new THREE.Vector3()), elapsed: 0, seconds: 2.5 };
+    const pack = entryPacks[contractId];
+    const entries = pack?.entryLandmarks ?? (pack?.entryLandmark ? [pack.entryLandmark] : []);
+    // At most two stops fit the authored window without shortening its 0.7 s eases.
+    if (!entries.length || entries.length > 2 || this.glanceTarget) return;
+    const positions = entries.flatMap((entry) => {
+      const model = scene.getObjectByName(entry.mountId);
+      return model?.userData.landmarkAsset && this.bodyPixels(model, scene, renderer) === 0
+        ? [model.getWorldPosition(new THREE.Vector3())] : [];
+    });
+    if (positions.length) this.entryGlance = { position: positions[0], nextPosition: positions[1], elapsed: 0, seconds: 2.5 };
   }
 
   /** One boot-time depth-tested body census; HUD coverage is intentionally separate. */
@@ -171,7 +178,11 @@ export class CameraRig {
       const easeIn = THREE.MathUtils.smoothstep(glance.elapsed, 0, 0.7);
       const easeOut = 1 - THREE.MathUtils.smoothstep(glance.elapsed, glance.seconds - 0.7, glance.seconds);
       const blend = easeIn * easeOut;
-      target = this.entryFocus.copy(target).lerp(glance.position, blend);
+      // A second stop uses the existing 1.1 s hold: 0.2 s, 0.7 s transit, 0.2 s.
+      const destination = glance.nextPosition
+        ? this.entryDestination.copy(glance.position).lerp(glance.nextPosition, THREE.MathUtils.smoothstep(glance.elapsed, 0.9, 1.6))
+        : glance.position;
+      target = this.entryFocus.copy(target).lerp(destination, blend);
       velocity = this.entryVelocity.copy(velocity).multiplyScalar(1 - blend);
       if (glance.elapsed >= glance.seconds) this.entryGlance = null;
     }

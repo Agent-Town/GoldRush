@@ -8,5 +8,6 @@ Completed map evidence:
 - [e1-twin-banks](e1-twin-banks/review.md)
 - [e1-baron](e1-baron/review.md)
 - [e2-trestle](e2-trestle/review.md)
+- [e6-glow-mesa](e6-glow-mesa/review.md)
 
-Remaining in order: e6-glow-mesa, e7-relay-rush.
+Remaining in order: e7-relay-rush.

@@ -47,5 +47,14 @@ try {
       entryFrames++;
     }
   }
-  writeFileSync(`${root}/rig-proof.json`,JSON.stringify({comparedBaselineFrames:compared,exactPoses:true,covered:['replay pan targets','moving hero','impulse','multiplayer glance and cancellation','zoom','snap'],timedReturnsToHero:true,inputVectorsUnchanged:true,snapCancels:true,multiplayerOverrides:true,entryFramesWithFixedOrientation:entryFrames,longPanDoesNotFlip:true},null,2)+'\n');
+  let singleEntryFrames=0;
+  for(const destination of [new THREE.Vector3(-56,8,50),new THREE.Vector3(0,.7,56),new THREE.Vector3(0,.7,-59)]){
+    target.set(0,.7,-32);velocity.set(0,0,0);old.snapTo(target);rig.snapTo(target);
+    old.entryGlance={position:destination,elapsed:0,seconds:2.5};rig.entryGlance={position:destination,elapsed:0,seconds:2.5};
+    for(let i=0;i<180;i++){
+      old.update(1/60,target,velocity);rig.update(1/60,target,velocity);
+      assert.deepEqual(pose(after),pose(before),'existing single landmark path stays byte exact');singleEntryFrames++;
+    }
+  }
+  writeFileSync(`${root}/rig-proof.json`,JSON.stringify({comparedBaselineFrames:compared,singleEntryFrames,exactPoses:true,covered:['replay pan targets','moving hero','impulse','multiplayer glance and cancellation','zoom','snap'],timedReturnsToHero:true,inputVectorsUnchanged:true,snapCancels:true,multiplayerOverrides:true,entryFramesWithFixedOrientation:entryFrames,longPanDoesNotFlip:true},null,2)+'\n');
 } finally {await vite.close();}

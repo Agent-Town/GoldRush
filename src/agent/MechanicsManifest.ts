@@ -1223,9 +1223,10 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     } : {}),
     interactables: interactables(contract),
     rules: rules.map((row) => {
-      const entry = entryPacks[contract.id]?.entryLandmark;
-      return entry && row.id === entryRuleIds[contract.id]
-        ? { ...row, data: { ...row.data, entryLandmark: `This map leads with the ${entry.mountId} landmark.` } }
+      const pack = entryPacks[contract.id];
+      const entries = pack?.entryLandmarks ?? (pack?.entryLandmark ? [pack.entryLandmark] : []);
+      return entries.length && row.id === entryRuleIds[contract.id]
+        ? { ...row, data: { ...row.data, entryLandmark: `This map leads with the ${entries.map(entry => `${entry.mountId} landmark`).join(', then the ')}.` } }
         : row;
     }).sort(byId),
     modes: (contract.modes ?? []).map((mode) => ({ ...mode })),
@@ -1350,7 +1351,7 @@ import night_shiftEntryPack from '../../assets/pilots/map-rebuild-spike/night-sh
 import twin_banksEntryPack from '../../assets/pilots/map-rebuild-spike/twin-banks-terrain-contract.json' with { type: 'json' };
 import baronEntryPack from '../../assets/pilots/map-rebuild-spike/baron-terrain-contract.json' with { type: 'json' };
 import trestleEntryPack from '../../assets/pilots/map-rebuild-spike/trestle-terrain-contract.json' with { type: 'json' };
-const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string } }>> = {
+const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string }; entryLandmarks?: readonly { mountId: string }[] }>> = {
   'e1-night-shift': night_shiftEntryPack,
   'e1-twin-banks': twin_banksEntryPack,
   'e1-baron': baronEntryPack,

@@ -877,3 +877,10 @@ Engine `97855ed9d083ec03a2057dfc9f33b0618f6c8cb28fcfac99952fa1e2e6000a97` → `3
 2026-09-24 run 10: entry — IMPROVED: phone bridge body revealed; desktop already partly visible. 1280 trestle-crossing: 8,161→8,155→8,148 px; 390 trestle-crossing: 0→52,732→0 px. The bridge span is the declared trestle-crossing body. Phone gains a 2.5-second glance and returns to the rider; desktop skips the existing visible fragment. Full span composition, gorge vista, rail stock and HUD clearance remain separate holds under the unchanged offset, zoom and zero-pixel rule. [Boards, timing and gates](run-10/entry-framing/e2-trestle/review.md). 
 
 Engine `3791c3f04a2941cd2b03a1b34883ef4ddee1c09d7d5e57630ef58416db65113b` → `2b0d52300abd6a7558c4d4a818e8bc61f0f3ffbde92984685d8f77a8aa653de4`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e6-glow-mesa
+
+2026-09-24 run 10: entry — IMPROVED: phone derrick then cooling rack fit one window; desktop rack HELD. 1280 mesa-starstone-derrick: 0→37,168→0 px; 390 mesa-starstone-derrick: 0→41,400→0 px; 1280 isotope-cooling-rack: 5,390→0→5,389 px; 390 isotope-cooling-rack: 0→35,096→0 px. entryLandmarks keeps mesa-starstone-derrick first and adds isotope-cooling-rack. The phone tour preserves the 0.7 s entry/return eases and uses the old 1.1 s hold for 0.2 s first hold, 0.7 s transit and 0.2 s second hold. The phone bodies are visible about 0.45–0.55 s and 0.58–0.68 s; this trades dwell time for two views. Desktop rack already has body pixels, so it is skipped; its zero peak count is at the derrick stop, not a claimed rack glance. Cropping, desktop rack HUD coverage, full mesa grouping and active node-ring presentation remain HELD. [Boards, timing and gates](run-10/entry-framing/e6-glow-mesa/review.md). 
+
+Engine `2b0d52300abd6a7558c4d4a818e8bc61f0f3ffbde92984685d8f77a8aa653de4` → `13fb20763655460af233764b4bb4ad960b2a1e758c3476473bd353e5b4203aa1`. No pin move.

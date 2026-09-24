@@ -26,12 +26,17 @@ delta=payload-json.loads(previous.read_text())['bytes'] if payload and previous.
 if payload: assert payload<52000000
 gates=json.loads((out/'e2e-own.json').read_text())
 text=f'# {id} — entry framing, 2026-09-24\n\n{decision["verdict"]}\n\n{decision["reason"]}\n\nDeclared: '+', '.join(f'`{x["mountId"]}`' for x in (entries[0]['entryLandmarks'] or [entries[0]['entryLandmark']]) if x)+'. '+plan[2]+'\n\n'
-text+='| View | Landmark | Rest pixels | Peak pixels | Return pixels | Seconds visible | Glance |\n| --- | --- | ---: | ---: | ---: | --- | --- |\n'
+text+='| View | Landmark | Rest pixels | Peak pixels | Return pixels | Seconds visible | Entry window |\n| --- | --- | ---: | ---: | ---: | --- | --- |\n'
 for m in metrics:
     text+=f'| {m["width"]} | {m["mountId"]} | {m["restPixels"]:,} | {m["peakPixels"]:,} | {m["returnPixels"]:,} | {m["observedVisibleSecondsLower"]}–{m["observedVisibleSecondsUpper"]}'+(' (observation censored)' if m['durationCensored'] else '')+f' | {m["triggered"]} |\n'
 text+='\nUnique-magenta depth-tested body counts use a fixed DPR-1 viewport render target, excluding the HUD. Counting the unique colour prevents animated water from contaminating a two-render difference. The normal-HUD screenshots remain ordinary live boots. These numbers measure body visibility, not total landscape fidelity or HUD clearance. Duration follows recorded live camera poses against a frozen final scene; no teleport or sim order is used. Zero console/page errors in all capture arms.\n\n[Desktop board](board-1280.png) · [Phone board](board-390.png) · [Raw captures](captures.json) · [Metrics](metrics.json) · [Contract invariants](invariants.json).\n\n'
 text+=f'TypeScript and default/full/E1 builds PASS. First-town payload **{payload:,} B**; delta **{delta:+,} B** from the preceding map/build.\n\n' if delta is not None else 'TypeScript and default/full builds PASS.\n\n'
 text+=f'Own existing browser spec exit: **{gates[0]["exit"]}**. See [test receipt](e2e-own.json) and [log](e2e-own.log). '+decision.get('tests','')+' No protected assertion was changed. Shared replay, parity and scoped guards are recorded in the run note.\n\n'
+if entries[0]['entryLandmarks']:
+    for sub in ['cooling-rack','west-dishes']:
+        if (out/sub/'board-390.png').exists():
+            text+=f'Additional body boards: [{sub} desktop]({sub}/board-1280.png) · [{sub} phone]({sub}/board-390.png).\n\n'
+    text+='The entry-window column names whether the map tour ran, not whether each individual body qualified. Already-visible bodies are skipped. Visibility sums separate observed intervals and does not count the offscreen gap between them. The singular declaration is retained as the list first element.\n\n'
 text+=f'Engine `{before}` → `{engine}`. Engine pin remains drain-owned. Camera offset, FOV, zoom, every hero start, Game entry/replay hook, view schema, sim and asset geometry are unchanged.\n'
 (out/'review.md').write_text(text)
 status=Path('reviews/sol-map-art-current-status-20260909.md');s=status.read_text();lines=s.splitlines()
