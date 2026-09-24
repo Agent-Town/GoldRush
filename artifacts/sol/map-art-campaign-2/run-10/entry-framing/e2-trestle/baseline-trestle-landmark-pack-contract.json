@@ -1,0 +1,360 @@
+{
+  "map": "trestle",
+  "era": 2,
+  "sourceLadder": [
+    "reuse",
+    "derive",
+    "build-new"
+  ],
+  "atlas": {
+    "asset": "landmarks/trestle/trestle-landmarks-atlas.png",
+    "width": 1024,
+    "height": 1024,
+    "sharedByEveryAsset": true,
+    "sha256": "b9a045bf9fbbde42d52b59177af8618066195af1e5280bfe377c19cac68955e9"
+  },
+  "blend": {
+    "asset": "landmarks/trestle/trestle-landmarks.blend",
+    "sha256": "d706aee6fde687404cc2513a874e998985189045f79997fecf11ac581c83270a"
+  },
+  "assets": {
+    "trestle-crossing": {
+      "asset": "landmarks/trestle/trestle-crossing.glb",
+      "sourceTier": "derive",
+      "sources": [
+        "assets/processed/ter-rail-elements-r0c2.png"
+      ],
+      "terrainConformed": false,
+      "triangles": 924,
+      "triangleBudget": 3000,
+      "bounds": {
+        "min": [
+          -2.4008,
+          -15.11,
+          0.0
+        ],
+        "max": [
+          2.4008,
+          15.11,
+          4.3969
+        ]
+      },
+      "sha256": "c5f9661c6118ecb7a80f0732eeab2067f1b27c1bac545e77154cd85d1d319ff2"
+    },
+    "south-boiler-site": {
+      "asset": "landmarks/trestle/south-boiler-site.glb",
+      "sourceTier": "reuse",
+      "sources": [
+        "assets/pilots/run3d/boiler-house.glb"
+      ],
+      "terrainConformed": false,
+      "triangles": 840,
+      "triangleBudget": 3000,
+      "bounds": {
+        "min": [
+          -3.9,
+          -2.9,
+          0.0
+        ],
+        "max": [
+          3.9,
+          2.9,
+          6.18
+        ]
+      },
+      "sha256": "ca460d593e3ad86b839d1daf134b7b0a30b6110da13cc295e2f26809e4b76c40",
+      "footprint": {
+        "kind": "rect",
+        "w": 5.616,
+        "d": 4.176
+      }
+    },
+    "north-boiler-site": {
+      "asset": "landmarks/trestle/north-boiler-site.glb",
+      "sourceTier": "reuse",
+      "sources": [
+        "assets/pilots/run3d/boiler-house.glb"
+      ],
+      "terrainConformed": false,
+      "triangles": 840,
+      "triangleBudget": 3000,
+      "bounds": {
+        "min": [
+          -3.9,
+          -2.9,
+          0.0
+        ],
+        "max": [
+          3.9,
+          2.9,
+          6.18
+        ]
+      },
+      "sha256": "ac74675b1d0029cd2a5a56ad6be8cf7a6fc589c75fba0e98a167e1eeaae6f549",
+      "footprint": {
+        "kind": "rect",
+        "w": 5.616,
+        "d": 4.176
+      }
+    },
+    "south-approach-kit": {
+      "asset": "landmarks/trestle/south-approach-kit.glb",
+      "sourceTier": "reuse",
+      "sources": [
+        "assets/pilots/run3d/palisade.glb",
+        "assets/pilots/plaza-props-3d/coal-bin.e2.glb",
+        "assets/pilots/plaza-props-3d/pipe-run.e2.glb"
+      ],
+      "terrainConformed": true,
+      "triangles": 1812,
+      "triangleBudget": 3000,
+      "bounds": {
+        "min": [
+          -7.05,
+          -3.358,
+          0.0
+        ],
+        "max": [
+          7.05,
+          3.358,
+          3.7018
+        ]
+      },
+      "sha256": "07b0c714916c8699d1a900eff3f040db1052642896e2a7e5a263b9e742a1b9f6"
+    },
+    "north-approach-kit": {
+      "asset": "landmarks/trestle/north-approach-kit.glb",
+      "sourceTier": "reuse",
+      "sources": [
+        "assets/pilots/run3d/palisade.glb",
+        "assets/pilots/plaza-props-3d/coal-bin.e2.glb",
+        "assets/pilots/plaza-props-3d/pipe-run.e2.glb"
+      ],
+      "terrainConformed": true,
+      "triangles": 1812,
+      "triangleBudget": 3000,
+      "bounds": {
+        "min": [
+          -7.05,
+          -3.358,
+          0.0
+        ],
+        "max": [
+          7.05,
+          3.358,
+          3.7002
+        ]
+      },
+      "sha256": "91847ae813f517f8b5a1dba82c093c2154d9672e753ca00e3639cb984d5ccecd"
+    },
+    "mine-spur-kit": {
+      "asset": "landmarks/trestle/mine-spur-kit.glb",
+      "sourceTier": "derive",
+      "sources": [
+        "assets/processed/ter-rail-elements-r0c2.png",
+        "assets/pilots/plaza-props-3d/coal-bin.e2.glb"
+      ],
+      "terrainConformed": false,
+      "triangles": 660,
+      "triangleBudget": 3000,
+      "bounds": {
+        "min": [
+          -4.4147,
+          -8.5234,
+          0.0
+        ],
+        "max": [
+          4.4147,
+          8.5234,
+          1.74
+        ]
+      },
+      "sha256": "8df3090fdb070f81d1503f39d6cdee70d1cb9938fb93a5f9875050f2858d634b",
+      "railStockCorrection": {
+        "date": "2026-09-20",
+        "recipe": "assets/pilots/map-rebuild-spike/dress_trestle_rail_stock.py",
+        "inputCommit": "ddfb210f5e8dacdc3595a9370d8498a7934427a8",
+        "inputBlendSha256": "08f6f944044a422f3ec8c25756c4aac13b2c631c78b44a124ce8b301d70b7523",
+        "movedVertices": 104,
+        "trianglesBeforeAfter": [
+          660,
+          660
+        ],
+        "scope": "Duplicate visual rails and sleepers become stored rail beside the bins; live route, original other geometry, UVs, atlas, mounts, collision and overall bounds are unchanged."
+      }
+    }
+  },
+  "mounts": [
+    {
+      "id": "trestle-crossing",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/trestle/trestle-crossing.glb"
+    },
+    {
+      "id": "south-boiler-site",
+      "position": [
+        12.0,
+        0.0,
+        -12.0
+      ],
+      "rotation": [
+        0.0,
+        0.08,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/trestle/south-boiler-site.glb"
+    },
+    {
+      "id": "north-boiler-site",
+      "position": [
+        -12.0,
+        0.0,
+        12.0
+      ],
+      "rotation": [
+        0.0,
+        -0.06,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/trestle/north-boiler-site.glb"
+    },
+    {
+      "id": "south-approach-kit",
+      "position": [
+        0.0,
+        -0.075577,
+        -22.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/trestle/south-approach-kit.glb",
+      "terrainConformOffsetY": -0.075577
+    },
+    {
+      "id": "north-approach-kit",
+      "position": [
+        0.0,
+        -0.031021,
+        22.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/trestle/north-approach-kit.glb",
+      "terrainConformOffsetY": -0.031021
+    },
+    {
+      "id": "mine-spur-kit",
+      "position": [
+        -14.0,
+        0.0,
+        -18.0
+      ],
+      "rotation": [
+        0.0,
+        -0.1,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/trestle/mine-spur-kit.glb"
+    }
+  ],
+  "simulation": "none; terrain, collision, movement, placement, water, spawns, and fog remain unchanged",
+  "acceptanceStations": [
+    {
+      "id": "trestle-crossing",
+      "heroPositionXZ": [
+        0,
+        7
+      ],
+      "offsetFromMountXZ": [
+        0,
+        7
+      ],
+      "backMeters": 7,
+      "purpose": "Normal-HUD diagnostic station at 1280x800 and 390x844. Full span bounds fit; persistent phone HUD still covers about 11.55%. Entry vista remains camera-owned."
+    },
+    {
+      "id": "south-boiler-site",
+      "heroPositionXZ": [
+        12,
+        -9
+      ],
+      "offsetFromMountXZ": [
+        0,
+        3
+      ],
+      "backMeters": 3,
+      "purpose": "Normal-HUD diagnostic station at both widths. Full boiler bounds fit with persistent HUD below 0.03%; original collision and entry camera unchanged."
+    },
+    {
+      "id": "mine-spur-kit",
+      "heroPositionXZ": [
+        -14,
+        -10
+      ],
+      "offsetFromMountXZ": [
+        0,
+        8
+      ],
+      "backMeters": 8,
+      "purpose": "Full-body diagnostic station at both widths. Phone bounds fit but persistent HUD covers about 23%; a 5 m detail view has less HUD coverage but clips the sides. Entry framing remains held."
+    },
+    {
+      "id": "south-approach-kit",
+      "heroPositionXZ": [
+        0,
+        -13
+      ],
+      "offsetFromMountXZ": [
+        0,
+        9
+      ],
+      "backMeters": 9,
+      "purpose": "Partial-yard diagnostic station: desktop full bounds fit; phone bounds exceed the horizontal frame with about 13% persistent HUD coverage. More distant 14/20 m views raise phone HUD coverage to 81/92%; camera/UI owner holds the full-yard view."
+    }
+  ]
+}

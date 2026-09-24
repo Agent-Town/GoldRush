@@ -1,0 +1,35 @@
+{
+  "sourceBaseline": "cc4940c0c5706091d9a77b210c7c4f374c78e0c9",
+  "overriddenFiles": [
+    "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/src/systems/CameraRig.ts",
+    "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/src/agent/MechanicsManifest.ts"
+  ],
+  "contractMetadata": "Current paired entry metadata; all other contract and binary data verified unchanged.",
+  "buildExit": 0,
+  "assertionExit": 1,
+  "motorHaulerAssets": [
+    {
+      "name": "motor-hauler-DGEx9v27-diet-c2bea0ac.glb",
+      "sha256": "4b17d0ee069fb13d9b967e0c9bc8ef2990a0501d411f495819225ae84e05a14b"
+    }
+  ],
+  "dietExit": 0,
+  "assertionOutput": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/scripts/assert-release-build.mjs:75\n  throw new Error(`[release-build] ${message}`);\n        ^\n\nError: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb\n    at fail (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/scripts/assert-release-build.mjs:75:9)\n    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/scripts/assert-release-build.mjs:46:26\n\nNode.js v26.4.0\n",
+  "matchesCandidateFailure": true,
+  "browser": {
+    "command": [
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--config=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/map-art-campaign-2/run-10/entry-framing/release.config.ts",
+      "--output=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/release-base-results",
+      "e2e/release-build.spec.ts:24"
+    ],
+    "exit": 1,
+    "log": "release-baseline-browser.log"
+  }
+}

@@ -1,0 +1,86 @@
+
+
+
+
+Running 2 tests using 1 worker
+
+
+
+
+[1/2] [desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+  1) [desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      328 |   await moveHeroTo(page, -4.5, -6.4);
+      329 |   await moveHeroTo(page, -2.5, -6.4);
+    > 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);
+          |                                                                                                       ^
+      331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);
+      332 |   await moveHeroTo(page, -4.5, -6.4);
+      333 |   await moveHeroTo(page, -4.5, 6.7);
+        at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/release-build.spec.ts:330:103)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/release-build.spec.ts:81:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/release-base-results/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/release-base-results/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-desktop-chrome/error-context.md
+
+
+
+
+
+[2/2] [mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+  2) [mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      328 |   await moveHeroTo(page, -4.5, -6.4);
+      329 |   await moveHeroTo(page, -2.5, -6.4);
+    > 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);
+          |                                                                                                       ^
+      331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);
+      332 |   await moveHeroTo(page, -4.5, -6.4);
+      333 |   await moveHeroTo(page, -4.5, 6.7);
+        at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/release-build.spec.ts:330:103)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/release-build.spec.ts:81:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/release-base-results/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/release-base-results/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice 
+    [mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice 
+[WebServer] (node:40381) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:40420) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+(node:40318) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40422) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40422) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:40974) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40974) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.

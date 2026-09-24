@@ -1,0 +1,44 @@
+{
+  "seconds": 2.5,
+  "easeIn": 0.7,
+  "firstHold": 0.2,
+  "transition": 0.7,
+  "secondHold": 0.2,
+  "easeOut": 0.7,
+  "firstHeld": true,
+  "secondHeld": true,
+  "offsetAndOrientationPreserved": true,
+  "returnsToUnchangedHero": true,
+  "visibilityCases": [
+    {
+      "visible": [],
+      "queued": [
+        "mesa-starstone-derrick",
+        "isotope-cooling-rack"
+      ]
+    },
+    {
+      "visible": [
+        "isotope-cooling-rack"
+      ],
+      "queued": [
+        "mesa-starstone-derrick"
+      ]
+    },
+    {
+      "visible": [
+        "mesa-starstone-derrick"
+      ],
+      "queued": [
+        "isotope-cooling-rack"
+      ]
+    },
+    {
+      "visible": [
+        "mesa-starstone-derrick",
+        "isotope-cooling-rack"
+      ],
+      "queued": []
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-twin-banks/base-verified-results",
+      "e2e/e1-twin-banks.spec.ts",
+      "-g",
+      "loads Twin|builds sluices|routes enemies"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 69.64,
+    "log": "artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-twin-banks/e2e-base-verified.log"
+  }
+]

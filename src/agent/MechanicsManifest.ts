@@ -1223,9 +1223,10 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
     } : {}),
     interactables: interactables(contract),
     rules: rules.map((row) => {
-      const entry = entryPacks[contract.id]?.entryLandmark;
-      return entry && row.id === entryRuleIds[contract.id]
-        ? { ...row, data: { ...row.data, entryLandmark: `This map leads with the ${entry.mountId} landmark.` } }
+      const pack = entryPacks[contract.id];
+      const entries = pack?.entryLandmarks ?? (pack?.entryLandmark ? [pack.entryLandmark] : []);
+      return entries.length && row.id === entryRuleIds[contract.id]
+        ? { ...row, data: { ...row.data, entryLandmark: `This map leads with the ${entries.map(entry => `${entry.mountId} landmark`).join(', then the ')}.` } }
         : row;
     }).sort(byId),
     modes: (contract.modes ?? []).map((mode) => ({ ...mode })),
@@ -1346,7 +1347,15 @@ import deadBandEntryPack from '../../assets/pilots/map-rebuild-spike/dead-band-t
 import farSideEntryPack from '../../assets/pilots/map-rebuild-spike/far-side-terrain-contract.json' with { type: 'json' };
 import halfLifeHollowEntryPack from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json' with { type: 'json' };
 import relayRushEntryPack from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json' with { type: 'json' };
-const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string } }>> = {
+import night_shiftEntryPack from '../../assets/pilots/map-rebuild-spike/night-shift-terrain-contract.json' with { type: 'json' };
+import twin_banksEntryPack from '../../assets/pilots/map-rebuild-spike/twin-banks-terrain-contract.json' with { type: 'json' };
+import baronEntryPack from '../../assets/pilots/map-rebuild-spike/baron-terrain-contract.json' with { type: 'json' };
+import trestleEntryPack from '../../assets/pilots/map-rebuild-spike/trestle-terrain-contract.json' with { type: 'json' };
+const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string }; entryLandmarks?: readonly { mountId: string }[] }>> = {
+  'e1-night-shift': night_shiftEntryPack,
+  'e1-twin-banks': twin_banksEntryPack,
+  'e1-baron': baronEntryPack,
+  'e2-trestle': trestleEntryPack,
   'e6-glow-mesa': glowMesaEntryPack,
   'e7-dead-band': deadBandEntryPack,
   'e8-far-side': farSideEntryPack,
@@ -1354,6 +1363,10 @@ const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: 
   'e7-relay-rush': relayRushEntryPack,
 };
 const entryRuleIds: Readonly<Record<string, string>> = {
+  'e2-trestle': 'river',
+  'e1-baron': 'baron',
+  'e1-twin-banks': 'water_crossings',
+  'e1-night-shift': 'darkness_cycle',
   'e6-glow-mesa': 'night_vein_ring',
   'e7-dead-band': 'signal_suppression',
   'e8-far-side': 'probe_recovery',

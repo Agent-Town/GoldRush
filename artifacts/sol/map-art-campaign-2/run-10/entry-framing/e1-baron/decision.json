@@ -1,0 +1,5 @@
+{
+  "verdict": "IMPROVED: phone headframe revealed; desktop already partly visible.",
+  "reason": "The phone glance frames seized_headframe for about 1.9 seconds and returns to the rider. Desktop skips its already-visible body. The 55.21 m fort, second cart, broad occupied valley, desktop headframe crop and remaining HUD overlap are HELD outside this bounded reveal.",
+  "tests": "Own suite 20 passed / 2 failed. Both failures reproduce at the identical prefetch assertion under the pre-task CameraRig/manifest control: baronAnimationLoaded false instead of true, line 302 in the test at line 411, desktop and mobile. See e2e-base-verified.log. Full suite acceptance remains HELD; no assertions changed."
+}

@@ -1,0 +1,5 @@
+{
+  "verdict": "IMPROVED: phone homestead revealed; desktop already visible.",
+  "reason": "The phone-only 2.5-second glance reveals south_bank_homestead and returns to the unchanged rider. Desktop correctly skips the already-visible house. Both braids, both banks, the other rig and HUD clearance remain separate holds; the single homestead does not establish full plate fidelity.",
+  "tests": "Own suite 4 passed / 6 failed. All six exact test/project failures reproduce under the pre-task CameraRig/manifest control: center bank-versus-river classification at line 96, invalid build ghost at line 48, ford-route timeout at line 228. See e2e-base-verified.log. Full existing-suite acceptance remains HELD; no assertion was changed."
+}
