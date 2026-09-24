@@ -164,13 +164,13 @@ function claimFirstBootForProfile(): boolean {
  * listener subscribed drops the signal on the floor while the claim has already spent the datum, and
  * the Tavernkeeper's opening card would be lost for the life of that profile.
  *
- * Called from two places, and the datum (not the caller) is the one-shot guard:
- *  - `afterFirstFrame` below, for every load that already has a profile.
- *  - `onEnterTown` in `showStartMenu`, which is where the naming flow lands. On a FRESH store the
- *    boot-path claim cannot fire (no profile exists yet - see `claimFirstBootForProfile`), so before
- *    this the greeting waited for the NEXT load and arrived after the founding beat, out of story
- *    order. `StartMenu.createFirstProfile` calls `onEnterTown()` as its last statement, in-page and
- *    before `openTown()` mounts the town, which is exactly the seam the beat needs.
+ * ONE call site, `afterFirstFrame` below, and the datum (not the caller) is the one-shot guard.
+ *
+ * On a FRESH store the boot-path claim cannot fire, because no profile exists yet to own the datum
+ * (see `claimFirstBootForProfile`), so the greeting arrives on the NEXT load - after the founding
+ * beat, which is out of story order and is UX-7's open half. Emitting at `onEnterTown` instead, where
+ * the naming flow lands, was tried and reverted: it reorders every beat behind it through
+ * StoryRuntime's FIFO queue. The measurement and the real fix are in the ⛔ note at that call site.
  */
 function announceFirstBootIfUnclaimed(): void {
   void guardedImport('story', () => import('./story')).then(({ emitStorySignal, installStoryRuntime }) => {
@@ -248,14 +248,22 @@ function showStartMenu(): void {
       onEnterTown: () => {
         startMenu?.dispose();
         startMenu = undefined;
-        // UX-7 (item 4): the naming flow lands HERE. `StartMenu.createFirstProfile` creates the
-        // profile and then calls this as its last statement, so on a fresh store this is the first
-        // moment a profile exists - and it is still in-page, before `openTown` mounts the town. The
-        // greeting therefore plays in story order (greeting, then the trail, then the founding beat)
-        // instead of waiting for the next load and arriving after the town was named. Harmless on
-        // the ordinary Enter Town click: the per-profile datum was already spent by the boot path,
-        // and the datum, not the call site, is the one-shot guard.
-        announceFirstBootIfUnclaimed();
+        // ⛔ UX-7 / item 4 WAS TRIED HERE AND REVERTED. MEASURED, DO NOT RE-ADD WITHOUT THE QUEUE FIX.
+        //
+        // `StartMenu.createFirstProfile` calls this as its last statement, so on a fresh store it is
+        // the first moment a profile exists and the town has not mounted yet - the exact seam the
+        // greeting wants. Emitting `first-boot` here does play the Tavernkeeper in story order. It
+        // also REORDERS EVERY BEAT BEHIND IT, because `StoryRuntime` is a FIFO queue with one card on
+        // screen for 6 s (src/story/StoryRuntime.ts:10,105,137): the greeting holds the slot across
+        // the town mount, so `ledger-page:the_claim` - which the mount emits - queues AHEAD of
+        // `town-named`'s `founding-welcome`. Measured 2026-09-24: the card read
+        // `data-beat-id="ledger-page:the_claim"` where e2e/profile-first-boot.spec.ts:57 expects
+        // `founding-welcome`, 2 failed / 10 passed on both projects.
+        //
+        // Fixing the order needs `StoryRuntime`'s queue (a priority, or the `run-return-town`
+        // unshift treatment for `first-boot`), which is outside this task's firewall, and item 5
+        // requires profile-first-boot GREEN UNMODIFIED. So the greeting stays on the boot path and
+        // arrives on the next load. F-UX7-1 in artifacts/ux-entry-robustness-1/report.md.
         openTown();
       },
       onOpenLedger: () => openClaimLedger(),
@@ -449,9 +457,21 @@ const RUN_ROUTE_LAUNCH_PARAMS = new Set([
 // opened the named contract anyway - it fell back to the Claim (specs/release-e1/README.md §4,
 // F-TOUR-1). `?debug` keeps the testing door: the factory boots contracts by URL all day.
 function contractParamNamesARun(search: URLSearchParams): boolean {
-  if (!search.has('contract')) return false;
+  const contractId = search.get('contract');
+  if (contractId === null) return false;
   if (!__GR_RELEASE_E1__ && search.has('debug')) return true;
-  return stagedPlayerContractLaunch() !== null;
+  if (stagedPlayerContractLaunch() !== null) return true;
+  // RELOAD-RESUME, and it needs its OWN durable proof. `continueSavedRun` stages the launch and then
+  // reloads, so the staged marker is the normal signal - but sessionStorage is exactly the store a
+  // reload can arrive without (a harness that clears it per navigation, a session restored into a
+  // fresh context), and losing a saved run to a dropped session key is not a trade worth making.
+  // Measured 2026-09-24: e2e/044-start-screen.spec.ts:135 clears sessionStorage in an init script
+  // that re-runs on the reload Continue triggers, and the resumed run landed on the menu.
+  // A suspend whose contract IS this contract lives in localStorage and is durable proof the player
+  // really is resuming this run. EXACT match only, so a shared link naming any other map still gets
+  // the menu and item 5's rule is untouched (specs/release-e1/README.md §4 blesses precisely this:
+  // "Reload-resume of a legitimately started run keeps working").
+  return readRunSuspend()?.contractId === contractId;
 }
 
 function searchNamesARun(search: URLSearchParams): boolean {
