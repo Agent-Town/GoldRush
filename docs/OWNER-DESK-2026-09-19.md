@@ -119,6 +119,11 @@ Two more words are yours that this closes on: **whether fidelity-3** (the sixtee
 **Options.** HM-01a: (a) three lit, four cold · (b) seven lit with a deterministic snuff at dusk (a new mechanic) · (c) as recorded. HM-01b: keep the band · narrow to the stream (folded into HM-01a or after it). Order after Night Shift: the Baron first (E1, release-facing) or the elevation maps first (the Glow Mesa, Relay Rush).
 **Recommendation.** HM-01a (a); HM-01b keep for now; the Baron next. A word on (a) queues the master (Opus, scratch worktree: one contract entry, five specs, the null floors re-recorded, one same-era pin).
 
+### F-TB-1 — Twin Banks: the braid mask reached the production tile without your ruling; the sim and the water no longer agree (added 2026-09-24)
+**What.** On 2026-09-12 Astra's uncommitted map campaign was committed for retention, `7c2744e5a`, "not yet gated". Among its changes: the braid water mask `twin-banks-true-braid-dev` was written into the production Twin Banks contract. The review that built that mask, `reviews/opus5-arc1-twin-banks-braid.md` (F-OP5-1), had said it must not be promoted alone, because the water surface still renders one 15.6 m band while the simulation would see two 3 m channels with a dry plait between them, and it named the paired switch as your decision. That is the state on main today, measured: the centre of the river samples as dry bank; enemies still cross only at the two fords (each channel is a river to them), so the crossing rule holds; two tests that pin the ratified single band are red since that day.
+**Options.** (a) Revert the mask from the production tile (it stays on its dev tile): the reviewed band is back, the null floors are re-recorded, one same-era pin. (b) Ratify the braid: land the mask-driven water surface with the mask (contract plus render), re-pin the two tests, re-record the floors, one pin; a held-maps slice (HM-06) beside the entry-camera work on this map.
+**Recommendation.** (b). The plate and the art are braided and the simulation already is; the render is the missing half. Choose (a) only if you want the reviewed state back today.
+
 ## 2. Art — your eye
 
 ### F-SSL-3 — two prospector hover8 regenerations
