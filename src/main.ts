@@ -461,6 +461,13 @@ function contractParamNamesARun(search: URLSearchParams): boolean {
   if (contractId === null) return false;
   if (!__GR_RELEASE_E1__ && search.has('debug')) return true;
   if (stagedPlayerContractLaunch() !== null) return true;
+  // F-UX1-6 (drain cure, 2026-09-25): an ONBOARDED store is durable proof too. The release suite's three
+  // rows ('later contract URLs and modes decline to the Claim', 'an imported later ledger heals to the
+  // frontier and plays', 'debug and era query seams are inert') seed a profile and then boot a bare
+  // ?contract= expecting a run, and specs/release-e1/README.md §4 keeps that door for a player who has
+  // already named a prospector. A FRESH store still gets the menu and mints nothing (the master's item 5).
+  // loadProfileState only normalises an existing value; on a fresh store it reads null and writes nothing.
+  if (loadProfileState(localStorage) !== null) return true;
   // RELOAD-RESUME, and it needs its OWN durable proof. `continueSavedRun` stages the launch and then
   // reloads, so the staged marker is the normal signal - but sessionStorage is exactly the store a
   // reload can arrive without (a harness that clears it per navigation, a session restored into a
