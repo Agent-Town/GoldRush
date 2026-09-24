@@ -25,6 +25,7 @@ import { DatabaseSync } from 'node:sqlite';
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { DEFAULT_MIRROR_DIR } from './ledger-mirror-dest.mjs';
 
 // Fixture teardown (F-2383-2). These guards made temp dirs and never removed them: 50 survivors
 // per run, invisible while scripts/fixture-teardown.test.mjs still failed fast on an earlier subject.
@@ -88,6 +89,12 @@ function variantOf(find, replace) {
   const dir = keep(mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-variant-')));
   const file = path.join(dir, 'ledger-mirror-exposure.mjs');
   writeFileSync(file, src.replace(find, replace));
+  // Since s2672 the subject imports the shared destination resolver by relative path
+  // (scripts/ledger-mirror-dest.mjs — one resolver for the pull, this gate and the
+  // freshness guard, so a re-home cannot leave them disagreeing). A variant lifted out
+  // of scripts/ has to carry it, or every mutation arm dies on ERR_MODULE_NOT_FOUND —
+  // which reads as "the mutation was caught" and is nothing of the kind.
+  cpSync(path.join(REPO, 'scripts', 'ledger-mirror-dest.mjs'), path.join(dir, 'ledger-mirror-dest.mjs'));
   return file;
 }
 
@@ -246,22 +253,37 @@ test('the corpus root is cwd-INVARIANT — the dangerous cwd is the one that sti
   assert.equal(fromRoot.stdout, fromSub.stdout);
 });
 
-test('the DEFAULT dir is anchored to the script, not to the working directory', () => {
-  // Relocating the script must move its default corpus with it — that is what
-  // proves the anchor is import.meta.url rather than process.cwd().
-  const home = keep(mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-relocated-')));
-  mkdirSync(path.join(home, 'scripts'));
-  mkdirSync(path.join(home, 'artifacts', 'ledger-backups'), { recursive: true });
-  cpSync(SUBJECT, path.join(home, 'scripts', 'ledger-mirror-exposure.mjs'));
-  const db = new DatabaseSync(path.join(home, 'artifacts', 'ledger-backups', 'ledger-2026-08-30.db'));
+test('the DEFAULT dir is the SHARED destination, and no cwd can change it', () => {
+  // REWRITTEN s2672. This arm used to relocate the script and assert its default corpus
+  // moved with it, proving the anchor was import.meta.url rather than process.cwd().
+  // The re-home (owner ruling 15) removed that property deliberately: the default now
+  // comes from scripts/ledger-mirror-dest.mjs, which all three ledger tools import, so
+  // that a re-homed destination cannot leave this gate inspecting an abandoned directory
+  // and printing `✅ CLEAN` about an empty room. The hazard the old arm guarded — a
+  // corpus a caller's directory can swap — is unchanged, so it is still asserted; what
+  // changed is WHAT the default must equal.
+  const dir = keep(mkdtempSync(path.join(os.tmpdir(), 'gr-exposure-shared-dest-')));
+  const db = new DatabaseSync(path.join(dir, 'ledger-2026-08-30.db'));
   db.exec('create table kv (key text primary key, value text)');
-  db.prepare('insert into kv (key, value) values (?, ?)').run('session:relocated', 'x');
+  db.prepare('insert into kv (key, value) values (?, ?)').run('session:shared-dest', 'x');
   db.close();
 
-  const r = spawnSync(process.execPath, [path.join(home, 'scripts', 'ledger-mirror-exposure.mjs')],
-    { encoding: 'utf8', cwd: REPO });
-  assert.equal(r.status, 1, 'the relocated copy must read ITS OWN artifacts dir, not the repo cwd');
-  assert.match(r.stdout, /session:relocated/);
+  // 1. With no --dir, the gate inspects the destination in force — from ANY cwd.
+  const env = { ...process.env, LEDGER_BACKUP_DEST: dir };
+  const fromRepo = spawnSync(process.execPath, [SUBJECT], { encoding: 'utf8', cwd: REPO, env });
+  const fromTmp = spawnSync(process.execPath, [SUBJECT], { encoding: 'utf8', cwd: os.tmpdir(), env });
+  assert.ok(fromRepo.stdout.length > 0, 'control validity: the arm must actually produce output');
+  assert.equal(fromRepo.status, 1, 'the account-class row in the destination in force must be caught');
+  assert.match(fromRepo.stdout, /session:shared-dest/);
+  assert.equal(fromRepo.stdout, fromTmp.stdout, 'cwd must not change the corpus');
+
+  // 2. And with nothing set, the default is the resolver's — the same path the pull
+  //    writes to, which is the whole point of there being one resolver.
+  const plain = { ...process.env };
+  delete plain.LEDGER_BACKUP_DEST;
+  const def = spawnSync(process.execPath, [SUBJECT], { encoding: 'utf8', cwd: os.tmpdir(), env: plain });
+  assert.ok(def.stdout.includes(DEFAULT_MIRROR_DIR),
+    `the default corpus must be ${DEFAULT_MIRROR_DIR}, got:\n${def.stdout.slice(0, 400)}`);
 });
 
 test('--dir without a path is "could not answer" (2), not a silent default', () => {
