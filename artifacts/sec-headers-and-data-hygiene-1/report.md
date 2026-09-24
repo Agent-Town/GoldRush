@@ -64,10 +64,10 @@ Measured, not assumed: `GET http://127.0.0.1:5314/` against a server that applie
 | --- | --- | ---: | ---: | ---: | --- |
 | 1280 town (plain boot through the start menu) | town frame > 30 | **0** | 1 | 0 | yes |
 | 1280 the-claim | contract frame > 30 | **0** | 1 | 0 | yes |
-| 1280 e1-dry-gulch | pass 1 instrument timeout, re-run in pass 2 | **0** | 1 | 0 | yes |
+| 1280 e1-dry-gulch | contract frame > 30 (pass 2) | **0** | 1 | 0 | yes |
 | 390 town | town frame > 30 | **0** | 1 | 0 | yes |
 | 390 the-claim | contract frame > 30 | **0** | 1 | 0 | yes |
-| 390 e1-dry-gulch | pass 1 instrument timeout, re-run in pass 2 | **0** | 1 | 0 | yes |
+| 390 e1-dry-gulch | contract frame > 30 (pass 2) | **0** | 1 | 0 | yes |
 
 Per-boot JSON (every console message, not only errors) and a screenshot per arm: `artifacts/sec-headers-and-data-hygiene-1/boots/`.
 
@@ -81,7 +81,7 @@ directive: "connect-src 'self' https://agenttown.app wss://agenttown.app". The p
 violation has been logged but no further action has been taken.
 ```
 
-and `fetch('https://agenttown.app/api/stats')` in the same evaluation produced NO line. So the policy was live in the browser, it bites a stranger, and it admits the county origin the game needs. (Pass 1's control *predicate* was wrong and reported a false failure: it matched `agenttown.app` anywhere in the message, and a violation message QUOTES the directive it broke. Fixed in the probe with the reason written beside it; the raw capture is `csp-control.json`.)
+and `fetch('https://agenttown.app/api/stats')` in the same evaluation produced NO line. So the policy was live in the browser, it bites a stranger, and it admits the county origin the game needs. (Pass 1's control *predicate* was wrong and reported a false failure: it matched `agenttown.app` anywhere in the message, and a violation message QUOTES the directive it broke, so the policy text itself matched. The predicate now matches the SUBJECT of the sentence (`Connecting to 'https://<host>`), with the reason written beside it; pass 2 re-ran it and `csp-control.json` now holds `refusedDisallowed: true, refusedAllowed: false` over exactly 2 violation lines, both about the invalid host.)
 
 ---
 
@@ -212,19 +212,15 @@ put bug:1790270634442-448e89e1  322 bytes  options {"expirationTtl":7776000}
 test AFTER that file's last green run, and its first regex (`[^)]*` between the key and the options
 object) cannot match the real call, because the argument in between is `JSON.stringify(stored)` and its
 own `)` ends the character class. So the test went into `5211041cb` RED. The final re-run of every arm
-caught it; fixed in the last commit of this branch with the reason written beside the regex. The lesson is the plain one: re-run
+caught it; fixed in `c9ed0a288` with the reason written beside the regex. The lesson is the plain one: re-run
 a test after touching THE TEST, not only after touching its subject.
 
-**Every other red is attributed. There are none that are new.** The only non-green facts in this run are (a) the pre-existing local `version.json` 404 described in section 1, and (b) two pass-1 probe arms that timed out on the INSTRUMENT (the probe omitted the `sessionStorage['gr.contract.launch.v1']` line that `e2e/f-astra-6-plain-boot.spec.ts:21` sets beside the query; `the-claim` boots from the query alone, which is why the omission looked harmless). Both e1-dry-gulch arms were queued for a pass 2 with that line restored, in a second locked batch
-(`scratchpad/sec2-locked-run2.sh`, a NEW file rather than an edit of the running one, per Mistake #17).
-
-⚠️ **PASS 2 WAS STILL QUEUED BEHIND THE ATTENDED LANDING'S DRAIN LOCK when this report was written**
-(`ux1-cure-and-tail.sh` held it from 17:28Z for over 40 minutes). The batch is armed and blocking on the
-lock, so it will run by itself when the lock frees and will leave its result in the worktree as modified
-`boots/1280-e1-dry-gulch.json`, `boots/390-e1-dry-gulch.json` and `csp-control.json`. **The drain should
-diff those three files**: the expected change is `reached: "contract frame > 30"` on both arms, `cspLines: []`
-unchanged, and `refusedAllowed: false` in the control (pass 1 recorded `true` from the wrong predicate).
-Nothing in the shipped tree depends on that pass; it closes the completeness of one row.
+**Every other red is attributed. There are none that are new.** The only non-green facts in this run are (a) the pre-existing local `version.json` 404 described in section 1, and (b) two pass-1 probe arms that timed out on the INSTRUMENT (the probe omitted the `sessionStorage['gr.contract.launch.v1']` line that `e2e/f-astra-6-plain-boot.spec.ts:21` sets beside the query; `the-claim` boots from the query alone, which is why the omission looked harmless). Both e1-dry-gulch arms were re-run in a pass 2 with that line restored, in a second locked batch
+(`scratchpad/sec2-locked-run2.sh`, a NEW file rather than an edit of the one pass 1 was running, per
+Mistake #17), which had to queue about 50 minutes behind the attended landing's drain lock. **PASS 2:
+2 boots, `contract frame > 30` on both, 0 CSP console lines, 0 failures, rc=0**, and the corrected
+control now reads `disallowed origin reported = true; agenttown.app reported = false`. So the six-row
+table above is complete and every arm reached its frame.
 
 **The four spec files ran against `vite preview` (no headers) and the CSP evidence comes from the probe.** They could not be pointed at the headered server: `scripts/external-server-guard.mjs` (F-1457-1) refuses any `GR_CAPTURE_EXTERNAL_SERVER=1` target that is not a vite DEV server, deliberately and with no bypass flag. Making my server answer `/@vite/client` as JavaScript would have satisfied that check by lying to it, which is not a thing to do quietly to a safety mechanism. The probe's capture is in one respect STRONGER than the specs': it records every console message type, where the specs record only `message.type() === 'error'`.
 
