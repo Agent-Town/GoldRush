@@ -321,3 +321,104 @@ actual position (or rename it to what it measures), linearise both readings befo
 the patch DPR-aware (scale the +-6/+-8 by `png.width / box.width`) so the two projects sample the same
 world area — then re-measure both thresholds. Every one of those four changes alters what a green means,
 which is why this task reports them instead of taking them.
+
+## Proof, part 2 — the four specs once on both projects, branch tree, port 5309
+
+Branch tree at `59e8d7dd1`, own dev server on 5309, `--workers=1`, both projects, one locked command.
+Transcript: `batch-c-branch-four-specs.log`. Post-edit `npm run build` in the same command: **rc 0**
+(`build-after.log`).
+
+    e2e/e1-twin-banks.spec.ts  e2e/e1-night-shift.spec.ts  e2e/e1-baron.spec.ts  e2e/beauty-twin-banks.spec.ts
+    ->  7 failed, 2 skipped, 51 passed (6.4 m), rc 1
+
+Every one of the seven is accounted for, and none of them is a test this task touched:
+
+| # | Project | Test | Owner |
+|---|---|---|---|
+| 1 | desktop | `beauty-twin-banks.spec.ts:295` the braid renders living water… | **F-TB-1**, must stay red |
+| 3 | desktop | `e1-twin-banks.spec.ts:64` loads Twin Banks contract… | **F-TB-1**, must stay red |
+| 4 | mobile | `beauty-twin-banks.spec.ts:295` the braid renders living water… | **F-TB-1**, must stay red |
+| 7 | mobile | `e1-twin-banks.spec.ts:64` loads Twin Banks contract… | **F-TB-1**, must stay red |
+| 2 | desktop | `e1-night-shift.spec.ts:284` loads Night Shift contract data and ramps… | **F-SEF2-5b** `:389` |
+| 5 | mobile | `e1-night-shift.spec.ts:284` loads Night Shift contract data and ramps… | **F-SEF2-5b** `:389` |
+| 6 | mobile | `e1-night-shift.spec.ts:402` lantern post is Night Shift gated… | **F-SEF2-5b** `:436` |
+
+The six tests this task re-pinned are green here, and so is every other test in the four specs on both
+projects: no collateral anywhere, including the untouched `beauty-twin-banks` cases and the ten other
+Baron cases. The two skips are the suite's own conditional cases, unchanged.
+
+**Independent corroboration that the two twin-banks tests were red on main, found while waiting for the
+lock:** the attended session's own gate running beside this task lists
+`known-red overrides: e2e/e1-twin-banks\.spec\.ts:103:1|e2e/e1-twin-banks\.spec\.ts:122`
+(`scratchpad/cp1-gates.txt`) — main's line numbers for *builds sluices and stockpiles on both banks*
+and *routes enemies through both west and east fords*, the two tests items 1 and 2 cure. Their gate has
+to override them as known reds; on this branch they pass at three repeats on both projects.
+
+## Proof, part 3 — the control: the same four specs on a clean detached main checkout, port 5310
+
+Control worktree `wt-e1truth-control`, detached at **main's tip `65e7947cb`** (not at this branch's base
+— see §0: cutting it at the tip is what proves the `sol-entry-framing-2` camera glance does not move
+these pins), node_modules symlinked, `.env.local` copied, own dev server on 5310, same command, same
+hour, `--workers=1`, both projects. Transcript: `batch-c-control-main-four-specs.log`.
+
+| Arm | Result |
+|---|---|
+| **control, clean main `65e7947cb`** | **14 failed, 2 skipped, 44 passed (7.9 m)** |
+| **branch `59e8d7dd1`** | **7 failed, 2 skipped, 51 passed (6.4 m)** |
+
+Seven project-runs cured, zero new. Test by test:
+
+| Test | control (main) | branch | verdict |
+|---|---|---|---|
+| `e1-twin-banks:103` builds sluices and stockpiles… | RED both | **GREEN both** | item 1 |
+| `e1-twin-banks:122` routes enemies through both fords | RED both | **GREEN both** | item 2 |
+| `e1-night-shift:271` loads Night Shift…ramps | RED both | RED both, at a later line | items 3 landed, `:389` remains (F-SEF2-5b) |
+| `e1-night-shift:372` lantern post…true-dark ring | RED mobile | RED mobile, at a later line | item 6 landed, `:436` remains (F-SEF2-5b) |
+| `e1-baron:411` Baron manifest loads and taunts fire | RED both | **GREEN both** | item 5 |
+| `e1-twin-banks:64` loads Twin Banks contract… | RED both | RED both | **F-TB-1, must stay red** |
+| `beauty-twin-banks:295` the braid renders living water… | RED both | RED both | **F-TB-1, must stay red** |
+| `e1-twin-banks:192` seeded Twin Banks diagnostics are stable | **RED desktop** | GREEN both | not this task's — see below |
+
+### The before-numbers, measured on clean main in this control
+
+| Test | What main answers |
+|---|---|
+| `e1-night-shift:271` | `fogNear: 18 -> 34`, `fogFar: 42 -> 58` — **the exact pair this branch re-pins, on main's tip, so the entry glance does not move it** |
+| `e1-night-shift:372` mobile | `spriteLuminance(outOfRadius)` = **0.06045960784313726** against a 0.06 ceiling (a fourth boot beside the investigation's 0.0605..0.0607); the branch's mobile ceiling of 0.065 clears it by 0.0046 |
+| `e1-twin-banks:103` | `build.ghostValid` poll never turns true (main `:48`) |
+| `e1-twin-banks:122` | `__twinRoute.reached` never turns true (main `:228`) |
+| `e1-twin-banks:64`, `beauty-twin-banks:295` | `terrainSample(0, 0).zone` Expected `"river"`, Received `"bank"` |
+| `e1-baron:411` | one field differs in the prefetch `toEqual` (main `:302`) — `baronAnimationLoaded` |
+
+### One red on main's tip that this branch does NOT have, and is not claiming
+
+`e1-twin-banks:192` *seeded Twin Banks diagnostics are stable* failed on the control, desktop only:
+two boots of the same seed disagreed by one field, `"y": 0.02688779068849728` against
+`"y": 0.3672938919067383` — a VISUAL HEIGHT, not a sim value. It passed on both projects on this
+branch. This task changes no determinism input (its diff is two stockpile coordinates, one spawn
+argument, four constants and one helper signature), and this branch sits 17 commits behind the control,
+so the honest reading is that it belongs to main's newer commits or is a flake. **Measured once, not
+reproduced, not attributed** — it wants a repeat-each control of its own before anyone calls it a
+regression.
+
+## Remaining list, in order
+
+1. **`e1-night-shift.spec.ts:389`, the hero-brightness band — both projects (F-SEF2-5b).** Not cured
+   here, on purpose: the assertion samples world (0, 0) while the Night Shift hero starts at (0, 12),
+   and it compares a ratio of sRGB-encoded readings against a linear-space `tintLuminance`. Deciding
+   what it should measure is a design call, not an implementer's. Cure sketch in §F-SEF2-5b.
+2. **`e1-night-shift.spec.ts:436`, the mobile in-radius sprite luminance (F-SEF2-5b).** 0.23454 against
+   a 0.35 floor, desktop passing. Same root: `spriteLuminance` samples a fixed +-6 by +-8 PNG-pixel
+   patch with no DPR normalisation, so Pixel 5 reads a 3x tighter patch than desktop. Cure it and item
+   6's ceiling can very likely go back to one number for both projects.
+3. **`e1-twin-banks.spec.ts:129`, the screenshot spawn.** Still starts a body inside
+   `north_bank_homestead`, where it freezes; it asserts nothing, so it was left alone. One line, same
+   cause as item 2.
+4. **`prefetchBaronPresentation` publishes no runtime-slot signal (`src/entities/pools.ts:687`).** One
+   field would let the Baron prefetch test assert the whole prefetch instead of three quarters of it.
+   `src/**`, so outside this firewall.
+5. **`e1-twin-banks.spec.ts:192` on main's tip** — the unattributed desktop determinism red above;
+   re-run it `--repeat-each=5` on a clean main before treating it as anything.
+6. **The F-CORR1-7 correction rows live outside the parsed corrections table** (F-SEF2-5a). A ledger
+   restructuring, flagged for the next drain.
+7. **This branch is 17 commits behind main.** The drain gates on the merged tree, as always.
