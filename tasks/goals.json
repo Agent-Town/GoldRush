@@ -6094,12 +6094,13 @@
               "id": "hm-01a-night-shift-lanterns",
               "title": "HM-01a (specs/held-maps): Night Shift starts with its home bank lit (three posts) and the far bank cold (four posts at 8 gold); contract data only, floors re-recorded, one same-era pin",
               "status": "blocked",
-              "blockClass": "owner-fork",
-              "blockedReason": "PARKED 2026-09-24 for the owner's word on desk item F-HM-1 option (a); the spec is DRAFT and the owner asked to see it first (\"lets go step by step\"). Queue only on his word; on (b) or (c) supersede this master.",
+              "blockClass": "gate-side",
+              "blockedReason": "RULED (a) by the owner 2026-09-24 (\"(4) (a)\"): three lit, four cold; lands with harvest-seed-parity-1 and the era bump on the next quiet day the owner names; lifted by the attended session that day",
               "taskFile": "hm-01a-night-shift-lanterns.md",
               "lane": "scratch worktree /Users/robin/Claude/Projects/wt-hm01a beside the primary, branch feat/hm-01a-night-shift-lanterns, Opus implementer on the Anthropic subscription, port 5308",
               "authoredAt": "2026-09-24",
-              "authoredBy": "attended (Fable) from specs/held-maps/README.md HM-01a"
+              "authoredBy": "attended (Fable) from specs/held-maps/README.md HM-01a",
+              "ruledAt": "2026-09-24"
             },
             {
               "id": "e1-spec-truth-1",
@@ -6156,6 +6157,50 @@
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
               "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes"
+            },
+            {
+              "id": "harvest-seed-parity-1",
+              "title": "Owner ruling 2026-09-24 item 17 (the review's SIM-1): the browser seeds the harvest from the run seed as the headless engine does; lands with hm-01a-night-shift-lanterns and the era bump on the owner's quiet day",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "the second half of the Night Shift lantern landing on the day the owner names (\"the next quiet day\"); lifted by the attended session with hm-01a",
+              "taskFile": "harvest-seed-parity-1.md",
+              "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
+              "authoredAt": "2026-09-24",
+              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24"
+            },
+            {
+              "id": "live-seed-rotation-1",
+              "title": "Owner ruling 2026-09-24 item 2 (a) (the review's SIM-2): humans ride the open rotation's seed per contract instead of the constant gold-rush seed",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "run by the attended session as an Opus implementer under the drain lock; lifted at launch",
+              "taskFile": "live-seed-rotation-1.md",
+              "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
+              "authoredAt": "2026-09-24",
+              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24"
+            },
+            {
+              "id": "hm-06-twin-banks-braid-water",
+              "title": "Owner ruling 2026-09-24 F-TB-1 (b): the braid's water surface follows the mask that already rules the simulation; the two band tests re-pinned to the braid (HM-06, Astra lane-c)",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "queued into lane-c by the attended session after the held-maps spec slice HM-06 is written (this master is its slice) and the lane is free; lifted at queue time",
+              "taskFile": "hm-06-twin-banks-braid-water.md",
+              "lane": "lane-c (Astra, the ChatGPT subscription; store branch astra/hm-06-braid)",
+              "authoredAt": "2026-09-24",
+              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24"
+            },
+            {
+              "id": "kv-counters-to-ledger-1",
+              "title": "Owner ruling 2026-09-24 item 7 (b) (the review's SEC-2): telemetry batched, the room connect in its error path, the counters, bug reports and prize codes moved to the droplet ledger; no paid plan",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "run by the attended session as an Opus implementer under the drain lock after the ops evening (the ledger routes deploy with the droplet mirror); lifted at launch",
+              "taskFile": "kv-counters-to-ledger-1.md",
+              "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
+              "authoredAt": "2026-09-24",
+              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24"
             }
           ]
         }
