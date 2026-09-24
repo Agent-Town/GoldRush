@@ -1,0 +1,30 @@
+branch fix/sec-headers-and-data-hygiene-1 tip 402c3159e 18:47Z
+chain base 4301117a3
+merged 0bfb168ea
+roster: added scripts/site-security-headers.test.mjs
+cure F-SEC2-3 committed 8cc4b367a
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 5793a96): 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97671352 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34346281 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (303.6s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 141 ℹ fail 0 
+functions gates: accounts rc=0 | mp rc=0 | stats rc=0
+CSP boots (violation lines per boot): 1280-e1-dry-gulch=0 1280-the-claim=0 1280-town=0 390-e1-dry-gulch=0 390-the-claim=0 390-town=0 | control: {"controlCsp":["info: Connecting to 'https://not-an-allowed-origin.invalid/probe' violates the following Content Securit
+warm-up (profile-first-boot desktop, cold compile, verdict not counted):   1 failed   5 passed (37.8s) 
+e2e start 18:56Z: e2e/bug-office-desk.spec.ts e2e/profile-first-boot.spec.ts e2e/m2-01-build-menu.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/agent-view.spec.ts
+e2e: rc=0   56 passed (3.0m)  18:59Z
+battery start 18:59Z
+battery: rc=1 ℹ tests 959 ℹ pass 950 ℹ fail 4 ℹ skipped 5  19:07Z
+✖ all 153 scripts/*.test.mjs fixture owners remove their temp directories (192415.553542ms)
+✖ rotation registry stays outside the engine identity corpus (552.916958ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (224.23625ms)
+✖ the live board is green under this guard (baseline is honest) (379.703584ms)
+dirt after battery: 0
+SEC2-PREP-DONE
+hash at pin time: 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f
+pin #60
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
