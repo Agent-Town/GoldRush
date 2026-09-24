@@ -6129,13 +6129,14 @@
             {
               "id": "ux-entry-robustness-1",
               "title": "UX-1/UX-2/UX-4/UX-7: tracking links show the start menu and mint no profile; a boot guard card; focus loss clears keys and freezes the solo pick clock; the first-boot greeting fires where the profile is made",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "run by the attended session as an Opus implementer in a scratch worktree, one at a time under the drain lock, after the phone-HUD-2 landing; not for a Codex lane; lifted by the attended session when it launches the run",
+              "status": "queued",
               "taskFile": "ux-entry-robustness-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
-              "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes"
+              "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes",
+              "liftedFrom": "gate-side: run by the attended session as an Opus implementer in a scratch worktree, one at a time under the drain lock, after the phone-HUD-2 landing; not for a Codex lane; lifted by the attended session when it launches the run",
+              "queuedAt": "2026-09-24",
+              "runner": "attended-spawned Opus implementer, scratch worktree /Users/robin/Claude/Projects/wt-ux1, branch fix/ux-entry-robustness-1, port 5312, serialized under the attended drain lock"
             },
             {
               "id": "release-gate-on-deploy-1",
@@ -6205,6 +6206,28 @@
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
               "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24"
+            },
+            {
+              "id": "ledger-shape-1",
+              "title": "Ruling 13a: STATUS rotates archived line-1s into archive/status/<YYYY-MM>.md, BACKLOG splits closed rows into tasks/backlog/<key>.md, the readers taught the shape, every byte kept",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "run by the attended session as an Opus implementer in a scratch worktree (/Users/robin/Claude/Projects/wt-ls1, branch chore/ledger-shape-1) under the drain lock; the branch ships tools, tests and a dry-run report; the attended drain executes the move on fresh main with the fires held; lifted by the attended session when it launches the run",
+              "taskFile": "ledger-shape-1.md",
+              "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
+              "authoredAt": "2026-09-24",
+              "authoredBy": "attended (Fable) from owner rulings 13a/14a of 2026-09-24 and docs/ledger-shape-reader-map-2026-09-24.md"
+            },
+            {
+              "id": "evidence-offload-1",
+              "title": "Ruling 14a: cited-only evidence leaves the public tree for the private archive behind an index with previews, the audits learn ARCHIVED, an evidence byte budget per landing",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "run by the attended session as an Opus implementer in a scratch worktree (/Users/robin/Claude/Projects/wt-eo1, branch chore/evidence-offload-1) under the drain lock; the branch ships tools, tests and a dry-run report; the attended drain executes the move on fresh main with the fires held; lifted by the attended session when it launches the run",
+              "taskFile": "evidence-offload-1.md",
+              "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
+              "authoredAt": "2026-09-24",
+              "authoredBy": "attended (Fable) from owner rulings 13a/14a of 2026-09-24 and docs/ledger-shape-reader-map-2026-09-24.md"
             }
           ]
         }
