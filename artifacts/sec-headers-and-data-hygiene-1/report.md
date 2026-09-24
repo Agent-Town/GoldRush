@@ -201,12 +201,23 @@ put bug:1790270634442-448e89e1  322 bytes  options {"expirationTtl":7776000}
 | tsc + build | `npm run build` | GREEN (tsc clean, vite 2930 modules) |
 | the new node test | `GR_GUARD_NO_ARTIFACT=1 node --test scripts/site-security-headers.test.mjs` | **4 tests, 4 pass, 0 fail** |
 | ledger + text guards (10 files) | `GR_GUARD_NO_ARTIFACT=1 node --test ...` | **116 tests, 116 pass, 0 fail, 11.7 s** |
-| accounts (the `functions/` gate, F-1229-1) | `npm run test:accounts` | GREEN: 43 + 43 + 27 + 24 checks |
+| accounts (`functions/**` path rule, `scripts/run-guards.mjs:145-151`) | `npm run test:accounts` | GREEN: 43 kv + 43 sqlite + 27 hardening + 24 office checks |
+| stats/standings/ledger-worker (same path rule) | `npm run test:stats` | GREEN: 87 stats + 372 kv + 372 sqlite + 26 ledger-worker checks |
+| multiplayer relay (same path rule) | `npm run test:mp` | GREEN: 466 checks |
 | the named e2e specs, production preview, BOTH projects | `GR_PREVIEW_PORT=5314 GR_ASSET_DIET_REUSE_BUILD=1 npx playwright test --config playwright.preview.config.ts e2e/f-astra-6-plain-boot.spec.ts e2e/f1297-2-plain-boot-tape-button.spec.ts e2e/trail-guide-plain-boot.spec.ts e2e/m2-01-build-menu.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --reporter=line` | **26 passed (2.6m), rc=0** |
 | CSP boot captures | `serve-with-headers.mjs` + `csp-boot-probe.mjs` on 5314 | **0 CSP console lines over 6 boots**, control proves the policy was live |
 | handler probe (TTL + CORS) | `node artifacts/sec-headers-and-data-hygiene-1/handler-probe.mjs` | as tabulated above |
 
-**Every red is attributed. There are none that are new.** The only non-green facts in this run are (a) the pre-existing local `version.json` 404 described in section 1, and (b) two pass-1 probe arms that timed out on the INSTRUMENT (the probe omitted the `sessionStorage['gr.contract.launch.v1']` line that `e2e/f-astra-6-plain-boot.spec.ts:21` sets beside the query; `the-claim` boots from the query alone, which is why the omission looked harmless). Both e1-dry-gulch arms were re-run in pass 2 with that line restored.
+**Every red is attributed. There are none that are new.** The only non-green facts in this run are (a) the pre-existing local `version.json` 404 described in section 1, and (b) two pass-1 probe arms that timed out on the INSTRUMENT (the probe omitted the `sessionStorage['gr.contract.launch.v1']` line that `e2e/f-astra-6-plain-boot.spec.ts:21` sets beside the query; `the-claim` boots from the query alone, which is why the omission looked harmless). Both e1-dry-gulch arms were queued for a pass 2 with that line restored, in a second locked batch
+(`scratchpad/sec2-locked-run2.sh`, a NEW file rather than an edit of the running one, per Mistake #17).
+
+⚠️ **PASS 2 WAS STILL QUEUED BEHIND THE ATTENDED LANDING'S DRAIN LOCK when this report was written**
+(`ux1-cure-and-tail.sh` held it from 17:28Z for over 40 minutes). The batch is armed and blocking on the
+lock, so it will run by itself when the lock frees and will leave its result in the worktree as modified
+`boots/1280-e1-dry-gulch.json`, `boots/390-e1-dry-gulch.json` and `csp-control.json`. **The drain should
+diff those three files**: the expected change is `reached: "contract frame > 30"` on both arms, `cspLines: []`
+unchanged, and `refusedAllowed: false` in the control (pass 1 recorded `true` from the wrong predicate).
+Nothing in the shipped tree depends on that pass; it closes the completeness of one row.
 
 **The four spec files ran against `vite preview` (no headers) and the CSP evidence comes from the probe.** They could not be pointed at the headered server: `scripts/external-server-guard.mjs` (F-1457-1) refuses any `GR_CAPTURE_EXTERNAL_SERVER=1` target that is not a vite DEV server, deliberately and with no bypass flag. Making my server answer `/@vite/client` as JavaScript would have satisfied that check by lying to it, which is not a thing to do quietly to a safety mechanism. The probe's capture is in one respect STRONGER than the specs': it records every console message type, where the specs record only `message.type() === 'error'`.
 
