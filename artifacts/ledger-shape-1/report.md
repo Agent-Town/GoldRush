@@ -21,6 +21,33 @@ run after the first edits rather than before them — a deviation worth stating:
 branch is under `scripts/`, `.claude/` or `package.json`'s scripts block, none of which the
 `tsc && vite build && asset-diet` pipeline reads, and it is green now.
 
+### MAIN HAS ADVANCED SINCE THE BRANCH POINT — the numbers below will differ slightly
+
+Measured at the end of this task: `main` is ~10 commits ahead of `c0e15c901` (the sec2
+sec-headers chain landed, plus the s2675 fire), and both ledger files grew.
+
+| file | at the branch point | on main now | delta |
+| --- | --- | --- | --- |
+| `STATUS.md` | 20,555,947 B | 20,562,862 B | **+6,915** |
+| `tasks/BACKLOG.md` | 9,289,815 B | 9,293,600 B | **+3,785** |
+| `scripts/citation-title-baseline.json` | 21,171 B | 21,171 B | 0 |
+
+Neither `archive/status/` nor `tasks/backlog/` exists on main yet, so the drain creates both.
+Both tools RE-DERIVE everything at `--apply` time — the months, the keys, the byte accounting and
+the baseline allocation are all measured from the tree in front of them, never transcribed — so the
+numbers in §1 and §2 are a SNAPSHOT of the branch point and not a prediction. **Run each tool with
+`--dry-run` on main first and read its own BALANCE line**; the extra bullets will land in
+2026-09 (the current month, so they stay on the board) and the extra rows above the title also
+stay, so the shape of the answer will not change even though the digits will. A brand-new month
+boundary is the only thing that would move a month from "current" to "closed", and neither tool
+needs telling: `currentMonth` is read from line 1.
+
+The attended drain merges main into this branch (this implementer was told not to, and did not:
+`git log main..HEAD` is exactly the four commits in §8b, and `git diff main...HEAD` is the 33 files
+listed there — nothing outside the master's TOUCH-ONLY list, and `STATUS.md`, `tasks/BACKLOG.md`,
+`tasks/goals.json` and `scripts/citation-title-baseline.json` all byte-identical to their
+branch-point versions).
+
 ## 1. `scripts/status-rotate-month.mjs --dry-run` on the branch's tree
 
 ```
