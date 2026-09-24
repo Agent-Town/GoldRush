@@ -1,0 +1,52 @@
+fix: LB-01's destination points at the private archive — F-2668-2 CLOSED, F-2672-1 filed and cured
+
+Owner ruling 2026-09-24 item 15, verbatim: "(keep the mirror out of the public tree
+and point the duty at the private archive)". s2670 discharged the first half of the
+gate, s2671 the denominator half; this is the named remainder.
+
+BOTH CLAUSES OF THE RULING, EXECUTED AND MEASURED:
+- out of the public tree: the 32 mirrors MOVED to ~/.goldrush/ledger-backups, outside
+  this repo entirely. Renamed, never deleted (CLAUDE.md 4.10b), each hashed before the
+  move and re-hashed at the destination: 32/32 equal (artifacts/s2672/rehome-mirrors.txt).
+  Being gitignored was never the property that mattered; being OUTSIDE is.
+- pointed at the private archive: scripts/ledger-mirror-push.mjs mirrors the series to
+  the PRIVATE archive remote on branch ledger-backups, in FM-01's sanctioned shape (a
+  throwaway temp clone, never a fetch into the working repo - F-E1T-3). PROVED BY
+  FETCHING IT BACK rather than by a push exit code: 32/32 blob ids byte-identical to
+  the local files, plus one real download (32,768 B, header "SQLite format 3", size
+  matching the tree). artifacts/s2672/verify-archive-push.txt.
+
+THE DIVERGENCE s2671 BANKED IS CURED FIRST, because the re-home is what would have made
+it live: the pull honoured LEDGER_BACKUP_DEST and the freshness guard honoured nothing,
+so a re-homed destination would have left the guard auditing the abandoned path and the
+exposure gate printing CLEAN about an empty room. There is now ONE resolver
+(scripts/ledger-mirror-dest.mjs) and three importers, so they cannot disagree. The
+resolver refuses a RELATIVE override instead of resolving it against cwd, and returns
+the PROVENANCE with the path so an env-narrowed corpus can never print like the default
+- the freshness header used to hardcode "artifacts/ledger-backups/" and would have gone
+on saying it about a directory it no longer opened.
+
+TEETH BY MUTATION, on a scratch copy (artifacts/s2672/teeth.txt, rerunnable): control
+25/25 green, then four manufactured defects. M3 (provenance dropped) and M4 (relative
+override resolved) landed exactly on arms 24 and 25 as predicted. TWO PREDICTIONS WERE
+NARROWER THAN THEIR MUTATION and are recorded as measured rather than widened after the
+fact: M1 (destination back inside the repo) reds 22 AND 24, because anchoring to the
+script's own location makes "the default" stop being one value at all; M2 (the guard
+keeps its own copy again) reds TWELVE arms, not the two predicted, because a guard that
+ignores the destination in force cannot be aimed at a fixture either - the divergence
+detaches the tool from the directory rather than merely mis-reporting it.
+
+F-2672-1, filed and cured in this commit: ops/ledger-series-anchor.json - F-2671-1's own
+cure - instructed the next fire to "move the day forward in the SAME commit as the
+re-home". Obeying it would have moved firstCoverageDay from 2026-08-24 to 2026-09-24 and
+deleted 31 days from the denominator, printing "1/1 day(s) present, WHOLE AND CURRENT,
+rc 0" - F-2671-1's false green re-manufactured by obeying F-2671-1. Realised cost zero:
+it was not executed, and the live guard reads 32/32 at the new home. The field now states
+the PREDICATE that makes an edit correct rather than the event that prompts one.
+
+THE SITE (F-2667-1: a cure with no reader): scripts/fire.md LB-01 carries the new
+destination, the push step, and the lift of the stop that parked the duty pending
+F-2661-1 - the owner ruled, so the ban on pulling is over; the ban on committing a
+mirror into THIS repo is restated and permanent, origin being public.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
