@@ -6110,13 +6110,12 @@
             {
               "id": "sec-signin-hardening-1",
               "title": "SEC-1/SEC-10/SEC-9 of the outside review: the sign-in door counts guesses atomically, verify gets a per-IP cap, dev-only answers stay dev-only, the admin token leaves the URL",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "run by the attended session as an Opus implementer in a scratch worktree, one at a time under the drain lock, after the phone-HUD-2 landing; not for a Codex lane; lifted by the attended session when it launches the run",
+              "status": "queued",
               "taskFile": "sec-signin-hardening-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
-              "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes"
+              "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes",
+              "queuedAt": "2026-09-24 05:16Z, launched by the attended session as an Opus implementer in its scratch worktree (not a Codex lane)"
             },
             {
               "id": "ux-entry-robustness-1",
@@ -6132,13 +6131,12 @@
             {
               "id": "release-gate-on-deploy-1",
               "title": "BUILD-1/F-SEF2-2/F-SEF2-3: the E4 hauler leaves the E1 bundle, the release assertion runs on every deploy, the release suite's two harvest reds measured",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "run by the attended session as an Opus implementer in a scratch worktree, one at a time under the drain lock, after the phone-HUD-2 landing; not for a Codex lane; lifted by the attended session when it launches the run",
+              "status": "queued",
               "taskFile": "release-gate-on-deploy-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
-              "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes"
+              "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes",
+              "queuedAt": "2026-09-24 05:16Z, launched by the attended session as an Opus implementer in its scratch worktree (not a Codex lane)"
             },
             {
               "id": "sec-headers-and-data-hygiene-1",
