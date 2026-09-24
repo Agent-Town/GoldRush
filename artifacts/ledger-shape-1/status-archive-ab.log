@@ -1,0 +1,27 @@
+########## A/B: THE PERMANENCE PREDICATE OVER A ROTATED PREDECESSOR ##########
+
+--- CONTROL: with the bullet NOWHERE, both arms must report the drop (F-2215-1) ---
+widened  : LOST: 2 handoff line-1s PERMANENTLY absent at HEAD (0 more were dropped at lock time but r
+  rc=1
+bullet in STATUS.md            : 0
+bullet in archive/status/2026-08: 1
+
+--- ARM A: the widened tool (corpus = STATUS.md + archive/status/*.md) ---
+board corpus     : STATUS.md + 3 archive month(s): archive/status/2026-09.md, archive/status/2026-08.md, archive/status/
+DROPPED 5023f2e6  2026-09-25T02:24:47+07:00
+LOST: 1 handoff line-1s PERMANENTLY absent at HEAD (1 more were dropped at lock time but restored by the fire's own hand
+rc=1
+
+--- ARM B: MANUFACTURED CONTROL, the pre-cure reader (corpus = STATUS.md only) ---
+board corpus     : STATUS.md (no rotated months on this tree)
+DROPPED d8082f74  2026-09-25T02:24:47+07:00
+  s9999 destroyed s9997's handoff line (109 chars)
+DROPPED 5023f2e6  2026-09-25T02:24:47+07:00
+  s9997 destroyed s9999's handoff line (83 chars)
+LOST: 2 handoff line-1s PERMANENTLY absent at HEAD (0 more were dropped at lock time but restored by the fire's own hand
+rc=1
+
+########## gate-caller-audit's TWO ESCALATION IDS, directly measured ##########
+F-1253-1  index=5  parts=1  corpus=6
+F-1251-1  index=2  parts=0  corpus=2
+AB-DONE

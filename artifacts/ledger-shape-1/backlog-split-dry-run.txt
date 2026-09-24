@@ -1,0 +1,53 @@
+=== backlog-split-closed ===
+mode              : DRY-RUN
+# Task backlog H1 : line 2935
+rows below title  : 2298  (595 closed-marked)
+held on the index : 184 closed row(s) kept — 157 gate · 10 RULED · 17 desk
+moving            : 411 row(s), 844.1 kB
+  keyed by        : 3 row-date · 165 neighbour-above · 85 heading-slug · 158 heading-date
+per destination   :
+  tasks/backlog/closed-2026-07.md                 264 row(s)   577.8 kB  + 485 B header (new file)
+  tasks/backlog/closed-2026-08.md                  62 row(s)   127.9 kB  + 485 B header (new file)
+  tasks/backlog/e2-completion.md                    1 row(s)     1.5 kB  + 484 B header (new file)
+  tasks/backlog/lane-c.md                           1 row(s)      301 B  + 477 B header (new file)
+  tasks/backlog/later.md                            2 row(s)     1.7 kB  + 476 B header (new file)
+  tasks/backlog/mp-07-ladder.md                     1 row(s)      439 B  + 483 B header (new file)
+  tasks/backlog/multiplayer.md                      1 row(s)     2.2 kB  + 482 B header (new file)
+  tasks/backlog/owner-rulings-2026-08-08-morning.md   21 row(s)    33.2 kB  + 503 B header (new file)
+  tasks/backlog/owners-desk.md                     11 row(s)     7.9 kB  + 482 B header (new file)
+  tasks/backlog/s1070.md                            3 row(s)     2.5 kB  + 476 B header (new file)
+  tasks/backlog/s1071.md                            2 row(s)     1.4 kB  + 476 B header (new file)
+  tasks/backlog/s1073.md                            2 row(s)     1.1 kB  + 476 B header (new file)
+  tasks/backlog/s1074-fire.md                       1 row(s)     1.2 kB  + 481 B header (new file)
+  tasks/backlog/s1077.md                            2 row(s)     9.8 kB  + 476 B header (new file)
+  tasks/backlog/s1078.md                            7 row(s)    18.3 kB  + 476 B header (new file)
+  tasks/backlog/s1079.md                           21 row(s)    49.5 kB  + 476 B header (new file)
+  tasks/backlog/the-epoch-work-package-ladder.md    8 row(s)     6.8 kB  + 500 B header (new file)
+  tasks/backlog/the-saga-build-plan.md              1 row(s)      638 B  + 490 B header (new file)
+tasks/BACKLOG.md  : 9.29 MB -> 8.45 MB  (+6932 B of pointer lines)
+BALANCE           : in 9305431 B (index 9289815 + parts 0 + headers 8684 + pointers 6932) === out 9305431 B (index 8452660 + parts 852771) -> BALANCED
+baseline re-key   :
+  tasks/BACKLOG.md keys: 74 · moved whole: 17 · straddling: 4 · unplaceable: 0
+    tasks/BACKLOG.md::e2e/asset-diet.spec.ts:101  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/asset-diet.spec.ts:16  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/asset-diet.spec.ts:2  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/e2-stamp-mill.spec.ts:202  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/f1148-1-trajectory-probe.spec.ts:78  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/lane-c-activations-assay-office.spec.ts:24  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/m3-05b-run-ledger.spec.ts:82  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/map-census.spec.ts:109  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/release-build.spec.ts:297  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/release-build.spec.ts:308  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/release-build.spec.ts:47  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/ss-02-beats.spec.ts:375  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/town-t6-surfaces.spec.ts:127  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/trail-guide.spec.ts:113  ->  tasks/backlog/closed-2026-08.md=1
+    tasks/BACKLOG.md::e2e/vp-02-sprite-animation.spec.ts:393  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/vp-02b-rotation-resolver.spec.ts:23  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/vp-02b-rotation-resolver.spec.ts:284  ->  tasks/backlog/closed-2026-07.md=1
+    STRADDLE tasks/BACKLOG.md::e2e/ap-standing-orders.spec.ts:80  ->  tasks/BACKLOG.md=1 , tasks/backlog/closed-2026-07.md=1   (allowance 1 -> 2; the coordinate now occurs on both sides of the split)
+    STRADDLE tasks/BACKLOG.md::e2e/asset-diet.spec.ts:15  ->  tasks/BACKLOG.md=1 , tasks/backlog/closed-2026-07.md=1   (allowance 1 -> 2; the coordinate now occurs on both sides of the split)
+    STRADDLE tasks/BACKLOG.md::e2e/m2-01-build-menu.spec.ts:84  ->  tasks/BACKLOG.md=1 , tasks/backlog/closed-2026-07.md=1   (allowance 2 -> 2; the coordinate now occurs on both sides of the split)
+    STRADDLE tasks/BACKLOG.md::e2e/task-037-assay-bench-ungate.spec.ts:160  ->  tasks/BACKLOG.md=1 , tasks/backlog/s1070.md=1   (allowance 2 -> 2; the coordinate now occurs on both sides of the split)
+DRY-RUN — nothing written. Re-run with --apply to perform the split.
+rc=0
