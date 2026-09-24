@@ -3,7 +3,7 @@
 Two jobs the owner ruled on 2026-09-24 ("(8) (a)", "(9) sure lets do it"), for one evening he names. The attended session sits beside him; every command that touches the live box or the live edge is his to run, in this order. Nothing here runs by itself and nothing here is a fire's.
 
 ## Before the evening (attended, no owner time)
-- The three credential rotations (ruling 1) are done and the F-2299-1 row carries the date; otherwise the registry secret and the edge token would be minted into a box that still holds the old ones.
+- The three credential rotations (ruling 1): the edge token and the voice key were rotated at their providers on 2026-09-24 (verified dead by the providers' own endpoints); the new values must be in `.env.local` and the Claude Code token rotated and revoked before the evening (the F-2299-1 desk row at the top of `tasks/BACKLOG.md`); otherwise the registry secret and the edge token would be minted into a box that still holds the old ones.
 - The sign-in hardening is live (`03543a276`, deployed 2026-09-24): the nginx `limit_req` lines below are the last piece of it.
 - `ops/droplet/*.service` and `ops/droplet/agenttown.app.nginx.conf` in the repo are the mirror of what the box runs; the evening changes the repo copies first, then applies them by hand, so the mirror stays true.
 
