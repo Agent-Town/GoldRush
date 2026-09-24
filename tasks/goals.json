@@ -6133,14 +6133,18 @@
             {
               "id": "ux-entry-robustness-1",
               "title": "UX-1/UX-2/UX-4/UX-7: tracking links show the start menu and mint no profile; a boot guard card; focus loss clears keys and freezes the solo pick clock; the first-boot greeting fires where the profile is made",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "ux-entry-robustness-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
               "authoredBy": "attended (Fable) from the outside review of 2026-09-24 and its three verification passes",
               "liftedFrom": "gate-side: run by the attended session as an Opus implementer in a scratch worktree, one at a time under the drain lock, after the phone-HUD-2 landing; not for a Codex lane; lifted by the attended session when it launches the run",
               "queuedAt": "2026-09-24",
-              "runner": "attended-spawned Opus implementer, scratch worktree /Users/robin/Claude/Projects/wt-ux1, branch fix/ux-entry-robustness-1, port 5312, serialized under the attended drain lock"
+              "runner": "attended-spawned Opus implementer, scratch worktree /Users/robin/Claude/Projects/wt-ux1, branch fix/ux-entry-robustness-1, port 5312, serialized under the attended drain lock",
+              "mergeHash": "3f5bc04565e0107241c7e88c4de39ccbc72f6627",
+              "mergedAt": "2026-09-24",
+              "review": "reviews/ux-entry-robustness-1.md",
+              "drainedBy": "attended 2026-09-24 (the outside review of 2026-09-24, UX rows)"
             },
             {
               "id": "release-gate-on-deploy-1",

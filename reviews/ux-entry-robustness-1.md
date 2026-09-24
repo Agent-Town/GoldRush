@@ -1,0 +1,41 @@
+# Drain review: `ux-entry-robustness-1`, tracking links stop skipping onboarding, a blank page gets a card, focus loss stops sticking keys (Opus implementer; the outside review of 2026-09-24, UX-1, UX-2, UX-4, UX-7)
+
+**Branch** `fix/ux-entry-robustness-1` at `bb25bfdfb` (eight path-scoped commits, prefix fix:) · **merge** `3f5bc0456` · same-era pin #59 `f64ee547` · drained attended 2026-09-24 18:18Z in a detached chain worktree with the scratch store at `5793a96`; deployed (a runtime change).
+
+**Verdict: LANDED.** Items 1, 2, 3 and 5 delivered; item 4 reverted by measurement (F-UX7-1, laddered); the drain cured F-UX1-6 on the merged tree.
+
+### What it does
+The boot router in `src/main.ts` used to show the start menu only when EVERY query key was in a six-key safe set and launch a run otherwise, so a tracking or share link (`?utm_source=…`, `?fbclid=…`, `?contract=…` from a shared URL) skipped onboarding and minted a profile named after the owner. It now inverts to an allowlist of run routes (seven run keys, twenty-five debug-harness keys derived from `DebugParams.ts`, and `contract` only with a staged board launch, `?debug`, or a run suspend for exactly that contract); the implementer scanned 759 `goto` calls across 482 e2e files and found zero verdict flips, and the tracking URLs now land on the menu with no profile index in storage. The unnamed-prospector fallback is a neutral name in `ProfileStorage` and the death overlay. `src/core/BootGuard.ts`, armed as the first import, wraps the seventeen runtime dynamic imports, probes WebGL2 once before either renderer, and draws an inline parchment card instead of a blank page (no client-error telemetry kind exists, so it reports to nobody; F-UX2-1). Blur and visibilitychange clear held keys AND re-arm the edge detectors, and the solo pick clock is a remaining-time budget keyed on an observed visibility transition: ten seconds on the clock, 3.2 s hidden, ten seconds still on the clock with the offer up. Item 4 (the first-boot signal at the profile's creation) was implemented, measured to reorder story beats through the runtime's FIFO queue (`ledger-page:the_claim` ahead of `founding-welcome`, 2 failed of 12), and reverted because the cure lives in `StoryRuntime`, outside the firewall. Where the player sees it: a shared link opens the menu; a broken boot shows a card; a key held while switching tabs is released; the level-up clock waits while the tab is hidden.
+
+### The drain's own cure
+**F-UX1-6.** The one gate the implementer could not run, the release suite under its own config, went 6 failed / 24 passed on the merged tree: three rows on both projects (\, \, \) seed a profile and then boot a bare \ expecting a run, and the allowlist sent them to the menu. The master's item 5 rules the menu for a FRESH store only, and the release spec §4 keeps the bare-contract door for a player who has already named a prospector, so the cure adds an onboarded profile store as durable proof beside the staged launch and the matching suspend (seven lines in \, \; \ reads null on a fresh store and writes nothing). The pre-cure gates are kept in \; every number below is the cured tree. **F-UX1-7.** The cured run's battery then redded the phone-HUD entry census: \ is one of its ten UI sources, so the noscript line moved the source hash the census pins; the drain re-recorded \ on the merged tree (\; the rows stay within their budgets, the test \) and re-ran the battery; the cured run's battery is kept in \.
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34345450 bytes` (the implementer measured +4,045 B on its base) |
+| strict release build (the assertion) | `rc=0 [release-build] E1-only: 1126 files, 97656941 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)` (red on the branch's base by inheritance, cured on main by the release-gate landing) |
+| engine hash | `f64ee547206cde3d…`; same-era pin #59 `f64ee547`, era guards in the chain `ℹ pass 9 ℹ fail 0 ` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (301.3s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 137 ℹ fail 0 ` |
+| the release suite under its own harness (the one gate the implementer could not run) | `rc=0   30 passed (2.2m) ` |
+| e2e both projects, `--workers=1` (entry-params, profile-first-boot, menu-safe-params, 044-start-screen, m1-06, m2-01, task-025, the agent view) | `rc=1   2 failed   106 passed (6.1m)  17:45Z`; the only allowed rows are `menu-safe-params.spec.ts:5` ("?town3dPilot=all boots the start menu, not a run"), red on clean main by the implementer's control (F-UX1-5); the warm-up line records the cold-compile flake F-ENV-1 |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 959 ℹ pass 950 ℹ fail 4 ℹ skipped 5  18:18Z` (the registry rows are the pre-pin hash class; the fixture sweep the load class) |
+
+The implementer's own four batches (both projects, one worker, under the drain lock): entry-params 18/18, m1-06 24/24, m2-01 14/14, task-025 10/10, the two plain-boot probes 2/2 and 6/6, story-signal-emitters first-boot 2/2, 044-start-screen 14/14 after the suspend-match cure; node guards 34/34; every remaining red attributed by a control arm on clean main (`artifacts/ux-entry-robustness-1/report.md`, `gates`..`gates4`).
+
+### Merge classification
+Code: `src/main.ts` (the allowlist router), `src/core/BootGuard.ts` (new), `src/core/InputController.ts` (blur and visibility), `src/game/Game.ts` (the solo pick clock only), `src/game/ProfileStorage.ts` and `src/ui/DeathOverlay.ts` (the fallback name), `index.html` (a noscript line), `e2e/entry-params.spec.ts` (new, nine tests), `artifacts/ux-entry-robustness-1/**`. Main had moved `src/game/Game.ts`'s file family only through the release-gate landing (a different file, `src/entities/Vehicle.ts`); the merge applied clean. No contract, sim rule, collision, floor or store change.
+
+### Findings
+- **F-UX7-1 (open, laddered):** item 4 needs a priority or unshift for `first-boot` in `StoryRuntime`, then the `onEnterTown` emit re-lands; the measurement is recorded at the call site.
+- **F-UX1-1 (open, fire-authorable):** `menu-safe-params.spec.ts:18` ("a contract param still launches the run path") passes vacuously on a fresh store (the naming form renders, so the button it asserts absent never exists); the report carries the four-line cure that stages a board launch.
+- **F-UX1-6 (cured here):** the onboarded-store rule above; the three release rows are green on the cured tree.
+- **F-UX1-7 (cured here):** the phone-HUD entry census re-recorded after the noscript line moved its UI source hash.
+- **F-UX1-5 (open, fire-authorable, main's):** `menu-safe-params.spec.ts:5` and the legacy `m3-06` hints row are red on clean main since the first-boot beat of 2026-09-06 (`9336b269c`); re-pin both to the first-boot naming form.
+- **F-UX1-3 (open, laddered):** `shouldSeedDefaultProfile` returning false unconditionally reds 172 spec files that boot a query-run on an empty store; item 1 already makes the path unreachable for a player, so the sweep is a harness change.
+- **F-UX1-2 (open, owner-adjacent):** `DEFAULT_PROFILE_NAME` is still the owner's first name on the legacy-migration path; renaming it moves three m3-06 assertions and one accounts-test line in the same commit.
+- **F-UX1-4 (cured on the branch):** `?contract=` accepts a matching run suspend, which keeps reload-resume working when a harness clears sessionStorage on every navigation.
+- **F-ENV-1 (noted):** `profile-first-boot` desktop reds on a COLD vite (the town graph compiles past the 30 s timeout), on main as well; this drain warms the server first.
+- **F-DOC-1 (noted):** three e2e comments still describe the removed denylist (`beauty-town.rig.ts`, `beauty-atmos.spec.ts`, `beauty-town.spec.ts`); comments only.
+- **F-PATH-1 (noted):** the master's READ-FIRST paths had drifted (`src/profiles/*` is `src/game/*`, `StartMenu.ts` is under `src/ui/menu/`).
