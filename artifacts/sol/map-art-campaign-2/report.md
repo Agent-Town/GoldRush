@@ -870,3 +870,10 @@ Engine `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b` → `9
 2026-09-24 run 10: entry — IMPROVED: phone headframe revealed; desktop already partly visible. 1280 seized_headframe: 24,267→24,265→24,264 px; 390 seized_headframe: 0→22,185→0 px. The phone glance frames seized_headframe for about 1.9 seconds and returns to the rider. Desktop skips its already-visible body. The 55.21 m fort, second cart, broad occupied valley, desktop headframe crop and remaining HUD overlap are HELD outside this bounded reveal. E1 34,333,649 B (+4,577 B). [Boards, timing and gates](run-10/entry-framing/e1-baron/review.md). 
 
 Engine `97855ed9d083ec03a2057dfc9f33b0618f6c8cb28fcfac99952fa1e2e6000a97` → `3791c3f04a2941cd2b03a1b34883ef4ddee1c09d7d5e57630ef58416db65113b`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e2-trestle
+
+2026-09-24 run 10: entry — IMPROVED: phone bridge body revealed; desktop already partly visible. 1280 trestle-crossing: 8,161→8,155→8,148 px; 390 trestle-crossing: 0→52,732→0 px. The bridge span is the declared trestle-crossing body. Phone gains a 2.5-second glance and returns to the rider; desktop skips the existing visible fragment. Full span composition, gorge vista, rail stock and HUD clearance remain separate holds under the unchanged offset, zoom and zero-pixel rule. [Boards, timing and gates](run-10/entry-framing/e2-trestle/review.md). 
+
+Engine `3791c3f04a2941cd2b03a1b34883ef4ddee1c09d7d5e57630ef58416db65113b` → `2b0d52300abd6a7558c4d4a818e8bc61f0f3ffbde92984685d8f77a8aa653de4`. No pin move.
