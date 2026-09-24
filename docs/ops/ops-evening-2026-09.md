@@ -3,7 +3,7 @@
 Two jobs the owner ruled on 2026-09-24 ("(8) (a)", "(9) sure lets do it"), for one evening he names. The attended session sits beside him; every command that touches the live box or the live edge is his to run, in this order. Nothing here runs by itself and nothing here is a fire's.
 
 ## Before the evening (attended, no owner time)
-- The three credential rotations (ruling 1) are done and in the repo root's `.env.local` (verified live 2026-09-24 18:15 local); the one thing left before the evening is revoking the OLD Claude Code token (desk F-2299-1), otherwise the registry secret and the edge token would be minted onto a box while an exposed factory credential is still live.
+- The three credential rotations (ruling 1) are done and in the repo root's `.env.local` (verified live 2026-09-24 23:2x local). The August Claude Code token is still live: the log-out-of-all-devices button does not revoke `setup-token` tokens (measured), so its revocation is an Anthropic support request (desk F-2299-1); the evening does not wait on it, because that token cannot reach the box or the edge (inference scope only).
 - The sign-in hardening is live (`03543a276`, deployed 2026-09-24): the nginx `limit_req` lines below are the last piece of it.
 - `ops/droplet/*.service` and `ops/droplet/agenttown.app.nginx.conf` in the repo are the mirror of what the box runs; the evening changes the repo copies first, then applies them by hand, so the mirror stays true.
 
