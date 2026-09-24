@@ -129,8 +129,8 @@ if ! GR_RELEASE="${GR_RELEASE:-e1}" CF_PAGES_COMMIT_SHA="$BUILD_ID" npm run buil
 #      documents at :208-:213, for the same one caller. ⚠️ UNLIKE the payload gate, nothing yet
 #      asserts this file is present in the real repo: deploy-budget.test.mjs pins
 #      first-town-payload.mjs and its declaration that way, and the equivalent row for
-#      assert-release-build.mjs is OWED (recorded in the F-PERFC-1 rows of tasks/BACKLOG.md and in
-#      artifacts/release-gate-on-deploy-1/report.md; out of this task's firewall).
+#      assert-release-build.mjs LANDED the day this shipped (F-RGD-2, 2026-09-24: the presence row in
+#      deploy-budget.test.mjs pins this file and the call below).
 RELEASE_ASSERT="$ROOT/scripts/assert-release-build.mjs"
 if [ "${GR_RELEASE:-e1}" = e1 ] && [ -f "$RELEASE_ASSERT" ]; then
   if ! GR_RELEASE=e1 node "$RELEASE_ASSERT" >> "$LOG" 2>&1; then note "ABORT: release assertion failed — later-era content in the E1 bundle; see $LOG"; finish build_failed 3; fi
