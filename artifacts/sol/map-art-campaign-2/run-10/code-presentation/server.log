@@ -1,0 +1,61 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+  VITE v8.3.0  ready in 94 ms
+
+  ➜  Local:   http://127.0.0.1:5312/
+12:20:45 PM [vite] (client) page reload src/world/Scatter.ts
+12:24:21 PM [vite] (client) page reload src/world/RailPath.ts
+12:26:37 PM [vite] (client) page reload src/game/Game.ts
+12:30:50 PM [vite] (client) page reload src/world/RailPath.ts
+12:30:50 PM [vite] (client) page reload src/world/Scatter.ts
+12:32:39 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/new-e2e-results/.playwright-artifacts-0/traces/resources/2ecd9ccbd00c874426974c2606d818aa9b44f9b6.html
+12:32:49 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/new-e2e-results/.playwright-artifacts-0/traces/resources/2ecd9ccbd00c874426974c2606d818aa9b44f9b6.html
+12:32:49 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/new-e2e-results/.playwright-artifacts-1/traces/resources/2ecd9ccbd00c874426974c2606d818aa9b44f9b6.html
+12:32:59 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/new-e2e-results/.playwright-artifacts-1/traces/resources/2ecd9ccbd00c874426974c2606d818aa9b44f9b6.html
+12:40:47 PM [vite] (client) page reload src/world/RailPath.ts
+12:40:47 PM [vite] (client) page reload src/systems/RelaySignalPresentation.ts
+12:42:26 PM [vite] (client) page reload src/world/Scatter.ts
+12:43:09 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-0/traces/resources/700a5f618125939ff32546224abf496b9ada163d.html
+12:43:15 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-0/traces/resources/700a5f618125939ff32546224abf496b9ada163d.html
+12:43:15 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-1/traces/resources/700a5f618125939ff32546224abf496b9ada163d.html
+12:43:31 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-1/traces/resources/700a5f618125939ff32546224abf496b9ada163d.html
+12:43:31 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-2/traces/resources/700a5f618125939ff32546224abf496b9ada163d.html
+12:44:03 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-2/traces/resources/700a5f618125939ff32546224abf496b9ada163d.html
+12:44:04 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-3/traces/resources/700a5f618125939ff32546224abf496b9ada163d.html
+12:45:57 PM [vite] (client) page reload src/world/Scatter.ts
+12:45:57 PM [vite] (client) [console.warn] [gold-rush] render demotion {"event":"render_demotion","reason":"pilot-load-failed:Failed to fetch","contractId":"the-claim","buildId":"dev","tier":"FULL","dataset":{"terrain3dPilotState":"failed","terrain3dPilotRenderSource":"painted","run3dPilotState":"loading","run3dPilotMeshes":"0","run3dPilotTriangles":"0","terrain3dPilotContract":"the-claim","terrain3dPilotTerrainLoadState":"pending","terrain3dPilotPanoramaLoadState":"pending","terrain3dPilotLandmarkLoadState":"pending","terrain3dPilotHeightSource":"painted","terrain3dPilotMeshes":"0","terrain3dPilotTriangles":"0","terrain3dPilotMaterials":"0","terrain3dPilotVertices":"0","terrain3dPilotPanorama":"off","terrain3dPilotPanoramaMeshes":"0","terrain3dPilotPanoramaTriangles":"0","terrain3dPilotPanoramaMaterials":"0","terrain3dPilotPanoramaVertices":"0"}}
+12:45:57 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-3/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:46:21 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-3/traces/resources/700a5f618125939ff32546224abf496b9ada163d.html
+12:46:21 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-3/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:46:22 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-4/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:46:29 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-4/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:46:30 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-5/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:46:46 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-5/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:46:47 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-6/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:47:14 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-6/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:47:15 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-7/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:47:31 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-7/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:47:32 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-8/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:48:58 PM [vite] (client) page reload src/systems/RelaySignalPresentation.ts
+12:48:58 PM [vite] (client) page reload src/game/Game.ts
+12:48:58 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-8/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:49:27 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-8/traces/resources/e3c41671cc49178676db54d7541af7725026d17b.html
+12:49:27 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/.playwright-artifacts-8/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:53:12 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-0/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:53:17 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-0/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:53:18 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-1/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:53:31 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-1/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:53:32 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-2/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:53:59 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-2/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:54:00 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-3/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:54:53 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-3/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:54:54 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-4/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:55:00 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-4/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:55:01 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-5/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:55:14 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-5/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:55:14 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-6/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:55:39 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-6/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:55:40 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-7/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html
+12:56:35 PM [vite] (client) page reload artifacts/sol/map-art-campaign-2/run-10/code-presentation/final-e2e-results/.playwright-artifacts-7/traces/resources/b4140ae9f8ce5310c33f35ef1b67eba23c01a0f7.html

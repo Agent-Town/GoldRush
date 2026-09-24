@@ -133,3 +133,17 @@ test('The Trestle unlocks after Hill Mine and runs the shipped crossing systems'
   expect(bossWindow.railcars.every((enemy) => enemy.bossGroupId === 'e2-trestle:wave-12:railcar')).toBe(true);
   expectNoConsoleErrors(watch);
 });
+
+test('the shared rail presentation finishes Trestle joins and endpoints without changing the route', async ({ page }) => {
+  await page.goto('/?debug&epoch=epoch-2-steamworks&contract=e2-trestle&nowaves&seed=code-presentation&tier=full');
+  await page.waitForFunction(() => document.querySelector('#game-canvas')?.getAttribute('data-terrain3d-pilot-landmark-load-state') === 'mounted');
+  const result = await page.evaluate(async () => {
+    const { RailPathView } = await Function('return import("/src/world/RailPath.ts")')();
+    const { activeContract } = await Function('return import("/src/meta/ContractFamilies.ts")')();
+    const paths = activeContract().tileParams.rails, bytes = JSON.stringify(paths), view = new RailPathView(paths);
+    const result = { finishing: view.group.userData.railFinishing, draws: view.diagnostics().drawCalls, same: JSON.stringify(paths) === bytes,
+      finite: view.group.children.every((mesh: { instanceMatrix: { array: Float32Array } }) => Array.from(mesh.instanceMatrix.array).every(Number.isFinite)) };
+    view.dispose(); return result;
+  });
+  expect(result).toEqual({ finishing: { joins: 1, buffers: 4, frogs: 4 }, draws: 2, same: true, finite: true });
+});
