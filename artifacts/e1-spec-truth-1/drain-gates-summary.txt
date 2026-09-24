@@ -1,0 +1,35 @@
+branch test/e1-spec-truth-1 tip 113430559 08:34Z
+chain base 6d16a5a68
+merged 348521f4d
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 6a33752598ba8c5ae2c97d217c265394dd17cd9ec3334c2259737265a0e27c21 (pinned 6a33752598ba8c5ae2c97d217c265394dd17cd9ec3334c2259737265a0e27c21)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 141 ℹ fail 0 
+e2e start 08:36Z: e2e/e1-twin-banks.spec.ts e2e/e1-night-shift.spec.ts e2e/e1-baron.spec.ts e2e/beauty-twin-banks.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   9 failed   2 skipped   75 passed (8.6m)  08:45Z
+1) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+2) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame
+3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+4) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+5) [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame 
+6) [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+7) [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+8) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+9) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:218:1 › seeded Twin Banks diagnostics are stable ──
+battery start 08:45Z
+battery: rc=1 ℹ tests 959 ℹ pass 951 ℹ fail 3 ℹ skipped 5  08:53Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (244668.202792ms)
+✖ every recorded run log remains recoverable (72.535541ms)
+✖ the live board is green under this guard (baseline is honest) (228.331125ms)
+dirt after battery: 0
+E1T-PREP-DONE
+unattributed e2e reds — needs hands:
+1) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+9) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:218:1 › seeded Twin Banks diagnostics are stable ──
+control start 09:02Z
+control (a7cf4cbe9) reed desktop x3:   3 failed | stable mobile x3:   3 passed (15.6s) 
+chain (348521f4d) reed desktop x3:   3 failed | stable mobile x3:   1 failed   2 passed (18.8s) 
+control verdict inputs: reed main=3 chain=3 | stable main=0 chain=1
+attributed: the reed field is red on clean main too (3 of 3 on main, 3 of 3 on the chain), so it is main's, not this branch's. the seeded-diagnostics test failed 0 of 3 on main and 1 of 3 on the chain: instability of the test itself, not this branch's.
+hash unchanged after the battery: pinned 6a33752598ba8c5ae2c97d217c265394dd17cd9ec3334c2259737265a0e27c21
