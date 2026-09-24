@@ -1483,6 +1483,10 @@ export class Game {
    * opens the hidden one as non-counting.
    */
   private readonly onPickClockVisibilityChange = () => {
+    // Flag first, settle second. `settleUpgradeOfferClock` closes the interval that just ended using
+    // the flag stamped when it OPENED, then opens the next one from this flag - so updating it here
+    // is what makes the new interval non-counting on the way out and counting again on the way back.
+    this.pickClockDocumentHidden = document.visibilityState === 'hidden';
     this.settleUpgradeOfferClock();
   };
   private profileElapsed = 0;
@@ -1501,6 +1505,16 @@ export class Game {
   private upgradeOfferRemainingMs = 0;
   private upgradeOfferClockAt = 0;
   private upgradeOfferClockCounting = false;
+  /**
+   * Hidden-ness as OBSERVED through a `visibilitychange` event, never as asked of the document at an
+   * arbitrary moment. A clock that freezes on whatever `document.visibilityState` happens to say at
+   * boot can be frozen for the life of a page by an embedder or an automation host that reports a
+   * stale 'hidden' - and a pick clock that never drains never files the default pick, which is a
+   * worse defect than the one this fixes. A page that boots hidden cannot have an offer on screen
+   * anyway (requestAnimationFrame is throttled, and a level-up needs a player), and the transition
+   * that brings such a page to the front fires this event, so nothing real is lost by waiting for it.
+   */
+  private pickClockDocumentHidden = false;
   private upgradeOfferDeadlineTick = 0;
   private upgradeExpiryQueued = false;
   private territoryRingPresent = false;
@@ -10515,7 +10529,7 @@ export class Game {
    * the freeze is a property of the clock, not of one state machine's current shape (F-UX4-2).
    */
   private get upgradeOfferClockRunning(): boolean {
-    return !this.state.isPaused && document.visibilityState !== 'hidden';
+    return !this.state.isPaused && !this.pickClockDocumentHidden;
   }
 
   private syncUpgradeOverlay(): void {
