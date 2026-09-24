@@ -1,3 +1,4 @@
+import { constantTimeEqual } from './_compare';
 import { bumpCounter, clientIpHash, type KVNamespaceLike as RateLimitKVNamespaceLike } from './_ratelimit';
 
 type KVListResult = {
@@ -176,9 +177,24 @@ async function readJson(request: Request): Promise<JsonRecord> {
   throw new HttpError(400, 'bad_json', 'The clerk cannot read this complaint.');
 }
 
+// SEC-9 (outside review 2026-09-24): the office token arrived in the QUERY STRING and was compared
+// with `===`. A query credential is written into every access log it passes (nginx, Cloudflare, the
+// owner's shell history, a Referer header if the URL is ever rendered), and `===` returns at the
+// first differing byte. The header is the supported form now, and both forms compare in constant
+// time.
 function authorized(context: BugsContext): boolean {
-  const token = new URL(context.request.url).searchParams.get('token');
-  return Boolean(context.env.BUG_OFFICE_TOKEN && token === context.env.BUG_OFFICE_TOKEN);
+  const secret = context.env.BUG_OFFICE_TOKEN;
+  if (!secret) return false;
+  const bearer = /^Bearer\s+(.+)$/i.exec(context.request.headers.get('authorization') ?? '')?.[1];
+  if (bearer !== undefined) return constantTimeEqual(bearer, secret);
+  const query = new URL(context.request.url).searchParams.get('token');
+  if (query === null) return false;
+  // DEPRECATED, one release only. Kept so a caller mid-upgrade is not locked out of the office, and
+  // so the log line names anyone still using it: e2e/bug-office-api.spec.ts:73,78 is the last one in
+  // this repo (scripts/fetch-bugs.mjs sends the header as of this change). Delete this branch, and
+  // the log line with it, once that spec sends the header too.
+  console.warn('bug office: deprecated ?token= query credential accepted; send "Authorization: Bearer <token>" instead');
+  return constantTimeEqual(query, secret);
 }
 
 function parseStoredReport(value: string | null): BugReport | null {

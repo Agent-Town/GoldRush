@@ -7,6 +7,7 @@ import { validateStandingOrders } from '../../src/agent/StandingOrders';
 import { CONTRACT_BUNDLES, runTapeEnvelopeForContract } from '../../src/playbook/PlaybookFormat';
 import { engineEraIncludes } from '../../src/replay/EngineEraLineage.mjs';
 import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
+import { constantTimeEqual } from './_compare';
 import { bumpCounter, clientIpHash } from './_ratelimit';
 import { recordSubmissionRefusal, type AssayRejectionReason, type RefusalStorage, type SubmissionRefusalReason } from './refusals';
 import type { LedgerStorage } from './_accounts';
@@ -560,14 +561,6 @@ async function assayRequest(context: StandingsContext, handle: (cors: Record<str
     if (err instanceof HttpError) return error(cors, err.status, err.code, err.message);
     return error(cors, 500, 'server_error', 'The county book is unavailable.');
   }
-}
-
-function constantTimeEqual(left: string, right: string): boolean {
-  const a = new TextEncoder().encode(left);
-  const b = new TextEncoder().encode(right);
-  let mismatch = a.length ^ b.length;
-  for (let index = 0; index < Math.max(a.length, b.length); index += 1) mismatch |= (a[index] ?? 0) ^ (b[index] ?? 0);
-  return mismatch === 0;
 }
 
 async function getBoard(context: StandingsContext, cors: Record<string, string>): Promise<Response> {
