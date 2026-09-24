@@ -25,7 +25,7 @@ stamp_to_epoch() { date -j -f '%Y%m%d-%H%M%S' "$1" +%s 2>/dev/null || echo 0; }
 NOW=$(date '+%H:%M:%S'); TODAY=$(date '+%Y-%m-%d')
 LOCK=$(head -1 STATUS.md | cut -c1-300 | esc)
 RUNNER_STATE=$(pgrep -f "[l]ane-runner-v3.sh" >/dev/null 2>&1 && echo "ALIVE" || echo "DOWN")
-FIRE_STATE=$(pgrep -f "claude -p # Gold Rush FIRE" >/dev/null 2>&1 && echo "FIRING NOW" || echo "between fires")
+FIRE_STATE=$([ -d tasks/.fire.lock ]               >/dev/null 2>&1 && echo "FIRING NOW" || echo "between fires")
 
 # --- Now building: slot--YYYYMMDD-HHMMSS-name markers -> elapsed ---
 RUNNING=""

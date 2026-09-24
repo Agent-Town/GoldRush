@@ -124,6 +124,15 @@ Two more words are yours that this closes on: **whether fidelity-3** (the sixtee
 **Options.** (a) Revert the mask from the production tile (it stays on its dev tile): the reviewed band is back, the null floors are re-recorded, one same-era pin. (b) Ratify the braid: land the mask-driven water surface with the mask (contract plus render), re-pin the two tests, re-record the floors, one pin; a held-maps slice (HM-06) beside the entry-camera work on this map.
 **Recommendation.** (b). The plate and the art are braided and the simulation already is; the render is the missing half. Choose (a) only if you want the reviewed state back today.
 
+### F-2661-1 — the county ledger mirror in a public repo. (carried into this file 2026-09-24 from the STATUS desk tail, where it had stood alone; PROCESS-9 of the outside review)
+The A3 shrink deliberately dropped `artifacts/ledger-backups/` as a *"user-data backup"*, but the LB-01 duty still says to `git add` it and push, and origin is now public. Account rows are still refused loudly by a rooted guard; what needs your word is whether **county standings** (rider-chosen `profile_name` + anonymous id + score) may live in plaintext in a public repository, given the same data is already served publicly by the board API. **Recommendation: keep the mirror OUT of the public tree and point LB-01's offsite copy at the private archive repo instead — the pull keeps working, the duty keeps its purpose, and no publication decision is taken by a fire.** ⓘ **s2664 measured that the private archive already holds the whole series (28 mirrors, through today) on an origin-reachable ref, so that recommendation costs nothing to adopt.**
+
+### F-2660-1 — the fire memory's durability, and the swap has SHARPENED it. (carried into this file 2026-09-24 from the STATUS desk tail, where it had stood alone; PROCESS-9 of the outside review)
+`~/.claude-fires/…/memory/` is in NO git repo and on no origin — **815 files / 2.42 MB** of distilled cross-fire learning, loaded into every fire at session start, invisible to all five repo-scoped evidence sweeps. It is not secret-bearing (815 scanned, anchored, 0 hits, controls both ways). **What changed today: the working repo is no longer *going* public, it IS public** — so mirroring the memory into `origin` is now unambiguously a publication, and the archive repo is the obvious private home. Same class the RETENTION LAW already carved out once on your word (run logs, 2026-08-26 *"keep the run logs local for now"*), with the one difference that argues the other way: run logs are raw transcripts, this is distilled learning nothing can reconstruct.
+
+### F-2642-3 — the account-registry deploy day. (carried into this file 2026-09-24 from the STATUS desk tail, where it had stood alone; PROCESS-9 of the outside review)
+Its trigger condition has been MET, so it is actionable rather than theoretical; it wants a day, not a design. 🔺 **`b1-device-verdict-rows`** (B1) — the device verdict rows, ten minutes on your phone (the ruling left this yours).
+
 ## 2. Art — your eye
 
 ### F-SSL-3 — two prospector hover8 regenerations
