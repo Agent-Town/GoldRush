@@ -1,0 +1,38 @@
+branch tip 8b89e4231 feat: record four-map phone HUD evidence and gate holds 04:38Z
+scratch store: detached at 5793a96 = store main, clean
+RESUME: chain already contains 8b89e4231 at d8705dc6e; merge step skipped
+merged d8705dc6e
+single-line law: n/a (no pilot tables)
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 5793a96): dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34341349 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (305.8s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 92 ℹ fail 0 
+e2e start 04:46Z: e2e/e1-night-shift.spec.ts e2e/e1-twin-banks.spec.ts e2e/e1-baron.spec.ts e2e/e2-trestle.spec.ts e2e/m2-01-build-menu.spec.ts e2e/polish-03-mobile-hud.spec.ts e2e/mobile-overlay-input.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/agent-view.spec.ts e2e/release-build.spec.ts
+warm-up (F-F2-15): first boot rc=0, second rc=0, optimizer reloads so far 1
+e2e: rc=1   11 failed   1 skipped   82 passed (9.6m)  04:56Z
+1) [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+3) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+4) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+5) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+6) [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+7) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+8) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+9) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+10) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+11) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+battery start 04:56Z
+battery: rc=1 ℹ tests 955 ℹ pass 948 ℹ fail 2 ℹ skipped 5  05:04Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (246496.940125ms)
+✖ failing tests:
+✖ the live board is green under this guard (baseline is honest) (221.079875ms)
+dirt after battery: 0
+HUD2-PREP-DONE
+known-red overrides: e2e e2e/e1-baron\.spec\.ts:411:1|e2e/e1-night-shift\.spec\.ts:271:1|e2e/e1-night-shift\.spec\.ts:372:1|e2e/e1-twin-banks\.spec\.ts:103:1|e2e/e1-twin-banks\.spec\.ts:122:1|e2e/e1-twin-banks\.spec\.ts:192:1|e2e/e1-twin-banks\.spec\.ts:64:1 battery ^$
+hash at pin time: dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b
+already pinned #56
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
