@@ -199,7 +199,7 @@ put bug:1790270634442-448e89e1  322 bytes  options {"expirationTtl":7776000}
 | Gate | Command | Result |
 | --- | --- | --- |
 | tsc + build | `npm run build` | GREEN (tsc clean, vite 2930 modules) |
-| the new node test | `GR_GUARD_NO_ARTIFACT=1 node --test scripts/site-security-headers.test.mjs` | **4 tests, 4 pass, 0 fail** |
+| the new node test | `GR_GUARD_NO_ARTIFACT=1 node --test scripts/site-security-headers.test.mjs` | **4 tests, 4 pass, 0 fail** (see the note below: it was committed RED once) |
 | ledger + text guards (10 files) | `GR_GUARD_NO_ARTIFACT=1 node --test ...` | **116 tests, 116 pass, 0 fail, 11.7 s** |
 | accounts (`functions/**` path rule, `scripts/run-guards.mjs:145-151`) | `npm run test:accounts` | GREEN: 43 kv + 43 sqlite + 27 hardening + 24 office checks |
 | stats/standings/ledger-worker (same path rule) | `npm run test:stats` | GREEN: 87 stats + 372 kv + 372 sqlite + 26 ledger-worker checks |
@@ -208,7 +208,14 @@ put bug:1790270634442-448e89e1  322 bytes  options {"expirationTtl":7776000}
 | CSP boot captures | `serve-with-headers.mjs` + `csp-boot-probe.mjs` on 5314 | **0 CSP console lines over 6 boots**, control proves the policy was live |
 | handler probe (TTL + CORS) | `node artifacts/sec-headers-and-data-hygiene-1/handler-probe.mjs` | as tabulated above |
 
-**Every red is attributed. There are none that are new.** The only non-green facts in this run are (a) the pre-existing local `version.json` 404 described in section 1, and (b) two pass-1 probe arms that timed out on the INSTRUMENT (the probe omitted the `sessionStorage['gr.contract.launch.v1']` line that `e2e/f-astra-6-plain-boot.spec.ts:21` sets beside the query; `the-claim` boots from the query alone, which is why the omission looked harmless). Both e1-dry-gulch arms were queued for a pass 2 with that line restored, in a second locked batch
+**One red was mine, and it is worth writing down.** The `kv.put` wiring assertion was added to the new
+test AFTER that file's last green run, and its first regex (`[^)]*` between the key and the options
+object) cannot match the real call, because the argument in between is `JSON.stringify(stored)` and its
+own `)` ends the character class. So the test went into `5211041cb` RED. The final re-run of every arm
+caught it; fixed in the last commit of this branch with the reason written beside the regex. The lesson is the plain one: re-run
+a test after touching THE TEST, not only after touching its subject.
+
+**Every other red is attributed. There are none that are new.** The only non-green facts in this run are (a) the pre-existing local `version.json` 404 described in section 1, and (b) two pass-1 probe arms that timed out on the INSTRUMENT (the probe omitted the `sessionStorage['gr.contract.launch.v1']` line that `e2e/f-astra-6-plain-boot.spec.ts:21` sets beside the query; `the-claim` boots from the query alone, which is why the omission looked harmless). Both e1-dry-gulch arms were queued for a pass 2 with that line restored, in a second locked batch
 (`scratchpad/sec2-locked-run2.sh`, a NEW file rather than an edit of the running one, per Mistake #17).
 
 ⚠️ **PASS 2 WAS STILL QUEUED BEHIND THE ATTENDED LANDING'S DRAIN LOCK when this report was written**

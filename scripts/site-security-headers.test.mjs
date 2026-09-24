@@ -168,9 +168,13 @@ test('the bug-office report TTL and the number the fetch script prints are the s
   assert.ok(officeSeconds >= 60, 'Cloudflare KV refuses an expirationTtl below 60 seconds');
   // A declared constant nothing passes is the shape this arm exists to catch: the number can be
   // right in both files while the report is still written with no expiry at all.
+  // `[^)]*` was the first draft and it CANNOT match this call: the argument between the key and the
+  // options object is `JSON.stringify(stored)`, whose own `)` ends the class. It was added after the
+  // file's last green run and committed red; the final re-run of every arm is what caught it, which is
+  // the whole argument for re-running a test after touching it rather than after touching its subject.
   assert.match(
     office,
-    /kv\.put\(`bug:\$\{id\}`[^)]*\{ expirationTtl: REPORT_TTL_SECONDS \}\)/,
+    /kv\.put\(`bug:\$\{id\}`.*\{ expirationTtl: REPORT_TTL_SECONDS \}\)/,
     'functions/api/_bugs.ts stores the report without passing REPORT_TTL_SECONDS to kv.put',
   );
 });
