@@ -1,0 +1,19 @@
+branch chore/ledger-shape-1 tip afe065d78 20:00Z
+chain base 9dc7fef9e
+package.json: node-guards roster union, added scripts/status-rotate-month.test.mjs,scripts/backlog-split-closed.test.mjs
+merged 77f8b3e08
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f (pinned 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 271 ℹ fail 0 
+ledger battery start 20:01Z (the two law clauses)
+ledger battery: rc=0 ℹ tests 1257 ℹ pass 1254 ℹ fail 0  20:03Z
+status-archive-audit --limit 40 --quiet: CLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (2 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0  rc=0
+dry runs on the merged tree: DRY-RUN — nothing written. Re-run with --apply to perform the move. |   tasks/BACKLOG.md keys: 74 · moved whole: 17 · straddling: 4 · unplaceable: 0
+battery start 20:03Z
+battery: rc=1 ℹ tests 961 ℹ pass 955 ℹ fail 1 ℹ skipped 5  20:21Z
+✖ all 155 scripts/*.test.mjs fixture owners remove their temp directories (1005938.680917ms)
+dirt after battery: 0
+LS1-PREP-DONE
+hash unchanged after the battery: pinned 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f
