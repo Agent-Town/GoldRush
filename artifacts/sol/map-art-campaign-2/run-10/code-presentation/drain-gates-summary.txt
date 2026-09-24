@@ -1,0 +1,43 @@
+branch tip bbabf5617 feat: light Relay Rush frames from live relay state 06:45Z
+scratch store: detached at 5793a96 = store main, clean
+chain base 2657cf36d merging sol/wave-lane-b bbabf5617
+merged 00e4e98c1
+single-line law: n/a (no pilot tables)
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 5793a96): 0b017ed5230a0b8c2e46d756004388034a3dc58bca94848b2708a33d35d4dce7
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34341349 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (299.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 91 ℹ fail 1 
+✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (169.337541ms)
+✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (169.337541ms)
+e2e start 06:53Z: e2e/e1-twin-banks.spec.ts e2e/e2-trestle.spec.ts e2e/e7-relay-rush-front.spec.ts e2e/e7-dead-band-suppression.spec.ts e2e/ss-08-e7-beats.spec.ts e2e/landmark-collision.spec.ts e2e/release-build.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/agent-view.spec.ts
+warm-up (F-F2-15): first boot rc=0, second rc=0, optimizer reloads so far 1
+e2e: rc=1   7 failed   79 passed (9.2m)  07:03Z
+1) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+2) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+3) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+4) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+5) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+6) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+7) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable ──
+battery start 07:03Z
+battery: rc=1 ℹ tests 955 ℹ pass 946 ℹ fail 4 ℹ skipped 5  07:11Z
+✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (252.406542ms)
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (192039.10125ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (591.446125ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (276.867041ms)
+dirt after battery: 0
+CP1-PREP-DONE
+known-red overrides: e2e e2e/e1-twin-banks\.spec\.ts:103:1|e2e/e1-twin-banks\.spec\.ts:122:1|e2e/e1-twin-banks\.spec\.ts:192:1|e2e/e1-twin-banks\.spec\.ts:64:1 battery ^$
+roster: added 3
+cure F-CP1-3: the three presentation tests alone: rc=0 ℹ pass 3 ℹ fail 0 
+guards: ℹ pass 98 ℹ fail 0  (re-run after the F-CP1-3 cure)
+cure F-CP1-3 committed b3aabdf6d
+known-red overrides: e2e e2e/e1-twin-banks\.spec\.ts:103:1|e2e/e1-twin-banks\.spec\.ts:122:1|e2e/e1-twin-banks\.spec\.ts:192:1|e2e/e1-twin-banks\.spec\.ts:64:1 battery POSITIVE CONTROL: the real repo passes, with a non-empty measured subject
+hash at pin time: 0b017ed5230a0b8c2e46d756004388034a3dc58bca94848b2708a33d35d4dce7
+pin #57
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

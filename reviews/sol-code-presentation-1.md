@@ -1,0 +1,38 @@
+# Drain review: `sol-code-presentation-1`, the three code-owned presentation holds on the skipped maps: Twin Banks' scatter cards, the Trestle's rail joins and ends, Relay Rush's active signal (Astra, lane-b, the owner's 2026-09-24 rulings)
+
+**Task:** `sol-code-presentation-1` · lane-b, gpt-6-astra xhigh on the owner's ChatGPT subscription · code branch `sol/wave-lane-b` · authored 2026-09-24 on the owner's rulings on F-F2-39 (item 3) and queued by the `sol-phone-hud-entry-2` drain. Render only: a per-map scatter table, rail joins and buffer stops at route joins and ends, a render-only relay-signal owner reading the existing state; no sim rule, contract, collision, route, view field or store change.
+
+## LANDED `00e4e98c1` (2026-09-24 07:33Z)
+
+**Branch tip** `bbabf5617` · **store main** `5793a96` (unchanged; the scratch store worktree at it) · **merge** `00e4e98c1` · same-era pin #57 `0b017ed5`
+
+### What it does
+Three code-owned presentation holds answered on the render side, no sim state, contract, collision, route or view field moved: `src/world/Scatter.ts` gains a per-map scatter table, `src/world/RailPath.ts` renders junctions and endpoints, and a new render-only owner `src/systems/RelaySignalPresentation.ts` reads the existing relay state (mounted from `src/game/Game.ts` in two lines). Astra proved the other maps unchanged with byte-identical captures (41 scatter maps; 38 headless view captures) and kept the E1 first-town payload at 34,341,349 B (+0 B).
+
+**Twin Banks: the scatter clause IMPLEMENTED.** 248 desktop and 102 phone scatter cards now draw reeds, willow and driftwood from the existing atlas instead of the generic cards, at the same six draws; roots embed 0.025 m into the delivered terrain with a 1 m exclusion around build zones and the fords. Frame p95 9.95 → 9.65 ms desktop, 9.95 → 9.70 ms phone. The six pre-existing Twin Banks failures reproduce on the saved source (F-SEF2-5, the test-truth run and F-TB-1); the camera, HUD and objective holds remain.
+
+**The Trestle: the shared rail clause IMPLEMENTED.** Where routes meet or end the rails now render one five-sleeper junction, four frogs with 0.17 m flangeways and four buffer stops, at two unchanged draws; the routes and stations are untouched, and Hill Mine, the Incline and the Canyon Works improve under the same rule while the Eclipse, the Mare Claim and the Dome Basin mesh bytes stay identical. Frame p95 9.90 → 10.00 ms desktop, 9.90 → 10.05 ms phone (within the 15% bar). The inherited entry, HUD and full-route holds remain.
+
+**Relay Rush: the active-signal clause IMPLEMENTED.** The four existing frame materials follow the relay's lit, muted and suppressed state; only an active lamp pulses (0.75 Hz, amplitude 0.75 to 1.35) and the inactive, muted and suppressed lamps stay dark; zero added objects, lights, draws or view fields, and no owner is created on maps without relays. Frame p95 9.95 → 9.95 ms desktop, 9.85 → 10.00 ms phone. The whole-route, layout and HUD holds and the native objective holds remain (HM-04).
+Where the player sees it: Twin Banks' banks carry reeds, willow and driftwood instead of generic cards; the Trestle's rails end in buffers and join with shared sleepers instead of cutting through each other; Relay Rush's active relay frame glows and pulses while the inactive ones stay dark.
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| merge | `clean, no conflicts` |
+| tsc / build / e1 | `0 / 0 / 0` (rc) · payload `34341349 bytes` |
+| engine hash | `0b017ed5230a0b8c…`; same-era pin #57 `0b017ed5`, era guards in the chain `ℹ pass 9 ℹ fail 0` |
+| halo / null floors / law-pointer | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged` · `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (299.7s).` · `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards (skill.md, same-game audit, view schema, gate callers, citations, no-emdash) | `ℹ pass 98 ℹ fail 0  (re-run after the F-CP1-3 cure)` |
+| e2e both projects, `--workers=1` (Twin Banks, the Trestle, Relay Rush's front, the Dead Band's suppression, the E7 beats, landmark collision, the release build, task-025, m2-01, the agent view) | `rc=1   7 failed   79 passed (9.2m)  07:03Z` |
+| e2e reds | `1) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake `<br>`2) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool `<br>`3) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords `<br>`4) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake `<br>`5) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool `<br>`6) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords `<br>`7) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable ──`<br>Attribution: Attribution: pre-attributed by a control of this drain's specs on main `2657cf36d` with the store's main at `5793a96` before the merge (`drain-e2e-control-main.log`: rc=1, 8 failure lines); every red on the merged tree below matches a line of that control by file, test line and project, and nothing in this task's diff touches those tests' subjects. |
+| full `npm run test:node-guards` (before the pin) | `rc=1 ℹ tests 955 ℹ pass 946 ℹ fail 4 ℹ skipped 5  07:11Z` |
+| battery reds | `✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (252.406542ms)`<br>`✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (192039.10125ms)`<br>`✖ failing tests:`<br>`✖ rotation registry stays outside the engine identity corpus (591.446125ms)`<br>`✖ the landed registry names the live engine and stays outside its hash corpus (276.867041ms)` (the engine-era, bench-seeds and fixture-sweep rows are the pre-pin hash class, cured by the pin above) |
+
+### Merge classification
+Code: `src/world/Scatter.ts` (a per-map table), `src/world/RailPath.ts` (joins and ends), `src/systems/RelaySignalPresentation.ts` (new) with its mount line, their unit tests, the three maps' specs extended, the status doc, the campaign report and `run-10/code-presentation/**`.
+
+### Findings
+- **F-CP1-1 (evidence):** the six pre-existing Twin Banks and Night Shift reds on main reproduce on the saved pre-task source in Astra's own controls and in this drain's control on main (`drain-e2e-control-main.log`); they are the F-SEF2-5 set (the test-side six in `tasks/e1-spec-truth-1.md`, the braid mask on the desk as F-TB-1), not this slice's.
+- **F-CP1-2 (design, filed for the held-maps ladder):** the Trestle's rail rule improves three other rail maps for free (Hill Mine, the Incline, the Canyon Works) because the joins were the same shape everywhere; the remaining Trestle holds are the span composition and the stock, which are camera and contract matters (HM-05).
+- **F-CP1-3 (cured at the drain):** Astra wrote three guard-shaped tests (`scripts/twin-banks-scatter-presentation.test.mjs`, `scripts/rail-path-presentation.test.mjs`, `scripts/relay-signal-presentation.test.mjs`) and could not add them to a battery because `package.json` was outside its firewall; `gate-caller-audit` refuses a guard with no caller, so the named guards and the battery read one red each. The drain added the three to `test:node-guards`, re-ran them and the named guards green, and the cure commit precedes the pin.
