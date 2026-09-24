@@ -1,0 +1,59 @@
+=== GZ-01 BACKFILL SWEEP (since 2026-09-20T00:00:00) ===
+scan space: src/ assets/ public/ functions/ site/ index.html
+  (a commit touching NONE of these is never examined — widen the list, not the verdict)
+examined 452 first-parent commit(s) in the window — merges AND single-parent alike; this walks the WHOLE first-parent chain (F-2613-1)
+player-path-touching first-parent commit(s): 92
+  already cited in marketing/outbox/ (either sink): 70
+    ...of which cited only via a CONTAINED commit:  0
+  reported:                                          59
+  dismissed (NOT PLAYER-VISIBLE):                  11
+  NOT cited anywhere — candidates to judge:         22
+
+weekly headline budget (2026-W39): 0 standalone, 0 batched
+  GZ-01 allows <=3 standalone item(s) per week; the rest batch into a ROUNDUP.
+  (counted in NO week: 117 item(s) carry no merge citation this parser
+   resolves — the pre-2026-08 house format — and 6 cite a hash on no ref.)
+
+--- dismissed (newest first; available to re-judge) ---
+  00ae5ae61  2026-09-23  drain: merge main into the entry-framing chain (fire bookkeeping and the test-truth landing, pas
+  e4c1f99d3  2026-09-22  drain: merge main into the regatta-view-parity chain (fire bookkeeping, pass 1; the era registry
+  8fb118452  2026-09-20  era 6, same-era pin: sol-map-art-corrections-3, measured on the merged tree with the store at b9
+  78e5c109b  2026-09-20  era 6, same-era pin: e5-regatta-boat-03, measured with the store clean on main (fd5fb81fed8b9a78
+  04d88f868  2026-09-20  shrink: every cited commit id re-pointed to the rewritten history (A3) — composed from git-filte
+  2ad3ab1ee  2026-09-20  public readiness: the art directories link to the SIBLING checkout of GoldRush-assets (relative 
+  902cb58da  2026-09-20  era 6, same-era pin: sol-map-art-corrections-1, measured on the merged tree with slice 2 (34884b
+  322cc122e  2026-09-20  drain: merge main into the corrections chain (slice 2 landed first: its pin #18 kept, this drain
+  cfb0c6fa5  2026-09-20  era 6, same-era pin: sol-map-art-corrections-1, measured on the merged tree (8a22b488cfb38cb0f94
+  7b3ababf2  2026-09-20  era 6, same-era pin: e5-regatta-boat-01, measured on the merged tree (8eb7e135ef6c707d1ac6241475
+  6da9cefc7  2026-09-20  era 6, same-era pin: sol-map-art-campaign-2b, measured on the merged tree (2ad0aa1e14a1b7f639bc9
+
+--- candidates (newest first; judge each for player-visibility) ---
+  aa4ccf975  2026-09-25  files=1  era 6, same-era pin: sec-headers-and-data-hygiene-1, measured on the merged tree with the store 
+  0bfb168ea  2026-09-25  files=29  drain: merge fix/sec-headers-and-data-hygiene-1 402c3159e — sec-headers-and-data-hygiene-1 — fiv
+  1b977e055  2026-09-25  files=1  era 6, same-era pin: ux-entry-robustness-1, measured on the merged tree with the store at 5793a9
+  960cbb249  2026-09-25  files=1  drain: cure F-UX1-6 — a bare ?contract= still launches once a profile store exists (the player h
+  3f5bc0456  2026-09-24  files=60  drain: merge fix/ux-entry-robustness-1 bb25bfdfb — ux-entry-robustness-1 — the boot router inver
+  3079d5db0  2026-09-24  files=1  era 6, same-era pin: release-gate-on-deploy-1, measured on the merged tree with the store at 579
+  459c21394  2026-09-24  files=14  drain: merge fix/release-gate-on-deploy-1 322d338e6 — release-gate-on-deploy-1 — the E4 hauler l
+  23e50fc53  2026-09-24  files=1  era 6, same-era pin: sol-code-presentation-1, measured on the merged tree with the store at 5793
+  00e4e98c1  2026-09-24  files=282  drain: merge sol/wave-lane-b bbabf5617 — sol-code-presentation-1 — Twin Banks' riparian scatter 
+  78934b5b7  2026-09-24  files=10  drain: merge fix/sec-signin-hardening-1 134a27c90 — sec-signin-hardening-1 — the sign-in door co
+  d8705dc6e  2026-09-24  files=841  drain: merge sol/wave-lane-b 8b89e4231 — sol-phone-hud-entry-2 — the 390 px HUD census and cure 
+  b541ac711  2026-09-24  files=4  rotation: r2026w39 minted late (RT-01; no fire ran since 2026-09-20, F-FIRE-1), skill.md block r
+  3a9628385  2026-09-24  files=1  era 6, same-era pin: sol-entry-framing-2, measured on the merged tree with the store at 5793a96 
+  26e4a5a9c  2026-09-24  files=529  drain: merge sol/map-art-campaign-2 up to 598943981 — sol-entry-framing-2 — the plain entry fram
+  55db53d86  2026-09-24  files=1  era 6, same-era pin: sol-map-art-fidelity-2 slice 16, measured on the merged tree with the store
+  9f842f2a0  2026-09-24  files=90  drain: merge sol/map-art-campaign-2 up to cc4940c0c — Astra's fidelity run 2 (the other twenty-t
+  eed03c91d  2026-09-24  files=1  era 6, same-era pin: sol-map-art-fidelity-2 slice 15, measured on the merged tree with the store
+  f3e95539c  2026-09-24  files=161  drain: merge sol/map-art-campaign-2 up to e0fa15426 — Astra's fidelity run 2 (the other twenty-t
+  208863d39  2026-09-24  files=1  era 6, same-era pin: sol-map-art-fidelity-2 slice 13, measured on the merged tree with the store
+  3edb6efd1  2026-09-24  files=1  era 6, same-era pin: sol-map-art-fidelity-2 slice 12, measured on the merged tree with the store
+  37a7141c8  2026-09-24  files=1  era 6, same-era pin: sol-map-art-fidelity-2 slice 11, measured on the merged tree with the store
+  36aa9fa6c  2026-09-24  files=1  era 6, same-era pin: sol-map-art-fidelity-2 slice 10, measured on the merged tree with the store
+
+    to DISCHARGE a candidate, write its verdict where THIS TOOL reads:
+      - news      -> a gazette item in marketing/outbox/ citing the hash
+      - not news  -> a paragraph in marketing/outbox/ containing "NOT PLAYER-VISIBLE" AND the hash
+    a verdict written only into a STATUS.md handoff is INVISIBLE here and
+    the candidate returns next fire. Blank lines scope the marker paragraph:
+    never cite a REPORTED hash inside one (F-1613-1).
