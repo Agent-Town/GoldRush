@@ -1,6 +1,6 @@
 # The held maps (HM ladder): the geometry and start-state corrections the art campaigns could not make
 
-Status: **DRAFT 2026-09-24 for owner ratification, HM-01 first.** The owner asked for this step by step; nothing in this ladder is queued until he has seen HM-01, and HM-02 to HM-05 are sketches to be specified one at a time after HM-01 lands. Authored attended 2026-09-24 from the fidelity-2 closeout (F-F2-39, `docs/OWNER-DESK-2026-09-19.md`).
+Status: **DRAFT 2026-09-24; HM-01a and HM-06 RULED the same day** (owner: "(4) (a)" three lit and four cold, the band kept; "(5) (b)" the braid ratified). HM-01a lands with the harvest-seed parity cure and an era bump on the owner's next quiet day; HM-06 is queued to lane-c when it is free. HM-02 to HM-05 stay sketches until their turn. The owner asked for this step by step; nothing in this ladder is queued until he has seen HM-01, and HM-02 to HM-05 are sketches to be specified one at a time after HM-01 lands. Authored attended 2026-09-24 from the fidelity-2 closeout (F-F2-39, `docs/OWNER-DESK-2026-09-19.md`).
 
 ## Owner directives (verbatim)
 - 2026-09-24, ruling on F-F2-39: "(1) ok, yes (2) that is how things are, we do it anyways - we are still in the pre-release stage, we can adjust things. lets make it better and fix stuff. (3) give me the details and we do it. regarding the maps and Astra's fixes. Of course I don't want to fix only the graphics, I also want to fix everything else that is not part of the art run. But lets go step by step. The maps that were held back, we have to fix them as well."
@@ -83,10 +83,17 @@ Held (run 6 review, per the status doc's 2026-09-23 row): the full route and the
 ## HM-05 Twin Banks and the Trestle: spawn moves only if the glance cannot show them (sketch)
 Twin Banks' braids and banks, the phone house and rig, and the Trestle's bridge and stock are camera holds first: `sol-entry-framing-2` is answering them now. If its evidence shows the timed glance cannot bring them into frame from the current spawn, the remaining move is the hero's start (`stakeMarkers[].heroStart`) or the framing station, which is contract data with the usual price (floors, tapes, pin). Decided after that drain, from its numbers.
 
+## HM-06 Twin Banks (E1): the braid's water surface follows the mask (RULED 2026-09-24, F-TB-1 "(5) (b)")
+**What is true.** The braid water mask `twin-banks-true-braid-dev` reached the production contract on 2026-09-12 in a retention commit; the simulation has been braided since (two 3 m channels through (0, +2) and (0, −2), a dry plait between them, the two fords as the only crossings) while the water renders as one 15.6 m band. Two tests pin the old band and are red. The owner ratified the braid.
+**The slice.** The water surface is built from the mask's regions on any tile that declares one (a ribbon per band, the fords as shallow surface, the source box as a pool; the legacy band path stays for tiles without a mask); the sculpt is re-cut only if the delivered bed still reads as one band (measured, not assumed); the two tests move to the braid (`e2e/e1-twin-banks.spec.ts` "loads Twin Banks contract with two fords, two build zones, and one loss stake" samples the plait as bank and both channels as river; `e2e/beauty-twin-banks.spec.ts` "the braid renders living water without touching the sculpt contract or the frame budget" asserts the mask's truth and the two ribbons). The contract's `waterMask` and `water` blocks are not touched (the ruling ratifies what is there).
+**Price.** Render-only if the bed needs no cut (no floor moves); floors re-recorded and a same-era pin either way; the E1 payload law holds. Master: `tasks/hm-06-twin-banks-braid-water.md` (Astra, lane-c, store branch `astra/hm-06-braid`).
+**Checkpoint.** A plain boot of Twin Banks at 1280 and 390 shows two channels of living water around a dry plait with the gravel bars on it; the hero cannot cross a channel except at a ford; bandits route through both fords; frame p95 and draw calls within the 15% bar.
+
 ---
 
 ## Integration map
 - Touches (HM-01a): `assets/contracts/epoch-1-frontier/contracts.json` (one entry), `assets/contracts/null-floors.json`, `assets/engine-era.json` (the drain's pin), five e2e specs, possibly `e2e/fixtures/e1-mechanics-manifests.json`, `lore/STORYBOOK.md`, `reviews/`, `artifacts/held-maps/`.
+- Touches (HM-06): `src/world/Terrain.ts` (the masked water surface), `src/world/Terrain3dClaimPilot.ts` (the Twin Banks water entry), the two Twin Banks specs, the store's Twin Banks sources only if the bed is re-cut.
 - Touches (HM-01b, if ruled): the above plus `src/meta/ContractFamilies.ts` (the per-map geometry exception) and `e2e/tile-identity-pass.spec.ts`, the store (terrain GLB, atlas, `.blend`, `night-shift-terrain-contract.json`, `central_ford`), `src/world/Terrain3dClaimPilot.ts` (one water entry), `scripts/deploy.sh` mirror filters only if a new corpus file appears.
 - Untouched by the whole ladder: the light ramp, the Claim, every sibling map's numbers, `CombatSystem`, `Economy`, the agent verbs, the county door, the assayer, the release build's shape.
 
