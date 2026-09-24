@@ -422,3 +422,32 @@ regression.
 6. **The F-CORR1-7 correction rows live outside the parsed corrections table** (F-SEF2-5a). A ledger
    restructuring, flagged for the next drain.
 7. **This branch is 17 commits behind main.** The drain gates on the merged tree, as always.
+
+## The tree this branch hands over
+
+Seven commits on `test/e1-spec-truth-1`, and the diff against the base `97c369971` touches exactly the
+firewall and nothing else:
+
+    e2e/e1-twin-banks.spec.ts    +41 -?   (two coordinates, one argument, one signature, comments)
+    e2e/e1-night-shift.spec.ts   +57 -?   (four constants, one helper, two freeze lines, comments)
+    e2e/e1-baron.spec.ts         +28 -?   (one probe field, one expectation, the docblock)
+    logs/suite-red-inventory.md  +7 -?    (three rows corrected in place, one row added)
+    artifacts/e1-spec-truth-1/** (the probe, its output, both transcripts, both build logs, this report)
+
+No `src/**`, no `assets/**`, no fixtures, no `scripts/**`, no `tasks/**`, no `specs/**`, no
+`beauty-twin-banks.spec.ts`, and no change to the centre-zone assertion of `e1-twin-banks.spec.ts:64`.
+
+**FACTORY-CHURN EXCEPTION (F-1407-1), listed as the pre-flight requires:** running the suites left 43
+modified tracked files and 4 untracked ones, all of them test output under `artifacts/**` — 16 in
+`artifacts/baron-presence`, 20 in `artifacts/beauty-twin-banks/latest`, 5 in `artifacts/night-bite`,
+2 in `artifacts/night-lanterns`, plus `artifacts/e1-twin-banks/` and two lantern PNGs untracked, and
+the `node_modules` symlink. They are the suites' own screenshots and measurement JSON, they are outside
+this task's firewall, and they were deliberately neither committed nor reverted.
+
+**The lock, as it was actually used.** Every vite server and every playwright batch ran inside one
+`dlock.sh` command: batch A (pre-flight build + probe), batch B (the six tests at repeat-each), batch C2
+(post-edit build + the branch four-spec run), batch D (the control). One hang was mine and is recorded
+here rather than hidden: batch C's first attempt wrapped the server start in `$(serve …)`, command
+substitution waited on a descriptor the npm/vite chain held, and the script sat at the first server
+start for twenty minutes holding the lock and running nothing. It was stopped by PID, by number, the
+lock released through its own trap, and the server start was inlined for the re-run.
