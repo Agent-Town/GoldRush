@@ -88,6 +88,14 @@ const RATE_TTL_SECONDS = 10 * 60;
 const MAX_VERIFY_ATTEMPTS = 5;
 const MAX_REQUESTS_PER_EMAIL = 5;
 const MAX_REQUESTS_PER_IP = 20;
+// SEC-1: /api/verify had no per-address cap at all, so the per-email budget was the only bound on a
+// guess flood and a caller could work through one email after another from one machine. Hourly, like
+// the other doors this limiter serves, and 60 is the number the owner already ruled for an hour
+// (F-HEAT14-7, _ratelimit.ts). It cannot refuse a real sign-in: a real caller needs at most
+// MAX_VERIFY_ATTEMPTS per code, and MAX_REQUESTS_PER_EMAIL caps how many codes an address can even
+// have issued in a 10 minute window, so 60 is twelve full budgets an hour from a single address.
+const MAX_VERIFIES_PER_IP = 60;
+const VERIFY_RATE_TTL_SECONDS = 60 * 60;
 const MAX_JSON_BYTES = 200 * 1024;
 const SMALL_JSON_BYTES = 8 * 1024;
 const CLOUD_DATA_CODEC_KEY = '$goldRushGzipDataV1';
@@ -147,6 +155,12 @@ export async function verifyCode(context: AccountsContext): Promise<Response> {
     const email = normalizeEmail(body.email);
     const code = typeof body.code === 'string' && /^\d{6}$/.test(body.code) ? body.code : '';
     if (!email || !code) return error(cors, 401, 'invalid_code', 'Code not accepted.');
+
+    // SEC-1: a per-address hourly cap, mirroring requestCode's, in its own bucket so a guess flood
+    // cannot lock an address out of asking for codes and vice versa.
+    if (!(await bumpCounter(kv, `ratelimit:verify:${clientIp(request)}`, MAX_VERIFIES_PER_IP, VERIFY_RATE_TTL_SECONDS))) {
+      return error(cors, 429, 'rate_limited', 'Try again later.');
+    }
 
     const emailHash = await sha256Hex(email);
     const attemptsKey = `attempts:${emailHash}`;
