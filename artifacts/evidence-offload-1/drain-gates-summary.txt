@@ -1,0 +1,18 @@
+branch chore/evidence-offload-1 tip 910648dda 22:13Z
+chain base ab37ae117
+merged cd2d4a4a8
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f (pinned 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 226 ℹ fail 0 
+ledger battery start 22:15Z (the two law clauses)
+ledger battery: rc=0 ℹ tests 1257 ℹ pass 1254 ℹ fail 0  22:17Z
+evidence audit --all: paths=1205 citations=2129 TRACKED=912 ON-DISK-UNTRACKED=0 ABSENT=656 SKIPPED=561 ARCHIVED=0
+plan totals:   tracked under artifacts/ : 26359 file(s) 8657.4 MB across 709 subtree(s)   MOVABLE                  : 20399 file(s) 7616.5 MB across 495 subtree(s)   candidates, largest first (movable bytes · files · kept · citations · reviews citing): 
+battery start 22:17Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1012 ℹ fail 1 ℹ skipped 5  22:25Z
+✖ all 159 scripts/*.test.mjs fixture owners remove their temp directories (262062.372417ms)
+dirt after battery: 0
+EO1-PREP-DONE
+hash unchanged after the battery: pinned 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f
