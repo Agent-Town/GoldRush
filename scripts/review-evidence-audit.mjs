@@ -6,6 +6,16 @@
  * Sweep:   node scripts/review-evidence-audit.mjs --all
  * Gate:    add --strict to exit 1 only for ON-DISK-UNTRACKED evidence.
  *
+ * THE FIFTH BUCKET, ARCHIVED (task evidence-offload-1, owner ruling 2026-09-24 item 14a). Cited-only
+ * evidence now leaves this repository for the private `archive` remote behind
+ * `artifacts/ARCHIVE-INDEX.json`. Without this bucket the offload would break this instrument in one
+ * of two ways, both measured in `docs/ledger-shape-reader-map-2026-09-24.md` §A5: files out of git but
+ * still on disk flip 911 citations to ON-DISK-UNTRACKED and `--strict` reds on EVERY drain; files out
+ * of both with nothing to resolve them flip to ABSENT and the audit goes blind on the exact population
+ * it exists to watch. An ARCHIVED citation is neither: it is evidence whose home is NAMED, with a
+ * commit and a sha256 behind it. The index is DECLARED on stdout every run, present or absent, so
+ * `ABSENT=0` can never be read as "archived" by accident or the reverse (F-2208-1).
+ *
  * EXIT CODES (F-2215-1, s2215)
  *   0  advisory mode, always; or --strict with nothing ON-DISK-UNTRACKED
  *   1  --strict, and the audit RAN and found ON-DISK-UNTRACKED evidence
@@ -19,6 +29,8 @@ import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+import { ARCHIVE_INDEX_PATH, archiveEntryFor, readArchiveIndex } from './evidence-readers.mjs';
 
 const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BACKTICKED = /`([^`\n]*)`/g;
@@ -94,10 +106,10 @@ function trackedDirectories(files) {
   return directories;
 }
 
-export function audit(root, reviewFiles, tracked = trackedPaths(root)) {
+export function audit(root, reviewFiles, tracked = trackedPaths(root), index = readArchiveIndex(root)) {
   const trackedFiles = new Set(tracked);
   const directories = trackedDirectories(tracked);
-  const buckets = { TRACKED: [], 'ON-DISK-UNTRACKED': [], ABSENT: [], SKIPPED: [] };
+  const buckets = { TRACKED: [], 'ON-DISK-UNTRACKED': [], ABSENT: [], SKIPPED: [], ARCHIVED: [] };
   let citations = 0;
 
   for (const review of reviewFiles) {
@@ -112,17 +124,30 @@ export function audit(root, reviewFiles, tracked = trackedPaths(root)) {
       }
       const resolved = cited.replace(/\/$/, '').replace(/:\d+$/, '');
       const item = { cited, resolved, review };
-      if (trackedFiles.has(resolved) || directories.has(resolved)) buckets.TRACKED.push(item);
+      // ORDER IS THE WHOLE ANSWER HERE. A file the offload KEPT inside an archived subtree (every
+      // `report.md`, every reader fixture) is still tracked, so the tracked-FILE test runs first and
+      // it reads TRACKED. The archive test runs SECOND, before the tracked-DIRECTORY test, because an
+      // emptied subtree still has a tracked directory - it holds `ARCHIVED.md` and `PREVIEW.png` -
+      // and a citation to the subtree itself must say where its content WENT, not that a pointer
+      // exists. Everything after that is unchanged.
+      const archived = archiveEntryFor(index, resolved);
+      if (trackedFiles.has(resolved)) buckets.TRACKED.push(item);
+      else if (archived) buckets.ARCHIVED.push({ ...item, archive: archived });
+      else if (directories.has(resolved)) buckets.TRACKED.push(item);
       else if (fs.existsSync(path.resolve(root, resolved))) buckets['ON-DISK-UNTRACKED'].push(item);
       else buckets.ABSENT.push(item);
     }
   }
-  return { paths: reviewFiles.length, citations, buckets };
+  return { paths: reviewFiles.length, citations, buckets, index };
 }
 
 export function summary(result) {
   const count = (bucket) => result.buckets[bucket].length;
-  return `paths=${result.paths} citations=${result.citations} TRACKED=${count('TRACKED')} ON-DISK-UNTRACKED=${count('ON-DISK-UNTRACKED')} ABSENT=${count('ABSENT')} SKIPPED=${count('SKIPPED')}`;
+  // ARCHIVED is appended LAST rather than filed next to TRACKED where it reads best, because the
+  // baseline regexes in `review-evidence-audit.test.mjs` pin the adjacency of the first four counts
+  // and a cosmetic reorder would red four cases for no reason (renamed-test-citation rot, learned
+  // the expensive way in this repo).
+  return `paths=${result.paths} citations=${result.citations} TRACKED=${count('TRACKED')} ON-DISK-UNTRACKED=${count('ON-DISK-UNTRACKED')} ABSENT=${count('ABSENT')} SKIPPED=${count('SKIPPED')} ARCHIVED=${count('ARCHIVED')}`;
 }
 
 function print(result) {
@@ -131,6 +156,11 @@ function print(result) {
   // that separates "I looked at every evidence citation and found nothing untracked"
   // from "I looked at two prefixes".
   console.log(`scan space: ${EVIDENCE_PREFIXES.join(' ')} — a cited path outside these is not counted at all`);
+  // Declared on the happy path too, and in BOTH states: "no index" is the normal reading until the
+  // first offload lands, and it must never be confusable with "the index said nothing was archived".
+  console.log(result.index
+    ? `archive index: ${ARCHIVE_INDEX_PATH} — ${Object.keys(result.index.subtrees ?? {}).length} subtree(s), ${Object.keys(result.index.files ?? {}).length} file(s) in the private archive`
+    : `archive index: ${ARCHIVE_INDEX_PATH} ABSENT — nothing has been offloaded, so no citation can resolve as ARCHIVED`);
   for (const bucket of ['ON-DISK-UNTRACKED', 'ABSENT']) {
     for (const item of result.buckets[bucket]) console.log(`${bucket}\t${item.cited}\t${item.review}`);
   }

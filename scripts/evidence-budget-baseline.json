@@ -1,0 +1,20 @@
+{
+ "note": "The evidence size budget (owner ruling 2026-09-24, item 14a: 'plus a size budget per landing'). scripts/evidence-budget.mjs reads this file; scripts/evidence-budget.test.mjs pins its shape and measures the tree against it; .claude/skills/drain/SKILL.md section 3 runs it on the merged tree. The numbers live here, as DATA, so moving one is a deliberate act with a reason beside it and not a code edit.",
+ "perLandingLimitBytes": 40000000,
+ "prefixes": ["artifacts/", "reviews/shots-"],
+ "totalArtifacts": {
+  "ceilingBytes": null,
+  "bankedBytes": null,
+  "bankedFiles": null,
+  "commit": null,
+  "measuredAt": null,
+  "setBy": "NOT BANKED YET. The attended drain that runs the first offload (task evidence-offload-1) banks it: measure `node scripts/evidence-budget.mjs --total` on the merged tree AFTER the offload commit, then set ceilingBytes to that total plus one quarter of headroom, bankedBytes/bankedFiles to the measurement, commit to the offload commit and measuredAt to that day. Until then the tool reports the total and exits 0, because a budget nobody has set must never refuse a drain.",
+  "measuredBefore": {
+   "bytes": 8657137147,
+   "files": 26345,
+   "commit": "39acd87471960d7489f87dbc58f55b7e35757c69",
+   "measuredAt": "2026-09-25",
+   "note": "The tree the tools were written against, recorded so the first offload's cut is checkable rather than claimed: 8657.1 MB / 26,345 tracked files, of which the derived must-stay set is 1040.9 MB / 5,959 files and the movable remainder 7616.2 MB / 20,386 files."
+  }
+ }
+}
