@@ -134,3 +134,16 @@ env/goldrush-verifiers/.venv/
 
 # F-HEAT12-DISK: a 275 MB view log from heat 12 ride e4-dust-flats; kept on disk and on branch heat12/opus-sweep, never pushed (GitHub refuses >100 MB blobs; the owner keeps run logs local, 2026-08-26)
 artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/attempt-1-views.jsonl
+
+# F-2668-2 (s2670, 2026-09-24): the county ledger mirrors LB-01 pulls from the droplet. Owner ruling 15
+# (docs/OWNER-DECISIONS-2026-09-24.md) is "keep the mirror out of the public tree and point the duty at the
+# private archive", and origin is now public — but nothing enforced it: `ledger-backup-pull.mjs` writes here,
+# `git check-ignore` returned no rule, and `git status` offered all 32 mirrors as addable (the other half of
+# SEC-5, named in the F-2668-2 row and left open). These hold county standings — rider-chosen profile_name
+# plus anonymous id and score — which `ledger-mirror-exposure.mjs` classes county-standings and NOT account
+# data (CLEAN over 1,486 keys, 0 account-class rows, measured this fire over all 32); the ruling keeps them
+# out of the public repo regardless. This rule newly untracks NOTHING: `git ls-files` over the path returned
+# 0 before it was written. The authoritative copies live on the private archive (refs/heads/sol/
+# account-registry-land and two siblings carry all 27 of 2026-08-24..2026-09-19, byte-identical to ours on
+# every overlap day), so ignoring them here loses no history under CLAUDE.md §4.10b.
+artifacts/ledger-backups/
