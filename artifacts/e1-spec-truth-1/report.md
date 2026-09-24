@@ -254,3 +254,70 @@ TEST.
    `bank`.
 2. `e2e/beauty-twin-banks.spec.ts` *the braid renders living water without touching the sculpt contract
    or the frame budget* — its sim-truth samples, under the comment "the legacy band still classifies".
+
+## Proof, part 1 — each fixed test, repeat-each, both projects, port 5309
+
+Branch tree at `089883a05`, own dev server on 5309, `--workers=1`, `--project=desktop-chrome
+--project=mobile-chrome`, one locked command. Transcript: `batch-b-repeat-each.log`.
+
+| Step | Command | Result |
+|---|---|---|
+| items 1+2 | `e1-twin-banks.spec.ts -g "builds sluices and stockpiles…|routes enemies through both west and east fords" --repeat-each=3` | **12 passed (57.0 s), rc 0** |
+| items 3+6 | `e1-night-shift.spec.ts -g "loads Night Shift contract data and ramps…|lantern post is Night Shift gated…" --repeat-each=3` | **9 failed / 3 passed, rc 1** — see the finding below |
+| item 4 | `e1-night-shift.spec.ts -g "cold lantern relight costs survive run suspend and continue" --repeat-each=5` | **10 passed (1.1 m), rc 0** |
+| item 5 | `e1-baron.spec.ts -g "Baron manifest loads and taunts fire at waves 5, 12, and 18" --repeat-each=3` | **6 passed (1.4 m), rc 0** |
+
+So items 1, 2, 4 and 5 are green at three and five repeats on both projects. Item 4's de-race is the
+strongest single result here: the same test was 5-of-5 green alone and red under load before, and it is
+now 10-of-10 across two projects with the waves frozen.
+
+**The whole batch produced exactly TWO distinct failing lines**, and neither is a pin this task set:
+
+    > 389 |   expect(heroRatio, ...).toBeLessThan(tintLuminance + 0.04);
+    > 436 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+
+That is itself the proof that items 3 and 6 landed. The ramp test now runs PAST the fog assertion (34 /
+58 accepted on both projects) and PAST `expect(darkTint).toBe('#44516b')`, failing only at the band
+below them; the lantern test now runs PAST the re-ceilinged sprite read at `:435` and fails at `:436`.
+Both were masked before by the reds this task cured.
+
+### F-SEF2-5b (NEW, this task) — `spriteLuminance` is a desktop-shaped instrument, and one of its two callers is not measuring what it is named for
+
+Two leftovers, one root. Reported rather than cured, because curing either one requires a design
+decision about what the test should measure, and both would mean weakening or re-aiming an assertion the
+master did not name. Measured numbers, bit-identical across all three repeats:
+
+| Assertion | Project | day | dark | ratio / value | threshold |
+|---|---|---|---|---|---|
+| `:389` band | desktop-chrome | 0.22820 | 0.05964 | ratio **0.26136** | 0.04175..0.12175 |
+| `:389` band | mobile-chrome | 0.93262 | **0.93262** | ratio **1.0** | 0.04175..0.12175 |
+| `:436` in-radius | mobile-chrome | — | — | **0.23454** | >= 0.35 |
+| `:436` in-radius | desktop-chrome | — | — | passes | >= 0.35 |
+
+Four things are true of that instrument, each verified by reading:
+
+1. **The band's sample point holds no hero.** `contractHeroStart` (Game.ts:10769) returns
+   `(lossStake?.x ?? 0, 0.06, lossStake?.z ?? 12)`, and `e1-night-shift` authors no `stakeMarkers`, so
+   the Night Shift hero starts at **(0, 12)**. The assertion samples world **(0, 0)** — twelve metres
+   south, in the river band — and calls the reading `dayHero` / `darkHero`. What darkens there is the
+   ground and water under the light rig, not a sprite under `spriteTint`.
+2. **The comparison mixes colour spaces.** `tintLuminance` is built with the spec's own `linear()`
+   helper, i.e. a LINEAR-space luminance, while `spriteLuminance` returns a p95 of sRGB-ENCODED channel
+   values. A ratio of two sRGB values is not comparable to a linear luminance. (For the record:
+   linearising the desktop pair gives 0.1139, which WOULD fall inside the band — but at a point with no
+   sprite that would be a coincidence, not a derivation, so it was not taken.)
+3. **On mobile the sample is lighting-invariant.** dayHero and darkHero are bit-identical at 0.93262
+   (about 238/255) in both phases and across repeats, so the patch is measuring something the night
+   ramp does not touch. A playwright element screenshot is a page screenshot clipped to the element box,
+   so an overlay above the canvas is included in the read.
+4. **The patch is not DPR-normalised.** `spriteLuminance` samples a fixed +-6 by +-8 PNG-pixel patch.
+   Desktop runs at DPR 1, so that is +-6 by +-8 CSS px; Pixel 5 runs at DPR 2.625, so the same patch is
+   +-2.3 by +-3 CSS px — a roughly 3x tighter sample of a different world area, reduced by a p95. That
+   is the same root as the 0.0605-vs-0.0437 gap item 6 had to give headroom for, and the likeliest cause
+   of the 0.23454-vs-0.35 gap at `:436`.
+
+**Cure direction for whoever takes it (one slice, test-side, no `src/**`):** aim the band at the hero's
+actual position (or rename it to what it measures), linearise both readings before the ratio, and make
+the patch DPR-aware (scale the +-6/+-8 by `png.width / box.width`) so the two projects sample the same
+world area — then re-measure both thresholds. Every one of those four changes alters what a green means,
+which is why this task reports them instead of taking them.
