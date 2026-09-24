@@ -196,9 +196,11 @@ of it.
 ## Not player-visible
 
 NOT PLAYER-VISIBLE — `e4c1f99d3`: a merge of main into the regatta-view-parity chain, fire bookkeeping, pass
-1. The era registry row it carries is main's own and the chain's pin was re-measured on top of it
-(`3aab225b0`, reported above as part of the seal). No runtime, contract, art or player text changed in this
-commit.
+1. The era registry row it carries is main's own and the chain's pin was re-measured on top of it — that pin is
+the `#38` entry reported above as part of the seal, and **its hash is deliberately not repeated here** (F-1613-1:
+a hash named inside a NOT PLAYER-VISIBLE paragraph is classified by it, so repeating it would re-file one pin as
+dismissed while its twelve identical siblings read as reported). No runtime, contract, art or player text
+changed in this commit.
 
 The rest of the day's 94 commits are the factory's own paper: reviews, ledger rows, goal-leaf updates, the
 handover sections through 13z-4, the lane dispatches that carried the owner's rulings into tasks, and the

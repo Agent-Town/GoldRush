@@ -110,8 +110,10 @@ write completes (F-F2-18, one battery red that passes alone). The battery on mai
 
 NOT PLAYER-VISIBLE — `00ae5ae61`: a merge of main into the entry-framing chain, fire bookkeeping plus the
 test-truth landing carried into the chain; the era registry row it moves is main's own and the chain's pin was
-re-measured on top of it (`6f7283c26`, reported above as part of the seal). No runtime, contract, art or
-player text changed in this commit.
+re-measured on top of it — that pin is the second of the eleven reported above as part of the seal, and **its
+hash is deliberately not repeated here** (F-1613-1, cured s2669: a hash named inside a NOT PLAYER-VISIBLE
+paragraph is classified by it, so this file had been re-filing that one pin as dismissed while its ten
+identical siblings read as reported). No runtime, contract, art or player text changed in this commit.
 
 The rest of the day's 67 commits are the factory's own paper: reviews, ledger rows, handover sections 13z-5
 through 13z-11, the queueing of the next leg on the owner's word, and the leg-by-leg split of the 22-map
