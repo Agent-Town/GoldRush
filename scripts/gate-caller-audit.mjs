@@ -59,6 +59,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { LAW_SURFACES } from './law-surfaces.mjs';
+import { backlogText } from './ledger-corpus.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -581,7 +582,13 @@ const escalations = Object.entries(baseline).filter(([, reason]) => OWNER_ROUTE.
 if (escalations.length) {
   let ledger = '';
   try {
-    ledger = fs.readFileSync(path.join(ROOT, 'tasks/BACKLOG.md'), 'utf8');
+    // ledger-shape-1 (owner ruling 2026-09-24, item 13a): the ledger is the index PLUS
+    // `tasks/backlog/**`. This read is a CONTAINMENT test with a hard refusal behind it, and the
+    // reader map measured that both escalation ids it has to find — F-1253-1 and F-1251-1 — sit
+    // below the `# Task backlog` title, i.e. exactly where the split moves rows from. Reading the
+    // index alone after the split would report them unrouted and exit 1 on a board that routes
+    // them correctly.
+    ledger = backlogText(ROOT);
   } catch (error) {
     console.error('gate-caller-audit: REFUSING — baseline escalates to the owner but the ledger is unreadable: ' + error.message);
     process.exit(2);

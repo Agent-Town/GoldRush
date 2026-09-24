@@ -1,0 +1,291 @@
+########## READERS BEFORE ##########
+
+===== findings-state-guard (BEFORE) =====
+ledger corpus     : tasks/BACKLOG.md (no split parts on this tree)
+declared subjects : 664
+declared closed   : 480
+declared open     : 184
+double-state      : 0
+wide-open advisory : 374 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+rc=0
+
+===== blocker-panel-closed-guard (BEFORE) =====
+ledger corpus     : tasks/BACKLOG.md (no split parts on this tree)
+panel rows        : 44
+rows with an F-ID : 42
+census closed     : 590
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+rc=0
+
+===== stale-ready-for-gates-guard (BEFORE) =====
+ledger corpus: tasks/BACKLOG.md (no split parts on this tree)
+tasks/BACKLOG.md: 125 row(s) carry READY-FOR-GATES · 8 quotation · 89 closed-row · 22 body-only · 6 unresolved · 0 in-flight · 0 STALE
+OK: no stale READY-FOR-GATES claim.
+rc=0
+
+===== stale-open-candidates (BEFORE) =====
+ledger corpus: tasks/BACKLOG.md (no split parts on this tree)
+stale-open-candidates — open findings whose file already appears in a CLOSED row
+  ledger rows : 665  (open 181 · closed 484)
+  hub demotion: files cited by >= 3 closed rows
+
+BACKLOG:950  F-E5STORM-1
+    WaveSystem.ts — also cited by 2 closed row(s), declaring 2 finding(s): F-1321-4, F-1081-3
+    RunManager.ts — also cited by 1 closed row(s), declaring 1 finding(s): F-1297-1
+BACKLOG:1076  F-2460-2
+    ss-01-beats.spec.ts — also cited by 1 closed row(s), declaring 1 finding(s): F-1299-2
+    beats.ts — also cited by 1 closed row(s), declaring 1 finding(s): F-1158-2
+    StoryRuntime.ts — also cited by 1 closed row(s), declaring 1 finding(s): F-1337-1
+rc=0
+
+===== desk-carryforward-guard (BEFORE) =====
+=== desk-carryforward-guard ===
+corpus tree               : main
+status corpus             : STATUS.md (no split parts on this tree)
+ledger corpus             : tasks/BACKLOG.md (no split parts on this tree)
+previous desk (s2671): 3 items
+this desk                 : 3 items
+dropped                   : 0 (0 accounted for)
+PASS — every item on the previous desk is carried, closed, or accounted for.
+rc=0
+
+===== desk-declaration-guard (BEFORE) =====
+=== desk-declaration-guard ===
+corpus tree       : main
+desk F-IDs        : 2
+desk slugs        : 1
+🔺 desk segments  : 3
+unexamined        : 0
+with a BACKLOG row: 3
+undeclared        : 0 (grandfathered 0)
+PASS — every non-grandfathered desk item has a declaring row.
+rc=0
+
+===== desk-state-audit (BEFORE) =====
+ITEM	TYPE	VERDICT	EVIDENCE
+F-2642-3	finding	OPEN-DESK-ONLY	280
+b1-device-verdict-rows	slug	UNRECORDED	—
+F-2299-1	finding	OPEN-DESK-ONLY	16, 1587
+
+CLOSED=0 · OPEN=0 · BOTH=0 · OPEN-DESK-ONLY=2 · UNRECORDED=1
+rc=0
+
+===== ruling-propagation-guard [scratch-resident copy] (BEFORE) =====
+ruling-propagation: 14 findings recorded RULED · 74 goal leaves still refuse work · 0 stale
+ledger corpus: tasks/BACKLOG.md (no split parts on this tree)
+  reason corpus     : 66/74 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+rc=0
+
+===== row-quote-currency [scratch-resident copy] (BEFORE) =====
+ledger corpus: tasks/BACKLOG.md (no split parts on this tree)
+open rows 181 | rows: PRESENT 21 ABSENT 39 UNRESOLVED 121
+quotes checked 67 | present 16 | gone 51
+rc=0
+
+===== citation-title-guard (BEFORE) =====
+=== citation-title-guard ===
+citations scanned : 735  (in 1618 tracked tasks/**/*.md)
+  CARRIES-TITLE   425
+  NUMBER-ONLY     254
+  CARRIES-LINE    56
+grandfathered keys: 262
+NOT GATED         : 159 citation(s) in 1 tracked .md outside tasks/ — largest STATUS.md (159). Scope ruling: F-1252-1, owner's desk.
+PASS — no new bare `spec:line` citation among the 735 scanned. This verdict covers tasks/** only.
+rc=0
+
+===== gate-caller-audit (BEFORE) =====
+gate-caller-audit: REFUSING — the resolver did not reach its own anchors.
+  unreached anchors: npm:test:node-guards, npm:test:task-guards
+  These gates have structurally certain callers (run-guards.mjs names them, package.json
+  defines them). If the graph cannot find THOSE, it did not build, and every "ORPHAN" it
+  prints is a false one. Fix the edge vocabulary (see EDGE_SOURCES) -- do not grandfather.
+rc=2
+
+===== dashboard greps (BEFORE) =====
+GATE: rows  901
+OWNER: rows 1
+
+########## APPLY ##########
+  archive/status/2026-08.md     1449 bullet(s)    8.98 MB  + 437 B header (new file)
+STATUS.md         : 20.56 MB -> 6.11 MB
+BALANCE           : in 20556821 B (STATUS 20555947 + archives 0 + headers 874) === out 20556821 B (STATUS 6111190 + archives 14445631) -> BALANCED
+APPLIED — 2954 bullet(s) moved into 2 file(s).
+archive/status now holds: archive/status/2026-08.md, archive/status/2026-07.md
+status-rotate rc=0
+    tasks/BACKLOG.md::e2e/ss-02-beats.spec.ts:375  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/town-t6-surfaces.spec.ts:127  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/trail-guide.spec.ts:113  ->  tasks/backlog/closed-2026-08.md=1
+    tasks/BACKLOG.md::e2e/vp-02-sprite-animation.spec.ts:393  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/vp-02b-rotation-resolver.spec.ts:23  ->  tasks/backlog/closed-2026-07.md=1
+    tasks/BACKLOG.md::e2e/vp-02b-rotation-resolver.spec.ts:284  ->  tasks/backlog/closed-2026-07.md=1
+    STRADDLE tasks/BACKLOG.md::e2e/ap-standing-orders.spec.ts:80  ->  tasks/BACKLOG.md=1 , tasks/backlog/closed-2026-07.md=1   (allowance 1 -> 2; the coordinate now occurs on both sides of the split)
+    STRADDLE tasks/BACKLOG.md::e2e/asset-diet.spec.ts:15  ->  tasks/BACKLOG.md=1 , tasks/backlog/closed-2026-07.md=1   (allowance 1 -> 2; the coordinate now occurs on both sides of the split)
+    STRADDLE tasks/BACKLOG.md::e2e/m2-01-build-menu.spec.ts:84  ->  tasks/BACKLOG.md=1 , tasks/backlog/closed-2026-07.md=1   (allowance 2 -> 2; the coordinate now occurs on both sides of the split)
+    STRADDLE tasks/BACKLOG.md::e2e/task-037-assay-bench-ungate.spec.ts:160  ->  tasks/BACKLOG.md=1 , tasks/backlog/s1070.md=1   (allowance 2 -> 2; the coordinate now occurs on both sides of the split)
+APPLIED — 411 row(s) moved into 18 file(s); baseline re-keyed.
+the ledger corpus is now: tasks/BACKLOG.md, tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+backlog-split rc=0
+
+--- the drain's commit: path-scoped add of exactly what the move touched ---
+a998e78 chore: ledger-shape-1 — rotate STATUS months and split closed BACKLOG rows
+
+--- second apply (idempotence) ---
+moving            : 0 bullet(s), 0 B
+BALANCE           : in 6111190 B (STATUS 6111190 + archives 0 + headers 0) === out 6111190 B (STATUS 6111190 + archives 0) -> BALANCED
+moving            : 0 row(s), 0 B
+BALANCE           : in 8452660 B (index 8452660 + parts 0 + headers 0 + pointers 0) === out 8452660 B (index 8452660 + parts 0) -> BALANCED
+tree dirty after second apply? []
+
+--- sizes ---
+-rw-r--r--  1 robin  wheel  6111190 Sep 25 02:23 /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ls1-scratch.YJth/STATUS.md
+-rw-r--r--  1 robin  wheel  8452660 Sep 25 02:23 /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ls1-scratch.YJth/tasks/BACKLOG.md
+2026-07.md
+2026-08.md
+closed-2026-07.md
+closed-2026-08.md
+e2-completion.md
+lane-c.md
+later.md
+mp-07-ladder.md
+multiplayer.md
+owner-rulings-2026-08-08-morning.md
+owners-desk.md
+s1070.md
+s1071.md
+s1073.md
+s1074-fire.md
+s1077.md
+s1078.md
+s1079.md
+the-epoch-work-package-ladder.md
+the-saga-build-plan.md
+########## READERS AFTER ##########
+
+===== findings-state-guard (AFTER) =====
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+declared subjects : 664
+declared closed   : 480
+declared open     : 184
+double-state      : 0
+wide-open advisory : 374 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+rc=0
+
+===== blocker-panel-closed-guard (AFTER) =====
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+panel rows        : 44
+rows with an F-ID : 42
+census closed     : 590
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+rc=0
+
+===== stale-ready-for-gates-guard (AFTER) =====
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+tasks/BACKLOG.md: 125 row(s) carry READY-FOR-GATES · 8 quotation · 89 closed-row · 22 body-only · 6 unresolved · 0 in-flight · 0 STALE
+OK: no stale READY-FOR-GATES claim.
+rc=0
+
+===== stale-open-candidates (AFTER) =====
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+stale-open-candidates — open findings whose file already appears in a CLOSED row
+  ledger rows : 665  (open 181 · closed 484)
+  hub demotion: files cited by >= 3 closed rows
+
+BACKLOG:950  F-E5STORM-1
+    WaveSystem.ts — also cited by 2 closed row(s), declaring 2 finding(s): F-1321-4, F-1081-3
+    RunManager.ts — also cited by 1 closed row(s), declaring 1 finding(s): F-1297-1
+BACKLOG:1076  F-2460-2
+    ss-01-beats.spec.ts — also cited by 1 closed row(s), declaring 1 finding(s): F-1299-2
+    beats.ts — also cited by 1 closed row(s), declaring 1 finding(s): F-1158-2
+    StoryRuntime.ts — also cited by 1 closed row(s), declaring 1 finding(s): F-1337-1
+rc=0
+
+===== desk-carryforward-guard (AFTER) =====
+=== desk-carryforward-guard ===
+corpus tree               : main
+status corpus             : STATUS.md + 2 part(s): archive/status/2026-08.md, archive/status/2026-07.md
+ledger corpus             : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+previous desk (s2671): 3 items
+this desk                 : 3 items
+dropped                   : 0 (0 accounted for)
+PASS — every item on the previous desk is carried, closed, or accounted for.
+rc=0
+
+===== desk-declaration-guard (AFTER) =====
+=== desk-declaration-guard ===
+corpus tree       : main
+desk F-IDs        : 2
+desk slugs        : 1
+🔺 desk segments  : 3
+unexamined        : 0
+with a BACKLOG row: 3
+undeclared        : 0 (grandfathered 0)
+PASS — every non-grandfathered desk item has a declaring row.
+rc=0
+
+===== desk-state-audit (AFTER) =====
+ITEM	TYPE	VERDICT	EVIDENCE
+F-2642-3	finding	OPEN-DESK-ONLY	280
+b1-device-verdict-rows	slug	UNRECORDED	—
+F-2299-1	finding	OPEN-DESK-ONLY	16, 1587
+
+CLOSED=0 · OPEN=0 · BOTH=0 · OPEN-DESK-ONLY=2 · UNRECORDED=1
+rc=0
+
+===== ruling-propagation-guard [scratch-resident copy] (AFTER) =====
+ruling-propagation: 14 findings recorded RULED · 74 goal leaves still refuse work · 0 stale
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+  reason corpus     : 66/74 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+rc=0
+
+===== row-quote-currency [scratch-resident copy] (AFTER) =====
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+open rows 181 | rows: PRESENT 21 ABSENT 39 UNRESOLVED 121
+quotes checked 67 | present 15 | gone 52
+rc=0
+
+===== citation-title-guard (AFTER) =====
+=== citation-title-guard ===
+citations scanned : 735  (in 1636 tracked tasks/**/*.md)
+  CARRIES-TITLE   425
+  NUMBER-ONLY     254
+  CARRIES-LINE    56
+grandfathered keys: 266
+NOT GATED         : 159 citation(s) in 3 tracked .md outside tasks/ — largest archive/status/2026-08.md (74). Scope ruling: F-1252-1, owner's desk.
+PASS — no new bare `spec:line` citation among the 735 scanned. This verdict covers tasks/** only.
+rc=0
+
+===== gate-caller-audit (AFTER) =====
+gate-caller-audit: REFUSING — the resolver did not reach its own anchors.
+  unreached anchors: npm:test:node-guards, npm:test:task-guards
+  These gates have structurally certain callers (run-guards.mjs names them, package.json
+  defines them). If the graph cannot find THOSE, it did not build, and every "ORPHAN" it
+  prints is a false one. Fix the edge vocabulary (see EDGE_SOURCES) -- do not grandfather.
+rc=2
+
+===== dashboard greps (AFTER) =====
+GATE: rows  901
+OWNER: rows 1
+
+########## STATUS-ARCHIVE A/B (the permanence predicate over a rotated predecessor) ##########
+predecessor bullet present in STATUS.md before the rotation: 1
+moving            : 361 bullet(s), 5.83 MB
+BALANCE           : in 15096222 B (STATUS 6111332 + archives 8984453 + headers 437) === out 15096222 B (STATUS 280770 + archives 14815452) -> BALANCED
+predecessor bullet present in STATUS.md AFTER the rotation : 0
+predecessor bullet present in archive/status/*.md          : 1
+
+--- ARM A: the widened tool (corpus = STATUS.md + archives) ---
+board corpus     : STATUS.md + 3 archive month(s): archive/status/2026-09.md, archive/status/2026-08.md, archive/status/2026-07.md
+CLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (0 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 0 same-session rewrites excluded, 0 attended self-updates superseded, of 1 replacements across 3 STATUS.md commits
+rc=0
+
+--- ARM B: MANUFACTURED CONTROL, the pre-cure reader (corpus = STATUS.md only) ---
+board corpus     : STATUS.md (no rotated months on this tree)
+CLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (0 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 0 same-session rewrites excluded, 0 attended self-updates superseded, of 1 replacements across 3 STATUS.md commits
+rc=0
+DONE

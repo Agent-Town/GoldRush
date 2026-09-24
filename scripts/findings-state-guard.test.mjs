@@ -9,10 +9,23 @@ import { scan } from './findings-state-guard.mjs';
 const SCRIPT = path.join(import.meta.dirname, 'findings-state-guard.mjs');
 const ROOT = path.resolve(import.meta.dirname, '..');
 
-function fixture(t, backlog) {
+/**
+ * `parts` is the ledger-shape-1 corpus (owner ruling 2026-09-24, item 13a):
+ * `{ 'closed-2026-07': '<rows>' }` writes `tasks/backlog/closed-2026-07.md` beside the index.
+ * It defaults to none, so every arm written before the split keeps its exact behaviour — and
+ * that default is also the assertion that this guard is indifferent to an ABSENT
+ * `tasks/backlog/`, which is the state of the branch that ships the split.
+ */
+function fixture(t, backlog, parts = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-findings-state-'));
   fs.mkdirSync(path.join(dir, 'tasks'));
   fs.writeFileSync(path.join(dir, 'tasks', 'BACKLOG.md'), backlog);
+  if (Object.keys(parts).length) {
+    fs.mkdirSync(path.join(dir, 'tasks', 'backlog'));
+    for (const [key, text] of Object.entries(parts)) {
+      fs.writeFileSync(path.join(dir, 'tasks', 'backlog', key + '.md'), text);
+    }
+  }
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   return dir;
 }
@@ -124,4 +137,50 @@ test('wide-open advisory reports skipped rows, hidden open IDs, and narrow close
     result.stdout,
     /wide-open advisory : 4 skipped marker-led rows; 2 F-IDs open only there; 1 narrow closed-only/,
   );
+});
+
+
+// ── LEDGER-SHAPE-1: THE SPLIT LEDGER (owner ruling 2026-09-24, item 13a) ─────────────────
+
+test('a conflict SPLIT ACROSS the index and a part file is still caught, with both coordinates', (t) => {
+  // THE DEFECT THE WIDENING EXISTS FOR, manufactured. This guard is the one that notices a
+  // finding declared closed in one place and open in another — exactly the pair a split can put
+  // in two different files. Reading the index alone would narrow the census SILENTLY and print
+  // the same PASS over two thirds of the rows: a fail-OPEN, which is the direction that hides
+  // defects rather than inventing them.
+  const index = [
+    '🟡 **F-9300-1 — OPEN, and still advertised as fire-authorable.**',
+    '',
+  ].join('\n');
+  const parts = {
+    'closed-2026-07': '✅ **F-9300-1 SHIPPED s9300 — `abc1234`.**\n',
+  };
+
+  // CONTROL FIRST (F-2215-1): with the part absent the same index is clean, so the arm below
+  // proves the CORPUS and not the fixture.
+  const alone = run(fixture(t, index));
+  assert.equal(alone.status, 0, alone.stdout + alone.stderr);
+  assert.match(alone.stdout, /double-state\s+:\s+0/);
+
+  const split = run(fixture(t, index, parts));
+  assert.equal(split.status, 1, 'the conflict must survive the split\n' + split.stdout + split.stderr);
+  assert.match(
+    split.stdout,
+    /F-9300-1\s+closed lines tasks\/backlog\/closed-2026-07\.md:1; open lines 1/,
+    'and each coordinate must name a line a reader can actually open — bare for the index, ' +
+      'prefixed for a part. Numbering a JOINED corpus would mint a Ghost Line (Mistake #5).',
+  );
+  assert.match(
+    split.stdout,
+    /ledger corpus\s+: tasks\/BACKLOG\.md \+ 1 part\(s\): tasks\/backlog\/closed-2026-07\.md/,
+    'the corpus is declared on the happy path and the sad one alike (F-2208-1)',
+  );
+});
+
+test('with no tasks/backlog/ at all the corpus line says so and the census is unchanged', (t) => {
+  // The state of the ledger-shape-1 BRANCH, and of every tree until the drain runs the split.
+  const r = run(fixture(t, ['✅ **F-9301-1 — CLOSED.**', ''].join('\n')));
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /ledger corpus\s+: tasks\/BACKLOG\.md \(no split parts on this tree\)/);
+  assert.match(r.stdout, /declared closed\s+: 1/);
 });

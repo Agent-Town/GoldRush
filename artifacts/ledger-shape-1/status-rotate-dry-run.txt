@@ -1,0 +1,15 @@
+=== status-rotate-month ===
+mode              : DRY-RUN
+current month     : 2026-09
+trailing window   : 40 newest bullet(s) held on the board whatever their month
+archive bullets   : 3314
+  dated by        : 3064 stamp · 250 session-neighbour · 0 document-neighbour · 0 unplaceable
+staying           : 320 current-month · 40 trailing-window · 0 unplaceable
+moving            : 2954 bullet(s), 14.44 MB
+per destination   :
+  archive/status/2026-07.md     1505 bullet(s)    5.46 MB  + 437 B header (new file)
+  archive/status/2026-08.md     1449 bullet(s)    8.98 MB  + 437 B header (new file)
+STATUS.md         : 20.56 MB -> 6.11 MB
+BALANCE           : in 20556821 B (STATUS 20555947 + archives 0 + headers 874) === out 20556821 B (STATUS 6111190 + archives 14445631) -> BALANCED
+DRY-RUN — nothing written. Re-run with --apply to perform the move.
+rc=0

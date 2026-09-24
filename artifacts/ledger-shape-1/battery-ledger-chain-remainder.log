@@ -1,0 +1,29 @@
+node scripts/desk-carryforward-guard.mjs                       rc=2
+      desk-carryforward-guard: REFUSING — this is a linked worktree and its STATUS.md
+        line-1 is NOT the one main carries.
+        Both corpora here are TRACKED, so this tree is frozen at its branch point and
+        the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+        would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+        proven by manufacturing: a real defect on main read byte-identically to a clean
+        board from here).
+        Re-run from the main worktree, or pass --root <main worktree>.
+node scripts/status-archive-audit.mjs --limit 40 --quiet       rc=0
+node scripts/attended-owed-audit.mjs                           rc=0
+bash scripts/main-lock-gate-guard.test.sh                      rc=0
+bash scripts/janitor-request-rejection.test.sh                 rc=0
+bash scripts/lane-dispatch-safety-guard.test.sh                rc=0
+bash scripts/codex-client-floor.test.sh                        rc=0
+bash scripts/runner-restart-recipe.test.sh                     rc=0
+bash scripts/runner-commit-decoupling-guard.test.sh            rc=0
+node scripts/ledger-mirror-exposure.mjs                        rc=0
+node scripts/nul-audit.mjs                                     rc=0
+node scripts/source-pointer-guard.mjs                          rc=1
+      
+      FAIL — 1 source comment(s) point at a line that no longer declares the symbol:
+        status-archive-audit.mjs:411
+            cites `kind` at :274, but it is declared at :322
+      
+      Re-base by RE-GREPPING the symbol, never by adding a remembered delta —
+      two pointers into one file routinely move by different amounts in the same
+      commit (CLAUDE.md §4.10b). Cite the CODE; the coordinate drifts.
+bash foundry/kit/test-init.sh                                  rc=0

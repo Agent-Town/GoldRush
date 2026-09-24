@@ -31,6 +31,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { FINDING } from './findings-state-guard.mjs';
+import { BACKLOG_INDEX, backlogParts, corpusDeclaration as ledgerCorpus } from './ledger-corpus.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORT = process.argv.includes('--report');
@@ -132,14 +133,31 @@ function collectLeaves(node, out = []) {
   return out;
 }
 
+/** `ruledFindings` over the whole corpus, with `<rel>:<n>` coordinates for the split parts. */
+export function ruledAcross(parts) {
+  const ruled = new Map();
+  for (const part of parts) {
+    for (const [id, n] of ruledFindings(part.text)) {
+      if (!ruled.has(id)) ruled.set(id, part.rel === BACKLOG_INDEX ? String(n) : `${part.rel}:${n}`);
+    }
+  }
+  return ruled;
+}
+
 export function refusingLeaves(goals) {
   return collectLeaves(goals).filter(
     (leaf) => leaf.status === 'blocked' || TERMINAL_CLOSED_STATUSES.has(leaf.status),
   );
 }
 
-export function staleRefusals(goals, backlogText) {
-  const ruled = ruledFindings(backlogText);
+/**
+ * `parts` is the ledger-shape-1 corpus (owner ruling 2026-09-24, item 13a): `tasks/BACKLOG.md`
+ * plus `tasks/backlog/**`. When given, the RULED map is built per file so each coordinate still
+ * names a line a reader can open; without it the single-text behaviour every existing caller and
+ * hermetic test relies on is byte-identical.
+ */
+export function staleRefusals(goals, backlogText, parts = null) {
+  const ruled = parts ? ruledAcross(parts) : ruledFindings(backlogText);
   const stale = [];
   const unreadable = [];
   for (const leaf of refusingLeaves(goals)) {
@@ -157,8 +175,9 @@ export function staleRefusals(goals, backlogText) {
 
 function main() {
   const goals = JSON.parse(fs.readFileSync(path.join(ROOT, 'tasks/goals.json'), 'utf8'));
-  const backlog = fs.readFileSync(path.join(ROOT, 'tasks/BACKLOG.md'), 'utf8');
-  const { stale, ruledCount, unreadable } = staleRefusals(goals, backlog);
+  const parts = backlogParts(ROOT);
+  const backlog = parts.map((part) => part.text).join('\n');
+  const { stale, ruledCount, unreadable } = staleRefusals(goals, backlog, parts);
   const refusing = refusingLeaves(goals).length;
 
   console.log(
@@ -168,6 +187,7 @@ function main() {
   // Printed ALWAYS, including the happy path: a declaration that appears only on failure re-creates
   // the ambiguity it removes (F-2208-1). This line is the difference between "I read 44 refusals
   // and found nothing" and "I read 39 of them".
+  console.log(`ledger corpus: ${ledgerCorpus(parts.map((p) => p.rel))}`);
   console.log(corpusDeclaration(refusing, unreadable.length));
   for (const leaf of unreadable) {
     const keys = Object.keys(leaf).filter((k) => /note|reason/i.test(k)).join(', ') || '(no reason-bearing key)';

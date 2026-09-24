@@ -42,6 +42,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { scan, FINDING } from './findings-state-guard.mjs';
+import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
 import { subjectLedClosure } from './desk-state-audit.mjs';
 
 function arg(flag) {
@@ -85,8 +86,16 @@ function main() {
 
   let backlog;
   let dashboard;
+  let backlogCorpus = [];
   try {
-    backlog = fs.readFileSync(backlogPath, 'utf8');
+  // ledger-shape-1 (owner ruling 2026-09-24, item 13a): the ledger is `tasks/BACKLOG.md` PLUS
+  // `tasks/backlog/**`. Reading the index alone after the split narrows the closure census SILENTLY and
+  // fails OPEN. Coordinates carry their own file so they still resolve (bare for the index,
+  // `<rel>:<n>` for a split part); `scripts/ledger-corpus.mjs` is the one place that lists them.
+    if (!fs.existsSync(backlogPath)) throw new Error(`cannot read ${backlogPath}`);
+    const parts = backlogParts(ROOT);
+    backlogCorpus = parts;
+    backlog = parts.map((part) => part.text).join('\n');
     dashboard = fs.readFileSync(dashboardPath, 'utf8');
   } catch (error) {
     refuse(`cannot read inputs: ${error.message}`);
@@ -127,7 +136,16 @@ function main() {
   // sees 1 of the ledger's 136 bullet-led "- ✅" closure rows, and the row that
   // manufactured the owner's 07-30 directive (BACKLOG:1459, closed at :1461) was
   // invisible to it. Wide widens closed only — the panel row IS the open claim.
-  const states = scan(backlog, { closedVocabulary: 'wide' });
+  // Scanned PER FILE and merged, so a closure coordinate still names a line a reader can open.
+  const states = new Map();
+  for (const part of backlogCorpus) {
+    for (const [id, state] of scan(part.text, { closedVocabulary: 'wide' })) {
+      if (!states.has(id)) states.set(id, { closed: [], open: [] });
+      const label = (n) => (part.rel === BACKLOG_INDEX ? String(n) : `${part.rel}:${n}`);
+      states.get(id).closed.push(...state.closed.map(label));
+      states.get(id).open.push(...state.open.map(label));
+    }
+  }
   const violations = [];
   let rowsWithId = 0;
   for (const line of selected) {
@@ -151,6 +169,7 @@ function main() {
     }
   }
 
+  console.log(`ledger corpus     : ${corpusDeclaration(backlogCorpus.map((p) => p.rel))}`);
   console.log(`panel rows        : ${selected.length}`);
   console.log(`rows with an F-ID : ${rowsWithId}`);
   console.log(`census closed     : ${[...states.values()].filter((s) => s.closed.length).length}`);

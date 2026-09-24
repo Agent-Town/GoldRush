@@ -39,6 +39,40 @@ after(() => {
 });
 
 const SCRIPT = path.join(import.meta.dirname, 'gate-caller-audit.mjs');
+
+/**
+ * Every local module the subject needs, DERIVED from its own imports rather than listed.
+ *
+ * WHY IT IS DERIVED (F-2672-2, and F-2358-1 on top of it). Three fixtures below write a mutant
+ * of `gate-caller-audit.mjs` into a bare `mkdtemp` and run it there, and each used to
+ * hand-copy ONE dependency by name (`law-surfaces.mjs`). Adding a SECOND relative import to the
+ * subject — `ledger-corpus.mjs`, for the ledger-shape-1 split — broke all three at once with
+ * `ERR_MODULE_NOT_FOUND`, and five arms then failed while asserting on a regex over the
+ * subject's output: a mutant that cannot LOAD produces a stack trace, which matches no arm's
+ * expectation and is indistinguishable at a glance from a guard with no teeth. A hand-maintained
+ * list of one member certifies the uncovered members as clean (F-2358-1), so the list is gone.
+ *
+ * ONE HOP IS ENOUGH AND IS ASSERTED, not assumed: the copy walk below is recursive, and it
+ * refuses rather than silently skipping a dependency it cannot read — a fixture that quietly
+ * omits a module is the same false green in a different costume. Named files only: it never
+ * copies the `scripts/` directory (fixture-corpus-copy-guard, F-2284-1 / F-2421-1).
+ */
+function copyLocalDeps(from, dir, seen = new Set()) {
+  const src = fs.readFileSync(from, 'utf8');
+  for (const match of src.matchAll(/from\s+'\.\/([\w.-]+\.mjs)'/g)) {
+    const dep = match[1];
+    if (seen.has(dep)) continue;
+    seen.add(dep);
+    const source = path.join(path.dirname(SCRIPT), dep);
+    assert.ok(
+      fs.existsSync(source),
+      `the subject imports ./${dep} but ${source} does not exist — the fixture would run a mutant that cannot load`,
+    );
+    fs.copyFileSync(source, path.join(dir, dep));
+    copyLocalDeps(source, dir, seen);
+  }
+  return seen;
+}
 const REAL_ROOT = path.resolve(import.meta.dirname, '..');
 
 function run(dir, ...extra) {
@@ -518,7 +552,7 @@ function mutantWithoutShSubjects() {
   const dir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-gate-caller-mutant-')));
   const p = path.join(dir, 'gate-caller-audit.mjs');
   fs.writeFileSync(p, neutered);
-  fs.copyFileSync(path.join(path.dirname(SCRIPT), 'law-surfaces.mjs'), path.join(dir, 'law-surfaces.mjs'));
+  copyLocalDeps(SCRIPT, dir);
   return p;
 }
 
@@ -609,7 +643,7 @@ function writeMutant(source, tag) {
   const dir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-gate-caller-' + tag + '-')));
   const p = path.join(dir, 'gate-caller-audit.mjs');
   fs.writeFileSync(p, source);
-  fs.copyFileSync(path.join(path.dirname(SCRIPT), 'law-surfaces.mjs'), path.join(dir, 'law-surfaces.mjs'));
+  copyLocalDeps(SCRIPT, dir);
   return p;
 }
 
@@ -699,7 +733,7 @@ function mutantWithoutLawRoots() {
   const dir = track(fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-gate-caller-lawmutant-')));
   const p = path.join(dir, 'gate-caller-audit.mjs');
   fs.writeFileSync(p, neutered);
-  fs.copyFileSync(path.join(path.dirname(SCRIPT), 'law-surfaces.mjs'), path.join(dir, 'law-surfaces.mjs'));
+  copyLocalDeps(SCRIPT, dir);
   return p;
 }
 

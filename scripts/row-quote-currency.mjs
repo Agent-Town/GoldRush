@@ -51,6 +51,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { scan } from './findings-state-guard.mjs';
+import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -256,16 +257,23 @@ export function probeRow(row, read = makeReader()) {
 }
 
 function openRows() {
-  const text = fs.readFileSync(path.join(ROOT, 'tasks/BACKLOG.md'), 'utf8');
-  const lines = text.split('\n');
+  // ledger-shape-1 (owner ruling 2026-09-24, item 13a): the ledger is `tasks/BACKLOG.md` PLUS
+  // `tasks/backlog/**`. Reading the index alone after the split narrows the probe set SILENTLY and
+  // fails OPEN — the same PASS over two thirds of the rows. `scripts/ledger-corpus.mjs` is the one
+  // place that lists the corpus; coordinates keep their own file so they still resolve.
+  const parts = backlogParts(ROOT);
   const byLine = new Map();
-  for (const [id, st] of scan(text)) {
-    for (const ln of st.open) {
-      if (!byLine.has(ln)) byLine.set(ln, { line: ln, ids: [], body: lines[ln - 1] });
-      byLine.get(ln).ids.push(id);
+  for (const part of parts) {
+    const lines = part.text.split('\n');
+    for (const [id, st] of scan(part.text)) {
+      for (const ln of st.open) {
+        const where = part.rel === BACKLOG_INDEX ? String(ln) : `${part.rel}:${ln}`;
+        if (!byLine.has(where)) byLine.set(where, { line: where, rel: part.rel, n: ln, ids: [], body: lines[ln - 1] });
+        byLine.get(where).ids.push(id);
+      }
     }
   }
-  return [...byLine.values()].sort((a, b) => a.line - b.line);
+  return { rows: [...byLine.values()].sort((a, b) => parts.findIndex((p) => p.rel === a.rel) - parts.findIndex((p) => p.rel === b.rel) || a.n - b.n), corpus: parts.map((p) => p.rel) };
 }
 
 function selfTest() {
@@ -393,7 +401,8 @@ function selfTest() {
 function main() {
   if (process.argv.includes('--self-test')) process.exit(selfTest() ? 1 : 0);
   const all = process.argv.includes('--all');
-  const rows = openRows();
+  const { rows, corpus } = openRows();
+  console.log(`ledger corpus: ${corpusDeclaration(corpus)}`);
   const tally = { PRESENT: 0, ABSENT: 0, UNRESOLVED: 0 };
   const out = [];
   for (const r of rows) {

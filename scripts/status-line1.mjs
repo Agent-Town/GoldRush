@@ -86,7 +86,14 @@ import { fileURLToPath } from 'node:url';
 // fileURLToPath, not URL.pathname — the repo path contains a space ("Gold Rush")
 // and .pathname hands back the percent-encoded form, which fs cannot open.
 const STATUS = fileURLToPath(new URL('../STATUS.md', import.meta.url));
-const ARCHIVE_INDEX = 3;
+// The fallback insertion point when the board carries NO archive bullet at all — index 2, the
+// line straight after line 1 and the blank line under it. It was 3, from the era when STATUS.md
+// opened with TWO blank lines; the board has carried one since, and after the ledger-shape-1
+// rotation (owner ruling 2026-09-24, item 13a) a fully-drained board is reachable for the first
+// time, where a 3 would splice the bullet one line too low and strand it under the first
+// archived line. The `findIndex` below still wins whenever any bullet is present, which is every
+// real board: the trailing window `scripts/status-rotate-month.mjs` holds back guarantees it.
+const ARCHIVE_INDEX = 2;
 
 const [, , cmd, ...rest] = process.argv;
 

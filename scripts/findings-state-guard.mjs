@@ -24,6 +24,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -78,7 +79,11 @@ export const FINDING = /\bF-(?:[A-Z0-9]{1,8}-)+\d+\b/g;
 const BULLET_CLOSED = /^[-*•]\s*✅/;
 const WIDE_OPEN_MARKERS = ['🟠', '🔬', '🔴', '🟢', '🟣'];
 
-function rowState(subject, lead, wide, wideOpen) {
+// EXPORTED for the same F-1261-1 reason scan() is: `scripts/backlog-split-closed.mjs` must
+// decide "is this row closed?" to know whether it may move, and a second implementation of that
+// question is exactly the defect this file's header warns about. The function is unchanged —
+// only the `export` keyword was added (ledger-shape-1, 2026-09-25).
+export function rowState(subject, lead, wide, wideOpen) {
   const struck =
     /^[^A-Za-z0-9]*~~/.test(lead) ||
     /✅\s*(?:CLOSED|RETIRED)/i.test(subject) ||
@@ -119,8 +124,12 @@ function census(states) {
   return { closed, open, conflicts };
 }
 
-function print(states) {
+function print(states, parts = null) {
   const { closed, open, conflicts } = census(states);
+  // Printed ALWAYS, including the happy path: a census whose corpus is invisible cannot be
+  // re-judged (F-2208-1). It is the difference between "543 subjects across the whole ledger"
+  // and "543 subjects in the file I happened to open".
+  if (parts) console.log(`ledger corpus     : ${corpusDeclaration(parts.map((part) => part.rel))}`);
   console.log(`declared subjects : ${states.size}`);
   console.log(`declared closed   : ${closed.length}`);
   console.log(`declared open     : ${open.length}`);
@@ -151,19 +160,47 @@ function printOpenAdvisory(text, narrow, wide) {
   );
 }
 
+/**
+ * Merge per-file scans into one census whose coordinates still resolve.
+ *
+ * ledger-shape-1 (owner ruling 2026-09-24, item 13a) split the closed rows into
+ * `tasks/backlog/**`, and this guard's whole job is to notice a finding declared closed in one
+ * place and open in another — the exact pair a split can put in two files. Scanning the index
+ * alone would narrow the census SILENTLY and fail OPEN. Joining the files and numbering the join
+ * would be worse: every conflict would print a line number that resolves to the wrong row in the
+ * wrong file, which is a Ghost Line (Mistake #5) minted by the cure. So each file is scanned on
+ * its own and the coordinates carry their file — bare for `tasks/BACKLOG.md`, so today's output
+ * is byte-identical, and `<rel>:<n>` for a split part.
+ */
+function scanCorpus(parts, options) {
+  const merged = new Map();
+  for (const part of parts) {
+    for (const [id, state] of scan(part.text, options)) {
+      if (!merged.has(id)) merged.set(id, { closed: [], open: [] });
+      const into = merged.get(id);
+      const label = (n) => (part.rel === BACKLOG_INDEX ? String(n) : `${part.rel}:${n}`);
+      for (const n of state.closed) into.closed.push(label(n));
+      for (const n of state.open) into.open.push(label(n));
+    }
+  }
+  return merged;
+}
+
 function main() {
   const backlog = path.join(ROOT, 'tasks', 'BACKLOG.md');
-  let text;
+  let parts;
   try {
-    text = fs.readFileSync(backlog, 'utf8');
+    if (!fs.existsSync(backlog)) throw new Error('no such file');
+    parts = backlogParts(ROOT);
   } catch (error) {
     console.error(`findings-state-guard: REFUSING — cannot read ${backlog}: ${error.message}`);
     process.exit(REPORT ? 0 : 2);
   }
+  const text = parts.map((part) => part.text).join('\n');
 
-  const narrow = scan(text);
-  const wideOpen = scan(text, { openVocabulary: 'wide' });
-  const conflicts = print(narrow);
+  const narrow = scanCorpus(parts);
+  const wideOpen = scanCorpus(parts, { openVocabulary: 'wide' });
+  const conflicts = print(narrow, parts);
   printOpenAdvisory(text, narrow, wideOpen);
   if (REPORT) process.exit(0);
   if (conflicts.length) {

@@ -23,11 +23,31 @@ const status = (line1, ...rest) => [line1, ...rest].join('\n');
 // vocabulary exists to see (measured s1291 as the commonest closure shape).
 const BACKLOG = ['- ✅ **F-9001-1 CLOSED s1533 — cured by `abc1234`.**', ''].join('\n');
 
-function runGuard(statusText, backlogText = '') {
+/**
+ * `archives` and `parts` are the ledger-shape-1 corpus (owner ruling 2026-09-24, item 13a):
+ * `{ "2026-08": "<bullets>" }` writes `archive/status/2026-08.md`, and
+ * `{ "closed-2026-07": "<rows>" }` writes `tasks/backlog/closed-2026-07.md`. Both default to
+ * empty, so every arm written before the split keeps its exact behaviour — and that default also
+ * PROVES this guard is indifferent to an absent archive directory, which is the state the
+ * ledger-shape-1 BRANCH is in and what `test:node-guards` asserts there.
+ */
+function runGuard(statusText, backlogText = '', { archives = {}, parts = {} } = {}) {
   const root = mkdtempSync(path.join(tmpdir(), 'desk-carryforward-'));
   mkdirSync(path.join(root, 'tasks'));
   writeFileSync(path.join(root, 'STATUS.md'), statusText);
   writeFileSync(path.join(root, 'tasks', 'BACKLOG.md'), backlogText);
+  if (Object.keys(archives).length) {
+    mkdirSync(path.join(root, 'archive', 'status'), { recursive: true });
+    for (const [month, text] of Object.entries(archives)) {
+      writeFileSync(path.join(root, 'archive', 'status', month + '.md'), text);
+    }
+  }
+  if (Object.keys(parts).length) {
+    mkdirSync(path.join(root, 'tasks', 'backlog'), { recursive: true });
+    for (const [key, text] of Object.entries(parts)) {
+      writeFileSync(path.join(root, 'tasks', 'backlog', key + '.md'), text);
+    }
+  }
   try {
     return spawnSync(
       process.execPath,
@@ -327,4 +347,63 @@ test('CONTROL — a real drop on a fully-keyed desk carries NO phantom caveat', 
   assert.match(result.stderr, /F-8001-1/);
   assert.doesNotMatch(result.stderr, /may name an item that IS carried/);
   assert.doesNotMatch(result.stderr, /2 defects reported above/);
+});
+
+
+// ── LEDGER-SHAPE-1: THE SPLIT BOARD (owner ruling 2026-09-24, item 13a) ──────────────────
+
+test('the previous desk is found in an ARCHIVED month when STATUS.md carries no bullet', () => {
+  // THE CLIFF THIS REMOVES, manufactured rather than argued: on the first fire of a new month a
+  // rotated board can hold no `s<N> handoff (line-1 archive)` bullet at all, and previousDesk()
+  // then returned null — which this guard turns into process.exit(2), "REFUSING — no previous
+  // handoff desk could be read", on a board that is perfectly healthy.
+  const desk = "🔺 **OWNER'S DESK — 1 awaiting a word.** 🔺 **F-9500-1 OPEN**";
+  const bare = runGuard(status(handoff(desk)));
+  assert.equal(bare.status, 2, 'CONTROL FIRST: with no bullet anywhere this really is the cliff');
+  assert.match(bare.stderr, /no previous handoff desk could be read/);
+
+  const rotated = runGuard(status(handoff(desk)), BACKLOG, {
+    archives: { '2026-08': archive(1533, desk) + '\n' },
+  });
+  assert.notEqual(rotated.status, 2, 'a rotated board must not read as an unreadable one\n' + rotated.stdout + rotated.stderr);
+  assert.equal(rotated.status, 0, rotated.stdout + rotated.stderr);
+  assert.match(rotated.stdout, /previous desk \(s1533\): 1 items/, 'and the archived desk is the one compared against');
+  assert.match(
+    rotated.stdout,
+    /status corpus\s+: STATUS\.md \+ 1 part\(s\): archive\/status\/2026-08\.md/,
+    'the corpus it read is declared, always, so the verdict can be re-judged (F-2208-1)',
+  );
+});
+
+test('previousDesk prefers the HIGHEST session wherever it lives, board or archive', () => {
+  const older = "🔺 **OWNER'S DESK — 1 awaiting a word.** 🔺 **F-9501-1 OPEN**";
+  const newer = "🔺 **OWNER'S DESK — 1 awaiting a word.** 🔺 **F-9501-2 OPEN**";
+  // Archived newer, on-board older: the archive wins, because the winner is the session number.
+  const fromArchive = previousDesk(status(handoff(newer), archive(1533, older)), [archive(1600, newer)]);
+  assert.equal(fromArchive.session, 1600);
+  // And the reverse, so the fall-through cannot decay into a PREFERENCE for the archives.
+  const fromBoard = previousDesk(status(handoff(newer), archive(1600, newer)), [archive(1533, older)]);
+  assert.equal(fromBoard.session, 1600);
+  assert.deepEqual(fromBoard.items, ['F-9501-2']);
+});
+
+test('a closure row in a SPLIT PART still excuses a dropped desk item', () => {
+  // The fail-OPEN half of the widening. subjectLedClosure reads the ledger to decide whether a
+  // dropped id was CLOSED rather than forgotten; with the closed rows split into tasks/backlog/**
+  // and only the index read, the drop reads SILENT and this guard reds on a fire that did nothing
+  // wrong — a guard whose remedy would be to un-close a closed finding.
+  const live = "🔺 **OWNER'S DESK — 1 awaiting a word.** 🔺 **F-9502-1 OPEN**";
+  const previous = "🔺 **OWNER'S DESK — 2 awaiting a word.** 🔺 **F-9502-1 OPEN** 🔺 **F-9502-2 OPEN**";
+  const boardOnly = runGuard(status(handoff(live), archive(1533, previous)), BACKLOG);
+  assert.equal(boardOnly.status, 1, 'CONTROL FIRST: with no closure row anywhere the drop really is silent');
+  assert.match(boardOnly.stderr, /F-9502-2/);
+
+  const split = runGuard(status(handoff(live), archive(1533, previous)), BACKLOG, {
+    parts: { 'closed-2026-08': '- ✅ **F-9502-2 CLOSED s1533 — cured by `def5678`.**\n' },
+  });
+  assert.equal(split.status, 0, 'a closure in a split part must excuse the drop\n' + split.stdout + split.stderr);
+  assert.match(
+    split.stdout,
+    /ledger corpus\s+: tasks\/BACKLOG\.md \+ 1 part\(s\): tasks\/backlog\/closed-2026-08\.md/,
+  );
 });

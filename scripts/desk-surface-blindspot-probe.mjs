@@ -25,6 +25,7 @@
  */
 import fs from 'node:fs';
 import { scan } from './findings-state-guard.mjs';
+import { backlogFiles, backlogText } from './ledger-corpus.mjs';
 
 const BACKLOG = process.argv.includes('--backlog')
   ? process.argv[process.argv.indexOf('--backlog') + 1]
@@ -38,7 +39,13 @@ F-1601-1 F-1510-1 F-E2S-3 F-1536-2 F-1591-1 F-1507-1 F-E2S-4`.split(/\s+/);
 const FINDING_ONE = /\bF-[A-Z0-9]+(?:-[A-Z0-9]+)*-\d+\b/;
 const NAMED = /\bF-(?![0-9]+-[0-9]+\b)[A-Z0-9]+(?:-[A-Z0-9]+)*-\d+\b/g;
 
-const text = fs.readFileSync(BACKLOG, 'utf8');
+// ledger-shape-1 (owner ruling 2026-09-24, item 13a): the ledger is the index PLUS
+// `tasks/backlog/**`. An explicit `--backlog <file>` still wins — that is how this probe is
+// pointed at a single fixture — but the default is the whole corpus, because a blind-spot count
+// taken over two thirds of the rows understates the blind spot it exists to measure.
+const CORPUS = process.argv.includes('--backlog') ? [BACKLOG] : backlogFiles(process.cwd());
+const text = process.argv.includes('--backlog') ? fs.readFileSync(BACKLOG, 'utf8') : backlogText(process.cwd());
+console.log(`ledger corpus: ${CORPUS.join(', ')}`);
 const lines = text.split('\n');
 const wide = scan(text, { closedVocabulary: 'wide' });
 

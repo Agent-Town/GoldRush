@@ -98,6 +98,9 @@ import { subjectLedClosure } from './desk-state-audit.mjs';
 // than re-implemented. No new cycle — desk-birth-guard reaches only
 // desk-declaration-guard, and the carryforward<->state-audit cycle predates this.
 import { carriesId } from './desk-birth-guard.mjs';
+// The ledger-shape-1 corpus: `tasks/BACKLOG.md` plus `tasks/backlog/**`, and `STATUS.md` plus
+// `archive/status/**`. One implementation of "where the ledger lives", for the F-1261-1 reason.
+import { backlogFiles, statusArchiveFiles, corpusDeclaration } from './ledger-corpus.mjs';
 
 function arg(flag) {
   const i = process.argv.indexOf(flag);
@@ -245,16 +248,34 @@ export function deskItems(tail) {
   return [...new Set(out)];
 }
 
-/** The newest ARCHIVED handoff desk — the one this fire must carry forward. */
-export function previousDesk(statusText) {
+/**
+ * The newest ARCHIVED handoff desk — the one this fire must carry forward.
+ *
+ * `archiveTexts` is the FALL-THROUGH added with the ledger-shape-1 rotation (owner ruling
+ * 2026-09-24, item 13a): closed months now live in `archive/status/<YYYY-MM>.md`, and a handoff
+ * bullet that has been rotated out is still the predecessor whose desk must be carried. Without
+ * it, the FIRST fire of a new month could find no bullet in STATUS.md and hit the
+ * `no-previous` cliff below — `process.exit(2)`, "REFUSING — no previous handoff desk could be
+ * read" — on a board that is perfectly healthy. `status-rotate-month.mjs` holds back a trailing
+ * window of 40 bullets precisely so that state is unreachable; this is the belt to that brace,
+ * and it removes the cliff rather than relying on a window never being misconfigured.
+ *
+ * STATUS.md is searched FIRST and the archives only add candidates — the winner is still the
+ * highest session number anywhere, which is the same answer the single-file version gave on
+ * every board it ever read. The extra argument is optional, so every existing caller and every
+ * hermetic test that passes one string keeps its exact behaviour.
+ */
+export function previousDesk(statusText, archiveTexts = []) {
   let newest = null;
-  for (const line of statusText.split('\n')) {
-    const m = line.match(/^- \*\*s(\d+) handoff \(line-1 archive\)/);
-    if (!m) continue;
-    const tail = deskTail(line);
-    if (!tail) continue;
-    const candidate = { session: Number(m[1]), items: deskItems(tail), line };
-    if (!newest || candidate.session > newest.session) newest = candidate;
+  for (const text of [statusText, ...archiveTexts]) {
+    for (const line of text.split('\n')) {
+      const m = line.match(/^- \*\*s(\d+) handoff \(line-1 archive\)/);
+      if (!m) continue;
+      const tail = deskTail(line);
+      if (!tail) continue;
+      const candidate = { session: Number(m[1]), items: deskItems(tail), line };
+      if (!newest || candidate.session > newest.session) newest = candidate;
+    }
   }
   return newest;
 }
@@ -320,11 +341,11 @@ export function acknowledged(line1, id) {
   return marks.some((m) => carriesId(line1.slice(m.index, m.index + 400), id));
 }
 
-export function analyse(statusText, backlogText) {
+export function analyse(statusText, backlogText, archiveTexts = []) {
   const line1 = statusText.split('\n')[0] || '';
   if (isLockLine(line1)) return { kind: 'lock' };
 
-  const prev = previousDesk(statusText);
+  const prev = previousDesk(statusText, archiveTexts);
   if (!prev || prev.items.length === 0) return { kind: 'no-previous', prev };
 
   const liveTail = deskTail(line1);
@@ -358,9 +379,16 @@ function main() {
     }
   }
   const statusText = fs.readFileSync(statusPath, 'utf8');
+  // Both corpora widened for the ledger-shape-1 split (owner ruling 2026-09-24, item 13a).
+  // The CLOSURE cross-check below (`subjectLedClosure`) is the half that fails OPEN: a dropped
+  // desk id whose closure row has moved into `tasks/backlog/**` would read as SILENT, and the
+  // guard would red on a fire that did nothing wrong.
+  const archiveFiles = statusArchiveFiles(ROOT);
+  const backlogCorpus = backlogFiles(ROOT);
   const result = analyse(
     statusText,
-    fs.readFileSync(backlogPath, 'utf8'),
+    backlogCorpus.map((rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8')).join('\n'),
+    archiveFiles.map((rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8')),
   );
 
   console.log('=== desk-carryforward-guard ===');
@@ -368,6 +396,8 @@ function main() {
   // failure re-creates the ambiguity it removes (F-2208-1).
   const tree = corpusTree(ROOT);
   console.log('corpus tree               :', tree);
+  console.log('status corpus             :', corpusDeclaration(['STATUS.md', ...archiveFiles]));
+  console.log('ledger corpus             :', corpusDeclaration(backlogCorpus));
 
   if (result.kind === 'lock') {
     console.log('SKIP — STATUS.md line-1 is a live ACTIVE lock, not a handoff.');

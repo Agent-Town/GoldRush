@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { SHIPPED, classifyRoot, goalLeaves } from './master-shipped-classifier.mjs';
+import { backlogFiles, backlogText } from './ledger-corpus.mjs';
 
 /**
  * F-2226-1 (measured and cured s2226). THE CURE LANDED IN THE CLI; THE ONLY OTHER CALLER
@@ -79,7 +80,12 @@ export function masterRows(backlogText) {
 }
 
 export function findGhosts(root) {
-  const backlog = fs.readFileSync(path.join(root, 'tasks', 'BACKLOG.md'), 'utf8');
+  // ledger-shape-1 (owner ruling 2026-09-24, item 13a): the ledger is `tasks/BACKLOG.md` PLUS
+  // `tasks/backlog/**`. Reading the index alone after the split narrows the lead-clipboard row set SILENTLY and
+  // fails OPEN. `scripts/ledger-corpus.mjs` lists the corpus; coordinates carry their own file so
+  // they still resolve (bare for the index, `<rel>:<n>` for a split part).
+  const backlogCorpus = backlogFiles(root);
+  const backlog = backlogText(root);
   const classified = classifyRoot(root);
   const verdicts = new Map(classified.verdicts.map((item) => [item.master, item]));
   const tree = classified.corpusTree;
@@ -119,6 +125,10 @@ export function findGhosts(root) {
     reviewsSource: classified.reviewsSource,
     reviewsReason: classified.reviewsReason ?? '',
     goalsSource: classified.goalsSource,
+    // ledger-shape-1: the LEDGER files the selector actually read, declared for the same
+    // F-2245-1/F-2208-1 reason as the three above it — `0 ghost ladder row(s)` over the index
+    // alone and over the whole corpus are otherwise byte-identical.
+    backlogCorpus,
   };
 }
 
@@ -179,7 +189,7 @@ function main() {
   const root = path.resolve(rootIndex === -1 ? process.cwd() : process.argv[rootIndex + 1]);
   const {
     ghosts, rows, clipboard, tree, treeDetail, crossSource, crossDetail, reviewsOk, reviewsSource,
-    reviewsReason, goalsSource,
+    reviewsReason, goalsSource, backlogCorpus,
   } = findGhosts(root);
   console.log('=== ghost-ladder-row-guard ===');
   for (const ghost of ghosts) console.log(`GHOST line ${ghost.line} ${ghost.path} — ${ghost.evidence}`);
@@ -204,6 +214,9 @@ function main() {
   // F-2245-1: the corpora the ghost list is actually COMPUTED from, as opposed to the tree it was
   // read on. Always, including the happy path (F-2208-1).
   console.log(`shipped-evidence corpora: reviews ${reviewsSource}, goals ${goalsSource}`);
+  // ledger-shape-1 (owner ruling 2026-09-24, item 13a): the ledger is the index PLUS
+  // `tasks/backlog/**`, so the corpus the SELECTOR ran over is named too.
+  console.log(`ledger files: ${backlogCorpus.join(', ')}`);
 
   if (!process.argv.includes('--strict')) return;
   // F-2245-1: this refusal comes FIRST because it invalidates the ghost list wholesale, where the
