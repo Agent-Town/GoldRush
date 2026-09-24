@@ -300,3 +300,101 @@ test('9. TEETH — on a board that IS LOST, every prescribed form answers with 1
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+
+// ------------------------------------------- F-2673-1: the unbounded walk states its price FIRST
+
+/**
+ * A copy of the subject with one source string replaced, run from a temp dir.
+ *
+ * SAFE FOR THIS SUBJECT, CHECKED RATHER THAN ASSUMED (F-2672-2, s2672): relocating a script
+ * breaks any RELATIVE import it carries, and a variant that cannot LOAD exits non-zero with no
+ * output -- indistinguishable at a glance from a variant the guard correctly refused.
+ * `status-archive-audit.mjs` imports only node builtins (`node:child_process`, `node:fs`), so the
+ * copy survives the trip. The arms below assert control validity (`out.length > 0`) anyway,
+ * because that assertion is what turned F-2672-2 from a silent false green into a loud red.
+ */
+function variantOf(find, replace) {
+  const src = fs.readFileSync(TOOL, 'utf8');
+  assert.ok(src.includes(find), `the variant anchor must still exist in the subject: ${find}`);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 's2674-var-'));
+  const p = path.join(dir, 'status-archive-audit.mjs'); // .mjs is load-bearing: node keys ESM on the extension
+  fs.writeFileSync(p, src.replace(find, replace));
+  return p;
+}
+
+const runTool = (tool, args, env = {}) => {
+  const r = spawnSync('node', [tool, ...args], {
+    timeout: 240_000, killSignal: 'SIGKILL', encoding: 'utf8', maxBuffer: 64 << 20,
+    env: { ...process.env, ...env },
+  });
+  return { rc: r.status, out: String(r.stdout ?? ''), err: String(r.stderr ?? '') };
+};
+
+test('10. F-2673-1 — the UNBOUNDED walk announces its price BEFORE it walks, not after', () => {
+  const root = fixtureWithOneDrop();
+  try {
+    const r = run([], { GR_REPO: root });
+    // F-2215-1: the fixture must reach the state being measured, or the ordering proves nothing.
+    assert.equal(r.rc, 1, 'control validity: this fixture is LOST, so there IS a walk to precede');
+    assert.match(r.out, /^UNBOUNDED WALK \(no --limit\)/m, 'a bare run must name itself as unbounded');
+    assert.match(r.out, /price\s+: (~\d+ ms per blob read|UNKNOWN)/, 'and must state what the walk COSTS');
+    assert.match(r.out, /ANSWER ALREADY KNOWN \(live board\)/, 'and the verdict already written down (F-2278-1)');
+
+    // THE LOAD-BEARING ASSERTION. "Before starting" is the entire gate: a price printed after ten
+    // minutes of grinding is not a price, it is a receipt. Ordering is checked by POSITION in
+    // stdout, which is what a reader actually experiences, and it is what breaks if the block is
+    // ever moved below the loop.
+    assert.ok(
+      r.out.indexOf('UNBOUNDED WALK') < r.out.indexOf('DROPPED '),
+      'the announcement must precede the findings it prices -- a receipt is not a warning',
+    );
+    assert.ok(
+      r.out.indexOf('UNBOUNDED WALK') < r.out.search(/^(CLEAN|LOST):/m),
+      'and it must precede the verdict line for the same reason',
+    );
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('11. F-2673-1 — a caller who CHOSE a bound is not lectured (one population, not two)', () => {
+  const root = fixtureWithOneDrop();
+  try {
+    for (const form of [['--limit', '40'], ['--limit', '40', '--quiet']]) {
+      const r = run(form, { GR_REPO: root });
+      assert.ok(r.out.length > 0, `control validity: ${form.join(' ')} really ran`);
+      assert.doesNotMatch(
+        r.out, /UNBOUNDED WALK/,
+        `${form.join(' ')}: the announcement belongs to the unbounded path ALONE -- the battery leg's output is a contract`,
+      );
+    }
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('12. TEETH — remove the announcement and arm 10 goes blind, while nothing else moves', () => {
+  const root = fixtureWithOneDrop();
+  // The mutation is the regression this cure exists to forbid: the announcement suppressed, the
+  // walk unchanged. If rc or the verdict moved too, arm 10 could be passing on some OTHER signal.
+  const stripped = variantOf('if (limit === Infinity) {', 'if (false) {');
+  try {
+    const cured = runTool(TOOL, [], { GR_REPO: root });
+    const variant = runTool(stripped, [], { GR_REPO: root });
+    assert.ok(cured.out.length > 0 && variant.out.length > 0, 'control validity: both really ran (F-2672-2)');
+
+    assert.match(cured.out, /UNBOUNDED WALK/, 'the cured subject announces');
+    assert.doesNotMatch(variant.out, /UNBOUNDED WALK/, 'the variant does not -- so arm 10 has something to catch');
+
+    // ADDITIVE, PROVEN: the announcement changes what a reader LEARNS, never what the gate DECIDES.
+    assert.equal(variant.rc, cured.rc, 'the announcement must not touch rc');
+    assert.equal(
+      variant.out.match(/^(CLEAN|LOST):.*$/m)?.[0],
+      cured.out.match(/^(CLEAN|LOST):.*$/m)?.[0],
+      'nor the verdict line -- if these differed, the cure would be changing the answer, not pricing it',
+    );
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+    fs.rmSync(path.dirname(stripped), { recursive: true, force: true });
+  }
+});
