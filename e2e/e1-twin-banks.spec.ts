@@ -270,3 +270,23 @@ async function determinismSnapshot(page: Page): Promise<unknown> {
     };
   });
 }
+
+// Run 10: exercise the actual scatter owner against the delivered GLB height source.
+test('riparian scatter keeps its counts and clears both build banks and fords', async ({ page }) => {
+  await page.goto('/?debug&epoch=epoch-1-frontier&contract=e1-twin-banks&nowaves&seed=code-presentation&tier=full');
+  await page.waitForFunction(() => document.querySelector('#game-canvas')?.getAttribute('data-terrain3d-pilot-landmark-load-state') === 'mounted');
+  const result = await page.evaluate(async () => {
+    const { DetailScatter } = await Function('return import("/src/world/Scatter.ts")')();
+    const terrain = await Function('return import("/src/world/Terrain.ts")')();
+    const { activeContract } = await Function('return import("/src/meta/ContractFamilies.ts")')();
+    const scatter = new DetailScatter(), tile = activeContract().tileParams;
+    const details = scatter.seededInstances as Array<{ x: number; y: number; z: number }>;
+    const result = { count: scatter.diagnostics().seededInstances, kinds: scatter.classes.filter((c: { instances: unknown[] }) => c.instances.length).map((c: { profile: { material: { userData: { riparianCard: string } } } }) => c.profile.material.userData.riparianCard),
+      grounded: details.every(d => Math.abs(d.y - terrain.visualY(d.x, d.z, -0.025)) < 1e-7),
+      clear: details.every(d => !tile.buildZones.some((b: { minX: number; maxX: number; minZ: number; maxZ: number }) => d.x >= b.minX - 1 && d.x <= b.maxX + 1 && d.z >= b.minZ - 1 && d.z <= b.maxZ + 1) && !tile.fords.some((f: { x: number; halfWidth: number }) => Math.abs(d.x - f.x) < f.halfWidth + 1 && Math.abs(d.z) < 7)) };
+    scatter.dispose(); return result;
+  });
+  expect(result.count).toBe(test.info().project.name === 'mobile-chrome' ? 102 : 248);
+  expect(result.kinds).toEqual(['driftwood', 'willow', 'reeds', 'driftwood', 'willow', 'reeds']);
+  expect(result.grounded).toBe(true); expect(result.clear).toBe(true);
+});
