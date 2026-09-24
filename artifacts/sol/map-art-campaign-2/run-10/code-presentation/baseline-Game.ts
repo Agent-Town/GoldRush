@@ -351,7 +351,6 @@ import { DevilsAlleyPresentation } from '../systems/DevilsAlleyPresentation';
 import { SeedCaravanPresentation } from '../systems/SeedCaravanPresentation';
 import { CanalChoiceSystem, CANAL_DECISION_REACH } from '../systems/CanalChoiceSystem';
 import { CanalFlowPresentation } from '../systems/CanalFlowPresentation';
-import { RelaySignalPresentation } from '../systems/RelaySignalPresentation';
 
 // THE CLAIM DECLARES ITS CLIP GROUPS BEFORE ITS FIRST WAVE (task hero-slot-clip-split, 2026-09-07).
 // This module is reached only through `await import('./game/Game')` in src/main.ts:166 — nothing
@@ -5134,7 +5133,6 @@ export class Game {
       );
       this.scene.add(this.devilsAlleyPresentation.group);
     }
-    if (this.interferenceFront.isDeclared) new RelaySignalPresentation(this.scene, () => this.interferenceFront.diagnostics, () => this.signalSuppression.suppresses('relayChains'), () => RelaySignalPresentation.terrainState(this.canvas, this.terrain3dPilotCancelled));
     // A5: the band joins the scene only where a front is declared, so no other map pays a draw
     // call for it. It starts hidden — `syncInterferenceBand` shows it while the wall crosses.
     if (this.interferenceFront.isDeclared) {

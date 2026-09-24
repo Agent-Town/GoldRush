@@ -1,0 +1,22 @@
+{
+  "base": "91ededde0c05f568c9fcd076ec2d4c2d523063b8",
+  "sourceAndReportPaths": [
+    "artifacts/sol/map-art-campaign-2/report.md",
+    "e2e/e1-twin-banks.spec.ts",
+    "e2e/e2-trestle.spec.ts",
+    "e2e/e7-relay-rush-front.spec.ts",
+    "reviews/sol-map-art-current-status-20260909.md",
+    "scripts/rail-path-presentation.test.mjs",
+    "scripts/relay-signal-presentation.test.mjs",
+    "scripts/twin-banks-scatter-presentation.test.mjs",
+    "src/game/Game.ts",
+    "src/systems/RelaySignalPresentation.ts",
+    "src/world/RailPath.ts",
+    "src/world/Scatter.ts"
+  ],
+  "allChangesWithinFirewall": true,
+  "allowedUncommittedChurn": [
+    "logs/guard-stats.jsonl"
+  ],
+  "gameAddedLines": 2
+}

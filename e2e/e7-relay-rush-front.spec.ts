@@ -364,3 +364,38 @@ test('the deadline latch arms only on a front that can be discharged', async () 
     await vite.close();
   }
 });
+
+test('the authored relay lamp pulses only while its live site is active and unmuted', async ({ page }) => {
+  await page.route('**/src/game/Game.ts*', async route => {
+    const response = await route.fetch(), source = await response.text();
+    const anchor = 'this.scene.add(this.detailScatter.group);';
+    expect(source.split(anchor)).toHaveLength(2);
+    await route.fulfill({ response, body: source.replace(anchor, `${anchor} window.__RELAY_SCENE__ = this.scene;`) });
+  });
+  const errors = await open(page, DEBUG_URL);
+  await page.waitForFunction(() => document.querySelector('#game-canvas')?.getAttribute('data-terrain3d-pilot-landmark-load-state') === 'mounted');
+  await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
+  const lamps = () => page.evaluate(() => {
+    const scene = (window as unknown as { __RELAY_SCENE__: import('three').Scene }).__RELAY_SCENE__;
+    return [1, 2, 3, 4].map(i => {
+      let value: number | null = null;
+      scene.getObjectByName(`rush-relay-r${i}-frame`)?.traverse(object => {
+        const material = (object as import('three').Mesh<import('three').BufferGeometry, import('three').MeshStandardMaterial>).material;
+        if (material?.userData.relaySignal) value = material.userData.relaySignal.value;
+      });
+      return value;
+    });
+  });
+  await expect.poll(lamps).toEqual([0, 0, 0, 0]);
+  expect(await page.evaluate(() => window.__GR_TEST__!.placeFree('sentry_beacon', -25, 44))).toBe(true);
+  await advance(page, 0.2);
+  await expect.poll(async () => (await lamps())[1]).toBeGreaterThan(0);
+  const lit = await lamps(); expect([lit[0], lit[2], lit[3]]).toEqual([0, 0, 0]);
+  await page.waitForTimeout(150); expect((await lamps())[1]).not.toBe(lit[1]);
+  await advance(page, (await front(page)).secondsToNextFront + 5.8);
+  expect((await front(page)).sites[1]!.muted).toBe(true);
+  await expect.poll(lamps).toEqual([0, 0, 0, 0]);
+  await advance(page, 20);
+  await expect.poll(async () => (await lamps())[1]).toBeGreaterThan(0);
+  expect(errors.consoleErrors).toEqual([]); expect(errors.pageErrors).toEqual([]);
+});

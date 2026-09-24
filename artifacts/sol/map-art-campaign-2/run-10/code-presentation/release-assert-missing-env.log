@@ -1,0 +1,11 @@
+file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:4
+if (process.env.GR_RELEASE !== 'e1') throw new Error('build:release requires GR_RELEASE=e1');
+                                           ^
+
+Error: build:release requires GR_RELEASE=e1
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:4:44
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.4.0

@@ -1,0 +1,332 @@
+(node:45621) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 54 tests using 1 worker
+
+(node:46268) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   1 [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake (4.3s)
+(node:50747) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   2 [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool (12.2s)
+(node:53198) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘   3 [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords (25.6s)
+(node:76963) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 [desktop-chrome] › e2e/e1-twin-banks.spec.ts:135:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges (7.1s)
+  ✓   5 [desktop-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable (6.6s)
+  ✓   6 [desktop-chrome] › e2e/e1-twin-banks.spec.ts:275:1 › riparian scatter keeps its counts and clears both build banks and fords (4.2s)
+(node:76963) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓   7 [desktop-chrome] › e2e/e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems (12.8s)
+  ✓   8 [desktop-chrome] › e2e/e2-trestle.spec.ts:137:1 › the shared rail presentation finishes Trestle joins and endpoints without changing the route (3.5s)
+  ✓   9 [desktop-chrome] › e2e/e7-dead-band-suppression.spec.ts:45:1 › the Dead Band refuses drones, playbooks and relay chains (4.2s)
+  ✓  10 [desktop-chrome] › e2e/e7-dead-band-suppression.spec.ts:81:1 › CONTROL — Relay Valley, same tile, keeps all three (4.4s)
+  ✓  11 [desktop-chrome] › e2e/e7-relay-rush-front.spec.ts:60:1 › the front keeps its schedule, mutes only what it covers, and never damages it (7.1s)
+  ✓  12 [desktop-chrome] › e2e/e7-relay-rush-front.spec.ts:147:1 › a playbook refuses under the wall and works the moment it passes (7.5s)
+  ✓  13 [desktop-chrome] › e2e/e7-relay-rush-front.spec.ts:227:1 › a plain boot fields the front and its objective without ?debug (7.3s)
+  ✓  14 [desktop-chrome] › e2e/e7-relay-rush-front.spec.ts:269:1 › the deadline latch arms only on a front that can be discharged (97ms)
+  ✓  15 [desktop-chrome] › e2e/e7-relay-rush-front.spec.ts:368:1 › the authored relay lamp pulses only while its live site is active and unmuted (5.9s)
+  ✓  16 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (4.4s)
+  ✓  17 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (4.6s)
+  ✓  18 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (4.3s)
+  ✓  19 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (4.2s)
+  ✓  20 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (7.1s)
+  ✓  21 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.7s)
+  ✓  22 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (6.2s)
+  ✓  23 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (5.8s)
+  ✓  24 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.9s)
+  ✓  25 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.9s)
+  ✓  26 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (4.0s)
+  ✓  27 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (4.6s)
+(node:34850) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  28 [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake (5.5s)
+(node:36925) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  29 [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool (12.7s)
+(node:40993) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  30 [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords (23.1s)
+(node:52194) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  31 [mobile-chrome] › e2e/e1-twin-banks.spec.ts:135:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges (6.4s)
+  ✘  32 [mobile-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable (7.8s)
+(node:57696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  33 [mobile-chrome] › e2e/e1-twin-banks.spec.ts:275:1 › riparian scatter keeps its counts and clears both build banks and fords (3.2s)
+(node:57696) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  34 [mobile-chrome] › e2e/e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems (9.6s)
+  ✓  35 [mobile-chrome] › e2e/e2-trestle.spec.ts:137:1 › the shared rail presentation finishes Trestle joins and endpoints without changing the route (2.8s)
+  ✓  36 [mobile-chrome] › e2e/e7-dead-band-suppression.spec.ts:45:1 › the Dead Band refuses drones, playbooks and relay chains (3.4s)
+  ✓  37 [mobile-chrome] › e2e/e7-dead-band-suppression.spec.ts:81:1 › CONTROL — Relay Valley, same tile, keeps all three (3.4s)
+  ✓  38 [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:60:1 › the front keeps its schedule, mutes only what it covers, and never damages it (5.9s)
+  ✓  39 [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:147:1 › a playbook refuses under the wall and works the moment it passes (7.4s)
+  ✓  40 [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:227:1 › a plain boot fields the front and its objective without ?debug (9.0s)
+  ✓  41 [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:269:1 › the deadline latch arms only on a front that can be discharged (182ms)
+  ✓  42 [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:368:1 › the authored relay lamp pulses only while its live site is active and unmuted (7.4s)
+  ✓  43 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (4.2s)
+  ✓  44 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (4.1s)
+  ✓  45 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (4.0s)
+  ✓  46 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (3.8s)
+  ✓  47 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (7.1s)
+  ✓  48 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (10.8s)
+  ✓  49 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (6.5s)
+  ✓  50 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (5.0s)
+  ✓  51 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.6s)
+  ✓  52 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.7s)
+  ✓  53 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.8s)
+  ✓  54 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (4.0s)
+
+
+  1) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "bank"
+
+      94 |   expect(snapshot.water?.fordPresent).toBe(true);
+      95 |   expect(snapshot.water?.fordStones).toBe(14);
+    > 96 |   expect(snapshot.samples.center?.zone).toBe('river');
+         |                                         ^
+      97 |   expect(snapshot.samples.westFord?.zone).toBe('ford');
+      98 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');
+      99 |   await shot(page, testInfo, 'both-bank-base');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:96:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      46 |   await teleport(page, x, z + 2);
+      47 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
+    > 48 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      49 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+      50 | }
+      51 |
+        at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:48:110)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:110:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      226 |       timeout: 15_000,
+      227 |     })
+    > 228 |     .toBe(true);
+          |      ^
+      229 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);
+      230 |   expect(track?.deepSamples).toBe(0);
+      231 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);
+        at assertFordRoute (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:228:6)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:127:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "bank"
+
+      94 |   expect(snapshot.water?.fordPresent).toBe(true);
+      95 |   expect(snapshot.water?.fordStones).toBe(14);
+    > 96 |   expect(snapshot.samples.center?.zone).toBe('river');
+         |                                         ^
+      97 |   expect(snapshot.samples.westFord?.zone).toBe('ford');
+      98 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');
+      99 |   await shot(page, testInfo, 'both-bank-base');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:96:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      46 |   await teleport(page, x, z + 2);
+      47 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
+    > 48 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      49 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+      50 | }
+      51 |
+        at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:48:110)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:110:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      226 |       timeout: 15_000,
+      227 |     })
+    > 228 |     .toBe(true);
+          |      ^
+      229 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);
+      230 |   expect(track?.deepSamples).toBe(0);
+      231 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);
+        at assertFordRoute (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:228:6)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:127:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.07178324562509593,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      195 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      196 |   const second = await determinismSnapshot(page);
+    > 197 |   expect(second).toEqual(first);
+          |                  ^
+      198 |   expectClean(errors);
+      199 | });
+      200 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:197:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/code-presentation/e2e-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7 failed
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable ───
+  47 passed (6.3m)

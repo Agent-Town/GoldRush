@@ -1,0 +1,23 @@
+PASS  rc=0  0s  test:task-guards
+FAIL  rc=1  3s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+--- test:citations (rc=1) last 20 lines ---
+=== citation-title-guard ===
+citations scanned : 730  (in 1612 tracked tasks/**/*.md)
+  CARRIES-TITLE   419
+  NUMBER-ONLY     255
+  CARRIES-LINE    56
+grandfathered keys: 262
+NOT GATED         : 2739 citation(s) in 621 tracked .md outside tasks/ — largest logs/suite-red-inventory.md (1239). Scope ruling: F-1252-1, owner's desk.
+
+FAIL — 1 citation(s) cite a line with no recoverable test title:
+  tasks/e1-spec-truth-1.md::e2e/e1-twin-banks.spec.ts:110   (found 1, grandfathered 0)
+      tasks/e1-spec-truth-1.md:21  1. **Twin Banks placements** (`e2e/e1-twin-banks.spec.ts:110-111`): move both stockpile targets off the winc…
+
+Fix: quote the test title beside the citation, e.g.
+  `e2e/foo.spec.ts:123` ("the exact test title, or an … elided form")
+The line number is a convenience that decays; the title is what survives.
+
+guards: 2/3 passed -- RED: test:citations
+guard-stats: appended 3 record(s) to /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/logs/guard-stats.jsonl
