@@ -653,7 +653,12 @@ function main() {
 
   let diff = '';
   try {
-    diff = git(['diff', `${prev.sha}..HEAD`, '--', 'tasks/BACKLOG.md']);
+    // ledger-shape-1 (owner ruling 2026-09-24, item 13a): a newly-added owner-gated row can be
+    // added to `tasks/BACKLOG.md` or to a `tasks/backlog/**` part, and a birth this pathspec
+    // cannot see is a gate that never reaches the desk — the exact defect this guard exists for.
+    // The DIRECTORY, not a glob: git pathspecs are matched by git, and `tasks/backlog` covers
+    // every file under it, present and future, without a shell expanding anything.
+    diff = git(['diff', `${prev.sha}..HEAD`, '--', 'tasks/BACKLOG.md', 'tasks/backlog']);
   } catch (err) {
     console.error(`desk-birth-guard: REFUSING — could not diff the window: ${err.message}`);
     process.exit(2);

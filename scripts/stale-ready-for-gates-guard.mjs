@@ -73,6 +73,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
 
 // A leaf in one of these states is no longer "awaiting its drain".
 export const LANDED = new Set(['merged', 'shipped', 'verified-by-owner', 'superseded']);
@@ -146,15 +147,23 @@ function main() {
   const ledgerPath = path.join(root, 'tasks/BACKLOG.md');
   const goalsPath = path.join(root, 'tasks/goals.json');
   const keys = indexLeaves(JSON.parse(fs.readFileSync(goalsPath, 'utf8')));
-  const lines = fs.readFileSync(ledgerPath, 'utf8').split('\n');
+  // ledger-shape-1 (owner ruling 2026-09-24, item 13a): the ledger is `tasks/BACKLOG.md` PLUS
+  // `tasks/backlog/**`. Reading the index alone after the split narrows the carrier set SILENTLY and
+  // fails OPEN. `scripts/ledger-corpus.mjs` lists the corpus; coordinates carry their own file so
+  // they still resolve (bare for the index, `<rel>:<n>` for a split part).
+  const parts = backlogParts(root);
+  const lines = parts.flatMap((part) => part.text.split('\n').map((line, i) => ({
+    line, where: part.rel === BACKLOG_INDEX ? String(i + 1) : `${part.rel}:${i + 1}`,
+  })));
 
   const buckets = { STALE: [], quoted: [], 'closed-row': [], 'body-only': [], unresolved: [], 'in-flight': [] };
-  lines.forEach((line, i) => {
+  lines.forEach(({ line, where }) => {
     const c = classifyRow(line, keys);
-    if (c) buckets[c.verdict].push({ n: i + 1, line, ...c });
+    if (c) buckets[c.verdict].push({ n: where, line, ...c });
   });
 
-  const carriers = lines.filter((l) => l.includes(CLAIM)).length;
+  const carriers = lines.filter((l) => l.line.includes(CLAIM)).length;
+  console.log(`ledger corpus: ${corpusDeclaration(parts.map((p) => p.rel))}`);
   console.log(
     `tasks/BACKLOG.md: ${carriers} row(s) carry ${CLAIM} · ` +
       `${buckets.quoted.length} quotation · ${buckets['closed-row'].length} closed-row · ` +
