@@ -8,7 +8,7 @@
 |---|---|---|---|---|---|
 | Process / factory | 9 | 5 | 4 | 0 | D. Fair: the ledgers, the self-auditing dry fires and the argument-limit outage are real |
 | Build / deploy | 10 | 6 | 4 | 0 (BUILD-4's wrangler drift was the reviewer's host) | D. Fair, with the clone caveat: `tsc` is green here |
-| Testing / CI | 8 | 3 | 5 | 0 ("gates never green" is wrong for the node battery: eight green runs on main this week; right for the e2e inventory of 2026-08-11) | D. Fair on CI and the e2e baseline; too hard on the node battery |
+| Testing / CI | 8 | 2 | 6 | 0 ("gates never green" is wrong for the node battery: eight green runs on main this week; right for the e2e inventory of 2026-08-11) | D. Fair on CI and the e2e baseline; too hard on the node battery |
 | Repo hygiene | 7 | 5 | 2 | 0 | D. Fair; the tree is 8.4 GB tracked and growing about 1 GB a day |
 | Simulation / netcode | 8 | 7 | 1 (SIM-6: the store resolves here; the missing pin is real) | 0 | C. Fair; SIM-1 and SIM-2 are the two that matter |
 | Architecture | 9 | 9 | 0 (ARCH-1's drift examples are partly wrong in detail and worse in one place) | 0 | C. Fair |
