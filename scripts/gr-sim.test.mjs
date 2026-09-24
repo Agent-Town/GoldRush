@@ -929,7 +929,8 @@ test('Twin Banks consumes its declared crossings and build zones before securing
       },
     },
     { id: 'river', source: 'tileParams.river', data: {} },
-    { id: 'water_crossings', source: 'tileParams.ford', data: { count: 2, ids: ['east-ford', 'west-ford'] } },
+    // sol-entry-framing-2 (2026-09-24): the entry landmark sentence rides the map's named rule (MechanicsManifest entryRuleIds).
+    { id: 'water_crossings', source: 'tileParams.ford', data: { count: 2, ids: ['east-ford', 'west-ford'], entryLandmark: 'This map leads with the south_bank_homestead landmark.' } },
   ]);
   assert.deepEqual(transcript[0].stablePrefix.mechanics.posting.waves, [
     { event: 'secure', wave: 20, source: 'twist.secureWave' },
