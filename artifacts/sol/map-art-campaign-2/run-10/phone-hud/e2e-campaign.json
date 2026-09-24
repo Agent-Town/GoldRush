@@ -1,0 +1,1342 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/node_modules/.bin/playwright",
+      "test",
+      "e2e/e1-night-shift.spec.ts",
+      "e2e/e1-twin-banks.spec.ts",
+      "e2e/e1-baron.spec.ts",
+      "e2e/e2-trestle.spec.ts",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e1-baron.spec.ts",
+      "file": "e1-baron.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "default contract does not preload Baron art",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3037,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:15:11.653Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-92ff19e1bf8f415686ca",
+          "file": "e1-baron.spec.ts",
+          "line": 317,
+          "column": 1
+        },
+        {
+          "title": "contract board requires science plus two secured claims and always shows an earned medal",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15353,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:15:14.945Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-0e6f0e7d6d8c7df1d0f9",
+          "file": "e1-baron.spec.ts",
+          "line": 343,
+          "column": 1
+        },
+        {
+          "title": "board launch uses the live Baron contract for cadence and wave 20 spawn",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7382,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:15:30.306Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-70f32a92fac18ab743e6",
+          "file": "e1-baron.spec.ts",
+          "line": 389,
+          "column": 1
+        },
+        {
+          "title": "Baron manifest loads and taunts fire at waves 5, 12, and 18",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15056,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[2m    \"bannerAsset\": \"loaded\",\u001b[22m\n\u001b[2m    \"bannerSprites\": 0,\u001b[22m\n\u001b[32m-   \"baronAnimationLoaded\": true,\u001b[39m\n\u001b[31m+   \"baronAnimationLoaded\": false,\u001b[39m\n\u001b[2m    \"baronAsset\": \"loaded\",\u001b[22m\n\u001b[2m    \"baronSprites\": 0,\u001b[22m\n\u001b[2m    \"portraitSrc\": null,\u001b[22m\n\u001b[2m  }\u001b[22m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[2m    \"bannerAsset\": \"loaded\",\u001b[22m\n\u001b[2m    \"bannerSprites\": 0,\u001b[22m\n\u001b[32m-   \"baronAnimationLoaded\": true,\u001b[39m\n\u001b[31m+   \"baronAnimationLoaded\": false,\u001b[39m\n\u001b[2m    \"baronAsset\": \"loaded\",\u001b[22m\n\u001b[2m    \"baronSprites\": 0,\u001b[22m\n\u001b[2m    \"portraitSrc\": null,\u001b[22m\n\u001b[2m  }\u001b[22m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n    at expectBaronPresentationPrefetched (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts:302:6)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts:414:9",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts",
+                      "column": 6,
+                      "line": 302
+                    },
+                    "snippet": "  300 |       { timeout: 10_000 },\n  301 |     )\n> 302 |     .toEqual({\n      |      ^\n  303 |       baronAsset: 'loaded',\n  304 |       bannerAsset: 'loaded',\n  305 |       baronAnimationLoaded: true,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts",
+                        "column": 6,
+                        "line": 302
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 1\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[2m    \"bannerAsset\": \"loaded\",\u001b[22m\n\u001b[2m    \"bannerSprites\": 0,\u001b[22m\n\u001b[32m-   \"baronAnimationLoaded\": true,\u001b[39m\n\u001b[31m+   \"baronAnimationLoaded\": false,\u001b[39m\n\u001b[2m    \"baronAsset\": \"loaded\",\u001b[22m\n\u001b[2m    \"baronSprites\": 0,\u001b[22m\n\u001b[2m    \"portraitSrc\": null,\u001b[22m\n\u001b[2m  }\u001b[22m\n\nCall Log:\n- Timeout 10000ms exceeded while waiting on the predicate\n\n  300 |       { timeout: 10_000 },\n  301 |     )\n> 302 |     .toEqual({\n      |      ^\n  303 |       baronAsset: 'loaded',\n  304 |       bannerAsset: 'loaded',\n  305 |       baronAnimationLoaded: true,\n    at expectBaronPresentationPrefetched (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts:302:6)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts:414:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:15:37.693Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts",
+                    "column": 6,
+                    "line": 302
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-d2db8778de5cb6b5eca4",
+          "file": "e1-baron.spec.ts",
+          "line": 411,
+          "column": 1
+        },
+        {
+          "title": "wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16530,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:15:56.180Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-47331d8970f09cb3923c",
+          "file": "e1-baron.spec.ts",
+          "line": 489,
+          "column": 1
+        },
+        {
+          "title": "Baron damage visibly drains bar segments and the launcher stays carried",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6880,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:16:13.039Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-aad4b66f347615da3603",
+          "file": "e1-baron.spec.ts",
+          "line": 526,
+          "column": 1
+        },
+        {
+          "title": "standard rig damage defeats the Baron, doubles science, and persists the medal",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14389,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:16:19.928Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-473eed4a1498adb05e8a",
+          "file": "e1-baron.spec.ts",
+          "line": 557,
+          "column": 1
+        },
+        {
+          "title": "fast Baron kill preserves the queued arrival card before secure",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8170,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:16:34.326Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-146eeec72279189214ba",
+          "file": "e1-baron.spec.ts",
+          "line": 607,
+          "column": 1
+        },
+        {
+          "title": "Baron art fallback keeps the placeholder path green when generated art fails",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4999,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:16:42.505Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-ba4e93b7e76e4f3d7d59",
+          "file": "e1-baron.spec.ts",
+          "line": 644,
+          "column": 1
+        },
+        {
+          "title": "same-frame overrun and Baron kill does not award the medal",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6268,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:16:47.514Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-c6c8086084ce756fbb24",
+          "file": "e1-baron.spec.ts",
+          "line": 675,
+          "column": 1
+        },
+        {
+          "title": "loss to the Baron contract remains the normal overrun ledger with no medal",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6194,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:16:53.793Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91d138ffb4f3256e7e3e-6067adc3390ef5461cb2",
+          "file": "e1-baron.spec.ts",
+          "line": 704,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e1-night-shift.spec.ts",
+      "file": "e1-night-shift.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "loads Night Shift contract data and ramps full, dusk, dark, dawn lighting",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 13899,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatchObject\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 2\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[32m-   \"fogFar\": 42,\u001b[39m\n\u001b[32m-   \"fogNear\": 18,\u001b[39m\n\u001b[31m+   \"fogFar\": 58,\u001b[39m\n\u001b[31m+   \"fogNear\": 34,\u001b[39m\n\u001b[2m  }\u001b[22m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatchObject\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 2\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[32m-   \"fogFar\": 42,\u001b[39m\n\u001b[32m-   \"fogNear\": 18,\u001b[39m\n\u001b[31m+   \"fogFar\": 58,\u001b[39m\n\u001b[31m+   \"fogNear\": 34,\u001b[39m\n\u001b[2m  }\u001b[22m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:339:93",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts",
+                      "column": 93,
+                      "line": 339
+                    },
+                    "snippet": "  337 |     darkness: 1,\n  338 |   });\n> 339 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({\n      |                                                                                             ^\n  340 |     fogNear: 18,\n  341 |     fogFar: 42,\n  342 |   });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts",
+                        "column": 93,
+                        "line": 339
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatchObject\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n\u001b[32m- Expected  - 2\u001b[39m\n\u001b[31m+ Received  + 2\u001b[39m\n\n\u001b[2m  Object {\u001b[22m\n\u001b[32m-   \"fogFar\": 42,\u001b[39m\n\u001b[32m-   \"fogNear\": 18,\u001b[39m\n\u001b[31m+   \"fogFar\": 58,\u001b[39m\n\u001b[31m+   \"fogNear\": 34,\u001b[39m\n\u001b[2m  }\u001b[22m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  337 |     darkness: 1,\n  338 |   });\n> 339 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({\n      |                                                                                             ^\n  340 |     fogNear: 18,\n  341 |     fogFar: 42,\n  342 |   });\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:339:93"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:17:00.031Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts",
+                    "column": 93,
+                    "line": 339
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c38a7a307748b8a8b125-621e685d4edc04c56d35",
+          "file": "e1-night-shift.spec.ts",
+          "line": 271,
+          "column": 1
+        },
+        {
+          "title": "lantern post is Night Shift gated and relights a true-dark light ring",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 14773,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.06045960784313726\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.06045960784313726\u001b[39m\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:405:52",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts",
+                      "column": 52,
+                      "line": 405
+                    },
+                    "snippet": "  403 |   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);\n  404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);\n> 405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);\n      |                                                    ^\n  406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);\n  407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);\n  408 |   await shot(page, testInfo, 'true-dark-lantern-ring');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts",
+                        "column": 52,
+                        "line": 405
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.06045960784313726\u001b[39m\n\n  403 |   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);\n  404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);\n> 405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);\n      |                                                    ^\n  406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);\n  407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);\n  408 |   await shot(page, testInfo, 'true-dark-lantern-ring');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:405:52"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:17:18.017Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts",
+                    "column": 52,
+                    "line": 405
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c38a7a307748b8a8b125-c23620a03a3dd77f45f5",
+          "file": "e1-night-shift.spec.ts",
+          "line": 372,
+          "column": 1
+        },
+        {
+          "title": "lantern coverage is necessary for threat visibility",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5684,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:17:37.307Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c38a7a307748b8a8b125-ce5e83406c0ba580ca39",
+          "file": "e1-night-shift.spec.ts",
+          "line": 413,
+          "column": 1
+        },
+        {
+          "title": "a lantern pool makes only its build island readable at true dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5589,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:17:43.311Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "lantern-brightness",
+                      "contentType": "application/json",
+                      "body": "ewogICJpbnNpZGUiOiAwLjIzODQxMDk4MDM5MjE1Njg2LAogICJvdXRzaWRlIjogMC4wNDUwNTY0NzA1ODgyMzUyOTUsCiAgInJhdGlvIjogNS4yOTEzODE2MjEzMjA1MjIKfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c38a7a307748b8a8b125-d242853a8d1e1cdfff28",
+          "file": "e1-night-shift.spec.ts",
+          "line": 435,
+          "column": 1
+        },
+        {
+          "title": "cold lantern relight costs survive run suspend and continue",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 23617,
+                  "error": {
+                    "message": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.",
+                    "stack": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.\n    at waitForSavedNightWave (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:171:14)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:480:23",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts",
+                      "column": 14,
+                      "line": 171
+                    },
+                    "snippet": "  169 |\n  170 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {\n> 171 |   await page.waitForFunction(\n      |              ^\n  172 |     ([key, wanted]) => {\n  173 |       const raw = localStorage.getItem(key);\n  174 |       if (!raw) return false;"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts",
+                        "column": 14,
+                        "line": 171
+                      },
+                      "message": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.\n\n  169 |\n  170 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {\n> 171 |   await page.waitForFunction(\n      |              ^\n  172 |     ([key, wanted]) => {\n  173 |       const raw = localStorage.getItem(key);\n  174 |       if (!raw) return false;\n    at waitForSavedNightWave (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:171:14)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:480:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:17:48.908Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts",
+                    "column": 14,
+                    "line": 171
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c38a7a307748b8a8b125-2a862df3924d24d19603",
+          "file": "e1-night-shift.spec.ts",
+          "line": 478,
+          "column": 1
+        },
+        {
+          "title": "pre-placed lanterns leave the full player build cap available",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4560,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:18:15.518Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c38a7a307748b8a8b125-bbc38dc8d27a0231658e",
+          "file": "e1-night-shift.spec.ts",
+          "line": 520,
+          "column": 1
+        },
+        {
+          "title": "render dimming does not stop turret acquisition or damage",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3616,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:18:20.442Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c38a7a307748b8a8b125-86dbeefbd865bd69d907",
+          "file": "e1-night-shift.spec.ts",
+          "line": 555,
+          "column": 1
+        },
+        {
+          "title": "wave 25 secures the claim through the dawn victory path",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:18:24.066Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c38a7a307748b8a8b125-9619c9cf8b8bb52de2ec",
+          "file": "e1-night-shift.spec.ts",
+          "line": 582,
+          "column": 1
+        },
+        {
+          "title": "seeded Night Shift diagnostics and dark render budget are stable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11526,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:18:27.701Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c38a7a307748b8a8b125-6706d7998239755660d9",
+          "file": "e1-night-shift.spec.ts",
+          "line": 611,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e1-twin-banks.spec.ts",
+      "file": "e1-twin-banks.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "loads Twin Banks contract with two fords, two build zones, and one loss stake",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6890,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"river\"\u001b[39m\nReceived: \u001b[31m\"bank\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"river\"\u001b[39m\nReceived: \u001b[31m\"bank\"\u001b[39m\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:96:41",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts",
+                      "column": 41,
+                      "line": 96
+                    },
+                    "snippet": "  94 |   expect(snapshot.water?.fordPresent).toBe(true);\n  95 |   expect(snapshot.water?.fordStones).toBe(14);\n> 96 |   expect(snapshot.samples.center?.zone).toBe('river');\n     |                                         ^\n  97 |   expect(snapshot.samples.westFord?.zone).toBe('ford');\n  98 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');\n  99 |   await shot(page, testInfo, 'both-bank-base');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts",
+                        "column": 41,
+                        "line": 96
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"river\"\u001b[39m\nReceived: \u001b[31m\"bank\"\u001b[39m\n\n  94 |   expect(snapshot.water?.fordPresent).toBe(true);\n  95 |   expect(snapshot.water?.fordStones).toBe(14);\n> 96 |   expect(snapshot.samples.center?.zone).toBe('river');\n     |                                         ^\n  97 |   expect(snapshot.samples.westFord?.zone).toBe('ford');\n  98 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');\n  99 |   await shot(page, testInfo, 'both-bank-base');\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:96:41"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:18:39.257Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts",
+                    "column": 41,
+                    "line": 96
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-a7da5ef7e6a5f14124c5",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 64,
+          "column": 1
+        },
+        {
+          "title": "builds sluices and stockpiles on both banks against one gold pool",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 14577,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:48:110)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:110:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts",
+                      "column": 110,
+                      "line": 48
+                    },
+                    "snippet": "  46 |   await teleport(page, x, z + 2);\n  47 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);\n> 48 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);\n     |                                                                                                              ^\n  49 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);\n  50 | }\n  51 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts",
+                        "column": 110,
+                        "line": 48
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  46 |   await teleport(page, x, z + 2);\n  47 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);\n> 48 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);\n     |                                                                                                              ^\n  49 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);\n  50 | }\n  51 |\n    at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:48:110)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:110:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:18:49.395Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts",
+                    "column": 110,
+                    "line": 48
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-3be4adc79236449dcbab",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "routes enemies through both west and east fords",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 24279,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n    at assertFordRoute (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:228:6)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:127:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts",
+                      "column": 6,
+                      "line": 228
+                    },
+                    "snippet": "  226 |       timeout: 15_000,\n  227 |     })\n> 228 |     .toBe(true);\n      |      ^\n  229 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);\n  230 |   expect(track?.deepSamples).toBe(0);\n  231 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts",
+                        "column": 6,
+                        "line": 228
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 15000ms exceeded while waiting on the predicate\n\n  226 |       timeout: 15_000,\n  227 |     })\n> 228 |     .toBe(true);\n      |      ^\n  229 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);\n  230 |   expect(track?.deepSamples).toBe(0);\n  231 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);\n    at assertFordRoute (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:228:6)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:127:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:19:09.215Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts",
+                    "column": 6,
+                    "line": 228
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-b620f192131b1d4ffa1f",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 122,
+          "column": 1
+        },
+        {
+          "title": "north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7484,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:19:38.633Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-47d083c0cf7f9d22ce52",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 135,
+          "column": 1
+        },
+        {
+          "title": "seeded Twin Banks diagnostics are stable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6227,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:19:46.448Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d7d659093f3e6361c72c-7a8481718955907c19ec",
+          "file": "e1-twin-banks.spec.ts",
+          "line": 192,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2-trestle.spec.ts",
+      "file": "e2-trestle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "The Trestle unlocks after Hill Mine and runs the shipped crossing systems",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10988,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T02:19:52.754Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8b3cbbc1b96fb4b85d3d-562a31f21c1c179e7301",
+          "file": "e2-trestle.spec.ts",
+          "line": 60,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-24T02:15:11.131Z",
+    "duration": 292770.054,
+    "expected": 19,
+    "skipped": 0,
+    "unexpected": 7,
+    "flaky": 0
+  }
+}

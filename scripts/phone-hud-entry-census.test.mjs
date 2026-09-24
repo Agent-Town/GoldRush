@@ -4,7 +4,8 @@ import { readFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import { coverage, ENTRY_BODIES, EVIDENCE, magentaMask, MAPS, sourceHash, unionArea } from './phone-hud-entry-census.mjs';
 
-// Run-8 painted union, rounded up by at most 0.05 percentage points for raster edges.
+// Retain the six run-8 ceilings; pin the four additions from the run-10 census.
+// Painted unions are rounded up by at most 0.05 percentage points for raster edges.
 // Updating a capture does not update its budget.
 const PHONE_UNION_CEILINGS = {
   'e8-low-orbit': 13.45, 'e9-seed-run': 12.15, 'e10-archive-world': 14.60,
@@ -33,6 +34,8 @@ test('the campaign mask counts coverage and distinguishes offscreen bodies', () 
 });
 
 test('current census pins persistent union, entry coverage and unchanged desktop boxes', () => {
+  assert.deepEqual([...MAPS].sort(), Object.keys(PHONE_UNION_CEILINGS).sort(), 'census map omitted or unbudgeted');
+  assert.deepEqual([...MAPS].sort(), Object.keys(DESKTOP_UNION_CEILINGS).sort());
   // The original reduction is still measured against the pre-cure run-8 baseline.
   const original = JSON.parse(readFileSync('artifacts/sol/map-art-campaign-2/run-8/phone-hud/before.json', 'utf8'));
   const previous = JSON.parse(readFileSync('artifacts/sol/map-art-campaign-2/run-8/phone-hud/after.json', 'utf8'));

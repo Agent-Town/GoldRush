@@ -1,0 +1,1392 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "artifacts/sol/map-art-campaign-2/run-10/phone-hud/playwright.release.config.ts",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/playwright.release.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "/release-build\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "0aaa67564a86ac9951c750b49ddb35927d3c2e29",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts"
+        ],
+        "testMatch": [
+          "/release-build\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 5312 --strictPort",
+      "cwd": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b",
+      "url": "http://127.0.0.1:5312",
+      "reuseExistingServer": false,
+      "timeout": 20000
+    }
+  },
+  "suites": [
+    {
+      "title": "release-build.spec.ts",
+      "file": "release-build.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "first player reaches textured town actors and places a Dry Gulch spring sluice",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 454966,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 150000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                        "column": 57,
+                        "line": 79
+                      },
+                      "message": "Error: locator.click: Test timeout of 150000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('contract-briefing-dismiss')\u001b[22m\n\n\n  77 |   await waitForContract(page, 'e1-dry-gulch');\n  78 |   if (await page.getByTestId('contract-briefing').isVisible().catch(() => false)) {\n> 79 |     await page.getByTestId('contract-briefing-dismiss').click();\n     |                                                         ^\n  80 |   }\n  81 |   await harvestSluiceBudget(page);\n  82 |   if (await page.getByTestId('upgrade-overlay').isVisible()) {\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:79:57"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:15:54.497Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-desktop-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-desktop-chrome/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-58c299c8a13aeab3fac1",
+          "file": "release-build.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "the-claim boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2124,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:31.541Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-2ca2e3af316f576a94d3",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-drill-yard boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2789,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:33.843Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-3fc70deac3cc84e05aa6",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-dry-gulch boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1766,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:36.638Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-88a74c5f883fa26cb704",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-night-shift boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1850,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:38.409Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-bc3c5bf7084e4d5c41d8",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-twin-banks boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1983,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:40.264Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-a3a141085cdc837443e5",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-baron boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2118,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:42.253Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-fe2d04b2fd8b53f37173",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "the schoolhouse ledger opens clean on a progressed frontier save",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2035,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:44.378Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-f8e92c838c33600cb18a",
+          "file": "release-build.spec.ts",
+          "line": 113,
+          "column": 1
+        },
+        {
+          "title": "the in-run Stamp Mill site explains the release horizon without funding controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4955,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:46.420Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-4d78d8c75f8c8487e6c9",
+          "file": "release-build.spec.ts",
+          "line": 131,
+          "column": 1
+        },
+        {
+          "title": "debug and era query seams are inert",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2445,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:51.382Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-2475ddc4dd47afed234c",
+          "file": "release-build.spec.ts",
+          "line": 156,
+          "column": 1
+        },
+        {
+          "title": "an imported later ledger heals to the frontier and plays",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2794,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:53.834Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-624ad5b9c6bc757d636c",
+          "file": "release-build.spec.ts",
+          "line": 179,
+          "column": 1
+        },
+        {
+          "title": "later contract URLs and modes decline to the Claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5034,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:23:56.635Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-002c45014d77f4493657",
+          "file": "release-build.spec.ts",
+          "line": 214,
+          "column": 1
+        },
+        {
+          "title": "a forged locked launch declines to the Claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1979,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:24:01.676Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-5a0fdbbfbbb3337eac4c",
+          "file": "release-build.spec.ts",
+          "line": 224,
+          "column": 1
+        },
+        {
+          "title": "a legitimate suspend resumes its unlocked contract",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1928,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:24:03.661Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-386b1d6e5a27e4082333",
+          "file": "release-build.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "dist has no later manifest ids or plate/GLB assets",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 142,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoThrow\u001b[2m()\u001b[22m\n\nError name:    \u001b[31m\"Error\"\u001b[39m\nError message: \u001b[31m\"Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs\u001b[39m\n\u001b[31mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75\u001b[39m\n\u001b[31m  throw new Error(`[release-build] ${message}`);\u001b[39m\n\u001b[31m        ^·\u001b[39m\n\u001b[31mError: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb\u001b[39m\n\u001b[31m    at fail \u001b[90m(file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:75:9\u001b[90m)\u001b[39m\u001b[31m\u001b[39m\n\u001b[31m    at \u001b[90mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:46:26·\u001b[39m\n\u001b[31mNode.js v26.4.0\u001b[39m\n\u001b[31m\"\u001b[39m\n\n      \u001b[2mat fail \u001b[90m(\u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:75:9\u001b[90m)\u001b[39m\u001b[22m\n      \u001b[2mat \u001b[22m\u001b[90mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:46:26\u001b[22m\n      Node.js v26.4.0\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:245:16\u001b[22m\n      \u001b[2mat Object.<anonymous> (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:11428:9)\u001b[22m\n      \u001b[2mat invokeMatcher (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12925:20)\u001b[22m\n      \u001b[2mat invoke (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12904:109)\u001b[22m\n      \u001b[2mat _Zone.run (\u001b[22mnode_modules/playwright-core/lib/coreBundle.js\u001b[2m:8572:40)\u001b[22m\n      \u001b[2mat callMatcherAsStep (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12905:64)\u001b[22m\n      \u001b[2mat Object.toThrow (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12867:23)\u001b[22m\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:248:11\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1662:15\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1154:17\u001b[22m\n      \u001b[2mat TimeoutManager.withRunnable (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:426:9)\u001b[22m\n      \u001b[2mat TestInfoImpl._runWithTimeout (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1152:34)\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1660:22\u001b[22m\n      \u001b[2mat WorkerMain._runTest (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1633:5)\u001b[22m\n      \u001b[2mat WorkerMain.runTestGroup (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1528:9)\u001b[22m\n      \u001b[2mat process.<anonymous> (\u001b[22mnode_modules/playwright/lib/common/index.js\u001b[2m:1991:25)\u001b[22m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoThrow\u001b[2m()\u001b[22m\n\nError name:    \u001b[31m\"Error\"\u001b[39m\nError message: \u001b[31m\"Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs\u001b[39m\n\u001b[31mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75\u001b[39m\n\u001b[31m  throw new Error(`[release-build] ${message}`);\u001b[39m\n\u001b[31m        ^·\u001b[39m\n\u001b[31mError: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb\u001b[39m\n\u001b[31m    at fail \u001b[90m(file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:75:9\u001b[90m)\u001b[39m\u001b[31m\u001b[39m\n\u001b[31m    at \u001b[90mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:46:26·\u001b[39m\n\u001b[31mNode.js v26.4.0\u001b[39m\n\u001b[31m\"\u001b[39m\n\n      \u001b[2mat fail \u001b[90m(\u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:75:9\u001b[90m)\u001b[39m\u001b[22m\n      \u001b[2mat \u001b[22m\u001b[90mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:46:26\u001b[22m\n      Node.js v26.4.0\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:245:16\u001b[22m\n      \u001b[2mat Object.<anonymous> (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:11428:9)\u001b[22m\n      \u001b[2mat invokeMatcher (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12925:20)\u001b[22m\n      \u001b[2mat invoke (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12904:109)\u001b[22m\n      \u001b[2mat _Zone.run (\u001b[22mnode_modules/playwright-core/lib/coreBundle.js\u001b[2m:8572:40)\u001b[22m\n      \u001b[2mat callMatcherAsStep (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12905:64)\u001b[22m\n      \u001b[2mat Object.toThrow (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12867:23)\u001b[22m\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:248:11\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1662:15\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1154:17\u001b[22m\n      \u001b[2mat TimeoutManager.withRunnable (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:426:9)\u001b[22m\n      \u001b[2mat TestInfoImpl._runWithTimeout (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1152:34)\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1660:22\u001b[22m\n      \u001b[2mat WorkerMain._runTest (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1633:5)\u001b[22m\n      \u001b[2mat WorkerMain.runTestGroup (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1528:9)\u001b[22m\n      \u001b[2mat process.<anonymous> (\u001b[22mnode_modules/playwright/lib/common/index.js\u001b[2m:1991:25)\u001b[22m\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:248:11",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                      "column": 11,
+                      "line": 248
+                    },
+                    "snippet": "  246 |     cwd: process.cwd(),\n  247 |     env: { ...process.env, GR_RELEASE: 'e1' },\n> 248 |   })).not.toThrow();\n      |           ^\n  249 | });\n  250 |\n  251 | async function seedProfile("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                        "column": 11,
+                        "line": 248
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoThrow\u001b[2m()\u001b[22m\n\nError name:    \u001b[31m\"Error\"\u001b[39m\nError message: \u001b[31m\"Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs\u001b[39m\n\u001b[31mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75\u001b[39m\n\u001b[31m  throw new Error(`[release-build] ${message}`);\u001b[39m\n\u001b[31m        ^·\u001b[39m\n\u001b[31mError: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb\u001b[39m\n\u001b[31m    at fail \u001b[90m(file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:75:9\u001b[90m)\u001b[39m\u001b[31m\u001b[39m\n\u001b[31m    at \u001b[90mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:46:26·\u001b[39m\n\u001b[31mNode.js v26.4.0\u001b[39m\n\u001b[31m\"\u001b[39m\n\n      \u001b[2mat fail \u001b[90m(\u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:75:9\u001b[90m)\u001b[39m\u001b[22m\n      \u001b[2mat \u001b[22m\u001b[90mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:46:26\u001b[22m\n      Node.js v26.4.0\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:245:16\u001b[22m\n      \u001b[2mat Object.<anonymous> (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:11428:9)\u001b[22m\n      \u001b[2mat invokeMatcher (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12925:20)\u001b[22m\n      \u001b[2mat invoke (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12904:109)\u001b[22m\n      \u001b[2mat _Zone.run (\u001b[22mnode_modules/playwright-core/lib/coreBundle.js\u001b[2m:8572:40)\u001b[22m\n      \u001b[2mat callMatcherAsStep (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12905:64)\u001b[22m\n      \u001b[2mat Object.toThrow (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12867:23)\u001b[22m\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:248:11\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1662:15\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1154:17\u001b[22m\n      \u001b[2mat TimeoutManager.withRunnable (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:426:9)\u001b[22m\n      \u001b[2mat TestInfoImpl._runWithTimeout (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1152:34)\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1660:22\u001b[22m\n      \u001b[2mat WorkerMain._runTest (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1633:5)\u001b[22m\n      \u001b[2mat WorkerMain.runTestGroup (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1528:9)\u001b[22m\n      \u001b[2mat process.<anonymous> (\u001b[22mnode_modules/playwright/lib/common/index.js\u001b[2m:1991:25)\u001b[22m\n\n  246 |     cwd: process.cwd(),\n  247 |     env: { ...process.env, GR_RELEASE: 'e1' },\n> 248 |   })).not.toThrow();\n      |           ^\n  249 | });\n  250 |\n  251 | async function seedProfile(\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:248:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": "ZmlsZTovLy9Vc2Vycy9yb2Jpbi9DbGF1ZGUvUHJvamVjdHMvR29sZCUyMFJ1c2gvd29ya3RyZWVzL2xhbmUtYi9zY3JpcHRzL2Fzc2VydC1yZWxlYXNlLWJ1aWxkLm1qczo3NQogIHRocm93IG5ldyBFcnJvcihgW3JlbGVhc2UtYnVpbGRdICR7bWVzc2FnZX1gKTsKICAgICAgICBeCgpFcnJvcjogW3JlbGVhc2UtYnVpbGRdIGxhdGVyIHBsYXRlL0dMQiBhc3NldHMgZW1pdHRlZDogbW90b3ItaGF1bGVyLURHRXg5djI3LWRpZXQtYzJiZWEwYWMuZ2xiCiAgICBhdCBmYWlsIBtbOTBtKGZpbGU6Ly8vVXNlcnMvcm9iaW4vQ2xhdWRlL1Byb2plY3RzL0dvbGQlMjBSdXNoL3dvcmt0cmVlcy9sYW5lLWIvG1szOW1zY3JpcHRzL2Fzc2VydC1yZWxlYXNlLWJ1aWxkLm1qczo3NTo5G1s5MG0pG1szOW0KICAgIGF0IBtbOTBtZmlsZTovLy9Vc2Vycy9yb2Jpbi9DbGF1ZGUvUHJvamVjdHMvR29sZCUyMFJ1c2gvd29ya3RyZWVzL2xhbmUtYi8bWzM5bXNjcmlwdHMvYXNzZXJ0LXJlbGVhc2UtYnVpbGQubWpzOjQ2OjI2CgpOb2RlLmpzIHYyNi40LjAK"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:24:05.595Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-desktop-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-desktop-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                    "column": 11,
+                    "line": 248
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-2cae460f0a7d7834e617",
+          "file": "release-build.spec.ts",
+          "line": 244,
+          "column": 1
+        },
+        {
+          "title": "first player reaches textured town actors and places a Dry Gulch spring sluice",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 150000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 143904,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n    at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:330:103)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:81:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                      "column": 103,
+                      "line": 330
+                    },
+                    "snippet": "  328 |   await moveHeroTo(page, -4.5, -6.4);\n  329 |   await moveHeroTo(page, -2.5, -6.4);\n> 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);\n      |                                                                                                       ^\n  331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);\n  332 |   await moveHeroTo(page, -4.5, -6.4);\n  333 |   await moveHeroTo(page, -4.5, 6.7);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                        "column": 103,
+                        "line": 330
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\nCall Log:\n- Timeout 5000ms exceeded while waiting on the predicate\n\n  328 |   await moveHeroTo(page, -4.5, -6.4);\n  329 |   await moveHeroTo(page, -2.5, -6.4);\n> 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);\n      |                                                                                                       ^\n  331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);\n  332 |   await moveHeroTo(page, -4.5, -6.4);\n  333 |   await moveHeroTo(page, -4.5, 6.7);\n    at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:330:103)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:81:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:24:06.176Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                    "column": 103,
+                    "line": 330
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-869d38ae3b981a3d0aff",
+          "file": "release-build.spec.ts",
+          "line": 24,
+          "column": 1
+        },
+        {
+          "title": "the-claim boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1735,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:33.200Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-7d34621cf64cfc2faff0",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-drill-yard boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1522,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:35.194Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-0c244ed33feaae330b7f",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-dry-gulch boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1927,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:36.721Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-e992f6498b92cb9451c1",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-night-shift boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1758,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:38.652Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-fe3cab6386ed3f309fb0",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-twin-banks boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1736,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:40.415Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-dd371bd9b4811c4d78f8",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "e1-baron boots through the E1 release door",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1656,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:42.155Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-e7ddccde5c608417a74a",
+          "file": "release-build.spec.ts",
+          "line": 103,
+          "column": 3
+        },
+        {
+          "title": "the schoolhouse ledger opens clean on a progressed frontier save",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1574,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:43.816Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-1592694f1b62af17e98d",
+          "file": "release-build.spec.ts",
+          "line": 113,
+          "column": 1
+        },
+        {
+          "title": "the in-run Stamp Mill site explains the release horizon without funding controls",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4254,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:45.395Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-140d2fbcd6f8f0e3bfd9",
+          "file": "release-build.spec.ts",
+          "line": 131,
+          "column": 1
+        },
+        {
+          "title": "debug and era query seams are inert",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1567,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:49.654Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-a2726d1abf3e1a26b802",
+          "file": "release-build.spec.ts",
+          "line": 156,
+          "column": 1
+        },
+        {
+          "title": "an imported later ledger heals to the frontier and plays",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1774,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:51.227Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-fa22a4c9ccd19acbd707",
+          "file": "release-build.spec.ts",
+          "line": 179,
+          "column": 1
+        },
+        {
+          "title": "later contract URLs and modes decline to the Claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3378,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:53.005Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-5253d77ed213eae6d08b",
+          "file": "release-build.spec.ts",
+          "line": 214,
+          "column": 1
+        },
+        {
+          "title": "a forged locked launch declines to the Claim",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1561,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:56.388Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-3ed66e1bf5d51c3bdf82",
+          "file": "release-build.spec.ts",
+          "line": 224,
+          "column": 1
+        },
+        {
+          "title": "a legitimate suspend resumes its unlocked contract",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1655,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "watchErrors suppressed 0 known GLTFLoader blob error(s)\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:57.953Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-f52bbe476fe85476915b",
+          "file": "release-build.spec.ts",
+          "line": 233,
+          "column": 1
+        },
+        {
+          "title": "dist has no later manifest ids or plate/GLB assets",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 119,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoThrow\u001b[2m()\u001b[22m\n\nError name:    \u001b[31m\"Error\"\u001b[39m\nError message: \u001b[31m\"Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs\u001b[39m\n\u001b[31mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75\u001b[39m\n\u001b[31m  throw new Error(`[release-build] ${message}`);\u001b[39m\n\u001b[31m        ^·\u001b[39m\n\u001b[31mError: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb\u001b[39m\n\u001b[31m    at fail \u001b[90m(file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:75:9\u001b[90m)\u001b[39m\u001b[31m\u001b[39m\n\u001b[31m    at \u001b[90mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:46:26·\u001b[39m\n\u001b[31mNode.js v26.4.0\u001b[39m\n\u001b[31m\"\u001b[39m\n\n      \u001b[2mat fail \u001b[90m(\u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:75:9\u001b[90m)\u001b[39m\u001b[22m\n      \u001b[2mat \u001b[22m\u001b[90mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:46:26\u001b[22m\n      Node.js v26.4.0\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:245:16\u001b[22m\n      \u001b[2mat Object.<anonymous> (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:11428:9)\u001b[22m\n      \u001b[2mat invokeMatcher (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12925:20)\u001b[22m\n      \u001b[2mat invoke (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12904:109)\u001b[22m\n      \u001b[2mat _Zone.run (\u001b[22mnode_modules/playwright-core/lib/coreBundle.js\u001b[2m:8572:40)\u001b[22m\n      \u001b[2mat callMatcherAsStep (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12905:64)\u001b[22m\n      \u001b[2mat Object.toThrow (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12867:23)\u001b[22m\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:248:11\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1662:15\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1154:17\u001b[22m\n      \u001b[2mat TimeoutManager.withRunnable (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:426:9)\u001b[22m\n      \u001b[2mat TestInfoImpl._runWithTimeout (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1152:34)\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1660:22\u001b[22m\n      \u001b[2mat WorkerMain._runTest (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1633:5)\u001b[22m\n      \u001b[2mat WorkerMain.runTestGroup (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1528:9)\u001b[22m\n      \u001b[2mat process.<anonymous> (\u001b[22mnode_modules/playwright/lib/common/index.js\u001b[2m:1991:25)\u001b[22m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoThrow\u001b[2m()\u001b[22m\n\nError name:    \u001b[31m\"Error\"\u001b[39m\nError message: \u001b[31m\"Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs\u001b[39m\n\u001b[31mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75\u001b[39m\n\u001b[31m  throw new Error(`[release-build] ${message}`);\u001b[39m\n\u001b[31m        ^·\u001b[39m\n\u001b[31mError: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb\u001b[39m\n\u001b[31m    at fail \u001b[90m(file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:75:9\u001b[90m)\u001b[39m\u001b[31m\u001b[39m\n\u001b[31m    at \u001b[90mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:46:26·\u001b[39m\n\u001b[31mNode.js v26.4.0\u001b[39m\n\u001b[31m\"\u001b[39m\n\n      \u001b[2mat fail \u001b[90m(\u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:75:9\u001b[90m)\u001b[39m\u001b[22m\n      \u001b[2mat \u001b[22m\u001b[90mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:46:26\u001b[22m\n      Node.js v26.4.0\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:245:16\u001b[22m\n      \u001b[2mat Object.<anonymous> (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:11428:9)\u001b[22m\n      \u001b[2mat invokeMatcher (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12925:20)\u001b[22m\n      \u001b[2mat invoke (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12904:109)\u001b[22m\n      \u001b[2mat _Zone.run (\u001b[22mnode_modules/playwright-core/lib/coreBundle.js\u001b[2m:8572:40)\u001b[22m\n      \u001b[2mat callMatcherAsStep (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12905:64)\u001b[22m\n      \u001b[2mat Object.toThrow (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12867:23)\u001b[22m\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:248:11\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1662:15\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1154:17\u001b[22m\n      \u001b[2mat TimeoutManager.withRunnable (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:426:9)\u001b[22m\n      \u001b[2mat TestInfoImpl._runWithTimeout (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1152:34)\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1660:22\u001b[22m\n      \u001b[2mat WorkerMain._runTest (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1633:5)\u001b[22m\n      \u001b[2mat WorkerMain.runTestGroup (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1528:9)\u001b[22m\n      \u001b[2mat process.<anonymous> (\u001b[22mnode_modules/playwright/lib/common/index.js\u001b[2m:1991:25)\u001b[22m\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:248:11",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                      "column": 11,
+                      "line": 248
+                    },
+                    "snippet": "  246 |     cwd: process.cwd(),\n  247 |     env: { ...process.env, GR_RELEASE: 'e1' },\n> 248 |   })).not.toThrow();\n      |           ^\n  249 | });\n  250 |\n  251 | async function seedProfile("
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                        "column": 11,
+                        "line": 248
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoThrow\u001b[2m()\u001b[22m\n\nError name:    \u001b[31m\"Error\"\u001b[39m\nError message: \u001b[31m\"Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs\u001b[39m\n\u001b[31mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75\u001b[39m\n\u001b[31m  throw new Error(`[release-build] ${message}`);\u001b[39m\n\u001b[31m        ^·\u001b[39m\n\u001b[31mError: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb\u001b[39m\n\u001b[31m    at fail \u001b[90m(file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:75:9\u001b[90m)\u001b[39m\u001b[31m\u001b[39m\n\u001b[31m    at \u001b[90mfile:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39m\u001b[31mscripts/assert-release-build.mjs:46:26·\u001b[39m\n\u001b[31mNode.js v26.4.0\u001b[39m\n\u001b[31m\"\u001b[39m\n\n      \u001b[2mat fail \u001b[90m(\u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:75:9\u001b[90m)\u001b[39m\u001b[22m\n      \u001b[2mat \u001b[22m\u001b[90mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/\u001b[39mscripts/assert-release-build.mjs\u001b[2m:46:26\u001b[22m\n      Node.js v26.4.0\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:245:16\u001b[22m\n      \u001b[2mat Object.<anonymous> (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:11428:9)\u001b[22m\n      \u001b[2mat invokeMatcher (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12925:20)\u001b[22m\n      \u001b[2mat invoke (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12904:109)\u001b[22m\n      \u001b[2mat _Zone.run (\u001b[22mnode_modules/playwright-core/lib/coreBundle.js\u001b[2m:8572:40)\u001b[22m\n      \u001b[2mat callMatcherAsStep (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12905:64)\u001b[22m\n      \u001b[2mat Object.toThrow (\u001b[22mnode_modules/playwright/lib/matchers/expect.js\u001b[2m:12867:23)\u001b[22m\n      \u001b[2mat \u001b[22mfile:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts\u001b[2m:248:11\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1662:15\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1154:17\u001b[22m\n      \u001b[2mat TimeoutManager.withRunnable (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:426:9)\u001b[22m\n      \u001b[2mat TestInfoImpl._runWithTimeout (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1152:34)\u001b[22m\n      \u001b[2mat \u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1660:22\u001b[22m\n      \u001b[2mat WorkerMain._runTest (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1633:5)\u001b[22m\n      \u001b[2mat WorkerMain.runTestGroup (\u001b[22mnode_modules/playwright/lib/worker/workerProcessEntry.js\u001b[2m:1528:9)\u001b[22m\n      \u001b[2mat process.<anonymous> (\u001b[22mnode_modules/playwright/lib/common/index.js\u001b[2m:1991:25)\u001b[22m\n\n  246 |     cwd: process.cwd(),\n  247 |     env: { ...process.env, GR_RELEASE: 'e1' },\n> 248 |   })).not.toThrow();\n      |           ^\n  249 | });\n  250 |\n  251 | async function seedProfile(\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:248:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "buffer": "ZmlsZTovLy9Vc2Vycy9yb2Jpbi9DbGF1ZGUvUHJvamVjdHMvR29sZCUyMFJ1c2gvd29ya3RyZWVzL2xhbmUtYi9zY3JpcHRzL2Fzc2VydC1yZWxlYXNlLWJ1aWxkLm1qczo3NQogIHRocm93IG5ldyBFcnJvcihgW3JlbGVhc2UtYnVpbGRdICR7bWVzc2FnZX1gKTsKICAgICAgICBeCgpFcnJvcjogW3JlbGVhc2UtYnVpbGRdIGxhdGVyIHBsYXRlL0dMQiBhc3NldHMgZW1pdHRlZDogbW90b3ItaGF1bGVyLURHRXg5djI3LWRpZXQtYzJiZWEwYWMuZ2xiCiAgICBhdCBmYWlsIBtbOTBtKGZpbGU6Ly8vVXNlcnMvcm9iaW4vQ2xhdWRlL1Byb2plY3RzL0dvbGQlMjBSdXNoL3dvcmt0cmVlcy9sYW5lLWIvG1szOW1zY3JpcHRzL2Fzc2VydC1yZWxlYXNlLWJ1aWxkLm1qczo3NTo5G1s5MG0pG1szOW0KICAgIGF0IBtbOTBtZmlsZTovLy9Vc2Vycy9yb2Jpbi9DbGF1ZGUvUHJvamVjdHMvR29sZCUyMFJ1c2gvd29ya3RyZWVzL2xhbmUtYi8bWzM5bXNjcmlwdHMvYXNzZXJ0LXJlbGVhc2UtYnVpbGQubWpzOjQ2OjI2CgpOb2RlLmpzIHYyNi40LjAK"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-09-24T04:26:59.612Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts",
+                    "column": 11,
+                    "line": 248
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "8f95432dcf142c683a49-a591d97ce77a3d92cbdd",
+          "file": "release-build.spec.ts",
+          "line": 244,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-24T04:15:53.778Z",
+    "duration": 666140.169,
+    "expected": 26,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

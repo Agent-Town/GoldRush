@@ -1,0 +1,45 @@
+[
+  {
+    "name": "e2e-release",
+    "args": [
+      "playwright",
+      "test",
+      "--config",
+      "artifacts/sol/map-art-campaign-2/run-10/phone-hud/playwright.release.config.ts",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "e2e-release-control",
+    "args": [
+      "playwright",
+      "test",
+      "e2e/release-build.spec.ts:24",
+      "e2e/release-build.spec.ts:244",
+      "--config",
+      "artifacts/sol/map-art-campaign-2/run-10/phone-hud/playwright.release.config.ts",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "e2e-release-recheck",
+    "args": [
+      "playwright",
+      "test",
+      "e2e/release-build.spec.ts:24",
+      "--config",
+      "artifacts/sol/map-art-campaign-2/run-10/phone-hud/playwright.release.config.ts",
+      "--project=desktop-chrome",
+      "--workers=1",
+      "--reporter=line,json",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-recheck"
+    ],
+    "exitCode": 1
+  }
+]

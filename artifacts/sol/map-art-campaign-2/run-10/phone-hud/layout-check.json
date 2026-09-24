@@ -1,0 +1,847 @@
+[
+  {
+    "width": 390,
+    "height": 844,
+    "contract": "e1-night-shift",
+    "targets": [
+      {
+        "id": "hud-agent",
+        "box": {
+          "x": 76,
+          "y": 92,
+          "width": 122,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-build",
+        "box": {
+          "x": 256,
+          "y": 594,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-pause",
+        "box": {
+          "x": 338,
+          "y": 8,
+          "width": 44,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "world-info-note-title",
+        "box": {
+          "x": 64,
+          "y": 562.75,
+          "width": 134,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "touch-stick",
+        "box": {
+          "x": 18,
+          "y": 716.8125,
+          "width": 109.1875,
+          "height": 109.1875
+        },
+        "reachable": true
+      },
+      {
+        "id": "rotate-button",
+        "box": {
+          "x": 216,
+          "y": 758,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "weapon-toggle-button",
+        "box": {
+          "x": 264,
+          "y": 690,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "confirm-button",
+        "box": {
+          "x": 304,
+          "y": 758,
+          "width": 60,
+          "height": 60
+        },
+        "reachable": true
+      }
+    ],
+    "resourceFit": [],
+    "fit": [
+      {
+        "attribute": "data-hud-hp",
+        "text": "999 / 999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-gold",
+        "text": "9999/9999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-xp",
+        "text": "9999 / 9999 XP",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-level",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-wave-number",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-time",
+        "text": "99:59",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-name",
+        "text": "the Prospector",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-level",
+        "text": "L3",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-label",
+        "text": "approval-required",
+        "insidePanel": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "contract": "e1-twin-banks",
+    "targets": [
+      {
+        "id": "hud-agent",
+        "box": {
+          "x": 76,
+          "y": 92,
+          "width": 122,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-build",
+        "box": {
+          "x": 256,
+          "y": 594,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-pause",
+        "box": {
+          "x": 338,
+          "y": 8,
+          "width": 44,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "world-info-note-title",
+        "box": {
+          "x": 64,
+          "y": 562.75,
+          "width": 134,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "touch-stick",
+        "box": {
+          "x": 18,
+          "y": 716.8125,
+          "width": 109.1875,
+          "height": 109.1875
+        },
+        "reachable": true
+      },
+      {
+        "id": "rotate-button",
+        "box": {
+          "x": 216,
+          "y": 758,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "weapon-toggle-button",
+        "box": {
+          "x": 264,
+          "y": 690,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "confirm-button",
+        "box": {
+          "x": 304,
+          "y": 758,
+          "width": 60,
+          "height": 60
+        },
+        "reachable": true
+      }
+    ],
+    "resourceFit": [],
+    "fit": [
+      {
+        "attribute": "data-hud-hp",
+        "text": "999 / 999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-gold",
+        "text": "9999/9999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-xp",
+        "text": "9999 / 9999 XP",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-level",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-wave-number",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-time",
+        "text": "99:59",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-name",
+        "text": "the Prospector",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-level",
+        "text": "L3",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-label",
+        "text": "approval-required",
+        "insidePanel": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "contract": "e1-baron",
+    "targets": [
+      {
+        "id": "hud-agent",
+        "box": {
+          "x": 76,
+          "y": 184,
+          "width": 122,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-build",
+        "box": {
+          "x": 256,
+          "y": 594,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-pause",
+        "box": {
+          "x": 338,
+          "y": 100,
+          "width": 44,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "world-info-note-title",
+        "box": {
+          "x": 64,
+          "y": 562.75,
+          "width": 134,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "touch-stick",
+        "box": {
+          "x": 18,
+          "y": 716.8125,
+          "width": 109.1875,
+          "height": 109.1875
+        },
+        "reachable": true
+      },
+      {
+        "id": "rotate-button",
+        "box": {
+          "x": 216,
+          "y": 758,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "weapon-toggle-button",
+        "box": {
+          "x": 264,
+          "y": 690,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "confirm-button",
+        "box": {
+          "x": 296,
+          "y": 750,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      }
+    ],
+    "resourceFit": [],
+    "fit": [
+      {
+        "attribute": "data-hud-hp",
+        "text": "999 / 999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-gold",
+        "text": "9999/9999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-xp",
+        "text": "9999 / 9999 XP",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-level",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-wave-number",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-time",
+        "text": "99:59",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-name",
+        "text": "the Prospector",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-level",
+        "text": "L3",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-label",
+        "text": "approval-required",
+        "insidePanel": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "height": 844,
+    "contract": "e2-trestle",
+    "targets": [
+      {
+        "id": "hud-agent",
+        "box": {
+          "x": 76,
+          "y": 106,
+          "width": 122,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-build",
+        "box": {
+          "x": 256,
+          "y": 594,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-pause",
+        "box": {
+          "x": 338,
+          "y": 8,
+          "width": 44,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "world-info-note-title",
+        "box": {
+          "x": 64,
+          "y": 562.75,
+          "width": 134,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "touch-stick",
+        "box": {
+          "x": 18,
+          "y": 716.8125,
+          "width": 109.1875,
+          "height": 109.1875
+        },
+        "reachable": true
+      },
+      {
+        "id": "rotate-button",
+        "box": {
+          "x": 216,
+          "y": 758,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "weapon-toggle-button",
+        "box": {
+          "x": 264,
+          "y": 690,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "confirm-button",
+        "box": {
+          "x": 296,
+          "y": 750,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      }
+    ],
+    "resourceFit": [
+      {
+        "id": "hud-pressure",
+        "text": [
+          {
+            "text": "Pressure",
+            "x": 243,
+            "y": 63.5,
+            "right": 301.703125,
+            "bottom": 74.5
+          },
+          {
+            "text": "×2",
+            "x": 356.96875,
+            "y": 63,
+            "right": 369,
+            "bottom": 74
+          },
+          {
+            "text": "0/100",
+            "x": 310.1875,
+            "y": 78,
+            "right": 346.96875,
+            "bottom": 92
+          }
+        ],
+        "inside": true,
+        "overlap": false
+      }
+    ],
+    "fit": [
+      {
+        "attribute": "data-hud-hp",
+        "text": "999 / 999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-gold",
+        "text": "9999/9999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-xp",
+        "text": "9999 / 9999 XP",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-level",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-wave-number",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-time",
+        "text": "99:59",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-name",
+        "text": "the Prospector",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-level",
+        "text": "L3",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-label",
+        "text": "approval-required",
+        "insidePanel": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 430,
+    "height": 932,
+    "contract": "e1-night-shift",
+    "targets": [
+      {
+        "id": "hud-agent",
+        "box": {
+          "x": 76,
+          "y": 92,
+          "width": 161.546875,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-build",
+        "box": {
+          "x": 296,
+          "y": 682,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-pause",
+        "box": {
+          "x": 378,
+          "y": 8,
+          "width": 44,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "world-info-note-title",
+        "box": {
+          "x": 64,
+          "y": 650.75,
+          "width": 134,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "touch-stick",
+        "box": {
+          "x": 18,
+          "y": 793.609375,
+          "width": 120.390625,
+          "height": 120.390625
+        },
+        "reachable": true
+      },
+      {
+        "id": "rotate-button",
+        "box": {
+          "x": 256,
+          "y": 846,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "weapon-toggle-button",
+        "box": {
+          "x": 304,
+          "y": 778,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "confirm-button",
+        "box": {
+          "x": 336,
+          "y": 838,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      }
+    ],
+    "resourceFit": [],
+    "fit": [
+      {
+        "attribute": "data-hud-hp",
+        "text": "999 / 999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-gold",
+        "text": "9999/9999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-xp",
+        "text": "9999 / 9999 XP",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-level",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-wave-number",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-time",
+        "text": "99:59",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-name",
+        "text": "the Prospector",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-level",
+        "text": "L3",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-label",
+        "text": "approval-required",
+        "insidePanel": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 430,
+    "height": 932,
+    "contract": "e1-baron",
+    "targets": [
+      {
+        "id": "hud-agent",
+        "box": {
+          "x": 76,
+          "y": 92,
+          "width": 161.546875,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-build",
+        "box": {
+          "x": 296,
+          "y": 682,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      },
+      {
+        "id": "hud-pause",
+        "box": {
+          "x": 378,
+          "y": 8,
+          "width": 44,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "world-info-note-title",
+        "box": {
+          "x": 64,
+          "y": 650.75,
+          "width": 134,
+          "height": 44
+        },
+        "reachable": true
+      },
+      {
+        "id": "touch-stick",
+        "box": {
+          "x": 18,
+          "y": 793.609375,
+          "width": 120.390625,
+          "height": 120.390625
+        },
+        "reachable": true
+      },
+      {
+        "id": "rotate-button",
+        "box": {
+          "x": 256,
+          "y": 846,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "weapon-toggle-button",
+        "box": {
+          "x": 304,
+          "y": 778,
+          "width": 58,
+          "height": 58
+        },
+        "reachable": true
+      },
+      {
+        "id": "confirm-button",
+        "box": {
+          "x": 336,
+          "y": 838,
+          "width": 76,
+          "height": 76
+        },
+        "reachable": true
+      }
+    ],
+    "resourceFit": [],
+    "fit": [
+      {
+        "attribute": "data-hud-hp",
+        "text": "999 / 999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-gold",
+        "text": "9999/9999",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-xp",
+        "text": "9999 / 9999 XP",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-level",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-wave-number",
+        "text": "99",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-time",
+        "text": "99:59",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-name",
+        "text": "the Prospector",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-level",
+        "text": "L3",
+        "insidePanel": true
+      },
+      {
+        "attribute": "data-hud-agent-label",
+        "text": "approval-required",
+        "insidePanel": true
+      }
+    ],
+    "errors": []
+  }
+]
