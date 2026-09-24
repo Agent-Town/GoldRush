@@ -18,5 +18,8 @@ allowed=['src/systems/CameraRig.ts','src/agent/MechanicsManifest.ts','reviews/so
 staged=run(['git','diff','--cached','--name-only']).splitlines()
 assert all(x in allowed or x.startswith(str(root)+'/') for x in staged),staged
 run(['git','diff','--cached','--check','--','src/systems/CameraRig.ts','src/agent/MechanicsManifest.ts','reviews/sol-map-art-current-status-20260909.md'])
-print(run(['git','commit','--quiet','-m',f'feat: frame {id} entry landmarks', '-m','READY-FOR-GATES: per-map measurements, preserved holds and existing-test results are recorded in the run-10 entry review. Shared closing parity and release checks follow the six-map slice.']))
+message='READY-FOR-GATES: per-map measurements, preserved holds and existing-test results are recorded in the run-10 entry review. Shared closing parity and release checks follow the six-map slice.'
+if id=='e7-relay-rush':
+    message='READY-FOR-GATES: all six maps measured; remaining list EMPTY. Closing run note records replay/parity proofs, payloads, engine pairs, visual holds and the exact browser/release gate failures. Full browser/release acceptance remains HELD; protected assertions and pins are untouched.'
+print(run(['git','commit','--quiet','-m',f'feat: frame {id} entry landmarks', '-m',message]))
 print('lane',run(['git','rev-parse','HEAD']),'store',storehead)

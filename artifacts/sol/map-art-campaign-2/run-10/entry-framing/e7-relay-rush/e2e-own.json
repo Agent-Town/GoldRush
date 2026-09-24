@@ -1,0 +1,20 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/own-results",
+      "e2e/e7-relay-rush-front.spec.ts"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 45.37,
+    "log": "artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/e2e-own.log"
+  }
+]

@@ -17,6 +17,6 @@ Unique-magenta depth-tested body counts use a fixed DPR-1 viewport render target
 
 TypeScript and default/full/E1 builds PASS. First-town payload **34,339,545 B**; delta **+5,896 B** from the preceding map/build.
 
-Own existing browser spec exit: **0**. See [test receipt](e2e-own.json) and [log](e2e-own.log). Own unchanged Trestle gameplay spec PASS 2/2, desktop and mobile. Full-span top/bottom cropping is visible in the phone peak board and is not represented as a full-frame success. No protected assertion was changed. Shared replay, parity and scoped guards are recorded in the run note.
+Own existing browser spec exit: **0**. See [test receipt](e2e-own.json) and [log](e2e-own.log). Own unchanged Trestle gameplay spec PASS 2/2, desktop and mobile. Full-span top/bottom cropping is visible in the phone peak board and is not represented as a full-frame success. No protected assertion was changed. Shared replay, parity, release checks and all gate holds are recorded in the [closing run note](../run-note.md).
 
 Engine `3791c3f04a2941cd2b03a1b34883ef4ddee1c09d7d5e57630ef58416db65113b` → `2b0d52300abd6a7558c4d4a818e8bc61f0f3ffbde92984685d8f77a8aa653de4`. Engine pin remains drain-owned. Camera offset, FOV, zoom, every hero start, Game entry/replay hook, view schema, sim and asset geometry are unchanged.

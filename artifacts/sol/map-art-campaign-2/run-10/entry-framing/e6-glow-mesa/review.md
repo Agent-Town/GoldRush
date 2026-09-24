@@ -19,7 +19,7 @@ Unique-magenta depth-tested body counts use a fixed DPR-1 viewport render target
 
 TypeScript and default/full/E1 builds PASS. First-town payload **34,340,281 B**; delta **+736 B** from the preceding map/build.
 
-Own existing browser spec exit: **0**. See [test receipt](e2e-own.json) and [log](e2e-own.log). Own unchanged Atomic story suite PASS 10/10. Scoped guards PASS (see guards-gates.json); normal/replay/multiplayer camera poses match the baseline for 1,200 frames, and the old single-target route matches for 540 frames. The two-stop timing and visibility-case proof passes. No protected assertion was changed. Shared replay, parity and scoped guards are recorded in the run note.
+Own existing browser spec exit: **0**. See [test receipt](e2e-own.json) and [log](e2e-own.log). Own unchanged Atomic story suite PASS 10/10. Scoped guards PASS (see guards-gates.json); normal/replay/multiplayer camera poses match the baseline for 1,200 frames, and the old single-target route matches for 540 frames. The two-stop timing and visibility-case proof passes. No protected assertion was changed. Shared replay, parity, release checks and all gate holds are recorded in the [closing run note](../run-note.md).
 
 Additional body boards: [cooling-rack desktop](cooling-rack/board-1280.png) · [cooling-rack phone](cooling-rack/board-390.png).
 

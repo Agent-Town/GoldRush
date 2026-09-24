@@ -25,4 +25,19 @@ try{
   rows.push({contract:contract.id,declarations,allOtherMechanicsByteIdentical:JSON.stringify(after)===JSON.stringify(before)});
  }
  writeFileSync(`${root}/manifest-proof.json`,JSON.stringify(rows,null,2)+'\n');
+ const fixtures=JSON.parse(readFileSync('e2e/fixtures/e1-mechanics-manifests.json','utf8'));
+ const e1Ids=listContracts().map(({id})=>id);
+ const before=e1Ids.map(baseline),after=e1Ids.map(current),authorized=[];
+ assert.equal(JSON.stringify(before),JSON.stringify(fixtures),'pre-task source matches the protected E1 fixture');
+ for(const manifest of after)for(const rule of manifest.rules)if('entryLandmark' in rule.data){
+  authorized.push({contract:manifest.contractId,rule:rule.id,sentence:rule.data.entryLandmark});
+  delete rule.data.entryLandmark;
+ }
+ assert.equal(JSON.stringify(after),JSON.stringify(fixtures),'only the authorized E1 landmark sentences differ from the fixture');
+ assert.equal(authorized.length,3);
+ writeFileSync(`${root}/manifest-fixture-attribution.json`,JSON.stringify({
+  fixture:'e2e/fixtures/e1-mechanics-manifests.json',baselineBytesMatch:true,
+  candidateMatchesAfterRemovingOnlyAuthorizedSentences:true,authorized,
+  disposition:'The unchanged agent-view fixture test fails on both projects because these three required sentences are absent from the protected fixture. This is an introduced fixture mismatch, not a pre-existing failure. Test assertions and fixture remain untouched under the task firewall.',
+ },null,2)+'\n');
 }finally{await vite.close()}

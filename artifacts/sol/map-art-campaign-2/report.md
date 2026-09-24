@@ -853,34 +853,50 @@ Builds, 34+3 guards, mirror, census 4, loading 8, repeat 2, six mount cycles pas
 
 ## 2026-09-24 — run 10: entry — e1-night-shift
 
-2026-09-24 run 10: entry — DECLARED / HELD: already partly visible, so no glance. 1280 lampworks_yard: 77,509→77,506→77,505 px; 390 lampworks_yard: 9,127→9,128→9,128 px. lampworks_yard has nonzero body pixels at both widths. The unchanged zero-pixel trigger cannot cure partial cropping or HUD coverage; no improvement is credited to the live count variation. The phone yard and full lantern procession remain held. E1 34,322,816 B (+4,270 B). [Boards, timing and gates](run-10/entry-framing/e1-night-shift/review.md). 
+2026-09-24 run 10: entry — DECLARED / HELD: already partly visible, so no glance. 1280 lampworks_yard: 77,509→77,506→77,505 px; 390 lampworks_yard: 9,127→9,128→9,128 px. lampworks_yard has nonzero body pixels at both widths. The unchanged zero-pixel trigger cannot cure partial cropping or HUD coverage; no improvement is credited to the live count variation. The phone yard and full lantern procession remain held. E1 34,322,816 B (+4,270 B). [Boards, timing and gates](run-10/entry-framing/e1-night-shift/review.md).
 
 Engine `d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959` → `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b`. No pin move.
 
 
 ## 2026-09-24 — run 10: entry — e1-twin-banks
 
-2026-09-24 run 10: entry — IMPROVED: phone homestead revealed; desktop already visible. 1280 south_bank_homestead: 44,748→44,746→44,746 px; 390 south_bank_homestead: 0→49,902→0 px. The phone-only 2.5-second glance reveals south_bank_homestead and returns to the unchanged rider. Desktop correctly skips the already-visible house. Both braids, both banks, the other rig and HUD clearance remain separate holds; the single homestead does not establish full plate fidelity. E1 34,329,072 B (+6,256 B). [Boards, timing and gates](run-10/entry-framing/e1-twin-banks/review.md). 
+2026-09-24 run 10: entry — IMPROVED: phone homestead revealed; desktop already visible. 1280 south_bank_homestead: 44,748→44,746→44,746 px; 390 south_bank_homestead: 0→49,902→0 px. The phone-only 2.5-second glance reveals south_bank_homestead and returns to the unchanged rider. Desktop correctly skips the already-visible house. Both braids, both banks, the other rig and HUD clearance remain separate holds; the single homestead does not establish full plate fidelity. E1 34,329,072 B (+6,256 B). [Boards, timing and gates](run-10/entry-framing/e1-twin-banks/review.md).
 
 Engine `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b` → `97855ed9d083ec03a2057dfc9f33b0618f6c8cb28fcfac99952fa1e2e6000a97`. No pin move.
 
 
 ## 2026-09-24 — run 10: entry — e1-baron
 
-2026-09-24 run 10: entry — IMPROVED: phone headframe revealed; desktop already partly visible. 1280 seized_headframe: 24,267→24,265→24,264 px; 390 seized_headframe: 0→22,185→0 px. The phone glance frames seized_headframe for about 1.9 seconds and returns to the rider. Desktop skips its already-visible body. The 55.21 m fort, second cart, broad occupied valley, desktop headframe crop and remaining HUD overlap are HELD outside this bounded reveal. E1 34,333,649 B (+4,577 B). [Boards, timing and gates](run-10/entry-framing/e1-baron/review.md). 
+2026-09-24 run 10: entry — IMPROVED: phone headframe revealed; desktop already partly visible. 1280 seized_headframe: 24,267→24,265→24,264 px; 390 seized_headframe: 0→22,185→0 px. The phone glance frames seized_headframe for about 1.9 seconds and returns to the rider. Desktop skips its already-visible body. The 55.21 m fort, second cart, broad occupied valley, desktop headframe crop and remaining HUD overlap are HELD outside this bounded reveal. E1 34,333,649 B (+4,577 B). [Boards, timing and gates](run-10/entry-framing/e1-baron/review.md).
 
 Engine `97855ed9d083ec03a2057dfc9f33b0618f6c8cb28fcfac99952fa1e2e6000a97` → `3791c3f04a2941cd2b03a1b34883ef4ddee1c09d7d5e57630ef58416db65113b`. No pin move.
 
 
 ## 2026-09-24 — run 10: entry — e2-trestle
 
-2026-09-24 run 10: entry — IMPROVED: phone bridge body revealed; desktop already partly visible. 1280 trestle-crossing: 8,161→8,155→8,148 px; 390 trestle-crossing: 0→52,732→0 px. The bridge span is the declared trestle-crossing body. Phone gains a 2.5-second glance and returns to the rider; desktop skips the existing visible fragment. Full span composition, gorge vista, rail stock and HUD clearance remain separate holds under the unchanged offset, zoom and zero-pixel rule. [Boards, timing and gates](run-10/entry-framing/e2-trestle/review.md). 
+2026-09-24 run 10: entry — IMPROVED: phone bridge body revealed; desktop already partly visible. 1280 trestle-crossing: 8,161→8,155→8,148 px; 390 trestle-crossing: 0→52,732→0 px. The bridge span is the declared trestle-crossing body. Phone gains a 2.5-second glance and returns to the rider; desktop skips the existing visible fragment. Full span composition, gorge vista, rail stock and HUD clearance remain separate holds under the unchanged offset, zoom and zero-pixel rule. [Boards, timing and gates](run-10/entry-framing/e2-trestle/review.md).
 
 Engine `3791c3f04a2941cd2b03a1b34883ef4ddee1c09d7d5e57630ef58416db65113b` → `2b0d52300abd6a7558c4d4a818e8bc61f0f3ffbde92984685d8f77a8aa653de4`. No pin move.
 
 
 ## 2026-09-24 — run 10: entry — e6-glow-mesa
 
-2026-09-24 run 10: entry — IMPROVED: phone derrick then cooling rack fit one window; desktop rack HELD. 1280 mesa-starstone-derrick: 0→37,168→0 px; 390 mesa-starstone-derrick: 0→41,400→0 px; 1280 isotope-cooling-rack: 5,390→0→5,389 px; 390 isotope-cooling-rack: 0→35,096→0 px. entryLandmarks keeps mesa-starstone-derrick first and adds isotope-cooling-rack. The phone tour preserves the 0.7 s entry/return eases and uses the old 1.1 s hold for 0.2 s first hold, 0.7 s transit and 0.2 s second hold. The phone bodies are visible about 0.45–0.55 s and 0.58–0.68 s; this trades dwell time for two views. Desktop rack already has body pixels, so it is skipped; its zero peak count is at the derrick stop, not a claimed rack glance. Cropping, desktop rack HUD coverage, full mesa grouping and active node-ring presentation remain HELD. [Boards, timing and gates](run-10/entry-framing/e6-glow-mesa/review.md). 
+2026-09-24 run 10: entry — IMPROVED: phone derrick then cooling rack fit one window; desktop rack HELD. 1280 mesa-starstone-derrick: 0→37,168→0 px; 390 mesa-starstone-derrick: 0→41,400→0 px; 1280 isotope-cooling-rack: 5,390→0→5,389 px; 390 isotope-cooling-rack: 0→35,096→0 px. entryLandmarks keeps mesa-starstone-derrick first and adds isotope-cooling-rack. The phone tour preserves the 0.7 s entry/return eases and uses the old 1.1 s hold for 0.2 s first hold, 0.7 s transit and 0.2 s second hold. The phone bodies are visible about 0.45–0.55 s and 0.58–0.68 s; this trades dwell time for two views. Desktop rack already has body pixels, so it is skipped; its zero peak count is at the derrick stop, not a claimed rack glance. Cropping, desktop rack HUD coverage, full mesa grouping and active node-ring presentation remain HELD. [Boards, timing and gates](run-10/entry-framing/e6-glow-mesa/review.md).
 
 Engine `2b0d52300abd6a7558c4d4a818e8bc61f0f3ffbde92984685d8f77a8aa653de4` → `13fb20763655460af233764b4bb4ad960b2a1e758c3476473bd353e5b4203aa1`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e7-relay-rush
+
+2026-09-24 run 10: entry — Phone charting station and west dishes REVEALED; desktop west dishes REVEALED; desktop charting station HELD. 1280 dead-gap-charting-station: 8,548→0→8,549 px; 390 dead-gap-charting-station: 0→21,955→0 px; 1280 west-ridge-dish-cluster: 0→22,216→0 px; 390 west-ridge-dish-cluster: 0→24,726→0 px. The charting station and west dish cluster are the two inherited Relay Valley bodies named by the run-6 hold. At 390, both are zero-body at rest and the ordered list reaches each inside the unchanged 2.5 s window. At 1280, 8,548 charting-station pixels already exist at the cropped left edge, so the unchanged zero-body rule skips it; only the west dishes are targeted. The charting-station body disappears during that desktop glance and returns afterward. Persistent HUD and broad plateau composition remain held. The list uses the former hold for two 0.2 s stops with a 0.7 s transit; it does not extend the tour or move the spawn. [Boards, timing and gates](run-10/entry-framing/e7-relay-rush/review.md).
+
+Engine `13fb20763655460af233764b4bb4ad960b2a1e758c3476473bd353e5b4203aa1` → `dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — closing gates
+
+All six maps are implemented and measured; remaining list is EMPTY. READY-FOR-GATES with full browser/release acceptance HELD. Camera/sim boundaries, 12 plain boots with zero errors, scoped guards, all standard build variants and the two-project boat replay proof pass. The final standard E1 payload is 34,340,806 B (below 52,000,000 B).
+
+Agent-view passes 10/12: the protected fixture lacks the three required E1 landmark sentences (an introduced fixture mismatch). Release checks also remain held: the unchanged suite passes 26/30, with the motor-hauler GLB leak and the Dry Gulch harvest-channeling failures reproduced with pre-task source. Night Shift, Twin Banks and Baron retain the precisely attributed own-suite holds. No assertion, fixture, sim, HUD, GLB or engine pin was changed to clear them.
+
+[Complete handoff: all body counts, duration bounds, reasons, visual holds, test attribution, per-map payload deltas, engine hash pairs and store commits](run-10/entry-framing/run-note.md).

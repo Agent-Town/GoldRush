@@ -1,0 +1,107 @@
+{
+  "declarations": [
+    {
+      "map": "e1-night-shift",
+      "landmarks": [
+        {
+          "mountId": "lampworks_yard",
+          "reason": "The plate's foreground working yard and lamp rig establish the night work beside the lantern route; this is the declared yard mount at (8,18)."
+        }
+      ],
+      "mirrorEquality": true,
+      "otherDataEqual": true
+    },
+    {
+      "map": "e1-twin-banks",
+      "landmarks": [
+        {
+          "mountId": "south_bank_homestead",
+          "reason": "The plate pairs worked homesteads across the braids; the southern homestead supplies one bounded landmark without pretending the fixed camera can frame both banks."
+        }
+      ],
+      "mirrorEquality": true,
+      "otherDataEqual": true
+    },
+    {
+      "map": "e1-baron",
+      "landmarks": [
+        {
+          "mountId": "seized_headframe",
+          "reason": "The seized headframe identifies the Baron's occupied workings and fits a single glance; the 55.21 m fort remains a separate layout hold."
+        }
+      ],
+      "mirrorEquality": true,
+      "otherDataEqual": true
+    },
+    {
+      "map": "e2-trestle",
+      "landmarks": [
+        {
+          "mountId": "trestle-crossing",
+          "reason": "The plate leads with the bridge span over the gorge; the existing crossing mount is the view's central structure."
+        }
+      ],
+      "mirrorEquality": true,
+      "otherDataEqual": true
+    },
+    {
+      "map": "e6-glow-mesa",
+      "landmarks": [
+        {
+          "mountId": "mesa-starstone-derrick",
+          "reason": "The plate anchors its raised cap with the tall starstone derrick and its working compound; the derrick is the mounted silhouette that identifies that cap."
+        },
+        {
+          "mountId": "isotope-cooling-rack",
+          "reason": "The plate groups its facilities around the mesa; the cooling rack is the offscreen body the first derrick glance did not reach."
+        }
+      ],
+      "mirrorEquality": true,
+      "otherDataEqual": true
+    },
+    {
+      "map": "e7-relay-rush",
+      "landmarks": [
+        {
+          "mountId": "dead-gap-charting-station",
+          "reason": "The charting station is the route-reading landmark beyond the already-visible R2 frame; its ordinary phone entry is offscreen."
+        },
+        {
+          "mountId": "west-ridge-dish-cluster",
+          "reason": "The offscreen west dishes give the relay route its listening silhouette beyond the charting station."
+        }
+      ],
+      "mirrorEquality": true,
+      "otherDataEqual": true
+    }
+  ],
+  "changedStorePaths": [
+    "pilots/map-rebuild-spike/baron-terrain-contract.json",
+    "pilots/map-rebuild-spike/glow-mesa-terrain-contract.json",
+    "pilots/map-rebuild-spike/landmarks/baron/baron-landmark-pack-contract.json",
+    "pilots/map-rebuild-spike/landmarks/glow-mesa/glow-mesa-landmark-pack-contract.json",
+    "pilots/map-rebuild-spike/landmarks/night-shift/night-shift-landmark-pack-contract.json",
+    "pilots/map-rebuild-spike/landmarks/relay-rush/relay-rush-landmark-pack-contract.json",
+    "pilots/map-rebuild-spike/landmarks/trestle/trestle-landmark-pack-contract.json",
+    "pilots/map-rebuild-spike/landmarks/twin-banks/twin-banks-landmark-pack-contract.json",
+    "pilots/map-rebuild-spike/night-shift-terrain-contract.json",
+    "pilots/map-rebuild-spike/relay-rush-terrain-contract.json",
+    "pilots/map-rebuild-spike/trestle-terrain-contract.json",
+    "pilots/map-rebuild-spike/twin-banks-terrain-contract.json"
+  ],
+  "onlyEntryMetadataChangedInStore": true,
+  "sourceChanges": [
+    "src/agent/MechanicsManifest.ts",
+    "src/systems/CameraRig.ts"
+  ],
+  "gameHookBalanceViewAndSimUnchanged": true,
+  "productionVisibilityCensusUnchanged": true,
+  "headlessNowSnapshots": 50,
+  "nowBytesEqual": true,
+  "nowSha256": "44d469d96528546f5329f74fbecb61a8be399114f738a1fac613d77084e8e29d",
+  "sameGameAuditBytesEqual": true,
+  "sameGameAuditSha256": "5f89a504552dced6885cd4f080da25d682980648a67d2cdfd86bb5d34aced1df",
+  "manifestCount": 42,
+  "onlyManifestLandmarkProseChanged": true,
+  "protectedTestsAndPinsUnchanged": true
+}

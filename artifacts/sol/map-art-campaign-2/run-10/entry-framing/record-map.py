@@ -52,7 +52,7 @@ for i,line in enumerate(lines):
 else:raise AssertionError('status row missing')
 status.write_text('\n'.join(lines)+'\n')
 report=Path('artifacts/sol/map-art-campaign-2/report.md')
-with report.open('a') as f:f.write(f'\n\n## 2026-09-24 — run 10: entry — {id}\n\n'+summary.removesuffix('Prior record: ').replace('../artifacts/sol/map-art-campaign-2/run-10/', 'run-10/')+'\n\n'+f'Engine `{before}` → `{engine}`. No pin move.\n')
+with report.open('a') as f:f.write(f'\n\n## 2026-09-24 — run 10: entry — {id}\n\n'+summary.removesuffix('Prior record: ').replace('../artifacts/sol/map-art-campaign-2/run-10/', 'run-10/').rstrip()+'\n\n'+f'Engine `{before}` → `{engine}`. No pin move.\n')
 done=[p[0] for p in plans if (root/p[0]/'review.md').exists()]
 remaining=[p[0] for p in plans if p[0] not in done]
 (root/'run-note.md').write_text('# Entry framing pass two — 2026-09-24\n\nPreflight PASS; expected `logs/guard-stats.jsonl` retained. Store branch `astra/entry-framing-2` follows the specific firewall. Shared validation is pending until all maps are measured.\n\nCompleted map evidence:\n\n'+''.join(f'- [{x}]({x}/review.md)\n' for x in done)+'\nRemaining in order: '+(', '.join(remaining) or 'EMPTY')+'.\n')
