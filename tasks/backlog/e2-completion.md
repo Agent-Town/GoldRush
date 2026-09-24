@@ -1,0 +1,9 @@
+# Task backlog — closed rows: e2-completion
+
+Closed rows split out of `tasks/BACKLOG.md` by `scripts/backlog-split-closed.mjs`
+(owner ruling 2026-09-24, item 13a). NOTHING HERE WAS DELETED — these rows were MOVED, byte
+for byte, and this file is tracked exactly as the index is (CLAUDE.md §4.10b, the Retention
+Law). The COMPLETE work ledger is the index PLUS every file in this directory; read them
+together, and list them with `backlogFiles()` in `scripts/ledger-corpus.mjs`.
+
+✅ **FIRE-AUTHORABLE NEXT list ④⑤⑥⑦⑧ — ALL SHIPPED in E2 wave-2 (Jul 12), GHOST-LINE RETIRED s477 (Mistake #8 guard — this was a re-queue trap: `tasks/e2-arsenal.md` still exists, and blind-queuing it would re-derive an already-merged diff = 824k-flail risk).** VERIFIED on main `976c537f` by FILE-PROBE (not BACKLOG markers): ④ E2 buildings/transforms WIRING = SHIPPED (`744aceac`) · ⑤ E2 ARSENAL = SHIPPED (`src/systems/PressureArsenalSystem.ts` = boilerLance/pressureMortar/skyRocket/auto-pan present, `e2e/e2-arsenal.spec.ts`, runner `562edc36` → merge `1a56ed98`; Sky-Rocket correctly gated on `hasBaronMedal()`/`rocketCartCaptured` per item 071; its pressure-store dependency `src/systems/PressureSystem.ts` also on main via `8e5a0930`) · ⑥ SS-03 E2 BEAT TABLE = SHIPPED (`e2e/ss-03-beats.spec.ts`, runner `9b5be735`) · ⑦ T2 DYNAMO CEREMONY = SHIPPED (`e2e/e2-t2-dynamo-ceremony.spec.ts`, runner `a1751ce6`) · ⑧ E2 MUSIC/SFX = SHIPPED (`04434e48 runner(lane-a): mu-03-era-audio.md` + fix `4196f7d3`). The ONLY still-open E2 rungs are the drip-02/03 identities below (owner-gated, no spec slice → NOT fire-authorable). **DO NOT re-queue e2-arsenal.md or any ④⑤⑥⑦⑧ master.** (original list, kept for history:) author from `specs/epoch-saga/e2-steamworks-bundle.md` + `specs/epoch-saga/BUILD-PLAN.md` §4 E2 — ④ buildings/transforms WIRING · ⑤ arsenal · ⑥ SS-03 beats · ⑦ T2 Dynamo ceremony · ⑧ E2 music/SFX.
