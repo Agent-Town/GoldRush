@@ -15,7 +15,7 @@ try {
   await page.goto(`http://127.0.0.1:5303/?contract=${id}&seed=map-art-campaign-2`);
   await page.waitForFunction(()=>document.querySelector('#game-canvas')?.dataset.terrain3dPilotLandmarkLoadState==='mounted');
   const begin=page.getByTestId('contract-briefing-dismiss');if(await begin.isVisible())await begin.click();
-  await page.waitForTimeout(1250);await page.screenshot({path:`${root}/${id}/plain-peak-${width}.png`});
+  await page.waitForTimeout(1250);await page.screenshot({path:`${root}/${id}/plain-window-${width}.png`});
   await page.waitForTimeout(3300);await page.screenshot({path:`${root}/${id}/plain-return-${width}.png`});
   const state=await page.evaluate(()=>({testHook:typeof window.__GR_TEST__,entryHandle:typeof window.__ENTRY_CONTEXT__,diagnostics:window.__THREE_GAME_DIAGNOSTICS__,dataset:{...document.querySelector('#game-canvas').dataset}}));
   assert.equal(state.testHook,'undefined');assert.equal(state.entryHandle,'undefined');assert.equal(state.diagnostics.contract.activeId,id);assert.deepEqual(errors,[]);

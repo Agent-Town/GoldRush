@@ -6,5 +6,6 @@ Completed map evidence:
 
 - [e1-night-shift](e1-night-shift/review.md)
 - [e1-twin-banks](e1-twin-banks/review.md)
+- [e1-baron](e1-baron/review.md)
 
-Remaining in order: e1-baron, e2-trestle, e6-glow-mesa, e7-relay-rush.
+Remaining in order: e2-trestle, e6-glow-mesa, e7-relay-rush.

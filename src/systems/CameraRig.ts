@@ -9,9 +9,11 @@ import relayRush from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-
 // Variant pack contractIds name authoring verdicts, not the playable contracts.
 import night_shiftEntryPack from '../../assets/pilots/map-rebuild-spike/night-shift-terrain-contract.json' with { type: 'json' };
 import twin_banksEntryPack from '../../assets/pilots/map-rebuild-spike/twin-banks-terrain-contract.json' with { type: 'json' };
+import baronEntryPack from '../../assets/pilots/map-rebuild-spike/baron-terrain-contract.json' with { type: 'json' };
 const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string; reason: string } }>> = {
   'e1-night-shift': night_shiftEntryPack,
   'e1-twin-banks': twin_banksEntryPack,
+  'e1-baron': baronEntryPack,
   'e6-glow-mesa': glowMesa,
   'e7-dead-band': deadBand,
   'e8-far-side': farSide,

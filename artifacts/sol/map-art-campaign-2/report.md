@@ -853,13 +853,20 @@ Builds, 34+3 guards, mirror, census 4, loading 8, repeat 2, six mount cycles pas
 
 ## 2026-09-24 — run 10: entry — e1-night-shift
 
-2026-09-24 run 10: entry — DECLARED / HELD: already partly visible, so no glance. 1280 lampworks_yard: 77,509→77,506→77,505 px; 390 lampworks_yard: 9,127→9,128→9,128 px. lampworks_yard has nonzero body pixels at both widths. The unchanged zero-pixel trigger cannot cure partial cropping or HUD coverage; no improvement is credited to the live count variation. The phone yard and full lantern procession remain held. E1 34,322,816 B (+4,270 B). [Boards, timing and gates](../artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/review.md). 
+2026-09-24 run 10: entry — DECLARED / HELD: already partly visible, so no glance. 1280 lampworks_yard: 77,509→77,506→77,505 px; 390 lampworks_yard: 9,127→9,128→9,128 px. lampworks_yard has nonzero body pixels at both widths. The unchanged zero-pixel trigger cannot cure partial cropping or HUD coverage; no improvement is credited to the live count variation. The phone yard and full lantern procession remain held. E1 34,322,816 B (+4,270 B). [Boards, timing and gates](run-10/entry-framing/e1-night-shift/review.md). 
 
 Engine `d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959` → `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b`. No pin move.
 
 
 ## 2026-09-24 — run 10: entry — e1-twin-banks
 
-2026-09-24 run 10: entry — IMPROVED: phone homestead revealed; desktop already visible. 1280 south_bank_homestead: 44,748→44,746→44,746 px; 390 south_bank_homestead: 0→49,902→0 px. The phone-only 2.5-second glance reveals south_bank_homestead and returns to the unchanged rider. Desktop correctly skips the already-visible house. Both braids, both banks, the other rig and HUD clearance remain separate holds; the single homestead does not establish full plate fidelity. E1 34,329,072 B (+6,256 B). [Boards, timing and gates](../artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-twin-banks/review.md). 
+2026-09-24 run 10: entry — IMPROVED: phone homestead revealed; desktop already visible. 1280 south_bank_homestead: 44,748→44,746→44,746 px; 390 south_bank_homestead: 0→49,902→0 px. The phone-only 2.5-second glance reveals south_bank_homestead and returns to the unchanged rider. Desktop correctly skips the already-visible house. Both braids, both banks, the other rig and HUD clearance remain separate holds; the single homestead does not establish full plate fidelity. E1 34,329,072 B (+6,256 B). [Boards, timing and gates](run-10/entry-framing/e1-twin-banks/review.md). 
 
 Engine `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b` → `97855ed9d083ec03a2057dfc9f33b0618f6c8cb28fcfac99952fa1e2e6000a97`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e1-baron
+
+2026-09-24 run 10: entry — IMPROVED: phone headframe revealed; desktop already partly visible. 1280 seized_headframe: 24,267→24,265→24,264 px; 390 seized_headframe: 0→22,185→0 px. The phone glance frames seized_headframe for about 1.9 seconds and returns to the rider. Desktop skips its already-visible body. The 55.21 m fort, second cart, broad occupied valley, desktop headframe crop and remaining HUD overlap are HELD outside this bounded reveal. E1 34,333,649 B (+4,577 B). [Boards, timing and gates](run-10/entry-framing/e1-baron/review.md). 
+
+Engine `97855ed9d083ec03a2057dfc9f33b0618f6c8cb28fcfac99952fa1e2e6000a97` → `3791c3f04a2941cd2b03a1b34883ef4ddee1c09d7d5e57630ef58416db65113b`. No pin move.

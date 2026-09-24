@@ -1,0 +1,96 @@
+(node:78412) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+
+(node:78477) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:78477) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/2] [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  1) [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-baron.spec.ts:302:6)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/base-verified-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/base-verified-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/error-context.md
+
+
+
+(node:78922) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:78922) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[2/2] [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  2) [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-baron.spec.ts:302:6)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/base-verified-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/base-verified-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+    [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 

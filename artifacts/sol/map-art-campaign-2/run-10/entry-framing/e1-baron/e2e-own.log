@@ -1,0 +1,129 @@
+(node:73715) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 22 tests using 1 worker
+
+
+(node:73783) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:73783) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/22] [desktop-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[2/22] [desktop-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[3/22] [desktop-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[4/22] [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  1) [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-baron.spec.ts:302:6)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/own-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/own-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/error-context.md
+
+
+
+(node:75123) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:75123) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[5/22] [desktop-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[6/22] [desktop-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[7/22] [desktop-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[8/22] [desktop-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[9/22] [desktop-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[10/22] [desktop-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[11/22] [desktop-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+
+(node:76051) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:76051) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[12/22] [mobile-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[13/22] [mobile-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[14/22] [mobile-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[15/22] [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  2) [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-baron.spec.ts:302:6)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/own-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/own-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/error-context.md
+
+
+
+(node:76673) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:76673) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[16/22] [mobile-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[17/22] [mobile-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[18/22] [mobile-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[19/22] [mobile-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[20/22] [mobile-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[21/22] [mobile-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[22/22] [mobile-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+  2 failed
+    [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+    [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+  20 passed (2.9m)
