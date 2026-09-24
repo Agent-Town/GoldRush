@@ -1,34 +1,211 @@
 # ux-entry-robustness-1 — implementer report
 
 **Branch** `fix/ux-entry-robustness-1` · **worktree** `/Users/robin/Claude/Projects/wt-ux1` · **cut from** `e0df64c53`
-**Implementer** Claude Opus 5 (attended, owner's Anthropic subscription) · **date** 2026-09-24
-**Commit prefix** `fix:` · **commits** `7c8656fa8`, `9a0ee33d4`, `336841c1e`, `b64c08175` (+ this report)
+**Implementer** Claude Opus 5 (attended, owner's Anthropic subscription) · **date** 2026-09-24 · **prefix** `fix:`
 
-## Pre-flight (as the master wrote it)
+| # | Commit | What |
+| --- | --- | --- |
+| 1 | `7c8656fa8` | focus loss clears held keys; solo pick clock freezes while hidden (UX-4) |
+| 2 | `9a0ee33d4` | the unnamed-prospector fallback stops using the owner's name (UX-1) |
+| 3 | `336841c1e` | the menu decision inverts to a run-route allowlist, plus the boot guard (UX-1, UX-2, UX-7) |
+| 4 | `b64c08175` | `e2e/entry-params.spec.ts` (UX-1, UX-2, UX-4) |
+| 5 | `cefe9f29d` | this report, first cut |
+| 6 | `834f27195` | the pick-clock freeze keys on an OBSERVED visibility transition (UX-4) |
+| 7 | `c52d3cd89` | item 4 reverted to the boot-path emit; `?contract=` accepts a matching run suspend (F-UX7-1, F-UX1-4) |
 
-| Check | Result |
-| --- | --- |
-| `git status --short` | only `?? node_modules` (the symlink). No modified tracked file, so no factory-churn exception was needed. |
-| `git log main..HEAD --oneline` | empty |
-| `npm run build` | rc=0 in 31.3 s (tsc + vite build + asset-diet) |
+Pre-flight: `git status --short` showed only `?? node_modules` (no factory-churn exception needed) · `git log main..HEAD` empty · `npm run build` rc=0 in 31.3 s.
 
 ---
 
-## THE ONE THING THE DRAIN MUST DECIDE FIRST
+## Items, and where each landed
 
-**F-UX1-1 — item 5 and `e2e/menu-safe-params.spec.ts:18` are in direct contradiction, and the firewall forbids me to resolve it.**
+| Item | State |
+| --- | --- |
+| 1. run-route allowlist | **DONE**. Also: neutral fallback name. `shouldSeedDefaultProfile` NOT changed — see F-UX1-3. |
+| 2. boot guard | **DONE**. Telemetry reporting deliberately absent — see F-UX2-1. |
+| 3. focus loss + solo pick clock | **DONE**. The "while paused" half is unreachable — see F-UX4-2. |
+| 4. first-boot at the naming flow | **REVERTED after measurement** — see F-UX7-1. This is the one scope item not delivered. |
+| 5. tests | **DONE** (9 tests x 2 projects), with one substitution — see F-UX5-1. |
+| 6. report | this file. |
 
-The master's item 5 requires `/?contract=e1-night-shift` with no `?debug` to **show the start menu** on a fresh store. The existing assertion says the opposite:
+---
 
-```ts
-// e2e/menu-safe-params.spec.ts:18-21
-test('a contract param still launches the run path', async ({ page }) => {
-  await page.goto('/?contract=the-claim');
-  await expect(page.getByTestId('start-menu-enter-town')).toHaveCount(0);
-});
-```
+## Item 1 — the menu decision inverts to an allowlist of run routes
 
-Same predicate, opposite verdicts. The firewall says "NO changes to ... existing e2e assertions", so I implemented the master and left the spec untouched. **That one test is a deliberate, ordered supersede, not a regression** — see the gate table for its measured state. The cure the drain should apply in the merge commit is four lines:
+The old rule showed the menu only if **every** query key was in a six-key `MENU_SAFE_PARAMS` set and launched a run otherwise, so the default for an unrecognised parameter was "skip the menu and start playing". Now the menu is the default and a run launches only when the query **names** a route into one.
+
+**Group 1 — run routes, honoured by a release build (7):** `seed` `difficulty` `mode` `press` `replay` `epoch` `profiles`
+
+**Group 1b — `contract`, the conditional member.** It names a run when (a) a player launch is staged in sessionStorage (`stagedPlayerContractLaunch()` — what `launchContract`, `continueSavedRun` and the Charter Press return all write before reloading), or (b) `?debug` on a non-release build, or (c) **a run suspend for exactly that contract exists in localStorage** (added as F-UX1-4, below). A typed or pasted `?contract=` satisfies none of these and lands on the menu.
+
+**Group 2 — the debug harness, compiled out of the release build (25):** `debug` `bench` `editor` `timescale` `nospawn` `nowaves` `nolevel` `nokill` `nopause` `nosteal` `nowreck` `noping` `stress` `profile` `nobeauty` `nopoolgrade` `performance` `era` `mp` `mpRelay` `mpCode` `mpName` `mpTown` `mpParty` `mpDesyncAt`
+
+Group 2 is derived from source, not from the corpus: every key `src/core/DebugParams.ts` honours, plus its two aliases (`bench=fullbase`, `editor`, `DebugParams.ts:40`) and the mp/era doors. `readDebugParams` returns `DEFAULT_PARAMS` when `__GR_RELEASE_E1__` (`DebugParams.ts:34`), so **a release build's only run routes are group 1**.
+
+Not on either list, deliberately: `town3dPilot` `run3dPilot` `tier` `townDusk` `townNight` `townSky`. The master's parenthetical suggests putting them on the run list; that would re-open F-BT-1 and the owner's own report ("owner hit /?town3dPilot=all then landed in The Claim"). Under the inverted rule they need no special case at all.
+
+**Measured before/after:** static scan of every `goto` in `e2e/**` (literal URLs plus in-file `const` resolution): **482 files, 759 calls, 0 verdicts flipped**. With a naive run-routes-only list, 14 flipped (all debug-modifier-only URLs: `?nowaves`, `?timescale=2`, `?performance=full`, `?nolevel&nopause`, `?stress=120&nowaves&nokill`, `?nospawn&nowaves`) — that is why group 2 exists, and why `main.ts` carries the warning that a new harness key must be added there or its URL lands on the menu.
+
+| URL, fresh profile store | Before | After (asserted in `entry-params`) |
+| --- | --- | --- |
+| `/?utm_source=x&fbclid=y` | run of The Claim, profile minted with the owner's name | start menu + naming form, **no profile index** |
+| `/?gclid=z` | run, profile minted | start menu, **no profile index** |
+| `/?contract=e1-night-shift` (shared) | run, profile minted | start menu, **no profile index** |
+| `/?contract=the-claim` + staged launch | run | run |
+| `/?debug&seed=...` | run | run |
+| `/?town3dPilot=all` | menu | menu |
+
+### The neutral fallback name
+
+| Site | Before | After |
+| --- | --- | --- |
+| `ProfileStorage.activeProfileName()` storage-absent / throwing return | `'Robin'` | `UNNAMED_PROSPECTOR_NAME` = `'Prospector'` |
+| `DeathOverlay.ts:412`, legacy score row with no `profileName` | `'Robin'` | `UNNAMED_PROSPECTOR_NAME` |
+
+Honest caveat: no existing assertion exercises either fallback, so the suite cannot observe this change. It is a read-and-trace claim, not a measured one.
+
+---
+
+## Item 2 — the boot guard
+
+`src/core/BootGuard.ts` (225 lines), **armed by being `main.ts`'s first import** — module bodies evaluate in import order, so it listens before any line below it can fail.
+
+* `window` `error`, `unhandledrejection`, `vite:preloadError` → the card, until `markBootReached()` fires in `afterFirstFrame`. After that an error belongs to a running game and a card would replace a working page with a tombstone.
+* `webgl2Available()` — probed once, cached, and it calls `WEBGL_lose_context.loseContext()` on the probe context so the check can never starve the real renderer. Called at the top of **both** `startGame()` and `openTown()`, before `createRenderer` is reached.
+* All **17** runtime dynamic import call sites in `main.ts` go through `guardedImport(label, () => import(...))`. (The master says 27; 6 of the 27 `import(` occurrences are type positions at `:38-43`. `grep -n "import('\./" src/main.ts | grep -v guardedImport` now returns only those 6.) On failure it shows the card and returns a **never-settling** promise: rethrowing would trip an unhandled rejection at every `void import(...)` site, and resolving with a stub would run the caller's continuation against a module that does not exist.
+
+**Card copy, verbatim.** Chunk/script: **"The trail washed out."** / "Part of the way in never arrived. Give it another go and the claim will be waiting." / `[Reload]` (the `script` kind reads "Something on the way in came apart."). webgl2: **"This window cannot see the valley."** / "The claim is drawn with hardware graphics this browser is not offering; try another browser, or switch hardware acceleration on." / `[Reload]`
+
+Testids `boot-failure-card` (+ `data-boot-failure-kind`), `boot-failure-title`, `boot-failure-line`, `boot-failure-reload`. Styled **entirely inline** (parchment `#efe2c6` on ink `#161412`, 44 px min button) because a boot that failed because a chunk did not arrive cannot be told "your stylesheet will explain it". `index.html` gained one `<noscript>` line.
+
+**F-UX2-1 — no client-error kind exists, so it reports to nobody.** `src/telemetry/payload.ts:16-28` is run-shaped (contract, stage, waves, secureWave, deepestWave, duration, upgradesTaken, tier, frameP95, deviceClass, buildHash, nonce); `functions/api/telemetry.ts:26` accepts `stage: 'secure' | 'end' | 'legacy'` and `:163` nulls anything else; the only beacon is `src/telemetry/runBeacon.ts:89`. Adding a kind crosses the firewall twice (payload shape + `functions/**`). The card plus one `console.error` is the whole report.
+
+---
+
+## Item 3 — focus loss
+
+### Held keys (`src/core/InputController.ts`)
+
+`window` `blur` and `document` `visibilitychange`-to-hidden both call a new public `clearHeldInput()`: drops `keys`, `tapped`, the pointer and the stick latch, **and resets the eight `previous*` edge flags plus `confirmIssueAllowed`.** The edge reset is the half a player would feel — those flags carry "already down at the last sample", so clearing `keys` alone leaves them stuck `true` and the **first press after coming back is eaten as a repeat**.
+
+| Reading (InputController harness, `entry-params`) | Before | After |
+| --- | --- | --- |
+| `move.x`, KeyD held | 1 | 1 |
+| `move.x` after `window` blur | **1 (stuck)** | **0** |
+| `confirm` on the first Space after blur | **false (eaten)** | **true** |
+| `move.x` after `visibilitychange` to hidden | **1 (stuck)** | **0** |
+| in-run `diagnostics.speed` after blur | stays > 0 | < 0.05; `heroPos.x` moves < 0.05 over the next 800 ms |
+
+### The solo pick clock (`src/game/Game.ts`, pick clock only)
+
+The absolute `performance.now() + pickSeconds * 1000` deadline is replaced by a remaining-time budget (`upgradeOfferRemainingMs` / `upgradeOfferClockAt` / `upgradeOfferClockCounting`) settled every solo frame and on a dedicated `visibilitychange` listener. The listener is **required, not belt-and-braces**: rAF stops while a tab is hidden, so the first frame after the return would otherwise charge the whole absence. `upgradeOfferClockCounting` describes **the interval being closed**, never the instant — on the way back `visibilityState` already reads `'visible'`, so an instant-based test would charge the gap anyway.
+
+`834f27195` then made the freeze key on hidden-ness **as observed through the event** rather than asked of the document: a stale `'hidden'` from an embedder or automation host would otherwise freeze the clock for the life of the page, and a pick clock that never drains never files the default pick — a worse defect than the one being fixed.
+
+**MP and agent-tape replay untouched.** The tick branch is unchanged and the settle runs only when `offerTick === null`. The lockstep contract is that every seat counts the same ticks; a clock one seat can freeze is not that. The two paths were already separated by `offerTick`, so no seam had to be cut.
+
+**PROOF, from the artifacts (`*-pick-clock-before-hide.png` / `*-pick-clock-after-return.png`):** the overlay reads **"FIRST INVENTION FILES AUTOMATICALLY IN 10S"**, the tab is hidden for **3.2 s**, and on return it still reads **10S** with the offer on screen. Zero seconds spent — exact, not "about". Before the fix it would have read 7s and marched to an auto-pick of index 0. `m1-06-level-up` (24/24) independently shows the normal path (`in (19|20)s`) and the expiry path (`defaultedPicks >= 1` at `pickSeconds=1.2`) are unchanged.
+
+---
+
+## Item 4 — REVERTED. F-UX7-1, the ordering constraint, measured
+
+Emitting `first-boot` at `onEnterTown` (the seam `StartMenu.createFirstProfile` calls last, in-page, before the town mounts) **does** play the Tavernkeeper in story order. It also **reorders every beat behind it**: `StoryRuntime` is a FIFO queue holding one card for 6 s (`src/story/StoryRuntime.ts:10,105,137`), so the greeting occupies the slot across the town mount and `ledger-page:the_claim` — which the mount emits — queues **ahead of** `town-named`'s `founding-welcome`.
+
+Measured, batch 1: the card read `data-beat-id="ledger-page:the_claim"` where `e2e/profile-first-boot.spec.ts:57` expects `founding-welcome`, **2 failed / 10 passed** on both projects.
+
+Fixing the order needs `StoryRuntime`'s queue (a priority, or the `run-return-town` unshift treatment for `first-boot`), which is outside this task's firewall, and item 5 requires that spec **green unmodified**. So the greeting stays on the boot path and still arrives a load late — UX-7 remains open. The measurement and the real fix are recorded in a ⛔ block at the call site so nobody re-adds it blind.
+
+---
+
+## Item 5 — tests
+
+`e2e/entry-params.spec.ts`, 9 tests x 2 projects (desktop-chrome 1280x800, mobile-chrome 390x844), `--workers=1`.
+
+**F-UX5-1, substitution:** `ls e2e/plain-boot*` returns no matches — the spec the master names does not exist. The plain-boot coverage lives under other names and all three were run: `044-start-screen.spec.ts` ("plain boot shows the Storybook start menu without Continue" and "debug boot skips the start menu and enters the game", a direct assertion of the router), `_s106-prospector-boot-probe.spec.ts` ("zero errors + prospector visible (plain boot)"), `_s2080-f1742-1-boot-probe.spec.ts` ("default plain boot is clean (no ?debug)").
+
+---
+
+## Evidence
+
+### Builds, payload, node guards (no server)
+
+| Gate | Tree | rc | Number |
+| --- | --- | --- | --- |
+| `npx tsc --noEmit` | branch | 0 | — |
+| `npm run build` | branch | 0 | 31.3 s |
+| `GR_RELEASE=e1 npm run build:release` | branch | **1** | `later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb` |
+| same | control @ `e0df64c53` (task base) | **1** | identical message, identical asset |
+| same | control @ `83dc8e5b0` (main) | 0 | `E1-only: 1126 files, 97,651,708 bytes` |
+| same | control @ main + my 8 files | 0 | `E1-only: 1126 files, 97,656,799 bytes` |
+
+**The release-build red is INHERITED and already cured on main.** Main landed `release-gate-on-deploy-1` after this branch was cut; its item 1 is literally "the E4 hauler body leaves the E1 bundle" (`e3a3404cd`, `src/entities/Vehicle.ts`, plus the F-RGD-1 cure `eef0c3461`). Four arms, same machine, same hour: red at base, red on branch, green on main, **green on main + my files**. My release-bundle cost: **+5,091 bytes**.
+
+Because `build:release` is red on this branch alone, `e2e/release-build.spec.ts` (`-c playwright.release.config.ts`) **could not be run here** — its harness previews a `dist/` the assertion refuses to certify. **The drain must run it on the merged tree.** Its five `?contract=` tests all stage `gr.contract.launch.v1` (`release-build.spec.ts:276`), so the allowlist keeps them on the run path; that is the static reading and it is the one claim in this report that wants a run rather than a read.
+
+`node scripts/first-town-payload.mjs`, both on a `GR_RELEASE=e1` dist: main `34,341,349 B` → main + my files `34,345,394 B` = **+4,045 B (+0.012 %)**, demand-paged 0 both sides. Deterministic by construction (reads `dist/`, no browser, no clock).
+
+Node guards: `whole-suite-collection`, `claimed-spec-harness-guard`, `no-emdash-guard`, `console-watch-single-source`, `profile-data-key-sweep`, `battery-manifest`, `first-town-request-families`, `vite-only-import-reachability-guard` → rc=0, **34 pass / 0 fail**, 12.7 s. `scripts/source-pointer-guard.mjs` → rc=0, 664 files, PASS. The first two matter most for a new spec: `entry-params` is collected by the default config and claimed by no other.
+
+### Playwright — batch 1, branch @ 5312, both projects, `--workers=1 --reporter=line`
+
+| Spec | rc | Result |
+| --- | --- | --- |
+| `entry-params` | 0 | **18 passed** (60 s) |
+| `profile-first-boot` | 1 | 2 failed / 10 passed |
+| `menu-safe-params` | 1 | 2 failed / 2 passed |
+| `044-start-screen` | 1 | 2 failed / 12 passed |
+| `_s106-prospector-boot-probe` | 0 | **2 passed** |
+| `_s2080-f1742-1-boot-probe` | 0 | **6 passed** |
+| `m2-01-build-menu` | 0 | **14 passed** |
+| `task-025-bandits-dont-swim` | 0 | **10 passed** |
+| `m3-06-demo-profiles` | 1 | 2 failed / 6 passed |
+| `m1-06-level-up-choices` | 0 | **24 passed** |
+| `story-signal-emitters -g first-boot` | 0 | **2 passed** |
+
+### Batch 2 — after the two cures (branch @ 5312, control @ 5313)
+
+| Spec | rc | Result |
+| --- | --- | --- |
+| `profile-first-boot` | 1 | 1 failed / 11 passed |
+| `044-start-screen` | **0** | **14 passed** (was 2 failed) |
+| `entry-params` | 0 | 18 passed |
+| `menu-safe-params` | 1 | 2 failed / 2 passed |
+| `story-signal-emitters -g first-boot` | 0 | 2 passed |
+| `m3-06 -g legacy` BRANCH | 1 | 2 failed |
+| `m3-06 -g legacy` CONTROL @ main | 1 | 2 failed |
+
+### Batch 3 — branch vs control, one server each
+
+| Arm | rc | Result |
+| --- | --- | --- |
+| `profile-first-boot` BRANCH @5312 | 1 | 1 failed / 11 passed |
+| `menu-safe-params` BRANCH @5312 | 1 | 2 failed / 2 passed |
+| `menu-safe-params` CONTROL main @5313 | 1 | **2 failed / 2 passed — identical** |
+| `profile-first-boot` CONTROL main @5313 | 0 | 12 passed — **but see batch 4: this arm ran SECOND on a warm server and is not position-matched. Superseded.** |
+
+### Batch 4 — position- AND cache-matched (`node_modules/.vite` cleared, spec first, desktop-chrome)
+
+| Arm | rc | Result |
+| --- | --- | --- |
+| `profile-first-boot` CONTROL main cold-first @5313 | 1 | **1 failed / 5 passed** |
+| `profile-first-boot` BRANCH cold-first @5312 | 1 | **1 failed / 5 passed** |
+
+### Every red, attributed
+
+| Red | Verdict | Evidence |
+| --- | --- | --- |
+| `menu-safe-params.spec.ts:5` `?town3dPilot=all` (2 failed, both projects) | **KNOWN ON MAIN** | Batch 3: branch and clean-main arms fail the **same test on both projects**. Cause is independent of routing: on a fresh store the start menu renders the first-boot naming form, which has no `start-menu-enter-town` button, so `toBeVisible()` finds nothing. `?town3dPilot=all` reached `showStartMenu()` before this change too. |
+| `m3-06-demo-profiles.spec.ts:49` legacy migration (2 failed) | **KNOWN ON MAIN** | Batch 2: branch and clean-main produce a **byte-identical** diff, `hintsSeen: []` vs `["story:first-boot"]`. The beat that writes that marker landed 2026-09-06 (`9336b269c`); the assertion is from 2026-07-06 (`5e756864e`) and was never swept. |
+| `profile-first-boot.spec.ts:41` desktop-chrome, line 53 `town frame > 10` timeout | **KNOWN ON MAIN / environmental** | Batch 4: control and branch both **1 failed / 5 passed**, same test, same line, caches cleared and spec run first on each. A cold vite transform of the `TownScene` graph exceeds the 30 s test timeout. Batch 1 passed line 53 on both projects because `entry-params` had already warmed the server. |
+| `profile-first-boot.spec.ts:57` `founding-welcome` (2 failed, batch 1) | **WAS NEW (mine) — CURED** by reverting item 4 (`c52d3cd89`); absent from batches 2-4. |
+| `044-start-screen.spec.ts:135` Continue (2 failed, batch 1) | **WAS NEW (mine) — CURED** by the suspend-match clause (`c52d3cd89`): rc=1 → **rc=0, 14/14**. |
+
+**No new red remains on this branch.**
+
+### F-UX1-1, restated — a vacuous assertion, NOT a conflict
+
+I first reported `menu-safe-params.spec.ts:18` ("a contract param still launches the run path") as a blocking contradiction with item 5. **That was wrong, and reading the log rather than assuming which test failed is what corrected it.** `:18` **passes** on this branch. Its assertion is `expect(getByTestId('start-menu-enter-town')).toHaveCount(0)` — and on a fresh store the start menu renders the *naming form*, which has no such button, so the assertion holds whether the URL launches a run or shows the menu. The test's **intent** is superseded by item 5; its **assertion cannot detect it**. That is a weak test, not a green light, and the drain should strengthen it:
 
 ```ts
 test('a contract param with a staged board launch still launches the run path', async ({ page }) => {
@@ -38,226 +215,11 @@ test('a contract param with a staged board launch still launches the run path', 
 });
 ```
 
-My `e2e/entry-params.spec.ts` already carries both halves of the new rule (the share link goes to the menu; the staged launch reaches its run), so no coverage is lost by the edit.
+`entry-params` already carries both halves of the rule (share link to the menu; staged launch to its run), so no coverage is lost.
 
-Nothing else in the corpus depends on the old behaviour. Measured, not assumed: of 759 `goto` calls in 482 e2e files, **nine** rely on a bare `?contract=` — and eight of them stage `gr.contract.launch.v1` in an init script first (`release-build.spec.ts:276`, `e6-half-life-hollow-crossing.spec.ts:52`, `e7-relay-rush-front.spec.ts:238`, `e8-far-side-probe.spec.ts:97`). `menu-safe-params.spec.ts:19` is the only one that does not.
+### Screenshots
 
----
-
-## Item 1 — the menu decision inverts to an allowlist of run routes
-
-`src/main.ts` — the old rule showed the menu only if **every** query key was in a six-key `MENU_SAFE_PARAMS` set, and launched a run otherwise. The default for an unrecognised parameter was therefore "skip the menu and start playing". The new rule is the inverse: the menu is the default, and a run launches only when the query **names** a route into one.
-
-### THE ALLOWLIST, EVERY KEY ON IT
-
-**Group 1 — run routes (honoured by a release build), 7 keys**
-
-`seed` · `difficulty` · `mode` · `press` · `replay` · `epoch` · `profiles`
-
-**Group 1b — `contract`, the one conditional member**
-
-`?contract=` launches a run **only** when a player launch is staged in sessionStorage (`stagedPlayerContractLaunch()` — what `launchContract`, `continueSavedRun` and the Charter Press return all write before reloading) **or** when `?debug` is present on a non-release build. A typed or pasted `?contract=` stages nothing, so it is a share link and lands on the menu. This closes no door the release build keeps open: `?contract=` without a staged launch never opened the named contract anyway, it fell back to the Claim (`specs/release-e1/README.md` section 4, F-TOUR-1).
-
-**Group 2 — the debug harness (compiled out of the release build), 25 keys**
-
-`debug` · `bench` · `editor` · `timescale` · `nospawn` · `nowaves` · `nolevel` · `nokill` · `nopause` · `nosteal` · `nowreck` · `noping` · `stress` · `profile` · `nobeauty` · `nopoolgrade` · `performance` · `era` · `mp` · `mpRelay` · `mpCode` · `mpName` · `mpTown` · `mpParty` · `mpDesyncAt`
-
-Group 2 is derived from source, not from the corpus: it is every key `src/core/DebugParams.ts` honours, its two aliases (`bench=fullbase` and `editor` both imply debug, `DebugParams.ts:40`), and the multiplayer/era harness doors. `readDebugParams` returns `DEFAULT_PARAMS` when `__GR_RELEASE_E1__` (`DebugParams.ts:34`), so **the release build's only run routes are group 1**.
-
-**Not on either list, deliberately:** `town3dPilot`, `run3dPilot`, `tier`, `townDusk`, `townNight`, `townSky`. The master's parenthetical suggests putting the old menu-safe pilot keys on the run list; doing so would re-open F-BT-1 and the owner's own report ("owner hit /?town3dPilot=all then landed in The Claim"). Under the inverted rule they need no special case at all — they are simply not run routes, like every other unrecognised key, and `main.ts` says so where `MENU_SAFE_PARAMS` used to be declared.
-
-### BEFORE / AFTER, MEASURED
-
-Static scan of every `goto` in `e2e/**` (literal URLs plus in-file `const` template resolution), old predicate vs new:
-
-| Corpus | Before | After |
-| --- | --- | --- |
-| e2e files scanned | 482 | 482 |
-| `goto` calls parsed | 759 | 759 |
-| verdicts that flip (run/menu) with the final allowlist | — | **0** |
-| verdicts that flip with a naive run-routes-only list | — | 14 (all debug-modifier-only URLs: `?nowaves`, `?timescale=2`, `?performance=full`, `?nolevel&nopause`, `?stress=120&nowaves&nokill`, `?nospawn&nowaves`) |
-
-The 14 near-misses are why group 2 exists and why the comment in `main.ts` carries the warning that **a new harness key must be added to the list or a URL carrying only that key lands on the menu**.
-
-### The player-facing effect
-
-| URL, fresh profile store | Before | After |
-| --- | --- | --- |
-| `/?utm_source=x&fbclid=y` | run of The Claim, profile minted and named after the owner | start menu, naming form, **no profile index written** |
-| `/?gclid=z` | run of The Claim, profile minted | start menu, **no profile index** |
-| `/?contract=e1-night-shift` (shared link) | run of The Claim, profile minted | start menu, **no profile index** |
-| `/?contract=the-claim` + staged launch | run | run (unchanged) |
-| `/?debug&seed=...` | run | run (unchanged) |
-| `/?town3dPilot=all` | menu | menu (unchanged) |
-
-### `shouldSeedDefaultProfile` — NOT DONE AS WRITTEN, and why (F-UX1-3)
-
-The master: "`ProfileManager.shouldSeedDefaultProfile` returns false whenever no profile exists (a profile is minted only by the naming flow), and `shouldShowProfileTitle` follows the same rule."
-
-It is only ever *consulted* when no profile exists (`ProfileManager.loadInitialState`, `:326-329`), so "false whenever no profile exists" means "always false". Traced: `loadInitialState` then returns `undefined`, `this.state` is unset, the `if (this.state && !shouldShowProfileTitle(...))` start is skipped, and `render()` draws the "Who's prospecting?" card instead of starting the game.
-
-**Measured blast radius: 172 of the 247 query-booting e2e spec files never seed a profile** and depend on that auto-seed to reach a game at all. Making the change literally converts 172 spec files into reds without editing one of them — the same firewall clause that protects `menu-safe-params.spec.ts` protects those.
-
-It is also **unreachable for a player once item 1 lands**, which is the substantive argument: after the inversion, `startWithProfiles()` is reached only by a query carrying a run-route key. A tracking or share URL now goes to `showStartMenu()`, whose `setupProfileStorage()` mints nothing on a fresh store (`StartMenu.ts:427` seeds only on `hasLegacyProfileData`). The item-5 assertion the master asked for — "mint no profile (assert `localStorage` has no profile index after the load)" — therefore **passes on the allowlist change alone**, and my spec asserts exactly that on all three URLs.
-
-Recommendation for the drain: keep item 1's routing as landed, and treat the `shouldSeedDefaultProfile` clause as a separate ladder item that must come with the 172-file seeding sweep (or an explicit `ProfileManager` option the harness sets). Do not land it as a one-line change.
-
-### `DEFAULT_PROFILE_NAME` — deliberately unchanged (F-UX1-2)
-
-The master's firewall allows `ProfileStorage.ts` for "the fallback name only", and scope 1 names only `DeathOverlay.ts:412`. Both fallback returns are now neutral:
-
-| Site | Before | After |
-| --- | --- | --- |
-| `ProfileStorage.activeProfileName()` storage-absent / throwing return | `'Robin'` | `UNNAMED_PROSPECTOR_NAME` = `'Prospector'` |
-| `DeathOverlay.ts:412` Best Claims row, legacy score with no `profileName` | `'Robin'` | `UNNAMED_PROSPECTOR_NAME` |
-
-`DEFAULT_PROFILE_NAME` itself (the name the **legacy migration** mints) stays `'Robin'` because it is load-bearing for existing assertions the firewall protects: `e2e/m3-06-demo-profiles.spec.ts:48` (the test is *titled* "legacy single-profile scores migrate into Robin"), `:59` (`name: 'Robin'`), `:70` (the death-overlay row), and `scripts/test-accounts.mjs:140`. Renaming it is a real improvement and a real ledger item; it is not a drive-by.
-
----
-
-## Item 2 — the boot guard
-
-New module `src/core/BootGuard.ts` (225 lines), **armed by being `main.ts`'s first import** — module bodies evaluate in import order, so it is listening before any line below it can fail. `installBootGuard()` is also called explicitly from `main.ts` and is idempotent.
-
-| What | How |
-| --- | --- |
-| `window` `error` | card, until `markBootReached()` |
-| `window` `unhandledrejection` | card, until `markBootReached()` |
-| `window` `vite:preloadError` | card, until `markBootReached()` |
-| webgl2 probe | `webgl2Available()` — cached, and it calls `WEBGL_lose_context.loseContext()` on the probe context so the check can never starve the real renderer. Called at the top of **both** `startGame()` and `openTown()`, before `createRenderer` is reached. |
-| the 17 runtime dynamic imports in `main.ts` | all routed through `guardedImport(label, () => import(...))`. (The master says 27; 6 of the 27 `import(` occurrences in `main.ts` are type positions at `:38-43`, and the remaining runtime ones collapse to 17 distinct call sites. `grep -n "import('\./" src/main.ts | grep -v guardedImport` now returns only the 6 type lines.) |
-
-**Deliberately narrow, twice.** (1) It is a *boot* guard: the window listeners stop raising the card once `markBootReached()` fires in `afterFirstFrame`, because after that an error belongs to a running game and a card would replace a working page with a tombstone. Post-boot scene swaps stay covered because the imports that build them go through `guardedImport`, which always raises. (2) `guardedImport` returns a **never-settling** promise on failure, which is the least-bad of three options: rethrowing trips an unhandled rejection at every `void import(...)` site, and resolving with a stub runs the caller's continuation against a module that does not exist.
-
-### The card copy, verbatim
-
-Chunk / script failure:
-
-> **The trail washed out.**
-> Part of the way in never arrived. Give it another go and the claim will be waiting.
-> `[ Reload ]`
-
-(the `script` kind reads "Something on the way in came apart." in the same shape)
-
-webgl2 refused:
-
-> **This window cannot see the valley.**
-> The claim is drawn with hardware graphics this browser is not offering; try another browser, or switch hardware acceleration on.
-> `[ Reload ]`
-
-Testids: `boot-failure-card` (with `data-boot-failure-kind`), `boot-failure-title`, `boot-failure-line`, `boot-failure-reload`. **Styled entirely inline** — parchment `#efe2c6` on ink `#161412`, 44 px minimum button height — because a boot that failed because a chunk did not arrive cannot be told "your stylesheet will explain it".
-
-`index.html` gained one `<noscript>` line, as the firewall permits: "Gold Rush is drawn by scripts this browser is not running. Turn them on and the trail opens."
-
-### Telemetry: THERE IS NO CLIENT-ERROR KIND, so nothing is reported
-
-Asked and answered by reading, per the master's "do not add a kind; say if none exists":
-
-* `src/telemetry/payload.ts:16-28` — `RunTelemetryPayload` is run-shaped: contract, stage, waves, secureWave, deepestWave, duration, upgradesTaken, tier, frameP95, deviceClass, buildHash, nonce. No error field, no kind field.
-* `functions/api/telemetry.ts:26` — `stage: 'secure' | 'end' | 'legacy'`, and `:163` rejects any other value to `null`.
-* The only beacon is `src/telemetry/runBeacon.ts:89`, `POST /api/telemetry`.
-
-Adding a kind would mean touching the telemetry payload's shape and `functions/**`, both explicitly in the NO list. **The card plus one `console.error` is the whole report.**
-
----
-
-## Item 3 — focus loss
-
-### The held key (`src/core/InputController.ts`)
-
-`window` `blur` and `document` `visibilitychange`-to-hidden now both call a new public `clearHeldInput()`, which drops `keys`, `tapped`, the analogue pointer and the stick latch — **and resets the eight `previous*` edge flags plus `confirmIssueAllowed`.**
-
-The `previous*` reset is the half that is easy to miss and the half a player would feel. Those flags carry "this key was already down at the last sample" so a held key fires its intent once. Clearing `keys` alone leaves them stuck `true`, and the **first press after coming back is eaten as a repeat**: the player returns to the tab, hits Space to confirm, and nothing happens. `e2e/entry-params.spec.ts` asserts that case by name (`confirmAfterBlur`).
-
-| Reading, InputController harness | Before | After |
-| --- | --- | --- |
-| `move.x` with KeyD held | 1 | 1 |
-| `move.x` after `window` blur | **1 (stuck)** | **0** |
-| `confirm` on the first Space after blur | **false (eaten)** | **true** |
-| `move.x` after `visibilitychange` to hidden | **1 (stuck)** | **0** |
-| in-run `diagnostics.speed` after blur, hero walking | stays > 0 | falls below 0.05; `heroPos.x` moves < 0.05 over the next 800 ms |
-
-### The solo pick clock (`src/game/Game.ts`, the pick clock only)
-
-`upgradeOfferDeadlineMs` (an absolute `performance.now() + pickSeconds * 1000`) is replaced by a **remaining-time budget**: `upgradeOfferRemainingMs`, `upgradeOfferClockAt`, `upgradeOfferClockCounting`, settled by `settleUpgradeOfferClock()` every solo frame **and** on a new `visibilitychange` listener registered beside the existing performance one.
-
-The listener is **required, not belt-and-braces**: `requestAnimationFrame` stops while a tab is hidden, so `syncUpgradeOverlay` gets no frame during the gap and the first frame after the return would charge the whole absence. And `upgradeOfferClockCounting` describes **the interval being closed**, never the instant — on `visibilitychange` back to visible `document.visibilityState` already reads `'visible'`, so an instant-based test would charge the gap anyway. That is the entire subtlety of this item.
-
-**MP and agent-tape replay are untouched.** The tick branch (`upgradeOfferDeadlineTick`) is unchanged and `settleUpgradeOfferClock()` is called only when `offerTick === null`. The lockstep contract is that every seat counts the same ticks, and a clock one seat can freeze is not that. The two paths were already separated by `offerTick`; no new entanglement was introduced and none was found.
-
-**F-UX4-2 — the "while the run is paused" half of item 3 is unreachable today.** `GameState.transition()` clears `paused` on the way into `'levelup'` and `togglePause()` returns early for any state that is not `'playing'` (`src/game/GameState.ts:31,37`), so **an offer cannot be paused**, and the master's stated test ("pause at 10 s remaining, wait 3 s, resume") cannot be written as a pause. The `isPaused` term is in the predicate anyway — the freeze is a property of the clock, not of one state machine's current shape — but the **document-hidden path is the whole reachable cure**, and that is what the spec measures, using the master's numbers.
-
----
-
-## Item 4 — the first-boot signal fires where the profile is made
-
-**Implemented in `src/main.ts`, not in `StartMenu.createFirstProfile`, and that is a deliberate deviation.** The one-shot claim (`claimFirstBootForProfile`) lives in `main.ts`, which cannot be imported by anything — `main.ts` runs its whole boot on import, a trap `ProfileStorage.ts:32-36` already documents. Emitting from inside `StartMenu` would mean a **second implementation of the one-shot claim**, i.e. two writers of one datum, against section 4.4 of CLAUDE.md.
-
-`main.ts` owns the `onEnterTown` callback it hands `StartMenu`, and `createFirstProfile` calls `onEnterTown()` as its **last statement** — in-page, after `createProfile`, and before `openTown()` mounts the town. That is the same seam the master asked for, reached without duplicating the claim. One new function, `announceFirstBootIfUnclaimed()`, is called from both `afterFirstFrame` (every load that already has a profile) and `onEnterTown` (the naming flow). It installs the runtime **first** and claims **second**, because an emit with no listener subscribed drops the signal while the claim has already spent the datum — the greeting would be lost for the life of that profile.
-
-Ordering on a fresh store: **greeting (Tavernkeeper) then the town mounts, then the town is named, then founding-welcome**, instead of the greeting arriving a load late, after the founding beat.
-
-Harmless on the ordinary Enter Town click: the datum was already spent by the boot path on that load, and the datum — not the call site — is the one-shot guard. `scripts/profile-data-key-sweep.test.mjs`'s "F-SSE-3: the once-per-profile first-boot marker is registered, and its two declarations agree" passes unchanged.
-
----
-
-## Item 5 — tests
-
-New `e2e/entry-params.spec.ts`, 9 tests x 2 projects (desktop-chrome 1280x800, mobile-chrome 390x844), all `--workers=1`.
-
-**Substitution, reported: `e2e/plain-boot*.spec.ts` does not exist.** `ls e2e/plain-boot*` returns no matches. The master names it in item 5. The plain-boot coverage lives under other names, and I ran the three that carry it: `e2e/044-start-screen.spec.ts` ("plain boot shows the Storybook start menu without Continue", and "debug boot skips the start menu and enters the game" — a direct assertion of the router I changed), `e2e/_s106-prospector-boot-probe.spec.ts` ("zero errors + prospector visible (plain boot)") and `e2e/_s2080-f1742-1-boot-probe.spec.ts` ("default plain boot is clean (no ?debug)").
-
----
-
-## Evidence
-
-### Builds and the payload gate (no server, no lock)
-
-| Gate | Tree | rc | Number |
-| --- | --- | --- | --- |
-| `npx tsc --noEmit` | branch | **0** | — |
-| `npm run build` | branch | **0** | 31.3 s |
-| `GR_RELEASE=e1 npm run build:release` | branch | **1** | `later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb` |
-| `GR_RELEASE=e1 npm run build:release` | **control @ `e0df64c53`** (the task base) | **1** | **identical message, identical asset** |
-| `GR_RELEASE=e1 npm run build:release` | **control @ `83dc8e5b0`** (current main) | **0** | `E1-only: 1126 files, 97,651,708 bytes` |
-| `GR_RELEASE=e1 npm run build:release` | **control @ main + my 8 files** | **0** | `E1-only: 1126 files, 97,656,799 bytes` |
-
-**The release-build red is INHERITED, not mine, and is already cured on main.** Main landed `release-gate-on-deploy-1` after my branch was cut, and its item 1 is literally "the E4 hauler body leaves the E1 bundle" (`e3a3404cd`, `src/entities/Vehicle.ts`, plus the F-RGD-1 cure `eef0c3461`). Proven four ways in the table above, same machine, same hour: red at my base, red on my branch, green on main, **green on main with my eight files applied**. The drain's merge of main picks up the cure and the release build goes green. My release-bundle cost is `97,656,799 - 97,651,708 =` **+5,091 bytes**.
-
-Because `build:release` is red on my branch alone, `e2e/release-build.spec.ts` (`-c playwright.release.config.ts`) **cannot be run on this branch** — its harness previews a `dist/` the assertion refuses to certify. It must be run by the drain on the merged tree. Its five `?contract=` tests all stage `gr.contract.launch.v1` (`release-build.spec.ts:276`), so the allowlist keeps them on the run path; that is the static reading, and it is the one thing in this report the drain should confirm by running rather than by reading.
-
-`node scripts/first-town-payload.mjs`, both on a `GR_RELEASE=e1` dist, same machine:
-
-| Tree | gated payload | demand-paged | delta |
-| --- | --- | --- | --- |
-| control @ main `83dc8e5b0` | 34,341,349 B | 0 B | — |
-| control @ main + my 8 files | 34,345,394 B | 0 B | **+4,045 B (+0.012 %)** |
-
-Within noise, and the number is deterministic by construction (the script reads `dist/`, no browser, no clock).
-
-### Node guards (no server)
-
-| Battery | rc | Count |
-| --- | --- | --- |
-| `whole-suite-collection`, `claimed-spec-harness-guard`, `no-emdash-guard`, `console-watch-single-source`, `profile-data-key-sweep`, `battery-manifest`, `first-town-request-families`, `vite-only-import-reachability-guard` | **0** | **34 pass / 0 fail / 0 cancelled**, 12.7 s |
-| `node scripts/source-pointer-guard.mjs` | **0** | 664 files, 5 same-file citations checked, PASS |
-
-`whole-suite-collection` and `claimed-spec-harness-guard` are the two that matter for a new spec: `e2e/entry-params.spec.ts` is collected by the default config and claimed by no other.
-
-### Playwright gates
-
-PENDING - the drain lock was held by another attended landing when this section was written.
-
----
-
-## Screenshots
-
-`artifacts/ux-entry-robustness-1/` — one per project, so every card is captured at **1280x800** (`desktop-chrome-*`) and **390x844** (`mobile-chrome-*`):
-
-* `*-card-chunk-failure.png` — the parchment card after an aborted StartMenu chunk
-* `*-card-webgl-refused.png` — the card after a webgl2 refusal
-* `*-menu-tracking-utm-fbclid.png`, `*-menu-tracking-gclid.png`, `*-menu-shared-contract.png` — the start menu where a run used to launch
-* `*-pick-clock-before-hide.png`, `*-pick-clock-after-return.png` — the countdown either side of a hidden tab
+14 PNGs in `artifacts/ux-entry-robustness-1/`, 7 per project, so every card is captured at **1280x800** and **390x844**: `*-card-chunk-failure`, `*-card-webgl-refused`, `*-menu-tracking-utm-fbclid`, `*-menu-tracking-gclid`, `*-menu-shared-contract`, `*-pick-clock-before-hide`, `*-pick-clock-after-return`. Batch-4 failure frames are under `gates4/shots/`.
 
 ---
 
@@ -265,19 +227,28 @@ PENDING - the drain lock was held by another attended landing when this section 
 
 | ID | Severity | Finding |
 | --- | --- | --- |
-| **F-UX1-1** | **blocking, needs the drain** | Item 5's `?contract=` rule and `e2e/menu-safe-params.spec.ts:18-21` assert opposite verdicts on the same URL. Implemented per the master; the spec is untouched per the firewall. Four-line cure given above. |
-| F-UX1-2 | non-blocking, owner-adjacent | `DEFAULT_PROFILE_NAME` is still the owner's first name on the legacy-migration path. Renaming it needs `e2e/m3-06-demo-profiles.spec.ts:48,59,70` and `scripts/test-accounts.mjs:140` moved in the same commit. |
-| F-UX1-3 | non-blocking, needs a ladder item | `shouldSeedDefaultProfile` returning false unconditionally reds **172** spec files that boot a query-run on an empty store. Unreachable for a player once item 1 lands. Needs a seeding sweep or a `ProfileManager` option, not a one-line change. |
-| F-UX2-1 | informational | No client-error kind exists on the telemetry beacon (`payload.ts:16-28`, `functions/api/telemetry.ts:26`), so the boot guard reports to nobody. Adding one crosses the firewall twice. |
-| F-UX4-2 | informational | The "while the run is paused" half of item 3 is unreachable: `GameState.transition` clears `paused` entering `'levelup'` and `togglePause` refuses outside `'playing'` (`GameState.ts:31,37`). The document-hidden half is the whole reachable cure; the `isPaused` term is kept as a property of the clock. |
-| F-UX5-1 | informational | `e2e/plain-boot*.spec.ts` (item 5) does not exist. Substituted `044-start-screen`, `_s106-prospector-boot-probe`, `_s2080-f1742-1-boot-probe`. |
-| F-PATH-1 | informational | Three READ-FIRST paths in the master have drifted: `src/profiles/ProfileManager.ts` is `src/game/ProfileManager.ts`, `src/profiles/ProfileStorage.ts` is `src/game/ProfileStorage.ts`, `src/ui/StartMenu.ts` is `src/ui/menu/StartMenu.ts`. All were located and read. |
-| F-DOC-1 | informational, out of firewall | Three e2e comments still describe the removed `MENU_SAFE_PARAMS` denylist: `e2e/beauty-town.rig.ts:101`, `e2e/beauty-atmos.spec.ts:50`, `e2e/beauty-town.spec.ts:110`. Comments only, no assertion depends on them. Reported, not fixed. |
+| **F-UX7-1** | **scope not delivered** | Item 4 reverted. The `first-boot` card queued before the town mounts pushes `ledger-page:the_claim` ahead of `founding-welcome` through StoryRuntime's FIFO queue. Needs `StoryRuntime` (outside firewall). UX-7 stays open. |
+| F-UX1-1 | non-blocking | `menu-safe-params.spec.ts:18` passes vacuously; intent superseded, assertion blind. Four-line cure above. |
+| F-UX1-2 | non-blocking, owner-adjacent | `DEFAULT_PROFILE_NAME` is still the owner's first name on the legacy-migration path. Renaming it must move `e2e/m3-06-demo-profiles.spec.ts:48,59,70` and `scripts/test-accounts.mjs:140` in the same commit. |
+| F-UX1-3 | non-blocking, needs a ladder item | `shouldSeedDefaultProfile` returning false unconditionally reds **172** spec files that boot a query-run on an empty store. It is also unreachable for a player once item 1 lands: a tracking/share URL now goes to `showStartMenu()`, which mints nothing on a fresh store (`StartMenu.ts:427`), and `entry-params` asserts no profile index on all three URLs. Needs a seeding sweep or a `ProfileManager` option, not a one-line change. |
+| F-UX1-4 | cured here | `?contract=` now also accepts a matching run suspend. `continueSavedRun` stages in sessionStorage and reloads; `044-start-screen.spec.ts:135` clears sessionStorage in an init script that re-runs on that very reload. Exact contract match only. |
+| F-UX2-1 | informational | No client-error kind on the beacon; the guard reports to nobody. |
+| F-UX4-2 | informational | The "while paused" half of item 3 is unreachable: `GameState.transition` clears `paused` entering `'levelup'` and `togglePause` refuses outside `'playing'` (`GameState.ts:31,37`). The hidden half is the whole reachable cure; `isPaused` is kept as a property of the clock. |
+| F-UX5-1 | informational | `e2e/plain-boot*.spec.ts` does not exist; three real plain-boot specs substituted. |
+| F-ENV-1 | informational | `profile-first-boot` desktop-chrome fails on a COLD vite (30 s timeout compiling the TownScene graph), on main as well as here. Any gate that runs it first on a cold server will see it. |
+| F-PATH-1 | informational | Master READ-FIRST paths drifted: `src/profiles/ProfileManager.ts` → `src/game/ProfileManager.ts`, `src/profiles/ProfileStorage.ts` → `src/game/ProfileStorage.ts`, `src/ui/StartMenu.ts` → `src/ui/menu/StartMenu.ts`. All located and read. |
+| F-DOC-1 | informational, out of firewall | Three e2e comments still describe the removed `MENU_SAFE_PARAMS` denylist: `e2e/beauty-town.rig.ts:101`, `e2e/beauty-atmos.spec.ts:50`, `e2e/beauty-town.spec.ts:110`. Comments only. Reported, not fixed. |
 
 ---
 
-## Remaining list, in order
+## REMAINING LIST IN ORDER
 
-PENDING
+1. **Merge main** (`83dc8e5b0` or later) — it carries the `motor-hauler` cure, after which `GR_RELEASE=e1 npm run build:release` is green (proven: main + these 8 files, rc=0).
+2. **Run `e2e/release-build.spec.ts` with `-c playwright.release.config.ts`** on the merged tree. It could not run here; it is the only unmeasured gate.
+3. **Strengthen `menu-safe-params.spec.ts:18`** with the four-line cure above (F-UX1-1), in the merge commit.
+4. **Ladder `shouldSeedDefaultProfile`** (F-UX1-3) with the 172-file seeding sweep, or a `ProfileManager` option the harness sets.
+5. **Ladder UX-7** (F-UX7-1): give `StoryRuntime` a priority or unshift for `first-boot`, then re-land the `onEnterTown` emit.
+6. **Ladder `DEFAULT_PROFILE_NAME`** (F-UX1-2) with its two assertion moves.
+7. Optional: sweep the three stale `MENU_SAFE_PARAMS` comments (F-DOC-1), and record F-ENV-1 in the known-reds inventory.
 
 READY-FOR-GATES
