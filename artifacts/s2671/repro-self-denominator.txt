@@ -1,0 +1,179 @@
+
+=== NO ANCHOR / CONTROL: whole 32-day series — 32 file(s) on disk ===
+LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)
+
+  corpus                  : read (32 entries, 32 dated)
+  series anchor           : ABSENT (ENOENT at /private<FIXTURE>/ops/ledger-series-anchor.json)
+  newest                  : ledger-2026-09-24.db  (today)
+  span                    : 2026-08-24 -> 2026-09-24  (32/32 day(s) present, left edge from the corpus)
+
+  ⛔ CANNOT VERIFY WHOLENESS — there is no external series anchor, so the left
+     edge of the span above is simply the oldest file that survives. A wholesale
+     loss of the old end of the series reads as a shorter, perfect series
+     (F-2668-2: 1 file on disk printed "1/1 day(s) present — WHOLE AND CURRENT").
+     Restore ops/ledger-series-anchor.json — ENOENT at /private<FIXTURE>/ops/ledger-series-anchor.json
+
+
+  rc(--strict) = 2
+
+=== NO ANCHOR / MANUFACTURED: 31 days deleted, newest survives — 1 file(s) on disk ===
+LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)
+
+  corpus                  : read (1 entry, 1 dated)
+  series anchor           : ABSENT (ENOENT at /private<FIXTURE>/ops/ledger-series-anchor.json)
+  newest                  : ledger-2026-09-24.db  (today)
+  span                    : 2026-09-24 -> 2026-09-24  (1/1 day(s) present, left edge from the corpus)
+
+  ⛔ CANNOT VERIFY WHOLENESS — there is no external series anchor, so the left
+     edge of the span above is simply the oldest file that survives. A wholesale
+     loss of the old end of the series reads as a shorter, perfect series
+     (F-2668-2: 1 file on disk printed "1/1 day(s) present — WHOLE AND CURRENT").
+     Restore ops/ledger-series-anchor.json — ENOENT at /private<FIXTURE>/ops/ledger-series-anchor.json
+
+
+  rc(--strict) = 2
+
+=== NO ANCHOR / MANUFACTURED: 25 days deleted, last week survives — 7 file(s) on disk ===
+LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)
+
+  corpus                  : read (7 entries, 7 dated)
+  series anchor           : ABSENT (ENOENT at /private<FIXTURE>/ops/ledger-series-anchor.json)
+  newest                  : ledger-2026-09-24.db  (today)
+  span                    : 2026-09-18 -> 2026-09-24  (7/7 day(s) present, left edge from the corpus)
+
+  ⛔ CANNOT VERIFY WHOLENESS — there is no external series anchor, so the left
+     edge of the span above is simply the oldest file that survives. A wholesale
+     loss of the old end of the series reads as a shorter, perfect series
+     (F-2668-2: 1 file on disk printed "1/1 day(s) present — WHOLE AND CURRENT").
+     Restore ops/ledger-series-anchor.json — ENOENT at /private<FIXTURE>/ops/ledger-series-anchor.json
+
+
+  rc(--strict) = 2
+
+=== ANCHORED / CONTROL: whole 32-day series — 32 file(s) on disk ===
+LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)
+
+  corpus                  : read (32 entries, 32 dated)
+  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus
+  newest                  : ledger-2026-09-24.db  (today)
+  span                    : 2026-08-24 -> 2026-09-24  (32/32 day(s) present, left edge from the anchor)
+
+  ✅ WHOLE AND CURRENT — every calendar day from the DECLARED first coverage day
+     (2026-08-24, anchored outside the corpus) to the newest mirror is present,
+     and the newest is not behind. Nothing owed.
+
+  rc(--strict) = 0
+
+=== ANCHORED / MANUFACTURED: 31 days deleted, newest survives — 1 file(s) on disk ===
+LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)
+
+  corpus                  : read (1 entry, 1 dated)
+  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus
+  newest                  : ledger-2026-09-24.db  (today)
+  span                    : 2026-08-24 -> 2026-09-24  (1/32 day(s) present, left edge from the anchor)
+
+  ⚠️  MISSING COVERAGE DAY(S): 31
+     LB-01's discharge test asks only whether TODAY's file exists, so these
+     are invisible to it forever — a hole never becomes today again.
+       2026-08-24
+       2026-08-25
+       2026-08-26
+       2026-08-27
+       2026-08-28
+       2026-08-29
+       2026-08-30
+       2026-08-31
+       2026-09-01
+       2026-09-02
+       2026-09-03
+       2026-09-04
+       2026-09-05
+       2026-09-06
+       2026-09-07
+       2026-09-08
+       2026-09-09
+       2026-09-10
+       2026-09-11
+       2026-09-12
+       2026-09-13
+       2026-09-14
+       2026-09-15
+       2026-09-16
+       2026-09-17
+       2026-09-18
+       2026-09-19
+       2026-09-20
+       2026-09-21
+       2026-09-22
+       2026-09-23
+
+     A hole is often LAWFUL (box down, machine asleep, a fire spent on a drain)
+     and the mirror is a CUMULATIVE sqlite DB, so a bracketed hole usually costs
+     nothing. Judge it, record the judgement, do not reflexively backfill:
+     the droplet keeps only its own retention window and may no longer hold it.
+
+  rc(--strict) = 1
+
+=== ANCHORED / MANUFACTURED: 25 days deleted, last week survives — 7 file(s) on disk ===
+LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)
+
+  corpus                  : read (7 entries, 7 dated)
+  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus
+  newest                  : ledger-2026-09-24.db  (today)
+  span                    : 2026-08-24 -> 2026-09-24  (7/32 day(s) present, left edge from the anchor)
+
+  ⚠️  MISSING COVERAGE DAY(S): 25
+     LB-01's discharge test asks only whether TODAY's file exists, so these
+     are invisible to it forever — a hole never becomes today again.
+       2026-08-24
+       2026-08-25
+       2026-08-26
+       2026-08-27
+       2026-08-28
+       2026-08-29
+       2026-08-30
+       2026-08-31
+       2026-09-01
+       2026-09-02
+       2026-09-03
+       2026-09-04
+       2026-09-05
+       2026-09-06
+       2026-09-07
+       2026-09-08
+       2026-09-09
+       2026-09-10
+       2026-09-11
+       2026-09-12
+       2026-09-13
+       2026-09-14
+       2026-09-15
+       2026-09-16
+       2026-09-17
+
+     A hole is often LAWFUL (box down, machine asleep, a fire spent on a drain)
+     and the mirror is a CUMULATIVE sqlite DB, so a bracketed hole usually costs
+     nothing. Judge it, record the judgement, do not reflexively backfill:
+     the droplet keeps only its own retention window and may no longer hold it.
+
+  rc(--strict) = 1
+
+=== ANCHORED / REGRESSION: one interior day missing — 31 file(s) on disk ===
+LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)
+
+  corpus                  : read (31 entries, 31 dated)
+  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus
+  newest                  : ledger-2026-09-24.db  (today)
+  span                    : 2026-08-24 -> 2026-09-24  (31/32 day(s) present, left edge from the anchor)
+
+  ⚠️  MISSING COVERAGE DAY(S): 1
+     LB-01's discharge test asks only whether TODAY's file exists, so these
+     are invisible to it forever — a hole never becomes today again.
+       2026-09-19
+
+     A hole is often LAWFUL (box down, machine asleep, a fire spent on a drain)
+     and the mirror is a CUMULATIVE sqlite DB, so a bracketed hole usually costs
+     nothing. Judge it, record the judgement, do not reflexively backfill:
+     the droplet keeps only its own retention window and may no longer hold it.
+
+  rc(--strict) = 1

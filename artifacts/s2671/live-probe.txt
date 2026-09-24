@@ -1,0 +1,12 @@
+LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)
+
+  corpus                  : read (32 entries, 32 dated)
+  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus
+  newest                  : ledger-2026-09-24.db  (today)
+  span                    : 2026-08-24 -> 2026-09-24  (32/32 day(s) present, left edge from the anchor)
+
+  ✅ WHOLE AND CURRENT — every calendar day from the DECLARED first coverage day
+     (2026-08-24, anchored outside the corpus) to the newest mirror is present,
+     and the newest is not behind. Nothing owed.
+
+rc=0

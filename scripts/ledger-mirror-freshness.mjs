@@ -84,12 +84,44 @@
  * This file therefore does NO Date parsing of the series at all. It converts
  * Y-M-D to an integer day number by pure calendar arithmetic and derives "today"
  * from LOCAL components. Timezone-proof and arithmetic-proof by construction.
+ *
+ * THE DENOMINATOR COMES FROM OUTSIDE THE CORPUS (F-2668-2's remaining gate, s2671)
+ * -------------------------------------------------------------------------------
+ * As first written, this tool asked "is every calendar day between the OLDEST and
+ * the NEWEST file present?" — and took both edges from the directory it audits.
+ * The right edge was safe (it is checked against TODAY, which is external). The
+ * LEFT edge was not: it is whatever survived. So a wholesale loss of the old end
+ * of the series is invisible BY CONSTRUCTION — delete thirty-one of thirty-two
+ * days and the survivor becomes the whole series:
+ *
+ *     corpus : read (1 entry, 1 dated)
+ *     span   : 2026-09-24 -> 2026-09-24  (1/1 day(s) present)
+ *     ✅ WHOLE AND CURRENT ... Nothing owed.        rc(--strict) = 0
+ *
+ * That is not a hypothetical: it is the transcript of this tool run against a
+ * manufactured wipe (artifacts/s2671/repro-self-denominator.txt), and it is the
+ * SAME sentence it printed for s2668 when the series really did hold one usable
+ * day. The guard survived its own subject's disaster with a green.
+ *
+ * The cure is a left edge that the corpus cannot supply about itself:
+ * `ops/ledger-series-anchor.json` declares the series' FIRST COVERAGE DAY, is
+ * tracked in git, and lives outside artifacts/ledger-backups/ so that deleting
+ * the mirrors cannot also delete the record of how many there should have been.
+ *
+ * Its absence is "could not answer" (2), never a fallback to the old behaviour:
+ * a cure that silently degrades to the defect when its input is missing is the
+ * defect with extra steps. Without the anchor this tool still reports the corpus
+ * and the age, and WITHHOLDS the word WHOLE.
  */
 
-import { readdirSync, realpathSync } from 'node:fs';
+import { readdirSync, readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const MIRROR_DIR = fileURLToPath(new URL('../artifacts/ledger-backups/', import.meta.url));
+
+// Anchored to import.meta.url for the same reason the corpus is (F-2220-1): a
+// caller's cwd must not be able to swap the denominator.
+const ANCHOR_FILE = fileURLToPath(new URL('../ops/ledger-series-anchor.json', import.meta.url));
 
 // ledger-YYYY-MM-DD.db. Validate the CALENDAR, never the digit count: eight
 // digits is not a date, and a filter that only counts digits drags a boundary to
@@ -154,23 +186,85 @@ export function readMirrors(dir = MIRROR_DIR) {
 }
 
 /**
- * The whole point of the tool: the INTERIOR holes, which LB-01's existential
- * "does today's file exist?" test can never see, plus the age of the newest.
+ * The external denominator (F-2668-2, s2671). State is a STRING in every arm —
+ * 'read' | 'absent' | 'unreadable' | 'malformed' — never a boolean and never a
+ * silent null, so a careless truthiness test coerces toward noticing (F-2212-1).
+ *
+ * The date is validated through parseName, the SAME calendar validator the
+ * corpus filenames go through: one validator, so the anchor and the series can
+ * never disagree about what a legal day is.
  */
-export function analyse(sel, today = localToday()) {
+export function readAnchor(file = ANCHOR_FILE) {
+  let raw;
+  try {
+    raw = readFileSync(file, 'utf8');
+  } catch (err) {
+    return {
+      state: err.code === 'ENOENT' ? 'absent' : 'unreadable',
+      detail: `${err.code ?? 'error'} at ${file}`,
+      iso: null,
+      day: null,
+    };
+  }
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (err) {
+    return { state: 'malformed', detail: `unparseable JSON at ${file} (${err.message})`, iso: null, day: null };
+  }
+  const iso = parsed?.firstCoverageDay;
+  if (typeof iso !== 'string') {
+    return { state: 'malformed', detail: `no string firstCoverageDay in ${file}`, iso: null, day: null };
+  }
+  const parts = parseName(`ledger-${iso}.db`);
+  if (!parts) {
+    return { state: 'malformed', detail: `firstCoverageDay "${iso}" is not a valid calendar day (${file})`, iso, day: null };
+  }
+  return { state: 'read', detail: file, iso, day: dayNumber(parts), parts };
+}
+
+/**
+ * The whole point of the tool: the INTERIOR holes, which LB-01's existential
+ * "does today's file exist?" test can never see, plus the age of the newest,
+ * plus — since s2671 — the days missing off the OLD END, which the tool's own
+ * self-drawn span could not see either.
+ *
+ * `anchor` defaults to the UNSET state rather than to a disk read, so a caller
+ * that does not supply one is told it has no denominator instead of quietly
+ * getting the pre-s2671 behaviour back. main() supplies readAnchor().
+ */
+export function analyse(sel, today = localToday(), anchor = { state: 'unset', detail: 'no anchor supplied by the caller', iso: null, day: null }) {
+  const anchorFields = {
+    anchorState: anchor?.state ?? 'unset',
+    anchorDetail: anchor?.detail ?? 'no anchor supplied by the caller',
+    anchorIso: anchor?.iso ?? null,
+  };
   if (sel.corpus !== 'read') {
-    return { corpus: sel.corpus, corpusDetail: sel.corpusDetail, missing: [], ageDays: null, newest: null, oldest: null, span: 0 };
+    return { corpus: sel.corpus, corpusDetail: sel.corpusDetail, missing: [], ageDays: null, newest: null, oldest: null, span: 0, ...anchorFields };
   }
   if (sel.dated.length === 0) {
-    return { corpus: 'read', corpusDetail: sel.corpusDetail, missing: [], ageDays: null, newest: null, oldest: null, span: 0, empty: true };
+    return { corpus: 'read', corpusDetail: sel.corpusDetail, missing: [], ageDays: null, newest: null, oldest: null, span: 0, empty: true, ...anchorFields };
   }
   const byDay = new Map(sel.dated.map((f) => [dayNumber(f), f]));
   const nums = [...byDay.keys()].sort((a, b) => a - b);
   const first = nums[0];
   const last = nums[nums.length - 1];
 
+  // THE LEFT EDGE. With an anchor it is declared from outside; without one it
+  // falls back to the oldest survivor — which is the pre-s2671 blind spot, and
+  // is why the verdict is WITHHELD rather than printed in that state.
+  const anchored = anchorFields.anchorState === 'read' && Number.isInteger(anchor.day);
+  const windowStart = anchored ? Math.min(anchor.day, first) : first;
+
+  // A file OLDER than the anchor is not an error — someone backfilled further
+  // back than the declared start. It widens the window (it can never hide a
+  // day) and is reported so the anchor can be corrected deliberately.
+  const beforeAnchor = anchored ? nums.filter((n) => n < anchor.day).length : 0;
+
   const missing = [];
-  for (let n = first + 1; n < last; n++) {
+  // Inclusive of windowStart: when the anchor day itself is gone, THAT is the
+  // headline. The old loop started at first+1 and so could never name it.
+  for (let n = windowStart; n < last; n++) {
     if (!byDay.has(n)) missing.push(isoFromDayNumber(n));
   }
   return {
@@ -179,9 +273,13 @@ export function analyse(sel, today = localToday()) {
     oldest: byDay.get(first),
     newest: byDay.get(last),
     missing,
-    span: last - first + 1,
+    windowStartIso: isoFromDayNumber(windowStart),
+    windowStartSource: anchored ? 'anchor' : 'corpus',
+    beforeAnchor,
+    span: last - windowStart + 1,
     present: nums.length,
     ageDays: dayNumber(today) - last,
+    ...anchorFields,
   };
 }
 
@@ -213,6 +311,10 @@ export function exitCodeFor(report, strict, maxAgeDays = 1) {
   if (!strict) return 0;
   if (report.corpus !== 'read') return 2;
   if (report.empty) return 2;
+  // No external denominator, no answer about WHOLENESS (F-2668-2, s2671). This
+  // sits ABOVE the missing/age tests on purpose: with the left edge drawn from
+  // the corpus, "missing: []" is not a finding, it is an artefact.
+  if (report.anchorState !== 'read') return 2;
   if (report.missing.length > 0) return 1;
   if (report.ageDays > maxAgeDays) return 1;
   return 0;
@@ -222,12 +324,18 @@ function main() {
   const strict = process.argv.includes('--strict');
   const json = process.argv.includes('--json');
   const sel = readMirrors();
-  const report = analyse(sel);
+  const anchor = readAnchor();
+  const report = analyse(sel, localToday(), anchor);
 
   if (json) {
     console.log(JSON.stringify({
       corpus: report.corpus,
       corpusDetail: report.corpusDetail,
+      anchorState: report.anchorState,
+      anchorDetail: report.anchorDetail,
+      anchorIso: report.anchorIso,
+      windowStart: report.windowStartIso ?? null,
+      windowStartSource: report.windowStartSource ?? null,
       newest: report.newest?.iso ?? null,
       oldest: report.oldest?.iso ?? null,
       present: report.present ?? 0,
@@ -249,6 +357,18 @@ function main() {
   }[report.corpus] ?? `UNRECOGNISED (${report.corpus})`;
   console.log(`  corpus                  : ${label}`);
 
+  // The denominator is DECLARED on the happy path too, and by the same law the
+  // corpus is (F-2208-1) — a reader must never have to infer where the left
+  // edge of the span came from.
+  const anchorLabel = {
+    read: `${report.anchorIso} (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus`,
+    absent: `ABSENT (${report.anchorDetail})`,
+    unreadable: `UNREADABLE (${report.anchorDetail})`,
+    malformed: `MALFORMED (${report.anchorDetail})`,
+    unset: `NOT SUPPLIED (${report.anchorDetail})`,
+  }[report.anchorState] ?? `UNRECOGNISED (${report.anchorState})`;
+  console.log(`  series anchor           : ${anchorLabel}`);
+
   if (report.corpus !== 'read') {
     console.log('');
     console.log(`  ⛔ CANNOT VERIFY — the mirror directory could not be read (${sel.corpusDetail}).`);
@@ -264,16 +384,38 @@ function main() {
   }
 
   const ageWord = report.ageDays === 0 ? 'today' : report.ageDays === 1 ? 'yesterday' : `${report.ageDays} days old`;
+  const anchored = report.windowStartSource === 'anchor';
   console.log(`  newest                  : ${report.newest.name}  (${ageWord})`);
-  console.log(`  span                    : ${report.oldest.iso} -> ${report.newest.iso}  (${report.present}/${report.span} day(s) present)`);
+  console.log(
+    `  span                    : ${report.windowStartIso} -> ${report.newest.iso}  ` +
+      `(${report.present}/${report.span} day(s) present, left edge from the ${report.windowStartSource})`,
+  );
+  if (anchored && report.windowStartIso !== report.anchorIso) {
+    console.log(`  oldest file             : ${report.oldest.iso}  (${report.beforeAnchor} file(s) predate the anchor — the window widened to include them)`);
+  }
   if (sel.undatedNames?.length) {
     console.log(`  undated entries ignored : ${sel.undatedNames.length} (${sel.undatedNames.slice(0, 3).join(', ')})`);
   }
   console.log('');
 
-  if (report.missing.length === 0 && report.ageDays <= 1) {
-    console.log('  ✅ WHOLE AND CURRENT — every calendar day between the oldest and newest');
-    console.log('     mirror is present, and the newest is not behind. Nothing owed.');
+  if (!anchored) {
+    // The verdict is WITHHELD, not guessed. Reporting the corpus and the age is
+    // still worth doing; calling an unmeasured series WHOLE is not.
+    console.log('  ⛔ CANNOT VERIFY WHOLENESS — there is no external series anchor, so the left');
+    console.log('     edge of the span above is simply the oldest file that survives. A wholesale');
+    console.log('     loss of the old end of the series reads as a shorter, perfect series');
+    console.log('     (F-2668-2: one surviving file printed "1/1 day(s) present" and a clean verdict).');
+    // The verdict token itself is deliberately NOT quoted in this paragraph: a
+    // guard's explanatory prose becomes a grepper's input, and an explanation
+    // that contains the very phrase it is refusing to print hands every reader
+    // — including this file's own negative assertions — a false positive.
+    console.log(`     Restore ops/ledger-series-anchor.json — ${report.anchorDetail}`);
+    console.log('');
+  }
+  if (anchored && report.missing.length === 0 && report.ageDays <= 1) {
+    console.log(`  ✅ WHOLE AND CURRENT — every calendar day from the DECLARED first coverage day`);
+    console.log(`     (${report.anchorIso}, anchored outside the corpus) to the newest mirror is present,`);
+    console.log('     and the newest is not behind. Nothing owed.');
   }
   if (report.missing.length > 0) {
     console.log(`  ⚠️  MISSING COVERAGE DAY(S): ${report.missing.length}`);

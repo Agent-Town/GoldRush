@@ -40,13 +40,23 @@ import {
   analyse,
   exitCodeFor,
   readMirrors,
+  readAnchor,
   localToday,
 } from './ledger-mirror-freshness.mjs';
 
 const SUBJECT = fileURLToPath(new URL('./ledger-mirror-freshness.mjs', import.meta.url));
 
-/** Build a fixture tree and RELOCATE the subject into it. */
-function fixture(days, { makeMirrorDir = true } = {}) {
+/**
+ * Build a fixture tree and RELOCATE the subject into it.
+ *
+ * `anchor` (s2671, F-2668-2) writes <root>/ops/ledger-series-anchor.json, the
+ * external denominator. It is a fixture OPTION rather than a default so that
+ * the anchor's own absence stays testable — and note that the relocation makes
+ * this a genuine control on WHERE the anchor is read from: the repo's real
+ * ops/ledger-series-anchor.json exists, so a subject that resolved the anchor
+ * against process.cwd() would pass every arm below by picking up the repo's.
+ */
+function fixture(days, { makeMirrorDir = true, anchor = null, anchorRaw = null } = {}) {
   const root = mkdtempSync(path.join(tmpdir(), 's2351-lmf-'));
   mkdirSync(path.join(root, 'scripts'), { recursive: true });
   copyFileSync(SUBJECT, path.join(root, 'scripts', path.basename(SUBJECT)));
@@ -54,6 +64,13 @@ function fixture(days, { makeMirrorDir = true } = {}) {
     const dir = path.join(root, 'artifacts', 'ledger-backups');
     mkdirSync(dir, { recursive: true });
     for (const name of days) writeFileSync(path.join(dir, name), 'x');
+  }
+  if (anchor || anchorRaw) {
+    mkdirSync(path.join(root, 'ops'), { recursive: true });
+    writeFileSync(
+      path.join(root, 'ops', 'ledger-series-anchor.json'),
+      anchorRaw ?? JSON.stringify({ firstCoverageDay: anchor }, null, 2),
+    );
   }
   return root;
 }
@@ -95,7 +112,7 @@ process.on('exit', () => {
 // ---------------------------------------------------------------- CLI arms
 
 test('1. a whole, current series reports WHOLE AND CURRENT and strict exits 0', () => {
-  const root = mk([dbFor(isoBack(2)), dbFor(isoBack(1)), dbFor(isoBack(0))]);
+  const root = mk([dbFor(isoBack(2)), dbFor(isoBack(1)), dbFor(isoBack(0))], { anchor: isoBack(2) });
   const a = runIn(root);
   assert.ok(a.out.length > 0, 'control validity: the arm must actually produce output');
   assert.match(a.out, /WHOLE AND CURRENT/);
@@ -106,7 +123,7 @@ test('1. a whole, current series reports WHOLE AND CURRENT and strict exits 0', 
 
 test('2. an INTERIOR hole is NAMED and strict exits 1 — the defect LB-01 cannot see', () => {
   // today, today-1 present, today-2 MISSING, today-3 present.
-  const root = mk([dbFor(isoBack(3)), dbFor(isoBack(1)), dbFor(isoBack(0))]);
+  const root = mk([dbFor(isoBack(3)), dbFor(isoBack(1)), dbFor(isoBack(0))], { anchor: isoBack(3) });
   const a = runIn(root);
   assert.ok(a.out.length > 0, 'control validity: the arm must actually produce output');
   assert.match(a.out, /MISSING COVERAGE DAY\(S\): 1/);
@@ -115,7 +132,7 @@ test('2. an INTERIOR hole is NAMED and strict exits 1 — the defect LB-01 canno
 });
 
 test('3. a STALE newest (no holes) is reported with its age and strict exits 1', () => {
-  const root = mk([dbFor(isoBack(6)), dbFor(isoBack(5))]);
+  const root = mk([dbFor(isoBack(6)), dbFor(isoBack(5))], { anchor: isoBack(6) });
   const a = runIn(root);
   assert.ok(a.out.length > 0, 'control validity: the arm must actually produce output');
   assert.match(a.out, /DAYS BEHIND/);
@@ -160,7 +177,9 @@ test('7. the corpus is DECLARED on the HAPPY path too, not only on failure', () 
 });
 
 test('8. the CALENDAR is validated, not the digit count', () => {
-  const root = mk([dbFor(isoBack(0)), 'ledger-2026-13-45.db', 'ledger-2026-02-30.db', 'notes.txt']);
+  const root = mk([dbFor(isoBack(0)), 'ledger-2026-13-45.db', 'ledger-2026-02-30.db', 'notes.txt'], {
+    anchor: isoBack(0),
+  });
   const a = runIn(root);
   // 4 entries on disk, but only the one real date is a subject.
   assert.match(a.out, /corpus\s+: read \(4 entries, 1 dated\)/);
@@ -169,7 +188,10 @@ test('8. the CALENDAR is validated, not the digit count', () => {
 
 test('9. REVERSE CONTROL: a relocated copy measures ITS OWN tree, from any cwd', () => {
   // Over-anchoring the corpus to process.cwd() passes every arm above and reds here.
-  const root = mk([dbFor(isoBack(3)), dbFor(isoBack(0))]);
+  // Since s2671 this arm covers the DENOMINATOR too: the repo really does ship an
+  // ops/ledger-series-anchor.json, so a subject that resolved it against cwd would
+  // read the repo's 2026-08-24 when run from the repo and nothing when run from tmp.
+  const root = mk([dbFor(isoBack(3)), dbFor(isoBack(0))], { anchor: isoBack(3) });
   const fromRepo = runIn(root, [], process.cwd());
   const fromTmp = runIn(root, [], tmpdir());
   const fromRoot = runIn(root, [], root);
@@ -224,16 +246,100 @@ test('12. parseName accepts only well-formed calendar names', () => {
 });
 
 test('13. exitCodeFor keeps 2 (could not answer) above 1 (refuses) above 0', () => {
-  assert.equal(exitCodeFor({ corpus: 'absent', missing: [], ageDays: null }, true), 2);
-  assert.equal(exitCodeFor({ corpus: 'unreadable', missing: [], ageDays: null }, true), 2);
-  assert.equal(exitCodeFor({ corpus: 'read', empty: true, missing: [], ageDays: null }, true), 2);
-  assert.equal(exitCodeFor({ corpus: 'read', missing: ['2026-08-27'], ageDays: 0 }, true), 1);
-  assert.equal(exitCodeFor({ corpus: 'read', missing: [], ageDays: 5 }, true), 1);
-  assert.equal(exitCodeFor({ corpus: 'read', missing: [], ageDays: 1 }, true), 0);
+  // anchorState: 'read' is stated in every arm that expects an ANSWER — since
+  // s2671 a report without an external denominator cannot produce 0 or 1 at all.
+  const ok = { anchorState: 'read' };
+  assert.equal(exitCodeFor({ ...ok, corpus: 'absent', missing: [], ageDays: null }, true), 2);
+  assert.equal(exitCodeFor({ ...ok, corpus: 'unreadable', missing: [], ageDays: null }, true), 2);
+  assert.equal(exitCodeFor({ ...ok, corpus: 'read', empty: true, missing: [], ageDays: null }, true), 2);
+  assert.equal(exitCodeFor({ ...ok, corpus: 'read', missing: ['2026-08-27'], ageDays: 0 }, true), 1);
+  assert.equal(exitCodeFor({ ...ok, corpus: 'read', missing: [], ageDays: 5 }, true), 1);
+  assert.equal(exitCodeFor({ ...ok, corpus: 'read', missing: [], ageDays: 1 }, true), 0);
   // the advisory contract, asserted directly
   for (const corpus of ['read', 'absent', 'unreadable']) {
-    assert.equal(exitCodeFor({ corpus, missing: ['x'], ageDays: 9 }, false), 0);
+    assert.equal(exitCodeFor({ ...ok, corpus, missing: ['x'], ageDays: 9 }, false), 0);
   }
+});
+
+// -------------------------------------- s2671: the DENOMINATOR (F-2668-2's gate)
+//
+// The subject's span used to take BOTH edges from the directory it audits. The
+// right edge was safe (checked against today); the left edge was whatever
+// survived, so a wholesale loss of the old end of the series was invisible by
+// construction and printed a clean verdict. Arms 16-20 are the teeth for the
+// external anchor that closes it. Every one was proven by manufacturing the
+// defect first: artifacts/s2671/repro-self-denominator.txt is the transcript of
+// the pre-cure subject calling a 1-of-32 series whole.
+
+test('16. THE DEFECT, GUARDED: 31 of 32 days deleted is NAMED, not read as a shorter perfect series', () => {
+  const anchor = isoBack(31);
+  const root = mk([dbFor(isoBack(0))], { anchor });
+  const a = runIn(root);
+  assert.ok(a.out.length > 0, 'control validity: the arm must actually produce output');
+  assert.match(a.out, /MISSING COVERAGE DAY\(S\): 31/);
+  assert.ok(a.out.includes(anchor), 'the declared first coverage day itself is missing and must be named');
+  assert.match(a.out, /1\/32 day\(s\) present/, 'the denominator is the DECLARED span, not the surviving one');
+  assert.doesNotMatch(a.out, /WHOLE AND CURRENT/);
+  assert.equal(runIn(root, ['--strict']).rc, 1, 'answered, and the answer refuses');
+});
+
+test('17. an ABSENT anchor WITHHOLDS the verdict — 2 (could not answer), never a silent fallback', () => {
+  // The whole series is on disk and perfectly healthy; the point is that the
+  // subject cannot KNOW that without a denominator, and must not pretend to.
+  const root = mk([dbFor(isoBack(2)), dbFor(isoBack(1)), dbFor(isoBack(0))]);
+  const a = runIn(root);
+  assert.match(a.out, /series anchor\s+: ABSENT/);
+  assert.match(a.out, /CANNOT VERIFY WHOLENESS/);
+  assert.doesNotMatch(a.out, /WHOLE AND CURRENT/, 'a cure that degrades to the defect is the defect with extra steps');
+  assert.equal(a.rc, 0, 'advisory stays 0 in every state');
+  assert.equal(runIn(root, ['--strict']).rc, 2, 'could not answer (2), NOT answered-and-clear (0)');
+});
+
+test('18. a MALFORMED anchor is could-not-answer too — bad JSON and a non-calendar day alike', () => {
+  const days = [dbFor(isoBack(1)), dbFor(isoBack(0))];
+  const badJson = mk(days, { anchorRaw: '{ this is not json' });
+  assert.match(runIn(badJson).out, /series anchor\s+: MALFORMED/);
+  assert.equal(runIn(badJson, ['--strict']).rc, 2);
+
+  const badDay = mk(days, { anchor: '2026-02-30' });
+  assert.match(runIn(badDay).out, /series anchor\s+: MALFORMED/, 'the calendar is validated, not the shape');
+  assert.equal(runIn(badDay, ['--strict']).rc, 2);
+
+  const noField = mk(days, { anchorRaw: JSON.stringify({ note: 'wrong key' }) });
+  assert.match(runIn(noField).out, /series anchor\s+: MALFORMED/);
+  assert.equal(runIn(noField, ['--strict']).rc, 2);
+});
+
+test('19. the ANCHOR is declared on the HAPPY path too, with its source (F-2208-1)', () => {
+  const root = mk([dbFor(isoBack(1)), dbFor(isoBack(0))], { anchor: isoBack(1) });
+  const a = runIn(root);
+  assert.ok(a.out.includes(`series anchor           : ${isoBack(1)}`), `got:\n${a.out}`);
+  assert.match(a.out, /declared OUTSIDE the corpus/);
+  assert.match(a.out, /left edge from the anchor/, 'the span must say where its left edge came from');
+});
+
+test('20. a file OLDER than the anchor widens the window and is never counted as a hole', () => {
+  // Someone backfilled further back than the declared start. That is not an
+  // error and must not manufacture missing days before the anchor.
+  const root = mk([dbFor(isoBack(3)), dbFor(isoBack(2)), dbFor(isoBack(1)), dbFor(isoBack(0))], {
+    anchor: isoBack(1),
+  });
+  const a = runIn(root);
+  assert.doesNotMatch(a.out, /MISSING COVERAGE DAY/);
+  assert.match(a.out, /4\/4 day\(s\) present/, 'the window widened to the oldest file, not to the anchor');
+  assert.match(a.out, /predate the anchor/);
+  assert.equal(runIn(root, ['--strict']).rc, 0);
+});
+
+test('21. the repo\'s OWN anchor is present, parseable and a real calendar day', () => {
+  // The subject fails safe without it, which means a lost anchor degrades to a
+  // permanent advisory 2 that nobody is obliged to read. This arm is what makes
+  // its absence a RED rather than a shrug.
+  const anchor = readAnchor();
+  assert.equal(anchor.state, 'read', `the repo anchor must be readable, got: ${anchor.detail}`);
+  assert.equal(typeof anchor.iso, 'string');
+  assert.ok(Number.isInteger(anchor.day), 'the anchor must resolve to a day number');
+  assert.ok(anchor.day <= dayNumber(localToday()), 'an anchor in the FUTURE would silence every hole');
 });
 
 test('15. localToday reads LOCAL components — the UTC date-only trap, guarded', () => {

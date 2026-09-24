@@ -1,0 +1,14 @@
+{
+  "firstCoverageDay": "2026-08-24",
+  "declaredBy": "s2671 fire, 2026-09-24 — the remaining half of F-2668-2's gate",
+  "source": "scripts/fire.md LB-01, 'the county book's daily offsite pull, added 2026-08-24'; the oldest mirror on disk AND the oldest on the private archive (refs/heads/sol/account-registry-land, verified byte-for-byte s2670) are both ledger-2026-08-24.db",
+  "whyItLivesOutsideTheCorpus": "scripts/ledger-mirror-freshness.mjs measures artifacts/ledger-backups/. A span whose LEFT edge is the oldest surviving file cannot see a wholesale loss of the old end of the series: delete 31 of 32 days and it reports '1/1 day(s) present — WHOLE AND CURRENT'. Measured, not argued: artifacts/s2671/repro-self-denominator.txt. This file is the denominator the corpus cannot supply about itself.",
+  "whenToEditThis": "Only when LB-01's destination is RE-HOMED (owner ruling 15's named remainder — the pull still writes into the public working tree rather than the private archive). Move the day forward in the SAME commit as the re-home and record why here. Never edit it to silence a red: the red is the tool working.",
+  "history": [
+    {
+      "day": "2026-08-24",
+      "set": "2026-09-24 (s2671)",
+      "why": "the day LB-01 was added and the day the series actually begins"
+    }
+  ]
+}
