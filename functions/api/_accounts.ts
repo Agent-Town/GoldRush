@@ -1,3 +1,4 @@
+import { constantTimeEqual } from './_compare';
 import { bumpCounter } from './_ratelimit';
 
 export type LedgerListResult = {
@@ -13,6 +14,8 @@ export type LedgerStorage = {
   list(options?: { prefix?: string; cursor?: string }): Promise<LedgerListResult>;
   resolveAccount?(candidate: AccountRecord): Promise<AccountRecord>;
   retireAccount?(emailHash: string, accountId: string): Promise<boolean>;
+  // SEC-1: one atomic count-and-read, where the store can offer one (SqliteStorage does; KV cannot).
+  increment?(key: string, ttlSeconds: number): Promise<number>;
 };
 
 export type AccountRegistryNamespace = {
@@ -115,7 +118,11 @@ export async function requestCode(context: AccountsContext): Promise<Response> {
       JSON.stringify({ hash: codeHash, revokeSessions: body.revokeSessions === true, createdAt: nowIso() }),
       { expirationTtl: CODE_TTL_SECONDS },
     );
-    await env.ACCOUNTS.delete(`attempts:${emailHash}`);
+    // SEC-1: the guess budget is NOT reset here. Deleting `attempts:` on every new code made the
+    // budget free to refill: a caller who had burned five guesses simply asked for another code and
+    // got five more, so the 5-per-TTL bound was really 5 per code request, i.e. 25 per 10 minutes
+    // per email. The counter now expires on its own TTL (CODE_TTL_SECONDS from the first counted
+    // guess) and a successful verify is the only thing that clears it.
 
     if (isDev(env)) {
       return json(cors, { ok: true, code, dev: true });
@@ -143,16 +150,17 @@ export async function verifyCode(context: AccountsContext): Promise<Response> {
 
     const emailHash = await sha256Hex(email);
     const attemptsKey = `attempts:${emailHash}`;
-    const attempts = numberOrZero(await kv.get(attemptsKey));
-    if (attempts >= MAX_VERIFY_ATTEMPTS) return error(cors, 429, 'too_many_attempts', 'Try again later.');
+    // SEC-1: count FIRST, then compare. The guess is charged to the budget before anything is read
+    // or hashed, and the caller is refused on the number its own count produced, so the two awaits
+    // that used to sit inside the read-then-write window cannot buy an extra evaluation.
+    const attempt = await countAttempt(kv, attemptsKey, CODE_TTL_SECONDS);
+    if (attempt > MAX_VERIFY_ATTEMPTS) return error(cors, 429, 'too_many_attempts', 'Try again later.');
 
     const rawCode = await kv.get(`code:${emailHash}`);
     const expected = parseCode(rawCode);
     const actual = await codeDigest(env, emailHash, code);
     if (!expected || !constantTimeEqual(expected.hash, actual)) {
-      const nextAttempts = attempts + 1;
-      await kv.put(attemptsKey, String(nextAttempts), { expirationTtl: CODE_TTL_SECONDS });
-      return nextAttempts >= MAX_VERIFY_ATTEMPTS
+      return attempt >= MAX_VERIFY_ATTEMPTS
         ? error(cors, 429, 'too_many_attempts', 'Try again later.')
         : error(cors, 401, 'invalid_code', 'Code not accepted.');
     }
@@ -377,6 +385,19 @@ function error(cors: Record<string, string>, status: number, code: string, messa
 
 function requireAccounts(env: AccountsEnv, cors: Record<string, string>): LedgerStorage | Response {
   return env.ACCOUNTS ?? error(cors, 503, 'sign_in_not_enabled', 'sign-in not yet enabled');
+}
+
+// SEC-1: charge one guess to a budget and hand back the number this call produced. The sqlite ledger
+// counts in a single statement (storage.mjs `increment`), which is the door that is live behind nginx
+// today. Cloudflare KV has no atomic increment and its own writes are eventually consistent, so the
+// fallback keeps the read and the write ADJACENT, with no digest or code read between them: a burst
+// on that backend can still share a count, and the nginx `limit_req` on /api/verify plus the per-IP
+// cap above are what bound it there. Flagged in the report, not papered over.
+async function countAttempt(kv: LedgerStorage, key: string, ttlSeconds: number): Promise<number> {
+  if (kv.increment) return kv.increment(key, ttlSeconds);
+  const attempt = numberOrZero(await kv.get(key)) + 1;
+  await kv.put(key, String(attempt), { expirationTtl: ttlSeconds });
+  return attempt;
 }
 
 async function readJson(request: Request, maxBytes: number): Promise<JsonRecord> {
@@ -728,15 +749,6 @@ async function codeDigest(env: AccountsEnv, emailHash: string, code: string): Pr
 async function sha256Hex(value: string): Promise<string> {
   const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
   return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
-}
-
-function constantTimeEqual(left: string, right: string): boolean {
-  let diff = left.length ^ right.length;
-  const length = Math.max(left.length, right.length);
-  for (let index = 0; index < length; index += 1) {
-    diff |= (left.charCodeAt(index) || 0) ^ (right.charCodeAt(index) || 0);
-  }
-  return diff === 0;
 }
 
 function numberOrZero(value: string | null): number {

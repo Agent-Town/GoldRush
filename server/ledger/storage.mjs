@@ -36,6 +36,23 @@ export class SqliteStorage {
       INSERT INTO kv (key, value, updated_at, expires_at) VALUES (?, ?, ?, ?)
       ON CONFLICT(key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at, expires_at = excluded.expires_at
     `);
+    // SEC-1 (outside review 2026-09-24, re-measured the same day): the sign-in guess counter was
+    // read, awaited across a KV read plus a SHA-256 digest, then written back, so every caller in a
+    // burst read the same number and the last write won. Measured on this tree before the fix: 50 of
+    // 50 parallel wrong guesses were digest-compared against a budget of 5, the stored counter ended
+    // at 1, and the real code was still accepted afterwards. One statement now counts the guess and
+    // hands back the number it produced, so no two callers can be handed the same count: SQLite's
+    // own write lock serialises them, across connections and processes as well as awaits.
+    // The window is NOT re-armed on conflict (`expires_at` keeps the existing row's value): the
+    // budget runs for one TTL from the first counted guess, so a flood cannot extend a victim's
+    // lockout by continuing to knock.
+    this.bump = this.db.prepare(`
+      INSERT INTO kv (key, value, updated_at, expires_at) VALUES (?, '1', ?, ?)
+      ON CONFLICT(key) DO UPDATE SET
+        value = CAST(MAX(CAST(kv.value AS INTEGER), 0) + 1 AS TEXT),
+        updated_at = excluded.updated_at
+      RETURNING value
+    `);
     this.remove = this.db.prepare('DELETE FROM kv WHERE key = ?');
     this.removeExpiredKey = this.db.prepare('DELETE FROM kv WHERE key = ? AND expires_at <= ?');
     this.removeExpired = this.db.prepare('DELETE FROM kv WHERE expires_at <= ?');
@@ -67,6 +84,16 @@ export class SqliteStorage {
 
   async delete(key) {
     this.remove.run(key);
+  }
+
+  // Atomic counter: returns the count THIS call produced (1 for the first), so a caller refuses on
+  // its own number and never on a number a concurrent caller might also have seen. An expired row
+  // is swept first, exactly as `put` does, so a stale count never carries into a fresh window.
+  async increment(key, ttlSeconds) {
+    if (!Number.isSafeInteger(ttlSeconds) || ttlSeconds < 1) throw new Error('expirationTtl must be a positive integer');
+    const now = Date.now();
+    this.removeExpired.run(now);
+    return Number(this.bump.get(key, now, now + ttlSeconds * 1_000).value);
   }
 
   async resolveAccount(candidate) {
