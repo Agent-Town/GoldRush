@@ -8,10 +8,10 @@ Declared: `lampworks_yard`. The plate's foreground working yard and lamp rig est
 
 | View | Landmark | Rest pixels | Peak pixels | Return pixels | Seconds visible | Glance |
 | --- | --- | ---: | ---: | ---: | --- | --- |
-| 1280 | lampworks_yard | 101,349 | 80,279 | 80,258 | 3.996–3.996 (observation censored) | False |
-| 390 | lampworks_yard | 11,087 | 9,361 | 9,343 | 3.986–3.986 (observation censored) | False |
+| 1280 | lampworks_yard | 77,509 | 77,506 | 77,505 | 3.988–3.988 (observation censored) | False |
+| 390 | lampworks_yard | 9,127 | 9,128 | 9,128 | 3.99–3.99 (observation censored) | False |
 
-Depth-tested body counts use a fixed DPR-1 viewport render target, excluding the HUD. The normal-HUD screenshots remain ordinary live boots. These numbers measure body visibility, not total landscape fidelity or HUD clearance. Duration follows recorded live camera poses against a frozen final scene; no teleport or sim order is used. Zero console/page errors in all capture arms.
+Corrected unique-magenta depth-tested body counts use a fixed DPR-1 viewport render target, excluding the HUD. The initial difference census counted animated water; those raw runs remain in difference-census/ and are superseded. Production camera logic is unchanged. The normal-HUD screenshots remain ordinary live boots. These numbers measure body visibility, not total landscape fidelity or HUD clearance. Duration follows recorded live camera poses against a frozen final scene; no teleport or sim order is used. Zero console/page errors in all capture arms.
 
 [Desktop board](board-1280.png) · [Phone board](board-390.png) · [Raw captures](captures.json) · [Metrics](metrics.json) · [Contract invariants](invariants.json).
 

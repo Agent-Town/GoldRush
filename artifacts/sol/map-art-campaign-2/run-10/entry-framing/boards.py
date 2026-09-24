@@ -2,6 +2,7 @@ from pathlib import Path
 import json, sys
 from PIL import Image, ImageDraw, ImageFont
 root=Path('artifacts/sol/map-art-campaign-2/run-10/entry-framing');name=sys.argv[1];out=root/name
+if len(sys.argv)>2:out=out/sys.argv[2]
 rows=json.loads((out/'captures.json').read_text())
 font=ImageFont.truetype('/System/Library/Fonts/Supplemental/Arial.ttf',22)
 small=ImageFont.truetype('/System/Library/Fonts/Supplemental/Arial.ttf',17)

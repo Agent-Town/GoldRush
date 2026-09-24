@@ -853,6 +853,13 @@ Builds, 34+3 guards, mirror, census 4, loading 8, repeat 2, six mount cycles pas
 
 ## 2026-09-24 — run 10: entry — e1-night-shift
 
-2026-09-24 run 10: entry — DECLARED / HELD: already partly visible, so no glance. 1280 lampworks_yard: 101,349→80,279→80,258 px; 390 lampworks_yard: 11,087→9,361→9,343 px. lampworks_yard has nonzero body pixels at both widths. The unchanged zero-pixel trigger cannot cure partial cropping or HUD coverage; no improvement is credited to the live count variation. The phone yard and full lantern procession remain held. E1 34,322,816 B (+4,270 B). [Boards, timing and gates](../artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/review.md). 
+2026-09-24 run 10: entry — DECLARED / HELD: already partly visible, so no glance. 1280 lampworks_yard: 77,509→77,506→77,505 px; 390 lampworks_yard: 9,127→9,128→9,128 px. lampworks_yard has nonzero body pixels at both widths. The unchanged zero-pixel trigger cannot cure partial cropping or HUD coverage; no improvement is credited to the live count variation. The phone yard and full lantern procession remain held. E1 34,322,816 B (+4,270 B). [Boards, timing and gates](../artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/review.md). 
 
 Engine `d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959` → `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e1-twin-banks
+
+2026-09-24 run 10: entry — IMPROVED: phone homestead revealed; desktop already visible. 1280 south_bank_homestead: 44,748→44,746→44,746 px; 390 south_bank_homestead: 0→49,902→0 px. The phone-only 2.5-second glance reveals south_bank_homestead and returns to the unchanged rider. Desktop correctly skips the already-visible house. Both braids, both banks, the other rig and HUD clearance remain separate holds; the single homestead does not establish full plate fidelity. E1 34,329,072 B (+6,256 B). [Boards, timing and gates](../artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-twin-banks/review.md). 
+
+Engine `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b` → `97855ed9d083ec03a2057dfc9f33b0618f6c8cb28fcfac99952fa1e2e6000a97`. No pin move.

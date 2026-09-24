@@ -8,6 +8,7 @@ export default defineConfig({
   globalSetup: undefined,
   use: { ...release.use, baseURL: 'http://127.0.0.1:5303' },
   webServer: {
+    cwd: process.cwd(),
     command: 'npx vite preview --host 127.0.0.1 --port 5303 --strictPort',
     url: 'http://127.0.0.1:5303',
     reuseExistingServer: false,

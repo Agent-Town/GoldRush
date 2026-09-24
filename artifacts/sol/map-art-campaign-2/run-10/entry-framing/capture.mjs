@@ -8,9 +8,11 @@ const name = id.replace(/^e\d+-/, '');
 const durationOnly = process.argv.includes('--duration');
 const declaredEntry = JSON.parse(readFileSync(`assets/pilots/map-rebuild-spike/${name}-terrain-contract.json`)).entryLandmark;
 const plan = JSON.parse(readFileSync(`${root}/map-plan.json`)).find(row => row[0] === id);
-const entry = declaredEntry ?? { mountId: plan[1], reason: plan[2] };
+const selected = process.argv.find(arg=>arg.startsWith('--mount='))?.slice(8);
+const entry = selected ? { mountId: selected, reason: 'Additional declared landmark' } : declaredEntry ?? { mountId: plan[1], reason: plan[2] };
 assert.ok(entry);
-const out = `${root}/${id}`;
+const sub = process.argv.find(arg=>arg.startsWith('--label='))?.slice(8);
+const out = `${root}/${id}${sub?'/'+sub:''}`;
 mkdirSync(out, { recursive: true });
 const browser = await chromium.launch({ channel: 'chromium' });
 const rows = [];
@@ -23,11 +25,12 @@ try {
     page.on('pageerror', e => errors.push(e.message));
     await page.route('**/src/game/Game.ts*', async route => {
       const response = await route.fetch(); let body = await response.text();
+      body = `import { bodyPixels as evidenceBodyPixels } from "/artifacts/sol/map-art-campaign-2/run-10/entry-framing/body-census.mjs";\n` + body;
       if (arm === 'before') body = body.replace('this.cameraRig.tryEntryGlance(this.activeContract.id, this.scene, this.renderer);', '/* baseline: no entry glance */');
       const line = 'this.cameraRig.update(delta, cameraTarget, this.localActor.velocity);';
       assert.equal(body.split(line).length, 2);
       body = body.replace(line, `${line}
-        window.__ENTRY_CONTEXT__ = {rig:this.cameraRig, camera:this.camera, scene:this.scene, renderer:this.renderer};
+        window.__ENTRY_CONTEXT__ = {rig:this.cameraRig, camera:this.camera, scene:this.scene, renderer:this.renderer,census:evidenceBodyPixels};
         if (window.__ENTRY_RECORD__) {
           const r=window.__ENTRY_RECORD__, c=this.camera;
           r.seconds=(r.seconds??0)+delta;
@@ -46,10 +49,9 @@ try {
     const row = { width, arm, entry, declared: Boolean(declaredEntry), errors, frames: {} };
     const shot = async label => {
       row.frames[label] = await page.evaluate(mountId => {
-        const {rig,camera,scene,renderer}=window.__ENTRY_CONTEXT__, model=scene.getObjectByName(mountId);
+        const {rig,camera,scene,renderer,census}=window.__ENTRY_CONTEXT__, model=scene.getObjectByName(mountId);
         const buffer=renderer.getDrawingBufferSize(camera.position.clone()).toArray().slice(0,2);
-        const original=renderer.getDrawingBufferSize;renderer.getDrawingBufferSize=v=>v.set(innerWidth,innerHeight);
-        let pixels;try{pixels=rig.bodyPixels(model,scene,renderer)}finally{renderer.getDrawingBufferSize=original}
+        const pixels=census(model,scene,renderer,camera,innerWidth,innerHeight);
         return { t:performance.now(), elapsed:rig.entryGlance?.elapsed??null, pixels, buffer, pixelSpace:'viewport pixels at DPR 1', position:camera.position.toArray(), quaternion:camera.quaternion.toArray(), focus:rig.focus.toArray(), hero:window.__THREE_GAME_DIAGNOSTICS__.heroPos, timeAlive:window.__THREE_GAME_DIAGNOSTICS__.timeAlive };
       }, entry.mountId);
       await page.screenshot({ path: `${out}/${label}-${width}.png` });
@@ -62,7 +64,10 @@ try {
       row.triggered = await page.evaluate(() => window.__ENTRY_RECORD__.samples.some(s => s.elapsed !== null));
       if (durationOnly) await page.waitForTimeout(4500);
       else {
-        if (row.triggered) await page.waitForFunction(() => (window.__ENTRY_CONTEXT__.rig.entryGlance?.elapsed ?? 0) >= 1.1);
+        if (row.triggered) {
+          const at = await page.evaluate(mountId=>{const {rig,scene}=window.__ENTRY_CONTEXT__;const g=rig.entryGlance;if(!g?.nextPosition)return 1.1;return scene.getObjectByName(mountId).getWorldPosition(g.position.clone()).distanceTo(g.nextPosition)<0.01?1.7:0.8},entry.mountId);
+          await page.waitForFunction(at => (window.__ENTRY_CONTEXT__.rig.entryGlance?.elapsed ?? 0) >= at, at);
+        }
         else await page.waitForTimeout(1100);
         await shot('peak');
         await page.waitForFunction(() => !window.__ENTRY_CONTEXT__.rig.entryGlance);
@@ -72,19 +77,18 @@ try {
       // Freeze only the CAMERA poses for diagnostic body census, after ordinary captures.
       // No sim advance, teleport, hidden HUD or gameplay change was used above.
       row.census = await page.evaluate(mountId => {
-        const {rig,camera,scene,renderer}=window.__ENTRY_CONTEXT__, model=scene.getObjectByName(mountId);
+        const {rig,camera,scene,renderer,census}=window.__ENTRY_CONTEXT__, model=scene.getObjectByName(mountId);
         const position=camera.position.clone(), quaternion=camera.quaternion.clone();
-        const original=renderer.getDrawingBufferSize;renderer.getDrawingBufferSize=v=>v.set(innerWidth,innerHeight);
         const samples=window.__ENTRY_RECORD__.samples, picked=[];let last=-Infinity;
         const start=samples.find(s=>s.checked)?.t??samples[0].t;
         try {
           for(const s of samples){
             if(s.t<start||s.t-start>4000||s.t-last<50)continue;last=s.t;
             camera.position.fromArray(s.position);camera.quaternion.fromArray(s.quaternion);camera.updateMatrixWorld(true);
-            picked.push({...s,seconds:(s.t-start)/1000,pixels:rig.bodyPixels(model,scene,renderer)});
+            picked.push({...s,seconds:(s.t-start)/1000,pixels:census(model,scene,renderer,camera,innerWidth,innerHeight)});
           }
-        } finally {renderer.getDrawingBufferSize=original;camera.position.copy(position);camera.quaternion.copy(quaternion);camera.updateMatrixWorld(true);}
-        return {method:'Depth-tested opaque landmark body at recorded live camera poses; final frozen scene; at least 50 ms between samples.',samples:picked};
+        } finally {camera.position.copy(position);camera.quaternion.copy(quaternion);camera.updateMatrixWorld(true);}
+        return {method:'Unique-magenta depth-tested body at recorded live camera poses; fixed viewport-sized target; final frozen scene; at least 50 ms between samples.',samples:picked};
       }, entry.mountId);
       writeFileSync(`${out}/${durationOnly?'duration':'camera'}-trace-${width}.json`, JSON.stringify(await page.evaluate(() => window.__ENTRY_RECORD__), null, 2)+'\n');
     }

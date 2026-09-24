@@ -5,5 +5,6 @@ Preflight PASS; expected `logs/guard-stats.jsonl` retained. Store branch `astra/
 Completed map evidence:
 
 - [e1-night-shift](e1-night-shift/review.md)
+- [e1-twin-banks](e1-twin-banks/review.md)
 
-Remaining in order: e1-twin-banks, e1-baron, e2-trestle, e6-glow-mesa, e7-relay-rush.
+Remaining in order: e1-baron, e2-trestle, e6-glow-mesa, e7-relay-rush.

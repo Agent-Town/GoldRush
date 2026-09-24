@@ -1,0 +1,40 @@
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+9:20:45 AM [vite] (client) Re-optimizing dependencies because vite config has changed
+
+  VITE v8.3.0  ready in 203 ms
+
+  ➜  Local:   http://127.0.0.1:5303/
+(!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+  /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/index.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/logs/cast-sheets.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/logs/dashboard.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/site/index-legacy-2026-08-13.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/site/index.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/site/news.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/scripts/stream-dashboard.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/scripts/stream-player.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/boss-art-fidelity-2026-09-08/index.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/dashboard-truth/after.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/dashboard-truth/before.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/goal-tracker-dashboard/dashboard.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/map-art-inventory-20260908/index.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/src/replay/harness.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/boss-fidelity/e1-baron/index.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/boss-fidelity/e2-railcar/index.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/boss-fidelity/e4-landyacht/index.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/boss-fidelity/e3-crawler/index.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/boss-fidelity/e5-dredge-queen/index.html
+/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/assets/pilots/hero-3d/compare.html
+
+  Build failed with 1 error:
+
+[31m[TSCONFIG_ERROR] [0mFailed to load tsconfig '../tsconfig.json': Tsconfig not found
+
+    at aggregateBindingErrorsIntoJsError (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/node_modules/rolldown/dist/shared/error-CGhV1ebk.mjs:48:18)
+    at unwrapBindingResult (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/node_modules/rolldown/dist/shared/error-CGhV1ebk.mjs:18:128)
+    at scan (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/node_modules/rolldown/dist/experimental-index.mjs:238:3)
+    at async Object.build (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/node_modules/vite/dist/node/chunks/node.js:27504:3)
+    at async scan (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/node_modules/vite/dist/node/chunks/node.js:27443:4)
+    at async file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/node_modules/vite/dist/node/chunks/node.js:35201:15
