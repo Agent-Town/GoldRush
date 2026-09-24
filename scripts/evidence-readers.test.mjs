@@ -18,8 +18,9 @@ import { dirname, join } from 'node:path';
 import test from 'node:test';
 
 import {
-  FILE_EXACT_SUBTREES, MAP_CLASS1_SUBTREES, codeLiterals, deriveMustStay, literalToPattern,
-  mustStayPredicate, normaliseLiteral, patternToRegExp, subtreeRootOf,
+  ALWAYS_KEEP, ARCHIVE_INDEX_PATH, FILE_EXACT_SUBTREES, MAP_CLASS1_SUBTREES, SELF_EXCLUDED,
+  codeLiterals, deriveMustStay, literalToPattern, mustStayPredicate, normaliseLiteral,
+  patternToRegExp, subtreeRootOf, trackedFiles,
 } from './evidence-readers.mjs';
 
 const CAMPAIGN = 'artifacts/sol/map-art-campaign-2';
@@ -81,6 +82,33 @@ test('the derivation leaves a movable majority: the offload has to be worth runn
   const movable = live.artifacts.filter((f) => !stays(f));
   assert.ok(movable.length > live.artifacts.length / 2,
     `only ${movable.length} of ${live.artifacts.length} tracked evidence files are movable`);
+});
+
+test('THE §A4 CONTROL IS NOT VACUOUS: this feature\'s own files feed nothing into the scan', () => {
+  // Measured the moment these files were first committed: the scan read its own test fixtures and
+  // its own transcription of §A4 as readers, pinned the 5.9 GB campaign from the `CAMPAIGN` constant
+  // 25 lines above, and took must-stay from 5,959 files to 16,893. Worse than the bytes: it made the
+  // §A4 case beneath assert its own transcription, so a scan that had stopped working would still
+  // have passed it.
+  const tracked = new Set(trackedFiles());
+  for (const file of SELF_EXCLUDED.keys()) {
+    assert.ok(tracked.has(file), `${file} is self-excluded but not tracked; the exclusion names nothing`);
+    assert.ok(String(SELF_EXCLUDED.get(file)).length > 20, `${file} is excluded without a reason`);
+  }
+  const leaked = live.hits.filter((hit) => SELF_EXCLUDED.has(hit.file));
+  assert.deepEqual(leaked.map((hit) => `${hit.file}:${hit.line}`), [], 'a self-excluded file reached the hit set');
+  const fromSelf = live.patterns.filter((pattern) =>
+    pattern.from.every((source) => SELF_EXCLUDED.has(source.split(':')[0])));
+  assert.deepEqual(fromSelf.map((pattern) => pattern.pattern), [],
+    'a must-stay pattern whose ONLY source is this feature is a pattern this feature invented');
+});
+
+test('the archive index keeps itself: the one file that says where every byte went cannot be offloaded', () => {
+  assert.equal(stays(ARCHIVE_INDEX_PATH), true);
+  assert.ok(ALWAYS_KEEP.has(ARCHIVE_INDEX_PATH));
+  // And it is kept by DECLARATION, not by the scan, because the module holding its readers is
+  // self-excluded above: a keep that depended on the scan would vanish with the exclusion.
+  assert.equal(live.patterns.some((pattern) => pattern.pattern === ARCHIVE_INDEX_PATH), false);
 });
 
 test('no must-stay pattern is a stray fragment of source code', () => {

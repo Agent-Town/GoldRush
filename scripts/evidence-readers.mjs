@@ -93,6 +93,34 @@ export const SCAN_SPACE = [
   { label: '.claude/skills/*/SKILL.md', test: (p) => /^\.claude\/skills\/[^/]+\/SKILL\.md$/.test(p) },
 ];
 
+/**
+ * THIS FEATURE'S OWN FILES, EXCLUDED BY NAME WITH A REASON. Measured the moment they were committed:
+ * the scan read its OWN test fixtures and its OWN §A4 control list as readers, pinned
+ * `artifacts/sol/map-art-campaign-2` from the `CAMPAIGN` constant in its test and `artifacts/*` from
+ * the report-law fixture, and the must-stay set went from 5,959 files / 1,040.9 MB to 16,893 files.
+ * 23 patterns came from these six files and every one was TEST DATA, never a reader.
+ *
+ * It was worse than a byte count. `MAP_CLASS1_SUBTREES` below is a hand transcription of the reader
+ * map, kept as a CONTROL; scanning the file that holds it makes every §A4 subtree must-stay BY
+ * TRANSCRIPTION, so the test asserting "every Class 1 subtree is derived" would pass on a scan that
+ * had stopped working entirely. A control that asserts itself is the F-2487-1 shape.
+ *
+ * Narrow, by name, never by pattern (the `law-pointer-guard.mjs` convention). Real readers DO live in
+ * `*.test.mjs` files - `assay-replay.test.mjs`, `engine-era-guard.test.mjs` and
+ * `regatta-boat-steer.test.mjs` are three of §A4's Class 1 sources - so excluding tests as a class
+ * would throw away exactly the evidence the scan exists to find. The teeth on this exclusion are the
+ * existing case "the campaign is FILE-EXACT": delete a line here and the campaign becomes must-stay
+ * and that case reds at once.
+ */
+export const SELF_EXCLUDED = new Map([
+  ['scripts/evidence-readers.mjs', 'holds MAP_CLASS1_SUBTREES (the §A4 control) and FILE_EXACT_SUBTREES: transcriptions, not readers'],
+  ['scripts/evidence-readers.test.mjs', 'fixture paths and the §A4 pins it asserts against'],
+  ['scripts/evidence-offload.mjs', 'the index path and the refusal texts name artifacts/ as a subject, not as a read'],
+  ['scripts/evidence-offload.test.mjs', 'mkdtemp fixture paths (artifacts/movable, artifacts/keep-tree)'],
+  ['scripts/evidence-archive-buckets.test.mjs', 'mkdtemp fixture paths (artifacts/moved, artifacts/leak, artifacts/stays)'],
+  ['scripts/evidence-budget.test.mjs', 'mkdtemp fixture paths (artifacts/seed, artifacts/new)'],
+]);
+
 // ─── THE FORMS ─────────────────────────────────────────────────────────────────────────────────
 // Each entry tests the WHITESPACE-COLLAPSED text immediately before the literal's opening quote.
 // The window is 200 characters: long enough for `JSON.parse(readFileSync(path.resolve(` chains and
@@ -164,6 +192,13 @@ export const FILE_EXACT_SUBTREES = new Map([
 // out as its one law-text exception. Both reach this predicate as a BASENAME rule, not a path list,
 // so a report written tomorrow is covered without an edit here.
 export const REPORT_BASENAMES = new Set(['report.md']);
+
+// The index itself. Declared here rather than derived, because the one file that says where every
+// moved byte went is read by `review-evidence-audit.mjs` and
+// `modified-tracked-evidence-census.mjs` from THIS module - and this module is self-excluded above,
+// so a scan can no longer see that reader. A tool that could offload its own index would be one
+// `--apply` away from making the whole archive unreadable.
+export const ALWAYS_KEEP = new Set([ARCHIVE_INDEX_PATH]);
 
 // Markdown and JSON have no code semantics, so a lexical sweep is exact for them. CODE does NOT
 // get one: a first draft of this file scanned `.mjs` with this very regex and SILENTLY LOST the
@@ -251,6 +286,7 @@ function classify(window) {
 export function scanLiterals(root = DEFAULT_ROOT, files = trackedFiles(root)) {
   const hits = [];
   for (const file of files) {
+    if (SELF_EXCLUDED.has(file)) continue;
     const family = SCAN_SPACE.find((f) => f.test(file));
     if (!family) continue;
     let text;
@@ -363,6 +399,7 @@ export function deriveMustStay(root = DEFAULT_ROOT, options = {}) {
 export function mustStay(path, derivation) {
   const value = String(path).replace(/\/+$/, '');
   if (!value.startsWith('artifacts/')) return false;
+  if (ALWAYS_KEEP.has(value)) return true;
   if (REPORT_BASENAMES.has(value.slice(value.lastIndexOf('/') + 1))) return true;
   for (const entry of derivation.patterns) {
     if (entry.re.test(value)) return true;
@@ -430,6 +467,7 @@ function main() {
   if (argv.includes('--json')) {
     process.stdout.write(`${JSON.stringify({
       scanSpace: SCAN_SPACE.map((f) => f.label),
+      selfExcluded: [...SELF_EXCLUDED.keys()],
       readForms: READ_FORMS.map((f) => f.id),
       writeForms: WRITE_FORMS.map((f) => f.id),
       hits: derivation.hits.length,
@@ -447,9 +485,11 @@ function main() {
   console.log('evidence-readers — the must-stay set, DERIVED from the code (task evidence-offload-1)');
   console.log(`  scan space   : ${SCAN_SPACE.map((f) => f.label).join(' · ')}`);
   console.log(`                 a reader OUTSIDE these families is invisible here (F-2208-1)`);
+  console.log(`  self-excluded: ${SELF_EXCLUDED.size} of this feature's own file(s) — their artifacts/ literals are TEST DATA`);
+  console.log(`                 ${[...SELF_EXCLUDED.keys()].join(' ')}`);
   console.log(`  read forms   : ${READ_FORMS.map((f) => f.id).join(' ')}`);
   console.log(`  write forms  : ${WRITE_FORMS.map((f) => f.id).join(' ')}`);
-  console.log(`  keep by law  : any artifacts/**/${[...REPORT_BASENAMES].join(', ')} (author-task + drain SKILL.md)`);
+  console.log(`  keep by law  : any artifacts/**/${[...REPORT_BASENAMES].join(', ')} (author-task + drain SKILL.md) · ${[...ALWAYS_KEEP].join(' ')}`);
   console.log(`  file-exact   : ${[...FILE_EXACT_SUBTREES.keys()].join(', ') || 'none'} (promotion refused BY NAME)`);
   console.log('');
   console.log(`  literals     : ${derivation.hits.length} artifacts/ literal(s) in the scan space`);
