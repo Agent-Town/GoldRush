@@ -27,6 +27,6 @@ Code: `src/entities/Vehicle.ts` (the lazy glob and the placeholder chassis), `sc
 
 ### Findings
 - **F-RGD-1 (cured here):** the compass-token false positive above; the assertion's era pattern needed the plate shape excused, not loosened.
-- **F-RGD-2 (open, fire-authorable):** nothing pins `scripts/assert-release-build.mjs` as present the way `deploy-budget.test.mjs` pins the payload script; deleting it would silently un-assert the deploy. One guard row.
-- **F-RGD-3 (open, bookkeeping):** `reviews/sol-phone-hud-entry.md` cites the release spec's channeling poll at a line that moved with this landing; the F-HUD-3 note there is root-caused as a stale coordinate.
+- **F-RGD-2 (closed the same day, attended: a presence row in `scripts/deploy-budget.test.mjs`):** nothing pins `scripts/assert-release-build.mjs` as present the way `deploy-budget.test.mjs` pins the payload script; deleting it would silently un-assert the deploy. One guard row.
+- **F-RGD-3 (closed the same day, attended: the citation re-based to the test title):** `reviews/sol-phone-hud-entry.md` cites the release spec's channeling poll at a line that moved with this landing; the F-HUD-3 note there is root-caused as a stale coordinate.
 - **F-SEF2-3 (closed):** the harvest reds were the test, not the build.

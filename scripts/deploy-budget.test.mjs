@@ -386,3 +386,18 @@ test('the payload computed here is the payload the block prints', (t) => {
   assert.equal(payload.declaredBytes, payload.bytes + payload.demandPagedBytes);
   assert.match(run.stdout, new RegExp(`first-town payload: ${payload.bytes} / ${LIMIT} bytes`));
 });
+
+// F-RGD-2 (release-gate-on-deploy-1 drain, 2026-09-24): deploy.sh runs scripts/assert-release-build.mjs after the
+// build and, when the file is ABSENT, prints "RELEASE NOT ASSERTED" and continues, so deleting the script would
+// silently un-assert every production deploy. This row pins the script's presence and the call, the way the rows
+// above pin first-town-payload.mjs and its declaration.
+test('the release assertion the deploy runs is present and deploy.sh calls it (F-RGD-2)', () => {
+  assert.equal(
+    existsSync(new URL('./assert-release-build.mjs', import.meta.url)),
+    true,
+    'scripts/assert-release-build.mjs is absent: deploy.sh would print RELEASE NOT ASSERTED and ship an unproven bundle',
+  );
+  const deploy = readFileSync(new URL('./deploy.sh', import.meta.url), 'utf8');
+  assert.match(deploy, /RELEASE_ASSERT="\$ROOT\/scripts\/assert-release-build\.mjs"/, 'deploy.sh no longer names the assertion script');
+  assert.match(deploy, /GR_RELEASE=e1 node "\$RELEASE_ASSERT"/, 'deploy.sh no longer runs the assertion');
+});
