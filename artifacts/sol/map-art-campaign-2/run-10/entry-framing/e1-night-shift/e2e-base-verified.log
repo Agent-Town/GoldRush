@@ -1,0 +1,135 @@
+(node:55747) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:55810) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:55810) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/6] [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "fogFar": 42,
+    -   "fogNear": 18,
+    +   "fogFar": 58,
+    +   "fogNear": 34,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      337 |     darkness: 1,
+      338 |   });
+    > 339 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({
+          |                                                                                             ^
+      340 |     fogNear: 18,
+      341 |     fogFar: 42,
+      342 |   });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:339:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-verified-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-verified-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+
+
+(node:56118) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:56118) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[2/6] [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[3/6] [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+
+(node:56450) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:56450) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[4/6] [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  2) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "fogFar": 42,
+    -   "fogNear": 18,
+    +   "fogFar": 58,
+    +   "fogNear": 34,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      337 |     darkness: 1,
+      338 |   });
+    > 339 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({
+          |                                                                                             ^
+      340 |     fogNear: 18,
+      341 |     fogFar: 42,
+      342 |   });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:339:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-verified-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-verified-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+
+
+(node:56851) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:56851) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[5/6] [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  3) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.35
+    Received:    0.26224313725490195
+
+      404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+    > 406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+          |                                                 ^
+      407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      408 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+      409 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:406:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-verified-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-verified-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+
+
+(node:57123) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:57123) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[6/6] [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+  3 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+  3 passed (44.2s)

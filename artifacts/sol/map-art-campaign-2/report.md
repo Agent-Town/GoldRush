@@ -849,3 +849,10 @@ Builds,34+3 guards,mirror,census4,loading8,repeat2,six disposal cycles pass. Bro
 **IMPROVED / HELD.** Connected upper wheel drives, native materials, low coursed masonry and sharper inherited canal edges. A/B/C 1,444/1,456/1,468→2,156/2,168/2,180 triangles; bands 552→2,184 within their old low envelope. Bed paint transition 0.80→0.25 m; six route segments and three choice bands exact. Own run-6 station median 0.190/0.190→0.384/0.386; HUD 0.062/0.111→0.037/0.066%. Full depth/walls, fine material/joint/contact fidelity and straight terrain boundary remain held. [Verbatim clauses and evidence](run-9/e9-old-canal/review.md).
 
 Builds, 34+3 guards, mirror, census 4, loading 8, repeat 2, six mount cycles pass. Browser 40 pass /4 skips /2 exact-base roster reds. Presentation proof preserves choices, low envelope, +3 m substrate resampling and 18-resource disposal; shared shader proof leaves Dome/Seed strings/uniforms/cache keys exact. Four-run p95 unchanged 9.80/9.75 ms; calls 90/59 unchanged; zero capture errors. E1 N/A. Engine `fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa` → `d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959`; store `c092e3de241f34163e903279bf071fe1f4fa6d56` pushed/read back. **READY-FOR-GATES. Remaining E9 task maps: none.** Full concept fidelity remains held, not silently accepted. [Complete E9 handoff](run-9/e9-handoff.md).
+
+
+## 2026-09-24 — run 10: entry — e1-night-shift
+
+2026-09-24 run 10: entry — DECLARED / HELD: already partly visible, so no glance. 1280 lampworks_yard: 101,349→80,279→80,258 px; 390 lampworks_yard: 11,087→9,361→9,343 px. lampworks_yard has nonzero body pixels at both widths. The unchanged zero-pixel trigger cannot cure partial cropping or HUD coverage; no improvement is credited to the live count variation. The phone yard and full lantern procession remain held. E1 34,322,816 B (+4,270 B). [Boards, timing and gates](../artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/review.md). 
+
+Engine `d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959` → `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b`. No pin move.

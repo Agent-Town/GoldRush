@@ -7,9 +7,7 @@ import halfLifeHollow from '../../assets/pilots/map-rebuild-spike/half-life-holl
 import relayRush from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json' with { type: 'json' };
 
 // Variant pack contractIds name authoring verdicts, not the playable contracts.
-import night_shiftEntryPack from '../../assets/pilots/map-rebuild-spike/night-shift-terrain-contract.json' with { type: 'json' };
 const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string; reason: string } }>> = {
-  'e1-night-shift': night_shiftEntryPack,
   'e6-glow-mesa': glowMesa,
   'e7-dead-band': deadBand,
   'e8-far-side': farSide,

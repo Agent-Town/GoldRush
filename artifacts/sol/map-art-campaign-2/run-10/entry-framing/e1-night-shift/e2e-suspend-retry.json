@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/suspend-retry-results",
+      "e2e/e1-night-shift.spec.ts",
+      "-g",
+      "cold lantern"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 15.51,
+    "log": "artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/e2e-suspend-retry.log"
+  }
+]

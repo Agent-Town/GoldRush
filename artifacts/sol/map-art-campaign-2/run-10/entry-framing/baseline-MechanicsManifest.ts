@@ -1346,9 +1346,7 @@ import deadBandEntryPack from '../../assets/pilots/map-rebuild-spike/dead-band-t
 import farSideEntryPack from '../../assets/pilots/map-rebuild-spike/far-side-terrain-contract.json' with { type: 'json' };
 import halfLifeHollowEntryPack from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json' with { type: 'json' };
 import relayRushEntryPack from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json' with { type: 'json' };
-import night_shiftEntryPack from '../../assets/pilots/map-rebuild-spike/night-shift-terrain-contract.json' with { type: 'json' };
 const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string } }>> = {
-  'e1-night-shift': night_shiftEntryPack,
   'e6-glow-mesa': glowMesaEntryPack,
   'e7-dead-band': deadBandEntryPack,
   'e8-far-side': farSideEntryPack,
@@ -1356,7 +1354,6 @@ const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: 
   'e7-relay-rush': relayRushEntryPack,
 };
 const entryRuleIds: Readonly<Record<string, string>> = {
-  'e1-night-shift': 'darkness_cycle',
   'e6-glow-mesa': 'night_vein_ring',
   'e7-dead-band': 'signal_suppression',
   'e8-far-side': 'probe_recovery',
