@@ -72,19 +72,23 @@ sudo systemctl status goldrush-ledger-backup.timer --no-pager
 sudo journalctl -u goldrush-ledger-backup.service -n 30 --no-pager
 ```
 
-The offsite mirror is pulled by the Mac, where the SSH key and git origin already live. It adds no credential to the droplet:
+The offsite mirror is pulled by the Mac, where the SSH key and both git remotes already live. It adds no credential to the droplet:
 
 ```bash
 node scripts/ledger-backup-pull.mjs --dry-run
 node scripts/ledger-backup-pull.mjs
-git add artifacts/ledger-backups/
-git commit -m "ops: mirror ledger backup"
-git push origin main
+node scripts/ledger-mirror-push.mjs
 ```
 
-The pull is idempotent and bounded: today's local file skips all network work, SSH gets a five-second connect timeout, and rsync gets a ten-second I/O timeout. Attended still must add this command as a standing fire duty; the repository script does not schedule itself.
+⚠️ **AMENDED 2026-09-25 (SEC-5 of the outside review 2026-09-24, task sec-headers-and-data-hygiene-1).** The three lines that used to close this block were `git add artifacts/ledger-backups/`, `git commit -m "ops: mirror ledger backup"` and `git push origin main` — i.e. this runbook told its reader to commit a database holding emails and live session tokens into the working repo, two paragraphs above the warning that says never to. They are gone, and the paragraph is kept so the history of the instruction stays readable. What replaced them, and where the bytes live now:
 
-This raw private-git mirror is valid only while accounts remain on Cloudflare. Before routing accounts to the droplet, attended must replace it with an encrypted artifact: the account ledger contains email addresses and active session tokens, which must never enter Git history in plaintext.
+- The pull's destination is **`~/.goldrush/ledger-backups/`**, outside this repo entirely, decided in one place (`scripts/ledger-mirror-dest.mjs`) that the pull, the freshness guard and the exposure gate all import. It moved there in s2672 on owner ruling 15 of 2026-09-24 ("keep the mirror out of the public tree and point the duty at the private archive"); `artifacts/ledger-backups/` no longer exists in the working tree at all, is gitignored as a backstop, and is not where anything writes.
+- The offsite copy goes to the **private `archive` remote on branch `ledger-backups`** via `scripts/ledger-mirror-push.mjs`, which refuses on any verdict but a clean one from `scripts/ledger-mirror-exposure.mjs`.
+- ⛔ **Never `git add`, commit or push a ledger mirror into THIS repo.** `origin` is PUBLIC (owner 2026-09-20) and a pushed row is not retractable: force-push is deny-listed. The standing duty is `scripts/fire.md` §LB-01, which carries the same ⛔.
+
+The pull is idempotent and bounded: today's local file skips all network work, SSH gets a five-second connect timeout, and rsync gets a ten-second I/O timeout. It is a standing fire duty (`scripts/fire.md` §LB-01, once per coverage day, not before 02:10 UTC); the repository script does not schedule itself.
+
+The private-archive mirror is still RAW, and that remains valid only while accounts stay on Cloudflare. Before routing accounts to the droplet, attended must replace it with an encrypted artifact: the account ledger contains email addresses and active session tokens, which must never enter any Git history in plaintext — the private remote raises the bar, it does not remove this requirement.
 
 ### Restore drill
 
