@@ -2,13 +2,21 @@ import { existsSync, mkdirSync, readdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { resolveMirrorDest, destLine } from './ledger-mirror-dest.mjs';
 
 // The droplet address lives only in .env.local (GR_DROPLET_HOST); never in the tree (owner 2026-09-20: the working repo becomes public).
 const HOST = process.env.GR_DROPLET_HOST || (() => { try { const m = /^GR_DROPLET_HOST=(.+)$/m.exec(readFileSync('.env.local', 'utf8')); return m ? m[1].trim() : undefined; } catch { return undefined; } })();
 if (!HOST) { console.error('ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local'); process.exit(2); }
 const REMOTE_DIR = '/opt/goldrush-ledger/backups';
-const DEFAULT_DEST = fileURLToPath(new URL('../artifacts/ledger-backups/', import.meta.url));
-const destination = process.env.LEDGER_BACKUP_DEST || DEFAULT_DEST;
+// THE DESTINATION IS NOT DECIDED HERE ANY MORE (F-2668-2's remaining half, owner ruling 15
+// 2026-09-24: "keep the mirror out of the public tree and point the duty at the private
+// archive"). It now comes from the one resolver all three ledger tools import, which points
+// outside the public repo — see scripts/ledger-mirror-dest.mjs for why a .gitignore line was
+// not enough. Declared on stdout ALWAYS, with its provenance, including the happy path
+// (F-2208-1): an env-narrowed destination that prints like the default is F-2220-1 rebuilt.
+const dest = resolveMirrorDest();
+const destination = dest.dir;
+console.log(destLine(dest));
 const todayName = `ledger-${new Date().toISOString().slice(0, 10)}.db`;
 const dryRun = process.argv.includes('--dry-run');
 const fillGaps = process.argv.includes('--fill-gaps');

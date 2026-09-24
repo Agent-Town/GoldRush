@@ -116,8 +116,16 @@
 
 import { readdirSync, readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { resolveMirrorDest, destLine } from './ledger-mirror-dest.mjs';
 
-const MIRROR_DIR = fileURLToPath(new URL('../artifacts/ledger-backups/', import.meta.url));
+// THE CORPUS AND THE PULL'S DESTINATION ARE NOW ONE DECISION (F-2668-2's remaining half).
+// This constant used to read `../artifacts/ledger-backups/` while ledger-backup-pull.mjs
+// ALSO honoured LEDGER_BACKUP_DEST — so a re-homed destination left this tool auditing the
+// abandoned path and calling a healthy mirror stale. s2671 banked that; the re-home below
+// the public tree made it live, so it is cured by making the question unaskable: one
+// resolver, three importers. The provenance is printed with the path (see reportHeader).
+const MIRROR_DEST = resolveMirrorDest();
+const MIRROR_DIR = MIRROR_DEST.dir;
 
 // Anchored to import.meta.url for the same reason the corpus is (F-2220-1): a
 // caller's cwd must not be able to swap the denominator.
@@ -329,6 +337,11 @@ function main() {
 
   if (json) {
     console.log(JSON.stringify({
+      // The directory MEASURED and where that choice came from. A machine reader
+      // must be able to tell a default corpus from an env-narrowed one without
+      // reading the environment it was not present for (F-2668-2's re-home).
+      dir: MIRROR_DIR,
+      destProvenance: MIRROR_DEST.provenance,
       corpus: report.corpus,
       corpusDetail: report.corpusDetail,
       anchorState: report.anchorState,
@@ -346,7 +359,12 @@ function main() {
     process.exit(exitCodeFor(report, strict));
   }
 
-  console.log('LEDGER MIRROR FRESHNESS — artifacts/ledger-backups/ (LB-01, advisory)');
+  // The header NAMES THE DIRECTORY IT ACTUALLY MEASURED. It used to print the literal
+  // string "artifacts/ledger-backups/", which was true only for as long as nobody re-homed
+  // the destination — a tool whose own header can go stale is a tool that can report
+  // confidently about a directory it never opened (F-2668-2's re-home, s2672).
+  console.log('LEDGER MIRROR FRESHNESS — LB-01, advisory');
+  console.log(`  ${destLine(MIRROR_DEST)}`);
   console.log('');
 
   // ALWAYS declared, including the happy path (F-2208-1).

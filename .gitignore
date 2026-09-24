@@ -146,4 +146,16 @@ artifacts/gauntlet-heat12-20260905/rides/e4-dust-flats/work/attempt-1-views.json
 # 0 before it was written. The authoritative copies live on the private archive (refs/heads/sol/
 # account-registry-land and two siblings carry all 27 of 2026-08-24..2026-09-19, byte-identical to ours on
 # every overlap day), so ignoring them here loses no history under CLAUDE.md §4.10b.
+#
+# s2672: THE PATH IS NOW EMPTY AND THE RULE IS KEPT AS A BACKSTOP, NOT AS THE DEFENCE.
+# The other half of ruling 15 ("point the duty at the private archive") was executed: the
+# series MOVED to ~/.goldrush/ledger-backups — outside this repo entirely — and is mirrored
+# to the `archive` remote on branch `ledger-backups` (32/32 blobs byte-identical, verified
+# by fetching them back: artifacts/s2672/verify-archive-push.txt). Being gitignored was
+# never the property that mattered; being OUTSIDE is. A .gitignore line is one `git add -f`,
+# one rule edit or one careless move away from not protecting anything, so this line now
+# guards only against a tool that writes here by mistake. The destination is decided in ONE
+# place, scripts/ledger-mirror-dest.mjs, and guarded by arm 22 of
+# scripts/ledger-mirror-freshness-guard.test.mjs ("the DEFAULT destination is not inside the
+# public repo"), which reds if anything moves it back under this root.
 artifacts/ledger-backups/

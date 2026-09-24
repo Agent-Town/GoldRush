@@ -43,8 +43,25 @@ import {
   readAnchor,
   localToday,
 } from './ledger-mirror-freshness.mjs';
+import { DEFAULT_MIRROR_DIR, resolveMirrorDest } from './ledger-mirror-dest.mjs';
 
 const SUBJECT = fileURLToPath(new URL('./ledger-mirror-freshness.mjs', import.meta.url));
+const RESOLVER = fileURLToPath(new URL('./ledger-mirror-dest.mjs', import.meta.url));
+
+/**
+ * WHERE THE FIXTURE'S CORPUS LIVES, AND WHY IT MOVED (s2672, F-2668-2's remaining half).
+ *
+ * Until the re-home the subject resolved its corpus as `../artifacts/ledger-backups/`
+ * against import.meta.url, so the ONLY way to aim it at a fixture was to RELOCATE it into
+ * <fixture>/scripts/. That is gone: LB-01's destination is now `~/.goldrush/ledger-backups`
+ * — outside the public repo entirely (owner ruling 15) — and a relocated copy would read
+ * the REAL series on this machine, which would make every arm below assert about live data.
+ *
+ * So the corpus is now aimed with LEDGER_BACKUP_DEST, the override the resolver honours.
+ * The relocation is KEPT regardless, because the ANCHOR is still import.meta.url-anchored
+ * and arms 17-19 depend on the fixture's ops/ dir being the one the subject reads.
+ */
+const mirrorDirOf = (root) => path.join(root, 'mirrors');
 
 /**
  * Build a fixture tree and RELOCATE the subject into it.
@@ -60,8 +77,11 @@ function fixture(days, { makeMirrorDir = true, anchor = null, anchorRaw = null }
   const root = mkdtempSync(path.join(tmpdir(), 's2351-lmf-'));
   mkdirSync(path.join(root, 'scripts'), { recursive: true });
   copyFileSync(SUBJECT, path.join(root, 'scripts', path.basename(SUBJECT)));
+  // The subject imports the shared destination resolver by relative path, so the
+  // relocated copy needs it beside it (s2672, F-2668-2's re-home).
+  copyFileSync(RESOLVER, path.join(root, 'scripts', path.basename(RESOLVER)));
   if (makeMirrorDir) {
-    const dir = path.join(root, 'artifacts', 'ledger-backups');
+    const dir = mirrorDirOf(root);
     mkdirSync(dir, { recursive: true });
     for (const name of days) writeFileSync(path.join(dir, name), 'x');
   }
@@ -75,11 +95,14 @@ function fixture(days, { makeMirrorDir = true, anchor = null, anchorRaw = null }
   return root;
 }
 
-function runIn(root, args = [], cwd = root) {
+function runIn(root, args = [], cwd = root, { dest = mirrorDirOf(root) } = {}) {
   const r = spawnSync('node', [path.join(root, 'scripts', path.basename(SUBJECT)), ...args], {
     timeout: 240_000, killSignal: 'SIGKILL',
     encoding: 'utf8',
     cwd,
+    // The fixture's corpus, never this machine's real one. `dest: null` drops the
+    // override entirely, which is how arm 9 asks what the DEFAULT resolves to.
+    env: dest === null ? process.env : { ...process.env, LEDGER_BACKUP_DEST: dest },
   });
   return { rc: r.status, out: r.stdout ?? '', err: r.stderr ?? '' };
 }
@@ -186,19 +209,90 @@ test('8. the CALENDAR is validated, not the digit count', () => {
   assert.doesNotMatch(a.out, /MISSING COVERAGE DAY/, 'a bogus date must not stretch the span');
 });
 
-test('9. REVERSE CONTROL: a relocated copy measures ITS OWN tree, from any cwd', () => {
-  // Over-anchoring the corpus to process.cwd() passes every arm above and reds here.
-  // Since s2671 this arm covers the DENOMINATOR too: the repo really does ship an
-  // ops/ledger-series-anchor.json, so a subject that resolved it against cwd would
-  // read the repo's 2026-08-24 when run from the repo and nothing when run from tmp.
+test('9. REVERSE CONTROL: cwd cannot change the corpus, and the ANCHOR is still read beside the script', () => {
+  // The original form of this arm caught a corpus re-anchored to process.cwd(). The
+  // corpus now comes from the resolver, so the cwd hazard moved to the DENOMINATOR:
+  // the repo really does ship an ops/ledger-series-anchor.json, so a subject that
+  // resolved the anchor against cwd would read the repo's 2026-08-24 when run from
+  // the repo and nothing when run from tmp — passing every other arm and reding here.
   const root = mk([dbFor(isoBack(3)), dbFor(isoBack(0))], { anchor: isoBack(3) });
   const fromRepo = runIn(root, [], process.cwd());
   const fromTmp = runIn(root, [], tmpdir());
   const fromRoot = runIn(root, [], root);
   const norm = (s) => s.replace(/\/private\/var\S*|\/var\S*|\/Users\S*/g, '<ROOT>');
-  assert.equal(norm(fromRepo.out), norm(fromRoot.out), 'cwd must not change the corpus');
-  assert.equal(norm(fromTmp.out), norm(fromRoot.out), 'cwd must not change the corpus');
+  assert.equal(norm(fromRepo.out), norm(fromRoot.out), 'cwd must not change the corpus or the anchor');
+  assert.equal(norm(fromTmp.out), norm(fromRoot.out), 'cwd must not change the corpus or the anchor');
   assert.ok(fromRepo.out.includes(isoBack(2)), 'it must still see the FIXTURE gap, not the repo');
+});
+
+// ------------------------------------- s2672: THE DESTINATION (F-2668-2's remaining half)
+//
+// Owner ruling 2026-09-24 item 15, verbatim: "keep the mirror out of the public tree and
+// point the duty at the private archive". Arms 22-24 are the teeth for the half of that
+// sentence a tool can check. Each was proven by manufacturing its defect on a scratch copy
+// of the resolver — artifacts/s2672/teeth.txt is the transcript.
+
+test('22. THE RULING, GUARDED: the DEFAULT destination is not inside the public repo', () => {
+  // The mechanised half of owner ruling 15. A mirror under the repo root is one
+  // `git add -f`, one .gitignore edit, or one careless rule move away from a PUBLIC
+  // origin, and a push there is a one-way door (F-2353-2). Being gitignored is not
+  // the property that matters; being OUTSIDE is.
+  const repoRoot = fileURLToPath(new URL('..', import.meta.url));
+  const rel = path.relative(repoRoot, DEFAULT_MIRROR_DIR);
+  assert.ok(
+    rel.startsWith('..') || path.isAbsolute(rel),
+    `the default mirror destination must be OUTSIDE ${repoRoot}, got ${DEFAULT_MIRROR_DIR}`,
+  );
+  assert.ok(path.isAbsolute(DEFAULT_MIRROR_DIR), 'and it must be absolute, so no cwd can aim it');
+});
+
+test('23. ONE destination, THREE tools: pull, freshness and exposure cannot disagree', () => {
+  // The divergence s2671 banked deliberately: the pull honoured LEDGER_BACKUP_DEST and
+  // the freshness guard did not, so a re-homed destination would have left the guard
+  // auditing the abandoned path and calling a healthy mirror stale — and the exposure
+  // gate would have printed `✅ CLEAN` about an empty room (F-2667-1's vacuous gate).
+  // The re-home made that live, so it is asserted rather than trusted.
+  const dir = mkdtempSync(path.join(tmpdir(), 's2672-dest-'));
+  const env = { ...process.env, LEDGER_BACKUP_DEST: dir };
+  const ask = (script, args) => spawnSync('node', [fileURLToPath(new URL(script, import.meta.url)), ...args],
+    { encoding: 'utf8', env, timeout: 240_000, killSignal: 'SIGKILL' });
+
+  const freshness = JSON.parse(ask('./ledger-mirror-freshness.mjs', ['--json']).stdout);
+  const exposure = JSON.parse(ask('./ledger-mirror-exposure.mjs', ['--json']).stdout);
+  const pull = ask('./ledger-backup-pull.mjs', ['--dry-run']).stdout;
+
+  assert.equal(freshness.dir, dir, 'the freshness guard must measure the destination in force');
+  assert.equal(exposure.dir, dir, 'the exposure gate must inspect the destination in force');
+  assert.ok(pull.includes(dir), `the pull must write to the destination in force, got:\n${pull}`);
+  rmSync(dir, { recursive: true, force: true });
+});
+
+test('24. the PROVENANCE rides with the path — an env-narrowed corpus cannot print like the default', () => {
+  // F-2220-1 in a new place: the danger is not a wrong directory, it is a wrong
+  // directory that LOOKS right in the transcript a handoff quotes.
+  const root = mk([dbFor(isoBack(0))], { anchor: isoBack(0) });
+  const narrowed = runIn(root);
+  assert.match(narrowed.out, /from LEDGER_BACKUP_DEST — NOT the default/);
+  assert.ok(narrowed.out.includes(mirrorDirOf(root)), 'and it must name the directory it actually read');
+
+  // And the default announces itself as the default rather than staying silent.
+  const def = runIn(root, [], root, { dest: null });
+  assert.match(def.out, /default: private, outside the public repo/);
+  assert.ok(def.out.includes(DEFAULT_MIRROR_DIR), 'the default run must name the real destination');
+});
+
+test('25. a RELATIVE destination override is REFUSED, never resolved against cwd', () => {
+  // The one door left open by honouring an env var. `path.resolve(override)` would be
+  // the over-general "fix": it passes arms 22-24 and silently reintroduces exactly the
+  // cwd-aimable corpus the resolver exists to prevent.
+  assert.throws(
+    () => resolveMirrorDest({ LEDGER_BACKUP_DEST: 'artifacts/ledger-backups' }),
+    /must be an ABSOLUTE path/,
+  );
+  // An empty value is "unset", not "the current directory".
+  assert.equal(resolveMirrorDest({ LEDGER_BACKUP_DEST: '' }).dir, DEFAULT_MIRROR_DIR);
+  assert.equal(resolveMirrorDest({}).provenance, 'default');
+  assert.equal(resolveMirrorDest({ LEDGER_BACKUP_DEST: '/tmp/x' }).provenance, 'environment');
 });
 
 // ------------------------------------------------------------- unit arms

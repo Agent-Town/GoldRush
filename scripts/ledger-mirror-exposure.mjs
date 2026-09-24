@@ -90,6 +90,7 @@
 import { existsSync, readdirSync, realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveMirrorDest } from './ledger-mirror-dest.mjs';
 
 // Derived from functions/api/_accounts.ts — every `<prefix>:${...}` key that file
 // writes. scripts/ledger-mirror-exposure-guard.test.mjs re-derives this list FROM
@@ -127,7 +128,14 @@ const TABLE_IDENTITY_COLUMNS = { refusals: ['anon_id', 'profile_name'] };
 // the denylist is the over-general cure, and that arm is its reverse control.
 const SAFE_TABLE_COLUMNS = { refusals: ['anon_id', 'profile_name'] };
 
-const DEFAULT_DIR = fileURLToPath(new URL('../artifacts/ledger-backups/', import.meta.url));
+// The default corpus is the ONE destination all three ledger tools share
+// (scripts/ledger-mirror-dest.mjs, F-2668-2's remaining half). This used to be its own
+// copy of `../artifacts/ledger-backups/`, so a re-homed destination would have left the
+// gate that stands in front of the one-way door inspecting an empty abandoned directory
+// and printing `✅ CLEAN` about it — F-2667-1's vacuous-gate shape, armed by a re-home.
+// `--dir` still wins: the pull passes its own resolved destination explicitly.
+const DEFAULT_DEST = resolveMirrorDest();
+const DEFAULT_DIR = DEFAULT_DEST.dir;
 
 function parseArgs(argv) {
   const strict = argv.includes('--strict');
@@ -135,7 +143,7 @@ function parseArgs(argv) {
   const i = argv.indexOf('--dir');
   if (i !== -1 && !argv[i + 1]) throw new Error('--dir requires a path');
   const dir = i === -1 ? DEFAULT_DIR : path.resolve(argv[i + 1]);
-  return { strict, json, dir };
+  return { strict, json, dir, dirProvenance: i === -1 ? DEFAULT_DEST.provenance : 'argument' };
 }
 
 export function classifyKey(key, site) {
@@ -236,6 +244,7 @@ async function main(argv) {
     console.log(JSON.stringify({
       corpus: result.corpus,
       dir: result.dir,
+      dirProvenance: args.dirProvenance,
       mirrors: result.mirrors.length,
       read: readable.length,
       unreadable: unreadable.length,
@@ -252,7 +261,10 @@ async function main(argv) {
     // "I read nothing" must never look alike.
     console.log(`  corpus                  : ${result.corpus} (${result.mirrors.length} mirror(s), ` +
       `${readable.length} read, ${unreadable.length} unreadable)`);
-    console.log(`  dir                     : ${result.dir}`);
+    // The PROVENANCE rides with the path for the same reason the corpus is declared:
+    // a gate that inspected an env-pointed or argument-pointed directory and a gate that
+    // inspected the real destination print the same verdict otherwise (F-2668-2, s2672).
+    console.log(`  dir                     : ${result.dir}  (${args.dirProvenance})`);
     console.log(`  tables inspected        : ${tableInspections.map(t =>
       `${t.file}:${t.table}[${t.columns.length ? t.columns.join(',') : 'SKIPPED: no declared columns'}]`).join('; ') || 'none'}`);
     console.log(`  keys inspected          : ${allKeys.length}`);
