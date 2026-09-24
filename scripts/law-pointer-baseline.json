@@ -309,8 +309,8 @@
     "scripts/fire.md -> scripts/fire-runner.sh:152": {
       "target": "scripts/fire-runner.sh",
       "line": 152,
-      "fingerprint": "c11d5b8cacd2",
-      "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
+      "fingerprint": "60f05774b94a",
+      "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p < scripts/fire.md --model \"$FIRE_MODEL\" >> \"$"
     },
     "scripts/fire.md -> desk-state-audit.mjs:72": {
       "target": "scripts/desk-state-audit.mjs",
@@ -501,8 +501,8 @@
     ".claude/skills/drain/SKILL.md -> fire-runner.sh:152": {
       "target": "scripts/fire-runner.sh",
       "line": 152,
-      "fingerprint": "c11d5b8cacd2",
-      "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
+      "fingerprint": "60f05774b94a",
+      "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p < scripts/fire.md --model \"$FIRE_MODEL\" >> \"$"
     },
     ".claude/skills/author-task/SKILL.md -> playwright.config.ts:46": {
       "target": "playwright.config.ts",

@@ -133,7 +133,7 @@ if [ "$FIRE_ENGINE" = "codex" ]; then
   done
   if [ -n "$CODEX_BIN" ]; then
     echo "[fire-runner] $(date +%H:%M:%S) FIRE START (engine codex, model from ~/.codex config)" >> "$LOG"
-    "$CODEX_BIN" exec --sandbox danger-full-access --skip-git-repo-check "$(cat scripts/fire.md)" >> "$LOG" 2>&1
+    "$CODEX_BIN" exec --sandbox danger-full-access --skip-git-repo-check < scripts/fire.md >> "$LOG" 2>&1
     RC=$?
     echo "[fire-runner] $(date +%H:%M:%S) FIRE END rc=$RC (codex; ALT fallback is claude-only, skipped)" >> "$LOG"
     exit 0
@@ -141,7 +141,7 @@ if [ "$FIRE_ENGINE" = "codex" ]; then
   echo "[fire-runner] $(date +%H:%M:%S) codex binary missing — falling through to claude engine" >> "$LOG"
 fi
 echo "[fire-runner] $(date +%H:%M:%S) FIRE START (model $FIRE_MODEL)" >> "$LOG"
-"$CLAUDE_BIN" -p "$(cat scripts/fire.md)" \
+"$CLAUDE_BIN" -p < scripts/fire.md \
   --model "$FIRE_MODEL" \
   >> "$LOG" 2>&1
 RC=$?
@@ -149,7 +149,7 @@ echo "[fire-runner] $(date +%H:%M:%S) FIRE END rc=$RC" >> "$LOG"
 # THE ALT FALLBACK (owner-authorized 2026-07-25: the brainstem tank, 97% headroom): a weekly-wall bounce retries once on the alt subscription.
 if [ "$RC" != "0" ] && tail -4 "$LOG" | grep -qi "weekly limit"; then
   echo "[fire-runner] $(date +%H:%M:%S) WALL on primary — ALT FIRE (config ~/.claude-alt)" >> "$LOG"
-  CLAUDE_CONFIG_DIR="$HOME/.claude-alt" "$CLAUDE_BIN" -p "$(cat scripts/fire.md)" --model "$FIRE_MODEL" >> "$LOG" 2>&1
+  CLAUDE_CONFIG_DIR="$HOME/.claude-alt" "$CLAUDE_BIN" -p < scripts/fire.md --model "$FIRE_MODEL" >> "$LOG" 2>&1
   RC=$?
   echo "[fire-runner] $(date +%H:%M:%S) ALT FIRE END rc=$RC" >> "$LOG"
 fi
