@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "6a33752598ba8c5ae2c97d217c265394dd17cd9ec3334c2259737265a0e27c21",
+  "engineHash": "f64ee547206cde3dfe8aca56ad3249aaae121f16036b00a1480668d425cf78be",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -436,6 +436,12 @@
       "engineHash": "6a33752598ba8c5ae2c97d217c265394dd17cd9ec3334c2259737265a0e27c21",
       "pinnedAt": "2026-09-24",
       "cause": "same era, pin #58: release-gate-on-deploy-1 (Opus implementer on the outside review of 2026-09-24, BUILD-1 and F-SEF2-2): the E4 hauler body leaves the E1 bundle through a lazy asset glob the release plugin already narrows (src/entities/Vehicle.ts, render-side vehicle loading only; no sim rule, contract, collision, floor or table moved); the release assertion joins the production deploy; the store unchanged at 5793a96. reviews/release-gate-on-deploy-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "f64ee547206cde3dfe8aca56ad3249aaae121f16036b00a1480668d425cf78be",
+      "pinnedAt": "2026-09-24",
+      "cause": "same era, pin #59: ux-entry-robustness-1 (Opus implementer on the outside review of 2026-09-24, UX-1, UX-2, UX-4): the boot router inverts to a run-route allowlist so tracking and share links land on the start menu and mint no profile, a boot guard draws a card on a failed chunk or a refused WebGL context, focus loss clears held keys and the solo pick clock freezes while hidden, the unnamed-prospector fallback is neutral, a bare ?contract= still launches once a profile store exists (drain cure F-UX1-6) (src/main.ts, src/core/BootGuard.ts, src/core/InputController.ts, src/game/Game.ts pick clock, src/game/ProfileStorage.ts, src/ui/DeathOverlay.ts, index.html; boot and input only; no sim rule, contract, collision, floor or table moved); the store unchanged at 5793a96. reviews/ux-entry-robustness-1.md",
       "aliases": []
     }
   ],
