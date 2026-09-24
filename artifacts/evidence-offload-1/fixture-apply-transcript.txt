@@ -1,0 +1,124 @@
+board.png written
+FIXTURE_BASE=/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/eo1fix.c5eQPH
+
+########## 1. --plan on the fixture ##########
+evidence-offload --plan — cited-only evidence that may move behind an index
+  tracked under artifacts/ : 7 file(s) 5.2 MB across 2 subtree(s)
+  MUST STAY                : 2 file(s) 0.0 MB (derived: node scripts/evidence-readers.mjs)
+  MOVABLE                  : 5 file(s) 5.2 MB across 1 subtree(s)
+  oversize left in place   : 0 blob(s) over 95.0 MB
+
+  candidates, largest first (movable bytes · files · kept · citations · reviews citing):
+        5.2 MB      5 file(s) keep   1 ·    3 citation(s) in   1 review(s)  artifacts/movable
+
+########## 2. REFUSAL: a must-stay subtree ##########
+evidence-offload --apply against a fixture remote, branch evidence
+  slice ceiling 1500.0 MB · blob ceiling 95.0 MB · worktree /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/eo1fix.c5eQPH/archive-wt
+⛔ REFUSING — artifacts/keep-tree is MUST-STAY: a reader, a write target or a law names it (node scripts/evidence-readers.mjs). Refusing rather than moving it, because the cost of the two readings is not symmetric.
+evidence-offload: REFUSING — artifacts/keep-tree is MUST-STAY: a reader, a write target or a law names it (node scripts/evidence-readers.mjs). Refusing rather than moving it, because the cost of the two readings is not symmetric.
+rc=1
+
+########## 3. REFUSAL: a dirty archive worktree ##########
+⛔ REFUSING — the archive worktree is dirty (1 path(s)); commit or clean it first. A half-written archive commit is the one state from which a move cannot be verified.
+evidence-offload: REFUSING — the archive worktree is dirty (1 path(s)); commit or clean it first. A half-written archive commit is the one state from which a move cannot be verified.
+rc=1
+
+########## 4. BLOB CEILING: huge.bin left in place at --max-blob 1000000 ##########
+evidence-offload --apply against a fixture remote, branch evidence
+  slice ceiling 0.5 MB · blob ceiling 1.0 MB · worktree /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/eo1fix.c5eQPH/archive-wt
+
+  artifacts/movable: 4 movable file(s) 1.2 MB · 1 kept · 1 oversize left in place · 3 slice(s)
+    slice 1/3  1b52382e4bce  1 file(s) 0.4 MB  VERIFIED in the archive commit
+    slice 2/3  e0293c861855  2 file(s) 0.4 MB  VERIFIED in the archive commit
+    slice 3/3  1d7b63edfd61  1 file(s) 0.4 MB  VERIFIED in the archive commit
+    pointer artifacts/movable/ARCHIVED.md · preview artifacts/movable/PREVIEW.png from artifacts/movable/board.png
+
+  repo commit 818e533c1fd48298d86fa52e5cd80c1d7eeb7716 — files gone from git AND disk, index and pointers in the same commit
+  NEXT (the drain, never this tool): git -C /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/eo1fix.c5eQPH/archive-wt push origin evidence:evidence  then  git push origin main
+rc=0
+
+########## 5. STATE AFTER: what is tracked, what is on disk ##########
+-- git ls-files artifacts/movable --
+artifacts/movable/ARCHIVED.md
+artifacts/movable/PREVIEW.png
+artifacts/movable/huge.bin
+artifacts/movable/report.md
+-- on disk --
+ARCHIVED.md
+PREVIEW.png
+huge.bin
+report.md
+-- archive branch tree --
+evidence/artifacts/movable/a.txt
+evidence/artifacts/movable/b.txt
+evidence/artifacts/movable/board.png
+evidence/artifacts/movable/nested/c.txt
+-- archive commits --
+1d7b63e evidence: artifacts/movable slice 3/3 (1 file(s), 0.4 MB)
+e0293c8 evidence: artifacts/movable slice 2/3 (2 file(s), 0.4 MB)
+1b52382 evidence: artifacts/movable slice 1/3 (1 file(s), 0.4 MB)
+-- preview geometry --
+PREVIEW.png 320x200 524 B
+-- ARCHIVED.md --
+# ARCHIVED
+
+`artifacts/movable` moved to the private `archive` remote, branch `evidence`, under `evidence/artifacts/movable/` at commit 1b52382e4bce6b21fc9a7c91e7f0a8e28a6052f3, e0293c861855b805ecc28d7785c2edf19cc6fb64, 1d7b63edfd6184431bd316f8c6135dd63d843022 on 2026-09-24: 4 file(s), 1.2 MB. Nothing was deleted (CLAUDE.md 4.10b); the per-file sha256 and commit are in `artifacts/ARCHIVE-INDEX.json`.
+-- ARCHIVE-INDEX.json (subtrees) --
+{
+ "artifacts/movable": {
+  "archiveCommits": [
+   "1b52382e4bce6b21fc9a7c91e7f0a8e28a6052f3",
+   "e0293c861855b805ecc28d7785c2edf19cc6fb64",
+   "1d7b63edfd6184431bd316f8c6135dd63d843022"
+  ],
+  "files": 4,
+  "bytes": 1215327,
+  "movedDate": "2026-09-24",
+  "previews": [
+   "artifacts/movable/PREVIEW.png"
+  ],
+  "kept": [
+   "artifacts/movable/report.md"
+  ],
+  "oversizeLeftInPlace": [
+   "artifacts/movable/huge.bin"
+  ]
+ }
+}
+files entries: 4
+[
+ "artifacts/movable/a.txt",
+ {
+  "archiveCommit": "1b52382e4bce6b21fc9a7c91e7f0a8e28a6052f3",
+  "sha256": "fabff7ed3ad0f878efe2670f6a2f28f780c11297e441205fdb3df94ea29d8b0f",
+  "bytes": 400000,
+  "movedDate": "2026-09-24"
+ }
+]
+-- repo commit --
+818e533c1fd48298d86fa52e5cd80c1d7eeb7716 chore: offload 1 evidence subtree(s) to the archive (4 file(s), 1.2 MB)
+818e533 chore: offload 1 evidence subtree(s) to the archive (4 file(s), 1.2 MB)
+ artifacts/ARCHIVE-INDEX.json   |  56 +++++++++++++++++++++++++++++++++++++++++
+ artifacts/movable/ARCHIVED.md  |   3 +++
+ artifacts/movable/PREVIEW.png  | Bin 0 -> 524 bytes
+ artifacts/movable/a.txt        |   1 -
+ artifacts/movable/b.txt        |   1 -
+ artifacts/movable/board.png    | Bin 15327 -> 0 bytes
+ artifacts/movable/nested/c.txt |   1 -
+ 7 files changed, 59 insertions(+), 3 deletions(-)
+-- working tree clean? --
+(empty above = clean)
+
+########## 6. review-evidence-audit over the offloaded fixture ##########
+scan space: artifacts reviews/shots- — a cited path outside these is not counted at all
+archive index: artifacts/ARCHIVE-INDEX.json — 1 subtree(s), 4 file(s) in the private archive
+PASS — no on-disk-untracked evidence cited
+paths=1 citations=3 TRACKED=0 ON-DISK-UNTRACKED=0 ABSENT=0 SKIPPED=0 ARCHIVED=3
+rc=0
+
+########## 7. the same, with the index removed (the blindness it prevents) ##########
+ABSENT	artifacts/movable/board.png	reviews/slice-01.md
+ABSENT	artifacts/movable/a.txt	reviews/slice-01.md
+PASS — no on-disk-untracked evidence cited
+paths=1 citations=3 TRACKED=1 ON-DISK-UNTRACKED=0 ABSENT=2 SKIPPED=0 ARCHIVED=0
+FIXTURE_BASE=/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/eo1fix.c5eQPH

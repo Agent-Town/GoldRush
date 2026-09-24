@@ -1,0 +1,5 @@
+evidence-budget — the whole tracked evidence tree against its banked ceiling
+  prefixes : artifacts/ reviews/shots- (the landing quantity); this total is artifacts/ alone
+  total    : 26345 file(s) 8657.1 MB tracked under artifacts/ at HEAD
+  ceiling  : NOT BANKED YET — NOT BANKED YET. The attended drain that runs the first offload (task evidence-offload-1) banks it: measure `node scripts/evidence-budget.mjs --total` on the merged tree AFTER the offload commit, then set ceilingBytes to that total plus one quarter of headroom, bankedBytes/bankedFiles to the measurement, commit to the offload commit and measuredAt to that day. Until then the tool reports the total and exits 0, because a budget nobody has set must never refuse a drain.
+  PASS (advisory) — no ceiling is banked, so this cannot refuse a drain. Run the offload, then bank it.

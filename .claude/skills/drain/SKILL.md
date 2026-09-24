@@ -26,6 +26,7 @@ Never place undecided content in main's working tree: cut `git worktree add --de
 node scripts/drain-block-check.mjs --strict <the drain unit>          # re-assert on the merged tree
 npx tsc --noEmit && npm run build && GR_RELEASE=e1 npm run build      # E1 payload law: node scripts/first-town-payload.mjs under 52,000,000 B
 node scripts/run-guards.mjs --changed-since <base hash>               # picks the battery FROM THE DIFF; functions/ adds test:stats, test:accounts, test:mp
+node scripts/evidence-budget.mjs <base hash> HEAD                     # owner 14a size budget: 40 MB of new artifacts/ + reviews/shots-* per landing, and the tree under its banked ceiling
 node scripts/gate-battery.mjs --label "<slice> drain" --transcript artifacts/<slice>-gate.txt --cwd <the worktree> --env GR_CAPTURE_EXTERNAL_SERVER=1 --env GR_CAPTURE_BASE_URL=http://127.0.0.1:<scratch port> '[["own spec","npx","playwright","test","e2e/<slice>.spec.ts"], …]'
 ```
 - `--workers=1` on every playwright command is a correctness requirement of the instrument, not style (at the default worker count the fire shell's CPU ceiling manufactures timing reds); `gate-battery.mjs` injects it and keeps an append-only transcript. Never pin `workers` unconditionally in `playwright.config.ts` (`workers: isFireShell ? 1 : undefined` is the mechanism, guarded by `fire-shell-serialisation.test.mjs`).
