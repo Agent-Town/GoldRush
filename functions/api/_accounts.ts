@@ -735,8 +735,24 @@ async function sendEmail(env: AccountsEnv, email: string, code: string): Promise
   return response.ok;
 }
 
+// SEC-10 (outside review 2026-09-24): `DEV_AUTH === '1'` on its own decided whether requestCode
+// returns the login code in the response body, so ONE mis-set production variable hands a working
+// code to anyone who asks for it. Measured on this tree before the fix: env `{ DEV_AUTH: '1',
+// RESEND_API_KEY: <bound> }` answered 200 with `code` and `dev: true` and never sent the mail.
+//
+// The second condition is the ABSENCE of the production mail sender binding, and it is chosen
+// because it is the one marker a REQUEST cannot reach. `RESEND_API_KEY` is an environment binding
+// (Pages project vars; `server/ledger/serve.mjs:119` for the droplet) and nothing derives it from a
+// header, an origin or a host. The alternative marker, a localhost host or origin, IS reachable by a
+// request: the droplet forwards the caller's own `Host:` header to the ledger
+// (`proxy_set_header Host $host`, ops/droplet/agenttown.app.nginx.conf), and `Origin` is whatever the
+// caller writes, so either could be spoofed into saying "localhost" from the public internet.
+// Both live doors bind the sender (the droplet since 2026-08-24, Pages for the accounts flow), so
+// production can never satisfy this and a code is never returned there. A dev box that wants dev
+// codes simply leaves the sender unbound, which is what every fixture in this repo already does
+// (scripts/test-accounts.mjs `cleanEnv`, playwright.accounts.config.ts, e2e/ratelimit-429-net).
 function isDev(env: AccountsEnv): boolean {
-  return env.DEV_AUTH === '1';
+  return env.DEV_AUTH === '1' && !env.RESEND_API_KEY;
 }
 
 function clientIp(request: Request): string {
