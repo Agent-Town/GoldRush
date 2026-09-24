@@ -1,3 +1,4 @@
+import { constantTimeEqual } from './_compare';
 import { bumpCounter, clientIpHash, type KVNamespaceLike } from './_ratelimit';
 
 type RedeemContext = {
@@ -59,8 +60,12 @@ async function mint(
   cors: Record<string, string>,
   value: unknown,
 ): Promise<Response> {
+  // SEC-9: the mint bearer was compared with `!==`, a first-differing-byte timing oracle on the same
+  // secret the bug office uses. Same constant-time compare as every other door now. The SECRET REUSE
+  // itself is unchanged and deliberate: splitting the mint off BUG_OFFICE_TOKEN means a new binding
+  // on the Pages project and the droplet, which is an owner ops step, not a code change (report).
   const token = /^Bearer\s+(.+)$/i.exec(context.request.headers.get('authorization') ?? '')?.[1];
-  if (!context.env.BUG_OFFICE_TOKEN || token !== context.env.BUG_OFFICE_TOKEN) {
+  if (!context.env.BUG_OFFICE_TOKEN || !constantTimeEqual(token ?? '', context.env.BUG_OFFICE_TOKEN)) {
     return json(cors, { ok: false, error: 'not_found', message: 'No office answers at this address.' }, 404);
   }
   if (!Array.isArray(value) || value.length < 1 || value.length > 20) throw new PayloadError();

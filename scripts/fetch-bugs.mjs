@@ -17,7 +17,7 @@ const fresh = reports.filter(({ id }) => !seen.has(id));
 
 for (const report of fresh) {
   console.log(`NEW ${report.id} ${report.submittedAt} ${report.prospectorName ?? 'unnamed'}: ${oneLine(report.description)}`);
-  const detail = await getJson(apiURL(baseURL, `/api/bugs/${report.id}`, token));
+  const detail = await getJson(apiURL(baseURL, `/api/bugs/${report.id}`), token);
   if (detail.bug?.screenshot) {
     const match = /^data:image\/jpeg;base64,([A-Za-z0-9+/]+={0,2})$/.exec(detail.bug.screenshot);
     if (!match) throw new Error(`Report ${report.id} returned a malformed screenshot.`);
@@ -33,23 +33,26 @@ async function listReports(origin, officeToken) {
   const reports = [];
   let cursor;
   do {
-    const url = apiURL(origin, '/api/bugs', officeToken);
+    const url = apiURL(origin, '/api/bugs');
     if (cursor) url.searchParams.set('cursor', cursor);
-    const page = await getJson(url);
+    const page = await getJson(url, officeToken);
     reports.push(...page.bugs);
     cursor = page.cursor ?? undefined;
   } while (cursor);
   return reports;
 }
 
-function apiURL(origin, pathname, officeToken) {
-  const url = new URL(pathname, origin);
-  url.searchParams.set('token', officeToken);
-  return url;
+function apiURL(origin, pathname) {
+  return new URL(pathname, origin);
 }
 
-async function getJson(url) {
-  const response = await fetch(url);
+// SEC-9 (outside review 2026-09-24): the token used to travel as `?token=`, which writes the office
+// credential into every access log, proxy log and shell history the URL touches. It rides the
+// Authorization header now. NOTE the deploy order: the office keeps accepting `?token=` for one
+// release, so an OLD script still works against a NEW deployment, but this script needs the deployed
+// functions to carry that same release before it can read the office again.
+async function getJson(url, officeToken) {
+  const response = await fetch(url, { headers: { authorization: `Bearer ${officeToken}` } });
   if (!response.ok) throw new Error(`Bug Office returned ${response.status} for ${url.pathname}.`);
   return response.json();
 }
