@@ -10,6 +10,7 @@
 //
 // USAGE
 //   node scripts/status-line1.mjs set     <textfile>            # replace line 1
+//        [--allow-desk-drop]                                    # ... losing a ruled desk item
 //   node scripts/status-line1.mjs handoff <textfile> <label>    # archive old line 1
 //                                                               # as a bullet, then set
 //   node scripts/status-line1.mjs show                          # print line 1
@@ -46,6 +47,34 @@
 // lock line, not the predecessor's handoff. Label it for what it actually is
 // ("sNNNN lock"), and if the predecessor's handoff never got archived, recover it
 // with `git show <their-commit>:STATUS.md` rather than leaving a gap in the chain.
+//
+// F-2671-2 (filed s2671, CURED HERE s2673) — THE CONVENTION ABOVE IS CORRECT AND WAS NOT
+// ENOUGH. s2671 read this very block for its `{STAMP}` contract, used `set`, and dropped
+// s2670's 7,974-char handoff line — including the OWNER'S DESK tail, its header and all
+// three items — off the board at 20:26:30, restored 11 minutes later from git. Documented
+// behaviour is not a guard: the one surface whose entire purpose is to be read by the owner
+// WITHOUT a git command went missing, and the tool that did it said nothing.
+//
+// `set` now REFUSES when all three hold: the line it would displace carries a desk tail,
+// the new line does not carry that desk forward intact, and no archive bullet on the board
+// already holds the displaced line. Any one of those failing means nothing is lost, so the
+// refusal cannot fire on lawful work — a fire that carries the tail onto its lock line (the
+// habit F-2671-2 prescribes) never sees it, and `handoff` preserves by construction and is
+// not checked at all.
+//
+// 🚫 THE REMEDY IT PRINTS NAMES ONLY CORRECT ACTS, because this repo has twice been bitten
+// by a guard whose remedy was to corrupt a correct file (status-archive-audit.mjs:322 and
+// F-2088-2). Both offered routes ADD the missing words; neither removes any. The deliberate
+// override `--allow-desk-drop` exists for the one lawful shape the predicate cannot see —
+// a ruled item leaving the tail (fire.md §4) — and it warns instead of failing, so the act
+// stays visible in the run log rather than becoming silent.
+//
+// ⚠️ SELF-CONTAINED ON PURPOSE (F-2672-2, s2672, one fire before this one): adding a
+// relative import to a script that guard harnesses copy OUT of scripts/ breaks every copied
+// variant at once, and the breakage wears the costume of the arms working. `deskOf` below
+// therefore duplicates status-archive-audit.mjs:136-145 rather than importing it. The
+// duplication is stated so it is visible: both read the LAST desk marker in the line and
+// slice to the end. If one changes, change both.
 //
 // Insert before the first archive bullet. Most STATUS files have two blank lines
 // first, but one missing blank must not strand an older handoff above newer ones.
@@ -94,6 +123,76 @@ function assertNoFutureStamp(line, now) {
   }
 }
 
+// --- F-2671-2: the desk-survival predicate ---------------------------------------
+// Twin of status-archive-audit.mjs:136-145. Kept local, not imported (see the header).
+const DESK = /OWNER.{0,2}S? DESK/i;
+const FINDING_ID = /\bF-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*\b/g;
+const DESK_ITEM = /🔺/g;
+
+const deskOf = (line) => {
+  const all = [...line.matchAll(new RegExp(DESK.source, 'gi'))];
+  return all.length ? line.slice(all[all.length - 1].index) : null;
+};
+
+// Already on the board? The bullet `handoff` writes carries the displaced line verbatim,
+// so a substring test is exact rather than a resemblance. Line 0 is excluded: the line
+// about to be replaced cannot archive itself.
+const archivedBelow = (lines, prev) =>
+  lines.some((line, index) =>
+    index > 0 && /^- \*\*.+ \(line-1 archive\):\*\*/.test(line) && line.includes(prev));
+
+// Returns null when the desk survives, or a sentence naming exactly what would be lost.
+function deskLoss(prev, next) {
+  const before = deskOf(prev);
+  if (before === null) return null; // nothing to lose
+
+  const after = deskOf(next);
+  if (after === null) return 'the new line carries no OWNER\'S DESK tail at all';
+
+  const beforeIds = [...new Set(before.match(FINDING_ID) ?? [])];
+  const afterIds = new Set(after.match(FINDING_ID) ?? []);
+  const lost = beforeIds.filter((id) => !afterIds.has(id));
+  if (lost.length) return `the new desk drops ${lost.length} finding id(s) the old one named: ${lost.join(', ')}`;
+
+  // Not every desk item is an F-id — `b1-device-verdict-rows` is a backtick key — so count
+  // the item markers too, or a whole class of items can vanish past the id test.
+  const beforeItems = (before.match(DESK_ITEM) ?? []).length;
+  const afterItems = (after.match(DESK_ITEM) ?? []).length;
+  if (afterItems < beforeItems) {
+    return `the new desk shows ${afterItems} 🔺 marker(s) against the old line's ${beforeItems}`;
+  }
+  return null;
+}
+
+function assertDeskSurvives(prev, next, lines, allowDrop) {
+  const loss = deskLoss(prev, next);
+  if (loss === null) return;
+  if (archivedBelow(lines, prev)) return; // the displaced line is already on the board
+
+  if (allowDrop) {
+    console.error(
+      `status-line1: ⚠️  DESK DROP ALLOWED — ${loss}, and the displaced line is not archived ` +
+        'below. Proceeding because --allow-desk-drop was passed. If an item was RULED, say so ' +
+        'in the commit message; if it was not, this is F-2671-2 happening again.',
+    );
+    return;
+  }
+
+  throw new Error(
+    `refusing to displace the OWNER'S DESK (F-2671-2): ${loss}, and no archive bullet on the ` +
+      'board holds the line being replaced — so the desk would survive in git alone for the ' +
+      'length of this fire, and not at all if this session dies before its handoff.\n' +
+      '  Two ways forward, both of which ADD words and remove none:\n' +
+      '    1. archive it by construction — node scripts/status-line1.mjs handoff <textfile> ' +
+      '"s<N-1> handoff"  (this is the right command at LOCK time too, whenever the ' +
+      "predecessor's handoff is not yet archived);\n" +
+      "    2. carry the tail — slice from the `🔺 **OWNER'S DESK` header to the end of the old " +
+      'line 1 and append it verbatim to your new line, with nothing after it.\n' +
+      '  If an item was genuinely RULED and is meant to leave the tail (fire.md §4), pass ' +
+      '--allow-desk-drop and say so in the commit message.',
+  );
+}
+
 function oneLine(text) {
   const now = nowStamp();
   const collapsed = text.replace(/\s*\n\s*/g, ' ').trim().replaceAll('{STAMP}', now);
@@ -110,10 +209,13 @@ try {
   if (cmd === 'show') {
     console.log(readLines()[0]);
   } else if (cmd === 'set') {
-    const [file] = rest;
-    if (!file) throw new Error('usage: set <textfile>');
+    const allowDrop = rest.includes('--allow-desk-drop');
+    const [file] = rest.filter((a) => !a.startsWith('--'));
+    if (!file) throw new Error('usage: set <textfile> [--allow-desk-drop]');
     const lines = readLines();
-    lines[0] = oneLine(readFileSync(file, 'utf8'));
+    const next = oneLine(readFileSync(file, 'utf8'));
+    assertDeskSurvives(lines[0], next, lines, allowDrop);
+    lines[0] = next;
     write(lines);
     console.log(`set line 1 (${lines[0].length} chars)`);
   } else if (cmd === 'handoff') {
