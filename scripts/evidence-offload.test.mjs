@@ -241,6 +241,42 @@ test('a blob over the ceiling is LEFT IN PLACE and listed, never silently droppe
   assert.equal(tracked(root, 'artifacts/movable/a.txt').length, 0, 'the rest of the subtree still moved');
 });
 
+test('a NESTED subtree can be applied on its own, so the drain can push between slices', async (t) => {
+  // The campaign is 5.9 GB and GitHub refuses a push over 2 GB, so the first offload has to land as
+  // `…/run-3`, push, `…/run-4`, push. If --apply only accepted top-level candidates that would be
+  // impossible and the slicing the task asks for would exist only on paper.
+  const { root, work } = await fixture(t);
+  const result = run(root, '--apply', 'artifacts/movable/nested', '--archive-worktree', work);
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  const index = JSON.parse(readFileSync(join(root, INDEX_PATH), 'utf8'));
+  assert.deepEqual(Object.keys(index.subtrees), ['artifacts/movable/nested']);
+  assert.deepEqual(Object.keys(index.files), ['artifacts/movable/nested/c.txt']);
+  assert.equal(tracked(root, 'artifacts/movable/nested/c.txt').length, 0);
+  assert.deepEqual(tracked(root, 'artifacts/movable/a.txt'), ['artifacts/movable/a.txt'],
+    'its siblings outside the named subtree are untouched');
+  // A second call for the rest of the parent extends the same index rather than replacing it.
+  const second = run(root, '--apply', 'artifacts/movable', '--archive-worktree', work);
+  assert.equal(second.status, 0, second.stdout + second.stderr);
+  const merged = JSON.parse(readFileSync(join(root, INDEX_PATH), 'utf8'));
+  assert.deepEqual(Object.keys(merged.subtrees).sort(), ['artifacts/movable', 'artifacts/movable/nested']);
+  assert.ok(Object.keys(merged.files).length >= 5);
+});
+
+test('a subtree whose every file must stay is REFUSED with that reason, not silently emptied', async (t) => {
+  const { root, work } = await fixture(t);
+  const result = run(root, '--apply', 'artifacts/keep-tree', '--archive-worktree', work);
+  assert.equal(result.status, 1);
+  assert.match(result.stdout, /MUST-STAY/);
+});
+
+test('a ceiling that excludes every file REFUSES rather than writing an empty archive commit', async (t) => {
+  const { root, work } = await fixture(t);
+  const result = run(root, '--apply', 'artifacts/movable', '--archive-worktree', work, '--max-blob', '10');
+  assert.equal(result.status, 1);
+  assert.match(result.stdout, /every movable file is over the .* blob ceiling/);
+  assert.equal(existsSync(join(root, INDEX_PATH)), false);
+});
+
 test('sliceFiles never opens an empty slice and never splits below one file', () => {
   const sizes = new Map([['a', 900], ['b', 900], ['c', 100]]);
   assert.deepEqual(sliceFiles(['a', 'b', 'c'], sizes, 1000).map((s) => s.files), [['a'], ['b', 'c']]);

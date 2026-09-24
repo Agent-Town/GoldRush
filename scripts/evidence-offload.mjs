@@ -298,8 +298,19 @@ async function apply(argv, root) {
       refuse(`${subtree} is MUST-STAY: a reader, a write target or a law names it (node scripts/evidence-readers.mjs). `
         + 'Refusing rather than moving it, because the cost of the two readings is not symmetric.');
     }
-    const candidate = board.candidates.find((c) => c.subtree === subtree);
-    if (!candidate) refuse(`${subtree} is not a movable subtree on this tree (no tracked movable file under it)`);
+    // ANY tracked directory under artifacts/, not only a top-level `--plan` candidate. The 5.9 GB
+    // campaign cannot land in one call: GitHub refuses a push over 2 GB, so the drain must apply
+    // `…/run-3`, push, apply `…/run-4`, push. Requiring a top-level candidate here would have made
+    // the slicing the whole task asks for impossible to execute, and the only safety the candidate
+    // list provided - mustStay - is asserted above, file by file, and again below.
+    const prefix = `${subtree}/`;
+    const under = [...board.sizes.keys()].filter((f) => f === subtree || f.startsWith(prefix));
+    if (!under.length) refuse(`${subtree} has no tracked file under it on this tree`);
+    const keep = under.filter(board.stays);
+    const candidateMovable = under.filter((f) => !board.stays(f));
+    if (!candidateMovable.length) {
+      refuse(`${subtree} has no movable file: all ${under.length} tracked file(s) under it must stay`);
+    }
 
     const modified = git(['status', '--porcelain', '-uno', '--', subtree], { cwd: root }).trim();
     if (modified) {
@@ -307,13 +318,16 @@ async function apply(argv, root) {
         + 'different question (modified-tracked-evidence-census.mjs); commit or restore it before moving the subtree.');
     }
 
-    const movable = candidate.movable.filter((f) => (board.sizes.get(f) ?? 0) <= maxBlob);
-    const oversize = candidate.movable.filter((f) => (board.sizes.get(f) ?? 0) > maxBlob)
-      .concat(candidate.oversize.map((o) => o.path));
+    const movable = candidateMovable.filter((f) => (board.sizes.get(f) ?? 0) <= maxBlob);
+    const oversize = candidateMovable.filter((f) => (board.sizes.get(f) ?? 0) > maxBlob);
+    if (!movable.length) {
+      refuse(`${subtree}: every movable file is over the ${mb(maxBlob)} blob ceiling. They stay, and they are an `
+        + `owner question (git-lfs, or a re-render): ${oversize.join(' ')}`);
+    }
     const slices = sliceFiles(movable, board.sizes, sliceBytes);
     console.log('');
     console.log(`  ${subtree}: ${movable.length} movable file(s) ${mb(movable.reduce((a, f) => a + (board.sizes.get(f) ?? 0), 0))} `
-      + `· ${candidate.keep.length} kept · ${oversize.length} oversize left in place · ${slices.length} slice(s)`);
+      + `· ${keep.length} kept · ${oversize.length} oversize left in place · ${slices.length} slice(s)`);
 
     const commits = [];
     for (const [i, slice] of slices.entries()) {
@@ -356,7 +370,7 @@ async function apply(argv, root) {
       bytes: commits.reduce((a, c) => a + c.bytes, 0),
       movedDate: today,
       previews: preview.made ? [previewPath] : [],
-      kept: candidate.keep,
+      kept: keep,
       oversizeLeftInPlace: oversize,
     };
 
