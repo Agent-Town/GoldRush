@@ -303,6 +303,11 @@ Nothing in the shipped tree depends on that pass; it closes the completeness of 
 | `bacd66ccb` | `.gitignore` + `docs/ops/agenttown-server.md`: `bug-reports/` ignored, the `git add` instruction retired with a dated note |
 | `811988a04` | `public/privacy.html` + the two one-line links |
 | `5211041cb` | `scripts/site-security-headers.test.mjs` |
+| `57918a0ae` | `artifacts/sec-headers-and-data-hygiene-1/**`: this report, the three probes, the headered server, the boot captures |
+| `877231206` | report rows for `test:stats` / `test:mp`, and pass 2's lock status |
+| `c9ed0a288` | the TTL wiring regex that could never match the call it pins (the red described in section 6) |
+
+Any commit after those in `git log main..HEAD` is a further correction to this report; the branch tip is the authority on the list.
 
 Untouched by design and left dirty in the worktree: `artifacts/accounts-worker/test-accounts.json` (rewritten by `npm run test:accounts`) and any `artifacts/**` PNG/JSON the four e2e specs regenerate — factory churn class (b), not this task's concern.
 
