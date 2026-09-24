@@ -1,0 +1,11 @@
+postBug -> 201 {"ok":true,"id":"1790270634442-448e89e1"}
+  put bug:ratelimit:d861b7e91033ebc1c1e8e7af39290101  15 bytes  options {"expirationTtl":3600}
+  put bug:1790270634442-448e89e1  322 bytes  options {"expirationTtl":7776000}
+PASS: the report key carries expirationTtl 7776000 (90 days)
+
+CORS arm (functions/api/_accounts.ts):
+  production-shaped (sender bound) + localhost origin: 403 allow-origin=(none) {"ok":false,"error":"cors_forbidden","message":"Origin not allowed."}
+  production-shaped (sender bound) + agenttown origin: 503 allow-origin=https://agenttown.app {"ok":false,"error":"email_unavailable","message":"sign-in not yet enabled"}
+  dev (no sender) + localhost origin: 200 allow-origin=http://localhost:5188 {"ok":true,"code":"<redacted>","dev":true}
+  unconfigured (no sender, no DEV_AUTH) + localhost origin: 503 allow-origin=http://localhost:5188 {"ok":false,"error":"sign_in_not_enabled","message":"sign-in not yet enabled"}
+  production-shaped + evil origin: 403 allow-origin=(none) {"ok":false,"error":"cors_forbidden","message":"Origin not allowed."}
