@@ -1,0 +1,23 @@
+s2681: retire the F-2676-1 ghost line; file F-2681-1 — the state guard cannot see it
+
+BACKLOG line 6 advertised F-2676-1 as "OPEN, fire-authorable" while line 7
+recorded it CURED s2677. Verified against the code rather than inherited:
+status-line1.mjs:140 takes the FIRST ISO match only and assertNoFutureStamp
+(:142-157) checks that one stamp, so the row's central claim ("walks EVERY
+full-ISO match") is false of current main. The row is retired, not deleted,
+with its prior record kept verbatim (Retention Law).
+
+F-2681-1: findings-state-guard.mjs exists to stop exactly this and was green
+over it. rowState (:86-97) admits only 🟡/wide-marker/✅/struck leads; this
+ledger writes findings 🧰-led with the state in prose, so 310 state-declaring
+rows are invisible to it against 449 visible. Probe reuses the guard's own
+exported rowState()/FINDING rather than re-implementing the rule (F-1261-1).
+
+Of 6 F-IDs the prose scan flagged, only 1 was a true ghost line; 3 are the
+probe's false positives (negations, "FRESHLY-LANDED", an incidental cited
+F-ID) and 1 is a deliberate successor fork. Recorded as such.
+
+Census 664/480/184 before, 665/481/184 after — the retirement itself made the
+row visible and closed.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>
