@@ -552,7 +552,7 @@ async function motorOpening(page: Page, row: Row): Promise<void> {
     row.notes.push(`tar ${node.x},${node.z}: reached=${reached}, fuel=${JSON.stringify((await read(page))?.fuel)}`);
   }
   if (row.contract === 'e4-boneyard') {
-    // The boiler centre is solid. Its south edge is walkable and within the 2.5-unit hitch reach.
+    // Aim outside the solid boiler centre but within hitch reach; this approach remains unproved.
     if (await motorStop(page, row, -8, -38)) {
       if (await motorStop(page, row, -34, -4)) {
         await walkTo(page, row, -24, -14, 0.8);
