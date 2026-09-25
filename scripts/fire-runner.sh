@@ -103,7 +103,7 @@ if [ "$dry" = "1" ] && [ "$skips" -lt 11 ]; then
 fi
 echo 0 > "$SKIPCOUNT_F"
 
-FIRE_MODEL=${FIRE_MODEL:-claude-opus-5}
+FIRE_MODEL=${FIRE_MODEL:-claude-opus-5-5}  # owner 2026-09-25: Opus 5.5 where we can; the id answers on Claude Code 2.1.282
 # FIRE ENGINE SWITCH (owner 2026-08-12, verbatim: "could we switch the fires to be GPT 5.6 Sol
 # xhigh instead of Opus? The Anthropic subscription is running low and will only be replenished
 # on Saturday.") — engine 'codex' rides the owner's OpenAI subscription via the codex CLI
