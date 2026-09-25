@@ -146,6 +146,9 @@ type Snapshot = {
   power: ThreeGameDiagnostics['power'];
   pressure: ThreeGameDiagnostics['pressure'];
   escort: ThreeGameDiagnostics['escort'];
+  canyonWorks: ThreeGameDiagnostics['canyonWorks'];
+  fairground: ThreeGameDiagnostics['fairground'];
+  crowdFlocks: ThreeGameDiagnostics['crowdFlocks'];
 };
 
 async function read(page: Page): Promise<Snapshot | null> {
@@ -155,9 +158,12 @@ async function read(page: Page): Promise<Snapshot | null> {
       if (!d) return null;
       return {
         escort: d.escort,
+        canyonWorks: d.canyonWorks,
+        fairground: d.fairground,
+        crowdFlocks: d.crowdFlocks,
         power: d.power,
         pressure: d.pressure,
-        objective: { baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
+        objective: { fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -321,7 +327,7 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
   for (let step = 0; step < steps; step += 1) {
     await takeUpgrades(page, row);
     const now = await read(page);
-    if (!now || now.runState === 'dead' || now.secured) return false;
+    if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     const dx = x - now.hero.x;
     const dz = z - now.hero.z;
     const gap = Math.hypot(dx, dz);
@@ -369,7 +375,7 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
   while (Date.now() < deadline) {
     await takeUpgrades(page, row);
     const now = await read(page);
-    if (!now || now.runState === 'dead' || now.secured) return false;
+    if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     if (now.gold >= amount) return true;
     const live = now.nodes.filter((node) => node.active && !unreachable.has(`${node.x},${node.z}`));
     const bank = fords.length > 0 ? live.filter((node) => Math.sign(node.z) === Math.sign(now.hero.z) || Math.abs(node.z) < 1.5) : live;
@@ -441,7 +447,7 @@ async function build(
   await page.waitForTimeout(200);
   for (let nudge = 0; nudge < 10; nudge += 1) {
     const now = await read(page);
-    if (!now || now.runState === 'dead' || now.secured) return false;
+    if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     if (now.ghostValid) break;
 
     const turn = (nudge * 2.39996) % (Math.PI * 2);
@@ -467,12 +473,14 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   if (row.contract === "e2-incline" && now.wave >= 8) return;
   const hurt = now.defences
     .filter(entry => row.contract !== "e3-blackout-ridge" || Math.hypot(entry.x - home.x, entry.z - home.z) < 18)
-    .filter((entry) => !entry.wrecked && entry.hp < entry.maxHp * 0.55 && entry.repairCost > 0)
+    .filter((entry) => (!entry.wrecked || row.contract === 'e3-fairground') && entry.hp < entry.maxHp * 0.55 && entry.repairCost > 0)
     .sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
   if (hurt) {
     if (row.contract === "e1-baron" && HOLD_GROUND && now.wave >= 12 && now.gold < hurt.repairCost) return;
     if (!(await fund(page, row, hurt.repairCost, Math.min(deadline, Date.now() + 45_000), fords, unreachable))) return;
-    if (!(await journey(page, row, hurt.x, hurt.z - 1, 1, fords, 45))) return;
+    if (row.contract === 'e3-fairground') {
+      if (!(await walkTo(page, row, hurt.x, hurt.z, 1.25, 45))) return;
+    } else if (!(await journey(page, row, hurt.x, hurt.z - 1, 1, fords, 45))) return;
     const before = (await read(page))?.repairs ?? 0;
     for (let tick = 0; tick < 40; tick += 1) {
       await takeUpgrades(page, row);
@@ -487,6 +495,7 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
     return;
   }
 
+  if (row.contract === "e3-fairground") return;
   if (row.contract === "e1-baron" && HOLD_GROUND && now.wave >= 12) return;
   const room =
     now.buildables.find((entry) => entry.id === 'turret' && entry.count < entry.maxCount && entry.cost <= now.gold + 120) ??
@@ -501,6 +510,26 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
+  if (contract.id === 'e3-fairground') return [
+    { id: 'palisade', dx: -8, dz: 0 },
+    { id: 'sentry_beacon', dx: -4, dz: -4 },
+    { id: 'palisade', dx: 8, dz: 0 },
+    { id: 'sentry_beacon', dx: 4, dz: -4 },
+    { id: 'palisade', dx: -8, dz: 8 },
+    { id: 'palisade', dx: 8, dz: 8 },
+    { id: 'sentry_beacon', dx: -4, dz: 4 },
+    { id: 'sentry_beacon', dx: 4, dz: 4 },
+    { id: 'palisade', dx: -8, dz: -8 },
+    { id: 'palisade', dx: 8, dz: -8 },
+  ];
+  if (contract.id === 'e3-canyon-works') return [
+    { id: 'sentry_beacon', dx: -12, dz: 8 },
+    { id: 'sentry_beacon', dx: -24, dz: 24 },
+    { id: 'sentry_beacon', dx: -28, dz: 52 },
+    { id: 'sentry_beacon', dx: 12, dz: 8 },
+    { id: 'sentry_beacon', dx: 24, dz: 24 },
+    { id: 'sentry_beacon', dx: 28, dz: 52 },
+  ];
   if (contract.id === 'e3-blackout-ridge') return [
     { id: 'capacitor_bank', dx: -8, dz: -26 },
     { id: 'capacitor_bank', dx: -18, dz: -26 },
@@ -539,9 +568,9 @@ const KIT: Array<{ id: string; dx: number; dz: number }> = [
   { id: 'turret', dx: -5, dz: 3 },
 ];
 
-export function nativeProof(id: string) {
+export function nativeProof(id: string, run = 1) {
   const contract = BOARD_CONTRACTS.find(entry => entry.id === id)!;
-  const ARTIFACT_ROOT = path.resolve('artifacts/sol/play-proofs/run-1', id);
+  const ARTIFACT_ROOT = path.resolve(`artifacts/sol/play-proofs/run-${process.env.GR_NATIVE_RUN ?? run}`, id);
 
     test(`${contract.id} plays to its secure wave, banks, reloads and returns to the board`, { tag: '@slow' }, async ({ page }, testInfo) => {
       test.setTimeout(PLAY_BUDGET_MS + BOOT_TIMEOUT_MS + 180_000);
@@ -661,6 +690,20 @@ export function nativeProof(id: string) {
         if (contract.id === 'e3-blackout-ridge') {
           await fund(page, row, 200, Math.min(deadline, Date.now() + 120_000), fords, unreachable);
         }
+        if (contract.id === 'e3-canyon-works') {
+          // Test the marked bridge, then independent approaches along the full-width terrace.
+          const approaches = testInfo.project.name === 'desktop-chrome' ? [0, -24, -44] : [0, 24, 44];
+          for (const x of approaches) {
+            await walkTo(page, row, x, -12, 1);
+            const crossed = await walkTo(page, row, x, -5.5, 0.6, 65);
+            const probe = await read(page);
+            row.notes.push(`southern terrace approach x=${x}: crossed=${crossed}, hero=${JSON.stringify(probe?.hero)}, wave=${probe?.wave}, gold=${probe?.gold}`);
+            if (crossed) {
+              await journey(page, row, -34, 30, 1.2, fords);
+              break;
+            }
+          }
+        }
         const kit = kitFor(contract);
         row.notes.push(`kit=${kit.map((piece) => piece.id).join('+')}`);
         let kitIndex = 0;
@@ -706,8 +749,21 @@ export function nativeProof(id: string) {
             died = `ore cart lost at wave ${now.wave}, sim ${now.sim.toFixed(1)}, hero ${now.hero.x.toFixed(1)},${now.hero.z.toFixed(1)}`;
             break;
           }
+          if (contract.id === 'e3-canyon-works' && now.canyonWorks?.failed) {
+            died = `CONNECT deadline missed: ${JSON.stringify(now.canyonWorks)}; hero=${JSON.stringify(now.hero)}, gold=${now.gold}`;
+            break;
+          }
           if (now.paused) await unpause(page, row);
 
+          if (contract.id === 'e3-fairground' && now.fairground?.spinning === false) {
+            died = `Fair Wheel stopped irreversibly: ${JSON.stringify(now.fairground)}; flocks=${JSON.stringify(now.crowdFlocks)}`;
+            break;
+          }
+          if (contract.id === 'e3-fairground' && kitIndex >= 4 && now.sim - lastMaintenance >= 12) {
+            lastMaintenance = now.sim;
+            await maintain(page, row, home, deadline, fords, unreachable);
+            continue;
+          }
           if (kitIndex < kit.length) {
             const piece = kit[kitIndex];
             kitIndex += 1;
@@ -715,22 +771,22 @@ export function nativeProof(id: string) {
             continue;
           }
 
-          if (contract.id === 'e3-blackout-ridge' && !['capacitor-west', 'capacitor-east'].every(id => (row.powerBanksPeak[id] ?? 0) > 0)) {
-            const cut = now.power.nodes.filter(n => n.kind === 'relay' && !n.online)
-              .sort((a, b) => Math.hypot(a.x - now.hero.x, a.z - now.hero.z) - Math.hypot(b.x - now.hero.x, b.z - now.hero.z))[0];
-            if (cut) {
-              const frame = now.defences.find(b => b.id === 'sentry_beacon' && Math.hypot(b.x - cut.x, b.z - cut.z) < 2.5);
-              if (frame && await fund(page, row, frame.repairCost, Math.min(deadline, Date.now() + 30_000), fords, unreachable)) {
-                await walkTo(page, row, frame.x, frame.z, 1.25);
-                const before = (await read(page))?.repairs ?? 0;
-                for (let tick = 0; tick < 40; tick++) {
-                  await takeUpgrades(page, row);
-                  const repaired = await read(page);
-                  if (!repaired || repaired.runState === 'dead' || repaired.secured || repaired.repairs > before) break;
-                  await page.waitForTimeout(150);
-                }
-                row.notes.push(`trunk ${cut.id} repair: ${(await read(page))?.repairs}, before=${before}`);
+          if (contract.id === 'e3-blackout-ridge') {
+            // Restore paid banks as well as the trunk; a connected wreck stores nothing.
+            const broken = now.defences.filter(b =>
+              (b.id === 'capacitor_bank' || b.id === 'sentry_beacon') && b.hp < b.maxHp * 0.8,
+            ).sort((a, b) => a.x - b.x)[0];
+            const reserve = now.defences.reduce((sum, b) => sum + b.repairCost, 10);
+            if (broken && await fund(page, row, reserve, Math.min(deadline, Date.now() + 30_000), fords, unreachable)) {
+              await walkTo(page, row, broken.x, broken.z, 1.25);
+              const before = (await read(page))?.repairs ?? 0;
+              for (let tick = 0; tick < 40; tick++) {
+                await takeUpgrades(page, row);
+                const repaired = await read(page);
+                if (!repaired || repaired.runState === 'dead' || repaired.secured || repaired.repairs > before) break;
+                await page.waitForTimeout(150);
               }
+              row.notes.push(`repair ${broken.id} ${broken.x},${broken.z}: ${(await read(page))?.repairs}, before=${before}; storage=${JSON.stringify(row.powerBanksPeak)}`);
             } else await page.waitForTimeout(200);
             continue;
           }
@@ -792,6 +848,12 @@ export function nativeProof(id: string) {
 
         if (contract.id === 'e3-blackout-ridge' && !['capacitor-west', 'capacitor-east'].every(id => (row.powerBanksPeak[id] ?? 0) > 0)) {
           row.secures = fail(`${row.secures.detail}; authored banks not both observed storing current: ${JSON.stringify(row.powerBanksPeak)}`);
+        }
+        if (contract.id === 'e3-fairground' && (!atSecure?.fairground?.spinning || !atSecure?.crowdFlocks?.allCrossed)) {
+          row.secures = fail(`${row.secures.detail}; wheel and all three flock crossings not proved`);
+        }
+        if (contract.id === 'e3-canyon-works' && !atSecure?.canyonWorks?.complete) {
+          row.secures = fail(`${row.secures.detail}; both galleries were not connected by wave 8`);
         }
         if (contract.id === 'e2-incline' && (!atSecure?.escort.enabled || atSecure.escort.arrived < atSecure.escort.required)) {
           row.secures = fail(`${row.secures.detail}; Incline Haul not completed: ${JSON.stringify(atSecure?.escort)}`);

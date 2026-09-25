@@ -2,4 +2,4 @@ import { test } from '@playwright/test';
 import { nativeProof } from './driver';
 test.skip(!process.env.GR_NATIVE_PROOF, 'full native objective run — set GR_NATIVE_PROOF=1');
 test.use({ trace: 'off' });
-nativeProof('e3-blackout-ridge', 2);
+nativeProof('e3-canyon-works', 2);

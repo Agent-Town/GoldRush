@@ -973,3 +973,10 @@ Task sol-play-proofs-1, lane-c, Astra. No production/contract/balance or existin
 The new banking check compares to pre-play scores, correcting census instrument finding F-MPP1-1: secure already writes the score before Return to Town. New specs are gated by GR_NATIVE_PROOF. See [run note](../play-proofs/run-1/run-note.md) for final checks, commits and continuation order.
 
 Final verification: build/TypeScript PASS; default collection PASS; gate-unset browser invocation 10 skipped; bounded existing secure-wave briefing check 2/2 PASS. All ten final rows have zero console/page errors. Only Incline passes all six cells on both projects; unresolved full-objective assertions remain red when enabled. Scope check confirms five second-column-only edits and allowed paths. Owned Vite stopped; five-map batch closed, next untouched map Canyon Works.
+
+## 2026-09-25 — Native play proofs, run 2
+
+- Blackout Ridge: PARTIAL desktop/phone; wave 12, bank/Book/reload/clean PASS, authored current storage FAIL, 0 Wh both banks. Two repair strategies, 15/12 repairs. [F-PP2-1](../play-proofs/run-2/e3-blackout-ridge/finding.md).
+- Canyon Works: FAIL desktop/phone; bridge and opposite flank routes stop near z=-7.88, CONNECT 0/2 misses wave 8, zero gold/builds. Full-width slope rejection confirmed by static calculation; no runtime fix within scope. [F-PP2-2](../play-proofs/run-2/e3-canyon-works/finding.md).
+- Fairground: FAIL desktop/phone; six-wall opening loses the wheel at wave 2, early-beacon opening at wave 1. Phone gets one flock across; wheel first-hit stop is irreversible. Both clean, no bank/reload proof. [F-PP2-3](../play-proofs/run-2/e3-fairground/finding.md).
+- Gates: final TypeScript/build PASS; native gate unset gives 14 skipped. Shared-driver Incline regression PASS desktop wave 17 / phone wave 14, full-health cart delivery, bank/Book/reload and zero errors. Scope check confirms only the three objective-evidence cells changed. No new full map proof this batch. [Ordered continuation and commands](../play-proofs/run-2/run-note.md).
