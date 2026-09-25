@@ -1,0 +1,378 @@
+BATCH b1 start 2026-09-25T03:23:21Z
+ids=e1-baron,e2-pressure-garden,e2-incline,e3-blackout-ridge,e3-canyon-works,e3-fairground projects=--project=desktop-chrome --project=mobile-chrome
+10:23  up 28 days, 18:23, 10 users, load averages: 6.77 18.94 24.94
+vite dev up 03:23:23Z (Content-Type: text/javascript)
+(node:49847) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+
+(node:49907) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/12] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 23 / 618.9s sim, 363 kills, 10 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       }
+      899 |
+    > 900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:900:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-e6a0e-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-e6a0e-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-e6a0e-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-secure-playabi-e6a0e-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:53818) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/12] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow
+  2) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: banks: the click wrote no new secured row for e2-pressure-garden at >= wave 12 (0 new row(s): [])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      899 |
+      900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+          |                                                          ^
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      904 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:901:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:59119) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/12] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-incline plays to its secure wave, banks, reloads and returns to the board @slow
+  3) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-incline plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 9 / 372.4s sim, 320 kills, 25 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       }
+      899 |
+    > 900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:900:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-75a2e-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-75a2e-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-75a2e-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-secure-playabi-75a2e-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:65828) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/12] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-blackout-ridge plays to its secure wave, banks, reloads and returns to the board @slow
+  4) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-blackout-ridge plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: banks: the click wrote no new secured row for e3-blackout-ridge at >= wave 12 (0 new row(s): [])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      899 |
+      900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+          |                                                          ^
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      904 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:901:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-c522c-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-c522c-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-c522c-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-secure-playabi-c522c-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:68579) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/12] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow
+  5) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: never secured: peak wave 79 of 12 after 2398.7s sim (runState=playing, 0 buildings, 101 kills)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       }
+      899 |
+    > 900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:900:64
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-182c2-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-182c2-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+
+(node:88416) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/12] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow
+  6) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 11 / 345.6s sim, 387 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       }
+      899 |
+    > 900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:900:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-2af1c-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-2af1c-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-2af1c-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-secure-playabi-2af1c-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:90866) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[7/12] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+  7) [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 23 / 618.9s sim, 493 kills, 15 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       }
+      899 |
+    > 900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:900:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-e6a0e-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-e6a0e-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-e6a0e-ds-and-returns-to-the-board-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-secure-playabi-e6a0e-ds-and-returns-to-the-board-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:94972) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[8/12] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow
+  8) [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: banks: the click wrote no new secured row for e2-pressure-garden at >= wave 12 (0 new row(s): [])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      899 |
+      900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+          |                                                          ^
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      904 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:901:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:98104) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[9/12] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-incline plays to its secure wave, banks, reloads and returns to the board @slow
+  9) [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-incline plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 13 / 529.2s sim, 581 kills, 26 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       }
+      899 |
+    > 900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:900:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-75a2e-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-75a2e-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-75a2e-ds-and-returns-to-the-board-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-secure-playabi-75a2e-ds-and-returns-to-the-board-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:2682) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[10/12] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-blackout-ridge plays to its secure wave, banks, reloads and returns to the board @slow
+  10) [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-blackout-ridge plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: banks: the click wrote no new secured row for e3-blackout-ridge at >= wave 12 (0 new row(s): [])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      899 |
+      900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+          |                                                          ^
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      904 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:901:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-c522c-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-c522c-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-c522c-ds-and-returns-to-the-board-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playability-secure-playabi-c522c-ds-and-returns-to-the-board-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:5052) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/12] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow
+/Users/robin/Claude/Projects/Gold Rush/scripts/attended/dlock.sh: line 12: 49731 Terminated: 15          "$@"

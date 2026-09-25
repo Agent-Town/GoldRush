@@ -92,8 +92,22 @@ const SECURE_CONTRACTS = [
 ] as const;
 
 const BOARD_CONTRACTS: readonly ContractManifest[] = listBoardContracts();
+
+/**
+ * GR_SECURE_CONTRACTS WIDENS the list above without editing it (map-play-proofs-1, owner 2026-09-25:
+ * "lets also do the play proofs"): a comma list of contract ids, or `all` for every board contract.
+ * Unset, the six above ARE the list and this file behaves exactly as it did before: the
+ * GR_PLAYABILITY_SECURE gate and the GR_SECURE_ONLY filter are untouched either way, and ONLY still
+ * narrows whatever the list resolves to.
+ */
+const WIDENED = (process.env.GR_SECURE_CONTRACTS ?? '').split(',').map((entry) => entry.trim()).filter(Boolean);
+const SELECTED: readonly string[] = WIDENED.some((entry) => entry.toLowerCase() === 'all')
+  ? BOARD_CONTRACTS.map((entry) => entry.id)
+  : WIDENED.length > 0
+    ? WIDENED
+    : (SECURE_CONTRACTS as readonly string[]);
 const TARGETS = BOARD_CONTRACTS.filter(
-  (entry) => (SECURE_CONTRACTS as readonly string[]).includes(entry.id) && (ONLY.length === 0 || ONLY.includes(entry.id)),
+  (entry) => SELECTED.includes(entry.id) && (ONLY.length === 0 || ONLY.includes(entry.id)),
 );
 
 type Cell = { ok: boolean; detail: string };
