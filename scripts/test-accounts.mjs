@@ -9,6 +9,8 @@ import { createServer as createViteServer } from 'vite';
 import { assertWranglerVersion } from './wrangler-binary.mjs';
 import { createLedgerServer, loadLedgerHandlers } from '../server/ledger/serve.mjs';
 import { SqliteStorage } from '../server/ledger/storage.mjs';
+import { sweepExpiredLedgerRows } from '../ops/droplet/ledger-backup.mjs';
+import { applyImport, planImport, TELEMETRY_MARKER } from './kv-to-ledger-migrate.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'http://localhost:5188';
@@ -20,6 +22,15 @@ const SQLITE_ROOT = path.join(STATE_ROOT, 'sqlite');
 const MAX_VERIFY_ATTEMPTS = 5;
 const MAX_VERIFIES_PER_IP = 60;
 const CODE_TTL_SECONDS = 10 * 60;
+// kv-counters-to-ledger-1, up here for the same temporal-dead-zone reason. Fixture values, not
+// credentials: they exist only inside this process and the ledgers it starts on 127.0.0.1.
+const LEDGER_SECRET = 'kv-counters-to-ledger-fixture-secret-0000';
+const OFFICE_SECRET = 'kv-counters-to-ledger-office-fixture';
+// KV writes per beacon MEASURED on 90a26053c, the cut this task started from, by
+// artifacts/kv-counters-to-ledger-1/measure-kv-writes.mjs (writes-before.json beside it).
+const KV_WRITES_BEFORE = { legacyWorstCase: 15, freshNonceReplay: 13, renderDemotionReplay: 8 };
+// The smallest valid JPEG the clerk accepts: SOI then EOI.
+const TINY_JPEG = 'data:image/jpeg;base64,/9j/2Q==';
 const checks = [];
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
@@ -62,7 +73,12 @@ async function main() {
       await checkDevFlow(start);
       console.log(`accounts ${backend} checks passed (${checks.length - before})`);
     }
-    for (const [label, check] of [['sign-in hardening', checkSignInHardening], ['office credential', checkBugOfficeCredential]]) {
+    for (const [label, check] of [
+      ['sign-in hardening', checkSignInHardening],
+      ['office credential', checkBugOfficeCredential],
+      ['ledger road', checkLedgerRoad],
+      ['kv-to-ledger migration', checkKvToLedgerMigration],
+    ]) {
       const before = checks.length;
       await check();
       console.log(`accounts ${label} checks passed (${checks.length - before})`);
@@ -437,7 +453,7 @@ async function checkBugOfficeCredential() {
 
   // Structural, because timing measurement in a gate is a flake generator: the doors that compare an
   // operator secret must route through the shared helper and never through === or !==.
-  for (const file of ['functions/api/_accounts.ts', 'functions/api/_bugs.ts', 'functions/api/redeem.ts', 'functions/api/standings.ts']) {
+  for (const file of ['functions/api/_accounts.ts', 'functions/api/_bugs.ts', 'functions/api/redeem.ts', 'functions/api/standings.ts', 'functions/api/_ledger.ts']) {
     const source = await readFile(path.join(ROOT, file), 'utf8');
     assert(/from '\.\/_compare'/.test(source), `${file} imports the shared constant-time compare`);
     assert(
@@ -445,6 +461,380 @@ async function checkBugOfficeCredential() {
       `${file} never compares an operator secret with === or !==`,
     );
   }
+}
+
+// --- kv-counters-to-ledger-1: the ledger road ------------------------------------------------------
+// The Pages doors are called DIRECTLY (as the Pages runtime would, one request object at a time) and
+// reach a REAL ledger over HTTP on 127.0.0.1: createLedgerServer, the same routes serve.mjs registers,
+// an in-memory SqliteStorage behind them. The KV binding they are handed COUNTS every put and delete,
+// because a KV write is what the free tier meters and what this task exists to stop spending.
+async function checkLedgerRoad() {
+  const doors = await loadDoors(['_ledger', '_ratelimit', 'telemetry', '_bugs', 'redeem']);
+  const storage = new SqliteStorage(':memory:');
+  const server = await createLedgerServer({ storage, env: { LEDGER_PROXY_SECRET: LEDGER_SECRET } });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  const ledgerUrl = `http://127.0.0.1:${server.address().port}`;
+  const bound = { LEDGER_ORIGIN: ledgerUrl, LEDGER_PROXY_SECRET: LEDGER_SECRET, BUG_OFFICE_TOKEN: OFFICE_SECRET };
+  try {
+    await checkLedgerGate(doors, ledgerUrl);
+    await checkAtomicLimiter(doors);
+    await checkTelemetryWritesPerBeacon(doors, bound, storage, ledgerUrl);
+    await checkBugOfficeThroughLedger(doors, bound, storage, ledgerUrl);
+    await checkPrizeDeskThroughLedger(doors, bound, storage);
+    await checkUnreachableLedger(doors);
+    await checkNightlySweep();
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+    storage.close();
+  }
+}
+
+async function checkLedgerGate(doors, ledgerUrl) {
+  const key = `mp:ratelimit:connect:${'a'.repeat(32)}`;
+  const auth = { authorization: `Bearer ${LEDGER_SECRET}` };
+  const call = (headers, body = { key, ttlSeconds: 60 }, method = 'POST') => fetch(`${ledgerUrl}/api/ledger/increment`, {
+    method,
+    headers: { 'content-type': 'application/json', ...headers },
+    body: method === 'POST' ? JSON.stringify(body) : undefined,
+  });
+  assertEqual((await call({})).status, 404, 'a ledger route is dark to a caller with no secret');
+  assertEqual((await call({ authorization: `Bearer ${LEDGER_SECRET}x` })).status, 404, 'a ledger route is dark to a wrong secret');
+  assertEqual((await call(auth, undefined, 'GET')).status, 405, 'the counter route is POST only');
+  assertEqual((await call(auth, { key: 'session:abc', ttlSeconds: 60 })).status, 400, 'the counter route refuses any key outside the three co-op buckets');
+  assertEqual((await call(auth, { key, ttlSeconds: 0 })).status, 400, 'the counter route refuses a counter with no window');
+  assertEqual((await (await call(auth)).json()).count, 1, 'the counter route counts');
+  assertEqual((await (await call(auth)).json()).count, 2, 'the counter route hands back the count it produced');
+  const ledger = doors._ledger;
+  assertEqual(ledger.ledgerAdmits(new Request('http://localhost/', { headers: { authorization: 'Bearer short' } }), { LEDGER_PROXY_SECRET: 'short' }), false, 'a short secret leaves the ledger routes dark');
+  assertEqual(ledger.ledgerLink({ LEDGER_PROXY_SECRET: 'short' }), null, 'a short secret is never sent');
+  assertEqual(ledger.ledgerLink({ LEDGER_PROXY_SECRET: LEDGER_SECRET, LEDGER_ORIGIN: 'http://agenttown.app' }), null, 'the secret never rides plain http off the loopback');
+  assertEqual(ledger.ledgerLink({ LEDGER_PROXY_SECRET: LEDGER_SECRET }) !== null, true, 'bound with no origin, the road leads to the public door');
+  assertEqual(ledger.ledgerLink({}), null, 'unbound, there is no road and every door keeps its KV path');
+}
+
+// The shared window counter on a store that can count atomically, against a KV-shaped control.
+async function checkAtomicLimiter(doors) {
+  const { bumpCounter } = doors._ratelimit;
+  const storage = new SqliteStorage(':memory:');
+  try {
+    const verdicts = await Promise.all(Array.from({ length: 50 }, () => bumpCounter(storage, 'telemetry:ratelimit:flood', 30, 3600)));
+    assertEqual(verdicts.filter(Boolean).length, 30, 'fifty parallel requests against a limit of 30: exactly 30 pass on the ledger');
+    assertEqual(await storage.get('telemetry:ratelimit:flood'), '50', 'every request in the flood was counted by the one statement');
+  } finally {
+    storage.close();
+  }
+  // CONTROL: the same flood on a store with no atomic count, whose read and write are an I/O hop apart
+  // as Cloudflare KV's are. Read-then-write lets it through, which is the race the ledger closes.
+  const values = new Map();
+  const hopKv = {
+    async get(key) { await sleep(1); return values.get(key) ?? null; },
+    async put(key, value) { await sleep(1); values.set(key, value); },
+  };
+  const raced = await Promise.all(Array.from({ length: 50 }, () => bumpCounter(hopKv, 'k', 30, 3600)));
+  assert(raced.filter(Boolean).length > 30, `CONTROL: read-then-write lets a parallel flood past its limit (${raced.filter(Boolean).length} of 50 passed a limit of 30)`);
+}
+
+async function checkTelemetryWritesPerBeacon(doors, bound, storage, ledgerUrl) {
+  const door = doors.telemetry.onRequest;
+  const limit = await sourceConstant('functions/api/telemetry.ts', 'MAX_REQUESTS_PER_IP');
+  const shapes = [
+    ['a run that ended unsecured', beacon({})],
+    ['a secure beacon', beacon({ stage: 'secure', waves: 8, secureWave: 8, deepestWave: 8, duration: 200_000 })],
+    ['a legacy client, secured, on a deepest-wave record', beacon({ stage: undefined, secureWave: 9, deepestWave: 40, waves: 40, duration: 900_000 })],
+    ['a render demotion', demotion()],
+  ];
+  let host = 10;
+  for (const [label, body] of shapes) {
+    const kv = countingKv();
+    const answer = await callDoor(door, '/api/telemetry', body, { TELEMETRY: kv, ...bound }, `198.51.100.${host++}`);
+    assertEqual(answer.status, 200, `${label}: accepted through the ledger`);
+    assertEqual(answer.body.stored, true, `${label}: stored`);
+    assertEqual(answer.fallback, null, `${label}: served by the ledger, so no fallback header`);
+    assert(kv.writes.length <= 1, `${label}: at most one KV write per beacon (up to ${KV_WRITES_BEFORE.legacyWorstCase} before), got ${kv.writes.length}`);
+    assertEqual(kv.writes.length, 0, `${label}: in fact no KV write at all`);
+  }
+  assertEqual(await storage.get('telemetry:runs:total'), '3', 'the run aggregates are counted in the ledger');
+  assertEqual(await storage.get('telemetry:render-demotion:total'), '1', 'the render-demotion aggregates are counted in the ledger');
+  const stats = await (await fetch(`${ledgerUrl}/api/stats`, { headers: { Origin: 'https://agenttown.app' } })).json();
+  assertEqual(stats.stats.runs.allTime, 3, 'the unchanged stats door answers from the ledger');
+
+  // The nonce is out of the digest: the same run under a fresh nonce is a duplicate.
+  const replayKv = countingKv();
+  const replay = await callDoor(door, '/api/telemetry', beacon({ nonce: 'b'.repeat(32) }), { TELEMETRY: replayKv, ...bound }, '198.51.100.10');
+  assertEqual(replay.body.duplicate, true, 'through the ledger, a replay under a fresh nonce is a duplicate');
+  assertEqual(replayKv.writes.length, 0, 'and it costs KV nothing');
+
+  // The per-address limit holds in the ledger, and KV still pays nothing.
+  const limitedKv = countingKv();
+  let refused = null;
+  for (let run = 1; run <= limit + 1; run += 1) {
+    const answer = await callDoor(door, '/api/telemetry', beacon({ duration: 100_000 + run }), { TELEMETRY: limitedKv, ...bound }, '198.51.100.30');
+    if (answer.status === 429) {
+      refused = { run, answer };
+      break;
+    }
+  }
+  assertEqual(refused?.run, limit + 1, `the ledger refuses beacon ${limit + 1} from one address inside the hour`);
+  assertEqual(refused?.answer.body.error, 'rate_limited', 'the refusal is the rate limit');
+  assertEqual(limitedKv.writes.length, 0, 'a whole hour of one address costs KV nothing through the ledger');
+
+  // UNBOUND (every fixture; production until the ops evening): the KV path, minus what scope 1 cut.
+  const kv = countingKv();
+  const env = { TELEMETRY: kv };
+  const first = await callDoor(door, '/api/telemetry', beacon({}), env, '198.51.100.40');
+  assertEqual(first.fallback, 'unconfigured', 'unbound, the door says the ledger did not serve it');
+  let mark = kv.writes.length;
+  const flood = await callDoor(door, '/api/telemetry', beacon({ nonce: 'c'.repeat(32) }), env, '198.51.100.40');
+  assertEqual(flood.body.duplicate, true, 'unbound, a replay under a fresh nonce is a duplicate too');
+  assertEqual(kv.writes.length - mark, 1, `unbound, that replay costs 1 KV write, the limiter (${KV_WRITES_BEFORE.freshNonceReplay} before)`);
+  mark = kv.writes.length;
+  await callDoor(door, '/api/telemetry', beacon({ duration: 401_000 }), env, '198.51.100.40');
+  assert(!kv.writes.slice(mark).includes('telemetry:updatedAt'), 'telemetry:updatedAt is not rewritten inside the minute');
+  const renderKv = countingKv();
+  await callDoor(door, '/api/telemetry', demotion(), { TELEMETRY: renderKv }, '198.51.100.41');
+  const latest = renderKv.puts.find(({ key }) => key.startsWith('telemetry:render-demotion:latest:'));
+  assertEqual(latest?.ttl, await sourceConstant('functions/api/telemetry.ts', 'DEDUP_TTL_SECONDS'), 'the render-demotion record carries the dedup TTL');
+  mark = renderKv.writes.length;
+  const renderReplay = await callDoor(door, '/api/telemetry', demotion(), { TELEMETRY: renderKv }, '198.51.100.41');
+  assertEqual(renderReplay.body.duplicate, true, 'a replayed render demotion is a duplicate');
+  assertEqual(renderKv.writes.length - mark, 1, `a replayed render demotion costs 1 KV write, the limiter (${KV_WRITES_BEFORE.renderDemotionReplay} before)`);
+}
+
+async function checkBugOfficeThroughLedger(doors, bound, storage, ledgerUrl) {
+  const { postBug, listBugs, getBug } = doors._bugs;
+  const limit = await sourceConstant('functions/api/_bugs.ts', 'MAX_REPORTS_PER_IP');
+  const ttl = await sourceConstant('functions/api/_bugs.ts', 'REPORT_TTL_SECONDS');
+  const kv = countingKv();
+  const env = { TELEMETRY: kv, ...bound };
+  const office = { authorization: `Bearer ${OFFICE_SECRET}` };
+  const filed = await callDoor(postBug, '/api/bug-report', bugReport(), env, '198.51.100.50');
+  assertEqual(filed.status, 201, 'a bug report is filed through the ledger');
+  assertEqual(filed.fallback, null, 'the ledger served it');
+  const row = storage.db.prepare('SELECT expires_at AS expiresAt, updated_at AS updatedAt FROM kv WHERE key = ?').get(`bug:${filed.body.id}`);
+  assert(row, 'the report is a ledger row under the key KV used');
+  assert(Math.abs(row.expiresAt - row.updatedAt - ttl * 1000) < 5_000, 'its 90-day expiry is the row expires_at column');
+  const listed = await callDoor(listBugs, '/api/bugs?limit=10', undefined, env, '198.51.100.51', { method: 'GET', headers: office });
+  assertEqual(listed.status, 200, 'the office lists through the ledger');
+  assert(listed.body.bugs.some((bug) => bug.id === filed.body.id && bug.screenshot === undefined), 'the list is summaries without the photograph');
+  const read = await callDoor(getBug, `/api/bugs/${filed.body.id}`, undefined, env, '198.51.100.51', { method: 'GET', headers: office, params: { id: filed.body.id } });
+  assertEqual(read.body.bug?.screenshot, TINY_JPEG, 'the office reads one report in full through the ledger');
+  const missing = await callDoor(getBug, '/api/bugs/1790000000000-00000000', undefined, env, '198.51.100.51', { method: 'GET', headers: office, params: { id: '1790000000000-00000000' } });
+  assertEqual(missing.status, 404, 'an unknown report is the office declining, as before');
+  assertEqual((await callDoor(listBugs, '/api/bugs', undefined, env, '198.51.100.51', { method: 'GET' })).status, 404, 'the office token is still checked at the edge');
+  assertEqual((await callDoor(postBug, '/api/bug-report', { ...bugReport(), email: 'x@example.com' }, env, '198.51.100.52')).status, 400, 'the edge refuses a field outside the allowlist before the ledger sees it');
+  const direct = await fetch(`${ledgerUrl}/api/ledger/bugs`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', authorization: `Bearer ${LEDGER_SECRET}` },
+    body: JSON.stringify({ client: 'a'.repeat(32), report: { ...bugReport(), email: 'x@example.com' } }),
+  });
+  assertEqual(direct.status, 400, 'the ledger re-validates what arrives with the secret');
+  for (let report = 2; report <= limit; report += 1) {
+    assertEqual((await callDoor(postBug, '/api/bug-report', bugReport(), env, '198.51.100.50')).status, 201, `report ${report} of ${limit} from one address is filed`);
+  }
+  const over = await callDoor(postBug, '/api/bug-report', bugReport(), env, '198.51.100.50');
+  assertEqual(over.status, 429, 'the per-address limit holds in the ledger');
+  assertEqual(kv.writes.length, 0, 'the whole office visit cost KV nothing');
+}
+
+async function checkPrizeDeskThroughLedger(doors, bound, storage) {
+  const door = doors.redeem.onRequest;
+  const limit = await sourceConstant('functions/api/redeem.ts', 'MAX_REDEEMS_PER_IP');
+  const kv = countingKv();
+  const env = { TELEMETRY: kv, ...bound };
+  const codes = ['GR-AAAAAA-BBBBBB-CCCCCC-DDDDDD', 'GR-111111-222222-333333-444444'];
+  assertEqual((await callDoor(door, '/api/redeem', { codes }, env, '198.51.100.60')).status, 404, 'the mint still needs the office bearer at the edge');
+  const minted = await callDoor(door, '/api/redeem', { codes }, env, '198.51.100.60', { headers: { authorization: `Bearer ${OFFICE_SECRET}` } });
+  assertEqual(minted.status, 201, 'the mint lands in the ledger');
+  assertEqual(minted.body.minted, 2, 'both codes are minted');
+  const redeemed = await callDoor(door, '/api/redeem', { code: codes[0].toLowerCase() }, env, '198.51.100.61');
+  assertEqual(redeemed.body.skin, 'gilded', 'a minted code redeems through the ledger');
+  assertEqual(redeemed.fallback, null, 'the ledger decided it');
+  assert((await storage.get(`prize:${codes[0]}`))?.startsWith('redeemed:'), 'the first redemption is stamped in the ledger');
+  assertEqual((await callDoor(door, '/api/redeem', { code: codes[0] }, env, '198.51.100.61')).body.skin, 'gilded', 'a stamped code still answers with its skin, as before');
+  assertEqual((await callDoor(door, '/api/redeem', { code: 'GR-999999-999999-999999-999999' }, env, '198.51.100.61')).body.error, 'bad_stub', 'an unknown code is no county prize');
+  for (let attempt = 1; attempt <= limit; attempt += 1) await callDoor(door, '/api/redeem', { code: codes[1] }, env, '198.51.100.62');
+  assertEqual((await callDoor(door, '/api/redeem', { code: codes[1] }, env, '198.51.100.62')).status, 429, 'the per-address redeem limit holds in the ledger');
+  assertEqual(kv.writes.length, 0, 'the prize desk cost KV nothing');
+}
+
+async function checkUnreachableLedger(doors) {
+  const kv = countingKv();
+  const env = { TELEMETRY: kv, LEDGER_ORIGIN: 'http://127.0.0.1:9', LEDGER_PROXY_SECRET: LEDGER_SECRET, BUG_OFFICE_TOKEN: OFFICE_SECRET };
+  const beaconAnswer = await callDoor(doors.telemetry.onRequest, '/api/telemetry', beacon({}), env, '198.51.100.70');
+  assertEqual(beaconAnswer.body.stored, false, 'a bound ledger that does not answer drops the beacon');
+  assertEqual(beaconAnswer.fallback, 'unreachable', 'and says why');
+  const bugAnswer = await callDoor(doors._bugs.postBug, '/api/bug-report', bugReport(), env, '198.51.100.70');
+  assertEqual(bugAnswer.status, 503, 'the complaints desk is honestly off the desk');
+  assertEqual(bugAnswer.fallback, 'unreachable', 'the bug door says why');
+  const prizeAnswer = await callDoor(doors.redeem.onRequest, '/api/redeem', { code: 'GR-AAAAAA-BBBBBB-CCCCCC-DDDDDD' }, env, '198.51.100.70');
+  assertEqual(prizeAnswer.status, 503, 'the prize desk is honestly off the desk');
+  assertEqual(prizeAnswer.fallback, 'unreachable', 'the prize door says why');
+  assertEqual(kv.writes.length, 0, 'none of it is spent against the shared KV budget');
+}
+
+// The nightly job's sweep, on a real file: exactly the rows past their own expiry are removed.
+async function checkNightlySweep() {
+  const directory = await mkdtemp(path.join(tmpdir(), 'gold-rush-ledger-sweep-'));
+  try {
+    const file = path.join(directory, 'ledger.db');
+    const storage = new SqliteStorage(file);
+    await storage.put('bug:1790000000000-aaaaaaaa', JSON.stringify({ id: '1790000000000-aaaaaaaa', description: 'old' }), { expirationTtl: 1 });
+    await storage.put('bug:1790000000001-bbbbbbbb', JSON.stringify({ id: '1790000000001-bbbbbbbb', description: 'new' }), { expirationTtl: 60 });
+    await storage.put('prize:GR-AAAAAA-BBBBBB-CCCCCC-DDDDDD', 'gilded');
+    storage.close();
+    assertEqual(sweepExpiredLedgerRows(file, Date.now() + 2_000), 1, 'the nightly sweep removes exactly the row past its own expiry');
+    const reopened = new SqliteStorage(file);
+    try {
+      const keys = reopened.db.prepare('SELECT key FROM kv ORDER BY key').all().map(({ key }) => key);
+      assertEqual(keys.join(','), 'bug:1790000000001-bbbbbbbb,prize:GR-AAAAAA-BBBBBB-CCCCCC-DDDDDD', 'the expired report is gone from the file and nothing else is');
+    } finally {
+      reopened.close();
+    }
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+}
+
+// scripts/kv-to-ledger-migrate.mjs, its PURE halves only, on a throwaway in-memory ledger: the script
+// itself is never run against KV or the droplet by this task.
+async function checkKvToLedgerMigration() {
+  const storage = new SqliteStorage(':memory:');
+  try {
+    const now = Date.now();
+    const day = 24 * 60 * 60 * 1000;
+    // The ledger after the flip: a prize already redeemed there, a counter already counting.
+    await storage.put('prize:GR-AAAAAA-BBBBBB-CCCCCC-DDDDDD', 'redeemed:2026-09-26T00:00:00.000Z|gilded');
+    await storage.tally('telemetry:runs:total');
+    const report = (id, submittedAt) => JSON.stringify({ id, submittedAt, description: 'the ford ate my wagon', diagnostics: {} });
+    const document = {
+      version: 1,
+      exportedAt: new Date(now).toISOString(),
+      namespaceId: 'f22215557bbe46e0a283953b8a0cfb4b',
+      rows: [
+        { key: 'bug:1790000000000-aaaaaaaa', value: report('1790000000000-aaaaaaaa', new Date(now - day).toISOString()), expiration: Math.floor((now + 89 * day) / 1000) },
+        { key: 'bug:1780000000000-bbbbbbbb', value: report('1780000000000-bbbbbbbb', new Date(now - 100 * day).toISOString()), expiration: null },
+        { key: 'prize:GR-AAAAAA-BBBBBB-CCCCCC-DDDDDD', value: 'gilded', expiration: null },
+        { key: 'prize:GR-111111-222222-333333-444444', value: 'gilded', expiration: null },
+        { key: 'telemetry:runs:total', value: '41', expiration: null },
+        { key: 'telemetry:waves:max', value: '37', expiration: null },
+        { key: 'telemetry:updatedAt', value: '2026-09-20T00:00:00.000Z', expiration: null },
+        { key: 'telemetry:ratelimit:abc', value: '3:1', expiration: Math.floor(now / 1000) + 60 },
+        { key: 'telemetry:dedup:2026-09:abc', value: '1', expiration: Math.floor(now / 1000) + 60 },
+        { key: 'bug:ratelimit:abc', value: '1', expiration: Math.floor(now / 1000) + 60 },
+        { key: 'session:deadbeef', value: '{}', expiration: null },
+      ],
+    };
+    const plan = planImport(document, { now });
+    assertEqual(plan.skipped.unclassified, 4, 'rate-limit hours, dedup markers and any foreign class are never planned');
+    applyImport(storage.db, plan, { now, dryRun: true });
+    assertEqual(await storage.get('bug:1790000000000-aaaaaaaa'), null, 'a dry run writes nothing');
+    const counts = applyImport(storage.db, plan, { now });
+    assertEqual(counts.bugsInserted, 2, 'both reports are imported');
+    assertEqual(counts.prizesInserted, 1, 'the prize the ledger lacked is imported');
+    assertEqual(counts.prizesAlreadyInLedger, 1, 'the prize the ledger already holds is left alone');
+    assert((await storage.get('prize:GR-AAAAAA-BBBBBB-CCCCCC-DDDDDD')).startsWith('redeemed:'), 'a prize redeemed in the ledger since the flip stays redeemed');
+    assertEqual(await storage.get('telemetry:runs:total'), '42', 'counters are ADDED to what the ledger counted since the flip');
+    assertEqual(await storage.get('telemetry:waves:max'), '37', 'the wave maximum is the larger');
+    assertEqual(await storage.get('session:deadbeef'), null, 'a session row in the file is never imported');
+    const expiry = (key) => storage.db.prepare('SELECT expires_at AS expiresAt FROM kv WHERE key = ?').get(key)?.expiresAt;
+    assertEqual(expiry('bug:1790000000000-aaaaaaaa'), document.rows[0].expiration * 1000, "a report keeps KV's own expiry");
+    assertEqual(expiry('bug:1780000000000-bbbbbbbb'), null, 'a pre-SEC-7 report keeps its lack of one: that is an owner decision');
+    assert((await storage.get(TELEMETRY_MARKER)) !== null, 'the one-time telemetry import leaves its marker');
+    const again = applyImport(storage.db, planImport(document, { now }), { now });
+    assertEqual(again.telemetryRowsSkippedAlreadyImported, 3, 'a second run skips the counters');
+    assertEqual(await storage.get('telemetry:runs:total'), '42', 'so the stats are never counted twice');
+    assertEqual(again.bugsAlreadyInLedger, 2, 'and the reports are not duplicated');
+    const expiring = planImport(document, { now, expireLegacyBugs: true });
+    assertEqual(expiring.rows.some(({ key }) => key === 'bug:1780000000000-bbbbbbbb'), false, '--expire-legacy-bugs skips a pre-SEC-7 report already past its 90 days');
+  } finally {
+    storage.close();
+  }
+}
+
+async function loadDoors(names) {
+  const vite = await createViteServer({ root: ROOT, configFile: false, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
+  try {
+    const doors = {};
+    for (const name of names) doors[name] = await vite.ssrLoadModule(`/functions/api/${name}.ts`);
+    return doors;
+  } finally {
+    await vite.close();
+  }
+}
+
+async function callDoor(handler, route, body, env, ip, { method = 'POST', headers = {}, params } = {}) {
+  const response = await handler({
+    env,
+    params,
+    request: new Request(`http://localhost${route}`, {
+      method,
+      headers: { 'content-type': 'application/json', Origin: ORIGIN, 'CF-Connecting-IP': ip, ...headers },
+      body: method === 'GET' ? undefined : JSON.stringify(body),
+    }),
+  });
+  return { status: response.status, fallback: response.headers.get('x-ledger-fallback'), body: await response.json().catch(() => ({})) };
+}
+
+// A KV stand-in that counts what the free tier meters: every put and every delete.
+function countingKv() {
+  const values = new Map();
+  const writes = [];
+  const puts = [];
+  return {
+    writes,
+    puts,
+    async get(key) {
+      const entry = values.get(key);
+      if (!entry) return null;
+      if (entry.expiresAt !== null && entry.expiresAt <= Date.now()) {
+        values.delete(key);
+        return null;
+      }
+      return entry.value;
+    },
+    async put(key, value, options) {
+      writes.push(key);
+      puts.push({ key, ttl: options?.expirationTtl ?? null });
+      values.set(key, { value, expiresAt: options?.expirationTtl ? Date.now() + options.expirationTtl * 1000 : null });
+    },
+    async delete(key) {
+      writes.push(`delete ${key}`);
+      values.delete(key);
+    },
+    async list({ prefix = '' } = {}) {
+      return { keys: [...values.keys()].filter((key) => key.startsWith(prefix)).sort().map((name) => ({ name })), list_complete: true };
+    },
+  };
+}
+
+function beacon(overrides) {
+  const body = {
+    contract: 'e1-dry-gulch', stage: 'end', waves: 12, secureWave: 0, deepestWave: 12, duration: 312_345, upgradesTaken: 5,
+    tier: 'BALANCED', frameP95: 21.7, deviceClass: 'desktop', buildHash: 'abcdef12', nonce: 'a'.repeat(32), ...overrides,
+  };
+  return Object.fromEntries(Object.entries(body).filter(([, value]) => value !== undefined));
+}
+
+function demotion() {
+  return { event: 'render_demotion', reason: 'webgl-context-lost', contractId: 'the-claim', buildId: 'abcdef12', tier: 'LITE', dataset: { terrain3dPilotState: 'ready' } };
+}
+
+function bugReport() {
+  return {
+    description: 'The ford swallowed my wagon at the second bell.',
+    prospectorName: 'Robin',
+    screenshot: TINY_JPEG,
+    diagnostics: { contractId: 'the-claim', wave: 3, position: { x: 1.5, z: -2 }, tier: 'LITE', version: 'abcdef12' },
+  };
+}
+
+// Numbers the doors own are READ from the door, never transcribed (the ratelimit-window pattern: a pin
+// that copies the number it guards goes green against a tree where the number moved).
+async function sourceConstant(file, name) {
+  const source = await readFile(path.join(ROOT, file), 'utf8');
+  const match = new RegExp(String.raw`^const ${name} = ([0-9 _*]+);`, 'm').exec(source);
+  if (!match) throw new Error(`${name} not found in ${file}`);
+  return match[1].split('*').map((part) => Number(part.trim().replace(/_/g, ''))).reduce((a, b) => a * b, 1);
 }
 
 function ledgerEnvelope(science, filler = '') {
