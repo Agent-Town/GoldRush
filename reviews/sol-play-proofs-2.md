@@ -1,0 +1,30 @@
+# Drain review: `sol-play-proofs-2`, the play-proofs campaign run 2: no new proof, one real map defect (the Canyon Works slope), two holds (Astra)
+
+**Branch** `sol/map-art-campaign-2` at `1a7c09a34` · **merge** `ed2cda202` · engine hash unchanged (`c63def1b`, no pin) · drained attended 2026-09-25 09:45Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `pp2`).
+
+**Verdict: LANDED.**
+
+### What it does
+Run 2 of the play-proofs campaign: three maps, two honest native attempts each, desktop then phone, twenty-two minutes, no new full proof, and the campaign's first source-supported map defect. Blackout Ridge stays PARTIAL: wave 12 secured on both projects, banked, Book returned, reload byte-identical, zero errors, but the authored current-storage goal fails again with two opposite repair strategies (nearest-first kept both banks alive and lost the trunk frames; west-to-east kept the frames and lost both banks; both banks peaked at 0 Wh). The Canyon Works FAILS on both projects with CONNECT 0 of 2 and no gold or buildings: every native approach to the gallery, the bridge and both flanks, stops at z about -7.88, and the finding derives the wall from the contract's creek and rail heights, the blend window and the tile-height slope, which exceeds the walkable limit across the full width (F-PP2-2, a contract or simulation defect, handed to the map owner; nothing was edited to make it pass). The Fairground FAILS: the wheel is destroyed at wave 2 (a palisade-first opening) or wave 1 (an early-beacon opening), so the irreversible wheel-and-flocks terminal is lost before the guns are funded (F-PP2-3, a strategy finding). The shared driver grew a per-run evidence path, and the Incline proof from run 1 was re-run against it on both projects and stayed green (desktop wave 17, phone wave 14, carts at 180 of 180). Where the player sees it: the Canyon Works is unplayable as designed until its slope is fixed; that is the finding that matters.
+
+### The gate stays closed
+With the environment unset the native-proof folder collects fourteen tests and skips all fourteen in an actual invocation; the default battery's collection is unchanged; `locked-win.spec.ts` green beside it.
+
+### Merge classification
+Tests and evidence only: `e2e/native-proofs/driver.ts` (the per-run evidence path), `e3-blackout-ridge.spec.ts` (the retained repair strategy), `e3-canyon-works.spec.ts` and `e3-fairground.spec.ts` (new, gated), `artifacts/sol/play-proofs/run-2/**` (the run note, three findings with rows and terminal boards, the Incline regression rows, the gate and adjacent logs, the verification script and manifest), three rows' second column in the campaign status doc (resolved by row key), one dated campaign-report section. No `src/**`, no contract, no balance, no store; the engine hash did not move.
+
+### Findings
+- **F-PP2-2 (open, HIGH, the map owner's):** the Canyon Works' southern slope blocks the gallery economy for a walking player; the connect deadline cannot be met. A corrective task follows this landing (`canyon-works-traversal-1`), with the native walk as its acceptance test.
+- **F-PP2-1 (open, a hold):** Blackout Ridge's storage chain: no repair order kept banks and trunk alive together; a design or difficulty question as much as a driver one.
+- **F-PP2-3 (open, a hold):** the Fairground's wheel is lost in the opening under two fort strategies.
+- The three run-1 holds stand (F-PP1-1, -2, -3); all holds get the campaign's planned final attempt unless the owner says otherwise.
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 137 ℹ fail 0` |
+| e2e both projects, --workers=1 | `rc=0   2 skipped   30 passed (2.3m)  09:27Z` |
+| full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 1018 ℹ pass 1012 ℹ fail 1 ℹ skipped 5  09:45Z` |
+| engine hash | `merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)` |

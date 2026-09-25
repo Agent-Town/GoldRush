@@ -1,0 +1,19 @@
+branch sol/map-art-campaign-2 tip 1a7c09a34 2026-09-25 09:22Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/pp2.json
+scratch store at the store's main 5793a96
+chain base b30392a9f
+merged ed2cda202
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+e2e start 09:25Z: e2e/native-proofs/e3-canyon-works.spec.ts e2e/locked-win.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   2 skipped   30 passed (2.3m)  09:27Z
+battery start 09:27Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1012 ℹ fail 1 ℹ skipped 5  09:45Z
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (1004722.406125ms)
+dirt after battery: 0
+pp2-PREP-DONE
+verdict: clean
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+review: reviews/sol-play-proofs-2.md
