@@ -667,7 +667,15 @@ test.describe('playability secure: the six open maps, plain boot to secure, bank
       page.on('pageerror', (error) => pageErrors.push(error.message));
       page.on('dialog', (dialog) => void dialog.accept().catch(() => undefined));
 
-      const secureWave = Math.max(0, Math.floor(contract.twist?.secureWave ?? 0));
+      // THE SECURE WAVE IS THE ENGINE'S (F-MPP1-4, test-truth-2, 2026-09-25). This used to be the
+      // manifest's `twist.secureWave ?? 0`, and 16 of the 42 contracts declare none (eight of them
+      // among the eighteen maps the 2026-09-25 census played): the engine then secures at
+      // `Balance.run.secureWave` (20, through `Game.secureWaveForRun`), so those rows recorded secure
+      // wave 0 and their banks threshold `waves >= 0` held for any row at all. The manifest
+      // value is only the fallback now, for a boot whose diagnostics publish no secure wave; the boot
+      // step below replaces it with `diagnostics.contract.secureWave` and says which one it used.
+      const manifestSecureWave = Math.max(0, Math.floor(contract.twist?.secureWave ?? 0));
+      let secureWave = manifestSecureWave;
       const row: Row = {
         project: testInfo.project.name,
         contract: contract.id,
@@ -706,6 +714,14 @@ test.describe('playability secure: the six open maps, plain boot to secure, bank
               ? pass(`activeId=${active.activeId} secureWave=${active.secureWave}`)
               : fail(`requested ${contract.id}, got activeId=${active?.activeId ?? 'none'} fallbackReason=${String(active?.fallbackReason)}`);
           row.notes.push(`engine secureWave=${active?.secureWave ?? 'unknown'} cadenceMult=${active?.waveCadenceMult ?? 'unknown'}`);
+          const engineSecureWave = active?.secureWave;
+          if (typeof engineSecureWave === 'number' && Number.isFinite(engineSecureWave)) {
+            secureWave = Math.max(0, Math.floor(engineSecureWave));
+            row.notes.push(`secureWave=${secureWave} read from the engine (manifest says ${manifestSecureWave})`);
+          } else {
+            row.notes.push(`secureWave=${secureWave} from the manifest: the engine published no secure wave`);
+          }
+          row.secureWave = secureWave;
         } catch (error) {
           row.boots = fail(`no game frame within ${BOOT_TIMEOUT_MS}ms: ${String((error as Error).message).split('\n')[0]}`);
         }
