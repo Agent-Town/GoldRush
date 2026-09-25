@@ -16,8 +16,9 @@ export type KVNamespaceLike = {
 // The stored value now carries the window START beside the count (`"<count>:<startedAtMs>"`) and the
 // TTL is the REMAINDER of the window measured from that start, so an hour is an hour for every door
 // this limiter serves. Nothing else moved: the signature, the return type, the refuse-before-write
-// order and every caller's limit are byte-identical, so the six doors that share it
-// (`standings`, `_accounts`, `telemetry`, `redeem`, `_bugs`, `refusals`) keep their own numbers. The
+// order and every caller's limit are byte-identical, so the seven doors that share it
+// (`standings`, `_accounts`, `telemetry`, `redeem`, `_bugs`, `refusals`, and `_multiplayer`'s KV fallback since
+// kv-counters-to-ledger-2, F-KV1-4) keep their own numbers. The
 // one behaviour every door inherits is the fixed window — which is the ruling.
 const WINDOW_SEPARATOR = ':';
 
@@ -58,7 +59,10 @@ export async function bumpCounter(kv: KVNamespaceLike, key: string, limit: numbe
   // A refusal never bumps and never re-arms the window: the hour that refused you is the hour that
   // has to pass, not an hour restarted by your own refused attempt.
   if (count >= limit) return false;
-  const remainingSeconds = Math.max(1, Math.ceil((startedAt + ttlSeconds * 1000 - now) / 1000));
+  // Cloudflare KV refuses an expirationTtl under 60 s (F-KV2-1, 2026-09-25): floor it, so the last 59 s of a
+  // rider's hour do not throw and 429 at the door. The window START stored beside the count still rolls the
+  // hour on the next read, so the floor costs at most 59 s of key life, never a longer window.
+  const remainingSeconds = Math.max(60, Math.ceil((startedAt + ttlSeconds * 1000 - now) / 1000));
   await kv.put(key, `${count + 1}${WINDOW_SEPARATOR}${startedAt}`, { expirationTtl: remainingSeconds });
   return true;
 }

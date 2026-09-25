@@ -17,6 +17,12 @@ const SECRET = 'assay-worker-test-secret';
 const KEY = 'standings:s2:epoch-1-frontier:the-claim';
 const ARCHIVE_KEY = 'standings:epoch-1-frontier:the-claim';
 const ASSAY_INDEX_KEY = 'assay-queue-index';
+// kv-counters-to-ledger-2 (checkCanonicalOrigin): the origin the Pages copy is bound to, the origin it
+// answers on, and every store method a handler can reach. Declared up here because the checks run at
+// module top level, below.
+const CANONICAL_ORIGIN = 'https://agenttown.app';
+const PAGES_ORIGIN = 'https://gold-rush-3in.pages.dev';
+const STORE_METHODS = new Set(['get', 'put', 'delete', 'list', 'increment', 'recordRefusal', 'readRefusals']);
 let checks = 0;
 let backend = 'kv';
 let sqliteId = 0;
@@ -67,6 +73,7 @@ try {
     await checkRotationBoard(onRequest);
     await checkAssayStrips(onRequest);
     await checkRefusals(onRequest, onRequestRefusals);
+    await checkCanonicalOrigin(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
     console.log(`standings assay ${backend} checks passed (${checks})`);
   }
 } finally {
@@ -74,6 +81,102 @@ try {
   sqliteStores.forEach((store) => store.close());
   await rm(sqliteRoot, { recursive: true, force: true });
   await vite.close();
+}
+
+// kv-counters-to-ledger-2 (F-KV1-5): since the L3 cutover of 2026-08-23 production /api/standings* is the
+// droplet's sqlite ledger, so this Pages copy only answers callers of gold-rush-3in.pages.dev, and each
+// POST there wrote the shared free-tier KV. Bound to the canonical origin, all four handlers answer 308
+// to the same path and query and make no store call at all; unbound (every other row in this file),
+// nothing moved. Every call here goes STRAIGHT to the handler and never through fetch: a fetch follows
+// a 308, and this suite must never reach the live site.
+async function checkCanonicalOrigin(onRequest, queueRoute, verdictRoute, reassayRoute) {
+  const bound = { STANDINGS_CANONICAL_ORIGIN: CANONICAL_ORIGIN };
+  const submission = post('e'.repeat(32), 10, tape('canonical-origin', 10));
+  const locator = { epochId: 'epoch-1-frontier', contractId: 'the-claim', tapeId: 'canonical-origin', rowId: 'moved' };
+  const doors = [
+    ['the board POST', onRequest, 'POST', '/api/standings', submission, undefined],
+    ['the board GET', onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, undefined],
+    ['the assay queue', queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, SECRET],
+    ['the assay queue without the assayer key', queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, undefined],
+    ['the assay verdict', verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(locator, 'verified'), SECRET],
+    ['the re-assay verb', reassayRoute, 'POST', '/api/standings/reassay', { epochId: 'epoch-1-frontier', contractId: 'the-claim', reason: 'moved' }, SECRET],
+    // The ops-evening probe's own shape (Part C step 9): a bare POST, no body and no content type. Unbound it
+    // is refused 415 and still writes a refusal record; bound it is moved and costs nothing.
+    ['the step-9 probe (a bare POST)', onRequest, 'POST', '/api/standings', undefined, undefined],
+  ];
+  for (const [name, route, method, url, body, key] of doors) {
+    const kv = makeKv();
+    const store = countedStore(kv);
+    const answer = await directCall(route, method, `${PAGES_ORIGIN}${url}`, body, store.kv, bound, key);
+    equal(answer.status, 308, `${name}: bound to the canonical origin, the Pages copy answers 308`);
+    equal(answer.location, `${CANONICAL_ORIGIN}${url}`, `${name}: to the same path and query on the canonical origin`);
+    equal(store.calls, [], `${name}: and makes no store call at all`);
+    equal(kv.ops, { reads: 0, writes: 0 }, `${name}: the file's own meter agrees, no read and no write`);
+  }
+
+  // The move is never cached (unbinding is the whole rollback) and carries the door's CORS answer.
+  const fromGame = await directCall(onRequest, 'POST', `${PAGES_ORIGIN}/api/standings`, submission, makeKv(), bound, undefined, { Origin: CANONICAL_ORIGIN });
+  equal([fromGame.status, fromGame.cacheControl, fromGame.allowOrigin], [308, 'no-store', CANONICAL_ORIGIN], 'the 308 is no-store and names the allowed origin');
+  const slashed = await directCall(onRequest, 'POST', `${PAGES_ORIGIN}/api/standings`, submission, makeKv(), { STANDINGS_CANONICAL_ORIGIN: `${CANONICAL_ORIGIN}/` });
+  equal(slashed.location, `${CANONICAL_ORIGIN}/api/standings`, 'a trailing slash on the bound origin is still a bare origin');
+
+  // Unbound, empty, blank or not a bare https origin: the answer and every store call are exactly what an
+  // environment without the variable gets. The accepted POST is the widest write path the door has.
+  const reference = await submitThrough(onRequest, submission, {});
+  equal(reference.status, 200, 'unbound, the Pages copy still accepts the submission (the comparison below means something)');
+  for (const value of ['', '   ', 'agenttown.app', 'http://agenttown.app', 'https://agenttown.app/api', 'https://agenttown.app?board=1']) {
+    equal(await submitThrough(onRequest, submission, { STANDINGS_CANONICAL_ORIGIN: value }), reference,
+      `STANDINGS_CANONICAL_ORIGIN=${JSON.stringify(value)} is not a redirect target, so the door is byte-identical to unbound`);
+  }
+
+  // A request already addressed to the canonical host is the canonical copy: served, never moved, because
+  // a redirect to itself would loop. The droplet sees its own requests as http on that host.
+  for (const origin of [CANONICAL_ORIGIN, 'http://agenttown.app']) {
+    const store = countedStore(makeKv());
+    const served = await directCall(onRequest, 'POST', `${origin}/api/standings`, submission, store.kv, bound);
+    equal([served.status, served.location], [200, null], `${origin}: a request on the canonical host is served, not moved`);
+    ok(store.calls.length > 0, `${origin}: and reaches its store`);
+  }
+}
+
+// One accepted-POST answer and the exact sequence of store calls behind it, on a fresh store.
+async function submitThrough(onRequest, submission, extraEnv) {
+  const store = countedStore(makeKv());
+  const answer = await directCall(onRequest, 'POST', `${PAGES_ORIGIN}/api/standings`, submission, store.kv, extraEnv);
+  return { status: answer.status, location: answer.location, text: answer.text, calls: store.calls };
+}
+
+async function directCall(route, method, url, body, kv, extraEnv = {}, key = undefined, extraHeaders = {}) {
+  const headers = new Headers({ ...(body === undefined ? {} : { 'content-type': 'application/json' }), ...extraHeaders });
+  if (key !== undefined) headers.set('x-assay-key', key);
+  const response = await route({
+    request: new Request(url, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) }),
+    env: { TELEMETRY: kv, ASSAY_WORKER_SECRET: SECRET, ...extraEnv },
+  });
+  return {
+    status: response.status,
+    location: response.headers.get('location'),
+    cacheControl: response.headers.get('cache-control'),
+    allowOrigin: response.headers.get('access-control-allow-origin'),
+    text: await response.text(),
+  };
+}
+
+// Every call a handler makes on its store, by method, so "touches no store" is a count of zero across
+// every method a handler can reach, not only the two that makeKv's own meter counts.
+function countedStore(kv) {
+  const calls = [];
+  const counted = new Proxy(kv, {
+    get(target, property, receiver) {
+      const value = Reflect.get(target, property, receiver);
+      if (typeof value !== 'function' || !STORE_METHODS.has(property)) return value;
+      return (...args) => {
+        calls.push(property);
+        return value.apply(target, args);
+      };
+    },
+  });
+  return { kv: counted, calls };
 }
 
 async function checkRefusals(onRequest, onRequestRefusals) {

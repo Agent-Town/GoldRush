@@ -1,0 +1,53 @@
+# scope 1 intermediate: the door moved, the census still says six
+# 2026-09-25T13:07:08Z HEAD=dec3196c5 node=v26.4.0 changed: functions/api/_multiplayer.ts scripts/ratelimit-window.test.mjs 
+$ node --test scripts/ratelimit-window.test.mjs
+✔ the rider cap is 60 and the sixty-first submission inside one hour is refused (1.059542ms)
+✔ an hour is an hour: the limit refills once the window from the first write has passed (0.361125ms)
+✔ a refusal never bumps the count and never re-arms the window (0.536625ms)
+✔ the stored ttl is the remainder of the window, never a fresh hour (0.142958ms)
+✔ a counter written before the window start was stored keeps its count (0.102ms)
+✔ the co-op door (KV fallback): a connect admitted at minute 59 does not extend its window (294.906458ms)
+✔ the co-op door (KV fallback): the count restarts at the hour measured from the first connect (0.781833ms)
+✔ the co-op door (KV fallback): a rider who filled the limit is let back in at the hour, not an hour after the last connect (2.463375ms)
+✖ every door that shares this limiter still passes its own ttl (17.448833ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 472.742833
+
+✖ failing tests:
+
+test at scripts/ratelimit-window.test.mjs:279:1
+✖ every door that shares this limiter still passes its own ttl (17.448833ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'functions/api/_accounts.ts',
+      'functions/api/_bugs.ts',
+  +   'functions/api/_multiplayer.ts',
+      'functions/api/redeem.ts',
+      'functions/api/refusals.ts',
+      'functions/api/standings.ts',
+      'functions/api/telemetry.ts'
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:284:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'functions/api/_accounts.ts', 'functions/api/_bugs.ts', 'functions/api/_multiplayer.ts', 'functions/api/redeem.ts', 'functions/api/refusals.ts', 'functions/api/standings.ts', 'functions/api/telemetry.ts' ],
+    expected: [ 'functions/api/_accounts.ts', 'functions/api/_bugs.ts', 'functions/api/redeem.ts', 'functions/api/refusals.ts', 'functions/api/standings.ts', 'functions/api/telemetry.ts' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+EXIT=1

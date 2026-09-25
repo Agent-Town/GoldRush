@@ -1,0 +1,81 @@
+# scope 1 RED-first: the co-op rows against the BASE door
+# 2026-09-25T13:06:56Z HEAD=dec3196c5 node=v26.4.0
+# functions/api/_multiplayer.ts changed vs HEAD: 0 (0 = the base door)
+# changed tracked files: scripts/ratelimit-window.test.mjs 
+$ node --test scripts/ratelimit-window.test.mjs
+✔ the rider cap is 60 and the sixty-first submission inside one hour is refused (1.508458ms)
+✔ an hour is an hour: the limit refills once the window from the first write has passed (0.535458ms)
+✔ a refusal never bumps the count and never re-arms the window (0.162542ms)
+✔ the stored ttl is the remainder of the window, never a fresh hour (0.144667ms)
+✔ a counter written before the window start was stored keeps its count (1.120625ms)
+✖ the co-op door (KV fallback): a connect admitted at minute 59 does not extend its window (58.913416ms)
+✖ the co-op door (KV fallback): the count restarts at the hour measured from the first connect (1.460666ms)
+✖ the co-op door (KV fallback): a rider who filled the limit is let back in at the hour, not an hour after the last connect (7.201792ms)
+✔ every door that shares this limiter still passes its own ttl (23.348375ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 6
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 252.340375
+
+✖ failing tests:
+
+test at scripts/ratelimit-window.test.mjs:229:1
+✖ the co-op door (KV fallback): a connect admitted at minute 59 does not extend its window (58.913416ms)
+  AssertionError [ERR_ASSERTION]: the write at minute 59 must arm the REMAINDER of the hour (at most 60 s), not a fresh hour: it armed 3600 s
+      at file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:239:12
+      at async withClock (file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:91:12)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:234:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/ratelimit-window.test.mjs:245:1
+✖ the co-op door (KV fallback): the count restarts at the hour measured from the first connect (1.460666ms)
+  AssertionError [ERR_ASSERTION]: and is counted as the FIRST connect of a new window: a limiter that re-armed the hour at minute 59 carries the count on
+  + actual - expected
+  
+  + '3'
+  - '1:1790330400000'
+  
+      at file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:256:12
+      at async withClock (file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:91:12)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:250:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '3',
+    expected: '1:1790330400000',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ratelimit-window.test.mjs:261:1
+✖ the co-op door (KV fallback): a rider who filled the limit is let back in at the hour, not an hour after the last connect (7.201792ms)
+  AssertionError [ERR_ASSERTION]: at the hour from the first connect the rider is admitted again; a limiter that re-arms on every accepted write keeps them out until an hour after the LAST one
+  
+  429 !== 426
+  
+      at file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:274:12
+      at async withClock (file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:91:12)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-kv2/scripts/ratelimit-window.test.mjs:267:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 429,
+    expected: 426,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+EXIT=1

@@ -1,0 +1,12 @@
+# before, Node v26.4.0, HEAD=dec3196c5, sources changed vs HEAD: 0 (0 = the base)
+=== node scripts/test-standings.mjs
+contract clock census 42/25/17/0
+refusals kv sample {"ok":true,"counts":{"unsecured":1,"bad_payload":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1790341601065},{"reason":"unsecured","contractId":"the-claim","refusedAt":1790341601065}]}
+standings assay kv checks passed (372)
+contract clock census 42/25/17/0
+refusals sqlite sample {"ok":true,"counts":{"bad_payload":1,"unsecured":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1790341602126},{"reason":"unsecured","contractId":"the-claim","refusedAt":1790341602125}]}
+standings assay sqlite checks passed (372)
+STANDINGS_RC=0
+=== node scripts/test-ledger-worker.mjs
+ledger worker HTTP contract checks passed (26)
+LEDGER_WORKER_RC=0
