@@ -71,3 +71,27 @@ W/reviews/shots-night/desktop-chrome-after.png | one lantern pool in black, five
 W/reviews/shots-panorama/after-the-claim-2000x1000.png | the Claim wide, river and ford, hero + Prospector
 W/artifacts/ux-entry-robustness-1/desktop-chrome-menu-shared-contract.png | MAIN MENU: GOLD RUSH an Agent Town tale, emblem, valley art, "Who's prospecting?"
 W/artifacts/s2539-fire/verification-screenshots/desktop-build-menu-icons-blurb.png | contract card The Claim rules + build menu; GOLD 1000/200 debug grant, unusable
+## Viewed after the first log pass (same session, same eyes)
+S/plate-e6-bld-atomic-diner.png | chrome-and-teal diner with a round atom sign; E6 at its warmest (promise material only)
+S/char-bandit-base-sheet-walk8.png | ragged-poncho walker, wide hat, scarf over face, rope and grapnel; the E1 crowd's costume
+S/char-jumper-s4-codex-v1.png | the claim jumper: tan wide hat, ragged red wrap, satchel, stern face
+W/site/assets/gold-rush-key-art.jpg | NOT key art: an in-game frame of the Claim, HUD cropped (HP row cut at the top edge); the og:image target (F-VIBE-2)
+W/site/assets/teaser-poster.jpg | the same kind of in-game frame, the Prospector toast cut off at the top
+site/index.html inline image 1 (extracted to the session scratchpad, not the repo) | the heroine with a pan brimming with gold, sentry beacons, walkers massing on a ridge before a locomotive
+site/index.html inline image 2 (scratchpad extraction) | the heroine mid-fight, sparks from dome turrets, red-scarfed outlaws, a black locomotive
+site/index.html inline image 3 (scratchpad extraction) | "The Calculating House": a glass hall of identical hooded figures at one long table (reads uncanny: F-VIBE-4)
+W/reviews/shots-prospector-presence/desktop-chrome-plain-boot.png | the Claim's contract card over the plain boot, "the Prospector: follows and observes. Chip by weapon; claim wins grow it."
+W/reviews/shots-night/mobile-chrome-after.png | the lantern pool in portrait: five lantern-carrying walkers round the heroine, the best vertical
+/Users/robin/GoldRushStream/loop/005-the-ten-eras-reel.mp4 (5 frames at 2/36/40/44/57 s, one contact sheet) | titled cut: "GOLD RUSH / AN AGENT TOWN TALE / TEN ERAS. ONE CLAIM." ... "THE GOLD RUSH WAS NEVER ABOUT THE GOLD."
+W/artifacts/landmark-lighting-calibration/after-e1-night-shift-desktop-chrome.png | wave 10 dark: the pair in a teal pool (the Prospector is a light source); tooltip "Your deputy. G opens its charter. Select it, then click a seam to send it panning." (debug chip)
+W/artifacts/map-art-inventory-20260908/stations/e1-night-shift--seven_lantern_terraces.png | Night Shift at wave 0: four lantern posts on terraces, the heroine kneeling at a seam: "Stand close and the pan works itself." (debug chip)
+W/artifacts/baron-presence/desktop-chrome-baron-arrival.png | wave 21: the oxblood taunt card, "Wave 20 ledgered", the Rocket Cart; tavernkeeper card over it (staged)
+W/artifacts/baron-presence/desktop-chrome-baron-taunt-banner.png | wave 12 taunt card "The Baron sends his regards. The claim won't hold." (staged)
+W/artifacts/baron-presence/desktop-chrome-baron-defeat-card.png | "Claim Secured ... THE BARON: DEFEATED, wave 20 ... Dragged off by his own men, swearing revenge ... Agent +1 STAMPED" (staged)
+W/artifacts/lantern-true-world-2/desktop-chrome-claim.png | the Lantern Show drawing the real Claim map inside its bulb frame; control bar shows a local URL field (crop)
+W/artifacts/town-cast-walk8-hard-alpha-recut/in-game-town-cast-desktop.png | the in-game town square (same frame as reviews/shots-town-cast)
+
+## Totals
+86 image views: 33 from the art store; 29 map boards and in-game frames; 18 HUD, menu and system captures; the landing page's 5 images; 1 contact sheet of 5 frames from the ten-eras reel.
+Maps whose plate and in-game frame were compared: the five Frontier Edition maps + 12 beyond the frontier (Hill Mine, Trestle, Incline, Canyon Works, Dust Flats, Deepwater Claim, Glow Mesa, Picnic, Relay Valley, Mare Claim, Ember Shore, Archive World).
+Plates viewed from the store (plate-*, kit-*, codex-*, mkt-*, char-*): 33, of which 5 Frontier map plates, the town plate, the valley master, all 10 era plates.
