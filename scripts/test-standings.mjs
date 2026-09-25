@@ -29,8 +29,12 @@ const serversByStorage = new WeakMap();
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 try {
   const { MAX_JSON_BYTES, compareScores, onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
-  const { submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
-  const { CONTRACT_BUNDLES, MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
+  const { RunTapeRecorder, submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { CONTRACT_BUNDLES, MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, parsePlaybookText, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
+  // The browser's own recorder, playbook shelf and intent seam: the door is judged against a reel a browser writes.
+  const { PlaybookRecorderSession } = await vite.ssrLoadModule('/src/playbook/PlaybookSession.ts');
+  const { intentsFromLockstepInput, lockstepInputFromIntents } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
+  const recorderKit = { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape };
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
   const { onRequest: onRequestReassay } = await vite.ssrLoadModule('/functions/api/standings/reassay.ts');
@@ -46,6 +50,7 @@ try {
     checks = 0;
     await checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, CONTRACT_BUNDLES, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_INTENTS, MAX_JSON_BYTES);
     checkTapeBuildMetadata(validateTape);
+    await checkRecorderReel(onRequest, validateTape, validateRunTape, runTapeEnvelopeForContract, recorderKit);
     await checkEngineHashReel(onRequest);
     await checkReplayableBoard(onRequest);
     await checkLineageReassay(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
@@ -353,6 +358,88 @@ function checkTapeBuildMetadata(validateTape) {
   equal(validateTape(legacyV2, 'the-claim', 'gold-rush', 'trail')?.meta, undefined, 'v2 tapes without build metadata remain valid');
   equal(validateTape(stampedV2, 'the-claim', 'gold-rush', 'trail')?.meta, stampedV2.meta, 'v2 engine metadata is accepted and preserved');
   equal(validateTape(badEngineHash, 'the-claim', 'gold-rush', 'trail'), null, 'malformed engine metadata is rejected');
+}
+
+// F-LSR1-0 (door-tape-grammar-1, 2026-09-25). The browser recorder writes `inputLog.playbookUses` on
+// EVERY reel since 15dc51b89 (2026-09-05) and `inputLog.motorActions` once a motor was driven since
+// 5823eaad6 (2026-09-04); the door's grammar knew neither key, so it refused every browser standing
+// that carried a reel as `bad_payload`. These rows build the reel with the REAL recorder, the way
+// Game.ts does at the standing, never with a hand-typed fixture, so the door is judged against what a
+// browser actually sends.
+async function checkRecorderReel(onRequest, validateTape, validateRunTape, runTapeEnvelopeForContract, kit) {
+  const before = checks;
+  const kv = makeKv();
+  const full = recorderReel(kit, '1dd7'.repeat(8), { playbook: true, motor: true });
+  const plain = recorderReel(kit, '0dd7'.repeat(8), { playbook: false, motor: false });
+  equal([full.runTape.inputLog.playbookUses.length, full.runTape.inputLog.motorActions?.length], [1, 2],
+    'the full reel carries one recorded playbook use and two motor actions');
+  equal([plain.runTape.inputLog.playbookUses, Object.hasOwn(plain.runTape.inputLog, 'motorActions')], [[], false],
+    'the plain reel carries the empty playbookUses list every browser reel carries, and no motor actions');
+  ok(full.body.tape && plain.body.tape, 'both reels fit the byte envelope, so both bodies carry their tape (submittedRunTape)');
+  const answers = [];
+  for (const { body } of [full, plain]) answers.push(await call(onRequest, 'POST', '/api/standings', body, kv));
+  equal(answers.map(({ status, body }) => [status, body.stored ?? body.error]), [[200, true], [200, true]],
+    `the door accepts the recorder's reels (with a playbook use and motor actions, and plain): ${JSON.stringify(answers.map(({ body }) => body))}`);
+  const stored = JSON.parse(await kv.get(KEY));
+  for (const { runTape } of [full, plain]) {
+    equal(stored.find((row) => row.tape?.id === runTape.id)?.tape.inputLog, runTape.inputLog,
+      `the county stores reel ${runTape.id} with its input log exactly as the recorder wrote it`);
+  }
+  // Where the player sees it: Return to Town after securing, the standing lands on the county board.
+  const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
+  equal(board.body.board.map(({ profileName }) => profileName), ['Recorder Reel', 'Recorder Reel'], 'both recorder standings are ranked on the county board');
+
+  // THE ROUND TRIP: the reel read back the way the browser reads it (`?reel=`) must satisfy the client's
+  // own validator with both keys intact, because the Lantern replays them (Game.ts:7823, :7827).
+  const watched = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${full.runTape.id}`, undefined, kv);
+  equal(watched.status, 200, `the stored reel is on the shelf: ${JSON.stringify(watched.body).slice(0, 160)}`);
+  const replayable = validateRunTape(watched.body.reel);
+  ok(replayable, 'the client validateRunTape accepts the reel read back through ?reel=');
+  equal(replayable?.inputLog.playbookUses, full.runTape.inputLog.playbookUses, 'the playbook use survives the round trip with its recording');
+  equal(replayable?.inputLog.motorActions, full.runTape.inputLog.motorActions, 'the motor actions survive the round trip with their points');
+
+  // NOTHING LOOSENED. Every mutation re-hashes the input log, so each refusal belongs to the grammar alone.
+  const refusalKv = makeKv();
+  const refused = async (label, source, mutate, atTheDoor = false) => {
+    const candidate = structuredClone(source.body);
+    mutate(candidate.tape.inputLog);
+    candidate.inputLogHash = createHash('sha256').update(JSON.stringify(candidate.tape.inputLog)).digest('hex');
+    equal(validateTape(candidate.tape, 'the-claim', 'gold-rush', 'trail'), null, `the tape grammar refuses ${label}`);
+    if (!atTheDoor) return;
+    const answer = await call(onRequest, 'POST', '/api/standings', candidate, refusalKv);
+    equal([answer.status, answer.body.error], [400, 'bad_payload'], `the door refuses ${label} as bad_payload`);
+  };
+  const legacy = { body: post('2dd7'.repeat(8), 10, tapeV2('legacy-twelve-keys', 10)) };
+  equal((await call(onRequest, 'POST', '/api/standings', legacy.body, refusalKv)).status, 200, 'control: the twelve-key tape is accepted as it always was');
+  await refused('a twelve-key tape with an unknown thirteenth key', legacy, (log) => { log.probes = []; }, true);
+  await refused('a recorder reel with an unknown fifteenth key', full, (log) => { log.probes = []; }, true);
+  await refused('a playbook use with a bad kind', full, (log) => { log.playbookUses[0].kind = 'playbook_used'; }, true);
+  await refused('a playbook use whose atTick is past the duration', full, (log) => { log.playbookUses[0].atTick = log.durationTicks + 1; }, true);
+  await refused('a playbook use carrying a malformed playbook', full, (log) => { delete log.playbookUses[0].playbook.version; }, true);
+  await refused('a playbook use with a negative atTick', full, (log) => { log.playbookUses[0].atTick = -1; });
+  await refused('playbook uses whose atTicks run backwards', full, (log) => { log.playbookUses = [{ ...log.playbookUses[0], atTick: 4 }, { ...log.playbookUses[0], atTick: 3 }]; });
+  await refused('a playbook use with an unknown key', full, (log) => { log.playbookUses[0].note = 'x'; });
+  await refused('a playbook recorded on another seed', full, (log) => { log.playbookUses[0].playbook.seed = 'another-seed'; });
+  await refused('a playbook whose entry names an action no grammar knows', full, (log) => { log.playbookUses[0].playbook.entries[0].a.push({ type: 'teleport' }); });
+  await refused('playbookUses that is not a list', full, (log) => { log.playbookUses = { 0: log.playbookUses[0] }; });
+  await refused('a motor action before tick 0', full, (log) => { log.motorActions[0].t = -1; });
+  await refused('a motor action of an unknown kind', full, (log) => { log.motorActions[0].kind = 'motor_fly'; });
+  await refused('a motor action at the duration', full, (log) => { log.motorActions[1].t = log.durationTicks; });
+  await refused('a motor action off the map', full, (log) => { log.motorActions[0].point.x = 300; });
+  await refused('motor actions running backwards', full, (log) => { log.motorActions.reverse(); });
+  await refused('motorActions that is not a list', full, (log) => { log.motorActions = {}; });
+  // Both lists are capped at the envelope's maxEntries; the byte envelope is checked first, so each
+  // capped tape is measured to fit it and the refusal is the count's alone.
+  const envelope = runTapeEnvelopeForContract('the-claim');
+  for (const field of ['playbookUses', 'motorActions']) {
+    const capped = structuredClone(full.body.tape);
+    capped.inputLog[field] = Array.from({ length: envelope.maxEntries }, () => structuredClone(full.body.tape.inputLog[field][0]));
+    ok(validateTape(capped, 'the-claim', 'gold-rush', 'trail'), `the grammar admits ${envelope.maxEntries} ${field}, the envelope's maxEntries`);
+    capped.inputLog[field].push(structuredClone(full.body.tape.inputLog[field][0]));
+    ok(Buffer.byteLength(JSON.stringify(capped)) <= envelope.maxTapeBytes, `${envelope.maxEntries + 1} ${field} still fit the byte envelope`);
+    equal(validateTape(capped, 'the-claim', 'gold-rush', 'trail'), null, `the grammar refuses ${envelope.maxEntries + 1} ${field}`);
+  }
+  console.log(`recorder reel ${backend} checks (${checks - before})`);
 }
 
 async function checkEngineHashReel(onRequest) {
@@ -1456,6 +1543,62 @@ function currentEraTape(runTape) {
     version: 2,
     meta,
     runStart: { meta: progress, research: { version: 1, progress, taken: [], proposalSalt: 0, pinnedTarget: null } },
+  };
+}
+
+// A reel written by the browser's own recorder and submitted the way Game.ts submits a secured standing
+// (Game.ts 8104-8143): `snapshot(outcome, eventLog)`, then `submittedRunTape`, then the body around it.
+// The playbook is recorded and read back off the shelf exactly as a named playbook is before its use
+// (`PlaybookRecorderSession.finish`, then `parsePlaybookText`, Game.ts:3900-3907).
+function recorderReel(kit, anonId, { playbook, motor }) {
+  const { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape } = kit;
+  const [contract, seed, difficulty] = ['the-claim', 'gold-rush', 'trail'];
+  const start = { x: 0.25, z: 12.5 };
+  const progress = { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } };
+  const recorder = new RunTapeRecorder({
+    contract, seed, difficulty,
+    meta: { buildId: 'dev', viewVersion: engineEra.viewSchema.version, engineHash: engineEra.engineHash, era: engineEra.era },
+    start,
+    runStart: { meta: progress, research: { version: 1, epochId: 'epoch-1-frontier', metaScienceCursor: 0, progress, taken: [], proposalSalt: 0, pinnedTarget: null, unlocks: {} } },
+  });
+  const move = (mx, my) => intentsFromLockstepInput({ mx, my, actions: [] });
+  const shelf = new PlaybookRecorderSession({ contractId: contract, seed, difficultyPreset: difficulty, start }, null);
+  shelf.recordTick(lockstepInputFromIntents(move(0, -1)), start);
+  shelf.recordTick(lockstepInputFromIntents(move(1, 0), { queuedActions: [{ type: 'place_build', id: 'palisade', position: { x: 1, z: 9 }, rotationSteps: 0 }] }), start);
+  shelf.recordTick(lockstepInputFromIntents(move(0, 0)), start);
+  const shelved = parsePlaybookText(shelf.finish('Assay Patrol').text);
+  if (!shelved.ok) throw new Error(`the shelf playbook did not parse: ${shelved.reason}`);
+  recorder.record(move(1, 0), start);
+  recorder.record(move(1, 0), { x: 0.5, z: 12.5 });
+  recorder.recordAction({ type: 'place_build', id: 'sluice', position: { x: 2, z: 10 }, rotationSteps: 1 });
+  recorder.record(move(0, 1), { x: 0.75, z: 12.5 });
+  if (motor) recorder.recordMotorAction('motor_grade', { x: 3.14159, z: 7.5 });
+  if (playbook) recorder.recordPlaybookUse(shelved.playbook);
+  recorder.record(move(0, 0), { x: 0.75, z: 12.75 });
+  recorder.record(move(-0.5, 0.25), { x: 0.75, z: 12.75 });
+  if (motor) recorder.recordMotorAction('motor_haul', { x: 4, z: 8 });
+  recorder.record(move(0, 0), { x: 0.625, z: 12.875 });
+  const runTape = recorder.snapshot(
+    { reason: 'secured', secured: true, waves: 10, timeAlive: 120, gold: 40 },
+    { ...recorder.eventLog(), kills: 3, gold: 40, wave: 10, economy: { banked: 40 } },
+  );
+  const submittedTape = submittedRunTape(runTape);
+  const sha256 = (text) => createHash('sha256').update(text).digest('hex');
+  return {
+    runTape,
+    body: {
+      contractId: contract,
+      epochId: 'epoch-1-frontier',
+      score: { secured: true, waves: 10, timeAlive: 120, gold: 40, baseValue: 60 },
+      profileName: 'Recorder Reel',
+      anonId,
+      difficulty,
+      seed,
+      seedMode: 'live',
+      seedHash: sha256(seed),
+      inputLogHash: sha256(JSON.stringify(runTape.inputLog)),
+      ...(submittedTape ? { tape: submittedTape } : {}),
+    },
   };
 }
 

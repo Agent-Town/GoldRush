@@ -1,0 +1,79 @@
+// Scratch attribution probe (not committed): the REAL door, in process, on an in-memory store, judging reels
+// written by the REAL browser recorder. Nothing leaves the machine. Run from the worktree root.
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const root = process.cwd();
+const { createServer } = await import(pathToFileURL(path.join(root, 'node_modules/vite/dist/node/index.js')).href);
+const engineEra = JSON.parse(readFileSync(path.join(root, 'assets/engine-era.json'), 'utf8'));
+const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
+const sha256 = (text) => createHash('sha256').update(text).digest('hex');
+try {
+  const { onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
+  const { RunTapeRecorder, submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { parsePlaybookText } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
+  const { PlaybookRecorderSession } = await vite.ssrLoadModule('/src/playbook/PlaybookSession.ts');
+  const { intentsFromLockstepInput, lockstepInputFromIntents } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
+  const move = (mx, my) => intentsFromLockstepInput({ mx, my, actions: [] });
+  const start = { x: 0.25, z: 12.5 };
+  const reel = ({ playbook = false, motor = false, action = null } = {}) => {
+    const progress = { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } };
+    const recorder = new RunTapeRecorder({
+      contract: 'the-claim', seed: 'gold-rush', difficulty: 'trail',
+      meta: { buildId: 'dev', viewVersion: engineEra.viewSchema.version, engineHash: engineEra.engineHash, era: engineEra.era },
+      start,
+      runStart: { meta: progress, research: { version: 1, epochId: 'epoch-1-frontier', metaScienceCursor: 0, progress, taken: [], proposalSalt: 0, pinnedTarget: null, unlocks: {} } },
+    });
+    const shelf = new PlaybookRecorderSession({ contractId: 'the-claim', seed: 'gold-rush', difficultyPreset: 'trail', start }, null);
+    shelf.recordTick(lockstepInputFromIntents(move(0, -1)), start);
+    shelf.recordTick(lockstepInputFromIntents(move(0, 0)), start);
+    const shelved = parsePlaybookText(shelf.finish('Probe Patrol').text);
+    recorder.record(move(1, 0), start);
+    if (action) recorder.recordAction(action);
+    recorder.record(move(0, 1), start);
+    if (motor) recorder.recordMotorAction('motor_grade', { x: 3, z: 7 });
+    if (playbook) recorder.recordPlaybookUse(shelved.playbook);
+    recorder.record(move(0, 0), start);
+    recorder.record(move(0, 0), start);
+    return recorder.snapshot({ reason: 'secured', secured: true, waves: 10, timeAlive: 120, gold: 40 }, { ...recorder.eventLog(), kills: 0, gold: 40, wave: 10, economy: {} });
+  };
+  const verdict = async (runTape, index) => {
+    const store = new Map();
+    const kv = { get: async (key) => store.get(key) ?? null, put: async (key, value) => { store.set(key, value); } };
+    const tape = submittedRunTape(runTape);
+    const body = {
+      contractId: 'the-claim', epochId: 'epoch-1-frontier', score: { secured: true, waves: 10, timeAlive: 120, gold: 40, baseValue: 60 },
+      profileName: 'Probe', anonId: index.toString(16).padStart(32, '0'), difficulty: 'trail', seed: 'gold-rush', seedMode: 'live',
+      seedHash: sha256('gold-rush'), inputLogHash: sha256(JSON.stringify(runTape.inputLog)), tape,
+    };
+    const response = await onRequest({ request: new Request('http://127.0.0.1/api/standings', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body) }), env: { TELEMETRY: kv } });
+    const answer = await response.json();
+    return { status: response.status, answer: answer.error ?? (answer.stored ? 'stored' : JSON.stringify(answer)), grammar: validateTape(tape, 'the-claim', 'gold-rush', 'trail') ? 'valid' : 'null', client: validateRunTape(tape) ? 'valid' : 'null' };
+  };
+  const drop = (runTape, key) => { const copy = structuredClone(runTape); delete copy.inputLog[key]; return copy; };
+  const cases = [
+    ['A full reel: 1 playbook use + 1 motor action', reel({ playbook: true, motor: true })],
+    ['B plain reel: playbookUses [] and no motorActions', reel()],
+    ['C plain reel with its empty playbookUses dropped (live-seed control)', drop(reel(), 'playbookUses')],
+    ['D full reel, playbookUses dropped, motorActions kept', drop(reel({ playbook: true, motor: true }), 'playbookUses')],
+    ['E full reel, motorActions dropped, playbookUses kept', drop(reel({ playbook: true, motor: true }), 'motorActions')],
+    ['F plain reel + prospector_dispatch (Game.ts:8257-8261)', reel({ action: { type: 'prospector_dispatch', node: 'seam-1' } })],
+    ['G plain reel + context_action recover (Game.ts:5727)', reel({ action: { type: 'context_action', action: 'recover' } })],
+    ['H plain reel + pick_upgrade as Game.ts:7995-7998 records it (defaulted stripped)', reel({ action: { type: 'pick_upgrade', id: 'damage' } })],
+    ['I plain reel + lockstep agent_orders (MP slot actions, Game.ts:7969-7971)', reel({ action: { type: 'agent_orders', version: 1, orders: [], submissionId: 'probe-1' } })],
+    ['F2 = F with playbookUses dropped (twelve keys)', drop(reel({ action: { type: 'prospector_dispatch', node: 'seam-1' } }), 'playbookUses')],
+    ['G2 = G with playbookUses dropped (twelve keys)', drop(reel({ action: { type: 'context_action', action: 'recover' } }), 'playbookUses')],
+    ['H2 = H with playbookUses dropped (twelve keys)', drop(reel({ action: { type: 'pick_upgrade', id: 'damage' } }), 'playbookUses')],
+    ['I2 = I with playbookUses dropped (twelve keys)', drop(reel({ action: { type: 'agent_orders', version: 1, orders: [], submissionId: 'probe-1' } }), 'playbookUses')],
+  ];
+  const rows = [];
+  for (const [index, [label, runTape]] of cases.entries()) {
+    const actions = runTape.inputLog.entries.flatMap((entry) => entry.a.map((a) => a.type ?? a.kind));
+    rows.push({ label, keys: Object.keys(runTape.inputLog).length, actions: actions.join(',') || '-', ...(await verdict(runTape, index + 1)) });
+  }
+  for (const row of rows) console.log(`${row.label.padEnd(84)} keys=${row.keys} actions=${row.actions.padEnd(20)} door=${row.status} ${row.answer.padEnd(12)} validateTape=${row.grammar.padEnd(5)} validateRunTape=${row.client}`);
+} finally {
+  await vite.close();
+}
