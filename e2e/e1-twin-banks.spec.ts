@@ -222,6 +222,10 @@ test('north marker is not the run loss stake, south overrun still ends the run, 
 });
 
 test('seeded Twin Banks diagnostics are stable', async ({ page }) => {
+  // Two boots, each now waiting for the mounted sculpt's height source before it samples (see
+  // `determinismSnapshot`): the GLB pilot can take several seconds per boot on a loaded host, which
+  // the 30 s default was never sized for. A longer budget changes no assertion.
+  test.setTimeout(120_000);
   const errors = await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
   const first = await determinismSnapshot(page);
   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
@@ -268,12 +272,47 @@ async function assertFordRoute(page: Page, fordX: number, spawnX: number = fordX
   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);
 }
 
+/**
+ * WAIT FOR THE HEIGHT SOURCE BEFORE READING A HEIGHT (F-SEF2-5c, test-truth-2, 2026-09-25).
+ *
+ * `heroPos.y` is a VISUAL height: `Game.syncHeroVisualHeight` sets it every frame from
+ * `Terrain.visualY`, and on Twin Banks the source behind `visualY` changes twice after boot. The
+ * mounted pilot (`src/world/Terrain3dClaimPilot.ts`) installs the sculpt's baked grid when the terrain
+ * GLB lands, then the landmark walk surfaces when the landmark bodies land, and only after that second
+ * install does `publish()` write `data-terrain3d-pilot-state="ready"` with
+ * `data-terrain3d-pilot-height-source="baked-grid"` on the canvas. Before this wait the snapshot was
+ * taken at `frame > 12` and nothing else, so a boot that sampled while the pilot was still `loading`
+ * read the painted fallback: the red measured on main was hero y 0.02688779068849728 (fallback) against
+ * 0.3672938919067383 (mounted), one boot of each, and Astra reproduced it 10 of 10 once its A/B proxy
+ * changed the boot timing (`artifacts/sol/map-art-campaign-2/run-11/braid/e1-twin-banks/report.md`).
+ *
+ * So each boot waits for the pilot to leave `loading` (to `ready`, or to a terminal `lite`/`failed`/
+ * `off`), lets two more frames render so the hero has been re-seated on the final source, and puts
+ * the pilot state and height source INTO the snapshot: two boots of one seed are equal only if they
+ * sampled the same surface, and a boot that demoted to the painted map says so in the diff instead of
+ * surfacing as an unexplained y.
+ */
 async function determinismSnapshot(page: Page): Promise<unknown> {
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 12);
+  await page.waitForFunction(
+    () => {
+      const state = document.querySelector<HTMLCanvasElement>('#game-canvas')?.dataset.terrain3dPilotState;
+      return state !== undefined && state !== 'loading';
+    },
+    undefined,
+    { timeout: 60_000 },
+  );
+  const settledAt = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0);
+  await page.waitForFunction((from) => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) >= from + 2, settledAt);
   return page.evaluate(() => {
     const diagnostics = window.__THREE_GAME_DIAGNOSTICS__!;
+    const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
     return {
       contract: diagnostics.contract.activeId,
+      pilot: {
+        state: canvas?.dataset.terrain3dPilotState ?? null,
+        heightSource: canvas?.dataset.terrain3dPilotHeightSource ?? null,
+      },
       hero: diagnostics.heroPos,
       water: diagnostics.terrain.water
         ? {
