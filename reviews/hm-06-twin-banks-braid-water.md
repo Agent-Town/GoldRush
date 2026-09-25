@@ -140,11 +140,29 @@ contract, did not take the report's word):
 Curing it means teaching the **shared** `createChannelWater` a rect-river pool region — which is precisely
 the constructor the firewall forbade. The STOP was correct in law and in fact.
 
-**Corrective:** re-author HM-06 as a v2 master whose WHY states the corrected premise (the pilot path is
-already braided; the gap is the unrendered rect-river source box plus the fallback band) and whose firewall
-**lifts `createChannelWater`** scoped to masked water, while keeping every simulation and other-map
-prohibition. Not queued by this fire: `tasks/CODEX-WALL` suspends §2E refills, and the master carries a
-gate-side hold reserving the queue action to the attended session.
+**Corrective — and a collision, recorded honestly.** This fire wrote that re-author as a v2 master. While it
+did so, the **ATTENDED session was independently re-authoring the same master IN PLACE as "RUN 2"**
+(`tasks/hm-06-twin-banks-braid-water.md`, found as uncommitted dirt in main's tree mid-drain and committed by
+this fire as bookkeeping in `828c35d37`, never reverted — fire.md §2A). It reaches the same conclusion from
+the same report: lift `createChannelWater`, correct the premise.
+
+The attended session owns the re-authoring and the queueing, so **the fire's v2 draft was moved out of
+`tasks/` before this drain landed** — two competing masters for one leaf is how a lane gets dispatched the
+wrong one — and banked, unqueued, at `artifacts/s2680/hm-06-v2-draft-SUPERSEDED-by-attended-run-2.md` under
+the Retention Law. The HM-06 leaf stays single.
+
+**Two clauses in the superseded draft are NOT in RUN 2 and are worth folding in:**
+
+1. **F-2680-2 as a hard requirement.** RUN 2 keeps v1's scope item 2 verbatim ("if the bed already reads as a
+   braid … say so with a measurement"), which lets the runner satisfy it by quoting the contract. The run-1
+   runner explicitly warned those are authored audit values. The draft makes a fresh delivered-GLB
+   measurement mandatory.
+2. **The shared-constructor blast radius as a REPORTED self-check.** RUN 2's firewall forbids other maps from
+   moving and asks for identical captures; the draft additionally puts that proof in the self-check and the
+   End line, so the runner must report it rather than only be forbidden to break it.
+
+**This drain is what unblocks RUN 2:** `lane-usable --all` read lane-c as **HOLDS** on four lane-only paths,
+so the lane could not be safely refreshed for a re-dispatch until they merged. They now have.
 
 ### F-2680-2 — the no-sculpt decision rests on authored audit values, not a fresh measurement. OPEN, carried into the re-author.
 

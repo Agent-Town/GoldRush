@@ -1,3 +1,28 @@
+> **SUPERSEDED, NEVER QUEUED — banked as evidence, not as a master.**
+>
+> The s2680 fire drained the HM-06 run-1 firewall stop and re-authored the master as this v2 draft.
+> While it did so, the ATTENDED session was independently re-authoring the SAME master IN PLACE as
+> RUN 2 (tasks/hm-06-twin-banks-braid-water.md, committed in 828c35d37), reaching the same
+> conclusion: lift the shared createChannelWater constructor and correct the premise. The attended
+> session owns the re-authoring and the queueing, so this draft was moved OUT of tasks/ before the
+> drain landed — two competing masters for one leaf is how a lane gets dispatched the wrong one.
+>
+> It is kept (Retention Law) because TWO CLAUSES in it are not in the attended RUN 2 text and are
+> worth folding in:
+>
+> 1. SCOPE ITEM 4 / F-2680-2 — RUN 2 keeps v1 scope item 2 verbatim (if the bed already reads as a
+>    braid, say so with a measurement), but the run-1 runner flagged the contract bed figures
+>    (north -0.4596 m, south -0.3507 m, plait +0.5234 m) as AUTHORED AUDIT VALUES, NOT a fresh
+>    delivered-GLB measurement, and asked that they be remeasured before the no-sculpt branch is
+>    accepted. The draft below makes that measurement mandatory rather than optional.
+> 2. THE SHARED-CONSTRUCTOR BLAST RADIUS, AS A SELF-CHECK — RUN 2 firewall does say every maskless
+>    tile keeps its construction, proven by the other maps captures staying identical. The draft
+>    below additionally puts that proof in the self-check and the End line, so the runner REPORTS
+>    it rather than only being forbidden to break it.
+>
+> Nothing else here should be actioned: RUN 2 is the live master.
+
+---
 # Task hm-06-twin-banks-braid-water-v2: the mask's UNRENDERED regions get a surface, and the two band tests are re-pinned to the braid (LANE-C, Astra, commit prefix "feat:"; a store branch `astra/hm-06-braid` for the terrain and landmark sources if the sculpt needs a cut)
 CODEX: model=gpt-6-astra
 
