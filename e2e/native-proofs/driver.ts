@@ -539,9 +539,9 @@ const KIT: Array<{ id: string; dx: number; dz: number }> = [
   { id: 'turret', dx: -5, dz: 3 },
 ];
 
-export function nativeProof(id: string) {
+export function nativeProof(id: string, run = 1) {
   const contract = BOARD_CONTRACTS.find(entry => entry.id === id)!;
-  const ARTIFACT_ROOT = path.resolve('artifacts/sol/play-proofs/run-1', id);
+  const ARTIFACT_ROOT = path.resolve(`artifacts/sol/play-proofs/run-${run}`, id);
 
     test(`${contract.id} plays to its secure wave, banks, reloads and returns to the board`, { tag: '@slow' }, async ({ page }, testInfo) => {
       test.setTimeout(PLAY_BUDGET_MS + BOOT_TIMEOUT_MS + 180_000);
@@ -715,22 +715,22 @@ export function nativeProof(id: string) {
             continue;
           }
 
-          if (contract.id === 'e3-blackout-ridge' && !['capacitor-west', 'capacitor-east'].every(id => (row.powerBanksPeak[id] ?? 0) > 0)) {
-            const cut = now.power.nodes.filter(n => n.kind === 'relay' && !n.online)
-              .sort((a, b) => Math.hypot(a.x - now.hero.x, a.z - now.hero.z) - Math.hypot(b.x - now.hero.x, b.z - now.hero.z))[0];
-            if (cut) {
-              const frame = now.defences.find(b => b.id === 'sentry_beacon' && Math.hypot(b.x - cut.x, b.z - cut.z) < 2.5);
-              if (frame && await fund(page, row, frame.repairCost, Math.min(deadline, Date.now() + 30_000), fords, unreachable)) {
-                await walkTo(page, row, frame.x, frame.z, 1.25);
-                const before = (await read(page))?.repairs ?? 0;
-                for (let tick = 0; tick < 40; tick++) {
-                  await takeUpgrades(page, row);
-                  const repaired = await read(page);
-                  if (!repaired || repaired.runState === 'dead' || repaired.secured || repaired.repairs > before) break;
-                  await page.waitForTimeout(150);
-                }
-                row.notes.push(`trunk ${cut.id} repair: ${(await read(page))?.repairs}, before=${before}`);
+          if (contract.id === 'e3-blackout-ridge') {
+            // Restore paid banks as well as the trunk; a connected wreck stores nothing.
+            const broken = now.defences.filter(b =>
+              (b.id === 'capacitor_bank' || b.id === 'sentry_beacon') && b.hp < b.maxHp * 0.8,
+            ).sort((a, b) => a.x - b.x)[0];
+            const reserve = now.defences.reduce((sum, b) => sum + b.repairCost, 10);
+            if (broken && await fund(page, row, reserve, Math.min(deadline, Date.now() + 30_000), fords, unreachable)) {
+              await walkTo(page, row, broken.x, broken.z, 1.25);
+              const before = (await read(page))?.repairs ?? 0;
+              for (let tick = 0; tick < 40; tick++) {
+                await takeUpgrades(page, row);
+                const repaired = await read(page);
+                if (!repaired || repaired.runState === 'dead' || repaired.secured || repaired.repairs > before) break;
+                await page.waitForTimeout(150);
               }
+              row.notes.push(`repair ${broken.id} ${broken.x},${broken.z}: ${(await read(page))?.repairs}, before=${before}; storage=${JSON.stringify(row.powerBanksPeak)}`);
             } else await page.waitForTimeout(200);
             continue;
           }
