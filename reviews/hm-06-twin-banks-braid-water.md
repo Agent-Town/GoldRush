@@ -184,9 +184,20 @@ fire-side measurement"), while the historical record in `logs/guard-stats.jsonl`
 **every fire drain from now on inherits an un-completable leg** and must spend 15 minutes to learn nothing. A red
 that is structurally guaranteed teaches a fire to wave reds through — the exact habit the gate exists to prevent.
 
+**And the cap LEAKS A PROCESS, which makes it worse than a wasted 15 minutes.** `run-guards` kills the `npm`
+wrapper it spawned, but the real test runner survives: `ps` showed `node scripts/run-node-guards.mjs …` at
+**PPID 1**, still alive **25 minutes** after its parent was SIGTERM'd (with its own `node --test` child). So
+every capped run orphans a test process that outlives the fire. On a shell whose CPU ceiling is already the
+stated reason concurrency was forced to 1 (F-1409-1), accumulating orphans is self-reinforcing: each one makes
+the next run slower, which makes the next cap more likely. Not killed by this fire — it was idle at 0.0% CPU
+and reaping a process mid-write is not worth the risk at handoff time — but an attended session should reap
+strays before trusting any fire-side timing measurement, and the cure below should make the kill
+process-group-wide.
+
 **Recommended cure (owner/attended call, not taken by this fire):** either raise the cap for this one guard, or
-measure the fire-side concurrency that F-1409-1 explicitly left pending and lift it from 1, or split the suite.
-Whichever is chosen, the guard-stats record now holds two dated 900s data points to measure against.
+measure the fire-side concurrency that F-1409-1 explicitly left pending and lift it from 1, or split the suite —
+and in all three cases kill the process GROUP, not just the wrapper. Whichever is chosen, the guard-stats record
+now holds two dated 900s data points to measure against.
 
 ### Non-findings, recorded so nobody re-opens them
 
