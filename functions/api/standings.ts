@@ -1736,14 +1736,51 @@ function validTapeAction(value: unknown, stored = false): boolean {
     && (value.choice === 'bank' || value.choice === 'rush');
   if (value.type === 'context_action') {
     if (value.action === 'fund') return hasOnlyKeys(value, new Set(['type', 'action']));
+    // F-DTG1-1 (door-tape-grammar-2): the probe recovery (Game.ts:5727), targetless like `fund`, as the client writes it.
+    if (value.action === 'recover') return hasOnlyKeys(value, new Set(['type', 'action']));
     return (value.action === 'upgrade' || value.action === 'demolish') && hasOnlyKeys(value, new Set(['type', 'action', 'target']))
       && isRecord(value.target) && hasOnlyKeys(value.target, new Set(['id', 'index'])) && token(value.target.id)
       && integerInRange(value.target.index, 0, 10_000) !== null;
   }
+  // F-DTG1-1 (door-tape-grammar-2): every solo dispatch of the Prospector (Game.ts:8256-8262), and a seated agent
+  // rider's orders on the lockstep wire (SeatedLockstepSim.submitOrders), each exactly as the client normalizes it.
+  if (value.type === 'prospector_dispatch') return hasOnlyKeys(value, new Set(['type', 'node'])) && cleanedToken(value.node, 64);
+  if (value.type === 'agent_orders') return validSeatOrders(value, stored);
   if (value.type === 'set_agent_rung') return hasOnlyKeys(value, new Set(['type', 'level', 'granted']))
     && integerInRange(value.level, 0, 3) !== null && typeof value.granted === 'boolean';
   return value.type === 'set_agent_ability' && hasOnlyKeys(value, new Set(['type', 'ability', 'granted']))
     && token(value.ability) && typeof value.granted === 'boolean';
+}
+
+// The client's `cleanToken` (LockstepClient.ts) trims, then cuts to `maxLength`. The door takes only a value
+// it would keep exactly as it is, so what the county stores is what the client reads back.
+function cleanedToken(value: unknown, maxLength: number): value is string {
+  return typeof value === 'string' && value.length > 0 && value.length <= maxLength && value.trim() === value;
+}
+
+// A seated agent rider's orders as the lockstep wire carries them (LockstepClient.ts `normalizeAction`):
+// version 1, a submission id of at most 96 characters, the orders within the wire's 3 KiB and, at the door,
+// the standing-order grammar. At read (`stored`) the orders are judged for SHAPE only and
+// `tapeGrammarRefusal` judges their verbs, exactly as for a `kind: 'agent_orders'` entry (ADR-005).
+const SEAT_ORDERS_MAX_BYTES = 3 * 1024;
+function validSeatOrders(value: JsonRecord, stored: boolean): boolean {
+  if (!hasOnlyKeys(value, new Set(['type', 'version', 'orders', 'submissionId'])) || value.version !== 1
+    || !cleanedToken(value.submissionId, 96) || jsonByteLength(value.orders) > SEAT_ORDERS_MAX_BYTES) return false;
+  return stored ? ordersShape(value.orders) : validateStandingOrders(value.orders).ok;
+}
+
+// The shape a stored order list keeps whatever its verbs (as the `stored` arm for `kind: 'agent_orders'`).
+function ordersShape(orders: unknown): boolean {
+  return Array.isArray(orders) && orders.length <= 32 && orders.every((order) => isRecord(order) && typeof order.verb === 'string');
+}
+
+// The client's `jsonBytes` (LockstepClient.ts): the UTF-8 bytes of the JSON, unbounded when it cannot serialize.
+function jsonByteLength(value: unknown): number {
+  try {
+    return new TextEncoder().encode(JSON.stringify(value)).byteLength;
+  } catch {
+    return Number.POSITIVE_INFINITY;
+  }
 }
 
 function tapeMatchesScore(tape: JsonRecord, score: ScoreRow): boolean {

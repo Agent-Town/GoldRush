@@ -33,8 +33,9 @@ try {
   const { CONTRACT_BUNDLES, MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, parsePlaybookText, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
   // The browser's own recorder, playbook shelf and intent seam: the door is judged against a reel a browser writes.
   const { PlaybookRecorderSession } = await vite.ssrLoadModule('/src/playbook/PlaybookSession.ts');
-  const { intentsFromLockstepInput, lockstepInputFromIntents } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
-  const recorderKit = { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape };
+  const { intentsFromLockstepInput, lockstepInputFromIntents, normalizeLockstepAction } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
+  const { validateStandingOrders } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
+  const recorderKit = { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape, normalizeLockstepAction, validateStandingOrders };
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
   const { onRequest: onRequestReassay } = await vite.ssrLoadModule('/functions/api/standings/reassay.ts');
@@ -51,6 +52,7 @@ try {
     await checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, CONTRACT_BUNDLES, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_INTENTS, MAX_JSON_BYTES);
     checkTapeBuildMetadata(validateTape);
     await checkRecorderReel(onRequest, validateTape, validateRunTape, runTapeEnvelopeForContract, recorderKit);
+    await checkRecorderVerbs(onRequest, validateTape, validateRunTape, recorderKit);
     await checkEngineHashReel(onRequest);
     await checkReplayableBoard(onRequest);
     await checkLineageReassay(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
@@ -440,6 +442,90 @@ async function checkRecorderReel(onRequest, validateTape, validateRunTape, runTa
     equal(validateTape(capped, 'the-claim', 'gold-rush', 'trail'), null, `the grammar refuses ${envelope.maxEntries + 1} ${field}`);
   }
   console.log(`recorder reel ${backend} checks (${checks - before})`);
+}
+
+// F-DTG1-1 (door-tape-grammar-2, 2026-09-25). After grammar-1 the door still refused three action verbs the
+// browser recorder writes: `prospector_dispatch` on every solo dispatch (Game.ts:8256-8262), `context_action`
+// `recover` (Game.ts:5727), and a seated agent rider's `agent_orders`, recorded in its slot's stream
+// (Game.ts:7975-7986) in the shape `SeatedLockstepSim.submitOrders` builds. The reels are the REAL recorder's,
+// as in `checkRecorderReel`, and the real handler judges them.
+async function checkRecorderVerbs(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  const kv = makeKv();
+  const seatOrders = kit.normalizeLockstepAction({
+    type: 'agent_orders', version: 1, submissionId: 'seat-1',
+    orders: kit.validateStandingOrders([{ verb: 'HARVEST', seam: 'gold-seam-2' }, { verb: 'SET_WEAPON', weapon: 'blast' }]).orders,
+  });
+  const reels = [
+    ['a solo prospector dispatch', recorderReel(kit, '3dd7'.repeat(8), { dispatch: 'gold-seam-2' }), { type: 'prospector_dispatch', node: 'gold-seam-2' }],
+    ['a probe recovery', recorderReel(kit, '4dd7'.repeat(8), { recover: true }), { type: 'context_action', action: 'recover' }],
+    ["a seated agent rider's orders", recorderReel(kit, '5dd7'.repeat(8), { seatOrders }), seatOrders],
+  ];
+  const actionsOf = (log) => [...log.entries, ...log.streams.flatMap((stream) => stream.entries)].flatMap((entry) => entry.a);
+  equal(reels.map(([, { runTape }, verb]) => actionsOf(runTape.inputLog).filter((action) => JSON.stringify(action) === JSON.stringify(verb)).length), [1, 1, 1],
+    'each reel carries its verb exactly once (a solo dispatch reaches the recorder twice and is kept once)');
+  equal(reels.map(([, , verb]) => kit.normalizeLockstepAction(verb)), reels.map(([, , verb]) => verb),
+    "each verb is already in the client normalizer's own shape, which is the shape the recorder writes");
+  ok(reels.every(([, { body }]) => body.tape), 'every reel fits the byte envelope, so every body carries its tape');
+  const answers = [];
+  for (const [, { body }] of reels) answers.push(await call(onRequest, 'POST', '/api/standings', body, kv));
+  equal(answers.map(({ status, body }) => [status, body.stored ?? body.error]), [[200, true], [200, true], [200, true]],
+    `the door accepts the recorder's reels with a dispatch, a recovery and a seated rider's orders: ${JSON.stringify(answers.map(({ body }) => body))}`);
+  const stored = JSON.parse(await kv.get(KEY));
+  for (const [label, { runTape }] of reels) {
+    equal(stored.find((row) => row.tape?.id === runTape.id)?.tape.inputLog, runTape.inputLog, `the county stores the reel with ${label} exactly as the recorder wrote it`);
+    const watched = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${runTape.id}`, undefined, kv);
+    const replayable = validateRunTape(watched.body.reel);
+    ok(replayable, `the reel with ${label} reads back through ?reel= and satisfies the client's validateRunTape`);
+    equal([replayable?.inputLog.entries, replayable?.inputLog.streams], [runTape.inputLog.entries, runTape.inputLog.streams],
+      `the reel with ${label} keeps its actions intact through the round trip`);
+  }
+  const solo = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
+  const posse = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&party=2', undefined, kv);
+  equal([solo.body.board.length, posse.body.board.length], [2, 1], 'the two solo reels rank on the solo board and the ridden one on the two-rider board');
+
+  // NOTHING LOOSENED. Every mutation re-hashes the input log, so each refusal belongs to the grammar alone.
+  const refusalKv = makeKv();
+  const [dispatchReel, recoverReel, seatReel] = reels.map(([, reel]) => reel);
+  const verbIn = (log, type) => actionsOf(log).find((action) => action.type === type && (type !== 'context_action' || action.action === 'recover'));
+  const refused = async (label, reel, type, mutate, { atTheDoor = false, stored: atRead = false } = {}) => {
+    const candidate = structuredClone(reel.body);
+    mutate(verbIn(candidate.tape.inputLog, type));
+    candidate.inputLogHash = createHash('sha256').update(JSON.stringify(candidate.tape.inputLog)).digest('hex');
+    equal(validateTape(candidate.tape, 'the-claim', 'gold-rush', 'trail', atRead), null, `the tape grammar${atRead ? ' at read' : ''} refuses ${label}`);
+    if (!atTheDoor) return;
+    const answer = await call(onRequest, 'POST', '/api/standings', candidate, refusalKv);
+    equal([answer.status, answer.body.error], [400, 'bad_payload'], `the door refuses ${label} as bad_payload`);
+  };
+  await refused('a verb no grammar knows', dispatchReel, 'prospector_dispatch', (action) => { action.type = 'prospector_recall'; }, { atTheDoor: true });
+  await refused('a dispatch with an unknown key', dispatchReel, 'prospector_dispatch', (action) => { action.target = { id: 'sluice', index: 0 }; }, { atTheDoor: true });
+  await refused('a recovery with an unknown key', recoverReel, 'context_action', (action) => { action.target = { id: 'sluice', index: 0 }; }, { atTheDoor: true });
+  await refused("a seated rider's orders naming a retired verb", seatReel, 'agent_orders', (action) => { action.orders = [{ verb: 'HOLD', pos: { x: 0, z: 30 } }]; }, { atTheDoor: true });
+  await refused('a dispatch with an empty node', dispatchReel, 'prospector_dispatch', (action) => { action.node = ''; });
+  await refused('a dispatch with a 65-character node', dispatchReel, 'prospector_dispatch', (action) => { action.node = 'n'.repeat(65); });
+  await refused('a dispatch whose node carries edge whitespace', dispatchReel, 'prospector_dispatch', (action) => { action.node = ' gold-seam-2 '; });
+  await refused('a dispatch whose node is only whitespace', dispatchReel, 'prospector_dispatch', (action) => { action.node = '   '; });
+  await refused('a dispatch whose node is not a string', dispatchReel, 'prospector_dispatch', (action) => { action.node = 2; });
+  await refused('a targetless context action other than fund or recover', recoverReel, 'context_action', (action) => { action.action = 'recall'; });
+  await refused("a seated rider's orders with an unknown key", seatReel, 'agent_orders', (action) => { action.note = 'x'; });
+  await refused("a seated rider's orders on wire version 2", seatReel, 'agent_orders', (action) => { action.version = 2; });
+  await refused("a seated rider's orders with an empty submission id", seatReel, 'agent_orders', (action) => { action.submissionId = ''; });
+  await refused("a seated rider's orders with a 97-character submission id", seatReel, 'agent_orders', (action) => { action.submissionId = 's'.repeat(97); });
+  await refused("a seated rider's orders whose submission id carries edge whitespace", seatReel, 'agent_orders', (action) => { action.submissionId = ' seat-1 '; });
+  const heavy = Array.from({ length: 32 }, () => ({ verb: 'HARVEST', seam: 's'.repeat(80) }));
+  ok(kit.validateStandingOrders(heavy).ok && Buffer.byteLength(JSON.stringify(heavy)) > 3 * 1024, 'the heavy orders are grammatical and over the 3 KiB wire limit, so the bytes alone decide');
+  await refused("a seated rider's orders over the 3 KiB wire limit", seatReel, 'agent_orders', (action) => { action.orders = heavy; });
+  await refused("a seated rider's 33 orders", seatReel, 'agent_orders', (action) => { action.orders = Array.from({ length: 33 }, () => ({ verb: 'SET_WEAPON', weapon: 'rig' })); });
+  await refused("a seated rider's orders that are not a list", seatReel, 'agent_orders', (action) => { action.orders = {}; });
+  // At read a seated rider's orders are judged for SHAPE only (ADR-005), as a stored `kind` entry's are, so a verb
+  // retired after acceptance leaves the row readable and `tapeGrammarRefusal` retires it; the shape stays required.
+  const heldSeat = structuredClone(seatReel.body.tape);
+  verbIn(heldSeat.inputLog, 'agent_orders').orders = [{ verb: 'HOLD', pos: { x: 0, z: 30 } }];
+  ok(validateTape(heldSeat, 'the-claim', 'gold-rush', 'trail', true), "at read the grammar keeps a seated rider's orders that name a since-retired verb");
+  await refused("a seated rider's orders that are not a list", seatReel, 'agent_orders', (action) => { action.orders = {}; }, { stored: true });
+  await refused("a seated rider's orders holding a non-order", seatReel, 'agent_orders', (action) => { action.orders = [1]; }, { stored: true });
+  await refused("a seated rider's orders over the 3 KiB wire limit", seatReel, 'agent_orders', (action) => { action.orders = heavy; }, { stored: true });
+  console.log(`recorder verbs ${backend} checks (${checks - before})`);
 }
 
 async function checkEngineHashReel(onRequest) {
@@ -1550,7 +1636,7 @@ function currentEraTape(runTape) {
 // (Game.ts 8104-8143): `snapshot(outcome, eventLog)`, then `submittedRunTape`, then the body around it.
 // The playbook is recorded and read back off the shelf exactly as a named playbook is before its use
 // (`PlaybookRecorderSession.finish`, then `parsePlaybookText`, Game.ts:3900-3907).
-function recorderReel(kit, anonId, { playbook, motor }) {
+function recorderReel(kit, anonId, { playbook = false, motor = false, dispatch = null, recover = false, seatOrders = null } = {}) {
   const { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape } = kit;
   const [contract, seed, difficulty] = ['the-claim', 'gold-rush', 'trail'];
   const start = { x: 0.25, z: 12.5 };
@@ -1571,10 +1657,18 @@ function recorderReel(kit, anonId, { playbook, motor }) {
   recorder.record(move(1, 0), start);
   recorder.record(move(1, 0), { x: 0.5, z: 12.5 });
   recorder.recordAction({ type: 'place_build', id: 'sluice', position: { x: 2, z: 10 }, rotationSteps: 1 });
-  recorder.record(move(0, 1), { x: 0.75, z: 12.5 });
+  // A solo dispatch reaches the recorder twice, as in Game.ts: `recordRunTapeAction` (:8261) and the tick's
+  // own action list (:2982-2984, :7969-7974). The recorder keeps one (RunTape.ts `record`, the routed dedupe).
+  const dispatched = dispatch ? [{ type: 'prospector_dispatch', node: dispatch }] : [];
+  dispatched.forEach((action) => recorder.recordAction(action));
+  recorder.record(move(0, 1), { x: 0.75, z: 12.5 }, dispatched);
   if (motor) recorder.recordMotorAction('motor_grade', { x: 3.14159, z: 7.5 });
   if (playbook) recorder.recordPlaybookUse(shelved.playbook);
+  if (recover) recorder.recordAction({ type: 'context_action', action: 'recover' });
   recorder.record(move(0, 0), { x: 0.75, z: 12.75 });
+  // A seated agent rider's orders arrive among its own slot's actions and land in that slot's stream
+  // (Game.ts:7975-7986), in the shape `SeatedLockstepSim.submitOrders` builds.
+  if (seatOrders) recorder.recordAdditional(1, move(0, 0), { x: 1, z: 13 }, [seatOrders]);
   recorder.record(move(-0.5, 0.25), { x: 0.75, z: 12.75 });
   if (motor) recorder.recordMotorAction('motor_haul', { x: 4, z: 8 });
   recorder.record(move(0, 0), { x: 0.625, z: 12.875 });
@@ -1597,6 +1691,8 @@ function recorderReel(kit, anonId, { playbook, motor }) {
       seedMode: 'live',
       seedHash: sha256(seed),
       inputLogHash: sha256(JSON.stringify(runTape.inputLog)),
+      // A ride with a seated agent rider is a posse (DeclaredStack.ts `multiplayerStandingParty`).
+      ...(seatOrders ? { party: { riderCount: 2, riders: [{ name: 'Recorder Reel' }, { name: 'Order Rider', stack: {} }] } } : {}),
       ...(submittedTape ? { tape: submittedTape } : {}),
     },
   };
