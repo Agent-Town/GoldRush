@@ -1,0 +1,39 @@
+branch sol/map-art-campaign-2 tip 4b05c78ca 2026-09-25 02:59Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/hm06.json
+scratch store at the store's main 5793a96
+chain base 2235b67a4
+merged 1920cfbbe
+cure: F-TB-1 row closed
+cure: HM-06 heading marked landed
+cure hm06: committed 016b2f0c5
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97706953 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34349803 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (288.9s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 03:10Z: e2e/e1-twin-banks.spec.ts e2e/beauty-twin-banks.spec.ts e2e/twin-banks-never-wedged.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/agent-view.spec.ts
+e2e: rc=1   2 failed   2 skipped   66 passed (5.6m)  03:15Z
+1) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+2) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+battery start 03:15Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1010 ℹ fail 3 ℹ skipped 5  03:23Z
+✖ all 160 scripts/*.test.mjs fixture owners remove their temp directories (176816.924166ms)
+✖ rotation registry stays outside the engine identity corpus (581.904291ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (157.773542ms)
+dirt after battery: 0
+hm06-PREP-DONE
+verdict: clean
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+pin #61 `c63def1b`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/hm-06-twin-banks-braid-water.md
+bookkeeping — needs hands
+RESUME 2026-09-25 04:00Z: chain 961f07fe2, merge 1920cfbbe, continuing at the pin
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+pin #61 `c63def1b`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/hm-06-twin-banks-braid-water.md

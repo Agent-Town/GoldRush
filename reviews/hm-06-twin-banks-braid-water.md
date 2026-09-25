@@ -1,224 +1,36 @@
-# hm-06-twin-banks-braid-water — the braid's water surface (HM-06, F-TB-1 (b))
+# Drain review: `hm-06-twin-banks-braid-water`, the Twin Banks water follows the braid the owner ratified (Astra run 2; owner 2026-09-24 (5)(b), 2026-09-25 twin banks; F-TB-1)
 
-- **Slice:** `tasks/hm-06-twin-banks-braid-water.md` (owner 2026-09-24 ruling F-TB-1 "(5) (b)"; queued 2026-09-25 on the owner's word "twin banks")
-- **Branch:** `sol/map-art-campaign-2` (lane-c, Astra / gpt-6-astra)
-- **Tip gated:** `d4c0207c3` "feat: record HM-06 braid constructor firewall blocker"
-- **Base:** `01d2b2e52` (the lane's merge-base with main at run time)
-- **Drained by:** s2680 fire, 2026-09-25, in the detached gate worktree `worktrees/gate-s2680`
+**Branch** `sol/map-art-campaign-2` at `4b05c78ca` · **merge** `1920cfbbe` · engine hash #61 `c63def1b` · drained attended 2026-09-25 04:00Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `hm06`).
 
-## VERDICT: MERGE — as a FIREWALL STOP, not as an implementation.
+**Verdict: LANDED.**
 
-The requested feature is **NOT implemented and does not claim to be**. What lands is the runner's
-finding, its evidence, and an ordered remaining list. `READY-FOR-GATES: NO` is written in the
-report itself. This is the firewall working exactly as designed (CLAUDE.md §4.5: "Codex reporting
-adjacent problems is good; fixing out of scope is a violation"), and it is a **real diff with a
-written WHY**, so it is not a Silent No-Op (Mistake #1).
+### What it does
+Twin Banks' simulation has been braided since the mask reached the production contract on 2026-09-12 (two 3 m channels, a dry plait, the two fords as the only crossings), and the owner ratified the braid on 2026-09-24 ((5) (b)). Run 1 of this master stopped at the firewall in three minutes with the measurement that made run 2 right: the mounted-GLB pilot already drew two animated ribbons, a confluence mesh and a ford sheet from the mask, while the single 15.6 m band survived only in the fallback surface, and the production mask's source rectangle had no pool because the shared water constructor took only polyline rivers and rect fords. Run 2, with that constructor inside the firewall, makes the production water mask the authority for both paths: the pilot's ribbons read it, the guessed interior confluence span becomes the declared 4 x 4 m source pool inside the existing confluence draw (no new draw, no new light), the fords keep their shallow draws and animation, and the fallback surface builds the two piecewise-linear bands with round joins, the source rectangle and the ford shapes from the same mask, so the plait shows dry ground instead of a plane. Every tile without a mask keeps its construction. No sculpt cut or re-bake was needed: fresh samples from the delivered GLB read the north bed at -0.452 m, the south at -0.316 m and the plait at +0.259 m, the bars grounded on it. Where the player sees it: on Twin Banks the water sits where the ground is wet, the plait between the channels is walkable dry ground, and the spring shows as a pool.
 
-## What it does
+### Astra's measurements (its report under `artifacts/sol/map-art-campaign-2/run-11/braid/e1-twin-banks/`)
+Plain boards at 1280 and 390 before and after, same seed and viewport, no debug query; paired hardware performance over three interleaved runs per arm and width, desktop p95 median 9.0 to 8.7 ms, phone within the 15 percent bar; first-town payload 34,346,281 to 34,349,803 B (+3,522 B, no asset bytes); `null-floor-anchors --check` 83 of 83 including all three Twin Banks seeds; the five dev specs on both projects 52 passed, 2 skipped, 2 failed, both failures pre-existing with controls; the node battery on Node 26 green except the four pre-pin hash rows the drain's pin retires.
 
-The master told the runner to make the Twin Banks water surface follow the `waterMask` that already
-rules the simulation, touching only `Terrain3dClaimPilot.ts`'s "Twin Banks water entry". The runner
-found the fix cannot live there: the mask-driven source-box pool needs changes to the **shared**
-`createChannelWater` constructor, outside TOUCH-ONLY. It stopped before writing any renderer or test
-change, and recorded why, with source coordinates and a mask comparison.
+### Merge classification
+Code: `src/world/Terrain.ts` (the fallback water surface from the mask), `src/world/Terrain3dClaimPilot.ts` (the constructor reads the production mask, the source pool, the Twin Banks entry). Tests: `e2e/e1-twin-banks.spec.ts` (the centre zone is the dry plait, two channel samples read river) and `e2e/beauty-twin-banks.spec.ts` (the sim-truth block asserts the mask's truth, the render assertions the two ribbons, the frame budget unchanged). Ledger: the Twin Banks row of the campaign status doc (resolved by row key at the drain), the campaign report's run-11 sections, the evidence under `run-11/braid/`. No contract change (the ruling ratifies what is there), no `Terrain.sample` or sim rule, no store commit.
 
-It also **corrects the master's premise**, which is the most valuable thing in the merge (see F-2680-1).
+### Findings
+- **F-TB-1 (closed):** the two tests that pinned the single band are re-pinned to the braid; the E1 control reds of 2026-09-24 on `e1-twin-banks` and `beauty-twin-banks` are green.
+- **F-E1T-1 (open, the test owner's, main's):** `beauty-twin-banks` "the reed field is alive in a still frame" fails on baseline and candidate alike since the riparian cards landed; outside this run's two authorized tests.
+- **F-SEF2-5c (open, the test owner's):** the seeded-diagnostics determinism test lacks a mounted-height readiness wait and reds intermittently on both arms.
+- **F-HUD-1 (held as in run 10):** the paired-bank entry composition is camera work, not this repair.
+- **F-HM06-1 (noted):** the run's first attempt cost 78k tokens to discover a constructor outside its firewall; the master now names conditional lifts explicitly (F-1082-1), and the reader of a held-maps master should expect the mounted and fallback paths to differ.
 
-## Evidence
-
-| Gate | Result |
-|---|---|
-| Diff is real (not a no-op) | 4 files, **+210 / −1** |
-| Diff shape | `artifacts/**` ×3, `reviews/*.md` ×1. **Zero** `src/`, `e2e/`, `scripts/`, `tasks/`, `specs/`, `assets/`, `package.json` |
-| Firewall compliance | **CLEAN.** All 4 paths are inside the master's TOUCH-ONLY (campaign report, status doc row, `run-11/braid/**`). Nothing in the NO list was touched |
-| Runner pre-flight (its own, reported) | `npm install` exit 0; `npm run build` (tsc + Vite + asset diet) exit 0; tracked tree clean before and after |
-| Store | detached at store main `5793a967d`, clean; branch `astra/hm-06-braid` cut at that commit; **no store commit, nothing to push** |
-| Runtime/asset bytes changed | **0** — no engine-hash input touched, so no era pin is measured or moved |
-| `run-guards --changed-since f9c9780ed` (merged tree, gate worktree) | see GATE BATTERY below |
-| `npm run test:ledger-guards` | run as the fire's last act, before the clearing commit (§4 / F-E1T-2) |
-
-**Gates deliberately NOT run, and why:** the master's self-check names tsc, both builds, six e2e specs
-on both projects, boot probes, draw counts, frame p95 and the E1 payload. Those gate *code*. This diff
-contains **no executable or config bytes** — no `src/`, `e2e/`, `scripts/`, `assets/` or `package.json`
-— so running them would gate the wrong object and attribute any red to an unrelated cause. The battery
-actually owed is the one the factory derives from the diff (`run-guards --changed-since`), which is what
-ran. The master's suites are **owed by the implementation run, not by this finding**, and the remaining
-list carries them.
-
-## GATE BATTERY (merged tree, `worktrees/gate-s2680`)
-
-`node scripts/run-guards.mjs --changed-since f9c9780ed` selected **base gate only** — "(no path rule matched)",
-which is itself evidence about the diff's shape: no path rule in the factory's own mapper fires on it.
-
-| guard | rc | time | verdict |
-|---|---|---|---|
-| `test:power-budget` | 0 | 0s | PASS (p95 = 0.375 ms) |
-| `test:task-guards` | 0 | 0s | PASS |
-| `test:citations` | 0 | 2s | PASS |
-| `test:gate-callers` | 0 | 0s | PASS |
-| `test:node-guards` | `signal:SIGTERM` | 900s | **RED — pre-existing, attributed below** |
-
-**4/5. The one red is NOT this merge's, and it was attributed by a control, not by assumption:**
-
-| run | tree | result |
-|---|---|---|
-| gated | merged, `worktrees/gate-s2680` @ `409a4ea91` | `signal:SIGTERM` @ **900s** |
-| **control** | **clean PRE-MERGE main, primary checkout** | `signal:SIGTERM` @ **900s** |
-
-The two fingerprints are **identical**. `test:node-guards` does not fail an assertion — it is **killed by
-`run-guards`'s own 15-minute cap** (`timeout: 15 * 60 * 1000`) while still emitting passing tests.
-
-Four further legs, because a timed-out suite returns no content verdict on either side and I did not want the
-attribution resting on the timeout alone:
-
-1. **§3.1's own trigger for `test:node-guards` is not met.** The law runs it "when the diff touches `src/sim/`,
-   `src/systems/`, `src/entities/` or anything the engine hash covers". This diff touches none of them; the suite
-   ran only because it sits in `run-guards`'s unconditional base gate.
-2. **The guards that DO read the trees this diff touches all pass on the merged tree.** 36 of the 174 node-guard
-   files reference `artifacts/` or `reviews/`, so this was checked rather than assumed — the seven that actually
-   audit those trees were run individually: `review-evidence-audit` 6/0, `evidence-budget` 14/0, `evidence-readers`
-   17/0, `evidence-archive-buckets` 10/0, `master-shipped-classifier` 12/0, `backlog-split-closed` 13/0,
-   `same-game-audit` 6/0 — **78 assertions, 0 failures.**
-3. **`scripts/evidence-budget.mjs` on the merged tree:** PASS (advisory) — 26,385 files / 8,658.1 MB tracked under
-   `artifacts/`; no ceiling is banked yet, so it cannot refuse a drain.
-4. **The guards that judge my OWN new files** (this review and the v2 master, which the base gate ran before they
-   existed) were re-run after writing them: `test:task-guards`, `test:citations`, `test:gate-callers` all PASS.
-
-**Caveat, recorded rather than hidden:** the control's `head` reads `41ef255c4` because I refreshed the lock
-stamp mid-run to stop it going stale at 45 minutes. The code state was identical to `f9c9780ed` — only
-`STATUS.md` line 1 differed — but three node-guard files (`desk-declaration-guard`, `law-pointer-guard`,
-`status-rotate-month`) do reference `STATUS.md`, so a content verdict from those three in the control run would
-be suspect. None of the three is reached before the cap in either run, and neither run reaches a content verdict
-at all, so this does not affect the timeout fingerprint the attribution rests on.
-
-## Merge classification
-
-- **Base:** `01d2b2e52`. Merged into main at `f9c9780ed` with `git merge --no-ff d4c0207c3`, strategy **ort**, **zero conflicts**.
-- Per file:
-
-| File | Class |
-|---|---|
-| `artifacts/sol/map-art-campaign-2/report.md` | LANE-TOUCHED (append of one dated run-11 section at EOF) |
-| `artifacts/sol/map-art-campaign-2/run-11/braid/e1-twin-banks/mask-comparison.json` | LANE-TOUCHED (new file) |
-| `artifacts/sol/map-art-campaign-2/run-11/braid/e1-twin-banks/report.md` | LANE-TOUCHED (new file) |
-| `reviews/sol-map-art-current-status-20260909.md` | LANE-TOUCHED (Twin Banks row rewritten) |
-
-- **MAIN-MOVED: none.** Main moved only by the s2680 lock commit (`STATUS.md`), which the lane does not touch.
-- **Retention check on the one rewritten row:** the Twin Banks status row prepends the run-11 verdict and
-  retains the entire prior record behind "Prior record:" — verified by reading the diff, **no prior text
-  dropped**. Lawful supersede, not a delete.
-
-## Findings
-
-### F-2680-1 — the master's premise was wrong about WHERE the single band is, and the correction is load-bearing. OPEN, fire-authorable (re-author).
-
-The master's WHY says the Twin Banks water "still renders as one 15.6 m band (`visualHalfWidth 7.8`)"
-and that the player "sees water where the sim has dry ground". **Verified against the code by this
-drain, not inherited from the report:**
-
-- `src/world/Terrain3dClaimPilot.ts:2895` `createChannelWater` reads `contract.maskTruth?.waterMask?.regions`
-  — **not** `Terrain.waterMask()` — and adds **one `createWaterRibbon` per `polyline_band` river region**.
-  Twin Banks declares two (`north-channel`, `south-channel`, each `halfWidth` 1.5), so the mounted GLB path
-  **already draws the braid as two ribbons**, plus a confluence mesh and a ford sheet.
-- The single 15.6 m band survives in the **fallback** `Terrain` surface (`Terrain.ts:694,1202,1554`), which
-  is not the normal mounted path.
-
-So the master aimed the cure at a path that was already braided. A re-author that repeats the premise
-would send the next run at the wrong file.
-
-**The real remaining defect, verified independently by this drain** (read `createChannelWater` and the
-contract, did not take the report's word):
-
-- Twin Banks' mask declares five regions: `west-ford` (rect/ford), `east-ford` (rect/ford),
-  **`west-source-box` (rect/river)**, `north-channel` and `south-channel` (polyline_band/river).
-- The ribbon loop skips anything that is not `kind === 'polyline_band'`; the ford-pan filter takes only
-  `kind === 'rect' && zone === 'ford'`.
-- **`west-source-box` is `kind: rect, zone: river`, so it matches neither branch and is rendered by
-  nothing.** The confluence mesh near it is a hardcoded `dressing.confluences` approximation, not
-  region-driven. The runner's claim is exact.
-
-Curing it means teaching the **shared** `createChannelWater` a rect-river pool region — which is precisely
-the constructor the firewall forbade. The STOP was correct in law and in fact.
-
-**Corrective — and a collision, recorded honestly.** This fire wrote that re-author as a v2 master. While it
-did so, the **ATTENDED session was independently re-authoring the same master IN PLACE as "RUN 2"**
-(`tasks/hm-06-twin-banks-braid-water.md`, found as uncommitted dirt in main's tree mid-drain and committed by
-this fire as bookkeeping in `828c35d37`, never reverted — fire.md §2A). It reaches the same conclusion from
-the same report: lift `createChannelWater`, correct the premise.
-
-The attended session owns the re-authoring and the queueing, so **the fire's v2 draft was moved out of
-`tasks/` before this drain landed** — two competing masters for one leaf is how a lane gets dispatched the
-wrong one — and banked, unqueued, at `artifacts/s2680/hm-06-v2-draft-SUPERSEDED-by-attended-run-2.md` under
-the Retention Law. The HM-06 leaf stays single.
-
-**Two clauses in the superseded draft are NOT in RUN 2 and are worth folding in:**
-
-1. **F-2680-2 as a hard requirement.** RUN 2 keeps v1's scope item 2 verbatim ("if the bed already reads as a
-   braid … say so with a measurement"), which lets the runner satisfy it by quoting the contract. The run-1
-   runner explicitly warned those are authored audit values. The draft makes a fresh delivered-GLB
-   measurement mandatory.
-2. **The shared-constructor blast radius as a REPORTED self-check.** RUN 2's firewall forbids other maps from
-   moving and asks for identical captures; the draft additionally puts that proof in the self-check and the
-   End line, so the runner must report it rather than only be forbidden to break it.
-
-**This drain is what unblocks RUN 2:** `lane-usable --all` read lane-c as **HOLDS** on four lane-only paths,
-so the lane could not be safely refreshed for a re-dispatch until they merged. They now have.
-
-### F-2680-2 — the no-sculpt decision rests on authored audit values, not a fresh measurement. OPEN, carried into the re-author.
-
-The runner reports the contract's bed figures (north −0.4596 m, south −0.3507 m, plait mean +0.5234 m) and
-flags them as **authored audit values, not a fresh delivered-GLB measurement**, explicitly asking that they
-be remeasured before the "leave the store alone" branch of scope item 2 is accepted. The v2 master must
-require the measurement rather than inherit the number — otherwise scope item 2 decides itself on a figure
-nobody re-took.
-
-### F-2680-3 — `test:node-guards` can no longer FINISH inside the gate's own cap on a fire shell. OPEN, fire-authorable. Not this slice's; found by this slice's gate.
-
-Observed **twice today, on two different trees**, one of them clean main: the suite is SIGTERM'd at exactly 900s
-by `run-guards`'s `timeout: 15 * 60 * 1000`, still printing passing tests when it dies. The fire shell forces
-`--test-concurrency=1` (`CLAUDE_CONFIG_DIR` present; F-1409-1/F-1410-1, "the conservative default pending
-fire-side measurement"), while the historical record in `logs/guard-stats.jsonl` shows the suite completing in
-**284–430s** through early September — it has outgrown the cap at concurrency 1.
-
-**Why this matters beyond one drain:** `test:node-guards` is in `GATE_GUARDS`, the *unconditional* base gate, so
-**every fire drain from now on inherits an un-completable leg** and must spend 15 minutes to learn nothing. A red
-that is structurally guaranteed teaches a fire to wave reds through — the exact habit the gate exists to prevent.
-
-**And the cap LEAKS A PROCESS, which makes it worse than a wasted 15 minutes.** `run-guards` kills the `npm`
-wrapper it spawned, but the real test runner survives: `ps` showed `node scripts/run-node-guards.mjs …` at
-**PPID 1**, still alive **25 minutes** after its parent was SIGTERM'd (with its own `node --test` child). So
-every capped run orphans a test process that outlives the fire. On a shell whose CPU ceiling is already the
-stated reason concurrency was forced to 1 (F-1409-1), accumulating orphans is self-reinforcing: each one makes
-the next run slower, which makes the next cap more likely. Not killed by this fire — it was idle at 0.0% CPU
-and reaping a process mid-write is not worth the risk at handoff time — but an attended session should reap
-strays before trusting any fire-side timing measurement, and the cure below should make the kill
-process-group-wide.
-
-**MEASURED HARM, in this fire's own ledger battery — the orphan leak manufactures FALSE REDS.** With strays
-still resident the machine reached **loadavg 57.1 (5-min)**, and `npm run test:ledger-guards` came back
-**1,261 pass / 2 fail** where the previous fire got 1,263 / 0. Both "failures" were the same 240s ceiling:
-`gazette-scan-space-guard` died `spawnSync ETIMEDOUT` (SIGKILL) and `status-archive-arg-guard` asserted on a
-verdict line that had simply not been reached. **Re-run alone on a quiet shell, both pass:** 12/0 in **23s**
-and 9/0 in **77s** — 10× and 3× inside the ceiling they had just blown. So the leak does not merely waste 15
-minutes; it corrupts the verdict of *unrelated* batteries run afterwards, in the direction of false alarm.
-This is the concrete cost of the cure being deferred.
-
-**Recommended cure (owner/attended call, not taken by this fire):** either raise the cap for this one guard, or
-measure the fire-side concurrency that F-1409-1 explicitly left pending and lift it from 1, or split the suite —
-and in all three cases kill the process GROUP, not just the wrapper. Whichever is chosen, the guard-stats record
-now holds two dated 900s data points to measure against.
-
-### Non-findings, recorded so nobody re-opens them
-
-- **Production and sculpt masks are semantically equal today** (the runner's JSON comparison, banked as
-  `mask-comparison.json`, `"equal": true` against baseline `01d2b2e52`). Making the production mask
-  authoritative is therefore a *plumbing* change, not a behaviour change, at today's data.
-- The runner makes **no claim** that the source-box pixels are currently dry, and neither does this review.
-
-## Ledger
-
-- `tasks/goals.json` leaf `hm-06-twin-banks-braid-water`: `status` `queued` → `blocked-firewall`, `mergeHash`
-  recorded, with the lift the v2 master needs — in the drain commit.
-- `tasks/BACKLOG.md`: the TWIN BANKS BRAID row updated from QUEUED to the firewall-stop outcome, F-2680-1 and
-  F-2680-2 declared — in the drain commit.
-- The done-move is renamed `stopped-…` so the board stops counting it as a real drain.
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| strict release build (the assertion) | `(strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97706953 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)` |
+| first-town payload | `34349803 bytes` |
+| halo | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu` |
+| null floors | `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (288.9s).` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 137 ℹ fail 0` |
+| the release suite under its own config | `(own config): rc=0   30 passed (2.2m)` |
+| e2e both projects, --workers=1 | `rc=1   2 failed   2 skipped   66 passed (5.6m)  03:15Z` |
+| full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 1018 ℹ pass 1010 ℹ fail 3 ℹ skipped 5  03:23Z` |
+| engine hash | `merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned 91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f)` |
