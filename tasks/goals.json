@@ -6201,14 +6201,33 @@
             {
               "id": "hm-06-twin-banks-braid-water",
               "title": "Owner ruling 2026-09-24 F-TB-1 (b): the braid's water surface follows the mask that already rules the simulation; the two band tests re-pinned to the braid (HM-06, Astra lane-c)",
-              "status": "queued",
+              "status": "blocked-firewall",
               "taskFile": "hm-06-twin-banks-braid-water.md",
               "lane": "lane-c (Astra, the ChatGPT subscription; store branch astra/hm-06-braid)",
               "authoredAt": "2026-09-24",
               "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24",
               "liftedFrom": "gate-side: queued into lane-c by the attended session after the held-maps spec slice HM-06 is written (this master is its slice) and the lane is free; lifted at queue time",
               "queuedAt": "2026-09-25",
-              "owner": "owner 2026-09-25, verbatim: \"twin banks\""
+              "owner": "owner 2026-09-25, verbatim: \"twin banks\"",
+              "mergeHash": "409a4ea91",
+              "blockedAt": "2026-09-25",
+              "blockedBy": "F-2680-1 — the run STOPPED at the firewall without implementing, correctly: the cure needs the SHARED createChannelWater constructor (src/world/Terrain3dClaimPilot.ts:2895), which the master's TOUCH-ONLY limited to 'the Twin Banks water entry'. Finding and evidence merged as a report-only diff (+210/-1, no src/e2e/assets bytes); reviews/hm-06-twin-banks-braid-water.md.",
+              "premiseCorrection": "The master's WHY is wrong about WHERE the single band is, verified by this drain against the code: createChannelWater already reads contract.maskTruth.waterMask.regions and draws ONE RIBBON PER polyline_band, so the mounted GLB path is ALREADY braided. The 15.6 m band survives only in the FALLBACK Terrain surface (Terrain.ts:694,1202,1554). The real unrendered gap is the mask's west-source-box (kind=rect, zone=river), which matches neither the ribbon loop (needs polyline_band) nor the ford-pan filter (needs zone=ford), so nothing renders it.",
+              "nextAction": "RE-AUTHORED by s2680 as hm-06-twin-banks-braid-water-v2 (leaf below). NOT queued by s2680: tasks/CODEX-WALL suspends §2E refills and the gate-side hold reserves the queue action to the attended session."
+            },
+            {
+              "id": "hm-06-twin-banks-braid-water-v2",
+              "title": "HM-06 re-authored (F-TB-1 (b), premise corrected by F-2680-1): the mask's UNRENDERED rect-river region gets a surface, the fallback follows the mask, the two band tests re-pin to the braid (Astra lane-c)",
+              "status": "authored-held",
+              "taskFile": "hm-06-twin-banks-braid-water-v2.md",
+              "lane": "lane-c (Astra, the ChatGPT subscription; store branch astra/hm-06-braid)",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "s2680 fire, from the v1 drain's verified finding (reviews/hm-06-twin-banks-braid-water.md) and the v1 runner's remaining list",
+              "supersedes": "hm-06-twin-banks-braid-water",
+              "liftedFrom": "gate-side: the attended session queues it. The fire did NOT queue it — tasks/CODEX-WALL suspends §2E refills, and the v1 master's gate-side hold carries forward.",
+              "owner": "owner 2026-09-24 ruling F-TB-1 \"(5) (b)\"; owner 2026-09-25, verbatim: \"twin banks\"",
+              "changedPremise": "CLAUDE.md §7.5 — this is not an identical retry. v1's WHY aimed at a single 15.6 m band on the player's path; the code shows that path is ALREADY braided and the unrendered thing is the mask's west-source-box (kind=rect, zone=river). v2 aims there and LIFTS the shared createChannelWater constructor, which is the one constraint that stopped v1.",
+              "carries": "F-2680-2 — scope item 4 requires a fresh delivered-GLB bed measurement instead of inheriting the contract's authored audit values."
             },
             {
               "id": "kv-counters-to-ledger-1",
