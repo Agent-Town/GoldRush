@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef",
+  "engineHash": "755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -454,6 +454,12 @@
       "engineHash": "c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef",
       "pinnedAt": "2026-09-25",
       "cause": "same era, pin #61: hm-06-twin-banks-braid-water (Astra, gpt-6-astra on the ChatGPT subscription; owner rulings 2026-09-24 (5)(b) and 2026-09-25 twin banks): the production water mask is the authority for Twin Banks mounted and fallback water surfaces (src/world/Terrain.ts, src/world/Terrain3dClaimPilot.ts; render-side only: two ribbons, the declared 4 x 4 m source pool inside the existing confluence draw, the fords shallows, the dry plait); no sim rule, contract, collision, floor or table moved (83 of 83 floors match, no store commit). The store unchanged at 5793a96. reviews/hm-06-twin-banks-braid-water.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa",
+      "pinnedAt": "2026-09-25",
+      "cause": "same era, pin #62: live-seed-rotation-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; owner: the seed changes every Monday): the run, its county standing and the co-op room ride the live rotation seed (src/game/liveSeed.ts, src/game/Game.ts two literals, src/mp/RideTogether.ts one literal, src/town/TownScene.ts the card label); no sim rule, contract, collision, floor or table moved. The store unchanged at 5793a96. reviews/live-seed-rotation-1.md",
       "aliases": []
     }
   ],

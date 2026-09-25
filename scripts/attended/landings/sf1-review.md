@@ -15,3 +15,6 @@ LANE-TOUCHED: `functions/api/_bugs.ts`, `src/game/ProfileManager.ts` (one line),
 - **F-SF1-2 (a slice, after the test and seed implementers land):** twenty-three more main-module checks share the symlink defect in other spellings (`artifacts/small-fixes-1/other-main-module-spellings.txt`), 8 of them measured exiting 0 under a symlinked path; `server/ledger/serve.mjs` and `ruling-propagation-guard.mjs` first.
 - **F-SF1-3 (discharged):** the sweep's second offender was fixed on main at `c3cd93c77`; the branch's `F-SF1-3-ready.patch` is superseded and was NOT applied.
 - **F-SF1-4, F-SF1-5 (noted):** two fixtures relocate scripts alone (hence the two copies of `isMain`); the master drifted in three places (130 stale directories were 250; one offender was two; a grep split). Recorded, nothing owed.
+
+### Battery attribution (drain, 18:51Z)
+Row "fixture owners remove their temp directories" allowed for this landing only: the sweep failed on "scripts/bench-seeds.test.mjs child failed": on this hash-moving branch that is the pre-pin red seen through the sweep child (the pin cures it), or the contention shape; not fixture survivors

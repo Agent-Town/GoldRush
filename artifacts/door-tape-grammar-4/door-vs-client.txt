@@ -1,0 +1,191 @@
+Door versus client, one action injected into a reel written by the real recorder: the same 79-row probe as grammar-3 (source: artifacts/door-tape-grammar-3/diff-probe.mjs.txt, unchanged). door = validateTape at POST (stored false); read = validateTape at read (stored true); client = validateRunTape. LOOSER = the door accepts what the client refuses.
+
+== before: base 0515f4b0d
+action on the tape                                                                   door     read     client   door vs client
+place_build id a real id                                                             accepts  accepts  accepts  equal
+place_build id whitespace only                                                       refuses  accepts  refuses  equal
+place_build id a tab and a newline                                                   refuses  accepts  refuses  equal
+place_build id edge whitespace                                                       accepts  accepts  accepts  equal
+place_build id empty                                                                 refuses  refuses  refuses  equal
+place_build id 64 characters                                                         accepts  accepts  accepts  equal
+place_build id 65 characters                                                         refuses  refuses  accepts  tighter
+place_build id 65 raw, 64 after trim                                                 refuses  refuses  accepts  tighter
+place_build id not a string                                                          refuses  refuses  refuses  equal
+place_build id not a building (control for the client: place_build takes any token)  accepts  accepts  accepts  equal
+place_build position unquantized                                                     accepts  accepts  accepts  equal
+place_build rotationSteps 4                                                          refuses  refuses  accepts  tighter
+pick_upgrade id a real id                                                            accepts  accepts  accepts  equal
+pick_upgrade id whitespace only                                                      refuses  accepts  refuses  equal
+pick_upgrade id a tab and a newline                                                  refuses  accepts  refuses  equal
+pick_upgrade id edge whitespace                                                      accepts  accepts  accepts  equal
+pick_upgrade id empty                                                                refuses  refuses  refuses  equal
+pick_upgrade id 64 characters                                                        accepts  accepts  accepts  equal
+pick_upgrade id 65 characters                                                        refuses  refuses  accepts  tighter
+pick_upgrade id 65 raw, 64 after trim                                                refuses  refuses  accepts  tighter
+pick_upgrade id not a string                                                         refuses  refuses  refuses  equal
+pick_upgrade with defaulted true                                                     refuses  refuses  accepts  tighter
+research_pick id a real id                                                           accepts  accepts  accepts  equal
+research_pick id whitespace only                                                     accepts  accepts  refuses  LOOSER
+research_pick id a tab and a newline                                                 accepts  accepts  refuses  LOOSER
+research_pick id edge whitespace                                                     accepts  accepts  accepts  equal
+research_pick id empty                                                               refuses  refuses  refuses  equal
+research_pick id 64 characters                                                       accepts  accepts  accepts  equal
+research_pick id 65 characters                                                       refuses  refuses  accepts  tighter
+research_pick id 65 raw, 64 after trim                                               refuses  refuses  accepts  tighter
+research_pick id not a string                                                        refuses  refuses  refuses  equal
+set_agent_ability auto_pan                                                           accepts  accepts  accepts  equal
+set_agent_ability auto_collect                                                       accepts  accepts  accepts  equal
+set_agent_ability auto_repair                                                        accepts  accepts  accepts  equal
+set_agent_ability light_duty                                                         accepts  accepts  accepts  equal
+set_agent_ability place_building                                                     accepts  accepts  accepts  equal
+set_agent_ability fly (unknown)                                                      refuses  accepts  refuses  equal
+set_agent_ability edge whitespace auto_pan                                           accepts  accepts  accepts  equal
+set_agent_ability AUTO_PAN (case)                                                    refuses  accepts  refuses  equal
+set_agent_ability whitespace only                                                    refuses  accepts  refuses  equal
+set_agent_ability empty                                                              refuses  refuses  refuses  equal
+set_agent_ability 65 characters                                                      refuses  refuses  refuses  equal
+set_agent_ability not a string                                                       refuses  refuses  refuses  equal
+set_agent_ability granted not a boolean                                              refuses  refuses  refuses  equal
+set_agent_rung level 0                                                               accepts  accepts  accepts  equal
+set_agent_rung level 3                                                               accepts  accepts  accepts  equal
+set_agent_rung level 4                                                               refuses  refuses  accepts  tighter
+set_agent_rung level -1                                                              refuses  refuses  accepts  tighter
+set_agent_rung level 1.5                                                             refuses  refuses  refuses  equal
+context_action upgrade target id sluice                                              accepts  accepts  accepts  equal
+context_action demolish target id sluice                                             accepts  accepts  accepts  equal
+context_action upgrade target id palisade                                            accepts  accepts  accepts  equal
+context_action demolish target id palisade                                           accepts  accepts  accepts  equal
+context_action upgrade target id whitespace only                                     accepts  accepts  refuses  LOOSER
+context_action demolish target id whitespace only                                    accepts  accepts  refuses  LOOSER
+context_action upgrade target id edge whitespace                                     accepts  accepts  accepts  equal
+context_action demolish target id edge whitespace                                    accepts  accepts  accepts  equal
+context_action upgrade target id not a building                                      accepts  accepts  refuses  LOOSER
+context_action demolish target id not a building                                     accepts  accepts  refuses  LOOSER
+context_action upgrade target index 255                                              accepts  accepts  accepts  equal
+context_action upgrade target index 256                                              accepts  accepts  accepts  equal
+context_action upgrade target index 10000                                            accepts  accepts  accepts  equal
+context_action upgrade target index 10001                                            refuses  refuses  accepts  tighter
+context_action upgrade target index -1                                               refuses  refuses  accepts  tighter
+context_action fund                                                                  accepts  accepts  accepts  equal
+context_action recover                                                               accepts  accepts  accepts  equal
+prospector_dispatch node gold-seam-2                                                 accepts  accepts  accepts  equal
+prospector_dispatch node whitespace only                                             refuses  refuses  refuses  equal
+prospector_dispatch node edge whitespace                                             refuses  refuses  accepts  tighter
+prospector_dispatch node 65 characters                                               refuses  refuses  accepts  tighter
+weapon_toggle                                                                        accepts  accepts  accepts  equal
+restart                                                                              accepts  accepts  accepts  equal
+debug_spawn                                                                          accepts  accepts  accepts  equal
+debug_xp                                                                             accepts  accepts  accepts  equal
+skip_ceremony                                                                        accepts  accepts  accepts  equal
+research_skip                                                                        accepts  accepts  accepts  equal
+set_pause true                                                                       accepts  accepts  accepts  equal
+death_action done                                                                    accepts  accepts  accepts  equal
+secure_choice bank                                                                   accepts  accepts  accepts  equal
+rows 79: LOOSER 6, tighter 14, equal 59
+
+== after: tip a1dd6df15
+action on the tape                                                                   door     read     client   door vs client
+place_build id a real id                                                             accepts  accepts  accepts  equal
+place_build id whitespace only                                                       refuses  accepts  refuses  equal
+place_build id a tab and a newline                                                   refuses  accepts  refuses  equal
+place_build id edge whitespace                                                       accepts  accepts  accepts  equal
+place_build id empty                                                                 refuses  refuses  refuses  equal
+place_build id 64 characters                                                         accepts  accepts  accepts  equal
+place_build id 65 characters                                                         refuses  refuses  accepts  tighter
+place_build id 65 raw, 64 after trim                                                 refuses  refuses  accepts  tighter
+place_build id not a string                                                          refuses  refuses  refuses  equal
+place_build id not a building (control for the client: place_build takes any token)  accepts  accepts  accepts  equal
+place_build position unquantized                                                     accepts  accepts  accepts  equal
+place_build rotationSteps 4                                                          refuses  refuses  accepts  tighter
+pick_upgrade id a real id                                                            accepts  accepts  accepts  equal
+pick_upgrade id whitespace only                                                      refuses  accepts  refuses  equal
+pick_upgrade id a tab and a newline                                                  refuses  accepts  refuses  equal
+pick_upgrade id edge whitespace                                                      accepts  accepts  accepts  equal
+pick_upgrade id empty                                                                refuses  refuses  refuses  equal
+pick_upgrade id 64 characters                                                        accepts  accepts  accepts  equal
+pick_upgrade id 65 characters                                                        refuses  refuses  accepts  tighter
+pick_upgrade id 65 raw, 64 after trim                                                refuses  refuses  accepts  tighter
+pick_upgrade id not a string                                                         refuses  refuses  refuses  equal
+pick_upgrade with defaulted true                                                     refuses  refuses  accepts  tighter
+research_pick id a real id                                                           accepts  accepts  accepts  equal
+research_pick id whitespace only                                                     refuses  accepts  refuses  equal
+research_pick id a tab and a newline                                                 refuses  accepts  refuses  equal
+research_pick id edge whitespace                                                     accepts  accepts  accepts  equal
+research_pick id empty                                                               refuses  refuses  refuses  equal
+research_pick id 64 characters                                                       accepts  accepts  accepts  equal
+research_pick id 65 characters                                                       refuses  refuses  accepts  tighter
+research_pick id 65 raw, 64 after trim                                               refuses  refuses  accepts  tighter
+research_pick id not a string                                                        refuses  refuses  refuses  equal
+set_agent_ability auto_pan                                                           accepts  accepts  accepts  equal
+set_agent_ability auto_collect                                                       accepts  accepts  accepts  equal
+set_agent_ability auto_repair                                                        accepts  accepts  accepts  equal
+set_agent_ability light_duty                                                         accepts  accepts  accepts  equal
+set_agent_ability place_building                                                     accepts  accepts  accepts  equal
+set_agent_ability fly (unknown)                                                      refuses  accepts  refuses  equal
+set_agent_ability edge whitespace auto_pan                                           accepts  accepts  accepts  equal
+set_agent_ability AUTO_PAN (case)                                                    refuses  accepts  refuses  equal
+set_agent_ability whitespace only                                                    refuses  accepts  refuses  equal
+set_agent_ability empty                                                              refuses  refuses  refuses  equal
+set_agent_ability 65 characters                                                      refuses  refuses  refuses  equal
+set_agent_ability not a string                                                       refuses  refuses  refuses  equal
+set_agent_ability granted not a boolean                                              refuses  refuses  refuses  equal
+set_agent_rung level 0                                                               accepts  accepts  accepts  equal
+set_agent_rung level 3                                                               accepts  accepts  accepts  equal
+set_agent_rung level 4                                                               refuses  refuses  accepts  tighter
+set_agent_rung level -1                                                              refuses  refuses  accepts  tighter
+set_agent_rung level 1.5                                                             refuses  refuses  refuses  equal
+context_action upgrade target id sluice                                              accepts  accepts  accepts  equal
+context_action demolish target id sluice                                             accepts  accepts  accepts  equal
+context_action upgrade target id palisade                                            accepts  accepts  accepts  equal
+context_action demolish target id palisade                                           accepts  accepts  accepts  equal
+context_action upgrade target id whitespace only                                     refuses  accepts  refuses  equal
+context_action demolish target id whitespace only                                    refuses  accepts  refuses  equal
+context_action upgrade target id edge whitespace                                     accepts  accepts  accepts  equal
+context_action demolish target id edge whitespace                                    accepts  accepts  accepts  equal
+context_action upgrade target id not a building                                      refuses  accepts  refuses  equal
+context_action demolish target id not a building                                     refuses  accepts  refuses  equal
+context_action upgrade target index 255                                              accepts  accepts  accepts  equal
+context_action upgrade target index 256                                              accepts  accepts  accepts  equal
+context_action upgrade target index 10000                                            accepts  accepts  accepts  equal
+context_action upgrade target index 10001                                            refuses  refuses  accepts  tighter
+context_action upgrade target index -1                                               refuses  refuses  accepts  tighter
+context_action fund                                                                  accepts  accepts  accepts  equal
+context_action recover                                                               accepts  accepts  accepts  equal
+prospector_dispatch node gold-seam-2                                                 accepts  accepts  accepts  equal
+prospector_dispatch node whitespace only                                             refuses  refuses  refuses  equal
+prospector_dispatch node edge whitespace                                             refuses  refuses  accepts  tighter
+prospector_dispatch node 65 characters                                               refuses  refuses  accepts  tighter
+weapon_toggle                                                                        accepts  accepts  accepts  equal
+restart                                                                              accepts  accepts  accepts  equal
+debug_spawn                                                                          accepts  accepts  accepts  equal
+debug_xp                                                                             accepts  accepts  accepts  equal
+skip_ceremony                                                                        accepts  accepts  accepts  equal
+research_skip                                                                        accepts  accepts  accepts  equal
+set_pause true                                                                       accepts  accepts  accepts  equal
+death_action done                                                                    accepts  accepts  accepts  equal
+secure_choice bank                                                                   accepts  accepts  accepts  equal
+rows 79: LOOSER 0, tighter 14, equal 65
+
+== rows whose verdict moved, before to after (diff)
+25,26c25,26
+< research_pick id whitespace only                                                     accepts  accepts  refuses  LOOSER
+< research_pick id a tab and a newline                                                 accepts  accepts  refuses  LOOSER
+---
+> research_pick id whitespace only                                                     refuses  accepts  refuses  equal
+> research_pick id a tab and a newline                                                 refuses  accepts  refuses  equal
+55,56c55,56
+< context_action upgrade target id whitespace only                                     accepts  accepts  refuses  LOOSER
+< context_action demolish target id whitespace only                                    accepts  accepts  refuses  LOOSER
+---
+> context_action upgrade target id whitespace only                                     refuses  accepts  refuses  equal
+> context_action demolish target id whitespace only                                    refuses  accepts  refuses  equal
+59,60c59,60
+< context_action upgrade target id not a building                                      accepts  accepts  refuses  LOOSER
+< context_action demolish target id not a building                                     accepts  accepts  refuses  LOOSER
+---
+> context_action upgrade target id not a building                                      refuses  accepts  refuses  equal
+> context_action demolish target id not a building                                     refuses  accepts  refuses  equal
+81c81
+< rows 79: LOOSER 6, tighter 14, equal 59
+---
+> rows 79: LOOSER 0, tighter 14, equal 65

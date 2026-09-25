@@ -91,6 +91,7 @@ import { MotorSocket, type MotorDiagnostics } from '../sim/MotorSocket';
 import { META_PROGRESS_KEY, agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { baronArrivalEdge } from './BaronFort';
+import { resolveLiveSeed } from './liveSeed';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentRegattaSource, type AgentViewSource } from '../agent/View';
@@ -1606,7 +1607,9 @@ export class Game {
     boot: GameBoot = {},
   ) {
     this.boot = assayReplayBoot(boot);
-    this.runSeed = this.boot.replay?.tape.seed ?? getDebugSeed() ?? 'gold-rush';
+    // THE LIVE SEED (owner ruling 2026-09-24, "(a)": humans ride the open rotation's seed per contract).
+    // A replay tape's seed and a dev `?seed=` pin still come first; the rules live in src/game/liveSeed.ts.
+    this.runSeed = this.boot.replay?.tape.seed ?? getDebugSeed() ?? resolveLiveSeed(this.activeContract.id);
     this.waveSystem = new WaveSystem(
       this.enemies,
       this.primaryActor.group.position,
@@ -8097,7 +8100,10 @@ export class Game {
       if (mixedAgentRide && pinnedSeed !== null) return;
       // A non-member pinned seed is neither comparable bench data nor live play; the owner may reverse this submission policy.
       if (pinnedSeed !== null && !(benchSeeds as Record<string, string[]>)[this.activeContract.id]?.includes(pinnedSeed)) return;
-      const seed = pinnedSeed ?? 'gold-rush';
+      // The seed this run was RIDDEN on (`runSeed`, resolved once at birth), never a second resolution:
+      // the reel records `runSeed` and the door requires the two to match, so a run that straddles
+      // Monday 00:00 UTC names last week's seed and the door answers `rotation_closed` (transfer-board L3).
+      const seed = pinnedSeed ?? this.runSeed;
       const reason: RunEndReason = this.state.current === 'dead'
         ? this.runManager?.diagnostics.rush ? 'rush' : 'death'
         : 'secured';

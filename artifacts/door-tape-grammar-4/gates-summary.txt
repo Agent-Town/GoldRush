@@ -1,0 +1,30 @@
+Gates for door-tape-grammar-4, tip a1dd6df15, Node v26.4.0. Every rc is taken from the command itself, never a pipe.
+
+BATCH 1, one blocking call of scripts/attended/dlock.sh (lock held 18:23:50Z to 18:40:53Z), worktree status at start: "?? node_modules" only.
+  GR_GUARD_NO_ARTIFACT=1 npm run test:node-guards   rc=1  18:23:50Z to 18:39:30Z  tests 1018, pass 1009, fail 4, skipped 5
+  npm run test:accounts                              rc=0  kv 43, sqlite 43, sign-in hardening 27, office credential 26, ledger road 86, kv-to-ledger migration 16
+  npm run test:mp                                    rc=0  multiplayer relay 528
+  npm run test:stats                                 rc=0  stats worker 87; standings 576 kv and 576 sqlite; ledger worker HTTP contract 26
+  controls at this slice's clean base 0515f4b0d (the detached scratch worktree, node_modules and the art store linked, no .env.local):
+    run-node-guards desk-declaration-guard, ledger-backup-pull, node-guards-contention   rc=1  tests 31, pass 29, fail 2 (ledger-backup-pull x2)
+    node --test ledger-backup-fill-gaps-guard.test.mjs                                   rc=1  tests 8, pass 1, fail 7 ("GR_DROPLET_HOST missing")
+    board-tape-gold.test.mjs alone: tip a1dd6df15 rc=0 in 30 s; base 0515f4b0d rc=0 in 30 s
+BATCH 2, one blocking call of dlock.sh (18:41:40Z to 18:41:42Z):
+    run-node-guards node-guards-contention alone at the tip a1dd6df15                  rc=0  tests 1, pass 1
+
+THE FOUR node-guards REDS AT THE TIP, ATTRIBUTED
+  1-2. ledger-backup-pull.test.mjs:11 and :18   "GR_DROPLET_HOST missing from the environment and .env.local"
+       PRE-EXISTING, ENVIRONMENTAL: the identical two reds at the base control. No .env.local here; none was read.
+  3.   fixture-teardown.test.mjs:34 (161 owners, 898.6 s): its first failing child is ledger-backup-fill-gaps-guard.test.mjs
+       ("GR_DROPLET_HOST missing ..."). PRE-EXISTING, ENVIRONMENTAL: the same file at the base, rc=1, 1 pass, 7 fail, same message.
+  4.   node-guards-contention.test.mjs:124       "node-guards board did not stay quiet for 300ms", "CONTENDED, 2 concurrent batteries"
+       ENVIRONMENTAL (another battery ran during this one): it loads neither changed file (0 references to standings or
+       functions/), and it is green ALONE at the tip (batch 2) and green at the base control.
+
+board-tape-gold, red once for grammar-3 under contention, was green in this battery and green alone on tip and base.
+desk-declaration-guard and same-game-audit.test.mjs (summary 0/595/1252/0 over 1847 rows, equal to its pin at :455) were green.
+
+FACTORY CHURN (F-1407-1): test:accounts and test:mp rewrote artifacts/accounts-worker/test-accounts.json and
+artifacts/multiplayer-relay/test-multiplayer.json. Left unstaged; in no commit.
+
+BUILD at the tip: npm run build, rc=0 in 20 s. tsc --noEmit rc=0 at a1dd6df15 and at aff05b4c2 alone.

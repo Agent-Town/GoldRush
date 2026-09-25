@@ -1,0 +1,13 @@
+{
+  "tag": "dtg4", "branch": "fix/door-tape-grammar-4", "port": 5389,
+  "mergeMessage": "drain: merge fix/door-tape-grammar-4 — door-tape-grammar-4 — research_pick ids and context_action target ids join the client-judged set (the door-versus-client probe's looser rows 6 to 0; red-first, six shapes ranked on the base and refused at the tip; stored rows retired not dropped; 514 to 576 door checks, 14 mutations red) and the validateTape comment describes the door as it is (Opus 5.5 implementer at max effort; F-DTG3-1, F-DTG3-5)",
+  "hash": "unchanged",
+  "gates": { "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": true, "ledgerBattery": true, "specs": [], "guards": ["scripts/function-cors-allowlist.test.mjs", "scripts/worker-type-coverage.test.mjs"] },
+  "cure": "scripts/attended/landings/dtg4-cure.sh",
+  "review": { "path": "reviews/door-tape-grammar-4.md", "title": "Drain review: `door-tape-grammar-4`, the last two client-judged ids (Opus 5.5 implementer at max effort; F-DTG3-1, F-DTG3-5)", "body": "scripts/attended/landings/dtg4-review.md" },
+  "bookkeeping": { "taskFile": "door-tape-grammar-4.md", "rowKey": "DOOR TAPE GRAMMAR 4 LANDED", "rowEmoji": "🔐",
+    "rowText": "`research_pick` ids and `context_action` target ids join `CLIENT_JUDGED_ACTIONS`: the 79-row door-versus-client probe's looser rows 6 to 0 (tighter 14 unchanged, equal 59 to 65, only the six targeted rows moved); RED first (six shapes ranked 1 to 6 on the base, 400 at the tip; a stored row of each retired at read, not dropped); 514 to 576 door checks per backend, 14 of 14 mutations red; `src/` byte-identical, hash unchanged {PIN}; audit unchanged; the comments above `validateTape` and inside `validTapeAction` (drain cure, F-DTG4-1) describe the door as it is. DEPLOYED. Slices left: F-DTG3-3 with F-DTG4-3 (an embedded recording with a client-refused action is dropped at read; fix before any building is ever removed), F-DTG3-2 (the assay queue serves retired pending rows).",
+    "statusPhrase": "every reel the county door ranks can be loaded by the Lantern and the assayer for every action the recorder writes",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg4, after grammar-3)" },
+  "deploy": true, "preview": true, "evidenceDir": "artifacts/door-tape-grammar-4"
+}

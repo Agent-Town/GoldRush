@@ -32,6 +32,9 @@ const source = Object.fromEntries([
   // ADR-005 stage 4: the deck prompt is where BOAT_BUILD and REANCHOR gained their human twins,
   // so the rows that claim those twins cite it and this list has to be able to resolve them.
   'src/ui/BuildingContextPrompt.ts',
+  // F-DTG2-1: the seat that WRITES a rider's `agent_orders` onto the lockstep wire, cited by the tape
+  // exemption that says whose channel that action is.
+  'src/sim/SeatedLockstepSim.ts',
 ].map((file) => [file, read(file)]));
 
 const vite = await createServer({ root: ROOT, server: { middlewareMode: true }, appType: 'custom', logLevel: 'silent' });
@@ -205,14 +208,57 @@ const tapeSurface = {
 };
 const tapeDoorVerb = {
   weapon_toggle: 'SET_WEAPON',
+  // F-DTG2-1 (same-game-audit-verbs-1): the player's dispatch of the Prospector to a seam or a sluice
+  // (ProspectorDispatchInput -> Game.dispatchProspector -> the tape's `prospector_dispatch`) pairs with the rider's
+  // HARVEST {seam | sluice}. MEASURED WITH THE SIM, not inferred from the target shapes:
+  // artifacts/same-game-audit-verbs-1/dispatch-pairing.mjs lifts Game.ts's OWN beginProspectorDispatch,
+  // advanceProspectorDispatch and prospectorDispatchPoint (this file's `browserPredicate` technique) and runs them in
+  // HeadlessContractSim beside a HARVEST sent through the public door, per contract, same contract and same seed
+  // (`same-game-seam-<id>`). On all 38 door-admitted contracts, in fresh runs at base stats, both walk the same path,
+  // arrive on the same tick, pan the same seam once for the same gold and leave the same remaining and the same
+  // economy; the sluice arm and the three door-refused boards that have seams pair too (e10-river has none). Cadence
+  // differs and is not reach: the dispatch pans 2 ticks later (its fixed 4-tick settle, F-SLHP-1) and leaves the seam
+  // 26 ticks sooner (HARVEST's receipt holds the Prospector for Balance.agent.workSeconds). YIELD CAN DIFFER once
+  // panning is upgraded (F-SGA1-2): with two pan_legend stacks (a 0.6 s pan tick) that 0.9 s linger keeps GR-SIM's
+  // harvest actor, the Prospector, on the seam long enough for one more passive pan per order, so HARVEST out-earns
+  // the dispatch (dispatch-pairing-pan-legend-2.json). The rows measure reach, so the pairing stands; the yield gap
+  // is the owner's Same-Laws question. The four door-refused boards stay agent-lacks.
+  prospector_dispatch: 'HARVEST',
 };
+// The first three citations were typed as literal `src/game/Game.ts:NNNN` strings in `08fba1d64` (2026-08-12), the only
+// unresolved citations in this file, and they rotted: read on 2026-09-26, `:2886` is a megaproject clear, `:2902` a
+// shooter unsubscribe and `:2909` a cloth dispose, and the committed report published them as current. Each now
+// resolves live onto the line where the browser applies that tape action (`Game.applyMultiplayerAction`), like
+// every other citation here, so the next move reds the audit ("Audit anchor missing") instead of rotting silently.
+//
+// TWO KINDS OF EXEMPTION, told apart by `parityRow`.
+//  - parityRow: true. A HUMAN CONTROL the agent lacks by design. The lack is real, so its rows stay in the table
+//    and count as `agent-lacks`; the exemption only says why no standing-order verb is owed.
+//  - parityRow: false. NOT A HUMAN CONTROL AT ALL, so there is nothing for either species to have or lack and the
+//    action publishes no parity row. `agent_orders` (F-DTG2-1; ruled exempt by the audit's owner, the attended
+//    session, in tasks/same-game-audit-verbs-1.md, 2026-09-25): door-tape-grammar-2 taught the door the lockstep
+//    wire's `{ type: 'agent_orders' }`, the SEATED RIDER'S OWN order channel. The seat writes it
+//    (SeatedLockstepSim.submitOrders) and the browser applies it only for a headless slot, into that rider's body.
+//    Read as a human tape action it cost 42 `agent-lacks` rows, one per contract, a category error: an agent cannot
+//    lack its own channel. Its rows now leave `agent-lacks` without entering `equal` (595 -> 553, equal 1252
+//    unchanged, 1847 -> 1805 rows; artifacts/same-game-audit-verbs-1/report.md). The solo tape's
+//    `{ kind: 'agent_orders' }` never made a row: the `value.type ===` reader above cannot see a `kind`.
 const tapeExemptions = [
-  { actions: 'death_action', reason: 'Post-death overlay transition; the headless terminal is already the run end.', citation: 'src/game/Game.ts:2902' },
-  { actions: 'research_pick / research_skip', reason: 'Between-run science progression lives outside the run window.', citation: 'src/game/Game.ts:2909' },
-  { actions: 'set_pause', reason: 'Pacing only; the agent door is turn-based.', citation: 'src/game/Game.ts:2886' },
-  { actions: 'skip_ceremony', reason: 'Baron ceremony is presentation-only; headless spawns the Baron directly without a ceremony gate.', citation: line('src/sim/HeadlessContractSim.ts', '(position, at, escorts) => this.postBaronSpawn(position, at, escorts)') },
+  { actions: 'death_action', parityRow: true, reason: 'Post-death overlay transition; the headless terminal is already the run end.', citation: line('src/game/Game.ts', "if (action.type === 'death_action') {") },
+  { actions: 'research_pick / research_skip', parityRow: true, reason: 'Between-run science progression lives outside the run window.', citation: `${line('src/game/Game.ts', "if (action.type === 'research_pick') {")} · ${line('src/game/Game.ts', "if (action.type === 'research_skip') {")}` },
+  { actions: 'set_pause', parityRow: true, reason: 'Pacing only; the agent door is turn-based.', citation: line('src/game/Game.ts', "if (action.type === 'set_pause' && !this.secureClaimChoicePending()") },
+  { actions: 'skip_ceremony', parityRow: true, reason: 'Baron ceremony is presentation-only; headless spawns the Baron directly without a ceremony gate.', citation: line('src/sim/HeadlessContractSim.ts', '(position, at, escorts) => this.postBaronSpawn(position, at, escorts)') },
+  {
+    actions: 'agent_orders',
+    parityRow: false,
+    reason: "Not a human control: the seated agent rider's own order channel on the lockstep wire. The rider's seat writes it "
+      + 'and the browser applies it only for a headless slot, into that rider\'s body; a human has nothing to press and an '
+      + 'agent cannot lack its own channel, so it publishes no parity row.',
+    citation: `${line('src/game/Game.ts', 'this.agentRiderBodies.get(player.playerId)?.submit(action.orders, action.submissionId, this.timeAlive);')} · ${line('src/sim/SeatedLockstepSim.ts', "type: 'agent_orders',")}`,
+  },
 ];
 const tapeExemptActions = new Set(tapeExemptions.flatMap(({ actions }) => actions.split(' / ')));
+const tapeNotAControl = new Set(tapeExemptions.filter(({ parityRow }) => !parityRow).flatMap(({ actions }) => actions.split(' / ')));
 
 // ---------------------------------------------------------------------------
 // ADR-005 CONTROLS PARITY. Owner ruling 2026-09-07, verbatim: "Humans cannot control the
@@ -696,6 +742,7 @@ function audit() {
     }
 
     for (const action of tapeActions) {
+      if (tapeNotAControl.has(action)) continue;
       const placeBuild = action === 'place_build' && doorVerbs.includes('BUILD');
       const rotationParity = placeBuild && source['src/agent/StandingOrders.ts'].includes('rotationSteps?: 0 | 1 | 2 | 3;');
       const doorVerb = tapeDoorVerb[action] ?? action.toUpperCase();
@@ -812,9 +859,10 @@ function markdown(result) {
   const independentMenuGaps = divergentMenuRows.filter((entry) => reachabilityByContract.get(entry.contract) === 'equal');
   const reachabilityDerivedMenuGaps = divergentMenuRows.filter((entry) => reachabilityByContract.get(entry.contract) === 'agent-lacks');
   const reachabilityDerivedRefusals = new Set(reachabilityDerivedMenuGaps.map((entry) => entry.contract)).size;
+  // The door verb through the same `tapeDoorVerb` pairing the rows use, so a paired action is not listed as verbless.
   const newlyEnumeratedTapeActions = tapeActions.filter((action) =>
     !['weapon_toggle', 'research_pick', 'research_skip', 'death_action', 'secure_choice'].includes(action)
-      && !doorVerbs.includes(action.toUpperCase()));
+      && !doorVerbs.includes(tapeDoorVerb[action] ?? action.toUpperCase()));
   const reachability = reachabilityRows.reduce((counts, entry) =>
     ({ ...counts, [entry.direction]: (counts[entry.direction] ?? 0) + 1 }), {});
   const admitted = result.admission.measurements.filter((entry) =>
@@ -848,9 +896,9 @@ function markdown(result) {
     '',
     '### Class-8 cited exemptions',
     '',
-    '| tape action | reason | citation |',
-    '|---|---|---|',
-    ...result.tapeExemptions.map((entry) => `| ${cell(entry.actions)} | ${cell(entry.reason)} | ${cell(entry.citation)} |`),
+    '| tape action | parity rows | reason | citation |',
+    '|---|---|---|---|',
+    ...result.tapeExemptions.map((entry) => `| ${cell(entry.actions)} | ${entry.parityRow ? 'counted as agent-lacks' : 'none: not a human control'} | ${cell(entry.reason)} | ${cell(entry.citation)} |`),
     '',
     '## Worst offenders',
     '',
