@@ -977,3 +977,4 @@ Final verification: build/TypeScript PASS; default collection PASS; gate-unset b
 ## 2026-09-25 — Native play proofs, run 2
 
 - Blackout Ridge: PARTIAL desktop/phone; wave 12, bank/Book/reload/clean PASS, authored current storage FAIL, 0 Wh both banks. Two repair strategies, 15/12 repairs. [F-PP2-1](../play-proofs/run-2/e3-blackout-ridge/finding.md).
+- Canyon Works: FAIL desktop/phone; bridge and opposite flank routes stop near z=-7.88, CONNECT 0/2 misses wave 8, zero gold/builds. Full-width slope rejection confirmed by static calculation; no runtime fix within scope. [F-PP2-2](../play-proofs/run-2/e3-canyon-works/finding.md).

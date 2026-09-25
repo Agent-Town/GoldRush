@@ -146,6 +146,7 @@ type Snapshot = {
   power: ThreeGameDiagnostics['power'];
   pressure: ThreeGameDiagnostics['pressure'];
   escort: ThreeGameDiagnostics['escort'];
+  canyonWorks: ThreeGameDiagnostics['canyonWorks'];
 };
 
 async function read(page: Page): Promise<Snapshot | null> {
@@ -155,9 +156,10 @@ async function read(page: Page): Promise<Snapshot | null> {
       if (!d) return null;
       return {
         escort: d.escort,
+        canyonWorks: d.canyonWorks,
         power: d.power,
         pressure: d.pressure,
-        objective: { baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
+        objective: { canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -501,6 +503,14 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
+  if (contract.id === 'e3-canyon-works') return [
+    { id: 'sentry_beacon', dx: -12, dz: 8 },
+    { id: 'sentry_beacon', dx: -24, dz: 24 },
+    { id: 'sentry_beacon', dx: -28, dz: 52 },
+    { id: 'sentry_beacon', dx: 12, dz: 8 },
+    { id: 'sentry_beacon', dx: 24, dz: 24 },
+    { id: 'sentry_beacon', dx: 28, dz: 52 },
+  ];
   if (contract.id === 'e3-blackout-ridge') return [
     { id: 'capacitor_bank', dx: -8, dz: -26 },
     { id: 'capacitor_bank', dx: -18, dz: -26 },
@@ -661,6 +671,20 @@ export function nativeProof(id: string, run = 1) {
         if (contract.id === 'e3-blackout-ridge') {
           await fund(page, row, 200, Math.min(deadline, Date.now() + 120_000), fords, unreachable);
         }
+        if (contract.id === 'e3-canyon-works') {
+          // Test the marked bridge, then independent approaches along the full-width terrace.
+          const approaches = testInfo.project.name === 'desktop-chrome' ? [0, -24, -44] : [0, 24, 44];
+          for (const x of approaches) {
+            await walkTo(page, row, x, -12, 1);
+            const crossed = await walkTo(page, row, x, -5.5, 0.6, 65);
+            const probe = await read(page);
+            row.notes.push(`southern terrace approach x=${x}: crossed=${crossed}, hero=${JSON.stringify(probe?.hero)}, wave=${probe?.wave}, gold=${probe?.gold}`);
+            if (crossed) {
+              await journey(page, row, -34, 30, 1.2, fords);
+              break;
+            }
+          }
+        }
         const kit = kitFor(contract);
         row.notes.push(`kit=${kit.map((piece) => piece.id).join('+')}`);
         let kitIndex = 0;
@@ -704,6 +728,10 @@ export function nativeProof(id: string, run = 1) {
           }
           if (contract.id === 'e2-incline' && now.escort.enabled && now.escort.objectiveLost) {
             died = `ore cart lost at wave ${now.wave}, sim ${now.sim.toFixed(1)}, hero ${now.hero.x.toFixed(1)},${now.hero.z.toFixed(1)}`;
+            break;
+          }
+          if (contract.id === 'e3-canyon-works' && now.canyonWorks?.failed) {
+            died = `CONNECT deadline missed: ${JSON.stringify(now.canyonWorks)}; hero=${JSON.stringify(now.hero)}, gold=${now.gold}`;
             break;
           }
           if (now.paused) await unpause(page, row);
@@ -792,6 +820,9 @@ export function nativeProof(id: string, run = 1) {
 
         if (contract.id === 'e3-blackout-ridge' && !['capacitor-west', 'capacitor-east'].every(id => (row.powerBanksPeak[id] ?? 0) > 0)) {
           row.secures = fail(`${row.secures.detail}; authored banks not both observed storing current: ${JSON.stringify(row.powerBanksPeak)}`);
+        }
+        if (contract.id === 'e3-canyon-works' && !atSecure?.canyonWorks?.complete) {
+          row.secures = fail(`${row.secures.detail}; both galleries were not connected by wave 8`);
         }
         if (contract.id === 'e2-incline' && (!atSecure?.escort.enabled || atSecure.escort.arrived < atSecure.escort.required)) {
           row.secures = fail(`${row.secures.detail}; Incline Haul not completed: ${JSON.stringify(atSecure?.escort)}`);
