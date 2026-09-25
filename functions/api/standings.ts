@@ -20,6 +20,9 @@ type StandingsEnv = {
   ASSAY_WORKER_SECRET?: string;
   ASSAY_INDEX_MAX_AGE_MS?: string;
   ALLOWED_CORS_ORIGINS?: ReadonlySet<string>;
+  // kv-counters-to-ledger-2 (F-KV1-5): where the county's boards live. Bound on the Pages project (the
+  // ops evening, Part C step 9), this copy answers every request with a 308 there (`canonicalRedirect`).
+  STANDINGS_CANONICAL_ORIGIN?: string;
 };
 
 type StandingsContext = {
@@ -249,6 +252,8 @@ const CURRENT_SEASON = 2;
 const KNOWN_SEASONS: ReadonlySet<number> = new Set([FIRST_SEASON, CURRENT_SEASON]);
 
 export async function onRequest(context: StandingsContext): Promise<Response> {
+  const moved = canonicalRedirect(context);
+  if (moved) return moved;
   const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
@@ -548,6 +553,9 @@ function isRetiredRow(row: StoredRow): boolean {
 }
 
 async function assayRequest(context: StandingsContext, handle: (cors: Record<string, string>) => Promise<Response>): Promise<Response> {
+  // The three assay routes are this file's other doors onto the store, so they move with the board.
+  const moved = canonicalRedirect(context);
+  if (moved) return moved;
   const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   const secret = context.env.ASSAY_WORKER_SECRET;
@@ -1766,6 +1774,52 @@ async function readJson(request: Request): Promise<JsonRecord> {
     if (isRecord(value)) return value;
   } catch {}
   throw new HttpError(400, 'bad_json', 'JSON not accepted.');
+}
+
+// kv-counters-to-ledger-2 (F-KV1-5, 2026-09-25): ONE WRITER PER SURFACE (CLAUDE.md §4.4). Since the L3
+// cutover of 2026-08-23 the county's boards are the droplet's sqlite ledger (nginx routes /api/standings*
+// there: ops/droplet/agenttown.app.nginx.conf), so this Pages copy answers only whoever calls
+// gold-rush-3in.pages.dev directly, and each such call read or wrote the shared free-tier KV: a POST
+// wrote a shadow board, assay index or refusal record that no player reads. With
+// STANDINGS_CANONICAL_ORIGIN bound (the ops evening, docs/ops/ops-evening-2026-09.md Part C step 9),
+// every request to the four handlers is answered 308 to the same path and query on that origin before
+// any store is touched: 308 rather than 301 because it keeps the method and the body, so a POST lands
+// on the ledger as a POST. `no-store` keeps any client from caching the move, so unbinding the variable
+// and redeploying is the whole rollback, and the door's CORS headers ride along so a browser may follow.
+//
+// Unbound, empty, or not a bare https origin (a path, a query, a fragment or credentials), the door is
+// exactly what it was: a value that cannot be a redirect target is ignored (as `_ledger.ts` leaves a
+// door unbound when LEDGER_ORIGIN is not an origin it can use), and the step-9 probe then shows no
+// 308. A request already addressed to the canonical host is served and never moved, because a
+// redirect to itself would loop. The droplet runs this same file (server/ledger/serve.mjs) and sees
+// its requests as http on that host; its env never carries this variable, and this rule would hold
+// if it did.
+function canonicalRedirect(context: StandingsContext): Response | null {
+  const canonical = canonicalOrigin(context.env.STANDINGS_CANONICAL_ORIGIN);
+  if (!canonical) return null;
+  const url = new URL(context.request.url);
+  if (url.host === canonical.host) return null;
+  return new Response(null, {
+    status: 308,
+    headers: {
+      ...(corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS) ?? {}),
+      'Cache-Control': 'no-store',
+      Location: `${canonical.origin}${url.pathname}${url.search}`,
+    },
+  });
+}
+
+function canonicalOrigin(value: string | undefined): URL | null {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  let url: URL;
+  try {
+    url = new URL(trimmed);
+  } catch {
+    return null;
+  }
+  const bare = url.pathname === '/' && !url.search && !url.hash && !url.username && !url.password;
+  return url.protocol === 'https:' && bare ? url : null;
 }
 
 function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Record<string, string> | null {
