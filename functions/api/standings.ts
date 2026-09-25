@@ -3,8 +3,9 @@ import rotationSeeds from '../../assets/rotations/rotation-seeds.json' with { ty
 import engineEra from '../../assets/engine-era.json' with { type: 'json' };
 import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
+import { validateMotorActions } from '../../src/game/RunTape';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
-import { CONTRACT_BUNDLES, runTapeEnvelopeForContract } from '../../src/playbook/PlaybookFormat';
+import { CONTRACT_BUNDLES, runTapeEnvelopeForContract, validatePlaybook, type RunTapeEnvelope } from '../../src/playbook/PlaybookFormat';
 import { engineEraIncludes } from '../../src/replay/EngineEraLineage.mjs';
 import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
 import { constantTimeEqual } from './_compare';
@@ -1623,7 +1624,7 @@ function validTapeOutcome(value: unknown): boolean {
 }
 
 function validTapeInput(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null, stored = false): boolean {
-  if (!isRecord(value) || !hasOnlyKeys(value, new Set(['version', 'name', 'contractId', 'seed', 'difficultyPreset', 'stepSeconds', 'start', 'durationTicks', 'entries', 'truncated', 'primarySlot', 'streams']))) return false;
+  if (!isRecord(value) || !hasOnlyKeys(value, new Set(['version', 'name', 'contractId', 'seed', 'difficultyPreset', 'stepSeconds', 'start', 'durationTicks', 'entries', 'truncated', 'primarySlot', 'streams', 'motorActions', 'playbookUses']))) return false;
   if (value.version !== 1 || value.contractId !== contractId || value.seed !== seed || value.difficultyPreset !== difficulty || value.stepSeconds !== 1 / 30) return false;
   if (typeof value.name !== 'string' || !value.name || value.name.length > 64 || !isRecord(value.start)
     || !hasOnlyKeys(value.start, new Set(['x', 'z']))) return false;
@@ -1641,6 +1642,33 @@ function validTapeInput(value: unknown, contractId: unknown, seed: unknown, diff
     if (numberInRange(stream.start.x, -256, 256) === null || numberInRange(stream.start.z, -256, 256) === null) return false;
     if (!validTapeEntries(stream.entries, duration, envelope.maxEntries, stored)) return false;
     slots.add(slot);
+  }
+  // F-LSR1-0: the browser recorder's two OPTIONAL input-log keys. Motor actions are judged by the client's
+  // own `validateMotorActions` (RunTape.ts) and, like every entry here, start no earlier than tick 0.
+  const motorActions = validateMotorActions(value, duration, envelope.maxEntries);
+  if (motorActions === null || motorActions?.some((action) => action.t < 0)
+    || !validTapePlaybookUses(value.playbookUses, duration, envelope, contractId, seed, difficulty)) return false;
+  return true;
+}
+
+// F-LSR1-0 (door-tape-grammar-1, 2026-09-25): since 15dc51b89 (2026-09-05) the browser recorder writes
+// `playbookUses` on EVERY reel (RunTape.ts `snapshot`) and the Lantern replays it, so the door admits it in
+// exactly the shape the client reads back. Absent is lawful. Each use is `{ kind: 'playbook_use', atTick,
+// playbook }`: atTick an integer in [0, durationTicks], never earlier than the use before it; the recording
+// judged by the client's own parser (`validatePlaybook`, the call RunTape.ts `validatePlaybookUses` makes)
+// and ridden on the tape's own contract, seed and difficulty (as RunTape.ts `validateRunTape` requires). The
+// list is capped at the envelope's maxEntries; `maxTapeBytes`, checked first in `validateTape`, bounds it.
+function validTapePlaybookUses(value: unknown, duration: number, envelope: RunTapeEnvelope, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): boolean {
+  if (value === undefined) return true;
+  if (!Array.isArray(value) || value.length > envelope.maxEntries) return false;
+  let prior = 0;
+  for (const use of value) {
+    if (!isRecord(use) || !hasOnlyKeys(use, new Set(['kind', 'atTick', 'playbook'])) || use.kind !== 'playbook_use') return false;
+    const atTick = integerInRange(use.atTick, prior, duration);
+    const parsed = validatePlaybook(use.playbook, envelope.maxTicks, envelope.maxEntries);
+    if (atTick === null || !parsed.ok || parsed.playbook.contractId !== contractId || parsed.playbook.seed !== seed
+      || parsed.playbook.difficultyPreset !== difficulty) return false;
+    prior = atTick;
   }
   return true;
 }

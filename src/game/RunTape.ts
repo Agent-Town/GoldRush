@@ -422,7 +422,7 @@ export function validateRunTape(value: unknown): RunTape | null {
   };
 }
 
-function validateMotorActions(value: unknown, durationTicks: number, maxEntries: number): RunTapeMotorAction[] | null | undefined {
+export function validateMotorActions(value: unknown, durationTicks: number, maxEntries: number): RunTapeMotorAction[] | null | undefined {
   if (!isRecord(value) || value.motorActions === undefined) return undefined;
   if (!Array.isArray(value.motorActions) || value.motorActions.length > maxEntries) return null;
   const actions: RunTapeMotorAction[] = [];
