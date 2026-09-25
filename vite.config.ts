@@ -38,6 +38,20 @@ export default defineConfig(() => {
     .slice(0, 8);
   return {
   base: releaseE1 && process.env.GR_BASE ? process.env.GR_BASE : './',
+  // ONE DEPENDENCY CACHE PER CHECKOUT (worktree-vite-cache-1; F-TT2-2 and the canyon-works-traversal-1
+  // boot failure, 2026-09-25). A worktree's `node_modules` is a symlink to the primary checkout's, so the
+  // default cache, `node_modules/.vite`, was ONE directory for every dev server and every vite-loading node
+  // guard on this Mac, while vite keys it by `config.root`: a boot from any other checkout logged "vite
+  // config has changed", deleted the shared `deps/` and wrote its own, and a page loading on a sibling's
+  // server got 504 "Outdated Optimize Dep" and never imported Game.ts (artifacts/worktree-vite-cache-1/).
+  // Each checkout now keeps its own, resolved from THIS file's directory (never process.cwd()), gitignored.
+  cacheDir: path.resolve(import.meta.dirname, '.vite-cache'),
+  // The dependency scan's entries, named: the default (`**/*.html` under the root) follows the art-store
+  // symlink into `assets/pilots/hero-3d/compare.html`, whose tsconfig extends `../../../tsconfig.json` from
+  // the store's REAL path, a file that does not exist, so the scan died with [TSCONFIG_ERROR] in every
+  // checkout, pre-bundling was skipped, and every cold boot found three.js at runtime and reloaded the page
+  // under the test. These are the two pages the dev server boots the game from.
+  optimizeDeps: { entries: ['index.html', 'src/replay/harness.html'] },
   define: {
     __APP_BUILD__: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA?.slice(0, 8) ?? 'dev'),
     __APP_BUILD_VARIANT__: JSON.stringify(buildVariant),
