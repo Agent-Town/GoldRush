@@ -214,11 +214,15 @@ const tapeDoorVerb = {
   // artifacts/same-game-audit-verbs-1/dispatch-pairing.mjs lifts Game.ts's OWN beginProspectorDispatch,
   // advanceProspectorDispatch and prospectorDispatchPoint (this file's `browserPredicate` technique) and runs them in
   // HeadlessContractSim beside a HARVEST sent through the public door, per contract, same contract and same seed
-  // (`same-game-seam-<id>`). On all 38 door-admitted contracts both walk the same path, arrive on the same tick, pan
-  // the same seam once for the same gold and leave the same remaining and the same economy; the sluice arm and the
-  // three door-refused boards that have seams pair too (e10-river has none). Cadence differs and is not reach: the
-  // dispatch pans 2 ticks later (its fixed 4-tick settle, F-SLHP-1) and leaves the seam 26 ticks sooner (HARVEST's
-  // receipt holds the Prospector for Balance.agent.workSeconds). The four door-refused boards stay agent-lacks.
+  // (`same-game-seam-<id>`). On all 38 door-admitted contracts, in fresh runs at base stats, both walk the same path,
+  // arrive on the same tick, pan the same seam once for the same gold and leave the same remaining and the same
+  // economy; the sluice arm and the three door-refused boards that have seams pair too (e10-river has none). Cadence
+  // differs and is not reach: the dispatch pans 2 ticks later (its fixed 4-tick settle, F-SLHP-1) and leaves the seam
+  // 26 ticks sooner (HARVEST's receipt holds the Prospector for Balance.agent.workSeconds). YIELD CAN DIFFER once
+  // panning is upgraded (F-SGA1-2): with two pan_legend stacks (a 0.6 s pan tick) that 0.9 s linger keeps GR-SIM's
+  // harvest actor, the Prospector, on the seam long enough for one more passive pan per order, so HARVEST out-earns
+  // the dispatch (dispatch-pairing-pan-legend-2.json). The rows measure reach, so the pairing stands; the yield gap
+  // is the owner's Same-Laws question. The four door-refused boards stay agent-lacks.
   prospector_dispatch: 'HARVEST',
 };
 // The first three citations were typed as literal `src/game/Game.ts:NNNN` strings in `08fba1d64` (2026-08-12), the only

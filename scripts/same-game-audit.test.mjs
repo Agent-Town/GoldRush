@@ -460,8 +460,10 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // same-game-audit-verbs-1, the second move: prospector_dispatch pairs with HARVEST, MEASURED WITH THE SIM rather than
   // inferred from the target shapes (artifacts/same-game-audit-verbs-1/dispatch-pairing.json: Game.ts's own dispatch
   // methods, lifted, against a HARVEST through the harness's door, same contract and same seed, on all 42 boards). The
-  // 38 boards the door admits all pair: same path and arrival tick, the same seam panned once for the same gold, the same
-  // remaining and economy; only the cadence differs (the dispatch pans 2 ticks later and leaves the seam 26 ticks sooner).
+  // 38 boards the door admits all pair at base stats: same path and arrival tick, the same seam panned once for the same
+  // gold, the same remaining and economy; only the cadence differs (the dispatch pans 2 ticks later and leaves the seam
+  // 26 ticks sooner). With panning upgraded HARVEST can out-earn the dispatch by one passive pan per order (F-SGA1-2);
+  // these rows measure reach, so that yield gap does not move them.
   // So 38 rows move agent-lacks -> equal and the 4 door-refused boards keep theirs: 553 -> 515, equal 1252 -> 1290,
   // rows 1805 unchanged. ATTRIBUTED BY REVERT-AND-REPRODUCE, all four corners measured on this branch:
   //   neither (the base)                 -> 0 / 595 / 1252 / 0 over 1847
