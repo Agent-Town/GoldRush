@@ -1,0 +1,64 @@
+BATCH START 2026-09-25T13:04:40Z HEAD=dec3196c5 dirty=1
+=== test:accounts
+
+> gold-rush@0.1.0 test:accounts
+> node scripts/test-accounts.mjs
+
+(node:99792) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+accounts kv checks passed (43)
+accounts sqlite checks passed (43)
+accounts sign-in hardening checks passed (27)
+accounts office credential checks passed (26)
+accounts ledger road checks passed (86)
+accounts kv-to-ledger migration checks passed (16)
+ACCOUNTS_RC=0
+=== test:mp
+
+> gold-rush@0.1.0 test:mp
+> node scripts/test-multiplayer.mjs
+
+(node:248) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+multiplayer relay checks passed (528)
+MP_RC=0
+=== test:stats
+
+> gold-rush@0.1.0 test:stats
+> node scripts/test-stats.mjs && node scripts/test-standings.mjs && node scripts/test-ledger-worker.mjs
+
+stats worker checks passed (87)
+(node:1247) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+contract clock census 42/25/17/0
+refusals kv sample {"ok":true,"counts":{"unsecured":1,"bad_payload":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1790341499354},{"reason":"unsecured","contractId":"the-claim","refusedAt":1790341499354}]}
+standings assay kv checks passed (372)
+contract clock census 42/25/17/0
+refusals sqlite sample {"ok":true,"counts":{"bad_payload":1,"unsecured":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1790341500265},{"reason":"unsecured","contractId":"the-claim","refusedAt":1790341500264}]}
+standings assay sqlite checks passed (372)
+(node:1331) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+file:///Users/robin/Claude/Projects/wt-kv2/scripts/test-ledger-worker.mjs:167
+    child.once('close', (code) => code === 0 ? resolve() : reject(new Error(`assay worker exited ${code}: ${output}`)));
+                                                                  ^
+
+Error: assay worker exited 1: file:///Users/robin/Claude/Projects/wt-kv2/scripts/assay-replay-agent.mjs:50
+    throw new Error(`assay worker requires Node ${CANONICAL_ASSAY_NODE_VERSION} exactly; found ${version}`);
+          ^
+
+Error: assay worker requires Node 26.4.0 exactly; found 23.11.1
+    at assertCanonicalAssayNode (file:///Users/robin/Claude/Projects/wt-kv2/scripts/assay-replay-agent.mjs:50:11)
+    at file:///Users/robin/Claude/Projects/wt-kv2/scripts/assay-worker.mjs:13:1
+
+Node.js v23.11.1
+
+    at ChildProcess.<anonymous> (file:///Users/robin/Claude/Projects/wt-kv2/scripts/test-ledger-worker.mjs:167:67)
+    at Object.onceWrapper (node:events:622:26)
+    at ChildProcess.emit (node:events:507:28)
+    at maybeClose (node:internal/child_process:1101:16)
+    at ChildProcess._handle.onexit (node:internal/child_process:305:5)
+
+Node.js v23.11.1
+STATS_RC=1
+BATCH END 2026-09-25T13:05:01Z
+DLOCK_EXIT=0

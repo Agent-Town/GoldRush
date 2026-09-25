@@ -1,0 +1,425 @@
+{
+  "instrument": "artifacts/kv-counters-to-ledger-2/measure-kv-writes.mjs",
+  "base": "dec3196c5 (dec3196c5)",
+  "tree": "64d696c0f plus working-tree changes",
+  "doorsThatDiffer": [
+    "functions/api/_multiplayer.ts",
+    "functions/api/standings.ts"
+  ],
+  "before": {
+    "label": "before (base)",
+    "revision": "dec3196c5",
+    "coopFallback": {
+      "limits": {
+        "create": 10,
+        "connect": 30,
+        "inspect": 120
+      },
+      "writesPerRequest": {
+        "create": {
+          "admitted": 10,
+          "kvWritesPerAdmittedRequest": 1,
+          "refusedAttempts": 5,
+          "kvWritesPerRefusedAttempt": 0,
+          "kvCallsTotal": {
+            "total": 25,
+            "writes": 10,
+            "byMethod": {
+              "get": 15,
+              "put": 10
+            }
+          }
+        },
+        "connect": {
+          "admitted": 30,
+          "kvWritesPerAdmittedRequest": 1,
+          "refusedAttempts": 5,
+          "kvWritesPerRefusedAttempt": 0,
+          "kvCallsTotal": {
+            "total": 65,
+            "writes": 30,
+            "byMethod": {
+              "get": 35,
+              "put": 30
+            }
+          }
+        },
+        "inspect": {
+          "admitted": 120,
+          "kvWritesPerAdmittedRequest": 1,
+          "refusedAttempts": 5,
+          "kvWritesPerRefusedAttempt": 0,
+          "kvCallsTotal": {
+            "total": 245,
+            "writes": 120,
+            "byMethod": {
+              "get": 125,
+              "put": 120
+            }
+          }
+        }
+      },
+      "window": {
+        "connectsAtMinutes0And59ThenAt60": {
+          "ttlArmedByFirstConnectSeconds": 3600,
+          "minute59": "admitted",
+          "ttlArmedByMinute59ConnectSeconds": 3600,
+          "minute60": "admitted",
+          "storedValueAfterMinute60": "3",
+          "windowRestartedAtMinute60": false
+        },
+        "limitSpentMinutes0To29": {
+          "lastAdmittedMinute": 29,
+          "readmittedAtMinute": 89
+        },
+        "everyTenMinutesForSixHours": {
+          "connects": 36,
+          "refused": 5,
+          "firstRefusedAtMinute": 300
+        },
+        "withKvTtlFloor": {
+          "59:00": "admitted",
+          "59:01": "admitted",
+          "59:30": "admitted",
+          "59:59": "admitted",
+          "60:00": "admitted"
+        }
+      }
+    },
+    "standingsPages": {
+      "unbound": [
+        {
+          "call": "POST /api/standings, no body (the ops-evening probe)",
+          "status": 415,
+          "location": null,
+          "kvCalls": {
+            "total": 2,
+            "writes": 1,
+            "byMethod": {
+              "get": 1,
+              "put": 1
+            }
+          }
+        },
+        {
+          "call": "POST /api/standings, an accepted submission",
+          "status": 200,
+          "location": null,
+          "kvCalls": {
+            "total": 49,
+            "writes": 4,
+            "byMethod": {
+              "get": 45,
+              "put": 4
+            }
+          }
+        },
+        {
+          "call": "POST /api/standings, a refused submission (unsecured)",
+          "status": 400,
+          "location": null,
+          "kvCalls": {
+            "total": 4,
+            "writes": 2,
+            "byMethod": {
+              "get": 2,
+              "put": 2
+            }
+          }
+        },
+        {
+          "call": "GET /api/standings (a board)",
+          "status": 200,
+          "location": null,
+          "kvCalls": {
+            "total": 1,
+            "writes": 0,
+            "byMethod": {
+              "get": 1
+            }
+          }
+        },
+        {
+          "call": "GET /api/standings/assay-queue (assayer key)",
+          "status": 200,
+          "location": null,
+          "kvCalls": {
+            "total": 44,
+            "writes": 1,
+            "byMethod": {
+              "get": 43,
+              "put": 1
+            }
+          }
+        }
+      ],
+      "bound": [
+        {
+          "call": "POST /api/standings, no body (the ops-evening probe)",
+          "status": 415,
+          "location": null,
+          "kvCalls": {
+            "total": 2,
+            "writes": 1,
+            "byMethod": {
+              "get": 1,
+              "put": 1
+            }
+          }
+        },
+        {
+          "call": "POST /api/standings, an accepted submission",
+          "status": 200,
+          "location": null,
+          "kvCalls": {
+            "total": 49,
+            "writes": 4,
+            "byMethod": {
+              "get": 45,
+              "put": 4
+            }
+          }
+        },
+        {
+          "call": "POST /api/standings, a refused submission (unsecured)",
+          "status": 400,
+          "location": null,
+          "kvCalls": {
+            "total": 4,
+            "writes": 2,
+            "byMethod": {
+              "get": 2,
+              "put": 2
+            }
+          }
+        },
+        {
+          "call": "GET /api/standings (a board)",
+          "status": 200,
+          "location": null,
+          "kvCalls": {
+            "total": 1,
+            "writes": 0,
+            "byMethod": {
+              "get": 1
+            }
+          }
+        },
+        {
+          "call": "GET /api/standings/assay-queue (assayer key)",
+          "status": 200,
+          "location": null,
+          "kvCalls": {
+            "total": 44,
+            "writes": 1,
+            "byMethod": {
+              "get": 43,
+              "put": 1
+            }
+          }
+        }
+      ]
+    }
+  },
+  "after": {
+    "label": "after (this tree)",
+    "revision": "working tree",
+    "coopFallback": {
+      "limits": {
+        "create": 10,
+        "connect": 30,
+        "inspect": 120
+      },
+      "writesPerRequest": {
+        "create": {
+          "admitted": 10,
+          "kvWritesPerAdmittedRequest": 1,
+          "refusedAttempts": 5,
+          "kvWritesPerRefusedAttempt": 0,
+          "kvCallsTotal": {
+            "total": 25,
+            "writes": 10,
+            "byMethod": {
+              "get": 15,
+              "put": 10
+            }
+          }
+        },
+        "connect": {
+          "admitted": 30,
+          "kvWritesPerAdmittedRequest": 1,
+          "refusedAttempts": 5,
+          "kvWritesPerRefusedAttempt": 0,
+          "kvCallsTotal": {
+            "total": 65,
+            "writes": 30,
+            "byMethod": {
+              "get": 35,
+              "put": 30
+            }
+          }
+        },
+        "inspect": {
+          "admitted": 120,
+          "kvWritesPerAdmittedRequest": 1,
+          "refusedAttempts": 5,
+          "kvWritesPerRefusedAttempt": 0,
+          "kvCallsTotal": {
+            "total": 245,
+            "writes": 120,
+            "byMethod": {
+              "get": 125,
+              "put": 120
+            }
+          }
+        }
+      },
+      "window": {
+        "connectsAtMinutes0And59ThenAt60": {
+          "ttlArmedByFirstConnectSeconds": 3600,
+          "minute59": "admitted",
+          "ttlArmedByMinute59ConnectSeconds": 60,
+          "minute60": "admitted",
+          "storedValueAfterMinute60": "1:1790330400000",
+          "windowRestartedAtMinute60": true
+        },
+        "limitSpentMinutes0To29": {
+          "lastAdmittedMinute": 29,
+          "readmittedAtMinute": 60
+        },
+        "everyTenMinutesForSixHours": {
+          "connects": 36,
+          "refused": 0,
+          "firstRefusedAtMinute": null
+        },
+        "withKvTtlFloor": {
+          "59:00": "admitted",
+          "59:01": "refused",
+          "59:30": "refused",
+          "59:59": "refused",
+          "60:00": "admitted"
+        }
+      }
+    },
+    "standingsPages": {
+      "unbound": [
+        {
+          "call": "POST /api/standings, no body (the ops-evening probe)",
+          "status": 415,
+          "location": null,
+          "kvCalls": {
+            "total": 2,
+            "writes": 1,
+            "byMethod": {
+              "get": 1,
+              "put": 1
+            }
+          }
+        },
+        {
+          "call": "POST /api/standings, an accepted submission",
+          "status": 200,
+          "location": null,
+          "kvCalls": {
+            "total": 49,
+            "writes": 4,
+            "byMethod": {
+              "get": 45,
+              "put": 4
+            }
+          }
+        },
+        {
+          "call": "POST /api/standings, a refused submission (unsecured)",
+          "status": 400,
+          "location": null,
+          "kvCalls": {
+            "total": 4,
+            "writes": 2,
+            "byMethod": {
+              "get": 2,
+              "put": 2
+            }
+          }
+        },
+        {
+          "call": "GET /api/standings (a board)",
+          "status": 200,
+          "location": null,
+          "kvCalls": {
+            "total": 1,
+            "writes": 0,
+            "byMethod": {
+              "get": 1
+            }
+          }
+        },
+        {
+          "call": "GET /api/standings/assay-queue (assayer key)",
+          "status": 200,
+          "location": null,
+          "kvCalls": {
+            "total": 44,
+            "writes": 1,
+            "byMethod": {
+              "get": 43,
+              "put": 1
+            }
+          }
+        }
+      ],
+      "bound": [
+        {
+          "call": "POST /api/standings, no body (the ops-evening probe)",
+          "status": 308,
+          "location": "https://agenttown.app/api/standings",
+          "kvCalls": {
+            "total": 0,
+            "writes": 0,
+            "byMethod": {}
+          }
+        },
+        {
+          "call": "POST /api/standings, an accepted submission",
+          "status": 308,
+          "location": "https://agenttown.app/api/standings",
+          "kvCalls": {
+            "total": 0,
+            "writes": 0,
+            "byMethod": {}
+          }
+        },
+        {
+          "call": "POST /api/standings, a refused submission (unsecured)",
+          "status": 308,
+          "location": "https://agenttown.app/api/standings",
+          "kvCalls": {
+            "total": 0,
+            "writes": 0,
+            "byMethod": {}
+          }
+        },
+        {
+          "call": "GET /api/standings (a board)",
+          "status": 308,
+          "location": "https://agenttown.app/api/standings?contract=the-claim&epoch=epoch-1-frontier",
+          "kvCalls": {
+            "total": 0,
+            "writes": 0,
+            "byMethod": {}
+          }
+        },
+        {
+          "call": "GET /api/standings/assay-queue (assayer key)",
+          "status": 308,
+          "location": "https://agenttown.app/api/standings/assay-queue?limit=5",
+          "kvCalls": {
+            "total": 0,
+            "writes": 0,
+            "byMethod": {}
+          }
+        }
+      ]
+    }
+  }
+}

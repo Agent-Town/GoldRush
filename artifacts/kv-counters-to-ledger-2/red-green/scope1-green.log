@@ -1,0 +1,21 @@
+# scope 1+2 GREEN at the tip of the change: the door on the shared hour, the census at seven
+# 2026-09-25T13:07:15Z HEAD=dec3196c5 node=v26.4.0 changed: functions/api/_multiplayer.ts scripts/ratelimit-window.test.mjs 
+$ node --test scripts/ratelimit-window.test.mjs
+✔ the rider cap is 60 and the sixty-first submission inside one hour is refused (0.976667ms)
+✔ an hour is an hour: the limit refills once the window from the first write has passed (0.327417ms)
+✔ a refusal never bumps the count and never re-arms the window (0.56175ms)
+✔ the stored ttl is the remainder of the window, never a fresh hour (0.159209ms)
+✔ a counter written before the window start was stored keeps its count (0.106041ms)
+✔ the co-op door (KV fallback): a connect admitted at minute 59 does not extend its window (270.313834ms)
+✔ the co-op door (KV fallback): the count restarts at the hour measured from the first connect (0.741917ms)
+✔ the co-op door (KV fallback): a rider who filled the limit is let back in at the hour, not an hour after the last connect (2.837292ms)
+✔ every door that shares this limiter still passes its own ttl (17.741417ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 424.535916
+EXIT=0

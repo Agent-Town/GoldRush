@@ -1,0 +1,10 @@
+# scope 3 GREEN: the canonical-origin rows against the changed standings door
+# 2026-09-25T13:09:24Z HEAD=4abe5075b node=v26.4.0 changed: functions/api/standings.ts scripts/test-standings.mjs 
+$ node scripts/test-standings.mjs
+contract clock census 42/25/17/0
+refusals kv sample {"ok":true,"counts":{"unsecured":1,"bad_payload":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1790341765979},{"reason":"unsecured","contractId":"the-claim","refusedAt":1790341765979}]}
+standings assay kv checks passed (413)
+contract clock census 42/25/17/0
+refusals sqlite sample {"ok":true,"counts":{"bad_payload":1,"unsecured":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1790341766982},{"reason":"unsecured","contractId":"the-claim","refusedAt":1790341766982}]}
+standings assay sqlite checks passed (413)
+EXIT=0

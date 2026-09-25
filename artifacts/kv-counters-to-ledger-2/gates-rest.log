@@ -1,0 +1,769 @@
+BATCH START 2026-09-25T13:47:10Z node=v26.4.0
+## TIP 64d696c0f dirty=0 env.local=absent
+=== [tip] node scripts/test-ticker-stats.mjs
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+[tip] TICKER_RC=0
+=== [tip] test:findings-state
+
+> gold-rush@0.1.0 test:findings-state
+> node scripts/findings-state-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+declared subjects : 665
+declared closed   : 481
+declared open     : 184
+double-state      : 0
+wide-open advisory : 374 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+[tip] FINDINGS_RC=0
+=== [tip] test:blocker-panel
+
+> gold-rush@0.1.0 test:blocker-panel
+> node scripts/blocker-panel-closed-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+panel rows        : 46
+rows with an F-ID : 43
+census closed     : 591
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+[tip] BLOCKER_RC=0
+=== [tip] test:ruling-propagation
+
+> gold-rush@0.1.0 test:ruling-propagation
+> node scripts/ruling-propagation-guard.mjs
+
+ruling-propagation: 14 findings recorded RULED · 70 goal leaves still refuse work · 0 stale
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+  reason corpus     : 62/70 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+      unread: stopped     b4v3-picnic-active-defense  [note_s2131, note]
+      unread: stopped     b4v2-picnic-stake-pressure  [note_s2090, note_s2088, note_s2089, note_s2139, note]
+      unread: stopped     f2251-1-county-board-red  [note_s2251b, note]
+      unread: superseded  art-jumper-rotation-retake  [note_s_att_20260824, note_s2249, note]
+      unread: superseded  lane-vp-02b-jumper-slot-red  [authorNotes, drainNotes]
+      unread: superseded  lane-c-f1148-1-trajectory-split  [authorNotes, drainNotes]
+      unread: superseded  jumper-8way-wiring  [note_s_att_20260824]
+      unread: superseded  ap-orders-adapter-wiring  [note]
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+[tip] RULING_RC=0
+=== [tip] test:desk-declaration
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs
+
+=== desk-declaration-guard ===
+corpus tree       : linked-worktree
+desk F-IDs        : 2
+desk slugs        : 1
+🔺 desk segments  : 3
+unexamined        : 0
+with a BACKLOG row: 3
+undeclared        : 0 (grandfathered 0)
+
+desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+  line-1 is NOT the one main carries.
+  Both corpora here are TRACKED, so this tree is frozen at its branch point and
+  the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+  would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+  proven by manufacturing: a real defect on main read byte-identically to a clean
+  board from here).
+  Re-run from the main worktree, or pass --root <main worktree>.
+[tip] DESKDECL_RC=2
+=== [tip] nul-audit
+nul-audit: corpus 26555 text subject(s) — 26153 read, 402 empty.
+nul-audit: excluded 11844 known-binary, 107 UNCLASSIFIED of 38506 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .cpuprofile×29 .bak×14 (no extension)×10 .pid×9 .exit×6 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .sha256×3 .done×3 .stderr×2 .timer×2 .stranded-1e057810×1 .progress×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+[tip] NUL_RC=0
+=== [tip] test:review-fixes + tail
+
+> gold-rush@0.1.0 test:review-fixes
+> node --test --test-concurrency=1 scripts/review-mixed-hashes.test.mjs scripts/review-party-retention.test.mjs scripts/review-save-names.test.mjs scripts/review-wrecked-turrets.test.mjs scripts/node-guards-watchdog.test.mjs scripts/ratelimit-window.test.mjs scripts/landing-rotation-derivation.test.mjs scripts/world-dispatch-boss-trigger-guard.test.mjs scripts/landmark-collision.test.mjs scripts/site-security-headers.test.mjs scripts/status-rotate-month.test.mjs scripts/backlog-split-closed.test.mjs scripts/attended-land.test.mjs
+
+✔ the lock predicate knows the four STATUS line-1 shapes and nothing else (0.558959ms)
+✔ a config must carry the fields a landing needs and refuses an F-ID in the STATUS phrase (2.27625ms)
+✔ the env file is single-quoted and survives apostrophes, spaces and dollar signs (0.609167ms)
+✔ union keeps both sides of a conflict block and refuses leftover markers (0.660667ms)
+✔ the evidence table lists only the gates that ran, last line per gate (0.165791ms)
+✔ the verdict allows only the configured e2e reds and the known battery classes (1.630083ms)
+✔ bookkeeping is idempotent and puts the phrase before the desk header without splicing (2.7115ms)
+✔ bookkeeping works on a chain whose stale line 1 carries a fire lock shape (the live lock is the ff gate, not this file) (1.603708ms)
+✔ --dry-run states rows, bytes and keys per destination and leaves the tree untouched (43.38875ms)
+✔ --apply moves closed rows below the title and keeps open, desk, gate, RULED and OWNER rows (41.66525ms)
+✔ every byte that left the index is in a part file, plus the headers and pointers it added (42.498417ms)
+✔ a second --apply moves nothing, doubles no pointer and changes no byte (81.143084ms)
+✔ a baseline key follows the row that carried its citation, and the allowance is not grown (42.403375ms)
+✔ GROUND TRUTH — a STRADDLING coordinate is allowed on both sides, and the addition is named (42.460959ms)
+✔ MANUFACTURED DEFECT — a baseline key whose citation is nowhere REFUSES and writes nothing (43.320042ms)
+✔ REVERSE CONTROL — the same board with a placeable baseline applies cleanly (43.256791ms)
+✔ REFUSES when the baseline is absent — a ratchet without its baseline is not a ratchet (42.399375ms)
+✔ MANUFACTURED DEFECT — pointer bytes that go uncounted REFUSE and write nothing (46.537375ms)
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (42.0495ms)
+✔ an index with no # Task backlog title moves nothing and says so (32.84175ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (97.533334ms)
+✔ the landing page holds no hand-written rotation id (19.442125ms)
+✔ the landing page declares no CURRENT_ROTATION_ID constant (17.679875ms)
+✔ the page derives the id the registry minted, for every rotation the county ships (1.171916ms)
+✔ the page and the door pick the same rotation at every instant the registry covers (0.364084ms)
+✔ a week that was never minted walks back to the latest rotation that did open (0.27575ms)
+✔ a resting door is asked once, not twelve times (0.25375ms)
+✔ e6-picnic retains the parent blockers and appends its own registered solids (1.004542ms)
+✔ e7-dead-band retains the parent blockers and appends its own registered solids (0.096459ms)
+✔ e7-relay-rush retains the parent blockers and appends its own registered solids (0.060208ms)
+✔ e8-far-side retains the parent blockers and appends its own registered solids (0.068167ms)
+✔ alias-only maps retain exactly their parent blockers (0.072ms)
+✔ plain maps retain their footprints without duplication (0.098958ms)
+✔ a file that stops producing TAP is sampled, killed, retried once, and reported red (16747.5185ms)
+✔ a battery that keeps producing TAP is never killed, however long it runs (5133.962833ms)
+✔ the stall bound is finite, reported, and can only be LOWERED from the environment (1040.637875ms)
+✔ the rider cap is 60 and the sixty-first submission inside one hour is refused (1.108458ms)
+✔ an hour is an hour: the limit refills once the window from the first write has passed (0.369625ms)
+✔ a refusal never bumps the count and never re-arms the window (0.605125ms)
+✔ the stored ttl is the remainder of the window, never a fresh hour (0.190458ms)
+✔ a counter written before the window start was stored keeps its count (0.1295ms)
+✔ the co-op door (KV fallback): a connect admitted at minute 59 does not extend its window (291.407542ms)
+✔ the co-op door (KV fallback): the count restarts at the hour measured from the first connect (0.779375ms)
+✔ the co-op door (KV fallback): a rider who filled the limit is let back in at the hour, not an hour after the last connect (2.926708ms)
+✔ every door that shares this limiter still passes its own ttl (20.618292ms)
+✔ browser-only: matching peer, remote after local (1.079541ms)
+✔ browser-only: mismatching peer, remote after local (0.164292ms)
+✔ browser-only: matching peer, remote before local (0.126125ms)
+✔ browser-only: mismatching peer, remote before local (0.095792ms)
+✔ mixed: matching peer, remote after local (0.126709ms)
+✔ mixed: mismatching peer, remote after local (0.112792ms)
+✔ mixed: matching peer, remote before local (0.090583ms)
+✔ mixed: mismatching peer, remote before local (0.098042ms)
+✔ headless-only: matching peer, remote after local (0.088542ms)
+✔ headless-only: mismatching peer, remote after local (0.12175ms)
+✔ headless-only: matching peer, remote before local (0.074792ms)
+✔ headless-only: mismatching peer, remote before local (0.059333ms)
+✔ a thin seat, unknown ID, or self hash cannot satisfy or poison the browser quorum (0.074542ms)
+✔ one browser with thin seats ignores their incompatible hashes (0.069833ms)
+✔ headless-only rooms require each headless peer (0.054458ms)
+✔ thin seats keep hash exchange disabled (0.236ms)
+✔ an outstanding comparison keeps the roster of its sampled tick after a peer leaves (0.278625ms)
+✔ later ticks use the smaller roster and ignore a departed peer (0.114375ms)
+✔ snapshot compression keeps the sampled quorum even when the roster changes before encoding finishes (6.725459ms)
+party retention checks passed (party sizes 1–4, top-100/leftover bounds, replay survival, archives, rotations)
+✔ scripts/review-party-retention.test.mjs (756.185541ms)
+(node:49798) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the untouched default saves and remains readable on the manual shelf (4.226834ms)
+✔ legal town names and the fallback fit every supported wave digit count (19.782625ms)
+✔ manual input keeps its punctuation, reserved-name, profanity, and duplicate checks (0.40675ms)
+(node:49823) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ later-era mounts stop on wreck or suspension and return on repair with stable relay IDs (2688.5905ms)
+public/_headers "/*": 5 security headers, 10 CSP directives
+✔ public/_headers sends the five security headers on every path (1.782375ms)
+✔ the Cache-Control rules 058-device-tiers gates are still there (0.09825ms)
+✔ the bug-office report TTL and the number the fetch script prints are the same (0.404541ms)
+✔ the audit catches a deleted policy, a widened source and an enforcing flip (1.584917ms)
+✔ --dry-run states the accounting per destination and leaves the tree untouched (39.551ms)
+✔ --apply moves the closed months and keeps line 1, the law bullets and the current month (42.438208ms)
+✔ a second --apply moves nothing and changes no byte (71.685166ms)
+✔ the trailing window holds the newest bullets on the board whatever their month (33.765958ms)
+✔ an unstamped bullet is filed by its session neighbours, and prose dates never decide (32.995292ms)
+✔ a bullet that cannot be placed at all STAYS ON THE BOARD (33.796709ms)
+✔ MANUFACTURED DEFECT — a header whose bytes go uncounted REFUSES and writes nothing (41.095958ms)
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (39.619542ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (95.01725ms)
+✔ every boss-kind dispatch trigger names a contract that declares a boss (4.108125ms)
+✔ M8-5 is keyed to Low Orbit being secured, not to a boss it never had (1.983834ms)
+✔ the guard BITES: a boss trigger on a bossless map is rejected (1.806792ms)
+ℹ tests 85
+ℹ suites 0
+ℹ pass 85
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30089.945542
+[tip] REVIEWFIXES_RC=0
+=== [tip] the four reds' files, same minute as the control
+✔ a desk item WITH a declaring row passes (63.183167ms)
+✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (46.711583ms)
+✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (47.048083ms)
+✔ a row whose id sits past the 90-char subject zone does NOT declare it (46.747917ms)
+✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (248.93525ms)
+✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (130.184958ms)
+✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (50.120041ms)
+✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (33.995083ms)
+✔ REFUSES (exit 2) when the desk segment holds zero keyed items (31.772125ms)
+✔ REFUSES (exit 2) when BACKLOG.md is missing (31.959875ms)
+✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (47.580459ms)
+✖ the live board is green under this guard (baseline is honest) (119.838417ms)
+✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (31.743ms)
+✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (47.763375ms)
+✔ all five desk spellings are read — the majority form was invisible (232.496042ms)
+✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (46.188167ms)
+✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (44.36675ms)
+✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (45.383292ms)
+✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (31.409083ms)
+✔ a SLUG-keyed desk item WITH a declaring row passes (60.38225ms)
+✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (44.88525ms)
+✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (45.517125ms)
+✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (59.702416ms)
+✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (63.778958ms)
+✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (59.802875ms)
+✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.252208ms)
+✔ every grandfathered id is still on the desk — the list must not rot (8.067875ms)
+✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (48.919708ms)
+✖ dry run prints a bounded plan without contacting the droplet (32.390958ms)
+✖ today's local backup makes the pull an offline no-op (31.262ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 27
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1815.572416
+
+✖ failing tests:
+
+test at scripts/desk-declaration-guard.test.mjs:163:1
+✖ the live board is green under this guard (baseline is honest) (119.838417ms)
+  AssertionError [ERR_ASSERTION]: === desk-declaration-guard ===
+  corpus tree       : linked-worktree
+  desk F-IDs        : 2
+  desk slugs        : 1
+  🔺 desk segments  : 3
+  unexamined        : 0
+  with a BACKLOG row: 3
+  undeclared        : 0 (grandfathered 0)
+  
+  desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+    line-1 is NOT the one main carries.
+    Both corpora here are TRACKED, so this tree is frozen at its branch point and
+    the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+    would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+    proven by manufacturing: a real defect on main read byte-identically to a clean
+    board from here).
+    Re-run from the main worktree, or pass --root <main worktree>.
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-kv2/scripts/desk-declaration-guard.test.mjs:167:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-pull.test.mjs:11:1
+✖ dry run prints a bounded plan without contacting the droplet (32.390958ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-kv2/scripts/ledger-backup-pull.test.mjs:13:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-pull.test.mjs:18:1
+✖ today's local backup makes the pull an offline no-op (31.262ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-kv2/scripts/ledger-backup-pull.test.mjs:26:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+[tip] REDFILES_RC=1
+## CONTROL dec3196c5 dirty=0 env.local=absent tree=linked-worktree
+=== [control] the four reds' files
+✔ a desk item WITH a declaring row passes (67.820125ms)
+✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (52.371875ms)
+✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (50.684042ms)
+✔ a row whose id sits past the 90-char subject zone does NOT declare it (55.487833ms)
+✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (318.884417ms)
+✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (155.731458ms)
+✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (63.9635ms)
+✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (42.27625ms)
+✔ REFUSES (exit 2) when the desk segment holds zero keyed items (40.923959ms)
+✔ REFUSES (exit 2) when BACKLOG.md is missing (41.571083ms)
+✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (58.365167ms)
+✖ the live board is green under this guard (baseline is honest) (151.117375ms)
+✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (38.77875ms)
+✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (57.902209ms)
+✔ all five desk spellings are read — the majority form was invisible (276.21325ms)
+✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (57.524459ms)
+✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (53.965792ms)
+✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (55.787875ms)
+✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (39.778459ms)
+✔ a SLUG-keyed desk item WITH a declaring row passes (70.63125ms)
+✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (65.474125ms)
+✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (54.066834ms)
+✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (70.70775ms)
+✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (66.767625ms)
+✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (66.078459ms)
+✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.317541ms)
+✔ every grandfathered id is still on the desk — the list must not rot (9.493417ms)
+✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (49.543166ms)
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (1894.444458ms)
+✖ dry run prints a bounded plan without contacting the droplet (33.820083ms)
+✖ today's local backup makes the pull an offline no-op (40.1735ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 27
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2180.197667
+
+✖ failing tests:
+
+test at scripts/desk-declaration-guard.test.mjs:163:1
+✖ the live board is green under this guard (baseline is honest) (151.117375ms)
+  AssertionError [ERR_ASSERTION]: === desk-declaration-guard ===
+  corpus tree       : linked-worktree
+  desk F-IDs        : 2
+  desk slugs        : 1
+  🔺 desk segments  : 3
+  unexamined        : 0
+  with a BACKLOG row: 3
+  undeclared        : 0 (grandfathered 0)
+  
+  desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+    line-1 is NOT the one main carries.
+    Both corpora here are TRACKED, so this tree is frozen at its branch point and
+    the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+    would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+    proven by manufacturing: a real defect on main read byte-identically to a clean
+    board from here).
+    Re-run from the main worktree, or pass --root <main worktree>.
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/scripts/desk-declaration-guard.test.mjs:167:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/fixture-teardown.test.mjs:32:1
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (1894.444458ms)
+  AssertionError [ERR_ASSERTION]: scripts/agent-reels.test.mjs child failed:
+  (node:52248) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  (Use `node --trace-warnings ...` to show where the warning was created)
+  ✖ agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids (1741.520917ms)
+  ℹ tests 1
+  ℹ suites 0
+  ℹ pass 0
+  ℹ fail 1
+  ℹ cancelled 0
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 1855.631583
+  
+  ✖ failing tests:
+  
+  test at scripts/agent-reels.test.mjs:14:1
+  ✖ agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids (1741.520917ms)
+    AssertionError [ERR_ASSERTION]: (node:52699) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    node:internal/modules/run_main:107
+        triggerUncaughtException(
+        ^
+    
+    Error: Failed to load url ../../assets/pilots/map-rebuild-spike/glow-mesa-terrain-contract.json (resolved id: ../../assets/pilots/map-rebuild-spike/glow-mesa-terrain-contract.json) in /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/src/agent/MechanicsManifest.ts. Does the file exist?
+        at loadAndTransform (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:19623:31) {
+      code: 'ERR_LOAD_URL',
+      runnerError: Error: RunnerError
+          at reviveInvokeError (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:541:64)
+          at Object.invoke (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:614:11)
+          at async SSRCompatModuleRunner.getModuleInformation (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1210:7)
+          at async request (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1227:83)
+          at async eval (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/src/agent/MechanicsManifest.ts:35:32)
+          at async ESModulesEvaluator.runInlinedModule (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:809:3)
+          at async SSRCompatModuleRunner.directRequest (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1270:59)
+          at async SSRCompatModuleRunner.directRequest (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:15515:20)
+          at async SSRCompatModuleRunner.cachedRequest (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1177:73)
+          at async eval (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/src/sim/HeadlessContractSim.ts:10:31)
+    }
+    
+    Node.js v26.4.0
+    
+    
+    1 !== 0
+    
+        at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/scripts/agent-reels.test.mjs:86:14)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 1,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/scripts/fixture-teardown.test.mjs:48:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-pull.test.mjs:11:1
+✖ dry run prints a bounded plan without contacting the droplet (33.820083ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/scripts/ledger-backup-pull.test.mjs:13:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-pull.test.mjs:18:1
+✖ today's local backup makes the pull an offline no-op (40.1735ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/scripts/ledger-backup-pull.test.mjs:26:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+[control] REDFILES_RC=1
+=== [control] node scripts/test-ticker-stats.mjs
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+[control] TICKER_RC=0
+=== [control] test:findings-state
+
+> gold-rush@0.1.0 test:findings-state
+> node scripts/findings-state-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+declared subjects : 665
+declared closed   : 481
+declared open     : 184
+double-state      : 0
+wide-open advisory : 374 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+[control] FINDINGS_RC=0
+=== [control] test:blocker-panel
+
+> gold-rush@0.1.0 test:blocker-panel
+> node scripts/blocker-panel-closed-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+panel rows        : 46
+rows with an F-ID : 43
+census closed     : 591
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+[control] BLOCKER_RC=0
+=== [control] test:ruling-propagation
+
+> gold-rush@0.1.0 test:ruling-propagation
+> node scripts/ruling-propagation-guard.mjs
+
+ruling-propagation: 14 findings recorded RULED · 70 goal leaves still refuse work · 0 stale
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+  reason corpus     : 62/70 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+      unread: stopped     b4v3-picnic-active-defense  [note_s2131, note]
+      unread: stopped     b4v2-picnic-stake-pressure  [note_s2090, note_s2088, note_s2089, note_s2139, note]
+      unread: stopped     f2251-1-county-board-red  [note_s2251b, note]
+      unread: superseded  art-jumper-rotation-retake  [note_s_att_20260824, note_s2249, note]
+      unread: superseded  lane-vp-02b-jumper-slot-red  [authorNotes, drainNotes]
+      unread: superseded  lane-c-f1148-1-trajectory-split  [authorNotes, drainNotes]
+      unread: superseded  jumper-8way-wiring  [note_s_att_20260824]
+      unread: superseded  ap-orders-adapter-wiring  [note]
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+[control] RULING_RC=0
+=== [control] test:desk-declaration
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs
+
+=== desk-declaration-guard ===
+corpus tree       : linked-worktree
+desk F-IDs        : 2
+desk slugs        : 1
+🔺 desk segments  : 3
+unexamined        : 0
+with a BACKLOG row: 3
+undeclared        : 0 (grandfathered 0)
+
+desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+  line-1 is NOT the one main carries.
+  Both corpora here are TRACKED, so this tree is frozen at its branch point and
+  the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+  would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+  proven by manufacturing: a real defect on main read byte-identically to a clean
+  board from here).
+  Re-run from the main worktree, or pass --root <main worktree>.
+[control] DESKDECL_RC=2
+=== [control] nul-audit
+nul-audit: corpus 26555 text subject(s) — 26153 read, 402 empty.
+nul-audit: excluded 11844 known-binary, 107 UNCLASSIFIED of 38506 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .cpuprofile×29 .bak×14 (no extension)×10 .pid×9 .exit×6 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .sha256×3 .done×3 .stderr×2 .timer×2 .stranded-1e057810×1 .progress×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+[control] NUL_RC=0
+=== [control] test:review-fixes + tail
+
+> gold-rush@0.1.0 test:review-fixes
+> node --test --test-concurrency=1 scripts/review-mixed-hashes.test.mjs scripts/review-party-retention.test.mjs scripts/review-save-names.test.mjs scripts/review-wrecked-turrets.test.mjs scripts/node-guards-watchdog.test.mjs scripts/ratelimit-window.test.mjs scripts/landing-rotation-derivation.test.mjs scripts/world-dispatch-boss-trigger-guard.test.mjs scripts/landmark-collision.test.mjs scripts/site-security-headers.test.mjs scripts/status-rotate-month.test.mjs scripts/backlog-split-closed.test.mjs scripts/attended-land.test.mjs
+
+✔ the lock predicate knows the four STATUS line-1 shapes and nothing else (0.680541ms)
+✔ a config must carry the fields a landing needs and refuses an F-ID in the STATUS phrase (4.476667ms)
+✔ the env file is single-quoted and survives apostrophes, spaces and dollar signs (0.804458ms)
+✔ union keeps both sides of a conflict block and refuses leftover markers (1.020917ms)
+✔ the evidence table lists only the gates that ran, last line per gate (0.190875ms)
+✔ the verdict allows only the configured e2e reds and the known battery classes (2.842ms)
+✔ bookkeeping is idempotent and puts the phrase before the desk header without splicing (2.842292ms)
+✔ bookkeeping works on a chain whose stale line 1 carries a fire lock shape (the live lock is the ff gate, not this file) (1.474334ms)
+✔ --dry-run states rows, bytes and keys per destination and leaves the tree untouched (41.720542ms)
+✔ --apply moves closed rows below the title and keeps open, desk, gate, RULED and OWNER rows (41.834417ms)
+✔ every byte that left the index is in a part file, plus the headers and pointers it added (41.491625ms)
+✔ a second --apply moves nothing, doubles no pointer and changes no byte (79.970416ms)
+✔ a baseline key follows the row that carried its citation, and the allowance is not grown (41.943791ms)
+✔ GROUND TRUTH — a STRADDLING coordinate is allowed on both sides, and the addition is named (43.157666ms)
+✔ MANUFACTURED DEFECT — a baseline key whose citation is nowhere REFUSES and writes nothing (40.845334ms)
+✔ REVERSE CONTROL — the same board with a placeable baseline applies cleanly (45.218584ms)
+✔ REFUSES when the baseline is absent — a ratchet without its baseline is not a ratchet (49.197917ms)
+✔ MANUFACTURED DEFECT — pointer bytes that go uncounted REFUSE and write nothing (41.086708ms)
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (42.296167ms)
+✔ an index with no # Task backlog title moves nothing and says so (32.308167ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (93.457584ms)
+✔ the landing page holds no hand-written rotation id (19.03ms)
+✔ the landing page declares no CURRENT_ROTATION_ID constant (17.314708ms)
+✔ the page derives the id the registry minted, for every rotation the county ships (1.071583ms)
+✔ the page and the door pick the same rotation at every instant the registry covers (0.372667ms)
+✔ a week that was never minted walks back to the latest rotation that did open (0.298791ms)
+✔ a resting door is asked once, not twelve times (0.258458ms)
+node:internal/test_runner/harness:124
+      throw err;
+      ^
+
+Error: ENOENT: no such file or directory, open '../../assets/pilots/map-rebuild-spike/landmark-collision-contract.json'
+    at async open (node:internal/fs/promises:1360:25)
+    at async Object.readFile (node:internal/fs/promises:2149:14)
+    at async LoadPluginContext.handler (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:31853:46)
+    at async EnvironmentPluginContainer.load (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:8130:19)
+    at async loadAndTransform (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:19587:21) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '../../assets/pilots/map-rebuild-spike/landmark-collision-contract.json',
+  runnerError: Error: RunnerError
+      at reviveInvokeError (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:541:64)
+      at Object.invoke (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:614:11)
+      at async SSRCompatModuleRunner.getModuleInformation (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1210:7)
+      at async request (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1227:83)
+      at async eval (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/src/world/LandmarkCollision.ts:8:31)
+      at async ESModulesEvaluator.runInlinedModule (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:809:3)
+      at async SSRCompatModuleRunner.directRequest (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1270:59)
+      at async SSRCompatModuleRunner.directRequest (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:15515:20)
+      at async SSRCompatModuleRunner.cachedRequest (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1177:73)
+      at async SSRCompatModuleRunner.import (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1132:10)
+}
+
+Node.js v26.4.0
+✖ scripts/landmark-collision.test.mjs (202.66425ms)
+✔ a file that stops producing TAP is sampled, killed, retried once, and reported red (16544.576459ms)
+✔ a battery that keeps producing TAP is never killed, however long it runs (5092.502541ms)
+✔ the stall bound is finite, reported, and can only be LOWERED from the environment (984.590584ms)
+✔ the rider cap is 60 and the sixty-first submission inside one hour is refused (1.568375ms)
+✔ an hour is an hour: the limit refills once the window from the first write has passed (0.398167ms)
+✔ a refusal never bumps the count and never re-arms the window (0.169833ms)
+✔ the stored ttl is the remainder of the window, never a fresh hour (0.148416ms)
+✔ a counter written before the window start was stored keeps its count (0.108833ms)
+✔ every door that shares this limiter still passes its own ttl (20.065875ms)
+✔ browser-only: matching peer, remote after local (0.990708ms)
+✔ browser-only: mismatching peer, remote after local (0.190209ms)
+✔ browser-only: matching peer, remote before local (0.117125ms)
+✔ browser-only: mismatching peer, remote before local (0.0925ms)
+✔ mixed: matching peer, remote after local (0.128542ms)
+✔ mixed: mismatching peer, remote after local (0.112959ms)
+✔ mixed: matching peer, remote before local (0.102084ms)
+✔ mixed: mismatching peer, remote before local (0.157292ms)
+✔ headless-only: matching peer, remote after local (0.1835ms)
+✔ headless-only: mismatching peer, remote after local (0.13625ms)
+✔ headless-only: matching peer, remote before local (0.089334ms)
+✔ headless-only: mismatching peer, remote before local (0.077834ms)
+✔ a thin seat, unknown ID, or self hash cannot satisfy or poison the browser quorum (0.119166ms)
+✔ one browser with thin seats ignores their incompatible hashes (0.065708ms)
+✔ headless-only rooms require each headless peer (0.057916ms)
+✔ thin seats keep hash exchange disabled (0.264417ms)
+✔ an outstanding comparison keeps the roster of its sampled tick after a peer leaves (0.315667ms)
+✔ later ticks use the smaller roster and ignore a departed peer (0.116667ms)
+✔ snapshot compression keeps the sampled quorum even when the roster changes before encoding finishes (7.694083ms)
+party retention checks passed (party sizes 1–4, top-100/leftover bounds, replay survival, archives, rotations)
+✔ scripts/review-party-retention.test.mjs (672.922ms)
+(node:60442) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the untouched default saves and remains readable on the manual shelf (3.401917ms)
+✔ legal town names and the fallback fit every supported wave digit count (16.012333ms)
+✔ manual input keeps its punctuation, reserved-name, profanity, and duplicate checks (0.337667ms)
+(node:60445) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✖ later-era mounts stop on wreck or suspension and return on repair with stable relay IDs (711.699458ms)
+public/_headers "/*": 5 security headers, 10 CSP directives
+✔ public/_headers sends the five security headers on every path (1.656167ms)
+✔ the Cache-Control rules 058-device-tiers gates are still there (0.090167ms)
+✔ the bug-office report TTL and the number the fetch script prints are the same (0.382125ms)
+✔ the audit catches a deleted policy, a widened source and an enforcing flip (1.2835ms)
+✔ --dry-run states the accounting per destination and leaves the tree untouched (45.260166ms)
+✔ --apply moves the closed months and keeps line 1, the law bullets and the current month (38.007416ms)
+✔ a second --apply moves nothing and changes no byte (69.958083ms)
+✔ the trailing window holds the newest bullets on the board whatever their month (31.243166ms)
+✔ an unstamped bullet is filed by its session neighbours, and prose dates never decide (31.679584ms)
+✔ a bullet that cannot be placed at all STAYS ON THE BOARD (34.244583ms)
+✔ MANUFACTURED DEFECT — a header whose bytes go uncounted REFUSES and writes nothing (39.601958ms)
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (38.088542ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (92.966542ms)
+✔ every boss-kind dispatch trigger names a contract that declares a boss (4.158834ms)
+✔ M8-5 is keyed to Low Orbit being secured, not to a boss it never had (1.729291ms)
+✔ the guard BITES: a boss trigger on a bossless map is rejected (1.575833ms)
+ℹ tests 77
+ℹ suites 0
+ℹ pass 75
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26814.403
+
+✖ failing tests:
+
+test at scripts/landmark-collision.test.mjs:1:1
+✖ scripts/landmark-collision.test.mjs (202.66425ms)
+  'test failed'
+
+test at scripts/review-wrecked-turrets.test.mjs:11:1
+✖ later-era mounts stop on wreck or suspension and return on repair with stable relay IDs (711.699458ms)
+  Error: Failed to load url ../../assets/pilots/map-rebuild-spike/glow-mesa-terrain-contract.json (resolved id: ../../assets/pilots/map-rebuild-spike/glow-mesa-terrain-contract.json) in /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/src/agent/MechanicsManifest.ts. Does the file exist?
+      at loadAndTransform (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:19623:31) {
+    code: 'ERR_LOAD_URL',
+    runnerError: Error: RunnerError
+        at reviveInvokeError (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:541:64)
+        at Object.invoke (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:614:11)
+        at async SSRCompatModuleRunner.getModuleInformation (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1210:7)
+        at async request (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1227:83)
+        at async eval (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/src/agent/MechanicsManifest.ts:35:32)
+        at async ESModulesEvaluator.runInlinedModule (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:809:3)
+        at async SSRCompatModuleRunner.directRequest (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1270:59)
+        at async SSRCompatModuleRunner.directRequest (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:15515:20)
+        at async SSRCompatModuleRunner.cachedRequest (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/module-runner.js:1177:73)
+        at async eval (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/kv2/kv2-control/src/sim/HeadlessContractSim.ts:10:31)
+  }
+[control] REVIEWFIXES_RC=1
+control worktree removed
+BATCH END 2026-09-25T13:48:35Z
+DLOCK_EXIT=0
