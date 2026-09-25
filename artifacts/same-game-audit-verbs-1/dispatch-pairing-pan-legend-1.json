@@ -1,8 +1,8 @@
 {
   "schema": "same-game-audit-verbs-1.dispatch-pairing.v1",
   "windowTicks": 900,
-  "panLegendStacks": 0,
-  "panTickMult": 1,
+  "panLegendStacks": 1,
+  "panTickMult": 0.7,
   "lifted": {
     "file": "src/game/Game.ts",
     "methods": [
@@ -28,7 +28,7 @@
       26
     ],
     "sluice": "pairs",
-    "wallMs": 47080
+    "wallMs": 46700
   },
   "wire": {
     "command": "wire",

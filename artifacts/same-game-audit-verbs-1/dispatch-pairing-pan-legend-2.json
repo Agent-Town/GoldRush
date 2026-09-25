@@ -1,8 +1,8 @@
 {
   "schema": "same-game-audit-verbs-1.dispatch-pairing.v1",
   "windowTicks": 900,
-  "panLegendStacks": 0,
-  "panTickMult": 1,
+  "panLegendStacks": 2,
+  "panTickMult": 0.4,
   "lifted": {
     "file": "src/game/Game.ts",
     "methods": [
@@ -16,10 +16,10 @@
   "arriveRadius": 0.16,
   "summary": {
     "contracts": 42,
-    "pairs": 41,
-    "differs": 0,
+    "pairs": 0,
+    "differs": 41,
     "noTarget": 1,
-    "pairsAmongDoorAdmitted": 38,
+    "pairsAmongDoorAdmitted": 0,
     "doorAdmitted": 38,
     "firstPanDeltaTicks": [
       2
@@ -28,7 +28,7 @@
       26
     ],
     "sluice": "pairs",
-    "wallMs": 47080
+    "wallMs": 47279
   },
   "wire": {
     "command": "wire",
@@ -165,15 +165,15 @@
         "remaining": 30,
         "distance": 8.3506
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -236,13 +236,17 @@
             {
               "tick": 54,
               "amount": 5
+            },
+            {
+              "tick": 71,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -9,
             6.7
@@ -299,15 +303,15 @@
         "remaining": 30,
         "distance": 8.3506
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -370,13 +374,17 @@
             {
               "tick": 54,
               "amount": 5
+            },
+            {
+              "tick": 71,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -9,
             6.7
@@ -433,15 +441,15 @@
         "remaining": 30,
         "distance": 8.3506
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -504,13 +512,17 @@
             {
               "tick": 54,
               "amount": 7
+            },
+            {
+              "tick": 71,
+              "amount": 7
             }
           ],
-          "goldPannedOnTarget": 7,
+          "goldPannedOnTarget": 14,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 23,
-          "goldAtEnd": 7,
+          "remainingAfter": 16,
+          "goldAtEnd": 14,
           "prospectorAtFirstPan": [
             -9,
             6.7
@@ -567,15 +579,15 @@
         "remaining": 30,
         "distance": 10.3012
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -638,13 +650,17 @@
             {
               "tick": 66,
               "amount": 5
+            },
+            {
+              "tick": 83,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             7.5,
             6.5
@@ -701,15 +717,15 @@
         "remaining": 30,
         "distance": 20.7095
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -772,13 +788,17 @@
             {
               "tick": 131,
               "amount": 5
+            },
+            {
+              "tick": 148,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             18,
             -7
@@ -835,15 +855,15 @@
         "remaining": 30,
         "distance": 26.7119
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -906,13 +926,17 @@
             {
               "tick": 168,
               "amount": 5
+            },
+            {
+              "tick": 185,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             18,
             -7
@@ -969,15 +993,15 @@
         "remaining": 30,
         "distance": 31.2286
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -1040,13 +1064,17 @@
             {
               "tick": 197,
               "amount": 5
+            },
+            {
+              "tick": 214,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -20,
             -34
@@ -1103,15 +1131,15 @@
         "remaining": 30,
         "distance": 19.5688
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -1174,13 +1202,17 @@
             {
               "tick": 124,
               "amount": 5
+            },
+            {
+              "tick": 141,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -18,
             -42
@@ -1237,15 +1269,15 @@
         "remaining": 30,
         "distance": 65.3269
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -1308,13 +1340,17 @@
             {
               "tick": 410,
               "amount": 5
+            },
+            {
+              "tick": 427,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             12,
             -12
@@ -1378,15 +1414,15 @@
         "remaining": 30,
         "distance": 19.8435
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -1449,13 +1485,17 @@
             {
               "tick": 126,
               "amount": 5
+            },
+            {
+              "tick": 143,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -10,
             29
@@ -1512,15 +1552,15 @@
         "remaining": 30,
         "distance": 13.8313
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -1583,13 +1623,17 @@
             {
               "tick": 88,
               "amount": 5
+            },
+            {
+              "tick": 105,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             24,
             -20
@@ -1646,15 +1690,15 @@
         "remaining": 30,
         "distance": 16.6098
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -1717,13 +1761,17 @@
             {
               "tick": 105,
               "amount": 5
+            },
+            {
+              "tick": 122,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -18,
             27
@@ -1780,15 +1828,15 @@
         "remaining": 30,
         "distance": 45.2653
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -1851,13 +1899,17 @@
             {
               "tick": 284,
               "amount": 5
+            },
+            {
+              "tick": 301,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -30,
             26
@@ -1914,15 +1966,15 @@
         "remaining": 30,
         "distance": 6.5837
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -1985,13 +2037,17 @@
             {
               "tick": 43,
               "amount": 5
+            },
+            {
+              "tick": 60,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             18,
             34
@@ -2048,15 +2104,15 @@
         "remaining": 30,
         "distance": 10.3012
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -2119,13 +2175,17 @@
             {
               "tick": 66,
               "amount": 5
+            },
+            {
+              "tick": 83,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             7.5,
             6.5
@@ -2182,15 +2242,15 @@
         "remaining": 30,
         "distance": 81.5196
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -2253,13 +2313,17 @@
             {
               "tick": 511,
               "amount": 5
+            },
+            {
+              "tick": 528,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -22,
             34
@@ -2316,15 +2380,15 @@
         "remaining": 30,
         "distance": 19.1401
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -2387,13 +2451,17 @@
             {
               "tick": 121,
               "amount": 5
+            },
+            {
+              "tick": 138,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             10,
             -16
@@ -2450,15 +2518,15 @@
         "remaining": 30,
         "distance": 75.7696
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -2521,13 +2589,17 @@
             {
               "tick": 475,
               "amount": 5
+            },
+            {
+              "tick": 492,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -44,
             -56
@@ -2584,15 +2656,15 @@
         "remaining": 30,
         "distance": 188.5742
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -2655,13 +2727,17 @@
             {
               "tick": 1180,
               "amount": 5
+            },
+            {
+              "tick": 1197,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             6,
             16
@@ -2718,15 +2794,15 @@
         "remaining": 30,
         "distance": 52.8802
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -2789,13 +2865,17 @@
             {
               "tick": 332,
               "amount": 5
+            },
+            {
+              "tick": 349,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             18.4,
             43.8
@@ -2852,15 +2932,15 @@
         "remaining": 30,
         "distance": 62.2826
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -2923,13 +3003,17 @@
             {
               "tick": 391,
               "amount": 5
+            },
+            {
+              "tick": 408,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -22.4,
             13.8
@@ -2986,15 +3070,15 @@
         "remaining": 30,
         "distance": 50.9618
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -3057,13 +3141,17 @@
             {
               "tick": 320,
               "amount": 5
+            },
+            {
+              "tick": 337,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             0,
             -22
@@ -3120,15 +3208,15 @@
         "remaining": 30,
         "distance": 5.2101
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -3191,13 +3279,17 @@
             {
               "tick": 34,
               "amount": 5
+            },
+            {
+              "tick": 51,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -52,
             4
@@ -3254,15 +3346,15 @@
         "remaining": 30,
         "distance": 50.9618
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -3325,13 +3417,17 @@
             {
               "tick": 320,
               "amount": 5
+            },
+            {
+              "tick": 337,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             0,
             -22
@@ -3388,15 +3484,15 @@
         "remaining": 30,
         "distance": 9.2469
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -3459,13 +3555,17 @@
             {
               "tick": 59,
               "amount": 5
+            },
+            {
+              "tick": 76,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             0,
             20
@@ -3522,15 +3622,15 @@
         "remaining": 30,
         "distance": 55.6018
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -3593,13 +3693,17 @@
             {
               "tick": 349,
               "amount": 5
+            },
+            {
+              "tick": 366,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 1,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 9,
+          "remainingAfter": 20,
+          "goldAtEnd": 14,
           "prospectorAtFirstPan": [
             -24,
             18
@@ -3656,15 +3760,15 @@
         "remaining": 30,
         "distance": 35.1162
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -3727,13 +3831,17 @@
             {
               "tick": 221,
               "amount": 5
+            },
+            {
+              "tick": 238,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             0,
             46
@@ -3790,15 +3898,15 @@
         "remaining": 30,
         "distance": 27.7169
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -3861,13 +3969,17 @@
             {
               "tick": 175,
               "amount": 5
+            },
+            {
+              "tick": 192,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             25,
             18
@@ -3924,15 +4036,15 @@
         "remaining": 30,
         "distance": 3.4387
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -3995,13 +4107,17 @@
             {
               "tick": 23,
               "amount": 5
+            },
+            {
+              "tick": 40,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             0,
             8
@@ -4058,15 +4174,15 @@
         "remaining": 30,
         "distance": 12.4107
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -4129,13 +4245,17 @@
             {
               "tick": 79,
               "amount": 5
+            },
+            {
+              "tick": 96,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -12,
             18
@@ -4192,15 +4312,15 @@
         "remaining": 30,
         "distance": 20.8678
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -4263,13 +4383,17 @@
             {
               "tick": 132,
               "amount": 5
+            },
+            {
+              "tick": 149,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -14,
             -6
@@ -4326,15 +4450,15 @@
         "remaining": 30,
         "distance": 41.4305
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -4397,13 +4521,17 @@
             {
               "tick": 260,
               "amount": 5
+            },
+            {
+              "tick": 277,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -34,
             37
@@ -4460,15 +4588,15 @@
         "remaining": 30,
         "distance": 8.0412
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -4531,13 +4659,17 @@
             {
               "tick": 52,
               "amount": 5
+            },
+            {
+              "tick": 69,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -25,
             32
@@ -4594,15 +4726,15 @@
         "remaining": 30,
         "distance": 25.2021
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -4665,13 +4797,17 @@
             {
               "tick": 159,
               "amount": 5
+            },
+            {
+              "tick": 176,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -22,
             26
@@ -4728,15 +4864,15 @@
         "remaining": 30,
         "distance": 16.618
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -4799,13 +4935,17 @@
             {
               "tick": 105,
               "amount": 5
+            },
+            {
+              "tick": 122,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -9,
             -22
@@ -4862,15 +5002,15 @@
         "remaining": 30,
         "distance": 12.3315
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -4933,13 +5073,17 @@
             {
               "tick": 79,
               "amount": 5
+            },
+            {
+              "tick": 96,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -12,
             4
@@ -4996,15 +5140,15 @@
         "remaining": 30,
         "distance": 20.9615
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -5067,13 +5211,17 @@
             {
               "tick": 133,
               "amount": 5
+            },
+            {
+              "tick": 150,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             16,
             22
@@ -5130,15 +5278,15 @@
         "remaining": 30,
         "distance": 44.412
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -5201,13 +5349,17 @@
             {
               "tick": 279,
               "amount": 5
+            },
+            {
+              "tick": 296,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             28,
             -22
@@ -5264,15 +5416,15 @@
         "remaining": 30,
         "distance": 2.6391
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -5335,13 +5487,17 @@
             {
               "tick": 18,
               "amount": 5
+            },
+            {
+              "tick": 35,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             0,
             9
@@ -5398,15 +5554,15 @@
         "remaining": 30,
         "distance": 12.2468
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -5469,13 +5625,17 @@
             {
               "tick": 78,
               "amount": 5
+            },
+            {
+              "tick": 95,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -14,
             12
@@ -5532,15 +5692,15 @@
         "remaining": 30,
         "distance": 13.6494
       },
-      "verdict": "pairs",
+      "verdict": "differs",
       "checks": {
         "bothAccepted": true,
         "commandCausedAPan": true,
-        "samePansOnTarget": true,
-        "sameGoldPanned": true,
-        "sameRemainingAfter": true,
+        "samePansOnTarget": false,
+        "sameGoldPanned": false,
+        "sameRemainingAfter": false,
         "samePansElsewhere": true,
-        "sameGoldAtEnd": true,
+        "sameGoldAtEnd": false,
         "samePathAndArrivalTick": true,
         "bothPannedAtTheSeam": true,
         "deterministic": true
@@ -5603,13 +5763,17 @@
             {
               "tick": 87,
               "amount": 5
+            },
+            {
+              "tick": 104,
+              "amount": 5
             }
           ],
-          "goldPannedOnTarget": 5,
+          "goldPannedOnTarget": 10,
           "pansElsewhere": 0,
           "remainingBefore": 30,
-          "remainingAfter": 25,
-          "goldAtEnd": 5,
+          "remainingAfter": 20,
+          "goldAtEnd": 10,
           "prospectorAtFirstPan": [
             -12,
             20

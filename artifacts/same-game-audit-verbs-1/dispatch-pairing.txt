@@ -1,5 +1,5 @@
 lifted: src/game/Game.ts:8265 beginProspectorDispatch, src/game/Game.ts:8277 advanceProspectorDispatch, src/game/Game.ts:8309 prospectorDispatchPoint; src/game/Game.ts:10972 distanceSq2; settle src/game/Game.ts:395 = 4
-window 900 ticks after the command; seed same-game-seam-<id>; one warm-up tick
+window 900 ticks after the command (or 10 s past the arrival); seed same-game-seam-<id>; one warm-up tick; pan_legend stacks 0 (panTickMult 1)
 
 | contract | door admits | target (distance) | window | dispatch: first pan tick, gold | HARVEST: first pan tick, gold | control pans | pan D-H | left seam H-D | verdict |
 |---|---|---|---:|---|---|---:|---:|---:|---|
@@ -46,6 +46,6 @@ window 900 ticks after the command; seed same-game-seam-<id>; one warm-up tick
 | e9-devils-alley | true | gold-seam-3 (12.2468) | 900 | 80, 5 | 78, 5 | 0 | 2 | 26 | pairs |
 | e9-old-canal | false | gold-seam-1 (13.6494) | 900 | 89, 5 | 87, 5 | 0 | 2 | 26 | pairs |
 
-summary {"contracts":42,"pairs":41,"differs":0,"noTarget":1,"pairsAmongDoorAdmitted":38,"doorAdmitted":38,"firstPanDeltaTicks":[2],"linger":[26],"sluice":"pairs","wallMs":99581}
+summary {"contracts":42,"pairs":41,"differs":0,"noTarget":1,"pairsAmongDoorAdmitted":38,"doorAdmitted":38,"firstPanDeltaTicks":[2],"linger":[26],"sluice":"pairs","wallMs":47080}
 wire (the-claim): applyWireAction(prospector_dispatch) returned false; pans on target 0; control pans 0
 sluice (the-claim, placed at {"x":0,"z":7}, sluice-1 at 0,7, distance 4.3226): dispatch arrived 27 left 33 pans 0 queue 0; HARVEST arrived 27 left 59 pans 0 order [{"status":"done"}]; gold at end 15 / 15; verdict pairs

@@ -28,6 +28,11 @@
 // arrival when the seam is further than 30 s away. Then, once on the Claim: the wire (a `prospector_dispatch`
 // handed to the harness's peer-action seam, applyWireAction) and the sluice half of the dispatch.
 // Usage: node artifacts/same-game-audit-verbs-1/dispatch-pairing.mjs  (SGA1_ONLY=<id,id> narrows it).
+// SGA1_PAN_LEGEND_STACKS=<n> gives BOTH arms n stacks of `pan_legend` after the warm-up tick, through the stat path
+// Progression.applyUpgrade itself takes (stacks, effectiveStats, onStatsChanged) minus its offer gate, and writes
+// dispatch-pairing-pan-legend-<n>.json: it asks whether HARVEST's post-pan linger earns a passive pan the dispatch
+// does not once panning is faster (in this engine the Prospector is the harvest actor '0', so standing at a seam
+// channels it). The committed county run is the default, 0 stacks.
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -35,8 +40,9 @@ import ts from 'typescript';
 import { createServer } from 'vite';
 
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
-const OUT = fileURLToPath(new URL('./', import.meta.url));
+const OUT = process.env.SGA1_OUT ?? fileURLToPath(new URL('./', import.meta.url)); // SGA1_OUT redirects the JSON
 const WINDOW_TICKS = 900; // 30 s of 1/30 s fixed steps from the command, the floor of every arm's window
+const PAN_LEGEND_STACKS = Number(process.env.SGA1_PAN_LEGEND_STACKS ?? 0);
 const STEP_SECONDS = 1 / 30;
 const print = (text) => process.stdout.write(`${text}\n`);
 console.log = () => undefined;
@@ -77,9 +83,11 @@ const vite = await createServer({ root: ROOT, server: { middlewareMode: true, wa
 let HeadlessContractSim;
 let supportedContractIds;
 let Balance;
+let effectiveStats;
 try {
   ({ HeadlessContractSim, supportedContractIds } = await vite.ssrLoadModule('/src/sim/HeadlessContractSim.ts'));
   ({ Balance } = await vite.ssrLoadModule('/src/game/Balance.ts'));
+  ({ effectiveStats } = await vite.ssrLoadModule('/src/game/StatSheet.ts'));
 } finally {
   await vite.close();
 }
@@ -117,6 +125,13 @@ const seedFor = (id) => `same-game-seam-${id}`;
 function boot(contractId) {
   const sim = new HeadlessContractSim({ contractId, seed: seedFor(contractId), admissionProbe: true });
   sim.advanceOneTick();
+  if (PAN_LEGEND_STACKS > 0) {
+    // Progression.applyUpgrade's own stat path (src/game/Progression.ts), without the offer gate.
+    const progression = sim.progression;
+    progression.stacksValue.pan_legend = PAN_LEGEND_STACKS;
+    progression.statsValue = effectiveStats(progression.stacksValue);
+    progression.options.onStatsChanged(progression.statsValue, 'pan_legend');
+  }
   return sim;
 }
 
@@ -339,6 +354,8 @@ const summary = {
 const report = {
   schema: 'same-game-audit-verbs-1.dispatch-pairing.v1',
   windowTicks: WINDOW_TICKS,
+  panLegendStacks: PAN_LEGEND_STACKS,
+  panTickMult: boot('the-claim').progression.stats.panTickMult,
   lifted: {
     file: gameFile,
     methods: lifted.map(({ name, line }) => `${gameFile}:${line} ${name}`),
@@ -351,10 +368,10 @@ const report = {
   sluice,
   results,
 };
-fs.writeFileSync(path.join(OUT, 'dispatch-pairing.json'), `${JSON.stringify(report, null, 2)}\n`);
+fs.writeFileSync(path.join(OUT, PAN_LEGEND_STACKS > 0 ? `dispatch-pairing-pan-legend-${PAN_LEGEND_STACKS}.json` : 'dispatch-pairing.json'), `${JSON.stringify(report, null, 2)}\n`);
 
 print(`lifted: ${report.lifted.methods.join(', ')}; ${report.lifted.distanceSq2} distanceSq2; settle ${report.lifted.settleTicks}`);
-print(`window ${WINDOW_TICKS} ticks after the command; seed same-game-seam-<id>; one warm-up tick`);
+print(`window ${WINDOW_TICKS} ticks after the command (or 10 s past the arrival); seed same-game-seam-<id>; one warm-up tick; pan_legend stacks ${PAN_LEGEND_STACKS} (panTickMult ${report.panTickMult})`);
 print('');
 print('| contract | door admits | target (distance) | window | dispatch: first pan tick, gold | HARVEST: first pan tick, gold | control pans | pan D-H | left seam H-D | verdict |');
 print('|---|---|---|---:|---|---|---:|---:|---:|---|');
