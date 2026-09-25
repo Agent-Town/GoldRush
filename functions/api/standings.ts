@@ -4,6 +4,7 @@ import engineEra from '../../assets/engine-era.json' with { type: 'json' };
 import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
 import { validateRunTape } from '../../src/game/RunTape';
+import { normalizeLockstepAction } from '../../src/mp/LockstepClient';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
 import { CONTRACT_BUNDLES, runTapeEnvelopeForContract, validatePlaybook, type RunTapeEnvelope } from '../../src/playbook/PlaybookFormat';
 import { engineEraIncludes } from '../../src/replay/EngineEraLineage.mjs';
@@ -1233,10 +1234,11 @@ function currentLineageRefusal(tape: JsonRecord): string | null {
 }
 
 // A stored reel whose orders name a verb the door has since retired (ADR-005) is RETIRED at read:
-// unranked and counted, exactly like a cross-era reel, and the county says why. Walks the primary
-// entries, every stream and every recording a playbook use carries (F-DTG1-2), and judges both order
-// forms, an entry's `kind: 'agent_orders'` and a seated rider's wire `agent_orders`; the first refusal
-// is the reason.
+// unranked and counted, exactly like a cross-era reel, and the county says why. So is a reel stored
+// before door-tape-grammar-3 with an action the client cannot load (F-DTG2-2, `clientRefusesAction`),
+// because it cannot replay (ADR-004). Walks the primary entries, every stream and every recording a
+// playbook use carries (F-DTG1-2), and judges both order forms, an entry's `kind: 'agent_orders'` and a
+// seated rider's wire `agent_orders`; the first refusal is the reason.
 function tapeGrammarRefusal(tape: JsonRecord): string | null {
   const input = isRecord(tape.inputLog) ? tape.inputLog : null;
   if (!input) return null;
@@ -1247,6 +1249,7 @@ function tapeGrammarRefusal(tape: JsonRecord): string | null {
     for (const entry of entries) {
       if (!isRecord(entry) || !Array.isArray(entry.a)) continue;
       for (const action of entry.a) {
+        if (isRecord(action) && clientRefusesAction(action)) return `This reel carries a ${String(action.type)} the client cannot load, so it cannot replay; it stands retired under ADR-004.`;
         if (!isRecord(action) || (action.kind !== 'agent_orders' && action.type !== 'agent_orders')) continue;
         const verdict = validateStandingOrders(action.orders);
         if (!verdict.ok) return `This reel's orders name a verb the door has retired (${verdict.message}); it stands retired under ADR-005.`;
@@ -1747,6 +1750,9 @@ function validTapeAction(value: unknown, stored = false): boolean {
     return validateStandingOrders(value.orders).ok;
   }
   if (typeof value.type !== 'string') return false;
+  // F-DTG2-2 (door-tape-grammar-3): at the door a place_build, pick_upgrade or set_agent_ability must also be
+  // one the client can load; at read the shape below still stands and `tapeGrammarRefusal` retires the row.
+  if (!stored && clientRefusesAction(value)) return false;
   const simple = new Set(['weapon_toggle', 'restart', 'debug_spawn', 'debug_xp', 'skip_ceremony', 'research_skip']);
   if (simple.has(value.type)) return hasOnlyKeys(value, new Set(['type']));
   if (value.type === 'place_build') return hasOnlyKeys(value, new Set(['type', 'id', 'position', 'rotationSteps']))
@@ -1775,6 +1781,17 @@ function validTapeAction(value: unknown, stored = false): boolean {
     && integerInRange(value.level, 0, 3) !== null && typeof value.granted === 'boolean';
   return value.type === 'set_agent_ability' && hasOnlyKeys(value, new Set(['type', 'ability', 'granted']))
     && token(value.ability) && typeof value.granted === 'boolean';
+}
+
+// F-DTG2-2 (door-tape-grammar-3, 2026-09-26): three verbs whose door shape was looser than the client's own
+// normalizer (`normalizeLockstepAction`, LockstepClient.ts), so the county stored and ranked reels the Lantern
+// and the assayer cannot load: a `place_build` or `pick_upgrade` id that trims to nothing, and a
+// `set_agent_ability` naming an ability outside the client's own set. For these the client's normalizer has
+// the last word: the door refuses what it refuses (its own bounds stay as they were), and at read
+// `tapeGrammarRefusal` retires a row stored before this grammar instead of dropping it.
+const CLIENT_JUDGED_ACTIONS = new Set(['place_build', 'pick_upgrade', 'set_agent_ability']);
+function clientRefusesAction(action: JsonRecord): boolean {
+  return typeof action.type === 'string' && CLIENT_JUDGED_ACTIONS.has(action.type) && normalizeLockstepAction(action) === null;
 }
 
 // The client's `cleanToken` (LockstepClient.ts) trims, then cuts to `maxLength`. The door takes only a value

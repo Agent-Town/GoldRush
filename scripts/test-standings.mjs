@@ -54,6 +54,8 @@ try {
     await checkRecorderReel(onRequest, validateTape, validateRunTape, runTapeEnvelopeForContract, recorderKit);
     await checkRecorderVerbs(onRequest, validateTape, validateRunTape, recorderKit);
     await checkRetiredEmbeddedOrders(onRequest, validateTape, recorderKit);
+    await checkClientGrammar(onRequest, validateTape, validateRunTape, recorderKit);
+    await checkRetiredClientGrammar(onRequest, validateTape, validateRunTape, recorderKit);
     await checkEngineHashReel(onRequest);
     await checkReplayableBoard(onRequest);
     await checkLineageReassay(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
@@ -547,14 +549,6 @@ async function checkRetiredEmbeddedOrders(onRequest, validateTape, kit) {
     ["a seated rider's stream", recorderReel(kit, '8dd7'.repeat(8), { seatOrders }), '&party=2',
       (log, orders) => { log.streams[0].entries[0].a[0].orders = orders; }],
   ];
-  // The row as the door stores it (submitScore's candidate): a declared stack is stamped `declaredBy: 'self'`.
-  const storedRowOf = (body, tape) => ({
-    ...body.score, profileName: body.profileName, anonId: body.anonId, difficulty: body.difficulty, seed: body.seed,
-    seedMode: body.seedMode, seedHash: body.seedHash, inputLogHash: createHash('sha256').update(JSON.stringify(tape.inputLog)).digest('hex'),
-    submittedAt: 1,
-    ...(body.party ? { party: { ...body.party, riders: body.party.riders.map((rider) => (rider.stack ? { ...rider, stack: { declaredBy: 'self', ...rider.stack } } : rider)) } } : {}),
-    tape, assay: 'pending',
-  });
   for (const [label, reel, party, inject] of cases) {
     const kv = makeKv();
     const board = `/api/standings?contract=the-claim&epoch=epoch-1-frontier${party}`;
@@ -580,6 +574,123 @@ async function checkRetiredEmbeddedOrders(onRequest, validateTape, kit) {
   cases[1][3](heavy.inputLog, Array.from({ length: 32 }, () => ({ verb: 'HARVEST', seam: 's'.repeat(80) })));
   equal(validateTape(heavy, 'the-claim', 'gold-rush', 'trail', true), null, "at read a recording whose seated rider's orders are over the 3 KiB wire limit is refused");
   console.log(`retired embedded orders ${backend} checks (${checks - before})`);
+}
+
+// F-DTG2-2 (door-tape-grammar-3, 2026-09-26). In three places the door accepted what the client refuses: a
+// `place_build` id of whitespace only, a `pick_upgrade` id of whitespace only, and a `set_agent_ability` naming an
+// ability the client does not know. The county stored and ranked such a reel, yet the Lantern and the assayer judge
+// a reel with `validateRunTape` and cannot load it. The CONTROLS are the real recorder's. The three SHAPES are made
+// by hand from them, because the recorder refuses each: both of its paths run the client's own normalizer
+// (RunTape.ts `recordAction`, and LockstepClient.ts `lockstepActionsFromSample` for a tick's action list).
+async function checkClientGrammar(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  const verbs = [
+    ['place_build', 'a place_build id of whitespace only', recorderReel(kit, '9dd7'.repeat(8)), (action) => { action.id = '   '; }],
+    ['pick_upgrade', 'a pick_upgrade id of whitespace only', recorderReel(kit, 'add7'.repeat(8), { upgrade: 'heavy_spark' }), (action) => { action.id = '   '; }],
+    ['set_agent_ability', 'a set_agent_ability naming an ability the client does not know', recorderReel(kit, 'bdd7'.repeat(8), { ability: 'auto_pan' }),
+      (action) => { action.ability = 'fly'; }],
+  ];
+  equal(verbs.map(([type, , { runTape }]) => reelActions(runTape.inputLog).filter((action) => action.type === type).length), [1, 1, 1],
+    'each control reel carries its verb once, as the recorder wrote it');
+  const shaped = verbs.map(([type, label, { body }, mutate]) => {
+    const candidate = structuredClone(body);
+    mutate(reelVerb(candidate.tape.inputLog, type));
+    candidate.inputLogHash = createHash('sha256').update(JSON.stringify(candidate.tape.inputLog)).digest('hex');
+    return { label, body: candidate, action: reelVerb(candidate.tape.inputLog, type) };
+  });
+  equal(shaped.map(({ action }) => kit.normalizeLockstepAction(action)), [null, null, null], "the client's own normalizer refuses each of the three shapes");
+  equal(recorderReel(kit, 'cdd7'.repeat(8), { offered: shaped.map(({ action }) => action) }).runTape.inputLog.entries, recorderReel(kit, 'cdd7'.repeat(8)).runTape.inputLog.entries,
+    'the recorder refuses each shape down both of its paths and leaves no trace of it, so the three shapes are made by hand');
+  const kv = makeKv();
+  const accepted = [];
+  for (const [, , { body }] of verbs) accepted.push(await call(onRequest, 'POST', '/api/standings', body, kv));
+  equal(accepted.map(({ status, body }) => [status, body.stored ?? body.error]), [[200, true], [200, true], [200, true]],
+    `control: the door accepts the recorder's reels with a real building id, a real upgrade id and a known ability: ${JSON.stringify(accepted.map(({ body }) => body))}`);
+  for (const [type, , { runTape }] of verbs) {
+    const watched = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${runTape.id}`, undefined, kv);
+    const replayable = validateRunTape(watched.body.reel);
+    equal(replayable ? reelVerb(replayable.inputLog, type) : null, reelVerb(runTape.inputLog, type),
+      `control: the reel with its ${type} reads back through ?reel= and the client loads it with the verb intact`);
+  }
+  const refusalKv = makeKv();
+  const answers = [];
+  for (const { body } of shaped) answers.push(await call(onRequest, 'POST', '/api/standings', body, refusalKv));
+  equal(answers.map(({ status, body }) => [status, body.stored ?? body.error]), [[400, 'bad_payload'], [400, 'bad_payload'], [400, 'bad_payload']],
+    `the door refuses a place_build id and a pick_upgrade id of whitespace only and an ability the client does not know: ${JSON.stringify(answers.map(({ body }) => body))}`);
+  for (const { label, body } of shaped) {
+    equal(validateTape(body.tape, 'the-claim', 'gold-rush', 'trail'), null, `the tape grammar refuses ${label}`);
+    equal(validateRunTape(body.tape), null, `the client refuses ${label}, so neither the Lantern nor the assayer could load it`);
+  }
+  // The rule is the client's, not one value: an id that trims to nothing, or an ability outside the client's own
+  // set, is refused; and NOTHING ELSE TIGHTENED: every neighbour the client keeps, the door still accepts.
+  const judged = (type, mutate) => {
+    const candidate = structuredClone(verbs.find(([verb]) => verb === type)[2].body.tape);
+    mutate(reelVerb(candidate.inputLog, type));
+    return [validateTape(candidate, 'the-claim', 'gold-rush', 'trail') !== null, validateRunTape(candidate) !== null];
+  };
+  equal(judged('place_build', (action) => { action.id = '\t\n'; }), [false, false], 'a place_build id of a tab and a newline is refused by the door, as by the client');
+  equal(judged('pick_upgrade', (action) => { action.id = '\t\n'; }), [false, false], 'a pick_upgrade id of a tab and a newline is refused by the door, as by the client');
+  equal(judged('set_agent_ability', (action) => { action.ability = 'AUTO_PAN'; }), [false, false], 'an ability in the wrong case is refused by the door, as by the client');
+  equal(judged('set_agent_ability', (action) => { action.ability = '   '; }), [false, false], 'an ability of whitespace only is refused by the door, as by the client');
+  equal(judged('place_build', (action) => { action.id = ' sluice '; }), [true, true], 'a place_build id with edge whitespace is still accepted (the client trims it)');
+  equal(judged('place_build', (action) => { action.id = 'nonsense'; }), [true, true], "a place_build naming no building is still accepted (the client's place_build takes any id)");
+  equal(judged('pick_upgrade', (action) => { action.id = ' heavy_spark '; }), [true, true], 'a pick_upgrade id with edge whitespace is still accepted (the client trims it)');
+  equal(judged('set_agent_ability', (action) => { action.ability = ' auto_pan '; }), [true, true], 'a known ability with edge whitespace is still accepted (the client trims it)');
+  const abilities = ['auto_collect', 'auto_repair', 'auto_pan', 'light_duty', 'place_building'];
+  equal(abilities.map((ability) => judged('set_agent_ability', (action) => { action.ability = ability; })), abilities.map(() => [true, true]),
+    "each of the client's five abilities is accepted by the door and the client (LockstepClient.ts normalizeAction)");
+  console.log(`client grammar ${backend} checks (${checks - before})`);
+}
+
+// F-DTG2-2, the rows stored BEFORE this grammar. At read (`stored`) the old shape still stands, so such a row stays
+// readable, and `tapeGrammarRefusal` RETIRES it: unranked, counted in `retiredCount`, its stored bytes untouched,
+// its reel still on the shelf. It is never dropped (F-RPG-21). Each row is stored clean first (it ranks), then with
+// the shape; the fourth case puts the shape in a second rider's stream, by hand on both sides.
+async function checkRetiredClientGrammar(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  const seatOrders = kit.normalizeLockstepAction({
+    type: 'agent_orders', version: 1, submissionId: 'seat-1', orders: kit.validateStandingOrders([{ verb: 'SET_WEAPON', weapon: 'rig' }]).orders,
+  });
+  const ability = (name) => ({ type: 'set_agent_ability', ability: name, granted: true });
+  const cases = [
+    ['a place_build id of whitespace only', recorderReel(kit, 'ddd7'.repeat(8)), '', (log) => { reelVerb(log, 'place_build').id = '   '; }],
+    ['a pick_upgrade id of whitespace only', recorderReel(kit, 'edd7'.repeat(8), { upgrade: 'heavy_spark' }), '', (log) => { reelVerb(log, 'pick_upgrade').id = '   '; }],
+    ['a set_agent_ability naming an ability the client does not know', recorderReel(kit, 'fdd7'.repeat(8), { ability: 'auto_pan' }), '',
+      (log) => { reelVerb(log, 'set_agent_ability').ability = 'fly'; }],
+    ["a second rider's set_agent_ability naming an ability the client does not know", recorderReel(kit, 'dad7'.repeat(8), { seatOrders }), '&party=2',
+      (log) => { log.streams[0].entries[0].a.push(ability('fly')); }, (log) => { log.streams[0].entries[0].a.push(ability('auto_pan')); }],
+  ];
+  for (const [label, reel, party, shape, control = () => {}] of cases) {
+    const kv = makeKv();
+    const board = `/api/standings?contract=the-claim&epoch=epoch-1-frontier${party}`;
+    const clean = structuredClone(reel.body.tape);
+    control(clean.inputLog);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, clean)]));
+    const ranked = await call(onRequest, 'GET', board, undefined, kv);
+    equal([ranked.body.board.length, ranked.body.retiredCount], [1, 0], `control: the clean stored row ranks, before ${label}`);
+    const retired = structuredClone(reel.body.tape);
+    shape(retired.inputLog);
+    ok(validateTape(retired, 'the-claim', 'gold-rush', 'trail', true) && !validateRunTape(retired), `at read the grammar keeps a stored reel with ${label}, which the client cannot load`);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, retired)]));
+    const storedBytes = await kv.get(KEY);
+    const read = await call(onRequest, 'GET', board, undefined, kv);
+    equal([read.body.board.length, read.body.retiredCount], [0, 1], `a stored row with ${label} is RETIRED and COUNTED, not dropped and not ranked`);
+    equal(await kv.get(KEY), storedBytes, `reading the retired row with ${label} leaves it byte-identical`);
+    const shelf = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${retired.id}`, undefined, kv);
+    equal([shelf.status, shelf.body.reel], [200, retired], `the reel with ${label} stays on the shelf exactly as stored`);
+    const slip = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=${retired.id}`, undefined, kv);
+    equal([slip.body.assay, slip.body.ranked], ['pending', false], `the assay slip of the reel with ${label} says it is not ranked`);
+  }
+  console.log(`retired client grammar ${backend} checks (${checks - before})`);
+}
+
+// Every action a reel carries (primary entries and every stream), and the first of one type.
+function reelActions(log) {
+  return [...log.entries, ...log.streams.flatMap((stream) => stream.entries)].flatMap((entry) => entry.a);
+}
+
+function reelVerb(log, type) {
+  return reelActions(log).find((action) => action.type === type);
 }
 
 async function checkEngineHashReel(onRequest) {
@@ -1690,7 +1801,7 @@ function currentEraTape(runTape) {
 // (Game.ts 8104-8143): `snapshot(outcome, eventLog)`, then `submittedRunTape`, then the body around it.
 // The playbook is recorded and read back off the shelf exactly as a named playbook is before its use
 // (`PlaybookRecorderSession.finish`, then `parsePlaybookText`, Game.ts:3900-3907).
-function recorderReel(kit, anonId, { playbook = false, motor = false, dispatch = null, recover = false, seatOrders = null } = {}) {
+function recorderReel(kit, anonId, { playbook = false, motor = false, dispatch = null, recover = false, seatOrders = null, upgrade = null, ability = null, offered = [] } = {}) {
   const { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape } = kit;
   const [contract, seed, difficulty] = ['the-claim', 'gold-rush', 'trail'];
   const start = { x: 0.25, z: 12.5 };
@@ -1719,7 +1830,12 @@ function recorderReel(kit, anonId, { playbook = false, motor = false, dispatch =
   if (motor) recorder.recordMotorAction('motor_grade', { x: 3.14159, z: 7.5 });
   if (playbook) recorder.recordPlaybookUse(shelved.playbook);
   if (recover) recorder.recordAction({ type: 'context_action', action: 'recover' });
-  recorder.record(move(0, 0), { x: 0.75, z: 12.75 });
+  // A solo level-up pick reaches the recorder through `recordRunTapeAction` (Game.ts:8810). An agent ability
+  // toggle reaches a tape only from a multiplayer ride's action list (Game.ts:8750-8751, then :7969-7974).
+  // `offered` actions go down BOTH recorder paths, which shows what the recorder itself refuses to write.
+  if (upgrade) recorder.recordAction({ type: 'pick_upgrade', id: upgrade });
+  offered.forEach((action) => recorder.recordAction(action));
+  recorder.record(move(0, 0), { x: 0.75, z: 12.75 }, [...(ability ? [{ type: 'set_agent_ability', ability, granted: true }] : []), ...offered]);
   // A seated agent rider's orders arrive among its own slot's actions and land in that slot's stream
   // (Game.ts:7975-7986), in the shape `SeatedLockstepSim.submitOrders` builds.
   if (seatOrders) recorder.recordAdditional(1, move(0, 0), { x: 1, z: 13 }, [seatOrders]);
@@ -1749,6 +1865,18 @@ function recorderReel(kit, anonId, { playbook = false, motor = false, dispatch =
       ...(seatOrders ? { party: { riderCount: 2, riders: [{ name: 'Recorder Reel' }, { name: 'Order Rider', stack: {} }] } } : {}),
       ...(submittedTape ? { tape: submittedTape } : {}),
     },
+  };
+}
+
+// The row as the door stores a body with this tape (submitScore's candidate): a declared stack is stamped
+// `declaredBy: 'self'`.
+function storedRowOf(body, tape) {
+  return {
+    ...body.score, profileName: body.profileName, anonId: body.anonId, difficulty: body.difficulty, seed: body.seed,
+    seedMode: body.seedMode, seedHash: body.seedHash, inputLogHash: createHash('sha256').update(JSON.stringify(tape.inputLog)).digest('hex'),
+    submittedAt: 1,
+    ...(body.party ? { party: { ...body.party, riders: body.party.riders.map((rider) => (rider.stack ? { ...rider, stack: { declaredBy: 'self', ...rider.stack } } : rider)) } } : {}),
+    tape, assay: 'pending',
   };
 }
 
