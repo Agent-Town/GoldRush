@@ -35,7 +35,9 @@ try {
   const { PlaybookRecorderSession } = await vite.ssrLoadModule('/src/playbook/PlaybookSession.ts');
   const { intentsFromLockstepInput, lockstepInputFromIntents, normalizeLockstepAction } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
   const { validateStandingOrders } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
-  const recorderKit = { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape, normalizeLockstepAction, validateStandingOrders };
+  const { buildableDefs } = await vite.ssrLoadModule('/src/game/buildables.ts');
+  const buildableIds = buildableDefs.map(({ id }) => id);
+  const recorderKit = { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape, normalizeLockstepAction, validateStandingOrders, buildableIds };
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
   const { onRequest: onRequestReassay } = await vite.ssrLoadModule('/functions/api/standings/reassay.ts');
@@ -56,6 +58,8 @@ try {
     await checkRetiredEmbeddedOrders(onRequest, validateTape, recorderKit);
     await checkClientGrammar(onRequest, validateTape, validateRunTape, recorderKit);
     await checkRetiredClientGrammar(onRequest, validateTape, validateRunTape, recorderKit);
+    await checkClientJudgedIds(onRequest, validateTape, validateRunTape, recorderKit);
+    await checkRetiredClientJudgedIds(onRequest, validateTape, validateRunTape, recorderKit);
     await checkEngineHashReel(onRequest);
     await checkReplayableBoard(onRequest);
     await checkLineageReassay(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
@@ -682,6 +686,108 @@ async function checkRetiredClientGrammar(onRequest, validateTape, validateRunTap
     equal([slip.body.assay, slip.body.ranked], ['pending', false], `the assay slip of the reel with ${label} says it is not ranked`);
   }
   console.log(`retired client grammar ${backend} checks (${checks - before})`);
+}
+
+// F-DTG3-1 (door-tape-grammar-4, 2026-09-26). The last two verbs the door judged looser than the client: a
+// `research_pick` id that trims to nothing, and a `context_action` upgrade or demolition whose target, trimmed, names
+// no building the client knows (`normalizeBuildingRef`, then `isBuildableId`). These are the six door-looser rows the
+// grammar-3 probe measured. The CONTROLS are the real recorder's; each SHAPE is made by hand from its own recorder
+// reel, because the recorder refuses every one of them (both of its paths run the client's own normalizer). A function,
+// not a const: the checks run from the top of this file, before a module-level const below them is initialized.
+function clientJudgedIdShapes() {
+  return [
+    ['a research_pick id of whitespace only', 'research_pick', { research: 'assay_grading' }, (action) => { action.id = '   '; }],
+    ['a research_pick id of a tab and a newline', 'research_pick', { research: 'assay_grading' }, (action) => { action.id = '\t\n'; }],
+    ['an upgrade whose target id is whitespace only', 'context_action', { context: { action: 'upgrade', target: { id: 'sluice', index: 0 } } }, (action) => { action.target.id = '   '; }],
+    ['a demolition whose target id is whitespace only', 'context_action', { context: { action: 'demolish', target: { id: 'sluice', index: 0 } } }, (action) => { action.target.id = '   '; }],
+    ['an upgrade whose target names no building', 'context_action', { context: { action: 'upgrade', target: { id: 'sluice', index: 0 } } }, (action) => { action.target.id = 'nonsense'; }],
+    ['a demolition whose target names no building', 'context_action', { context: { action: 'demolish', target: { id: 'sluice', index: 0 } } }, (action) => { action.target.id = 'nonsense'; }],
+  ];
+}
+
+async function checkClientJudgedIds(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  const controls = [
+    ['research_pick', recorderReel(kit, '1ee7'.repeat(8), { research: 'assay_grading' })],
+    ['context_action', recorderReel(kit, '2ee7'.repeat(8), { context: { action: 'upgrade', target: { id: 'sluice', index: 0 } } })],
+    ['context_action', recorderReel(kit, '3ee7'.repeat(8), { context: { action: 'demolish', target: { id: 'sluice', index: 0 } } })],
+  ];
+  equal(controls.map(([type, { runTape }]) => reelActions(runTape.inputLog).filter((action) => action.type === type).length), [1, 1, 1],
+    'each control reel carries its verb once, as the recorder wrote it (a research pick, an upgrade and a demolition of the sluice it placed)');
+  const shaped = clientJudgedIdShapes().map(([label, type, options, mutate], index) => {
+    const body = structuredClone(recorderReel(kit, `${index + 4}ee7`.repeat(8), options).body);
+    mutate(reelVerb(body.tape.inputLog, type));
+    body.inputLogHash = createHash('sha256').update(JSON.stringify(body.tape.inputLog)).digest('hex');
+    return { label, body, action: reelVerb(body.tape.inputLog, type) };
+  });
+  equal(shaped.map(({ action }) => kit.normalizeLockstepAction(action)), shaped.map(() => null), "the client's own normalizer refuses each of the six shapes");
+  equal(recorderReel(kit, 'aee7'.repeat(8), { offered: shaped.map(({ action }) => action) }).runTape.inputLog.entries, recorderReel(kit, 'aee7'.repeat(8)).runTape.inputLog.entries,
+    'the recorder refuses each shape down both of its paths and leaves no trace of it, so the six shapes are made by hand');
+  const kv = makeKv();
+  const accepted = [];
+  for (const [, { body }] of controls) accepted.push(await call(onRequest, 'POST', '/api/standings', body, kv));
+  equal(accepted.map(({ status, body }) => [status, body.stored ?? body.error]), [[200, true], [200, true], [200, true]],
+    `control: the door accepts the recorder's reels with a real research node, an upgrade and a demolition of a real building: ${JSON.stringify(accepted.map(({ body }) => body))}`);
+  for (const [type, { runTape }] of controls) {
+    const watched = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${runTape.id}`, undefined, kv);
+    const replayable = validateRunTape(watched.body.reel);
+    equal(replayable ? reelVerb(replayable.inputLog, type) : null, reelVerb(runTape.inputLog, type),
+      `control: the reel with its ${type} reads back through ?reel= and the client loads it with the verb intact`);
+  }
+  const refusalKv = makeKv();
+  const answers = [];
+  for (const { body } of shaped) answers.push(await call(onRequest, 'POST', '/api/standings', body, refusalKv));
+  equal(answers.map(({ status, body }) => [status, body.stored ?? body.error]), shaped.map(() => [400, 'bad_payload']),
+    `the door refuses research ids and building targets the client refuses: ${JSON.stringify(answers.map(({ body }) => body))}`);
+  for (const { label, body } of shaped) {
+    equal(validateTape(body.tape, 'the-claim', 'gold-rush', 'trail'), null, `the tape grammar refuses ${label}`);
+    equal(validateRunTape(body.tape), null, `the client refuses ${label}, so neither the Lantern nor the assayer could load it`);
+  }
+  // NOTHING ELSE TIGHTENED: every neighbour the client keeps, the door still accepts.
+  const judged = (control, mutate) => {
+    const candidate = structuredClone(control[1].body.tape);
+    mutate(reelVerb(candidate.inputLog, control[0]));
+    return [validateTape(candidate, 'the-claim', 'gold-rush', 'trail') !== null, validateRunTape(candidate) !== null];
+  };
+  const [researchControl, upgradeControl, demolishControl] = controls;
+  equal(judged(researchControl, (action) => { action.id = ' assay_grading '; }), [true, true], 'a research_pick id with edge whitespace is still accepted (the client trims it)');
+  equal(judged(researchControl, (action) => { action.id = 'no-such-node'; }), [true, true], "a research_pick naming no research node is still accepted (the client's research_pick takes any id)");
+  equal(judged(upgradeControl, (action) => { action.target.id = ' sluice '; }), [true, true], 'an upgrade target id with edge whitespace is still accepted (the client trims it)');
+  equal(judged(upgradeControl, (action) => { action.target.index = 256; }), [true, true], 'an upgrade target index of 256 is still accepted (the client clamps it; the door bounds it at 10000)');
+  const buildings = kit.buildableIds;
+  equal([buildings.length > 0, buildings.flatMap((id) => [upgradeControl, demolishControl].map((control) => judged(control, (action) => { action.target.id = id; })))],
+    [true, buildings.flatMap(() => [[true, true], [true, true]])], "every building the client knows (buildables.ts buildableDefs) is accepted as an upgrade and a demolition target");
+  equal(['fund', 'recover'].map((name) => judged(upgradeControl, (action) => { action.action = name; delete action.target; })), [[true, true], [true, true]],
+    'the targetless context actions (fund, recover) are still accepted now that every context action meets the client');
+  console.log(`client judged ids ${backend} checks (${checks - before})`);
+}
+
+// F-DTG3-1, the rows stored BEFORE this grammar: each of the six shapes, manufactured as the door would have stored
+// it, is RETIRED at read (unranked, counted in `retiredCount`, its bytes untouched, its reel still on the shelf) and
+// never dropped (F-RPG-21), exactly as the grammar-3 shapes are. Each row is stored clean first (it ranks).
+async function checkRetiredClientJudgedIds(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  for (const [label, type, options, mutate] of clientJudgedIdShapes()) {
+    const reel = recorderReel(kit, 'bee7'.repeat(8), options);
+    const kv = makeKv();
+    const board = '/api/standings?contract=the-claim&epoch=epoch-1-frontier';
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, reel.body.tape)]));
+    const ranked = await call(onRequest, 'GET', board, undefined, kv);
+    equal([ranked.body.board.length, ranked.body.retiredCount], [1, 0], `control: the clean stored row ranks, before ${label}`);
+    const retired = structuredClone(reel.body.tape);
+    mutate(reelVerb(retired.inputLog, type));
+    ok(validateTape(retired, 'the-claim', 'gold-rush', 'trail', true) && !validateRunTape(retired), `at read the grammar keeps a stored reel with ${label}, which the client cannot load`);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, retired)]));
+    const storedBytes = await kv.get(KEY);
+    const read = await call(onRequest, 'GET', board, undefined, kv);
+    equal([read.body.board.length, read.body.retiredCount], [0, 1], `a stored row with ${label} is RETIRED and COUNTED, not dropped and not ranked`);
+    equal(await kv.get(KEY), storedBytes, `reading the retired row with ${label} leaves it byte-identical`);
+    const shelf = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${retired.id}`, undefined, kv);
+    equal([shelf.status, shelf.body.reel], [200, retired], `the reel with ${label} stays on the shelf exactly as stored`);
+    const slip = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=${retired.id}`, undefined, kv);
+    equal([slip.body.assay, slip.body.ranked], ['pending', false], `the assay slip of the reel with ${label} says it is not ranked`);
+  }
+  console.log(`retired client judged ids ${backend} checks (${checks - before})`);
 }
 
 // Every action a reel carries (primary entries and every stream), and the first of one type.
@@ -1801,7 +1907,7 @@ function currentEraTape(runTape) {
 // (Game.ts 8104-8143): `snapshot(outcome, eventLog)`, then `submittedRunTape`, then the body around it.
 // The playbook is recorded and read back off the shelf exactly as a named playbook is before its use
 // (`PlaybookRecorderSession.finish`, then `parsePlaybookText`, Game.ts:3900-3907).
-function recorderReel(kit, anonId, { playbook = false, motor = false, dispatch = null, recover = false, seatOrders = null, upgrade = null, ability = null, offered = [] } = {}) {
+function recorderReel(kit, anonId, { playbook = false, motor = false, dispatch = null, recover = false, seatOrders = null, upgrade = null, ability = null, research = null, context = null, offered = [] } = {}) {
   const { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape } = kit;
   const [contract, seed, difficulty] = ['the-claim', 'gold-rush', 'trail'];
   const start = { x: 0.25, z: 12.5 };
@@ -1834,8 +1940,15 @@ function recorderReel(kit, anonId, { playbook = false, motor = false, dispatch =
   // toggle reaches a tape only from a multiplayer ride's action list (Game.ts:8750-8751, then :7969-7974).
   // `offered` actions go down BOTH recorder paths, which shows what the recorder itself refuses to write.
   if (upgrade) recorder.recordAction({ type: 'pick_upgrade', id: upgrade });
+  // A building upgrade or demolition reaches the recorder through `recordRunTapeAction` (Game.ts:10102, :10111). A
+  // research pick reaches a tape only from a multiplayer ride's action list (Game.ts:10285, then :7969-7974).
+  if (context) recorder.recordAction({ type: 'context_action', ...context });
   offered.forEach((action) => recorder.recordAction(action));
-  recorder.record(move(0, 0), { x: 0.75, z: 12.75 }, [...(ability ? [{ type: 'set_agent_ability', ability, granted: true }] : []), ...offered]);
+  recorder.record(move(0, 0), { x: 0.75, z: 12.75 }, [
+    ...(ability ? [{ type: 'set_agent_ability', ability, granted: true }] : []),
+    ...(research ? [{ type: 'research_pick', id: research }] : []),
+    ...offered,
+  ]);
   // A seated agent rider's orders arrive among its own slot's actions and land in that slot's stream
   // (Game.ts:7975-7986), in the shape `SeatedLockstepSim.submitOrders` builds.
   if (seatOrders) recorder.recordAdditional(1, move(0, 0), { x: 1, z: 13 }, [seatOrders]);
