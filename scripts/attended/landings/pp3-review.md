@@ -10,3 +10,6 @@ Tests and evidence only: `e2e/native-proofs/driver.ts` (the E4 vehicle verbs), t
 ### Findings
 - **F-PP3-1, F-PP3-2, F-PP3-3 (open, holds):** the three E4 maps under the driver's routes; the Boneyard's approach tolerance is a general driver fix (an objective's own radius, not the driver's walking tolerance) for run 4.
 - **F-PP3-4 (this drain, the campaign's yield):** eleven maps attempted over three runs, one full proof (the Incline), one partial (Blackout Ridge), one map defect (the Canyon Works), eight holds. Run 4 begins with a control on the Claim, a map with a native proof and the simplest objective: if the shared driver cannot finish the Claim, the holds measure the driver and the campaign pauses for the owner; if it can, they measure the maps.
+
+### One battery row attributed by the drain
+`board-tape-gold.test.mjs` "the browser door submits the purse held at the secure tick, not the run's lifetime panning" was red in the chain's battery: a 120 second `page.waitForFunction` timeout while six implementers, an Astra play run and this landing shared the machine (load average 61 at the time). The branch touches only evidence and gated specs, nothing the door reads, and the row passed alone in the same chain worktree a minute later (rc 0). Allowed for this landing only; the row stays out of the default allow list on purpose.
