@@ -2,6 +2,7 @@ declare const WebSocketPair: typeof import('@cloudflare/workers-types').WebSocke
 
 import { normalizeSelfDeclaredStack, type SelfDeclaredStack } from '../../src/agent/DeclaredStack';
 import { fallbackReason, ledgerLink, withLedgerFallback, type LedgerEnv, type LedgerFallback } from './_ledger';
+import { bumpCounter } from './_ratelimit';
 
 type JsonRecord = Record<string, unknown>;
 type WebSocket = import('@cloudflare/workers-types').WebSocket;
@@ -664,10 +665,14 @@ function requireRooms(env: MultiplayerEnv, cors: Record<string, string>): Durabl
 // with the rate limit's own status and words. A refusal is what the caller can act on ("try again
 // later"); a thrown error from the connect door was an unhandled exception in front of a WebSocket.
 //
-// The KV fallback keeps this file's own limiter (`bumpCounter` below), which re-arms its hour on every
-// accepted write: the F-HEAT14-7 shape `_ratelimit.ts` cured for its six doors. Moving this door onto
-// that limiter is outside this slice (its census guard, scripts/ratelimit-window.test.mjs, counts
-// exactly six importers), so it is a finding for its own slice; through the ledger the window is fixed.
+// kv-counters-to-ledger-2 (F-KV1-4, 2026-09-25): the KV fallback counts on the limiter the other doors
+// share (`_ratelimit.ts`), whose window is the real hour the owner ruled for on 2026-09-19
+// (F-HEAT14-7). This file used to keep a limiter of its own that re-armed `expirationTtl` to a full
+// hour on every accepted write, so a rider who kept knocking never saw the hour end. The limits, the
+// key shape and RATE_TTL_SECONDS are unchanged; the window starts at the first counted request and
+// ends an hour later. scripts/ratelimit-window.test.mjs drives this door under a fixed clock to prove
+// it, and its census counts this file among the limiter's doors. Through the ledger the window was
+// already fixed.
 async function admit(
   request: Request,
   env: MultiplayerEnv,
@@ -691,7 +696,7 @@ async function admit(
       // is down with no KV behind it is a failed count, and a failed count refuses.
       return { refusal: ledger ? rateLimited(cors, fallback) : error(cors, 503, 'multiplayer_not_enabled', ROOM_UNAVAILABLE_MESSAGE), fallback };
     }
-    return { refusal: (await bumpCounter(limiter, key, limit)) ? null : rateLimited(cors, fallback), fallback };
+    return { refusal: (await bumpCounter(limiter, key, limit, RATE_TTL_SECONDS)) ? null : rateLimited(cors, fallback), fallback };
   } catch {
     return { refusal: rateLimited(cors, fallback), fallback };
   }
@@ -730,14 +735,6 @@ async function readJson(request: Request, maxBytes: number): Promise<JsonRecord>
   }
   if (!isRecord(value)) throw new HttpError(400, 'bad_json', 'JSON not accepted.');
   return value;
-}
-
-async function bumpCounter(kv: KVNamespaceLike, key: string, limit: number): Promise<boolean> {
-  const current = Number(await kv.get(key));
-  const count = Number.isFinite(current) && current > 0 ? Math.trunc(current) : 0;
-  if (count >= limit) return false;
-  await kv.put(key, String(count + 1), { expirationTtl: RATE_TTL_SECONDS });
-  return true;
 }
 
 async function clientIpHash(request: Request): Promise<string> {
