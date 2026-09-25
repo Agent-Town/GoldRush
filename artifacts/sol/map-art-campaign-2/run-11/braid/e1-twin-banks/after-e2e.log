@@ -1,0 +1,178 @@
+
+Running 56 tests using 1 worker
+
+
+(node:95832) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/56] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:99:1 › twin banks beauty board: boot, braid run camera, ford, plait, overview
+[2/56] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:191:1 › the beauty pass pays its frame budget, measured against its own build
+[3/56] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame
+  1) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+
+    Error: the reed sway should move pixels on the dry bank between two frames
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 60
+    Received:   0
+
+      247 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+      248 |   await writeFile(path.join(ARTIFACT_DIR, 'reed-motion.json'), `${JSON.stringify({ stage: STAGE, movedPixels: moved }, null, 2)}\n`);
+    > 249 |   expect(moved, 'the reed sway should move pixels on the dry bank between two frames').toBeGreaterThan(60);
+          |                                                                                        ^
+      250 |   expectClean(errors);
+      251 | });
+      252 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/beauty-twin-banks.spec.ts:249:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:951) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/56] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:253:1 › twin banks beauty board: west ford under pressure
+[5/56] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget
+[6/56] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[7/56] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:109:1 › builds sluices and stockpiles on both banks against one gold pool
+[8/56] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+[9/56] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:167:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[10/56] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[11/56] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords
+  2) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      326 |   expect(result.count).toBe(test.info().project.name === 'mobile-chrome' ? 102 : 248);
+      327 |   expect(result.kinds).toEqual(['driftwood', 'willow', 'reeds', 'driftwood', 'willow', 'reeds']);
+    > 328 |   expect(result.grounded).toBe(true); expect(result.clear).toBe(true);
+          |                           ^
+      329 | });
+      330 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:328:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-riparian-sca-4a8fc--both-build-banks-and-fords-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-riparian-sca-4a8fc--both-build-banks-and-fords-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-riparian-sca-4a8fc--both-build-banks-and-fords-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-riparian-sca-4a8fc--both-build-banks-and-fords-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:15993) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[12/56] [desktop-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[13/56] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[14/56] [desktop-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[15/56] [desktop-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[16/56] [desktop-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[17/56] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[18/56] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[19/56] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[20/56] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[21/56] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[22/56] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[23/56] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[24/56] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[25/56] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[26/56] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[27/56] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[28/56] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:24016) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[29/56] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:99:1 › twin banks beauty board: boot, braid run camera, ford, plait, overview
+[30/56] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:191:1 › the beauty pass pays its frame budget, measured against its own build
+[31/56] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame
+[32/56] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:253:1 › twin banks beauty board: west ford under pressure
+[33/56] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget
+[34/56] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[35/56] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:109:1 › builds sluices and stockpiles on both banks against one gold pool
+[36/56] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+[37/56] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:167:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[38/56] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[39/56] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords
+  3) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      326 |   expect(result.count).toBe(test.info().project.name === 'mobile-chrome' ? 102 : 248);
+      327 |   expect(result.kinds).toEqual(['driftwood', 'willow', 'reeds', 'driftwood', 'willow', 'reeds']);
+    > 328 |   expect(result.grounded).toBe(true); expect(result.clear).toBe(true);
+          |                           ^
+      329 | });
+      330 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:328:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-riparian-sca-4a8fc--both-build-banks-and-fords-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-riparian-sca-4a8fc--both-build-banks-and-fords-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-riparian-sca-4a8fc--both-build-banks-and-fords-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-riparian-sca-4a8fc--both-build-banks-and-fords-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:32517) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[40/56] [mobile-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[41/56] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[42/56] [mobile-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[43/56] [mobile-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[44/56] [mobile-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[45/56] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[46/56] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[47/56] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[48/56] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[49/56] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[50/56] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[51/56] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[52/56] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[53/56] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[54/56] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[55/56] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[56/56] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  3 failed
+    [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords 
+  2 skipped
+  51 passed (5.8m)
