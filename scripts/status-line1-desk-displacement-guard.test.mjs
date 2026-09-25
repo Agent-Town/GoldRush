@@ -50,15 +50,24 @@
  * proves the copy runs by making it SUCCEED rather than fail.
  */
 
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const SUBJECT = fileURLToPath(new URL('./status-line1.mjs', import.meta.url));
+
+// F-EO1-5 (reviews/evidence-offload-1.md; small-fixes-1, 2026-09-25): every board() below is a
+// mkdtemp directory, ten per run, and none was ever removed: 250 stale s2673-desk-* directories were
+// on the owner's disk when this landed, and scripts/fixture-teardown.test.mjs named this file for it.
+// Each board is recorded as it is made and removed once every arm has run.
+const BOARDS = [];
+after(() => {
+  for (const dir of BOARDS) rmSync(dir, { recursive: true, force: true });
+});
 
 const DESK_TAIL =
   "🔺 **OWNER'S DESK — 3 awaiting a word.** " +
@@ -79,6 +88,7 @@ const BODY = ['', '- **s2671 handoff (line-1 archive):** an older line, kept.', 
  */
 function board({ line1, extraBullets = [], mutate }) {
   const dir = mkdtempSync(join(tmpdir(), 's2673-desk-'));
+  BOARDS.push(dir);
   mkdirSync(join(dir, 'scripts'));
   const tool = join(dir, 'scripts', 'status-line1.mjs');
   copyFileSync(SUBJECT, tool);
