@@ -984,3 +984,4 @@ Final verification: build/TypeScript PASS; default collection PASS; gate-unset b
 ## 2026-09-25 — Native play proofs, run 3
 
 - Dust Flats: FAIL desktop/phone. Haul-first reaches railhead at 43.9 s but dies wave 2; defense-first builds two defenses but dies wave 4 before dispatch. Zero console/page errors. Strategy limits, not impossibility. [F-PP3-1](../play-proofs/run-3/e4-dust-flats/finding.md).
+- Gusher County: FAIL desktop/phone. Desktop stops after two deliveries on a missed north dispatch, dies wave 14; phone verifies all three deliveries using 27.631 fuel, then dies wave 4 funding its first defense. Zero errors. [F-PP3-2](../play-proofs/run-3/e4-gusher-county/finding.md).

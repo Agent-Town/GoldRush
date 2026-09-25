@@ -517,13 +517,17 @@ async function motorStop(page: Page, row: Row, x: number, z: number): Promise<bo
     row.notes.push(`motor stop unreachable: ${x},${z}; hero=${JSON.stringify((await read(page))?.hero)}`);
     return false;
   }
-  await takeUpgrades(page, row);
-  await page.keyboard.press('Space');
-  await page.waitForTimeout(200);
-  // At an ungraded stake the first confirm grades; the second dispatches.
-  const first = await read(page);
-  if (!first?.vehicle?.target || Math.hypot(first.vehicle.target.x - x, first.vehicle.target.z - z) > 2) {
+  // Confirm can be consumed by an upgrade appearing between movement and the key event.
+  // Verify the actual destination, and issue a fresh key only if the dispatch never changed.
+  for (let press = 0; press < 5; press++) {
+    await takeUpgrades(page, row);
     await page.keyboard.press('Space');
+    await page.waitForTimeout(250);
+    const next = await read(page);
+    if (!next || next.runState === 'dead') return false;
+    const target = next.vehicle?.target;
+    if (target && Math.hypot(target.x - x, target.z - z) < 2) break;
+    if (next.vehicle?.state === 'arrived' && Math.hypot(next.vehicle.x - x, next.vehicle.z - z) < 2) break;
   }
   for (let tick = 0; tick < 100; tick++) {
     await takeUpgrades(page, row);
@@ -546,6 +550,38 @@ async function motorOpening(page: Page, row: Row): Promise<void> {
     const reached = await walkTo(page, row, node.x, node.z, 0.8, 120);
     if (reached) await page.waitForTimeout(350);
     row.notes.push(`tar ${node.x},${node.z}: reached=${reached}, fuel=${JSON.stringify((await read(page))?.fuel)}`);
+  }
+  if (row.contract === 'e4-gusher-county') {
+    // Keep the Hauler on graded spokes, returning through camp rather than cutting between leases.
+    const leases = [
+      { index: 0, start: [-12, -8], end: [-50, -40] },
+      { index: 1, start: [12, -8], end: [48, -38] },
+      { index: 2, start: [0, 8], end: [0, 46] },
+    ];
+    for (const lease of leases) {
+      if (!(await motorStop(page, row, lease.start[0], lease.start[1]))) break;
+      // A closed spoke loses its fuel discount. Wait at the stake through its own storm.
+      for (let wait = 0; wait < 100; wait++) {
+        await takeUpgrades(page, row);
+        const now = await read(page);
+        if (!now || now.runState === 'dead') return;
+        const within = now.sim % 30;
+        if (Math.floor(now.sim / 30) % 3 !== lease.index || within < 6 || within >= 22) break;
+        await page.waitForTimeout(150);
+      }
+      if (!(await motorStop(page, row, lease.end[0], lease.end[1]))) break;
+      // A parked Hauler delivers as soon as this lease reopens.
+      for (let wait = 0; wait < 100; wait++) {
+        await takeUpgrades(page, row);
+        const now = await read(page);
+        if (!now || now.runState === 'dead') return;
+        if (Math.floor(now.sim / 30) % 3 !== lease.index || now.sim % 30 < 10 || now.sim % 30 >= 22) break;
+        await page.waitForTimeout(150);
+      }
+      row.notes.push(`lease ${lease.index} rested open at sim=${(await read(page))?.sim}`);
+      if (lease.index !== 2 && !(await motorStop(page, row, lease.start[0], lease.start[1]))) break;
+    }
+    await walkTo(page, row, 0, -4, 1.2, 120);
   }
   if (row.contract === 'e4-dust-flats') {
     if (await motorStop(page, row, 0, 12)) await motorStop(page, row, 0, 72);
@@ -702,6 +738,7 @@ export function nativeProof(id: string, run = 1) {
         const fords = crossingsFor(contract);
         const unreachable = new Set<string>();
 
+        if (contract.id === 'e4-gusher-county') await motorOpening(page, row);
         if (contract.id === 'e4-dust-flats') {
           // Establish cover before the long railhead errand; the haul-first attempt died gathering.
           await build(page, row, 'turret', 0, 4, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
