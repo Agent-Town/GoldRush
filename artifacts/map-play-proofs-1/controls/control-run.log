@@ -1,0 +1,111 @@
+CONTROL START 2026-09-25T06:01:10Z
+== A today 209f4b9c3 06:01:10Z
+13:01  up 28 days, 21:01, 10 users, load averages: 6.59 7.33 9.73
+vite ctl-today up on 5319 at 06:01:13Z (Content-Type: text/javascript), pid 87340
+(node:87440) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:87500) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-dry-gulch plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-dry-gulch plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 17 / 517.9s sim, 738 kills, 15 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       }
+      899 |
+    > 900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:900:64
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctl-today-secure/playability-secure-playabi-08fcd-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctl-today-secure/playability-secure-playabi-08fcd-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-dry-gulch plays to its secure wave, banks, reloads and returns to the board @slow 
+A.secure RC=1 at 06:05:01Z
+(node:92485) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:92547) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/locked-win.spec.ts:108:1 › leaving at secure follows the full victory ledger flow
+  1 passed (3.6s)
+A.lockedwin RC=0 at 06:05:05Z
+port 5319 released
+== B control d30d50451 06:05:08Z
+13:05  up 28 days, 21:05, 10 users, load averages: 8.90 7.96 9.44
+vite ctl-d30d50451 up on 5320 at 06:05:10Z (Content-Type: text/javascript), pid 92884
+(node:93053) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:93131) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-dry-gulch plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-dry-gulch plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: banks: the click wrote no new secured row for e1-dry-gulch at >= wave 20 (0 new row(s): [])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      885 |
+      886 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 887 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+          |                                                          ^
+      888 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      889 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      890 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1-control/e2e/playability-secure.spec.ts:887:58
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctl-old-secure/playability-secure-playabi-08fcd-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctl-old-secure/playability-secure-playabi-08fcd-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-dry-gulch plays to its secure wave, banks, reloads and returns to the board @slow 
+B.secure RC=1 at 06:09:31Z
+(node:98288) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:98349) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/locked-win.spec.ts:108:1 › leaving at secure follows the full victory ledger flow
+  1 passed (3.5s)
+B.lockedwin RC=0 at 06:09:35Z
+port 5320 released
+control rows copied
+CONTROL END 2026-09-25T06:09:38Z

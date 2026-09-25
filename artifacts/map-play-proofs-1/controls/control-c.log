@@ -1,0 +1,109 @@
+CONTROL-C START 2026-09-25T06:09:52Z
+== C1 today 209f4b9c3 06:09:52Z
+13:09  up 28 days, 21:09, 10 users, load averages: 6.60 7.36 8.77
+vite ctlc-today up on 5319 at 06:09:54Z (Content-Type: text/javascript), pid 98654
+(node:98749) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:98816) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: banks: the click wrote no new secured row for e10-last-claim at >= wave 8 (0 new row(s): [])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      899 |
+      900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+          |                                                          ^
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      904 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:901:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctlc-today/playability-secure-playabi-037a7-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctlc-today/playability-secure-playabi-037a7-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctlc-today/playability-secure-playabi-037a7-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctlc-today/playability-secure-playabi-037a7-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow 
+C1.secure RC=1 at 06:12:58Z
+port 5319 released
+== C2 control d30d50451 06:13:01Z
+13:13  up 28 days, 21:13, 10 users, load averages: 6.15 6.97 8.32
+instrument copied: ae0fd0e6ec48c61a
+vite ctlc-d30d50451 up on 5320 at 06:13:03Z (Content-Type: text/javascript), pid 4227
+(node:5080) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:5140) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/mpp1-control-playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/mpp1-control-playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: banks: the click wrote no new secured row for e10-last-claim at >= wave 8 (0 new row(s): [])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      899 |
+      900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+          |                                                          ^
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      904 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1-control/e2e/mpp1-control-playability-secure.spec.ts:901:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctlc-old/mpp1-control-playability-s-22151-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctlc-old/mpp1-control-playability-s-22151-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctlc-old/mpp1-control-playability-s-22151-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/pw-ctlc-old/mpp1-control-playability-s-22151-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chrome] › e2e/mpp1-control-playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow 
+C2.secure RC=1 at 06:16:07Z
+port 5320 released
+instrument copy moved out of the control tree
+control rows copied (       2 rows)
+== self-check today 06:16:10Z
+tsc RC=0
+guards RC=0
+list unset: 12
+list unset ids: e1-baron plays e1-dry-gulch plays e1-night-shift plays e1-twin-banks plays e2-hill-mine plays e4-long-road plays 
+list eighteen: 36
+CONTROL-C END 2026-09-25T06:16:20Z
