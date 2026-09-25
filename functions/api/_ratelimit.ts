@@ -1,6 +1,9 @@
 export type KVNamespaceLike = {
   get(key: string): Promise<string | null>;
   put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
+  // kv-counters-to-ledger-1: the droplet ledger's one-statement count-and-read
+  // (server/ledger/storage.mjs `increment`). SqliteStorage offers it; Cloudflare KV cannot.
+  increment?(key: string, ttlSeconds: number): Promise<number>;
 };
 
 // F-HEAT14-7, owner ruling 2026-09-19 (verbatim: "I agree with all your recommendations on the
@@ -34,6 +37,17 @@ function parseWindow(raw: string | null, now: number): RateWindow {
 }
 
 export async function bumpCounter(kv: KVNamespaceLike, key: string, limit: number, ttlSeconds: number): Promise<boolean> {
+  // kv-counters-to-ledger-1 (owner ruling 2026-09-24, item 7 "(b)"): where the store can count
+  // atomically - the sqlite ledger behind every door the droplet serves, and the ledger routes the
+  // Pages doors now call - the window counter IS that count. The read-then-write below lets a burst
+  // share one number (the SEC-1 defect, measured on the guess counter), and the ledger's statement
+  // cannot: each caller is refused on the count its own call produced. The window is the same fixed
+  // window this file already promises: `increment` arms `expires_at` once, from the first counted
+  // request, and never re-arms it. One difference, deliberate: a refused request is counted too, so
+  // the stored number can pass the limit. That buys nothing and costs nothing, because the window it
+  // sits in still ends on time. A value this file wrote as `<count>:<start>` keeps its count: sqlite
+  // reads `CAST('7:1788...' AS INTEGER)` as 7, measured.
+  if (kv.increment) return (await kv.increment(key, ttlSeconds)) <= limit;
   const now = Date.now();
   const stored = parseWindow(await kv.get(key), now);
   const elapsedMs = now - stored.startedAt;

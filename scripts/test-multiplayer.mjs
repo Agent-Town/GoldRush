@@ -4,7 +4,10 @@ import net from 'node:net';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createServer as createViteServer } from 'vite';
 import { assertWranglerVersion } from './wrangler-binary.mjs';
+import { createLedgerServer } from '../server/ledger/serve.mjs';
+import { SqliteStorage } from '../server/ledger/storage.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'http://localhost:5188';
@@ -25,6 +28,10 @@ const SETUP = {
     pinnedTarget: null,
   },
 };
+// kv-counters-to-ledger-1: a fixture value, not a credential; it exists only in this process and the
+// ledger it starts on 127.0.0.1. Declared up here because main() runs at module top level.
+const LEDGER_SECRET = 'kv-counters-to-ledger-fixture-secret-0000';
+const RATE_LIMIT_MESSAGE = 'The wire is busy. Try again later.';
 const checks = [];
 let wranglerVersion = 'unknown';
 
@@ -39,6 +46,7 @@ async function main() {
     await checkUnconfigured503();
     await checkRelayFlow();
     await checkRateLimits();
+    await checkLimiterThroughLedger();
     await writeSummary('passed');
     console.log(`multiplayer relay checks passed (${checks.length})`);
   } catch (err) {
@@ -164,6 +172,9 @@ async function checkRateLimits() {
     assert(created, 'create rate limit trips');
     assertEqual(created.body.error, 'rate_limited', 'create rate limit error code');
     assertEqual(created.body.message, 'The wire is busy. Try again later.', 'create rate limit friendly copy');
+    // kv-counters-to-ledger-1: this fixture binds no ledger, so the KV limiter answered, and says so
+    // through the real wrangler runtime, not only through the direct-call arm below.
+    assertEqual(created.headers.get('x-ledger-fallback'), 'unconfigured', 'an unbound door names the KV fallback in its header');
 
     const alternateIp = { 'CF-Connecting-IP': '203.0.113.44' };
     const room = await post(relay.url, '/api/multiplayer/create', {}, ORIGIN, alternateIp);
@@ -371,10 +382,151 @@ async function get(baseUrl, route, origin = ORIGIN, extraHeaders = {}) {
 async function readResponse(response) {
   const rawBody = await response.text();
   try {
-    return { status: response.status, body: JSON.parse(rawBody), rawBody };
+    return { status: response.status, headers: response.headers, body: JSON.parse(rawBody), rawBody };
   } catch {
-    return { status: response.status, body: {}, rawBody };
+    return { status: response.status, headers: response.headers, body: {}, rawBody };
   }
+}
+
+// --- kv-counters-to-ledger-1 scope 2: the co-op limiter rides the ledger, and never throws ----------
+// The three doors are called DIRECTLY (a Durable Object stub stands in for the room) so the KV binding
+// can be made to FAIL the way the free tier fails when the day's 1,000 writes are spent: the put
+// rejects. Before this task the connect door let that rejection escape as a thrown error
+// (artifacts/kv-counters-to-ledger-1/writes-before.json, "connectWithFailingKv": "threw").
+async function checkLimiterThroughLedger() {
+  const vite = await createViteServer({ root: ROOT, configFile: false, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
+  let doors;
+  try {
+    doors = await vite.ssrLoadModule('/functions/api/_multiplayer.ts');
+  } finally {
+    await vite.close();
+  }
+  const storage = new SqliteStorage(':memory:');
+  const server = await createLedgerServer({ storage, env: { LEDGER_PROXY_SECRET: LEDGER_SECRET } });
+  await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+  const bound = { LEDGER_ORIGIN: `http://127.0.0.1:${server.address().port}`, LEDGER_PROXY_SECRET: LEDGER_SECRET };
+  const down = { LEDGER_ORIGIN: 'http://127.0.0.1:9', LEDGER_PROXY_SECRET: LEDGER_SECRET };
+  const code = 'A'.repeat(24);
+  try {
+    // 1. A bump that fails refuses, on every door, with the rate limit's own status and words.
+    for (const [door, call] of [['connect', doors.connectRoom], ['inspect', doors.inspectRoom], ['create', doors.createRoom]]) {
+      const rooms = roomStub();
+      const answer = await callRoomDoor(call, door, code, { MULTIPLAYER_ROOMS: rooms, MULTIPLAYER_RATE_LIMITS: failingKv() }, '192.0.2.10');
+      assertEqual(answer.threw, undefined, `${door}: a failed bump is not a thrown error`);
+      assertEqual(answer.status, 429, `${door}: a failed bump refuses`);
+      assertEqual(answer.body.error, 'rate_limited', `${door}: with the rate limit's code`);
+      assertEqual(answer.body.message, RATE_LIMIT_MESSAGE, `${door}: and the rate limit's words`);
+      assertEqual(answer.fallback, 'unconfigured', `${door}: naming the KV fallback that failed`);
+      assertEqual(rooms.calls, 0, `${door}: the room is never reached on a refused count`);
+    }
+
+    // 2. Bound: the ledger counts, a failing KV is never touched, and the window is the ledger's.
+    const connectLimit = await sourceConstant('MAX_CONNECT_REQUESTS_PER_IP');
+    const rooms = roomStub();
+    const kv = failingKv();
+    let refusedAt = null;
+    for (let attempt = 1; attempt <= connectLimit + 1; attempt += 1) {
+      const answer = await callRoomDoor(doors.connectRoom, 'connect', code, { MULTIPLAYER_ROOMS: rooms, MULTIPLAYER_RATE_LIMITS: kv, ...bound }, '192.0.2.20');
+      if (answer.status === 429) {
+        refusedAt = { attempt, answer };
+        break;
+      }
+      assertEqual(answer.status, 426, `bound: connect ${attempt} of ${connectLimit} reaches the room`);
+    }
+    assertEqual(refusedAt?.attempt, connectLimit + 1, `bound: connect ${connectLimit + 1} from one address is refused by the ledger`);
+    assertEqual(refusedAt?.answer.fallback, null, 'bound: the refusal came from the ledger, so no fallback header');
+    assertEqual(kv.puts, 0, 'bound: the KV namespace is never written');
+    assertEqual(rooms.calls, connectLimit, 'bound: exactly the admitted connects reach the room');
+    const counted = storage.db.prepare("SELECT value FROM kv WHERE key LIKE 'mp:ratelimit:connect:%'").all();
+    assertEqual(counted.length, 1, 'bound: one counter row per address and bucket, in the ledger');
+    assertEqual(counted[0].value, String(connectLimit + 1), 'bound: the ledger counted every attempt');
+
+    // 3. Bound but down: the KV fallback answers and says so; and if KV fails too, still a refusal.
+    const healthy = healthyKv();
+    const fallback = await callRoomDoor(doors.inspectRoom, 'inspect', code, { MULTIPLAYER_ROOMS: roomStub(), MULTIPLAYER_RATE_LIMITS: healthy, ...down }, '192.0.2.30');
+    assertEqual(fallback.status, 200, 'down: the KV fallback admits the request');
+    assertEqual(fallback.fallback, 'unreachable', 'down: and names the fallback');
+    assertEqual(healthy.puts, 1, 'down: the fallback counted in KV');
+    const both = await callRoomDoor(doors.connectRoom, 'connect', code, { MULTIPLAYER_ROOMS: roomStub(), MULTIPLAYER_RATE_LIMITS: failingKv(), ...down }, '192.0.2.31');
+    assertEqual(both.status, 429, 'down with KV failing too: still a refusal, never a throw');
+    assertEqual(both.fallback, 'unreachable', 'down with KV failing too: named');
+    const bare = await callRoomDoor(doors.connectRoom, 'connect', code, { MULTIPLAYER_ROOMS: roomStub(), ...down }, '192.0.2.32');
+    assertEqual(bare.status, 429, 'down with no KV bound: a failed count refuses');
+    const unsaddled = await callRoomDoor(doors.connectRoom, 'connect', code, { MULTIPLAYER_ROOMS: roomStub() }, '192.0.2.33');
+    assertEqual(unsaddled.status, 503, 'nothing bound at all: the honest "not saddled yet", as before');
+  } finally {
+    await new Promise((resolve) => server.close(resolve));
+    storage.close();
+  }
+}
+
+async function callRoomDoor(handler, door, code, env, ip) {
+  const url = door === 'create' ? 'http://localhost/api/multiplayer/create' : `http://localhost/api/multiplayer/${door}?code=${code}`;
+  const request = new Request(url, {
+    method: door === 'create' ? 'POST' : 'GET',
+    headers: { Origin: ORIGIN, 'CF-Connecting-IP': ip, ...(door === 'create' ? { 'content-type': 'application/json' } : {}) },
+    body: door === 'create' ? JSON.stringify({ setup: SETUP }) : undefined,
+  });
+  let response;
+  try {
+    response = await handler({ request, env });
+  } catch (error) {
+    return { threw: error instanceof Error ? error.message : String(error) };
+  }
+  return { status: response.status, fallback: response.headers.get('x-ledger-fallback'), body: await response.json().catch(() => ({})) };
+}
+
+function roomStub() {
+  const stub = {
+    calls: 0,
+    idFromName: (name) => name,
+    get: () => ({
+      fetch: async (request) => {
+        stub.calls += 1;
+        const path = new URL(request.url).pathname;
+        if (path.endsWith('/inspect')) return new Response(JSON.stringify({ ok: true, type: 'room-info' }), { status: 200, headers: { 'content-type': 'application/json' } });
+        if (path.endsWith('/create')) return new Response(JSON.stringify({ ok: true, type: 'room-created' }), { status: 200, headers: { 'content-type': 'application/json' } });
+        return new Response(JSON.stringify({ ok: false, error: 'upgrade_required' }), { status: 426, headers: { 'content-type': 'application/json' } });
+      },
+    }),
+  };
+  return stub;
+}
+
+// The free tier's answer once the day's writes are spent: the read works, the put rejects.
+function failingKv() {
+  const kv = {
+    puts: 0,
+    async get() { return null; },
+    async put() {
+      kv.puts += 1;
+      throw new Error('KV PUT failed: 429 Too Many Requests');
+    },
+    async list() { return { keys: [], list_complete: true }; },
+  };
+  return kv;
+}
+
+function healthyKv() {
+  const values = new Map();
+  const kv = {
+    puts: 0,
+    async get(key) { return values.get(key) ?? null; },
+    async put(key, value) {
+      kv.puts += 1;
+      values.set(key, value);
+    },
+    async list() { return { keys: [], list_complete: true }; },
+  };
+  return kv;
+}
+
+async function sourceConstant(name) {
+  const { readFile } = await import('node:fs/promises');
+  const source = await readFile(path.join(ROOT, 'functions/api/_multiplayer.ts'), 'utf8');
+  const match = new RegExp(String.raw`^const ${name} = ([0-9_]+);`, 'm').exec(source);
+  if (!match) throw new Error(`${name} not found in functions/api/_multiplayer.ts`);
+  return Number(match[1].replace(/_/g, ''));
 }
 
 async function connectClient(baseUrl, code, name, town, clientType = 'browser', stack) {
