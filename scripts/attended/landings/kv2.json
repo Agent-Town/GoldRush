@@ -1,0 +1,14 @@
+{
+  "tag": "kv2", "branch": "fix/kv-counters-to-ledger-2", "port": 5379,
+  "mergeMessage": "drain: merge fix/kv-counters-to-ledger-2 — kv-counters-to-ledger-2 — the co-op door's KV fallback rides the shared real hour (its own limiter re-armed the hour on every write; census six to seven), the Pages standings copy answers a no-store 308 to STANDINGS_CANONICAL_ORIGIN when set and is byte-identical unset, the shared limiter floors the KV expiry at 60 s (F-KV2-1, drain); nothing bound until the ops evening (Opus 5.5 implementer at max effort; owner ruling 7 (b) of 2026-09-24)",
+  "hash": "unchanged",
+  "gates": { "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": true, "ledgerBattery": false,
+    "specs": [], "guards": ["scripts/ratelimit-window.test.mjs", "scripts/function-cors-allowlist.test.mjs", "scripts/worker-type-coverage.test.mjs"] },
+  "cure": "scripts/attended/landings/kv2-cure.sh",
+  "review": { "path": "reviews/kv-counters-to-ledger-2.md", "title": "Drain review: `kv-counters-to-ledger-2`, the last two KV writers stop (Opus 5.5 implementer at max effort; owner ruling 7 (b) of 2026-09-24)", "body": "scripts/attended/landings/kv2-review.md" },
+  "bookkeeping": { "taskFile": "kv-counters-to-ledger-2.md", "rowKey": "KV COUNTERS TO LEDGER 2 LANDED", "rowEmoji": "🧮",
+    "rowText": "F-KV1-4: the co-op door's KV fallback rides `_ratelimit.ts`'s real hour (before: a rider who spent 30 connects in minutes 0 to 29 got back in at minute 89, a rider every ten minutes refused 5 of 36 times; now minute 60 and never), census SEVEN doors by name; F-KV1-5: the Pages standings copy answers a no-store 308 to `STANDINGS_CANONICAL_ORIGIN` when set (0 KV calls) and is byte-identical unset (bound on the ops evening, Part C step 9; the canonical host serves, never redirects itself). Drain fix F-KV2-1: the shared limiter floors the KV expiry at Cloudflare's 60 s minimum (the last 59 s of an hour threw), red-first 10/10. Gates: accounts 241, mp 528, standings 372 to 413, stats rc 0. Hash unchanged {PIN}. Desk: F-KV2-6 (owner: pages.dev standings surface). Deployed: the limiter's hour is live on the co-op door's KV fallback; the redirect stays inert until bound.",
+    "statusPhrase": "the co-op door's hour is a real hour on the shared limiter and the Pages standings copy will redirect once the canonical origin is named",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh kv2)" },
+  "deploy": true, "preview": true, "evidenceDir": "artifacts/kv-counters-to-ledger-2"
+}

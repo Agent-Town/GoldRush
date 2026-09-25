@@ -1,0 +1,8 @@
+#!/bin/bash
+# lsr1 cure (in the chain after the merge): two desk rows, the owner decision and the ops cadence.
+G=$1
+node scripts/attended/desk-row.cjs F-LSR1-1 "(2026-09-25, from the live-seed-rotation-1 landing): human standings on the weekly seed appear on NO in-game board.** The public board keeps only rows without a \`rotationId\` (\`functions/api/standings.ts:704\`), the transfer board is site-only and verified-solo, party rows on a rotation seed appear nowhere. Recommendation: the in-game county board reads the open week's partition (a slice, once you say so). Until then a human who secures the week's claim sees their standing only on the site." >> "$G" 2>&1
+node scripts/attended/desk-row.cjs F-LSR1-2 "(2026-09-25, from the live-seed-rotation-1 landing, ops): the weekly mint must run a week AHEAD.** A deployed bundle without the open week falls back to last week and the door refuses every such standing until a deploy lands; week 39 was minted three days late (2026-09-24) and week 40 is not minted at this landing; week 39 closes Monday 2026-09-28 00:00 UTC. The attended session mints and deploys week 40 before Monday on the owner-held salt if the RT-01 fire duty has not; the standing cadence should be the Friday before." >> "$G" 2>&1
+git add -- tasks/BACKLOG.md && git commit -q -m "drain: live-seed-rotation-1 — the owner decision and the ops cadence declared as their own desk rows (F-LSR1-1 the in-game board's partition, F-LSR1-2 the mint a week ahead)
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>" && echo "cure lsr1: desk rows committed $(git rev-parse --short HEAD)" >> "$G"
