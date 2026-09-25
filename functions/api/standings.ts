@@ -1753,7 +1753,7 @@ function validTapeAction(value: unknown, stored = false): boolean {
     return validateStandingOrders(value.orders).ok;
   }
   if (typeof value.type !== 'string') return false;
-  // F-DTG2-2 (door-tape-grammar-3): at the door a place_build, pick_upgrade or set_agent_ability must also be
+  // F-DTG2-2 (door-tape-grammar-3): at the door an action in CLIENT_JUDGED_ACTIONS (place_build, pick_upgrade, set_agent_ability, research_pick, context_action; F-DTG4-1) must also be
   // one the client can load; at read the shape below still stands and `tapeGrammarRefusal` retires the row.
   if (!stored && clientRefusesAction(value)) return false;
   const simple = new Set(['weapon_toggle', 'restart', 'debug_spawn', 'debug_xp', 'skip_ceremony', 'research_skip']);
