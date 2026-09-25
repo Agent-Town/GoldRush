@@ -1,0 +1,15 @@
+{
+  "tag": "tt2", "branch": "test/test-truth-2", "port": 5382,
+  "mergeMessage": "drain: merge test/test-truth-2 — test-truth-2 — five test instruments corrected against a clean-main control (the Night Shift luminance probe reads a named body in scene light, the Twin Banks wait follows the terrain pilot, the reed field is counted inside its swaying cards, the secure spec's banks step asks for the secured row the boot did not hold and takes the secure wave from the engine); the ten secured pairs measured: banks 9 of 9, reload 9 of 9, board 7 of 9 (the Last Claim fail is the test), clean 10 of 10 (Opus 5.5 implementer at max effort; owner 2026-09-25 spare budget)",
+  "hash": "unchanged",
+  "gates": { "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": false, "ledgerBattery": false,
+    "specs": ["e2e/e1-night-shift.spec.ts", "e2e/e1-twin-banks.spec.ts", "e2e/beauty-twin-banks.spec.ts", "e2e/playability-secure.spec.ts", "e2e/task-025-bandits-dont-swim.spec.ts", "e2e/m2-01-build-menu.spec.ts"],
+    "guards": [] },
+  "cure": "scripts/attended/landings/tt2-cure.sh",
+  "review": { "path": "reviews/test-truth-2.md", "title": "Drain review: `test-truth-2`, five test instruments made true and the ten secured pairs measured (Opus 5.5 implementer at max effort; owner 2026-09-25 spare budget)", "body": "scripts/attended/landings/tt2-review.md" },
+  "bookkeeping": { "taskFile": "test-truth-2.md", "rowKey": "TEST TRUTH 2 LANDED", "rowEmoji": "🔬",
+    "rowText": "F-SEF2-5b the Night Shift luminance probe rebuilt (named body at torso height, still camera, DOM hidden, CSS-pixel patch, scene light with the ACES inverse; band re-derived 0.526 to 0.666 from the renderer's dark tint; ramp ratio 0.26 and 1.0 before, 0.585 and 0.589 after; lantern in-radius 0.237 to 0.78 to 0.81); F-SEF2-5c the Twin Banks snapshot waits for the terrain pilot (7 of 10 red to 10 of 10); F-E1T-1 reeds counted inside their 44 swaying cards from the claim stake (0 to 308 to 336 moved pixels against 5 to 9 control); F-MPP1-1/-4 the secure spec's banks step asks for the secured row the boot scoreboard did not hold and reads the secure wave from the engine. Ten secured pairs: banks 9/9, reload 9/9 (7,396 to 7,401 bytes byte-identical), board 7/9 (Last Claim: the finale's Charter Press, F-TT2-1 a test leg), clean 10/10; Seed Run phone unmeasured (died at waves 19 and 17). Controls on clean main `517822b35`; every cured test green 3x both projects; guards 52/52; evidence 9.4 MB. Hash unchanged {PIN}. Slices: F-TT2-1 (board step finale leg), F-TT2-2 (the dev server's dependency scan fails on every worktree and the shared `node_modules/.vite` cache is re-optimised by siblings: `worktree-vite-cache-1`), F-TT2-3 (the relight test's race, main's).",
+    "statusPhrase": "five test instruments now measure what they claim and nine of ten secured map pairs bank, reload and show their board",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh tt2)" },
+  "deploy": false, "preview": false, "evidenceDir": "artifacts/test-truth-2"
+}
