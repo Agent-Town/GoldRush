@@ -6229,14 +6229,18 @@
             {
               "id": "kv-counters-to-ledger-1",
               "title": "Owner ruling 2026-09-24 item 7 (b) (the review's SEC-2): telemetry batched, the room connect in its error path, the counters, bug reports and prize codes moved to the droplet ledger; no paid plan",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "kv-counters-to-ledger-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
               "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24",
               "liftedFrom": "gate-side: run by the attended session as an Opus implementer under the drain lock after the ops evening (the ledger routes deploy with the droplet mirror); lifted at launch",
               "queuedAt": "2026-09-25",
-              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-kv1, branch fix/kv-counters-to-ledger-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\""
+              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-kv1, branch fix/kv-counters-to-ledger-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\"",
+              "mergeHash": "647337be24e8fc6e2fb3b32cd8a4b0b2aaa7386c",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/kv-counters-to-ledger-1.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh kv1)"
             },
             {
               "id": "ledger-shape-1",
@@ -6315,12 +6319,16 @@
             {
               "id": "sol-play-proofs-3",
               "title": "The play-proofs campaign, run 3: the Dust Flats onward (E4, E8, E9, E10); the holds wait for the campaign's end",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "sol-play-proofs-3.md",
               "lane": "lane-c (Astra, gpt-6-astra; the CODEX-WALL campaign lift of 2026-09-25); the queue copy is HELD until sol-play-proofs-2 has landed on main",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from run 2's REMAINING LIST",
-              "queuedAt": "2026-09-25 (leaf; the copy follows the run-2 landing)"
+              "queuedAt": "2026-09-25 (leaf; the copy follows the run-2 landing)",
+              "mergeHash": "3447c53342352439d998f46883309769690ef1c4",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/sol-play-proofs-3.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh pp3)"
             },
             {
               "id": "canyon-works-traversal-1",
@@ -6343,6 +6351,56 @@
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) on the owner word of 2026-09-25",
               "queuedAt": "2026-09-25"
+            },
+            {
+              "id": "test-truth-2",
+              "title": "Five test-side findings get their true instrument (the Night Shift luminance probe, the Twin Banks determinism wait, the reed-field aliveness, the secure spec bank count and secure wave), then the ten secured pairs measured for banks, board and reload",
+              "status": "queued",
+              "taskFile": "test-truth-2.md",
+              "lane": "scratch worktree /Users/robin/Claude/Projects/wt-tt2 beside the primary, branch test/test-truth-2, Opus 5.5 implementer at max effort (the session inherits), port 5323, under the attended drain lock",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) on the owner word of 2026-09-25 (the spare budget)",
+              "queuedAt": "2026-09-25"
+            },
+            {
+              "id": "small-fixes-1",
+              "title": "Four small findings closed with tests: the bug office localhost CORS, the privacy link on the signed-in card, the main-module idiom under symlinked paths in thirteen scripts, a desk guard temp-directory leak",
+              "status": "queued",
+              "taskFile": "small-fixes-1.md",
+              "lane": "scratch worktree /Users/robin/Claude/Projects/wt-sf1 beside the primary, branch fix/small-fixes-1, Opus 5.5 implementer at max effort (the session inherits), port 5324, under the attended drain lock",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) on the owner word of 2026-09-25 (the spare budget)",
+              "queuedAt": "2026-09-25"
+            },
+            {
+              "id": "kv-counters-to-ledger-2",
+              "title": "The two KV writers kv-counters-to-ledger-1 left behind stop writing KV: the co-op door's KV fallback moves onto the shared real-hour limiter (F-KV1-4, census six to seven) and the Pages copy of standings answers 308 to STANDINGS_CANONICAL_ORIGIN when bound (F-KV1-5); nothing live until the ops evening binds the variable",
+              "status": "queued",
+              "taskFile": "kv-counters-to-ledger-2.md",
+              "lane": "scratch worktree /Users/robin/Claude/Projects/wt-kv2 beside the primary, branch fix/kv-counters-to-ledger-2, Opus 5.5 implementer at max effort (the session inherits), functions gates, under the landing lock at drain time",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) from the kv-counters-to-ledger-1 review findings F-KV1-4 and F-KV1-5, 2026-09-25",
+              "queuedAt": "2026-09-25"
+            },
+            {
+              "id": "sol-play-proofs-4",
+              "title": "The play-proofs campaign, run 4: a driver control on the Claim first, then the Far Side onward (E8, E9, E10)",
+              "status": "queued",
+              "taskFile": "sol-play-proofs-4.md",
+              "lane": "lane-c (Astra, gpt-6-astra; the CODEX-WALL campaign lift of 2026-09-25); the queue copy is HELD until sol-play-proofs-3 has landed on main",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) from run 3's REMAINING LIST, with the driver control added for the yield question F-PP3-4",
+              "queuedAt": "2026-09-25 (leaf; the copy follows the run-3 landing)"
+            },
+            {
+              "id": "sol-play-proofs-5",
+              "title": "Play-proofs run 5: Dome Basin onward through E9 and E10 (six ground maps), the E8 trio excluded until an orbital driver exists (F-PP4-4); Astra on lane-c, queued by the run-4 landing's queue job",
+              "status": "queued",
+              "taskFile": "sol-play-proofs-5.md",
+              "lane": "lane-c (Astra, gpt-6-astra; the CODEX-WALL campaign lift of 2026-09-25); the queue copy is HELD until sol-play-proofs-3 has landed on main",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) from run 4's REMAINING LIST, 2026-09-25",
+              "queuedAt": "2026-09-25 (by the queue job once run 4 has landed)"
             }
           ]
         }

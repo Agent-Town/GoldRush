@@ -23,7 +23,10 @@ const DEFAULTS = {
     'scripts/deploy-budget.test.mjs', 'scripts/deploy-mirror-allowlist.test.mjs', 'scripts/claimed-spec-harness-guard.test.mjs',
   ],
   allowedBattery: [
-    'fixture owners remove their temp directories',
+    // 'fixture owners remove their temp directories' was allowed here as a load-class row until 2026-09-25, when the pp3 drain
+    // read the battery log and found the red was a REAL leak (two s2673/s2677 guards never removed their mkdtemp dirs; 328
+    // survivors; fixed c3cd93c77). A blanket allowance hid it for every landing since (F-PP3-6). The sweep is now allowed
+    // ONLY per landing, after reading its assertion: 'child failed' under load is attributable; 'fixture survivors' never is.
     'rotation registry stays outside the engine identity corpus',
     'the landed registry names the live engine and stays outside its hash corpus',
     'the live board is green under this guard',

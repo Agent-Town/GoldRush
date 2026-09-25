@@ -140,6 +140,8 @@ type Snapshot = {
   nodes: Array<{ id: string; active: boolean; x: number; z: number; respawnIn: number; respawnScheduled: boolean }>;
   buildables: Array<{ id: string; cost: number; count: number; maxCount: number; canAfford: boolean }>;
   defences: Array<{ id: string; index: number; hp: number; maxHp: number; wrecked: boolean; repairCost: number; x: number; z: number }>;
+  fuel: ThreeGameDiagnostics['fuel'];
+  vehicle: ThreeGameDiagnostics['vehicle'];
   repairs: number;
   channeling: boolean;
   objective: unknown;
@@ -157,13 +159,15 @@ async function read(page: Page): Promise<Snapshot | null> {
       const d = window.__THREE_GAME_DIAGNOSTICS__;
       if (!d) return null;
       return {
+        fuel: d.fuel,
+        vehicle: d.vehicle,
         escort: d.escort,
         canyonWorks: d.canyonWorks,
         fairground: d.fairground,
         crowdFlocks: d.crowdFlocks,
         power: d.power,
         pressure: d.pressure,
-        objective: { fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
+        objective: { fuel: d.fuel, vehicle: d.vehicle, landYacht: d.landYachtBoss, fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -507,6 +511,97 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   await build(page, row, room.id, home.x + Math.cos(angle) * radius, home.z + Math.sin(angle) * radius, Math.min(deadline, Date.now() + 60_000), fords, unreachable);
 }
 
+// Motor errands use the ordinary confirm key at surveyed stakes and haul destinations.
+async function motorStop(page: Page, row: Row, x: number, z: number, tolerance = 0.8): Promise<boolean> {
+  if (!(await walkTo(page, row, x, z, tolerance, 120))) {
+    row.notes.push(`motor stop unreachable: ${x},${z}; hero=${JSON.stringify((await read(page))?.hero)}`);
+    return false;
+  }
+  // Confirm can be consumed by an upgrade appearing between movement and the key event.
+  // Verify the actual destination, and issue a fresh key only if the dispatch never changed.
+  for (let press = 0; press < 5; press++) {
+    await takeUpgrades(page, row);
+    await page.keyboard.press('Space');
+    await page.waitForTimeout(250);
+    const next = await read(page);
+    if (!next || next.runState === 'dead') return false;
+    const target = next.vehicle?.target;
+    if (target && Math.hypot(target.x - x, target.z - z) < 2) break;
+    if (next.vehicle?.state === 'arrived' && Math.hypot(next.vehicle.x - x, next.vehicle.z - z) < 2) break;
+  }
+  for (let tick = 0; tick < 100; tick++) {
+    await takeUpgrades(page, row);
+    const now = await read(page);
+    if (!now || now.runState === 'dead') return false;
+    if (now.vehicle?.state === 'arrived' || now.vehicle?.state === 'dry') {
+      const arrived = now.vehicle.state === 'arrived' && Math.hypot(now.vehicle.x - x, now.vehicle.z - z) < 2;
+      row.notes.push(`motor stop ${x},${z}: arrived=${arrived}, sim=${now.sim.toFixed(1)}, vehicle=${JSON.stringify(now.vehicle)}, fuel=${JSON.stringify(now.fuel)}`);
+      return arrived;
+    }
+    await page.waitForTimeout(150);
+  }
+  row.notes.push(`motor stop ${x},${z}: arrival wait exhausted`);
+  return false;
+}
+
+async function motorOpening(page: Page, row: Row): Promise<void> {
+  const initial = await read(page);
+  for (const node of initial?.fuel?.nodes ?? []) {
+    const reached = await walkTo(page, row, node.x, node.z, 0.8, 120);
+    if (reached) await page.waitForTimeout(350);
+    row.notes.push(`tar ${node.x},${node.z}: reached=${reached}, fuel=${JSON.stringify((await read(page))?.fuel)}`);
+  }
+  if (row.contract === 'e4-boneyard') {
+    // Aim outside the solid boiler centre but within hitch reach; this approach remains unproved.
+    if (await motorStop(page, row, -8, -38)) {
+      if (await motorStop(page, row, -34, -4)) {
+        await walkTo(page, row, -24, -14, 0.8);
+        await walkTo(page, row, -18, -14, 0.8);
+        if (await motorStop(page, row, -18, -10, 0.5)) {
+          if (await motorStop(page, row, -34, -4)) await motorStop(page, row, -8, -38);
+        }
+      }
+    }
+    await walkTo(page, row, 0, -44, 1.2, 120);
+  }
+  if (row.contract === 'e4-gusher-county') {
+    // Keep the Hauler on graded spokes, returning through camp rather than cutting between leases.
+    const leases = [
+      { index: 0, start: [-12, -8], end: [-50, -40] },
+      { index: 1, start: [12, -8], end: [48, -38] },
+      { index: 2, start: [0, 8], end: [0, 46] },
+    ];
+    for (const lease of leases) {
+      if (!(await motorStop(page, row, lease.start[0], lease.start[1]))) break;
+      // A closed spoke loses its fuel discount. Wait at the stake through its own storm.
+      for (let wait = 0; wait < 100; wait++) {
+        await takeUpgrades(page, row);
+        const now = await read(page);
+        if (!now || now.runState === 'dead') return;
+        const within = now.sim % 30;
+        if (Math.floor(now.sim / 30) % 3 !== lease.index || within < 6 || within >= 22) break;
+        await page.waitForTimeout(150);
+      }
+      if (!(await motorStop(page, row, lease.end[0], lease.end[1]))) break;
+      // A parked Hauler delivers as soon as this lease reopens.
+      for (let wait = 0; wait < 100; wait++) {
+        await takeUpgrades(page, row);
+        const now = await read(page);
+        if (!now || now.runState === 'dead') return;
+        if (Math.floor(now.sim / 30) % 3 !== lease.index || now.sim % 30 < 10 || now.sim % 30 >= 22) break;
+        await page.waitForTimeout(150);
+      }
+      row.notes.push(`lease ${lease.index} rested open at sim=${(await read(page))?.sim}`);
+      if (lease.index !== 2 && !(await motorStop(page, row, lease.start[0], lease.start[1]))) break;
+    }
+    await walkTo(page, row, 0, -4, 1.2, 120);
+  }
+  if (row.contract === 'e4-dust-flats') {
+    if (await motorStop(page, row, 0, 12)) await motorStop(page, row, 0, 72);
+    await walkTo(page, row, 0, 8, 1.2, 120);
+  }
+}
+
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
@@ -656,6 +751,17 @@ export function nativeProof(id: string, run = 1) {
         const fords = crossingsFor(contract);
         const unreachable = new Set<string>();
 
+        if (contract.id === 'e4-boneyard') {
+          await build(page, row, 'turret', 0, -48, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
+          await motorOpening(page, row);
+        }
+        if (contract.id === 'e4-gusher-county') await motorOpening(page, row);
+        if (contract.id === 'e4-dust-flats') {
+          // Establish cover before the long railhead errand; the haul-first attempt died gathering.
+          await build(page, row, 'turret', 0, 4, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
+          await build(page, row, 'sentry_beacon', -4, 9, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
+          await motorOpening(page, row);
+        }
         if (contract.id === 'e2-pressure-garden') {
           if (HOLD_GROUND) {
             await build(page, row, 'turret', -29, 24, Math.min(deadline, Date.now() + 60_000), fords, unreachable);

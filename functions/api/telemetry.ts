@@ -1,3 +1,12 @@
+import {
+  fallbackReason,
+  LedgerRequestError,
+  ledgerClientKey,
+  ledgerLink,
+  ledgerRoute,
+  withLedgerFallback,
+  type LedgerEnv,
+} from './_ledger';
 import { bumpCounter, clientIpHash, type KVNamespaceLike as RateLimitKVNamespaceLike } from './_ratelimit';
 
 type KVListResult = {
@@ -8,9 +17,13 @@ type KVListResult = {
 
 type KVNamespaceLike = RateLimitKVNamespaceLike & {
   list(options?: { prefix?: string; cursor?: string }): Promise<KVListResult>;
+  // The droplet ledger's permanent atomic counter and maximum (server/ledger/storage.mjs). Absent on
+  // Cloudflare KV, where the read-then-write below is the only way.
+  tally?(key: string): Promise<number>;
+  raise?(key: string, value: number): Promise<void>;
 };
 
-type TelemetryEnv = {
+type TelemetryEnv = LedgerEnv & {
   TELEMETRY?: KVNamespaceLike; ACCOUNTS?: KVNamespaceLike;
 };
 
@@ -48,7 +61,14 @@ type RenderDemotionPayload = {
 type TelemetryPayload = RunTelemetryPayload | RenderDemotionPayload;
 
 const MAX_JSON_BYTES = 4 * 1024;
+// The ledger road carries the validated beacon plus the anonymous client key.
+const LEDGER_TELEMETRY_BYTES = MAX_JSON_BYTES + 1024;
 const DEDUP_TTL_SECONDS = 62 * 24 * 60 * 60;
+const UPDATED_AT_KEY = 'telemetry:updatedAt';
+// kv-counters-to-ledger-1 scope 1: the "last beacon" stamp moves at most once a minute. The stats door
+// caches its answer for 60 s (`PUBLIC_CACHE`, stats.ts), so a finer stamp was a write nobody could see.
+const UPDATED_AT_MIN_INTERVAL_MS = 60_000;
+const RATE_LIMIT_MESSAGE = 'The wire is busy. Try again later.';
 const RATE_TTL_SECONDS = 60 * 60;
 const MAX_REQUESTS_PER_IP = 30;
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
@@ -83,19 +103,63 @@ export async function onRequest(context: TelemetryContext): Promise<Response> {
     if (!hasOnlyAllowedPayloadKeys(body)) return error(cors, 400, 'bad_payload', 'Telemetry payload not accepted.');
     const payload = validatePayload(body);
     if (!payload) return error(cors, 400, 'bad_payload', 'Telemetry payload not accepted.');
-    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-    if (!kv) return json(cors, { ok: true, stored: false });
-    const ipAllowed = await bumpCounter(kv, `telemetry:ratelimit:${await clientIpHash(context.request)}`, MAX_REQUESTS_PER_IP, RATE_TTL_SECONDS);
-    if (!ipAllowed) return error(cors, 429, 'rate_limited', 'The wire is busy. Try again later.');
+    const client = await clientIpHash(context.request);
 
-    const duplicate = 'event' in payload
-      ? await storeRenderDemotion(kv, payload)
-      : await storeAggregate(kv, payload);
-    return json(cors, { ok: true, stored: true, duplicate });
+    // kv-counters-to-ledger-1 scope 1, "or better: forward the beacon to the ledger and write nothing
+    // on the edge". With the ledger bound, a beacon costs the shared KV namespace ZERO writes: the
+    // per-address limit, the dedup and every aggregate are counted in sqlite, where a write is free.
+    const ledger = ledgerLink(context.env);
+    if (ledger) {
+      // The body AS RECEIVED (already accepted above), not the normalised payload: `validatePayload`
+      // fills a legacy client's missing stage in as 'legacy', which it would then refuse on the ledger.
+      // Both ends validate the same bytes with the same function.
+      const reply = await ledger.post('/api/ledger/telemetry', { client, beacon: body });
+      if (reply?.ok === true) return json(cors, { ok: true, stored: true, duplicate: reply.duplicate === true });
+      if (reply?.error === 'rate_limited') return error(cors, 429, 'rate_limited', RATE_LIMIT_MESSAGE);
+      // Bound but not served (down, restarting, the nginx route missing): the beacon is DROPPED, not
+      // spent against the KV budget. That budget is the co-op limiter's fallback, the one door that
+      // must keep answering while the ledger rests; telemetry is best-effort and says so here.
+      return json(withLedgerFallback(cors, fallbackReason(ledger)), { ok: true, stored: false });
+    }
+
+    // Unconfigured (every fixture, and production until the ops evening binds the secret): the KV path
+    // keeps its shape, because the unchanged stats door reads these very keys back (`npm run
+    // test:stats` pins it). What scope 1 changes here is what a beacon can make it spend: a replay under
+    // a fresh nonce is now a duplicate (1 write, the limiter, instead of 13), a replayed render demotion
+    // likewise (1 instead of 8), and `telemetry:updatedAt` moves at most once a minute.
+    const unconfigured = withLedgerFallback(cors, fallbackReason(ledger));
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    if (!kv) return json(unconfigured, { ok: true, stored: false });
+    const ipAllowed = await bumpCounter(kv, `telemetry:ratelimit:${client}`, MAX_REQUESTS_PER_IP, RATE_TTL_SECONDS);
+    if (!ipAllowed) return error(unconfigured, 429, 'rate_limited', RATE_LIMIT_MESSAGE);
+    return json(unconfigured, { ok: true, stored: true, duplicate: await recordBeacon(kv, payload) });
   } catch (err) {
     if (err instanceof HttpError) return error(cors, err.status, err.code, err.message);
     return error(cors, 500, 'server_error', 'Telemetry not accepted.');
   }
+}
+
+// POST /api/ledger/telemetry {client, beacon} on the droplet (server/ledger/serve.mjs). The beacon is
+// validated AGAIN here with the same allowlist and caps as the edge: the ledger trusts the secret, not
+// the shape of what arrives with it.
+export async function ledgerTelemetry(context: { request: Request; env: TelemetryEnv }): Promise<Response> {
+  return ledgerRoute(context, ['POST'], LEDGER_TELEMETRY_BYTES, async ({ body }) => {
+    const client = ledgerClientKey(body.client);
+    const beacon = isRecord(body.beacon) && !hasIdentifierKey(body.beacon) && hasOnlyAllowedPayloadKeys(body.beacon)
+      ? validatePayload(body.beacon)
+      : null;
+    if (!client || !beacon) throw new LedgerRequestError(400, 'bad_payload');
+    const store = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    if (!store) throw new LedgerRequestError(503, 'office_closed');
+    if (!(await bumpCounter(store, `telemetry:ratelimit:${client}`, MAX_REQUESTS_PER_IP, RATE_TTL_SECONDS))) {
+      return { ok: false, error: 'rate_limited' };
+    }
+    return { ok: true, duplicate: await recordBeacon(store, beacon) };
+  });
+}
+
+async function recordBeacon(kv: KVNamespaceLike, payload: TelemetryPayload): Promise<boolean> {
+  return 'event' in payload ? storeRenderDemotion(kv, payload) : storeAggregate(kv, payload);
 }
 
 async function storeAggregate(kv: KVNamespaceLike, payload: RunTelemetryPayload): Promise<boolean> {
@@ -127,30 +191,58 @@ async function storeAggregate(kv: KVNamespaceLike, payload: RunTelemetryPayload)
       ? [bump(kv, `telemetry:secured-at:${waveBucket(payload.secureWave)}`)]
       : []),
   ]);
-  await kv.put('telemetry:updatedAt', new Date().toISOString());
+  await touchUpdatedAt(kv);
   return false;
 }
 
+// kv-counters-to-ledger-1 scope 1: the render-demotion record gets the run beacon's dedup and TTL. It
+// used to write eight rows per report with no dedup at all, so a replayed report cost eight writes
+// every time. NOTE THE MEANING THIS BUYS: the payload carries no identity (identifiers are refused
+// above, by design), so a demotion is now counted once per distinct signature per month; two players
+// who demote identically on the same build are one row. That trade is the owner's to keep or change.
 async function storeRenderDemotion(kv: KVNamespaceLike, payload: RenderDemotionPayload): Promise<boolean> {
   const day = new Date().toISOString().slice(0, 10);
+  const dedupKey = `telemetry:dedup:${day.slice(0, 7)}:${await digestRenderDemotion(payload)}`;
+  if (await kv.get(dedupKey)) return true;
+  await kv.put(dedupKey, '1', { expirationTtl: DEDUP_TTL_SECONDS });
   await Promise.all([
     bump(kv, 'telemetry:render-demotion:total'),
     bump(kv, `telemetry:render-demotion:day:${day}`),
     bump(kv, `telemetry:render-demotion:reason:${reasonBucket(payload.reason)}`),
     bump(kv, `telemetry:render-demotion:contract:${payload.contractId}`),
     bump(kv, `telemetry:render-demotion:tier:${payload.tier}`),
-    kv.put(`telemetry:render-demotion:latest:${payload.contractId}`, JSON.stringify({ ...payload, receivedAt: new Date().toISOString() })),
+    kv.put(
+      `telemetry:render-demotion:latest:${payload.contractId}`,
+      JSON.stringify({ ...payload, receivedAt: new Date().toISOString() }),
+      { expirationTtl: DEDUP_TTL_SECONDS },
+    ),
   ]);
-  await kv.put('telemetry:updatedAt', new Date().toISOString());
+  await touchUpdatedAt(kv);
   return false;
 }
 
+// Read first, write only when the stamp is a minute old (or missing, or from a clock ahead of ours).
+async function touchUpdatedAt(kv: KVNamespaceLike): Promise<void> {
+  const now = Date.now();
+  const last = Date.parse((await kv.get(UPDATED_AT_KEY)) ?? '');
+  if (Number.isFinite(last) && now >= last && now - last < UPDATED_AT_MIN_INTERVAL_MS) return;
+  await kv.put(UPDATED_AT_KEY, new Date(now).toISOString());
+}
+
 async function bump(kv: KVNamespaceLike, key: string): Promise<void> {
+  if (kv.tally) {
+    await kv.tally(key);
+    return;
+  }
   const current = Number(await kv.get(key));
   await kv.put(key, String((Number.isFinite(current) && current > 0 ? current : 0) + 1));
 }
 
 async function maxValue(kv: KVNamespaceLike, key: string, value: number): Promise<void> {
+  if (kv.raise) {
+    await kv.raise(key, value);
+    return;
+  }
   const current = Number(await kv.get(key));
   if (!Number.isFinite(current) || value > current) await kv.put(key, String(value));
 }
@@ -245,9 +337,16 @@ function waveBucket(value: number): string {
   return '40plus';
 }
 
+// kv-counters-to-ledger-1 scope 1: the client nonce is OUT of the digest. It was the only field a
+// caller could change freely, so a replayed beacon under a fresh nonce was a brand-new run to this
+// door and cost its full write bill again (measured: 13 KV writes, the flood shape). The digest is now
+// the run itself: which contract, which stage, how it went, on what build and device. The master named
+// the run's identity as "contract, seed, outcome, the profile's anonymous id"; the beacon carries no
+// seed and no anonymous id (src/telemetry/payload.ts), and the monthly nonce WAS the only anonymous id
+// it carried, which is exactly why it cannot anchor a dedup. The nonce is still required on the wire,
+// so every shipped client keeps being accepted.
 async function digestPayload(payload: RunTelemetryPayload): Promise<string> {
-  const text = [
-    payload.nonce,
+  return sha256Hex([
     payload.contract,
     payload.stage,
     payload.waves,
@@ -259,7 +358,15 @@ async function digestPayload(payload: RunTelemetryPayload): Promise<string> {
     payload.frameP95,
     payload.deviceClass,
     payload.buildHash,
-  ].join(':');
+  ].join(':'));
+}
+
+async function digestRenderDemotion(payload: RenderDemotionPayload): Promise<string> {
+  const dataset = Object.keys(payload.dataset).sort().map((key) => [key, payload.dataset[key]]);
+  return sha256Hex(JSON.stringify([payload.event, payload.reason, payload.contractId, payload.buildId, payload.tier, dataset]));
+}
+
+async function sha256Hex(text: string): Promise<string> {
   const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
   return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }

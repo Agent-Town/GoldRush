@@ -1,0 +1,62 @@
+
+Running 1 test using 1 worker
+
+
+(node:41370) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [mobile-chrome] › e2e/native-proofs/driver.ts:621:5 › e4-dust-flats plays to its secure wave, banks, reloads and returns to the board @slow
+[mobile-chrome] › e2e/native-proofs/driver.ts:621:5 › e4-dust-flats plays to its secure wave, banks, reloads and returns to the board @slow
+e4-dust-flats {"t":10.5,"wave":0,"hp":100,"gold":0,"kills":0,"x":16.9,"z":25.7,"alive":2,"seams":2}
+
+e4-dust-flats {"t":20.7,"wave":0,"hp":100,"gold":15,"kills":1,"x":18,"z":44.9,"alive":5,"seams":2}
+
+e4-dust-flats {"t":31.3,"wave":1,"hp":100,"gold":30,"kills":5,"x":-7.6,"z":18.5,"alive":9,"seams":1}
+
+e4-dust-flats {"t":41.6,"wave":1,"hp":100,"gold":30,"kills":8,"x":-50.5,"z":-23.6,"alive":9,"seams":1}
+
+e4-dust-flats {"t":52,"wave":1,"hp":100,"gold":50,"kills":9,"x":-56.1,"z":-43.6,"alive":13,"seams":2}
+
+e4-dust-flats {"t":62.4,"wave":2,"hp":92,"gold":50,"kills":15,"x":-13.2,"z":-0.7,"alive":16,"seams":2}
+
+e4-dust-flats {"t":72.7,"wave":2,"hp":84,"gold":0,"kills":25,"x":-13.4,"z":-6.7,"alive":12,"seams":2}
+
+e4-dust-flats {"t":83.2,"wave":2,"hp":84,"gold":0,"kills":32,"x":-55.7,"z":-44.3,"alive":10,"seams":2}
+
+e4-dust-flats {"t":93.7,"wave":3,"hp":84,"gold":10,"kills":34,"x":-22.1,"z":-56.3,"alive":18,"seams":1}
+
+e4-dust-flats {"t":104.1,"wave":3,"hp":76,"gold":10,"kills":37,"x":19.9,"z":-53.2,"alive":24,"seams":1}
+
+e4-dust-flats {"t":114.1,"wave":3,"hp":76,"gold":25,"kills":38,"x":43.6,"z":-56.2,"alive":28,"seams":2}
+
+e4-dust-flats {"t":124.8,"wave":4,"hp":76,"gold":25,"kills":47,"x":-3.7,"z":-8.9,"alive":31,"seams":2}
+
+e4-dust-flats {"t":134.8,"wave":4,"hp":76,"gold":0,"kills":56,"x":-12,"z":-7.2,"alive":33,"seams":2}
+
+  1) [mobile-chrome] › e2e/native-proofs/driver.ts:621:5 › e4-dust-flats plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 4 / 143.7s sim, 78 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       999 |       }
+      1000 |
+    > 1001 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1002 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1003 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1004 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1001:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-3/e4-dust-flats/mobile-results/native-proofs-e4-dust-flat-f18ad-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-3/e4-dust-flats/mobile-results/native-proofs-e4-dust-flat-f18ad-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/native-proofs/driver.ts:621:5 › e4-dust-flats plays to its secure wave, banks, reloads and returns to the board @slow 

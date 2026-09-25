@@ -1,0 +1,60 @@
+
+Running 1 test using 1 worker
+
+
+(node:73567) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:668:5 › e4-boneyard plays to its secure wave, banks, reloads and returns to the board @slow
+[desktop-chrome] › e2e/native-proofs/driver.ts:668:5 › e4-boneyard plays to its secure wave, banks, reloads and returns to the board @slow
+e4-boneyard {"t":10.4,"wave":0,"hp":100,"gold":0,"kills":0,"x":-11.3,"z":-27.1,"alive":2,"seams":2}
+
+e4-boneyard {"t":20.9,"wave":0,"hp":100,"gold":0,"kills":0,"x":-0.6,"z":-7.8,"alive":6,"seams":2}
+
+e4-boneyard {"t":30.9,"wave":1,"hp":100,"gold":0,"kills":1,"x":-7.8,"z":-35,"alive":13,"seams":2}
+
+e4-boneyard {"t":40.9,"wave":1,"hp":90,"gold":0,"kills":7,"x":-34.1,"z":-5.7,"alive":10,"seams":2}
+
+e4-boneyard {"t":51.2,"wave":1,"hp":76,"gold":0,"kills":13,"x":-14.9,"z":-16.1,"alive":9,"seams":2}
+
+e4-boneyard {"t":61.5,"wave":2,"hp":76,"gold":0,"kills":17,"x":17.6,"z":-25,"alive":14,"seams":2}
+
+e4-boneyard {"t":71.6,"wave":2,"hp":76,"gold":20,"kills":20,"x":15.7,"z":-13,"alive":16,"seams":2}
+
+e4-boneyard {"t":81.6,"wave":2,"hp":76,"gold":30,"kills":27,"x":-12.7,"z":15.4,"alive":14,"seams":1}
+
+e4-boneyard {"t":91.9,"wave":3,"hp":33,"gold":50,"kills":35,"x":-15.1,"z":7.3,"alive":17,"seams":1}
+
+e4-boneyard {"t":102.4,"wave":3,"hp":33,"gold":50,"kills":38,"x":0.7,"z":-40.1,"alive":22,"seams":2}
+
+e4-boneyard {"t":112.9,"wave":3,"hp":33,"gold":0,"kills":43,"x":32.6,"z":-13.5,"alive":23,"seams":2}
+
+e4-boneyard {"t":122.9,"wave":4,"hp":9,"gold":20,"kills":53,"x":33.3,"z":-0.1,"alive":25,"seams":2}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:668:5 › e4-boneyard plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 4 / 124.4s sim, 55 kills, 25 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1047 |       }
+      1048 |
+    > 1049 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1050 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1051 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1052 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1049:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-3/e4-boneyard/desktop-results/native-proofs-e4-boneyard--6dc68-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-3/e4-boneyard/desktop-results/native-proofs-e4-boneyard--6dc68-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:668:5 › e4-boneyard plays to its secure wave, banks, reloads and returns to the board @slow 

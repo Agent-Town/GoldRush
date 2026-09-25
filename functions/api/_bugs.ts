@@ -1,4 +1,13 @@
 import { constantTimeEqual } from './_compare';
+import {
+  fallbackReason,
+  LedgerRequestError,
+  ledgerClientKey,
+  ledgerLink,
+  ledgerRoute,
+  withLedgerFallback,
+  type LedgerEnv,
+} from './_ledger';
 import { bumpCounter, clientIpHash, type KVNamespaceLike as RateLimitKVNamespaceLike } from './_ratelimit';
 
 type KVListResult = {
@@ -11,7 +20,7 @@ type KVNamespaceLike = RateLimitKVNamespaceLike & {
   list(options?: { prefix?: string; cursor?: string; limit?: number }): Promise<KVListResult>;
 };
 
-export type BugsEnv = {
+export type BugsEnv = LedgerEnv & {
   TELEMETRY?: KVNamespaceLike;
   ACCOUNTS?: KVNamespaceLike;
   BUG_OFFICE_TOKEN?: string;
@@ -42,10 +51,22 @@ type BugReport = {
   };
 };
 
+type ReportBody = Omit<BugReport, 'id' | 'submittedAt'>;
+
+type ReportPage = {
+  bugs: Omit<BugReport, 'screenshot'>[];
+  cursor: string | null;
+  listComplete: boolean;
+};
+
 const MAX_DESCRIPTION_LENGTH = 2_000;
 const MAX_NAME_LENGTH = 24;
 const MAX_SCREENSHOT_BYTES = 180 * 1024;
 const MAX_JSON_BYTES = 260 * 1024;
+// What the ledger road carries for one report: the report as validated here (a bare base64 screenshot
+// gains its 23-byte data: prefix) plus the anonymous client key. Well under the ledger reader's own cap.
+const LEDGER_BUG_BYTES = MAX_JSON_BYTES + 1024;
+const BUG_ID = /^\d{13}-[a-f0-9]{8}$/;
 const RATE_TTL_SECONDS = 60 * 60;
 const MAX_REPORTS_PER_IP = 5;
 // SEC-7 (outside review 2026-09-24): a bug report is the most personal thing this game stores — a
@@ -73,16 +94,25 @@ export async function postBug(context: BugsContext): Promise<Response> {
 
   try {
     const report = validateReport(await readJson(context.request));
-    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-    if (!kv) return error(cors, 503, 'office_closed', 'The complaints ledger is off the desk. Try again later.');
-    if (!(await bumpCounter(kv, `bug:ratelimit:${await clientIpHash(context.request)}`, MAX_REPORTS_PER_IP, RATE_TTL_SECONDS))) {
-      return error(cors, 429, 'rate_limited', 'The complaints desk has your stack already. Try again after the next bell.');
+    const client = await clientIpHash(context.request);
+
+    // kv-counters-to-ledger-1 scope 3 (owner ruling 2026-09-24, item 7 "(b)"): the complaints ledger
+    // lives in the droplet ledger. This door validates exactly as before and hands the report over;
+    // the per-address limit and the 90-day expiry are kept there. A ledger that is bound but does not
+    // answer is an honest "off the desk", never a second copy in KV, where the office would not look.
+    const ledger = ledgerLink(context.env);
+    if (ledger) {
+      const reply = await ledger.post('/api/ledger/bugs', { client, report });
+      if (reply?.ok === true && typeof reply.id === 'string') return json(cors, { ok: true, id: reply.id }, 201);
+      if (reply?.error === 'rate_limited') return rateLimited(cors);
+      return officeClosed(withLedgerFallback(cors, fallbackReason(ledger)));
     }
 
-    const id = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
-    const stored: BugReport = { id, submittedAt: new Date().toISOString(), ...report };
-    await kv.put(`bug:${id}`, JSON.stringify(stored), { expirationTtl: REPORT_TTL_SECONDS });
-    return json(cors, { ok: true, id }, 201);
+    const headers = withLedgerFallback(cors, fallbackReason(ledger));
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    if (!kv) return officeClosed(headers);
+    const id = await fileReport(kv, client, report);
+    return id ? json(headers, { ok: true, id }, 201) : rateLimited(headers);
   } catch (cause) {
     if (cause instanceof HttpError) return error(cors, cause.status, cause.code, cause.message);
     return error(cors, 500, 'server_error', 'The clerk dropped the ledger. Try again later.');
@@ -94,24 +124,30 @@ export async function listBugs(context: BugsContext): Promise<Response> {
   if (!cors) return decline({});
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'GET' || !authorized(context)) return decline(cors);
-  const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-  if (!kv) return json(cors, { ok: true, bugs: [], cursor: null, listComplete: true });
-
   const url = new URL(context.request.url);
   const cursor = url.searchParams.get('cursor') || undefined;
-  const requestedLimit = Number(url.searchParams.get('limit') ?? '50');
-  const limit = Number.isInteger(requestedLimit) ? Math.min(100, Math.max(1, requestedLimit)) : 50;
-  const page = await kv.list({ prefix: 'bug:', cursor, limit });
-  const reports = (await Promise.all(page.keys.map(({ name }) => kv.get(name))))
-    .map(parseStoredReport)
-    .filter((report): report is BugReport => report !== null)
-    .map(({ screenshot: _screenshot, ...summary }) => summary);
-  return json(cors, {
-    ok: true,
-    bugs: reports,
-    cursor: page.list_complete ? null : page.cursor ?? null,
-    listComplete: page.list_complete,
-  });
+  const limit = pageLimit(url.searchParams.get('limit'));
+
+  // The office token is checked HERE, at the edge, exactly as before; the ledger admits this door by
+  // the shared secret and never sees the office token.
+  const ledger = ledgerLink(context.env);
+  if (ledger) {
+    const reply = await ledger.get('/api/ledger/bugs', { ...(cursor ? { cursor } : {}), limit: String(limit) });
+    if (reply?.ok === true && Array.isArray(reply.bugs)) {
+      return json(cors, {
+        ok: true,
+        bugs: reply.bugs,
+        cursor: typeof reply.cursor === 'string' ? reply.cursor : null,
+        listComplete: reply.listComplete === true,
+      });
+    }
+    return officeClosed(withLedgerFallback(cors, fallbackReason(ledger)));
+  }
+
+  const headers = withLedgerFallback(cors, fallbackReason(ledger));
+  const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+  if (!kv) return json(headers, { ok: true, bugs: [], cursor: null, listComplete: true });
+  return json(headers, { ok: true, ...(await readReportPage(kv, cursor, limit)) });
 }
 
 export async function getBug(context: BugsContext): Promise<Response> {
@@ -120,14 +156,90 @@ export async function getBug(context: BugsContext): Promise<Response> {
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'GET' || !authorized(context)) return decline(cors);
   const id = context.params?.id;
-  if (typeof id !== 'string' || !/^\d{13}-[a-f0-9]{8}$/.test(id)) return decline(cors);
+  if (typeof id !== 'string' || !BUG_ID.test(id)) return decline(cors);
+  const ledger = ledgerLink(context.env);
+  if (ledger) {
+    const reply = await ledger.get('/api/ledger/bugs', { id });
+    if (reply?.ok === true && isRecord(reply.bug)) return json(cors, { ok: true, bug: reply.bug });
+    if (reply?.ok === false && reply.error === 'not_found') return decline(cors);
+    return officeClosed(withLedgerFallback(cors, fallbackReason(ledger)));
+  }
+  const headers = withLedgerFallback(cors, fallbackReason(ledger));
   const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
-  if (!kv) return decline(cors);
+  if (!kv) return decline(headers);
   const report = parseStoredReport(await kv.get(`bug:${id}`));
-  return report ? json(cors, { ok: true, bug: report }) : decline(cors);
+  return report ? json(headers, { ok: true, bug: report }) : decline(headers);
 }
 
-function validateReport(value: JsonRecord): Omit<BugReport, 'id' | 'submittedAt'> {
+// POST /api/ledger/bugs {client, report} files a report; GET /api/ledger/bugs?cursor=&limit= pages the
+// summaries (no screenshots); GET /api/ledger/bugs?id= reads one in full. Droplet side
+// (server/ledger/serve.mjs). The report is validated AGAIN with the same field allowlists and caps the
+// public door enforces: the ledger trusts the secret, not the shape of what arrives with it. Stored
+// under the same `bug:<id>` key KV used, so the office, fetch-bugs and the one-shot migration
+// (scripts/kv-to-ledger-migrate.mjs) all read one shape; the 90-day expiry is the row's `expires_at`,
+// swept nightly by ops/droplet/ledger-backup.mjs.
+export async function ledgerBugs(context: { request: Request; env: BugsEnv }): Promise<Response> {
+  return ledgerRoute(context, ['GET', 'POST'], LEDGER_BUG_BYTES, async ({ method, body, url }) => {
+    const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
+    if (!kv) throw new LedgerRequestError(503, 'office_closed');
+    if (method === 'POST') {
+      const client = ledgerClientKey(body.client);
+      const report = isRecord(body.report) ? revalidate(body.report) : null;
+      if (!client || !report) throw new LedgerRequestError(400, 'bad_payload');
+      const id = await fileReport(kv, client, report);
+      return id ? { ok: true, id } : { ok: false, error: 'rate_limited' };
+    }
+    const id = url.searchParams.get('id');
+    if (id !== null) {
+      if (!BUG_ID.test(id)) throw new LedgerRequestError(400, 'bad_id');
+      const report = parseStoredReport(await kv.get(`bug:${id}`));
+      return report ? { ok: true, bug: report } : { ok: false, error: 'not_found' };
+    }
+    return { ok: true, ...(await readReportPage(kv, url.searchParams.get('cursor') || undefined, pageLimit(url.searchParams.get('limit')))) };
+  });
+}
+
+// One home for the write, whichever store serves it: the per-address limit, then the report with its
+// 90-day expiry (SEC-7). Returns the new id, or null when the limit refuses.
+async function fileReport(kv: KVNamespaceLike, client: string, report: ReportBody): Promise<string | null> {
+  if (!(await bumpCounter(kv, `bug:ratelimit:${client}`, MAX_REPORTS_PER_IP, RATE_TTL_SECONDS))) return null;
+  const id = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
+  const stored: BugReport = { id, submittedAt: new Date().toISOString(), ...report };
+  await kv.put(`bug:${id}`, JSON.stringify(stored), { expirationTtl: REPORT_TTL_SECONDS });
+  return id;
+}
+
+async function readReportPage(kv: KVNamespaceLike, cursor: string | undefined, limit: number): Promise<ReportPage> {
+  const page = await kv.list({ prefix: 'bug:', cursor, limit });
+  const reports = (await Promise.all(page.keys.map(({ name }) => kv.get(name))))
+    .map(parseStoredReport)
+    .filter((report): report is BugReport => report !== null)
+    .map(({ screenshot: _screenshot, ...summary }) => summary);
+  return { bugs: reports, cursor: page.list_complete ? null : page.cursor ?? null, listComplete: page.list_complete };
+}
+
+function pageLimit(value: string | null): number {
+  const requested = Number(value ?? '50');
+  return Number.isInteger(requested) ? Math.min(100, Math.max(1, requested)) : 50;
+}
+
+function revalidate(value: JsonRecord): ReportBody | null {
+  try {
+    return validateReport(value);
+  } catch {
+    return null;
+  }
+}
+
+function officeClosed(headers: Record<string, string>): Response {
+  return error(headers, 503, 'office_closed', 'The complaints ledger is off the desk. Try again later.');
+}
+
+function rateLimited(headers: Record<string, string>): Response {
+  return error(headers, 429, 'rate_limited', 'The complaints desk has your stack already. Try again after the next bell.');
+}
+
+function validateReport(value: JsonRecord): ReportBody {
   if (!hasOnlyKeys(value, ['description', 'prospectorName', 'screenshot', 'diagnostics'])) throw badPayload();
   const description = typeof value.description === 'string' ? value.description.trim() : '';
   if (!description || description.length > MAX_DESCRIPTION_LENGTH) throw badPayload();
