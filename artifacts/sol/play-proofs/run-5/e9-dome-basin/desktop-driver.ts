@@ -303,13 +303,13 @@ type Home = { x: number; z: number; circuit: Array<[number, number]> };
 function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Home {
   const tile = contract.tileParams as {
     stakeMarkers?: Array<{ x: number; z: number; heroStart?: boolean }>;
-    buildZones?: Array<{ id?: string; minX: number; maxX: number; minZ: number; maxZ: number }>;
+    buildZones?: Array<{ minX: number; maxX: number; minZ: number; maxZ: number }>;
   };
   const stake = tile.stakeMarkers?.find((marker) => marker.heroStart) ?? tile.stakeMarkers?.[0];
   const zones = tile.buildZones ?? [];
 
   const holding = stake ? zones.find((entry) => stake.x >= entry.minX && stake.x <= entry.maxX && stake.z >= entry.minZ && stake.z <= entry.maxZ) : undefined;
-  const zone = contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
+  const zone = contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
   const centre =
     stake && (holding || zones.length === 0)
       ? { x: stake.x, z: stake.z }
