@@ -1,0 +1,13 @@
+{
+  "tag": "wvc1", "branch": "fix/worktree-vite-cache-1", "port": 5386,
+  "mergeMessage": "drain: merge fix/worktree-vite-cache-1 — worktree-vite-cache-1 — every checkout gets its own vite dependency cache and two named entries, because vite's default entry glob followed the assets/pilots symlink into the art store and every worktree boot re-optimised the shared cache and skipped pre-bundling (three of six boots never booted; after: 2.5 to 3.4 s cold or warm, zero reloads; build byte-identical, hash unchanged) (Opus 5.5 implementer at max effort; F-TT2-2, the canyon-works boot failure)",
+  "hash": "unchanged",
+  "gates": { "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": false, "ledgerBattery": false,
+    "specs": ["e2e/task-025-bandits-dont-swim.spec.ts", "e2e/m2-01-build-menu.spec.ts"], "guards": [] },
+  "review": { "path": "reviews/worktree-vite-cache-1.md", "title": "Drain review: `worktree-vite-cache-1`, one vite cache per checkout and the entry glob that crossed into the art store (Opus 5.5 implementer at max effort)", "body": "scripts/attended/landings/wvc1-review.md" },
+  "bookkeeping": { "taskFile": "worktree-vite-cache-1.md", "rowKey": "WORKTREE VITE CACHE LANDED", "rowEmoji": "🧰",
+    "rowText": "Root cause corrected (F-WVC1-1): vite's default `**/*.html` entry glob followed the `assets/pilots` symlink into the art store's `hero-3d/compare.html`, whose tsconfig extends a path that does not exist there, so every worktree boot re-optimised the SHARED `node_modules/.vite` and skipped pre-bundling (8 of 8 boots; a sampler saw eight configurations rewrite the cache 127 times in 19 minutes; three of six boots never booted). Cure in `vite.config.ts`: `cacheDir` `.vite-cache` per checkout (gitignored), `optimizeDeps.entries` index.html and the replay harness, a dev-only rewrite keeping the old deps URL for the spec and five review scripts that import it directly (F-WVC1-2, a slice). After: scan 197 ms, boots 2.5 to 3.4 s cold or warm with zero reloads, a sibling's server no longer touches this checkout's cache; build byte-identical (3,173 dist files), hash unchanged {PIN}, task-025 and m2-01 24/24. F-WVC1-3 (inferred): today's browser-door \"load\" reds may have been this; watch the row. No deploy (config only; the droplet rebuilds its cache once per deploy, F-WVC1-4).",
+    "statusPhrase": "every checkout has its own vite dependency cache and the entry glob no longer crosses into the art store, so worktree boots stop re-optimising each other",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh wvc1)" },
+  "deploy": false, "preview": false, "evidenceDir": "artifacts/worktree-vite-cache-1"
+}
