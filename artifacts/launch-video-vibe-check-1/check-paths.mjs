@@ -5,7 +5,7 @@
 // ones that look like paths: repo-relative (artifacts/, reviews/, lore/, docs/, ...), absolute
 // (/Users/...), home-relative (~/...), and the documents' `store:` shorthand for the art store.
 // A `:NN` or `:NN-MM` line suffix is stripped. A `*` inside a segment is matched against the
-// directory listing. Phase-2 outputs under ~/.goldrush/launch-video/ are reported PLANNED.
+// directory listing, and every segment must match its directory entry in exact case. Phase-2 outputs under ~/.goldrush/launch-video/ are reported PLANNED.
 // Prints every miss and exits 1 when there is at least one.
 import fs from 'node:fs';
 import os from 'node:os';
@@ -42,8 +42,22 @@ function resolveToken(raw) {
   return { token, absolute };
 }
 
+// Exact-case walk: macOS resolves paths case-insensitively, so existsSync alone would pass a
+// wrongly-cased path that breaks on Linux. Each segment must match a directory entry exactly.
+function exactExists(absolute) {
+  const parts = absolute.split('/').filter(Boolean);
+  let dir = '/';
+  for (const part of parts) {
+    let entries;
+    try { entries = fs.readdirSync(dir); } catch { return false; }
+    if (!entries.includes(part)) return false;
+    dir = path.join(dir, part);
+  }
+  return true;
+}
+
 function globExists(absolute) {
-  if (!absolute.includes('*')) return fs.existsSync(absolute);
+  if (!absolute.includes('*')) return exactExists(absolute);
   const parts = absolute.split('/').filter(Boolean);
   let frontier = ['/'];
   for (const part of parts) {
