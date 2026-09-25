@@ -301,3 +301,21 @@ test('every door that shares this limiter still passes its own ttl', () => {
     }
   }
 });
+
+test('the TTL handed to KV never drops below Cloudflare\'s 60-second minimum near the end of the hour (F-KV2-1)', async () => {
+  // KV refuses `expirationTtl` under 60 s with a 400, which would turn every accepted write in the last
+  // 59 s of a rider's hour into a thrown error and a 429 at the door. The floor keeps the key alive at
+  // most 59 s past the hour; the stored window START still rolls the count on the next read.
+  const start = Date.UTC(2026, 8, 25, 14, 0, 0);
+  await withClock(start, async (clock) => {
+    const kv = makeKv();
+    assert.equal(await bumpCounter(kv, 'k', 60, 3600), true, 'the first write opens the window');
+    clock.advance(3599.5 * 1000);
+    assert.equal(await bumpCounter(kv, 'k', 60, 3600), true, 'a write half a second before the hour ends is accepted');
+    const last = kv.puts[kv.puts.length - 1];
+    assert.ok(last.ttl >= 60, `expirationTtl must be at least 60 s, got ${last.ttl}`);
+    clock.advance(60 * 1000);
+    assert.equal(await bumpCounter(kv, 'k', 60, 3600), true, 'past the hour the window has rolled');
+    assert.equal(kv.raw('k').split(':')[0], '1', 'the count restarted at 1 after the roll');
+  });
+});
