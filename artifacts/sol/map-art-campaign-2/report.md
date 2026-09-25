@@ -999,3 +999,4 @@ Final verification: build/TypeScript PASS; default collection PASS; gate-unset b
 ## 2026-09-25 — Native play proofs run 5
 
 - Dome Basin: FAIL desktop/phone, waves 15/13. Quarry 4/4, gates 3/3 and all five named building grounds complete; eight builds each, zero errors. Corrected the circuit clamping to the wrong zone; phone still fails survival. No map defect established. [F-PP5-1](../play-proofs/run-5/e9-dome-basin/finding.md).
+- Seed Run: FAIL desktop/phone, death waves 13/14. Caravan arrives with 236.4/234.8 guard; three/four late defenses cannot carry these attempts to wave 20. Zero errors; no banking or planting-persistence proof. [F-PP5-2](../play-proofs/run-5/e9-seed-run/finding.md).
