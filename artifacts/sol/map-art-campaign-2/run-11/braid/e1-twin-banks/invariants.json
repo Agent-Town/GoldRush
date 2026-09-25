@@ -1,0 +1,103 @@
+{
+  "baseline": "d4c0207c35cc857dc83bd7dda4967d1f29ae6683",
+  "unchangedFunctions": {
+    "export function sample(": {
+      "identical": true,
+      "beforeSha256": "8cfbd8f8e1b0405cb04053e14a6c25df3f021e95fb0b13298f31dd6450b90d64",
+      "afterSha256": "8cfbd8f8e1b0405cb04053e14a6c25df3f021e95fb0b13298f31dd6450b90d64"
+    },
+    "function createExtendedRiverGeometry(": {
+      "identical": true,
+      "beforeSha256": "56f79fc923ddf0a6f44d43263283739b44d9b7c5c3437f9d525f0c5f8d96bc69",
+      "afterSha256": "56f79fc923ddf0a6f44d43263283739b44d9b7c5c3437f9d525f0c5f8d96bc69"
+    },
+    "export function riverGeometry(": {
+      "identical": true,
+      "beforeSha256": "3676c8d4635cb67648a34472338b98c5a826a8f9cddb6e4cf1014d856db8544c",
+      "afterSha256": "3676c8d4635cb67648a34472338b98c5a826a8f9cddb6e4cf1014d856db8544c"
+    }
+  },
+  "files": {
+    "assets/contracts/epoch-1-frontier/contracts.json": "7e4d9b1a1f1e224cc4ff199420a4704d9b063f2dac9dd8843f8693542bfe3dbe",
+    "assets/contracts/null-floors.json": "2e13cb263717de2234fdcf87ab20a2f6cca6ea5b4a32ba2d0ebf3194589da328",
+    "assets/engine-era.json": "3879e80f35fa68fe41a473bddb3e5187821181a352f819af1935975c2f56ecdd",
+    "assets/pilots/map-rebuild-spike/twin-banks-terrain.glb": "b2010a82109cde9fb6d0a1514874442ab0afd760a041cad000ca36014a364aea",
+    "assets/pilots/map-rebuild-spike/twin-banks-terrain.blend": "83b958f03d675107b342acf2b4b650ea1112bb3ddf25e226c56b3725b9d7e669",
+    "assets/pilots/map-rebuild-spike/twin-banks-terrain-contract.json": "76aeb3df49d667962a4ea6894d892451bf2891e59d145b84eeeb5e6d2e550b92"
+  },
+  "storeCommit": "5793a967da46e8f00c0ba16f92f17dc10d36558d",
+  "verification": {
+    "preflightInstall": 0,
+    "preflightBuild": 0,
+    "tsc": 0,
+    "defaultBuild": 0,
+    "e1Build": 0,
+    "nullFloorCheck": 0,
+    "nullFloorsMatched": 83,
+    "releaseBrowser": {
+      "exitCode": 0,
+      "passed": 30
+    },
+    "targetNodeGuards": {
+      "exitCode": 0,
+      "passed": 13
+    },
+    "baselineBrowser": {
+      "exitCode": 1,
+      "passed": 49,
+      "skipped": 2,
+      "failed": 5
+    },
+    "finalBrowser": {
+      "exitCode": 1,
+      "passed": 52,
+      "skipped": 2,
+      "failed": 2
+    },
+    "legacyCapturesIdentical": 10,
+    "geometrySamples": 14336,
+    "geometryDisagreements": 0,
+    "walkProbes": 8,
+    "walkDeepSamples": 0,
+    "storePush": 0,
+    "focusedBrowser": {
+      "exitCode": 0,
+      "passed": 6
+    },
+    "stableBaselineControl": {
+      "exitCode": 1,
+      "failed": 10,
+      "fingerprint": "hero Y 0.02688779068849728 versus 0.3672938919067383"
+    },
+    "performance": {
+      "exitCode": 0,
+      "framesPerArmAndWidth": 540,
+      "gpu": "ANGLE Metal Renderer: Apple M4 Max"
+    },
+    "canonicalNodeGuards": {
+      "node": "26.4.0",
+      "exitCode": 1,
+      "passed": 1009,
+      "skipped": 5,
+      "failed": 4,
+      "cancelled": 0,
+      "failures": [
+        "bench-seeds: drain pin",
+        "engine-era: drain pin",
+        "fixture-teardown: nested bench-seeds pin",
+        "desk-declaration: lane STATUS differs from main"
+      ]
+    },
+    "canonicalLandmarkCollision": {
+      "node": "26.4.0",
+      "exitCode": 0
+    }
+  },
+  "implementationCommit": "96fc2b9ce633d3476d3cbd751277d7dd8ee1616b",
+  "sourceHashes": {
+    "src/world/Terrain.ts": "27384b19cc3c593eb351fbeab276a7179ae72028950124efea6219bc2519c6fd",
+    "src/world/Terrain3dClaimPilot.ts": "c86d93e27988ee2c0a4c7a14e4d36449082b8c1c28e1453af71ca36933a1664c",
+    "e2e/e1-twin-banks.spec.ts": "1f7cd5e63166745bd9b3671b5af1970aeae71bc70fbcd16a6e51756d74ddc7ca",
+    "e2e/beauty-twin-banks.spec.ts": "0b8919df40af198797346938267c6a56c476ed40f7f4571a77a0cfb661cf2e4b"
+  }
+}

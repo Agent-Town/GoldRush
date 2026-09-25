@@ -2894,7 +2894,8 @@ function hidePaintedRelief(host: Host): HiddenRelief[] {
 
 function createChannelWater(contractId: string, contract: Contract, heightAt: (x: number, z: number) => number): THREE.Group | undefined {
   const dressing = CONTRACT_CHANNEL_WATER[contractId];
-  const regions = contract.maskTruth?.waterMask?.regions ?? [];
+  const productionMask = Terrain.waterMask();
+  const regions: MaskRegion[] = productionMask?.regions ?? contract.maskTruth?.waterMask?.regions ?? [];
   if (!dressing || regions.length === 0) return undefined;
   // `?nochannelwater` boots the identical build with the dressing withheld. It exists because a
   // beauty claim is only worth what its A/B proves, and it also answers "is this render or sim?"
@@ -2905,10 +2906,13 @@ function createChannelWater(contractId: string, contract: Contract, heightAt: (x
   const group = new THREE.Group();
   group.name = 'Terrain3dChannelWater';
   group.userData.renderOnly = true;
+  group.userData.waterMask = productionMask?.id;
+  group.userData.waterRegions = regions.map((region) => region.id);
+  group.userData.waterPools = productionMask?.regions.filter((region) => region.kind === 'rect' && region.zone === 'river') ?? [];
   for (const region of regions) {
     const channel = dressing.channels[region.id];
     const points = region.points ?? [];
-    if (!channel || region.kind !== 'polyline_band' || region.zone !== 'river' || points.length < 2 || !region.halfWidth) continue;
+    if (region.kind !== 'polyline_band' || (!channel && !productionMask) || points.length < 2 || !region.halfWidth) continue;
     group.add(createWaterRibbon({
       name: `Terrain3dChannelWater.${region.id}`,
       points,
@@ -2920,18 +2924,42 @@ function createChannelWater(contractId: string, contract: Contract, heightAt: (x
       surfaceY: (contract.maskAgreement?.waterPlaneY ?? 0) + dressing.surfaceLift,
       // Render depth, not sim depth: it only picks a point on the shader's wade..deep colour
       // ramp, so the contract's north-deeper-than-south ORDER reads as colour and foam.
-      depth: channel.depth === 'deep' ? deep : wade + (deep - wade) * 0.34,
-      glints: channel.glints ?? [],
-      headInset: channel.headInset,
-      tailInset: channel.tailInset,
-      headFade: channel.headFade,
-      tailFade: channel.tailFade,
+      depth: region.zone === 'shallows' || region.zone === 'ford' ? wade : channel?.depth === 'deep' ? deep : wade + (deep - wade) * 0.34,
+      glints: channel?.glints ?? [],
+      headInset: channel?.headInset,
+      tailInset: channel?.tailInset,
+      headFade: channel?.headFade ?? 0,
+      tailFade: channel?.tailFade ?? 0,
       bed: { heightAt, ...dressing.bed },
     }));
   }
+  // Keep the exterior continuations, but replace their guessed source reach with the
+  // production rectangle. Pool and continuations remain one draw, with no stacked pool sheet.
+  let confluencePaths = dressing.confluences.map((confluence) => confluence.points);
+  for (const pool of productionMask?.regions ?? []) {
+    if (pool.kind !== 'rect' || pool.zone !== 'river') continue;
+    const z = (pool.minZ + pool.maxZ) / 2;
+    const halfWidth = (pool.maxZ - pool.minZ) / 2;
+    let joined = false;
+    confluencePaths = confluencePaths.map((path) => {
+      const first = path[0]!, last = path.at(-1)!;
+      if (first.x > pool.minX || last.x < pool.maxX || path.some((point) => point.z !== z)) return path;
+      joined = true;
+      return [
+        ...path.filter((point) => point.x < pool.minX),
+        { x: pool.minX, z, halfWidth, alpha: 1 },
+        { x: pool.maxX, z, halfWidth, alpha: 1 },
+        ...path.filter((point) => point.x > pool.maxX),
+      ];
+    });
+    if (!joined) confluencePaths.push([
+      { x: pool.minX, z, halfWidth, alpha: 1 },
+      { x: pool.maxX, z, halfWidth, alpha: 1 },
+    ]);
+  }
   group.add(createWaterConfluence({
     name: 'Terrain3dChannelWater.confluences',
-    paths: dressing.confluences.map((confluence) => confluence.points),
+    paths: confluencePaths,
     surfaceY: (contract.maskAgreement?.waterPlaneY ?? 0) + dressing.surfaceLift + 0.001,
     depth: wade + (deep - wade) * 0.58,
   }));
@@ -2939,7 +2967,7 @@ function createChannelWater(contractId: string, contract: Contract, heightAt: (x
   // across an 11 m band while only a 3.4 m ribbon crosses them, so the pans rendered as brown
   // gravel with a stripe of river through it and the pressure board showed enemies wading dry
   // ground. One sheet for both pans, from the mask's own ford rects.
-  const pans = regions.filter((region) => region.kind === 'rect' && region.zone === 'ford' && region.minX !== undefined);
+  const pans = regions.filter((region) => region.kind === 'rect' && (region.zone === 'ford' || (productionMask && region.zone === 'shallows')) && region.minX !== undefined);
   if (dressing.fordDepth !== undefined && pans.length > 0) {
     const halfDepth = Math.max(...pans.map((pan) => (pan.maxZ! - pan.minZ!) / 2));
     group.add(createFordSheet({
@@ -3268,6 +3296,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.canvas.dataset.terrain3dPilotSpringPonds = String(ponds.length);
       host.canvas.dataset.terrain3dPilotSpringPondWaterRadii = JSON.stringify(ponds.map((pond) => pond.waterRadius));
       if (nextChannelWater) host.scene.add(nextChannelWater);
+      if (nextChannelWater?.userData.waterMask) {
+        host.canvas.dataset.terrain3dPilotWaterMask = nextChannelWater.userData.waterMask;
+        host.canvas.dataset.terrain3dPilotWaterRegions = JSON.stringify(nextChannelWater.userData.waterRegions);
+        host.canvas.dataset.terrain3dPilotWaterPools = JSON.stringify(nextChannelWater.userData.waterPools);
+      }
       host.canvas.dataset.terrain3dPilotChannelWater = String(
         nextChannelWater?.children.filter((child) => child.name.includes('-channel')).length ?? 0,
       );
@@ -3673,6 +3706,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     landmarks = undefined;
     channelWater = undefined;
     delete host.canvas.dataset.terrain3dPilotChannelWaterHalfWidths;
+    delete host.canvas.dataset.terrain3dPilotWaterMask;
+    delete host.canvas.dataset.terrain3dPilotWaterRegions;
+    delete host.canvas.dataset.terrain3dPilotWaterPools;
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
   };
 }

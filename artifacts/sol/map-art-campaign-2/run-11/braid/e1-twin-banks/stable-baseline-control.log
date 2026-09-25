@@ -1,0 +1,472 @@
+
+Running 10 tests using 1 worker
+
+
+(node:93083) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  1) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.02688779068849728,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:93747) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  2) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    + ]
+
+      57 |
+      58 | function expectClean(errors: ErrorBucket): void {
+    > 59 |   expect(errors.consoleErrors).toEqual([]);
+         |                                ^
+      60 |   expect(errors.pageErrors).toEqual([]);
+      61 |   expect(errors.consoleWarnings.filter((message) => /contract|twin banks/i.test(message))).toEqual([]);
+      62 | }
+        at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:59:32)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:230:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:93960) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[3/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  3) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    + ]
+
+      57 |
+      58 | function expectClean(errors: ErrorBucket): void {
+    > 59 |   expect(errors.consoleErrors).toEqual([]);
+         |                                ^
+      60 |   expect(errors.pageErrors).toEqual([]);
+      61 |   expect(errors.consoleWarnings.filter((message) => /contract|twin banks/i.test(message))).toEqual([]);
+      62 | }
+        at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:59:32)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:230:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:94047) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  4) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    + ]
+
+      57 |
+      58 | function expectClean(errors: ErrorBucket): void {
+    > 59 |   expect(errors.consoleErrors).toEqual([]);
+         |                                ^
+      60 |   expect(errors.pageErrors).toEqual([]);
+      61 |   expect(errors.consoleWarnings.filter((message) => /contract|twin banks/i.test(message))).toEqual([]);
+      62 | }
+        at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:59:32)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:230:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:94210) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[5/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  5) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    + ]
+
+      57 |
+      58 | function expectClean(errors: ErrorBucket): void {
+    > 59 |   expect(errors.consoleErrors).toEqual([]);
+         |                                ^
+      60 |   expect(errors.pageErrors).toEqual([]);
+      61 |   expect(errors.consoleWarnings.filter((message) => /contract|twin banks/i.test(message))).toEqual([]);
+      62 | }
+        at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:59:32)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:230:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:94362) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  6) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    + ]
+
+      57 |
+      58 | function expectClean(errors: ErrorBucket): void {
+    > 59 |   expect(errors.consoleErrors).toEqual([]);
+         |                                ^
+      60 |   expect(errors.pageErrors).toEqual([]);
+      61 |   expect(errors.consoleWarnings.filter((message) => /contract|twin banks/i.test(message))).toEqual([]);
+      62 | }
+        at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:59:32)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:230:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:94454) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[7/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  7) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.3672938919067383,
+    +     "y": 0.07178324562509593,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:94609) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[8/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  8) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.3672938919067383,
+    +     "y": 0.07178324562509593,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:94920) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[9/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  9) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    +   "WebSocket connection to 'ws://127.0.0.1:5193/?token=YSW_Yr1s-K3x' failed: Error during WebSocket handshake: Unexpected response code: 200",
+    + ]
+
+      57 |
+      58 | function expectClean(errors: ErrorBucket): void {
+    > 59 |   expect(errors.consoleErrors).toEqual([]);
+         |                                ^
+      60 |   expect(errors.pageErrors).toEqual([]);
+      61 |   expect(errors.consoleWarnings.filter((message) => /contract|twin banks/i.test(message))).toEqual([]);
+      62 | }
+        at expectClean (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:59:32)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:230:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:95696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[10/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  10) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.3672938919067383,
+    +     "y": 0.07178324562509593,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  10 failed
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───

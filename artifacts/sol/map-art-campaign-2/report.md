@@ -944,3 +944,14 @@ Engine `dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b` → `0
 ## 2026-09-25 run 11: braid - firewall stop
 
 Twin Banks HM-06 is BLOCKED before implementation. Pre-flight install and build pass; the normal GLB path already renders two ribbons, while the fallback retains the band. The mask-driven source-box pool and production-mask ownership require the shared pilot constructor, outside the permitted Twin Banks water entry. No runtime, test or store bytes changed. [Finding, evidence and remaining list](run-11/braid/e1-twin-banks/report.md).
+
+
+## 2026-09-25 run 11: Twin Banks braid, HM-06 run 2
+
+**IMPLEMENTED; READY-FOR-GATES.** The lifted shared-constructor firewall allows production-mask authority, a region-driven source pool within the existing confluence draw, and mask-shaped fallback water. The existing two mounted ribbons are reused. No sculpt, collision, simulation or contract change. Implementation **96fc2b9ce**.
+
+Measured delivered beds -0.452156/-0.315686 m; dry plait +0.259180 m and bar anchors +0.711866/+0.658148 m. Store branch `astra/hm-06-braid` is pushed, unchanged at `5793a967da46e8f00c0ba16f92f17dc10d36558d`. Mask geometry 14,336/14,336; hero probes 8/8; focused braid/routing 6/6; legacy construction captures 10/10 byte-identical. Draws 95→95 desktop /65→65 phone; p95 medians 9.0→8.7 /9.2→9.2 ms. Floors 83/83 match. First-town payload 34,346,281→34,349,803 B (+3,522 B), below 52,000,000 B. Both builds and release 30/30 pass.
+
+The broad dev battery is 52 pass/2 skip/2 red: existing reed motion and a hero-height boot race, both controlled against pre-task source. The drain owns floor re-record/check and the same-era pin; the lane does not change `engine-era.json`. Full paired-bank entry remains camera/HUD-owned; a river-station diagnostic is not called a plain-entry fix. [Every board, command, guard limitation, and remaining item](run-11/braid/e1-twin-banks/report.md).
+
+Canonical Node 26.4.0 battery: 1,009 pass / 5 skip / 4 expected pin/status failures / 0 cancelled; same-game audit and separately run landmark-collision rows pass. The four reds are enumerated in the run-2 report; no pin/status edit was made outside the firewall.
