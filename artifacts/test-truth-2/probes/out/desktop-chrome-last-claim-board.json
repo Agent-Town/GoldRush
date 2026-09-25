@@ -1,0 +1,60 @@
+{
+  "project": "desktop-chrome",
+  "secureWave": 8,
+  "finale": {
+    "enabled": true,
+    "ark": {
+      "sceneClass": "deepsky-ark-deck",
+      "tileId": "ark-plaza-e10",
+      "deckCount": 10,
+      "loadState": "ready",
+      "models": [
+        "E10ArkPlaza",
+        "E10ArkDeckDressing"
+      ],
+      "renderOnly": true,
+      "visualY": true
+    },
+    "reink": {
+      "state": "idle",
+      "progress": 0,
+      "renderOnly": true
+    },
+    "riverOffer": {
+      "offered": false,
+      "charterName": "The River",
+      "launchTemplate": "the-claim"
+    }
+  },
+  "timeline": [
+    {
+      "ms": 13,
+      "visible": [
+        "e10-finale-layer"
+      ]
+    },
+    {
+      "ms": 3031,
+      "visible": [
+        "e10-finale-layer",
+        "e10-river-lever",
+        "e10-return-town"
+      ]
+    },
+    {
+      "ms": 3086,
+      "visible": [
+        "(pressed e10-return-town)"
+      ]
+    },
+    {
+      "ms": 3577,
+      "visible": [
+        "contract-board",
+        "contract-board-title"
+      ]
+    }
+  ],
+  "url": "http://127.0.0.1:5323/?debug=&nowaves=&nolevel=",
+  "errors": []
+}

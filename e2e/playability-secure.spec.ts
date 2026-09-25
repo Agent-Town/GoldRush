@@ -667,7 +667,16 @@ test.describe('playability secure: the six open maps, plain boot to secure, bank
       page.on('pageerror', (error) => pageErrors.push(error.message));
       page.on('dialog', (dialog) => void dialog.accept().catch(() => undefined));
 
-      const secureWave = Math.max(0, Math.floor(contract.twist?.secureWave ?? 0));
+      // THE SECURE WAVE IS THE ENGINE'S (F-MPP1-4, test-truth-2, 2026-09-25). This used to be the
+      // manifest's `twist.secureWave ?? 0`, and 16 of the 42 contracts declare none (eight of them
+      // among the eighteen maps the 2026-09-25 census played): the engine then secures at
+      // `Balance.run.secureWave` (20, through `Game.secureWaveForRun`), so those rows recorded secure
+      // wave 0 and their banks threshold `waves >= 0` held for any row at all. The manifest
+      // value is only the fallback now, for a boot whose diagnostics publish no secure wave; the boot
+      // step below replaces it with `diagnostics.contract.secureWave` and says which one it used.
+      const manifestSecureWave = Math.max(0, Math.floor(contract.twist?.secureWave ?? 0));
+      let secureWave = manifestSecureWave;
+      let bootScores: Score[] = [];
       const row: Row = {
         project: testInfo.project.name,
         contract: contract.id,
@@ -706,10 +715,27 @@ test.describe('playability secure: the six open maps, plain boot to secure, bank
               ? pass(`activeId=${active.activeId} secureWave=${active.secureWave}`)
               : fail(`requested ${contract.id}, got activeId=${active?.activeId ?? 'none'} fallbackReason=${String(active?.fallbackReason)}`);
           row.notes.push(`engine secureWave=${active?.secureWave ?? 'unknown'} cadenceMult=${active?.waveCadenceMult ?? 'unknown'}`);
+          const engineSecureWave = active?.secureWave;
+          if (typeof engineSecureWave === 'number' && Number.isFinite(engineSecureWave)) {
+            secureWave = Math.max(0, Math.floor(engineSecureWave));
+            row.notes.push(`secureWave=${secureWave} read from the engine (manifest says ${manifestSecureWave})`);
+          } else {
+            row.notes.push(`secureWave=${secureWave} from the manifest: the engine published no secure wave`);
+          }
+          row.secureWave = secureWave;
         } catch (error) {
           row.boots = fail(`no game frame within ${BOOT_TIMEOUT_MS}ms: ${String((error as Error).message).split('\n')[0]}`);
         }
         expect(row.boots.ok, `boots: ${row.boots.detail}`).toBe(true);
+        // The scoreboard the seeded profile BOOTED with, before a single sim second is played: the
+        // banks step below asks for a secured row this snapshot did not hold (F-MPP1-1).
+        bootScores = await readScores(page);
+        row.notes.push(
+          `boot scoreboard: ${bootScores.length} row(s), ${contract.id} rows at waves [${bootScores
+            .filter((score) => score.contractId === contract.id)
+            .map((score) => score.waves ?? '?')
+            .join(',')}]`,
+        );
 
         await page.getByTestId('contract-briefing-dismiss').click({ timeout: 10_000 }).catch(() => undefined);
         await expect(page.getByTestId('contract-briefing')).toBeHidden({ timeout: 10_000 });
@@ -827,20 +853,51 @@ test.describe('playability secure: the six open maps, plain boot to secure, bank
           try {
             // THE SEED ALREADY HOLDS A SECURED ROW FOR EVERY CONTRACT (it has to: a player who has
             // earned the whole board is the only one who can launch every map plainly). So "banks"
-            // cannot be "a secured row exists" — it has to be a row that WAS NOT THERE BEFORE THE
-            // CLICK. Measured on the first Dry Gulch BEFORE run, which reported the seeded row
-            // (waves=30 gold=400 timeAlive=600) and would have passed on any map at all.
-            const before = new Set((await readScores(page)).map((score) => JSON.stringify(score)));
+            // cannot be "a secured row exists": measured on the first Dry Gulch BEFORE run, which
+            // reported the seeded row (waves=30 gold=400 timeAlive=600) and would have passed on any map.
+            //
+            // BUT IT IS NOT "A ROW THE CLICK WROTE" EITHER (F-MPP1-1, test-truth-2, 2026-09-25). This
+            // step used to diff the scoreboard across the Return to Town click, and the game has not
+            // banked at the click since `07248387a` (2026-07-22, "feat: lock Claim wins at wave ten"):
+            // the `run_secured` handler in src/game/Game.ts records the score AT THE SECURE TICK (the
+            // overlay says so, "The win is banked."), and the click's `run_ended` handler records it
+            // again under the same `at` (`securedScoreAt`), which `recordScore` in
+            // src/game/Scoreboard.ts replaces IN PLACE. The click-only diff therefore saw zero new rows
+            // on every map and tree (the 2026-09-25 census: 10 of 10 secured rows, 3 of 3 controls), and
+            // board and reload, which run only after banks, were never measured anywhere.
+            //
+            // THE SHAPE ACCEPTED NOW: after the click, a secured row for THIS contract at or above the
+            // engine's secure wave whose `at` (the scoreboard's own row key) the BOOT snapshot did not
+            // hold. That is the win whichever writer made it, the secure tick or the click, and asking
+            // for it AFTER the click also proves the click kept it. Keyed on `at`, not on the JSON,
+            // because the first write re-serialises every seeded row (profile name, base value, weapon
+            // split), so a JSON diff against the boot would flag rows nobody wrote; the seed's own row
+            // for this contract (`waves: 1`, `at` from the seed) can never qualify. Which writer it was,
+            // and whether the click changed it, is recorded in the detail as a measurement.
+            const atOverlay = await readScores(page);
             await page.getByTestId('bank-secured-claim').click({ timeout: 10_000 });
             await expect(page.getByTestId('claim-secured')).toBeHidden({ timeout: 10_000 });
-            const scores = await readScores(page);
-            const fresh = scores.filter((score) => !before.has(JSON.stringify(score)));
-            const banked = fresh.find((score) => score.contractId === contract.id && score.secured === true && (score.waves ?? 0) >= secureWave);
-            row.banks = banked
-              ? pass(`a NEW secured row for ${contract.id}: waves=${banked.waves} gold=${banked.gold} timeAlive=${Math.round(banked.timeAlive ?? 0)} kills=${banked.kills ?? '?'} (${fresh.length} row(s) written by the click)`)
-              : fail(
-                  `the click wrote no new secured row for ${contract.id} at >= wave ${secureWave} (${fresh.length} new row(s): ${JSON.stringify(fresh.slice(0, 2))})`,
-                );
+            const afterClick = await readScores(page);
+            const bootAts = new Set(bootScores.map((score) => score.at));
+            const banked = afterClick.find(
+              (score) =>
+                score.contractId === contract.id && score.secured === true && (score.waves ?? 0) >= secureWave && !bootAts.has(score.at),
+            );
+            if (banked) {
+              const atSecureTick = atOverlay.find((score) => score.at === banked.at);
+              const writer = !atSecureTick
+                ? 'written by the Return to Town click'
+                : JSON.stringify(atSecureTick) === JSON.stringify(banked)
+                  ? 'written at the secure tick, rewritten in place by the click byte for byte'
+                  : `written at the secure tick, rewritten in place by the click with changes to ${changedFields(atSecureTick, banked)}`;
+              row.banks = pass(
+                `a secured row for ${contract.id} the boot scoreboard did not hold: waves=${banked.waves} secureWave=${banked.secureWave ?? '?'} gold=${banked.gold} timeAlive=${Math.round(banked.timeAlive ?? 0)} kills=${banked.kills ?? '?'} (${writer})`,
+              );
+            } else {
+              row.banks = fail(
+                `no secured row for ${contract.id} at >= wave ${secureWave} that the boot scoreboard did not hold (rows: boot ${bootScores.length}, overlay ${atOverlay.length}, after the click ${afterClick.length}; ${contract.id} after the click: ${JSON.stringify(afterClick.filter((score) => score.contractId === contract.id).slice(0, 2))})`,
+              );
+            }
           } catch (error) {
             row.banks = fail(String((error as Error).message).split('\n').slice(0, 3).join(' | '));
           }
@@ -906,7 +963,23 @@ test.describe('playability secure: the six open maps, plain boot to secure, bank
   }
 });
 
-type Score = { contractId?: string; secured?: boolean; waves?: number; gold?: number; timeAlive?: number; kills?: number; at?: number };
+type Score = {
+  contractId?: string;
+  secured?: boolean;
+  waves?: number;
+  secureWave?: number;
+  gold?: number;
+  timeAlive?: number;
+  kills?: number;
+  at?: number;
+};
+
+/** The keys whose values differ between two score rows, for the banks detail. */
+function changedFields(before: Score, after: Score): string {
+  const keys = [...new Set([...Object.keys(before), ...Object.keys(after)])] as Array<keyof Score>;
+  const changed = keys.filter((key) => JSON.stringify(before[key]) !== JSON.stringify(after[key]));
+  return changed.length > 0 ? changed.join(',') : 'key order only';
+}
 
 async function rawScores(page: Page): Promise<string | null> {
   return page.evaluate(
