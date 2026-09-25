@@ -1,16 +1,46 @@
 {
-  "tag": "cw1", "branch": "fix/canyon-works-traversal-1", "port": 5381,
+  "tag": "cw1",
+  "branch": "fix/canyon-works-traversal-1",
+  "port": 5381,
   "mergeMessage": "drain: merge fix/canyon-works-traversal-1 — canyon-works-traversal-1 — the Canyon Works creek bank crosses at every x (creekBlendStart minus 8 to minus 14: peak sim gradient 1.03 to 0.28, six of six pylons and the bridge reachable, floors 83 of 83, channel depth unchanged), a traversal spec on both projects; the second wall F-CW1-1 (the t2 ramp, peak 0.598) keeps the map unwinnable on foot and goes to a contract-only corrective (Opus 5.5 implementer at max effort; from Astra's F-PP2-2)",
   "hash": "pin",
   "pinCause": "canyon-works-traversal-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; from Astra's play-proofs finding F-PP2-2 of 2026-09-25): one line in the e3-canyon-works elevation block, creekBlendStart minus 8 to minus 14, so the creek bank's 1.5 m drop runs over 8 m (peak sim gradient 1.03 to 0.28 under the 0.35 limit); creekBlendEnd, creekHeight and railHeight unchanged, null floors 83 of 83, both canyon seeds' view streams byte-identical; no other contract, rule, collision or table moved.",
-  "gates": { "releaseBuild": true, "payload": true, "halo": true, "nullFloors": true, "releaseSuite": true, "functions": false, "ledgerBattery": false,
-    "specs": ["e2e/e3-canyon-works-traversal.spec.ts", "e2e/e3-canyon-works.spec.ts", "e2e/task-025-bandits-dont-swim.spec.ts", "e2e/m2-01-build-menu.spec.ts"],
-    "guards": ["scripts/e3-mask-tables.test.mjs"] },
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": false,
+    "specs": [
+      "e2e/e3-canyon-works-traversal.spec.ts",
+      "e2e/e3-canyon-works.spec.ts",
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": [
+      "scripts/e3-mask-tables.test.mjs"
+    ],
+    "allowedBattery": [
+      "fixture owners remove their temp directories"
+    ]
+  },
   "cure": "scripts/attended/landings/cw1-cure.sh",
-  "review": { "path": "reviews/canyon-works-traversal-1.md", "title": "Drain review: `canyon-works-traversal-1`, the creek bank crosses; the t2 wall is next (Opus 5.5 implementer at max effort; from Astra's F-PP2-2)", "body": "scripts/attended/landings/cw1-review.md" },
-  "bookkeeping": { "taskFile": "canyon-works-traversal-1.md", "rowKey": "CANYON WORKS TRAVERSAL 1 LANDED", "rowEmoji": "⛰️",
+  "review": {
+    "path": "reviews/canyon-works-traversal-1.md",
+    "title": "Drain review: `canyon-works-traversal-1`, the creek bank crosses; the t2 wall is next (Opus 5.5 implementer at max effort; from Astra's F-PP2-2)",
+    "body": "scripts/attended/landings/cw1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "canyon-works-traversal-1.md",
+    "rowKey": "CANYON WORKS TRAVERSAL 1 LANDED",
+    "rowEmoji": "⛰️",
     "rowText": "`creekBlendStart` minus 8 to minus 14 in the `e3-canyon-works` elevation block: the creek bank's 1.5 m drop runs over 8 m (the map's own t1-ramp run), peak sim gradient 1.0313 at z minus 7 (refused at x 0, plus or minus 24, plus or minus 44, Astra's stop reproduced) to 0.2798 at z minus 10, no refused point; on foot six of six pylons and the bridge (was four, no bridge); null floors 83 of 83; channel depth unchanged; float or sink 0.000 m. New `e2e/e3-canyon-works-traversal.spec.ts` green both projects; e3-canyon-works, task-025, m2-01 28/28. The drain republished the mask-table mirror and wrote the report. Engine hash PINNED {PIN}. **The map is STILL not winnable on foot: F-CW1-1, the t2 ramp (peak 0.598) refuses z 19.8 to 26.2 at every x; Astra's acceptance stops at `secures` with gold 0** (desk row with the corrective `canyon-works-traversal-2` recommended: window 14 to 32, gt-03 re-baselined). F-CW1-2 (art): the GLB bank face no longer matches the sim ground (desk row). Deployed.",
     "statusPhrase": "the Canyon Works creek bank can be walked at every x; the works above it wait on the second wall's corrective",
-    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh cw1)" },
-  "deploy": true, "preview": true, "evidenceDir": "artifacts/canyon-works-traversal-1"
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh cw1)"
+  },
+  "deploy": true,
+  "preview": true,
+  "evidenceDir": "artifacts/canyon-works-traversal-1"
 }
