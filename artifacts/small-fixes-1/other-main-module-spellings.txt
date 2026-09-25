@@ -1,0 +1,31 @@
+# Main-module checks OUTSIDE the thirteen that share F-LS1-2's defect (small-fixes-1, 2026-09-25)
+# Each compares an UNRESOLVED spelling of process.argv[1] (raw, path.resolve'd, or pathToFileURL'd) with import.meta.url,
+# which node has already realpath'd; under a symlinked path each is false, main() never runs, and the tool exits 0 silent.
+# Not touched: outside small-fixes-1's firewall (the master scoped the exact spelling in scripts/*.mjs).
+# ruling-propagation-guard.mjs was named by F-LS1-2 itself; server/ledger/serve.mjs carries the swept spelling verbatim, outside scripts/.
+# The two marked THROWS also crash on a node -e import (pathToFileURL(undefined)), the s1533 defect.
+# Before curing any of them: measure whether a fixture relocates it ALONE (two of the thirteen needed a verbatim copy).
+
+scripts/assay-replay-agent.mjs:122  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+scripts/blocker-panel-closed-guard.mjs:237  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+scripts/desk-state-audit.mjs:264  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+scripts/e4-motor-ride.mjs:87  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+scripts/e7-playbook-digest.mjs:116  if (fileURLToPath(import.meta.url) === path.resolve(process.argv[1] ?? '')) {
+scripts/evidence-budget.mjs:199  if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+scripts/evidence-readers.mjs:518  if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+scripts/evidence-offload.mjs:469  if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();
+scripts/findings-state-guard.mjs:214  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+scripts/gate-battery.mjs:240  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+scripts/frontier-registry.mjs:122  if (process.argv[1] === fileURLToPath(import.meta.url)) {
+scripts/gazette-backfill-sweep.mjs:323  if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main()
+scripts/review-evidence-audit.mjs:214  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+scripts/ruling-propagation-guard.mjs:223  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+scripts/spawn-bound-census.mjs:351  if (path.resolve(process.argv[1] || '') === fileURLToPath(import.meta.url)) main();
+scripts/row-quote-currency.mjs:452  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+scripts/stream-showcase.mjs:74  if (pathToFileURL(process.argv[1]).href === import.meta.url) {  (no argv guard: THROWS on a node -e import)
+scripts/terrain-contract-scope.mjs:124  if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+scripts/second-rider.mjs:315  if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
+scripts/stream-director.mjs:139  if (pathToFileURL(process.argv[1]).href === import.meta.url) await main(process.argv.slice(2));  (no argv guard: THROWS on a node -e import)
+scripts/ticker-stats.mjs:193  if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) await main();
+scripts/withheld-evidence-audit.mjs:319  if (path.resolve(process.argv[1] ?? '') === fileURLToPath(import.meta.url)) {
+server/ledger/serve.mjs:130  if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
