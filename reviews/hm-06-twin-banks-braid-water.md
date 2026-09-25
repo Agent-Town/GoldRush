@@ -194,6 +194,15 @@ and reaping a process mid-write is not worth the risk at handoff time — but an
 strays before trusting any fire-side timing measurement, and the cure below should make the kill
 process-group-wide.
 
+**MEASURED HARM, in this fire's own ledger battery — the orphan leak manufactures FALSE REDS.** With strays
+still resident the machine reached **loadavg 57.1 (5-min)**, and `npm run test:ledger-guards` came back
+**1,261 pass / 2 fail** where the previous fire got 1,263 / 0. Both "failures" were the same 240s ceiling:
+`gazette-scan-space-guard` died `spawnSync ETIMEDOUT` (SIGKILL) and `status-archive-arg-guard` asserted on a
+verdict line that had simply not been reached. **Re-run alone on a quiet shell, both pass:** 12/0 in **23s**
+and 9/0 in **77s** — 10× and 3× inside the ceiling they had just blown. So the leak does not merely waste 15
+minutes; it corrupts the verdict of *unrelated* batteries run afterwards, in the direction of false alarm.
+This is the concrete cost of the cure being deferred.
+
 **Recommended cure (owner/attended call, not taken by this fire):** either raise the cap for this one guard, or
 measure the fire-side concurrency that F-1409-1 explicitly left pending and lift it from 1, or split the suite —
 and in all three cases kill the process GROUP, not just the wrapper. Whichever is chosen, the guard-stats record
