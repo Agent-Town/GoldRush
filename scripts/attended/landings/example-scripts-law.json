@@ -1,0 +1,15 @@
+{
+  "tag": "example-scripts-law",
+  "branch": "chore/some-tooling",
+  "port": 5367,
+  "mergeMessage": "drain: merge chore/some-tooling — <slice> — the tools, the widened readers, the law clauses; nothing moved on the branch",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": false, "ledgerBattery": true,
+    "guards": ["scripts/law-bash-prescription-guard.test.mjs", "scripts/dry-board-advisory-prescription-guard.test.mjs", "scripts/desk-carryforward-guard.test.mjs", "scripts/findings-state-guard.test.mjs"],
+    "specs": []
+  },
+  "review": { "path": "reviews/<slice>.md", "title": "Drain review: `<slice>`, tools and law (implementer; the ruling)", "body": "scripts/attended/landings/<slice>-review.md" },
+  "bookkeeping": { "taskFile": "<slice>.md", "rowKey": "<SLICE> LANDED", "rowEmoji": "📚", "rowText": "The tools, their tests, the readers widened, the law clauses; phase 2 if any and who runs it.", "statusPhrase": "the factory change in a dozen words, nothing moved yet" },
+  "deploy": false, "preview": false, "evidenceDir": "artifacts/<slice>"
+}
