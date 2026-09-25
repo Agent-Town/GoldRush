@@ -6229,14 +6229,18 @@
             {
               "id": "kv-counters-to-ledger-1",
               "title": "Owner ruling 2026-09-24 item 7 (b) (the review's SEC-2): telemetry batched, the room connect in its error path, the counters, bug reports and prize codes moved to the droplet ledger; no paid plan",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "kv-counters-to-ledger-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
               "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24",
               "liftedFrom": "gate-side: run by the attended session as an Opus implementer under the drain lock after the ops evening (the ledger routes deploy with the droplet mirror); lifted at launch",
               "queuedAt": "2026-09-25",
-              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-kv1, branch fix/kv-counters-to-ledger-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\""
+              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-kv1, branch fix/kv-counters-to-ledger-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\"",
+              "mergeHash": "647337be24e8fc6e2fb3b32cd8a4b0b2aaa7386c",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/kv-counters-to-ledger-1.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh kv1)"
             },
             {
               "id": "ledger-shape-1",
