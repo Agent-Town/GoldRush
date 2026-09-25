@@ -449,7 +449,10 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // maps-campaign-land-era6 (2026-09-14): Astra's map campaign moved 22 rows from agent-lacks to equal (the door now
   // admits the Archive World's restoration, the flotilla and the E8 air work on both sides) and added one row:
   // 533 -> 511 agent-lacks, 1229 -> 1252 equal; docs/bench/same-game-audit.md regenerated on the landed tree.
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 511, equal: 1252, 'not-offered': 0 });
+  // door-tape-grammar-2 (2026-09-25, F-DTG2-1): the door learned two more client verbs, prospector_dispatch and agent_orders,
+  // so 42 + 42 rows moved into agent-lacks (511 -> 595) and none moved out (equal stays 1252 over 1847 rows). The audit reads
+  // the door's verb set from standings.ts; teaching it that agent_orders is the rider's own channel is a slice for its owner.
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 595, equal: 1252, 'not-offered': 0 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
