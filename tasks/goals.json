@@ -6190,13 +6190,14 @@
             {
               "id": "live-seed-rotation-1",
               "title": "Owner ruling 2026-09-24 item 2 (a) (the review's SIM-2): humans ride the open rotation's seed per contract instead of the constant gold-rush seed",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "run by the attended session as an Opus implementer under the drain lock; lifted at launch",
+              "status": "queued",
               "taskFile": "live-seed-rotation-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
-              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24"
+              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24",
+              "liftedFrom": "gate-side: run by the attended session as an Opus implementer under the drain lock; lifted at launch",
+              "queuedAt": "2026-09-25",
+              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-lsr1, branch feat/live-seed-rotation-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\""
             },
             {
               "id": "hm-06-twin-banks-braid-water",
@@ -6228,13 +6229,14 @@
             {
               "id": "kv-counters-to-ledger-1",
               "title": "Owner ruling 2026-09-24 item 7 (b) (the review's SEC-2): telemetry batched, the room connect in its error path, the counters, bug reports and prize codes moved to the droplet ledger; no paid plan",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "run by the attended session as an Opus implementer under the drain lock after the ops evening (the ledger routes deploy with the droplet mirror); lifted at launch",
+              "status": "queued",
               "taskFile": "kv-counters-to-ledger-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
-              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24"
+              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24",
+              "liftedFrom": "gate-side: run by the attended session as an Opus implementer under the drain lock after the ops evening (the ledger routes deploy with the droplet mirror); lifted at launch",
+              "queuedAt": "2026-09-25",
+              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-kv1, branch fix/kv-counters-to-ledger-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\""
             },
             {
               "id": "ledger-shape-1",
@@ -6323,13 +6325,14 @@
             {
               "id": "canyon-works-traversal-1",
               "title": "F-PP2-2: the Canyon Works creek bank (1.5 m over 2 m, gradient near 1.1 against slopeMax 0.35) becomes walkable so the galleries and the connect deadline are reachable on foot",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "run by the attended session as an Opus implementer in a scratch worktree (/Users/robin/Claude/Projects/wt-cw1) under the drain lock when lane-c is idle (a native walk is the acceptance test; it must not share the machine with an Astra run); lifted by the attended session when it launches the run",
+              "status": "queued",
               "taskFile": "canyon-works-traversal-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-25",
-              "authoredBy": "attended (Fable) from F-PP2-2 (Astra, sol-play-proofs-2), the derivation verified in assets/contracts and src/sim/TileHeight.ts"
+              "authoredBy": "attended (Fable) from F-PP2-2 (Astra, sol-play-proofs-2), the derivation verified in assets/contracts and src/sim/TileHeight.ts",
+              "liftedFrom": "gate-side: run by the attended session as an Opus implementer in a scratch worktree (/Users/robin/Claude/Projects/wt-cw1) under the drain lock when lane-c is idle (a native walk is the acceptance test; it must not share the machine with an Astra run); lifted by the attended session when it launches the run",
+              "queuedAt": "2026-09-25",
+              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-cw1, branch fix/canyon-works-traversal-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\""
             },
             {
               "id": "launch-video-vibe-check-1",
