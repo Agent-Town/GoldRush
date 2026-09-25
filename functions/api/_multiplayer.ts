@@ -667,7 +667,7 @@ function requireRooms(env: MultiplayerEnv, cors: Record<string, string>): Durabl
 // The KV fallback keeps this file's own limiter (`bumpCounter` below), which re-arms its hour on every
 // accepted write: the F-HEAT14-7 shape `_ratelimit.ts` cured for its six doors. Moving this door onto
 // that limiter is outside this slice (its census guard, scripts/ratelimit-window.test.mjs, counts
-// exactly six importers), so the report carries it; through the ledger the window is fixed.
+// exactly six importers), so it is a finding for its own slice; through the ledger the window is fixed.
 async function admit(
   request: Request,
   env: MultiplayerEnv,

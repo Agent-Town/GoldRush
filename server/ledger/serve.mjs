@@ -44,6 +44,26 @@ async function loadLedgerRuntime() {
           // and the prize desk move off the shared free-tier KV namespace. The Pages functions reach these
           // five over nginx's `location /api/ledger/` (added on the ops evening) with LEDGER_PROXY_SECRET;
           // each route answers 404 to anyone without it (functions/api/_ledger.ts `ledgerRoute`).
+          //
+          // OPENING THE ROAD, IN THIS ORDER (a Pages secret bound before step 3 sends the road to the
+          // Pages site: every door then reads `unreachable`, telemetry is dropped, bugs/prizes answer 503):
+          //   1. `openssl rand -hex 32` on the Mac; the value goes only into the two env stores below.
+          //   2. Droplet: LEDGER_PROXY_SECRET=<value> in /etc/goldrush-ledger.env; rsync the drained tree
+          //      (docs/ops/agenttown-server.md recipe, its --exclude .env.local is load-bearing);
+          //      `systemctl restart goldrush-ledger`, wait out the ~60 s first boot.
+          //   3. nginx (live file AND the ops/droplet/agenttown.app.nginx.conf mirror), then
+          //      `nginx -t && systemctl reload nginx`:
+          //        location /api/ledger/ { proxy_pass http://127.0.0.1:8791; proxy_set_header Host $host;
+          //          proxy_set_header X-Forwarded-Proto https; error_page 502 503 504 = @ledger_resting; }
+          //   4. `curl -s -X POST https://agenttown.app/api/ledger/increment` must print this ledger's
+          //      {"ok":false,"error":"not_found"}, not the Pages page.
+          //   5. `wrangler pages secret put LEDGER_PROXY_SECRET --project-name gold-rush`, same value; redeploy
+          //      production. (LEDGER_ORIGIN needs no binding: it defaults to https://agenttown.app.)
+          //   6. `curl -si 'https://agenttown.app/api/multiplayer/inspect?code=000000000000000000000000'
+          //      -H 'Origin: https://agenttown.app'`: a 404 room_not_found with NO x-ledger-fallback header.
+          //   7. scripts/kv-to-ledger-migrate.mjs export (Mac), then import --dry-run, then import (droplet).
+          //   8. Only then `location = /api/stats` with the same four lines, so the public stats continue
+          //      from the imported KV totals.
           '/api/ledger/increment': ledger.ledgerIncrement,
           '/api/ledger/telemetry': telemetry.ledgerTelemetry,
           '/api/ledger/bugs': bugs.ledgerBugs,

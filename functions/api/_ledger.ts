@@ -25,7 +25,8 @@
 //
 // NOTHING HERE IS LIVE UNTIL THE OWNER BINDS IT. With `LEDGER_PROXY_SECRET` unbound (every Pages
 // deployment and every fixture today) `ledgerLink` returns null and every door keeps its KV path,
-// byte for byte. The ops-evening steps are in artifacts/kv-counters-to-ledger-1/report.md.
+// byte for byte. The ops-evening steps, in their required order, sit beside the route table in
+// server/ledger/serve.mjs.
 import { constantTimeEqual } from './_compare';
 
 type JsonRecord = Record<string, unknown>;

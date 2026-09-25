@@ -199,7 +199,7 @@ async function storeAggregate(kv: KVNamespaceLike, payload: RunTelemetryPayload)
 // used to write eight rows per report with no dedup at all, so a replayed report cost eight writes
 // every time. NOTE THE MEANING THIS BUYS: the payload carries no identity (identifiers are refused
 // above, by design), so a demotion is now counted once per distinct signature per month; two players
-// who demote identically on the same build are one row. The report names this trade.
+// who demote identically on the same build are one row. That trade is the owner's to keep or change.
 async function storeRenderDemotion(kv: KVNamespaceLike, payload: RenderDemotionPayload): Promise<boolean> {
   const day = new Date().toISOString().slice(0, 10);
   const dedupKey = `telemetry:dedup:${day.slice(0, 7)}:${await digestRenderDemotion(payload)}`;

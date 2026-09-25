@@ -4,8 +4,8 @@
 //
 // WRITTEN, NOT RUN. The task that wrote it ran only its pure functions, against a throwaway in-memory
 // ledger (scripts/test-accounts.mjs, "kv-to-ledger migration"). Running it for real is an ops-evening
-// step, AFTER the Pages secret is bound (so no new row can land in KV behind it); the order is in
-// artifacts/kv-counters-to-ledger-1/report.md.
+// step, AFTER the Pages secret is bound (so no new row can land in KV behind it); the whole order is
+// beside the route table in server/ledger/serve.mjs.
 //
 // TWO HALVES, TWO MACHINES, ONE FILE BETWEEN THEM:
 //
