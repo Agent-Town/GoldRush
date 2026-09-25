@@ -573,8 +573,7 @@ async function lowOrbitCrossing(page: Page, row: Row, deadline: number, unreacha
   const crossing = start?.air?.crossing;
   const side = crossing?.reached.includes('west-scaffold-deck') && !crossing.reached.includes('east-scaffold-deck') ? 1
     : (crossing?.credited ?? 0) % 2 === 0 ? -1 : 1;
-  const cost = start?.buildables.find(b => b.id === 'sentry_beacon')?.cost ?? 30;
-  await fund(page, row, cost, Math.min(deadline, Date.now() + 30_000), [], unreachable);
+  await fund(page, row, 50, Math.min(deadline, Date.now() + 30_000), [], unreachable);
   if (!(await refillOrbital(page, row))) return;
   await walkTo(page, row, 0, -10, 1.5, 100);
   await walkTo(page, row, side * 18, 0, 1.5, 100);
@@ -582,7 +581,7 @@ async function lowOrbitCrossing(page: Page, row: Row, deadline: number, unreacha
   const now = await read(page);
   row.notes.push(`Low Orbit deck ${side}: reached=${reached}, hero=${JSON.stringify(now?.hero)}, air=${JSON.stringify(now?.air)}`);
   if (reached && !row.builds.some(b => side * b.x >= 26)) {
-    await build(page, row, 'sentry_beacon', side * 34, 0, Math.min(deadline, Date.now() + 10_000), [], unreachable);
+    await build(page, row, 'turret', side * 34, 0, Math.min(deadline, Date.now() + 10_000), [], unreachable);
   }
   await walkTo(page, row, side * 18, 0, 1.5, 100);
   await walkTo(page, row, 0, -10, 1.5, 100);
@@ -707,11 +706,6 @@ function kitFor(contract: ContractManifest): KitPiece[] {
     { id: 'capacitor_bank', dx: -8, dz: -26 },
     { id: 'capacitor_bank', dx: -18, dz: -26 },
   ];
-  if (contract.id === 'e8-low-orbit') return [
-    { id: 'sentry_beacon', dx: -44, dz: 6 },
-    { id: 'sentry_beacon', dx: 24, dz: 6 },
-    { id: 'turret', dx: 5, dz: -1 },
-  ];
   if (contract.id === 'e2-incline') return [
     { id: 'sentry_beacon', dx: 8, dz: -4 },
     { id: 'turret', dx: -8, dz: -4 },
@@ -835,9 +829,6 @@ export function nativeProof(id: string, run = 1) {
         const fords = crossingsFor(contract);
         const unreachable = new Set<string>();
 
-        if (contract.id === 'e8-low-orbit') {
-          await build(page, row, 'turret', 10, -10, Math.min(deadline, Date.now() + 45_000), fords, unreachable);
-        }
         if (contract.id === 'e8-far-side') await farSideCrossing(page, row);
         if (contract.id === 'e4-boneyard') {
           await build(page, row, 'turret', 0, -48, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
