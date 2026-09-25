@@ -968,4 +968,8 @@ Task sol-play-proofs-1, lane-c, Astra. No production/contract/balance or existin
 
 - **The Incline: PASS desktop/phone.** Both deliver the cart at 180/180 HP, defeat the railcar and secure at wave 14; all six cells pass, byte-identical score on reload, zero errors. F-PP1-4 resolved: the actual Book launch selects escort mode. Holding four turrets after wave 8 succeeds where extra funding trips failed. [Proof and boards](../play-proofs/run-1/e2-incline/proof.md).
 
+- **Blackout Ridge: PARTIAL desktop/phone, F-PP1-5.** Both wave-12 secure/bank/Book/reload journeys pass with zero errors. The full card goal remains red: phone builds both banks and records eight repairs, but both banks finish wrecked and no current storage is observed. [Exact readings and boundaries](../play-proofs/run-1/e3-blackout-ridge/finding.md).
+
 The new banking check compares to pre-play scores, correcting census instrument finding F-MPP1-1: secure already writes the score before Return to Town. New specs are gated by GR_NATIVE_PROOF. See [run note](../play-proofs/run-1/run-note.md) for final checks, commits and continuation order.
+
+Final verification: build/TypeScript PASS; default collection PASS; gate-unset browser invocation 10 skipped; bounded existing secure-wave briefing check 2/2 PASS. All ten final rows have zero console/page errors. Only Incline passes all six cells on both projects; unresolved full-objective assertions remain red when enabled. Scope check confirms five second-column-only edits and allowed paths. Owned Vite stopped; five-map batch closed, next untouched map Canyon Works.

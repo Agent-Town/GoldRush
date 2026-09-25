@@ -1,0 +1,143 @@
+{
+  "base": "0c0179197cf8c6f4de582b637348481eeb4ba778",
+  "scope": "PASS; only allowed paths, only five objective cells changed",
+  "changedRows": [
+    "Twin Banks (e1-twin-banks)",
+    "The Claim-Jumper Baron (e1-baron)",
+    "The Pressure Garden (e2-pressure-garden)",
+    "The Incline (e2-incline)",
+    "Blackout Ridge (e3-blackout-ridge)"
+  ],
+  "rows": [
+    {
+      "contract": "e1-baron",
+      "project": "desktop-chrome",
+      "cells": {
+        "boots": true,
+        "secures": false,
+        "banks": false,
+        "board": false,
+        "reload": false,
+        "clean": true
+      },
+      "wave": 16
+    },
+    {
+      "contract": "e1-baron",
+      "project": "mobile-chrome",
+      "cells": {
+        "boots": true,
+        "secures": false,
+        "banks": false,
+        "board": false,
+        "reload": false,
+        "clean": true
+      },
+      "wave": 23
+    },
+    {
+      "contract": "e1-twin-banks",
+      "project": "desktop-chrome",
+      "cells": {
+        "boots": true,
+        "secures": false,
+        "banks": false,
+        "board": false,
+        "reload": false,
+        "clean": true
+      },
+      "wave": 19
+    },
+    {
+      "contract": "e1-twin-banks",
+      "project": "mobile-chrome",
+      "cells": {
+        "boots": true,
+        "secures": false,
+        "banks": false,
+        "board": false,
+        "reload": false,
+        "clean": true
+      },
+      "wave": 18
+    },
+    {
+      "contract": "e2-incline",
+      "project": "desktop-chrome",
+      "cells": {
+        "boots": true,
+        "secures": true,
+        "banks": true,
+        "board": true,
+        "reload": true,
+        "clean": true
+      },
+      "wave": 14
+    },
+    {
+      "contract": "e2-incline",
+      "project": "mobile-chrome",
+      "cells": {
+        "boots": true,
+        "secures": true,
+        "banks": true,
+        "board": true,
+        "reload": true,
+        "clean": true
+      },
+      "wave": 14
+    },
+    {
+      "contract": "e2-pressure-garden",
+      "project": "desktop-chrome",
+      "cells": {
+        "boots": true,
+        "secures": false,
+        "banks": false,
+        "board": false,
+        "reload": false,
+        "clean": true
+      },
+      "wave": 3
+    },
+    {
+      "contract": "e2-pressure-garden",
+      "project": "mobile-chrome",
+      "cells": {
+        "boots": true,
+        "secures": false,
+        "banks": false,
+        "board": false,
+        "reload": false,
+        "clean": true
+      },
+      "wave": 11
+    },
+    {
+      "contract": "e3-blackout-ridge",
+      "project": "desktop-chrome",
+      "cells": {
+        "boots": true,
+        "secures": false,
+        "banks": true,
+        "board": true,
+        "reload": true,
+        "clean": true
+      },
+      "wave": 12
+    },
+    {
+      "contract": "e3-blackout-ridge",
+      "project": "mobile-chrome",
+      "cells": {
+        "boots": true,
+        "secures": false,
+        "banks": true,
+        "board": true,
+        "reload": true,
+        "clean": true
+      },
+      "wave": 12
+    }
+  ]
+}

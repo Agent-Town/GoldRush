@@ -53,6 +53,7 @@ type Row = {
   objective?: unknown;
   finalSnapshot?: Snapshot;
   peakHotBoilers: number;
+  powerBanksPeak: Record<string, number>;
   at: string;
 };
 
@@ -142,6 +143,7 @@ type Snapshot = {
   repairs: number;
   channeling: boolean;
   objective: unknown;
+  power: ThreeGameDiagnostics['power'];
   pressure: ThreeGameDiagnostics['pressure'];
   escort: ThreeGameDiagnostics['escort'];
 };
@@ -153,8 +155,9 @@ async function read(page: Page): Promise<Snapshot | null> {
       if (!d) return null;
       return {
         escort: d.escort,
+        power: d.power,
         pressure: d.pressure,
-        objective: { baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort },
+        objective: { baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -239,6 +242,9 @@ async function takeUpgrades(page: Page, row: Row): Promise<void> {
     if (now && now.sim - (row.samples.at(-1)?.t ?? 0) >= 10) {
       row.samples.push({ t: +now.sim.toFixed(1), wave: Math.max(now.wave, now.hudWave), hp: Math.round(now.hp), gold: Math.round(now.gold), kills: now.kills, x: +now.hero.x.toFixed(1), z: +now.hero.z.toFixed(1), alive: now.enemiesAlive, seams: now.nodes.filter(n => n.active).length });
       console.log(row.contract, JSON.stringify(row.samples.at(-1)));
+    }
+    if (now) for (const node of now.power.nodes) {
+      if (node.kind === 'storage') row.powerBanksPeak[node.id] = Math.max(row.powerBanksPeak[node.id] ?? 0, node.storedWh ?? 0);
     }
     if (now) row.peakHotBoilers = Math.max(row.peakHotBoilers, now.pressure?.objective.hotBoilers ?? 0);
     if (!now || !now.upgradeOpen) return;
@@ -460,6 +466,7 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   if (row.contract === "e2-pressure-garden") return;
   if (row.contract === "e2-incline" && now.wave >= 8) return;
   const hurt = now.defences
+    .filter(entry => row.contract !== "e3-blackout-ridge" || Math.hypot(entry.x - home.x, entry.z - home.z) < 18)
     .filter((entry) => !entry.wrecked && entry.hp < entry.maxHp * 0.55 && entry.repairCost > 0)
     .sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
   if (hurt) {
@@ -494,6 +501,10 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
+  if (contract.id === 'e3-blackout-ridge') return [
+    { id: 'capacitor_bank', dx: -8, dz: -26 },
+    { id: 'capacitor_bank', dx: -18, dz: -26 },
+  ];
   if (contract.id === 'e2-incline') return [
     { id: 'sentry_beacon', dx: 8, dz: -4 },
     { id: 'turret', dx: -8, dz: -4 },
@@ -563,6 +574,7 @@ export function nativeProof(id: string) {
         goldAtEnd: 0,
         killsAtEnd: 0,
         peakHotBoilers: 0,
+        powerBanksPeak: {},
         builds: [],
         upgrades: [],
         samples: [],
@@ -646,6 +658,9 @@ export function nativeProof(id: string) {
           const ready = await read(page);
           row.notes.push(`boiler commissioning: sim=${ready?.sim}, wave=${ready?.wave}, hp=${ready?.hp}, gold=${ready?.gold}, coal=${ready?.pressure.coal}, hero=${JSON.stringify(ready?.hero)}`);
         }
+        if (contract.id === 'e3-blackout-ridge') {
+          await fund(page, row, 200, Math.min(deadline, Date.now() + 120_000), fords, unreachable);
+        }
         const kit = kitFor(contract);
         row.notes.push(`kit=${kit.map((piece) => piece.id).join('+')}`);
         let kitIndex = 0;
@@ -700,6 +715,25 @@ export function nativeProof(id: string) {
             continue;
           }
 
+          if (contract.id === 'e3-blackout-ridge' && !['capacitor-west', 'capacitor-east'].every(id => (row.powerBanksPeak[id] ?? 0) > 0)) {
+            const cut = now.power.nodes.filter(n => n.kind === 'relay' && !n.online)
+              .sort((a, b) => Math.hypot(a.x - now.hero.x, a.z - now.hero.z) - Math.hypot(b.x - now.hero.x, b.z - now.hero.z))[0];
+            if (cut) {
+              const frame = now.defences.find(b => b.id === 'sentry_beacon' && Math.hypot(b.x - cut.x, b.z - cut.z) < 2.5);
+              if (frame && await fund(page, row, frame.repairCost, Math.min(deadline, Date.now() + 30_000), fords, unreachable)) {
+                await walkTo(page, row, frame.x, frame.z, 1.25);
+                const before = (await read(page))?.repairs ?? 0;
+                for (let tick = 0; tick < 40; tick++) {
+                  await takeUpgrades(page, row);
+                  const repaired = await read(page);
+                  if (!repaired || repaired.runState === 'dead' || repaired.secured || repaired.repairs > before) break;
+                  await page.waitForTimeout(150);
+                }
+                row.notes.push(`trunk ${cut.id} repair: ${(await read(page))?.repairs}, before=${before}`);
+              }
+            } else await page.waitForTimeout(200);
+            continue;
+          }
           if (now.sim - lastMaintenance >= 25) {
             lastMaintenance = now.sim;
             await maintain(page, row, home, deadline, fords, unreachable);
@@ -756,6 +790,9 @@ export function nativeProof(id: string) {
                 `never secured: peak wave ${row.peakWave} of ${secureWave} after ${row.simAtEnd.toFixed(1)}s sim (runState=${row.runStateAtEnd || 'unknown'}, ${row.builds.length} buildings, ${row.killsAtEnd} kills)`,
             );
 
+        if (contract.id === 'e3-blackout-ridge' && !['capacitor-west', 'capacitor-east'].every(id => (row.powerBanksPeak[id] ?? 0) > 0)) {
+          row.secures = fail(`${row.secures.detail}; authored banks not both observed storing current: ${JSON.stringify(row.powerBanksPeak)}`);
+        }
         if (contract.id === 'e2-incline' && (!atSecure?.escort.enabled || atSecure.escort.arrived < atSecure.escort.required)) {
           row.secures = fail(`${row.secures.detail}; Incline Haul not completed: ${JSON.stringify(atSecure?.escort)}`);
         }

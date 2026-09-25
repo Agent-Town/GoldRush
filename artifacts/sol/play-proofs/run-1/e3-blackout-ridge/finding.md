@@ -1,0 +1,12 @@
+# F-PP1-5 — Blackout Ridge persists a secure, but current storage remains unproved
+
+2026-09-25. **PARTIAL desktop/phone.** Both reach Claim Secured at wave 12 / 360.13 s with 175 HP, bank a new wave-12 score, return to the Book, navigate plainly to `/`, retain all 7,398 scoreboard bytes exactly and reopen the Book on foot. Both have zero console/page errors. The driver deliberately keeps the full goal assertion red because neither named bank was observed storing current.
+
+- Desktop beacon strategy: three new beacons, no capacitor bank, zero stored charge. This proves the wave/score journey only; it did not perform the card's current-storage goal. [Row](row-desktop-chrome.json), [terminal](terminal-desktop-chrome.png), [Book](board-desktop-chrome.png), [log](desktop.log).
+- Phone capacitor strategy: earned 200 gold, built the east bank at (16,4) at sim 111.33 s and west bank at (7,4) at 115.60 s. Repaired the trunk frames by standing within the normal repair radius. **Final diagnostics count eight repairs** (the notes log selected restoration milestones, not every passive repair). At terminal all three trunk nodes are online, but both capacitor buildings are wrecked, 0/70 HP. Their observed peak stored charge remains 0 Wh. Hero at (-6.775,-6.088), 6 gold. [Row](row-mobile-chrome.json), [terminal](terminal-mobile-chrome.png), [Book](board-mobile-chrome.png), [log](capacitor-phone.log).
+
+The observable obstacle is protecting/repairing the banks as well as reconnecting the trunk; this strategy did not demonstrate charge. It does not establish that current can never be stored or that the map is impossible. The desktop run does establish that the game can show Claim Secured without building either bank, so a wave-only test cannot prove the briefing's whole goal. Per the two-attempt limit, no further attempt in run 1. Continue the unattempted queue at Canyon Works.
+
+Default spec now uses the capacitor strategy: save 200 gold, build both named sites, restore cut trunk frames, then survive. It remains gated and intentionally fails its unmet authored-goal assertion. No production or existing-test change makes this pass.
+
+Commands: `GR_NATIVE_PROOF=1 GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5303 npx playwright test e2e/native-proofs/e3-blackout-ridge.spec.ts --project=desktop-chrome --workers=1 --reporter=line`; second attempt uses `--project=mobile-chrome`. Both exit 1 at the current-storage assertion; banking, Book, reload and clean checks pass. No debug, gold grants, teleports or engine calls.

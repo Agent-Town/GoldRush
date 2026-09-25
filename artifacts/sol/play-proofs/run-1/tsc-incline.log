@@ -1,0 +1,4 @@
+e2e/native-proofs/driver.ts(643,13): error TS6133: 'lastSample' is declared but its value is never read.
+e2e/native-proofs/driver.ts(679,58): error TS2339: Property 'objectiveLost' does not exist on type '(OreCartDiagnostics & { enabled: true; objectiveLost: boolean; arrived: number; required: number; payout: number; }) | { enabled: false; }'.
+  Property 'objectiveLost' does not exist on type '{ enabled: false; }'.
+e2e/native-proofs/driver.ts(748,92): error TS2339: Property 'completed' does not exist on type 'OreCartDiagnostics & { enabled: true; objectiveLost: boolean; arrived: number; required: number; payout: number; }'.

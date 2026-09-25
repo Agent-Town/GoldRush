@@ -1100,7 +1100,11 @@ Listing tests:
   [desktop-chrome] › mu-03-era-audio.spec.ts:31:1 › E1 contract keeps the frontier loop
   [desktop-chrome] › mu-03-era-audio.spec.ts:35:1 › title autoplay gate, music volume, and mute still hold
   [desktop-chrome] › music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting
-  [desktop-chrome] › native-proofs/driver.ts:508:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board
+  [desktop-chrome] › native-proofs/driver.ts:546:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board
+  [desktop-chrome] › native-proofs/driver.ts:546:5 › e1-twin-banks plays to its secure wave, banks, reloads and returns to the board
+  [desktop-chrome] › native-proofs/driver.ts:546:5 › e2-incline plays to its secure wave, banks, reloads and returns to the board
+  [desktop-chrome] › native-proofs/driver.ts:546:5 › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board
+  [desktop-chrome] › native-proofs/driver.ts:546:5 › e3-blackout-ridge plays to its secure wave, banks, reloads and returns to the board
   [desktop-chrome] › never-trap.spec.ts:33:1 › repairing a wall releases the repairer and an enemy on its line immediately
   [desktop-chrome] › never-trap.spec.ts:58:1 › hero and enemies escape a run landmark center within bounded ticks
   [desktop-chrome] › never-trap.spec.ts:88:1 › Night Shift enemies always make goal progress around object footprints
@@ -2806,7 +2810,11 @@ Listing tests:
   [mobile-chrome] › mu-03-era-audio.spec.ts:31:1 › E1 contract keeps the frontier loop
   [mobile-chrome] › mu-03-era-audio.spec.ts:35:1 › title autoplay gate, music volume, and mute still hold
   [mobile-chrome] › music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting
-  [mobile-chrome] › native-proofs/driver.ts:508:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board
+  [mobile-chrome] › native-proofs/driver.ts:546:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board
+  [mobile-chrome] › native-proofs/driver.ts:546:5 › e1-twin-banks plays to its secure wave, banks, reloads and returns to the board
+  [mobile-chrome] › native-proofs/driver.ts:546:5 › e2-incline plays to its secure wave, banks, reloads and returns to the board
+  [mobile-chrome] › native-proofs/driver.ts:546:5 › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board
+  [mobile-chrome] › native-proofs/driver.ts:546:5 › e3-blackout-ridge plays to its secure wave, banks, reloads and returns to the board
   [mobile-chrome] › never-trap.spec.ts:33:1 › repairing a wall releases the repairer and an enemy on its line immediately
   [mobile-chrome] › never-trap.spec.ts:58:1 › hero and enemies escape a run landmark center within bounded ticks
   [mobile-chrome] › never-trap.spec.ts:88:1 › Night Shift enemies always make goal progress around object footprints
@@ -3420,4 +3428,4 @@ Listing tests:
   [desktop-webkit] › 058-device-tiers.spec.ts:216:1 › desktop Chrome tier proofs › FULL and LITE same-scene screenshots are captured
   [desktop-webkit] › 058-device-tiers.spec.ts:226:1 › desktop WebKit records FULL baseline and LITE wave-20 stress envelope
   [desktop-webkit] › 058-device-tiers.spec.ts:255:1 › built hashed assets have immutable cache headers and small-merge download estimate
-Total: 3420 tests in 469 files
+Total: 3428 tests in 469 files
