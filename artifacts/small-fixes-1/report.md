@@ -55,7 +55,7 @@ Gates on the fixed tree: `npm run test:accounts` rc 0 (43 kv, 43 sqlite, 27 sign
 
 ---
 
-## 2. F-SEC2-4: the signed-in card's privacy link (scope item 2), commit `dd2c87433`
+## 2. F-SEC2-4: the signed-in card's privacy link (scope item 2), commit `dd2c87433`, evidence with the report
 
 `src/game/ProfileManager.ts`, `renderAccountCard()`, the signed-in return: **one line**, last in the card, byte-identical to the sign-in branch's link (same `href="${import.meta.env.BASE_URL}privacy.html"`, `target="_blank"`, `rel="noopener"`, `data-testid="account-privacy-link"`, text "What the Office keeps about you"). The two branches are exclusive (the function returns one or the other), so the shared test id names one element in either state. Where the player sees it: Profiles, the account card, under "Back up now / Sign out / Burn cloud ledger", in a plain boot.
 
@@ -65,7 +65,9 @@ Gates on the fixed tree: `npm run test:accounts` rc 0 (43 kv, 43 sqlite, 27 sign
 - **no live request**: a signed-in boot asks the account door for the cloud ledgers and the door's default origin is the live county one, so every `/api/` call is answered in the page route, every other off-origin request is aborted and recorded, both tests assert the record empty, and the signed-in test asserts the fence DID answer `/api/save/profiles` (so "no live request" is measured, not assumed); the signed-out test asserts no `/api/` call at all;
 - zero console errors and zero page errors, both tests.
 
-**Result: PENDING at this commit** (the lock was held by another session when this report was first written; the check is queued, detached, and this section is updated with its numbers and screenshots when it completes).
+**Result: GREEN on both projects.** `4 passed (8.8s)`: desktop-chrome and mobile-chrome, signed-out reference then signed-in check, each about 1.9 s, zero console and page errors asserted, the off-origin record empty, and the fence did answer `/api/save/profiles` on the signed-in boot. The adjacent `profile-first-boot` suite (the same panel) ran in the same locked call: `12 passed (23.6s)`. Screenshots, the account card as the signed-in player sees it (Back up now, Sign out, Burn cloud ledger, then the link): `shots/desktop-chrome-signed-in-account-card.png`, `shots/mobile-chrome-signed-in-account-card.png`, plus the full panel at each size.
+
+One uncounted warm-up run went first, on desktop only, because a cold vite compiles the boot past the timeout (F-ENV-1). It failed, and the reason is in the server log, not the spec: vite re-optimized its dependencies mid-boot and reloaded the page (`browser-check-vite.log`, "optimized dependencies changed. reloading" and a failed dynamic import of `TownTavernPilot.ts`), so the click on Profile landed on a page that was about to reload. The counted run started after the server settled and passed 4 of 4.
 
 ---
 
@@ -121,8 +123,8 @@ Gates on the fixed tree: `npm run test:accounts` rc 0 (43 kv, 43 sqlite, 27 sign
 | `test:ledger-guards` (not required; most of the thirteen's own tests live there) | leg 1: `ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3`, 84 s, 11:21Z. The 20 script legs, run one by one: all rc 0 except `desk-declaration`, `desk-birth` and `desk-carryforward`, rc 2, the linked-worktree refusal (main() ran and refused because main's STATUS.md line 1 has moved past this branch point; all three printed rc 0 by both paths before main moved, `symlink-run-table-after.txt`). Logs: `ledger-guards-leg1.log`, `ledger-guards-script-legs.log` |
 | the 63-file family of tests touching the thirteen scripts | 638 / 638 |
 | source-pointer-guard / law-pointer-guard | PASS / PASS |
-| browser check, both projects, `--workers=1`, through the lock | PENDING at this commit: queued behind the shared drain lock (held by another session), launched detached; the result replaces this row |
-| adjacent `profile-first-boot`, both projects, same locked call | PENDING, same locked call |
+| browser check, both projects, `--workers=1`, through the lock | **rc 0, 4 passed (8.8 s)**: the signed-out reference and the signed-in check on desktop-chrome and mobile-chrome, `--workers=1`, a vite dev server on 5324 started and stopped inside ONE locked call (`browser-check-lock.out`: lock held 13:05:03Z to 13:07:02Z, after 1 h 42 min queued behind other landings; vite pid stopped by number). Log `browser-check.log`, shots in `shots/` |
+| adjacent `profile-first-boot`, both projects, same locked call | rc 0, **12 passed (23.6 s)** (`browser-adjacent.log`) |
 | engine hash | moved by the one `src/` line, as expected: `c63def1b…` (pinned, and exactly the hash of this tree with the cut `ProfileManager.ts`) to `13e5735c2e784834…`; the drain pins it, `assets/engine-era.json` untouched |
 
 ---
@@ -150,9 +152,10 @@ Gates on the fixed tree: `npm run test:accounts` rc 0 (43 kv, 43 sqlite, 27 sign
 | `87761f666`, `4eebbc0a4` | report | this file (the browser check pending in the first) |
 | `208e96ddf` | F-SF1-3 | `F-SF1-3-ready.patch` (not applied; superseded by main's `c3cd93c77`) |
 | `5255fd11a` | F-EO1-5 | the desk test aligned byte for byte with main's identical cure, so the merge is clean |
+| `99add1b51`, `bcc6edb35`, `c0811954b`, `2065f5ed5`, `52647c5be` | evidence and report | the jobs-1 tally and the final symlink table; F-SF1-1 measured; F-SF1-2 measured; the flake census; report updates |
+| the commit carrying this version | F-SEC2-4 evidence | `shots/`, `browser-*.log`, `browser-check-lock.out`, `browser-check-vite.log`, this report |
 
-
-Left dirty in the worktree by design, factory churn class (b), not committed: `artifacts/accounts-worker/test-accounts.json` and `artifacts/multiplayer-relay/test-multiplayer.json` (rewritten by the functions gates).
+Left dirty in the worktree by design, factory churn class (b), not committed: `artifacts/accounts-worker/test-accounts.json` and `artifacts/multiplayer-relay/test-multiplayer.json` (rewritten by the functions gates); the adjacent `profile-first-boot` run also wrote untracked screenshots under `artifacts/profile-first-boot/`, not this task's evidence, left in place.
 
 **Evidence in `artifacts/small-fixes-1/`**: `bugs-cors-probe.mjs` with `-before.txt` / `-after.txt` (item 1), `other-doors-cors-probe.mjs` / `.txt` (F-SF1-1); `shots/` and `browser-check.log`, `browser-adjacent.log`, `browser-check-lock.out` (item 2); `symlink-run-table.mjs` with `-before.txt` / `-after.txt` / `-final.txt`, `other-main-module-spellings.txt`, `family-tests-63.log` (item 3); `stale-desk-tempdirs-before.txt`, `stale-stamp-tempdirs.txt`, `fixture-teardown-before.log`, `fixture-teardown-tally.mjs` with `-jobs1.txt` and `-after.txt` (jobs 3), `F-SF1-3-ready.patch` (superseded, not applied) (item 4); `node-guards-battery.log`, `roster-chained-legs.log`, `roster-tail-review-fixes.log`, `three-named-guards.log`, `functions-gates.log` (the gates).
 
