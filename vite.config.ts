@@ -43,7 +43,7 @@ export default defineConfig(() => {
     __APP_BUILD_VARIANT__: JSON.stringify(buildVariant),
     __GR_RELEASE_E1__: JSON.stringify(releaseE1),
   },
-  plugins: [releaseE1ContentPlugin(releaseE1), craftingQueuePlugin()],
+  plugins: [releaseE1ContentPlugin(releaseE1), craftingQueuePlugin(), legacyDepsUrlPlugin()],
   server: {
     // A3: the four art directories are symlinks into the sibling checkout of Agent-Town/GoldRush-assets (clone it next to this repo); Vite serves files by their real path, so the store's real location is allowed explicitly.
     fs: { allow: [process.cwd(), ...artStoreRoots()] },
@@ -81,12 +81,12 @@ export default defineConfig(() => {
   //      they could not collide with (and be deduped against) the main pass's `-diet-` names:
   //      1,231 PNGs / 96,097,301 B of un-dieted duplicates, roughly doubling the deployed asset
   //      count for files no first-town request ever asks for.
-  // `plugins` is written as the same two constructors in the same order as the main list so the two
+  // `plugins` is written as the same constructors in the same order as the main list so the two
   // passes cannot drift apart silently; Vite requires fresh instances per bundling, which is why it
-  // is a function. `craftingQueuePlugin()` only defines dev-server hooks, so it is inert here and
-  // present for that symmetry alone.
+  // is a function. `craftingQueuePlugin()` and `legacyDepsUrlPlugin()` only define dev-server hooks,
+  // so they are inert here and present for that symmetry alone.
   worker: {
-    plugins: () => [releaseE1ContentPlugin(releaseE1), craftingQueuePlugin()],
+    plugins: () => [releaseE1ContentPlugin(releaseE1), craftingQueuePlugin(), legacyDepsUrlPlugin()],
     rollupOptions: {
       output: {
         entryFileNames: `assets/[name]-[hash]-diet-${assetDietFingerprint}.js`,
@@ -277,6 +277,31 @@ function releaseE1CharacterImports(): string[] {
     }
   }
   return contractedFiles.sort().map((file) => `../../assets/processed/${file}`);
+}
+
+// THE OPTIMIZER'S OLD ADDRESS STILL ANSWERS (worktree-vite-cache-1, 2026-09-25). Until `cacheDir` moved
+// into the checkout, vite served pre-bundled deps under `/node_modules/.vite/deps/`, and that literal is
+// written into `e2e/e5-sea-contact.spec.ts:46` and five `scripts/review-*.mjs`, which import three.js in
+// the page from `/node_modules/.vite/deps/three.js`. With the cache moved, that URL fell through to the
+// SHARED directory behind the `node_modules` symlink: another checkout's copy, or nothing (measured in
+// artifacts/worktree-vite-cache-1/). This dev-only rewrite serves the old address from wherever
+// `cacheDir` points now, so those callers load this checkout's own pre-bundled file. It does nothing
+// while the cache is still `node_modules/.vite`.
+function legacyDepsUrlPlugin(): Plugin {
+  const legacy = '/node_modules/.vite/deps/';
+  return {
+    name: 'gold-rush-legacy-deps-url',
+    apply: 'serve',
+    configureServer(server) {
+      const relative = path.relative(server.config.root, server.config.cacheDir).split(sep).join('/');
+      const current = `${relative.startsWith('..') ? `/@fs${server.config.cacheDir}` : `/${relative}`}/deps/`;
+      if (current === legacy) return;
+      server.middlewares.use((req, _res, next) => {
+        if (req.url?.startsWith(legacy)) req.url = current + req.url.slice(legacy.length);
+        next();
+      });
+    },
+  };
 }
 
 function craftingQueuePlugin(): Plugin {
