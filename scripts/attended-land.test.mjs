@@ -53,10 +53,14 @@ test('the verdict allows only the configured e2e reds and the known battery clas
     '1) [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › town3dPilot', '2) [mobile-chrome] › e2e/other.spec.ts:9:1 › other', 'battery start 00:00Z', 'battery: rc=1 ℹ tests 9 ℹ pass 8 ℹ fail 1',
     '✖ all 150 scripts/*.test.mjs fixture owners remove their temp directories (1ms)', 'dirt after battery: 0'].join('\n') + '\n';
   const d = mkdtempSync(join(tmpdir(), 'land-')); const gf = join(d, 'g.txt'); writeFileSync(gf, '\n' + gates);
+  // The fixture-teardown sweep is NOT allowed by default (F-PP3-6, 2026-09-25: the blanket allowance hid a real leak); a landing allows it by name after reading its assertion.
   withConfig({ ...base(), gates: { specs: ['e2e/x.spec.ts'], allowedE2E: ['menu-safe-params\\.spec\\.ts:5:'] } }, (p) => {
-    const r = lib.verdict(lib.loadConfig(p), gf); assert.equal(r.length, 1); assert.match(r[0], /other\.spec\.ts/);
+    const r = lib.verdict(lib.loadConfig(p), gf); assert.equal(r.length, 2); assert.match(r[0], /other\.spec\.ts/); assert.match(r[1], /battery reds: .*fixture owners/);
   });
-  withConfig({ ...base(), gates: { specs: ['e2e/x.spec.ts'], allowedE2E: ['menu-safe-params\\.spec\\.ts:5:', 'other\\.spec\\.ts:9:'] } }, (p) => assert.deepEqual(lib.verdict(lib.loadConfig(p), gf), []));
+  withConfig({ ...base(), gates: { specs: ['e2e/x.spec.ts'], allowedE2E: ['menu-safe-params\\.spec\\.ts:5:', 'other\\.spec\\.ts:9:'] } }, (p) => {
+    const r = lib.verdict(lib.loadConfig(p), gf); assert.equal(r.length, 1); assert.match(r[0], /battery reds: .*fixture owners/);
+  });
+  withConfig({ ...base(), gates: { specs: ['e2e/x.spec.ts'], allowedE2E: ['menu-safe-params\\.spec\\.ts:5:', 'other\\.spec\\.ts:9:'], allowedBattery: ['fixture owners remove their temp directories'] } }, (p) => assert.deepEqual(lib.verdict(lib.loadConfig(p), gf), []));
   rmSync(d, { recursive: true, force: true });
 });
 
