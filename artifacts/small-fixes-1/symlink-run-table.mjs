@@ -4,7 +4,8 @@
  * path and by a file symlink in a scratch dir, side by side (small-fixes-1, 2026-09-25). Evidence,
  * not a gate.
  *
- * usage: node artifacts/small-fixes-1/symlink-run-table.mjs <scripts-dir> <label>
+ * usage: node artifacts/small-fixes-1/symlink-run-table.mjs <scripts-dir> <label> [--scripts a.mjs,b.mjs]
+ * (--scripts replaces the default list, e.g. to measure the OTHER main-module spellings of F-SF1-2)
  * Per script: rc and output bytes (stdout+stderr) by the real path and by the symlink; verdict SAME
  * (identical rc and identical output) or SILENT (the symlinked run exited 0 having printed nothing,
  * the F-LS1-2 defect) or DIFFERENT.
@@ -17,9 +18,10 @@ import { mkdtempSync, realpathSync, rmSync, symlinkSync, unlinkSync } from 'node
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
-const [dirArg, label = 'run'] = process.argv.slice(2);
+const [dirArg, label = 'run'] = process.argv.slice(2).filter((arg, i, all) => arg !== '--scripts' && all[i - 1] !== '--scripts');
+const listAt = process.argv.indexOf('--scripts');
 const SCRIPTS = resolve(dirArg ?? 'scripts');
-const RUNNABLE = [
+const DEFAULT_RUNNABLE = [
   'authorable-candidates.mjs',
   'claimed-spec-harness-guard.mjs',
   'desk-birth-guard.mjs',
@@ -31,6 +33,7 @@ const RUNNABLE = [
   'source-pointer-guard.mjs',
   'stale-ready-for-gates-guard.mjs',
 ];
+const RUNNABLE = listAt === -1 ? DEFAULT_RUNNABLE : process.argv[listAt + 1].split(',').filter(Boolean);
 const scratch = realpathSync(mkdtempSync(join(tmpdir(), 'sf1-symlink-table-')));
 const links = [];
 const run = (file) => {
