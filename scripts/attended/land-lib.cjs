@@ -148,7 +148,8 @@ function bookkeep(cfg, mergeSha, pinText) {
   if (!bl.includes(b.rowKey)) bl = `${b.rowEmoji || '✅'} **${b.rowKey} — \`${b.taskFile.replace(/\.md$/, '')}\` as \`${short}\` (drained attended ${today}).** ${b.rowText.replace('{PIN}', pinText)} \`${cfg.review.path}\`.\n` + bl;
   fs.writeFileSync('tasks/BACKLOG.md', bl);
   const lines = fs.readFileSync('STATUS.md', 'utf8').split('\n');
-  if (isLockLine(lines[0])) throw new Error('STATUS line 1 carries a live fire lock; bookkeeping refused');
+  // NOTE: no lock check here. In the chain, STATUS line 1 is a SNAPSHOT of main at merge time (a fire may have been mid-run); the
+  // live lock (line 1 on main AND the tasks/.fire.lock directory) is land.sh's fast-forward gate, and the phrase is re-applied after the main merge.
   if (!lines[0].includes(b.rowKey)) {
     const m = lines[0].match(/🔺 \*\*OWNER.{0,3}S DESK — (\d+) [^*]{0,40}\*\*/); const h = m ? lines[0].indexOf(m[0]) : -1;
     if (h < 0) throw new Error('no OWNER\'S DESK header on line 1');

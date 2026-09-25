@@ -15,7 +15,7 @@ export PATH=/opt/homebrew/bin:$PATH
 CFG="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"; D="$(cd "$(dirname "$0")" && pwd)"; LIB="$D/land-lib.cjs"
 R="${GR_REPO:-/Users/robin/Claude/Projects/Gold Rush}"; A="${GR_STORE:-/Users/robin/Claude/Projects/GoldRush-assets}"; HOMEDIR="${GR_LAND_HOME:-$HOME/.goldrush/land}"; mkdir -p "$HOMEDIR"
 node "$LIB" env "$CFG" "$HOMEDIR/env.$$.sh" > /dev/null || exit 2; . "$HOMEDIR/env.$$.sh"; rm -f "$HOMEDIR/env.$$.sh"
-G="$HOMEDIR/$TAG-gates.txt"; W="$HOMEDIR/wt-$TAG"; SW="$HOMEDIR/GoldRush-assets"; : > "$G"
+G="$HOMEDIR/$TAG-gates.txt"; W="$HOMEDIR/wt-$TAG"; SW="$HOMEDIR/GoldRush-assets"; RESUME=${GR_LAND_RESUME:-0}; [ "$RESUME" = 1 ] || : > "$G"
 # paths in the config are relative to the PRIMARY repo (the chain worktree has no uncommitted files); resolve them before the cd
 [ -n "$CURE" ] && [ "${CURE#/}" = "$CURE" ] && CURE="$R/$CURE"; export GR_REPO_ROOT="$R"
 say() { echo "$*" >> "$G"; }; fail() { say "$* — needs hands"; exit 1; }
@@ -25,6 +25,7 @@ pinned() { node -e 'console.log(JSON.parse(require("fs").readFileSync("assets/en
 counts() { grep -E '^ℹ (tests|pass|fail|skipped)' "$1" | tr '\n' ' '; }
 pwcounts() { grep -E '^[[:space:]]+[0-9]+ (passed|failed|skipped|flaky)' "$1" | tr '\n' ' '; }
 pwreds() { grep -E '^[[:space:]]+[0-9]+\) \[' "$1" | sed -E 's/^[[:space:]]+//' | cut -c1-160; }
+if [ "$RESUME" != 1 ]; then
 MSG="$(node -p "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8')).mergeMessage" "$CFG")"
 cd "$R" || exit 1; LANE_SHA=$(git rev-parse "$BR") || fail "branch $BR not found"; say "branch $BR tip $(git rev-parse --short "$LANE_SHA") $(date -u '+%Y-%m-%d %H:%MZ') config $CFG"
 # the scratch store worktree beside the chain (assets/pilots -> ../../GoldRush-assets/pilots is a relative symlink)
@@ -70,10 +71,15 @@ fi
 say "battery start $(date -u '+%H:%MZ')"; GR_GUARD_NO_ARTIFACT=1 nice -n 5 npm run test:node-guards > "$HOMEDIR/$TAG-battery.log" 2>&1; say "battery: rc=$? $(counts "$HOMEDIR/$TAG-battery.log") $(date -u '+%H:%MZ')"; grep -E '^✖' "$HOMEDIR/$TAG-battery.log" | grep -v 'failing tests' | sort -u | head -6 | cut -c1-140 >> "$G"; git diff --name-only -- artifacts reviews | xargs git checkout -- 2>/dev/null
 say "dirt after battery: $(git status --short | grep -v '^??' | wc -l | tr -d ' ')"; say "$TAG-PREP-DONE"
 node "$LIB" verdict "$CFG" "$G" >> "$G" 2>&1 || fail "verdict"
+else
+  # RESUME after a fixed stop: the chain already holds the merge, the cure, the verdict; pick up at the pin
+  cd "$R" || exit 1; LANE_SHA=$(git rev-parse "$BR"); STORE=$(git -C "$A" rev-parse --short main); cd "$W" || fail "no chain worktree to resume"; grep -q "^verdict: clean" "$G" || fail "resume refused: the gates log carries no clean verdict"
+  MH=$(git log --format=%H -1 --grep="^drain: merge $BR"); [ -n "$MH" ] || fail "resume: merge commit not found in the chain"; PINNED=$(pinned); say "RESUME $(date -u '+%Y-%m-%d %H:%MZ'): chain $(git rev-parse --short HEAD), merge ${MH:0:9}, continuing at the pin"
+fi
 # the pin, measured LAST
 H1=$(ehash); say "hash at pin time: $H1"
 if [ "$HASH_MODE" = "unchanged" ]; then [ "$H1" = "$PINNED" ] || fail "HASH MOVED after the battery"; PIN="unchanged (\`${PINNED:0:8}\`, no pin)"
-else PIN=$(node "$LIB" pin "$CFG" "$STORE" "$H1" | sed -n 's/^PIN=//p'); say "pin $PIN"; ERA=$(GR_GUARD_NO_ARTIFACT=1 node --test scripts/engine-era-guard.test.mjs scripts/bench-seeds.test.mjs 2>&1 | grep -E '^ℹ (pass|fail)' | tr '\n' ' '); say "era (chain, scratch store): $ERA"; echo "$ERA" | grep -q 'fail 0' || fail "era guards red"
+else PIN=$(node "$LIB" pin "$CFG" "$STORE" "$H1" | sed -n 's/^PIN=//p'); PIN=${PIN% (already pinned)}; say "pin $PIN"; ERA=$(GR_GUARD_NO_ARTIFACT=1 node --test scripts/engine-era-guard.test.mjs scripts/bench-seeds.test.mjs 2>&1 | grep -E '^ℹ (pass|fail)' | tr '\n' ' '); say "era (chain, scratch store): $ERA"; echo "$ERA" | grep -q 'fail 0' || fail "era guards red"
   git add -- assets/engine-era.json; git diff --cached --quiet || git commit -q -m "era 6, same-era pin: $TAG, measured on the merged tree with the store at $STORE ($H1)
 
 Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"; fi

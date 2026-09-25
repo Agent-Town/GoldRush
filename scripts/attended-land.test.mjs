@@ -75,10 +75,11 @@ test('bookkeeping is idempotent and puts the phrase before the desk header witho
   } finally { process.chdir(cwd); rmSync(d, { recursive: true, force: true }); }
 });
 
-test('bookkeeping refuses while a fire lock shape sits on line 1', () => {
+test('bookkeeping works on a chain whose stale line 1 carries a fire lock shape (the live lock is the ff gate, not this file)', () => {
   const d = mkdtempSync(join(tmpdir(), 'land-')); const cwd = process.cwd();
   try {
-    mkdirSync(join(d, 'tasks')); writeFileSync(join(d, 'tasks/goals.json'), JSON.stringify({ goals: [{ tasks: [{ id: 't1', status: 'queued', taskFile: 't1.md' }] }] })); writeFileSync(join(d, 'tasks/BACKLOG.md'), ''); writeFileSync(join(d, 'STATUS.md'), 'ACTIVE 2026-09-25T09:02Z (s2680 fire) — x 🔺 **OWNER\'S DESK — 1 awaiting a word.**\n');
-    process.chdir(d); const cfg = withConfig(base(), (p) => lib.loadConfig(p)); assert.throws(() => lib.bookkeep(cfg, 'abc', '#1'), /live fire lock/);
+    mkdirSync(join(d, 'tasks')); writeFileSync(join(d, 'tasks/goals.json'), JSON.stringify({ goals: [{ tasks: [{ id: 't1', status: 'queued', taskFile: 't1.md' }] }] })); writeFileSync(join(d, 'tasks/BACKLOG.md'), ''); writeFileSync(join(d, 'STATUS.md'), "ACTIVE 2026-09-25T09:02Z (s2680 fire) — x 🔺 **OWNER'S DESK — 1 awaiting a word.**\n");
+    process.chdir(d); const cfg = withConfig(base(), (p) => lib.loadConfig(p)); lib.bookkeep(cfg, 'abc', '#1');
+    const s = readFileSync('STATUS.md', 'utf8').split('\n')[0]; assert.match(s, /^ACTIVE .*T1 LANDED .*OWNER'S DESK/);
   } finally { process.chdir(cwd); rmSync(d, { recursive: true, force: true }); }
 });

@@ -38,3 +38,4 @@ Everything here is for the ATTENDED session or an Opus implementer it spawns. Fi
 
 ## Learned on the first real run (hm06, 2026-09-25)
 Config paths (`cure`, `review.body`) are relative to the PRIMARY repository and are resolved before the tool enters the chain worktree; a chain worktree is a detached checkout of main and holds none of the session's uncommitted files. The first run stopped at `cure … No such file or directory` for exactly that reason and was re-queued after the fix.
+Also learned there: the chain's STATUS line 1 is a snapshot of main at merge time and may carry a fire's ACTIVE shape; bookkeeping must not read it as a live lock (the live lock is the fast-forward gate). And a fixed stop resumes: `GR_LAND_RESUME=1 scripts/attended/dlock.sh scripts/attended/land.sh <cfg>` skips the merge, the cure and every gate when the gates log already carries `verdict: clean`, and continues at the pin.
