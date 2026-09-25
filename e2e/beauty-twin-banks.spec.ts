@@ -245,9 +245,9 @@ test('the beauty pass pays its frame budget, measured against its own build', as
  * comes from the live owner module (the same seeded `DetailScatter` the riparian test reads), the
  * motion is counted INSIDE the swaying cards' own projected footprints, and a negative control from the
  * same two frames (the same footprints shifted 2.5 m along the bank, minus any reed footprint) proves
- * the motion is the reeds'. Measured at this pose: 6 swaying cards in view, 336 to 515 moved pixels
- * inside their footprints (density 0.030 to 0.046) against 0.0004 to 0.0008 in the control. Motion is
- * never manufactured here: the test animates nothing, it only reads two frames.
+ * the motion is the reeds'. Measured at this pose (five recorded runs, and the probe): 6 swaying cards,
+ * 308 to 515 moved pixels inside their footprints (density 0.028 to 0.046) against 0.0004 to 0.0011 in
+ * the control. Motion is never manufactured here: the test animates nothing, it only reads two frames.
  */
 const CLAIM_STAKE = { x: 0, z: -12 };
 
