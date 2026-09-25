@@ -1,0 +1,24 @@
+branch fix/worktree-vite-cache-1 tip 9d22a2a46 2026-09-25 17:37Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/wvc1.json
+scratch store at the store's main 5793a96
+chain base db1eceb69
+merged 052e295c3
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+e2e start 17:40Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   24 passed (2.0m)  17:42Z
+battery start 17:42Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1011 ℹ fail 2 ℹ skipped 5  17:59Z
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (973171.974042ms)
+✖ contention is advisory, correctly counted, and absent when alone (6559.270042ms)
+dirt after battery: 0
+wvc1-PREP-DONE
+battery reds: ✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (973171.974042ms)
+verdict — needs hands
+RESUME-PREP 17:59Z: fixture owners remove their temp directories = the sweep failed on "scripts/node-guards-contention.test.mjs child failed", the contention shape (another battery on the host), not fixture survivors; the branch touches the vite config, the gitignore and a README
+verdict: clean
+RESUME 2026-09-25 22:43Z: chain 052e295c3, merge 052e295c3, continuing at the pin
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+review: reviews/worktree-vite-cache-1.md

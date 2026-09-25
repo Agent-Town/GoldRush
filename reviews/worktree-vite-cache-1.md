@@ -1,0 +1,34 @@
+# Drain review: `worktree-vite-cache-1`, one vite cache per checkout and the entry glob that crossed into the art store (Opus 5.5 implementer at max effort)
+
+**Branch** `fix/worktree-vite-cache-1` at `9d22a2a46` · **merge** `052e295c3` · engine hash unchanged (`c63def1b`, no pin) · drained attended 2026-09-25 22:43Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `wvc1`).
+
+**Verdict: LANDED.**
+
+### What it does
+Every worktree on this Mac symlinks `node_modules` to the primary checkout's, so all dev servers shared one vite dependency cache; two implementers lost runs to it today. The implementer (Opus 5.5 at max effort) reproduced both symptoms and corrected the master's premise: the dependency scan did not fail because of the symlinked real path; vite's default `**/*.html` entry glob followed the `assets/pilots` symlink into the art store's `hero-3d/compare.html`, whose tsconfig extends a path that does not exist from the store, so every boot logged `Re-optimizing dependencies because vite config has changed` (deleting the shared deps), `Failed to run dependency scan` and `[TSCONFIG_ERROR]`; the primary's glob found 145 entries including every lane worktree. The cure in `vite.config.ts`: `cacheDir: path.resolve(import.meta.dirname, '.vite-cache')` (per checkout, gitignored), `optimizeDeps.entries: ['index.html', 'src/replay/harness.html']` (the cache fix alone still failed the scan and reloaded the page on 3 of 3 cold boots), and a dev-only rewrite that keeps the old `/node_modules/.vite/deps/three.js` URL working for the one spec and five review scripts that import it directly (F-WVC1-2). Where the player sees it: nowhere; the build is byte-identical. Where the factory sees it: a worktree boots in 2.5 to 3.4 s cold or warm with zero reloads (before: three of six boots never booted), a sibling's server no longer rewrites this checkout's cache, and the browser-door battery row that has been read as "load" all day may have been this (F-WVC1-3, inferred: it passed inside a contended battery with the fix).
+
+### Measured
+Scan before: 8 of 8 boots failed the scan; after: `Scan completed in 197 ms`, `dependencies optimized` at +459 ms, no failure. Two servers at once: before, neither page booted in 180 s (504 Outdated Optimize Dep) and a read-only sampler saw eight configurations rewrite the shared cache 127 times in 19 minutes; after, both pages booted (2.66 s and 1.98 s at load 89) and this checkout's cache metadata stayed identical. Boot timings with the 1-minute load in brackets: before cold no boot [36.7], 3.6 s [15.1], 3.7 s [14.5]; before warm no boot [18.4], no boot [14.9], 3.6 s [13.0]; after cold 3.3 s [38.0], 2.5 s [22.6], 2.7 s [17.1]; after warm 3.4 s [28.8], 2.5 s [18.3], 2.8 s [15.4]. `npm run build` rc 0 before and after with all 3,173 dist files byte-identical (manifest sha256 `507fb7e4…`); engine hash `c63def1b…` unchanged, era guard 5 of 5; task-025 and m2-01 24 passed on a cold server and again through playwright's own `webServer`; battery 1,009 of 1,018 with four explained reds (two backup-pull rows and the sweep needing `.env.local`, contention with three batteries at once).
+
+### Merge classification
+LANE-TOUCHED: `vite.config.ts` (cacheDir, optimizeDeps.entries, the dev-only deps rewrite), `.gitignore` (`.vite-cache/`), `scripts/attended/README.md` (one paragraph), `artifacts/worktree-vite-cache-1/**`. No `src/`, no playwright config, no `package.json`.
+
+### Findings
+- **F-WVC1-1 (the master's premise corrected):** the scan failure was the entry glob crossing the `assets/pilots` symlink into the art store, not the real path of `node_modules`.
+- **F-WVC1-2 (a slice):** `e2e/e5-sea-contact.spec.ts:46` and five `scripts/review-*.mjs` import `/node_modules/.vite/deps/three.js` directly; the rewrite keeps them working; they should import the module.
+- **F-WVC1-3 (inferred, for the drain):** the browser-door "load" row may be the shared-cache re-optimisation; watch it after this lands.
+- **F-WVC1-4 (noted):** on the droplet `/opt/goldrush/.vite-cache` is not protected by the deploy mirror, so each deploy removes it and the assayer rebuilds it once (harmless, not measured there).
+- **F-WVC1-5, -6, -7 (noted):** 226 to 244 leftover `deps_temp_*` folders in the shared cache; two READ FIRST report paths did not exist at authoring; `vite.config.ts` is outside the project's tsc and carries two pre-existing strict errors.
+
+### Battery attribution (drain, 17:59Z)
+Row "fixture owners remove their temp directories" allowed for this landing only: the sweep failed on "scripts/node-guards-contention.test.mjs child failed", the contention shape (another battery on the host), not fixture survivors; the branch touches the vite config, the gitignore and a README
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 137 ℹ fail 0` |
+| e2e both projects, --workers=1 | `rc=0   24 passed (2.0m)  17:42Z` |
+| full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 1018 ℹ pass 1011 ℹ fail 2 ℹ skipped 5  17:59Z` |
+| engine hash | `merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)` |

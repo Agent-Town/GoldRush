@@ -6447,12 +6447,16 @@
             {
               "id": "worktree-vite-cache-1",
               "title": "Every checkout gets its own vite dependency cache (cacheDir inside the checkout, gitignored) so sibling worktrees stop re-optimising each other mid-boot and the dependency scan stops failing in worktrees (F-TT2-2; canyon-works-traversal-1 boot failure)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "worktree-vite-cache-1.md",
               "lane": "scratch worktree /Users/robin/Claude/Projects/wt-wvc1 beside the primary, branch fix/worktree-vite-cache-1, Opus 5.5 implementer at max effort; config only, no deploy",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from F-TT2-2 and the canyon-works-traversal-1 report, 2026-09-25",
-              "queuedAt": "2026-09-25"
+              "queuedAt": "2026-09-25",
+              "mergeHash": "052e295c3229fa091e6bb053c6678996ab2e9832",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/worktree-vite-cache-1.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh wvc1)"
             },
             {
               "id": "sol-play-proofs-4",
