@@ -206,10 +206,15 @@ const tapeSurface = {
 const tapeDoorVerb = {
   weapon_toggle: 'SET_WEAPON',
 };
+// The first three citations were typed as literal `src/game/Game.ts:NNNN` strings in `08fba1d64` (2026-08-12), the only
+// unresolved citations in this file, and they rotted: read on 2026-09-26, `:2886` is a megaproject clear, `:2902` a
+// shooter unsubscribe and `:2909` a cloth dispose, and the committed report published them as current. Each now
+// resolves live onto the line where the browser applies that tape action (`Game.applyMultiplayerAction`), like
+// every other citation here, so the next move reds the audit ("Audit anchor missing") instead of rotting silently.
 const tapeExemptions = [
-  { actions: 'death_action', reason: 'Post-death overlay transition; the headless terminal is already the run end.', citation: 'src/game/Game.ts:2902' },
-  { actions: 'research_pick / research_skip', reason: 'Between-run science progression lives outside the run window.', citation: 'src/game/Game.ts:2909' },
-  { actions: 'set_pause', reason: 'Pacing only; the agent door is turn-based.', citation: 'src/game/Game.ts:2886' },
+  { actions: 'death_action', reason: 'Post-death overlay transition; the headless terminal is already the run end.', citation: line('src/game/Game.ts', "if (action.type === 'death_action') {") },
+  { actions: 'research_pick / research_skip', reason: 'Between-run science progression lives outside the run window.', citation: `${line('src/game/Game.ts', "if (action.type === 'research_pick') {")} · ${line('src/game/Game.ts', "if (action.type === 'research_skip') {")}` },
+  { actions: 'set_pause', reason: 'Pacing only; the agent door is turn-based.', citation: line('src/game/Game.ts', "if (action.type === 'set_pause' && !this.secureClaimChoicePending()") },
   { actions: 'skip_ceremony', reason: 'Baron ceremony is presentation-only; headless spawns the Baron directly without a ceremony gate.', citation: line('src/sim/HeadlessContractSim.ts', '(position, at, escorts) => this.postBaronSpawn(position, at, escorts)') },
 ];
 const tapeExemptActions = new Set(tapeExemptions.flatMap(({ actions }) => actions.split(' / ')));
