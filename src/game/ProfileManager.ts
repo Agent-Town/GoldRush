@@ -320,6 +320,7 @@ export class ProfileManager {
           <button class="death-overlay__button gr-account-danger" type="button" data-testid="account-burn-confirm"${disabled}>Burn it</button>
           <button class="death-overlay__button" type="button" data-testid="account-burn-cancel"${disabled}>Keep it</button>
         </div>` : ''}
+        <p class="gr-account-note"><a href="${import.meta.env.BASE_URL}privacy.html" target="_blank" rel="noopener" data-testid="account-privacy-link">What the Office keeps about you</a></p>
       </section>
     `;
   }
