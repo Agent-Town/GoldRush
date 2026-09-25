@@ -1,0 +1,5652 @@
+{
+  "schema": "same-game-audit-verbs-1.dispatch-pairing.v1",
+  "windowTicks": 900,
+  "lifted": {
+    "file": "src/game/Game.ts",
+    "methods": [
+      "src/game/Game.ts:8265 beginProspectorDispatch",
+      "src/game/Game.ts:8277 advanceProspectorDispatch",
+      "src/game/Game.ts:8309 prospectorDispatchPoint"
+    ],
+    "distanceSq2": "src/game/Game.ts:10972",
+    "settleTicks": "src/game/Game.ts:395 = 4"
+  },
+  "arriveRadius": 0.16,
+  "summary": {
+    "contracts": 42,
+    "pairs": 41,
+    "differs": 0,
+    "noTarget": 1,
+    "pairsAmongDoorAdmitted": 38,
+    "doorAdmitted": 38,
+    "firstPanDeltaTicks": [
+      2
+    ],
+    "linger": [
+      26
+    ],
+    "sluice": "pairs",
+    "wallMs": 99581
+  },
+  "wire": {
+    "command": "wire",
+    "accepted": false,
+    "ticks": 900,
+    "terminal": false,
+    "arrivedTick": null,
+    "leftTick": null,
+    "pansOnTarget": [],
+    "goldPannedOnTarget": 0,
+    "pansElsewhere": 0,
+    "remainingBefore": 30,
+    "remainingAfter": 30,
+    "goldAtEnd": 0,
+    "prospectorAtFirstPan": null,
+    "distanceAtFirstPan": null,
+    "prospectorAtEnd": [
+      -1.9811,
+      10.5844
+    ],
+    "dispatchQueueLeft": null,
+    "order": null
+  },
+  "sluice": {
+    "contract": "the-claim",
+    "placedAt": {
+      "x": 0,
+      "z": 7
+    },
+    "target": {
+      "id": "sluice-1",
+      "x": 0,
+      "z": 7,
+      "distance": 4.3226
+    },
+    "checks": {
+      "bothAccepted": true,
+      "bothReachedTheSluice": true,
+      "samePathAndArrivalTick": true,
+      "controlNeverArrives": true,
+      "neitherPans": true,
+      "sameGoldAtEnd": true,
+      "dispatchServed": true,
+      "orderDone": true
+    },
+    "arms": {
+      "dispatch": {
+        "command": "dispatch",
+        "accepted": true,
+        "ticks": 900,
+        "terminal": false,
+        "arrivedTick": 27,
+        "leftTick": 33,
+        "pansOnTarget": [],
+        "goldPannedOnTarget": 0,
+        "pansElsewhere": 0,
+        "remainingBefore": null,
+        "remainingAfter": null,
+        "goldAtEnd": 15,
+        "prospectorAtFirstPan": null,
+        "distanceAtFirstPan": null,
+        "prospectorAtEnd": [
+          -1.9743,
+          10.5869
+        ],
+        "dispatchQueueLeft": 0,
+        "order": null
+      },
+      "harvest": {
+        "command": "harvest",
+        "accepted": true,
+        "ticks": 900,
+        "terminal": false,
+        "arrivedTick": 27,
+        "leftTick": 59,
+        "pansOnTarget": [],
+        "goldPannedOnTarget": 0,
+        "pansElsewhere": 0,
+        "remainingBefore": null,
+        "remainingAfter": null,
+        "goldAtEnd": 15,
+        "prospectorAtFirstPan": null,
+        "distanceAtFirstPan": null,
+        "prospectorAtEnd": [
+          -1.9743,
+          10.5869
+        ],
+        "dispatchQueueLeft": null,
+        "order": [
+          {
+            "status": "done"
+          }
+        ]
+      },
+      "control": {
+        "command": "none",
+        "accepted": null,
+        "ticks": 900,
+        "terminal": false,
+        "arrivedTick": null,
+        "leftTick": null,
+        "pansOnTarget": [],
+        "goldPannedOnTarget": 0,
+        "pansElsewhere": 0,
+        "remainingBefore": null,
+        "remainingAfter": null,
+        "goldAtEnd": 15,
+        "prospectorAtFirstPan": null,
+        "distanceAtFirstPan": null,
+        "prospectorAtEnd": [
+          -1.9811,
+          10.5844
+        ],
+        "dispatchQueueLeft": null,
+        "order": null
+      }
+    },
+    "verdict": "pairs"
+  },
+  "results": [
+    {
+      "contract": "the-claim",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-the-claim",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": -9,
+        "z": 6.7,
+        "remaining": 30,
+        "distance": 8.3506
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 56,
+        "harvest": 54,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 52,
+        "harvest": 52
+      },
+      "leftTargetTick": {
+        "dispatch": 58,
+        "harvest": 84,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0287,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 52,
+          "leftTick": 58,
+          "pansOnTarget": [
+            {
+              "tick": 56,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -9,
+            6.7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 52,
+          "leftTick": 84,
+          "pansOnTarget": [
+            {
+              "tick": 54,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -9,
+            6.7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9634,
+            10.5911
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e1-drill-yard",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e1-drill-yard",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -9,
+        "z": 6.7,
+        "remaining": 30,
+        "distance": 8.3506
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 56,
+        "harvest": 54,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 52,
+        "harvest": 52
+      },
+      "leftTargetTick": {
+        "dispatch": 58,
+        "harvest": 84,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0287,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 52,
+          "leftTick": 58,
+          "pansOnTarget": [
+            {
+              "tick": 56,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -9,
+            6.7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 52,
+          "leftTick": 84,
+          "pansOnTarget": [
+            {
+              "tick": 54,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -9,
+            6.7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9634,
+            10.5911
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e1-dry-gulch",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e1-dry-gulch",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -9,
+        "z": 6.7,
+        "remaining": 30,
+        "distance": 8.3506
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 56,
+        "harvest": 54,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 52,
+        "harvest": 52
+      },
+      "leftTargetTick": {
+        "dispatch": 58,
+        "harvest": 84,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0287,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 52,
+          "leftTick": 58,
+          "pansOnTarget": [
+            {
+              "tick": 56,
+              "amount": 7
+            }
+          ],
+          "goldPannedOnTarget": 7,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 23,
+          "goldAtEnd": 7,
+          "prospectorAtFirstPan": [
+            -9,
+            6.7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 52,
+          "leftTick": 84,
+          "pansOnTarget": [
+            {
+              "tick": 54,
+              "amount": 7
+            }
+          ],
+          "goldPannedOnTarget": 7,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 23,
+          "goldAtEnd": 7,
+          "prospectorAtFirstPan": [
+            -9,
+            6.7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9634,
+            10.5911
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e1-night-shift",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e1-night-shift",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-3",
+        "x": 7.5,
+        "z": 6.5,
+        "remaining": 30,
+        "distance": 10.3012
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 68,
+        "harvest": 66,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 64,
+        "harvest": 64
+      },
+      "leftTargetTick": {
+        "dispatch": 70,
+        "harvest": 96,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0248,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 64,
+          "leftTick": 70,
+          "pansOnTarget": [
+            {
+              "tick": 68,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            7.5,
+            6.5
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 64,
+          "leftTick": 96,
+          "pansOnTarget": [
+            {
+              "tick": 66,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            7.5,
+            6.5
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9671,
+            10.5897
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e1-twin-banks",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e1-twin-banks",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": -13.07
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 18,
+        "z": -7,
+        "remaining": 30,
+        "distance": 20.7095
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 133,
+        "harvest": 131,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 129,
+        "harvest": 129
+      },
+      "leftTargetTick": {
+        "dispatch": 135,
+        "harvest": 161,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0117,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 129,
+          "leftTick": 135,
+          "pansOnTarget": [
+            {
+              "tick": 133,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            18,
+            -7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9634,
+            -13.4089
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 129,
+          "leftTick": 161,
+          "pansOnTarget": [
+            {
+              "tick": 131,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            18,
+            -7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9743,
+            -13.4131
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            -13.4156
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e1-baron",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e1-baron",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 18,
+        "z": -7,
+        "remaining": 30,
+        "distance": 26.7119
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 170,
+        "harvest": 168,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 166,
+        "harvest": 166
+      },
+      "leftTargetTick": {
+        "dispatch": 172,
+        "harvest": 198,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.037,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 166,
+          "leftTick": 172,
+          "pansOnTarget": [
+            {
+              "tick": 170,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            18,
+            -7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9743,
+            10.5869
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 166,
+          "leftTick": 198,
+          "pansOnTarget": [
+            {
+              "tick": 168,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            18,
+            -7
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -2.009,
+            10.574
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e10-ember-shore",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e10-ember-shore",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": 1.2,
+        "z": -11.07
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": -20,
+        "z": -34,
+        "remaining": 30,
+        "distance": 31.2286
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 199,
+        "harvest": 197,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 195,
+        "harvest": 195
+      },
+      "leftTargetTick": {
+        "dispatch": 201,
+        "harvest": 227,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0037,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 195,
+          "leftTick": 201,
+          "pansOnTarget": [
+            {
+              "tick": 199,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -20,
+            -34
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            1.0257,
+            -11.4131
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 195,
+          "leftTick": 227,
+          "pansOnTarget": [
+            {
+              "tick": 197,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -20,
+            -34
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            1.0222,
+            -11.4144
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            1.0189,
+            -11.4156
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e10-archive-world",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e10-archive-world",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": -52.9772
+      },
+      "target": {
+        "id": "gold-seam-3",
+        "x": -18,
+        "z": -42,
+        "remaining": 30,
+        "distance": 19.5688
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 126,
+        "harvest": 124,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 122,
+        "harvest": 122
+      },
+      "leftTargetTick": {
+        "dispatch": 128,
+        "harvest": 154,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0287,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 122,
+          "leftTick": 128,
+          "pansOnTarget": [
+            {
+              "tick": 126,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -18,
+            -42
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9634,
+            -32.9089
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 122,
+          "leftTick": 154,
+          "pansOnTarget": [
+            {
+              "tick": 124,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -18,
+            -42
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            -32.919
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9634,
+            -32.9089
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e10-last-claim",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e10-last-claim",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -11.8,
+        "z": 48.8372
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 12,
+        "z": -12,
+        "remaining": 30,
+        "distance": 65.3269
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 412,
+        "harvest": 410,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 408,
+        "harvest": 408
+      },
+      "leftTargetTick": {
+        "dispatch": 414,
+        "harvest": 440,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 2.4115,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 408,
+          "leftTick": 414,
+          "pansOnTarget": [
+            {
+              "tick": 412,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            12,
+            -12
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -10.3246,
+            27.3968
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 408,
+          "leftTick": 440,
+          "pansOnTarget": [
+            {
+              "tick": 410,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            12,
+            -12
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -9.1041,
+            25.317
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -11.9811,
+            30.0844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e10-river",
+      "agentCanEnter": false,
+      "activeSeams": 0,
+      "verdict": "no-target",
+      "note": "no active seam in the view at the command tick"
+    },
+    {
+      "contract": "e2-hill-mine",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e2-hill-mine",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": -10,
+        "z": 29,
+        "remaining": 30,
+        "distance": 19.8435
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 128,
+        "harvest": 126,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 124,
+        "harvest": 124
+      },
+      "leftTargetTick": {
+        "dispatch": 130,
+        "harvest": 156,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0523,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 124,
+          "leftTick": 130,
+          "pansOnTarget": [
+            {
+              "tick": 128,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -10,
+            29
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9671,
+            10.5897
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 124,
+          "leftTick": 156,
+          "pansOnTarget": [
+            {
+              "tick": 126,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -10,
+            29
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -2.0161,
+            10.5714
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e2-trestle",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e2-trestle",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": 10.2,
+        "z": -19.07
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": 24,
+        "z": -20,
+        "remaining": 30,
+        "distance": 13.8313
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 90,
+        "harvest": 88,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 86,
+        "harvest": 86
+      },
+      "leftTargetTick": {
+        "dispatch": 92,
+        "harvest": 118,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0298,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 86,
+          "leftTick": 92,
+          "pansOnTarget": [
+            {
+              "tick": 90,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            24,
+            -20
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            10.0189,
+            -19.4156
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 86,
+          "leftTick": 118,
+          "pansOnTarget": [
+            {
+              "tick": 88,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            24,
+            -20
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            9.991,
+            -19.426
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            10.0189,
+            -19.4156
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e2-pressure-garden",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e2-pressure-garden",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -13.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": -18,
+        "z": 27,
+        "remaining": 30,
+        "distance": 16.6098
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 107,
+        "harvest": 105,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 103,
+        "harvest": 103
+      },
+      "leftTargetTick": {
+        "dispatch": 109,
+        "harvest": 135,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0447,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 103,
+          "leftTick": 109,
+          "pansOnTarget": [
+            {
+              "tick": 107,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -18,
+            27
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -13.9671,
+            10.5897
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 103,
+          "leftTick": 135,
+          "pansOnTarget": [
+            {
+              "tick": 105,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -18,
+            27
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -14.009,
+            10.574
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -13.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e2-incline",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e2-incline",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -25.8,
+        "z": -19.07
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -30,
+        "z": 26,
+        "remaining": 30,
+        "distance": 45.2653
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 286,
+        "harvest": 284,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 282,
+        "harvest": 282
+      },
+      "leftTargetTick": {
+        "dispatch": 288,
+        "harvest": 314,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0307,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 282,
+          "leftTick": 288,
+          "pansOnTarget": [
+            {
+              "tick": 286,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -30,
+            26
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -25.9671,
+            -19.4103
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 282,
+          "leftTick": 314,
+          "pansOnTarget": [
+            {
+              "tick": 284,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -30,
+            26
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -25.9958,
+            -19.4211
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -25.9811,
+            -19.4156
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e3-blackout-ridge",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e3-blackout-ridge",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": 22.2,
+        "z": 28.93
+      },
+      "target": {
+        "id": "gold-seam-3",
+        "x": 18,
+        "z": 34,
+        "remaining": 30,
+        "distance": 6.5837
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 45,
+        "harvest": 43,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 41,
+        "harvest": 41
+      },
+      "leftTargetTick": {
+        "dispatch": 47,
+        "harvest": 73,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0275,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 41,
+          "leftTick": 47,
+          "pansOnTarget": [
+            {
+              "tick": 45,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            18,
+            34
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            21.9839,
+            28.5714
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 41,
+          "leftTick": 73,
+          "pansOnTarget": [
+            {
+              "tick": 43,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            18,
+            34
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            22.0097,
+            28.581
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            22.0189,
+            28.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e3-moth-season",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e3-moth-season",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-3",
+        "x": 7.5,
+        "z": 6.5,
+        "remaining": 30,
+        "distance": 10.3012
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 68,
+        "harvest": 66,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 64,
+        "harvest": 64
+      },
+      "leftTargetTick": {
+        "dispatch": 70,
+        "harvest": 96,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0248,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 64,
+          "leftTick": 70,
+          "pansOnTarget": [
+            {
+              "tick": 68,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            7.5,
+            6.5
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 64,
+          "leftTick": 96,
+          "pansOnTarget": [
+            {
+              "tick": 66,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            7.5,
+            6.5
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9671,
+            10.5897
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e3-canyon-works",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e3-canyon-works",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": -44.9772
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": -22,
+        "z": 34,
+        "remaining": 30,
+        "distance": 81.5196
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 513,
+        "harvest": 511,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 509,
+        "harvest": 509
+      },
+      "leftTargetTick": {
+        "dispatch": 515,
+        "harvest": 541,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 2.4128,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 509,
+          "leftTick": 515,
+          "pansOnTarget": [
+            {
+              "tick": 513,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -22,
+            34
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -11.5982,
+            -0.3741
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 509,
+          "leftTick": 541,
+          "pansOnTarget": [
+            {
+              "tick": 511,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -22,
+            34
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -12.2989,
+            1.9347
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9903,
+            -32.919
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e3-fairground",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e3-fairground",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": -31.07
+      },
+      "target": {
+        "id": "gold-seam-3",
+        "x": 10,
+        "z": -16,
+        "remaining": 30,
+        "distance": 19.1401
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 123,
+        "harvest": 121,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 119,
+        "harvest": 119
+      },
+      "leftTargetTick": {
+        "dispatch": 125,
+        "harvest": 151,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0171,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 119,
+          "leftTick": 125,
+          "pansOnTarget": [
+            {
+              "tick": 123,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            10,
+            -16
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            -31.419
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 119,
+          "leftTick": 151,
+          "pansOnTarget": [
+            {
+              "tick": 121,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            10,
+            -16
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9743,
+            -31.4131
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            -31.4156
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e4-dust-flats",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e4-dust-flats",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 6.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": -44,
+        "z": -56,
+        "remaining": 30,
+        "distance": 75.7696
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 477,
+        "harvest": 475,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 473,
+        "harvest": 473
+      },
+      "leftTargetTick": {
+        "dispatch": 479,
+        "harvest": 505,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 2.4128,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 473,
+          "leftTick": 479,
+          "pansOnTarget": [
+            {
+              "tick": 477,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -44,
+            -56
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -22.0872,
+            -23.4312
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 473,
+          "leftTick": 505,
+          "pansOnTarget": [
+            {
+              "tick": 475,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -44,
+            -56
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -23.435,
+            -25.4324
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            6.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e4-long-road",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e4-long-road",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -181.8,
+        "z": -1.07
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 6,
+        "z": 16,
+        "remaining": 30,
+        "distance": 188.5742
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 1479,
+      "firstPanTick": {
+        "dispatch": 1182,
+        "harvest": 1180,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 1178,
+        "harvest": 1178
+      },
+      "leftTargetTick": {
+        "dispatch": 1184,
+        "harvest": 1210,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 2.4129,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 1479,
+          "terminal": false,
+          "arrivedTick": 1178,
+          "leftTick": 1184,
+          "pansOnTarget": [
+            {
+              "tick": 1182,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            6,
+            16
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -21.446,
+            13.4781
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 1479,
+          "terminal": false,
+          "arrivedTick": 1178,
+          "leftTick": 1210,
+          "pansOnTarget": [
+            {
+              "tick": 1180,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            6,
+            16
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -19.0433,
+            13.6993
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 1479,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -181.676,
+            -1.0842
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e4-gusher-county",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e4-gusher-county",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": -5.07
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 18.4,
+        "z": 43.8,
+        "remaining": 30,
+        "distance": 52.8802
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 334,
+        "harvest": 332,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 330,
+        "harvest": 330
+      },
+      "leftTargetTick": {
+        "dispatch": 336,
+        "harvest": 362,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 2.4113,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 330,
+          "leftTick": 336,
+          "pansOnTarget": [
+            {
+              "tick": 334,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            18.4,
+            43.8
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.6846,
+            -4.729
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 330,
+          "leftTick": 362,
+          "pansOnTarget": [
+            {
+              "tick": 332,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            18.4,
+            43.8
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -0.7196,
+            -2.5192
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            -5.4156
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e4-boneyard",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e4-boneyard",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": -44.9772
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": -22.4,
+        "z": 13.8,
+        "remaining": 30,
+        "distance": 62.2826
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 393,
+        "harvest": 391,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 389,
+        "harvest": 389
+      },
+      "leftTargetTick": {
+        "dispatch": 395,
+        "harvest": 421,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 2.4117,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 389,
+          "leftTick": 395,
+          "pansOnTarget": [
+            {
+              "tick": 393,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -22.4,
+            13.8
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -3.4476,
+            -29.26
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 389,
+          "leftTick": 421,
+          "pansOnTarget": [
+            {
+              "tick": 391,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -22.4,
+            13.8
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -4.3929,
+            -27.0413
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9903,
+            -32.919
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e5-deepwater-claim",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e5-deepwater-claim",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 28.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 0,
+        "z": -22,
+        "remaining": 30,
+        "distance": 50.9618
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 322,
+        "harvest": 320,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 318,
+        "harvest": 318
+      },
+      "leftTargetTick": {
+        "dispatch": 324,
+        "harvest": 350,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0629,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 318,
+          "leftTick": 324,
+          "pansOnTarget": [
+            {
+              "tick": 322,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            -22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9811,
+            28.5844
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 318,
+          "leftTick": 350,
+          "pansOnTarget": [
+            {
+              "tick": 320,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            -22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9997,
+            28.5243
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            28.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e5-regatta",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e5-regatta",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -50.8,
+        "z": -1.07
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -52,
+        "z": 4,
+        "remaining": 30,
+        "distance": 5.2101
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 36,
+        "harvest": 34,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 32,
+        "harvest": 32
+      },
+      "leftTargetTick": {
+        "dispatch": 38,
+        "harvest": 64,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0117,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 32,
+          "leftTick": 38,
+          "pansOnTarget": [
+            {
+              "tick": 36,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -52,
+            4
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -50.9634,
+            -1.4089
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 32,
+          "leftTick": 64,
+          "pansOnTarget": [
+            {
+              "tick": 34,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -52,
+            4
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -50.9743,
+            -1.4131
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -50.9811,
+            -1.4156
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e5-stillwater",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e5-stillwater",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 28.93
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": 0,
+        "z": -22,
+        "remaining": 30,
+        "distance": 50.9618
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 322,
+        "harvest": 320,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 318,
+        "harvest": 318
+      },
+      "leftTargetTick": {
+        "dispatch": 324,
+        "harvest": 350,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0629,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 318,
+          "leftTick": 324,
+          "pansOnTarget": [
+            {
+              "tick": 322,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            -22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9811,
+            28.5844
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 318,
+          "leftTick": 350,
+          "pansOnTarget": [
+            {
+              "tick": 320,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            -22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9997,
+            28.5243
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            28.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e5-flotilla",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e5-flotilla",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 0,
+        "z": 20,
+        "remaining": 30,
+        "distance": 9.2469
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 61,
+        "harvest": 59,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 57,
+        "harvest": 57
+      },
+      "leftTargetTick": {
+        "dispatch": 63,
+        "harvest": 89,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0275,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 57,
+          "leftTick": 63,
+          "pansOnTarget": [
+            {
+              "tick": 61,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            20
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 57,
+          "leftTick": 89,
+          "pansOnTarget": [
+            {
+              "tick": 59,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            20
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -2.0161,
+            10.5714
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e6-glow-mesa",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e6-glow-mesa",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.7989,
+        "z": -32.9772
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -24,
+        "z": 18,
+        "remaining": 30,
+        "distance": 55.6018
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 351,
+        "harvest": 349,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 347,
+        "harvest": 347
+      },
+      "leftTargetTick": {
+        "dispatch": 353,
+        "harvest": 379,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 2.4119,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 347,
+          "leftTick": 353,
+          "pansOnTarget": [
+            {
+              "tick": 351,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 1,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 9,
+          "prospectorAtFirstPan": [
+            -24,
+            18
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -3.6599,
+            -28.7077
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 347,
+          "leftTick": 379,
+          "pansOnTarget": [
+            {
+              "tick": 349,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 1,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 9,
+          "prospectorAtFirstPan": [
+            -24,
+            18
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -4.6011,
+            -26.487
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9903,
+            -32.919
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e6-showroom",
+      "agentCanEnter": false,
+      "seed": "same-game-seam-e6-showroom",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 0,
+        "z": 46,
+        "remaining": 30,
+        "distance": 35.1162
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 223,
+        "harvest": 221,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 219,
+        "harvest": 219
+      },
+      "leftTargetTick": {
+        "dispatch": 225,
+        "harvest": 251,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0229,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 219,
+          "leftTick": 225,
+          "pansOnTarget": [
+            {
+              "tick": 223,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            46
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9958,
+            10.5789
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 219,
+          "leftTick": 251,
+          "pansOnTarget": [
+            {
+              "tick": 221,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            46
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9743,
+            10.5869
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e6-half-life-hollow",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e6-half-life-hollow",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 25,
+        "z": 18,
+        "remaining": 30,
+        "distance": 27.7169
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 177,
+        "harvest": 175,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 173,
+        "harvest": 173
+      },
+      "leftTargetTick": {
+        "dispatch": 179,
+        "harvest": 205,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0072,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 173,
+          "leftTick": 179,
+          "pansOnTarget": [
+            {
+              "tick": 177,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            25,
+            18
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9743,
+            10.5869
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 173,
+          "leftTick": 205,
+          "pansOnTarget": [
+            {
+              "tick": 175,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            25,
+            18
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e6-picnic",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e6-picnic",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-3",
+        "x": 0,
+        "z": 8,
+        "remaining": 30,
+        "distance": 3.4387
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 25,
+        "harvest": 23,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 21,
+        "harvest": 21
+      },
+      "leftTargetTick": {
+        "dispatch": 27,
+        "harvest": 53,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0098,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 21,
+          "leftTick": 27,
+          "pansOnTarget": [
+            {
+              "tick": 25,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            8
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 21,
+          "leftTick": 53,
+          "pansOnTarget": [
+            {
+              "tick": 23,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            8
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e7-relay-valley",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e7-relay-valley",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -12,
+        "z": 18,
+        "remaining": 30,
+        "distance": 12.4107
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 81,
+        "harvest": 79,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 77,
+        "harvest": 77
+      },
+      "leftTargetTick": {
+        "dispatch": 83,
+        "harvest": 109,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.02,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 77,
+          "leftTick": 83,
+          "pansOnTarget": [
+            {
+              "tick": 81,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -12,
+            18
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 77,
+          "leftTick": 109,
+          "pansOnTarget": [
+            {
+              "tick": 79,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -12,
+            18
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -2.009,
+            10.574
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e7-echo-canyon",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e7-echo-canyon",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-3",
+        "x": -14,
+        "z": -6,
+        "remaining": 30,
+        "distance": 20.8678
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 134,
+        "harvest": 132,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 130,
+        "harvest": 130
+      },
+      "leftTargetTick": {
+        "dispatch": 136,
+        "harvest": 162,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0098,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 130,
+          "leftTick": 136,
+          "pansOnTarget": [
+            {
+              "tick": 134,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -14,
+            -6
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 130,
+          "leftTick": 162,
+          "pansOnTarget": [
+            {
+              "tick": 132,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -14,
+            -6
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e7-dead-band",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e7-dead-band",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -34,
+        "z": 37,
+        "remaining": 30,
+        "distance": 41.4305
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 262,
+        "harvest": 260,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 258,
+        "harvest": 258
+      },
+      "leftTargetTick": {
+        "dispatch": 264,
+        "harvest": 290,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0154,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 258,
+          "leftTick": 264,
+          "pansOnTarget": [
+            {
+              "tick": 262,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -34,
+            37
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9634,
+            10.5911
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 258,
+          "leftTick": 290,
+          "pansOnTarget": [
+            {
+              "tick": 260,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -34,
+            37
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9778,
+            10.5856
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e7-relay-rush",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e7-relay-rush",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -26.7999,
+        "z": 39.8372
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -25,
+        "z": 32,
+        "remaining": 30,
+        "distance": 8.0412
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 54,
+        "harvest": 52,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 50,
+        "harvest": 50
+      },
+      "leftTargetTick": {
+        "dispatch": 56,
+        "harvest": 82,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0523,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 50,
+          "leftTick": 56,
+          "pansOnTarget": [
+            {
+              "tick": 54,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -25,
+            32
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -26.9671,
+            30.0897
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 50,
+          "leftTick": 82,
+          "pansOnTarget": [
+            {
+              "tick": 52,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -25,
+            32
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -27.0161,
+            30.0714
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -26.9903,
+            30.081
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e8-mare-claim",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e8-mare-claim",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": -22,
+        "z": 26,
+        "remaining": 30,
+        "distance": 25.2021
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 161,
+        "harvest": 159,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 157,
+        "harvest": 157
+      },
+      "leftTargetTick": {
+        "dispatch": 163,
+        "harvest": 189,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0487,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 157,
+          "leftTick": 163,
+          "pansOnTarget": [
+            {
+              "tick": 161,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -22,
+            26
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -2.009,
+            10.574
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 157,
+          "leftTick": 189,
+          "pansOnTarget": [
+            {
+              "tick": 159,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -22,
+            26
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9634,
+            10.5911
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e8-far-side",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e8-far-side",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.7999,
+        "z": -36.9772
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": -9,
+        "z": -22,
+        "remaining": 30,
+        "distance": 16.618
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 107,
+        "harvest": 105,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 103,
+        "harvest": 103
+      },
+      "leftTargetTick": {
+        "dispatch": 109,
+        "harvest": 135,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0287,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 103,
+          "leftTick": 109,
+          "pansOnTarget": [
+            {
+              "tick": 107,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -9,
+            -22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9634,
+            -32.9089
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 103,
+          "leftTick": 135,
+          "pansOnTarget": [
+            {
+              "tick": 105,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -9,
+            -22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            -32.919
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9671,
+            -32.9103
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e8-low-orbit",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e8-low-orbit",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -12,
+        "z": 4,
+        "remaining": 30,
+        "distance": 12.3315
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 81,
+        "harvest": 79,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 77,
+        "harvest": 77
+      },
+      "leftTargetTick": {
+        "dispatch": 83,
+        "harvest": 109,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 77,
+          "leftTick": 83,
+          "pansOnTarget": [
+            {
+              "tick": 81,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -12,
+            4
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 77,
+          "leftTick": 109,
+          "pansOnTarget": [
+            {
+              "tick": 79,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -12,
+            4
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e8-eclipse",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e8-eclipse",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-2",
+        "x": 16,
+        "z": 22,
+        "remaining": 30,
+        "distance": 20.9615
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 135,
+        "harvest": 133,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 131,
+        "harvest": 131
+      },
+      "leftTargetTick": {
+        "dispatch": 137,
+        "harvest": 163,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 131,
+          "leftTick": 137,
+          "pansOnTarget": [
+            {
+              "tick": 135,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            16,
+            22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 131,
+          "leftTick": 163,
+          "pansOnTarget": [
+            {
+              "tick": 133,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            16,
+            22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e9-dome-basin",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e9-dome-basin",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": 28,
+        "z": -22,
+        "remaining": 30,
+        "distance": 44.412
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 281,
+        "harvest": 279,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 277,
+        "harvest": 277
+      },
+      "leftTargetTick": {
+        "dispatch": 283,
+        "harvest": 309,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 277,
+          "leftTick": 283,
+          "pansOnTarget": [
+            {
+              "tick": 281,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            28,
+            -22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 277,
+          "leftTick": 309,
+          "pansOnTarget": [
+            {
+              "tick": 279,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            28,
+            -22
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e9-seed-run",
+      "agentCanEnter": false,
+      "seed": "same-game-seam-e9-seed-run",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": 0,
+        "z": 9,
+        "remaining": 30,
+        "distance": 2.6391
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 20,
+        "harvest": 18,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 16,
+        "harvest": 16
+      },
+      "leftTargetTick": {
+        "dispatch": 22,
+        "harvest": 48,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.015,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 16,
+          "leftTick": 22,
+          "pansOnTarget": [
+            {
+              "tick": 20,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            9
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 16,
+          "leftTick": 48,
+          "pansOnTarget": [
+            {
+              "tick": 18,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            0,
+            9
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9671,
+            10.5897
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e9-devils-alley",
+      "agentCanEnter": true,
+      "seed": "same-game-seam-e9-devils-alley",
+      "activeSeams": 3,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-3",
+        "x": -14,
+        "z": 12,
+        "remaining": 30,
+        "distance": 12.2468
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 80,
+        "harvest": 78,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 76,
+        "harvest": 76
+      },
+      "leftTargetTick": {
+        "dispatch": 82,
+        "harvest": 108,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0275,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 76,
+          "leftTick": 82,
+          "pansOnTarget": [
+            {
+              "tick": 80,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -14,
+            12
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -2.0161,
+            10.5714
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 76,
+          "leftTick": 108,
+          "pansOnTarget": [
+            {
+              "tick": 78,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -14,
+            12
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    },
+    {
+      "contract": "e9-old-canal",
+      "agentCanEnter": false,
+      "seed": "same-game-seam-e9-old-canal",
+      "activeSeams": 2,
+      "prospectorStart": {
+        "x": -1.8,
+        "z": 10.93
+      },
+      "target": {
+        "id": "gold-seam-1",
+        "x": -12,
+        "z": 20,
+        "remaining": 30,
+        "distance": 13.6494
+      },
+      "verdict": "pairs",
+      "checks": {
+        "bothAccepted": true,
+        "commandCausedAPan": true,
+        "samePansOnTarget": true,
+        "sameGoldPanned": true,
+        "sameRemainingAfter": true,
+        "samePansElsewhere": true,
+        "sameGoldAtEnd": true,
+        "samePathAndArrivalTick": true,
+        "bothPannedAtTheSeam": true,
+        "deterministic": true
+      },
+      "windowTicks": 900,
+      "firstPanTick": {
+        "dispatch": 89,
+        "harvest": 87,
+        "dispatchMinusHarvest": 2
+      },
+      "arrivedTick": {
+        "dispatch": 85,
+        "harvest": 85
+      },
+      "leftTargetTick": {
+        "dispatch": 91,
+        "harvest": 117,
+        "harvestMinusDispatch": 26
+      },
+      "endGap": 0.0275,
+      "arms": {
+        "dispatch": {
+          "command": "dispatch",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 85,
+          "leftTick": 91,
+          "pansOnTarget": [
+            {
+              "tick": 89,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -12,
+            20
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -1.9903,
+            10.581
+          ],
+          "dispatchQueueLeft": 0,
+          "order": null
+        },
+        "harvest": {
+          "command": "harvest",
+          "accepted": true,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": 85,
+          "leftTick": 117,
+          "pansOnTarget": [
+            {
+              "tick": 87,
+              "amount": 5
+            }
+          ],
+          "goldPannedOnTarget": 5,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 25,
+          "goldAtEnd": 5,
+          "prospectorAtFirstPan": [
+            -12,
+            20
+          ],
+          "distanceAtFirstPan": 0,
+          "prospectorAtEnd": [
+            -2.0161,
+            10.5714
+          ],
+          "dispatchQueueLeft": null,
+          "order": [
+            {
+              "status": "done"
+            }
+          ]
+        },
+        "control": {
+          "command": "none",
+          "accepted": null,
+          "ticks": 900,
+          "terminal": false,
+          "arrivedTick": null,
+          "leftTick": null,
+          "pansOnTarget": [],
+          "goldPannedOnTarget": 0,
+          "pansElsewhere": 0,
+          "remainingBefore": 30,
+          "remainingAfter": 30,
+          "goldAtEnd": 0,
+          "prospectorAtFirstPan": null,
+          "distanceAtFirstPan": null,
+          "prospectorAtEnd": [
+            -1.9811,
+            10.5844
+          ],
+          "dispatchQueueLeft": null,
+          "order": null
+        }
+      }
+    }
+  ]
+}

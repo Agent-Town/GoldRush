@@ -208,6 +208,18 @@ const tapeSurface = {
 };
 const tapeDoorVerb = {
   weapon_toggle: 'SET_WEAPON',
+  // F-DTG2-1 (same-game-audit-verbs-1): the player's dispatch of the Prospector to a seam or a sluice
+  // (ProspectorDispatchInput -> Game.dispatchProspector -> the tape's `prospector_dispatch`) pairs with the rider's
+  // HARVEST {seam | sluice}. MEASURED WITH THE SIM, not inferred from the target shapes:
+  // artifacts/same-game-audit-verbs-1/dispatch-pairing.mjs lifts Game.ts's OWN beginProspectorDispatch,
+  // advanceProspectorDispatch and prospectorDispatchPoint (this file's `browserPredicate` technique) and runs them in
+  // HeadlessContractSim beside a HARVEST sent through the public door, per contract, same contract and same seed
+  // (`same-game-seam-<id>`). On all 38 door-admitted contracts both walk the same path, arrive on the same tick, pan
+  // the same seam once for the same gold and leave the same remaining and the same economy; the sluice arm and the
+  // three door-refused boards that have seams pair too (e10-river has none). Cadence differs and is not reach: the
+  // dispatch pans 2 ticks later (its fixed 4-tick settle, F-SLHP-1) and leaves the seam 26 ticks sooner (HARVEST's
+  // receipt holds the Prospector for Balance.agent.workSeconds). The four door-refused boards stay agent-lacks.
+  prospector_dispatch: 'HARVEST',
 };
 // The first three citations were typed as literal `src/game/Game.ts:NNNN` strings in `08fba1d64` (2026-08-12), the only
 // unresolved citations in this file, and they rotted: read on 2026-09-26, `:2886` is a megaproject clear, `:2902` a
@@ -843,9 +855,10 @@ function markdown(result) {
   const independentMenuGaps = divergentMenuRows.filter((entry) => reachabilityByContract.get(entry.contract) === 'equal');
   const reachabilityDerivedMenuGaps = divergentMenuRows.filter((entry) => reachabilityByContract.get(entry.contract) === 'agent-lacks');
   const reachabilityDerivedRefusals = new Set(reachabilityDerivedMenuGaps.map((entry) => entry.contract)).size;
+  // The door verb through the same `tapeDoorVerb` pairing the rows use, so a paired action is not listed as verbless.
   const newlyEnumeratedTapeActions = tapeActions.filter((action) =>
     !['weapon_toggle', 'research_pick', 'research_skip', 'death_action', 'secure_choice'].includes(action)
-      && !doorVerbs.includes(action.toUpperCase()));
+      && !doorVerbs.includes(tapeDoorVerb[action] ?? action.toUpperCase()));
   const reachability = reachabilityRows.reduce((counts, entry) =>
     ({ ...counts, [entry.direction]: (counts[entry.direction] ?? 0) + 1 }), {});
   const admitted = result.admission.measurements.filter((entry) =>
