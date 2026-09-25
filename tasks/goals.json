@@ -6425,6 +6425,26 @@
               "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg2, P0, directly after grammar-1)"
             },
             {
+              "id": "door-tape-grammar-3",
+              "title": "The three places where the county door is looser than the client (whitespace-only place_build and pick_upgrade ids, an unknown set_agent_ability) are tightened to the client grammar, so a stored reel can always be loaded (F-DTG2-2)",
+              "status": "queued",
+              "taskFile": "door-tape-grammar-3.md",
+              "lane": "scratch worktree /Users/robin/Claude/Projects/wt-dtg3, branch fix/door-tape-grammar-3, Opus 5.5 implementer at max effort; functions and ledger gates; deploy",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) from F-DTG2-2, 2026-09-25",
+              "queuedAt": "2026-09-25"
+            },
+            {
+              "id": "same-game-audit-verbs-1",
+              "title": "The same-game audit exempts agent_orders (the rider own channel) and measures the prospector_dispatch pairing before re-pinning its summary (F-DTG2-1)",
+              "status": "queued",
+              "taskFile": "same-game-audit-verbs-1.md",
+              "lane": "scratch worktree /Users/robin/Claude/Projects/wt-sga1, branch fix/same-game-audit-verbs-1, Opus 5.5 implementer at max effort; tests and a bench doc; no deploy",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) from F-DTG2-1, 2026-09-25",
+              "queuedAt": "2026-09-25"
+            },
+            {
               "id": "worktree-vite-cache-1",
               "title": "Every checkout gets its own vite dependency cache (cacheDir inside the checkout, gitignored) so sibling worktrees stop re-optimising each other mid-boot and the dependency scan stops failing in worktrees (F-TT2-2; canyon-works-traversal-1 boot failure)",
               "status": "queued",
