@@ -3,7 +3,7 @@ import rotationSeeds from '../../assets/rotations/rotation-seeds.json' with { ty
 import engineEra from '../../assets/engine-era.json' with { type: 'json' };
 import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
-import { validateMotorActions } from '../../src/game/RunTape';
+import { validateRunTape } from '../../src/game/RunTape';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
 import { CONTRACT_BUNDLES, runTapeEnvelopeForContract, validatePlaybook, type RunTapeEnvelope } from '../../src/playbook/PlaybookFormat';
 import { engineEraIncludes } from '../../src/replay/EngineEraLineage.mjs';
@@ -1643,12 +1643,31 @@ function validTapeInput(value: unknown, contractId: unknown, seed: unknown, diff
     if (!validTapeEntries(stream.entries, duration, envelope.maxEntries, stored)) return false;
     slots.add(slot);
   }
-  // F-LSR1-0: the browser recorder's two OPTIONAL input-log keys. Motor actions are judged by the client's
-  // own `validateMotorActions` (RunTape.ts) and, like every entry here, start no earlier than tick 0.
-  const motorActions = validateMotorActions(value, duration, envelope.maxEntries);
-  if (motorActions === null || motorActions?.some((action) => action.t < 0)
+  // F-LSR1-0: the browser recorder's two OPTIONAL input-log keys, each judged by the client's own validators.
+  if (!validTapeMotorActions(value.motorActions, duration, contractId, seed, difficulty)
     || !validTapePlaybookUses(value.playbookUses, duration, envelope, contractId, seed, difficulty)) return false;
   return true;
+}
+
+// F-LSR1-0 (door-tape-grammar-1, 2026-09-25): since 5823eaad6 (2026-09-04) the recorder writes `motorActions`
+// once a motor was driven. The client judges them in `validateMotorActions`, which is private to RunTape.ts,
+// and every byte of `src/` is engine identity (`ENGINE_SOURCE_INPUTS`, scripts/assay-replay-agent.mjs), so
+// exporting it would move the engine hash and need an era pin. The door reaches that same validator through
+// the exported `validateRunTape`, over a minimal tape that carries nothing else, and adds one bound of its
+// own: like every entry here, a motor action starts no earlier than tick 0. Absent is lawful.
+function validTapeMotorActions(value: unknown, duration: number, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): boolean {
+  if (value === undefined) return true;
+  if (typeof contractId !== 'string' || typeof seed !== 'string' || difficulty === null) return false;
+  const judged = validateRunTape({
+    version: 1, id: 'motor-actions', createdAt: 0, kept: false, contract: contractId, seed, difficulty, simVersion: 1,
+    inputLog: {
+      version: 1, name: 'motor-actions', contractId, seed, difficultyPreset: difficulty, stepSeconds: 1 / 30,
+      start: { x: 0, z: 0 }, durationTicks: duration, entries: [], truncated: null, primarySlot: 0, streams: [], motorActions: value,
+    },
+    eventLogHash: 'fnv1a32:00000000',
+    outcome: { reason: 'death', secured: false, waves: 0, timeAlive: 0, gold: 0 },
+  });
+  return judged !== null && (judged.inputLog.motorActions ?? []).every((action) => action.t >= 0);
 }
 
 // F-LSR1-0 (door-tape-grammar-1, 2026-09-25): since 15dc51b89 (2026-09-05) the browser recorder writes
