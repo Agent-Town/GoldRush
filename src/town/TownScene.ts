@@ -2513,7 +2513,7 @@ export class TownScene {
             ? `<dl class="town-ui__ride-agent" data-testid="ride-contract">
                 <div><dt>Contract</dt><dd>${escapeHtml(this.rideSetup.contractId)}</dd></div>
                 <div><dt>Difficulty</dt><dd>${escapeHtml(this.rideSetup.difficultyPreset)}</dd></div>
-                <div><dt>Seed</dt><dd><small>${escapeHtml(liveSeedLabel(this.rideSetup.seed) ?? this.rideSetup.seed)}</small></dd></div>
+                <div><dt>Seed</dt><dd><small>${escapeHtml(liveSeedLabel(this.rideSetup.seed) ? `${liveSeedLabel(this.rideSetup.seed)} (${this.rideSetup.seed})` : this.rideSetup.seed)}</small></dd></div>
               </dl>`
             : ''
         }
