@@ -6201,13 +6201,14 @@
             {
               "id": "hm-06-twin-banks-braid-water",
               "title": "Owner ruling 2026-09-24 F-TB-1 (b): the braid's water surface follows the mask that already rules the simulation; the two band tests re-pinned to the braid (HM-06, Astra lane-c)",
-              "status": "blocked",
-              "blockClass": "gate-side",
-              "blockedReason": "queued into lane-c by the attended session after the held-maps spec slice HM-06 is written (this master is its slice) and the lane is free; lifted at queue time",
+              "status": "queued",
               "taskFile": "hm-06-twin-banks-braid-water.md",
               "lane": "lane-c (Astra, the ChatGPT subscription; store branch astra/hm-06-braid)",
               "authoredAt": "2026-09-24",
-              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24"
+              "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24",
+              "liftedFrom": "gate-side: queued into lane-c by the attended session after the held-maps spec slice HM-06 is written (this master is its slice) and the lane is free; lifted at queue time",
+              "queuedAt": "2026-09-25",
+              "owner": "owner 2026-09-25, verbatim: \"twin banks\""
             },
             {
               "id": "kv-counters-to-ledger-1",

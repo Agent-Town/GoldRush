@@ -1,4 +1,5 @@
 # Task hm-06-twin-banks-braid-water: the braid's water surface follows the mask that already rules the simulation, and the two band tests are re-pinned to the braid (LANE-C, Astra, commit prefix "feat:"; a store branch `astra/hm-06-braid` for the terrain and landmark sources if the sculpt needs a cut)
+CODEX: model=gpt-6-astra
 
 ⛔ GATE-SIDE HOLD until the attended session queues it (owner ruling 2026-09-24, F-TB-1 "(5) (b)": ratify the braid and land its water surface). Lane-c, the ChatGPT subscription, one run.
 
