@@ -1570,11 +1570,14 @@ function validateParty(value: unknown, stored = false): SubmittedParty | null {
   return { riderCount, riders };
 }
 
-// `stored` is true when the county re-reads a row it already accepted: the tape's SHAPE is still
-// required, but its order grammar is judged by `tapeGrammarRefusal` (a retired verb makes the row
-// RETIRED and COUNTED, never silently dropped). At the door (`stored` false) the grammar is strict.
-// ADR-005 stage 3 (2026-09-07): the first read after the grammar deploy emptied 25 boards with a
-// retiredCount of zero because every retired-verb tape simply stopped validating (F-RPG-21).
+// `stored` is true when the county re-reads a row it already accepted. At the door (`stored` false) the
+// grammar is strict: every field must have the door's own shape, and every action whose verb is in
+// `CLIENT_JUDGED_ACTIONS` must also be one the client's own normalizer keeps. At read the SHAPE is still
+// required, but two judgments move to `tapeGrammarRefusal`: the standing orders' verbs (ADR-005) and the
+// client-judged actions (ADR-004 rule 2: a reel the client cannot load cannot replay). Either makes the row
+// RETIRED and COUNTED, never silently dropped. ADR-005 stage 3 (2026-09-07): the first read after the grammar
+// deploy emptied 25 boards with a retiredCount of zero because every retired-verb tape simply stopped
+// validating (F-RPG-21).
 export function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null, stored = false): JsonRecord | null {
   if (!isRecord(value) || new TextEncoder().encode(JSON.stringify(value)).length > runTapeEnvelopeForContract(String(contractId)).maxTapeBytes) return null;
   if (!hasOnlyKeys(value, new Set(['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'meta', 'runStart', 'inputLog', 'eventLogHash', 'outcome']))) return null;
