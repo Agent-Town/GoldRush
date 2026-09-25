@@ -1,0 +1,36 @@
+--- a/scripts/status-line1-future-stamp-scope-guard.test.mjs	2026-09-25 18:28:46
++++ b/scripts/status-line1-future-stamp-scope-guard.test.mjs	2026-09-25 18:28:46
+@@ -53,16 +53,23 @@
+  * failure-to-load could produce, since a copy that cannot load fails every arm alike.
+  */
+ 
+-import { test } from 'node:test';
++import { test, after } from 'node:test';
+ import assert from 'node:assert/strict';
+ import { spawnSync } from 'node:child_process';
+-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync } from 'node:fs';
++import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, rmSync } from 'node:fs';
+ import { tmpdir } from 'node:os';
+ import { join } from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ 
+ const SUBJECT = fileURLToPath(new URL('./status-line1.mjs', import.meta.url));
+ 
++// F-SF1-3 (small-fixes-1, 2026-09-25): the same cure as the sibling's F-EO1-5. Every board() is a
++// mkdtemp directory, six per run, recorded as it is made and removed once every arm has run.
++const BOARDS = [];
++after(() => {
++  for (const dir of BOARDS) rmSync(dir, { recursive: true, force: true });
++});
++
+ // No desk on the displaced line, so the F-2671-2 displacement guard never fires and every
+ // verdict below belongs to the stamp check alone. Its sibling test owns that predicate.
+ const PRIOR = 'Last updated: 2026-09-24T22:22Z s2676 handoff, lock CLEARED — the prior line.';
+@@ -74,6 +81,7 @@
+ 
+ function board({ mutate } = {}) {
+   const dir = mkdtempSync(join(tmpdir(), 's2677-stamp-'));
++  BOARDS.push(dir);
+   mkdirSync(join(dir, 'scripts'));
+   const tool = join(dir, 'scripts', 'status-line1.mjs');
+   copyFileSync(SUBJECT, tool);
