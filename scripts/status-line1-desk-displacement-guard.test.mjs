@@ -60,15 +60,6 @@ import { fileURLToPath } from 'node:url';
 
 const SUBJECT = fileURLToPath(new URL('./status-line1.mjs', import.meta.url));
 
-// F-EO1-5 (reviews/evidence-offload-1.md; small-fixes-1, 2026-09-25): every board() below is a
-// mkdtemp directory, ten per run, and none was ever removed: 250 stale s2673-desk-* directories were
-// on the owner's disk when this landed, and scripts/fixture-teardown.test.mjs named this file for it.
-// Each board is recorded as it is made and removed once every arm has run.
-const BOARDS = [];
-after(() => {
-  for (const dir of BOARDS) rmSync(dir, { recursive: true, force: true });
-});
-
 const DESK_TAIL =
   "🔺 **OWNER'S DESK — 3 awaiting a word.** " +
   '🔺 **F-2642-3** — the account-registry deploy day. ' +
@@ -86,9 +77,16 @@ const BODY = ['', '- **s2671 handoff (line-1 archive):** an older line, kept.', 
  * the subject resolves STATUS.md as `../STATUS.md` from its own location.
  * `mutate` (optional) edits the copied source, which is how the pre-cure control is made.
  */
+// Every fixture this file makes is removed when the file's tests end (F-1335-5: a leaked mkdtemp dir reds
+// scripts/fixture-teardown.test.mjs and, through it, test:node-guards; measured 2026-09-25 by the pp3 drain,
+// F-PP3-5: 328 survivors of this file and its s2677 sibling in the host tmpdir). The literal prefix stays at
+// the mkdtemp call site because the sweep's extractor is a regex over this source.
+const FIXTURES = [];
+after(() => { for (const d of FIXTURES) rmSync(d, { recursive: true, force: true }); });
+
 function board({ line1, extraBullets = [], mutate }) {
   const dir = mkdtempSync(join(tmpdir(), 's2673-desk-'));
-  BOARDS.push(dir);
+  FIXTURES.push(dir);
   mkdirSync(join(dir, 'scripts'));
   const tool = join(dir, 'scripts', 'status-line1.mjs');
   copyFileSync(SUBJECT, tool);
