@@ -512,8 +512,8 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 }
 
 // Motor errands use the ordinary confirm key at surveyed stakes and haul destinations.
-async function motorStop(page: Page, row: Row, x: number, z: number): Promise<boolean> {
-  if (!(await walkTo(page, row, x, z, 0.8, 120))) {
+async function motorStop(page: Page, row: Row, x: number, z: number, tolerance = 0.8): Promise<boolean> {
+  if (!(await walkTo(page, row, x, z, tolerance, 120))) {
     row.notes.push(`motor stop unreachable: ${x},${z}; hero=${JSON.stringify((await read(page))?.hero)}`);
     return false;
   }
@@ -550,6 +550,19 @@ async function motorOpening(page: Page, row: Row): Promise<void> {
     const reached = await walkTo(page, row, node.x, node.z, 0.8, 120);
     if (reached) await page.waitForTimeout(350);
     row.notes.push(`tar ${node.x},${node.z}: reached=${reached}, fuel=${JSON.stringify((await read(page))?.fuel)}`);
+  }
+  if (row.contract === 'e4-boneyard') {
+    // The boiler centre is solid. Its south edge is walkable and within the 2.5-unit hitch reach.
+    if (await motorStop(page, row, -8, -38)) {
+      if (await motorStop(page, row, -34, -4)) {
+        await walkTo(page, row, -24, -14, 0.8);
+        await walkTo(page, row, -18, -14, 0.8);
+        if (await motorStop(page, row, -18, -10, 0.5)) {
+          if (await motorStop(page, row, -34, -4)) await motorStop(page, row, -8, -38);
+        }
+      }
+    }
+    await walkTo(page, row, 0, -44, 1.2, 120);
   }
   if (row.contract === 'e4-gusher-county') {
     // Keep the Hauler on graded spokes, returning through camp rather than cutting between leases.
@@ -738,6 +751,10 @@ export function nativeProof(id: string, run = 1) {
         const fords = crossingsFor(contract);
         const unreachable = new Set<string>();
 
+        if (contract.id === 'e4-boneyard') {
+          await build(page, row, 'turret', 0, -48, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
+          await motorOpening(page, row);
+        }
         if (contract.id === 'e4-gusher-county') await motorOpening(page, row);
         if (contract.id === 'e4-dust-flats') {
           // Establish cover before the long railhead errand; the haul-first attempt died gathering.
