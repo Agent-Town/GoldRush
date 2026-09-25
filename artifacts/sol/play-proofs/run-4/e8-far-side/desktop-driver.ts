@@ -137,10 +137,9 @@ type Snapshot = {
   buildMode: boolean;
   ghostValid: boolean;
   ghostPos: { x: number; z: number };
-  nodes: Array<{ id: string; anchorIndex: number; active: boolean; x: number; z: number; respawnIn: number; respawnScheduled: boolean }>;
+  nodes: Array<{ id: string; active: boolean; x: number; z: number; respawnIn: number; respawnScheduled: boolean }>;
   buildables: Array<{ id: string; cost: number; count: number; maxCount: number; canAfford: boolean }>;
   defences: Array<{ id: string; index: number; hp: number; maxHp: number; wrecked: boolean; repairCost: number; x: number; z: number }>;
-  physics: ThreeGameDiagnostics['e8Physics'];
   air: ThreeGameDiagnostics['e8SuitAir'];
   probe: ThreeGameDiagnostics['probeRecovery'];
   fuel: ThreeGameDiagnostics['fuel'];
@@ -162,7 +161,6 @@ async function read(page: Page): Promise<Snapshot | null> {
       const d = window.__THREE_GAME_DIAGNOSTICS__;
       if (!d) return null;
       return {
-        physics: d.e8Physics,
         air: d.e8SuitAir,
         probe: d.probeRecovery,
         fuel: d.fuel,
@@ -195,7 +193,6 @@ async function read(page: Page): Promise<Snapshot | null> {
         ghostPos: { x: d.build?.ghostPos?.x ?? 0, z: d.build?.ghostPos?.z ?? 0 },
         nodes: (d.harvest?.activeNodes ?? []).map((n) => ({
           id: n.id,
-          anchorIndex: n.anchorIndex,
           active: n.active,
           x: n.position.x,
           z: n.position.z,
@@ -307,7 +304,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
   const zones = tile.buildZones ?? [];
 
   const holding = stake ? zones.find((entry) => stake.x >= entry.minX && stake.x <= entry.maxX && stake.z >= entry.minZ && stake.z <= entry.maxZ) : undefined;
-  const zone = contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
+  const zone = holding ?? zones[0];
   const centre =
     stake && (holding || zones.length === 0)
       ? { x: stake.x, z: stake.z }
@@ -317,7 +314,6 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
 
   if (contract.id === "e1-baron") { centre.x = 3; centre.z = 11; }
   if (contract.id === "e2-incline") { centre.x = 0; centre.z = -18; }
-  if (contract.id === 'e8-low-orbit') { centre.x = 10; centre.z = -6; }
   const radius = 4;
   const clampX = (v: number) => (zone ? Math.min(zone.maxX - 2, Math.max(zone.minX + 2, v)) : v);
   const clampZ = (v: number) => (zone ? Math.min(zone.maxZ - 2, Math.max(zone.minZ + 2, v)) : v);
@@ -343,18 +339,7 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
     const dx = x - now.hero.x;
     const dz = z - now.hero.z;
     const gap = Math.hypot(dx, dz);
-    const drifting = now.physics.active && now.physics.movement !== 'normal';
-    const velocity = now.physics.filteredMovement;
-    // Position is the walking goal. A sub-unit arrival must not wait for an
-    // unrelated momentum threshold while suit air drains; fund rechecks pan range.
     if (gap <= tolerance) return true;
-    if (drifting && gap < 8) {
-      // Counter-thrust against the published momentum before calling a seam reached.
-      // Releasing keys alone coasts out of the 1.6-unit harvest disc.
-      await steer(page, dx - 3 * velocity.x, dz - 3 * velocity.y, Math.min(65, Math.max(16, gap * 8)));
-      await page.waitForTimeout(60);
-      continue;
-    }
     if (gap < best - 0.35) {
       best = gap;
       stalled = 0;
@@ -400,17 +385,13 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
     const now = await read(page);
     if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     if (now.gold >= amount) return true;
-    if (now.air && now.air.suit.seconds < 30) {
-      if (!(await refillOrbital(page, row))) return false;
+    if (row.contract === 'e8-far-side' && now.air && now.air.suit.seconds < 30) {
+      if (!(await refillFarSide(page, row))) return false;
       continue;
     }
     const live = now.nodes.filter((node) => node.active && !unreachable.has(`${node.x},${node.z}`));
     const bank = fords.length > 0 ? live.filter((node) => Math.sign(node.z) === Math.sign(now.hero.z) || Math.abs(node.z) < 1.5) : live;
-    let pool = bank.length > 0 ? bank : live;
-    if (row.contract === 'e8-eclipse' && now.air?.regolith.creditedThisWindow === 0) {
-      const fresh = pool.filter(n => !now.air!.regolith.worked.includes(n.anchorIndex));
-      if (fresh.length) pool = fresh;
-    }
+    const pool = bank.length > 0 ? bank : live;
     if (pool.length === 0) {
       await page.waitForTimeout(600);
       continue;
@@ -418,11 +399,9 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
     const node = pool.sort(
       (a, b) => Math.hypot(a.x - now.hero.x, a.z - now.hero.z) - Math.hypot(b.x - now.hero.x, b.z - now.hero.z),
     )[0];
-    // Leave margin for E8's residual coast and allow enough short braking pulses.
-    const orbital = now.physics.active && now.physics.movement !== 'normal';
-    if (!(await journey(page, row, node.x, node.z, orbital ? 0.7 : 1.2, fords, orbital ? 140 : 45))) {
+    if (!(await journey(page, row, node.x, node.z, 1.2, fords, 45))) {
       unreachable.add(`${node.x},${node.z}`);
-      row.notes.push(`seam ${node.id} (${node.x.toFixed(1)},${node.z.toFixed(1)}) approach budget exhausted; hero=${JSON.stringify((await read(page))?.hero)}`);
+      row.notes.push(`seam ${node.id} (${node.x.toFixed(1)},${node.z.toFixed(1)}) unreachable on foot`);
       continue;
     }
     for (let tick = 0; tick < 140; tick += 1) {
@@ -430,9 +409,8 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
       const next = await read(page);
       if (!next || next.runState === 'dead') return false;
       if (next.gold >= amount) return true;
-      if (next.air && next.air.suit.seconds < 30) break;
+      if (row.contract === 'e8-far-side' && next.air && next.air.suit.seconds < 30) break;
       if (!next.nodes.find((entry) => entry.id === node.id)?.active) break;
-      if (Math.hypot(next.hero.x - node.x, next.hero.z - node.z) > 1.5) break;
       await page.waitForTimeout(140);
     }
   }
@@ -542,10 +520,9 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   await build(page, row, room.id, home.x + Math.cos(angle) * radius, home.z + Math.sin(angle) * radius, Math.min(deadline, Date.now() + 60_000), fords, unreachable);
 }
 
-// Return to this map's authored pressurised ground, using ordinary movement.
-async function refillOrbital(page: Page, row: Row): Promise<boolean> {
-  const target = row.contract === 'e8-far-side' ? [10, -34] : row.contract === 'e8-eclipse' ? [0, 0] : [10, -6];
-  if (!(await walkTo(page, row, target[0], target[1], 1.5, 150))) return false;
+// The Far Side's landing yard is the only refill ground; the crater is vacuum.
+async function refillFarSide(page: Page, row: Row): Promise<boolean> {
+  if (!(await walkTo(page, row, 10, -34, 1.5, 150))) return false;
   for (let tick = 0; tick < 100; tick++) {
     await takeUpgrades(page, row);
     const now = await read(page);
@@ -557,45 +534,14 @@ async function refillOrbital(page: Page, row: Row): Promise<boolean> {
 }
 
 async function farSideCrossing(page: Page, row: Row): Promise<void> {
-  if (!(await refillOrbital(page, row))) return;
+  if (!(await refillFarSide(page, row))) return;
   // Enter the rectangle itself for air credit; recovery alone has a larger reach.
   const reached = await walkTo(page, row, 10, 39.5, 1, 220);
   await takeUpgrades(page, row);
-  if (reached) {
-    for (let press = 0; press < 5; press++) {
-      await takeUpgrades(page, row);
-      await page.keyboard.press('Space');
-      await page.waitForTimeout(150);
-      if ((await read(page))?.probe.recovered) break;
-    }
-  }
+  if (reached) await page.keyboard.press('Space');
   const now = await read(page);
-  if (reached && now && now.gold >= 50 && !row.builds.some(b => b.z >= 38)) {
-    await build(page, row, 'turret', 10, 40, Date.now() + 5000, [], new Set());
-  }
   row.notes.push(`Far Side crossing: reached=${reached}, hero=${JSON.stringify(now?.hero)}, air=${JSON.stringify(now?.air)}, probe=${JSON.stringify(now?.probe)}`);
-  await refillOrbital(page, row);
-}
-
-async function lowOrbitCrossing(page: Page, row: Row, deadline: number, unreachable: Set<string>): Promise<void> {
-  const start = await read(page);
-  const crossing = start?.air?.crossing;
-  const side = crossing?.reached.includes('west-scaffold-deck') && !crossing.reached.includes('east-scaffold-deck') ? 1
-    : (crossing?.credited ?? 0) % 2 === 0 ? -1 : 1;
-  const cost = start?.buildables.find(b => b.id === 'sentry_beacon')?.cost ?? 30;
-  await fund(page, row, cost, Math.min(deadline, Date.now() + 30_000), [], unreachable);
-  if (!(await refillOrbital(page, row))) return;
-  await walkTo(page, row, 0, -10, 1.5, 100);
-  await walkTo(page, row, side * 18, 0, 1.5, 100);
-  const reached = await walkTo(page, row, side * 32, 0, 1.5, 140);
-  const now = await read(page);
-  row.notes.push(`Low Orbit deck ${side}: reached=${reached}, hero=${JSON.stringify(now?.hero)}, air=${JSON.stringify(now?.air)}`);
-  if (reached && !row.builds.some(b => side * b.x >= 26)) {
-    await build(page, row, 'sentry_beacon', side * 34, 0, Math.min(deadline, Date.now() + 10_000), [], unreachable);
-  }
-  await walkTo(page, row, side * 18, 0, 1.5, 100);
-  await walkTo(page, row, 0, -10, 1.5, 100);
-  await refillOrbital(page, row);
+  await refillFarSide(page, row);
 }
 
 // Motor errands use the ordinary confirm key at surveyed stakes and haul destinations.
@@ -716,17 +662,6 @@ function kitFor(contract: ContractManifest): KitPiece[] {
     { id: 'capacitor_bank', dx: -8, dz: -26 },
     { id: 'capacitor_bank', dx: -18, dz: -26 },
   ];
-  if (contract.id === 'e8-eclipse') return [
-    { id: 'turret', dx: 0, dz: -4 },
-    { id: 'sentry_beacon', dx: -18, dz: 0 },
-    { id: 'turret', dx: 18, dz: 0 },
-    { id: 'sentry_beacon', dx: -44, dz: 47 },
-  ];
-  if (contract.id === 'e8-low-orbit') return [
-    { id: 'sentry_beacon', dx: -44, dz: 6 },
-    { id: 'sentry_beacon', dx: 24, dz: 6 },
-    { id: 'turret', dx: 5, dz: -1 },
-  ];
   if (contract.id === 'e2-incline') return [
     { id: 'sentry_beacon', dx: 8, dz: -4 },
     { id: 'turret', dx: -8, dz: -4 },
@@ -777,7 +712,7 @@ export function nativeProof(id: string, run = 1) {
       page.on('pageerror', (error) => pageErrors.push(error.message));
       page.on('dialog', (dialog) => void dialog.accept().catch(() => undefined));
 
-      let secureWave = Math.max(0, Math.floor(contract.twist?.secureWave ?? 0));
+      const secureWave = Math.max(0, Math.floor(contract.twist?.secureWave ?? 0));
       const row: Row = {
         project: testInfo.project.name,
         contract: contract.id,
@@ -830,7 +765,6 @@ export function nativeProof(id: string, run = 1) {
             active?.activeId === contract.id && active?.fallbackReason === null
               ? pass(`activeId=${active.activeId} secureWave=${active.secureWave}`)
               : fail(`requested ${contract.id}, got activeId=${active?.activeId ?? 'none'} fallbackReason=${String(active?.fallbackReason)}`);
-          secureWave = row.secureWave = active?.secureWave ?? secureWave;
           row.notes.push(`engine secureWave=${active?.secureWave ?? 'unknown'} cadenceMult=${active?.waveCadenceMult ?? 'unknown'}`);
         } catch (error) {
           row.boots = fail(`no game frame within ${BOOT_TIMEOUT_MS}ms: ${String((error as Error).message).split('\n')[0]}`);
@@ -850,9 +784,6 @@ export function nativeProof(id: string, run = 1) {
         const fords = crossingsFor(contract);
         const unreachable = new Set<string>();
 
-        if (contract.id === 'e8-low-orbit') {
-          await build(page, row, 'turret', 10, -10, Math.min(deadline, Date.now() + 45_000), fords, unreachable);
-        }
         if (contract.id === 'e8-far-side') await farSideCrossing(page, row);
         if (contract.id === 'e4-boneyard') {
           await build(page, row, 'turret', 0, -48, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
@@ -964,20 +895,12 @@ export function nativeProof(id: string, run = 1) {
           }
           if (now.paused) await unpause(page, row);
 
-          if (contract.id === 'e8-eclipse' && now.air && !now.air.regolith.complete && now.air.regolith.creditedThisWindow === 0) {
-            await fund(page, row, now.gold + 5, Math.min(deadline, Date.now() + 25_000), fords, unreachable);
-            continue;
-          }
-          if (contract.id === 'e8-low-orbit' && now.air?.crossing && !now.air.crossing.complete && now.air.crossing.creditedThisWindow === 0) {
-            await lowOrbitCrossing(page, row, deadline, unreachable);
-            continue;
-          }
           if (contract.id === 'e8-far-side' && now.air?.crossing && !now.air.crossing.complete && now.air.crossing.creditedThisWindow === 0) {
             await farSideCrossing(page, row);
             continue;
           }
-          if (now.air && now.air.suit.seconds < 30) {
-            await refillOrbital(page, row);
+          if (contract.id === 'e8-far-side' && now.air && now.air.suit.seconds < 30) {
+            await refillFarSide(page, row);
             continue;
           }
           if (contract.id === 'e3-fairground' && now.fairground?.spinning === false) {
@@ -1071,14 +994,8 @@ export function nativeProof(id: string, run = 1) {
                 `never secured: peak wave ${row.peakWave} of ${secureWave} after ${row.simAtEnd.toFixed(1)}s sim (runState=${row.runStateAtEnd || 'unknown'}, ${row.builds.length} buildings, ${row.killsAtEnd} kills)`,
             );
 
-        if (contract.id === 'e8-eclipse' && (!atSecure?.air?.regolith.complete || !atSecure.air.eclipse?.arrived || atSecure.air.eclipse.groundsWorkedAfter < atSecure.air.eclipse.requiredAfter || !row.builds.some(b => Math.abs(b.x) >= 38 && b.z >= 42) || !row.builds.some(b => Math.abs(b.x) <= 24 && Math.abs(b.z) <= 6))) {
-          row.secures = fail(`${row.secures.detail}; timed regolith, post-eclipse work and dome/rim builds not proved`);
-        }
-        if (contract.id === 'e8-low-orbit' && (!atSecure?.air?.crossing?.complete || ![-1, 0, 1].every(side => row.builds.some(b => side === 0 ? Math.abs(b.x) <= 18 : side * b.x >= 26)))) {
-          row.secures = fail(`${row.secures.detail}; four air-supported deck entries and builds on all three decks not proved`);
-        }
-        if (contract.id === 'e8-far-side' && (!atSecure?.air?.crossing?.complete || !atSecure.probe.recovered || atSecure.probe.playbackCount !== 1 || !row.builds.some(b => b.z >= 38) || !row.builds.some(b => b.z <= -30))) {
-          row.secures = fail(`${row.secures.detail}; four air-supported crossings, one probe playback and builds at both grounds not proved`);
+        if (contract.id === 'e8-far-side' && (!atSecure?.air?.crossing?.complete || !atSecure.probe.recovered || atSecure.probe.playbackCount !== 1)) {
+          row.secures = fail(`${row.secures.detail}; four air-supported crossings and one probe playback not proved`);
         }
         if (contract.id === 'e3-blackout-ridge' && !['capacitor-west', 'capacitor-east'].every(id => (row.powerBanksPeak[id] ?? 0) > 0)) {
           row.secures = fail(`${row.secures.detail}; authored banks not both observed storing current: ${JSON.stringify(row.powerBanksPeak)}`);

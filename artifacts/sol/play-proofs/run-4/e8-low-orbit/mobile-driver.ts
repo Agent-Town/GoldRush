@@ -137,7 +137,7 @@ type Snapshot = {
   buildMode: boolean;
   ghostValid: boolean;
   ghostPos: { x: number; z: number };
-  nodes: Array<{ id: string; anchorIndex: number; active: boolean; x: number; z: number; respawnIn: number; respawnScheduled: boolean }>;
+  nodes: Array<{ id: string; active: boolean; x: number; z: number; respawnIn: number; respawnScheduled: boolean }>;
   buildables: Array<{ id: string; cost: number; count: number; maxCount: number; canAfford: boolean }>;
   defences: Array<{ id: string; index: number; hp: number; maxHp: number; wrecked: boolean; repairCost: number; x: number; z: number }>;
   physics: ThreeGameDiagnostics['e8Physics'];
@@ -195,7 +195,6 @@ async function read(page: Page): Promise<Snapshot | null> {
         ghostPos: { x: d.build?.ghostPos?.x ?? 0, z: d.build?.ghostPos?.z ?? 0 },
         nodes: (d.harvest?.activeNodes ?? []).map((n) => ({
           id: n.id,
-          anchorIndex: n.anchorIndex,
           active: n.active,
           x: n.position.x,
           z: n.position.z,
@@ -307,7 +306,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
   const zones = tile.buildZones ?? [];
 
   const holding = stake ? zones.find((entry) => stake.x >= entry.minX && stake.x <= entry.maxX && stake.z >= entry.minZ && stake.z <= entry.maxZ) : undefined;
-  const zone = contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
+  const zone = holding ?? zones[0];
   const centre =
     stake && (holding || zones.length === 0)
       ? { x: stake.x, z: stake.z }
@@ -345,13 +344,11 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
     const gap = Math.hypot(dx, dz);
     const drifting = now.physics.active && now.physics.movement !== 'normal';
     const velocity = now.physics.filteredMovement;
-    // Position is the walking goal. A sub-unit arrival must not wait for an
-    // unrelated momentum threshold while suit air drains; fund rechecks pan range.
-    if (gap <= tolerance) return true;
+    if (gap <= tolerance && (!drifting || Math.hypot(velocity.x, velocity.y) < 0.12)) return true;
     if (drifting && gap < 8) {
       // Counter-thrust against the published momentum before calling a seam reached.
       // Releasing keys alone coasts out of the 1.6-unit harvest disc.
-      await steer(page, dx - 3 * velocity.x, dz - 3 * velocity.y, Math.min(65, Math.max(16, gap * 8)));
+      await steer(page, (gap <= tolerance ? 0 : dx) - 3 * velocity.x, (gap <= tolerance ? 0 : dz) - 3 * velocity.y, Math.min(65, Math.max(16, gap * 8)));
       await page.waitForTimeout(60);
       continue;
     }
@@ -406,11 +403,7 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
     }
     const live = now.nodes.filter((node) => node.active && !unreachable.has(`${node.x},${node.z}`));
     const bank = fords.length > 0 ? live.filter((node) => Math.sign(node.z) === Math.sign(now.hero.z) || Math.abs(node.z) < 1.5) : live;
-    let pool = bank.length > 0 ? bank : live;
-    if (row.contract === 'e8-eclipse' && now.air?.regolith.creditedThisWindow === 0) {
-      const fresh = pool.filter(n => !now.air!.regolith.worked.includes(n.anchorIndex));
-      if (fresh.length) pool = fresh;
-    }
+    const pool = bank.length > 0 ? bank : live;
     if (pool.length === 0) {
       await page.waitForTimeout(600);
       continue;
@@ -418,11 +411,9 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
     const node = pool.sort(
       (a, b) => Math.hypot(a.x - now.hero.x, a.z - now.hero.z) - Math.hypot(b.x - now.hero.x, b.z - now.hero.z),
     )[0];
-    // Leave margin for E8's residual coast and allow enough short braking pulses.
-    const orbital = now.physics.active && now.physics.movement !== 'normal';
-    if (!(await journey(page, row, node.x, node.z, orbital ? 0.7 : 1.2, fords, orbital ? 140 : 45))) {
+    if (!(await journey(page, row, node.x, node.z, 1.2, fords, 45))) {
       unreachable.add(`${node.x},${node.z}`);
-      row.notes.push(`seam ${node.id} (${node.x.toFixed(1)},${node.z.toFixed(1)}) approach budget exhausted; hero=${JSON.stringify((await read(page))?.hero)}`);
+      row.notes.push(`seam ${node.id} (${node.x.toFixed(1)},${node.z.toFixed(1)}) unreachable on foot`);
       continue;
     }
     for (let tick = 0; tick < 140; tick += 1) {
@@ -544,7 +535,7 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 
 // Return to this map's authored pressurised ground, using ordinary movement.
 async function refillOrbital(page: Page, row: Row): Promise<boolean> {
-  const target = row.contract === 'e8-far-side' ? [10, -34] : row.contract === 'e8-eclipse' ? [0, 0] : [10, -6];
+  const target = row.contract === 'e8-far-side' ? [10, -34] : [10, -6];
   if (!(await walkTo(page, row, target[0], target[1], 1.5, 150))) return false;
   for (let tick = 0; tick < 100; tick++) {
     await takeUpgrades(page, row);
@@ -715,12 +706,6 @@ function kitFor(contract: ContractManifest): KitPiece[] {
   if (contract.id === 'e3-blackout-ridge') return [
     { id: 'capacitor_bank', dx: -8, dz: -26 },
     { id: 'capacitor_bank', dx: -18, dz: -26 },
-  ];
-  if (contract.id === 'e8-eclipse') return [
-    { id: 'turret', dx: 0, dz: -4 },
-    { id: 'sentry_beacon', dx: -18, dz: 0 },
-    { id: 'turret', dx: 18, dz: 0 },
-    { id: 'sentry_beacon', dx: -44, dz: 47 },
   ];
   if (contract.id === 'e8-low-orbit') return [
     { id: 'sentry_beacon', dx: -44, dz: 6 },
@@ -964,10 +949,6 @@ export function nativeProof(id: string, run = 1) {
           }
           if (now.paused) await unpause(page, row);
 
-          if (contract.id === 'e8-eclipse' && now.air && !now.air.regolith.complete && now.air.regolith.creditedThisWindow === 0) {
-            await fund(page, row, now.gold + 5, Math.min(deadline, Date.now() + 25_000), fords, unreachable);
-            continue;
-          }
           if (contract.id === 'e8-low-orbit' && now.air?.crossing && !now.air.crossing.complete && now.air.crossing.creditedThisWindow === 0) {
             await lowOrbitCrossing(page, row, deadline, unreachable);
             continue;
@@ -1071,9 +1052,6 @@ export function nativeProof(id: string, run = 1) {
                 `never secured: peak wave ${row.peakWave} of ${secureWave} after ${row.simAtEnd.toFixed(1)}s sim (runState=${row.runStateAtEnd || 'unknown'}, ${row.builds.length} buildings, ${row.killsAtEnd} kills)`,
             );
 
-        if (contract.id === 'e8-eclipse' && (!atSecure?.air?.regolith.complete || !atSecure.air.eclipse?.arrived || atSecure.air.eclipse.groundsWorkedAfter < atSecure.air.eclipse.requiredAfter || !row.builds.some(b => Math.abs(b.x) >= 38 && b.z >= 42) || !row.builds.some(b => Math.abs(b.x) <= 24 && Math.abs(b.z) <= 6))) {
-          row.secures = fail(`${row.secures.detail}; timed regolith, post-eclipse work and dome/rim builds not proved`);
-        }
         if (contract.id === 'e8-low-orbit' && (!atSecure?.air?.crossing?.complete || ![-1, 0, 1].every(side => row.builds.some(b => side === 0 ? Math.abs(b.x) <= 18 : side * b.x >= 26)))) {
           row.secures = fail(`${row.secures.detail}; four air-supported deck entries and builds on all three decks not proved`);
         }

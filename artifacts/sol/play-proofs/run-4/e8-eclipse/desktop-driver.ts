@@ -345,13 +345,11 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
     const gap = Math.hypot(dx, dz);
     const drifting = now.physics.active && now.physics.movement !== 'normal';
     const velocity = now.physics.filteredMovement;
-    // Position is the walking goal. A sub-unit arrival must not wait for an
-    // unrelated momentum threshold while suit air drains; fund rechecks pan range.
-    if (gap <= tolerance) return true;
+    if (gap <= tolerance && (!drifting || Math.hypot(velocity.x, velocity.y) < 0.12)) return true;
     if (drifting && gap < 8) {
       // Counter-thrust against the published momentum before calling a seam reached.
       // Releasing keys alone coasts out of the 1.6-unit harvest disc.
-      await steer(page, dx - 3 * velocity.x, dz - 3 * velocity.y, Math.min(65, Math.max(16, gap * 8)));
+      await steer(page, (gap <= tolerance ? 0 : dx) - 3 * velocity.x, (gap <= tolerance ? 0 : dz) - 3 * velocity.y, Math.min(65, Math.max(16, gap * 8)));
       await page.waitForTimeout(60);
       continue;
     }
@@ -418,11 +416,9 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
     const node = pool.sort(
       (a, b) => Math.hypot(a.x - now.hero.x, a.z - now.hero.z) - Math.hypot(b.x - now.hero.x, b.z - now.hero.z),
     )[0];
-    // Leave margin for E8's residual coast and allow enough short braking pulses.
-    const orbital = now.physics.active && now.physics.movement !== 'normal';
-    if (!(await journey(page, row, node.x, node.z, orbital ? 0.7 : 1.2, fords, orbital ? 140 : 45))) {
+    if (!(await journey(page, row, node.x, node.z, 1.2, fords, 45))) {
       unreachable.add(`${node.x},${node.z}`);
-      row.notes.push(`seam ${node.id} (${node.x.toFixed(1)},${node.z.toFixed(1)}) approach budget exhausted; hero=${JSON.stringify((await read(page))?.hero)}`);
+      row.notes.push(`seam ${node.id} (${node.x.toFixed(1)},${node.z.toFixed(1)}) unreachable on foot`);
       continue;
     }
     for (let tick = 0; tick < 140; tick += 1) {
