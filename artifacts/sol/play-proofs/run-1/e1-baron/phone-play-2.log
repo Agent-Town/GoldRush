@@ -1,0 +1,50 @@
+
+Running 1 test using 1 worker
+
+
+(node:13784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [mobile-chrome] › e2e/native-proofs/driver.ts:508:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+[mobile-chrome] › e2e/native-proofs/driver.ts:508:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+e1-baron {"t":39,"wave":1,"hp":100,"gold":0,"hero":{"x":4.129647853639552,"z":11.393568609181072},"builds":1}
+
+e1-baron {"t":93,"wave":3,"hp":100,"gold":40,"hero":{"x":3.473199303028941,"z":14.432380355856706},"builds":1}
+
+e1-baron {"t":109,"wave":4,"hp":100,"gold":0,"hero":{"x":8.230711687320069,"z":14.33646998057207},"builds":2}
+
+e1-baron {"t":455,"wave":17,"hp":175,"gold":60,"hero":{"x":11.32998672721997,"z":-9.06128511334971},"builds":2}
+
+e1-baron {"t":609,"wave":23,"hp":0,"gold":60,"hero":{"x":11.32998672721997,"z":-9.06128511334971},"builds":2}
+
+  1) [mobile-chrome] › e2e/native-proofs/driver.ts:508:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 23 / 609.5s sim, 552 kills, 60 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      756 |       }
+      757 |
+    > 758 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      759 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      760 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      761 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:758:64
+
+    Error: apiRequestContext._wrapApiCall: file data stream has unexpected number of bytes
+
+    Error: End of central directory record signature not found. Either not a zip file, or file is truncated.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-1/e1-baron/phone-play-2-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-1/e1-baron/phone-play-2-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/native-proofs/driver.ts:508:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 

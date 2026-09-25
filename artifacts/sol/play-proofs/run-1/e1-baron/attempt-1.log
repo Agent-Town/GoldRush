@@ -1,0 +1,61 @@
+
+Running 1 test using 1 worker
+
+
+(node:95373) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:501:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:501:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    TimeoutError: locator.click: Timeout 2000ms exceeded.
+    Call log:
+      - waiting for getByTestId('hud-build-tile-sentry_beacon')
+        - locator resolved to <button type="button" role="menuitem" data-selected="false" data-asset-state="ready" data-icon-slug="sentry-beacon" data-buildable-id="sentry_beacon" data-slot="ui.build.icon.sentry_beacon" data-testid="hud-build-tile-sentry_beacon" class="hud-build-tile hud-build-tile--icon" title="Lights the dark and slows what it touches; radius 8wu.">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <section aria-hidden="false" data-testid="upgrade-overlay" aria-label="Patent Office choices" class="upgrade-overlay upgrade-overlay--visible">…</section> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <section aria-hidden="false" data-testid="upgrade-overlay" aria-label="Patent Office choices" class="upgrade-overlay upgrade-overlay--visible">…</section> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        4 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <section aria-hidden="false" data-testid="upgrade-overlay" aria-label="Patent Office choices" class="upgrade-overlay upgrade-overlay--visible">…</section> intercepts pointer events
+        - retrying click action
+          - waiting 500ms
+
+
+      422 |     await page.getByTestId('hud-build').click({ timeout: 2_000 });
+      423 |   }
+    > 424 |   await tile.click({ timeout: 2_000 });
+          |              ^
+      425 |   await page.waitForTimeout(200);
+      426 |   for (let nudge = 0; nudge < 10; nudge += 1) {
+      427 |     const now = await read(page);
+        at build (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:424:14)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:617:13
+
+    Error: apiRequestContext._wrapApiCall: file data stream has unexpected number of bytes
+
+    Error: End of central directory record signature not found. Either not a zip file, or file is truncated.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-1/e1-baron/attempt-1-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-1/e1-baron/attempt-1-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:501:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 

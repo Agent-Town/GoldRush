@@ -955,3 +955,11 @@ Measured delivered beds -0.452156/-0.315686 m; dry plait +0.259180 m and bar anc
 The broad dev battery is 52 pass/2 skip/2 red: existing reed motion and a hero-height boot race, both controlled against pre-task source. The drain owns floor re-record/check and the same-era pin; the lane does not change `engine-era.json`. Full paired-bank entry remains camera/HUD-owned; a river-station diagnostic is not called a plain-entry fix. [Every board, command, guard limitation, and remaining item](run-11/braid/e1-twin-banks/report.md).
 
 Canonical Node 26.4.0 battery: 1,009 pass / 5 skip / 4 expected pin/status failures / 0 cancelled; same-game audit and separately run landmark-collision rows pass. The four reds are enumerated in the run-2 report; no pin/status edit was made outside the firewall.
+
+## 2026-09-25 — native play proofs, run 1
+
+Task sol-play-proofs-1, lane-c, Astra. No production/contract/balance or existing-test changes. Pre-flight: no ahead commits and only untracked evidence/log churn; synced lane to main, removed permitted regenerated artifact directories and `logs/guard-stats.jsonl`. Install/build passed; npm-only lockfile metadata churn restored, clean status verified. Own Vite port 5303, one worker, desktop then phone.
+
+- **Baron: FAIL desktop/phone, F-PP1-1.** Desktop died wave 16; phone wave 23, boss at 62.3% HP. Boot/clean pass both, zero errors; terminal/bank/reload unproved. Two attempted strategies do not prove impossibility. [Finding, exact positions and rows](../play-proofs/run-1/e1-baron/finding.md).
+
+The new banking check compares to pre-play scores, correcting census instrument finding F-MPP1-1: secure already writes the score before Return to Town. New specs are gated by GR_NATIVE_PROOF. See [run note](../play-proofs/run-1/run-note.md) for final checks, commits and continuation order.
