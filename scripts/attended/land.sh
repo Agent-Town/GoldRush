@@ -74,7 +74,7 @@ node "$LIB" verdict "$CFG" "$G" >> "$G" 2>&1 || fail "verdict"
 else
   # RESUME after a fixed stop: the chain already holds the merge, the cure, the verdict; pick up at the pin
   cd "$R" || exit 1; LANE_SHA=$(git rev-parse "$BR"); STORE=$(git -C "$A" rev-parse --short main); cd "$W" || fail "no chain worktree to resume"; grep -q "^verdict: clean" "$G" || fail "resume refused: the gates log carries no clean verdict"
-  MH=$(git log --format=%H -1 --grep="^drain: merge $BR"); [ -n "$MH" ] || fail "resume: merge commit not found in the chain"; PINNED=$(pinned); say "RESUME $(date -u '+%Y-%m-%d %H:%MZ'): chain $(git rev-parse --short HEAD), merge ${MH:0:9}, continuing at the pin"
+  MH=$(git log --format=%H -1 --grep="^[a-z]*: merge $BR"); [ -n "$MH" ] || fail "resume: merge commit not found in the chain"  # any <type>: merge <branch> (rt40 used rotation:, F-RT40-2); PINNED=$(pinned); say "RESUME $(date -u '+%Y-%m-%d %H:%MZ'): chain $(git rev-parse --short HEAD), merge ${MH:0:9}, continuing at the pin"
 fi
 # the pin, measured LAST
 H1=$(ehash); say "hash at pin time: $H1"
