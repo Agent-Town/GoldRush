@@ -1,0 +1,45 @@
+{
+  "tag": "pp3",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5373,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 (sol-play-proofs-3) — the play-proofs campaign, run 3: the three E4 vehicle maps held after two honest attempts each (the Dust Flats, Gusher County, the Boneyard; route and survival limits of the driver, the Boneyard's approach tolerance named as a general fix), the shared driver grew the vehicle verbs and keeps the Incline proof green; no source touched (Astra gpt-6-astra on the ChatGPT subscription)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": false,
+    "specs": [
+      "e2e/native-proofs/e4-boneyard.spec.ts",
+      "e2e/locked-win.spec.ts",
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "warmup": [
+      "/",
+      "/?contract=the-claim"
+    ],
+    "allowedBattery": [
+      "the browser door submits the purse held at the secure tick"
+    ]
+  },
+  "review": {
+    "path": "reviews/sol-play-proofs-3.md",
+    "title": "Drain review: `sol-play-proofs-3`, the play-proofs campaign run 3: the three E4 vehicle maps held, the campaign's yield question (Astra)",
+    "body": "scripts/attended/landings/pp3-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-play-proofs-3.md",
+    "rowKey": "PLAY PROOFS RUN 3 LANDED",
+    "rowEmoji": "🎮",
+    "rowText": "Astra, 21 minutes, the three E4 vehicle maps, two honest attempts each, zero errors on every row, no new proof and no defect: the Dust Flats (F-PP3-1: the Hauler delivered at 43.9 s, deaths at waves 2 and 4, the Land-Yacht unreached), Gusher County (F-PP3-2: the phone completed all three deliveries by 94.4 s then died funding its first defence; desktop missed the north dispatch, wave 14), the Boneyard (F-PP3-3: the phone stopped 1.112 units from the road head, inside the objective's 2.5-unit radius but outside the driver's walking tolerance; a general driver fix). The driver grew the vehicle verbs; the Incline proof re-ran green. YIELD (F-PP3-4): eleven maps, one proof, one partial, one defect, eight holds. Run 4 opens with a CONTROL on the Claim (a proven map): the driver's own verdict before the E8 to E10 maps. Engine hash unchanged {PIN}; no deploy.",
+    "statusPhrase": "Astra's play proofs, run 3: the three E4 vehicle maps held; run 4 opens with a driver control on the Claim before the E8 to E10 maps",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh pp3)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-3/drain"
+}
