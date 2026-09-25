@@ -6413,12 +6413,16 @@
             {
               "id": "door-tape-grammar-2",
               "title": "HOTFIX continuation (P0): the county door accepts the three action verbs the client writes (prospector_dispatch, context_action recover, multiplayer agent_orders) and the retirement walk covers playbookUses (F-DTG1-1, F-DTG1-2)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "door-tape-grammar-2.md",
               "lane": "same worktree wt-dtg1, branch fix/door-tape-grammar-2 stacked on the hotfix, Opus 5.5 implementer at max effort (the grammar-1 agent continued); functions and ledger gates; deployed",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from F-DTG1-1, 2026-09-25",
-              "queuedAt": "2026-09-25"
+              "queuedAt": "2026-09-25",
+              "mergeHash": "dd5c74b97261c700f98b0430640955ae847c39ba",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/door-tape-grammar-2.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg2, P0, directly after grammar-1)"
             },
             {
               "id": "worktree-vite-cache-1",
