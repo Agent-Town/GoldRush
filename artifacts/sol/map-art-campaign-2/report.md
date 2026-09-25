@@ -987,3 +987,7 @@ Final verification: build/TypeScript PASS; default collection PASS; gate-unset b
 - Gusher County: FAIL desktop/phone. Desktop stops after two deliveries on a missed north dispatch, dies wave 14; phone verifies all three deliveries using 27.631 fuel, then dies wave 4 funding its first defense. Zero errors. [F-PP3-2](../play-proofs/run-3/e4-gusher-county/finding.md).
 - Boneyard: FAIL desktop/phone. Desktop approach stalls at the boiler west edge; phone stops 1.112 units from the road head, outside driver tolerance, and never reaches the hitch. Deaths at waves 4/10; phone builds four defenses. Zero errors. Route limits, no impossibility claim. [F-PP3-3](../play-proofs/run-3/e4-boneyard/finding.md).
 - Gates: TypeScript/build PASS; native gate unset gives 20 skipped; Incline regression PASS desktop/phone at wave 14 with 180/180 HP carts, bank/Book/reload and zero errors. Existing secure-wave briefing check 2/2 PASS. Scope verification confirms exactly three second-column-only status edits and allowed files. No new full proof; next untouched map Far Side. [Ordered continuation, commands and commits](../play-proofs/run-3/run-note.md).
+
+## 2026-09-25 — Native play proofs, run 4
+
+- Driver control: Claim PASS desktop with the unchanged driver, wave 10 / 300.07 s, 143 HP, six buildings, bank/Book/plain reload and zero console/page errors. The control permits the ordered E8 continuation; earlier holds remain strategy findings. [Run note](../play-proofs/run-4/run-note.md).
