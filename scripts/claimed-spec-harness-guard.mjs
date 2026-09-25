@@ -70,7 +70,7 @@
 //                                                          # filesystem instead of git ls-files
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './is-main.mjs';
 import { execSync } from 'node:child_process';
 
 // Masters authored BEFORE 395bc04be (2026-07-31T21:34), when naming no config was correct.
@@ -342,4 +342,4 @@ function main() {
 // which `import.meta.url` percent-encodes and `process.argv[1]` does not. That comparison is
 // false here for EVERY invocation, so the guard ran, printed nothing and exited 0: a gate that
 // silently measures nothing while looking rooted. Caught s1482 on this guard's first run.
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (isMain(import.meta.url)) main();

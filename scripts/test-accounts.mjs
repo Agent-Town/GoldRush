@@ -4,12 +4,12 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import net from 'node:net';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { createServer as createViteServer } from 'vite';
 import { assertWranglerVersion } from './wrangler-binary.mjs';
 import { createLedgerServer, loadLedgerHandlers } from '../server/ledger/serve.mjs';
 import { SqliteStorage } from '../server/ledger/storage.mjs';
-
+import { isMain } from './is-main.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'http://localhost:5188';
 const ARTIFACT_DIR = path.join(ROOT, 'artifacts/accounts-worker');
@@ -22,7 +22,7 @@ const MAX_VERIFIES_PER_IP = 60;
 const CODE_TTL_SECONDS = 10 * 60;
 const checks = [];
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+if (isMain(import.meta.url)) {
   if (process.argv[2] === '--serve') await serve(process.argv[3]);
   else await main();
 }
