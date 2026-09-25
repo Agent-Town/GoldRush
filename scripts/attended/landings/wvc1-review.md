@@ -13,3 +13,6 @@ LANE-TOUCHED: `vite.config.ts` (cacheDir, optimizeDeps.entries, the dev-only dep
 - **F-WVC1-3 (inferred, for the drain):** the browser-door "load" row may be the shared-cache re-optimisation; watch it after this lands.
 - **F-WVC1-4 (noted):** on the droplet `/opt/goldrush/.vite-cache` is not protected by the deploy mirror, so each deploy removes it and the assayer rebuilds it once (harmless, not measured there).
 - **F-WVC1-5, -6, -7 (noted):** 226 to 244 leftover `deps_temp_*` folders in the shared cache; two READ FIRST report paths did not exist at authoring; `vite.config.ts` is outside the project's tsc and carries two pre-existing strict errors.
+
+### Battery attribution (drain, 17:59Z)
+Row "fixture owners remove their temp directories" allowed for this landing only: the sweep failed on "scripts/node-guards-contention.test.mjs child failed", the contention shape (another battery on the host), not fixture survivors; the branch touches the vite config, the gitignore and a README
