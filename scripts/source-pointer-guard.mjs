@@ -70,8 +70,8 @@
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
-
+import { fileURLToPath } from 'node:url';
+import { isMain } from './is-main.mjs';
 /**
  * Anchored at this file's own location, NOT process.cwd(). `git ls-files` and bare
  * relative paths both resolve against the working directory, which is how nul-audit
@@ -258,4 +258,4 @@ function main() {
 
 // NOT `file://${process.argv[1]}`: this repo's path contains a space, which
 // import.meta.url percent-encodes and process.argv[1] does not (the s1334 trap).
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (isMain(import.meta.url)) main();

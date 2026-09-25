@@ -61,7 +61,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './is-main.mjs';
 import { execFileSync } from 'node:child_process';
 // F-2241-1 — see the twin note in desk-declaration-guard.mjs. Reached through
 // `npm run test:desk-birth`, so F-2232-1's "five BARE legs" census could not see it.
@@ -766,7 +766,7 @@ function main() {
 // The house entrypoint form, copied from desk-declaration-guard.mjs rather than
 // re-invented — NOT `file://${process.argv[1]}`. This repo's path contains a
 // space, which import.meta.url percent-encodes and process.argv[1] does not (the
-// s1334 trap: main() silently never ran and the guard "passed" everything). The
-// argv[1] presence check is the sibling half (s1533): with no argv[1] —
-// `node -e "import(...)"`, some harnesses — pathToFileURL THROWS.
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+// s1334 trap: main() silently never ran and the guard "passed" everything). isMain
+// (./is-main.mjs) also carries the s1533 half (no argv[1] is "not main", never a
+// throw) and compares REAL paths, so a symlinked spelling runs main() (F-LS1-2).
+if (isMain(import.meta.url)) main();

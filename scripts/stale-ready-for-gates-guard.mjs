@@ -72,7 +72,7 @@
 //   node scripts/stale-ready-for-gates-guard.mjs --root <d> # synthetic corpus (tests)
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './is-main.mjs';
 import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
 
 // A leaf in one of these states is no longer "awaiting its drain".
@@ -202,4 +202,4 @@ function main() {
 
 // NOT `file://${process.argv[1]}` — this repo's absolute path contains a space ("Gold Rush"),
 // which `import.meta.url` percent-encodes and `process.argv[1]` does not (F-1482 note).
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (isMain(import.meta.url)) main();

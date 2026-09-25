@@ -1,0 +1,18 @@
+final-tree functions gates at HEAD dd2c87433, 11:23:01Z
+test:accounts rc=0
+test:mp rc=0
+test:stats rc=0
+
+=== npm run test:accounts (final tree)
+accounts kv checks passed (43)
+accounts sqlite checks passed (43)
+accounts sign-in hardening checks passed (27)
+accounts office credential checks passed (24)
+=== npm run test:mp (final tree)
+multiplayer relay checks passed (466)
+=== npm run test:stats (final tree)
+standings assay kv checks passed (372)
+contract clock census 42/25/17/0
+refusals sqlite sample {"ok":true,"counts":{"bad_payload":1,"unsecured":1},"recent":[{"reason":"bad_payload","contractId":"the-claim","refusedAt":1790335397081},{"reason":"unsecured","contractId":"the-claim","refusedAt":1790335397080}]}
+standings assay sqlite checks passed (372)
+ledger worker HTTP contract checks passed (26)

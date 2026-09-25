@@ -1,0 +1,71 @@
+=== leg-node_scripts_test-ticker-stats.mjs
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+=== leg-npm_run_test_findings-state
+
+> gold-rush@0.1.0 test:findings-state
+> node scripts/findings-state-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+declared subjects : 665
+declared closed   : 481
+declared open     : 184
+double-state      : 0
+wide-open advisory : 374 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+=== leg-npm_run_test_blocker-panel
+
+> gold-rush@0.1.0 test:blocker-panel
+> node scripts/blocker-panel-closed-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+panel rows        : 46
+rows with an F-ID : 43
+census closed     : 591
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+=== leg-npm_run_test_ruling-propagation
+
+> gold-rush@0.1.0 test:ruling-propagation
+> node scripts/ruling-propagation-guard.mjs
+
+ruling-propagation: 14 findings recorded RULED · 70 goal leaves still refuse work · 0 stale
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+  reason corpus     : 62/70 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+      unread: stopped     b4v3-picnic-active-defense  [note_s2131, note]
+      unread: stopped     b4v2-picnic-stake-pressure  [note_s2090, note_s2088, note_s2089, note_s2139, note]
+      unread: stopped     f2251-1-county-board-red  [note_s2251b, note]
+      unread: superseded  art-jumper-rotation-retake  [note_s_att_20260824, note_s2249, note]
+      unread: superseded  lane-vp-02b-jumper-slot-red  [authorNotes, drainNotes]
+      unread: superseded  lane-c-f1148-1-trajectory-split  [authorNotes, drainNotes]
+      unread: superseded  jumper-8way-wiring  [note_s_att_20260824]
+      unread: superseded  ap-orders-adapter-wiring  [note]
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+=== leg-npm_run_test_desk-declaration
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs
+
+=== desk-declaration-guard ===
+corpus tree       : linked-worktree
+desk F-IDs        : 2
+desk slugs        : 1
+🔺 desk segments  : 3
+unexamined        : 0
+with a BACKLOG row: 3
+undeclared        : 0 (grandfathered 0)
+
+desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+  line-1 is NOT the one main carries.
+  Both corpora here are TRACKED, so this tree is frozen at its branch point and
+  the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+  would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+  proven by manufacturing: a real defect on main read byte-identically to a clean
+  board from here).
+  Re-run from the main worktree, or pass --root <main worktree>.
+=== leg-node_scripts_nul-audit.mjs
+nul-audit: corpus 26485 text subject(s) — 26086 read, 399 empty.
+nul-audit: excluded 11820 known-binary, 107 UNCLASSIFIED of 38412 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .cpuprofile×29 .bak×14 (no extension)×10 .pid×9 .exit×6 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .sha256×3 .done×3 .stderr×2 .timer×2 .stranded-1e057810×1 .progress×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.

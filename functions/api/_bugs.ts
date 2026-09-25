@@ -24,6 +24,8 @@ export type BugsEnv = LedgerEnv & {
   TELEMETRY?: KVNamespaceLike;
   ACCOUNTS?: KVNamespaceLike;
   BUG_OFFICE_TOKEN?: string;
+  // Read ONLY as the production marker for the CORS dev arm (F-SEC2-2, corsHeaders below). The office sends no mail.
+  RESEND_API_KEY?: string;
 };
 
 export type BugsContext = {
@@ -85,7 +87,7 @@ const REPORT_TTL_SECONDS = 60 * 60 * 24 * 90;
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 
 export async function postBug(context: BugsContext): Promise<Response> {
-  const cors = corsHeaders(context.request, 'POST, OPTIONS');
+  const cors = corsHeaders(context.request, context.env, 'POST, OPTIONS');
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'The clerk cannot take reports from that trail.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'POST') return decline(cors);
@@ -118,7 +120,7 @@ export async function postBug(context: BugsContext): Promise<Response> {
 }
 
 export async function listBugs(context: BugsContext): Promise<Response> {
-  const cors = corsHeaders(context.request, 'GET, OPTIONS');
+  const cors = corsHeaders(context.request, context.env, 'GET, OPTIONS');
   if (!cors) return decline({});
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'GET' || !authorized(context)) return decline(cors);
@@ -149,7 +151,7 @@ export async function listBugs(context: BugsContext): Promise<Response> {
 }
 
 export async function getBug(context: BugsContext): Promise<Response> {
-  const cors = corsHeaders(context.request, 'GET, OPTIONS');
+  const cors = corsHeaders(context.request, context.env, 'GET, OPTIONS');
   if (!cors) return decline({});
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'GET' || !authorized(context)) return decline(cors);
@@ -333,7 +335,19 @@ function parseStoredReport(value: string | null): BugReport | null {
   }
 }
 
-function corsHeaders(request: Request, methods: string): Record<string, string> | null {
+// F-SEC2-2 (reviews/sec-headers-and-data-hygiene-1.md; small-fixes-1, 2026-09-25): this allowlist
+// admitted `http://localhost:*` and `http://127.0.0.1:*` UNCONDITIONALLY, in production, on the office
+// that takes a screenshot from anyone and, with the office token, hands back the complaints ledger:
+// the SEC-8 hole the accounts door closed on 2026-09-24. The dev arm now asks the accounts handler's
+// question (functions/api/_accounts.ts, corsHeaders): is the PRODUCTION MAIL SENDER unbound?
+// `RESEND_API_KEY` is an environment binding, handed to every Pages function in the project, this
+// office included, and nothing derives it from a header, an origin or a host, so no request can talk
+// its way into the dev arm. Pages is this office's only live door: nginx forwards the residual /api/
+// to it, and the droplet ledger (server/ledger/serve.mjs) routes no bug path. Same predicate as the
+// accounts door, kept in step by hand: no shared helper exists, and making one would touch
+// _accounts.ts. The unconfigured arm (no sender: every local fixture, `wrangler pages dev`) still
+// admits localhost, so a developer's own office keeps working.
+function corsHeaders(request: Request, env: BugsEnv, methods: string): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'content-type',
@@ -342,7 +356,12 @@ function corsHeaders(request: Request, methods: string): Record<string, string> 
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  const devOrigins = !env.RESEND_API_KEY;
+  if (
+    ALLOWED_ORIGINS.has(origin) ||
+    /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) ||
+    (devOrigins && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin))
+  ) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;

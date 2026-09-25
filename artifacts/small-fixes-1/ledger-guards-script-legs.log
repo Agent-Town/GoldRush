@@ -1,0 +1,231 @@
+=== node scripts/ghost-ladder-row-guard.mjs --strict -> rc=0 (0s)
+=== ghost-ladder-row-guard ===
+0 ghost ladder row(s).
+ladder corpus: 1 master row(s) selected from 29 clipboard-lead row(s).
+corpus tree: linked-worktree (the board main tracks lives in /Users/robin/Claude/Projects/Gold Rush) — main shipped-evidence cross-check: main
+shipped-evidence corpora: reviews main, goals goals
+ledger files: tasks/BACKLOG.md, tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+=== npm run test:findings-state -> rc=0 (0s)
+
+> gold-rush@0.1.0 test:findings-state
+> node scripts/findings-state-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+declared subjects : 665
+declared closed   : 481
+declared open     : 184
+double-state      : 0
+wide-open advisory : 374 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+=== npm run test:blocker-panel -> rc=0 (1s)
+
+> gold-rush@0.1.0 test:blocker-panel
+> node scripts/blocker-panel-closed-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+panel rows        : 46
+rows with an F-ID : 43
+census closed     : 591
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+=== npm run test:ruling-propagation -> rc=0 (0s)
+> gold-rush@0.1.0 test:ruling-propagation
+> node scripts/ruling-propagation-guard.mjs
+
+ruling-propagation: 14 findings recorded RULED · 70 goal leaves still refuse work · 0 stale
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+  reason corpus     : 62/70 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+      unread: stopped     b4v3-picnic-active-defense  [note_s2131, note]
+      unread: stopped     b4v2-picnic-stake-pressure  [note_s2090, note_s2088, note_s2089, note_s2139, note]
+      unread: stopped     f2251-1-county-board-red  [note_s2251b, note]
+      unread: superseded  art-jumper-rotation-retake  [note_s_att_20260824, note_s2249, note]
+      unread: superseded  lane-vp-02b-jumper-slot-red  [authorNotes, drainNotes]
+      unread: superseded  lane-c-f1148-1-trajectory-split  [authorNotes, drainNotes]
+      unread: superseded  jumper-8way-wiring  [note_s_att_20260824]
+      unread: superseded  ap-orders-adapter-wiring  [note]
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+=== npm run test:citations -> rc=0 (3s)
+
+> gold-rush@0.1.0 test:citations
+> node scripts/citation-title-guard.mjs
+
+=== citation-title-guard ===
+citations scanned : 733  (in 1643 tracked tasks/**/*.md)
+  CARRIES-TITLE   423
+  NUMBER-ONLY     254
+  CARRIES-LINE    56
+grandfathered keys: 266
+NOT GATED         : 2803 citation(s) in 660 tracked .md outside tasks/ — largest logs/suite-red-inventory.md (1239). Scope ruling: F-1252-1, owner's desk.
+PASS — no new bare `spec:line` citation among the 733 scanned. This verdict covers tasks/** only.
+=== npm run test:desk-declaration -> rc=2 (0s)
+desk F-IDs        : 2
+desk slugs        : 1
+🔺 desk segments  : 3
+unexamined        : 0
+with a BACKLOG row: 3
+undeclared        : 0 (grandfathered 0)
+
+desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+  line-1 is NOT the one main carries.
+  Both corpora here are TRACKED, so this tree is frozen at its branch point and
+  the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+  would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+  proven by manufacturing: a real defect on main read byte-identically to a clean
+  board from here).
+  Re-run from the main worktree, or pass --root <main worktree>.
+=== npm run test:desk-birth -> rc=2 (1s)
+   | 🕯️ **HM-01a PARKED (owner-fork), authored 2026-09-24: `tasks/hm-01a-night-shift-lanterns.md`, Night Shift's home bank lit at entry (three posts), the far bank 
+   ⓘ ADVISORY, not a failure: each line above carries an owner gate and a key but
+     leads with neither an admitted glyph nor `**F-`, so this guard never examined
+     it. Widening membership was measured and manufactures false reds out of
+     closure rows (F-2259-1) — read these by hand and desk any that are real.
+of those, undesked        : 0
+
+desk-birth-guard: REFUSING — this is a linked worktree and its STATUS.md
+  line-1 is NOT the one main carries.
+  Both corpora here are TRACKED, so this tree is frozen at its branch point and
+  the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+  would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+  proven by manufacturing: a real defect on main read byte-identically to a clean
+  board from here).
+  Re-run from the main worktree, or pass --root <main worktree>.
+=== node scripts/desk-carryforward-guard.mjs -> rc=2 (0s)
+corpus tree               : linked-worktree
+status corpus             : STATUS.md + 2 part(s): archive/status/2026-08.md, archive/status/2026-07.md
+ledger corpus             : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+previous desk (s2681): 3 items
+this desk                 : 3 items
+dropped                   : 0 (0 accounted for)
+
+desk-carryforward-guard: REFUSING — this is a linked worktree and its STATUS.md
+  line-1 is NOT the one main carries.
+  Both corpora here are TRACKED, so this tree is frozen at its branch point and
+  the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+  would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+  proven by manufacturing: a real defect on main read byte-identically to a clean
+  board from here).
+  Re-run from the main worktree, or pass --root <main worktree>.
+=== node scripts/status-archive-audit.mjs --limit 40 --quiet -> rc=0 (6s)
+board corpus     : STATUS.md + 2 archive month(s): archive/status/2026-08.md, archive/status/2026-07.md
+CLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (3 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 13 same-session rewrites excluded, 0 attended self-updates superseded, of 37 replacements across 40 STATUS.md commits
+=== node scripts/attended-owed-audit.mjs -> rc=0 (0s)
+  ⚠️  anchor targets read from a LINKED WORKTREE — frozen relative to main. A cure main
+      already carries reads as OPEN here. Verdicts below are cross-checked against main.
+  ⏳ OPEN  002-transfer-board-spec-registry-path.md  (0d)  → specs/transfer-board.md
+      F-2472-3 (s2472, control-proven): the registry path this RATIFIED spec names at :15 and :19 puts a new .json inside the engine identity corpus, which rotates computeEngineHash and refuses every existing verified reel — violating the spec's OWN law L1 ADDITIVE ("existing tapes, seeds, eras and ranking are untouched"). The fix is a path, not a ruling, but a fire may not edit a ratified spec (CLAUDE.md §2, §7.7).
+      opened s2472 2026-09-03 · anchor: "assets/rotations/rotation-seeds.json"
+attended-owed: OPEN ITEMS (attended-side) — 1 item(s): 1 open, 0 landed-not-archived, 0 stale-tree-open, 0 uncross-checked, 0 malformed/bad-target
+  (OPEN is not a defect: only the attended side can clear it. --strict to enforce.)
+=== bash scripts/main-lock-gate-guard.test.sh -> rc=0 (0s)
+note: fire-runner line-1 board check PASS — line-1 does not trip the needle ('^ACTIVE|lock ACTIVE| ACTIVE \(s[0-9]+ fire\)')
+PASS: both lock predicates correct on 11 fixtures each (7 hold incl. 3 anchored-prefix blind spots, 3 release, 1 fails safe)
+=== bash scripts/janitor-request-rejection.test.sh -> rc=0 (0s)
+PASS(a): well-formed refresh kept janitor-<epoch>-<name> with no rejection marker
+PASS(b): both malformed historical shapes were visibly filed as janitor-REJECTED
+PASS(c): BUSY refresh remained in tasks/janitor with no archive
+=== bash scripts/lane-dispatch-safety-guard.test.sh -> rc=0 (9s)
+PASS(REFUSES-HOLDS): queue file stayed queued and held-path.txt was logged
+PASS(DISPATCHES-HOLDS-BUT-FULLY-ABSORBED): BOTH-MOVED path with zero residue dispatched and was logged
+PASS(REFUSES-HOLDS-WITH-REAL-RESIDUE): queue file stayed queued for unseen additions and mixed add/delete residue
+PASS(REFUSES-ON-RESIDUE-PROBE-FAILURE): inner probe failure kept the queue file queued
+PASS(DISPATCHES-AHEAD-BUT-ABSORBED): safe squash-dupe shape dispatched
+PASS(DISPATCHES-USABLE): clean ahead=0 lane dispatched
+PASS(DISPATCHES-DIRTY-RC2): DIRTY shares rc=2 but is not HOLDS
+PASS(DISPATCHES-PROBE-FAIL-OPEN): missing probe dispatched
+PASS(HONOURS-DECLARED-BUILD-ON-PREDECESSOR): a full declaration dispatched over a real HOLDS lane
+PASS(REFUSES-PARTIAL-DECLARATION): an undeclared second held path still refused
+PASS(HONOURS-SUPERSET-DECLARATION): declaring a path main already absorbed did not block dispatch
+PASS(REFUSES-DECLARATION-WITHOUT-OPT-IN): a path list alone is not an opt-in
+PASS(REFUSES-OPT-IN-WITHOUT-DECLARED-PATHS): the token alone is not a blank cheque
+PASS(RETRIES-THEN-NAMES-FAIL-OPEN): no-verdict probe was retried once, conceded in the log, and still dispatched
+PASS(RETRY-RECOVERS-REAL-HOLDS): a transient blip over a HOLDS lane was retried and then REFUSED
+=== bash scripts/codex-client-floor.test.sh -> rc=0 (1s)
+codex-client-floor guard (F-1651-1)
+  ok   — lane-runner-v3.sh parses
+  ok   — floor check (line 423) precedes master consumption (line 431)
+  ok   — dispatch invokes "$codex_bin"
+  ok   — no bare-codex dispatch remains
+  ok   — 0.145.0 >= 0.144.1
+  ok   — 0.144.1 >= 0.144.1 (equal)
+  ok   — 0.144.0 < 0.144.1
+  ok   — 0.133.0 < 0.144.1
+  ok   — 1.0.0 >= 0.144.1 (major bump)
+  ok   — codex_ver parses 'codex-cli 0.145.0' -> 0.145.0
+  ok   — self-heals past a 0.133.0 PATH to the nvm 0.145.0 client
+  ok   — prefers a floor-meeting PATH client (no-op when healthy)
+  ok   — refuses (rc 1) when no client meets the floor
+RESULT: 0 failure(s)
+=== bash scripts/runner-restart-recipe.test.sh -> rc=0 (35s)
+  ok   — health-watch.sh routes its restart through start-lane-runner.sh
+  ok   — helper unsets CLAUDE_CONFIG_DIR and CLAUDECODE
+  ok   — helper prepends the resolved client's bin dir to PATH (carries node/npm/npx)
+  ok   — helper refuses when a runner is already alive
+  ok   — helper never rmdir's the runner lock
+  ok   — CODEX_FLOOR agrees: helper 0.144.1 == runner 0.144.1
+  ok   — staleness computation lives in the shared runner-processes.sh (one implementation)
+  ok   — health-watch's runner line calls runner_staleness_note (wired, not merely defined)
+  ok   — health-watch runner line goes STALE when the process predates the script
+  ok   — health-watch runner line is silent when the runner is current (no noise)
+  ok   — stale runner (process older than the newest runner-script commit) is REPORTED
+  ok   — fresh runner is reported as current (no false STALE alarm)
+  ok   — staleness report is WARN-only (rc 0 both arms) — never blocks a restart
+  ok   — staleness report is bounded (<=20 lines)
+RESULT: 0 failure(s)
+=== bash scripts/runner-commit-decoupling-guard.test.sh -> rc=0 (3s)
+runner-commit-decoupling guard (F-1657-1, from F-1656-1)
+  ok   — lane-runner-v3.sh parses
+  ok   — DEFECT REPRODUCES: the compound form leaves HEAD at 'init' with work.txt stranded staged
+  ok   — CURE WORKS: the decoupled form commits the work and leaves the index clean
+  ok   — the ignored path did NOT leak into the decoupled commit
+  ok   — delta commit includes literal *.txt only; moved tracked/raw baseline dirt remains unstaged
+  ok   — factory accounting withheld; logs/session-scratch evidence and src still committed
+  ok   — no commit site is gated on the add's rc
+  ok   — both art routes keep the decoupled form and ordinary lanes use the delta boundary
+  ok   — the debris excludes are still in place on the lane commit site
+  ok   — red path fires — a runner with the `&&` restored is rejected
+  ok   — red path fires — restoring the old broad commit sweeps baseline dirt and is rejected
+  ok   — red path fires — a runner that sweeps logs/ accounting into lane commits is rejected
+  ok   — reverse control fires — a wholesale logs/ exclusion is rejected (retention hole)
+RESULT: 0 failure(s)
+=== node scripts/ledger-mirror-exposure.mjs -> rc=0 (0s)
+LEDGER MIRROR EXPOSURE — LB-01 standing encryption gate
+
+  corpus                  : read (33 mirror(s), 33 read, 0 unreadable)
+  dir                     : /Users/robin/.goldrush/ledger-backups  (default)
+  tables inspected        : ledger-2026-08-24.db:kv[key]; ledger-2026-08-25.db:kv[key]; ledger-2026-08-26.db:kv[key]; ledger-2026-08-27.db:kv[key]; ledger-2026-08-28.db:kv[key]; ledger-2026-08-29.db:kv[key]; ledger-2026-08-30.db:kv[key]; ledger-2026-08-31.db:kv[key]; ledger-2026-09-01.db:kv[key]; ledger-2026-09-02.db:kv[key]; ledger-2026-09-03.db:kv[key]; ledger-2026-09-04.db:kv[key]; ledger-2026-09-04.db:refusals[anon_id,profile_name]; ledger-2026-09-04.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-05.db:kv[key]; ledger-2026-09-05.db:refusals[anon_id,profile_name]; ledger-2026-09-05.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-06.db:kv[key]; ledger-2026-09-06.db:refusals[anon_id,profile_name]; ledger-2026-09-06.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-07.db:kv[key]; ledger-2026-09-07.db:refusals[anon_id,profile_name]; ledger-2026-09-07.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-08.db:kv[key]; ledger-2026-09-08.db:refusals[anon_id,profile_name]; ledger-2026-09-08.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-09.db:kv[key]; ledger-2026-09-09.db:refusals[anon_id,profile_name]; ledger-2026-09-09.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-10.db:kv[key]; ledger-2026-09-10.db:refusals[anon_id,profile_name]; ledger-2026-09-10.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-11.db:kv[key]; ledger-2026-09-11.db:refusals[anon_id,profile_name]; ledger-2026-09-11.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-12.db:kv[key]; ledger-2026-09-12.db:refusals[anon_id,profile_name]; ledger-2026-09-12.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-13.db:kv[key]; ledger-2026-09-13.db:refusals[anon_id,profile_name]; ledger-2026-09-13.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-14.db:kv[key]; ledger-2026-09-14.db:refusals[anon_id,profile_name]; ledger-2026-09-14.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-15.db:kv[key]; ledger-2026-09-15.db:refusals[anon_id,profile_name]; ledger-2026-09-15.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-16.db:kv[key]; ledger-2026-09-16.db:refusals[anon_id,profile_name]; ledger-2026-09-16.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-17.db:kv[key]; ledger-2026-09-17.db:refusals[anon_id,profile_name]; ledger-2026-09-17.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-18.db:kv[key]; ledger-2026-09-18.db:refusals[anon_id,profile_name]; ledger-2026-09-18.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-19.db:kv[key]; ledger-2026-09-19.db:refusals[anon_id,profile_name]; ledger-2026-09-19.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-20.db:kv[key]; ledger-2026-09-20.db:refusals[anon_id,profile_name]; ledger-2026-09-20.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-21.db:kv[key]; ledger-2026-09-21.db:refusals[anon_id,profile_name]; ledger-2026-09-21.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-22.db:kv[key]; ledger-2026-09-22.db:refusals[anon_id,profile_name]; ledger-2026-09-22.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-23.db:kv[key]; ledger-2026-09-23.db:refusals[anon_id,profile_name]; ledger-2026-09-23.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-24.db:kv[key]; ledger-2026-09-24.db:refusals[anon_id,profile_name]; ledger-2026-09-24.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-25.db:kv[key]; ledger-2026-09-25.db:refusals[anon_id,profile_name]; ledger-2026-09-25.db:sqlite_sequence[SKIPPED: no declared columns]
+  keys inspected          : 1580
+  column-class verdicts   : refusals.anon_id, refusals.profile_name = county-standings by SCHEMA (account denylist still checked first)
+  account-class rows      : 0
+  unrecognised rows       : 0
+
+✅ CLEAN — every key in every mirror is county-standings class.
+   Nothing here carries account data; these mirrors are safe to commit.
+=== node scripts/nul-audit.mjs -> rc=0 (3s)
+nul-audit: corpus 26485 text subject(s) — 26086 read, 399 empty.
+nul-audit: excluded 11820 known-binary, 107 UNCLASSIFIED of 38412 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .cpuprofile×29 .bak×14 (no extension)×10 .pid×9 .exit×6 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .sha256×3 .done×3 .stderr×2 .timer×2 .stranded-1e057810×1 .progress×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+=== node scripts/source-pointer-guard.mjs -> rc=0 (0s)
+=== source-pointer-guard ===
+corpus                    : 684 source file(s) under /Users/robin/Claude/Projects/wt-sf1/scripts
+same-file citations checked: 5
+cross-file citations (not checkable here): 5
+PASS — every checkable source pointer still lands on its declaration.
+=== bash foundry/kit/test-init.sh -> rc=0 (1s)
+  ok: no lock taken
+  ok: no log written
+== 10. lane-runner --dry-run: exit 0, flags missing worktrees, no side effects ==
+  ok: lane-runner --dry-run exit 0
+  ok: lane-runner prints DRY-RUN
+  ok: missing worktree flagged for lane-a
+  ok: main workdir resolves to root
+  ok: dry-run left the queue untouched
+  ok: no runner lock taken
+== 11. idempotency: re-run refuses loudly, overwrites nothing ==
+  ok: re-run exited nonzero
+  ok: refusal is loud (REFUSED)
+  ok: existing files untouched
+
+RESULT: 83 passed, 0 failed

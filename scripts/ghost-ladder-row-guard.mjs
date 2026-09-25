@@ -9,7 +9,7 @@
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './is-main.mjs';
 import { SHIPPED, classifyRoot, goalLeaves } from './master-shipped-classifier.mjs';
 import { backlogFiles, backlogText } from './ledger-corpus.mjs';
 
@@ -248,4 +248,4 @@ function main() {
   if (ghosts.length) process.exitCode = 1;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (isMain(import.meta.url)) main();
