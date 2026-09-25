@@ -1,0 +1,22 @@
+{
+  "tag": "sf1",
+  "branch": "fix/small-fixes-1",
+  "port": 5377,
+  "mergeMessage": "drain: merge fix/small-fixes-1 — small-fixes-1 — the bug office refuses localhost origins in production (6 of 20 probe rows wrong before, 0 after), the signed-in account card links the privacy notice (proved on both projects), thirteen scripts find their own name under a symlinked path through scripts/is-main.mjs, the desk guard removes its fixtures; the engine hash moves by the one privacy-link line (Opus 5.5 implementer at max effort; owner 2026-09-25 spare budget)",
+  "hash": "pin",
+  "pinCause": "small-fixes-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; owner 2026-09-25: the spare budget): the signed-in account card links the privacy notice, one line in src/game/ProfileManager.ts (F-SEC2-4); no sim rule, contract, collision, floor or table moved.",
+  "gates": {
+    "releaseBuild": true, "payload": true, "halo": true, "nullFloors": true, "releaseSuite": true, "functions": true, "ledgerBattery": false,
+    "specs": ["e2e/account-card-privacy-link.spec.ts","e2e/profile-first-boot.spec.ts","e2e/task-025-bandits-dont-swim.spec.ts","e2e/m2-01-build-menu.spec.ts"],
+    "guards": ["scripts/is-main.test.mjs", "scripts/function-cors-allowlist.test.mjs", "scripts/worker-type-coverage.test.mjs"]
+  },
+  "cure": "scripts/attended/landings/sf1-cure.sh",
+  "review": { "path": "reviews/small-fixes-1.md", "title": "Drain review: `small-fixes-1`, four small findings closed with tests (Opus 5.5 implementer at max effort; owner 2026-09-25 spare budget)", "body": "scripts/attended/landings/sf1-review.md" },
+  "bookkeeping": {
+    "taskFile": "small-fixes-1.md", "rowKey": "SMALL FIXES 1 LANDED", "rowEmoji": "🧰",
+    "rowText": "F-SEC2-2 the bug office refuses localhost origins in production (probe 20 rows: 6 wrong before, 0 after; unconfigured still admits localhost); F-SEC2-4 the signed-in account card links the privacy notice, same link and wording as the sign-in form (`e2e/account-card-privacy-link.spec.ts`, 4/4 both projects, 0 console errors); F-LS1-2 `scripts/is-main.mjs` (real-path comparison) in thirteen scripts, two as pinned byte-identical copies because fixtures relocate them alone, proved through a symlinked path (7 arms); F-EO1-5 the desk guard removes its fixtures (100/100, 0 survivors), merged cleanly with main's own fix. Gates: tsc/build 0, accounts 26+86+16, mp 528, is-main 7/7. Engine hash PINNED {PIN} (one UI line). Owner desk F-SF1-7 (confirm RESEND_API_KEY in Pages production and preview; leaked test fixtures listed, not deleted). Correctives: F-SF1-6 attended (the sweep-blind template-literal leaker), F-SF1-1 six more doors admitting localhost (after kv-counters-to-ledger-2), F-SF1-2 twenty-three more main-module checks (after the test and seed implementers land).",
+    "statusPhrase": "four small findings closed with tests: the bug office refuses localhost in production, the signed-in card links the privacy notice, thirteen scripts know their own name under a symlink, the desk guard cleans up",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh sf1)"
+  },
+  "deploy": true, "preview": true, "evidenceDir": "artifacts/small-fixes-1"
+}
