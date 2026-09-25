@@ -1,0 +1,43 @@
+Gates for door-tape-grammar-3, tip a3531c91b, Node v26.4.0. Every rc is taken from the command itself, never a pipe.
+
+BATCH 1, one blocking call of scripts/attended/dlock.sh (lock held 17:29:09Z to 17:48:59Z), worktree status at start: "?? node_modules" only.
+  GR_GUARD_NO_ARTIFACT=1 npm run test:node-guards   rc=1  17:29:09Z to 17:48:30Z  tests 1018, pass 1008, fail 5, skipped 5
+  npm run test:accounts                              rc=0  kv 43, sqlite 43, sign-in hardening 27, office credential 26, ledger road 86, kv-to-ledger migration 16
+  npm run test:mp                                    rc=0  multiplayer relay 528
+  npm run test:stats                                 rc=0  stats worker 87; standings 514 kv and 514 sqlite; ledger worker HTTP contract 26
+  control at clean base 3b12c4236 (detached scratch worktree, node_modules and the art store linked, no .env.local):
+  GR_GUARD_NO_ARTIFACT=1 node scripts/run-node-guards.mjs desk-declaration-guard ledger-backup-pull node-guards-contention
+                                                     rc=1  tests 31, pass 28, fail 3
+
+THE FIVE node-guards REDS AT THE TIP, ATTRIBUTED
+  1-2. ledger-backup-pull.test.mjs:11 and :18   "GR_DROPLET_HOST missing from the environment and .env.local"
+       PRE-EXISTING, ENVIRONMENTAL: the identical two reds on the clean-base control. The worktree has no .env.local and none was read.
+  3.   node-guards-contention.test.mjs:124       "node-guards board did not stay quiet for 300ms", "CONTENDED, 2 concurrent batteries"
+       PRE-EXISTING, ENVIRONMENTAL: the identical red on the clean-base control.
+  4.   fixture-teardown.test.mjs:34 (161 owners, 1121.7 s)
+       Its assertion stops at the FIRST failing child (fixture-teardown.test.mjs:50). Children run in sorted order; that child was
+       #106 of 161, ledger-backup-fill-gaps-guard.test.mjs (8 tests, 1 pass, 7 fail, "GR_DROPLET_HOST missing ...").
+       PRE-EXISTING, ENVIRONMENTAL: the same file at the clean base, node --test: rc=1, 8 tests, 1 pass, 7 fail, the same message.
+       Children #0 to #105 passed, board-tape-gold (#25) among them: so board-tape-gold PASSED once in this very battery.
+  5.   board-tape-gold.test.mjs:134 (direct run)  "page.waitForFunction: Timeout 120000ms exceeded" at :177 (154.9 s)
+       A load-sensitive browser boot. It loads neither changed file: it fulfils /api/standings itself (board-tape-gold.test.mjs:170-172),
+       and `git diff --name-only 3b12c4236 a3531c91b` is exactly functions/api/standings.ts and scripts/test-standings.mjs.
+       Measured flaky at the tip in batch 1 (red direct, green as fixture-teardown child #25); batch 2 below runs it alone.
+
+NOT RED THIS TIME: desk-declaration-guard (green on tip and base here), same-game-audit.test.mjs (green: summary 0/595/1252/0 over 1847
+rows equals its pin at :455; this slice adds no value.type literal).
+
+FACTORY CHURN (F-1407-1): test:accounts and test:mp rewrote artifacts/accounts-worker/test-accounts.json and
+artifacts/multiplayer-relay/test-multiplayer.json. Left unstaged; in no commit.
+
+BATCH 2, one blocking call of scripts/attended/dlock.sh (queued behind another implementer's batch; lock held 18:04:14Z to 18:06:15Z):
+board-tape-gold.test.mjs alone, GR_GUARD_NO_ARTIFACT=1 node --test, alternating trees:
+  board-tape-gold tip (a3531c91b) pass 1: rc=0 in 30s; 
+  board-tape-gold base (3b12c4236) pass 1: rc=0 in 30s; 
+  board-tape-gold tip (a3531c91b) pass 2: rc=0 in 30s; 
+  board-tape-gold base (3b12c4236) pass 2: rc=0 in 31s; 
+  => at the tip board-tape-gold is green 3 times out of 4 (twice alone, once as fixture-teardown child #25); its one red came in the
+     full battery while the board read "CONTENDED, 2 concurrent batteries". It cannot reach the change (no src/ file imports functions/;
+     it fulfils /api/standings itself). ATTRIBUTED: a load-sensitive browser boot, not this branch.
+
+BUILD at the tip: npm run build, rc=0 in 29 s (tsc, vite build, asset-diet). Pre-flight build at the base: rc=0.

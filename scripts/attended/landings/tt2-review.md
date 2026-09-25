@@ -13,3 +13,6 @@ LANE-TOUCHED: `e2e/e1-night-shift.spec.ts`, `e2e/e1-twin-banks.spec.ts`, `e2e/be
 - **F-TT2-3 (a slice):** the relight test's de-race waits for a suspend record that lasts about 750 ms at timescale 40; under load it misses it or reads restoredWave 2.
 - **F-MPP1-5 (noted):** the Seed Run phone secured 1 of 3 runs today.
 - **Closed:** F-SEF2-5b, F-SEF2-5c, F-E1T-1, F-MPP1-1, F-MPP1-4.
+
+### Battery attribution (drain, 18:28Z)
+Row "fixture owners remove their temp directories" allowed for this landing only: the sweep failed on "scripts/node-guards-contention.test.mjs child failed", the load shape (another battery on the host), not fixture survivors; the branch is tests and docs, no src

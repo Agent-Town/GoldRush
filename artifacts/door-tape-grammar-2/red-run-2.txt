@@ -1,0 +1,27 @@
+contract clock census 42/25/17/0
+recorder reel kv checks (40)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: a stored row with a playbook use whose recording carries agent orders naming a since-retired verb is RETIRED and COUNTED, not dropped
++ actual - expected
+
+  [
+    0,
++   0
+-   1
+  ]
+
+    at equal (file:///Users/robin/Claude/Projects/wt-dtg1/scripts/test-standings.mjs:1874:10)
+    at checkRetiredEmbeddedOrders (file:///Users/robin/Claude/Projects/wt-dtg1/scripts/test-standings.mjs:572:5)
+    at async file:///Users/robin/Claude/Projects/wt-dtg1/scripts/test-standings.mjs:55:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ 0, 0 ],
+  expected: [ 0, 1 ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.4.0

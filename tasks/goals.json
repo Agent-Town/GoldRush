@@ -6190,24 +6190,32 @@
             {
               "id": "live-seed-rotation-1",
               "title": "Owner ruling 2026-09-24 item 2 (a) (the review's SIM-2): humans ride the open rotation's seed per contract instead of the constant gold-rush seed",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "live-seed-rotation-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-24",
               "authoredBy": "attended (Fable) from the owner's rulings of 2026-09-24",
               "liftedFrom": "gate-side: run by the attended session as an Opus implementer under the drain lock; lifted at launch",
               "queuedAt": "2026-09-25",
-              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-lsr1, branch feat/live-seed-rotation-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\""
+              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-lsr1, branch feat/live-seed-rotation-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\"",
+              "mergeHash": "da13ea750944dfd4182b58c482613df927b349bd",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/live-seed-rotation-1.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh lsr1)"
             },
             {
               "id": "rotation-r2026w40",
               "title": "Week 40 rotation minted a week ahead on the owner-held salt (RT-01 form), the skill.md rotations block refreshed, RT-01 cadence moved to Wednesday (F-RT40-1, F-LSR1-2)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "rotation-r2026w40.md",
               "lane": "attended, branch rt/r2026w40, landed by the toolkit as rt40 with deploy",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable), 2026-09-25",
-              "queuedAt": "2026-09-25"
+              "queuedAt": "2026-09-25",
+              "mergeHash": "73553e691217907c60090adc3c392655f6a7beaf",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/rotation-r2026w40.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh rt40)"
             },
             {
               "id": "hm-06-twin-banks-braid-water",
@@ -6373,12 +6381,16 @@
             {
               "id": "test-truth-2",
               "title": "Five test-side findings get their true instrument (the Night Shift luminance probe, the Twin Banks determinism wait, the reed-field aliveness, the secure spec bank count and secure wave), then the ten secured pairs measured for banks, board and reload",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "test-truth-2.md",
               "lane": "scratch worktree /Users/robin/Claude/Projects/wt-tt2 beside the primary, branch test/test-truth-2, Opus 5.5 implementer at max effort (the session inherits), port 5323, under the attended drain lock",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) on the owner word of 2026-09-25 (the spare budget)",
-              "queuedAt": "2026-09-25"
+              "queuedAt": "2026-09-25",
+              "mergeHash": "5209d4d037d9661562c70ed53af049b79fdc3900",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/test-truth-2.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh tt2)"
             },
             {
               "id": "small-fixes-1",
@@ -6403,22 +6415,72 @@
             {
               "id": "door-tape-grammar-1",
               "title": "HOTFIX: the county door accepts the recorder's playbookUses and motorActions input-log keys (written since 2026-09-05) so a human standing with a reel is no longer refused as bad_payload (F-LSR1-0, verified in code by the attended session)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "door-tape-grammar-1.md",
               "lane": "scratch worktree /Users/robin/Claude/Projects/wt-dtg1 beside the primary, branch fix/door-tape-grammar-1, Opus 5.5 implementer at max effort, P0; landed with functions gates and the ledger battery, deployed (Pages and the droplet ledger restart)",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from F-LSR1-0, 2026-09-25",
-              "queuedAt": "2026-09-25"
+              "queuedAt": "2026-09-25",
+              "mergeHash": "c582dda251b3c841e256cdf8f7b2179dd3039038",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/door-tape-grammar-1.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg1, P0 at the front of the queue)"
             },
             {
               "id": "door-tape-grammar-2",
               "title": "HOTFIX continuation (P0): the county door accepts the three action verbs the client writes (prospector_dispatch, context_action recover, multiplayer agent_orders) and the retirement walk covers playbookUses (F-DTG1-1, F-DTG1-2)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "door-tape-grammar-2.md",
               "lane": "same worktree wt-dtg1, branch fix/door-tape-grammar-2 stacked on the hotfix, Opus 5.5 implementer at max effort (the grammar-1 agent continued); functions and ledger gates; deployed",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from F-DTG1-1, 2026-09-25",
-              "queuedAt": "2026-09-25"
+              "queuedAt": "2026-09-25",
+              "mergeHash": "dd5c74b97261c700f98b0430640955ae847c39ba",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/door-tape-grammar-2.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg2, P0, directly after grammar-1)"
+            },
+            {
+              "id": "door-tape-grammar-3",
+              "title": "The three places where the county door is looser than the client (whitespace-only place_build and pick_upgrade ids, an unknown set_agent_ability) are tightened to the client grammar, so a stored reel can always be loaded (F-DTG2-2)",
+              "status": "merged",
+              "taskFile": "door-tape-grammar-3.md",
+              "lane": "scratch worktree /Users/robin/Claude/Projects/wt-dtg3, branch fix/door-tape-grammar-3, Opus 5.5 implementer at max effort; functions and ledger gates; deploy",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) from F-DTG2-2, 2026-09-25",
+              "queuedAt": "2026-09-25",
+              "mergeHash": "8eca6385e3845eb3df973f85e95aa03fd22c6373",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/door-tape-grammar-3.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg3)"
+            },
+            {
+              "id": "door-tape-grammar-4",
+              "title": "The last two ids the door judges looser than the client (research_pick, context_action targets) join the client-judged set; the stale validateTape comment corrected (F-DTG3-1, F-DTG3-5)",
+              "status": "merged",
+              "taskFile": "door-tape-grammar-4.md",
+              "lane": "same worktree wt-dtg3, branch fix/door-tape-grammar-4 stacked on grammar-3, Opus 5.5 implementer at max effort (the grammar-3 agent continued); functions and ledger gates; deploy",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) from F-DTG3-1, 2026-09-25",
+              "queuedAt": "2026-09-25",
+              "mergeHash": "df691d8b100bfa55a61c6a91c5a95538ea3df1d8",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/door-tape-grammar-4.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg4, after grammar-3)"
+            },
+            {
+              "id": "same-game-audit-verbs-1",
+              "title": "The same-game audit exempts agent_orders (the rider own channel) and measures the prospector_dispatch pairing before re-pinning its summary (F-DTG2-1)",
+              "status": "merged",
+              "taskFile": "same-game-audit-verbs-1.md",
+              "lane": "scratch worktree /Users/robin/Claude/Projects/wt-sga1, branch fix/same-game-audit-verbs-1, Opus 5.5 implementer at max effort; tests and a bench doc; no deploy",
+              "authoredAt": "2026-09-25",
+              "authoredBy": "attended (Fable) from F-DTG2-1, 2026-09-25",
+              "queuedAt": "2026-09-25",
+              "mergeHash": "729d97af0c4acbe1c5490aff1f09104c19f66a2f",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/same-game-audit-verbs-1.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh sga1)"
             },
             {
               "id": "worktree-vite-cache-1",

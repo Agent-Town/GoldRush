@@ -1,0 +1,26 @@
+{
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "seedMode": "live",
+  "rawVerdicts": [
+    {
+      "status": 400,
+      "body": {
+        "ok": false,
+        "error": "bad_payload",
+        "message": "Standing not accepted."
+      }
+    }
+  ],
+  "answers": [
+    {
+      "status": 200,
+      "body": {
+        "ok": true,
+        "stored": true,
+        "rank": 1,
+        "decidedBy": "crown",
+        "rotationId": "r2026w39"
+      }
+    }
+  ]
+}

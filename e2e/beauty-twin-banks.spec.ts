@@ -216,37 +216,147 @@ test('the beauty pass pays its frame budget, measured against its own build', as
   expectClean(errors);
 });
 
+/**
+ * WHERE THE REED FIELD MOVES (F-E1T-1, test-truth-2, 2026-09-25).
+ *
+ * This test used to count moved pixels over the lower 55% of the run-camera frame (the hero standing at
+ * the north marker, 0, 12) and has read 0 against a floor of 60 on clean main since `8207be490`
+ * (2026-09-24, "replace Twin Banks scatter with grounded riparian cards"). Read, not guessed:
+ *  - the cards are NOT all still. That commit re-skinned the six scatter classes as reed, willow and
+ *    driftwood cards (desktop 248: 150 reeds, 30 willows, 68 driftwood; phone 102), and five of the
+ *    classes are static by design (flattened into the opaque batches, or the ruts' own draw), but the
+ *    `reeds` class keeps `reedMaterial()`'s vertex sway (src/world/Scatter.ts: `onBeforeCompile` bends
+ *    each blade by `uReedTime`, which `onBeforeRender` advances on the wall clock) and is never
+ *    batched. So 44 of the 150 reed cards on desktop still sway (18 of 62 on the phone);
+ *  - what moved is WHERE a card may stand. The riparian clause of `staticExcluded` keeps every card out
+ *    of both build zones plus a 1 m pad and out of both ford approaches, and off any point within 1 m of
+ *    water. Twin Banks' build zones are the whole of both banks from |z| 7 to 30, so every card now
+ *    stands in the braid corridor between them (|z| under 6: the dry strips beside the two channels and
+ *    the plait between them) or beyond the zones' east and west ends. The region this test measured is
+ *    the north build zone: measured at that pose, 14 swaying cards in view and 0 of them in the region,
+ *    and 0 moved pixels there (artifacts/test-truth-2/probes/out/desktop-chrome-reed.json);
+ *  - at the run camera the channel water, animated on the same wall clock, sits directly behind the
+ *    north strip's cards, so a count there cannot tell a reed from a ripple (moved-pixel density inside
+ *    the cards' footprints 0.085 against 0.071 in the same footprints moved 2.5 m along the bank).
+ *
+ * So the claim is kept and re-aimed at what the bank actually does: the hero stands at the contract's
+ * own start, the `south-claim-stake` (0, -12), where the south strip's swaying cards stand on dry bank
+ * between the hero and the south channel, their footprints clear of the water below them. The census
+ * comes from the live owner module (the same seeded `DetailScatter` the riparian test reads), the
+ * motion is counted INSIDE the swaying cards' own projected footprints, and a negative control from the
+ * same two frames (the same footprints shifted 2.5 m along the bank, minus any reed footprint) proves
+ * the motion is the reeds'. Measured at this pose (five recorded runs, and the probe): 6 swaying cards,
+ * 308 to 515 moved pixels inside their footprints (density 0.028 to 0.046) against 0.0004 to 0.0011 in
+ * the control. Motion is never manufactured here: the test animates nothing, it only reads two frames.
+ */
+const CLAIM_STAKE = { x: 0, z: -12 };
+
+type SwayingCensus = {
+  swayingClasses: Array<{ id: string; card: string | null; instances: number }>;
+  cards: Array<{ x: number; y: number; z: number; scale: number }>;
+};
+
+async function swayingReedCensus(page: Page): Promise<SwayingCensus> {
+  return page.evaluate(async () => {
+    const { DetailScatter } = await Function('return import("/src/world/Scatter.ts")')();
+    const scatter = new DetailScatter();
+    type Entry = {
+      profile: { id: string; material: { userData: { riparianCard?: string; reedTime?: unknown } } };
+      instances: Array<{ x: number; y: number; z: number; scale: number }>;
+    };
+    const swaying = (scatter.classes as Entry[]).filter((entry) => Boolean(entry.profile.material.userData.reedTime));
+    const census = {
+      swayingClasses: swaying.map((entry) => ({ id: entry.profile.id, card: entry.profile.material.userData.riparianCard ?? null, instances: entry.instances.length })),
+      cards: swaying.flatMap((entry) => entry.instances.map((card) => ({ x: card.x, y: card.y, z: card.z, scale: card.scale }))),
+    };
+    scatter.dispose();
+    return census;
+  });
+}
+
+type ScreenBox = { x0: number; x1: number; y0: number; y1: number };
+
+/** A card's screen footprint: root to blade tip (1.25 m unscaled), half a card width either side. */
+async function cardFootprint(page: Page, card: { x: number; y: number; z: number; scale: number }): Promise<ScreenBox | null> {
+  const points = await page.evaluate((c) => {
+    const at = (x: number, y: number) => window.__GR_TEST__?.screenPoint(x, c.z, y) ?? null;
+    return { base: at(c.x, c.y), top: at(c.x, c.y + 1.25 * c.scale), mid: at(c.x, c.y + 0.6 * c.scale), side: at(c.x + 0.7 * c.scale, c.y + 0.6 * c.scale) };
+  }, card);
+  const { base, top, mid, side } = points;
+  if (!base || !top || !mid || !side || !(base.inView || top.inView)) return null;
+  const halfWidth = Math.max(3, Math.abs(side.x - mid.x));
+  return { x0: Math.min(base.x, top.x) - halfWidth, x1: Math.max(base.x, top.x) + halfWidth, y0: top.y - 2, y1: base.y + 2 };
+}
+
 test('the reed field is alive in a still frame', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   test.skip(testInfo.project.name !== 'desktop-chrome', 'one viewport is enough to prove motion');
   const errors = collectErrors(page);
   await boot(page);
-  await poseAt(page, RUN_CAMERA.x, RUN_CAMERA.z);
+  const census = await swayingReedCensus(page);
+  // The census first: exactly one class carries the sway, it is the reeds class drawn as a reed card,
+  // and it holds the contract's `classCounts.reeds` (44) at desktop density.
+  expect(census.swayingClasses).toEqual([{ id: 'reeds', card: 'reeds', instances: 44 }]);
+  await poseAt(page, CLAIM_STAKE.x, CLAIM_STAKE.z);
   await hideGameChrome(page);
-  // A vertex sway cannot be photographed, so it is measured: two frames 600 ms apart, counted
-  // over the near bank only (below the braid, away from hero and companion idle animation).
+  const viewport = page.viewportSize()!;
+  const heroBox = { x0: viewport.width * 0.4, x1: viewport.width * 0.6, y0: viewport.height * 0.45, y1: viewport.height * 0.72 };
+  const footprints: Array<{ reed: ScreenBox; control: ScreenBox | null }> = [];
+  for (const card of census.cards) {
+    const reed = await cardFootprint(page, card);
+    if (reed) footprints.push({ reed, control: await cardFootprint(page, { ...card, x: card.x + 2.5 }) });
+  }
+  expect(footprints.length, 'swaying reed cards in view from the claim stake').toBeGreaterThanOrEqual(3);
+
+  // A vertex sway cannot be photographed, so it is measured: two frames 600 ms apart, counted inside
+  // the swaying cards' footprints and inside the control footprints, away from the hero.
   const first = PNG.sync.read(await page.screenshot());
   await page.waitForTimeout(600);
   const second = PNG.sync.read(await page.screenshot());
-  const viewport = page.viewportSize()!;
-  const heroBox = { x0: viewport.width * 0.4, x1: viewport.width * 0.6, y0: viewport.height * 0.45, y1: viewport.height * 0.72 };
-  let moved = 0;
-  for (let y = Math.round(first.height * 0.45); y < first.height; y += 1) {
+  const sx = first.width / viewport.width;
+  const sy = first.height / viewport.height;
+  const paint = (mask: Uint8Array, box: ScreenBox) => {
+    for (let y = Math.max(0, Math.floor(box.y0 * sy)); y < Math.min(first.height, Math.ceil(box.y1 * sy)); y += 1) {
+      for (let x = Math.max(0, Math.floor(box.x0 * sx)); x < Math.min(first.width, Math.ceil(box.x1 * sx)); x += 1) mask[y * first.width + x] = 1;
+    }
+  };
+  const reedMask = new Uint8Array(first.width * first.height);
+  const controlMask = new Uint8Array(first.width * first.height);
+  for (const footprint of footprints) {
+    paint(reedMask, footprint.reed);
+    if (footprint.control) paint(controlMask, footprint.control);
+  }
+  const counts = { reedArea: 0, movedInReeds: 0, controlArea: 0, movedInControl: 0 };
+  for (let y = 0; y < first.height; y += 1) {
     for (let x = 0; x < first.width; x += 1) {
-      const inViewportX = (x * viewport.width) / first.width;
-      const inViewportY = (y * viewport.height) / first.height;
+      const index = y * first.width + x;
+      const inReed = reedMask[index] === 1;
+      const inControl = controlMask[index] === 1 && !inReed;
+      if (!inReed && !inControl) continue;
+      const inViewportX = x / sx;
+      const inViewportY = y / sy;
       if (inViewportX > heroBox.x0 && inViewportX < heroBox.x1 && inViewportY > heroBox.y0 && inViewportY < heroBox.y1) continue;
-      const offset = (y * first.width + x) * 4;
+      const offset = index * 4;
       const delta =
         Math.abs(first.data[offset]! - second.data[offset]!) +
         Math.abs(first.data[offset + 1]! - second.data[offset + 1]!) +
         Math.abs(first.data[offset + 2]! - second.data[offset + 2]!);
-      if (delta > 18) moved += 1;
+      if (inReed) {
+        counts.reedArea += 1;
+        if (delta > 18) counts.movedInReeds += 1;
+      } else {
+        counts.controlArea += 1;
+        if (delta > 18) counts.movedInControl += 1;
+      }
     }
   }
+  const reedDensity = counts.movedInReeds / Math.max(1, counts.reedArea);
+  const controlDensity = counts.movedInControl / Math.max(1, counts.controlArea);
+  const evidence = { stage: STAGE, pose: CLAIM_STAKE, swayingCards: census.cards.length, inView: footprints.length, ...counts, reedDensity, controlDensity };
   await mkdir(ARTIFACT_DIR, { recursive: true });
-  await writeFile(path.join(ARTIFACT_DIR, 'reed-motion.json'), `${JSON.stringify({ stage: STAGE, movedPixels: moved }, null, 2)}\n`);
-  expect(moved, 'the reed sway should move pixels on the dry bank between two frames').toBeGreaterThan(60);
+  await writeFile(path.join(ARTIFACT_DIR, 'reed-motion.json'), `${JSON.stringify(evidence, null, 2)}\n`);
+  expect(counts.movedInReeds, `the reed sway should move pixels inside the swaying cards: ${JSON.stringify(evidence)}`).toBeGreaterThan(60);
+  expect(reedDensity, `the motion is the reeds', not the frame's: ${JSON.stringify(evidence)}`).toBeGreaterThan(4 * controlDensity);
   expectClean(errors);
 });
 

@@ -13,3 +13,9 @@ LANE-TOUCHED: `src/game/liveSeed.ts` (new), `src/game/Game.ts` (two literals), `
 - **F-LSR1-2 (ops, on the desk with a recommendation):** a bundle without the open week falls back to last week and the door refuses every such standing until a deploy lands; week 39 was minted three days late and week 40 is not minted as of this landing (week 39 closes Monday 2026-09-28 00:00 UTC). The RT-01 mint must run a week ahead.
 - **F-LSR1-3 (a slice):** `View.ts` publishes the URL seed or `gold-rush`, not the run's seed.
 - **F-LSR1-5 (documented):** "Try Again" keeps the old seed after Monday; a suspended run resumed across Monday mixes seeds; a rider joining after the close is refused `setup_mismatch`.
+
+### Battery attribution (drain, 17:32Z)
+Three reds in the chain battery: the two registry rows are the expected pre-pin reds of a hash-moving branch (default-allowed) and the fixture sweep failed on "scripts/bench-seeds.test.mjs child failed", the same pre-pin red seen through the sweep child; the pin cures it. Allowed for this landing only.
+
+### Drain correction (17:40Z)
+The drain's first item-4 edit made the Ride Together card show the week label INSTEAD of the seed, which broke the implementer's own room row (`e2e/live-seed-rotation.spec.ts:88` asserts the exact seed on `ride-contract`) on both projects; the landing's e2e caught it and the verdict refused. The card now shows the label and the exact seed together ("Week 39 claim (e1-the-claim-r2026w39-…)", `38c0c03c3`); the live-seed spec and the lobby spec pass 24 of 24 on both projects against a private server. The landing was re-run fresh, not resumed.
