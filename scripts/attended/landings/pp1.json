@@ -1,0 +1,20 @@
+{
+  "tag": "pp1",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5371,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 (sol-play-proofs-1) — the play-proofs campaign, run 1: the shared native driver and five gated proofs; the Incline proven on both projects (cart delivered, railcar defeated, banked, reloaded), Blackout Ridge secured and banked with its storage goal unproved, the Baron, Twin Banks and the Pressure Garden held after two honest attempts each, zero errors on all ten rows, no source touched (Astra gpt-6-astra on the ChatGPT subscription; owner 2026-09-25 \"Can you do play proofs using Astra for these maps? That would be good.\")",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": false, "ledgerBattery": false,
+    "specs": ["e2e/native-proofs/e2-incline.spec.ts", "e2e/locked-win.spec.ts", "e2e/task-025-bandits-dont-swim.spec.ts", "e2e/m2-01-build-menu.spec.ts"],
+    "warmup": ["/", "/?contract=the-claim"]
+  },
+  "review": { "path": "reviews/sol-play-proofs-1.md", "title": "Drain review: `sol-play-proofs-1`, the play-proofs campaign run 1: the Incline proven, Blackout Ridge half proven, three Frontier-era maps held (Astra; owner 2026-09-25)", "body": "scripts/attended/landings/pp1-review.md" },
+  "bookkeeping": {
+    "taskFile": "sol-play-proofs-1.md", "rowKey": "PLAY PROOFS RUN 1 LANDED", "rowEmoji": "🎮",
+    "rowText": "Astra, fifty-five minutes, five maps on desktop and phone with a shared native driver (`e2e/native-proofs/driver.ts`, real inputs, read-only diagnostics) and one gated spec per map (`GR_NATIVE_PROOF=1`; ten skipped with the env unset, the default battery's collection unchanged). The Incline: full proof both projects (wave 14, cart delivered 180/180, railcar defeated, banked, Book back, reload byte-identical). Blackout Ridge: PARTIAL (wave 12 secured, banked, reloaded; the authored storage goal unproved, F-PP1-5). The Baron (F-PP1-1: died wave 16 and wave 23, the Rocket Cart at 62 percent), Twin Banks (F-PP1-2: died 19 and 18 of 20) and the Pressure Garden (F-PP1-3: two of three boilers hot, died wave 11 of 12) are HOLDS after two honest attempts each, not impossibilities; a planned third attempt comes at the campaign's end with what the later maps teach the driver, unless the owner says otherwise (veto window). F-PP1-4 cured in the run (the Incline's Book launch). All ten rows zero errors; no src, no contract, no store. Engine hash unchanged {PIN}; no deploy. Run 2 (`sol-play-proofs-2`) carries the remaining list from Blackout Ridge onward.",
+    "statusPhrase": "Astra's play proofs, run 1: the Incline proven end to end, Blackout Ridge secured and banked, the Baron, Twin Banks and the Pressure Garden held after two honest attempts; run 2 queued",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh pp1)"
+  },
+  "deploy": false, "preview": false, "evidenceDir": "artifacts/sol/play-proofs/run-1/drain"
+}
