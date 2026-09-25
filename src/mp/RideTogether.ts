@@ -3,6 +3,7 @@ import { getDebugSeed } from '../core/DebugParams';
 import { readDifficultyPreset } from '../game/Balance';
 import { freshMetaProgress, loadMetaProgress } from '../game/MetaProgress';
 import { hasRocketCartCaptured } from '../game/Medals';
+import { resolveLiveSeed } from '../game/liveSeed';
 import { contractEpochId, DEFAULT_CONTRACT_ID } from '../meta/ContractFamilies';
 import { browserResearchStorage, loadResearchState } from '../meta/ResearchTree';
 import type { LockstepClientOptions, MultiplayerSetup } from './LockstepClient';
@@ -193,7 +194,10 @@ export function currentMultiplayerSetup(contractId = DEFAULT_CONTRACT_ID): Multi
   const research = loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() }, contractEpochId(contractId));
   return {
     contractId,
-    seed: getDebugSeed() ?? 'gold-rush',
+    // The host's resolver result seeds the room, and a joiner resolves the same contract's week from the
+    // same registry, so the full-setup compare (`probeRideRoom` here, `setup_mismatch` at the relay)
+    // still agrees. A rider who joins after Monday 00:00 UTC resolves the new week and is refused, not seated.
+    seed: getDebugSeed() ?? resolveLiveSeed(contractId),
     difficultyPreset: readDifficultyPreset(),
     meta,
     research,

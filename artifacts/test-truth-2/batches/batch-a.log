@@ -1,0 +1,783 @@
+BATCH A start 2026-09-25T11:26:22Z
+branch 2cf3feea4300b45df6f2fb455e7e870eea8e051b (dirty: 3 tracked files)
+control 517822b351286d3e36d47be3ad5c28461cb304e8
+control vite pid 85493
+vite dev up on 5325 2026-09-25T11:26:25Z (Content-Type: text/javascript)
+
+== CONTROL night-shift: ramps + lantern post, both projects 2026-09-25T11:26:25Z | load 7.48 14.77 25.73
+(node:85639) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+
+(node:85750) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.22819529411764708,"darkHero":0.059641568627450986,"heroRatio":0.2613619569065369,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   0.2613619569065369
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:86016) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:86436) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  2) [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.9326211764705883,"darkHero":0.9326211764705883,"heroRatio":1,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   1
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:86705) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  3) [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.35
+    Received:    0.23704156862745096
+
+      434 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      435 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_SPRITE_LIGHT());
+    > 436 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+          |                                                 ^
+      437 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      438 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+      439 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:436:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+  1 passed (37.4s)
+rc=1
+
+== CONTROL twin-banks: seeded diagnostics x5, both projects 2026-09-25T11:27:03Z | load 9.44 14.28 25.04
+
+Running 10 tests using 1 worker
+
+[1/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  1) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.3672938919067383,
+    +     "y": 0.02688779068849728,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[2/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[3/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  2) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.02688779068849728,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[4/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  3) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.02688779068849728,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-desktop-chrome-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[5/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[6/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[7/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  4) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.07178324562509593,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[8/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  5) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.07178324562509593,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[9/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  6) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.07178324562509593,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[10/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  7) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.07178324562509593,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  7 failed
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───
+  3 passed (1.3m)
+rc=1
+
+== CONTROL beauty-twin-banks: reed field, both projects 2026-09-25T11:28:20Z | load 18.29 15.90 24.68
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame
+  1) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+
+    Error: the reed sway should move pixels on the dry bank between two frames
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 60
+    Received:   0
+
+      247 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+      248 |   await writeFile(path.join(ARTIFACT_DIR, 'reed-motion.json'), `${JSON.stringify({ stage: STAGE, movedPixels: moved }, null, 2)}\n`);
+    > 249 |   expect(moved, 'the reed sway should move pixels on the dry bank between two frames').toBeGreaterThan(60);
+          |                                                                                        ^
+      250 |   expectClean(errors);
+      251 | });
+      252 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/beauty-twin-banks.spec.ts:249:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[2/2] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame
+  1 failed
+    [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+  1 skipped
+rc=1
+
+== CONTROL secure: e10-river desktop 2026-09-25T11:28:32Z | load 16.78 15.65 24.49
+(node:92116) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:92175) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-river plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-river plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: banks: the click wrote no new secured row for e10-river at >= wave 0 (0 new row(s): [])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      899 |
+      900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+          |                                                          ^
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      904 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/playability-secure.spec.ts:901:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-cdb56-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-cdb56-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-river plays to its secure wave, banks, reloads and returns to the board @slow 
+rc=1
+port 5325 released
+branch vite pid 9615
+vite dev up on 5323 2026-09-25T11:31:42Z (Content-Type: text/javascript)
+
+== PROBES night-shift + reed-field, both projects 2026-09-25T11:31:42Z | load 9.31 12.53 21.39
+
+Running 6 tests using 1 worker
+
+[1/6] [desktop-chrome] › artifacts/test-truth-2/probes/night-shift.probe.ts:115:1 › probe: Night Shift hero luminance, day and dark, per height and space
+[2/6] [desktop-chrome] › artifacts/test-truth-2/probes/night-shift.probe.ts:157:1 › probe: Night Shift lantern ring, in and out of radius, per height and space
+[3/6] [desktop-chrome] › artifacts/test-truth-2/probes/reed-field.probe.ts:72:1 › probe: Twin Banks reed field census and motion, three poses
+[4/6] [mobile-chrome] › artifacts/test-truth-2/probes/night-shift.probe.ts:115:1 › probe: Night Shift hero luminance, day and dark, per height and space
+[5/6] [mobile-chrome] › artifacts/test-truth-2/probes/night-shift.probe.ts:157:1 › probe: Night Shift lantern ring, in and out of radius, per height and space
+[6/6] [mobile-chrome] › artifacts/test-truth-2/probes/reed-field.probe.ts:72:1 › probe: Twin Banks reed field census and motion, three poses
+  6 passed (1.1m)
+rc=0
+
+== PROBE twin-banks readiness x2, both projects 2026-09-25T11:32:50Z | load 9.77 12.14 20.55
+
+Running 4 tests using 1 worker
+
+[1/4] [desktop-chrome] › artifacts/test-truth-2/probes/twin-banks-ready.probe.ts:66:1 › probe: Twin Banks hero visual y against the pilot readiness fields, two boots
+[2/4] [desktop-chrome] › artifacts/test-truth-2/probes/twin-banks-ready.probe.ts:66:1 › probe: Twin Banks hero visual y against the pilot readiness fields, two boots
+[3/4] [mobile-chrome] › artifacts/test-truth-2/probes/twin-banks-ready.probe.ts:66:1 › probe: Twin Banks hero visual y against the pilot readiness fields, two boots
+[4/4] [mobile-chrome] › artifacts/test-truth-2/probes/twin-banks-ready.probe.ts:66:1 › probe: Twin Banks hero visual y against the pilot readiness fields, two boots
+  4 passed (39.7s)
+rc=0
+
+== BRANCH night-shift: ramps + lantern post, both projects 2026-09-25T11:33:31Z | load 11.26 12.29 20.22
+(node:33818) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+
+(node:33991) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:414:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[2/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:559:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:36252) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:414:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[4/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:559:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  4 passed (27.8s)
+rc=0
+
+== BRANCH twin-banks: seeded diagnostics x5, both projects 2026-09-25T11:33:59Z | load 11.60 12.27 19.98
+
+Running 10 tests using 1 worker
+
+[1/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[2/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[3/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[4/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[5/10] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[6/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[7/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[8/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[9/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[10/10] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  10 passed (59.6s)
+rc=0
+
+== BRANCH secure: the four maps secured on both projects, both projects 2026-09-25T11:34:59Z | load 9.69 11.55 19.18
+(node:75575) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+
+(node:75904) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/8] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 11 / 358.4s sim, 376 kills, 48 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      955 |       }
+      956 |
+    > 957 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      958 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      959 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      960 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/playability-secure.spec.ts:957:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-511ed-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+
+(node:19951) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/8] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-blackout-ridge plays to its secure wave, banks, reloads and returns to the board @slow
+[3/8] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow
+  2) [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: board: locator.click: Timeout 10000ms exceeded. | Call log: |   - waiting for getByTestId('stake-again')
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      957 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+      958 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+    > 959 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+          |                                                          ^
+      960 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      961 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      962 |     });
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/playability-secure.spec.ts:959:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-037a7-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-037a7-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+
+(node:27997) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/8] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-river plays to its secure wave, banks, reloads and returns to the board @slow
+
+(node:36015) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/8] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow
+[6/8] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-blackout-ridge plays to its secure wave, banks, reloads and returns to the board @slow
+[7/8] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow
+  3) [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: board: locator.click: Timeout 10000ms exceeded. | Call log: |   - waiting for getByTestId('stake-again')
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      957 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+      958 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+    > 959 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+          |                                                          ^
+      960 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      961 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      962 |     });
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/playability-secure.spec.ts:959:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-037a7-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-037a7-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+
+(node:52523) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[8/8] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-river plays to its secure wave, banks, reloads and returns to the board @slow
+  3 failed
+    [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow 
+    [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e10-last-claim plays to its secure wave, banks, reloads and returns to the board @slow 
+  5 passed (18.4m)
+rc=1
+
+== BRANCH secure: e9-devils-alley desktop 2026-09-25T11:53:23Z | load 7.12 8.94 11.86
+(node:73496) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:73673) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e9-devils-alley plays to its secure wave, banks, reloads and returns to the board @slow
+  1 passed (3.2m)
+rc=0
+
+== BRANCH secure: e9-seed-run mobile 2026-09-25T11:56:37Z | load 6.78 8.21 10.98
+(node:86234) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:86297) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e9-seed-run plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e9-seed-run plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 19 / 598.1s sim, 708 kills, 27 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      955 |       }
+      956 |
+    > 957 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      958 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      959 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      960 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/playability-secure.spec.ts:957:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-ccaf6-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-ccaf6-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e9-seed-run plays to its secure wave, banks, reloads and returns to the board @slow 
+rc=1
+port 5323 released
+
+BATCH A END 2026-09-25T11:59:34Z

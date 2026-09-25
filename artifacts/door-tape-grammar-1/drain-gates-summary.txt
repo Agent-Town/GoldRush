@@ -1,0 +1,28 @@
+branch fix/door-tape-grammar-1 tip 0cf8e12f5 2026-09-25 15:09Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/dtg1.json
+scratch store at the store's main 5793a96
+chain base 40237f76e
+merged c582dda25
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 140 ℹ fail 0 
+functions gates: accounts rc=0 | mp rc=0 | stats rc=0
+ledger battery start 15:11Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+battery start 15:15Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1010 ℹ fail 3 ℹ skipped 5  15:34Z
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (1054976.314833ms)
+✖ contention is advisory, correctly counted, and absent when alone (6523.76475ms)
+✖ the browser door submits the purse held at the secure tick, not the run's lifetime panning (138333.874125ms)
+dirt after battery: 0
+dtg1-PREP-DONE
+battery reds: ✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (1054976.314833ms) ; ✖ the browser door submits the purse held at the secure tick, not the run's lifetime panning (138333.874125ms)
+verdict — needs hands
+RESUME-PREP 15:35Z: browser-door row = page.waitForFunction 120 s timeout at load 111 with the ledger battery 1263/0 and 412 door checks green; sweep = contention child failed; contention advisory
+verdict: clean
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+HASH MOVED after the battery — needs hands
+RESUME 2026-09-25 15:59Z: chain c582dda25, merge c582dda25, continuing at the pin
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+review: reviews/door-tape-grammar-1.md

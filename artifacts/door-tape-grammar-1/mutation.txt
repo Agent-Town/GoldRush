@@ -1,0 +1,10 @@
+M0 none (control)                          rc=0 passed 412/412
+M1 no kind check                           rc=1 RED: the tape grammar refuses a playbook use with a bad kind
+M2 atTick from -1                          rc=1 RED: the tape grammar refuses a playbook use with a negative atTick
+M3 no contract/seed/difficulty identity    rc=1 RED: the tape grammar refuses a playbook recorded on another seed
+M4 motor t < 0 allowed                     rc=1 RED: the tape grammar refuses a motor action before tick 0
+M5 playbook parser skipped                 rc=1 RED: 
+M6 no playbookUses cap                     rc=1 RED: the grammar refuses 3602 playbookUses
+M7 no key check on a use                   rc=1 RED: the tape grammar refuses a playbook use with an unknown key
+M8 atTick past duration allowed            rc=1 RED: the tape grammar refuses a playbook use whose atTick is past the duration
+M9 motorActions validator skipped          rc=1 RED: the tape grammar refuses a motor action before tick 0

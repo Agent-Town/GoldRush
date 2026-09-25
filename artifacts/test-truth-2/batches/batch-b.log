@@ -1,0 +1,590 @@
+BATCH B start 2026-09-25T13:07:14Z
+branch 05eeffd9f51c06397da83316c34984a4850fec15 (dirty tracked e2e: 2)
+control 517822b351286d3e36d47be3ad5c28461cb304e8
+control vite pid 7951
+vite dev up on 5325 2026-09-25T13:07:16Z (Content-Type: text/javascript)
+
+== CONTROL the three touched spec files whole, both projects 2026-09-25T13:07:16Z | load 11.65 20.17 28.51
+(node:8098) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 40 tests using 1 worker
+
+[1/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:99:1 › twin banks beauty board: boot, braid run camera, ford, plait, overview
+[2/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:191:1 › the beauty pass pays its frame budget, measured against its own build
+[3/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame
+  1) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+
+    Error: the reed sway should move pixels on the dry bank between two frames
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 60
+    Received:   0
+
+      247 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+      248 |   await writeFile(path.join(ARTIFACT_DIR, 'reed-motion.json'), `${JSON.stringify({ stage: STAGE, movedPixels: moved }, null, 2)}\n`);
+    > 249 |   expect(moved, 'the reed sway should move pixels on the dry bank between two frames').toBeGreaterThan(60);
+          |                                                                                        ^
+      250 |   expectClean(errors);
+      251 | });
+      252 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/beauty-twin-banks.spec.ts:249:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[4/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:253:1 › twin banks beauty board: west ford under pressure
+[5/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget
+
+(node:9255) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.22819529411764708,"darkHero":0.059641568627450986,"heroRatio":0.2613619569065369,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   0.2613619569065369
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:9997) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[7/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[8/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:443:1 › lantern coverage is necessary for threat visibility
+[9/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:465:1 › a lantern pool makes only its build island readable at true dark
+[10/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+[11/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:567:1 › pre-placed lanterns leave the full player build cap available
+[12/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:602:1 › render dimming does not stop turret acquisition or damage
+[13/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:629:1 › wave 25 secures the claim through the dawn victory path
+[14/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:658:1 › seeded Night Shift diagnostics and dark render budget are stable
+[15/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[16/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:109:1 › builds sluices and stockpiles on both banks against one gold pool
+[17/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+[18/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:167:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[19/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[20/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords
+[21/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:99:1 › twin banks beauty board: boot, braid run camera, ford, plait, overview
+[22/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:191:1 › the beauty pass pays its frame budget, measured against its own build
+[23/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame
+[24/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:253:1 › twin banks beauty board: west ford under pressure
+[25/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget
+
+(node:42435) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[26/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  3) [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.9326211764705883,"darkHero":0.9326211764705883,"heroRatio":1,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   1
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:62471) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[27/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  4) [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.35
+    Received:    0.23620784313725487
+
+      434 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      435 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_SPRITE_LIGHT());
+    > 436 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+          |                                                 ^
+      437 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      438 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+      439 |
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:436:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:66335) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[28/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:443:1 › lantern coverage is necessary for threat visibility
+[29/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:465:1 › a lantern pool makes only its build island readable at true dark
+[30/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+[31/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:567:1 › pre-placed lanterns leave the full player build cap available
+[32/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:602:1 › render dimming does not stop turret acquisition or damage
+[33/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:629:1 › wave 25 secures the claim through the dawn victory path
+[34/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:658:1 › seeded Night Shift diagnostics and dark render budget are stable
+[35/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[36/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:109:1 › builds sluices and stockpiles on both banks against one gold pool
+[37/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+[38/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:167:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[39/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[40/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords
+  4 failed
+    [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+  2 skipped
+  34 passed (3.9m)
+rc=1
+port 5325 released
+branch vite pid 80655
+vite dev up on 5323 2026-09-25T13:11:16Z (Content-Type: text/javascript)
+
+== BRANCH night-shift: ramps + lantern post x3, both projects 2026-09-25T13:11:16Z | load 17.14 17.50 25.14
+(node:80749) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+
+(node:80806) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:442:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:4593) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:587:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:34642) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:442:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:49036) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  4) [desktop-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:587:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:50315) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  5) [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:442:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:66873) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:70366) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[7/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[8/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:74538) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[9/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[10/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:230) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[12/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  5 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+  7 passed (3.9m)
+rc=1
+
+== BRANCH beauty-twin-banks: reed field x3, both projects 2026-09-25T13:15:11Z | load 47.73 25.24 25.98
+
+Running 6 tests using 1 worker
+
+[1/6] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:289:1 › the reed field is alive in a still frame
+[2/6] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:289:1 › the reed field is alive in a still frame
+[3/6] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:289:1 › the reed field is alive in a still frame
+[4/6] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:289:1 › the reed field is alive in a still frame
+[5/6] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:289:1 › the reed field is alive in a still frame
+[6/6] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:289:1 › the reed field is alive in a still frame
+  3 skipped
+  3 passed (26.7s)
+rc=0
+
+== BRANCH the three touched spec files whole, both projects 2026-09-25T13:15:38Z | load 55.29 29.15 27.37
+(node:35694) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 40 tests using 1 worker
+
+[1/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:99:1 › twin banks beauty board: boot, braid run camera, ford, plait, overview
+[2/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:191:1 › the beauty pass pays its frame budget, measured against its own build
+[3/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:289:1 › the reed field is alive in a still frame
+[4/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:361:1 › twin banks beauty board: west ford under pressure
+[5/40] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:403:1 › the braid renders living water without touching the sculpt contract or the frame budget
+
+(node:36319) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[7/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[8/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:635:1 › lantern coverage is necessary for threat visibility
+[9/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:657:1 › a lantern pool makes only its build island readable at true dark
+[10/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:700:1 › cold lantern relight costs survive run suspend and continue
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:700:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:702:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:69761) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:759:1 › pre-placed lanterns leave the full player build cap available
+[12/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:794:1 › render dimming does not stop turret acquisition or damage
+[13/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:821:1 › wave 25 secures the claim through the dawn victory path
+[14/40] [desktop-chrome] › e2e/e1-night-shift.spec.ts:850:1 › seeded Night Shift diagnostics and dark render budget are stable
+[15/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[16/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:109:1 › builds sluices and stockpiles on both banks against one gold pool
+[17/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+[18/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:167:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[19/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[20/40] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:351:1 › riparian scatter keeps its counts and clears both build banks and fords
+[21/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:99:1 › twin banks beauty board: boot, braid run camera, ford, plait, overview
+[22/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:191:1 › the beauty pass pays its frame budget, measured against its own build
+[23/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:289:1 › the reed field is alive in a still frame
+[24/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:361:1 › twin banks beauty board: west ford under pressure
+[25/40] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:403:1 › the braid renders living water without touching the sculpt contract or the frame budget
+
+(node:73174) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[26/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:441:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[27/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:586:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[28/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:635:1 › lantern coverage is necessary for threat visibility
+[29/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:657:1 › a lantern pool makes only its build island readable at true dark
+[30/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:700:1 › cold lantern relight costs survive run suspend and continue
+[31/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:759:1 › pre-placed lanterns leave the full player build cap available
+[32/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:794:1 › render dimming does not stop turret acquisition or damage
+[33/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:821:1 › wave 25 secures the claim through the dawn victory path
+[34/40] [mobile-chrome] › e2e/e1-night-shift.spec.ts:850:1 › seeded Night Shift diagnostics and dark render budget are stable
+[35/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[36/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:109:1 › builds sluices and stockpiles on both banks against one gold pool
+[37/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+[38/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:167:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[39/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[40/40] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:351:1 › riparian scatter keeps its counts and clears both build banks and fords
+  1 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:700:1 › cold lantern relight costs survive run suspend and continue 
+  2 skipped
+  37 passed (4.9m)
+rc=1
+
+== PROBE last-claim board, both projects 2026-09-25T13:20:32Z | load 16.37 35.34 32.71
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › artifacts/test-truth-2/probes/last-claim-board.probe.ts:16:1 › probe: where Return to Town lands on a secured Last Claim
+[2/2] [mobile-chrome] › artifacts/test-truth-2/probes/last-claim-board.probe.ts:16:1 › probe: where Return to Town lands on a secured Last Claim
+  2 passed (1.7m)
+rc=0
+
+== BRANCH secure re-run: e2-pressure-garden desktop 2026-09-25T13:22:11Z | load 10.50 27.99 30.14
+(node:2160) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:2333) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow
+  1 passed (2.7m)
+rc=0
+
+== BRANCH secure re-run: e9-seed-run mobile 2026-09-25T13:24:54Z | load 8.36 19.54 26.24
+(node:31722) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:31803) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e9-seed-run plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e9-seed-run plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 17 / 512.7s sim, 580 kills, 109 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      955 |       }
+      956 |
+    > 957 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      958 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      959 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      960 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/playability-secure.spec.ts:957:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-ccaf6-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-ccaf6-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e9-seed-run plays to its secure wave, banks, reloads and returns to the board @slow 
+rc=1
+port 5323 released
+
+BATCH B END 2026-09-25T13:27:15Z

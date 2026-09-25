@@ -1,16 +1,48 @@
 {
-  "tag": "lsr1", "branch": "feat/live-seed-rotation-1", "port": 5378,
+  "tag": "lsr1",
+  "branch": "feat/live-seed-rotation-1",
+  "port": 5378,
   "mergeMessage": "drain: merge feat/live-seed-rotation-1 — live-seed-rotation-1 — the run, its county standing and the co-op room ride the live weekly seed (open week, else the latest opened, else gold-rush; tape and dev pin first; the standing names the seed ridden), the Ride Together card names the week; no door grace per L3 and the owner's Monday rule (Opus 5.5 implementer at max effort; owner 2026-09-23 the seed changes every Monday)",
   "hash": "pin",
   "pinCause": "live-seed-rotation-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; owner: the seed changes every Monday): the run, its county standing and the co-op room ride the live rotation seed (src/game/liveSeed.ts, src/game/Game.ts two literals, src/mp/RideTogether.ts one literal, src/town/TownScene.ts the card label); no sim rule, contract, collision, floor or table moved.",
-  "gates": { "releaseBuild": true, "payload": true, "halo": true, "nullFloors": true, "releaseSuite": true, "functions": false, "ledgerBattery": false,
-    "specs": ["e2e/live-seed-rotation.spec.ts", "e2e/mp-ride-lobby.spec.ts","e2e/agent-view.spec.ts","e2e/task-025-bandits-dont-swim.spec.ts","e2e/m2-01-build-menu.spec.ts"],
-    "guards": ["scripts/live-seed-rotation.test.mjs", "scripts/contract-run-epoch.test.mjs"] },
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": false,
+    "specs": [
+      "e2e/live-seed-rotation.spec.ts",
+      "e2e/mp-ride-lobby.spec.ts",
+      "e2e/agent-view.spec.ts",
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": [
+      "scripts/live-seed-rotation.test.mjs",
+      "scripts/contract-run-epoch.test.mjs"
+    ],
+    "allowedBattery": [
+      "fixture owners remove their temp directories"
+    ]
+  },
   "cure": "scripts/attended/landings/lsr1-cure.sh",
-  "review": { "path": "reviews/live-seed-rotation-1.md", "title": "Drain review: `live-seed-rotation-1`, the run and the room ride the live weekly seed (Opus 5.5 implementer at max effort; owner: the seed changes every Monday)", "body": "scripts/attended/landings/lsr1-review.md" },
-  "bookkeeping": { "taskFile": "live-seed-rotation-1.md", "rowKey": "LIVE SEED ROTATION LANDED", "rowEmoji": "🗓️",
+  "review": {
+    "path": "reviews/live-seed-rotation-1.md",
+    "title": "Drain review: `live-seed-rotation-1`, the run and the room ride the live weekly seed (Opus 5.5 implementer at max effort; owner: the seed changes every Monday)",
+    "body": "scripts/attended/landings/lsr1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "live-seed-rotation-1.md",
+    "rowKey": "LIVE SEED ROTATION LANDED",
+    "rowEmoji": "🗓️",
     "rowText": "`src/game/liveSeed.ts` resolves the week open now (the door's UTC window), else the latest opened, else `gold-rush`; tape seed and dev `?seed=` first; the standing names the seed the run was ridden on (a run crossing Monday gets `rotation_closed`, not `bad_payload`); host and riders resolve the same week; the Ride Together card names it (\"Week 39 claim\", drain item 4). No door grace (L3; owner). Unit 7/7, new spec 20/20 dev, release 14 + 6 skips, adjacents 36/36 + 48/48, pre-existing reds fingerprinted on a clean control. Engine hash PINNED {PIN}. Found on the way: F-LSR1-0 CRITICAL (the door refuses every browser reel since 2026-09-05; hotfix door-tape-grammar-1 P0 in flight). Desk: F-LSR1-1 (owner: the in-game board's partition), F-LSR1-2 (ops: mint a week ahead; week 40 unminted, week 39 closes Monday). Slices: F-LSR1-3 (View.ts publishes the run seed).",
     "statusPhrase": "the run and the co-op room ride the live weekly seed and the card names the week; the county door's reel refusal found on the way has its hotfix running",
-    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh lsr1)" },
-  "deploy": true, "preview": true, "evidenceDir": "artifacts/live-seed-rotation-1"
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh lsr1)"
+  },
+  "deploy": true,
+  "preview": true,
+  "evidenceDir": "artifacts/live-seed-rotation-1"
 }

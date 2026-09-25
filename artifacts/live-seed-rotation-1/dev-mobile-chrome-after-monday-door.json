@@ -1,0 +1,24 @@
+{
+  "seed": "e1-the-claim-r2026w38-f94c101b7c67",
+  "seedMode": "live",
+  "rawVerdicts": [
+    {
+      "status": 400,
+      "body": {
+        "ok": false,
+        "error": "bad_payload",
+        "message": "Standing not accepted."
+      }
+    }
+  ],
+  "answers": [
+    {
+      "status": 403,
+      "body": {
+        "ok": false,
+        "error": "rotation_closed",
+        "message": "That rotation is not open."
+      }
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+// Scratch probe (not committed as code): what the county does with a row ALREADY STORED carrying one of the shapes.
+// Each case manufactures one stored row (the row the door itself would have written) on a fresh in-memory store and
+// reads it back through the REAL handlers: the board, the shelf (`?reel=`) and the assay queue. Reels come from the
+// REAL browser recorder; each shape is set by hand. Nothing leaves the machine. Run from a worktree root.
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const root = process.cwd();
+const { createServer } = await import(pathToFileURL(path.join(root, 'node_modules/vite/dist/node/index.js')).href);
+const engineEra = JSON.parse(readFileSync(path.join(root, 'assets/engine-era.json'), 'utf8'));
+const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
+const sha256 = (text) => createHash('sha256').update(text).digest('hex');
+try {
+  const { onRequest } = await vite.ssrLoadModule('/functions/api/standings.ts');
+  const { onRequest: queueRoute } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
+  const { RunTapeRecorder, submittedRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { parsePlaybookText } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
+  const { PlaybookRecorderSession } = await vite.ssrLoadModule('/src/playbook/PlaybookSession.ts');
+  const { intentsFromLockstepInput, lockstepInputFromIntents } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
+  const move = (mx, my) => intentsFromLockstepInput({ mx, my, actions: [] });
+  const start = { x: 0.25, z: 12.5 };
+  const reel = ({ upgrade = null, ability = null, playbook = false, seat = false } = {}) => {
+    const progress = { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } };
+    const recorder = new RunTapeRecorder({
+      contract: 'the-claim', seed: 'gold-rush', difficulty: 'trail',
+      meta: { buildId: 'dev', viewVersion: engineEra.viewSchema.version, engineHash: engineEra.engineHash, era: engineEra.era },
+      start,
+      runStart: { meta: progress, research: { version: 1, epochId: 'epoch-1-frontier', metaScienceCursor: 0, progress, taken: [], proposalSalt: 0, pinnedTarget: null, unlocks: {} } },
+    });
+    const shelf = new PlaybookRecorderSession({ contractId: 'the-claim', seed: 'gold-rush', difficultyPreset: 'trail', start }, null);
+    shelf.recordTick(lockstepInputFromIntents(move(0, -1)), start);
+    shelf.recordTick(lockstepInputFromIntents(move(1, 0), { queuedActions: [{ type: 'place_build', id: 'palisade', position: { x: 1, z: 9 }, rotationSteps: 0 }] }), start);
+    shelf.recordTick(lockstepInputFromIntents(move(0, 0)), start);
+    const shelved = parsePlaybookText(shelf.finish('Probe Patrol').text);
+    recorder.record(move(1, 0), start);
+    recorder.recordAction({ type: 'place_build', id: 'sluice', position: { x: 2, z: 10 }, rotationSteps: 1 });
+    recorder.record(move(0, 1), start);
+    if (upgrade) recorder.recordAction({ type: 'pick_upgrade', id: upgrade });
+    if (playbook) recorder.recordPlaybookUse(shelved.playbook);
+    recorder.record(move(0, 0), start, ability ? [{ type: 'set_agent_ability', ability, granted: true }] : []);
+    if (seat) recorder.recordAdditional(1, move(1, 0), { x: 1, z: 13 }, []);
+    recorder.record(move(0, 0), start);
+    return submittedRunTape(recorder.snapshot({ reason: 'secured', secured: true, waves: 10, timeAlive: 120, gold: 40 },
+      { ...recorder.eventLog(), kills: 0, gold: 40, wave: 10, economy: {} }));
+  };
+  const find = (log, type) => [...log.entries, ...log.streams.flatMap((stream) => stream.entries)].flatMap((entry) => entry.a).find((action) => action.type === type);
+  const cases = [
+    ['a place_build id of whitespace only', reel(), (log) => { find(log, 'place_build').id = '   '; }, 1],
+    ['a pick_upgrade id of whitespace only', reel({ upgrade: 'heavy_spark' }), (log) => { find(log, 'pick_upgrade').id = '   '; }, 1],
+    ['a set_agent_ability naming fly', reel({ ability: 'auto_pan' }), (log) => { find(log, 'set_agent_ability').ability = 'fly'; }, 1],
+    ["a second rider's set_agent_ability naming fly", reel({ seat: true }), (log) => { log.streams[0].entries[0].a.push({ type: 'set_agent_ability', ability: 'fly', granted: true }); }, 2],
+    ['a playbook use whose recording has a place_build id of whitespace only', reel({ playbook: true }),
+      (log) => { log.playbookUses[0].playbook.entries.flatMap((entry) => entry.a).find((action) => action.type === 'place_build').id = '   '; }, 1],
+  ];
+  const rows = [];
+  const judged = [];
+  for (const [label, clean, shape, riders] of cases) {
+    judged.push([`control for ${label}`, clean, () => {}, riders], [label, clean, shape, riders]);
+  }
+  for (const [label, clean, shape, riders] of judged) {
+    const tape = structuredClone(clean);
+    shape(tape.inputLog);
+    const store = new Map();
+    const kv = {
+      get: async (key) => store.get(key) ?? null,
+      put: async (key, value) => { store.set(key, value); },
+      list: async ({ prefix = '', cursor = '' } = {}) => ({ keys: [...store.keys()].filter((key) => key.startsWith(prefix) && key > cursor).sort().map((name) => ({ name })), list_complete: true }),
+    };
+    const row = {
+      secured: true, waves: 10, timeAlive: 120, gold: 40, baseValue: 60, profileName: 'Probe', anonId: 'ab'.repeat(16), difficulty: 'trail',
+      seed: 'gold-rush', seedMode: 'live', seedHash: sha256('gold-rush'), inputLogHash: sha256(JSON.stringify(tape.inputLog)), submittedAt: 1,
+      ...(riders > 1 ? { party: { riderCount: 2, riders: [{ name: 'Probe' }, { name: 'Second Rider' }] } } : {}),
+      tape, assay: 'pending',
+    };
+    await kv.put('standings:s2:epoch-1-frontier:the-claim', JSON.stringify([row]));
+    const get = async (route, url, headers = {}, env = {}) => {
+      const response = await route({ request: new Request(`http://127.0.0.1${url}`, { method: 'GET', headers }), env: { TELEMETRY: kv, ...env } });
+      return { status: response.status, body: await response.json() };
+    };
+    const board = await get(onRequest, `/api/standings?contract=the-claim&epoch=epoch-1-frontier${riders > 1 ? '&party=2' : ''}`);
+    const shelf = await get(onRequest, `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${tape.id}`);
+    const queue = await get(queueRoute, '/api/standings/assay-queue', { 'x-assay-key': 'probe-secret' }, { ASSAY_WORKER_SECRET: 'probe-secret' });
+    const queued = queue.body.queue?.some((entry) => entry.locator.tapeId === tape.id) ?? false;
+    const state = board.body.board.length === 1 ? 'RANKED' : board.body.retiredCount === 1 ? 'RETIRED' : 'DROPPED';
+    rows.push({ label, state, board: board.body.board.length, retiredCount: board.body.retiredCount, shelf: shelf.status, queued });
+  }
+  const width = Math.max(...rows.map(({ label }) => label.length));
+  console.log(`${'stored row carrying'.padEnd(width)}  state    board retiredCount ?reel= assay-queue`);
+  for (const row of rows) {
+    console.log(`${row.label.padEnd(width)}  ${row.state.padEnd(8)} ${String(row.board).padEnd(5)} ${String(row.retiredCount).padEnd(12)} ${String(row.shelf).padEnd(6)} ${row.queued ? 'queued' : 'absent'}`);
+  }
+} finally {
+  await vite.close();
+}
