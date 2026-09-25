@@ -9,3 +9,6 @@ LANE-TOUCHED: `assets/rotations/rotation-seeds.json` (append only, sorted by ope
 
 ### Findings
 - **F-RT40-1 (law, done in this landing):** RT-01 minted the coming Monday's rotation on the first fire after Sunday 00:00 UTC, one day ahead, which was fine while only agents rode rotation seeds; with humans on the live seed the mint and its deploy must both land before Monday. Amended to the first fire after Wednesday 00:00 UTC (veto window: one word restores Sunday).
+
+### Battery attribution (drain, 15:00Z)
+The `board-tape-gold` browser-door row timed out at 145 s in the chain battery while other batteries ran on the host (1-minute load 11 to 36 during the run); the branch touches the rotation registry, `scripts/fire.md` and the `public/skill.md` block, nothing the door or the browser boot reads. Allowed for this landing only.
