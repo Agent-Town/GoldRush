@@ -1,0 +1,3115 @@
+{
+  "schema": "goldrush.cw1.slope-table.v1",
+  "contract": "e3-canyon-works",
+  "source": "git 90a26053c:assets/contracts/epoch-3-voltage/contracts.json",
+  "activeContract": {
+    "activeId": "e3-canyon-works",
+    "fallbackReason": null
+  },
+  "elevation": {
+    "cellSize": 2,
+    "analytic": {
+      "hillMine": 1,
+      "creekHeight": 0.5,
+      "railHeight": -1,
+      "t1Height": 0.5,
+      "t2Height": 4.5,
+      "t3Height": 6,
+      "creekBlendStart": -8,
+      "creekBlendEnd": -6,
+      "t1RampStart": 6,
+      "t1RampEnd": 14,
+      "t2RampStart": 18,
+      "t2RampEnd": 28,
+      "t3RampStart": 40,
+      "t3RampEnd": 50,
+      "cliffMinX": -12,
+      "cliffMaxX": 12,
+      "cliffMinZ": 18,
+      "cliffMaxZ": 26,
+      "cliffAmp": 2.2,
+      "cliffFeather": 1,
+      "mineMouthX": 0,
+      "mineMouthZ": 50,
+      "mineMouthRadius": 1,
+      "mineMouthCrown": 0
+    }
+  },
+  "slopeMax": 0.35,
+  "centralDifferenceStep": 0.5,
+  "xs": [
+    0,
+    -24,
+    24,
+    -44,
+    44
+  ],
+  "table": [
+    {
+      "z": -12,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -11.75,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -11.5,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -11.25,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -11,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -10.75,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -10.5,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -10.25,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -10,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -9.75,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -9.5,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -9.25,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -9,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -8.75,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -8.5,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -8.25,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -8,
+      "simHeight": 0.5,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "bank",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -7.75,
+      "simHeight": 0.4355,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -24,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -7.5,
+      "simHeight": 0.2656,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -24,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -7.25,
+      "simHeight": 0.0254,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -24,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -7,
+      "simHeight": -0.25,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 1.0313,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -24,
+          "slope": 1.0313,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 1.0313,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 1.0313,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 1.0313,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -6.75,
+      "simHeight": -0.5254,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -24,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0.9609,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -6.5,
+      "simHeight": -0.7656,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -24,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0.75,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -6.25,
+      "simHeight": -0.9355,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -24,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0.4746,
+          "traversable": false,
+          "zone": "out",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -6,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0.2344,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -5.75,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0.0645,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -5.5,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -5.25,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "shallows",
+          "walkable": true
+        }
+      ]
+    },
+    {
+      "z": -5,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -4.75,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -4.5,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -4.25,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -4,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -3.75,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -3.5,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -3.25,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -3,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -2.75,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -2.5,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -2.25,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    },
+    {
+      "z": -2,
+      "simHeight": -1,
+      "cols": [
+        {
+          "x": 0,
+          "slope": 0,
+          "traversable": true,
+          "zone": "ford",
+          "walkable": true
+        },
+        {
+          "x": -24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 24,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": -44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        },
+        {
+          "x": 44,
+          "slope": 0,
+          "traversable": true,
+          "zone": "river",
+          "walkable": false
+        }
+      ]
+    }
+  ],
+  "creekBand": [
+    {
+      "x": 0,
+      "walls": [
+        {
+          "from": -7.87,
+          "to": -6.13,
+          "width": 1.74,
+          "peak": 1.0313,
+          "peakZ": -7
+        }
+      ],
+      "peak": {
+        "slope": 1.0313,
+        "z": -7
+      }
+    },
+    {
+      "x": -24,
+      "walls": [
+        {
+          "from": -7.87,
+          "to": -6.13,
+          "width": 1.74,
+          "peak": 1.0313,
+          "peakZ": -7
+        }
+      ],
+      "peak": {
+        "slope": 1.0313,
+        "z": -7
+      }
+    },
+    {
+      "x": 24,
+      "walls": [
+        {
+          "from": -7.87,
+          "to": -6.13,
+          "width": 1.74,
+          "peak": 1.0313,
+          "peakZ": -7
+        }
+      ],
+      "peak": {
+        "slope": 1.0313,
+        "z": -7
+      }
+    },
+    {
+      "x": -44,
+      "walls": [
+        {
+          "from": -7.87,
+          "to": -6.13,
+          "width": 1.74,
+          "peak": 1.0313,
+          "peakZ": -7
+        }
+      ],
+      "peak": {
+        "slope": 1.0313,
+        "z": -7
+      }
+    },
+    {
+      "x": 44,
+      "walls": [
+        {
+          "from": -7.87,
+          "to": -6.13,
+          "width": 1.74,
+          "peak": 1.0313,
+          "peakZ": -7
+        }
+      ],
+      "peak": {
+        "slope": 1.0313,
+        "z": -7
+      }
+    }
+  ],
+  "fullProfile": [
+    {
+      "x": 0,
+      "walls": [
+        {
+          "from": -7.85,
+          "to": -6.15,
+          "width": 1.7,
+          "peak": 1.0313,
+          "peakZ": -7
+        },
+        {
+          "from": 16.8,
+          "to": 27.15,
+          "width": 10.35,
+          "peak": 2.2,
+          "peakZ": 17.5
+        }
+      ],
+      "peak": {
+        "slope": 2.2,
+        "z": 17.5
+      }
+    },
+    {
+      "x": -24,
+      "walls": [
+        {
+          "from": -7.85,
+          "to": -6.15,
+          "width": 1.7,
+          "peak": 1.0313,
+          "peakZ": -7
+        },
+        {
+          "from": 19.8,
+          "to": 26.2,
+          "width": 6.4,
+          "peak": 0.598,
+          "peakZ": 23
+        }
+      ],
+      "peak": {
+        "slope": 1.0313,
+        "z": -7
+      }
+    },
+    {
+      "x": 24,
+      "walls": [
+        {
+          "from": -7.85,
+          "to": -6.15,
+          "width": 1.7,
+          "peak": 1.0313,
+          "peakZ": -7
+        },
+        {
+          "from": 19.8,
+          "to": 26.2,
+          "width": 6.4,
+          "peak": 0.598,
+          "peakZ": 23
+        }
+      ],
+      "peak": {
+        "slope": 1.0313,
+        "z": -7
+      }
+    },
+    {
+      "x": -44,
+      "walls": [
+        {
+          "from": -7.85,
+          "to": -6.15,
+          "width": 1.7,
+          "peak": 1.0313,
+          "peakZ": -7
+        },
+        {
+          "from": 19.8,
+          "to": 26.2,
+          "width": 6.4,
+          "peak": 0.598,
+          "peakZ": 23
+        }
+      ],
+      "peak": {
+        "slope": 1.0313,
+        "z": -7
+      }
+    },
+    {
+      "x": 44,
+      "walls": [
+        {
+          "from": -7.85,
+          "to": -6.15,
+          "width": 1.7,
+          "peak": 1.0313,
+          "peakZ": -7
+        },
+        {
+          "from": 19.8,
+          "to": 26.2,
+          "width": 6.4,
+          "peak": 0.598,
+          "peakZ": 23
+        }
+      ],
+      "peak": {
+        "slope": 1.0313,
+        "z": -7
+      }
+    }
+  ],
+  "reach": {
+    "method": "8-connected flood fill over Terrain.sample(x,z).walkable on a 0.5 m lattice from the hero start (0,-44); a target is reached when a reached lattice point lies within 1.5 m",
+    "lattice": {
+      "nx": 193,
+      "nz": 225,
+      "walkable": 35783,
+      "reached": 18362
+    },
+    "targets": [
+      {
+        "kind": "pylon site",
+        "id": "pylon-west-base",
+        "x": -12,
+        "z": -36,
+        "reachable": true
+      },
+      {
+        "kind": "pylon site",
+        "id": "pylon-west-switch",
+        "x": -24,
+        "z": -20,
+        "reachable": true
+      },
+      {
+        "kind": "pylon site",
+        "id": "pylon-west-rim",
+        "x": -28,
+        "z": 8,
+        "reachable": false
+      },
+      {
+        "kind": "pylon site",
+        "id": "pylon-east-base",
+        "x": 12,
+        "z": -36,
+        "reachable": true
+      },
+      {
+        "kind": "pylon site",
+        "id": "pylon-east-switch",
+        "x": 24,
+        "z": -20,
+        "reachable": true
+      },
+      {
+        "kind": "pylon site",
+        "id": "pylon-east-rim",
+        "x": 28,
+        "z": 8,
+        "reachable": false
+      },
+      {
+        "kind": "seam (harvest anchor)",
+        "id": "anchor-0",
+        "x": -34,
+        "z": 30,
+        "reachable": false
+      },
+      {
+        "kind": "seam (harvest anchor)",
+        "id": "anchor-1",
+        "x": -22,
+        "z": 34,
+        "reachable": false
+      },
+      {
+        "kind": "seam (harvest anchor)",
+        "id": "anchor-2",
+        "x": 22,
+        "z": 34,
+        "reachable": false
+      },
+      {
+        "kind": "seam (harvest anchor)",
+        "id": "anchor-3",
+        "x": 34,
+        "z": 30,
+        "reachable": false
+      },
+      {
+        "kind": "gallery consumer",
+        "id": "gallery-west",
+        "x": -28,
+        "z": 28,
+        "reachable": false
+      },
+      {
+        "kind": "gallery consumer",
+        "id": "gallery-east",
+        "x": 28,
+        "z": 28,
+        "reachable": false
+      },
+      {
+        "kind": "lamp consumer",
+        "id": "lamp-west",
+        "x": -32,
+        "z": 32,
+        "reachable": false
+      },
+      {
+        "kind": "lamp consumer",
+        "id": "lamp-east",
+        "x": 32,
+        "z": 32,
+        "reachable": false
+      },
+      {
+        "kind": "pre-placed lantern_post",
+        "id": "lantern_post-0",
+        "x": -32,
+        "z": 32,
+        "reachable": false
+      },
+      {
+        "kind": "pre-placed lantern_post",
+        "id": "lantern_post-1",
+        "x": 32,
+        "z": 32,
+        "reachable": false
+      },
+      {
+        "kind": "pre-placed turret",
+        "id": "turret-2",
+        "x": -18,
+        "z": 22,
+        "reachable": false
+      },
+      {
+        "kind": "pre-placed turret",
+        "id": "turret-3",
+        "x": 18,
+        "z": 22,
+        "reachable": false
+      },
+      {
+        "kind": "bridge (works-bridge ford), north end",
+        "id": "works-bridge-north",
+        "x": 0,
+        "z": 6.5,
+        "reachable": false
+      }
+    ]
+  },
+  "visible": [
+    {
+      "x": 0,
+      "rows": [
+        {
+          "z": -16,
+          "mesh": 0.5024,
+          "sim": 0.5,
+          "simMinusMesh": -0.0024,
+          "meshGrade": -0.0169
+        },
+        {
+          "z": -15.5,
+          "mesh": 0.4939,
+          "sim": 0.5,
+          "simMinusMesh": 0.0061,
+          "meshGrade": -0.0171
+        },
+        {
+          "z": -15,
+          "mesh": 0.4853,
+          "sim": 0.5,
+          "simMinusMesh": 0.0147,
+          "meshGrade": -0.0168
+        },
+        {
+          "z": -14.5,
+          "mesh": 0.4771,
+          "sim": 0.5,
+          "simMinusMesh": 0.0229,
+          "meshGrade": -0.0163
+        },
+        {
+          "z": -14,
+          "mesh": 0.4691,
+          "sim": 0.5,
+          "simMinusMesh": 0.0309,
+          "meshGrade": -0.0149
+        },
+        {
+          "z": -13.5,
+          "mesh": 0.4622,
+          "sim": 0.5,
+          "simMinusMesh": 0.0378,
+          "meshGrade": -0.0133
+        },
+        {
+          "z": -13,
+          "mesh": 0.4558,
+          "sim": 0.5,
+          "simMinusMesh": 0.0442,
+          "meshGrade": -0.0116
+        },
+        {
+          "z": -12.5,
+          "mesh": 0.4506,
+          "sim": 0.5,
+          "simMinusMesh": 0.0494,
+          "meshGrade": -0.0091
+        },
+        {
+          "z": -12,
+          "mesh": 0.4466,
+          "sim": 0.5,
+          "simMinusMesh": 0.0534,
+          "meshGrade": -0.0069
+        },
+        {
+          "z": -11.5,
+          "mesh": 0.4437,
+          "sim": 0.5,
+          "simMinusMesh": 0.0563,
+          "meshGrade": -0.0028
+        },
+        {
+          "z": -11,
+          "mesh": 0.4438,
+          "sim": 0.5,
+          "simMinusMesh": 0.0562,
+          "meshGrade": 0.0012
+        },
+        {
+          "z": -10.5,
+          "mesh": 0.4449,
+          "sim": 0.5,
+          "simMinusMesh": 0.0551,
+          "meshGrade": 0.0173
+        },
+        {
+          "z": -10,
+          "mesh": 0.4611,
+          "sim": 0.5,
+          "simMinusMesh": 0.0389,
+          "meshGrade": 0.0425
+        },
+        {
+          "z": -9.5,
+          "mesh": 0.4873,
+          "sim": 0.5,
+          "simMinusMesh": 0.0127,
+          "meshGrade": 0.0828
+        },
+        {
+          "z": -9,
+          "mesh": 0.5439,
+          "sim": 0.5,
+          "simMinusMesh": -0.0439,
+          "meshGrade": 0.085
+        },
+        {
+          "z": -8.5,
+          "mesh": 0.5723,
+          "sim": 0.5,
+          "simMinusMesh": -0.0723,
+          "meshGrade": 0.0288
+        },
+        {
+          "z": -8,
+          "mesh": 0.5727,
+          "sim": 0.5,
+          "simMinusMesh": -0.0727,
+          "meshGrade": -0.376
+        },
+        {
+          "z": -7.5,
+          "mesh": 0.1963,
+          "sim": 0.2656,
+          "simMinusMesh": 0.0693,
+          "meshGrade": -0.8783
+        },
+        {
+          "z": -7,
+          "mesh": -0.3056,
+          "sim": -0.25,
+          "simMinusMesh": 0.0556,
+          "meshGrade": -0.9116
+        },
+        {
+          "z": -6.5,
+          "mesh": -0.7153,
+          "sim": -0.7656,
+          "simMinusMesh": -0.0503,
+          "meshGrade": -0.7157
+        },
+        {
+          "z": -6,
+          "mesh": -1.0213,
+          "sim": -1,
+          "simMinusMesh": 0.0213,
+          "meshGrade": -0.3008
+        },
+        {
+          "z": -5.5,
+          "mesh": -1.0161,
+          "sim": -1,
+          "simMinusMesh": 0.0161,
+          "meshGrade": 0.0099
+        },
+        {
+          "z": -5,
+          "mesh": -1.0114,
+          "sim": -1,
+          "simMinusMesh": 0.0114,
+          "meshGrade": 0.0089
+        },
+        {
+          "z": -4.5,
+          "mesh": -1.0072,
+          "sim": -1,
+          "simMinusMesh": 0.0072,
+          "meshGrade": 0.0075
+        },
+        {
+          "z": -4,
+          "mesh": -1.0039,
+          "sim": -1,
+          "simMinusMesh": 0.0039,
+          "meshGrade": 0.0063
+        },
+        {
+          "z": -3.5,
+          "mesh": -1.0009,
+          "sim": -1,
+          "simMinusMesh": 0.0009,
+          "meshGrade": 0.0046
+        },
+        {
+          "z": -3,
+          "mesh": -0.9992,
+          "sim": -1,
+          "simMinusMesh": -0.0008,
+          "meshGrade": 0.003
+        },
+        {
+          "z": -2.5,
+          "mesh": -0.9979,
+          "sim": -1,
+          "simMinusMesh": -0.0021,
+          "meshGrade": 0.0018
+        },
+        {
+          "z": -2,
+          "mesh": -0.9975,
+          "sim": -1,
+          "simMinusMesh": -0.0025,
+          "meshGrade": 0.0004
+        }
+      ]
+    },
+    {
+      "x": -24,
+      "rows": [
+        {
+          "z": -16,
+          "mesh": 0.5013,
+          "sim": 0.5,
+          "simMinusMesh": -0.0013,
+          "meshGrade": 0.0024
+        },
+        {
+          "z": -15.5,
+          "mesh": 0.5026,
+          "sim": 0.5,
+          "simMinusMesh": -0.0026,
+          "meshGrade": 0.0029
+        },
+        {
+          "z": -15,
+          "mesh": 0.5042,
+          "sim": 0.5,
+          "simMinusMesh": -0.0042,
+          "meshGrade": 0.0023
+        },
+        {
+          "z": -14.5,
+          "mesh": 0.505,
+          "sim": 0.5,
+          "simMinusMesh": -0.005,
+          "meshGrade": 0.0013
+        },
+        {
+          "z": -14,
+          "mesh": 0.5055,
+          "sim": 0.5,
+          "simMinusMesh": -0.0055,
+          "meshGrade": 0.001
+        },
+        {
+          "z": -13.5,
+          "mesh": 0.506,
+          "sim": 0.5,
+          "simMinusMesh": -0.006,
+          "meshGrade": 0.0033
+        },
+        {
+          "z": -13,
+          "mesh": 0.5088,
+          "sim": 0.5,
+          "simMinusMesh": -0.0088,
+          "meshGrade": 0.0125
+        },
+        {
+          "z": -12.5,
+          "mesh": 0.5185,
+          "sim": 0.5,
+          "simMinusMesh": -0.0185,
+          "meshGrade": 0.0216
+        },
+        {
+          "z": -12,
+          "mesh": 0.5304,
+          "sim": 0.5,
+          "simMinusMesh": -0.0304,
+          "meshGrade": 0.0259
+        },
+        {
+          "z": -11.5,
+          "mesh": 0.5444,
+          "sim": 0.5,
+          "simMinusMesh": -0.0444,
+          "meshGrade": 0.0197
+        },
+        {
+          "z": -11,
+          "mesh": 0.5501,
+          "sim": 0.5,
+          "simMinusMesh": -0.0501,
+          "meshGrade": 0.0087
+        },
+        {
+          "z": -10.5,
+          "mesh": 0.5531,
+          "sim": 0.5,
+          "simMinusMesh": -0.0531,
+          "meshGrade": 0.0097
+        },
+        {
+          "z": -10,
+          "mesh": 0.5598,
+          "sim": 0.5,
+          "simMinusMesh": -0.0598,
+          "meshGrade": 0.0199
+        },
+        {
+          "z": -9.5,
+          "mesh": 0.573,
+          "sim": 0.5,
+          "simMinusMesh": -0.073,
+          "meshGrade": 0.0458
+        },
+        {
+          "z": -9,
+          "mesh": 0.6056,
+          "sim": 0.5,
+          "simMinusMesh": -0.1056,
+          "meshGrade": 0.0651
+        },
+        {
+          "z": -8.5,
+          "mesh": 0.6381,
+          "sim": 0.5,
+          "simMinusMesh": -0.1381,
+          "meshGrade": 0.0649
+        },
+        {
+          "z": -8,
+          "mesh": 0.6705,
+          "sim": 0.5,
+          "simMinusMesh": -0.1705,
+          "meshGrade": -0.2838
+        },
+        {
+          "z": -7.5,
+          "mesh": 0.3543,
+          "sim": 0.2656,
+          "simMinusMesh": -0.0887,
+          "meshGrade": -0.7485
+        },
+        {
+          "z": -7,
+          "mesh": -0.078,
+          "sim": -0.25,
+          "simMinusMesh": -0.172,
+          "meshGrade": -0.9569
+        },
+        {
+          "z": -6.5,
+          "mesh": -0.6026,
+          "sim": -0.7656,
+          "simMinusMesh": -0.1631,
+          "meshGrade": -0.9223
+        },
+        {
+          "z": -6,
+          "mesh": -1.0003,
+          "sim": -1,
+          "simMinusMesh": 0.0003,
+          "meshGrade": -0.4152
+        },
+        {
+          "z": -5.5,
+          "mesh": -1.0178,
+          "sim": -1,
+          "simMinusMesh": 0.0178,
+          "meshGrade": -0.0295
+        },
+        {
+          "z": -5,
+          "mesh": -1.0298,
+          "sim": -1,
+          "simMinusMesh": 0.0298,
+          "meshGrade": -0.0186
+        },
+        {
+          "z": -4.5,
+          "mesh": -1.0364,
+          "sim": -1,
+          "simMinusMesh": 0.0364,
+          "meshGrade": -0.0118
+        },
+        {
+          "z": -4,
+          "mesh": -1.0416,
+          "sim": -1,
+          "simMinusMesh": 0.0416,
+          "meshGrade": -0.01
+        },
+        {
+          "z": -3.5,
+          "mesh": -1.0464,
+          "sim": -1,
+          "simMinusMesh": 0.0464,
+          "meshGrade": -0.0075
+        },
+        {
+          "z": -3,
+          "mesh": -1.0491,
+          "sim": -1,
+          "simMinusMesh": 0.0491,
+          "meshGrade": -0.0048
+        },
+        {
+          "z": -2.5,
+          "mesh": -1.0512,
+          "sim": -1,
+          "simMinusMesh": 0.0512,
+          "meshGrade": -0.0027
+        },
+        {
+          "z": -2,
+          "mesh": -1.0518,
+          "sim": -1,
+          "simMinusMesh": 0.0518,
+          "meshGrade": -0.0001
+        }
+      ]
+    },
+    {
+      "x": 24,
+      "rows": [
+        {
+          "z": -16,
+          "mesh": 0.4985,
+          "sim": 0.5,
+          "simMinusMesh": 0.0015,
+          "meshGrade": -0.002
+        },
+        {
+          "z": -15.5,
+          "mesh": 0.4977,
+          "sim": 0.5,
+          "simMinusMesh": 0.0023,
+          "meshGrade": -0.0011
+        },
+        {
+          "z": -15,
+          "mesh": 0.4974,
+          "sim": 0.5,
+          "simMinusMesh": 0.0026,
+          "meshGrade": 0.0002
+        },
+        {
+          "z": -14.5,
+          "mesh": 0.4979,
+          "sim": 0.5,
+          "simMinusMesh": 0.0021,
+          "meshGrade": 0.0013
+        },
+        {
+          "z": -14,
+          "mesh": 0.4987,
+          "sim": 0.5,
+          "simMinusMesh": 0.0013,
+          "meshGrade": 0.0014
+        },
+        {
+          "z": -13.5,
+          "mesh": 0.4994,
+          "sim": 0.5,
+          "simMinusMesh": 0.0006,
+          "meshGrade": 0.0016
+        },
+        {
+          "z": -13,
+          "mesh": 0.5003,
+          "sim": 0.5,
+          "simMinusMesh": -0.0003,
+          "meshGrade": 0.0026
+        },
+        {
+          "z": -12.5,
+          "mesh": 0.5019,
+          "sim": 0.5,
+          "simMinusMesh": -0.0019,
+          "meshGrade": 0.0046
+        },
+        {
+          "z": -12,
+          "mesh": 0.5049,
+          "sim": 0.5,
+          "simMinusMesh": -0.0049,
+          "meshGrade": 0.0073
+        },
+        {
+          "z": -11.5,
+          "mesh": 0.5092,
+          "sim": 0.5,
+          "simMinusMesh": -0.0092,
+          "meshGrade": 0.0082
+        },
+        {
+          "z": -11,
+          "mesh": 0.5131,
+          "sim": 0.5,
+          "simMinusMesh": -0.0131,
+          "meshGrade": 0.0076
+        },
+        {
+          "z": -10.5,
+          "mesh": 0.5168,
+          "sim": 0.5,
+          "simMinusMesh": -0.0168,
+          "meshGrade": 0.0164
+        },
+        {
+          "z": -10,
+          "mesh": 0.5295,
+          "sim": 0.5,
+          "simMinusMesh": -0.0295,
+          "meshGrade": 0.0343
+        },
+        {
+          "z": -9.5,
+          "mesh": 0.5511,
+          "sim": 0.5,
+          "simMinusMesh": -0.0511,
+          "meshGrade": 0.0696
+        },
+        {
+          "z": -9,
+          "mesh": 0.5991,
+          "sim": 0.5,
+          "simMinusMesh": -0.0991,
+          "meshGrade": 0.1078
+        },
+        {
+          "z": -8.5,
+          "mesh": 0.6589,
+          "sim": 0.5,
+          "simMinusMesh": -0.1589,
+          "meshGrade": 0.1313
+        },
+        {
+          "z": -8,
+          "mesh": 0.7304,
+          "sim": 0.5,
+          "simMinusMesh": -0.2304,
+          "meshGrade": -0.0389
+        },
+        {
+          "z": -7.5,
+          "mesh": 0.62,
+          "sim": 0.2656,
+          "simMinusMesh": -0.3544,
+          "meshGrade": -0.2815
+        },
+        {
+          "z": -7,
+          "mesh": 0.4489,
+          "sim": -0.25,
+          "simMinusMesh": -0.6989,
+          "meshGrade": -0.8396
+        },
+        {
+          "z": -6.5,
+          "mesh": -0.2197,
+          "sim": -0.7656,
+          "simMinusMesh": -0.546,
+          "meshGrade": -1.2087
+        },
+        {
+          "z": -6,
+          "mesh": -0.7598,
+          "sim": -1,
+          "simMinusMesh": -0.2402,
+          "meshGrade": -0.6949
+        },
+        {
+          "z": -5.5,
+          "mesh": -0.9146,
+          "sim": -1,
+          "simMinusMesh": -0.0854,
+          "meshGrade": -0.2314
+        },
+        {
+          "z": -5,
+          "mesh": -0.9912,
+          "sim": -1,
+          "simMinusMesh": -0.0088,
+          "meshGrade": -0.0752
+        },
+        {
+          "z": -4.5,
+          "mesh": -0.9897,
+          "sim": -1,
+          "simMinusMesh": -0.0103,
+          "meshGrade": 0.0039
+        },
+        {
+          "z": -4,
+          "mesh": -0.9874,
+          "sim": -1,
+          "simMinusMesh": -0.0126,
+          "meshGrade": 0.0051
+        },
+        {
+          "z": -3.5,
+          "mesh": -0.9847,
+          "sim": -1,
+          "simMinusMesh": -0.0153,
+          "meshGrade": 0.0064
+        },
+        {
+          "z": -3,
+          "mesh": -0.981,
+          "sim": -1,
+          "simMinusMesh": -0.019,
+          "meshGrade": 0.0076
+        },
+        {
+          "z": -2.5,
+          "mesh": -0.9771,
+          "sim": -1,
+          "simMinusMesh": -0.0229,
+          "meshGrade": 0.0082
+        },
+        {
+          "z": -2,
+          "mesh": -0.9728,
+          "sim": -1,
+          "simMinusMesh": -0.0272,
+          "meshGrade": 0.0088
+        }
+      ]
+    },
+    {
+      "x": -44,
+      "rows": [
+        {
+          "z": -16,
+          "mesh": 0.5524,
+          "sim": 0.5,
+          "simMinusMesh": -0.0524,
+          "meshGrade": 0.0019
+        },
+        {
+          "z": -15.5,
+          "mesh": 0.5528,
+          "sim": 0.5,
+          "simMinusMesh": -0.0528,
+          "meshGrade": 0
+        },
+        {
+          "z": -15,
+          "mesh": 0.5523,
+          "sim": 0.5,
+          "simMinusMesh": -0.0523,
+          "meshGrade": -0.0025
+        },
+        {
+          "z": -14.5,
+          "mesh": 0.5502,
+          "sim": 0.5,
+          "simMinusMesh": -0.0502,
+          "meshGrade": -0.0042
+        },
+        {
+          "z": -14,
+          "mesh": 0.5481,
+          "sim": 0.5,
+          "simMinusMesh": -0.0481,
+          "meshGrade": -0.0061
+        },
+        {
+          "z": -13.5,
+          "mesh": 0.5441,
+          "sim": 0.5,
+          "simMinusMesh": -0.0441,
+          "meshGrade": -0.0078
+        },
+        {
+          "z": -13,
+          "mesh": 0.5402,
+          "sim": 0.5,
+          "simMinusMesh": -0.0402,
+          "meshGrade": -0.0084
+        },
+        {
+          "z": -12.5,
+          "mesh": 0.5357,
+          "sim": 0.5,
+          "simMinusMesh": -0.0357,
+          "meshGrade": -0.0093
+        },
+        {
+          "z": -12,
+          "mesh": 0.5309,
+          "sim": 0.5,
+          "simMinusMesh": -0.0309,
+          "meshGrade": -0.0091
+        },
+        {
+          "z": -11.5,
+          "mesh": 0.5266,
+          "sim": 0.5,
+          "simMinusMesh": -0.0266,
+          "meshGrade": -0.008
+        },
+        {
+          "z": -11,
+          "mesh": 0.5229,
+          "sim": 0.5,
+          "simMinusMesh": -0.0229,
+          "meshGrade": -0.0062
+        },
+        {
+          "z": -10.5,
+          "mesh": 0.5204,
+          "sim": 0.5,
+          "simMinusMesh": -0.0204,
+          "meshGrade": 0.005
+        },
+        {
+          "z": -10,
+          "mesh": 0.5279,
+          "sim": 0.5,
+          "simMinusMesh": -0.0279,
+          "meshGrade": 0.0229
+        },
+        {
+          "z": -9.5,
+          "mesh": 0.5433,
+          "sim": 0.5,
+          "simMinusMesh": -0.0433,
+          "meshGrade": 0.0521
+        },
+        {
+          "z": -9,
+          "mesh": 0.58,
+          "sim": 0.5,
+          "simMinusMesh": -0.08,
+          "meshGrade": 0.0812
+        },
+        {
+          "z": -8.5,
+          "mesh": 0.6245,
+          "sim": 0.5,
+          "simMinusMesh": -0.1245,
+          "meshGrade": 0.0939
+        },
+        {
+          "z": -8,
+          "mesh": 0.6739,
+          "sim": 0.5,
+          "simMinusMesh": -0.1739,
+          "meshGrade": -0.1155
+        },
+        {
+          "z": -7.5,
+          "mesh": 0.509,
+          "sim": 0.2656,
+          "simMinusMesh": -0.2433,
+          "meshGrade": -0.4053
+        },
+        {
+          "z": -7,
+          "mesh": 0.2686,
+          "sim": -0.25,
+          "simMinusMesh": -0.5186,
+          "meshGrade": -0.8602
+        },
+        {
+          "z": -6.5,
+          "mesh": -0.3513,
+          "sim": -0.7656,
+          "simMinusMesh": -0.4144,
+          "meshGrade": -1.1061
+        },
+        {
+          "z": -6,
+          "mesh": -0.8375,
+          "sim": -1,
+          "simMinusMesh": -0.1625,
+          "meshGrade": -0.5888
+        },
+        {
+          "z": -5.5,
+          "mesh": -0.94,
+          "sim": -1,
+          "simMinusMesh": -0.06,
+          "meshGrade": -0.1525
+        },
+        {
+          "z": -5,
+          "mesh": -0.99,
+          "sim": -1,
+          "simMinusMesh": -0.01,
+          "meshGrade": -0.0488
+        },
+        {
+          "z": -4.5,
+          "mesh": -0.9889,
+          "sim": -1,
+          "simMinusMesh": -0.0111,
+          "meshGrade": 0.0018
+        },
+        {
+          "z": -4,
+          "mesh": -0.9882,
+          "sim": -1,
+          "simMinusMesh": -0.0118,
+          "meshGrade": 0.0011
+        },
+        {
+          "z": -3.5,
+          "mesh": -0.9878,
+          "sim": -1,
+          "simMinusMesh": -0.0122,
+          "meshGrade": -0.0001
+        },
+        {
+          "z": -3,
+          "mesh": -0.9883,
+          "sim": -1,
+          "simMinusMesh": -0.0117,
+          "meshGrade": -0.0014
+        },
+        {
+          "z": -2.5,
+          "mesh": -0.9892,
+          "sim": -1,
+          "simMinusMesh": -0.0108,
+          "meshGrade": -0.0029
+        },
+        {
+          "z": -2,
+          "mesh": -0.9912,
+          "sim": -1,
+          "simMinusMesh": -0.0088,
+          "meshGrade": -0.0045
+        }
+      ]
+    },
+    {
+      "x": 44,
+      "rows": [
+        {
+          "z": -16,
+          "mesh": 0.4606,
+          "sim": 0.5,
+          "simMinusMesh": 0.0394,
+          "meshGrade": -0.0011
+        },
+        {
+          "z": -15.5,
+          "mesh": 0.4603,
+          "sim": 0.5,
+          "simMinusMesh": 0.0397,
+          "meshGrade": 0.0004
+        },
+        {
+          "z": -15,
+          "mesh": 0.461,
+          "sim": 0.5,
+          "simMinusMesh": 0.039,
+          "meshGrade": 0.0027
+        },
+        {
+          "z": -14.5,
+          "mesh": 0.463,
+          "sim": 0.5,
+          "simMinusMesh": 0.037,
+          "meshGrade": 0.0046
+        },
+        {
+          "z": -14,
+          "mesh": 0.4656,
+          "sim": 0.5,
+          "simMinusMesh": 0.0344,
+          "meshGrade": 0.007
+        },
+        {
+          "z": -13.5,
+          "mesh": 0.47,
+          "sim": 0.5,
+          "simMinusMesh": 0.03,
+          "meshGrade": 0.0093
+        },
+        {
+          "z": -13,
+          "mesh": 0.4749,
+          "sim": 0.5,
+          "simMinusMesh": 0.0251,
+          "meshGrade": 0.011
+        },
+        {
+          "z": -12.5,
+          "mesh": 0.481,
+          "sim": 0.5,
+          "simMinusMesh": 0.019,
+          "meshGrade": 0.013
+        },
+        {
+          "z": -12,
+          "mesh": 0.4879,
+          "sim": 0.5,
+          "simMinusMesh": 0.0121,
+          "meshGrade": 0.0145
+        },
+        {
+          "z": -11.5,
+          "mesh": 0.4955,
+          "sim": 0.5,
+          "simMinusMesh": 0.0045,
+          "meshGrade": 0.0167
+        },
+        {
+          "z": -11,
+          "mesh": 0.5046,
+          "sim": 0.5,
+          "simMinusMesh": -0.0046,
+          "meshGrade": 0.019
+        },
+        {
+          "z": -10.5,
+          "mesh": 0.5145,
+          "sim": 0.5,
+          "simMinusMesh": -0.0145,
+          "meshGrade": 0.0307
+        },
+        {
+          "z": -10,
+          "mesh": 0.5352,
+          "sim": 0.5,
+          "simMinusMesh": -0.0352,
+          "meshGrade": 0.0511
+        },
+        {
+          "z": -9.5,
+          "mesh": 0.5656,
+          "sim": 0.5,
+          "simMinusMesh": -0.0656,
+          "meshGrade": 0.0862
+        },
+        {
+          "z": -9,
+          "mesh": 0.6214,
+          "sim": 0.5,
+          "simMinusMesh": -0.1214,
+          "meshGrade": 0.1229
+        },
+        {
+          "z": -8.5,
+          "mesh": 0.6884,
+          "sim": 0.5,
+          "simMinusMesh": -0.1884,
+          "meshGrade": 0.1433
+        },
+        {
+          "z": -8,
+          "mesh": 0.7648,
+          "sim": 0.5,
+          "simMinusMesh": -0.2648,
+          "meshGrade": -0.1806
+        },
+        {
+          "z": -7.5,
+          "mesh": 0.5078,
+          "sim": 0.2656,
+          "simMinusMesh": -0.2422,
+          "meshGrade": -0.6064
+        },
+        {
+          "z": -7,
+          "mesh": 0.1584,
+          "sim": -0.25,
+          "simMinusMesh": -0.4084,
+          "meshGrade": -0.9376
+        },
+        {
+          "z": -6.5,
+          "mesh": -0.4298,
+          "sim": -0.7656,
+          "simMinusMesh": -0.3358,
+          "meshGrade": -1.0512
+        },
+        {
+          "z": -6,
+          "mesh": -0.8929,
+          "sim": -1,
+          "simMinusMesh": -0.1071,
+          "meshGrade": -0.4893
+        },
+        {
+          "z": -5.5,
+          "mesh": -0.9191,
+          "sim": -1,
+          "simMinusMesh": -0.0809,
+          "meshGrade": -0.0475
+        },
+        {
+          "z": -5,
+          "mesh": -0.9403,
+          "sim": -1,
+          "simMinusMesh": -0.0597,
+          "meshGrade": -0.0236
+        },
+        {
+          "z": -4.5,
+          "mesh": -0.9427,
+          "sim": -1,
+          "simMinusMesh": -0.0573,
+          "meshGrade": -0.0063
+        },
+        {
+          "z": -4,
+          "mesh": -0.9466,
+          "sim": -1,
+          "simMinusMesh": -0.0534,
+          "meshGrade": -0.008
+        },
+        {
+          "z": -3.5,
+          "mesh": -0.9507,
+          "sim": -1,
+          "simMinusMesh": -0.0493,
+          "meshGrade": -0.01
+        },
+        {
+          "z": -3,
+          "mesh": -0.9567,
+          "sim": -1,
+          "simMinusMesh": -0.0433,
+          "meshGrade": -0.0115
+        },
+        {
+          "z": -2.5,
+          "mesh": -0.9623,
+          "sim": -1,
+          "simMinusMesh": -0.0377,
+          "meshGrade": -0.0122
+        },
+        {
+          "z": -2,
+          "mesh": -0.9689,
+          "sim": -1,
+          "simMinusMesh": -0.0311,
+          "meshGrade": -0.0128
+        }
+      ]
+    }
+  ]
+}

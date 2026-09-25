@@ -1,0 +1,59 @@
+{
+  "project": "desktop-chrome",
+  "contract": "e3-canyon-works",
+  "name": "The Canyon Works",
+  "secureWave": 12,
+  "boots": {
+    "ok": false,
+    "detail": "no game frame within 60000ms: page.waitForFunction: Timeout 60000ms exceeded."
+  },
+  "secures": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "board": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "clean": {
+    "ok": false,
+    "detail": "{\"consoleErrors\":[\"Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)\",\"[boot-guard] chunk: game/Game: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5321/src/game/Game.ts\",\"Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)\",\"Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)\",\"[boot-guard] chunk: game/Game: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5321/src/game/Game.ts\",\"Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)\",\"Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)\"],\"pageErrors\":[\"Failed to fetch dynamically imported module: http://127.0.0.1:5321/src/town/TownTavernPilot.ts\",\"Failed to fetch dynamically imported module: http://127.0.0.1:5321/src/town/TownTavernPilot.ts\"]}"
+  },
+  "peakWave": 0,
+  "simAtEnd": 0,
+  "runStateAtEnd": "",
+  "hpAtEnd": 0,
+  "goldAtEnd": 0,
+  "killsAtEnd": 0,
+  "peakHotBoilers": 0,
+  "powerBanksPeak": {},
+  "builds": [],
+  "upgrades": [],
+  "samples": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+    "[boot-guard] chunk: game/Game: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5321/src/game/Game.ts",
+    "Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+    "Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+    "[boot-guard] chunk: game/Game: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5321/src/game/Game.ts",
+    "Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+    "Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)"
+  ],
+  "pageErrors": [
+    "Failed to fetch dynamically imported module: http://127.0.0.1:5321/src/town/TownTavernPilot.ts",
+    "Failed to fetch dynamically imported module: http://127.0.0.1:5321/src/town/TownTavernPilot.ts"
+  ],
+  "notes": [
+    "epoch=epoch-3-voltage",
+    "strategy=gather-and-extend"
+  ],
+  "at": "2026-09-25T13:46:02.497Z"
+}
