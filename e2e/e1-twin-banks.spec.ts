@@ -71,6 +71,8 @@ test('loads Twin Banks contract with two fords, two build zones, and one loss st
       water: diagnostics.terrain.water,
       samples: {
         center: window.__GR_TEST__?.terrainSample(0, 0),
+        northChannel: window.__GR_TEST__?.terrainSample(0, 2),
+        southChannel: window.__GR_TEST__?.terrainSample(0, -2),
         westFord: window.__GR_TEST__?.terrainSample(-16, 0),
         eastFord: window.__GR_TEST__?.terrainSample(16, 0),
       },
@@ -93,7 +95,11 @@ test('loads Twin Banks contract with two fords, two build zones, and one loss st
   expect(snapshot.water?.riverPresent).toBe(true);
   expect(snapshot.water?.fordPresent).toBe(true);
   expect(snapshot.water?.fordStones).toBe(14);
-  expect(snapshot.samples.center?.zone).toBe('river');
+  // HM-06: the owner ratified the two channels and the dry, unbuildable central plait.
+  expect(snapshot.samples.center).toMatchObject({ zone: 'bank', walkable: true });
+  expect(snapshot.contract.tileParams.buildZones?.some((zone) => zone.minX <= 0 && zone.maxX >= 0 && zone.minZ <= 0 && zone.maxZ >= 0)).toBe(false);
+  expect(snapshot.samples.northChannel).toMatchObject({ zone: 'river', walkable: false });
+  expect(snapshot.samples.southChannel).toMatchObject({ zone: 'river', walkable: false });
   expect(snapshot.samples.westFord?.zone).toBe('ford');
   expect(snapshot.samples.eastFord?.zone).toBe('ford');
   await shot(page, testInfo, 'both-bank-base');

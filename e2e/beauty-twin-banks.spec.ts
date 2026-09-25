@@ -303,15 +303,21 @@ test('the braid renders living water without touching the sculpt contract or the
   expect(Number(await canvas.getAttribute('data-terrain3d-pilot-triangles'))).toBe(51_200);
   expect(Number(await canvas.getAttribute('data-terrain3d-pilot-vertices'))).toBe(25_921);
 
-  // Sim truth is untouched by the render-only water: the legacy band still classifies.
+  // HM-06: the production mask owns both channels, the dry plait, and the shallow fords.
   const samples = await page.evaluate(() => ({
     center: window.__GR_TEST__?.terrainSample(0, 0),
+    northChannel: window.__GR_TEST__?.terrainSample(0, 2),
+    southChannel: window.__GR_TEST__?.terrainSample(0, -2),
+    sourcePool: window.__GR_TEST__?.terrainSample(-28, 0),
     westFord: window.__GR_TEST__?.terrainSample(-16, 0),
     eastFord: window.__GR_TEST__?.terrainSample(16, 0),
     southBank: window.__GR_TEST__?.terrainSample(0, -12),
     water: window.__THREE_GAME_DIAGNOSTICS__?.terrain.water,
   }));
-  expect(samples.center?.zone).toBe('river');
+  expect(samples.center).toMatchObject({ zone: 'bank', walkable: true });
+  expect(samples.northChannel).toMatchObject({ zone: 'river', walkable: false });
+  expect(samples.southChannel).toMatchObject({ zone: 'river', walkable: false });
+  expect(samples.sourcePool).toMatchObject({ zone: 'river', walkable: false });
   expect(samples.westFord?.zone).toBe('ford');
   expect(samples.eastFord?.zone).toBe('ford');
   expect(samples.southBank?.zone).toBe('bank');
@@ -332,6 +338,11 @@ test('the braid renders living water without touching the sculpt contract or the
 
   // Both channels carry a mounted ribbon...
   expect(await canvas.getAttribute('data-terrain3d-pilot-channel-water')).toBe('2');
+  expect(await canvas.getAttribute('data-terrain3d-pilot-water-mask')).toBe('twin-banks-true-braid-dev');
+  expect(JSON.parse((await canvas.getAttribute('data-terrain3d-pilot-channel-water-half-widths'))!)).toEqual([1.5, 1.5]);
+  expect(JSON.parse((await canvas.getAttribute('data-terrain3d-pilot-water-pools'))!)).toEqual([
+    { id: 'west-source-box', kind: 'rect', zone: 'river', minX: -30, maxX: -26, minZ: -2, maxZ: 2 },
+  ]);
   // ...and the ribbons put WATER ON THE SCREEN. A mesh count is a claim, pixels are the fact:
   // the first cut of this shift shipped two ribbons of zero width that passed every count.
   await poseAt(page, RUN_CAMERA.x, RUN_CAMERA.z);
