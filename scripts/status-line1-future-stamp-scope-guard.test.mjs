@@ -53,10 +53,10 @@
  * failure-to-load could produce, since a copy that cannot load fails every arm alike.
  */
 
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -72,8 +72,16 @@ const BODY = ['', '- **s2675 handoff (line-1 archive):** an older line, kept.', 
 const FUTURE = '2031-09-27T00:00Z';
 const PAST = '2026-09-20T00:00Z';
 
+// Every fixture this file makes is removed when the file's tests end (F-1335-5: a leaked mkdtemp dir reds
+// scripts/fixture-teardown.test.mjs and, through it, test:node-guards; measured 2026-09-25 by the pp3 drain,
+// F-PP3-5: 328 survivors of this file and its s2677 sibling in the host tmpdir). The literal prefix stays at
+// the mkdtemp call site because the sweep's extractor is a regex over this source.
+const FIXTURES = [];
+after(() => { for (const d of FIXTURES) rmSync(d, { recursive: true, force: true }); });
+
 function board({ mutate } = {}) {
   const dir = mkdtempSync(join(tmpdir(), 's2677-stamp-'));
+  FIXTURES.push(dir);
   mkdirSync(join(dir, 'scripts'));
   const tool = join(dir, 'scripts', 'status-line1.mjs');
   copyFileSync(SUBJECT, tool);

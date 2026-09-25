@@ -50,10 +50,10 @@
  * proves the copy runs by making it SUCCEED rather than fail.
  */
 
-import { test } from 'node:test';
+import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, copyFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -77,8 +77,16 @@ const BODY = ['', '- **s2671 handoff (line-1 archive):** an older line, kept.', 
  * the subject resolves STATUS.md as `../STATUS.md` from its own location.
  * `mutate` (optional) edits the copied source, which is how the pre-cure control is made.
  */
+// Every fixture this file makes is removed when the file's tests end (F-1335-5: a leaked mkdtemp dir reds
+// scripts/fixture-teardown.test.mjs and, through it, test:node-guards; measured 2026-09-25 by the pp3 drain,
+// F-PP3-5: 328 survivors of this file and its s2677 sibling in the host tmpdir). The literal prefix stays at
+// the mkdtemp call site because the sweep's extractor is a regex over this source.
+const FIXTURES = [];
+after(() => { for (const d of FIXTURES) rmSync(d, { recursive: true, force: true }); });
+
 function board({ line1, extraBullets = [], mutate }) {
   const dir = mkdtempSync(join(tmpdir(), 's2673-desk-'));
+  FIXTURES.push(dir);
   mkdirSync(join(dir, 'scripts'));
   const tool = join(dir, 'scripts', 'status-line1.mjs');
   copyFileSync(SUBJECT, tool);
