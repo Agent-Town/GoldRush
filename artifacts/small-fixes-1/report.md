@@ -2,7 +2,7 @@
 
 **Branch** `fix/small-fixes-1` in `/Users/robin/Claude/Projects/wt-sf1`, cut from main at `2cf3feea4` (main has moved on since; not merged or rebased, as instructed).
 **Implementer** Claude Opus 5.5, attended-side scratch worktree, never Codex. **Date** 2026-09-25.
-**Verdict** All four findings closed, each with its proof and its own commit. One gate cannot be met inside this firewall and one instruction was adapted, both measured rather than stretched: on this branch `fixture-teardown` names exactly ONE offender after the cure, a sibling test outside the firewall that grew the same leak after F-EO1-5 was filed (F-SF1-3; main cured that sibling, and this branch's file too, at `c3cd93c77` while this ran, so the merge has exactly one conflict, in that file, and resolves to main's side: section 4); and two of the thirteen scripts cannot import a sibling at all, because a guard fixture relocates each of them alone, so they carry a byte-identical copy of the helper under a test arm that pins the copy to the original (section 3).
+**Verdict** All four findings closed, each with its proof and its own commit. One gate cannot be met inside this firewall and one instruction was adapted, both measured rather than stretched: on this branch `fixture-teardown` names exactly ONE offender after the cure, a sibling test outside the firewall that grew the same leak after F-EO1-5 was filed (F-SF1-3; main cured that sibling, and this branch's file too, at `c3cd93c77` while this ran, and this branch now carries main's version of that file byte for byte, so the branch merges clean: section 4); and two of the thirteen scripts cannot import a sibling at all, because a guard fixture relocates each of them alone, so they carry a byte-identical copy of the helper under a test arm that pins the copy to the original (section 3).
 
 ---
 
@@ -94,15 +94,15 @@ Gates on the fixed tree: `npm run test:accounts` rc 0 (43 kv, 43 sqlite, 27 sign
 
 ---
 
-## 4. F-EO1-5: the temp-directory leak (scope item 4), commit `65fe53a2f`
+## 4. F-EO1-5: the temp-directory leak (scope item 4), commits `65fe53a2f`, `5255fd11a`
 
-`scripts/status-line1-desk-displacement-guard.test.mjs`: `board()` made one `mkdtemp` board per arm (ten per run) and never removed one. Each board is now pushed onto `BOARDS` as it is made, and an `after()` hook removes them all once every arm has run.
+`scripts/status-line1-desk-displacement-guard.test.mjs`: `board()` made one `mkdtemp` board per arm (ten per run) and never removed one. Each board is now recorded in a list as it is made, and an `after()` hook removes them all once every arm has run (`65fe53a2f`; since `5255fd11a` the file is byte-identical to main's own copy of the same cure, below).
 
 - The cured file, in an isolated TMPDIR (the sweep's own method): **10/10 pass, 0 `s2673-desk-*` survivors**.
 - `scripts/fixture-teardown.test.mjs` BEFORE the cure (isolation, 1,083.8 s, 161 fixture owners): named **TWO** offenders, `status-line1-desk-displacement-guard.test.mjs: 10` and `status-line1-future-stamp-scope-guard.test.mjs: 6`.
 - AFTER the cure: the real sweep can no longer reach its tally on this branch: it asserts each child exits 0 before counting, and bench-seeds reds on the unpinned engine hash (the node-guards battery's own `scripts/bench-seeds.test.mjs child failed`). So `fixture-teardown-tally.mjs` re-ran the sweep's subject set, prefixes and isolated-TMPDIR method, counting every child whatever its exit code (162 owners, 521 s at three jobs): **one offender, `status-line1-future-stamp-scope-guard.test.mjs: 6`; `status-line1-desk-displacement-guard.test.mjs: 0`** (`fixture-teardown-tally-after.txt`). Once the drain pins the hash, the real sweep will name exactly that one file until F-SF1-3 is cured.
 - **The master's "single offender" has become two since F-EO1-5 was filed.** `status-line1-future-stamp-scope-guard.test.mjs` (commit `2e7b9ae11`, F-2676-1) copied the same `board()` shape, `mkdtemp(join(tmpdir(), 's2677-stamp-'))` with no cleanup, six per run. It is not on this task's TOUCH-ONLY list, so it is untouched and the sweep cannot name zero from inside this firewall: finding **F-SF1-3**, REMAINING 1 (the identical cure: a list, an after() hook, one push; ready and verified as `F-SF1-3-ready.patch`, not applied).
-- **MERGE NOTE, MEASURED: main cured both files itself while this branch ran.** `c3cd93c77` (2026-09-25 18:30 +0700, F-PP3-5, the pp3 drain) gives `status-line1-desk-displacement-guard.test.mjs` AND `status-line1-future-stamp-scope-guard.test.mjs` the same cure (the same two import lines, a `FIXTURES` list and an `after()` hook). `git merge-tree --write-tree main HEAD` (read-only) names exactly ONE conflict for this whole branch: `scripts/status-line1-desk-displacement-guard.test.mjs`, where my `BOARDS.push` and main's `FIXTURES.push` sit on the same line. **Resolve by taking main's side of that file**: the effect is identical, and F-EO1-5's substance then rides on main's commit. With both files cured on main, the sweep's two visible offenders are gone once merged (INFERRED from reading `c3cd93c77` against the tallies here; the drain's battery measures it after the pin).
+- **MERGE NOTE, MEASURED: main cured both files itself while this branch ran.** `c3cd93c77` (2026-09-25 18:30 +0700, F-PP3-5, the pp3 drain) gives `status-line1-desk-displacement-guard.test.mjs` AND `status-line1-future-stamp-scope-guard.test.mjs` the same cure (the same two import lines, a `FIXTURES` list and an `after()` hook). `git merge-tree --write-tree main HEAD` (read-only) then named exactly ONE conflict for this whole branch, in `scripts/status-line1-desk-displacement-guard.test.mjs` (my `BOARDS.push` against main's `FIXTURES.push` on one line). **Resolved on the branch, not at the drain**: `5255fd11a` makes the file byte-identical to main's version (same effect; 10 / 10 pass, 0 survivors in an isolated TMPDIR), and `git merge-tree` now reports **no conflict at all**. F-EO1-5's substance is therefore carried by both histories identically. With both files cured on main, the sweep's two visible offenders are gone once merged (INFERRED from reading `c3cd93c77` against the tallies here; the drain's battery measures it after the pin).
 - **The stale directories are LISTED, NOT DELETED** (the Retention Law covers factory artifacts; temp directories are the owner's to sweep): **250** `s2673-desk-*` under `os.tmpdir()` (`/var/folders/cd/.../T`), 2026-09-24T23:32 to 2026-09-25T12:17 machine time (UTC+7), about 6 MB, 3 entries each, in `artifacts/small-fixes-1/stale-desk-tempdirs-before.txt` (the master said 130; at ten a run, 250 is 25 runs, 12 of them since the master was written). The sibling's **72** `s2677-stamp-*` (about 1.7 MB) are listed in `stale-stamp-tempdirs.txt`. Still 250 after every run in this task: the cured file adds none.
 
 ---
@@ -146,6 +146,10 @@ Gates on the fixed tree: `npm run test:accounts` rc 0 (43 kv, 43 sqlite, 27 sign
 | `558a5c0e8` | F-SEC2-2 | `functions/api/_bugs.ts`, `artifacts/small-fixes-1/bugs-cors-probe*` |
 | `dd2c87433` | F-SEC2-4 | `src/game/ProfileManager.ts` (one line), `e2e/account-card-privacy-link.spec.ts` (new) |
 | `d7ef99bb4` | gate evidence | the fixture sweep tally, the battery and gate logs, the lists |
+| `87761f666`, `4eebbc0a4` | report | this file (the browser check pending in the first) |
+| `208e96ddf` | F-SF1-3 | `F-SF1-3-ready.patch` (not applied; superseded by main's `c3cd93c77`) |
+| `5255fd11a` | F-EO1-5 | the desk test aligned byte for byte with main's identical cure, so the merge is clean |
+
 
 Left dirty in the worktree by design, factory churn class (b), not committed: `artifacts/accounts-worker/test-accounts.json` and `artifacts/multiplayer-relay/test-multiplayer.json` (rewritten by the functions gates).
 
@@ -155,7 +159,7 @@ Left dirty in the worktree by design, factory churn class (b), not committed: `a
 
 ## 8. REMAINING LIST IN ORDER
 
-1. **The merge's one conflict** (`git merge-tree`, read-only): `scripts/status-line1-desk-displacement-guard.test.mjs`, because main cured it (and F-SF1-3's sibling) itself at `c3cd93c77` while this branch ran. Take main's side of that file; everything else merges clean. `F-SF1-3-ready.patch` is superseded by the same commit: do not apply it. Then `fixture-teardown` should name zero once the hash is pinned (item 2), the master's gate as written.
+1. **Nothing to resolve at the merge**: main cured both status-line1 fixture leaks itself at `c3cd93c77` while this branch ran, and `5255fd11a` aligned this branch's copy byte for byte, so `git merge-tree --write-tree main HEAD` reports no conflict (checked at 18:4x +0700; main keeps moving). `F-SF1-3-ready.patch` is superseded by that commit: do not apply it. Once the hash is pinned (item 2), `fixture-teardown` should name zero, the master's gate as written.
 2. **The drain pins the engine hash**: the one `src/game/ProfileManager.ts` line moves it from `c63def1b…` to `13e5735c2e784834f640dd99e65d674cf0295c3d0d899c2364da4b60baa42fab`; `assets/engine-era.json` is untouched here, and bench-seeds, engine-era-guard and (through them) fixture-teardown red until the pin.
 3. **F-SF1-6**: an `after()` cleanup in `status-archive-empty-corpus-guard.test.mjs`, and `fixture-teardown.test.mjs` reading a template-literal prefix up to its first `${`, so that leaker (12 dirs a run, 8,834 on disk) becomes visible and stays visible.
 4. **F-SF1-1**: gate the localhost arm in the six other doors on the same predicate, `redeem.ts` first.
