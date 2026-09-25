@@ -1,13 +1,41 @@
 {
-  "tag": "dtg1", "branch": "fix/door-tape-grammar-1", "port": 5384,
+  "tag": "dtg1",
+  "branch": "fix/door-tape-grammar-1",
+  "port": 5384,
   "mergeMessage": "drain: merge fix/door-tape-grammar-1 — door-tape-grammar-1 HOTFIX — the county door accepts the recorder's playbookUses and motorActions input-log keys with the client's own validators (red-first against a real recorder reel: 400 bad_payload twice on the base, stored and read back at the tip; 372 to 412 door checks per backend; nothing else loosened, nine mutations each red), so a human standing with a reel is no longer refused as it has been since 2026-09-05 (Opus 5.5 implementer at max effort; F-LSR1-0, P0)",
   "hash": "unchanged",
-  "gates": { "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": true, "ledgerBattery": true,
-    "specs": [], "guards": ["scripts/function-cors-allowlist.test.mjs", "scripts/worker-type-coverage.test.mjs"] },
-  "review": { "path": "reviews/door-tape-grammar-1.md", "title": "Drain review: `door-tape-grammar-1` HOTFIX, the county door accepts the recorder's reels again (Opus 5.5 implementer at max effort; F-LSR1-0, P0)", "body": "scripts/attended/landings/dtg1-review.md" },
-  "bookkeeping": { "taskFile": "door-tape-grammar-1.md", "rowKey": "DOOR TAPE GRAMMAR HOTFIX LANDED", "rowEmoji": "🚨",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": true,
+    "ledgerBattery": true,
+    "specs": [],
+    "guards": [
+      "scripts/function-cors-allowlist.test.mjs",
+      "scripts/worker-type-coverage.test.mjs"
+    ],
+    "allowedBattery": [
+      "the browser door submits the purse held at the secure tick",
+      "fixture owners remove their temp directories"
+    ]
+  },
+  "review": {
+    "path": "reviews/door-tape-grammar-1.md",
+    "title": "Drain review: `door-tape-grammar-1` HOTFIX, the county door accepts the recorder's reels again (Opus 5.5 implementer at max effort; F-LSR1-0, P0)",
+    "body": "scripts/attended/landings/dtg1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "door-tape-grammar-1.md",
+    "rowKey": "DOOR TAPE GRAMMAR HOTFIX LANDED",
+    "rowEmoji": "🚨",
     "rowText": "The county door accepts `playbookUses` (each `{kind:'playbook_use', atTick in [0, durationTicks] non-decreasing, playbook}` validated by the client's `validatePlaybook` with the tape's contract, seed and difficulty) and `motorActions` (each `{t in [0, durationTicks) non-decreasing, kind motor_grade|motor_haul, point in [-256, 256]}` via the client's `validateMotorActions`), both optional, at most `maxEntries` each; absent and empty accepted, null and any unknown key still refused; nine mutations each red. RED first: the real recorder's reel got 400 `bad_payload` twice on the base and is stored, ranked and read back through `?reel=` at the tip. 372 to 412 door checks per backend; accounts, mp 528, stats green; `RunTape.ts` byte-identical, hash unchanged {PIN}. DEPLOYED (the deploy restarts `goldrush-ledger`, whose door is this module): a human who secures a run banks a county standing again after twenty days. **F-DTG1-1 (P0 continuation `door-tape-grammar-2`): the door still refuses `prospector_dispatch`, `context_action recover` and multiplayer `agent_orders`, so a reel with a dispatch is still refused until it lands.** F-DTG1-5: the function bundle grew 387 to 508 KB (a validators-only module later).",
     "statusPhrase": "the county door accepts the recorder's reels again after twenty days of refusing every human standing, and its three remaining refused verbs have their continuation running",
-    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg1, P0 at the front of the queue)" },
-  "deploy": true, "preview": true, "evidenceDir": "artifacts/door-tape-grammar-1"
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg1, P0 at the front of the queue)"
+  },
+  "deploy": true,
+  "preview": true,
+  "evidenceDir": "artifacts/door-tape-grammar-1"
 }

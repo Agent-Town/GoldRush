@@ -1,0 +1,14 @@
+{
+  "tag": "dtg2", "branch": "fix/door-tape-grammar-2", "port": 5385,
+  "mergeMessage": "drain: merge fix/door-tape-grammar-2 — door-tape-grammar-2 (P0 continuation) — the county door accepts prospector_dispatch, context_action recover and a seated rider's agent_orders with the client's exact shapes (red-first with the real recorder: three 400 bad_payload on the base, stored and read back at the tip; 412 to 467 door checks per backend, 20 mutations red) and the retirement walk retires stored rows with a since-retired embedded verb instead of dropping them; the same-game audit re-pinned 511 to 595 (Opus 5.5 implementer at max effort; F-DTG1-1, F-DTG1-2)",
+  "hash": "unchanged",
+  "gates": { "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": true, "ledgerBattery": true,
+    "specs": [], "guards": ["scripts/function-cors-allowlist.test.mjs", "scripts/worker-type-coverage.test.mjs"] },
+  "cure": "scripts/attended/landings/dtg2-cure.sh",
+  "review": { "path": "reviews/door-tape-grammar-2.md", "title": "Drain review: `door-tape-grammar-2`, the door accepts the three client verbs it still refused (Opus 5.5 implementer at max effort; F-DTG1-1, P0 continuation)", "body": "scripts/attended/landings/dtg2-review.md" },
+  "bookkeeping": { "taskFile": "door-tape-grammar-2.md", "rowKey": "DOOR TAPE GRAMMAR 2 LANDED", "rowEmoji": "🚨",
+    "rowText": "The door accepts `prospector_dispatch` (`{type, node}`, node 1 to 64 chars), `context_action recover` (`{type, action}`) and a seated rider's `agent_orders` (`{type, version:1, orders <= 3 KiB passing the full order grammar, submissionId 1 to 96 chars}`) exactly as the client's normalizer does; RED first with the real recorder (three 400 `bad_payload` on the base; stored, ranked and read back at the tip); F-DTG1-2 closed: a stored row with a since-retired embedded verb is RETIRED and COUNTED, not dropped. 412 to 467 door checks per backend, 20 mutations red; `src/` byte-identical, hash unchanged {PIN}. Drain cure F-DTG2-1: the same-game audit re-pinned 511 to 595 agent-lacks (the door learned two verbs; none removed). DEPLOYED with grammar-1: a secured run with dispatches banks its standing again. Slice: F-DTG2-2 `door-tape-grammar-3` (three places where the door accepts what the client refuses: whitespace-only build and upgrade ids, an unknown set_agent_ability).",
+    "statusPhrase": "the county door also accepts the dispatch, recover and rider-order verbs it still refused, so a secured run with dispatches banks its standing again",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg2, P0, directly after grammar-1)" },
+  "deploy": true, "preview": true, "evidenceDir": "artifacts/door-tape-grammar-2"
+}
