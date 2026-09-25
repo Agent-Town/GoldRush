@@ -980,3 +980,7 @@ Final verification: build/TypeScript PASS; default collection PASS; gate-unset b
 - Canyon Works: FAIL desktop/phone; bridge and opposite flank routes stop near z=-7.88, CONNECT 0/2 misses wave 8, zero gold/builds. Full-width slope rejection confirmed by static calculation; no runtime fix within scope. [F-PP2-2](../play-proofs/run-2/e3-canyon-works/finding.md).
 - Fairground: FAIL desktop/phone; six-wall opening loses the wheel at wave 2, early-beacon opening at wave 1. Phone gets one flock across; wheel first-hit stop is irreversible. Both clean, no bank/reload proof. [F-PP2-3](../play-proofs/run-2/e3-fairground/finding.md).
 - Gates: final TypeScript/build PASS; native gate unset gives 14 skipped. Shared-driver Incline regression PASS desktop wave 17 / phone wave 14, full-health cart delivery, bank/Book/reload and zero errors. Scope check confirms only the three objective-evidence cells changed. No new full map proof this batch. [Ordered continuation and commands](../play-proofs/run-2/run-note.md).
+
+## 2026-09-25 — Native play proofs, run 3
+
+- Dust Flats: FAIL desktop/phone. Haul-first reaches railhead at 43.9 s but dies wave 2; defense-first builds two defenses but dies wave 4 before dispatch. Zero console/page errors. Strategy limits, not impossibility. [F-PP3-1](../play-proofs/run-3/e4-dust-flats/finding.md).

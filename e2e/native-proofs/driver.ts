@@ -140,6 +140,8 @@ type Snapshot = {
   nodes: Array<{ id: string; active: boolean; x: number; z: number; respawnIn: number; respawnScheduled: boolean }>;
   buildables: Array<{ id: string; cost: number; count: number; maxCount: number; canAfford: boolean }>;
   defences: Array<{ id: string; index: number; hp: number; maxHp: number; wrecked: boolean; repairCost: number; x: number; z: number }>;
+  fuel: ThreeGameDiagnostics['fuel'];
+  vehicle: ThreeGameDiagnostics['vehicle'];
   repairs: number;
   channeling: boolean;
   objective: unknown;
@@ -157,13 +159,15 @@ async function read(page: Page): Promise<Snapshot | null> {
       const d = window.__THREE_GAME_DIAGNOSTICS__;
       if (!d) return null;
       return {
+        fuel: d.fuel,
+        vehicle: d.vehicle,
         escort: d.escort,
         canyonWorks: d.canyonWorks,
         fairground: d.fairground,
         crowdFlocks: d.crowdFlocks,
         power: d.power,
         pressure: d.pressure,
-        objective: { fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
+        objective: { fuel: d.fuel, vehicle: d.vehicle, landYacht: d.landYachtBoss, fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -507,6 +511,48 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   await build(page, row, room.id, home.x + Math.cos(angle) * radius, home.z + Math.sin(angle) * radius, Math.min(deadline, Date.now() + 60_000), fords, unreachable);
 }
 
+// Motor errands use the ordinary confirm key at surveyed stakes and haul destinations.
+async function motorStop(page: Page, row: Row, x: number, z: number): Promise<boolean> {
+  if (!(await walkTo(page, row, x, z, 0.8, 120))) {
+    row.notes.push(`motor stop unreachable: ${x},${z}; hero=${JSON.stringify((await read(page))?.hero)}`);
+    return false;
+  }
+  await takeUpgrades(page, row);
+  await page.keyboard.press('Space');
+  await page.waitForTimeout(200);
+  // At an ungraded stake the first confirm grades; the second dispatches.
+  const first = await read(page);
+  if (!first?.vehicle?.target || Math.hypot(first.vehicle.target.x - x, first.vehicle.target.z - z) > 2) {
+    await page.keyboard.press('Space');
+  }
+  for (let tick = 0; tick < 100; tick++) {
+    await takeUpgrades(page, row);
+    const now = await read(page);
+    if (!now || now.runState === 'dead') return false;
+    if (now.vehicle?.state === 'arrived' || now.vehicle?.state === 'dry') {
+      const arrived = now.vehicle.state === 'arrived' && Math.hypot(now.vehicle.x - x, now.vehicle.z - z) < 2;
+      row.notes.push(`motor stop ${x},${z}: arrived=${arrived}, sim=${now.sim.toFixed(1)}, vehicle=${JSON.stringify(now.vehicle)}, fuel=${JSON.stringify(now.fuel)}`);
+      return arrived;
+    }
+    await page.waitForTimeout(150);
+  }
+  row.notes.push(`motor stop ${x},${z}: arrival wait exhausted`);
+  return false;
+}
+
+async function motorOpening(page: Page, row: Row): Promise<void> {
+  const initial = await read(page);
+  for (const node of initial?.fuel?.nodes ?? []) {
+    const reached = await walkTo(page, row, node.x, node.z, 0.8, 120);
+    if (reached) await page.waitForTimeout(350);
+    row.notes.push(`tar ${node.x},${node.z}: reached=${reached}, fuel=${JSON.stringify((await read(page))?.fuel)}`);
+  }
+  if (row.contract === 'e4-dust-flats') {
+    if (await motorStop(page, row, 0, 12)) await motorStop(page, row, 0, 72);
+    await walkTo(page, row, 0, 8, 1.2, 120);
+  }
+}
+
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
@@ -656,6 +702,12 @@ export function nativeProof(id: string, run = 1) {
         const fords = crossingsFor(contract);
         const unreachable = new Set<string>();
 
+        if (contract.id === 'e4-dust-flats') {
+          // Establish cover before the long railhead errand; the haul-first attempt died gathering.
+          await build(page, row, 'turret', 0, 4, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
+          await build(page, row, 'sentry_beacon', -4, 9, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
+          await motorOpening(page, row);
+        }
         if (contract.id === 'e2-pressure-garden') {
           if (HOLD_GROUND) {
             await build(page, row, 'turret', -29, 24, Math.min(deadline, Date.now() + 60_000), fords, unreachable);
