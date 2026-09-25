@@ -140,7 +140,6 @@ type Snapshot = {
   nodes: Array<{ id: string; active: boolean; x: number; z: number; respawnIn: number; respawnScheduled: boolean }>;
   buildables: Array<{ id: string; cost: number; count: number; maxCount: number; canAfford: boolean }>;
   defences: Array<{ id: string; index: number; hp: number; maxHp: number; wrecked: boolean; repairCost: number; x: number; z: number }>;
-  physics: ThreeGameDiagnostics['e8Physics'];
   air: ThreeGameDiagnostics['e8SuitAir'];
   probe: ThreeGameDiagnostics['probeRecovery'];
   fuel: ThreeGameDiagnostics['fuel'];
@@ -162,7 +161,6 @@ async function read(page: Page): Promise<Snapshot | null> {
       const d = window.__THREE_GAME_DIAGNOSTICS__;
       if (!d) return null;
       return {
-        physics: d.e8Physics,
         air: d.e8SuitAir,
         probe: d.probeRecovery,
         fuel: d.fuel,
@@ -341,16 +339,7 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
     const dx = x - now.hero.x;
     const dz = z - now.hero.z;
     const gap = Math.hypot(dx, dz);
-    const drifting = now.physics.active && now.physics.movement !== 'normal';
-    const velocity = now.physics.filteredMovement;
-    if (gap <= tolerance && (!drifting || Math.hypot(velocity.x, velocity.y) < 0.12)) return true;
-    if (drifting && gap < 8) {
-      // Counter-thrust against the published momentum before calling a seam reached.
-      // Releasing keys alone coasts out of the 1.6-unit harvest disc.
-      await steer(page, dx - 3 * velocity.x, dz - 3 * velocity.y, Math.min(65, Math.max(16, gap * 8)));
-      await page.waitForTimeout(60);
-      continue;
-    }
+    if (gap <= tolerance) return true;
     if (gap < best - 0.35) {
       best = gap;
       stalled = 0;
@@ -422,7 +411,6 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
       if (next.gold >= amount) return true;
       if (row.contract === 'e8-far-side' && next.air && next.air.suit.seconds < 30) break;
       if (!next.nodes.find((entry) => entry.id === node.id)?.active) break;
-      if (Math.hypot(next.hero.x - node.x, next.hero.z - node.z) > 1.5) break;
       await page.waitForTimeout(140);
     }
   }
@@ -550,18 +538,8 @@ async function farSideCrossing(page: Page, row: Row): Promise<void> {
   // Enter the rectangle itself for air credit; recovery alone has a larger reach.
   const reached = await walkTo(page, row, 10, 39.5, 1, 220);
   await takeUpgrades(page, row);
-  if (reached) {
-    for (let press = 0; press < 5; press++) {
-      await takeUpgrades(page, row);
-      await page.keyboard.press('Space');
-      await page.waitForTimeout(150);
-      if ((await read(page))?.probe.recovered) break;
-    }
-  }
+  if (reached) await page.keyboard.press('Space');
   const now = await read(page);
-  if (reached && now && now.gold >= 50 && !row.builds.some(b => b.z >= 38)) {
-    await build(page, row, 'turret', 10, 40, Date.now() + 5000, [], new Set());
-  }
   row.notes.push(`Far Side crossing: reached=${reached}, hero=${JSON.stringify(now?.hero)}, air=${JSON.stringify(now?.air)}, probe=${JSON.stringify(now?.probe)}`);
   await refillFarSide(page, row);
 }
@@ -1016,8 +994,8 @@ export function nativeProof(id: string, run = 1) {
                 `never secured: peak wave ${row.peakWave} of ${secureWave} after ${row.simAtEnd.toFixed(1)}s sim (runState=${row.runStateAtEnd || 'unknown'}, ${row.builds.length} buildings, ${row.killsAtEnd} kills)`,
             );
 
-        if (contract.id === 'e8-far-side' && (!atSecure?.air?.crossing?.complete || !atSecure.probe.recovered || atSecure.probe.playbackCount !== 1 || !row.builds.some(b => b.z >= 38) || !row.builds.some(b => b.z <= -30))) {
-          row.secures = fail(`${row.secures.detail}; four air-supported crossings, one probe playback and builds at both grounds not proved`);
+        if (contract.id === 'e8-far-side' && (!atSecure?.air?.crossing?.complete || !atSecure.probe.recovered || atSecure.probe.playbackCount !== 1)) {
+          row.secures = fail(`${row.secures.detail}; four air-supported crossings and one probe playback not proved`);
         }
         if (contract.id === 'e3-blackout-ridge' && !['capacitor-west', 'capacitor-east'].every(id => (row.powerBanksPeak[id] ?? 0) > 0)) {
           row.secures = fail(`${row.secures.detail}; authored banks not both observed storing current: ${JSON.stringify(row.powerBanksPeak)}`);

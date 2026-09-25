@@ -991,3 +991,4 @@ Final verification: build/TypeScript PASS; default collection PASS; gate-unset b
 ## 2026-09-25 — Native play proofs, run 4
 
 - Driver control: Claim PASS desktop with the unchanged driver, wave 10 / 300.07 s, 143 HP, six buildings, bank/Book/plain reload and zero console/page errors. The control permits the ordered E8 continuation; earlier holds remain strategy findings. [Run note](../play-proofs/run-4/run-note.md).
+- Far Side: FAIL desktop/phone. Desktop coasts out of seam reach (zero gold, death wave 12); corrected phone gathers and proves four air-supported crossings plus one probe playback, but dies wave 17 with four landing-yard defenses. Northern build and full terminal unproved. [F-PP4-1](../play-proofs/run-4/e8-far-side/finding.md).
