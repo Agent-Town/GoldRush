@@ -345,13 +345,11 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
     const gap = Math.hypot(dx, dz);
     const drifting = now.physics.active && now.physics.movement !== 'normal';
     const velocity = now.physics.filteredMovement;
-    // Position is the walking goal. A sub-unit arrival must not wait for an
-    // unrelated momentum threshold while suit air drains; fund rechecks pan range.
-    if (gap <= tolerance) return true;
+    if (gap <= tolerance && (!drifting || Math.hypot(velocity.x, velocity.y) < 0.12)) return true;
     if (drifting && gap < 8) {
       // Counter-thrust against the published momentum before calling a seam reached.
       // Releasing keys alone coasts out of the 1.6-unit harvest disc.
-      await steer(page, dx - 3 * velocity.x, dz - 3 * velocity.y, Math.min(65, Math.max(16, gap * 8)));
+      await steer(page, (gap <= tolerance ? 0 : dx) - 3 * velocity.x, (gap <= tolerance ? 0 : dz) - 3 * velocity.y, Math.min(65, Math.max(16, gap * 8)));
       await page.waitForTimeout(60);
       continue;
     }
