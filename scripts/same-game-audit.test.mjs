@@ -452,7 +452,12 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // door-tape-grammar-2 (2026-09-25, F-DTG2-1): the door learned two more client verbs, prospector_dispatch and agent_orders,
   // so 42 + 42 rows moved into agent-lacks (511 -> 595) and none moved out (equal stays 1252 over 1847 rows). The audit reads
   // the door's verb set from standings.ts; teaching it that agent_orders is the rider's own channel is a slice for its owner.
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 595, equal: 1252, 'not-offered': 0 });
+  // same-game-audit-verbs-1 (F-DTG2-1, the audit owner's ruling in tasks/same-game-audit-verbs-1.md): the wire's agent_orders
+  // is the seated rider's OWN order channel, not a human control, so its exemption publishes no parity row and its 42 rows
+  // leave agent-lacks without entering equal: 595 -> 553, equal 1252 unchanged, 1847 -> 1805 rows. MEASURED on the --json
+  // row sets, not inferred: before and after differ by exactly the 42 `tape action agent_orders | agent-lacks` rows, no row
+  // added and no other row changed (artifacts/same-game-audit-verbs-1/report.md).
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 553, equal: 1252, 'not-offered': 0 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
@@ -484,9 +489,14 @@ test('same-game audit follows the door grammar through the final AP-16 verbs', (
   assert.ok(has('the-claim', 'verb', 'CONTEXT_ACTION', 'equal'), 'building context actions must reach the door');
   const audit = JSON.parse(result.stdout);
   assert.deepEqual(audit.tapeExemptions.map(({ actions }) => actions), [
-    'death_action', 'research_pick / research_skip', 'set_pause', 'skip_ceremony',
+    'death_action', 'research_pick / research_skip', 'set_pause', 'skip_ceremony', 'agent_orders',
   ]);
   assert.ok(audit.tapeExemptions.every(({ reason, citation }) => reason.length > 20 && citation.length > 5));
+  // F-DTG2-1: the seated rider's own order channel is not a human control. It is the one exemption that publishes NO
+  // parity row (neither agent-lacks nor equal); every other exemption keeps its rows as a real, cited lack.
+  assert.deepEqual(audit.tapeExemptions.filter(({ parityRow }) => !parityRow).map(({ actions }) => actions), ['agent_orders']);
+  assert.equal(rows.filter((row) => row['humans-get'] === 'tape action agent_orders').length, 0,
+    'the rider\'s own order channel came back as a human tape action row');
 });
 
 test('same-game audit also emits a complete markdown table', () => {
