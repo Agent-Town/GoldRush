@@ -964,4 +964,6 @@ Task sol-play-proofs-1, lane-c, Astra. No production/contract/balance or existin
 
 - **Twin Banks: FAIL desktop/phone, F-PP1-2.** Desktop died wave 19 / 582.9s, phone wave 18 / 554.1s. Both boot/clean pass, zero errors. [Two attempts and remaining driver limitations](../play-proofs/run-1/e1-twin-banks/finding.md).
 
+- **Pressure Garden: FAIL desktop/phone, F-PP1-3.** Authored route reaches all three coal seams. Desktop died wave 3; phone built two turrets and three boilers, reached two hot boilers, died wave 11. No full secure. [Rows and route findings](../play-proofs/run-1/e2-pressure-garden/finding.md).
+
 The new banking check compares to pre-play scores, correcting census instrument finding F-MPP1-1: secure already writes the score before Return to Town. New specs are gated by GR_NATIVE_PROOF. See [run note](../play-proofs/run-1/run-note.md) for final checks, commits and continuation order.

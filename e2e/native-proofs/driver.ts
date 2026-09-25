@@ -52,6 +52,7 @@ type Row = {
   notes: string[];
   objective?: unknown;
   finalSnapshot?: Snapshot;
+  peakHotBoilers: number;
   at: string;
 };
 
@@ -141,6 +142,7 @@ type Snapshot = {
   repairs: number;
   channeling: boolean;
   objective: unknown;
+  pressure: ThreeGameDiagnostics['pressure'];
 };
 
 async function read(page: Page): Promise<Snapshot | null> {
@@ -149,6 +151,7 @@ async function read(page: Page): Promise<Snapshot | null> {
       const d = window.__THREE_GAME_DIAGNOSTICS__;
       if (!d) return null;
       return {
+        pressure: d.pressure,
         objective: { baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
@@ -231,6 +234,11 @@ const UPGRADE_PRIORITY = [
 async function takeUpgrades(page: Page, row: Row): Promise<void> {
   for (let guard = 0; guard < 6; guard += 1) {
     const now = await read(page);
+    if (now && now.sim - (row.samples.at(-1)?.t ?? 0) >= 10) {
+      row.samples.push({ t: +now.sim.toFixed(1), wave: Math.max(now.wave, now.hudWave), hp: Math.round(now.hp), gold: Math.round(now.gold), kills: now.kills, x: +now.hero.x.toFixed(1), z: +now.hero.z.toFixed(1), alive: now.enemiesAlive, seams: now.nodes.filter(n => n.active).length });
+      console.log(row.contract, JSON.stringify(row.samples.at(-1)));
+    }
+    if (now) row.peakHotBoilers = Math.max(row.peakHotBoilers, now.pressure?.objective.hotBoilers ?? 0);
     if (!now || !now.upgradeOpen) return;
     const offer = now.offer ?? [];
     let index = 0;
@@ -304,7 +312,7 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
   for (let step = 0; step < steps; step += 1) {
     await takeUpgrades(page, row);
     const now = await read(page);
-    if (!now || now.runState === 'dead') return false;
+    if (!now || now.runState === 'dead' || now.secured) return false;
     const dx = x - now.hero.x;
     const dz = z - now.hero.z;
     const gap = Math.hypot(dx, dz);
@@ -352,7 +360,7 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
   while (Date.now() < deadline) {
     await takeUpgrades(page, row);
     const now = await read(page);
-    if (!now || now.runState === 'dead') return false;
+    if (!now || now.runState === 'dead' || now.secured) return false;
     if (now.gold >= amount) return true;
     const live = now.nodes.filter((node) => node.active && !unreachable.has(`${node.x},${node.z}`));
     const bank = fords.length > 0 ? live.filter((node) => Math.sign(node.z) === Math.sign(now.hero.z) || Math.abs(node.z) < 1.5) : live;
@@ -424,7 +432,7 @@ async function build(
   await page.waitForTimeout(200);
   for (let nudge = 0; nudge < 10; nudge += 1) {
     const now = await read(page);
-    if (!now || now.runState === 'dead') return false;
+    if (!now || now.runState === 'dead' || now.secured) return false;
     if (now.ghostValid) break;
 
     const turn = (nudge * 2.39996) % (Math.PI * 2);
@@ -446,6 +454,7 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   if (!now || now.runState === 'dead') return;
   if (row.contract === "e1-baron" && HOLD_GROUND && now.wave >= 12 && now.gold < 10) return;
   if (row.contract === "e1-twin-banks" && HOLD_GROUND && now.wave >= 13) return;
+  if (row.contract === "e2-pressure-garden") return;
   const hurt = now.defences
     .filter((entry) => !entry.wrecked && entry.hp < entry.maxHp * 0.55 && entry.repairCost > 0)
     .sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
@@ -481,6 +490,12 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
+  if (contract.id === 'e2-pressure-garden') return [
+    { id: 'boiler_house', dx: 0, dz: 0 },
+    { id: 'boiler_house', dx: 12, dz: 0 },
+    { id: 'boiler_house', dx: 24, dz: 0 },
+    { id: 'turret', dx: -6, dz: 1 },
+  ];
   if (contract.id === 'e1-baron' && HOLD_GROUND) return [
     { id: 'turret', dx: 0, dz: -2 },
     { id: 'sluice', dx: 4, dz: -5 },
@@ -536,6 +551,7 @@ export function nativeProof(id: string) {
         hpAtEnd: 0,
         goldAtEnd: 0,
         killsAtEnd: 0,
+        peakHotBoilers: 0,
         builds: [],
         upgrades: [],
         samples: [],
@@ -575,6 +591,37 @@ export function nativeProof(id: string) {
         const fords = crossingsFor(contract);
         const unreachable = new Set<string>();
 
+        if (contract.id === 'e2-pressure-garden') {
+          if (HOLD_GROUND) {
+            await build(page, row, 'turret', -29, 24, Math.min(deadline, Date.now() + 60_000), fords, unreachable);
+            await build(page, row, 'turret', -21, 27, Math.min(deadline, Date.now() + 60_000), fords, unreachable);
+          }
+          // Coal is on the high terrace. Walk outside the central manifold first.
+          await walkTo(page, row, -32, 12, 1.2);
+          await walkTo(page, row, -32, 26, 1.2);
+          await walkTo(page, row, -24, 39, 1.2);
+          for (const seam of opened?.pressure.seams ?? []) {
+            const reached = await walkTo(page, row, seam.x, seam.z, 1);
+            if (reached) await page.waitForTimeout(350);
+            const coal = (await read(page))?.pressure;
+            row.notes.push(`coal ${seam.x},${seam.z}: reached=${reached}, stored=${coal?.coal}`);
+          }
+        }
+        if (contract.id === 'e2-pressure-garden') {
+          await fund(page, row, 200, Math.min(deadline, Date.now() + 120_000), fords, unreachable);
+          await walkTo(page, row, -32, 26, 1.2);
+          await walkTo(page, row, -32, 12, 1.2);
+          await walkTo(page, row, -12, 14, 1.2);
+          // Coal is finite. Commission the boilers near wave 7 so they can run through wave 12.
+          while (Date.now() < deadline) {
+            await takeUpgrades(page, row);
+            const ready = await read(page);
+            if (!ready || ready.sim >= 205 || ready.runState === 'dead' || ready.secured) break;
+            await page.waitForTimeout(150);
+          }
+          const ready = await read(page);
+          row.notes.push(`boiler commissioning: sim=${ready?.sim}, wave=${ready?.wave}, hp=${ready?.hp}, gold=${ready?.gold}, coal=${ready?.pressure.coal}, hero=${JSON.stringify(ready?.hero)}`);
+        }
         const kit = kitFor(contract);
         row.notes.push(`kit=${kit.map((piece) => piece.id).join('+')}`);
         let kitIndex = 0;
@@ -599,7 +646,7 @@ export function nativeProof(id: string) {
           row.goldAtEnd = now.gold;
           row.killsAtEnd = now.kills;
           row.objective = now.objective;
-          if (now.sim - lastSample >= 10) {
+          if (now.sim - (row.samples.at(-1)?.t ?? 0) >= 10) {
             lastSample = now.sim;
             console.log(contract.id, JSON.stringify({t: Math.round(now.sim), wave: now.wave, hp: Math.round(now.hp), gold: now.gold, hero: now.hero, builds: row.builds.length}));
             row.samples.push({
@@ -678,6 +725,9 @@ export function nativeProof(id: string) {
                 `never secured: peak wave ${row.peakWave} of ${secureWave} after ${row.simAtEnd.toFixed(1)}s sim (runState=${row.runStateAtEnd || 'unknown'}, ${row.builds.length} buildings, ${row.killsAtEnd} kills)`,
             );
 
+        if (contract.id === 'e2-pressure-garden' && row.peakHotBoilers < 3) {
+          row.secures = fail(`${row.secures.detail}; wave ${row.peakWave}, overlay=${sawOverlay}, but only ${row.peakHotBoilers}/3 authored boiler beds operated hot`);
+        }
         await page.screenshot({ path: path.join(ARTIFACT_ROOT, `terminal-${testInfo.project.name}.png`) });
 
         if (sawOverlay) {
@@ -690,9 +740,9 @@ export function nativeProof(id: string) {
             const fresh = scores.filter((score) => !before.has(JSON.stringify(score)));
             const banked = fresh.find((score) => score.contractId === contract.id && score.secured === true && (score.waves ?? 0) >= secureWave);
             row.banks = banked
-              ? pass(`a NEW secured row for ${contract.id}: waves=${banked.waves} gold=${banked.gold} timeAlive=${Math.round(banked.timeAlive ?? 0)} kills=${banked.kills ?? '?'} (${fresh.length} row(s) written by the click)`)
+              ? pass(`a NEW secured row for ${contract.id}: waves=${banked.waves} gold=${banked.gold} timeAlive=${Math.round(banked.timeAlive ?? 0)} kills=${banked.kills ?? '?'} (${fresh.length} new row(s) since pre-play, retained after Return to Town)`)
               : fail(
-                  `the click wrote no new secured row for ${contract.id} at >= wave ${secureWave} (${fresh.length} new row(s): ${JSON.stringify(fresh.slice(0, 2))})`,
+                  `no new secured row since pre-play for ${contract.id} at >= wave ${secureWave} (${fresh.length} new row(s): ${JSON.stringify(fresh.slice(0, 2))})`,
                 );
           } catch (error) {
             row.banks = fail(String((error as Error).message).split('\n').slice(0, 3).join(' | '));
@@ -733,6 +783,7 @@ export function nativeProof(id: string) {
             expect(reachedTavern, 'the tavern is reachable on foot after the reload').toBe(true);
             await page.getByTestId('town-open-board').click({ timeout: 10_000 });
             await expect(page.getByTestId('contract-board')).toBeVisible({ timeout: 20_000 });
+            expect(await rawScores(page), 'score still byte-identical after opening the Book').toBe(before);
             row.reload = pass(`score retained across reload (${(before ?? '').length} bytes) and the Book reopened on foot`);
           } catch (error) {
             row.reload = fail(String((error as Error).message).split('\n').slice(0, 3).join(' | '));
