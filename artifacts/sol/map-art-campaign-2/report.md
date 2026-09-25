@@ -966,4 +966,6 @@ Task sol-play-proofs-1, lane-c, Astra. No production/contract/balance or existin
 
 - **Pressure Garden: FAIL desktop/phone, F-PP1-3.** Authored route reaches all three coal seams. Desktop died wave 3; phone built two turrets and three boilers, reached two hot boilers, died wave 11. No full secure. [Rows and route findings](../play-proofs/run-1/e2-pressure-garden/finding.md).
 
+- **The Incline: PASS desktop/phone.** Both deliver the cart at 180/180 HP, defeat the railcar and secure at wave 14; all six cells pass, byte-identical score on reload, zero errors. F-PP1-4 resolved: the actual Book launch selects escort mode. Holding four turrets after wave 8 succeeds where extra funding trips failed. [Proof and boards](../play-proofs/run-1/e2-incline/proof.md).
+
 The new banking check compares to pre-play scores, correcting census instrument finding F-MPP1-1: secure already writes the score before Return to Town. New specs are gated by GR_NATIVE_PROOF. See [run note](../play-proofs/run-1/run-note.md) for final checks, commits and continuation order.

@@ -143,6 +143,7 @@ type Snapshot = {
   channeling: boolean;
   objective: unknown;
   pressure: ThreeGameDiagnostics['pressure'];
+  escort: ThreeGameDiagnostics['escort'];
 };
 
 async function read(page: Page): Promise<Snapshot | null> {
@@ -151,8 +152,9 @@ async function read(page: Page): Promise<Snapshot | null> {
       const d = window.__THREE_GAME_DIAGNOSTICS__;
       if (!d) return null;
       return {
+        escort: d.escort,
         pressure: d.pressure,
-        objective: { baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure },
+        objective: { baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -291,6 +293,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
         : { x: hero.x, z: hero.z };
 
   if (contract.id === "e1-baron") { centre.x = 3; centre.z = 11; }
+  if (contract.id === "e2-incline") { centre.x = 0; centre.z = -18; }
   const radius = 4;
   const clampX = (v: number) => (zone ? Math.min(zone.maxX - 2, Math.max(zone.minX + 2, v)) : v);
   const clampZ = (v: number) => (zone ? Math.min(zone.maxZ - 2, Math.max(zone.minZ + 2, v)) : v);
@@ -455,6 +458,7 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   if (row.contract === "e1-baron" && HOLD_GROUND && now.wave >= 12 && now.gold < 10) return;
   if (row.contract === "e1-twin-banks" && HOLD_GROUND && now.wave >= 13) return;
   if (row.contract === "e2-pressure-garden") return;
+  if (row.contract === "e2-incline" && now.wave >= 8) return;
   const hurt = now.defences
     .filter((entry) => !entry.wrecked && entry.hp < entry.maxHp * 0.55 && entry.repairCost > 0)
     .sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
@@ -490,6 +494,13 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
+  if (contract.id === 'e2-incline') return [
+    { id: 'sentry_beacon', dx: 8, dz: -4 },
+    { id: 'turret', dx: -8, dz: -4 },
+    { id: 'turret', dx: 8, dz: -4 },
+    { id: 'turret', dx: -8, dz: 3 },
+    { id: 'turret', dx: 8, dz: 3 },
+  ];
   if (contract.id === 'e2-pressure-garden') return [
     { id: 'boiler_house', dx: 0, dz: 0 },
     { id: 'boiler_house', dx: 12, dz: 0 },
@@ -557,14 +568,27 @@ export function nativeProof(id: string) {
         samples: [],
         consoleErrors,
         pageErrors,
-        notes: [`epoch=${epochOf(contract.id)}`, `strategy=${HOLD_GROUND ? "hold-ground" : "gather-and-extend"}`],
+        notes: [`epoch=${epochOf(contract.id)}`, `strategy=${HOLD_GROUND || contract.id === "e2-incline" ? "hold-ground" : "gather-and-extend"}`],
         at: new Date().toISOString(),
       };
 
       try {
 
         await seed(page, contract.id);
-        await page.goto(`/?contract=${encodeURIComponent(contract.id)}&timescale=${TIMESCALE}`);
+        if (contract.id === 'e2-incline') {
+          // The Book's real launch button selects Incline Haul; a bare contract URL does not.
+          await page.goto('/');
+          await page.getByTestId('start-menu-enter-town').click({ timeout: 20_000 });
+          await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10, undefined, { timeout: BOOT_TIMEOUT_MS });
+          expect(await walkToTavern(page, row)).toBe(true);
+          await page.getByTestId('town-open-board').click();
+          await page.getByTestId(`contract-chapter-tab-${epochOf(contract.id)}`).click();
+          await page.getByTestId(`contract-launch-${contract.id}`).click();
+          await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.escort.enabled === true, undefined, { timeout: BOOT_TIMEOUT_MS });
+          const launch = new URL(page.url());
+          launch.searchParams.set('timescale', TIMESCALE);
+          await page.goto(launch.toString());
+        } else await page.goto(`/?contract=${encodeURIComponent(contract.id)}&timescale=${TIMESCALE}`);
         try {
           await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 12, undefined, { timeout: BOOT_TIMEOUT_MS });
           const active = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract);
@@ -629,7 +653,6 @@ export function nativeProof(id: string) {
         let cornerBest = Number.POSITIVE_INFINITY;
         let cornerStall = 0;
         let lastMaintenance = 0;
-        let lastSample = 0;
         let died = '';
         while (Date.now() < deadline) {
           if (await secured.isVisible().catch(() => false)) break;
@@ -647,7 +670,6 @@ export function nativeProof(id: string) {
           row.killsAtEnd = now.kills;
           row.objective = now.objective;
           if (now.sim - (row.samples.at(-1)?.t ?? 0) >= 10) {
-            lastSample = now.sim;
             console.log(contract.id, JSON.stringify({t: Math.round(now.sim), wave: now.wave, hp: Math.round(now.hp), gold: now.gold, hero: now.hero, builds: row.builds.length}));
             row.samples.push({
               t: Number(now.sim.toFixed(1)),
@@ -665,6 +687,10 @@ export function nativeProof(id: string) {
             died = `runState=dead at wave ${Math.max(now.wave, now.hudWave)} / ${now.sim.toFixed(1)}s sim, ${now.kills} kills, ${Math.round(now.gold)} gold`;
             break;
           }
+          if (contract.id === 'e2-incline' && now.escort.enabled && now.escort.objectiveLost) {
+            died = `ore cart lost at wave ${now.wave}, sim ${now.sim.toFixed(1)}, hero ${now.hero.x.toFixed(1)},${now.hero.z.toFixed(1)}`;
+            break;
+          }
           if (now.paused) await unpause(page, row);
 
           if (kitIndex < kit.length) {
@@ -680,6 +706,11 @@ export function nativeProof(id: string) {
             continue;
           }
 
+          if (contract.id === 'e2-incline' && now.wave >= 8) {
+            if (Math.hypot(now.hero.x, now.hero.z + 18) > 1.5) await walkTo(page, row, 0, -18, 1.5, 20);
+            else await page.waitForTimeout(200);
+            continue;
+          }
           if (contract.id === 'e1-twin-banks' && HOLD_GROUND && now.wave >= 13) {
             if (Math.hypot(now.hero.x + 2, now.hero.z + 13) > 1.5) {
               await walkTo(page, row, -2, -13, 1.5, 20);
@@ -725,6 +756,9 @@ export function nativeProof(id: string) {
                 `never secured: peak wave ${row.peakWave} of ${secureWave} after ${row.simAtEnd.toFixed(1)}s sim (runState=${row.runStateAtEnd || 'unknown'}, ${row.builds.length} buildings, ${row.killsAtEnd} kills)`,
             );
 
+        if (contract.id === 'e2-incline' && (!atSecure?.escort.enabled || atSecure.escort.arrived < atSecure.escort.required)) {
+          row.secures = fail(`${row.secures.detail}; Incline Haul not completed: ${JSON.stringify(atSecure?.escort)}`);
+        }
         if (contract.id === 'e2-pressure-garden' && row.peakHotBoilers < 3) {
           row.secures = fail(`${row.secures.detail}; wave ${row.peakWave}, overlay=${sawOverlay}, but only ${row.peakHotBoilers}/3 authored boiler beds operated hot`);
         }
