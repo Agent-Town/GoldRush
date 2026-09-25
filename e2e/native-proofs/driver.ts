@@ -147,6 +147,8 @@ type Snapshot = {
   pressure: ThreeGameDiagnostics['pressure'];
   escort: ThreeGameDiagnostics['escort'];
   canyonWorks: ThreeGameDiagnostics['canyonWorks'];
+  fairground: ThreeGameDiagnostics['fairground'];
+  crowdFlocks: ThreeGameDiagnostics['crowdFlocks'];
 };
 
 async function read(page: Page): Promise<Snapshot | null> {
@@ -157,9 +159,11 @@ async function read(page: Page): Promise<Snapshot | null> {
       return {
         escort: d.escort,
         canyonWorks: d.canyonWorks,
+        fairground: d.fairground,
+        crowdFlocks: d.crowdFlocks,
         power: d.power,
         pressure: d.pressure,
-        objective: { canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
+        objective: { fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -323,7 +327,7 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
   for (let step = 0; step < steps; step += 1) {
     await takeUpgrades(page, row);
     const now = await read(page);
-    if (!now || now.runState === 'dead' || now.secured) return false;
+    if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     const dx = x - now.hero.x;
     const dz = z - now.hero.z;
     const gap = Math.hypot(dx, dz);
@@ -371,7 +375,7 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
   while (Date.now() < deadline) {
     await takeUpgrades(page, row);
     const now = await read(page);
-    if (!now || now.runState === 'dead' || now.secured) return false;
+    if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     if (now.gold >= amount) return true;
     const live = now.nodes.filter((node) => node.active && !unreachable.has(`${node.x},${node.z}`));
     const bank = fords.length > 0 ? live.filter((node) => Math.sign(node.z) === Math.sign(now.hero.z) || Math.abs(node.z) < 1.5) : live;
@@ -443,7 +447,7 @@ async function build(
   await page.waitForTimeout(200);
   for (let nudge = 0; nudge < 10; nudge += 1) {
     const now = await read(page);
-    if (!now || now.runState === 'dead' || now.secured) return false;
+    if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     if (now.ghostValid) break;
 
     const turn = (nudge * 2.39996) % (Math.PI * 2);
@@ -469,12 +473,14 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   if (row.contract === "e2-incline" && now.wave >= 8) return;
   const hurt = now.defences
     .filter(entry => row.contract !== "e3-blackout-ridge" || Math.hypot(entry.x - home.x, entry.z - home.z) < 18)
-    .filter((entry) => !entry.wrecked && entry.hp < entry.maxHp * 0.55 && entry.repairCost > 0)
+    .filter((entry) => (!entry.wrecked || row.contract === 'e3-fairground') && entry.hp < entry.maxHp * 0.55 && entry.repairCost > 0)
     .sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
   if (hurt) {
     if (row.contract === "e1-baron" && HOLD_GROUND && now.wave >= 12 && now.gold < hurt.repairCost) return;
     if (!(await fund(page, row, hurt.repairCost, Math.min(deadline, Date.now() + 45_000), fords, unreachable))) return;
-    if (!(await journey(page, row, hurt.x, hurt.z - 1, 1, fords, 45))) return;
+    if (row.contract === 'e3-fairground') {
+      if (!(await walkTo(page, row, hurt.x, hurt.z, 1.25, 45))) return;
+    } else if (!(await journey(page, row, hurt.x, hurt.z - 1, 1, fords, 45))) return;
     const before = (await read(page))?.repairs ?? 0;
     for (let tick = 0; tick < 40; tick += 1) {
       await takeUpgrades(page, row);
@@ -489,6 +495,7 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
     return;
   }
 
+  if (row.contract === "e3-fairground") return;
   if (row.contract === "e1-baron" && HOLD_GROUND && now.wave >= 12) return;
   const room =
     now.buildables.find((entry) => entry.id === 'turret' && entry.count < entry.maxCount && entry.cost <= now.gold + 120) ??
@@ -503,6 +510,18 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
+  if (contract.id === 'e3-fairground') return [
+    { id: 'palisade', dx: -8, dz: 0 },
+    { id: 'sentry_beacon', dx: -4, dz: -4 },
+    { id: 'palisade', dx: 8, dz: 0 },
+    { id: 'sentry_beacon', dx: 4, dz: -4 },
+    { id: 'palisade', dx: -8, dz: 8 },
+    { id: 'palisade', dx: 8, dz: 8 },
+    { id: 'sentry_beacon', dx: -4, dz: 4 },
+    { id: 'sentry_beacon', dx: 4, dz: 4 },
+    { id: 'palisade', dx: -8, dz: -8 },
+    { id: 'palisade', dx: 8, dz: -8 },
+  ];
   if (contract.id === 'e3-canyon-works') return [
     { id: 'sentry_beacon', dx: -12, dz: 8 },
     { id: 'sentry_beacon', dx: -24, dz: 24 },
@@ -551,7 +570,7 @@ const KIT: Array<{ id: string; dx: number; dz: number }> = [
 
 export function nativeProof(id: string, run = 1) {
   const contract = BOARD_CONTRACTS.find(entry => entry.id === id)!;
-  const ARTIFACT_ROOT = path.resolve(`artifacts/sol/play-proofs/run-${run}`, id);
+  const ARTIFACT_ROOT = path.resolve(`artifacts/sol/play-proofs/run-${process.env.GR_NATIVE_RUN ?? run}`, id);
 
     test(`${contract.id} plays to its secure wave, banks, reloads and returns to the board`, { tag: '@slow' }, async ({ page }, testInfo) => {
       test.setTimeout(PLAY_BUDGET_MS + BOOT_TIMEOUT_MS + 180_000);
@@ -736,6 +755,15 @@ export function nativeProof(id: string, run = 1) {
           }
           if (now.paused) await unpause(page, row);
 
+          if (contract.id === 'e3-fairground' && now.fairground?.spinning === false) {
+            died = `Fair Wheel stopped irreversibly: ${JSON.stringify(now.fairground)}; flocks=${JSON.stringify(now.crowdFlocks)}`;
+            break;
+          }
+          if (contract.id === 'e3-fairground' && kitIndex >= 4 && now.sim - lastMaintenance >= 12) {
+            lastMaintenance = now.sim;
+            await maintain(page, row, home, deadline, fords, unreachable);
+            continue;
+          }
           if (kitIndex < kit.length) {
             const piece = kit[kitIndex];
             kitIndex += 1;
@@ -820,6 +848,9 @@ export function nativeProof(id: string, run = 1) {
 
         if (contract.id === 'e3-blackout-ridge' && !['capacitor-west', 'capacitor-east'].every(id => (row.powerBanksPeak[id] ?? 0) > 0)) {
           row.secures = fail(`${row.secures.detail}; authored banks not both observed storing current: ${JSON.stringify(row.powerBanksPeak)}`);
+        }
+        if (contract.id === 'e3-fairground' && (!atSecure?.fairground?.spinning || !atSecure?.crowdFlocks?.allCrossed)) {
+          row.secures = fail(`${row.secures.detail}; wheel and all three flock crossings not proved`);
         }
         if (contract.id === 'e3-canyon-works' && !atSecure?.canyonWorks?.complete) {
           row.secures = fail(`${row.secures.detail}; both galleries were not connected by wave 8`);

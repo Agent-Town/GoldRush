@@ -1,0 +1,52 @@
+
+Running 1 test using 1 worker
+
+
+(node:93000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:573:5 › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow
+[desktop-chrome] › e2e/native-proofs/driver.ts:573:5 › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow
+e3-fairground {"t":10.7,"wave":0,"hp":100,"gold":0,"kills":0,"x":-4.5,"z":-25.8,"alive":2,"seams":2}
+
+e3-fairground {"t":21.5,"wave":0,"hp":100,"gold":0,"kills":2,"x":-7.5,"z":-20.1,"alive":4,"seams":2}
+
+e3-fairground {"t":31.6,"wave":1,"hp":100,"gold":0,"kills":6,"x":-7.8,"z":-35.6,"alive":8,"seams":2}
+
+e3-fairground {"t":42.3,"wave":1,"hp":92,"gold":5,"kills":11,"x":-7.6,"z":-31.7,"alive":6,"seams":2}
+
+e3-fairground {"t":52.8,"wave":1,"hp":92,"gold":2,"kills":14,"x":10.5,"z":-24.9,"alive":8,"seams":2}
+
+e3-fairground {"t":62.9,"wave":2,"hp":92,"gold":7,"kills":17,"x":-6,"z":-32,"alive":14,"seams":2}
+
+e3-fairground {"t":72.9,"wave":2,"hp":92,"gold":7,"kills":23,"x":-6,"z":-32,"alive":14,"seams":2}
+
+e3-fairground {"t":83.1,"wave":2,"hp":92,"gold":7,"kills":31,"x":-6,"z":-32,"alive":11,"seams":2}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:573:5 › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: Fair Wheel stopped irreversibly: {"active":false,"spinning":false,"hp":0,"maxHp":240,"outputWatts":0,"configuredWatts":24,"viewRadius":18,"x":0,"z":8}; flocks={"enabled":true,"count":3,"escortRadius":7,"speed":3.6,"home":{"x":0,"z":-30},"night":3,"attempts":12,"completions":0,"frights":10,"allCrossed":false,"flocks":[{"id":"flock-1","x":-20,"z":-17.03999999999999,"phase":"outbound","destination":"copper-pavilion","attempts":4,"crossings":0,"frights":3,"crossed":false},{"id":"flock-2","x":0,"z":-30,"phase":"home","destination":"ferris-wheel","attempts":4,"crossings":0,"frights":4,"crossed":false},{"id":"flock-3","x":20,"z":-17.03999999999999,"phase":"outbound","destination":"silver-pavilion","attempts":4,"crossings":0,"frights":3,"crossed":false}]}; wheel and all three flock crossings not proved
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      945 |       }
+      946 |
+    > 947 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      948 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      949 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      950 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:947:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-2/e3-fairground/desktop-results/native-proofs-e3-fairgroun-4ea21-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-2/e3-fairground/desktop-results/native-proofs-e3-fairgroun-4ea21-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:573:5 › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow 
