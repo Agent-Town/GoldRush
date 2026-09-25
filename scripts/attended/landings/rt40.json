@@ -1,0 +1,13 @@
+{
+  "tag": "rt40", "branch": "rt/r2026w40", "port": 5380,
+  "mergeMessage": "rotation: merge rt/r2026w40 — r2026w40 minted a week ahead on the owner-held salt (opens 2026-09-28T00:00Z, six seeds) and the RT-01 cadence moved to the first fire after Wednesday 00:00 UTC, because live-seed-rotation-1 puts humans on the open week and a bundle without it refuses their standings (F-LSR1-2)",
+  "hash": "unchanged",
+  "gates": { "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": false, "ledgerBattery": false,
+    "specs": [], "guards": ["scripts/landing-rotation-derivation.test.mjs"] },
+  "review": { "path": "reviews/rotation-r2026w40.md", "title": "Drain review: `r2026w40` minted a week ahead, and the RT-01 cadence moved to Wednesday (attended, 2026-09-25)", "body": "scripts/attended/landings/rt40-review.md" },
+  "bookkeeping": { "taskFile": "rotation-r2026w40.md", "rowKey": "ROTATION R2026W40 MINTED", "rowEmoji": "🗓️",
+    "rowText": "Week 40 (`r2026w40`, opens Monday 2026-09-28 00:00 UTC) minted on the owner-held salt in the RT-01 form, six seeds, a week AHEAD (F-LSR1-2: with humans on the live seed a bundle without the coming week refuses their standings until a deploy lands; week 39 was minted three days late). RT-01 cadence amended in `scripts/fire.md`: the first fire after WEDNESDAY 00:00 UTC (was Sunday), veto window one word. Registry outside the engine identity corpus; hash unchanged {PIN}. Deployed with the landing.",
+    "statusPhrase": "week 40's rotation is minted a week ahead and the weekly mint now runs from Wednesday",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh rt40)" },
+  "deploy": true, "preview": false, "evidenceDir": "artifacts/rotation-r2026w40"
+}
