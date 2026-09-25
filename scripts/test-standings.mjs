@@ -53,6 +53,7 @@ try {
     checkTapeBuildMetadata(validateTape);
     await checkRecorderReel(onRequest, validateTape, validateRunTape, runTapeEnvelopeForContract, recorderKit);
     await checkRecorderVerbs(onRequest, validateTape, validateRunTape, recorderKit);
+    await checkRetiredEmbeddedOrders(onRequest, validateTape, recorderKit);
     await checkEngineHashReel(onRequest);
     await checkReplayableBoard(onRequest);
     await checkLineageReassay(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
@@ -526,6 +527,59 @@ async function checkRecorderVerbs(onRequest, validateTape, validateRunTape, kit)
   await refused("a seated rider's orders holding a non-order", seatReel, 'agent_orders', (action) => { action.orders = [1]; }, { stored: true });
   await refused("a seated rider's orders over the 3 KiB wire limit", seatReel, 'agent_orders', (action) => { action.orders = heavy; }, { stored: true });
   console.log(`recorder verbs ${backend} checks (${checks - before})`);
+}
+
+// F-DTG1-2 (door-tape-grammar-2, ADR-005). A verb retired AFTER a row was accepted must RETIRE the row
+// (unranked, counted, its stored bytes untouched), never drop it (F-RPG-21). These rows manufacture the case
+// for orders a reel carries OUTSIDE its primary entries: inside a recording the rider handed the agent
+// (`playbookUses`, in both order forms) and in a seated rider's stream. Each row is stored clean first (it
+// ranks), then with its orders naming HOLD, which ADR-005 retired on 2026-09-07.
+async function checkRetiredEmbeddedOrders(onRequest, validateTape, kit) {
+  const before = checks;
+  const current = kit.validateStandingOrders([{ verb: 'SET_WEAPON', weapon: 'rig' }]).orders;
+  const held = [{ verb: 'HOLD', pos: { x: 0, z: 30 } }];
+  const seatOrders = kit.normalizeLockstepAction({ type: 'agent_orders', version: 1, submissionId: 'seat-1', orders: current });
+  const cases = [
+    ['a playbook use whose recording carries agent orders', recorderReel(kit, '6dd7'.repeat(8), { playbook: true }), '',
+      (log, orders) => { log.playbookUses[0].playbook.entries[2].a.push({ kind: 'agent_orders', orders }); }],
+    ["a playbook use whose recording carries a seated rider's orders", recorderReel(kit, '7dd7'.repeat(8), { playbook: true }), '',
+      (log, orders) => { log.playbookUses[0].playbook.entries[1].a.push({ ...seatOrders, orders }); }],
+    ["a seated rider's stream", recorderReel(kit, '8dd7'.repeat(8), { seatOrders }), '&party=2',
+      (log, orders) => { log.streams[0].entries[0].a[0].orders = orders; }],
+  ];
+  // The row as the door stores it (submitScore's candidate): a declared stack is stamped `declaredBy: 'self'`.
+  const storedRowOf = (body, tape) => ({
+    ...body.score, profileName: body.profileName, anonId: body.anonId, difficulty: body.difficulty, seed: body.seed,
+    seedMode: body.seedMode, seedHash: body.seedHash, inputLogHash: createHash('sha256').update(JSON.stringify(tape.inputLog)).digest('hex'),
+    submittedAt: 1,
+    ...(body.party ? { party: { ...body.party, riders: body.party.riders.map((rider) => (rider.stack ? { ...rider, stack: { declaredBy: 'self', ...rider.stack } } : rider)) } } : {}),
+    tape, assay: 'pending',
+  });
+  for (const [label, reel, party, inject] of cases) {
+    const kv = makeKv();
+    const board = `/api/standings?contract=the-claim&epoch=epoch-1-frontier${party}`;
+    const clean = structuredClone(reel.body.tape);
+    inject(clean.inputLog, current);
+    ok(validateTape(clean, 'the-claim', 'gold-rush', 'trail'), `control: the door's grammar accepts ${label} while its orders are current`);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, clean)]));
+    const ranked = await call(onRequest, 'GET', board, undefined, kv);
+    equal([ranked.body.board.length, ranked.body.retiredCount], [1, 0], `control: a stored row with ${label} ranks while its orders are current`);
+    const retired = structuredClone(reel.body.tape);
+    inject(retired.inputLog, held);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, retired)]));
+    const storedBytes = await kv.get(KEY);
+    const read = await call(onRequest, 'GET', board, undefined, kv);
+    equal([read.body.board.length, read.body.retiredCount], [0, 1], `a stored row with ${label} naming a since-retired verb is RETIRED and COUNTED, not dropped`);
+    equal(await kv.get(KEY), storedBytes, `reading the retired row with ${label} leaves it byte-identical`);
+  }
+  // The SHAPE is still required at read: a recording whose order list is malformed is refused, never emptied.
+  const malformed = structuredClone(cases[0][1].body.tape);
+  cases[0][3](malformed.inputLog, {});
+  equal(validateTape(malformed, 'the-claim', 'gold-rush', 'trail', true), null, 'at read a recording whose agent orders are not a list is refused');
+  const heavy = structuredClone(cases[1][1].body.tape);
+  cases[1][3](heavy.inputLog, Array.from({ length: 32 }, () => ({ verb: 'HARVEST', seam: 's'.repeat(80) })));
+  equal(validateTape(heavy, 'the-claim', 'gold-rush', 'trail', true), null, "at read a recording whose seated rider's orders are over the 3 KiB wire limit is refused");
+  console.log(`retired embedded orders ${backend} checks (${checks - before})`);
 }
 
 async function checkEngineHashReel(onRequest) {
