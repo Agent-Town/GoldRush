@@ -940,3 +940,7 @@ Required development-browser run: 47 passed/7 failed; final frozen-source four-s
 Engine `dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b` → `0b017ed5230a0b8c2e46d756004388034a3dc58bca94848b2708a33d35d4dce7`. Store `5793a967da46e8f00c0ba16f92f17dc10d36558d` unchanged; no pin move. Requested implementation remaining list is **EMPTY**; gate-owner work is ordered in the handoff.
 
 [Complete handoff, per-map engine hash pairs and remaining gate work](run-10/code-presentation/run-note.md) · [Twin Banks](run-10/code-presentation/e1-twin-banks/review.md) · [Trestle and every rail map](run-10/code-presentation/e2-trestle/review.md) · [Relay Rush](run-10/code-presentation/e7-relay-rush/review.md) · [Failure attribution](run-10/code-presentation/failure-attribution.md).
+
+## 2026-09-25 run 11: braid - firewall stop
+
+Twin Banks HM-06 is BLOCKED before implementation. Pre-flight install and build pass; the normal GLB path already renders two ribbons, while the fallback retains the band. The mask-driven source-box pool and production-mask ownership require the shared pilot constructor, outside the permitted Twin Banks water entry. No runtime, test or store bytes changed. [Finding, evidence and remaining list](run-11/braid/e1-twin-banks/report.md).
