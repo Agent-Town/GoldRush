@@ -6505,12 +6505,16 @@
             {
               "id": "sol-play-proofs-5",
               "title": "Play-proofs run 5: Dome Basin onward through E9 and E10 (six ground maps), the E8 trio excluded until an orbital driver exists (F-PP4-4); Astra on lane-c, queued by the run-4 landing's queue job",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "sol-play-proofs-5.md",
               "lane": "lane-c (Astra, gpt-6-astra; the CODEX-WALL campaign lift of 2026-09-25); the queue copy is HELD until sol-play-proofs-3 has landed on main",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from run 4's REMAINING LIST, 2026-09-25",
-              "queuedAt": "2026-09-25 (by the queue job once run 4 has landed)"
+              "queuedAt": "2026-09-25 (by the queue job once run 4 has landed)",
+              "mergeHash": "6e4eab345622170af0ebff25b8da6cb7ebc62fe4",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/sol-play-proofs-5.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh pp5)"
             },
             {
               "id": "sol-play-proofs-6",
