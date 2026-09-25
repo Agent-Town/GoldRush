@@ -12,7 +12,9 @@ const ROOT = resolve(SCRIPTS, '..');
 const childEnv = { ...process.env };
 // Inheriting Node's internal test-child marker makes nested `node --test` execute zero tests.
 delete childEnv.NODE_TEST_CONTEXT;
-const PREFIX = /\bmkdtemp(?:Sync)?\s*\(\s*(?:path\.)?join\s*\(\s*(?:os\.)?tmpdir\(\)\s*,\s*(['"`])([^'"`]+)\1\s*\)\s*\)/g;
+// A template literal counts up to its first `${` (F-SF1-6, 2026-09-25): `s2337-${tag}-` yields the prefix `s2337-`, which is
+// what the directory names start with; before this the sweep read the whole template as plain text and never matched a survivor.
+const PREFIX = /\bmkdtemp(?:Sync)?\s*\(\s*(?:path\.)?join\s*\(\s*(?:os\.)?tmpdir\(\)\s*,\s*(['"`])([^'"`$]+)(?:\$\{[^}]*\}[^'"`]*)?\1\s*\)\s*\)/g;
 const BASELINE = JSON.parse(readFileSync(join(ROOT, 'scripts/gate-caller-baseline.json'), 'utf8'));
 const subjects = readdirSync(SCRIPTS)
   .filter((name) => name.endsWith('.test.mjs'))
