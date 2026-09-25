@@ -3090,3 +3090,10 @@ NOT PLAYER-VISIBLE — `7c6ecd500810caf1a9e7255a8aea0df35b8cb695` (s2540): six c
 NOT PLAYER-VISIBLE (s2553, 2026-09-08): `7b8c6a7114077ac81f14fc42f41d3db86618a745` and ancestry-only `c0d43efe387bba5dcb861036969e1626d3208df7` change test evidence destinations and preserve lane history. No player-facing behavior or engine-era change; no headline slot used.
 
 NOT PLAYER-VISIBLE (s2556, 2026-09-08): `905023e4e574a97f88904bf54cd998697e086d2b` escapes four regex alternation pipes in the asset ledger table. Documentation formatting only; no art, player text, runtime or engine-era change.
+
+## ROUNDUP — The Twin Banks river runs in its two channels, and the spring shows as a pool
+At Twin Banks the water now sits where the ground is actually wet: two channels with dry, walkable ground braided between them, the two fords still the only way across, and the spring at the head of the river reads as a pool instead of nothing at all.
+merge `1920cfbbe` · review `reviews/hm-06-twin-banks-braid-water.md`
+ROUNDUP-CLASS — 2026-W39; batched because the week's three standalone headlines are already spent. Owner approval still governs publication.
+
+NOT PLAYER-VISIBLE (s2687, 2026-09-25) — `961f07fe2` appends engine-era pin #61 and rotates the identity hash. Judged by READING the diff against its parent, not its subject line (F-2612-1, the method of the s2676 note above): the sole file is `assets/engine-era.json`, the registry parses to `"era": 6` on both sides, and only `engineHash`, `pinnedAt`, `cause` and an empty `aliases` move — no era bumped. The water change this pin records is reported as news in the Twin Banks roundup entry; the pin itself draws nothing.
