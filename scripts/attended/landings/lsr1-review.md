@@ -13,3 +13,6 @@ LANE-TOUCHED: `src/game/liveSeed.ts` (new), `src/game/Game.ts` (two literals), `
 - **F-LSR1-2 (ops, on the desk with a recommendation):** a bundle without the open week falls back to last week and the door refuses every such standing until a deploy lands; week 39 was minted three days late and week 40 is not minted as of this landing (week 39 closes Monday 2026-09-28 00:00 UTC). The RT-01 mint must run a week ahead.
 - **F-LSR1-3 (a slice):** `View.ts` publishes the URL seed or `gold-rush`, not the run's seed.
 - **F-LSR1-5 (documented):** "Try Again" keeps the old seed after Monday; a suspended run resumed across Monday mixes seeds; a rider joining after the close is refused `setup_mismatch`.
+
+### Battery attribution (drain, 17:32Z)
+Three reds in the chain battery: the two registry rows are the expected pre-pin reds of a hash-moving branch (default-allowed) and the fixture sweep failed on "scripts/bench-seeds.test.mjs child failed", the same pre-pin red seen through the sweep child; the pin cures it. Allowed for this landing only.
