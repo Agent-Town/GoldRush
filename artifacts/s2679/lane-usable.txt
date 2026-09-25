@@ -1,0 +1,83 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=603  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 603 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 129 file(s) main has moved that this lane lacks:
+          e2e/agent-view.spec.ts
+          e2e/e1-baron.spec.ts
+          e2e/e1-night-shift.spec.ts
+          e2e/e1-twin-banks.spec.ts
+          e2e/e2-trestle.spec.ts
+          e2e/e5-regatta-boat.spec.ts
+          e2e/e5-regatta-race.spec.ts
+          e2e/e7-relay-rush-front.spec.ts
+          … and 121 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-b  sol/wave-lane-b  ahead=0  behind=183  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/wave-lane-b is 183 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/wave-lane-b
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 78 file(s) main has moved that this lane lacks:
+          e2e/e1-baron.spec.ts
+          e2e/e1-night-shift.spec.ts
+          e2e/e1-twin-banks.spec.ts
+          e2e/entry-params.spec.ts
+          e2e/m3-06-demo-profiles.spec.ts
+          e2e/menu-safe-params.spec.ts
+          e2e/release-build.spec.ts
+          functions/api/_accounts.ts
+          … and 70 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-c  sol/map-art-campaign-2  ahead=0  behind=242  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/map-art-campaign-2 is 242 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/map-art-campaign-2
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-c) — F-1320-2.
+     📋 run-surface drift: 93 file(s) main has moved that this lane lacks:
+          e2e/e1-baron.spec.ts
+          e2e/e1-night-shift.spec.ts
+          e2e/e1-twin-banks.spec.ts
+          e2e/e2-trestle.spec.ts
+          e2e/e7-relay-rush-front.spec.ts
+          e2e/entry-params.spec.ts
+          e2e/fixtures/e1-mechanics-manifests.json
+          e2e/m3-06-demo-profiles.spec.ts
+          … and 85 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=603  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but art/portraits-e5-e10-generated is 603 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> art/portraits-e5-e10-generated
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-d) — F-1320-2.
+     📋 run-surface drift: 129 file(s) main has moved that this lane lacks:
+          e2e/agent-view.spec.ts
+          e2e/e1-baron.spec.ts
+          e2e/e1-night-shift.spec.ts
+          e2e/e1-twin-banks.spec.ts
+          e2e/e2-trestle.spec.ts
+          e2e/e5-regatta-boat.spec.ts
+          e2e/e5-regatta-race.spec.ts
+          e2e/e7-relay-rush-front.spec.ts
+          … and 121 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+
+worktree coverage: reported 4 of 47 registered — 43 NOT reported (0 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported
