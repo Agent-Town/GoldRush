@@ -1,0 +1,431 @@
+{
+  "project": "mobile-chrome",
+  "contract": "e1-baron",
+  "name": "The Claim-Jumper Baron",
+  "secureWave": 20,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e1-baron secureWave=20"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "runState=dead at wave 23 / 609.5s sim, 552 kills, 60 gold"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "skipped: never secured"
+  },
+  "board": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 23,
+  "simAtEnd": 609.4666666666424,
+  "runStateAtEnd": "dead",
+  "hpAtEnd": 0,
+  "goldAtEnd": 60,
+  "killsAtEnd": 552,
+  "builds": [
+    {
+      "id": "turret",
+      "at": 39.333333333333236,
+      "wave": 1,
+      "x": 4,
+      "z": 9
+    },
+    {
+      "id": "turret",
+      "at": 109.06666666666872,
+      "wave": 4,
+      "x": 8,
+      "z": 12
+    }
+  ],
+  "upgrades": [
+    "double_tap_coil",
+    "spring_heels",
+    "double_tap_coil",
+    "split_spark",
+    "double_tap_coil",
+    "split_spark",
+    "tinkers_plating",
+    "spring_heels",
+    "tinkers_plating",
+    "heavy_spark",
+    "heavy_spark",
+    "tinkers_plating",
+    "spring_heels",
+    "heavy_spark",
+    "long_resonator",
+    "powder_charge",
+    "long_resonator",
+    "quick_fuse",
+    "quick_fuse",
+    "prospectors_luck",
+    "powder_charge"
+  ],
+  "samples": [
+    {
+      "t": 39.5,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 10,
+      "x": 4.1,
+      "z": 11.4,
+      "alive": 6,
+      "seams": 2
+    },
+    {
+      "t": 93.1,
+      "wave": 3,
+      "hp": 100,
+      "gold": 40,
+      "kills": 46,
+      "x": 3.5,
+      "z": 14.4,
+      "alive": 8,
+      "seams": 2
+    },
+    {
+      "t": 109.2,
+      "wave": 4,
+      "hp": 100,
+      "gold": 0,
+      "kills": 63,
+      "x": 8.2,
+      "z": 14.3,
+      "alive": 5,
+      "seams": 1
+    },
+    {
+      "t": 454.7,
+      "wave": 17,
+      "hp": 175,
+      "gold": 60,
+      "kills": 499,
+      "x": 11.3,
+      "z": -9.1,
+      "alive": 59,
+      "seams": 2
+    },
+    {
+      "t": 609.5,
+      "wave": 23,
+      "hp": 0,
+      "gold": 60,
+      "kills": 552,
+      "x": 11.3,
+      "z": -9.1,
+      "alive": 61,
+      "seams": 2
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-1-frontier",
+    "strategy=hold-ground",
+    "engine secureWave=20 cadenceMult=1.15",
+    "home=3.0,11.0 circuit=[[-1,7],[7,7],[7,15],[-1,15]]",
+    "kit=turret+sluice+turret+turret+turret",
+    "crossing at the ford x=0 (6.8 -> -6.4)",
+    "crossing at the ford x=0 (-6.0 -> 11.0)",
+    "crossing at the ford x=0 (11.4 -> -6.4)",
+    "crossing at the ford x=0 (-6.9 -> 8.0)",
+    "sluice did not place at 7.0,6.0 (ghostValid=false)",
+    "crossing at the ford x=0 (14.3 -> -6.4)",
+    "crossing at the ford x=0 (-7.2 -> 6.5)",
+    "seam gold-seam-1 (7.5,6.5) unreachable on foot",
+    "crossing at the ford x=0 (-9.1 -> 6.7)",
+    "seam gold-seam-2 (-9.0,6.7) unreachable on foot",
+    "could not fund turret (cost 95, purse 0)",
+    "could not fund turret (cost 95, purse 60)"
+  ],
+  "at": "2026-09-25T07:24:34.718Z",
+  "objective": {
+    "baron": {
+      "cartVisible": true,
+      "carried": true,
+      "distanceFromBaron": 1.7472263734273243,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 6.933333333333394,
+      "volleys": 10,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "baron_rocket:60",
+      "lastTarget": {
+        "x": 11.32998672721997,
+        "z": -9.06128511334971
+      },
+      "target": {
+        "x": 11.32998672721997,
+        "z": -9.06128511334971
+      },
+      "props": {
+        "state": "ready",
+        "source": "glb",
+        "launcher": true,
+        "rocket": true,
+        "powderKeg": true,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": {
+        "count": 3,
+        "damage": 18,
+        "radius": 2.35,
+        "cadenceSeconds": 8,
+        "telegraphSeconds": 1.2,
+        "airTime": 1.1,
+        "spreadRadius": 0.9
+      }
+    },
+    "boss": {
+      "visible": true,
+      "ratio": 0.623,
+      "renderedRatio": 0.623,
+      "litSegments": 4,
+      "segments": 8,
+      "groupId": null,
+      "aliveComponents": 1,
+      "destroyedComponents": 0,
+      "components": [
+        {
+          "id": "baron",
+          "label": "Baron",
+          "hp": 33237.29,
+          "maxHp": 53346.89
+        }
+      ]
+    },
+    "medals": {
+      "version": 1,
+      "baronBeaten": false,
+      "rocketCartCaptured": false
+    }
+  },
+  "finalSnapshot": {
+    "objective": {
+      "baron": {
+        "cartVisible": true,
+        "carried": true,
+        "distanceFromBaron": 1.7472263734273243,
+        "telegraphActive": false,
+        "telegraphElapsed": 0,
+        "nextVolleyIn": 6.933333333333394,
+        "volleys": 10,
+        "suppressed": false,
+        "targetKind": null,
+        "lastOwnerId": "baron_rocket:60",
+        "lastTarget": {
+          "x": 11.32998672721997,
+          "z": -9.06128511334971
+        },
+        "target": {
+          "x": 11.32998672721997,
+          "z": -9.06128511334971
+        },
+        "props": {
+          "state": "ready",
+          "source": "glb",
+          "launcher": true,
+          "rocket": true,
+          "powderKeg": true,
+          "triangles": {
+            "launcher": 2020,
+            "rocket": 876,
+            "powder_keg": 704
+          }
+        },
+        "manifest": {
+          "count": 3,
+          "damage": 18,
+          "radius": 2.35,
+          "cadenceSeconds": 8,
+          "telegraphSeconds": 1.2,
+          "airTime": 1.1,
+          "spreadRadius": 0.9
+        }
+      },
+      "boss": {
+        "visible": true,
+        "ratio": 0.623,
+        "renderedRatio": 0.623,
+        "litSegments": 4,
+        "segments": 8,
+        "groupId": null,
+        "aliveComponents": 1,
+        "destroyedComponents": 0,
+        "components": [
+          {
+            "id": "baron",
+            "label": "Baron",
+            "hp": 33237.29,
+            "maxHp": 53346.89
+          }
+        ]
+      },
+      "medals": {
+        "version": 1,
+        "baronBeaten": false,
+        "rocketCartCaptured": false
+      }
+    },
+    "frame": 18853,
+    "sim": 609.4666666666424,
+    "wave": 23,
+    "hudWave": 23,
+    "runState": "dead",
+    "paused": false,
+    "secured": false,
+    "hp": 0,
+    "maxHp": 175,
+    "gold": 60,
+    "hero": {
+      "x": 11.32998672721997,
+      "z": -9.06128511334971
+    },
+    "enemiesAlive": 61,
+    "kills": 552,
+    "pendingLevels": 0,
+    "offer": null,
+    "upgradeOpen": false,
+    "buildMode": false,
+    "ghostValid": false,
+    "ghostPos": {
+      "x": 8,
+      "z": 12
+    },
+    "nodes": [
+      {
+        "id": "gold-seam-1",
+        "active": true,
+        "x": 7.5,
+        "z": 6.5,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "x": -9,
+        "z": 6.7,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      }
+    ],
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "count": 0,
+        "maxCount": 6,
+        "canAfford": true
+      },
+      {
+        "id": "palisade",
+        "cost": 0,
+        "count": 0,
+        "maxCount": 48,
+        "canAfford": true
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "count": 0,
+        "maxCount": 3,
+        "canAfford": true
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "count": 0,
+        "maxCount": 2,
+        "canAfford": true
+      },
+      {
+        "id": "turret",
+        "cost": 95,
+        "count": 2,
+        "maxCount": 4,
+        "canAfford": false
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "count": 0,
+        "maxCount": 1,
+        "canAfford": false
+      }
+    ],
+    "defences": [
+      {
+        "id": "turret",
+        "index": 0,
+        "hp": 0,
+        "maxHp": 50,
+        "wrecked": true,
+        "repairCost": 13,
+        "x": 4,
+        "z": 9
+      },
+      {
+        "id": "turret",
+        "index": 1,
+        "hp": 0,
+        "maxHp": 50,
+        "wrecked": true,
+        "repairCost": 18,
+        "x": 8,
+        "z": 12
+      }
+    ],
+    "repairs": 0,
+    "channeling": false
+  }
+}

@@ -1,0 +1,2293 @@
+{
+  "project": "mobile-chrome",
+  "contract": "e3-blackout-ridge",
+  "name": "Blackout Ridge",
+  "secureWave": 12,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e3-blackout-ridge secureWave=12"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "Claim Secured at wave 12 / 360.1s sim, 175 HP, 2 buildings; authored banks not both observed storing current: {\"capacitor-east\":0,\"capacitor-west\":0}"
+  },
+  "banks": {
+    "ok": true,
+    "detail": "a NEW secured row for e3-blackout-ridge: waves=12 gold=6 timeAlive=360 kills=157 (42 new row(s) since pre-play, retained after Return to Town)"
+  },
+  "board": {
+    "ok": true,
+    "detail": "the Book is on screen straight off the run ledger"
+  },
+  "reload": {
+    "ok": true,
+    "detail": "score retained across reload (7398 bytes) and the Book reopened on foot"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 12,
+  "simAtEnd": 360.13333333332315,
+  "runStateAtEnd": "playing",
+  "hpAtEnd": 175,
+  "goldAtEnd": 6,
+  "killsAtEnd": 157,
+  "peakHotBoilers": 0,
+  "powerBanksPeak": {
+    "capacitor-east": 0,
+    "capacitor-west": 0
+  },
+  "builds": [
+    {
+      "id": "capacitor_bank",
+      "at": 111.3333333333355,
+      "wave": 3,
+      "x": 16,
+      "z": 4
+    },
+    {
+      "id": "capacitor_bank",
+      "at": 115.60000000000238,
+      "wave": 3,
+      "x": 7,
+      "z": 4
+    }
+  ],
+  "upgrades": [
+    "double_tap_coil",
+    "spring_heels",
+    "double_tap_coil",
+    "split_spark",
+    "split_spark",
+    "heavy_spark",
+    "tinkers_plating",
+    "tinkers_plating",
+    "tinkers_plating",
+    "heavy_spark",
+    "heavy_spark"
+  ],
+  "samples": [
+    {
+      "t": 10.1,
+      "wave": 0,
+      "hp": 100,
+      "gold": 5,
+      "kills": 0,
+      "x": 29.5,
+      "z": 26,
+      "alive": 2,
+      "seams": 2
+    },
+    {
+      "t": 20.1,
+      "wave": 0,
+      "hp": 100,
+      "gold": 30,
+      "kills": 1,
+      "x": 18.5,
+      "z": 33.9,
+      "alive": 5,
+      "seams": 1
+    },
+    {
+      "t": 31.7,
+      "wave": 1,
+      "hp": 100,
+      "gold": 60,
+      "kills": 2,
+      "x": 18.5,
+      "z": 33.9,
+      "alive": 12,
+      "seams": 0
+    },
+    {
+      "t": 42.1,
+      "wave": 1,
+      "hp": 100,
+      "gold": 75,
+      "kills": 9,
+      "x": 18.5,
+      "z": 33.9,
+      "alive": 8,
+      "seams": 1
+    },
+    {
+      "t": 52.3,
+      "wave": 1,
+      "hp": 100,
+      "gold": 90,
+      "kills": 12,
+      "x": 10.6,
+      "z": 29.5,
+      "alive": 10,
+      "seams": 1
+    },
+    {
+      "t": 62.4,
+      "wave": 2,
+      "hp": 100,
+      "gold": 120,
+      "kills": 14,
+      "x": 8.9,
+      "z": 30,
+      "alive": 17,
+      "seams": 0
+    },
+    {
+      "t": 72.7,
+      "wave": 2,
+      "hp": 100,
+      "gold": 140,
+      "kills": 20,
+      "x": 8.9,
+      "z": 30,
+      "alive": 17,
+      "seams": 1
+    },
+    {
+      "t": 83.5,
+      "wave": 2,
+      "hp": 100,
+      "gold": 150,
+      "kills": 26,
+      "x": 8.9,
+      "z": 30,
+      "alive": 16,
+      "seams": 1
+    },
+    {
+      "t": 94,
+      "wave": 3,
+      "hp": 100,
+      "gold": 175,
+      "kills": 33,
+      "x": 17.1,
+      "z": 33.2,
+      "alive": 19,
+      "seams": 1
+    },
+    {
+      "t": 104.3,
+      "wave": 3,
+      "hp": 100,
+      "gold": 200,
+      "kills": 37,
+      "x": 14.9,
+      "z": 23.7,
+      "alive": 24,
+      "seams": 1
+    },
+    {
+      "t": 115.7,
+      "wave": 3,
+      "hp": 100,
+      "gold": 50,
+      "kills": 40,
+      "x": 6.9,
+      "z": 5.8,
+      "alive": 27,
+      "seams": 2
+    },
+    {
+      "t": 126,
+      "wave": 4,
+      "hp": 100,
+      "gold": 36,
+      "kills": 45,
+      "x": -24.5,
+      "z": -23.8,
+      "alive": 33,
+      "seams": 2
+    },
+    {
+      "t": 136.5,
+      "wave": 4,
+      "hp": 100,
+      "gold": 25,
+      "kills": 56,
+      "x": -20.9,
+      "z": -19.4,
+      "alive": 34,
+      "seams": 2
+    },
+    {
+      "t": 147.1,
+      "wave": 4,
+      "hp": 100,
+      "gold": 18,
+      "kills": 61,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 35,
+      "seams": 2
+    },
+    {
+      "t": 157.7,
+      "wave": 5,
+      "hp": 100,
+      "gold": 18,
+      "kills": 72,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 36,
+      "seams": 2
+    },
+    {
+      "t": 168.3,
+      "wave": 5,
+      "hp": 100,
+      "gold": 18,
+      "kills": 83,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 39,
+      "seams": 2
+    },
+    {
+      "t": 178.5,
+      "wave": 5,
+      "hp": 100,
+      "gold": 18,
+      "kills": 91,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 38,
+      "seams": 2
+    },
+    {
+      "t": 188.8,
+      "wave": 6,
+      "hp": 100,
+      "gold": 14,
+      "kills": 99,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 52,
+      "seams": 2
+    },
+    {
+      "t": 199.5,
+      "wave": 6,
+      "hp": 100,
+      "gold": 14,
+      "kills": 109,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 50,
+      "seams": 2
+    },
+    {
+      "t": 209.7,
+      "wave": 6,
+      "hp": 100,
+      "gold": 10,
+      "kills": 114,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 53,
+      "seams": 2
+    },
+    {
+      "t": 221.1,
+      "wave": 7,
+      "hp": 100,
+      "gold": 6,
+      "kills": 125,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 59,
+      "seams": 2
+    },
+    {
+      "t": 231.3,
+      "wave": 7,
+      "hp": 125,
+      "gold": 6,
+      "kills": 132,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 59,
+      "seams": 2
+    },
+    {
+      "t": 241.6,
+      "wave": 8,
+      "hp": 125,
+      "gold": 6,
+      "kills": 138,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 58,
+      "seams": 2
+    },
+    {
+      "t": 252,
+      "wave": 8,
+      "hp": 125,
+      "gold": 6,
+      "kills": 141,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    },
+    {
+      "t": 262.3,
+      "wave": 8,
+      "hp": 175,
+      "gold": 6,
+      "kills": 145,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    },
+    {
+      "t": 272.7,
+      "wave": 9,
+      "hp": 175,
+      "gold": 6,
+      "kills": 150,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 59,
+      "seams": 2
+    },
+    {
+      "t": 282.9,
+      "wave": 9,
+      "hp": 175,
+      "gold": 6,
+      "kills": 152,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    },
+    {
+      "t": 293.2,
+      "wave": 9,
+      "hp": 175,
+      "gold": 6,
+      "kills": 155,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    },
+    {
+      "t": 303.5,
+      "wave": 10,
+      "hp": 175,
+      "gold": 6,
+      "kills": 157,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    },
+    {
+      "t": 313.7,
+      "wave": 10,
+      "hp": 175,
+      "gold": 6,
+      "kills": 157,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    },
+    {
+      "t": 324,
+      "wave": 10,
+      "hp": 175,
+      "gold": 6,
+      "kills": 157,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    },
+    {
+      "t": 334.4,
+      "wave": 11,
+      "hp": 175,
+      "gold": 6,
+      "kills": 157,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    },
+    {
+      "t": 344.8,
+      "wave": 11,
+      "hp": 175,
+      "gold": 6,
+      "kills": 157,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    },
+    {
+      "t": 355.1,
+      "wave": 11,
+      "hp": 175,
+      "gold": 6,
+      "kills": 157,
+      "x": -6.8,
+      "z": -6.1,
+      "alive": 60,
+      "seams": 2
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-3-voltage",
+    "strategy=gather-and-extend",
+    "engine secureWave=12 cadenceMult=1",
+    "home=24.0,30.0 circuit=[[20,26],[28,26],[28,34],[20,34]]",
+    "kit=capacitor_bank+capacitor_bank",
+    "trunk trunk-ridge repair: 1, before=0",
+    "trunk trunk-middle repair: 2, before=1",
+    "trunk trunk-west repair: 3, before=2",
+    "trunk trunk-ridge repair: 5, before=4"
+  ],
+  "at": "2026-09-25T08:00:18.995Z",
+  "objective": {
+    "baron": {
+      "cartVisible": false,
+      "carried": false,
+      "distanceFromBaron": 0,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 0,
+      "volleys": 0,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "",
+      "lastTarget": {
+        "x": 0,
+        "z": 0
+      },
+      "target": {
+        "x": 0,
+        "z": 0
+      },
+      "props": {
+        "state": "off",
+        "source": "placeholder",
+        "launcher": false,
+        "rocket": false,
+        "powderKeg": false,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": null
+    },
+    "boss": {
+      "visible": false,
+      "ratio": 0,
+      "renderedRatio": 1,
+      "litSegments": 7,
+      "segments": 0,
+      "groupId": null,
+      "aliveComponents": 0,
+      "destroyedComponents": 0,
+      "components": []
+    },
+    "medals": {
+      "version": 1,
+      "baronBeaten": false,
+      "rocketCartCaptured": false
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.343407917022705,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.619681199391685,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 5.282248497009277,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "escort": {
+      "enabled": false
+    },
+    "power": {
+      "id": "e3-blackout-ridge-grid",
+      "tick": 2742,
+      "topologyRevision": 8,
+      "allocationRevision": 2700,
+      "totalSupplyWatts": 36,
+      "totalDemandWatts": 12,
+      "nodes": [
+        {
+          "id": "capacitor-east",
+          "labelKey": "East Capacitor Bank",
+          "kind": "storage",
+          "x": 16,
+          "z": 4,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0.05,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "capacitor-west",
+          "labelKey": "West Capacitor Bank",
+          "kind": "storage",
+          "x": 6,
+          "z": 4,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0.05,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "lamp-ridge",
+          "labelKey": "Ridge Switch Lamps",
+          "kind": "consumer",
+          "x": 24,
+          "z": 30,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 10,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "lamp-yard",
+          "labelKey": "Breath Yard Lamps",
+          "kind": "consumer",
+          "x": 12,
+          "z": 20,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 10,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "off-map-current",
+          "labelKey": "Current Beyond the Ridge",
+          "kind": "producer",
+          "x": -38,
+          "z": -40,
+          "online": true,
+          "outputWatts": 36,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "trunk-middle",
+          "labelKey": "Middle Trunk Frame",
+          "kind": "relay",
+          "x": -18,
+          "z": -18,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "trunk-ridge",
+          "labelKey": "Ridge Trunk Frame",
+          "kind": "relay",
+          "x": -6,
+          "z": -6,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "trunk-west",
+          "labelKey": "West Trunk Frame",
+          "kind": "relay",
+          "x": -30,
+          "z": -30,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        }
+      ],
+      "wires": [
+        {
+          "id": "capacitor-east--capacitor-west",
+          "a": "capacitor-east",
+          "b": "capacitor-west",
+          "state": "intact",
+          "length": 10,
+          "maxLength": 30
+        },
+        {
+          "id": "capacitor-east--lamp-ridge",
+          "a": "capacitor-east",
+          "b": "lamp-ridge",
+          "state": "intact",
+          "length": 27.203,
+          "maxLength": 30
+        },
+        {
+          "id": "capacitor-west--lamp-yard",
+          "a": "capacitor-west",
+          "b": "lamp-yard",
+          "state": "intact",
+          "length": 17.088,
+          "maxLength": 30
+        },
+        {
+          "id": "capacitor-west--trunk-ridge",
+          "a": "capacitor-west",
+          "b": "trunk-ridge",
+          "state": "intact",
+          "length": 15.62,
+          "maxLength": 30
+        },
+        {
+          "id": "off-map-current--trunk-west",
+          "a": "off-map-current",
+          "b": "trunk-west",
+          "state": "intact",
+          "length": 12.806,
+          "maxLength": 30
+        },
+        {
+          "id": "trunk-middle--trunk-ridge",
+          "a": "trunk-middle",
+          "b": "trunk-ridge",
+          "state": "intact",
+          "length": 16.971,
+          "maxLength": 30
+        },
+        {
+          "id": "trunk-middle--trunk-west",
+          "a": "trunk-middle",
+          "b": "trunk-west",
+          "state": "intact",
+          "length": 16.971,
+          "maxLength": 30
+        }
+      ],
+      "components": [
+        {
+          "id": "component-1",
+          "nodeIds": [
+            "lamp-ridge"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 6,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "lamp-ridge"
+          ]
+        },
+        {
+          "id": "component-2",
+          "nodeIds": [
+            "lamp-yard"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 6,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "lamp-yard"
+          ]
+        },
+        {
+          "id": "component-3",
+          "nodeIds": [
+            "off-map-current",
+            "trunk-middle",
+            "trunk-ridge",
+            "trunk-west"
+          ],
+          "supplyWatts": 36,
+          "generationWatts": 36,
+          "storageDischargeWatts": 0,
+          "demandWatts": 0,
+          "unusedWatts": 36,
+          "storedWh": 0,
+          "state": "lit",
+          "shedOrder": []
+        }
+      ],
+      "signature": "206:a53a794314bcda9b",
+      "active": true,
+      "budgetMs": 0.5,
+      "lastSolveMs": 0.09999990463256836,
+      "maxSolveMs": 0.5,
+      "lastStepMs": 0.09999990463256836,
+      "maxStepMs": 0.5,
+      "overBudget": false,
+      "overBudgetCount": 0,
+      "solveCount": 2701,
+      "nodeCount": 8,
+      "wireCount": 7,
+      "intactWireCount": 7,
+      "cutWireCount": 0,
+      "events": [
+        {
+          "seq": 1,
+          "tick": 0,
+          "nodeId": "capacitor-east",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 2,
+          "tick": 0,
+          "nodeId": "capacitor-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 3,
+          "tick": 0,
+          "nodeId": "lamp-ridge",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 4,
+          "tick": 0,
+          "nodeId": "lamp-yard",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 5,
+          "tick": 0,
+          "nodeId": "off-map-current",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 6,
+          "tick": 0,
+          "nodeId": "trunk-middle",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 7,
+          "tick": 0,
+          "nodeId": "trunk-ridge",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 8,
+          "tick": 0,
+          "nodeId": "trunk-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 9,
+          "tick": 1,
+          "nodeId": "trunk-middle",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 10,
+          "tick": 1,
+          "nodeId": "trunk-ridge",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 11,
+          "tick": 1,
+          "nodeId": "trunk-west",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 12,
+          "tick": 312,
+          "nodeId": "trunk-ridge",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 13,
+          "tick": 826,
+          "nodeId": "trunk-middle",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 14,
+          "tick": 916,
+          "nodeId": "trunk-west",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 15,
+          "tick": 988,
+          "nodeId": "trunk-middle",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 16,
+          "tick": 988,
+          "nodeId": "trunk-ridge",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 17,
+          "tick": 988,
+          "nodeId": "trunk-west",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 18,
+          "tick": 1027,
+          "nodeId": "trunk-ridge",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 19,
+          "tick": 1079,
+          "nodeId": "trunk-ridge",
+          "from": "dark",
+          "to": "powered"
+        }
+      ],
+      "render": {
+        "active": true,
+        "renderLayer": 2,
+        "renderSlot": "gameplay",
+        "topologyRevision": 8,
+        "allocationRevision": 2700,
+        "rebuildCount": 13,
+        "spans": 7,
+        "poweredSpans": 4,
+        "darkSpans": 3,
+        "intactSpans": 7,
+        "cutSpans": 0,
+        "segments": 84,
+        "poweredSegments": 48,
+        "darkSegments": 36,
+        "drawCalls": 2,
+        "asset": "procedural-catenary"
+      }
+    }
+  },
+  "finalSnapshot": {
+    "escort": {
+      "enabled": false
+    },
+    "power": {
+      "id": "e3-blackout-ridge-grid",
+      "tick": 2742,
+      "topologyRevision": 8,
+      "allocationRevision": 2700,
+      "totalSupplyWatts": 36,
+      "totalDemandWatts": 12,
+      "nodes": [
+        {
+          "id": "capacitor-east",
+          "labelKey": "East Capacitor Bank",
+          "kind": "storage",
+          "x": 16,
+          "z": 4,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0.05,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "capacitor-west",
+          "labelKey": "West Capacitor Bank",
+          "kind": "storage",
+          "x": 6,
+          "z": 4,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0.05,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "lamp-ridge",
+          "labelKey": "Ridge Switch Lamps",
+          "kind": "consumer",
+          "x": 24,
+          "z": 30,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 10,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "lamp-yard",
+          "labelKey": "Breath Yard Lamps",
+          "kind": "consumer",
+          "x": 12,
+          "z": 20,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 10,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "off-map-current",
+          "labelKey": "Current Beyond the Ridge",
+          "kind": "producer",
+          "x": -38,
+          "z": -40,
+          "online": true,
+          "outputWatts": 36,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "trunk-middle",
+          "labelKey": "Middle Trunk Frame",
+          "kind": "relay",
+          "x": -18,
+          "z": -18,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "trunk-ridge",
+          "labelKey": "Ridge Trunk Frame",
+          "kind": "relay",
+          "x": -6,
+          "z": -6,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "trunk-west",
+          "labelKey": "West Trunk Frame",
+          "kind": "relay",
+          "x": -30,
+          "z": -30,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        }
+      ],
+      "wires": [
+        {
+          "id": "capacitor-east--capacitor-west",
+          "a": "capacitor-east",
+          "b": "capacitor-west",
+          "state": "intact",
+          "length": 10,
+          "maxLength": 30
+        },
+        {
+          "id": "capacitor-east--lamp-ridge",
+          "a": "capacitor-east",
+          "b": "lamp-ridge",
+          "state": "intact",
+          "length": 27.203,
+          "maxLength": 30
+        },
+        {
+          "id": "capacitor-west--lamp-yard",
+          "a": "capacitor-west",
+          "b": "lamp-yard",
+          "state": "intact",
+          "length": 17.088,
+          "maxLength": 30
+        },
+        {
+          "id": "capacitor-west--trunk-ridge",
+          "a": "capacitor-west",
+          "b": "trunk-ridge",
+          "state": "intact",
+          "length": 15.62,
+          "maxLength": 30
+        },
+        {
+          "id": "off-map-current--trunk-west",
+          "a": "off-map-current",
+          "b": "trunk-west",
+          "state": "intact",
+          "length": 12.806,
+          "maxLength": 30
+        },
+        {
+          "id": "trunk-middle--trunk-ridge",
+          "a": "trunk-middle",
+          "b": "trunk-ridge",
+          "state": "intact",
+          "length": 16.971,
+          "maxLength": 30
+        },
+        {
+          "id": "trunk-middle--trunk-west",
+          "a": "trunk-middle",
+          "b": "trunk-west",
+          "state": "intact",
+          "length": 16.971,
+          "maxLength": 30
+        }
+      ],
+      "components": [
+        {
+          "id": "component-1",
+          "nodeIds": [
+            "lamp-ridge"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 6,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "lamp-ridge"
+          ]
+        },
+        {
+          "id": "component-2",
+          "nodeIds": [
+            "lamp-yard"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 6,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "lamp-yard"
+          ]
+        },
+        {
+          "id": "component-3",
+          "nodeIds": [
+            "off-map-current",
+            "trunk-middle",
+            "trunk-ridge",
+            "trunk-west"
+          ],
+          "supplyWatts": 36,
+          "generationWatts": 36,
+          "storageDischargeWatts": 0,
+          "demandWatts": 0,
+          "unusedWatts": 36,
+          "storedWh": 0,
+          "state": "lit",
+          "shedOrder": []
+        }
+      ],
+      "signature": "206:a53a794314bcda9b",
+      "active": true,
+      "budgetMs": 0.5,
+      "lastSolveMs": 0.09999990463256836,
+      "maxSolveMs": 0.5,
+      "lastStepMs": 0.09999990463256836,
+      "maxStepMs": 0.5,
+      "overBudget": false,
+      "overBudgetCount": 0,
+      "solveCount": 2701,
+      "nodeCount": 8,
+      "wireCount": 7,
+      "intactWireCount": 7,
+      "cutWireCount": 0,
+      "events": [
+        {
+          "seq": 1,
+          "tick": 0,
+          "nodeId": "capacitor-east",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 2,
+          "tick": 0,
+          "nodeId": "capacitor-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 3,
+          "tick": 0,
+          "nodeId": "lamp-ridge",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 4,
+          "tick": 0,
+          "nodeId": "lamp-yard",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 5,
+          "tick": 0,
+          "nodeId": "off-map-current",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 6,
+          "tick": 0,
+          "nodeId": "trunk-middle",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 7,
+          "tick": 0,
+          "nodeId": "trunk-ridge",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 8,
+          "tick": 0,
+          "nodeId": "trunk-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 9,
+          "tick": 1,
+          "nodeId": "trunk-middle",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 10,
+          "tick": 1,
+          "nodeId": "trunk-ridge",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 11,
+          "tick": 1,
+          "nodeId": "trunk-west",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 12,
+          "tick": 312,
+          "nodeId": "trunk-ridge",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 13,
+          "tick": 826,
+          "nodeId": "trunk-middle",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 14,
+          "tick": 916,
+          "nodeId": "trunk-west",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 15,
+          "tick": 988,
+          "nodeId": "trunk-middle",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 16,
+          "tick": 988,
+          "nodeId": "trunk-ridge",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 17,
+          "tick": 988,
+          "nodeId": "trunk-west",
+          "from": "dark",
+          "to": "powered"
+        },
+        {
+          "seq": 18,
+          "tick": 1027,
+          "nodeId": "trunk-ridge",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 19,
+          "tick": 1079,
+          "nodeId": "trunk-ridge",
+          "from": "dark",
+          "to": "powered"
+        }
+      ],
+      "render": {
+        "active": true,
+        "renderLayer": 2,
+        "renderSlot": "gameplay",
+        "topologyRevision": 8,
+        "allocationRevision": 2700,
+        "rebuildCount": 13,
+        "spans": 7,
+        "poweredSpans": 4,
+        "darkSpans": 3,
+        "intactSpans": 7,
+        "cutSpans": 0,
+        "segments": 84,
+        "poweredSegments": 48,
+        "darkSegments": 36,
+        "drawCalls": 2,
+        "asset": "procedural-catenary"
+      }
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.343407917022705,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.619681199391685,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 5.282248497009277,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "objective": {
+      "baron": {
+        "cartVisible": false,
+        "carried": false,
+        "distanceFromBaron": 0,
+        "telegraphActive": false,
+        "telegraphElapsed": 0,
+        "nextVolleyIn": 0,
+        "volleys": 0,
+        "suppressed": false,
+        "targetKind": null,
+        "lastOwnerId": "",
+        "lastTarget": {
+          "x": 0,
+          "z": 0
+        },
+        "target": {
+          "x": 0,
+          "z": 0
+        },
+        "props": {
+          "state": "off",
+          "source": "placeholder",
+          "launcher": false,
+          "rocket": false,
+          "powderKeg": false,
+          "triangles": {
+            "launcher": 2020,
+            "rocket": 876,
+            "powder_keg": 704
+          }
+        },
+        "manifest": null
+      },
+      "boss": {
+        "visible": false,
+        "ratio": 0,
+        "renderedRatio": 1,
+        "litSegments": 7,
+        "segments": 0,
+        "groupId": null,
+        "aliveComponents": 0,
+        "destroyedComponents": 0,
+        "components": []
+      },
+      "medals": {
+        "version": 1,
+        "baronBeaten": false,
+        "rocketCartCaptured": false
+      },
+      "pressure": {
+        "enabled": false,
+        "multiplayerPosture": "single-player-gated",
+        "coal": 0,
+        "seams": [
+          {
+            "x": -12,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 4.343407917022705,
+            "spriteVisible": false
+          },
+          {
+            "x": -5,
+            "z": 43,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 4.619681199391685,
+            "spriteVisible": false
+          },
+          {
+            "x": 3,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 5.282248497009277,
+            "spriteVisible": false
+          }
+        ],
+        "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+        "boilers": [
+          {
+            "index": 0,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 1,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 2,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          }
+        ],
+        "vents": 0,
+        "safeBand": null,
+        "objective": {
+          "active": false,
+          "failed": false,
+          "complete": false,
+          "hotBoilers": 0,
+          "waves": "8-12"
+        }
+      },
+      "escort": {
+        "enabled": false
+      },
+      "power": {
+        "id": "e3-blackout-ridge-grid",
+        "tick": 2742,
+        "topologyRevision": 8,
+        "allocationRevision": 2700,
+        "totalSupplyWatts": 36,
+        "totalDemandWatts": 12,
+        "nodes": [
+          {
+            "id": "capacitor-east",
+            "labelKey": "East Capacitor Bank",
+            "kind": "storage",
+            "x": 16,
+            "z": 4,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0.05,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "capacitor-west",
+            "labelKey": "West Capacitor Bank",
+            "kind": "storage",
+            "x": 6,
+            "z": 4,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0.05,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "lamp-ridge",
+            "labelKey": "Ridge Switch Lamps",
+            "kind": "consumer",
+            "x": 24,
+            "z": 30,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 6,
+            "priority": 10,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-1",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "lamp-yard",
+            "labelKey": "Breath Yard Lamps",
+            "kind": "consumer",
+            "x": 12,
+            "z": 20,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 6,
+            "priority": 10,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-2",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "off-map-current",
+            "labelKey": "Current Beyond the Ridge",
+            "kind": "producer",
+            "x": -38,
+            "z": -40,
+            "online": true,
+            "outputWatts": 36,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "powered",
+            "allocatedWatts": 0,
+            "allocationRatio": 1,
+            "componentId": "component-3",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "trunk-middle",
+            "labelKey": "Middle Trunk Frame",
+            "kind": "relay",
+            "x": -18,
+            "z": -18,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "powered",
+            "allocatedWatts": 0,
+            "allocationRatio": 1,
+            "componentId": "component-3",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "trunk-ridge",
+            "labelKey": "Ridge Trunk Frame",
+            "kind": "relay",
+            "x": -6,
+            "z": -6,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "powered",
+            "allocatedWatts": 0,
+            "allocationRatio": 1,
+            "componentId": "component-3",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "trunk-west",
+            "labelKey": "West Trunk Frame",
+            "kind": "relay",
+            "x": -30,
+            "z": -30,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "powered",
+            "allocatedWatts": 0,
+            "allocationRatio": 1,
+            "componentId": "component-3",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          }
+        ],
+        "wires": [
+          {
+            "id": "capacitor-east--capacitor-west",
+            "a": "capacitor-east",
+            "b": "capacitor-west",
+            "state": "intact",
+            "length": 10,
+            "maxLength": 30
+          },
+          {
+            "id": "capacitor-east--lamp-ridge",
+            "a": "capacitor-east",
+            "b": "lamp-ridge",
+            "state": "intact",
+            "length": 27.203,
+            "maxLength": 30
+          },
+          {
+            "id": "capacitor-west--lamp-yard",
+            "a": "capacitor-west",
+            "b": "lamp-yard",
+            "state": "intact",
+            "length": 17.088,
+            "maxLength": 30
+          },
+          {
+            "id": "capacitor-west--trunk-ridge",
+            "a": "capacitor-west",
+            "b": "trunk-ridge",
+            "state": "intact",
+            "length": 15.62,
+            "maxLength": 30
+          },
+          {
+            "id": "off-map-current--trunk-west",
+            "a": "off-map-current",
+            "b": "trunk-west",
+            "state": "intact",
+            "length": 12.806,
+            "maxLength": 30
+          },
+          {
+            "id": "trunk-middle--trunk-ridge",
+            "a": "trunk-middle",
+            "b": "trunk-ridge",
+            "state": "intact",
+            "length": 16.971,
+            "maxLength": 30
+          },
+          {
+            "id": "trunk-middle--trunk-west",
+            "a": "trunk-middle",
+            "b": "trunk-west",
+            "state": "intact",
+            "length": 16.971,
+            "maxLength": 30
+          }
+        ],
+        "components": [
+          {
+            "id": "component-1",
+            "nodeIds": [
+              "lamp-ridge"
+            ],
+            "supplyWatts": 0,
+            "generationWatts": 0,
+            "storageDischargeWatts": 0,
+            "demandWatts": 6,
+            "unusedWatts": 0,
+            "storedWh": 0,
+            "state": "dark",
+            "shedOrder": [
+              "lamp-ridge"
+            ]
+          },
+          {
+            "id": "component-2",
+            "nodeIds": [
+              "lamp-yard"
+            ],
+            "supplyWatts": 0,
+            "generationWatts": 0,
+            "storageDischargeWatts": 0,
+            "demandWatts": 6,
+            "unusedWatts": 0,
+            "storedWh": 0,
+            "state": "dark",
+            "shedOrder": [
+              "lamp-yard"
+            ]
+          },
+          {
+            "id": "component-3",
+            "nodeIds": [
+              "off-map-current",
+              "trunk-middle",
+              "trunk-ridge",
+              "trunk-west"
+            ],
+            "supplyWatts": 36,
+            "generationWatts": 36,
+            "storageDischargeWatts": 0,
+            "demandWatts": 0,
+            "unusedWatts": 36,
+            "storedWh": 0,
+            "state": "lit",
+            "shedOrder": []
+          }
+        ],
+        "signature": "206:a53a794314bcda9b",
+        "active": true,
+        "budgetMs": 0.5,
+        "lastSolveMs": 0.09999990463256836,
+        "maxSolveMs": 0.5,
+        "lastStepMs": 0.09999990463256836,
+        "maxStepMs": 0.5,
+        "overBudget": false,
+        "overBudgetCount": 0,
+        "solveCount": 2701,
+        "nodeCount": 8,
+        "wireCount": 7,
+        "intactWireCount": 7,
+        "cutWireCount": 0,
+        "events": [
+          {
+            "seq": 1,
+            "tick": 0,
+            "nodeId": "capacitor-east",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 2,
+            "tick": 0,
+            "nodeId": "capacitor-west",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 3,
+            "tick": 0,
+            "nodeId": "lamp-ridge",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 4,
+            "tick": 0,
+            "nodeId": "lamp-yard",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 5,
+            "tick": 0,
+            "nodeId": "off-map-current",
+            "from": null,
+            "to": "powered"
+          },
+          {
+            "seq": 6,
+            "tick": 0,
+            "nodeId": "trunk-middle",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 7,
+            "tick": 0,
+            "nodeId": "trunk-ridge",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 8,
+            "tick": 0,
+            "nodeId": "trunk-west",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 9,
+            "tick": 1,
+            "nodeId": "trunk-middle",
+            "from": "dark",
+            "to": "powered"
+          },
+          {
+            "seq": 10,
+            "tick": 1,
+            "nodeId": "trunk-ridge",
+            "from": "dark",
+            "to": "powered"
+          },
+          {
+            "seq": 11,
+            "tick": 1,
+            "nodeId": "trunk-west",
+            "from": "dark",
+            "to": "powered"
+          },
+          {
+            "seq": 12,
+            "tick": 312,
+            "nodeId": "trunk-ridge",
+            "from": "powered",
+            "to": "dark"
+          },
+          {
+            "seq": 13,
+            "tick": 826,
+            "nodeId": "trunk-middle",
+            "from": "powered",
+            "to": "dark"
+          },
+          {
+            "seq": 14,
+            "tick": 916,
+            "nodeId": "trunk-west",
+            "from": "powered",
+            "to": "dark"
+          },
+          {
+            "seq": 15,
+            "tick": 988,
+            "nodeId": "trunk-middle",
+            "from": "dark",
+            "to": "powered"
+          },
+          {
+            "seq": 16,
+            "tick": 988,
+            "nodeId": "trunk-ridge",
+            "from": "dark",
+            "to": "powered"
+          },
+          {
+            "seq": 17,
+            "tick": 988,
+            "nodeId": "trunk-west",
+            "from": "dark",
+            "to": "powered"
+          },
+          {
+            "seq": 18,
+            "tick": 1027,
+            "nodeId": "trunk-ridge",
+            "from": "powered",
+            "to": "dark"
+          },
+          {
+            "seq": 19,
+            "tick": 1079,
+            "nodeId": "trunk-ridge",
+            "from": "dark",
+            "to": "powered"
+          }
+        ],
+        "render": {
+          "active": true,
+          "renderLayer": 2,
+          "renderSlot": "gameplay",
+          "topologyRevision": 8,
+          "allocationRevision": 2700,
+          "rebuildCount": 13,
+          "spans": 7,
+          "poweredSpans": 4,
+          "darkSpans": 3,
+          "intactSpans": 7,
+          "cutSpans": 0,
+          "segments": 84,
+          "poweredSegments": 48,
+          "darkSegments": 36,
+          "drawCalls": 2,
+          "asset": "procedural-catenary"
+        }
+      }
+    },
+    "frame": 10844,
+    "sim": 360.13333333332315,
+    "wave": 12,
+    "hudWave": 12,
+    "runState": "playing",
+    "paused": true,
+    "secured": true,
+    "hp": 175,
+    "maxHp": 175,
+    "gold": 6,
+    "hero": {
+      "x": -6.775353393564498,
+      "z": -6.088219233695101
+    },
+    "enemiesAlive": 60,
+    "kills": 157,
+    "pendingLevels": 0,
+    "offer": null,
+    "upgradeOpen": false,
+    "buildMode": false,
+    "ghostValid": false,
+    "ghostPos": {
+      "x": 7,
+      "z": 4
+    },
+    "nodes": [
+      {
+        "id": "gold-seam-1",
+        "active": true,
+        "x": 18,
+        "z": 34,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "x": 8,
+        "z": 30,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      }
+    ],
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 55,
+        "count": 3,
+        "maxCount": 6,
+        "canAfford": false
+      },
+      {
+        "id": "palisade",
+        "cost": 0,
+        "count": 0,
+        "maxCount": 48,
+        "canAfford": true
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "count": 0,
+        "maxCount": 3,
+        "canAfford": false
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "count": 0,
+        "maxCount": 2,
+        "canAfford": false
+      },
+      {
+        "id": "capacitor_bank",
+        "cost": 75,
+        "count": 2,
+        "maxCount": 4,
+        "canAfford": false
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "count": 0,
+        "maxCount": 1,
+        "canAfford": false
+      }
+    ],
+    "defences": [
+      {
+        "id": "sentry_beacon",
+        "index": 0,
+        "hp": 40,
+        "maxHp": 40,
+        "wrecked": false,
+        "repairCost": 0,
+        "x": -30,
+        "z": -30
+      },
+      {
+        "id": "sentry_beacon",
+        "index": 1,
+        "hp": 40,
+        "maxHp": 40,
+        "wrecked": false,
+        "repairCost": 0,
+        "x": -18,
+        "z": -18
+      },
+      {
+        "id": "sentry_beacon",
+        "index": 2,
+        "hp": 40,
+        "maxHp": 40,
+        "wrecked": false,
+        "repairCost": 0,
+        "x": -6,
+        "z": -6
+      },
+      {
+        "id": "lantern_post",
+        "index": 0,
+        "hp": 0,
+        "maxHp": 35,
+        "wrecked": true,
+        "repairCost": 4,
+        "x": 12,
+        "z": 20
+      },
+      {
+        "id": "lantern_post",
+        "index": 1,
+        "hp": 0,
+        "maxHp": 35,
+        "wrecked": true,
+        "repairCost": 4,
+        "x": 24,
+        "z": 30
+      },
+      {
+        "id": "capacitor_bank",
+        "index": 0,
+        "hp": 0,
+        "maxHp": 70,
+        "wrecked": true,
+        "repairCost": 19,
+        "x": 16,
+        "z": 4
+      },
+      {
+        "id": "capacitor_bank",
+        "index": 1,
+        "hp": 0,
+        "maxHp": 70,
+        "wrecked": true,
+        "repairCost": 19,
+        "x": 7,
+        "z": 4
+      }
+    ],
+    "repairs": 8,
+    "channeling": false
+  }
+}

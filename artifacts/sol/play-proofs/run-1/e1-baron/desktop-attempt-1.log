@@ -1,0 +1,43 @@
+
+Running 1 test using 1 worker
+
+
+(node:94553) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:501:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:501:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: boots: requested e1-baron, got activeId=the-claim fallbackReason=null
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      553 |           row.boots = fail(`no game frame within ${BOOT_TIMEOUT_MS}ms: ${String((error as Error).message).split('\n')[0]}`);
+      554 |         }
+    > 555 |         expect(row.boots.ok, `boots: ${row.boots.detail}`).toBe(true);
+          |                                                            ^
+      556 |
+      557 |         await page.getByTestId('contract-briefing-dismiss').click({ timeout: 10_000 }).catch(() => undefined);
+      558 |         await expect(page.getByTestId('contract-briefing')).toBeHidden({ timeout: 10_000 });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:555:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-1/e1-baron/test-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-1/e1-baron/test-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-1/e1-baron/test-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/play-proofs/run-1/e1-baron/test-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:501:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 
