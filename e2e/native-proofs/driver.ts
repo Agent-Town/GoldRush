@@ -445,6 +445,7 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   const now = await read(page);
   if (!now || now.runState === 'dead') return;
   if (row.contract === "e1-baron" && HOLD_GROUND && now.wave >= 12 && now.gold < 10) return;
+  if (row.contract === "e1-twin-banks" && HOLD_GROUND && now.wave >= 13) return;
   const hurt = now.defences
     .filter((entry) => !entry.wrecked && entry.hp < entry.maxHp * 0.55 && entry.repairCost > 0)
     .sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
@@ -632,6 +633,12 @@ export function nativeProof(id: string) {
             continue;
           }
 
+          if (contract.id === 'e1-twin-banks' && HOLD_GROUND && now.wave >= 13) {
+            if (Math.hypot(now.hero.x + 2, now.hero.z + 13) > 1.5) {
+              await walkTo(page, row, -2, -13, 1.5, 20);
+            } else await page.waitForTimeout(200);
+            continue;
+          }
           const [cx, cz] = home.circuit[corner];
           const gap = Math.hypot(cx - now.hero.x, cz - now.hero.z);
 
