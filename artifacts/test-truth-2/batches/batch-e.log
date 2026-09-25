@@ -1,0 +1,658 @@
+BATCH E start 2026-09-25T13:54:27Z
+branch 65def50cb133165a368ebc2fb3088f2970f66a1b control 517822b351286d3e36d47be3ad5c28461cb304e8
+vite dev up on 5325 2026-09-25T13:54:30Z (Content-Type: text/javascript)
+
+== CONTROL round 1: warm-up boot 2026-09-25T13:54:30Z | load 25.89 23.07 26.73
+warm: booted on attempt 1 in 3355 ms
+warm rc=0
+
+== CONTROL round 1: relight x5, desktop 2026-09-25T13:54:34Z | load 25.82 23.10 26.72
+(node:90737) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+
+(node:90802) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+
+    Error: expect(received).resolves.toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      554 |   );
+      555 |   await restoredPage.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restored === true);
+    > 556 |   await expect(restoredPage.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave)).resolves.toBe(1);
+          |                                                                                                                   ^
+      557 |   await expect(
+      558 |     restoredPage.evaluate(() => (window.__THREE_GAME_DIAGNOSTICS__?.build as unknown as { lanternPostRotations: number[] }).lanternPostRotations),
+      559 |   ).resolves.toEqual(COLD_LANTERNS.map(({ rotationSteps }) => rotationSteps));
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:556:115
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:92761) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:99023) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:9487) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:510:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:25015) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:510:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+  2 passed (1.6m)
+rc=1
+port 5325 released
+vite dev up on 5323 2026-09-25T13:56:15Z (Content-Type: text/javascript)
+
+== BRANCH round 1: warm-up boot 2026-09-25T13:56:15Z | load 41.24 28.55 28.39
+warm: booted on attempt 1 in 4820 ms
+warm rc=0
+
+== BRANCH round 1: relight x5, desktop 2026-09-25T13:56:21Z | load 38.90 28.27 28.29
+(node:45005) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+
+(node:45074) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:704:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:50424) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:704:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:61402) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+
+(node:63371) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+
+(node:63623) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    Error: expect(received).resolves.toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      748 |   );
+      749 |   await restoredPage.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restored === true);
+    > 750 |   await expect(restoredPage.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave)).resolves.toBe(1);
+          |                                                                                                                   ^
+      751 |   await expect(
+      752 |     restoredPage.evaluate(() => (window.__THREE_GAME_DIAGNOSTICS__?.build as unknown as { lanternPostRotations: number[] }).lanternPostRotations),
+      753 |   ).resolves.toEqual(COLD_LANTERNS.map(({ rotationSteps }) => rotationSteps));
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:750:115
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  3 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+  2 passed (1.5m)
+rc=1
+port 5323 released
+vite dev up on 5325 2026-09-25T13:57:56Z (Content-Type: text/javascript)
+
+== CONTROL round 2: warm-up boot 2026-09-25T13:57:56Z | load 34.64 29.58 28.77
+warm: booted on attempt 1 in 5119 ms
+warm rc=0
+
+== CONTROL round 2: relight x5, desktop 2026-09-25T13:58:02Z | load 33.85 29.58 28.78
+(node:66723) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+
+(node:66807) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:510:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:68963) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:510:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:83921) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:510:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:94451) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  4) [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:510:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:9194) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  5) [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2-control/e2e/e1-night-shift.spec.ts:510:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  5 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue 
+rc=1
+port 5325 released
+vite dev up on 5323 2026-09-25T14:00:59Z (Content-Type: text/javascript)
+
+== BRANCH round 2: warm-up boot 2026-09-25T14:00:59Z | load 47.10 36.96 31.97
+warm: attempt 1 did not boot in 38556 ms (page.waitForFunction: Timeout 30000ms exceeded.)
+warm: booted on attempt 2 in 5736 ms
+warm rc=0
+
+== BRANCH round 2: relight x5, desktop 2026-09-25T14:02:19Z | load 130.28 64.46 42.83
+(node:81524) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+
+(node:83232) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:704:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:33415) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:704:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:86521) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('contract-briefing-dismiss')
+        - locator resolved to <button type="button" class="contract-briefing__dismiss" data-testid="contract-briefing-dismiss">Begin</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - <canvas width="1280" height="800" id="game-canvas" data-css-aspect="1.6" data-hero-skin="stock" data-hero-sheet="young" data-camera-aspect="1.6" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="8" data-boss-bar-visible="false" data-boss-bar-semanti…></canvas> intercepts pointer events
+      - retrying click action
+        - waiting for element to be visible, enabled and stable
+        - element is not visible
+      - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        50 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      77 | async function dismissBriefing(page: Page): Promise<void> {
+      78 |   const briefing = page.getByTestId('contract-briefing');
+    > 79 |   if (await briefing.isVisible().catch(() => false)) await page.getByTestId('contract-briefing-dismiss').click();
+         |                                                                                                          ^
+      80 |   await expect(briefing).toBeHidden();
+      81 | }
+      82 |
+        at dismissBriefing (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:79:106)
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:74:3)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:703:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:33780) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  4) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:704:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:61741) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  5) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      182 |
+      183 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 184 |   await page.waitForFunction(
+          |              ^
+      185 |     ([key, wanted]) => {
+      186 |       const raw = localStorage.getItem(key);
+      187 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:184:14)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:704:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  5 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+rc=1
+port 5323 released
+
+BATCH E END 2026-09-25T14:08:04Z
