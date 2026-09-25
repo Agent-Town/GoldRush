@@ -1783,13 +1783,14 @@ function validTapeAction(value: unknown, stored = false): boolean {
     && token(value.ability) && typeof value.granted === 'boolean';
 }
 
-// F-DTG2-2 (door-tape-grammar-3, 2026-09-26): three verbs whose door shape was looser than the client's own
-// normalizer (`normalizeLockstepAction`, LockstepClient.ts), so the county stored and ranked reels the Lantern
-// and the assayer cannot load: a `place_build` or `pick_upgrade` id that trims to nothing, and a
-// `set_agent_ability` naming an ability outside the client's own set. For these the client's normalizer has
-// the last word: the door refuses what it refuses (its own bounds stay as they were), and at read
-// `tapeGrammarRefusal` retires a row stored before this grammar instead of dropping it.
-const CLIENT_JUDGED_ACTIONS = new Set(['place_build', 'pick_upgrade', 'set_agent_ability']);
+// F-DTG2-2 and F-DTG3-1 (door-tape-grammar-3 and -4, 2026-09-26): the verbs whose door shape was looser than the
+// client's own normalizer (`normalizeLockstepAction`, LockstepClient.ts), so the county stored and ranked reels the
+// Lantern and the assayer cannot load: a `place_build`, `pick_upgrade` or `research_pick` id that trims to nothing,
+// a `set_agent_ability` naming an ability outside the client's own set, and a `context_action` upgrade or
+// demolition whose target names no building the client knows. For these the client's normalizer has the last
+// word: the door refuses what it refuses (its own bounds stay as they were), and at read `tapeGrammarRefusal`
+// retires a row stored before this grammar instead of dropping it.
+const CLIENT_JUDGED_ACTIONS = new Set(['place_build', 'pick_upgrade', 'research_pick', 'set_agent_ability', 'context_action']);
 function clientRefusesAction(action: JsonRecord): boolean {
   return typeof action.type === 'string' && CLIENT_JUDGED_ACTIONS.has(action.type) && normalizeLockstepAction(action) === null;
 }
