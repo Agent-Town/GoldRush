@@ -16,6 +16,11 @@ async function loadLedgerRuntime() {
       const standings = await vite.ssrLoadModule('/functions/api/standings.ts');
       const refusals = await vite.ssrLoadModule('/functions/api/refusals.ts');
       const accounts = await vite.ssrLoadModule('/functions/api/_accounts.ts');
+      const ledger = await vite.ssrLoadModule('/functions/api/_ledger.ts');
+      const telemetry = await vite.ssrLoadModule('/functions/api/telemetry.ts');
+      const stats = await vite.ssrLoadModule('/functions/api/stats.ts');
+      const bugs = await vite.ssrLoadModule('/functions/api/_bugs.ts');
+      const redeem = await vite.ssrLoadModule('/functions/api/redeem.ts');
       return {
         maxRequestBytes: standings.MAX_JSON_BYTES,
         handlers: {
@@ -35,6 +40,18 @@ async function loadLedgerRuntime() {
           '/api/save/versions': accounts.saveVersions,
           '/api/save/profiles': accounts.saveProfiles,
           '/api/delete-account': accounts.deleteAccount,
+          // kv-counters-to-ledger-1 (owner ruling 2026-09-24, item 7 "(b)"): the counters, the bug office
+          // and the prize desk move off the shared free-tier KV namespace. The Pages functions reach these
+          // five over nginx's `location /api/ledger/` (added on the ops evening) with LEDGER_PROXY_SECRET;
+          // each route answers 404 to anyone without it (functions/api/_ledger.ts `ledgerRoute`).
+          '/api/ledger/increment': ledger.ledgerIncrement,
+          '/api/ledger/telemetry': telemetry.ledgerTelemetry,
+          '/api/ledger/bugs': bugs.ledgerBugs,
+          '/api/ledger/prizes/mint': redeem.ledgerMint,
+          '/api/ledger/prizes/redeem': redeem.ledgerRedeem,
+          // The telemetry counters' reader follows them: the UNCHANGED stats door, served from sqlite.
+          // Public once nginx routes `/api/stats` here; until then the Pages copy keeps reading KV.
+          '/api/stats': stats.onRequest,
         },
       };
     } finally {
@@ -118,6 +135,9 @@ async function main() {
       DEV_AUTH: process.env.DEV_AUTH,
       RESEND_API_KEY: process.env.RESEND_API_KEY,
       AUTH_CODE_PEPPER: process.env.AUTH_CODE_PEPPER,
+      // kv-counters-to-ledger-1: the secret the Pages functions present on /api/ledger/*. Unset (or
+      // shorter than 32 characters), every /api/ledger/* route stays dark.
+      LEDGER_PROXY_SECRET: process.env.LEDGER_PROXY_SECRET,
       ALLOWED_CORS_ORIGINS: allowedOrigins(process.env.ALLOWED_CORS_ORIGINS),
     },
   });
