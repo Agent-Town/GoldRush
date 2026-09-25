@@ -1,0 +1,35 @@
+{
+  "tag": "vibe",
+  "branch": "docs/launch-video-vibe-check-1",
+  "port": 5375,
+  "mergeMessage": "drain: merge docs/launch-video-vibe-check-1 — launch-video-vibe-check-1 phase 1 — the vibe check, the treatment \"WHAT IS A CLAIM?\" (12 beats in 94 s, zero generation) and the mood board (24 existing frames), read from the storybook whole and 86 images; the live look waits on the attended word (Opus 5.5 implementer at max effort; owner request 2026-09-25)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": false,
+    "specs": [],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/launch-video-vibe-check-1.md",
+    "title": "Drain review: `launch-video-vibe-check-1` phase 1, the vibe check and the launch-film treatment (Opus 5.5 implementer at max effort; owner request 2026-09-25)",
+    "body": "scripts/attended/landings/vibe-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "launch-video-vibe-check-1.md",
+    "rowKey": "LAUNCH VIDEO VIBE CHECK PHASE 1 LANDED",
+    "rowEmoji": "🎬",
+    "rowText": "Three documents under `docs/marketing/launch-video/`: the vibe check (six pillars with proving frames, 17 maps art-against-game, verdict \"Gold Rush is thrilling where the light is\"), the treatment \"WHAT IS A CLAIM?\" (12 beats, 94 s, seven-field shot cards, Pan Theme + E1 loop, ZERO generation per the owner's 2026-09-19 \"do not buy\") and the mood board (24 existing frames); report and viewing log under `artifacts/launch-video-vibe-check-1/`. Read: the storybook whole, the READ FIRST list, 86 images. Phase 2 (the live look on port 5322 under the no-network rule F-VIBE-10) NOT started, on the attended word. Three questions on the desk (F-VIBE-Q): ride the Baron for the camera (no era-6 defeat tape exists, F-VIBE-11), printed slips or a spoken voice, model names on the boards. Site correctives F-VIBE-2/3/5 (share card, inlined key art, footer token link) are the owner's call: public content. Hash unchanged {PIN}.",
+    "statusPhrase": "the launch-film treatment is drafted from the storybook and the plates with zero generation, and its live look waits on the attended word",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh vibe)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/launch-video-vibe-check-1",
+  "cure": "scripts/attended/landings/vibe-cure.sh"
+}

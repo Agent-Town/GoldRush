@@ -42,3 +42,7 @@ Also learned there: the chain's STATUS line 1 is a snapshot of main at merge tim
 
 ## Battery rows that read as load, not regression (attribute by a quiet re-run, never by allowing them blindly)
 `fixture owners remove their temp directories` (the sweep itself, allowed by default), the two registry rows before a pin (allowed by default), and `board-tape-gold.test.mjs`'s "the browser door submits the purse held at the secure tick" (a headless browser boot with 120 s waits; red in every battery that ran beside another playwright batch on 2026-09-25, green alone). The last one is deliberately NOT in the default allow list: when it is red alone on a quiet machine, the door has changed.
+
+## Two rules learned on 2026-09-25 (pp3 resume; the vibe and kv1 landings)
+- **Commit landing-config edits before you resume or queue.** The main-merge wait needs ZERO non-log tracked changes on the PRIMARY repo and counts your own dirt: an edited `landings/<tag>.json` or `<tag>-review.md` left uncommitted stalls the landing silently at the ff step (pp3 slept 17 minutes on two such files). Path-scoped commit first, then `GR_LAND_RESUME=1 …`.
+- **Owner items get their own BACKLOG row.** `desk-declaration-guard` counts a finding as declared only when it is the FIRST F-ID in a row's subject zone; a mention inside the landed row is not a declaration. In the cure: `node scripts/attended/desk-row.cjs <F-ID> "(date, from <landing>): <subject>.** <body>"` (idempotent; inserts above the first desk row; run from the chain root, commit `tasks/BACKLOG.md`).
