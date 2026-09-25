@@ -196,7 +196,7 @@ export function currentMultiplayerSetup(contractId = DEFAULT_CONTRACT_ID): Multi
     contractId,
     // The host's resolver result seeds the room, and a joiner resolves the same contract's week from the
     // same registry, so the full-setup compare (`probeRideRoom` here, `setup_mismatch` at the relay)
-    // still agrees. A room that outlives Monday 00:00 UTC refuses a rider on the new week; it never mixes seeds.
+    // still agrees. A rider who joins after Monday 00:00 UTC resolves the new week and is refused, not seated.
     seed: getDebugSeed() ?? resolveLiveSeed(contractId),
     difficultyPreset: readDifficultyPreset(),
     meta,
