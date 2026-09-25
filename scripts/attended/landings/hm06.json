@@ -1,0 +1,23 @@
+{
+  "tag": "hm06",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5369,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 (hm-06-twin-banks-braid-water, run 2) — the production water mask is the authority for Twin Banks' mounted and fallback water: two ribbons, the declared 4 x 4 m source pool inside the existing confluence draw, the fords' shallows, the dry plait; the two band tests re-pinned to the braid; no sculpt cut, no store change, 83/83 floors match (Astra gpt-6-astra on the ChatGPT subscription; owner 2026-09-24 \"(5) (b)\" and 2026-09-25 \"twin banks\"; F-TB-1)",
+  "hash": "pin",
+  "pinCause": "hm-06-twin-banks-braid-water (Astra, gpt-6-astra on the ChatGPT subscription; owner rulings 2026-09-24 (5)(b) and 2026-09-25 twin banks): the production water mask is the authority for Twin Banks mounted and fallback water surfaces (src/world/Terrain.ts, src/world/Terrain3dClaimPilot.ts; render-side only: two ribbons, the declared 4 x 4 m source pool inside the existing confluence draw, the fords shallows, the dry plait); no sim rule, contract, collision, floor or table moved (83 of 83 floors match, no store commit).",
+  "cure": "scripts/attended/landings/hm06-cure.sh",
+  "gates": {
+    "releaseBuild": true, "payload": true, "halo": true, "nullFloors": true, "releaseSuite": true, "functions": false, "ledgerBattery": false,
+    "specs": ["e2e/e1-twin-banks.spec.ts", "e2e/beauty-twin-banks.spec.ts", "e2e/twin-banks-never-wedged.spec.ts", "e2e/landmark-collision.spec.ts", "e2e/task-025-bandits-dont-swim.spec.ts", "e2e/m2-01-build-menu.spec.ts", "e2e/agent-view.spec.ts"],
+    "warmup": ["/", "/?contract=e1-twin-banks"],
+    "allowedE2E": ["the reed field is alive in a still frame", "seeded Twin Banks diagnostics are stable"]
+  },
+  "review": { "path": "reviews/hm-06-twin-banks-braid-water.md", "title": "Drain review: `hm-06-twin-banks-braid-water`, the Twin Banks water follows the braid the owner ratified (Astra run 2; owner 2026-09-24 (5)(b), 2026-09-25 twin banks; F-TB-1)", "body": "scripts/attended/landings/hm06-review.md" },
+  "bookkeeping": {
+    "taskFile": "hm-06-twin-banks-braid-water.md", "rowKey": "TWIN BANKS BRAID LANDED", "rowEmoji": "🌊",
+    "rowText": "Astra run 2 (338k tokens; run 1 stopped at the firewall with the measurement that made run 2 right): `Terrain.waterMask()` is the authority for the pilot's two ribbons and the fallback surface, the guessed interior confluence span becomes the declared 4 x 4 m source pool inside the existing draw (no new draw), the fords keep their shallows, the plait is dry; no sculpt cut (fresh GLB samples: north bed -0.452 m, south -0.316 m, plait +0.259 m), no store commit (`astra/hm-06-braid` sits at the store's main), 83 of 83 floors match, payload 34,346,281 to 34,349,803 B (+3,522 B), desktop p95 median 9.0 to 8.7 ms, plain boards at 1280 and 390 before and after. The two band tests re-pinned to the braid: F-TB-1 CLOSED (the two E1 control reds of 2026-09-24 are green). Left as they were, both pre-existing with controls: the reed-field still-frame test (main's riparian cards, open for the test owner) and the seeded-diagnostics determinism test (a missing mounted-height readiness wait); the paired-bank entry composition stays held as in run 10. Same-era pin {PIN}.",
+    "statusPhrase": "the Twin Banks water follows the braid the owner ratified, the plait dry and the source pool declared; pin {PIN}",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh hm06, the first landing through the tracked toolkit)"
+  },
+  "deploy": true, "preview": true, "evidenceDir": "artifacts/sol/map-art-campaign-2/run-11/braid/drain"
+}

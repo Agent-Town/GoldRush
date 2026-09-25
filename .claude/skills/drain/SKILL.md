@@ -2,6 +2,8 @@
 
 One drain per invocation. Serial. Never batch-gate. Compacted 2026-09-24 on the owner's order; the incident history behind every rule is in `docs/law/skill-drain-archive-2026-09-24.md` (grep the F-ID).
 
+**Attended sessions: the tracked toolkit `scripts/attended/` does this whole skill from one JSON config (`land.sh`, under `dlock.sh`; `scripts/attended/README.md`). The steps below are what it encodes and what a hand-run must still do.**
+
 ## 0. Preconditions (abort if any fails; fix the precondition first)
 - [ ] **IS IT ALLOWED? The FIRST command, before classification and before you form an opinion:** `node scripts/drain-block-check.mjs --strict <done-move filename | taskfile | branch>`. **Exit 1 = STOP** (a policy block is not a property of the tree; no git probe can see it; a well-argued runner report is not an unblock). Read the `blockClass`: `owner-fork` is lifted by the owner only; `gate-side` is a fire-recorded readiness hold you lift by SATISFYING its stated condition and re-registering the leaf in the same commit. `--strict` makes an unmatched master (no goal leaf) exit 2 instead of 0: UNKNOWN is a Goal Registration finding, never a clearance. `--all` audits every blocked leaf.
 - [ ] STATUS.md line 1: you hold the lock (attended) or no fresh ACTIVE fire owns main (the four shapes are in CLAUDE.md §1). **And `tasks/.fire.lock` is absent or older than 50 minutes (F-E1T-2): a fire commits `lock CLEARED` before its last writes, so that directory, kept by the runner for the process lifetime, is the liveness signal; line 1 alone is not.**
