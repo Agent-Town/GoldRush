@@ -35,3 +35,7 @@ Base `afd7393e9`; the branch touches only `site/index.html`, new files under `si
 | the ledger battery | `rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3` |
 | full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 1037 ℹ pass 1031 ℹ fail 1 ℹ skipped 5  13:45Z` |
 | engine hash | `merged: 642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a (pinned 642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a)` |
+
+## Deploy (attended, 2026-09-26 14:10Z)
+- `bash scripts/deploy-site.sh` rc 0: the `agenttown` Pages project DEPLOYED (`https://39904ac3.agenttown.pages.dev`); `https://agenttown.pages.dev/` now serves the new page (`og:image` → `share-card.jpg`).
+- **The live front page at `https://agenttown.app/` is NOT that project.** It is the droplet's nginx, `root /opt/goldrush/site` (`docs/ops/agenttown-server.md:20`), and that tree is synced by the GAME deploy (`scripts/deploy.sh` rsync `--include=/site/***`, line 401), so the live page still served the 2026-09-20 copy at this stamp (old `og:image`, the four image paths answering the old index as a fallback, one `dexscreener` hit). It updates at the next game deploy, which is the `charter-press-locked-lands-1` landing queued right behind this one; the drain verifies the live tags and the four image URLs after that deploy (F-SVF1-9: the site's own deploy script does not reach the host that serves the site).
