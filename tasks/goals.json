@@ -6423,12 +6423,16 @@
             {
               "id": "is-main-2",
               "title": "The twenty-three remaining main-module checks move onto scripts/is-main.mjs so every tool runs its main under a symlinked path (F-SF1-2); fixture relocation measured per file first",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "is-main-2.md",
               "lane": "scratch worktree /Users/robin/Claude/Projects/wt-im2, branch fix/is-main-2, Opus 5.5 implementer at max effort; scripts only, hash unchanged; no deploy",
               "authoredAt": "2026-09-26",
               "authoredBy": "attended (Fable) from F-SF1-2, 2026-09-26",
-              "queuedAt": "2026-09-26"
+              "queuedAt": "2026-09-26",
+              "mergeHash": "20dc211ea52c37814baf5f2aa9b013fad603cc68",
+              "mergedAt": "2026-09-26",
+              "review": "reviews/is-main-2.md",
+              "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh im2, after cw2)"
             },
             {
               "id": "kv-counters-to-ledger-2",
