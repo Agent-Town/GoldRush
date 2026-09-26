@@ -1,0 +1,37 @@
+{
+  "tag": "srp1",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5397,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-river-proof-1 — Astra's native proof of the River ending after river-ending-score-1: PASS desktop and 390 px phone (the real Last Claim secure, bank, Charter Press wait, lever click; the first player pan writes one completed e10-river score, 5 gold at 5.20 s / 4.73 s; the Book and a reload keep it; a second pan and a second earned lever leave it unchanged; 0 standings requests; 0 console/page errors; the raw route's stray enemies 2/2 measured); the shared driver's fabricated River row removed (F-RES1-2); F-PP6-2 CLOSED for the player (owner 'Yes, let it run please' 2026-09-26; Astra on lane-c)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/sol-river-proof-1.md",
+    "title": "Drain review: `sol-river-proof-1`, Astra proves the River's ending the human way, both projects (F-PP6-2 closed for the player)",
+    "body": "scripts/attended/landings/srp1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-river-proof-1.md",
+    "rowKey": "SOL RIVER PROOF 1 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra's run 7 (`artifacts/sol/play-proofs/run-7/`): PASS desktop (1280x800) and phone (390x844): the real Last Claim wave-8 secure, the bank, the Charter Press wait and the lever click lead to the quiet River; the first player pan writes ONE completed `e10-river` score (5 gold at 5.200 s desktop, 4.733 s phone); the Book shows it and a reload keeps it; a second pan and a second real earned lever leave the original score unchanged; 0 county standings requests during the ceremony (the post is held); 0 console/page errors; the raw route's stray enemies measured 2 at 11.5 s and 2 at 26.5 s on both projects (F-RES1-3, on the desk). The shared driver's fabricated wave-30 `e10-river` row is gone (F-RES1-2 closed; the old seed read a fresh completion as not new, the fixed seed reads it true). New spec `e2e/native-proofs/e10-river-ending.spec.ts`, gated by `GR_NATIVE_PROOF=1` like the others (the default battery unchanged). An honest first desktop attempt exited 1 at an unproved re-pull and is preserved beside the passing run. Engine hash unchanged. F-PP6-2 CLOSED for the player's ending; the county-board half waits on `river-assay-1`. `reviews/sol-river-proof-1.md`.",
+    "statusPhrase": "the River's ending is proven the human way on desktop and phone: the pan writes the score, the Book and a reload keep it",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh srp1; Astra on lane-c, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-7"
+}
