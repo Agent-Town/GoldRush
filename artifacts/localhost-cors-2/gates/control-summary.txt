@@ -1,0 +1,45 @@
+2026-09-26T05:00:39Z LOCK HELD (control). base 39f88d36f, tip b2d0c3992, load 8.14 11.41 14.50
+2026-09-26T05:00:52Z control worktree 39f88d36f; art links: ok ok ok ok ; env files present: 0
+2026-09-26T05:00:55Z battery reds on base (39f88d36f) rc=1 3s :: ℹ tests 70 ℹ pass 54 ℹ fail 16  :: survivors 2 node-guards-tap-2K5VVV s2672-dest-TZjfG3 
+    base: ✖ --fill-gaps --dry-run names the gap and rsyncs NOTHING (32.54225ms)
+    base: ✖ --fill-gaps pulls exactly the missing dated backup, and nothing else (35.566ms)
+    base: ✖ 23. ONE destination, THREE tools: pull, freshness and exposure cannot disagree (89.421042ms)
+    base: ✖ REVERSE CONTROL: a genuine discharge does NOT claim to be outstanding (32.635417ms)
+    base: ✖ THE DEFECT ARM: the default path leaves the hole behind today untouched (31.506917ms)
+    base: ✖ a mirror directory that does not exist yet is created, not crashed on (31.250833ms)
+    base: ✖ dry run prints a bounded plan without contacting the droplet (34.950625ms)
+    base: ✖ failing tests:
+    base: ✖ non-dated debris on the box is never pulled (32.479875ms)
+    base: ✖ the corpus is declared even on the happy path — "0 gaps" must not look like "I could not read the box" (F-2208-1) (31.768458ms)
+    base: ✖ the declaration names the supply window rather than blaming the fetch (33.870833ms)
+    base: ✖ the exit stays advisory — a no-op must never red the LB-01 duty (32.289417ms)
+    base: ✖ the live board is green under this guard (baseline is honest) (117.370917ms)
+    base: ✖ the newest-already-present exit names TODAY as still outstanding (35.049417ms)
+    base: ✖ the recovered file is the REMOTE bytes, not a placeholder (30.897375ms)
+    base: ✖ the site names the RANDOMIZED mechanism, so no fixed threshold can creep back (32.328542ms)
+    base: ✖ today's local backup makes the pull an offline no-op (29.864792ms)
+2026-09-26T05:00:57Z battery reds on tip (b2d0c3992) rc=1 2s :: ℹ tests 70 ℹ pass 54 ℹ fail 16  :: survivors 2 node-guards-tap-G7Tvku s2672-dest-NgQsP5 
+    tip: ✖ --fill-gaps --dry-run names the gap and rsyncs NOTHING (29.861958ms)
+    tip: ✖ --fill-gaps pulls exactly the missing dated backup, and nothing else (32.777167ms)
+    tip: ✖ 23. ONE destination, THREE tools: pull, freshness and exposure cannot disagree (88.305917ms)
+    tip: ✖ REVERSE CONTROL: a genuine discharge does NOT claim to be outstanding (33.4285ms)
+    tip: ✖ THE DEFECT ARM: the default path leaves the hole behind today untouched (32.118583ms)
+    tip: ✖ a mirror directory that does not exist yet is created, not crashed on (30.548708ms)
+    tip: ✖ dry run prints a bounded plan without contacting the droplet (31.690333ms)
+    tip: ✖ failing tests:
+    tip: ✖ non-dated debris on the box is never pulled (30.211166ms)
+    tip: ✖ the corpus is declared even on the happy path — "0 gaps" must not look like "I could not read the box" (F-2208-1) (29.813458ms)
+    tip: ✖ the declaration names the supply window rather than blaming the fetch (31.0345ms)
+    tip: ✖ the exit stays advisory — a no-op must never red the LB-01 duty (30.90325ms)
+    tip: ✖ the live board is green under this guard (baseline is honest) (122.682625ms)
+    tip: ✖ the newest-already-present exit names TODAY as still outstanding (34.6175ms)
+    tip: ✖ the recovered file is the REMOTE bytes, not a placeholder (31.306ms)
+    tip: ✖ the site names the RANDOMIZED mechanism, so no fixed threshold can creep back (32.165084ms)
+    tip: ✖ today's local backup makes the pull an offline no-op (31.677625ms)
+2026-09-26T05:00:58Z desk-declaration leg on base: rc=2 :: desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+2026-09-26T05:00:58Z ports busy before control e2e: none
+2026-09-26T05:01:20Z control vite pid 76812 up; warm boot rc=0 ::   1 passed (4.6s) 
+2026-09-26T05:09:52Z control e2e (base, 9 specs, both projects) rc=1 507s load 17.82 19.52 18.33 ::   21 failed   10 skipped   12 did not run   73 passed (8.4m) 
+2026-09-26T05:09:52Z control vite pid 76812 stopped
+2026-09-26T05:09:54Z control worktree removed
+2026-09-26T05:09:54Z CONTROL DONE. load 17.75 19.48 18.33

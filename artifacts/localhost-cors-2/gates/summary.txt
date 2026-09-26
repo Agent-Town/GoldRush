@@ -1,0 +1,21 @@
+2026-09-26T04:25:07Z LOCK HELD. tip b2d0c3992, node v26.4.0, wrangler 4.107.0, load 52.47 26.15 19.47, workerd processes 0
+2026-09-26T04:25:16Z test:accounts rc=0 9s load 49.53 26.39 19.64 :: accounts kv checks passed (43);accounts sqlite checks passed (43);accounts sign-in hardening checks passed (27);accounts office credential checks passed (26);accounts ledger road checks passed (86);accounts kv-to-ledger migration checks passed (16);
+2026-09-26T04:25:28Z test:mp rc=0 12s load 45.42 26.60 19.83 :: multiplayer relay checks passed (528);
+2026-09-26T04:25:45Z test:stats rc=0 17s load 45.82 27.61 20.31 :: stats worker checks passed (87);standings assay kv checks passed (617);standings assay sqlite checks passed (617);ledger worker HTTP contract checks passed (26);
+2026-09-26T04:46:29Z test:node-guards (every leg run) combined rc=1 1244s load 12.15 14.75 18.99
+leg 1/8 rc=1 1211s :: node scripts/run-node-guards.mjs scripts/live-seed-rotation.test.mjs scripts/phone-hud-ent... :: ℹ tests 1032, ℹ pass 1022, ℹ fail 5, ℹ cancelled 0, ℹ skipped 5
+leg 2/8 rc=0 0s :: node scripts/test-ticker-stats.mjs :: ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+leg 3/8 rc=0 0s :: npm run test:findings-state :: findings-state-guard: PASS
+leg 4/8 rc=0 1s :: npm run test:blocker-panel :: blocker-panel-closed-guard: PASS
+leg 5/8 rc=0 0s :: npm run test:ruling-propagation :: PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+leg 6/8 rc=2 0s :: npm run test:desk-declaration ::   Re-run from the main worktree, or pass --root <main worktree>.
+leg 7/8 rc=0 2s :: node scripts/nul-audit.mjs :: nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+leg 8/8 rc=0 29s :: npm run test:review-fixes scripts/node-guards-watchdog.test.mjs scripts/ratelimit-window.t... :: ℹ tests 86, ℹ pass 86, ℹ fail 0, ℹ cancelled 0, ℹ skipped 0
+BATTERY: 8 legs, combined rc 1
+2026-09-26T04:46:30Z ports busy before e2e: none
+2026-09-26T04:46:51Z vite pid 51939 up; warm boot (uncounted) rc=0 ::   1 passed (4.7s) 
+2026-09-26T04:59:30Z e2e 18 specs, both projects, --workers=1 rc=1 754s load 9.39 12.55 15.14 ::   21 failed   12 skipped   9 did not run   132 passed (12.6m) 
+2026-09-26T04:59:30Z vite pid 51939 stopped; workerd processes 0
+2026-09-26T04:59:33Z dev-vars probe rc=0 3s :: VERDICT: wrangler pages dev reads the root .dev.vars; without it a localhost page is refused, with it admitted; the county origin is admitted either way.
+2026-09-26T04:59:33Z tracked files the batch changed: 35 ::  M artifacts/agent-seat/boot-probe.json  M artifacts/live-seed-rotation-1/dev-desktop-chrome-after-monday-door.json  M artifacts/live-seed-rotation-1/dev-desktop-chrome-inside-week-door.json  M artifacts/live-seed-rotation-1/dev-desktop-chrome-ride-lobby.png  M artifacts/live-seed-rotation-1/dev-des
+2026-09-26T04:59:33Z BATCH DONE. load 9.39 12.55 15.14, workerd processes 0
