@@ -7755,10 +7755,10 @@ export class Game {
    * (`run_secured`, then a secured `run_ended` or `hero_died`), the only writer of a completed score, never fires on
    * it. This is the ceremony's own completion instead, written through the sinks every secured run uses: the score
    * (`recordRunScore`: waves 0, the time alive at the pan, the purse the pan filled, secured) and the reel (the
-   * recorder's snapshot with the outcome a standing's reel declares, kept in the tape ring). The county standing
-   * (`submitCountyStanding`, which would attach that same reel) is HELD behind `RIVER_STANDING_POSTS_ENABLED` until a
-   * River reel can be assayed. The door's grammar (`validTapeOutcome`) admits `secured`, `rush` and `death` and
-   * nothing else, so the ceremony rides `secured`.
+   * recorder's snapshot with the outcome a standing's reel declares, kept in the tape ring) and the county standing
+   * (`submitCountyStanding`, which attaches that same reel; `RIVER_STANDING_POSTS_ENABLED`, on since river-assay-1 made a
+   * River reel assayable). The door's grammar (`validTapeOutcome`) admits `secured`, `rush` and `death` and nothing
+   * else, so the ceremony rides `secured`.
    *
    * THE EVENT is the first gold the player's own pan lands, called from the fixed step: the earliest act that is
    * certainly a pan (the channel's first swing yields nothing if the player steps off inside one pan tick, 1.5 s
@@ -11166,13 +11166,13 @@ function countyAnonId(): string {
 // F-PP6-2: the contract THE RIVER's ending is scored under. The lever plays it as its lineage root, `the-claim`.
 const RIVER_ENDING_CONTRACT_ID = 'e10-river';
 
-// HELD (attended session, 2026-09-26): the River's county standing is not posted until a River reel can be assayed.
-// Today every instrument rejects one (F-RES1-1: a replay opens the raw `e10-river` manifest, not the lever's pressed
-// Claim under `nowaves`, and the browser arm reads RunManager's secure, which the ceremony never sets; F-RES1-6: the
-// browser's seams follow the `?seed=` pin, not the run's seed), so a posted River row would rank while pending and
-// then be rejected on the live board. The score and the reel are still written, and the reel stays door-shaped
-// (`e2e/river-ending-score.spec.ts` judges it with the door in-process). The assay slice flips this one line.
-const RIVER_STANDING_POSTS_ENABLED: boolean = false;
+// ON since river-assay-1 (the county-board half of the owner's F-PP6-2 ruling, 2026-09-26). It was HELD (attended
+// session, 2026-09-26) while every instrument rejected a River reel, so a posted River row would have ranked while
+// pending and then been rejected on the live board. The assay now verifies one: a replay opens the lever's ceremony
+// world and reads the pan's completed score (F-RES1-1), the seams follow the run's seed (F-RES1-6), and a live run moves
+// by the axes its reel records (F-RVA1-1); `scripts/river-assay.test.mjs` and `e2e/river-ending-score.spec.ts` prove it
+// through the county's own door and worker. Holding the post again is this one line.
+const RIVER_STANDING_POSTS_ENABLED: boolean = true;
 
 /**
  * THE RIVER CEREMONY (F-PP6-2): `E10FinaleSystem.launchRiver` stamps THE RIVER charter onto its lineage root and boots it
