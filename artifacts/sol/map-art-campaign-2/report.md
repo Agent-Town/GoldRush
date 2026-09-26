@@ -1009,3 +1009,4 @@ Final verification: build/TypeScript PASS; default collection PASS; gate-unset b
 - Initial required Incline regression: PASS both projects, wave 14, cart 180/180, all six cells, zero errors.
 - Last Claim: PASS desktop/phone, wave 8, vent alive, banked, actual finale Return to the Ark reaches Book, score byte-identical after reload, zero errors. Prior census text preserved. [Proof](../play-proofs/run-6/e10-last-claim/proof.md).
 - Final shared-driver Incline regression: PASS both projects at wave 14, all six cells and full-health carts, zero errors.
+- River: PARTIAL desktop/phone. Real earned finale lever, no-wave pan 0→30 gold and clean Book return; no completed River score or terminal bank action, so bank/persistence remain FAIL. Raw wave-20 census text preserved and explicitly distinguished. This is an ending-acceptance mismatch, not survival impossibility. [F-PP6-2](../play-proofs/run-6/e10-river/finding.md).
