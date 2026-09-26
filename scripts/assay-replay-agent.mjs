@@ -100,7 +100,19 @@ function installLocationShim(tape) {
   globalThis.window = { location };
 }
 
+/**
+ * THE RIVER IS NOT A HEADLESS RUN (river-assay-1, F-RES1-1). A reel scored `e10-river` is the finale lever's ceremony,
+ * played in the browser on THE RIVER charter pressed onto its lineage root under `nowaves`; the headless door cannot
+ * ride it (the raw River is not on its roster) and a browser reel carries no `agent_orders`, so the worker's seam
+ * (`isAgentTape`, `scripts/assay-replay.mjs`) sends it to the browser arm, which stages the ceremony. Refused here by
+ * name, before any engine loads, rather than by the generic roster message.
+ */
+export const RIVER_ENDING_CONTRACT_ID = 'e10-river';
+
 export async function replayAgentTape(rawTape) {
+  if (rawTape?.contract === RIVER_ENDING_CONTRACT_ID) {
+    throw new Error(`${RIVER_ENDING_CONTRACT_ID} is the River ceremony, a browser run: its reel is assayed by the browser arm (scripts/assay-replay.mjs), never by the headless door`);
+  }
   installLocationShim(rawTape);
   const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null /* F-ASSAY-E2E-8: the replayer never edits files; default watching exhausts inotify on small boxes and crashed every live agent replay */ } });
   const quiet = { log: console.log, info: console.info, debug: console.debug };
