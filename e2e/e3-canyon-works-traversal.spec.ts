@@ -96,3 +96,97 @@ test('the hero walks down the works bank past z -6 at the bridge and both flanks
   console.log(`[canyon-traversal] ${testInfo.project.name} ${JSON.stringify(rows)}`);
   expectNoConsoleErrors(watch);
 });
+
+// canyon-works-traversal-2 (F-CW1-1, measured 2026-09-25 and 2026-09-26). The second wall was the t2 ramp: 4 m (t1Height 0.5
+// to t2Height 4.5) over z 18..28, a smoothstep peak |simSlope| of 0.598, so isTraversable refused z 19.8..26.2 at every x and
+// no seam, gallery, lamp or turret above it could be reached on foot (Astra's acceptance stopped at z 19.8 with gold 0). The
+// contract now runs the same 4 m over z 14..32: peak 0.333, a margin of 0.017 under slopeMax, the narrowest window with a
+// margin of at least 0.015 (artifacts/canyon-works-traversal-2/slope-t2.txt). The scripted cliff (x -12..12, z 18..26, 2.2 m)
+// is unchanged, so the route goes round it. This row walks the hero from the works bridge to the first gallery target of that
+// acceptance run, seam anchor-0 at (-34, 30) beside the west gallery, one held key per leg, under the manual sim.
+const T2_START = { x: 0, z: -5 }; // on the works bridge, where the acceptance run stands once it has crossed the bank
+const T2_TARGET = { x: -34, z: 30 }; // seam anchor-0, the acceptance run's first gallery target
+const T2_RAMP_X = -28; // the west gallery's column (gallery-west stands at -28, 28): clear of the cliff, the steepest line up
+const T2_MARGIN = 0.015; // the margin under slopeMax the ramp window was chosen for
+const T2_STEP_S = 0.125;
+const T2_MIN_STEP = 0.1; // the bank row's pace floor (0.2 m per 0.25 s) at this step
+const T2_LEGS = [
+  { id: 'bridge-to-bench', key: 'KeyS', axis: 'z', sign: 1, to: 12, budgetS: 8 }, // over the bridge and up the t1 ramp
+  { id: 'bench-west', key: 'KeyA', axis: 'x', sign: -1, to: T2_RAMP_X, budgetS: 10 }, // along the bench, south of the cliff
+  { id: 't2-ramp', key: 'KeyS', axis: 'z', sign: 1, to: 30, budgetS: 10 }, // straight up the t2 ramp to the gallery shelf
+  { id: 'gallery-shelf', key: 'KeyA', axis: 'x', sign: -1, to: T2_TARGET.x, budgetS: 4 }, // along the shelf to the seam
+] as const;
+
+test('the hero walks from the works bridge up the t2 ramp to the first gallery target, round the cliff', async ({ page }, testInfo) => {
+  const watch = watchErrors(page);
+  await page.goto(`/${QUERY}`);
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  const briefing = page.getByTestId('contract-briefing');
+  if (await briefing.isVisible()) await page.getByTestId('contract-briefing-dismiss').click();
+  await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe('e3-canyon-works');
+
+  // The sim first: the t2 ramp is legal ground at the gallery column with the chosen margin, it still climbs its 4 m, and
+  // the scripted cliff is still a cliff.
+  const sim = await page.evaluate(({ x }) => {
+    const ramp: Array<{ z: number; height: number; slope: number; traversable: boolean }> = [];
+    for (let z = 14; z <= 32 + 1e-9; z += 0.25) {
+      const sample = window.__GR_TEST__!.terrainSim(x, z);
+      ramp.push({ z, height: sample.height, slope: Math.hypot(sample.slope.dx, sample.slope.dz), traversable: sample.traversable });
+    }
+    const cliff: Array<{ z: number; traversable: boolean }> = [];
+    for (let z = 18; z <= 26 + 1e-9; z += 0.5) cliff.push({ z, traversable: window.__GR_TEST__!.terrainSim(0, z).traversable });
+    return { ramp, cliff };
+  }, { x: T2_RAMP_X });
+  const peak = Math.max(...sim.ramp.map((point) => point.slope));
+  expect(sim.ramp.filter((point) => !point.traversable), 't2: refused points on the ramp at the gallery column').toEqual([]);
+  expect(peak, 't2: peak |simSlope| on the ramp, with the margin the window was chosen for').toBeLessThanOrEqual(Balance.terrainSim.slopeMax - T2_MARGIN);
+  expect(sim.ramp.at(-1)!.height - sim.ramp[0]!.height, 't2: the ramp still rises t1Height 0.5 to t2Height 4.5').toBeCloseTo(4, 3);
+  expect(sim.cliff.filter((point) => point.traversable), 't2: the scripted cliff at x 0 stays refused').toEqual([]);
+
+  // Then the hero: teleport onto the bridge and walk the four legs, one held key each.
+  await page.evaluate(({ x, z }) => {
+    window.__GR_TEST__!.teleport(x, z);
+    window.__GR_TEST__!.advanceSim(0.1);
+  }, T2_START);
+  const start = await heroPos(page);
+  expect(Math.hypot(start.x - T2_START.x, start.z - T2_START.z), 't2: teleport landed on the bridge').toBeLessThan(0.1);
+
+  const path: Point[] = [start];
+  const legs: Array<Record<string, unknown>> = [];
+  for (const leg of T2_LEGS) {
+    const from = path.at(-1)!;
+    const along = (point: Point) => (leg.axis === 'z' ? point.z : point.x) * leg.sign;
+    const goal = leg.to * leg.sign;
+    let elapsed = 0;
+    let stalls = 0;
+    await page.keyboard.down(leg.key);
+    try {
+      while (elapsed < leg.budgetS && along(path.at(-1)!) < goal) {
+        await page.evaluate((seconds) => window.__GR_TEST__!.advanceSim(seconds), T2_STEP_S);
+        elapsed += T2_STEP_S;
+        const next = await heroPos(page);
+        if (along(next) < goal && along(next) - along(path.at(-1)!) < T2_MIN_STEP) stalls += 1;
+        path.push(next);
+      }
+    } finally {
+      await page.keyboard.up(leg.key);
+    }
+    const end = path.at(-1)!;
+    const drift = leg.axis === 'z' ? Math.abs(end.x - from.x) : Math.abs(end.z - from.z);
+    legs.push({ leg: leg.id, from, end, simSeconds: elapsed, stalls, drift: Number(drift.toFixed(3)) });
+    expect(along(end), `t2 ${leg.id}: reached ${leg.axis} ${leg.to} within ${leg.budgetS}s of sim`).toBeGreaterThanOrEqual(goal);
+    expect(stalls, `t2 ${leg.id}: steps that made under ${T2_MIN_STEP} m of progress in ${T2_STEP_S}s`).toBe(0);
+    expect(drift, `t2 ${leg.id}: walked straight`).toBeLessThan(0.5);
+  }
+
+  const closest = Math.min(...path.map((point) => Math.hypot(point.x - T2_TARGET.x, point.z - T2_TARGET.z)));
+  const end = path.at(-1)!;
+  const shelf = await page.evaluate(({ x, z }) => window.__GR_TEST__!.terrainSim(x, z).height, end);
+  const row = { approach: 'bridge-to-first-gallery-target', peakSlope: Number(peak.toFixed(4)), start, end, closestToTarget: Number(closest.toFixed(3)), shelfHeight: Number(shelf.toFixed(3)), legs };
+  await testInfo.attach('canyon-traversal-t2.json', { body: JSON.stringify(row, null, 2), contentType: 'application/json' });
+  console.log(`[canyon-traversal-t2] ${testInfo.project.name} ${JSON.stringify(row)}`);
+  expect(closest, 't2: the hero reached the first gallery target (the acceptance run arrives within 1.2 m of a seam)').toBeLessThanOrEqual(1.2);
+  expect(shelf, 't2: the hero stands on the gallery shelf').toBeGreaterThan(4);
+  expectNoConsoleErrors(watch);
+});
