@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { createHash, randomUUID } from 'node:crypto';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './is-main.mjs';
 import { resolveSpec, runShowcase } from './stream-showcase.mjs';
 import { consumeNextShowcase, readShowcaseQueue, showcaseQueueStatus } from './stream-showcase-queue.mjs';
 
@@ -136,4 +136,4 @@ async function main(args) {
 }
 
 try { process.loadEnvFile?.('.env.local'); } catch {}
-if (pathToFileURL(process.argv[1]).href === import.meta.url) await main(process.argv.slice(2));
+if (isMain(import.meta.url)) await main(process.argv.slice(2));

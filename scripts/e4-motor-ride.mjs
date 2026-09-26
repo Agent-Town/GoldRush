@@ -17,7 +17,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { motorFloorOrders } from './e4-motor-floor.mjs';
-
+import { isMain } from './is-main.mjs';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 export function parseRideArgs(argv) {
@@ -84,7 +84,7 @@ export function rideMotorContract(options) {
   });
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   const options = parseRideArgs(process.argv.slice(2));
   if (options.tape) mkdirSync(path.dirname(path.resolve(ROOT, options.tape)), { recursive: true });
   const ride = await rideMotorContract({ ...options, tape: options.tape ? path.resolve(ROOT, options.tape) : null });

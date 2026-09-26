@@ -69,7 +69,7 @@ import { spawnSync } from 'node:child_process';
 import { appendFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-
+import { isMain } from './is-main.mjs';
 // (3) fileURLToPath — NOT URL.pathname, which would percent-encode "Gold Rush".
 export const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -237,7 +237,7 @@ function repeatedFlag(name) {
 const VALUE_FLAGS = new Set(['--transcript', '--label', '--cwd', '--env']);
 
 // Run only when invoked directly, so the guard can import the helpers.
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   const spec = process.argv.slice(2).filter((a, i, all) => {
     if (VALUE_FLAGS.has(a)) return false;
     return !VALUE_FLAGS.has(all[i - 1]);

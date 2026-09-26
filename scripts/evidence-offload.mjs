@@ -44,7 +44,7 @@ import { fileURLToPath } from 'node:url';
 
 import { isEvidenceCitation } from './review-evidence-audit.mjs';
 import { ARCHIVE_INDEX_PATH, deriveMustStay, mustStayPredicate, readArchiveIndex, subtreeRootOf } from './evidence-readers.mjs';
-
+import { isMain } from './is-main.mjs';
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_ROOT = resolve(HERE, '..');
 // One implementation of the word: the path and the reader live in `evidence-readers.mjs`, because
@@ -466,4 +466,4 @@ async function main() {
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();
+if (isMain(import.meta.url)) await main();
