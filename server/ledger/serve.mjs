@@ -2,10 +2,10 @@
 
 import { createServer as createHttpServer } from 'node:http';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { createServer as createViteServer } from 'vite';
 import { SqliteStorage } from './storage.mjs';
-
+import fs from 'node:fs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 let runtimePromise;
 
@@ -167,9 +167,28 @@ async function main() {
   process.once('SIGTERM', close);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+if (isMain(import.meta.url)) {
   main().catch((error) => {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;
   });
+}
+
+/**
+ * A VERBATIM COPY of isMain from ../../scripts/is-main.mjs (F-SF1-2, is-main-2), not an import:
+ * this file is the droplet ledger's entry point, and the deploy mirror (scripts/deploy.sh,
+ * MIRROR_FILTERS) ships server/ whole but only five named files of scripts/, never is-main.mjs, so
+ * an import would crash the production door at its next restart with ERR_MODULE_NOT_FOUND.
+ * deploy-mirror-allowlist.test.mjs walks this file's imports and measured exactly that with the
+ * import applied. scripts/is-main.test.mjs asserts this copy still matches the original byte for
+ * byte; change them together.
+ */
+function isMain(importMetaUrl) {
+  const entry = process.argv[1];
+  if (!entry || !importMetaUrl) return false;
+  try {
+    return fs.realpathSync(entry) === fs.realpathSync(fileURLToPath(importMetaUrl));
+  } catch {
+    return false;
+  }
 }
