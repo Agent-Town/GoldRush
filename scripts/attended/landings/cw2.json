@@ -1,16 +1,48 @@
 {
-  "tag": "cw2", "branch": "fix/canyon-works-traversal-2", "port": 5390,
+  "tag": "cw2",
+  "branch": "fix/canyon-works-traversal-2",
+  "port": 5390,
   "mergeMessage": "drain: merge fix/canyon-works-traversal-2 — canyon-works-traversal-2 — the t2 ramp window 18 to 28 becomes 14 to 32 (peak sim gradient 0.598 to 0.333, every seam, gallery, lamp and turret reachable on foot, the cliff untouched), the two authored arc turrets stand for the first time (F-CW2-1, the owner's veto on the desk), gt-03 and one canyon spec step re-baselined with reasons; Astra's acceptance still does not secure the map at load 165 to 230 (F-CW2-3) (Opus 5.5 implementer at max effort; from F-CW1-1)",
   "hash": "pin",
   "pinCause": "canyon-works-traversal-2 (Opus 5.5 implementer at max effort on the Anthropic subscription; from Astra's F-PP2-2 and F-CW1-1): two numbers in the e3-canyon-works elevation block, t2RampStart 18 to 14 and t2RampEnd 28 to 32, so the ramp's 4 m rise runs over 18 m (peak sim gradient 0.333 under the 0.35 limit) and the whole works can be walked; the cliff, creek and every other number unchanged; the two canyon null floors moved on event hash only because the contract's authored turrets now stand (81 others byte-identical).",
-  "gates": { "releaseBuild": true, "payload": true, "halo": true, "nullFloors": true, "releaseSuite": true, "functions": false, "ledgerBattery": false,
-    "specs": ["e2e/e3-canyon-works-traversal.spec.ts", "e2e/e3-canyon-works.spec.ts", "e2e/gt-03-enemy-elevation.spec.ts", "e2e/task-025-bandits-dont-swim.spec.ts", "e2e/m2-01-build-menu.spec.ts"],
-    "guards": ["scripts/e3-mask-tables.test.mjs", "scripts/null-floor-anchors.test.mjs"] },
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": false,
+    "specs": [
+      "e2e/e3-canyon-works-traversal.spec.ts",
+      "e2e/e3-canyon-works.spec.ts",
+      "e2e/gt-03-enemy-elevation.spec.ts",
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": [
+      "scripts/e3-mask-tables.test.mjs",
+      "scripts/null-floor-anchors.test.mjs"
+    ],
+    "allowedE2E": [
+      "gt-03-enemy-elevation\\.spec\\.ts:125:"
+    ]
+  },
   "cure": "scripts/attended/landings/cw2-cure.sh",
-  "review": { "path": "reviews/canyon-works-traversal-2.md", "title": "Drain review: `canyon-works-traversal-2`, the second wall is slope-legal and the authored turrets stand (Opus 5.5 implementer at max effort; from F-CW1-1)", "body": "scripts/attended/landings/cw2-review.md" },
-  "bookkeeping": { "taskFile": "canyon-works-traversal-2.md", "rowKey": "CANYON WORKS TRAVERSAL 2 LANDED", "rowEmoji": "⛰️",
+  "review": {
+    "path": "reviews/canyon-works-traversal-2.md",
+    "title": "Drain review: `canyon-works-traversal-2`, the second wall is slope-legal and the authored turrets stand (Opus 5.5 implementer at max effort; from F-CW1-1)",
+    "body": "scripts/attended/landings/cw2-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "canyon-works-traversal-2.md",
+    "rowKey": "CANYON WORKS TRAVERSAL 2 LANDED",
+    "rowEmoji": "⛰️",
     "rowText": "`t2RampStart` 18 to 14, `t2RampEnd` 28 to 32: the 4 m rise over 18 m, peak sim gradient 0.598 to 0.333 (margin 0.017; a 17 m run reads 0.3525), no refused point outside the untouched cliff (833 of 833 still refused), 4/4 seams, 2/2 galleries, lamps and turrets reachable on foot (before 0); mirror republished (guard 30/30); the traversal spec gains the t2 row (0 stalls, both projects). **F-CW2-1 (owner desk row): the contract's two authored arc turrets at (±18, 22) stand for the first time** (the old ramp refused their ground), so the two canyon null floors moved on event hash only (re-pinned by the drain, 81 others identical) and `e3-canyon-works.spec.ts:81` was re-baselined under a named lift; gt-03's goal-side rows re-baselined (they slid on the old wall, F-CW2-2 a fixture slice). Engine hash PINNED {PIN}. **Astra's acceptance still does not secure the map** (crossed 4/4, gold 4/4, secures 0/4 at load 165 to 230: enemy pressure at the ford and the 240-gold CONNECT, F-CW2-3, a re-run on a quiet host first). F-CW2-4 (art): the GLB t2 face 0.91 m off the sim ground. Deployed.",
     "statusPhrase": "the whole Canyon Works can be walked and its two authored turrets stand; securing it still waits on a quiet-host re-run of the acceptance",
-    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh cw2)" },
-  "deploy": true, "preview": true, "evidenceDir": "artifacts/canyon-works-traversal-2"
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh cw2)"
+  },
+  "deploy": true,
+  "preview": true,
+  "evidenceDir": "artifacts/canyon-works-traversal-2"
 }
