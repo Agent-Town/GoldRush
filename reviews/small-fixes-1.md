@@ -1,6 +1,6 @@
 # Drain review: `small-fixes-1`, four small findings closed with tests (Opus 5.5 implementer at max effort; owner 2026-09-25 spare budget)
 
-**Branch** `fix/small-fixes-1` at `a5f9d8581` · **merge** `70cf2362f` · engine hash #64 `2cf26ba4` · drained attended 2026-09-25 22:44Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `sf1`).
+**Branch** `fix/small-fixes-1` at `a5f9d8581` · **merge** `70cf2362f` · engine hash #64 `2cf26ba4` · drained attended 2026-09-26 00:55Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `sf1`).
 
 **Verdict: LANDED.**
 
