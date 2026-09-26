@@ -168,10 +168,10 @@ Received: false
   1316 |           row.secures = fail(`${row.secures.detail}; wave ${row.peakWave}, overlay=${sawOverlay}, but only ${row.peakHotBoilers}/3 authored boiler beds operated hot`);
   1317 |         }
   1318 |         await page.screenshot({ path: path.join(ARTIFACT_ROOT, `terminal-${testInfo.project.name}.png`) });
-  1319 | 
+  1319 |
   1320 |         if (sawOverlay) {
   1321 |           try {
-  1322 | 
+  1322 |
   1323 |             const before = initialScores;
   1324 |             await page.getByTestId('bank-secured-claim').click({ timeout: 10_000 });
   1325 |             await expect(page.getByTestId('claim-secured')).toBeHidden({ timeout: 10_000 });
@@ -189,7 +189,7 @@ Received: false
   1337 |         } else {
   1338 |           row.banks = fail('skipped: never secured');
   1339 |         }
-  1340 | 
+  1340 |
   1341 |         if (id === 'e10-river' && sawOverlay) {
   1342 |           await riverEnding(page, row, ARTIFACT_ROOT);
   1343 |         } else if (row.banks.ok) {
@@ -213,7 +213,7 @@ Received: false
   1361 |         } else {
   1362 |           row.board = fail('skipped: never banked');
   1363 |         }
-  1364 | 
+  1364 |
   1365 |         if (id !== 'e10-river' && row.banks.ok) {
   1366 |           try {
   1367 |             const before = await rawScores(page);
@@ -235,7 +235,7 @@ Received: false
   1383 |         } else if (id !== 'e10-river') {
   1384 |           row.reload = fail('skipped: never banked');
   1385 |         }
-  1386 | 
+  1386 |
   1387 |         row.clean =
   1388 |           consoleErrors.length === 0 && pageErrors.length === 0
   1389 |             ? pass('0 console, 0 page')
@@ -256,7 +256,7 @@ Received: false
   1404 |         row.clean = consoleErrors.length === 0 && pageErrors.length === 0 ? pass('0 console, 0 page') : fail(JSON.stringify({consoleErrors, pageErrors}));
   1405 |         await writeFile(path.join(ARTIFACT_ROOT, `row-${testInfo.project.name}.json`), JSON.stringify(row, null, 2) + '\n');
   1406 |       }
-  1407 | 
+  1407 |
 > 1408 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
        |                                                                ^ Error: secures: runState=dead at wave 18 / 556.9s sim, 806 kills, 67 gold
   1409 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
@@ -265,16 +265,16 @@ Received: false
   1412 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
   1413 |     });
   1414 | }
-  1415 | 
+  1415 |
   1416 | type Score = { contractId?: string; secured?: boolean; completed?: boolean; waves?: number; gold?: number; timeAlive?: number; kills?: number; at?: number };
-  1417 | 
+  1417 |
   1418 | async function rawScores(page: Page): Promise<string | null> {
   1419 |   return page.evaluate(
   1420 |     ([key, profileKey]) => localStorage.getItem(`${profileKey}.robin.${key}`) ?? localStorage.getItem(key),
   1421 |     [SCOREBOARD_KEY, PROFILE_KEY] as const,
   1422 |   );
   1423 | }
-  1424 | 
+  1424 |
   1425 | async function readScores(page: Page): Promise<Score[]> {
   1426 |   const raw = await rawScores(page);
   1427 |   try {
@@ -284,7 +284,7 @@ Received: false
   1431 |     return [];
   1432 |   }
   1433 | }
-  1434 | 
+  1434 |
   1435 | async function walkToTavern(page: Page, row: Row): Promise<boolean> {
   1436 |   for (let step = 0; step < 70; step += 1) {
   1437 |     const town = await page
@@ -303,7 +303,7 @@ Received: false
   1450 |   row.notes.push('could not reach the tavern in 70 steps');
   1451 |   return false;
   1452 | }
-  1453 | 
+  1453 |
   1454 | /** The no-wave River ending starts at the real lever, after a native wave-8 prelude. */
   1455 | async function riverEnding(page: Page, row: Row, root: string): Promise<void> {
   1456 |   const prelude = { secures: row.secures, banks: row.banks, finalSnapshot: row.finalSnapshot, builds: [...row.builds], samples: [...row.samples], upgrades: [...row.upgrades] };

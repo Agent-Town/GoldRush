@@ -44,7 +44,7 @@ The changed ride acknowledges six builds but ends with seven pieces: a wave-1 pa
 - `node artifacts/sol/play-proofs/run-10/verify-default.mjs`: PASS; specialize RESTORE_GROUND to false in base and final TypeScript syntax trees and compare normalized output. [Result](default-equivalence.json).
 - Final actual flag-unset native battery: **44 skipped**, exit 0; [log](gate-unset.log). Incline is the unmodified adjacent behavioral control and passed with the strategy flag unset.
 - `node artifacts/sol/play-proofs/run-10/verify-evidence.mjs`: PASS for scope, unchanged expectations, ride counts, browser cleanliness and successful-ride screenshot presence. It does not convert failed survival rows into passes.
-- `git diff --check`: PASS after trimming generated log whitespace. No production, balance, asset-store, protected assertion, task, spec or ledger changes.
+- `git diff 8b034f0cf --check`: PASS after trimming generated log and Playwright error-context whitespace. No production, balance, asset-store, protected assertion, task, spec or ledger changes.
 
 Vite ran on the task series' `http://127.0.0.1:5303` with strict port, owned PID 96767, stopped at closeout. Every browser invocation used `--workers=1`, native keyboard/HUD input, timescale 4, the existing progressed-profile fixture and ordinary public live seed (no debug URL or seed override). Phone means Chromium Pixel 5 emulation at 390×844 CSS px, not a physical-device/touch-only certification. Traces off; screenshots and read-only diagnostics retained. No quota/disconnect interruption. The task's TOUCH-ONLY firewall excludes vault writes; this directory is the durable handoff.
 
