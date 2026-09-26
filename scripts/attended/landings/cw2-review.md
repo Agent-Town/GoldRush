@@ -12,3 +12,6 @@ LANE-TOUCHED: `assets/contracts/epoch-3-voltage/contracts.json` (two t2 numbers)
 - **F-CW2-2 (a slice):** the owner-mandated goal-side steer rows have no wall left on this map (re-aims: 3 of 4 slide at the cliff, 0 of 4 at the river); a goal-side fixture with a wall no router avoids.
 - **F-CW2-3:** the win is blocked by enemy pressure at the ford and the CONNECT cost; re-run Astra's acceptance at baseline load (a run-7 candidate).
 - **F-CW2-4 (art):** the GLB's t2 face now sits up to 0.91 m off the sim ground (was 0.57); with F-CW1-2, the art owner's regrade.
+
+### E2E attribution (drain, 04:16Z)
+`e2e/gt-03-enemy-elevation.spec.ts:125` red on both projects: the implementer measured this row red on the CLEAN tree too (its report: "`:125` is red on the clean tree too"; `:155` green on both), so it is not this change; allowed for this landing only by name.
