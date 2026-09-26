@@ -6417,6 +6417,16 @@
               "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh sf1)"
             },
             {
+              "id": "is-main-2",
+              "title": "The twenty-three remaining main-module checks move onto scripts/is-main.mjs so every tool runs its main under a symlinked path (F-SF1-2); fixture relocation measured per file first",
+              "status": "queued",
+              "taskFile": "is-main-2.md",
+              "lane": "scratch worktree /Users/robin/Claude/Projects/wt-im2, branch fix/is-main-2, Opus 5.5 implementer at max effort; scripts only, hash unchanged; no deploy",
+              "authoredAt": "2026-09-26",
+              "authoredBy": "attended (Fable) from F-SF1-2, 2026-09-26",
+              "queuedAt": "2026-09-26"
+            },
+            {
               "id": "kv-counters-to-ledger-2",
               "title": "The two KV writers kv-counters-to-ledger-1 left behind stop writing KV: the co-op door's KV fallback moves onto the shared real-hour limiter (F-KV1-4, census six to seven) and the Pages copy of standings answers 308 to STANDINGS_CANONICAL_ORIGIN when bound (F-KV1-5); nothing live until the ops evening binds the variable",
               "status": "queued",
