@@ -1,6 +1,6 @@
 # Drain review: `canyon-works-traversal-1`, the creek bank crosses; the t2 wall is next (Opus 5.5 implementer at max effort; from Astra's F-PP2-2)
 
-**Branch** `fix/canyon-works-traversal-1` at `2bba21639` · **merge** `752d624e8` · engine hash #63 `9a995b76` · drained attended 2026-09-25 22:43Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `cw1`).
+**Branch** `fix/canyon-works-traversal-1` at `2bba21639` · **merge** `752d624e8` · engine hash #63 `9a995b76` · drained attended 2026-09-26 00:31Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `cw1`).
 
 **Verdict: LANDED.**
 
