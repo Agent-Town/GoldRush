@@ -485,10 +485,13 @@ export class Pilot {
     };
     let found = await inFrame();
     if (found.visible || !found.nearest) return found.visible ?? null;
+    // Stand 5 m south of the seam, so it sits straight above the heroine in frame: on the 390x844 vertical at the 0.7
+    // floor the frame is only about 8 m wide, and a seam off to one side falls outside it (vertical Claim t2). Within
+    // the walk's 0.8 m tolerance the seam stays farther than the 3.5 m that marks it as her own.
     const target = found.nearest;
-    const toward = { x: target.x + (found.run.hero.x - target.x) * (5 / target.distance), z: target.z + (found.run.hero.z - target.z) * (5 / target.distance) };
+    const toward = { x: target.x, z: target.z + 5 };
     this.note('walk-into-view-of-seam', { seam: target.id, toward });
-    await this.walkTo(toward, { tolerance: 1, timeoutMs: 10_000 });
+    await this.walkTo(toward, { tolerance: 0.8, timeoutMs: 10_000 });
     await this.settleCamera(600);
     found = await inFrame();
     return found.visible ?? null;
