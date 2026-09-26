@@ -17,7 +17,7 @@
 //
 // THE STAMP COMES FROM `date`, NOT FROM THE CALLER (F-1039-2 / F-1204-5, closed here
 // s1206). Write the literal token {STAMP} in <textfile> and it is substituted with
-// `date "+%Y-%m-%dT%H:%MZ"` at write time. This closes a SIX-instance lineage of
+// `date -u "+%Y-%m-%dT%H:%MZ"` at write time (`-u` since 2026-09-26, F-ATT-3: without it the stamp was this Mac's local clock with a literal Z, seven hours ahead once the clock moved to +07). This closes a SIX-instance lineage of
 // models hand-computing a time they could have run a command for, every one of them
 // drifting into the FUTURE: s1038 +46 min, s1046 +56/+50, s1053 +14, s1204 +38 — the
 // s1053 and s1204 instances written by fires that had just re-read the rule forbidding
@@ -123,7 +123,7 @@ const ISO_MIN = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z/g;
 
 // The one place a stamp may be born. Same command protocol §1.1 names.
 function nowStamp() {
-  const stamp = execFileSync('date', ['+%Y-%m-%dT%H:%MZ'], { encoding: 'utf8' }).trim();
+  const stamp = execFileSync('date', ['-u', '+%Y-%m-%dT%H:%MZ'], { encoding: 'utf8' }).trim();
   if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z$/.test(stamp)) {
     throw new Error(`refusing to write a malformed stamp: ${JSON.stringify(stamp)}`);
   }
