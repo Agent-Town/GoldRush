@@ -1,6 +1,6 @@
 # Drain review: `worktree-vite-cache-1`, one vite cache per checkout and the entry glob that crossed into the art store (Opus 5.5 implementer at max effort)
 
-**Branch** `fix/worktree-vite-cache-1` at `9d22a2a46` · **merge** `052e295c3` · engine hash unchanged (`c63def1b`, no pin) · drained attended 2026-09-25 22:43Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `wvc1`).
+**Branch** `fix/worktree-vite-cache-1` at `9d22a2a46` · **merge** `052e295c3` · engine hash unchanged (`755400f8`, no pin) · drained attended 2026-09-26 00:05Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `wvc1`).
 
 **Verdict: LANDED.**
 
