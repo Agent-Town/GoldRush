@@ -1,0 +1,103 @@
+head dc3d6e6d31a2689fb4d42c7f8a1e3f50df742979 dirty: 1 load 38.50 49.89 65.58
+✔ rotation registry stays outside the engine identity corpus (218.347208ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.15575ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.172416ms)
+✔ rotation mint is deterministic, week-sensitive, and requires a salt (142.735292ms)
+✔ campaign harness URL binds Terrain to its selected contract (3270.296792ms)
+(node:30515) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ Canyon Works alone publishes its live connection objective (2649.861208ms)
+✔ every destructured ssrLoadModule symbol is exported by its source module (3.897583ms)
+✔ published mask tables exactly track authored contract data (16.142167ms)
+✔ published Moth Season mask stays inside bounds and agrees with authored water (0.601625ms)
+✔ e2-trestle mask stays inside bounds and agrees with authored water (0.2255ms)
+✔ e2-pressure-garden mask stays inside bounds and agrees with authored water (0.222042ms)
+✔ e2-incline mask stays inside bounds and agrees with authored water (0.371917ms)
+✔ e3-canyon-works mask stays inside bounds and agrees with authored water (0.273417ms)
+✔ e3-blackout-ridge mask stays inside bounds and agrees with authored water (0.39ms)
+✔ e3-moth-season mask stays inside bounds and agrees with authored water (0.371959ms)
+✔ e3-fairground mask stays inside bounds and agrees with authored water (0.244583ms)
+✔ e4-dust-flats mask stays inside bounds and agrees with authored water (0.559375ms)
+✔ e4-long-road mask stays inside bounds and agrees with authored water (0.34725ms)
+✔ e4-gusher-county mask stays inside bounds and agrees with authored water (0.411208ms)
+✔ e4-boneyard mask stays inside bounds and agrees with authored water (0.940708ms)
+✔ e5-regatta mask stays inside bounds and agrees with authored water (0.704625ms)
+✔ e5-stillwater mask stays inside bounds and agrees with authored water (0.52475ms)
+✔ e5-flotilla mask stays inside bounds and agrees with authored water (0.33075ms)
+✔ e6-glow-mesa mask stays inside bounds and agrees with authored water (0.396958ms)
+✔ e6-showroom mask stays inside bounds and agrees with authored water (0.505375ms)
+✔ e6-half-life-hollow mask stays inside bounds and agrees with authored water (0.350334ms)
+✔ e6-picnic mask stays inside bounds and agrees with authored water (0.34275ms)
+✔ e7-relay-valley mask stays inside bounds and agrees with authored water (0.358ms)
+✔ e7-echo-canyon mask stays inside bounds and agrees with authored water (0.381666ms)
+✔ e7-dead-band mask stays inside bounds and agrees with authored water (0.431ms)
+✔ e7-relay-rush mask stays inside bounds and agrees with authored water (0.2305ms)
+✔ e8-mare-claim mask stays inside bounds and agrees with authored water (0.275291ms)
+✔ e9-dome-basin mask stays inside bounds and agrees with authored water (0.4575ms)
+✔ e9-seed-run mask stays inside bounds and agrees with authored water (0.324333ms)
+✔ e9-devils-alley mask stays inside bounds and agrees with authored water (0.269166ms)
+✔ e9-old-canal mask stays inside bounds and agrees with authored water (1.248458ms)
+✔ e10-ember-shore mask stays inside bounds and agrees with authored water (0.541334ms)
+✔ the landed registry names the live engine and stays outside its hash corpus (226.210208ms)
+✔ same-era re-pins append, and removing an earlier pin reds (24.440875ms)
+✔ tooling edits stay outside the engine identity while src edits rotate it (12.77125ms)
+✔ a new-basis alias keeps its old-basis pin in the current era (9.273083ms)
+✔ an era bump starts a fresh lineage (20.050625ms)
+✔ a default write leaves the banked census byte-identical (34.041ms)
+✔ an explicit F2135_CENSUS_FILE write still lands where asked (34.036417ms)
+✔ a differing third run recomputes the comparison across all three runs (29.821583ms)
+✔ the committed two-run artifact round-trips byte-identically (562.074083ms)
+scan space: 301 tracked src TS files (293 scanned, 8 skipped)
+✔ visitor copy and contract text fields contain no em dashes (1320.989917ms)
+(node:30521) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ null-floor artifact exactly covers every door-servable bench seed (0.875708ms)
+✔ terrain contract scope report matches a fresh SSR measurement (1688.618166ms)
+✔ Terrain still resolves DEFAULT_CONTRACT_ID under SSR (325.60125ms)
+✔ Terrain seam census excludes its declaration and fallback (0.567ms)
+✔ the F-A10-1 Terrain consumption and override seams have not moved (0.285875ms)
+ℹ tests 52
+ℹ suites 0
+ℹ pass 52
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3429.668458
+rc=0

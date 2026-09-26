@@ -1,0 +1,3442 @@
+{
+  "project": "mobile-chrome",
+  "contract": "e3-canyon-works",
+  "name": "The Canyon Works",
+  "secureWave": 12,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e3-canyon-works secureWave=12"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "runState=dead at wave 3 / 115.2s sim, 38 kills, 30 gold; both galleries were not connected by wave 8"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "skipped: never secured"
+  },
+  "board": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 3,
+  "simAtEnd": 115.20000000000236,
+  "runStateAtEnd": "dead",
+  "hpAtEnd": 0,
+  "goldAtEnd": 30,
+  "killsAtEnd": 38,
+  "peakHotBoilers": 0,
+  "powerBanksPeak": {},
+  "builds": [
+    {
+      "id": "sentry_beacon",
+      "at": 64.66666666666652,
+      "wave": 2,
+      "x": -12,
+      "z": -35
+    }
+  ],
+  "upgrades": [
+    "double_tap_coil",
+    "spring_heels",
+    "double_tap_coil"
+  ],
+  "samples": [
+    {
+      "t": 10.1,
+      "wave": 0,
+      "hp": 100,
+      "gold": 0,
+      "kills": 0,
+      "x": 0,
+      "z": -32.1,
+      "alive": 2,
+      "seams": 2
+    },
+    {
+      "t": 20.8,
+      "wave": 0,
+      "hp": 100,
+      "gold": 0,
+      "kills": 0,
+      "x": -4.1,
+      "z": 10.3,
+      "alive": 6,
+      "seams": 2
+    },
+    {
+      "t": 31.3,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 1,
+      "x": -30.8,
+      "z": 32.5,
+      "alive": 13,
+      "seams": 2
+    },
+    {
+      "t": 41.7,
+      "wave": 1,
+      "hp": 100,
+      "gold": 25,
+      "kills": 2,
+      "x": -23,
+      "z": 34.2,
+      "alive": 15,
+      "seams": 2
+    },
+    {
+      "t": 52.4,
+      "wave": 1,
+      "hp": 76,
+      "gold": 25,
+      "kills": 11,
+      "x": 1.1,
+      "z": -1.9,
+      "alive": 11,
+      "seams": 2
+    },
+    {
+      "t": 63.6,
+      "wave": 2,
+      "hp": 60,
+      "gold": 25,
+      "kills": 17,
+      "x": -11.9,
+      "z": -33.3,
+      "alive": 14,
+      "seams": 2
+    },
+    {
+      "t": 73.9,
+      "wave": 2,
+      "hp": 36,
+      "gold": 0,
+      "kills": 24,
+      "x": 0.2,
+      "z": 0,
+      "alive": 13,
+      "seams": 2
+    },
+    {
+      "t": 84.1,
+      "wave": 2,
+      "hp": 36,
+      "gold": 0,
+      "kills": 24,
+      "x": -22,
+      "z": 33.6,
+      "alive": 19,
+      "seams": 2
+    },
+    {
+      "t": 94.4,
+      "wave": 3,
+      "hp": 28,
+      "gold": 5,
+      "kills": 27,
+      "x": 26.3,
+      "z": 29.8,
+      "alive": 25,
+      "seams": 1
+    },
+    {
+      "t": 104.7,
+      "wave": 3,
+      "hp": 28,
+      "gold": 30,
+      "kills": 30,
+      "x": 30.1,
+      "z": 26.5,
+      "alive": 31,
+      "seams": 1
+    },
+    {
+      "t": 114.9,
+      "wave": 3,
+      "hp": 4,
+      "gold": 30,
+      "kills": 38,
+      "x": 0.3,
+      "z": -3.6,
+      "alive": 29,
+      "seams": 2
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-3-voltage",
+    "strategy=gather-and-extend",
+    "engine secureWave=12 cadenceMult=1",
+    "home=0.0,-44.0 circuit=[[-4,-48],[4,-48],[4,-40],[-4,-40]]",
+    "southern terrace approach x=0: crossed=true, hero={\"x\":0,\"z\":-5.714663494318409}, wave=0, gold=0",
+    "crossing at the ford x=0 (-5.7 -> 30.0)",
+    "kit=sentry_beacon+sentry_beacon+sentry_beacon+sentry_beacon+sentry_beacon+sentry_beacon",
+    "crossing at the ford x=0 (34.2 -> -34.0)",
+    "crossing at the ford x=0 (-33.3 -> 34.0)",
+    "crossing at the ford x=0 (29.8 -> -18.0)",
+    "could not stand at -24.0,-18.0 for sentry_beacon; building from 0.3,-5.1"
+  ],
+  "at": "2026-09-26T01:29:40.113Z",
+  "objective": {
+    "devils": null,
+    "caravan": null,
+    "canal": {
+      "active": false,
+      "stage": 0,
+      "activeGateId": null,
+      "stageProgress": 0,
+      "contested": false,
+      "stagePayoutGold": 0,
+      "gates": [
+        {
+          "id": "canal-stage-c1",
+          "x": -28,
+          "z": 34,
+          "complete": false,
+          "active": false
+        },
+        {
+          "id": "canal-stage-c2",
+          "x": -12,
+          "z": 10,
+          "complete": false,
+          "active": false
+        },
+        {
+          "id": "canal-stage-c3",
+          "x": 4,
+          "z": -24,
+          "complete": false,
+          "active": false
+        }
+      ],
+      "quarry": {
+        "bandId": "ice-quarry-scarp-north-h4",
+        "channelNodeId": null,
+        "progress": 0,
+        "harvested": 0,
+        "total": 4,
+        "payoutGold": 0,
+        "nodes": [
+          {
+            "id": "ice-pack-1",
+            "x": -49.5,
+            "z": 47,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-2",
+            "x": -40.5,
+            "z": 49,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-3",
+            "x": -31.5,
+            "z": 47,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-4",
+            "x": -22.5,
+            "z": 49,
+            "harvested": false
+          }
+        ]
+      },
+      "canal": {
+        "wet": false,
+        "renderOnly": true,
+        "visualY": true,
+        "segments": 5
+      },
+      "dustDevil": {
+        "mode": "wander-lane",
+        "targeting": "none",
+        "phase": "clear",
+        "warning": false,
+        "laneId": "dust-devil-wander",
+        "laneProgress": 0,
+        "position": null,
+        "shoves": 0,
+        "pushedDistance": 0
+      }
+    },
+    "air": null,
+    "probe": {
+      "declared": false,
+      "trigger": null,
+      "zones": [],
+      "recovered": false,
+      "recoveredZoneId": null,
+      "playedFragment": null,
+      "playbackCount": 0,
+      "refusals": {
+        "outOfReach": 0,
+        "alreadyRecovered": 0
+      }
+    },
+    "fuel": null,
+    "vehicle": null,
+    "landYacht": null,
+    "fairground": null,
+    "crowdFlocks": null,
+    "canyonWorks": {
+      "powered": 0,
+      "required": 2,
+      "byWave": 8,
+      "complete": false,
+      "failed": false
+    },
+    "baron": {
+      "cartVisible": false,
+      "carried": false,
+      "distanceFromBaron": 0,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 0,
+      "volleys": 0,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "",
+      "lastTarget": {
+        "x": 0,
+        "z": 0
+      },
+      "target": {
+        "x": 0,
+        "z": 0
+      },
+      "props": {
+        "state": "off",
+        "source": "placeholder",
+        "launcher": false,
+        "rocket": false,
+        "powderKeg": false,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": null
+    },
+    "boss": {
+      "visible": false,
+      "ratio": 0,
+      "renderedRatio": 1,
+      "litSegments": 7,
+      "segments": 0,
+      "groupId": null,
+      "aliveComponents": 0,
+      "destroyedComponents": 0,
+      "components": []
+    },
+    "medals": {
+      "version": 1,
+      "baronBeaten": false,
+      "rocketCartCaptured": false
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.516047886439732,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.70926757085891,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.535805838448661,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "escort": {
+      "enabled": false
+    },
+    "power": {
+      "id": "e3-canyon-works-grid",
+      "tick": 870,
+      "topologyRevision": 2,
+      "allocationRevision": 2,
+      "totalSupplyWatts": 26,
+      "totalDemandWatts": 28,
+      "nodes": [
+        {
+          "id": "crawler-drain-east-base",
+          "labelKey": "Crawler Drain at East Base",
+          "kind": "consumer",
+          "x": 12,
+          "z": -36,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-east-rim",
+          "labelKey": "Crawler Drain at East Rim",
+          "kind": "consumer",
+          "x": 28,
+          "z": 8,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-east-switch",
+          "labelKey": "Crawler Drain at East Switchback",
+          "kind": "consumer",
+          "x": 24,
+          "z": -20,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-west-base",
+          "labelKey": "Crawler Drain at West Base",
+          "kind": "consumer",
+          "x": -12,
+          "z": -36,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-west-rim",
+          "labelKey": "Crawler Drain at West Rim",
+          "kind": "consumer",
+          "x": -28,
+          "z": 8,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-west-switch",
+          "labelKey": "Crawler Drain at West Switchback",
+          "kind": "consumer",
+          "x": -24,
+          "z": -20,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "gallery-east",
+          "labelKey": "East Gallery",
+          "kind": "consumer",
+          "x": 28,
+          "z": 28,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 10,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "gallery-west",
+          "labelKey": "West Gallery",
+          "kind": "consumer",
+          "x": -28,
+          "z": 28,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 10,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "lamp-east",
+          "labelKey": "East Gallery Lamps",
+          "kind": "consumer",
+          "x": 32,
+          "z": 32,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 2,
+          "priority": 30,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "lamp-west",
+          "labelKey": "West Gallery Lamps",
+          "kind": "consumer",
+          "x": -32,
+          "z": 32,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 2,
+          "priority": 30,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-east-base",
+          "labelKey": "East Base Pylon",
+          "kind": "relay",
+          "x": 12,
+          "z": -36,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-east-rim",
+          "labelKey": "East Rim Pylon",
+          "kind": "relay",
+          "x": 28,
+          "z": 8,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-east-switch",
+          "labelKey": "East Switchback Pylon",
+          "kind": "relay",
+          "x": 24,
+          "z": -20,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-west-base",
+          "labelKey": "West Base Pylon",
+          "kind": "relay",
+          "x": -12,
+          "z": -36,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-west-rim",
+          "labelKey": "West Rim Pylon",
+          "kind": "relay",
+          "x": -28,
+          "z": 8,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-west-switch",
+          "labelKey": "West Switchback Pylon",
+          "kind": "relay",
+          "x": -24,
+          "z": -20,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "sub-hall",
+          "labelKey": "Dynamo Sub-Hall",
+          "kind": "producer",
+          "x": 0,
+          "z": -44,
+          "online": true,
+          "outputWatts": 26,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "tram-motor",
+          "labelKey": "Works Tram",
+          "kind": "consumer",
+          "x": -28,
+          "z": 8,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 4,
+          "priority": 15,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-4",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "turret-east",
+          "labelKey": "East Arc Turret",
+          "kind": "consumer",
+          "x": 18,
+          "z": 22,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 4,
+          "priority": 20,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "turret-west",
+          "labelKey": "West Arc Turret",
+          "kind": "consumer",
+          "x": -18,
+          "z": 22,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 4,
+          "priority": 20,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        }
+      ],
+      "wires": [
+        {
+          "id": "crawler-drain-east-base--pylon-east-base",
+          "a": "crawler-drain-east-base",
+          "b": "pylon-east-base",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-east-rim--pylon-east-rim",
+          "a": "crawler-drain-east-rim",
+          "b": "pylon-east-rim",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-east-switch--pylon-east-switch",
+          "a": "crawler-drain-east-switch",
+          "b": "pylon-east-switch",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-west-base--pylon-west-base",
+          "a": "crawler-drain-west-base",
+          "b": "pylon-west-base",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-west-rim--pylon-west-rim",
+          "a": "crawler-drain-west-rim",
+          "b": "pylon-west-rim",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-west-switch--pylon-west-switch",
+          "a": "crawler-drain-west-switch",
+          "b": "pylon-west-switch",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-east--lamp-east",
+          "a": "gallery-east",
+          "b": "lamp-east",
+          "state": "intact",
+          "length": 5.657,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-east--pylon-east-rim",
+          "a": "gallery-east",
+          "b": "pylon-east-rim",
+          "state": "intact",
+          "length": 20,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-east--turret-east",
+          "a": "gallery-east",
+          "b": "turret-east",
+          "state": "intact",
+          "length": 11.662,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-west--lamp-west",
+          "a": "gallery-west",
+          "b": "lamp-west",
+          "state": "intact",
+          "length": 5.657,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-west--pylon-west-rim",
+          "a": "gallery-west",
+          "b": "pylon-west-rim",
+          "state": "intact",
+          "length": 20,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-west--turret-west",
+          "a": "gallery-west",
+          "b": "turret-west",
+          "state": "intact",
+          "length": 11.662,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-east-base--pylon-east-switch",
+          "a": "pylon-east-base",
+          "b": "pylon-east-switch",
+          "state": "cut",
+          "length": 20,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-east-base--sub-hall",
+          "a": "pylon-east-base",
+          "b": "sub-hall",
+          "state": "cut",
+          "length": 14.422,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-east-rim--pylon-east-switch",
+          "a": "pylon-east-rim",
+          "b": "pylon-east-switch",
+          "state": "cut",
+          "length": 28.284,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-west-base--pylon-west-switch",
+          "a": "pylon-west-base",
+          "b": "pylon-west-switch",
+          "state": "cut",
+          "length": 20,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-west-base--sub-hall",
+          "a": "pylon-west-base",
+          "b": "sub-hall",
+          "state": "intact",
+          "length": 14.422,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-west-rim--pylon-west-switch",
+          "a": "pylon-west-rim",
+          "b": "pylon-west-switch",
+          "state": "cut",
+          "length": 28.284,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-west-rim--tram-motor",
+          "a": "pylon-west-rim",
+          "b": "tram-motor",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        }
+      ],
+      "components": [
+        {
+          "id": "component-1",
+          "nodeIds": [
+            "gallery-east",
+            "lamp-east",
+            "turret-east"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 12,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "lamp-east",
+            "turret-east",
+            "gallery-east"
+          ]
+        },
+        {
+          "id": "component-2",
+          "nodeIds": [
+            "gallery-west",
+            "lamp-west",
+            "turret-west"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 12,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "lamp-west",
+            "turret-west",
+            "gallery-west"
+          ]
+        },
+        {
+          "id": "component-3",
+          "nodeIds": [
+            "pylon-west-base",
+            "sub-hall"
+          ],
+          "supplyWatts": 26,
+          "generationWatts": 26,
+          "storageDischargeWatts": 0,
+          "demandWatts": 0,
+          "unusedWatts": 26,
+          "storedWh": 0,
+          "state": "lit",
+          "shedOrder": []
+        },
+        {
+          "id": "component-4",
+          "nodeIds": [
+            "tram-motor"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 4,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "tram-motor"
+          ]
+        }
+      ],
+      "signature": "492:f33dd74834a0b31c",
+      "active": true,
+      "budgetMs": 0.5,
+      "lastSolveMs": 0.3000001907348633,
+      "maxSolveMs": 0.8000001907348633,
+      "lastStepMs": 0,
+      "maxStepMs": 0.8000001907348633,
+      "overBudget": false,
+      "overBudgetCount": 1,
+      "solveCount": 3,
+      "nodeCount": 20,
+      "wireCount": 19,
+      "intactWireCount": 14,
+      "cutWireCount": 5,
+      "events": [
+        {
+          "seq": 1,
+          "tick": 0,
+          "nodeId": "crawler-drain-east-base",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 2,
+          "tick": 0,
+          "nodeId": "crawler-drain-east-rim",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 3,
+          "tick": 0,
+          "nodeId": "crawler-drain-east-switch",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 4,
+          "tick": 0,
+          "nodeId": "crawler-drain-west-base",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 5,
+          "tick": 0,
+          "nodeId": "crawler-drain-west-rim",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 6,
+          "tick": 0,
+          "nodeId": "crawler-drain-west-switch",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 7,
+          "tick": 0,
+          "nodeId": "gallery-east",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 8,
+          "tick": 0,
+          "nodeId": "gallery-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 9,
+          "tick": 0,
+          "nodeId": "lamp-east",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 10,
+          "tick": 0,
+          "nodeId": "lamp-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 11,
+          "tick": 0,
+          "nodeId": "pylon-east-base",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 12,
+          "tick": 0,
+          "nodeId": "pylon-east-rim",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 13,
+          "tick": 0,
+          "nodeId": "pylon-east-switch",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 14,
+          "tick": 0,
+          "nodeId": "pylon-west-base",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 15,
+          "tick": 0,
+          "nodeId": "pylon-west-rim",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 16,
+          "tick": 0,
+          "nodeId": "pylon-west-switch",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 17,
+          "tick": 0,
+          "nodeId": "sub-hall",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 18,
+          "tick": 0,
+          "nodeId": "tram-motor",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 19,
+          "tick": 0,
+          "nodeId": "turret-east",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 20,
+          "tick": 0,
+          "nodeId": "turret-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 21,
+          "tick": 479,
+          "nodeId": "pylon-west-base",
+          "from": "dark",
+          "to": "powered"
+        }
+      ],
+      "render": {
+        "active": true,
+        "renderLayer": 2,
+        "renderSlot": "gameplay",
+        "topologyRevision": 2,
+        "allocationRevision": 2,
+        "rebuildCount": 3,
+        "spans": 19,
+        "poweredSpans": 6,
+        "darkSpans": 13,
+        "intactSpans": 14,
+        "cutSpans": 5,
+        "segments": 228,
+        "poweredSegments": 72,
+        "darkSegments": 156,
+        "drawCalls": 2,
+        "asset": "procedural-catenary"
+      }
+    }
+  },
+  "finalSnapshot": {
+    "devils": null,
+    "caravan": null,
+    "canal": {
+      "active": false,
+      "stage": 0,
+      "activeGateId": null,
+      "stageProgress": 0,
+      "contested": false,
+      "stagePayoutGold": 0,
+      "gates": [
+        {
+          "id": "canal-stage-c1",
+          "x": -28,
+          "z": 34,
+          "complete": false,
+          "active": false
+        },
+        {
+          "id": "canal-stage-c2",
+          "x": -12,
+          "z": 10,
+          "complete": false,
+          "active": false
+        },
+        {
+          "id": "canal-stage-c3",
+          "x": 4,
+          "z": -24,
+          "complete": false,
+          "active": false
+        }
+      ],
+      "quarry": {
+        "bandId": "ice-quarry-scarp-north-h4",
+        "channelNodeId": null,
+        "progress": 0,
+        "harvested": 0,
+        "total": 4,
+        "payoutGold": 0,
+        "nodes": [
+          {
+            "id": "ice-pack-1",
+            "x": -49.5,
+            "z": 47,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-2",
+            "x": -40.5,
+            "z": 49,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-3",
+            "x": -31.5,
+            "z": 47,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-4",
+            "x": -22.5,
+            "z": 49,
+            "harvested": false
+          }
+        ]
+      },
+      "canal": {
+        "wet": false,
+        "renderOnly": true,
+        "visualY": true,
+        "segments": 5
+      },
+      "dustDevil": {
+        "mode": "wander-lane",
+        "targeting": "none",
+        "phase": "clear",
+        "warning": false,
+        "laneId": "dust-devil-wander",
+        "laneProgress": 0,
+        "position": null,
+        "shoves": 0,
+        "pushedDistance": 0
+      }
+    },
+    "physics": {
+      "active": false,
+      "contractId": "e3-canyon-works",
+      "source": "default",
+      "movement": "normal",
+      "feelG": 1,
+      "lobArcDistanceMultiplier": 1,
+      "lobAirTimeMultiplier": 1,
+      "knockbackScale": 1,
+      "orbitalReturn": false,
+      "vacuum": false,
+      "fixedTimestepOnly": true,
+      "filteredMovement": {
+        "x": 0,
+        "y": 0
+      },
+      "adaptedLobs": [
+        {
+          "resumeKey": "orbital:kineticLobber",
+          "range": 15,
+          "airTime": 1.68
+        }
+      ]
+    },
+    "air": null,
+    "probe": {
+      "declared": false,
+      "trigger": null,
+      "zones": [],
+      "recovered": false,
+      "recoveredZoneId": null,
+      "playedFragment": null,
+      "playbackCount": 0,
+      "refusals": {
+        "outOfReach": 0,
+        "alreadyRecovered": 0
+      }
+    },
+    "fuel": null,
+    "vehicle": null,
+    "escort": {
+      "enabled": false
+    },
+    "canyonWorks": {
+      "powered": 0,
+      "required": 2,
+      "byWave": 8,
+      "complete": false,
+      "failed": false
+    },
+    "fairground": null,
+    "crowdFlocks": null,
+    "power": {
+      "id": "e3-canyon-works-grid",
+      "tick": 870,
+      "topologyRevision": 2,
+      "allocationRevision": 2,
+      "totalSupplyWatts": 26,
+      "totalDemandWatts": 28,
+      "nodes": [
+        {
+          "id": "crawler-drain-east-base",
+          "labelKey": "Crawler Drain at East Base",
+          "kind": "consumer",
+          "x": 12,
+          "z": -36,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-east-rim",
+          "labelKey": "Crawler Drain at East Rim",
+          "kind": "consumer",
+          "x": 28,
+          "z": 8,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-east-switch",
+          "labelKey": "Crawler Drain at East Switchback",
+          "kind": "consumer",
+          "x": 24,
+          "z": -20,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-west-base",
+          "labelKey": "Crawler Drain at West Base",
+          "kind": "consumer",
+          "x": -12,
+          "z": -36,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-west-rim",
+          "labelKey": "Crawler Drain at West Rim",
+          "kind": "consumer",
+          "x": -28,
+          "z": 8,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "crawler-drain-west-switch",
+          "labelKey": "Crawler Drain at West Switchback",
+          "kind": "consumer",
+          "x": -24,
+          "z": -20,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 18,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "gallery-east",
+          "labelKey": "East Gallery",
+          "kind": "consumer",
+          "x": 28,
+          "z": 28,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 10,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "gallery-west",
+          "labelKey": "West Gallery",
+          "kind": "consumer",
+          "x": -28,
+          "z": 28,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 10,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "lamp-east",
+          "labelKey": "East Gallery Lamps",
+          "kind": "consumer",
+          "x": 32,
+          "z": 32,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 2,
+          "priority": 30,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "lamp-west",
+          "labelKey": "West Gallery Lamps",
+          "kind": "consumer",
+          "x": -32,
+          "z": 32,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 2,
+          "priority": 30,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-east-base",
+          "labelKey": "East Base Pylon",
+          "kind": "relay",
+          "x": 12,
+          "z": -36,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-east-rim",
+          "labelKey": "East Rim Pylon",
+          "kind": "relay",
+          "x": 28,
+          "z": 8,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-east-switch",
+          "labelKey": "East Switchback Pylon",
+          "kind": "relay",
+          "x": 24,
+          "z": -20,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-west-base",
+          "labelKey": "West Base Pylon",
+          "kind": "relay",
+          "x": -12,
+          "z": -36,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-west-rim",
+          "labelKey": "West Rim Pylon",
+          "kind": "relay",
+          "x": -28,
+          "z": 8,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "pylon-west-switch",
+          "labelKey": "West Switchback Pylon",
+          "kind": "relay",
+          "x": -24,
+          "z": -20,
+          "online": false,
+          "outputWatts": 0,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "sub-hall",
+          "labelKey": "Dynamo Sub-Hall",
+          "kind": "producer",
+          "x": 0,
+          "z": -44,
+          "online": true,
+          "outputWatts": 26,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "powered",
+          "allocatedWatts": 0,
+          "allocationRatio": 1,
+          "componentId": "component-3",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "tram-motor",
+          "labelKey": "Works Tram",
+          "kind": "consumer",
+          "x": -28,
+          "z": 8,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 4,
+          "priority": 15,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-4",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "turret-east",
+          "labelKey": "East Arc Turret",
+          "kind": "consumer",
+          "x": 18,
+          "z": 22,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 4,
+          "priority": 20,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "turret-west",
+          "labelKey": "West Arc Turret",
+          "kind": "consumer",
+          "x": -18,
+          "z": 22,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 4,
+          "priority": 20,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        }
+      ],
+      "wires": [
+        {
+          "id": "crawler-drain-east-base--pylon-east-base",
+          "a": "crawler-drain-east-base",
+          "b": "pylon-east-base",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-east-rim--pylon-east-rim",
+          "a": "crawler-drain-east-rim",
+          "b": "pylon-east-rim",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-east-switch--pylon-east-switch",
+          "a": "crawler-drain-east-switch",
+          "b": "pylon-east-switch",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-west-base--pylon-west-base",
+          "a": "crawler-drain-west-base",
+          "b": "pylon-west-base",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-west-rim--pylon-west-rim",
+          "a": "crawler-drain-west-rim",
+          "b": "pylon-west-rim",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "crawler-drain-west-switch--pylon-west-switch",
+          "a": "crawler-drain-west-switch",
+          "b": "pylon-west-switch",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-east--lamp-east",
+          "a": "gallery-east",
+          "b": "lamp-east",
+          "state": "intact",
+          "length": 5.657,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-east--pylon-east-rim",
+          "a": "gallery-east",
+          "b": "pylon-east-rim",
+          "state": "intact",
+          "length": 20,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-east--turret-east",
+          "a": "gallery-east",
+          "b": "turret-east",
+          "state": "intact",
+          "length": 11.662,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-west--lamp-west",
+          "a": "gallery-west",
+          "b": "lamp-west",
+          "state": "intact",
+          "length": 5.657,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-west--pylon-west-rim",
+          "a": "gallery-west",
+          "b": "pylon-west-rim",
+          "state": "intact",
+          "length": 20,
+          "maxLength": 30
+        },
+        {
+          "id": "gallery-west--turret-west",
+          "a": "gallery-west",
+          "b": "turret-west",
+          "state": "intact",
+          "length": 11.662,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-east-base--pylon-east-switch",
+          "a": "pylon-east-base",
+          "b": "pylon-east-switch",
+          "state": "cut",
+          "length": 20,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-east-base--sub-hall",
+          "a": "pylon-east-base",
+          "b": "sub-hall",
+          "state": "cut",
+          "length": 14.422,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-east-rim--pylon-east-switch",
+          "a": "pylon-east-rim",
+          "b": "pylon-east-switch",
+          "state": "cut",
+          "length": 28.284,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-west-base--pylon-west-switch",
+          "a": "pylon-west-base",
+          "b": "pylon-west-switch",
+          "state": "cut",
+          "length": 20,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-west-base--sub-hall",
+          "a": "pylon-west-base",
+          "b": "sub-hall",
+          "state": "intact",
+          "length": 14.422,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-west-rim--pylon-west-switch",
+          "a": "pylon-west-rim",
+          "b": "pylon-west-switch",
+          "state": "cut",
+          "length": 28.284,
+          "maxLength": 30
+        },
+        {
+          "id": "pylon-west-rim--tram-motor",
+          "a": "pylon-west-rim",
+          "b": "tram-motor",
+          "state": "intact",
+          "length": 0,
+          "maxLength": 30
+        }
+      ],
+      "components": [
+        {
+          "id": "component-1",
+          "nodeIds": [
+            "gallery-east",
+            "lamp-east",
+            "turret-east"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 12,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "lamp-east",
+            "turret-east",
+            "gallery-east"
+          ]
+        },
+        {
+          "id": "component-2",
+          "nodeIds": [
+            "gallery-west",
+            "lamp-west",
+            "turret-west"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 12,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "lamp-west",
+            "turret-west",
+            "gallery-west"
+          ]
+        },
+        {
+          "id": "component-3",
+          "nodeIds": [
+            "pylon-west-base",
+            "sub-hall"
+          ],
+          "supplyWatts": 26,
+          "generationWatts": 26,
+          "storageDischargeWatts": 0,
+          "demandWatts": 0,
+          "unusedWatts": 26,
+          "storedWh": 0,
+          "state": "lit",
+          "shedOrder": []
+        },
+        {
+          "id": "component-4",
+          "nodeIds": [
+            "tram-motor"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 4,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "tram-motor"
+          ]
+        }
+      ],
+      "signature": "492:f33dd74834a0b31c",
+      "active": true,
+      "budgetMs": 0.5,
+      "lastSolveMs": 0.3000001907348633,
+      "maxSolveMs": 0.8000001907348633,
+      "lastStepMs": 0,
+      "maxStepMs": 0.8000001907348633,
+      "overBudget": false,
+      "overBudgetCount": 1,
+      "solveCount": 3,
+      "nodeCount": 20,
+      "wireCount": 19,
+      "intactWireCount": 14,
+      "cutWireCount": 5,
+      "events": [
+        {
+          "seq": 1,
+          "tick": 0,
+          "nodeId": "crawler-drain-east-base",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 2,
+          "tick": 0,
+          "nodeId": "crawler-drain-east-rim",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 3,
+          "tick": 0,
+          "nodeId": "crawler-drain-east-switch",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 4,
+          "tick": 0,
+          "nodeId": "crawler-drain-west-base",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 5,
+          "tick": 0,
+          "nodeId": "crawler-drain-west-rim",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 6,
+          "tick": 0,
+          "nodeId": "crawler-drain-west-switch",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 7,
+          "tick": 0,
+          "nodeId": "gallery-east",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 8,
+          "tick": 0,
+          "nodeId": "gallery-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 9,
+          "tick": 0,
+          "nodeId": "lamp-east",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 10,
+          "tick": 0,
+          "nodeId": "lamp-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 11,
+          "tick": 0,
+          "nodeId": "pylon-east-base",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 12,
+          "tick": 0,
+          "nodeId": "pylon-east-rim",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 13,
+          "tick": 0,
+          "nodeId": "pylon-east-switch",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 14,
+          "tick": 0,
+          "nodeId": "pylon-west-base",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 15,
+          "tick": 0,
+          "nodeId": "pylon-west-rim",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 16,
+          "tick": 0,
+          "nodeId": "pylon-west-switch",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 17,
+          "tick": 0,
+          "nodeId": "sub-hall",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 18,
+          "tick": 0,
+          "nodeId": "tram-motor",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 19,
+          "tick": 0,
+          "nodeId": "turret-east",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 20,
+          "tick": 0,
+          "nodeId": "turret-west",
+          "from": null,
+          "to": "dark"
+        },
+        {
+          "seq": 21,
+          "tick": 479,
+          "nodeId": "pylon-west-base",
+          "from": "dark",
+          "to": "powered"
+        }
+      ],
+      "render": {
+        "active": true,
+        "renderLayer": 2,
+        "renderSlot": "gameplay",
+        "topologyRevision": 2,
+        "allocationRevision": 2,
+        "rebuildCount": 3,
+        "spans": 19,
+        "poweredSpans": 6,
+        "darkSpans": 13,
+        "intactSpans": 14,
+        "cutSpans": 5,
+        "segments": 228,
+        "poweredSegments": 72,
+        "darkSegments": 156,
+        "drawCalls": 2,
+        "asset": "procedural-catenary"
+      }
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.516047886439732,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.70926757085891,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 4.535805838448661,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "objective": {
+      "devils": null,
+      "caravan": null,
+      "canal": {
+        "active": false,
+        "stage": 0,
+        "activeGateId": null,
+        "stageProgress": 0,
+        "contested": false,
+        "stagePayoutGold": 0,
+        "gates": [
+          {
+            "id": "canal-stage-c1",
+            "x": -28,
+            "z": 34,
+            "complete": false,
+            "active": false
+          },
+          {
+            "id": "canal-stage-c2",
+            "x": -12,
+            "z": 10,
+            "complete": false,
+            "active": false
+          },
+          {
+            "id": "canal-stage-c3",
+            "x": 4,
+            "z": -24,
+            "complete": false,
+            "active": false
+          }
+        ],
+        "quarry": {
+          "bandId": "ice-quarry-scarp-north-h4",
+          "channelNodeId": null,
+          "progress": 0,
+          "harvested": 0,
+          "total": 4,
+          "payoutGold": 0,
+          "nodes": [
+            {
+              "id": "ice-pack-1",
+              "x": -49.5,
+              "z": 47,
+              "harvested": false
+            },
+            {
+              "id": "ice-pack-2",
+              "x": -40.5,
+              "z": 49,
+              "harvested": false
+            },
+            {
+              "id": "ice-pack-3",
+              "x": -31.5,
+              "z": 47,
+              "harvested": false
+            },
+            {
+              "id": "ice-pack-4",
+              "x": -22.5,
+              "z": 49,
+              "harvested": false
+            }
+          ]
+        },
+        "canal": {
+          "wet": false,
+          "renderOnly": true,
+          "visualY": true,
+          "segments": 5
+        },
+        "dustDevil": {
+          "mode": "wander-lane",
+          "targeting": "none",
+          "phase": "clear",
+          "warning": false,
+          "laneId": "dust-devil-wander",
+          "laneProgress": 0,
+          "position": null,
+          "shoves": 0,
+          "pushedDistance": 0
+        }
+      },
+      "air": null,
+      "probe": {
+        "declared": false,
+        "trigger": null,
+        "zones": [],
+        "recovered": false,
+        "recoveredZoneId": null,
+        "playedFragment": null,
+        "playbackCount": 0,
+        "refusals": {
+          "outOfReach": 0,
+          "alreadyRecovered": 0
+        }
+      },
+      "fuel": null,
+      "vehicle": null,
+      "landYacht": null,
+      "fairground": null,
+      "crowdFlocks": null,
+      "canyonWorks": {
+        "powered": 0,
+        "required": 2,
+        "byWave": 8,
+        "complete": false,
+        "failed": false
+      },
+      "baron": {
+        "cartVisible": false,
+        "carried": false,
+        "distanceFromBaron": 0,
+        "telegraphActive": false,
+        "telegraphElapsed": 0,
+        "nextVolleyIn": 0,
+        "volleys": 0,
+        "suppressed": false,
+        "targetKind": null,
+        "lastOwnerId": "",
+        "lastTarget": {
+          "x": 0,
+          "z": 0
+        },
+        "target": {
+          "x": 0,
+          "z": 0
+        },
+        "props": {
+          "state": "off",
+          "source": "placeholder",
+          "launcher": false,
+          "rocket": false,
+          "powderKeg": false,
+          "triangles": {
+            "launcher": 2020,
+            "rocket": 876,
+            "powder_keg": 704
+          }
+        },
+        "manifest": null
+      },
+      "boss": {
+        "visible": false,
+        "ratio": 0,
+        "renderedRatio": 1,
+        "litSegments": 7,
+        "segments": 0,
+        "groupId": null,
+        "aliveComponents": 0,
+        "destroyedComponents": 0,
+        "components": []
+      },
+      "medals": {
+        "version": 1,
+        "baronBeaten": false,
+        "rocketCartCaptured": false
+      },
+      "pressure": {
+        "enabled": false,
+        "multiplayerPosture": "single-player-gated",
+        "coal": 0,
+        "seams": [
+          {
+            "x": -12,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 4.516047886439732,
+            "spriteVisible": false
+          },
+          {
+            "x": -5,
+            "z": 43,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 4.70926757085891,
+            "spriteVisible": false
+          },
+          {
+            "x": 3,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 4.535805838448661,
+            "spriteVisible": false
+          }
+        ],
+        "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+        "boilers": [
+          {
+            "index": 0,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 1,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 2,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          }
+        ],
+        "vents": 0,
+        "safeBand": null,
+        "objective": {
+          "active": false,
+          "failed": false,
+          "complete": false,
+          "hotBoilers": 0,
+          "waves": "8-12"
+        }
+      },
+      "escort": {
+        "enabled": false
+      },
+      "power": {
+        "id": "e3-canyon-works-grid",
+        "tick": 870,
+        "topologyRevision": 2,
+        "allocationRevision": 2,
+        "totalSupplyWatts": 26,
+        "totalDemandWatts": 28,
+        "nodes": [
+          {
+            "id": "crawler-drain-east-base",
+            "labelKey": "Crawler Drain at East Base",
+            "kind": "consumer",
+            "x": 12,
+            "z": -36,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 18,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "crawler-drain-east-rim",
+            "labelKey": "Crawler Drain at East Rim",
+            "kind": "consumer",
+            "x": 28,
+            "z": 8,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 18,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "crawler-drain-east-switch",
+            "labelKey": "Crawler Drain at East Switchback",
+            "kind": "consumer",
+            "x": 24,
+            "z": -20,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 18,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "crawler-drain-west-base",
+            "labelKey": "Crawler Drain at West Base",
+            "kind": "consumer",
+            "x": -12,
+            "z": -36,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 18,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "crawler-drain-west-rim",
+            "labelKey": "Crawler Drain at West Rim",
+            "kind": "consumer",
+            "x": -28,
+            "z": 8,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 18,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "crawler-drain-west-switch",
+            "labelKey": "Crawler Drain at West Switchback",
+            "kind": "consumer",
+            "x": -24,
+            "z": -20,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 18,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "gallery-east",
+            "labelKey": "East Gallery",
+            "kind": "consumer",
+            "x": 28,
+            "z": 28,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 6,
+            "priority": 10,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-1",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "gallery-west",
+            "labelKey": "West Gallery",
+            "kind": "consumer",
+            "x": -28,
+            "z": 28,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 6,
+            "priority": 10,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-2",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "lamp-east",
+            "labelKey": "East Gallery Lamps",
+            "kind": "consumer",
+            "x": 32,
+            "z": 32,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 2,
+            "priority": 30,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-1",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "lamp-west",
+            "labelKey": "West Gallery Lamps",
+            "kind": "consumer",
+            "x": -32,
+            "z": 32,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 2,
+            "priority": 30,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-2",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "pylon-east-base",
+            "labelKey": "East Base Pylon",
+            "kind": "relay",
+            "x": 12,
+            "z": -36,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "pylon-east-rim",
+            "labelKey": "East Rim Pylon",
+            "kind": "relay",
+            "x": 28,
+            "z": 8,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "pylon-east-switch",
+            "labelKey": "East Switchback Pylon",
+            "kind": "relay",
+            "x": 24,
+            "z": -20,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "pylon-west-base",
+            "labelKey": "West Base Pylon",
+            "kind": "relay",
+            "x": -12,
+            "z": -36,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "powered",
+            "allocatedWatts": 0,
+            "allocationRatio": 1,
+            "componentId": "component-3",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "pylon-west-rim",
+            "labelKey": "West Rim Pylon",
+            "kind": "relay",
+            "x": -28,
+            "z": 8,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "pylon-west-switch",
+            "labelKey": "West Switchback Pylon",
+            "kind": "relay",
+            "x": -24,
+            "z": -20,
+            "online": false,
+            "outputWatts": 0,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "sub-hall",
+            "labelKey": "Dynamo Sub-Hall",
+            "kind": "producer",
+            "x": 0,
+            "z": -44,
+            "online": true,
+            "outputWatts": 26,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "powered",
+            "allocatedWatts": 0,
+            "allocationRatio": 1,
+            "componentId": "component-3",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "tram-motor",
+            "labelKey": "Works Tram",
+            "kind": "consumer",
+            "x": -28,
+            "z": 8,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 4,
+            "priority": 15,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-4",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "turret-east",
+            "labelKey": "East Arc Turret",
+            "kind": "consumer",
+            "x": 18,
+            "z": 22,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 4,
+            "priority": 20,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-1",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "turret-west",
+            "labelKey": "West Arc Turret",
+            "kind": "consumer",
+            "x": -18,
+            "z": 22,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 4,
+            "priority": 20,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-2",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          }
+        ],
+        "wires": [
+          {
+            "id": "crawler-drain-east-base--pylon-east-base",
+            "a": "crawler-drain-east-base",
+            "b": "pylon-east-base",
+            "state": "intact",
+            "length": 0,
+            "maxLength": 30
+          },
+          {
+            "id": "crawler-drain-east-rim--pylon-east-rim",
+            "a": "crawler-drain-east-rim",
+            "b": "pylon-east-rim",
+            "state": "intact",
+            "length": 0,
+            "maxLength": 30
+          },
+          {
+            "id": "crawler-drain-east-switch--pylon-east-switch",
+            "a": "crawler-drain-east-switch",
+            "b": "pylon-east-switch",
+            "state": "intact",
+            "length": 0,
+            "maxLength": 30
+          },
+          {
+            "id": "crawler-drain-west-base--pylon-west-base",
+            "a": "crawler-drain-west-base",
+            "b": "pylon-west-base",
+            "state": "intact",
+            "length": 0,
+            "maxLength": 30
+          },
+          {
+            "id": "crawler-drain-west-rim--pylon-west-rim",
+            "a": "crawler-drain-west-rim",
+            "b": "pylon-west-rim",
+            "state": "intact",
+            "length": 0,
+            "maxLength": 30
+          },
+          {
+            "id": "crawler-drain-west-switch--pylon-west-switch",
+            "a": "crawler-drain-west-switch",
+            "b": "pylon-west-switch",
+            "state": "intact",
+            "length": 0,
+            "maxLength": 30
+          },
+          {
+            "id": "gallery-east--lamp-east",
+            "a": "gallery-east",
+            "b": "lamp-east",
+            "state": "intact",
+            "length": 5.657,
+            "maxLength": 30
+          },
+          {
+            "id": "gallery-east--pylon-east-rim",
+            "a": "gallery-east",
+            "b": "pylon-east-rim",
+            "state": "intact",
+            "length": 20,
+            "maxLength": 30
+          },
+          {
+            "id": "gallery-east--turret-east",
+            "a": "gallery-east",
+            "b": "turret-east",
+            "state": "intact",
+            "length": 11.662,
+            "maxLength": 30
+          },
+          {
+            "id": "gallery-west--lamp-west",
+            "a": "gallery-west",
+            "b": "lamp-west",
+            "state": "intact",
+            "length": 5.657,
+            "maxLength": 30
+          },
+          {
+            "id": "gallery-west--pylon-west-rim",
+            "a": "gallery-west",
+            "b": "pylon-west-rim",
+            "state": "intact",
+            "length": 20,
+            "maxLength": 30
+          },
+          {
+            "id": "gallery-west--turret-west",
+            "a": "gallery-west",
+            "b": "turret-west",
+            "state": "intact",
+            "length": 11.662,
+            "maxLength": 30
+          },
+          {
+            "id": "pylon-east-base--pylon-east-switch",
+            "a": "pylon-east-base",
+            "b": "pylon-east-switch",
+            "state": "cut",
+            "length": 20,
+            "maxLength": 30
+          },
+          {
+            "id": "pylon-east-base--sub-hall",
+            "a": "pylon-east-base",
+            "b": "sub-hall",
+            "state": "cut",
+            "length": 14.422,
+            "maxLength": 30
+          },
+          {
+            "id": "pylon-east-rim--pylon-east-switch",
+            "a": "pylon-east-rim",
+            "b": "pylon-east-switch",
+            "state": "cut",
+            "length": 28.284,
+            "maxLength": 30
+          },
+          {
+            "id": "pylon-west-base--pylon-west-switch",
+            "a": "pylon-west-base",
+            "b": "pylon-west-switch",
+            "state": "cut",
+            "length": 20,
+            "maxLength": 30
+          },
+          {
+            "id": "pylon-west-base--sub-hall",
+            "a": "pylon-west-base",
+            "b": "sub-hall",
+            "state": "intact",
+            "length": 14.422,
+            "maxLength": 30
+          },
+          {
+            "id": "pylon-west-rim--pylon-west-switch",
+            "a": "pylon-west-rim",
+            "b": "pylon-west-switch",
+            "state": "cut",
+            "length": 28.284,
+            "maxLength": 30
+          },
+          {
+            "id": "pylon-west-rim--tram-motor",
+            "a": "pylon-west-rim",
+            "b": "tram-motor",
+            "state": "intact",
+            "length": 0,
+            "maxLength": 30
+          }
+        ],
+        "components": [
+          {
+            "id": "component-1",
+            "nodeIds": [
+              "gallery-east",
+              "lamp-east",
+              "turret-east"
+            ],
+            "supplyWatts": 0,
+            "generationWatts": 0,
+            "storageDischargeWatts": 0,
+            "demandWatts": 12,
+            "unusedWatts": 0,
+            "storedWh": 0,
+            "state": "dark",
+            "shedOrder": [
+              "lamp-east",
+              "turret-east",
+              "gallery-east"
+            ]
+          },
+          {
+            "id": "component-2",
+            "nodeIds": [
+              "gallery-west",
+              "lamp-west",
+              "turret-west"
+            ],
+            "supplyWatts": 0,
+            "generationWatts": 0,
+            "storageDischargeWatts": 0,
+            "demandWatts": 12,
+            "unusedWatts": 0,
+            "storedWh": 0,
+            "state": "dark",
+            "shedOrder": [
+              "lamp-west",
+              "turret-west",
+              "gallery-west"
+            ]
+          },
+          {
+            "id": "component-3",
+            "nodeIds": [
+              "pylon-west-base",
+              "sub-hall"
+            ],
+            "supplyWatts": 26,
+            "generationWatts": 26,
+            "storageDischargeWatts": 0,
+            "demandWatts": 0,
+            "unusedWatts": 26,
+            "storedWh": 0,
+            "state": "lit",
+            "shedOrder": []
+          },
+          {
+            "id": "component-4",
+            "nodeIds": [
+              "tram-motor"
+            ],
+            "supplyWatts": 0,
+            "generationWatts": 0,
+            "storageDischargeWatts": 0,
+            "demandWatts": 4,
+            "unusedWatts": 0,
+            "storedWh": 0,
+            "state": "dark",
+            "shedOrder": [
+              "tram-motor"
+            ]
+          }
+        ],
+        "signature": "492:f33dd74834a0b31c",
+        "active": true,
+        "budgetMs": 0.5,
+        "lastSolveMs": 0.3000001907348633,
+        "maxSolveMs": 0.8000001907348633,
+        "lastStepMs": 0,
+        "maxStepMs": 0.8000001907348633,
+        "overBudget": false,
+        "overBudgetCount": 1,
+        "solveCount": 3,
+        "nodeCount": 20,
+        "wireCount": 19,
+        "intactWireCount": 14,
+        "cutWireCount": 5,
+        "events": [
+          {
+            "seq": 1,
+            "tick": 0,
+            "nodeId": "crawler-drain-east-base",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 2,
+            "tick": 0,
+            "nodeId": "crawler-drain-east-rim",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 3,
+            "tick": 0,
+            "nodeId": "crawler-drain-east-switch",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 4,
+            "tick": 0,
+            "nodeId": "crawler-drain-west-base",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 5,
+            "tick": 0,
+            "nodeId": "crawler-drain-west-rim",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 6,
+            "tick": 0,
+            "nodeId": "crawler-drain-west-switch",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 7,
+            "tick": 0,
+            "nodeId": "gallery-east",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 8,
+            "tick": 0,
+            "nodeId": "gallery-west",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 9,
+            "tick": 0,
+            "nodeId": "lamp-east",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 10,
+            "tick": 0,
+            "nodeId": "lamp-west",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 11,
+            "tick": 0,
+            "nodeId": "pylon-east-base",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 12,
+            "tick": 0,
+            "nodeId": "pylon-east-rim",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 13,
+            "tick": 0,
+            "nodeId": "pylon-east-switch",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 14,
+            "tick": 0,
+            "nodeId": "pylon-west-base",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 15,
+            "tick": 0,
+            "nodeId": "pylon-west-rim",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 16,
+            "tick": 0,
+            "nodeId": "pylon-west-switch",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 17,
+            "tick": 0,
+            "nodeId": "sub-hall",
+            "from": null,
+            "to": "powered"
+          },
+          {
+            "seq": 18,
+            "tick": 0,
+            "nodeId": "tram-motor",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 19,
+            "tick": 0,
+            "nodeId": "turret-east",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 20,
+            "tick": 0,
+            "nodeId": "turret-west",
+            "from": null,
+            "to": "dark"
+          },
+          {
+            "seq": 21,
+            "tick": 479,
+            "nodeId": "pylon-west-base",
+            "from": "dark",
+            "to": "powered"
+          }
+        ],
+        "render": {
+          "active": true,
+          "renderLayer": 2,
+          "renderSlot": "gameplay",
+          "topologyRevision": 2,
+          "allocationRevision": 2,
+          "rebuildCount": 3,
+          "spans": 19,
+          "poweredSpans": 6,
+          "darkSpans": 13,
+          "intactSpans": 14,
+          "cutSpans": 5,
+          "segments": 228,
+          "poweredSegments": 72,
+          "darkSegments": 156,
+          "drawCalls": 2,
+          "asset": "procedural-catenary"
+        }
+      }
+    },
+    "frame": 3316,
+    "sim": 115.20000000000236,
+    "wave": 3,
+    "hudWave": 3,
+    "runState": "dead",
+    "paused": false,
+    "secured": false,
+    "hp": 0,
+    "maxHp": 100,
+    "gold": 30,
+    "hero": {
+      "x": 0.2947292331233046,
+      "z": -5.062676535407254
+    },
+    "enemiesAlive": 29,
+    "kills": 38,
+    "pendingLevels": 0,
+    "offer": null,
+    "upgradeOpen": false,
+    "buildMode": false,
+    "ghostValid": false,
+    "ghostPos": {
+      "x": -12,
+      "z": -35
+    },
+    "nodes": [
+      {
+        "id": "gold-seam-1",
+        "anchorIndex": 3,
+        "active": true,
+        "x": 34,
+        "z": 30,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-2",
+        "anchorIndex": 0,
+        "active": true,
+        "x": -34,
+        "z": 30,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-3",
+        "anchorIndex": -1,
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-4",
+        "anchorIndex": -1,
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      }
+    ],
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 30,
+        "count": 1,
+        "maxCount": 6,
+        "canAfford": true
+      },
+      {
+        "id": "palisade",
+        "cost": 0,
+        "count": 0,
+        "maxCount": 48,
+        "canAfford": true
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "count": 0,
+        "maxCount": 3,
+        "canAfford": false
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "count": 0,
+        "maxCount": 2,
+        "canAfford": false
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "count": 0,
+        "maxCount": 1,
+        "canAfford": false
+      }
+    ],
+    "defences": [
+      {
+        "id": "sentry_beacon",
+        "index": 0,
+        "hp": 40,
+        "maxHp": 40,
+        "wrecked": false,
+        "repairCost": 0,
+        "x": -12,
+        "z": -35
+      },
+      {
+        "id": "turret",
+        "index": 0,
+        "hp": 50,
+        "maxHp": 50,
+        "wrecked": false,
+        "repairCost": 0,
+        "x": -18,
+        "z": 22
+      },
+      {
+        "id": "turret",
+        "index": 1,
+        "hp": 50,
+        "maxHp": 50,
+        "wrecked": false,
+        "repairCost": 0,
+        "x": 18,
+        "z": 22
+      },
+      {
+        "id": "lantern_post",
+        "index": 0,
+        "hp": 35,
+        "maxHp": 35,
+        "wrecked": false,
+        "repairCost": 0,
+        "x": -32,
+        "z": 32
+      },
+      {
+        "id": "lantern_post",
+        "index": 1,
+        "hp": 35,
+        "maxHp": 35,
+        "wrecked": false,
+        "repairCost": 0,
+        "x": 32,
+        "z": 32
+      }
+    ],
+    "repairs": 0,
+    "channeling": false
+  }
+}

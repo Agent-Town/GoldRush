@@ -1,0 +1,1728 @@
+{
+  "schema": "goldrush.cw2.slope-t2.v1",
+  "results": [
+    {
+      "source": "working tree (assets/contracts/epoch-3-voltage/contracts.json)",
+      "activeContract": {
+        "activeId": "e3-canyon-works",
+        "fallbackReason": null
+      },
+      "window": {
+        "t2RampStart": 14,
+        "t2RampEnd": 32,
+        "run": 18,
+        "rise": 4
+      },
+      "analyticPeak": 0.3333,
+      "centralDifferencePeak": 0.333,
+      "slopeMax": 0.35,
+      "centralDifferenceStep": 0.5,
+      "cliff": {
+        "minX": -12,
+        "maxX": 12,
+        "minZ": 18,
+        "maxZ": 26,
+        "amp": 2.2,
+        "feather": 1,
+        "footprint": {
+          "minX": -13.5,
+          "maxX": 13.5,
+          "minZ": 16.5,
+          "maxZ": 27.5
+        },
+        "scriptedRectRefused": "833/833",
+        "heightOnTop": 4.368,
+        "heightBeside": 2.168
+      },
+      "neighbours": {
+        "t1RampStart": 6,
+        "t1RampEnd": 14,
+        "t3RampStart": 40,
+        "t3RampEnd": 50
+      },
+      "columns": [
+        {
+          "x": 0,
+          "crossesFootprint": true,
+          "band": {
+            "walls": [
+              {
+                "from": 16.68,
+                "to": 27.15,
+                "width": 10.47,
+                "peak": 2.4085,
+                "peakZ": 17.5,
+                "kind": "cliff"
+              }
+            ],
+            "peak": {
+              "slope": 2.4085,
+              "z": 17.5
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.2798,
+              "z": 10
+            }
+          },
+          "tile": {
+            "walls": [
+              {
+                "from": 16.7,
+                "to": 27.15,
+                "width": 10.45,
+                "peak": 2.4085,
+                "peakZ": 17.5,
+                "kind": "cliff"
+              }
+            ],
+            "peak": {
+              "slope": 2.4085,
+              "z": 17.5
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.2798,
+              "z": -10
+            }
+          }
+        },
+        {
+          "x": -8,
+          "crossesFootprint": true,
+          "band": {
+            "walls": [
+              {
+                "from": 16.68,
+                "to": 27.15,
+                "width": 10.47,
+                "peak": 2.4085,
+                "peakZ": 17.5,
+                "kind": "cliff"
+              }
+            ],
+            "peak": {
+              "slope": 2.4085,
+              "z": 17.5
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.2798,
+              "z": 10
+            }
+          },
+          "tile": {
+            "walls": [
+              {
+                "from": 16.7,
+                "to": 27.15,
+                "width": 10.45,
+                "peak": 2.4085,
+                "peakZ": 17.5,
+                "kind": "cliff"
+              }
+            ],
+            "peak": {
+              "slope": 2.4085,
+              "z": 17.5
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.2798,
+              "z": -10
+            }
+          }
+        },
+        {
+          "x": 8,
+          "crossesFootprint": true,
+          "band": {
+            "walls": [
+              {
+                "from": 16.68,
+                "to": 27.15,
+                "width": 10.47,
+                "peak": 2.4085,
+                "peakZ": 17.5,
+                "kind": "cliff"
+              }
+            ],
+            "peak": {
+              "slope": 2.4085,
+              "z": 17.5
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.2798,
+              "z": 10
+            }
+          },
+          "tile": {
+            "walls": [
+              {
+                "from": 16.7,
+                "to": 27.15,
+                "width": 10.45,
+                "peak": 2.4085,
+                "peakZ": 17.5,
+                "kind": "cliff"
+              }
+            ],
+            "peak": {
+              "slope": 2.4085,
+              "z": 17.5
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.2798,
+              "z": -10
+            }
+          }
+        },
+        {
+          "x": -14,
+          "crossesFootprint": false,
+          "band": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          },
+          "tile": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          }
+        },
+        {
+          "x": 14,
+          "crossesFootprint": false,
+          "band": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          },
+          "tile": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          }
+        },
+        {
+          "x": -20,
+          "crossesFootprint": false,
+          "band": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          },
+          "tile": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          }
+        },
+        {
+          "x": 20,
+          "crossesFootprint": false,
+          "band": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          },
+          "tile": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          }
+        },
+        {
+          "x": -30,
+          "crossesFootprint": false,
+          "band": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          },
+          "tile": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          }
+        },
+        {
+          "x": 30,
+          "crossesFootprint": false,
+          "band": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          },
+          "tile": {
+            "walls": [],
+            "peak": {
+              "slope": 0.333,
+              "z": 23
+            },
+            "peakOutsideFootprint": {
+              "slope": 0.333,
+              "z": 23
+            }
+          }
+        }
+      ],
+      "outsideFootprint": {
+        "wholeTile": {
+          "lattice": 0.25,
+          "points": 167960,
+          "peak": {
+            "slope": 0.333,
+            "x": -48,
+            "z": 23
+          },
+          "margin": 0.017,
+          "refused": 0,
+          "refusedBox": null
+        },
+        "t2Band": {
+          "lattice": 0.05,
+          "points": 1034960,
+          "peak": {
+            "slope": 0.333,
+            "x": -48,
+            "z": 23
+          },
+          "margin": 0.017,
+          "refused": 0,
+          "refusedBox": null
+        }
+      },
+      "reachFromBridge": {
+        "method": "8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m",
+        "reached": 38024,
+        "targets": [
+          {
+            "kind": "seam",
+            "id": "anchor-0",
+            "x": -34,
+            "z": 30,
+            "reachable": true,
+            "pathLength": 52.3,
+            "entersFootprint": false
+          },
+          {
+            "kind": "seam",
+            "id": "anchor-1",
+            "x": -22,
+            "z": 34,
+            "reachable": true,
+            "pathLength": 48.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "seam",
+            "id": "anchor-2",
+            "x": 22,
+            "z": 34,
+            "reachable": true,
+            "pathLength": 48.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "seam",
+            "id": "anchor-3",
+            "x": 34,
+            "z": 30,
+            "reachable": true,
+            "pathLength": 52.3,
+            "entersFootprint": false
+          },
+          {
+            "kind": "gallery",
+            "id": "gallery-west",
+            "x": -28,
+            "z": 28,
+            "reachable": true,
+            "pathLength": 45.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "gallery",
+            "id": "gallery-east",
+            "x": 28,
+            "z": 28,
+            "reachable": true,
+            "pathLength": 45.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "turret",
+            "id": "turret-west",
+            "x": -18,
+            "z": 22,
+            "reachable": true,
+            "pathLength": 34.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "turret",
+            "id": "turret-east",
+            "x": 18,
+            "z": 22,
+            "reachable": true,
+            "pathLength": 34.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "lamp",
+            "id": "lamp-west",
+            "x": -32,
+            "z": 32,
+            "reachable": true,
+            "pathLength": 51.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "lamp",
+            "id": "lamp-east",
+            "x": 32,
+            "z": 32,
+            "reachable": true,
+            "pathLength": 51.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-west-base",
+            "x": -12,
+            "z": -36,
+            "reachable": true,
+            "pathLength": 36,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-west-switch",
+            "x": -24,
+            "z": -20,
+            "reachable": true,
+            "pathLength": 30.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-west-rim",
+            "x": -28,
+            "z": 8,
+            "reachable": true,
+            "pathLength": 37.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-east-base",
+            "x": 12,
+            "z": -36,
+            "reachable": true,
+            "pathLength": 36,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-east-switch",
+            "x": 24,
+            "z": -20,
+            "reachable": true,
+            "pathLength": 30.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-east-rim",
+            "x": 28,
+            "z": 8,
+            "reachable": true,
+            "pathLength": 37.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "bridge north end",
+            "id": "works-bridge-north",
+            "x": 0,
+            "z": 6.5,
+            "reachable": true,
+            "pathLength": 11.5,
+            "entersFootprint": false
+          }
+        ]
+      },
+      "reachFromBridgePlain": {
+        "method": "8-connected flood over Terrain.sample(x,z).walkable on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m",
+        "reached": 38182,
+        "targets": [
+          {
+            "kind": "seam",
+            "id": "anchor-0",
+            "x": -34,
+            "z": 30,
+            "reachable": true,
+            "pathLength": 52.3,
+            "entersFootprint": false
+          },
+          {
+            "kind": "seam",
+            "id": "anchor-1",
+            "x": -22,
+            "z": 34,
+            "reachable": true,
+            "pathLength": 48.1,
+            "entersFootprint": true
+          },
+          {
+            "kind": "seam",
+            "id": "anchor-2",
+            "x": 22,
+            "z": 34,
+            "reachable": true,
+            "pathLength": 48.1,
+            "entersFootprint": true
+          },
+          {
+            "kind": "seam",
+            "id": "anchor-3",
+            "x": 34,
+            "z": 30,
+            "reachable": true,
+            "pathLength": 52.3,
+            "entersFootprint": false
+          },
+          {
+            "kind": "gallery",
+            "id": "gallery-west",
+            "x": -28,
+            "z": 28,
+            "reachable": true,
+            "pathLength": 45.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "gallery",
+            "id": "gallery-east",
+            "x": 28,
+            "z": 28,
+            "reachable": true,
+            "pathLength": 45.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "turret",
+            "id": "turret-west",
+            "x": -18,
+            "z": 22,
+            "reachable": true,
+            "pathLength": 34.5,
+            "entersFootprint": true
+          },
+          {
+            "kind": "turret",
+            "id": "turret-east",
+            "x": 18,
+            "z": 22,
+            "reachable": true,
+            "pathLength": 34.5,
+            "entersFootprint": true
+          },
+          {
+            "kind": "lamp",
+            "id": "lamp-west",
+            "x": -32,
+            "z": 32,
+            "reachable": true,
+            "pathLength": 51.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "lamp",
+            "id": "lamp-east",
+            "x": 32,
+            "z": 32,
+            "reachable": true,
+            "pathLength": 51.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-west-base",
+            "x": -12,
+            "z": -36,
+            "reachable": true,
+            "pathLength": 36,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-west-switch",
+            "x": -24,
+            "z": -20,
+            "reachable": true,
+            "pathLength": 30.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-west-rim",
+            "x": -28,
+            "z": 8,
+            "reachable": true,
+            "pathLength": 37.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-east-base",
+            "x": 12,
+            "z": -36,
+            "reachable": true,
+            "pathLength": 36,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-east-switch",
+            "x": 24,
+            "z": -20,
+            "reachable": true,
+            "pathLength": 30.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-east-rim",
+            "x": 28,
+            "z": 8,
+            "reachable": true,
+            "pathLength": 37.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "bridge north end",
+            "id": "works-bridge-north",
+            "x": 0,
+            "z": 6.5,
+            "reachable": true,
+            "pathLength": 11.5,
+            "entersFootprint": false
+          }
+        ]
+      },
+      "reachFromHeroStart": {
+        "method": "8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-44); a target is reached when a reached point lies within 1.5 m",
+        "reached": 38024,
+        "targets": [
+          {
+            "kind": "seam",
+            "id": "anchor-0",
+            "x": -34,
+            "z": 30,
+            "reachable": true,
+            "pathLength": 91.3,
+            "entersFootprint": false
+          },
+          {
+            "kind": "seam",
+            "id": "anchor-1",
+            "x": -22,
+            "z": 34,
+            "reachable": true,
+            "pathLength": 87.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "seam",
+            "id": "anchor-2",
+            "x": 22,
+            "z": 34,
+            "reachable": true,
+            "pathLength": 87.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "seam",
+            "id": "anchor-3",
+            "x": 34,
+            "z": 30,
+            "reachable": true,
+            "pathLength": 91.3,
+            "entersFootprint": false
+          },
+          {
+            "kind": "gallery",
+            "id": "gallery-west",
+            "x": -28,
+            "z": 28,
+            "reachable": true,
+            "pathLength": 84.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "gallery",
+            "id": "gallery-east",
+            "x": 28,
+            "z": 28,
+            "reachable": true,
+            "pathLength": 84.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "turret",
+            "id": "turret-west",
+            "x": -18,
+            "z": 22,
+            "reachable": true,
+            "pathLength": 73.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "turret",
+            "id": "turret-east",
+            "x": 18,
+            "z": 22,
+            "reachable": true,
+            "pathLength": 73.5,
+            "entersFootprint": false
+          },
+          {
+            "kind": "lamp",
+            "id": "lamp-west",
+            "x": -32,
+            "z": 32,
+            "reachable": true,
+            "pathLength": 90.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "lamp",
+            "id": "lamp-east",
+            "x": 32,
+            "z": 32,
+            "reachable": true,
+            "pathLength": 90.1,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-west-base",
+            "x": -12,
+            "z": -36,
+            "reachable": true,
+            "pathLength": 15.3,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-west-switch",
+            "x": -24,
+            "z": -20,
+            "reachable": true,
+            "pathLength": 33.9,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-west-rim",
+            "x": -28,
+            "z": 8,
+            "reachable": true,
+            "pathLength": 76.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-east-base",
+            "x": 12,
+            "z": -36,
+            "reachable": true,
+            "pathLength": 15.3,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-east-switch",
+            "x": 24,
+            "z": -20,
+            "reachable": true,
+            "pathLength": 33.9,
+            "entersFootprint": false
+          },
+          {
+            "kind": "pylon site",
+            "id": "pylon-east-rim",
+            "x": 28,
+            "z": 8,
+            "reachable": true,
+            "pathLength": 76.2,
+            "entersFootprint": false
+          },
+          {
+            "kind": "bridge north end",
+            "id": "works-bridge-north",
+            "x": 0,
+            "z": 6.5,
+            "reachable": true,
+            "pathLength": 50.5,
+            "entersFootprint": false
+          }
+        ]
+      },
+      "profiles": [
+        {
+          "x": 0,
+          "rows": [
+            {
+              "z": 8,
+              "h": -0.766,
+              "slope": 0.2095,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 9,
+              "h": -0.525,
+              "slope": 0.2622,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 10,
+              "h": -0.25,
+              "slope": 0.2798,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 11,
+              "h": 0.025,
+              "slope": 0.2622,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 12,
+              "h": 0.266,
+              "slope": 0.2095,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 13,
+              "h": 0.436,
+              "slope": 0.1216,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 14,
+              "h": 0.5,
+              "slope": 0.0259,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 15,
+              "h": 0.536,
+              "slope": 0.0696,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 16,
+              "h": 0.637,
+              "slope": 0.1313,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 17,
+              "h": 0.796,
+              "slope": 1.2848,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 18,
+              "h": 3.205,
+              "slope": 1.3301,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 19,
+              "h": 3.454,
+              "slope": 0.2671,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 20,
+              "h": 3.737,
+              "slope": 0.296,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 21,
+              "h": 4.044,
+              "slope": 0.3165,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 22,
+              "h": 4.368,
+              "slope": 0.3289,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 23,
+              "h": 4.7,
+              "slope": 0.333,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 24,
+              "h": 5.032,
+              "slope": 0.3289,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 25,
+              "h": 5.356,
+              "slope": 0.3165,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 26,
+              "h": 5.663,
+              "slope": 0.804,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 27,
+              "h": 3.746,
+              "slope": 0.8329,
+              "T": false,
+              "walkable": false
+            },
+            {
+              "z": 28,
+              "h": 3.995,
+              "slope": 0.2301,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 29,
+              "h": 4.204,
+              "slope": 0.1848,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 30,
+              "h": 4.363,
+              "slope": 0.1313,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 31,
+              "h": 4.464,
+              "slope": 0.0696,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 32,
+              "h": 4.5,
+              "slope": 0.0091,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 33,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 34,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 35,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 36,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 37,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 38,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            }
+          ]
+        },
+        {
+          "x": -14,
+          "rows": [
+            {
+              "z": 8,
+              "h": -0.766,
+              "slope": 0.2095,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 9,
+              "h": -0.525,
+              "slope": 0.2622,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 10,
+              "h": -0.25,
+              "slope": 0.2798,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 11,
+              "h": 0.025,
+              "slope": 0.2622,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 12,
+              "h": 0.266,
+              "slope": 0.2095,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 13,
+              "h": 0.436,
+              "slope": 0.1216,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 14,
+              "h": 0.5,
+              "slope": 0.0259,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 15,
+              "h": 0.536,
+              "slope": 0.0696,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 16,
+              "h": 0.637,
+              "slope": 0.1313,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 17,
+              "h": 0.796,
+              "slope": 0.1848,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 18,
+              "h": 1.005,
+              "slope": 0.2301,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 19,
+              "h": 1.254,
+              "slope": 0.2671,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 20,
+              "h": 1.537,
+              "slope": 0.296,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 21,
+              "h": 1.844,
+              "slope": 0.3165,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 22,
+              "h": 2.168,
+              "slope": 0.3289,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 23,
+              "h": 2.5,
+              "slope": 0.333,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 24,
+              "h": 2.832,
+              "slope": 0.3289,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 25,
+              "h": 3.156,
+              "slope": 0.3165,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 26,
+              "h": 3.463,
+              "slope": 0.296,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 27,
+              "h": 3.746,
+              "slope": 0.2671,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 28,
+              "h": 3.995,
+              "slope": 0.2301,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 29,
+              "h": 4.204,
+              "slope": 0.1848,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 30,
+              "h": 4.363,
+              "slope": 0.1313,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 31,
+              "h": 4.464,
+              "slope": 0.0696,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 32,
+              "h": 4.5,
+              "slope": 0.0091,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 33,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 34,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 35,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 36,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 37,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 38,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            }
+          ]
+        },
+        {
+          "x": -20,
+          "rows": [
+            {
+              "z": 8,
+              "h": -0.766,
+              "slope": 0.2095,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 9,
+              "h": -0.525,
+              "slope": 0.2622,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 10,
+              "h": -0.25,
+              "slope": 0.2798,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 11,
+              "h": 0.025,
+              "slope": 0.2622,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 12,
+              "h": 0.266,
+              "slope": 0.2095,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 13,
+              "h": 0.436,
+              "slope": 0.1216,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 14,
+              "h": 0.5,
+              "slope": 0.0259,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 15,
+              "h": 0.536,
+              "slope": 0.0696,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 16,
+              "h": 0.637,
+              "slope": 0.1313,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 17,
+              "h": 0.796,
+              "slope": 0.1848,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 18,
+              "h": 1.005,
+              "slope": 0.2301,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 19,
+              "h": 1.254,
+              "slope": 0.2671,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 20,
+              "h": 1.537,
+              "slope": 0.296,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 21,
+              "h": 1.844,
+              "slope": 0.3165,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 22,
+              "h": 2.168,
+              "slope": 0.3289,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 23,
+              "h": 2.5,
+              "slope": 0.333,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 24,
+              "h": 2.832,
+              "slope": 0.3289,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 25,
+              "h": 3.156,
+              "slope": 0.3165,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 26,
+              "h": 3.463,
+              "slope": 0.296,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 27,
+              "h": 3.746,
+              "slope": 0.2671,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 28,
+              "h": 3.995,
+              "slope": 0.2301,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 29,
+              "h": 4.204,
+              "slope": 0.1848,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 30,
+              "h": 4.363,
+              "slope": 0.1313,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 31,
+              "h": 4.464,
+              "slope": 0.0696,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 32,
+              "h": 4.5,
+              "slope": 0.0091,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 33,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 34,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 35,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 36,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 37,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 38,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            }
+          ]
+        },
+        {
+          "x": -30,
+          "rows": [
+            {
+              "z": 8,
+              "h": -0.766,
+              "slope": 0.2095,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 9,
+              "h": -0.525,
+              "slope": 0.2622,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 10,
+              "h": -0.25,
+              "slope": 0.2798,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 11,
+              "h": 0.025,
+              "slope": 0.2622,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 12,
+              "h": 0.266,
+              "slope": 0.2095,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 13,
+              "h": 0.436,
+              "slope": 0.1216,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 14,
+              "h": 0.5,
+              "slope": 0.0259,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 15,
+              "h": 0.536,
+              "slope": 0.0696,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 16,
+              "h": 0.637,
+              "slope": 0.1313,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 17,
+              "h": 0.796,
+              "slope": 0.1848,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 18,
+              "h": 1.005,
+              "slope": 0.2301,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 19,
+              "h": 1.254,
+              "slope": 0.2671,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 20,
+              "h": 1.537,
+              "slope": 0.296,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 21,
+              "h": 1.844,
+              "slope": 0.3165,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 22,
+              "h": 2.168,
+              "slope": 0.3289,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 23,
+              "h": 2.5,
+              "slope": 0.333,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 24,
+              "h": 2.832,
+              "slope": 0.3289,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 25,
+              "h": 3.156,
+              "slope": 0.3165,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 26,
+              "h": 3.463,
+              "slope": 0.296,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 27,
+              "h": 3.746,
+              "slope": 0.2671,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 28,
+              "h": 3.995,
+              "slope": 0.2301,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 29,
+              "h": 4.204,
+              "slope": 0.1848,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 30,
+              "h": 4.363,
+              "slope": 0.1313,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 31,
+              "h": 4.464,
+              "slope": 0.0696,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 32,
+              "h": 4.5,
+              "slope": 0.0091,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 33,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 34,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 35,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 36,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 37,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            },
+            {
+              "z": 38,
+              "h": 4.5,
+              "slope": 0,
+              "T": true,
+              "walkable": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

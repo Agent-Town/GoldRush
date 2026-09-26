@@ -1,0 +1,272 @@
+
+Running 40 tests using 1 worker
+
+[canyon-traversal] desktop-chrome [{"approach":"works-bridge","x":0,"peakSlope":0.2798,"start":{"x":0,"z":-16},"end":{"x":0,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0},{"approach":"west-flank","x":-24,"peakSlope":0.2798,"start":{"x":-24,"z":-16},"end":{"x":-24,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0},{"approach":"east-flank","x":24,"peakSlope":0.2798,"start":{"x":24,"z":-16},"end":{"x":24,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0}]
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓   1 [desktop-chrome] › e2e/e3-canyon-works-traversal.spec.ts:40:1 › the hero walks down the works bank past z -6 at the bridge and both flanks (3.7s)
+[canyon-traversal-t2] desktop-chrome {"approach":"bridge-to-first-gallery-target","peakSlope":0.333,"start":{"x":0,"z":-5},"end":{"x":-34.13955335122941,"z":30.60025136856002},"closestToTarget":0.616,"shelfHeight":4.431,"legs":[{"leg":"bridge-to-bench","from":{"x":0,"z":-5},"end":{"x":0,"z":12.38273855698996},"simSeconds":3.5,"stalls":0,"drift":0},{"leg":"bench-west","from":{"x":0,"z":12.38273855698996},"end":{"x":-28.58897033203799,"z":12.544690910077028},"simSeconds":4.5,"stalls":0,"drift":0.162},{"leg":"t2-ramp","from":{"x":-28.58897033203799,"z":12.544690910077028},"end":{"x":-28.75058301754124,"z":30.41982132407171},"simSeconds":3.875,"stalls":0,"drift":0.162},{"leg":"gallery-shelf","from":{"x":-28.75058301754124,"z":30.41982132407171},"end":{"x":-34.13955335122941,"z":30.60025136856002},"simSeconds":0.875,"stalls":0,"drift":0.18}]}
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓   2 [desktop-chrome] › e2e/e3-canyon-works-traversal.spec.ts:120:1 › the hero walks from the works bridge up the t2 ramp to the first gallery target, round the cliff (4.4s)
+  ✘   3 [desktop-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span (10.8s)
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓   4 [desktop-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit (3.1s)
+  ✘   5 [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics (7.3s)
+  ✘   6 [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge (10.8s)
+  ✓   7 [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:240:1 › seeded basin diagnostics include hash-identical enemy positions (7.0s)
+  ✓   8 [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:254:1 › basin stress stays in frame envelope while the flat claim remains neutral (5.2s)
+  ✓   9 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (3.6s)
+  ✓  10 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (3.3s)
+  ✓  11 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (3.3s)
+  ✓  12 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (3.9s)
+  ✓  13 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (6.0s)
+  ✓  14 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.1s)
+  ✓  15 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (6.1s)
+  ✓  16 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.7s)
+  ✓  17 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.4s)
+  ✓  18 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (4.2s)
+  ✓  19 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (3.8s)
+  ✓  20 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (4.8s)
+[canyon-traversal] mobile-chrome [{"approach":"works-bridge","x":0,"peakSlope":0.2798,"start":{"x":0,"z":-16},"end":{"x":0,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0},{"approach":"west-flank","x":-24,"peakSlope":0.2798,"start":{"x":-24,"z":-16},"end":{"x":-24,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0},{"approach":"east-flank","x":24,"peakSlope":0.2798,"start":{"x":24,"z":-16},"end":{"x":24,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0}]
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  21 [mobile-chrome] › e2e/e3-canyon-works-traversal.spec.ts:40:1 › the hero walks down the works bank past z -6 at the bridge and both flanks (4.8s)
+[canyon-traversal-t2] mobile-chrome {"approach":"bridge-to-first-gallery-target","peakSlope":0.333,"start":{"x":0,"z":-5},"end":{"x":-34.13955335122941,"z":30.60025136856002},"closestToTarget":0.616,"shelfHeight":4.431,"legs":[{"leg":"bridge-to-bench","from":{"x":0,"z":-5},"end":{"x":0,"z":12.38273855698996},"simSeconds":3.5,"stalls":0,"drift":0},{"leg":"bench-west","from":{"x":0,"z":12.38273855698996},"end":{"x":-28.58897033203799,"z":12.544690910077028},"simSeconds":4.5,"stalls":0,"drift":0.162},{"leg":"t2-ramp","from":{"x":-28.58897033203799,"z":12.544690910077028},"end":{"x":-28.75058301754124,"z":30.41982132407171},"simSeconds":3.875,"stalls":0,"drift":0.162},{"leg":"gallery-shelf","from":{"x":-28.75058301754124,"z":30.41982132407171},"end":{"x":-34.13955335122941,"z":30.60025136856002},"simSeconds":0.875,"stalls":0,"drift":0.18}]}
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  22 [mobile-chrome] › e2e/e3-canyon-works-traversal.spec.ts:120:1 › the hero walks from the works bridge up the t2 ramp to the first gallery target, round the cliff (7.0s)
+  ✘  23 [mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span (14.2s)
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  24 [mobile-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit (4.8s)
+  ✘  25 [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics (12.8s)
+  ✘  26 [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge (17.5s)
+  -  27 [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:240:1 › seeded basin diagnostics include hash-identical enemy positions
+  -  28 [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:254:1 › basin stress stays in frame envelope while the flat claim remains neutral
+  ✓  29 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (5.5s)
+  ✓  30 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (4.6s)
+  ✓  31 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (4.4s)
+  ✓  32 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (4.7s)
+  ✓  33 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (7.8s)
+  ✓  34 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (10.8s)
+  ✓  35 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (7.4s)
+  ✓  36 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (6.2s)
+  ✓  37 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (7.9s)
+  ✓  38 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (4.7s)
+  ✓  39 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (3.8s)
+  ✓  40 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (5.0s)
+
+
+  1) [desktop-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 3
+    + Received  + 3
+
+      Object {
+    -   "alive": 1,
+    -   "attached": 1,
+    -   "sourceId": "lantern:1",
+    +   "alive": 0,
+    +   "attached": 0,
+    +   "sourceId": null,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      79 |   expect(await page.evaluate(() => window.__GR_TEST__!.spawnMoths(1, 30, 32))).toBe(1);
+      80 |   await page.evaluate(() => window.__GR_TEST__!.advanceSim(2));
+    > 81 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.mothSwarm)).toMatchObject({ alive: 1, attached: 1, sourceId: 'lantern:1' });
+         |                                                                                              ^
+      82 |   expect(await page.evaluate(() => window.__GR_TEST__!.lightCoverage(37.5, 32))).toBeLessThan(full * 0.6);
+      83 |   await shot(page, testInfo, 'moth-cloud-lamp');
+      84 |   await page.evaluate(() => {
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/e3-canyon-works.spec.ts:81:94
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.85
+    Received:   1.037
+
+      144 |   await writeFile(path.join(ARTIFACT_DIR, `slope-report-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
+      145 |
+    > 146 |   expect(report.uphillVsFlatSpeed).toBeLessThan(0.85);
+          |                                    ^
+      147 |   expect(report.downhillVsFlatSpeed).toBeGreaterThanOrEqual(0.98);
+      148 |   expect(uphill.terrain?.grounded).toBe(true);
+      149 |   expect(uphill.terrain?.traversable).toBe(true);
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/gt-03-enemy-elevation.spec.ts:146:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge 
+
+    Error: same: -38 → -46
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "west"
+    Received: null
+
+      232 |   for (const row of goalSideRows) {
+      233 |     expect(row.samples, `${row.polarity}: ${row.startX} → ${row.targetX}`).toBeGreaterThan(5);
+    > 234 |     expect(row.passSide, `${row.polarity}: ${row.startX} → ${row.targetX}`).toBe(row.expectedPassSide);
+          |                                                                             ^
+      235 |   }
+      236 |   expect(errors.consoleErrors).toEqual([]);
+      237 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/gt-03-enemy-elevation.spec.ts:234:77
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-clif-0ef21-sends-them-around-the-ridge-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-clif-0ef21-sends-them-around-the-ridge-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-clif-0ef21-sends-them-around-the-ridge-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-clif-0ef21-sends-them-around-the-ridge-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 3
+    + Received  + 3
+
+      Object {
+    -   "alive": 1,
+    -   "attached": 1,
+    -   "sourceId": "lantern:1",
+    +   "alive": 0,
+    +   "attached": 0,
+    +   "sourceId": null,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      79 |   expect(await page.evaluate(() => window.__GR_TEST__!.spawnMoths(1, 30, 32))).toBe(1);
+      80 |   await page.evaluate(() => window.__GR_TEST__!.advanceSim(2));
+    > 81 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.mothSwarm)).toMatchObject({ alive: 1, attached: 1, sourceId: 'lantern:1' });
+         |                                                                                              ^
+      82 |   expect(await page.evaluate(() => window.__GR_TEST__!.lightCoverage(37.5, 32))).toBeLessThan(full * 0.6);
+      83 |   await shot(page, testInfo, 'moth-cloud-lamp');
+      84 |   await page.evaluate(() => {
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/e3-canyon-works.spec.ts:81:94
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.85
+    Received:   2.23
+
+      144 |   await writeFile(path.join(ARTIFACT_DIR, `slope-report-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
+      145 |
+    > 146 |   expect(report.uphillVsFlatSpeed).toBeLessThan(0.85);
+          |                                    ^
+      147 |   expect(report.downhillVsFlatSpeed).toBeGreaterThanOrEqual(0.98);
+      148 |   expect(uphill.terrain?.grounded).toBe(true);
+      149 |   expect(uphill.terrain?.traversable).toBe(true);
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/gt-03-enemy-elevation.spec.ts:146:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge 
+
+    Error: same: -38 → -46
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "west"
+    Received: null
+
+      232 |   for (const row of goalSideRows) {
+      233 |     expect(row.samples, `${row.polarity}: ${row.startX} → ${row.targetX}`).toBeGreaterThan(5);
+    > 234 |     expect(row.passSide, `${row.polarity}: ${row.startX} → ${row.targetX}`).toBe(row.expectedPassSide);
+          |                                                                             ^
+      235 |   }
+      236 |   expect(errors.consoleErrors).toEqual([]);
+      237 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/gt-03-enemy-elevation.spec.ts:234:77
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-clif-0ef21-sends-them-around-the-ridge-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-clif-0ef21-sends-them-around-the-ridge-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-clif-0ef21-sends-them-around-the-ridge-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-battery/gt-03-enemy-elevation-clif-0ef21-sends-them-around-the-ridge-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [desktop-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span 
+    [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+    [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge 
+    [mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span 
+    [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+    [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge 
+  2 skipped
+  32 passed (6.3m)
