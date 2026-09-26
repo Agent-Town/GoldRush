@@ -21,7 +21,7 @@ import {
   CAPTURE_NAME, CAPTURE_TOWN, HUD_OFF_SELECTORS, TakeRecorder, VIEWPORTS, collectErrors, installStopHandler,
   launchCaptureBrowser, loadLineage, log, networkVerdict, newCaptureContext, setHudVisible, sleep, takeName, writeSidecar,
 } from './lib/capture.mjs';
-import { PILOT_DISCLOSURE, Pilot, readRun, turtle } from './lib/pilot.mjs';
+import { CENTER_RIVER, PILOT_DISCLOSURE, Pilot, readRun, turtle } from './lib/pilot.mjs';
 import { launchFromBoard, openBoard, waitForTown } from './lib/town.mjs';
 
 const { values: args } = parseArgs({
@@ -125,7 +125,7 @@ try {
   const { context, ledger } = await newCaptureContext(browser, viewport, { storageState: state });
   const page = await context.newPage();
   const errors = collectErrors(page);
-  const pilot = new Pilot(page, { viewport: shape.context.viewport });
+  const pilot = new Pilot(page, { viewport: shape.context.viewport, river: CENTER_RIVER });
   await page.goto('/');
   await page.getByTestId('start-menu-enter-town').click({ timeout: 60_000 });
   await waitForTown(page);

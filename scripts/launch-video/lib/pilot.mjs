@@ -15,6 +15,10 @@
 import * as THREE from 'three';
 import { log, sleep } from './capture.mjs';
 
+// The Claim's, Night Shift's and the Baron's river: east-west through z 0, half-width 5, one centre ford 3 wide each
+// side (assets/contracts/epoch-1-frontier/contracts.json tileParams: water.halfWidth 5, fords center-ford halfWidth 3).
+export const CENTER_RIVER = { halfWidth: 5, fords: [{ x: 0, halfWidth: 3 }] };
+
 export const PILOT_DISCLOSURE = 'pilot: the capture script, playing through real keyboard and mouse events at 1x; it reads the published diagnostics and never writes game state';
 
 // The camera, as src/systems/CameraRig.ts places it for a run (sceneScale 1): the tracked target is the
@@ -113,8 +117,9 @@ export function projectToScreen(run, world, viewport) {
 const MOVE_KEYS = ['KeyW', 'KeyA', 'KeyS', 'KeyD'];
 
 export class Pilot {
-  constructor(page, { viewport, recorder = null, avoid = [], picks = DEFAULT_PICKS, onService = null } = {}) {
+  constructor(page, { viewport, recorder = null, avoid = [], picks = DEFAULT_PICKS, onService = null, river = null } = {}) {
     this.page = page;
+    this.river = river;
     this.viewport = viewport;
     this.recorder = recorder;
     this.avoid = avoid;
@@ -251,7 +256,38 @@ export class Pilot {
     return { dx, dz };
   }
 
-  async walkTo(target, { tolerance = 0.9, timeoutMs = 25_000, service = true, until = null } = {}) {
+  /**
+   * The deep river cannot be walked across (Night Shift t1, 2026-09-27: the heroine stood at the south bank's edge
+   * for eight waves, walking at a seam on the far side). A walk whose straight line crosses the river outside a ford
+   * goes by the nearest ford instead: to its near end on land, across, then on. `river` is
+   * { halfWidth, fords: [{ x, halfWidth }] } for the east-west river at z 0 (the Claim, Night Shift, the Baron).
+   */
+  routeVia(from, to) {
+    if (!this.river) return null;
+    const bank = this.river.halfWidth + 1.2;
+    const side = (z) => (z >= 0 ? 1 : -1);
+    const a = side(from.z);
+    const b = side(to.z);
+    if (a === b || Math.abs(to.z) < this.river.halfWidth) return null;
+    const t = from.z / (from.z - to.z);
+    const xAtRiver = from.x + (to.x - from.x) * t;
+    if (this.river.fords.some((ford) => Math.abs(xAtRiver - ford.x) < ford.halfWidth - 0.6)) return null;
+    const ford = [...this.river.fords].sort((f1, f2) => (Math.abs(f1.x - from.x) + Math.abs(f1.x - to.x)) - (Math.abs(f2.x - from.x) + Math.abs(f2.x - to.x)))[0];
+    return [{ x: ford.x, z: a * bank }, { x: ford.x, z: b * bank }];
+  }
+
+  async walkTo(target, { tolerance = 0.9, timeoutMs = 25_000, service = true, until = null, route = true } = {}) {
+    if (route && this.river) {
+      const now = await this.run();
+      const hops = now?.hero ? this.routeVia(now.hero, target) : null;
+      if (hops) {
+        this.note('route-via-ford', { from: { x: Number(now.hero.x.toFixed(1)), z: Number(now.hero.z.toFixed(1)) }, to: target, hops });
+        for (const hop of hops) {
+          const reached = await this.walkTo(hop, { tolerance: 1.0, timeoutMs: 15_000, service, until, route: false });
+          if (reached !== 'arrived' && reached !== 'timeout') return reached;
+        }
+      }
+    }
     const started = Date.now();
     while (Date.now() - started < timeoutMs) {
       if (service) {

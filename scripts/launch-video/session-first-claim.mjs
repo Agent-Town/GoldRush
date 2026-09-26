@@ -21,7 +21,7 @@ import {
   CAPTURE_NAME, CAPTURE_TOWN, TakeRecorder, VIEWPORTS, collectErrors, installStopHandler, launchCaptureBrowser, log,
   loadLineage, networkVerdict, newCaptureContext, saveLineage, setHudVisible, sleep, takeName, writeSidecar, HUD_OFF_SELECTORS,
 } from './lib/capture.mjs';
-import { PILOT_DISCLOSURE, Pilot, bankSecuredClaim, readRun } from './lib/pilot.mjs';
+import { CENTER_RIVER, PILOT_DISCLOSURE, Pilot, bankSecuredClaim, readRun } from './lib/pilot.mjs';
 import { onboard, openBoard, launchFromBoard, waitForTown, walkToBuilding } from './lib/town.mjs';
 import { playClaim } from './claim-choreography.mjs';
 
@@ -59,7 +59,7 @@ try {
   const { context, ledger } = await newCaptureContext(browser, viewport, fresh ? {} : { storageState: loadLineage(args['claim-from-lineage']) });
   const page = await context.newPage();
   const errors = collectErrors(page);
-  const pilot = new Pilot(page, { viewport: shape.context.viewport });
+  const pilot = new Pilot(page, { viewport: shape.context.viewport, river: CENTER_RIVER });
 
   if (fresh) {
     await page.goto('about:blank');
