@@ -1,136 +1,149 @@
-# localhost-cors-2: implementer report (STOPPED before any door changed)
+# localhost-cors-2: implementer report
 
-**Branch** `fix/localhost-cors-2` in `/Users/robin/Claude/Projects/wt-lc2`, cut from main at `39f88d36f` (main has since moved one docs-only commit, `1d168c966`, five lines in `docs/HANDOVER-2026-09-06-attended.md`; not merged or rebased, as instructed).
+**Branch** `fix/localhost-cors-2` in `/Users/robin/Claude/Projects/wt-lc2`, cut from main at `39f88d36f`. The amended master was read from main at `11e061e29` with `git show` (main not merged or rebased, as instructed).
 **Implementer** Claude Opus 5.5 at maximum effort, attended-side scratch worktree, never Codex. **Date** 2026-09-26.
-**Verdict: NOT READY-FOR-GATES. STOPPED on a false premise, with no door, test script, dotfile or doc changed.** The master's scope item 4 says the e2e batteries that exercise doors "set the variable where they need it (measure which do; the default e2e fixtures mock the API, so expect none)", and its firewall lists no e2e file. Measured: one default-gate e2e spec asserts the very behavior this task removes, six more default-gate e2e specs and one named functions gate (`test:stats`) only pass on a checkout that holds a gitignored `.dev.vars`, and none of those files is on the TOUCH-ONLY list. AGENTS.md: "if a fix lands outside the TOUCH-ONLY list, STOP and report"; the brief: "If a premise in the master is false on your branch, STOP and report exactly what you found." What this run did land is inside the firewall and useful either way: the probe the master asks for (scope 3), extended to every CORS entry point of the eight doors, with its BEFORE counts, and the measured inventory below.
+**Verdict: READY-FOR-GATES.** Every one of the eight doors now admits a localhost origin only when `ALLOW_LOCALHOST_ORIGINS` is exactly `'1'`, through one helper that reads that variable and nothing else (`functions/api/_cors.ts`); the mail key is off the CORS path. The in-process probe over all 22 CORS entry points: **134 of 782 rows broke the rule before, 0 of 782 after**, and two defects manufactured in the helper are caught (44 and 134 rows). Every harness that starts the functions passes the switch to its own dev run, so every gate below ran in this worktree with NO `.dev.vars`, `.env` or `.env.local` present, the way a fresh clone and the drain's detached worktree run them. `wrangler pages dev` was measured reading the root `.dev.vars` at runtime. `src/**`, `server/**` and `wrangler.toml` are byte-identical to the cut.
 
 ---
 
-## 0. Pre-flight (as written in the master)
+## 0. History of this run
+
+1. **First pass, stopped (commits `027dc3a9f`, `4e97cb1b0`).** The master's scope 4 expected no e2e battery to need the variable. Measured instead: `e2e/tl-02-public-stats.spec.ts:197-199` asserted the behavior this slice removes; six multiplayer specs and `scripts/test-stats.mjs` pass only where a root `.dev.vars` exists; `assay-season-roll` was uncertain (F-LC2-1 to F-LC2-4). None was on the TOUCH-ONLY list, so the run stopped before any door changed, with the probe and its BEFORE counts banked.
+2. **The amendment.** The coordinator amended the master on main (`11e061e29`): a named firewall lift for exactly those dependents, `.gitignore` (one line) and the standings 308 argument (F-LC2-8, F-LC2-9), and scope 4 rewritten from the measurements. This pass implements it. Pre-flight held: tracked tree clean, `npm run build` rc 0 before any edit (42 s, vite 2933 modules, host load 56 to 89); `git log main..HEAD` held only the first pass's two artifact commits.
+
+---
+
+## 1. What changed
+
+| Commit | Concern | Paths |
+| --- | --- | --- |
+| `ec717cb76` | the eight doors key their localhost arm on one helper | `functions/api/_cors.ts` (new), `_bugs.ts`, `_accounts.ts`, `redeem.ts`, `standings.ts`, `refusals.ts`, `telemetry.ts`, `stats.ts`, `_multiplayer.ts` |
+| `82f50c0c3` | the local runners opt in, each for its own dev run | `scripts/test-accounts.mjs`, `scripts/test-multiplayer.mjs`, `scripts/test-stats.mjs`, `e2e/mp-06-party-overview.spec.ts`, `e2e/mp-arsenal.spec.ts`, `e2e/agent-seat.spec.ts`, `e2e/second-rider.spec.ts`, `e2e/mp-reconnect.spec.ts`, `e2e/mp-02-lockstep.spec.ts`, `e2e/assay-season-roll.spec.ts` |
+| `030b8e540` | the stats preflight rows assert the rule both ways | `e2e/tl-02-public-stats.spec.ts` |
+| `b2d0c3992` | the switch documented | `.gitignore`, `.dev.vars.example`, `docs/ops/ops-evening-2026-09.md` |
+
+- **The helper**, `functions/api/_cors.ts` (23 lines): `localhostOriginAllowed(origin, env)` returns `env?.ALLOW_LOCALHOST_ORIGINS === '1' && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)`, with the type `LocalhostOriginsEnv`. The variable and nothing else decides it (not the mail key, not `DEV_AUTH`, never a header, origin or host); an undefined env refuses. The localhost pattern the eight doors repeated now lives only here (`grep -rln 'localhost|127' functions/api/` names only `_cors.ts`). Each door keeps its own `ALLOWED_ORIGINS = new Set(...)`, which `scripts/function-cors-allowlist.test.mjs` counts.
+- **Each door:** its env type is intersected with `LocalhostOriginsEnv`, `corsHeaders` takes the env, and the localhost arm is `localhostOriginAllowed(origin, env)`. Call sites that changed only their argument: `redeem.ts:39`, `stats.ts:57`, `telemetry.ts:96`, `refusals.ts:70`, `standings.ts:259`, `:561`, `:1935`, `_multiplayer.ts:136`, `:155`, `:630` (the bug office and the accounts copy already passed the env). `refusals.ts` and `standings.ts` now take the env where they took `ALLOWED_CORS_ORIGINS` and read the droplet's extras from it. The bug office drops `RESEND_API_KEY` from `BugsEnv` (its only reader was the CORS arm); the accounts copy drops `devOrigins` and keeps `isDev` and the sender check (SEC-10, not the CORS path). `RESEND_API_KEY` is now read only by `_accounts.ts` `requestCode`, `sendEmail` and `isDev`.
+- **`standings.ts`, the CORS arm only plus the 308 argument (F-LC2-8):** the two CORS call sites, `canonicalRedirect`'s one `corsHeaders` argument at `:1935` (the 308 carries the door's CORS answer, now under the same rule; the redirect's logic is untouched), the env type and `corsHeaders`. The import takes the blank line after the import block, so none of the file's 1993 lines moves: `docs/bench/same-game-audit.md` cites `standings.ts:1750..1776` 672 times, and its guards compare only the verb set and the citation format, so a shift would rot the report without redding anything.
+- **Comments (F-LC2-10):** the bug office and accounts CORS blocks are rewritten, keeping the SEC-8 and F-SEC2-2 history, correcting the claim that Pages binds the sender (F-SF1-8), and dropping the old accounts block's em dashes. The accounts `isDev` block's "Both live doors bind the sender" is corrected (the droplet binds it; the Pages production environment binds neither the sender nor `DEV_AUTH`), and its pointer `server/ledger/serve.mjs:119`, which had rotted onto `async function requestBody`, now names `main()` (F-LC2-11).
+- **The harnesses (`82f50c0c3`):** `test-accounts.mjs` adds `--binding ALLOW_LOCALHOST_ORIGINS=1` to every wrangler arm, the `--serve` browser fixture included (`:884-:887`), gives the ledger fixture the variable (`:978-:979`) and gives `callDoor`'s in-process door calls the variable (`:767-:769`). `test-multiplayer.mjs` binds it on both relay arms (`:296-:298`, the unconfigured one running from a temp dir no root `.dev.vars` reaches) and in `callRoomDoor` (`:475-:476`). `test-stats.mjs` binds it on its pages dev run (`:180-:183`). The six multiplayer specs bind it on the pages dev relay they start and never on the room worker (`mp-06-party-overview.spec.ts:295-296`, `mp-arsenal.spec.ts:324-325`, `agent-seat.spec.ts:253-254`, `second-rider.spec.ts:201-202`, `mp-reconnect.spec.ts:238-239`, `mp-02-lockstep.spec.ts:1445-1447`). `assay-season-roll.spec.ts:93-95` gives its in-process county door the variable. The in-process envs are spread (`{ ...env, ALLOW_LOCALHOST_ORIGINS: '1' }`), so every counting store the checks read stays the same object.
+- **`tl-02-public-stats.spec.ts:197-206`:** the preflight rows now assert 403 with no allow-origin header without the variable, then 204, the allow-origin header and the methods with `ALLOW_LOCALHOST_ORIGINS: '1'`.
+- **`.gitignore`:** one rule, `.dev.vars`, appended at the end after a blank separator, so none of the file's own line pointers move (it cites its `*.log` rule "at line 7" at `:59` and `:81`, and lines 60, 72 and 74 at `:87-:91`). Exact name, so `.dev.vars.example` stays tracked (`git check-ignore -v .dev.vars` names `.gitignore:187`; the example is not ignored). Blast radius measured: no path named `.dev.vars*` existed or was tracked. No wrangler spawn in the repo passes `--env`, so the `.dev.vars.<env>` variants that wrangler's own two-line convention also covers are unused here.
+- **`.dev.vars.example` (tracked):** the one line `ALLOW_LOCALHOST_ORIGINS=1` under a header naming it development only, never on Pages or the droplet, which runner reads it, and that once `.dev.vars` exists wrangler loads it instead of `.env` and `.env.local` (F-LC2-6). **`.dev.vars` (gitignored)** was created in this worktree by the dev-vars probe's arm B as a copy of the example, and is not committed.
+- **The runbook:** `docs/ops/ops-evening-2026-09.md` gains a short section: never set the variable on the Pages project (production or preview: no `wrangler pages secret put`, no dashboard variable, no `[vars]` entry in `wrangler.toml`) and never in `/etc/goldrush-ledger.env`; the variable-names read that measured F-SF1-8 is the check; a locally served game talking to the live county is refused by every door after this lands (F-LC2-5).
+
+---
+
+## 2. The probe: 134 of 782 before, 0 of 782 after
+
+`artifacts/localhost-cors-2/cors-probe.mjs` calls all 22 CORS entry points of the eight doors in process (vite middleware mode, no port, stub strings only) under five env shapes and seven origins, plus the standings 308 under two more; a preflight is answered by the CORS decision before any handler logic, so nothing is written.
+
+| Env shape | Rows | Before (`39f88d36f`) | After (`b2d0c3992`) |
+| --- | --- | --- | --- |
+| pages production (the one measured variable plus the KV bindings) | 154 | 44 | **0** |
+| droplet production (the env `server/ledger/serve.mjs` builds; sender bound) | 154 | 22 | **0** |
+| development (`ALLOW_LOCALHOST_ORIGINS=1`) | 154 | 0 | **0** |
+| misspelled development (`=true`) | 154 | 44 | **0** |
+| development with the sender bound (`=1` and `RESEND_API_KEY`) | 154 | 22 | **0** |
+| pages production, canonical origin bound (the 308) | 6 | 2 | **0** |
+| development, canonical origin bound (the 308) | 6 | 0 | **0** |
+| **total** | **782** | **134** (rc 1) | **0** (rc 0) |
+
+By door, after: `_bugs.ts` 105 rows, `_accounts.ts` 280, `redeem.ts` 35, `standings.ts` 152, `refusals.ts` 35, `telemetry.ts` 35, `stats.ts` 35, `_multiplayer.ts` 105, zero mismatches each. Sample rows: `stats.ts onRequest | pages production | http://localhost:5188 | 403 cors_forbidden | (none)`; the same with the switch: `204 | http://localhost:5188`; the 308 under pages production from localhost: `308 | (none)`.
+
+**The detector is proven by manufacturing the defect, not only by its green** (each mutant written into `_cors.ts`, the probe run, the original restored byte for byte, sha256 checked):
+- M1, any non-empty value accepted (`Boolean(env?.ALLOW_LOCALHOST_ORIGINS)`): **44 of 782**, exactly the misspelled-value rows (`cors-probe-mutation-m1-any-value.txt`);
+- M2, the switch removed (the pattern alone): **134 of 782**: pages 44, droplet 44, misspelled 44, the 308 path 2 (`cors-probe-mutation-m2-no-switch.txt`).
+
+Files: `cors-probe-before.txt`, `cors-probe-after.txt`, the two mutation files, beside this report. Re-run: `node artifacts/localhost-cors-2/cors-probe.mjs --label after`.
+
+---
+
+## 3. Which local runner reads the switch
+
+- **`wrangler pages dev` and `wrangler dev`**, from `.dev.vars` in the directory of the config they resolve (installed wrangler 4.107.0, `cli.js:184480-:184491`). This repo's `wrangler.toml` sits at the root, so every `wrangler pages dev public` started there reads the root `.dev.vars`; a run started with `--cwd <dir>` or `--config <dir>/...` reads that directory's instead. **Measured at runtime under the lock** (`dev-vars-probe.mjs` / `gates/dev-vars-probe.txt`): arm A, no `.dev.vars` in the root: a localhost preflight to `/api/stats` answered **403 with no allow-origin**, the county origin 204 with its allow-origin, and wrangler read no variables file; arm B, `.dev.vars` copied from `.dev.vars.example`: the localhost preflight answered **204 with `http://localhost:5188`**, the county origin 204, and wrangler's own log said `Using secrets defined in .dev.vars` (both wrangler pids, 69856 and 69916, stopped by number).
+- **Not the vite dev server:** it runs no function; its only middlewares are a deps URL rewrite and the crafting-queue endpoints (`vite.config.ts:313`, `:329`, `:342`).
+- **Not the droplet ledger:** `server/ledger/serve.mjs` `main()` forwards an explicit key list without this one, so even a line in `/etc/goldrush-ledger.env` could not reach a door; tests hand it over through `createLedgerServer({ env })`.
+- **No deploy path reads `.dev.vars`:** its loader's only callers are local dev bindings and `wrangler types` (`cli.js:184676-:184694`, `:207260-:207266`), and the droplet mirror is a positive allowlist closed by `--filter=-s *` (`scripts/deploy.sh:371-:478`).
+- **F-LC2-6, as the master asks:** creating `.dev.vars` in a checkout switches off wrangler's fallback of loading `.env` and `.env.local` into that checkout's local functions (`cli.js:184417-:184418`, `:184493-:184503`; the fallback defaults on, `:39497-:39499`). In the primary checkout, which keeps its credentials in `.env.local`, that ends those values reaching local wrangler servers, and it also stops any local flow that relied on them. This run never read `.env.local`.
+
+---
+
+## 4. Gates (tip `b2d0c3992`; worktree with no `.dev.vars`, `.env` or `.env.local`)
 
 | Check | Result |
 | --- | --- |
-| `git status --short`, modified tracked files outside the churn classes | none (only `?? node_modules`, the symlink) |
-| `git log main..HEAD` | empty |
-| both predecessors in `git log --oneline main` | `70cf2362f` (merge of `fix/small-fixes-1`), `2957a1b1b` (kv2 LANDED) |
-| `npm run build` before touching anything | rc 0, 42 s, vite 2933 modules; no tracked file changed; host load 56 rising to 89 during the run |
+| tsc | rc 0, 6 s |
+| `npm run build` | rc 0, 20 s, vite 2933 modules; no tracked file changed |
+| the guards that parse these files: `function-cors-allowlist`, `worker-type-coverage`, `site-security-headers`, `ratelimit-window`, `citation-title-guard`, `no-emdash-guard`, `gate-caller-audit` | 81 of 81 |
+| `source-pointer-guard` / `law-pointer-guard` | PASS / PASS (34 instruments, 0 dead) |
+| engine hash | `2cf26ba49f0e...` on the tip, equal to the pin (`assets/engine-era.json:4`); `functions/`, `e2e/` and the test scripts are not engine inputs (`scripts/assay-replay-agent.mjs:36-44`) |
+| `test:accounts` (lock) | rc 0, 9 s, load 49.5: 43 kv, 43 sqlite, 27 sign-in hardening, 26 office credential, 86 ledger road, 16 migration checks |
+| `test:mp` (lock) | rc 0, 12 s, load 45.4: 528 relay checks |
+| `test:stats` (lock) | rc 0, 17 s, load 45.8: stats worker 87, standings assay 617 (kv) and 617 (sqlite), ledger worker 26 |
+| `test:node-guards`, every `&&` leg run on its own (lock, `battery-legs.mjs`) | combined rc 1, 1244 s. Leg 1: 1032 tests, 1022 pass, **5 fail**, 5 skipped; legs 2 to 5, 7 and 8 rc 0 (ticker stats, findings-state, blocker-panel, ruling-propagation, nul-audit CLEAN, review-fixes 86 of 86); leg 6 `test:desk-declaration` rc 2. Every red is attributed in 4.1: identical on the cut, none reads a changed file. |
+| e2e, 18 specs, both projects, `--workers=1`, vite on 5351 after a warm boot (lock) | rc 1, 754 s, load 9.4: **132 passed, 21 failed**, 12 skipped, 9 did not run. All 21 reds reproduce on the cut (4.2). The slice's own specs: `tl-02` 8 of 8 passed, `mp-06-party-overview` 4 of 4, `mp-arsenal` 2 of 2, `agent-seat` and `mp-reconnect` 1 of 1 each (their mobile arms skip by the specs' own `test.skip`), `mp-02-lockstep` 15 passed, 10 skipped by its own `test.skip`, 1 failed (`:687`, red on the cut identically); `assay-season-roll` 4 and `second-rider` 2 red on the cut identically. The adjacent door specs passed every test they started: `terrain3d-default` 6, `live-seed-rotation` 20, `bug-office-api` 8, `ratelimit-429-net` 6. The 12 skips are exactly those mobile arms (1, 1, 10). |
+| the dev-vars probe (lock) | rc 0, 3 s: section 3 |
+| control on the cut (lock, `control-run.sh`, `control-run-2.sh`) | a detached worktree of `39f88d36f` in the scratchpad, wired like this one (node_modules linked, art links resolving, no env files), removed afterwards: section 4 |
+
+The lock was held from 04:25:07Z to 04:59:33Z (`gates/summary.txt`); every server the batch started it stopped by pid (vite 51939; the dev-vars probe's two wrangler pids are in its output). The two control batches held it 05:00:39Z to 05:09:54Z and 05:11:31Z to 05:15:41Z (vites 76812, 60170, 19764, each stopped by number). The e2e specs rewrote 35 tracked evidence files of their own (`artifacts/live-seed-rotation-1` 11, `seam-anim-mp` 6, `mp-02` 4, `party-pot-anchor` 4, `mp-03` 3, `terrain3d-default` 2, `tl-01` 2, `agent-seat` 1, `mp-04` 1, and `reviews/shots-fd1/standings-mobile-chrome.png`) and left 10 untracked screenshots: factory churn class (b), left uncommitted.
+
+### 4.1 The battery's reds, attributed
+
+Five leg-1 reds and leg 6, four causes, none of them this slice's (no red file, and no script one of them drives, changed on this branch):
+- **`desk-declaration-guard.test.mjs` "the live board is green" and leg 6 `test:desk-declaration` (rc 2):** "REFUSING: this is a linked worktree and its STATUS.md line-1 is NOT the one main carries". Main changed `STATUS.md` in 2 commits after the cut; this branch leaves it byte-identical to the cut. On the cut's worktree the leg answers rc 2 with the same refusal (`control-desk-declaration-base.log`).
+- **`ledger-backup-pull.test.mjs` (2 reds):** "GR_DROPLET_HOST missing from the environment and .env.local". A scratch worktree holds no `.env.local` by design, and this run never reads or copies it.
+- **`fixture-teardown.test.mjs` (1 red):** of 162 fixture owners, 161 left 0 temp directories; the one survivor is `s2672-dest-*` from `ledger-mirror-freshness-guard.test.mjs`, a child that failed on the same missing `GR_DROPLET_HOST`.
+- **`node-guards-contention.test.mjs` (1 red):** "node-guards board did not stay quiet for 300ms" during the full battery; alone it passes on both the cut and the tip (2.8 s, 2.4 s): the contention class.
+- **Control:** the six red files alone, on the cut and on the tip, each in an isolated TMPDIR: **identical**, 70 tests, 54 pass, 16 fail on each side; the 17 distinct failing lines diff empty; by message, 15 of the 16 trace to the missing `GR_DROPLET_HOST` (8 name it directly, 5 through a fixture that refused on it, and 2 are the pull that therefore never ran: "the pull must write to the destination in force" and an ENOENT on the file it never wrote), and 1 is the desk-declaration refusal; the same survivor classes on both sides (`control-battery-base.log`, `control-battery-tip.log`, `control-summary.txt`).
+
+### 4.2 The e2e reds, attributed
+
+- **20 of 21 reproduce test for test on the cut** (`control-run.sh`: the nine failing spec files on the cut's worktree, both projects, `--workers=1`, a warmed vite on 5352): same test, same error, same source line on each side, "common same 20, common different 0". Tip 21 failed, cut 21 failed.
+- **The 21st, `mp-02-lockstep:687`** (the town Ride Together card): serial mode never ran it on the cut in the first control, because the cut's `:466` failed first and the rest of the file did not run. `control-run-2.sh` ran it alone, twice on each side: **cut 2 of 2 failed, tip 2 of 2 failed**, the same `window.__GR_MP__.state().connected` 15 s timeout. `second-rider` (the same connect step): cut 1 of 1 failed, tip 1 of 1 failed, the same 20 s timeout.
+- **None is a CORS refusal:** `cors_forbidden` or "Origin not allowed" appears 0 times in the tip e2e log and in the three relay-spec traces; the `second-rider` trace shows its relay calls (`/api/multiplayer/create`, `/inspect`) answered 200.
 
 ---
 
-## 1. The premise that is false: e2e and gate consumers of the localhost arm
+## 5. Firewall accounting
 
-Every consumer that could send a loopback Origin to one of the eight doors, found by reading (every e2e spec naming `wrangler`, `createLedgerServer`, `ssrLoadModule` or `functions/api`, 19 files; every `scripts/`, `ops/`, `server/`, `src/` file with a loopback Origin header or constant), then classified by reading each call site. `playwright.config.ts:39-47` removes only three specs from the default gate (release-build, release-base-path, accounts-sync), so every e2e spec below except those three is collected by the default gate.
-
-**A. Certain red after the change, whatever the checkout holds (1 spec, 2 test instances):**
-- `e2e/tl-02-public-stats.spec.ts:193-201`, test "GET /api/stats guards methods and CORS preflight": calls the real stats door in process with `env: {}` and a preflight from `http://localhost:5188` (`:197`), and asserts `204` (`:198`) and `access-control-allow-origin: http://localhost:5188` (`:199`). Scope 2 requires exactly that request to be refused ("an unconfigured setup (no variable) refuses localhost in every door"), so this assertion must change; it runs on both projects. AGENTS.md forbids touching an existing e2e assertion unless the task says so.
-
-**B. Red in any checkout without a root `.dev.vars` (6 default-gate specs and 1 named functions gate):** each starts `wrangler pages dev public` with `cwd: ROOT` and no binding for the variable, then sends an explicit loopback Origin.
-| Consumer | wrangler spawn | loopback Origin sent |
-| --- | --- | --- |
-| `e2e/mp-06-party-overview.spec.ts` | `:291`, cwd ROOT `:301` | `:240` (createRoom, which throws on a non-ok answer, `:244`), `:330`; the browser joins cross-origin through `?mpRelay=` `:197-:198` |
-| `e2e/mp-arsenal.spec.ts` | `:320`, cwd ROOT `:330` | `:269`, `:359` |
-| `e2e/agent-seat.spec.ts` | `:249`, cwd ROOT `:257` | `:272` |
-| `e2e/second-rider.spec.ts` | `:197`, cwd ROOT `:207` | `:236` |
-| `e2e/mp-reconnect.spec.ts` | `:234`, cwd ROOT `:244` | `:185`, `:273` |
-| `e2e/mp-02-lockstep.spec.ts` | `:1426-:1445`, cwd ROOT `:1451-:1452` | `:1335`, `:1491` |
-| `scripts/test-stats.mjs` (`npm run test:stats`, first leg) | `startPages` `:168-:195`, cwd ROOT `:198-:201` | `ORIGIN = 'http://localhost:5188'` `:9`, sent on every request (`:52`, `:55`, `:261`, `:271-:284`); first red would be `:40` "empty stats returns 200" |
-
-A root `.dev.vars` rescues all seven because wrangler reads it from the repo root for these spawns (section 3). But `.dev.vars` is gitignored by design, so a fresh clone and the drain's detached chain worktree have none, and a gate that silently depends on it is the fragile shape this factory has been bitten by. The robust cure is one `--binding ALLOW_LOCALHOST_ORIGINS=1` per spawn, and every one of these files is outside the firewall.
-
-**C. Uncertain (1 spec):** `e2e/assay-season-roll.spec.ts:87-99` forwards the browser's own `request.headers()` into the in-process standings door with `env: { TELEMETRY: kv }` (`:92-:93`). If Playwright's `headers()` carries the page's `origin` (a loopback origin), the board answers 403 after the change; if not, nothing changes. Not measured (it needs a browser run). The cure is harmless either way: the variable in that env at `:93`.
-
-**D. Fixable inside the firewall (the two touchable scripts):**
-- `scripts/test-accounts.mjs`: `waitForServer` (`:992-:1008`) accepts only a 204 to a preflight from `ORIGIN` (`:17`, localhost), so both wrangler arms and the `--serve` browser fixture (`:42-:62`) need the binding in `startWrangler` (`:867-:884`); `startLedger` builds its env explicitly (`:973`); `callDoor` sends `Origin: ORIGIN` into in-process doors whose envs never carry the variable (`:766-:772`). Unaffected: `callAccounts` (`:379-:389`) and the office checks (`:412-:442`) send no Origin.
-- `scripts/test-multiplayer.mjs`: `startPages` (`:268-:307`) for both arms; the unconfigured arm runs wrangler with `--cwd <tmpdir>` (`:273`, `:295`), so no root `.dev.vars` can ever reach it; `callRoomDoor` sends `Origin: ORIGIN` in process (`:463-:469`). The relay WebSockets send no Origin (section 3), so they are unaffected.
-
-**E. Unaffected (measured by reading, and by the Node origin probe for the fetch-based ones):**
-- In-process e2e callers that build their Request with no Origin (7): `field-book.spec.ts:34-:39`, `mp-07c-4-reckoning.spec.ts:10-:16`, `milk-county-board.spec.ts:47-:53`, `lb-01-county-standings.spec.ts:60-:66`, `terrain3d-default.spec.ts:126-:131`, `tl-01-run-telemetry.spec.ts:245-:300` and `:354-:359`, `live-seed-rotation.spec.ts:247-:251`.
-- e2e specs whose Node `fetch` names no Origin (3): `cosmetic-grants.spec.ts` (`:99-:135`, `:242-:262`), `bug-office-api.spec.ts` (`:102`, `:109-:113`, `:117`), `ratelimit-429-net.spec.ts` (`:122-:130`).
-- `scripts/test-standings.mjs` (`directCall` `:163-:170`, `workerCall` `:2131-:2141`: no loopback Origin; its only Origin is the canonical one, `:132`) and `scripts/test-ledger-worker.mjs` (`https://county.example` through `ALLOWED_CORS_ORIGINS`, `:29`, `:47`).
-- Live agent seats: `scripts/gr-sim.mjs --origin` passes a relay BASE URL (`:189`, `:428`), and the client adds no Origin header (`src/mp/LockstepClient.ts:240`, `:421-:425`; Node adds none), so production seats keep working.
-
-**F. No gate calls them (2):** `playwright.accounts.config.ts:22` (no caller: `scripts/claimed-spec-harness-guard.mjs:201`) and `scripts/agent-seat-room.mjs` (spawn `:722-:733` with cwd ROOT, Origin `:776`, `:790`; named only in comments by `scripts/agent-seat.test.mjs:7` and `e2e/agent-seat.spec.ts:11`). Whoever runs either next needs the variable.
+Every path this branch changes against `39f88d36f` (23 outside `artifacts/localhost-cors-2/`, 46 inside it, this report among them) is on the amended TOUCH-ONLY list: the eight doors and the shared helper; `.dev.vars.example` (and `.dev.vars`, gitignored, not committed); `.gitignore` (the one rule); `docs/ops/ops-evening-2026-09.md`; `scripts/test-accounts.mjs`, `test-multiplayer.mjs`, `test-stats.mjs`; the eight named e2e specs, each only where it starts the functions or asserts the localhost arm; `artifacts/localhost-cors-2/**`. `git diff --stat 39f88d36f..HEAD -- src/ server/ wrangler.toml tasks/ STATUS.md` is empty. `standings.ts` and `_multiplayer.ts` change only their CORS arm (plus the named 308 argument); the grammar, the redirect logic and kv2's limiter are untouched.
 
 ---
 
-## 2. The probe (scope 3): BEFORE counts; AFTER not run because no door changed
+## 6. Findings
 
-`artifacts/localhost-cors-2/cors-probe.mjs`, in the style of `artifacts/small-fixes-1/bugs-cors-probe.mjs` (vite middleware mode, handlers called in process, no port, no server, stub strings only). It covers **every CORS entry point of the eight doors, 22 in all** (the bug office's 3, the accounts copy's 8, redeem 1, standings 4, refusals 1, telemetry 1, stats 1, multiplayer 3) under five env shapes and seven origins, plus the standings door's canonical 308 (which carries the door's CORS headers) under two more. A preflight is answered by the CORS decision before any handler logic, so nothing is written.
-
-The target rule it encodes: a loopback origin is admitted only when `env.ALLOW_LOCALHOST_ORIGINS === '1'` (admitted = `Access-Control-Allow-Origin` equal to the origin; refused = the door's refusal status, 403, or 404 on the bug office's two read doors, or the 308 with no CORS answer, AND no allow-origin header); the site's origins (agenttown.app, www, the pages.dev project and a preview) are admitted everywhere; a stranger is refused everywhere.
-
-**BEFORE, on the untouched tree `39f88d36f` (`cors-probe-before.txt`, rc 1, 2 s, host load 25.4): 782 rows, 134 do not match the rule.**
-
-| Env shape | Rows | Mismatches | What the mismatches are |
-| --- | --- | --- | --- |
-| pages production (the one measured variable, `ASSAY_WORKER_SECRET`, plus the KV bindings) | 154 | 44 | all 22 entry points admit both loopback origins: six doors unconditionally, the bug office and the accounts copy because the sender is unbound on Pages (F-SF1-8) |
-| droplet production (the env `server/ledger/serve.mjs:152-161` builds; sender bound) | 154 | 22 | the 11 entry points of the six ungated doors admit localhost; the bug office and accounts refuse |
-| development (`ALLOW_LOCALHOST_ORIGINS=1`) | 154 | 0 | every door already admits localhost |
-| misspelled development (`=true`) | 154 | 44 | the value is ignored today, so every door admits |
-| development with the sender bound (`=1` and `RESEND_API_KEY`) | 154 | 22 | the bug office and accounts refuse localhost because they key on the mail key (8 + 3 entry points, 2 origins) |
-| pages production, canonical origin bound (the 308) | 6 | 2 | the 308 carries `allow-origin: http://localhost:5188` |
-| development, canonical origin bound (the 308) | 6 | 0 | |
-
-By door (localhost admitted where the rule refuses / localhost refused where the rule admits / site or stranger rows): `_bugs.ts` 105 rows, 18 (12/6/0); `_accounts.ts` 280, 48 (32/16/0); `redeem.ts` 35, 6 (6/0/0); `standings.ts` 152, 26 (26/0/0); `refusals.ts` 35, 6 (6/0/0); `telemetry.ts` 35, 6 (6/0/0); `stats.ts` 35, 6 (6/0/0); `_multiplayer.ts` 105, 18 (18/0/0). **Site and stranger rows: 0 mismatches in every env**, so the rule's other two halves already hold and the change is confined to the localhost arm. Re-run: `node artifacts/localhost-cors-2/cors-probe.mjs --label after` (expected 0 of 782 once implemented).
+- **F-LC2-1, F-LC2-2, F-LC2-3, F-LC2-4, F-LC2-8, F-LC2-9: resolved in this slice** under the named lift (`030b8e540`, `82f50c0c3`, `ec717cb76`, `b2d0c3992`).
+- **F-LC2-10: resolved** (`ec717cb76`).
+- **F-LC2-5 (the drain puts it on the owner's desk before any deploy):** after this deploys, a game served locally (the vite dev server at `127.0.0.1:5188`) that talks to the live county (`src/app/GameApi.ts:5`) is refused by every door; the accounts door on the droplet already refuses it today. Intended by F-SEC2-2; no local variable can change a live door's answer.
+- **F-LC2-6 (the owner's call, stated in section 3 and in `.dev.vars.example`):** whether `.env.local` should keep reaching local wrangler servers in the primary checkout.
+- **F-LC2-7 (still open, no caller):** `playwright.accounts.config.ts:22` and `scripts/agent-seat-room.mjs` start root wrangler servers and send loopback origins without the switch; nothing reds, but whoever runs either next needs `.dev.vars` or a binding. Outside this firewall.
+- **F-LC2-11 (new, fixed in passing):** the `isDev` comment's pointer `server/ledger/serve.mjs:119` had rotted onto `async function requestBody` (the env block is `main()`); rewritten to name `main()`, since the block was being corrected anyway.
+- **F-LC2-12 (new, a gap worth a slice):** only one door's rule is GATED. `tl-02-public-stats.spec.ts` asserts the stats door both ways; every other harness now carries the switch, so a door that regressed to admitting localhost unconditionally would still pass `test:accounts`, `test:mp`, `test:stats` and the e2e specs. The probe catches it for all eight (M2 above) but is evidence, not a gate. Cure, outside this firewall: promote `cors-probe.mjs` into a node guard on the `test:node-guards` roster (`scripts/` and the one `package.json` line).
+- **F-LC2-13 (pre-existing reds on the cut, for the drain's inventory, not this slice's to cure):** 21 e2e tests in 9 spec files red on `39f88d36f` exactly as on this tip (section 4.2). By cause, as read: standings submissions answered 400 or `stored: true` where the specs expect 200 or `stored: false` (`field-book:129`, `mp-07c-4-reckoning:53`, `lb-01-county-standings:387`, and the empty boards of `assay-season-roll:105` and `:149`); the wardrobe option now reading "Claim-Day · at the tailor's" where `cosmetic-grants:65` expects "Claim-Day Neckerchief"; gameplay flows timing out (`lb-01-county-standings:654`, `milk-county-board:446`, `tl-01-run-telemetry:229`); and the town ride never reporting `connected` (`second-rider:28`, `mp-02-lockstep:687`). On the cut, `mp-02-lockstep:466` also failed once on a hash desync at tick 570 and passed on the tip: a flake on the cut, noted, not scored.
 
 ---
 
-## 3. Measured facts the continuation needs
+## 7. Commits (path-scoped, prefix `fix:`)
 
-- **Which local runner reads the variable.** `wrangler pages dev` (and `wrangler dev`) read `.dev.vars` from the directory of the config they resolve (`cli.js:184480-:184491` of the installed wrangler 4.107.0, `/opt/homebrew/Cellar/cloudflare-wrangler/4.107.0/libexec/lib/node_modules/wrangler/wrangler-dist/cli.js`). In this repo `wrangler.toml` sits at the root (`pages_build_output_dir = "dist"`, `wrangler.toml:2`), so every `wrangler pages dev public` started with cwd ROOT reads the ROOT `.dev.vars`; a runner started with `--cwd <dir>` or `--config <dir>/...` reads `<dir>/.dev.vars` instead (the multiplayer unconfigured arm, the room and registry workers). **The vite dev server reads nothing and runs no function**: its only middlewares are a deps URL rewrite (`vite.config.ts:313`) and the crafting-queue endpoints (`:329`, `:342`). **The droplet ledger never forwards the variable**: `serve.mjs:152-161` names its env keys explicitly; tests reach it through `createLedgerServer({ env })`, which merges a caller's env (`:96`).
-- **`.dev.vars` displaces `.env` and `.env.local`.** With no `.dev.vars`, wrangler loads `.env` then `.env.local` from that same directory as local bindings (`cli.js:184417-:184418`, `:184493-:184503`; `CLOUDFLARE_LOAD_DEV_VARS_FROM_DOT_ENV` defaults to true, `:39497-:39499`; process env is NOT included by default, `:39501-:39503`). Creating `.dev.vars` in a checkout silently stops `.env.local` reaching its local functions (F-LC2-6).
-- **No deploy path reads `.dev.vars`.** Its loader has two callers, local dev bindings (`getBindings2`, `cli.js:184676-:184694`) and `wrangler types` key names (`:207260-:207266`); the droplet mirror is a positive allowlist closed by `--filter=-s *` (`scripts/deploy.sh:371-:478`), so a root `.dev.vars` is never mirrored.
-- **Gitignore convention.** Wrangler's own is `.dev.vars*` plus `!.dev.vars.example` (`cli.js:238109-:238110`). The repo's `.gitignore` has neither (`.env.local` at `:3` only), and `.gitignore` is not on the master's TOUCH-ONLY list although scope 1 and the brief ask for "the gitignored file".
-- **Node sends no Origin.** Node v26.4.0's `fetch` (GET and POST) and `WebSocket` put no Origin header on the wire (`node-origin-probe.mjs` / `.txt`, one loopback server in process). A caller built on them takes every door's no-origin path.
-- **The guard that parses these files.** `scripts/function-cors-allowlist.test.mjs` counts files declaring `ALLOWED_ORIGINS = new Set(` (floor 7, `:94`, `:98-:103`), so the shared helper must NOT absorb the per-door allowlists; `scripts/worker-type-coverage.test.mjs` requires every `functions/**/*.ts` in `tsc --listFiles` (`tsconfig.json` includes `functions`, so a new `functions/api/_cors.ts` is covered). `scripts/test-accounts.mjs:457-:463` requires five doors to import `./_compare` and never compare an operator secret with `===`; the new predicate compares a flag, not a secret, and matches neither pattern.
-
----
-
-## 4. Findings
-
-- **F-LC2-1 (blocking, the false premise):** `e2e/tl-02-public-stats.spec.ts:197-:199` asserts that an unconfigured env admits a localhost preflight (204 and the allow-origin header), the behavior scope 2 removes. It is a default-gate spec on both projects. Cure, outside this firewall: keep the test's development arm by giving that call `env: { ALLOW_LOCALHOST_ORIGINS: '1' }`, and add the production arm (`env: {}`: 403, no allow-origin).
-- **F-LC2-2 (blocking in any checkout without `.dev.vars`):** the six multiplayer e2e specs of section 1.B spawn `wrangler pages dev` at the root with no binding and send loopback Origins. Cure, outside this firewall: `--binding ALLOW_LOCALHOST_ORIGINS=1` in each spawn (six one-line edits). The alternative, a gate harness that copies `.dev.vars.example` to `.dev.vars` before gating, puts a gitignored file under a gate: not recommended.
-- **F-LC2-3 (blocking in any checkout without `.dev.vars`):** `scripts/test-stats.mjs`, the first leg of the named `test:stats` gate, sends `Origin: http://localhost:5188` on every request to a `wrangler pages dev` it starts with no binding (`:9`, `:168-:201`). Cure, outside this firewall: `--binding ALLOW_LOCALHOST_ORIGINS=1` in `startPages`, the same line `test-accounts.mjs:883` already uses for `DEV_AUTH`.
-- **F-LC2-4 (uncertain):** `e2e/assay-season-roll.spec.ts:92-:93` forwards the browser's headers into the in-process standings door; red after the change only if Playwright's `request.headers()` carries the page's Origin. Cure harmless either way: the variable in that env.
-- **F-LC2-5 (owner-visible, intended by F-SEC2-2, worth a line on the desk before the deploy):** the game's API origin is the constant `GAME_API_ORIGIN = 'https://agenttown.app'` (`src/app/GameApi.ts:5`) and the vite dev server serves the game at `http://127.0.0.1:5188` (`vite.config.ts:64-:65`). After this slice deploys, a game served locally that talks to the live county is refused by every door: boards, standings posts, beacons, stats, complaints, prizes, co-op. The accounts door on the droplet already refuses it today (sender bound, `_accounts.ts:405`). No local variable can change a live door's answer. Local play against a local API is possible only where the game has an override (`?mpRelay=`, `src/mp/LockstepClient.ts:923`; `VITE_ACCOUNTS_API_URL`, `src/game/AccountSync.ts:664`); the standings, telemetry, stats, complaint and prize calls have none.
-- **F-LC2-6 (latent, measured in wrangler; the file's keys NOT verified, this run never reads `.env.local`):** with no `.dev.vars`, every `wrangler pages dev` started in a checkout that holds `.env.local` hands that file's variables to the local functions as bindings. In the primary checkout that file holds the live credentials (`scripts/deploy.sh:362-:367`, `AGENTS.md:19`). If it ever carries `RESEND_API_KEY`, `test-accounts.mjs`'s unconfigured arm there would take the mail path and call api.resend.com (`_accounts.ts:108-:110`, `:139`, `:748-:763`). A `.dev.vars` in that checkout ends the loading as a side effect, and also stops any local flow that relied on it.
-- **F-LC2-7 (no gate caller):** `playwright.accounts.config.ts:22` and `scripts/agent-seat-room.mjs:722-:733` start root wrangler servers and send loopback Origins; nothing reds, but whoever runs either next needs `.dev.vars` or a binding.
-- **F-LC2-8 (firewall wording for the continuation):** `standings.ts` decides CORS in three places, `:259`, `:561` and `:1935`, and `:1935` is inside `canonicalRedirect`, so the 308 carries the door's CORS answer (the probe's 308 rows). Passing the env there is a one-argument change to the CORS arm with the redirect's logic untouched; the master's "not the redirect" should name it as allowed, or the 308 answers localhost differently from its door (always refused, even in development).
-- **F-LC2-9 (firewall wording):** `.gitignore` needs the two wrangler-convention lines for `.dev.vars` to be gitignored; the brief authorizes it, the master's TOUCH-ONLY list does not name it.
-- **F-LC2-10 (stale comments the continuation rewrites):** `_accounts.ts:394-:395` and `:778` say "Both live doors bind the sender (the droplet since 2026-08-24, Pages for the accounts flow)"; F-SF1-8 measured Pages without it. `_bugs.ts:338-:349` describes the `RESEND_API_KEY` predicate and "no shared helper exists". Both blocks move with the predicate.
-
----
-
-## 5. Recommended amendment and the planned design (so the attended session can veto before a line lands)
-
-**Add to TOUCH-ONLY:** `.gitignore` (two lines); `e2e/tl-02-public-stats.spec.ts` (F-LC2-1); `scripts/test-stats.mjs` (F-LC2-3); the six multiplayer specs (F-LC2-2); `e2e/assay-season-roll.spec.ts:93` (F-LC2-4); name `standings.ts:1935` as part of the CORS arm (F-LC2-8). Optional: `playwright.accounts.config.ts`, `scripts/agent-seat-room.mjs` (F-LC2-7). Owner line: F-LC2-5.
-
-**Design, unchanged from the master except where the measurements force it:**
-1. `functions/api/_cors.ts` (new) exports `LocalhostOriginsEnv = { ALLOW_LOCALHOST_ORIGINS?: string }` and `localhostOriginAllowed(origin, env)`, which is `env?.ALLOW_LOCALHOST_ORIGINS === '1' && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)`: the variable and nothing else, and the pattern in one place. Every door keeps its own `ALLOWED_ORIGINS = new Set(...)` (the allowlist guard's floor).
-2. The eight doors: each `corsHeaders` takes the env and its localhost arm becomes `localhostOriginAllowed(origin, env)`. Call sites that change only their argument: `redeem.ts:38`, `stats.ts:55`, `telemetry.ts:95`, `refusals.ts:69`, `standings.ts:259`, `:561`, `:1935`, `_multiplayer.ts:135`, `:154`, `:629` (the bug office and accounts already pass the env). `RESEND_API_KEY` leaves `BugsEnv` (its only reader is the CORS arm, `_bugs.ts:27-:28`, `:359`); in `_accounts.ts` only `devOrigins` goes, while `isDev` and the sender check stay (SEC-10, not the CORS path).
-3. `.dev.vars.example` (tracked) with `ALLOW_LOCALHOST_ORIGINS=1` and a comment; `.dev.vars` (gitignored) created in the worktree; `docs/ops/ops-evening-2026-09.md` gains the rule: the variable is the development switch, never set on Pages and never in `/etc/goldrush-ledger.env` (which could not deliver it anyway, `serve.mjs:152-161`).
-4. `test-accounts.mjs` and `test-multiplayer.mjs` as in section 1.D; the out-of-firewall consumers as in the amendment, each with an explicit binding rather than a dependence on `.dev.vars`.
-5. Gates: tsc, build, the probe (0 of 782 expected), `function-cors-allowlist`, `worker-type-coverage`, `site-security-headers`, `ratelimit-window`; under the drain lock the three functions gates and the node-guards battery, plus the affected e2e specs of section 1 on both projects, with a control run on this tree for any red.
-
----
-
-## 6. Commits (path-scoped, prefix `fix:`)
-
-| Commit | Paths |
+| Commit | What |
 | --- | --- |
-| `027dc3a9f`, evidence: the probes and their output | `artifacts/localhost-cors-2/cors-probe.mjs`, `cors-probe-before.txt`, `node-origin-probe.mjs`, `node-origin-probe.txt` |
-| the commit carrying this version, the report | `artifacts/localhost-cors-2/report.md` |
-
-Nothing else is changed on the branch: no door, no test script, no dotfile, no doc. No network call left the machine; nothing was deployed or bound; `.env.local` was never read.
+| `027dc3a9f` | first pass: the probe and its BEFORE counts; the Node origin probe |
+| `4e97cb1b0` | first pass: the stop report |
+| `ec717cb76` | the eight doors on one helper |
+| `82f50c0c3` | the local runners opt in |
+| `030b8e540` | the stats preflight rows assert the rule |
+| `b2d0c3992` | `.gitignore`, `.dev.vars.example`, the runbook |
+| `a033e60a6` | gate evidence: the AFTER probe, the mutations, the batch scripts and logs |
+| the commit carrying this version | this report |
 
 ---
 
-## 7. REMAINING LIST IN ORDER
+## 8. REMAINING LIST IN ORDER
 
-1. **Attended decision:** amend the master's firewall as in section 5 (or re-slice: the doors and the two touchable scripts in one slice, the e2e and `test-stats.mjs` consumers in the same drain), then continue this implementer; it holds the full measurement context.
-2. **The owner line (F-LC2-5):** after the deploy, a locally served game is refused by every live door; intended, but it changes local play against the live county.
-3. **The implementation** (section 5, items 1 to 4) and the AFTER probe run (expected 0 of 782).
-4. **Gates** (section 5, item 5), with F-LC2-4 settled by the e2e run itself.
-5. **F-LC2-6** at the owner's convenience: whether `.env.local` should keep reaching local wrangler servers in the primary checkout.
+1. **The drain:** F-LC2-5 on the owner's desk before any deploy.
+2. **F-LC2-12:** a node guard over the eight doors (the probe, promoted).
+3. **F-LC2-7:** the two uncalled harnesses gain the binding when someone next runs them.
+4. **F-LC2-6:** the owner's word on `.env.local` reaching local wrangler servers in the primary checkout.
 
-NOT READY-FOR-GATES (stopped on the false premise; see section 1).
+READY-FOR-GATES
