@@ -1,3 +1,4 @@
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
 import { bumpCounter, clientIpHash } from './_ratelimit';
 
 export const SUBMISSION_REFUSAL_REASONS = [
@@ -55,7 +56,7 @@ export type RefusalStorage = {
 
 type RefusalContext = {
   request: Request;
-  env: { TELEMETRY?: RefusalStorage; ACCOUNTS?: RefusalStorage; ALLOWED_CORS_ORIGINS?: ReadonlySet<string> };
+  env: LocalhostOriginsEnv & { TELEMETRY?: RefusalStorage; ACCOUNTS?: RefusalStorage; ALLOWED_CORS_ORIGINS?: ReadonlySet<string> };
 };
 
 const ANON_ID = /^[a-f0-9]{32}$/;
@@ -66,7 +67,7 @@ const RATE_TTL_SECONDS = 60 * 60;
 const KV_PREFIX = 'refusal:';
 
 export async function onRequest(context: RefusalContext): Promise<Response> {
-  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'GET') return error(cors, 405, 'method_not_allowed', 'GET only');
@@ -151,11 +152,11 @@ function cleanProfile(value: unknown): string {
   return typeof value === 'string' ? value.replace(/\s+/g, ' ').trim().slice(0, 24) : '';
 }
 
-function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Record<string, string> | null {
+function corsHeaders(request: Request, env: LocalhostOriginsEnv & { ALLOWED_CORS_ORIGINS?: ReadonlySet<string> }): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers = { 'Access-Control-Allow-Headers': 'content-type', 'Access-Control-Allow-Methods': 'GET, OPTIONS', 'Cache-Control': 'no-store', Vary: 'Origin' };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || extraOrigins?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || env.ALLOWED_CORS_ORIGINS?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || localhostOriginAllowed(origin, env)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;

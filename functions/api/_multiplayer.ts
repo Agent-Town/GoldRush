@@ -1,6 +1,7 @@
 declare const WebSocketPair: typeof import('@cloudflare/workers-types').WebSocketPair;
 
 import { normalizeSelfDeclaredStack, type SelfDeclaredStack } from '../../src/agent/DeclaredStack';
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
 import { fallbackReason, ledgerLink, withLedgerFallback, type LedgerEnv, type LedgerFallback } from './_ledger';
 import { bumpCounter } from './_ratelimit';
 
@@ -24,7 +25,7 @@ type KVNamespaceLike = {
   list(options?: { prefix?: string; cursor?: string }): Promise<KVListResult>;
 };
 
-type MultiplayerEnv = LedgerEnv & {
+type MultiplayerEnv = LedgerEnv & LocalhostOriginsEnv & {
   MULTIPLAYER_ROOMS?: DurableObjectNamespaceLike;
   MULTIPLAYER_RATE_LIMITS?: KVNamespaceLike;
 };
@@ -132,7 +133,7 @@ export async function createRoom(context: MultiplayerContext): Promise<Response>
 }
 
 export async function connectRoom(context: MultiplayerContext): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   const rooms = requireRooms(context.env, cors);
@@ -151,7 +152,7 @@ export async function connectRoom(context: MultiplayerContext): Promise<Response
 }
 
 export async function inspectRoom(context: MultiplayerContext): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'GET') return error(cors, 405, 'method_not_allowed', 'GET only');
@@ -626,7 +627,7 @@ async function route(
   context: MultiplayerContext,
   handler: (value: { request: Request; env: MultiplayerEnv; cors: Record<string, string> }) => Promise<Response>,
 ): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   try {
@@ -637,7 +638,7 @@ async function route(
   }
 }
 
-function corsHeaders(request: Request): Record<string, string> | null {
+function corsHeaders(request: Request, env: LocalhostOriginsEnv): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'authorization, content-type',
@@ -646,7 +647,7 @@ function corsHeaders(request: Request): Record<string, string> | null {
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || localhostOriginAllowed(origin, env)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;
