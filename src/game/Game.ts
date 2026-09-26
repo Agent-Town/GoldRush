@@ -2983,7 +2983,8 @@ export class Game {
     this.mpTickThisFrame = null;
     this.mpActorIntents = null;
     this.mpActionsThisTick = [];
-    const sampledIntents = this.runTapeReplay ? intentsFromLockstepInput(null) : this.input.readIntents();
+    // RECORD WHAT RAN (F-RVA1-1): the live run moves by the axes its reel records, rounded to 1e-3 (`recordedIntents`).
+    const sampledIntents = this.runTapeReplay ? intentsFromLockstepInput(null) : recordedIntents(this.input.readIntents());
     if (this.mpClient && this.manualLockstepPausedForTest) return false;
     const cancelConsumed =
       this.mpClient || this.playbookLiveRecording() ? this.applyLocalMultiplayerPresentation(sampledIntents) : false;
@@ -11184,6 +11185,20 @@ function isRiverCeremonyContract(contract: ContractManifest): boolean {
   if (contract.name !== river.contract.name) return false;
   const stamped = stampCharter(river);
   return stamped.ok && contractDescriptorJson(contract) === stamped.document;
+}
+
+/**
+ * RECORD WHAT RAN (F-RVA1-1, river-assay-1; firewall lift by the attended session, 2026-09-27). A reel stores each
+ * tick's movement through `lockstepInputFromIntents`, which rounds both axes to 1e-3, and a replay can only move by what
+ * the reel stores. A live solo run used to move by the raw axes instead: a keyboard diagonal is 0.7071067811865476, a
+ * phone joystick anything at all, so every run that walked other than straight drifted from its own reel (0.001 m after
+ * a 7 m diagonal, measured on a River pan) and its reel's probes, inside the event-log hash, could never be reproduced.
+ * The live run now moves by exactly the rounded axes it records, as multiplayer's lockstep input and the playbook
+ * recorder already did; every other intent passes through untouched.
+ */
+function recordedIntents(intents: Intents): Intents {
+  const { mx, my } = lockstepInputFromIntents(intents);
+  return { ...intents, move: new THREE.Vector2(mx, my) };
 }
 
 function shouldPostCountyStanding(): boolean {
