@@ -1,0 +1,262 @@
+(node:28706) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:28772) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/6] [desktop-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug
+  1) [desktop-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByTestId('lantern-show')
+    Expected: "false"
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 20000ms
+      - waiting for getByTestId('lantern-show')
+
+
+      291 |   const errors = await openBoardReel(page, tape);
+      292 |   const show = page.getByTestId('lantern-show');
+    > 293 |   await expect(show).toHaveAttribute('data-era-refused', 'false', { timeout: 20_000 });
+          |                      ^
+      294 |   await expect(show).toHaveAttribute('data-playback', 'playing');
+      295 |   await expect(page.getByTestId('lantern-agent-honesty')).toHaveText('This is the ride. The county is replaying it here in your browser.');
+      296 |   await expect.poll(async () => (await probe(page))?.tick ?? -1).toBeGreaterThanOrEqual(0);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/agent-reels.spec.ts:293:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/agent-reels-plain-town-boa-178fe--current-reel-without-debug-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/agent-reels-plain-town-boa-178fe--current-reel-without-debug-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/agent-reels-plain-town-boa-178fe--current-reel-without-debug-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/agent-reels-plain-town-boa-178fe--current-reel-without-debug-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:29357) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/6] [desktop-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board
+
+[desktop-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board
+(node:29436) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+assay replay failed: malformed tape
+  2) [desktop-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board 
+
+    Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs /Users/robin/Claude/Projects/wt-cbw1/artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json
+    (node:29436) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    assay replay failed: malformed tape
+
+
+      304 |   test.setTimeout(180_000);
+      305 |   const tape = await currentEraTape(HILL_MINE_CROWN_PATH);
+    > 306 |   const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', HILL_MINE_CROWN_PATH], {
+          |                           ^
+      307 |     encoding: 'utf8', timeout: 120_000,
+      308 |   }));
+      309 |   const errors = collectErrors(page);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/agent-reels.spec.ts:306:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/agent-reels-the-Hill-Mine--ae1dd-ing-link-and-the-town-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/agent-reels-the-Hill-Mine--ae1dd-ing-link-and-the-town-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/agent-reels-the-Hill-Mine--ae1dd-ing-link-and-the-town-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/agent-reels-the-Hill-Mine--ae1dd-ing-link-and-the-town-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:29472) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/6] [desktop-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal
+  3) [desktop-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByTestId('lantern-show')
+    Expected: "true"
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 20000ms
+      - waiting for getByTestId('lantern-show')
+
+
+      326 |   const errors = await openBoardReel(page, tape);
+      327 |   const show = page.getByTestId('lantern-show');
+    > 328 |   await expect(show).toHaveAttribute('data-era-refused', 'true', { timeout: 20_000 });
+          |                      ^
+      329 |   await expect(show).toHaveAttribute('data-playback', 'complete');
+      330 |   await expect(page.getByTestId('lantern-intertitle')).toContainText(`This reel rode era unknown (unstamped build ${tape.meta.buildId}).`);
+      331 |   await expect(page.getByTestId('lantern-intertitle')).toContainText(
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/agent-reels.spec.ts:328:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/agent-reels-plain-town-boa-eaa6c-onest-unstamped-era-refusal-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/agent-reels-plain-town-boa-eaa6c-onest-unstamped-era-refusal-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/agent-reels-plain-town-boa-eaa6c-onest-unstamped-era-refusal-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/agent-reels-plain-town-boa-eaa6c-onest-unstamped-era-refusal-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:30070) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/6] [mobile-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug
+  4) [mobile-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByTestId('lantern-show')
+    Expected: "false"
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 20000ms
+      - waiting for getByTestId('lantern-show')
+
+
+      291 |   const errors = await openBoardReel(page, tape);
+      292 |   const show = page.getByTestId('lantern-show');
+    > 293 |   await expect(show).toHaveAttribute('data-era-refused', 'false', { timeout: 20_000 });
+          |                      ^
+      294 |   await expect(show).toHaveAttribute('data-playback', 'playing');
+      295 |   await expect(page.getByTestId('lantern-agent-honesty')).toHaveText('This is the ride. The county is replaying it here in your browser.');
+      296 |   await expect.poll(async () => (await probe(page))?.tick ?? -1).toBeGreaterThanOrEqual(0);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/agent-reels.spec.ts:293:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/agent-reels-plain-town-boa-178fe--current-reel-without-debug-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/agent-reels-plain-town-boa-178fe--current-reel-without-debug-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/agent-reels-plain-town-boa-178fe--current-reel-without-debug-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/agent-reels-plain-town-boa-178fe--current-reel-without-debug-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:30810) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/6] [mobile-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board
+
+[mobile-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board
+(node:30894) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+assay replay failed: malformed tape
+  5) [mobile-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board 
+
+    Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs /Users/robin/Claude/Projects/wt-cbw1/artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json
+    (node:30894) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    assay replay failed: malformed tape
+
+
+      304 |   test.setTimeout(180_000);
+      305 |   const tape = await currentEraTape(HILL_MINE_CROWN_PATH);
+    > 306 |   const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', HILL_MINE_CROWN_PATH], {
+          |                           ^
+      307 |     encoding: 'utf8', timeout: 120_000,
+      308 |   }));
+      309 |   const errors = collectErrors(page);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/agent-reels.spec.ts:306:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/agent-reels-the-Hill-Mine--ae1dd-ing-link-and-the-town-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/agent-reels-the-Hill-Mine--ae1dd-ing-link-and-the-town-board-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/agent-reels-the-Hill-Mine--ae1dd-ing-link-and-the-town-board-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/agent-reels-the-Hill-Mine--ae1dd-ing-link-and-the-town-board-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:30924) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/6] [mobile-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal
+  6) [mobile-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: getByTestId('lantern-show')
+    Expected: "true"
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 20000ms
+      - waiting for getByTestId('lantern-show')
+
+
+      326 |   const errors = await openBoardReel(page, tape);
+      327 |   const show = page.getByTestId('lantern-show');
+    > 328 |   await expect(show).toHaveAttribute('data-era-refused', 'true', { timeout: 20_000 });
+          |                      ^
+      329 |   await expect(show).toHaveAttribute('data-playback', 'complete');
+      330 |   await expect(page.getByTestId('lantern-intertitle')).toContainText(`This reel rode era unknown (unstamped build ${tape.meta.buildId}).`);
+      331 |   await expect(page.getByTestId('lantern-intertitle')).toContainText(
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/agent-reels.spec.ts:328:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/agent-reels-plain-town-boa-eaa6c-onest-unstamped-era-refusal-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/agent-reels-plain-town-boa-eaa6c-onest-unstamped-era-refusal-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/agent-reels-plain-town-boa-eaa6c-onest-unstamped-era-refusal-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/agent-reels-plain-town-boa-eaa6c-onest-unstamped-era-refusal-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  6 failed
+    [desktop-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug 
+    [desktop-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board 
+    [desktop-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal 
+    [mobile-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug 
+    [mobile-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board 
+    [mobile-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal 

@@ -1,0 +1,54 @@
+B2 start be37d83cf + worktree edits 2026-09-26T12:08:09Z load { 4.59 7.98 16.99 }
+branch vite pid 59744 owns port 5547
+warmup rc=0
+spec full (both projects) rc=0  10 passed (18.2s) 
+door before/after rc=0 8 same, 7 moved
+replaced 1 occurrence in functions/api/standings.ts (1 -> 1 lines)
+m1 planted in functions/api/standings.ts: rc=1  2 failed 
+    caught by:   1) [desktop-chrome] › e2e/county-board-open-week.spec.ts:125:1 › door: a named week and the open alias serve that week alone, and the all-time board keeps its shape 
+    caught by:   2) [desktop-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+       - Expected  - 2
+       + Received  + 2
+m1 restored byte for byte (sha256 OK)
+replaced 1 occurrence in functions/api/standings.ts (1 -> 1 lines)
+m2 planted in functions/api/standings.ts: rc=1  1 failed  1 passed (502ms) 
+    caught by:   1) [desktop-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+       - Expected  -  3
+       + Received  + 43
+m2 restored byte for byte (sha256 OK)
+replaced 1 occurrence in src/encyclopedia/reader.ts (1 -> 1 lines)
+m3 planted in src/encyclopedia/reader.ts: rc=1  1 failed 
+    caught by:   1) [desktop-chrome] › e2e/county-board-open-week.spec.ts:301:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away 
+       - Expected substring  - 1
+       + Received string     + 7
+m3 restored byte for byte (sha256 OK)
+unmutated rc=0  3 passed (3.4s) 
+branch vite 59744 stopped
+functions/api/standings.ts: OK
+src/encyclopedia/reader.ts: OK
+branch arm done 2026-09-26T12:09:09Z load { 7.31 8.18 16.45 }
+control vite pid 61439 owns port 5551
+control warmup rc=0
+control board rc=1  12 failed  38 passed (1.8m) 
+    control red:   1) [desktop-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger 
+    control red:   2) [desktop-chrome] › e2e/assay-season-roll.spec.ts:147:1 › the archive door serves season one read-only and refuses the pen 
+    control red:   3) [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration 
+    control red:   4) [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name 
+    control red:   5) [desktop-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run 
+    control red:   6) [desktop-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell 
+    control red:   7) [mobile-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger 
+    control red:   8) [mobile-chrome] › e2e/assay-season-roll.spec.ts:147:1 › the archive door serves season one read-only and refuses the pen 
+    control red:   9) [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration 
+    control red:   10) [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name 
+    control red:   11) [mobile-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run 
+    control red:   12) [mobile-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell 
+control reels rc=1  6 failed 
+    control red:   1) [desktop-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug 
+    control red:   2) [desktop-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board 
+    control red:   3) [desktop-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal 
+    control red:   4) [mobile-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug 
+    control red:   5) [mobile-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board 
+    control red:   6) [mobile-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal 
+control vite 61439 stopped
+B2 end 2026-09-26T12:12:41Z load { 5.37 7.33 14.31 }
+B2-DONE

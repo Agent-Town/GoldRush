@@ -1,0 +1,91 @@
+(node:60778) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+
+(node:60839) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/2] [desktop-chrome] › e2e/county-board-open-week.spec.ts:125:1 › door: a named week and the open alias serve that week alone, and the all-time board keeps its shape
+[2/2] [desktop-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar
+  1) [desktop-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  3
+    + Received  + 43
+
+      Object {
+    -   "error": "bad_rotation",
+    -   "message": "Rotation not accepted.",
+    -   "ok": false,
+    +   "assayEra": true,
+    +   "board": Array [
+    +     Object {
+    +       "assay": "verified",
+    +       "baseValue": 60,
+    +       "cost": Object {
+    +         "calls": null,
+    +         "durationS": 120,
+    +         "orders": null,
+    +         "tokensIn": null,
+    +         "tokensOut": null,
+    +       },
+    +       "declared": true,
+    +       "difficulty": "trail",
+    +       "gold": 40,
+    +       "harness": "week-rig",
+    +       "harnessDigest": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    +       "harnessVersion": "1",
+    +       "heldOut": null,
+    +       "model": "week-test",
+    +       "profileName": "Week Rider",
+    +       "rank": 1,
+    +       "reel": Object {
+    +         "id": "cbw1-222222-12",
+    +         "simVersion": 1,
+    +       },
+    +       "rotationId": "r2026w40",
+    +       "season": "Season 2: The Same Game",
+    +       "secured": true,
+    +       "submittedAt": 1790553600000,
+    +       "timeAlive": 120,
+    +       "waves": 12,
+    +     },
+    +   ],
+    +   "contractId": "the-claim",
+    +   "epochId": "epoch-1-frontier",
+    +   "ok": true,
+    +   "party": "solo",
+    +   "probeCount": 0,
+    +   "rejectedCount": 1,
+    +   "retiredCount": 0,
+    +   "rotationId": "r2026w40",
+    +   "season": 2,
+      }
+
+      202 |   // The week turns at its own opensAt: one millisecond before, its id is held out and `open` is last week.
+      203 |   await atInstant(Date.parse(LATEST.opensAt) - 1, async () => {
+    > 204 |     expect((await door(kv, `${CLAIM}&rotation=${LATEST.id}`)).body).toEqual({ ok: false, error: 'bad_rotation', message: 'Rotation not accepted.' });
+          |                                                                     ^
+      205 |     const open = await door(kv, `${CLAIM}&rotation=open`);
+      206 |     expect(open.status).toBe(200);
+      207 |     expect(open.body.rotationId).toBe(PRIOR.id);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:204:69
+        at atInstant (/Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:116:12)
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:203:3
+
+    Error Context: test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+  1 passed (502ms)

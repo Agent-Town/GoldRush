@@ -1,0 +1,433 @@
+✔ rotation registry stays outside the engine identity corpus (104.6955ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.157167ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.177834ms)
+✔ rotation mint is deterministic, week-sensitive, and requires a salt (131.407625ms)
+✔ a desk item WITH a declaring row passes (64.284584ms)
+✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (45.605958ms)
+✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (46.400292ms)
+✔ a row whose id sits past the 90-char subject zone does NOT declare it (47.49525ms)
+✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (231.800666ms)
+✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (111.311292ms)
+✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (44.065334ms)
+✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (30.263667ms)
+✔ REFUSES (exit 2) when the desk segment holds zero keyed items (29.751083ms)
+✔ REFUSES (exit 2) when BACKLOG.md is missing (29.258ms)
+✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (45.65275ms)
+✖ the live board is green under this guard (baseline is honest) (116.472167ms)
+✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (29.910209ms)
+✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (45.888125ms)
+✔ all five desk spellings are read — the majority form was invisible (226.65825ms)
+✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (44.200334ms)
+✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (44.702708ms)
+✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (47.218541ms)
+✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (32.502375ms)
+✔ a SLUG-keyed desk item WITH a declaring row passes (59.212542ms)
+✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (43.90325ms)
+✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (44.4345ms)
+✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (57.89125ms)
+✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (59.043333ms)
+✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (60.163166ms)
+✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.291709ms)
+✔ every grandfathered id is still on the desk — the list must not rot (8.893917ms)
+✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (46.044042ms)
+✔ the landed registry names the live engine and stays outside its hash corpus (118.063917ms)
+✔ same-era re-pins append, and removing an earlier pin reds (11.135667ms)
+✔ tooling edits stay outside the engine identity while src edits rotate it (6.215375ms)
+✔ a new-basis alias keeps its old-basis pin in the current era (4.949208ms)
+✔ an era bump starts a fresh lineage (9.648292ms)
+✖ --fill-gaps pulls exactly the missing dated backup, and nothing else (32.197166ms)
+✖ the recovered file is the REMOTE bytes, not a placeholder (31.807584ms)
+✖ --fill-gaps --dry-run names the gap and rsyncs NOTHING (29.7205ms)
+✖ the corpus is declared even on the happy path — "0 gaps" must not look like "I could not read the box" (F-2208-1) (30.777292ms)
+✖ THE DEFECT ARM: the default path leaves the hole behind today untouched (31.503542ms)
+✖ non-dated debris on the box is never pulled (31.146625ms)
+✖ a mirror directory that does not exist yet is created, not crashed on (33.345084ms)
+✔ an unreachable box fails LOUD — it must never report a clean series (30.950792ms)
+✖ dry run prints a bounded plan without contacting the droplet (32.2205ms)
+✖ today's local backup makes the pull an offline no-op (31.822541ms)
+✔ 1. a whole, current series reports WHOLE AND CURRENT and strict exits 0 (65.605834ms)
+✔ 2. an INTERIOR hole is NAMED and strict exits 1 — the defect LB-01 cannot see (64.99575ms)
+✔ 3. a STALE newest (no holes) is reported with its age and strict exits 1 (64.382875ms)
+✔ 4. an ABSENT mirror directory CANNOT VERIFY — strict exits 2, never 1 (63.738542ms)
+✔ 5. a readable but EMPTY series CANNOT VERIFY — an empty series has no gaps (61.309625ms)
+✔ 6. ADVISORY default is 0 in EVERY state, including a gap and an unreadable corpus (92.706417ms)
+✔ 7. the corpus is DECLARED on the HAPPY path too, not only on failure (30.986167ms)
+✔ 8. the CALENDAR is validated, not the digit count (30.900667ms)
+✔ 9. REVERSE CONTROL: cwd cannot change the corpus, and the ANCHOR is still read beside the script (92.303625ms)
+✔ 22. THE RULING, GUARDED: the DEFAULT destination is not inside the public repo (0.2455ms)
+✖ 23. ONE destination, THREE tools: pull, freshness and exposure cannot disagree (89.316875ms)
+✔ 24. the PROVENANCE rides with the path — an env-narrowed corpus cannot print like the default (61.822625ms)
+✔ 25. a RELATIVE destination override is REFUSED, never resolved against cwd (0.252ms)
+✔ 10. gaps are computed across month and year boundaries (0.539834ms)
+✔ 11. day arithmetic is leap-correct and monotone (no Date, so no timezone) (0.055125ms)
+✔ 12. parseName accepts only well-formed calendar names (0.132625ms)
+✔ 13. exitCodeFor keeps 2 (could not answer) above 1 (refuses) above 0 (0.060792ms)
+✔ 16. THE DEFECT, GUARDED: 31 of 32 days deleted is NAMED, not read as a shorter perfect series (64.478541ms)
+✔ 17. an ABSENT anchor WITHHOLDS the verdict — 2 (could not answer), never a silent fallback (62.509375ms)
+✔ 18. a MALFORMED anchor is could-not-answer too — bad JSON and a non-calendar day alike (189.352916ms)
+✔ 19. the ANCHOR is declared on the HAPPY path too, with its source (F-2208-1) (29.925292ms)
+✔ 20. a file OLDER than the anchor widens the window and is never counted as a hole (60.005875ms)
+✔ 21. the repo's OWN anchor is present, parseable and a real calendar day (0.220083ms)
+✔ 15. localToday reads LOCAL components — the UTC date-only trap, guarded (0.319875ms)
+✔ 14. readMirrors DECLARES an unreadable corpus rather than returning an empty selection (0.130709ms)
+✖ the newest-already-present exit names TODAY as still outstanding (33.5145ms)
+✖ the declaration names the supply window rather than blaming the fetch (32.262625ms)
+✖ the exit stays advisory — a no-op must never red the LB-01 duty (33.375708ms)
+✖ REVERSE CONTROL: a genuine discharge does NOT claim to be outstanding (34.593209ms)
+✔ the site records how the supply window was measured (0.219625ms)
+✖ the site names the RANDOMIZED mechanism, so no fixed threshold can creep back (32.003ms)
+ℹ tests 78
+ℹ suites 0
+ℹ pass 62
+ℹ fail 16
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1741.618958
+
+✖ failing tests:
+
+test at scripts/desk-declaration-guard.test.mjs:163:1
+✖ the live board is green under this guard (baseline is honest) (116.472167ms)
+  AssertionError [ERR_ASSERTION]: === desk-declaration-guard ===
+  corpus tree       : linked-worktree
+  desk F-IDs        : 2
+  desk slugs        : 1
+  🔺 desk segments  : 3
+  unexamined        : 0
+  with a BACKLOG row: 3
+  undeclared        : 0 (grandfathered 0)
+  
+  desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+    line-1 is NOT the one main carries.
+    Both corpora here are TRACKED, so this tree is frozen at its branch point and
+    the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+    would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+    proven by manufacturing: a real defect on main read byte-identically to a clean
+    board from here).
+    Re-run from the main worktree, or pass --root <main worktree>.
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/desk-declaration-guard.test.mjs:167:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-fill-gaps-guard.test.mjs:85:1
+✖ --fill-gaps pulls exactly the missing dated backup, and nothing else (32.197166ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-backup-fill-gaps-guard.test.mjs:88:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-fill-gaps-guard.test.mjs:98:1
+✖ the recovered file is the REMOTE bytes, not a placeholder (31.807584ms)
+  Error: ENOENT: no such file or directory, open '/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cbw1/tmp-ctl/lb01-fill-ekmNUo/mirror/ledger-2026-08-27.db'
+      at readFileSync (node:fs:539:20)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-backup-fill-gaps-guard.test.mjs:102:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cbw1/tmp-ctl/lb01-fill-ekmNUo/mirror/ledger-2026-08-27.db'
+  }
+
+test at scripts/ledger-backup-fill-gaps-guard.test.mjs:107:1
+✖ --fill-gaps --dry-run names the gap and rsyncs NOTHING (29.7205ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-backup-fill-gaps-guard.test.mjs:110:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-fill-gaps-guard.test.mjs:117:1
+✖ the corpus is declared even on the happy path — "0 gaps" must not look like "I could not read the box" (F-2208-1) (30.777292ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-backup-fill-gaps-guard.test.mjs:120:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-fill-gaps-guard.test.mjs:127:1
+✖ THE DEFECT ARM: the default path leaves the hole behind today untouched (31.503542ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-backup-fill-gaps-guard.test.mjs:133:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-fill-gaps-guard.test.mjs:138:1
+✖ non-dated debris on the box is never pulled (31.146625ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-backup-fill-gaps-guard.test.mjs:144:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-fill-gaps-guard.test.mjs:148:1
+✖ a mirror directory that does not exist yet is created, not crashed on (33.345084ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-backup-fill-gaps-guard.test.mjs:151:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-pull.test.mjs:11:1
+✖ dry run prints a bounded plan without contacting the droplet (32.2205ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-backup-pull.test.mjs:13:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-pull.test.mjs:18:1
+✖ today's local backup makes the pull an offline no-op (31.822541ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-backup-pull.test.mjs:26:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-mirror-freshness-guard.test.mjs:249:1
+✖ 23. ONE destination, THREE tools: pull, freshness and exposure cannot disagree (89.316875ms)
+  AssertionError [ERR_ASSERTION]: the pull must write to the destination in force, got:
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-mirror-freshness-guard.test.mjs:266:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-pull-supply-window-guard.test.mjs:66:1
+✖ the newest-already-present exit names TODAY as still outstanding (33.5145ms)
+  AssertionError [ERR_ASSERTION]: FIXTURE REFUSED: the pull produced no stdout — ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+      at runPull (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:62:10)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:67:13)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-pull-supply-window-guard.test.mjs:77:1
+✖ the declaration names the supply window rather than blaming the fetch (32.262625ms)
+  AssertionError [ERR_ASSERTION]: FIXTURE REFUSED: the pull produced no stdout — ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+      at runPull (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:62:10)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:78:13)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-pull-supply-window-guard.test.mjs:84:1
+✖ the exit stays advisory — a no-op must never red the LB-01 duty (33.375708ms)
+  AssertionError [ERR_ASSERTION]: FIXTURE REFUSED: the pull produced no stdout — ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+      at runPull (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:62:10)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:85:13)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-pull-supply-window-guard.test.mjs:96:1
+✖ REVERSE CONTROL: a genuine discharge does NOT claim to be outstanding (34.593209ms)
+  AssertionError [ERR_ASSERTION]: FIXTURE REFUSED: the pull produced no stdout — ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+      at runPull (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:62:10)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:97:13)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-pull-supply-window-guard.test.mjs:130:1
+✖ the site names the RANDOMIZED mechanism, so no fixed threshold can creep back (32.003ms)
+  AssertionError [ERR_ASSERTION]: FIXTURE REFUSED: the pull produced no stdout — ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+      at runPull (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:62:10)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-cbw1-ctl/scripts/ledger-pull-supply-window-guard.test.mjs:136:13)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+control rc=1

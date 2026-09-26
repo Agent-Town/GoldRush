@@ -1,0 +1,545 @@
+(node:24552) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 58 tests using 1 worker
+
+
+(node:24617) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/58] [desktop-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger
+  1) [desktop-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('county-standings-row-1')
+    Expected substring: "Fresh Season Rider"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('county-standings-row-1')
+
+
+      120 |   await expect(page.getByTestId('county-standings-season-first')).toHaveAttribute('aria-pressed', 'false');
+      121 |   await page.getByTestId('county-standings-week-all').click();
+    > 122 |   await expect(page.getByTestId('county-standings-row-1')).toContainText('Fresh Season Rider');
+          |                                                            ^
+      123 |   await expect(page.getByTestId('county-standings-row-2')).toHaveCount(0);
+      124 |   await expect(page.locator('.county-standings__board-label')).toContainText('County board');
+      125 |   expect(seen.filter((search) => search.includes('contract=the-claim')).every((search) => !search.includes('season='))).toBe(true);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/assay-season-roll.spec.ts:122:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/assay-season-roll-the-coun-11d0c-hes-the-closed-first-ledger-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/assay-season-roll-the-coun-11d0c-hes-the-closed-first-ledger-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/assay-season-roll-the-coun-11d0c-hes-the-closed-first-ledger-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/assay-season-roll-the-coun-11d0c-hes-the-closed-first-ledger-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:24838) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/58] [desktop-chrome] › e2e/assay-season-roll.spec.ts:148:1 › the archive door serves season one read-only and refuses the pen
+  2) [desktop-chrome] › e2e/assay-season-roll.spec.ts:148:1 › the archive door serves season one read-only and refuses the pen 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 10
+    + Received  +  1
+
+      Object {
+        "assayEra": false,
+    -   "board": Array [
+    -     Object {
+    -       "profileName": "Founding Rider",
+    -       "rank": 1,
+    -     },
+    -     Object {
+    -       "profileName": "Cedar Jack",
+    -       "rank": 2,
+    -     },
+    -   ],
+    +   "board": Array [],
+        "season": 1,
+      }
+
+      155 |   });
+      156 |   expect(archive.status).toBe(200);
+    > 157 |   expect(await archive.json()).toMatchObject({
+          |                                ^
+      158 |     season: 1,
+      159 |     assayEra: false,
+      160 |     board: [{ rank: 1, profileName: 'Founding Rider' }, { rank: 2, profileName: 'Cedar Jack' }],
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/assay-season-roll.spec.ts:157:32
+
+    Error Context: test-results/assay-season-roll-the-arch-2d771-ad-only-and-refuses-the-pen-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/assay-season-roll-the-arch-2d771-ad-only-and-refuses-the-pen-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/assay-season-roll-the-arch-2d771-ad-only-and-refuses-the-pen-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:24899) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/58] [desktop-chrome] › e2e/en-01-claim-ledger.spec.ts:94:1 › EN-01 claim ledger access, discovery beat, dupe guard, persistence, and fact cap
+[4/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:251:1 › public county rows carry submitted time while legacy rows keep the missing-time fallback
+[5/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:303:1 › standings accept a declared harness with its version
+[6/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:314:1 › standings reject a declared harness without its version
+[7/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:326:1 › standings still accept model-only and undeclared riders
+[8/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:342:1 › standings accept an optional world model and reject descriptions over 64 characters
+[9/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:360:1 › stored version-less harness rows still render through the standings route
+[10/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration
+  3) [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "ok": true,
+        "rank": null,
+    -   "stored": false,
+    +   "stored": true,
+      }
+
+      611 |     env: { TELEMETRY: fullKv },
+      612 |   });
+    > 613 |   expect(await unranked.json()).toMatchObject({ ok: true, stored: false, rank: null });
+          |                                 ^
+      614 | });
+      615 |
+      616 | test('bench submissions require membership in the contract frozen seed set', async () => {
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/lb-01-county-standings.spec.ts:613:33
+
+    Error Context: test-results/lb-01-county-standings-end-68bdd--its-board-safe-declaration-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-end-68bdd--its-board-safe-declaration-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/lb-01-county-standings-end-68bdd--its-board-safe-declaration-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:25207) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:616:1 › bench submissions require membership in the contract frozen seed set
+[12/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name
+  4) [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 8000ms exceeded while waiting on the predicate
+
+      659 |
+      660 |   await secureClaim(page, seed, undefined, '&epoch=epoch-2-steamworks&contract=the-claim');
+    > 661 |   await expect.poll(() => posts.length, { timeout: 8_000 }).toBe(1);
+          |                                                             ^
+      662 |
+      663 |   const post = posts[0]!;
+      664 |   expect(post).toMatchObject({
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/lb-01-county-standings.spec.ts:661:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:25618) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[13/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:709:1 › secure skips county submission for a pinned seed outside the frozen set
+[14/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:719:1 › development standings require the explicit dev-send opt-in
+[15/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:729:1 › standings opt-out suppresses submission
+[16/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:739:1 › offline standings failure stays silent through the secure ceremony
+[17/58] [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:754:1 › Claim Ledger renders the seeded county board and its empty contract state
+[18/58] [desktop-chrome] › e2e/milk-county-board.spec.ts:173:1 › a posse ranks only within its own size and never disturbs the solo board
+[19/58] [desktop-chrome] › e2e/milk-county-board.spec.ts:225:1 › party is optional and strict once offered
+[20/58] [desktop-chrome] › e2e/milk-county-board.spec.ts:266:1 › the field book reads composition from self-declared stacks, and ranks nothing
+[21/58] [desktop-chrome] › e2e/milk-county-board.spec.ts:306:1 › a standings row publishes a reel handle, and the reel itself is fetched on demand
+[22/58] [desktop-chrome] › e2e/milk-county-board.spec.ts:354:1 › plain boot: an offline county clerk leaves the posse board and field book quiet
+[23/58] [desktop-chrome] › e2e/milk-county-board.spec.ts:378:1 › plain boot: a failing standings request adds no error of the application own
+[24/58] [desktop-chrome] › e2e/milk-county-board.spec.ts:404:1 › plain boot: standings accept pre-declaration rows but reject malformed or dishonest stacks
+[25/58] [desktop-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run
+  5) [desktop-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "11111111-1111-4111-8111-111111111111"
+    Received: null
+
+      577 |   await expect(page.getByTestId('lantern-show')).toBeVisible({ timeout: 20_000 });
+      578 |   await expect(page.getByTestId('claim-ledger')).toHaveCount(0);
+    > 579 |   expect(new URL(page.url()).searchParams.get('replay')).toBe(playable.id);
+          |                                                          ^
+      580 |   await page.getByTestId('lantern-show').screenshot({ path: path.join(SHOTS, `watch-this-run-${testInfo.project.name}.png`) });
+      581 |
+      582 |   expect(errors).toEqual({ console: [], page: [] });
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/milk-county-board.spec.ts:579:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/milk-county-board-plain-bo-c5713-s-and-a-row-watches-its-run-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/milk-county-board-plain-bo-c5713-s-and-a-row-watches-its-run-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/milk-county-board-plain-bo-c5713-s-and-a-row-watches-its-run-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/milk-county-board-plain-bo-c5713-s-and-a-row-watches-its-run-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:26212) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[26/58] [desktop-chrome] › e2e/sea-2-season-page.spec.ts:55:1 › plain boot opens the season list and a season page without losing legacy standings
+[27/58] [desktop-chrome] › e2e/sea-2-season-page.spec.ts:134:1 › the Founding Season renders its cited chronicle at both viewports
+[28/58] [desktop-chrome] › e2e/sea-2-season-page.spec.ts:163:1 › unavailable results are not reported as an empty season
+[29/58] [desktop-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell
+  6) [desktop-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Failed to resolve module specifier './standing-rule.js'. The base URL is about:blank because import() is called from a CORS-cross-origin script.",
+    + ]
+
+      36 |   await mkdir(SHOTS, { recursive: true });
+      37 |   await page.locator('.ledger').screenshot({ path: path.join(SHOTS, `${testInfo.project.name}-transfer-board.png`) });
+    > 38 |   expect(errors).toEqual([]);
+         |                  ^
+      39 | });
+      40 |
+      41 | function collectErrors(page: Page): string[] {
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/transfer-board.spec.ts:38:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/transfer-board-landing-ren-10214-ion-and-generalization-cell-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/transfer-board-landing-ren-10214-ion-and-generalization-cell-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/transfer-board-landing-ren-10214-ion-and-generalization-cell-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/transfer-board-landing-ren-10214-ion-and-generalization-cell-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:26394) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[30/58] [mobile-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger
+  7) [mobile-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('county-standings-row-1')
+    Expected substring: "Fresh Season Rider"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('county-standings-row-1')
+
+
+      120 |   await expect(page.getByTestId('county-standings-season-first')).toHaveAttribute('aria-pressed', 'false');
+      121 |   await page.getByTestId('county-standings-week-all').click();
+    > 122 |   await expect(page.getByTestId('county-standings-row-1')).toContainText('Fresh Season Rider');
+          |                                                            ^
+      123 |   await expect(page.getByTestId('county-standings-row-2')).toHaveCount(0);
+      124 |   await expect(page.locator('.county-standings__board-label')).toContainText('County board');
+      125 |   expect(seen.filter((search) => search.includes('contract=the-claim')).every((search) => !search.includes('season='))).toBe(true);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/assay-season-roll.spec.ts:122:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/assay-season-roll-the-coun-11d0c-hes-the-closed-first-ledger-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/assay-season-roll-the-coun-11d0c-hes-the-closed-first-ledger-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/assay-season-roll-the-coun-11d0c-hes-the-closed-first-ledger-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/assay-season-roll-the-coun-11d0c-hes-the-closed-first-ledger-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:26579) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[31/58] [mobile-chrome] › e2e/assay-season-roll.spec.ts:148:1 › the archive door serves season one read-only and refuses the pen
+  8) [mobile-chrome] › e2e/assay-season-roll.spec.ts:148:1 › the archive door serves season one read-only and refuses the pen 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 10
+    + Received  +  1
+
+      Object {
+        "assayEra": false,
+    -   "board": Array [
+    -     Object {
+    -       "profileName": "Founding Rider",
+    -       "rank": 1,
+    -     },
+    -     Object {
+    -       "profileName": "Cedar Jack",
+    -       "rank": 2,
+    -     },
+    -   ],
+    +   "board": Array [],
+        "season": 1,
+      }
+
+      155 |   });
+      156 |   expect(archive.status).toBe(200);
+    > 157 |   expect(await archive.json()).toMatchObject({
+          |                                ^
+      158 |     season: 1,
+      159 |     assayEra: false,
+      160 |     board: [{ rank: 1, profileName: 'Founding Rider' }, { rank: 2, profileName: 'Cedar Jack' }],
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/assay-season-roll.spec.ts:157:32
+
+    Error Context: test-results/assay-season-roll-the-arch-2d771-ad-only-and-refuses-the-pen-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/assay-season-roll-the-arch-2d771-ad-only-and-refuses-the-pen-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/assay-season-roll-the-arch-2d771-ad-only-and-refuses-the-pen-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:26637) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32/58] [mobile-chrome] › e2e/en-01-claim-ledger.spec.ts:94:1 › EN-01 claim ledger access, discovery beat, dupe guard, persistence, and fact cap
+[33/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:251:1 › public county rows carry submitted time while legacy rows keep the missing-time fallback
+[34/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:303:1 › standings accept a declared harness with its version
+[35/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:314:1 › standings reject a declared harness without its version
+[36/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:326:1 › standings still accept model-only and undeclared riders
+[37/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:342:1 › standings accept an optional world model and reject descriptions over 64 characters
+[38/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:360:1 › stored version-less harness rows still render through the standings route
+[39/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration
+  9) [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "ok": true,
+        "rank": null,
+    -   "stored": false,
+    +   "stored": true,
+      }
+
+      611 |     env: { TELEMETRY: fullKv },
+      612 |   });
+    > 613 |   expect(await unranked.json()).toMatchObject({ ok: true, stored: false, rank: null });
+          |                                 ^
+      614 | });
+      615 |
+      616 | test('bench submissions require membership in the contract frozen seed set', async () => {
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/lb-01-county-standings.spec.ts:613:33
+
+    Error Context: test-results/lb-01-county-standings-end-68bdd--its-board-safe-declaration-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-end-68bdd--its-board-safe-declaration-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/lb-01-county-standings-end-68bdd--its-board-safe-declaration-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:26847) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[40/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:616:1 › bench submissions require membership in the contract frozen seed set
+[41/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name
+  10) [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 8000ms exceeded while waiting on the predicate
+
+      659 |
+      660 |   await secureClaim(page, seed, undefined, '&epoch=epoch-2-steamworks&contract=the-claim');
+    > 661 |   await expect.poll(() => posts.length, { timeout: 8_000 }).toBe(1);
+          |                                                             ^
+      662 |
+      663 |   const post = posts[0]!;
+      664 |   expect(post).toMatchObject({
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/lb-01-county-standings.spec.ts:661:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/lb-01-county-standings-sec-0dfa9-gin-hashes-and-profile-name-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:27063) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[42/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:709:1 › secure skips county submission for a pinned seed outside the frozen set
+[43/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:719:1 › development standings require the explicit dev-send opt-in
+[44/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:729:1 › standings opt-out suppresses submission
+[45/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:739:1 › offline standings failure stays silent through the secure ceremony
+[46/58] [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:754:1 › Claim Ledger renders the seeded county board and its empty contract state
+[47/58] [mobile-chrome] › e2e/milk-county-board.spec.ts:173:1 › a posse ranks only within its own size and never disturbs the solo board
+[48/58] [mobile-chrome] › e2e/milk-county-board.spec.ts:225:1 › party is optional and strict once offered
+[49/58] [mobile-chrome] › e2e/milk-county-board.spec.ts:266:1 › the field book reads composition from self-declared stacks, and ranks nothing
+[50/58] [mobile-chrome] › e2e/milk-county-board.spec.ts:306:1 › a standings row publishes a reel handle, and the reel itself is fetched on demand
+[51/58] [mobile-chrome] › e2e/milk-county-board.spec.ts:354:1 › plain boot: an offline county clerk leaves the posse board and field book quiet
+[52/58] [mobile-chrome] › e2e/milk-county-board.spec.ts:378:1 › plain boot: a failing standings request adds no error of the application own
+[53/58] [mobile-chrome] › e2e/milk-county-board.spec.ts:404:1 › plain boot: standings accept pre-declaration rows but reject malformed or dishonest stacks
+[54/58] [mobile-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run
+  11) [mobile-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "11111111-1111-4111-8111-111111111111"
+    Received: null
+
+      577 |   await expect(page.getByTestId('lantern-show')).toBeVisible({ timeout: 20_000 });
+      578 |   await expect(page.getByTestId('claim-ledger')).toHaveCount(0);
+    > 579 |   expect(new URL(page.url()).searchParams.get('replay')).toBe(playable.id);
+          |                                                          ^
+      580 |   await page.getByTestId('lantern-show').screenshot({ path: path.join(SHOTS, `watch-this-run-${testInfo.project.name}.png`) });
+      581 |
+      582 |   expect(errors).toEqual({ console: [], page: [] });
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/milk-county-board.spec.ts:579:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/milk-county-board-plain-bo-c5713-s-and-a-row-watches-its-run-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/milk-county-board-plain-bo-c5713-s-and-a-row-watches-its-run-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/milk-county-board-plain-bo-c5713-s-and-a-row-watches-its-run-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/milk-county-board-plain-bo-c5713-s-and-a-row-watches-its-run-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:27406) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[55/58] [mobile-chrome] › e2e/sea-2-season-page.spec.ts:55:1 › plain boot opens the season list and a season page without losing legacy standings
+[56/58] [mobile-chrome] › e2e/sea-2-season-page.spec.ts:134:1 › the Founding Season renders its cited chronicle at both viewports
+[57/58] [mobile-chrome] › e2e/sea-2-season-page.spec.ts:163:1 › unavailable results are not reported as an empty season
+[58/58] [mobile-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell
+  12) [mobile-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Failed to resolve module specifier './standing-rule.js'. The base URL is about:blank because import() is called from a CORS-cross-origin script.",
+    + ]
+
+      36 |   await mkdir(SHOTS, { recursive: true });
+      37 |   await page.locator('.ledger').screenshot({ path: path.join(SHOTS, `${testInfo.project.name}-transfer-board.png`) });
+    > 38 |   expect(errors).toEqual([]);
+         |                  ^
+      39 | });
+      40 |
+      41 | function collectErrors(page: Page): string[] {
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/transfer-board.spec.ts:38:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/transfer-board-landing-ren-10214-ion-and-generalization-cell-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/transfer-board-landing-ren-10214-ion-and-generalization-cell-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/transfer-board-landing-ren-10214-ion-and-generalization-cell-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/transfer-board-landing-ren-10214-ion-and-generalization-cell-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  12 failed
+    [desktop-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger 
+    [desktop-chrome] › e2e/assay-season-roll.spec.ts:148:1 › the archive door serves season one read-only and refuses the pen 
+    [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration 
+    [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name 
+    [desktop-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run 
+    [desktop-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell 
+    [mobile-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger 
+    [mobile-chrome] › e2e/assay-season-roll.spec.ts:148:1 › the archive door serves season one read-only and refuses the pen 
+    [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration 
+    [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name 
+    [mobile-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run 
+    [mobile-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell 
+  46 passed (2.3m)

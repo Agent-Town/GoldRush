@@ -1,0 +1,94 @@
+(node:60512) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+
+(node:60571) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/2] [desktop-chrome] › e2e/county-board-open-week.spec.ts:125:1 › door: a named week and the open alias serve that week alone, and the all-time board keeps its shape
+  1) [desktop-chrome] › e2e/county-board-open-week.spec.ts:125:1 › door: a named week and the open alias serve that week alone, and the all-time board keeps its shape 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Array [
+        Array [
+          1,
+    -     "Week Rider",
+    -     "r2026w40",
+    +     "All-Time Rider",
+    +     null,
+        ],
+      ]
+
+      142 |     expect(Object.keys(week.body)).toEqual(WEEK_KEYS);
+      143 |     expect(week.body).toMatchObject({ ok: true, season: 2, assayEra: true, contractId: 'the-claim', party: 'solo', rotationId: LATEST.id });
+    > 144 |     expect(names(week)).toEqual([[1, 'Week Rider', LATEST.id]]);
+          |                         ^
+      145 |     expect(week.body.board[0].heldOut).toEqual({ rotationId: LATEST.id, waves: 12 });
+      146 |     expect(week.body.rejectedCount, 'the refused reel is counted on its own week, never on the all-time board').toBe(1);
+      147 |
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:144:25
+        at atInstant (/Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:116:12)
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:129:3
+
+    Error Context: test-results/county-board-open-week-doo-8f5c1--time-board-keeps-its-shape-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/county-board-open-week-doo-8f5c1--time-board-keeps-its-shape-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/county-board-open-week-doo-8f5c1--time-board-keeps-its-shape-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:60630) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/2] [desktop-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar
+  2) [desktop-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Array [
+        Array [
+          1,
+    -     "Last Week Rider",
+    -     "r2026w39",
+    +     "All-Time Rider",
+    +     null,
+        ],
+      ]
+
+      206 |     expect(open.status).toBe(200);
+      207 |     expect(open.body.rotationId).toBe(PRIOR.id);
+    > 208 |     expect(names(open)).toEqual([[1, 'Last Week Rider', PRIOR.id]]);
+          |                         ^
+      209 |   });
+      210 |   await atInstant(Date.parse(LATEST.opensAt), async () => {
+      211 |     const opened = await door(kv, `${CLAIM}&rotation=${LATEST.id}`);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:208:25
+        at atInstant (/Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:116:12)
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:203:3
+
+    Error Context: test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/county-board-open-week.spec.ts:125:1 › door: a named week and the open alias serve that week alone, and the all-time board keeps its shape 
+    [desktop-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
