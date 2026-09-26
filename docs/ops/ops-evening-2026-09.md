@@ -26,3 +26,11 @@ In the order written above the route table in `server/ledger/serve.mjs` and in `
 ## After the evening (attended)
 - Commit the mirrored units and the nginx file from the box back into `ops/droplet/`; close F-2642-3 and the SEC-4/BUILD-6 rows with the date; note in the handover which step needed a deviation.
 - Release any evidence the two jobs produced into `artifacts/ops-evening-2026-09/`.
+
+## Owner rulings 2026-09-26 (verbatim "D - as you recommend it")
+- **F-KV1-7 (step 0 of Part C):** before the first nightly mirror after the ledger switch, the mirror-exposure gate learns the new key classes (bug reports, hashed-IP rate-limit rows, prize codes, bug ids) and REDACTS them from the mirror; the tables stay in the backup and the private archive.
+- **F-KV2-6:** keep the no-store 308 from pages.dev to agenttown.app once `STANDINGS_CANONICAL_ORIGIN` is set; do not delete the Pages standings handler.
+- **F-KV1-3:** render demotions count once per distinct signature per month; the default stands.
+- **F-2355-2:** the box pulls the edge-watch cure (`ops/droplet/edge-watch.sh` must contain `2xx-slow`) on the evening; an owner action at the box.
+- **F-2352-3:** the LB-01 encryption lands BEFORE the sign-in fix; the ordering stands.
+- **F-LC2-6 (from the localhost-cors-2 landing, open):** whether `.env.local` keeps reaching local wrangler servers in the primary checkout; recommended a `.dev.vars` holding only `ALLOW_LOCALHOST_ORIGINS=1`.
