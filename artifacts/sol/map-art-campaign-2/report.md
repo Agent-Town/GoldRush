@@ -1002,3 +1002,8 @@ Final verification: build/TypeScript PASS; default collection PASS; gate-unset b
 - Seed Run: FAIL desktop/phone, death waves 13/14. Caravan arrives with 236.4/234.8 guard; three/four late defenses cannot carry these attempts to wave 20. Zero errors; no banking or planting-persistence proof. [F-PP5-2](../play-proofs/run-5/e9-seed-run/finding.md).
 - Devil's Alley: PASS phone, PARTIAL desktop. Both wave 20, bank, Book, byte-identical reload and zero errors. Desktop missed the east-bay build; phone confirms all three bays after native build-confirmation retries. Two attempts exhausted; desktop full goal remains red. [F-PP5-3](../play-proofs/run-5/e9-devils-alley/finding.md).
 - Closing gates: TypeScript/build PASS; collection 3,452 tests, gate unset 34 skipped; final-driver Incline PASS desktop/phone at wave 14 with carts 180/180 HP; bounded adjacent check 2/2 PASS. Eight final rows clean. Three second-column status cells and allowed paths verified. No new full desktop/phone map acceptance; next untouched Old Canal. [Commands, commits and remaining order](../play-proofs/run-5/run-note.md).
+
+## 2026-09-26 — Native play proofs run 6 and campaign close
+
+- Old Canal: FAIL desktop/phone, all three choices complete, eight/seven builds, deaths wave 19/18. Central demolish opens the defense ground; both outer re-digs register. No map defect established, zero errors. [F-PP6-1](../play-proofs/run-6/e9-old-canal/finding.md).
+- Initial required Incline regression: PASS both projects, wave 14, cart 180/180, all six cells, zero errors.
