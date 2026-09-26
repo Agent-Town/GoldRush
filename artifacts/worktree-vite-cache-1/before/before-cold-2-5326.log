@@ -1,0 +1,48 @@
+# spawn 2026-09-25T14:46:42.416Z pid 9724 cwd /Users/robin/Claude/Projects/wt-wvc1
+# argv node /Users/robin/Claude/Projects/wt-wvc1/node_modules/vite/bin/vite.js --host 127.0.0.1 --port 5326 --strictPort --force
+# load1 15.09
+[+   107ms] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[+   107ms]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[+   107ms] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[+   127ms] 9:46:42 PM [vite] (client) Forced re-optimization of dependencies
+[+   134ms] 
+[+   134ms]   VITE v8.3.0  ready in 105 ms
+[+   134ms] 
+[+   134ms]   ➜  Local:   http://127.0.0.1:5326/
+[+   385ms] (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+[+   386ms]   /Users/robin/Claude/Projects/wt-wvc1/index.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/logs/cast-sheets.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/logs/dashboard.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/public/privacy.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/site/index-legacy-2026-08-13.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/site/index.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/site/news.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/scripts/stream-dashboard.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/scripts/stream-player.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/boss-art-fidelity-2026-09-08/index.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/dashboard-truth/after.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/dashboard-truth/before.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/goal-tracker-dashboard/dashboard.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/map-art-inventory-20260908/index.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/src/replay/harness.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/boss-fidelity/e1-baron/index.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/boss-fidelity/e2-railcar/index.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/boss-fidelity/e4-landyacht/index.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/boss-fidelity/e3-crawler/index.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/artifacts/boss-fidelity/e5-dredge-queen/index.html
+[+   386ms] /Users/robin/Claude/Projects/wt-wvc1/assets/pilots/hero-3d/compare.html
+[+   386ms] 
+[+   386ms]   Build failed with 1 error:
+[+   386ms] 
+[+   386ms] [31m[TSCONFIG_ERROR] [0mFailed to load tsconfig '../tsconfig.json': Tsconfig not found
+[+   386ms] 
+[+   386ms]     at aggregateBindingErrorsIntoJsError (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/rolldown/dist/shared/error-CGhV1ebk.mjs:48:18)
+[+   386ms]     at unwrapBindingResult (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/rolldown/dist/shared/error-CGhV1ebk.mjs:18:128)
+[+   386ms]     at scan (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/rolldown/dist/experimental-index.mjs:238:3)
+[+   386ms]     at async Object.build (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:27504:3)
+[+   386ms]     at async scan (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:27443:4)
+[+   386ms]     at async file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:35201:15
+[+   837ms] 9:46:43 PM [vite] (client) dependency optimized: three
+[+  1442ms] 9:46:43 PM [vite] (client) dependencies optimized: lil-gui, meshoptimizer, three/addons/utils/BufferGeometryUtils.js, three/examples/jsm/loaders/GLTFLoader.js, three/examples/jsm/math/ConvexHull.js
+[+  1442ms] 9:46:43 PM [vite] (client) optimized dependencies changed. reloading
+# stopped 2026-09-25T14:46:56.067Z exit {"code":143,"signal":null}

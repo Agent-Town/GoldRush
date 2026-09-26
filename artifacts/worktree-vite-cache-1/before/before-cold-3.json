@@ -1,0 +1,68 @@
+{
+  "label": "before-cold-3",
+  "root": "/Users/robin/Claude/Projects/wt-wvc1",
+  "port": 5326,
+  "force": true,
+  "spawnedAt": "2026-09-25T14:50:17.694Z",
+  "pid": 83990,
+  "load1AtStart": 14.49,
+  "load1AtBoot": 13.83,
+  "readyMs": 244,
+  "bootMs": 3732,
+  "page": {
+    "ok": true,
+    "pageStart": 1790347818101,
+    "pageMs": 3325,
+    "bootedAt": 1790347821426,
+    "error": null,
+    "navigationsAtBoot": 2,
+    "reloadsBeforeBoot": 1,
+    "reloadsInSettle": 0,
+    "consoleErrors": [],
+    "badResponses": [],
+    "failedRequests": [
+      "net::ERR_ABORTED /@fs/Users/robin/Claude/Projects/GoldRush-assets/pilots/plaza-props-3d/era-props.e10.json?import",
+      "net::ERR_ABORTED /@fs/Users/robin/Claude/Projects/GoldRush-assets/pilots/plaza-props-3d/era-props.e8.json?import",
+      "net::ERR_ABORTED /@fs/Users/robin/Claude/Projects/GoldRush-assets/pilots/plaza-props-3d/era-props.e5.json?import",
+      "net::ERR_ABORTED /@fs/Users/robin/Claude/Projects/GoldRush-assets/pilots/flotilla-3d/flotilla-contract.json?import",
+      "net::ERR_ABORTED /src/story/story.css",
+      "net::ERR_ABORTED /assets/processed/prop-straw-man-stand.png?import&url",
+      "net::ERR_ABORTED /node_modules/.vite/deps/three_addons_utils_BufferGeometryUtils__js.js?v=bc5a5c43",
+      "net::ERR_ABORTED /assets/charters/the-river.json?import",
+      "net::ERR_ABORTED /src/story/beats.ts",
+      "net::ERR_ABORTED /src/story/speakers.ts",
+      "net::ERR_ABORTED /@fs/Users/robin/Claude/Projects/GoldRush-assets/pilots/plaza-props-3d/era-props.e2.json?import",
+      "net::ERR_ABORTED /assets/processed/prop-drill-faucet-station.png?import&url",
+      "net::ERR_ABORTED /node_modules/.vite/deps/three.js?v=bc5a5c43",
+      "net::ERR_ABORTED /@fs/Users/robin/Claude/Projects/GoldRush-assets/pilots/plaza-props-3d/era-props.e4.json?import",
+      "net::ERR_ABORTED /@fs/Users/robin/Claude/Projects/GoldRush-assets/pilots/plaza-props-3d/era-props.e9.json?import",
+      "net::ERR_ABORTED /src/ui/TrueReelTerrain.ts",
+      "net::ERR_ABORTED /src/story/seenState.ts",
+      "net::ERR_ABORTED /@fs/Users/robin/Claude/Projects/GoldRush-assets/pilots/plaza-props-3d/era-props.e3.json?import",
+      "net::ERR_ABORTED /node_modules/.vite/deps/three.module-BifoCqb3.js?v=bc5a5c43",
+      "net::ERR_ABORTED /assets/processed/prop-drill-bell-post.png?import&url"
+    ]
+  },
+  "markers": {
+    "scanFailed": [
+      "+682ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ],
+    "tsconfigError": [
+      "+682ms \u001b[31m[TSCONFIG_ERROR] \u001b[0mFailed to load tsconfig '../tsconfig.json': Tsconfig not found"
+    ],
+    "newDepsOptimized": [],
+    "reoptimizing": [
+      "+113ms 9:50:17 PM [vite] (client) Forced re-optimization of dependencies"
+    ],
+    "reloading": [
+      "+1521ms 9:50:19 PM [vite] (client) optimized dependencies changed. reloading"
+    ],
+    "errors": [
+      "+682ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ]
+  },
+  "stop": {
+    "code": 143,
+    "signal": null
+  }
+}
