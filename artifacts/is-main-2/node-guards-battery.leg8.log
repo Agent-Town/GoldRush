@@ -1,0 +1,136 @@
+
+> gold-rush@0.1.0 test:review-fixes
+> node --test --test-concurrency=1 scripts/review-mixed-hashes.test.mjs scripts/review-party-retention.test.mjs scripts/review-save-names.test.mjs scripts/review-wrecked-turrets.test.mjs scripts/node-guards-watchdog.test.mjs scripts/ratelimit-window.test.mjs scripts/landing-rotation-derivation.test.mjs scripts/world-dispatch-boss-trigger-guard.test.mjs scripts/landmark-collision.test.mjs scripts/site-security-headers.test.mjs scripts/status-rotate-month.test.mjs scripts/backlog-split-closed.test.mjs scripts/attended-land.test.mjs
+
+✔ the lock predicate knows the four STATUS line-1 shapes and nothing else (0.645ms)
+✔ a config must carry the fields a landing needs and refuses an F-ID in the STATUS phrase (5.971125ms)
+✔ the env file is single-quoted and survives apostrophes, spaces and dollar signs (1.005ms)
+✔ union keeps both sides of a conflict block and refuses leftover markers (1.507875ms)
+✔ the evidence table lists only the gates that ran, last line per gate (0.226375ms)
+✔ the verdict allows only the configured e2e reds and the known battery classes (3.157875ms)
+✔ bookkeeping is idempotent and puts the phrase before the desk header without splicing (3.252458ms)
+✔ bookkeeping works on a chain whose stale line 1 carries a fire lock shape (the live lock is the ff gate, not this file) (2.591959ms)
+✔ --dry-run states rows, bytes and keys per destination and leaves the tree untouched (50.29475ms)
+✔ --apply moves closed rows below the title and keeps open, desk, gate, RULED and OWNER rows (74.38925ms)
+✔ every byte that left the index is in a part file, plus the headers and pointers it added (59.436125ms)
+✔ a second --apply moves nothing, doubles no pointer and changes no byte (95.523ms)
+✔ a baseline key follows the row that carried its citation, and the allowance is not grown (49.298792ms)
+✔ GROUND TRUTH — a STRADDLING coordinate is allowed on both sides, and the addition is named (54.019958ms)
+✔ MANUFACTURED DEFECT — a baseline key whose citation is nowhere REFUSES and writes nothing (51.389042ms)
+✔ REVERSE CONTROL — the same board with a placeable baseline applies cleanly (49.17625ms)
+✔ REFUSES when the baseline is absent — a ratchet without its baseline is not a ratchet (47.553583ms)
+✔ MANUFACTURED DEFECT — pointer bytes that go uncounted REFUSE and write nothing (50.569792ms)
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (50.635166ms)
+✔ an index with no # Task backlog title moves nothing and says so (37.81175ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (110.035542ms)
+✔ the landing page holds no hand-written rotation id (46.0385ms)
+✔ the landing page declares no CURRENT_ROTATION_ID constant (25.680416ms)
+✔ the page derives the id the registry minted, for every rotation the county ships (1.421167ms)
+✔ the page and the door pick the same rotation at every instant the registry covers (0.397542ms)
+✔ a week that was never minted walks back to the latest rotation that did open (0.329916ms)
+✔ a resting door is asked once, not twelve times (0.3145ms)
+✔ e6-picnic retains the parent blockers and appends its own registered solids (1.967375ms)
+✔ e7-dead-band retains the parent blockers and appends its own registered solids (0.151084ms)
+✔ e7-relay-rush retains the parent blockers and appends its own registered solids (0.066625ms)
+✔ e8-far-side retains the parent blockers and appends its own registered solids (0.082667ms)
+✔ alias-only maps retain exactly their parent blockers (0.080709ms)
+✔ plain maps retain their footprints without duplication (0.109541ms)
+✔ a file that stops producing TAP is sampled, killed, retried once, and reported red (24304.305208ms)
+✔ a battery that keeps producing TAP is never killed, however long it runs (5183.496917ms)
+✔ the stall bound is finite, reported, and can only be LOWERED from the environment (1575.279958ms)
+✔ the rider cap is 60 and the sixty-first submission inside one hour is refused (4.111625ms)
+✔ an hour is an hour: the limit refills once the window from the first write has passed (1.158875ms)
+✔ a refusal never bumps the count and never re-arms the window (0.334167ms)
+✔ the stored ttl is the remainder of the window, never a fresh hour (0.36975ms)
+✔ a counter written before the window start was stored keeps its count (0.180834ms)
+✔ every door that shares this limiter still passes its own ttl (59.926625ms)
+✔ browser-only: matching peer, remote after local (1.210416ms)
+✔ browser-only: mismatching peer, remote after local (0.196167ms)
+✔ browser-only: matching peer, remote before local (0.13875ms)
+✔ browser-only: mismatching peer, remote before local (0.108625ms)
+✔ mixed: matching peer, remote after local (0.1395ms)
+✔ mixed: mismatching peer, remote after local (0.141417ms)
+✔ mixed: matching peer, remote before local (0.124125ms)
+✔ mixed: mismatching peer, remote before local (0.113042ms)
+✔ headless-only: matching peer, remote after local (0.119167ms)
+✔ headless-only: mismatching peer, remote after local (0.147875ms)
+✔ headless-only: matching peer, remote before local (0.734167ms)
+✔ headless-only: mismatching peer, remote before local (1.27875ms)
+✔ a thin seat, unknown ID, or self hash cannot satisfy or poison the browser quorum (2.947833ms)
+✔ one browser with thin seats ignores their incompatible hashes (0.502208ms)
+✔ headless-only rooms require each headless peer (0.279208ms)
+✔ thin seats keep hash exchange disabled (0.889125ms)
+✔ an outstanding comparison keeps the roster of its sampled tick after a peer leaves (1.952583ms)
+✔ later ticks use the smaller roster and ignore a departed peer (0.253542ms)
+✔ snapshot compression keeps the sampled quorum even when the roster changes before encoding finishes (20.656125ms)
+party retention checks passed (party sizes 1–4, top-100/leftover bounds, replay survival, archives, rotations)
+✔ scripts/review-party-retention.test.mjs (1121.099833ms)
+(node:65100) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the untouched default saves and remains readable on the manual shelf (4.256292ms)
+✔ legal town names and the fallback fit every supported wave digit count (47.243333ms)
+✔ manual input keeps its punctuation, reserved-name, profanity, and duplicate checks (0.391541ms)
+(node:66210) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ later-era mounts stop on wreck or suspension and return on repair with stable relay IDs (6550.672041ms)
+public/_headers "/*": 5 security headers, 10 CSP directives
+✔ public/_headers sends the five security headers on every path (2.082208ms)
+✔ the Cache-Control rules 058-device-tiers gates are still there (0.113833ms)
+✔ the bug-office report TTL and the number the fetch script prints are the same (0.787375ms)
+✔ the audit catches a deleted policy, a widened source and an enforcing flip (2.16675ms)
+✔ --dry-run states the accounting per destination and leaves the tree untouched (46.654167ms)
+✔ --apply moves the closed months and keeps line 1, the law bullets and the current month (44.965417ms)
+✔ a second --apply moves nothing and changes no byte (87.319917ms)
+✔ the trailing window holds the newest bullets on the board whatever their month (39.539125ms)
+✔ an unstamped bullet is filed by its session neighbours, and prose dates never decide (39.093084ms)
+✔ a bullet that cannot be placed at all STAYS ON THE BOARD (40.816125ms)
+✔ MANUFACTURED DEFECT — a header whose bytes go uncounted REFUSES and writes nothing (51.618875ms)
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (50.09425ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (118.577458ms)
+✔ every boss-kind dispatch trigger names a contract that declares a boss (7.265792ms)
+✔ M8-5 is keyed to Low Orbit being secured, not to a boss it never had (2.017542ms)
+✔ the guard BITES: a boss trigger on a bossless map is rejected (1.905583ms)
+ℹ tests 82
+ℹ suites 0
+ℹ pass 82
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 42997.447167

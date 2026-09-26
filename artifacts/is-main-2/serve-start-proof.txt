@@ -1,0 +1,22 @@
+serve-start-proof: /Users/robin/Claude/Projects/wt-im2/server/ledger/serve.mjs
+node v26.4.0; 1-min load 28.1; 2026-09-26T03:06:44.210Z
+
+== real-path: STARTED AND SERVED
+   entry     /Users/robin/Claude/Projects/wt-im2/server/ledger/serve.mjs
+   pid 96405, port 62849, listening true after 687 ms
+   request   /api/stats -> 200 application/json; charset=utf-8 {"ok":true,"empty":true,"message":"the office opens with the first assay","stats":{"runs":{"today":0,"sevenDays":0,"allTime":0},"deepestWave":0,"medianDurationB
+   request   /no-such-route -> 404 application/json; charset=utf-8 {"ok":false,"error":"not_found"}
+   exit      {"code":0,"signal":null}
+   stdout    gold-rush ledger listening on 127.0.0.1:62849
+   stderr    (none)
+
+== symlinked: STARTED AND SERVED
+   entry     /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/im2-serve-proof-oIyZun/serve.link.mjs
+   pid 97255, port 62852, listening true after 510 ms
+   request   /api/stats -> 200 application/json; charset=utf-8 {"ok":true,"empty":true,"message":"the office opens with the first assay","stats":{"runs":{"today":0,"sevenDays":0,"allTime":0},"deepestWave":0,"medianDurationB
+   request   /no-such-route -> 404 application/json; charset=utf-8 {"ok":false,"error":"not_found"}
+   exit      {"code":0,"signal":null}
+   stdout    gold-rush ledger listening on 127.0.0.1:62852
+   stderr    (none)
+
+1-min load at end 28.1; both started and served
