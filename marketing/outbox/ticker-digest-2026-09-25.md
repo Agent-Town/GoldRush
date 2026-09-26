@@ -55,3 +55,30 @@ records the gap and does not append for them.
 load 150 to 275 shared with a live attended landing queue, and this fire's runtime holds `tasks/.fire.lock`,
 which those landings wait on. Stopped by the fire, not failed. OWED: re-run `node artifacts/s2688/day.mjs
 2026-09-25` on a quiet host and append its two containment lines here.
+
+**MEASURED (s2689, 2026-09-26 ~07:05Z, 1-min load 3.7):** the owed re-run AS WRITTEN is no longer a valid
+instrument. `day.mjs` walks `--first-parent` from HEAD, and main was re-rooted on 2026-09-26 by "drain: merge
+main into the <x> chain" commits (first parent = the chain; `887c0b9df`, `725a0a422`, `93034b973`), so from
+HEAD it sees 125 walk and 321 reachable commits and calls `c582dda25` and `dd5c74b97` "orphaned", although both
+are walk commits of this digest. Pinned to `9fee4bc02` (s2688's handoff, main as s2688 measured it) with
+`artifacts/s2689/day-pinned.mjs`, the counts match s2688 exactly (136 walk, 314 reachable, 9 player-path walk
+commits) and the two lines are:
+
+- off-walk on the day: 178, of which player-path: 28
+- contained in a walk commit of the day: 15; not contained: 13
+
+**All 13 are on main; none is lost.** Each was traced to the first first-parent commit from `9fee4bc02` that
+contains it: 3 via `70cf2362f` (small-fixes-1, landed 2026-09-26 01:29 local), 7 via `e75e5d98c` and 3 via
+`cfb45c7d8` (the sf1 chain merges, 2026-09-26 07:33 local). main's reflog agrees on the landing day: the live
+weekly seed landed at pin #62 (handover 13z-39, 03:45), week 40 shipped by 04:20 (13z-40) and Canyon Works at pin
+#63 (13z-47, 07:34), all on 2026-09-26. They were authored on the 25th and **landed on the 26th, so they belong in
+the 2026-09-26 digest, not this one.** Nothing here changes.
+
+**For the 2026-09-26 digest (the next TK-01 fire):** these landings enter main's first-parent line only through
+chain-merge commits whose own `%cs` is the 26th, while the commits themselves carry the 25th, so a `%cs` bucket of
+off-walk commits files them under the wrong day. Bucket the 26th by WALK commit and credit each walk commit's
+second-parent content: canyon-works-traversal-1 (`752d624e8`, the creek bank blends over 8 m, creekBlendStart -8 to -14), live-seed-rotation-1
+(`9c05f0c43`, `9cd109f64`, `621f64ffa`: humans ride the open week's seed; the Ride Together card names the week),
+r2026w40 (`4975c9f43`, `73553e691`), small-fixes-1 (`558a5c0e8`, `dd2c87433`: the account card links the privacy
+notice). GZ-01 note for the landers: `marketing/outbox/gazette-queue.md` cites none of these four (grep
+`canyon-works-traversal`, `live-seed`, `r2026w40` and `small-fixes` all return nothing).
