@@ -4,8 +4,13 @@
 // fit on parchment (#f5e6c8) with a ledger-ink (#2e1b0e) caption: the beat, the moment, and REAL or STAGED as the
 // take's sidecar says. Node only (sharp); no server, no lock.
 //
-// Usage: node scripts/launch-video/contact-sheet.mjs --stills a.jpg,b.jpg,... [--out artifacts/launch-video-capture-2/contact-sheet.jpg]
+// A cell may also name a clip and a second, `<take>.mp4@<seconds>`: that frame is read from the clip with ffmpeg
+// straight into the sheet (no file is written), for a moment the take's own still caught too early, such as a Baron
+// banner still fading in when its mark fired.
+//
+// Usage: node scripts/launch-video/contact-sheet.mjs --stills a.jpg,b.mp4@321.0,... [--out artifacts/launch-video-capture-2/contact-sheet.jpg]
 
+import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -30,7 +35,8 @@ const height = rows * (cell.height + cell.caption) + (rows + 1) * cell.gap + 56;
 const escape = (value) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 function captionFor(name) {
-  const take = name.replace(/\.(jpg|png)$/, '');
+  const fromClip = name.match(/^(.+)\.mp4@(\d+(?:\.\d+)?)$/);
+  const take = fromClip ? `${fromClip[1]}-frame at ${fromClip[2]} s` : name.replace(/\.(jpg|png)$/, '');
   const match = take.match(/^(B[0-9-]+(?:-B[0-9]+)*)-(.+)-(1280x800|390x844)-(t\d+)-(.+)$/);
   const sidecarName = match ? `${match[1]}-${match[2]}-${match[3]}-${match[4]}.json` : null;
   let staged = false;
@@ -41,13 +47,17 @@ function captionFor(name) {
 
 const composites = [];
 for (const [index, name] of names.entries()) {
-  const file = path.join(OUT_DIR, name);
+  const fromClip = name.match(/^(.+\.mp4)@(\d+(?:\.\d+)?)$/);
+  const file = path.join(OUT_DIR, fromClip ? fromClip[1] : name);
   if (!existsSync(file)) throw new Error(`missing still ${file}`);
+  const source = fromClip
+    ? execFileSync('ffmpeg', ['-v', 'error', '-ss', fromClip[2], '-i', file, '-frames:v', '1', '-f', 'image2pipe', '-vcodec', 'mjpeg', '-q:v', '2', '-'], { maxBuffer: 64 * 1024 * 1024 })
+    : file;
   const column = index % columns;
   const row = Math.floor(index / columns);
   const left = cell.gap + column * (cell.width + cell.gap);
   const top = 56 + cell.gap + row * (cell.height + cell.caption + cell.gap);
-  const image = await sharp(file).resize(cell.width, cell.height, { fit: 'contain', background: '#2e1b0e' }).toBuffer();
+  const image = await sharp(source).resize(cell.width, cell.height, { fit: 'contain', background: '#2e1b0e' }).toBuffer();
   composites.push({ input: image, left, top });
   const { label, staged } = captionFor(name);
   const svg = `<svg width="${cell.width}" height="${cell.caption}" xmlns="http://www.w3.org/2000/svg">
