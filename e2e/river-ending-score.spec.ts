@@ -2,20 +2,28 @@
 // the game writes a completed score at the pan"). Run 6 of the play proofs pulled the finale's real lever and
 // panned the quiet River (30 gold, wave 0, no enemies through 35 s) but found no completed score, so its bank and
 // reload cells failed (`artifacts/sol/play-proofs/run-6/e10-river/driver.ts:1416-1419` and `:1439-1441`). These
-// tests prove the pan now writes that score, its reel and its county standing exactly once, and that nothing
-// writes on boot or on the lever alone.
+// tests prove the pan now writes that score and its reel exactly once, and that nothing writes on boot or on the
+// lever alone.
+//
+// THE COUNTY POST IS HELD (`RIVER_STANDING_POSTS_ENABLED = false` in `src/game/Game.ts`, attended session
+// 2026-09-26): no assay instrument can reproduce a River reel yet (F-RES1-1, F-RES1-6), so a posted River row would
+// rank while pending and then be rejected. The spec asserts ZERO standing POSTs through every pan, reload and
+// re-pull, with the dev-send flag seeded so the silence is the hold's and not the opt-in's; and it keeps the kept
+// reel door-shaped by judging it in-process, with the client's `validateRunTape` and with the door's own
+// `onRequest` on the body `submitCountyStanding` would build, for the day the one line flips.
 //
 // NO `?debug` ANYWHERE (Mistake #10). The River is reached the way the lever reaches it: the spec computes the
 // lever's two sessionStorage entries and its URL with the same calls `E10FinaleSystem.launchRiver` makes
 // (`getPostCreditsCharter`, `stampCharter`, `charterLineageRootId`, the `nowaves` run policy) and boots that URL.
 // The real lever click behind a native Last Claim prelude is the run-6 native driver's job; it is not repeated.
 //
-// NOTHING LEAVES THIS MACHINE: every request to the county's origin is answered here, and the captured standing is
-// judged by the door's own handler in-process (no storage bound, so it validates and stores nothing).
+// NOTHING LEAVES THIS MACHINE: every request to the county's origin is answered here, and the door's handler runs
+// in-process with no storage bound, so it validates and stores nothing.
 //
-// EVIDENCE (the pan and Book screenshots, the reel, the standing and the door's answer) lands in the gitignored
+// EVIDENCE (the pan and Book screenshots, the reel, the door-shaped body and the door's answer) lands in the gitignored
 // test-results/evidence/river-ending-score-1/ unless GR_REFRESH_EVIDENCE=1 asks for artifacts/river-ending-score-1/,
 // so a gate run never churns a tracked file (F-RRR-5's rule, as in scripts/board-tape-gold.test.mjs).
+import { createHash } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
@@ -33,7 +41,7 @@ import {
   profileDataKey,
   type ProfileState,
 } from '../src/game/ProfileStorage';
-import { RUN_TAPES_KEY, type RunTape } from '../src/game/RunTape';
+import { RUN_TAPES_KEY, validateRunTape, type RunTape } from '../src/game/RunTape';
 import { ACTIVE_EPOCH_KEY, CHARTER_LAUNCH_KEY, listEpochs } from '../src/meta/ContractFamilies';
 import { researchStateKey } from '../src/meta/ResearchTree';
 import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
@@ -76,6 +84,7 @@ type Score = {
   gold?: number;
   kills?: number;
   timeAlive?: number;
+  baseValue?: number;
   at?: number;
 };
 type Seam = { id: string; x: number; z: number };
@@ -92,6 +101,8 @@ type RunView = {
 };
 type Errors = { console: string[]; page: string[] };
 type Standing = { contractId: string; epochId: string; seedMode: string; score: Record<string, number | boolean>; tape?: RunTape };
+// A fixed, well-formed anonymous id for the in-process door judgement; the door only checks its shape.
+const DOOR_ANON_ID = '0123456789abcdef0123456789abcdef';
 
 // A progressed profile that has just earned the lever: ONE secured Last Claim, nothing for the River. Chapters and
 // research are opened the way the run-6 driver opened them, so the Book can show the E10 chapter.
@@ -114,7 +125,8 @@ function seedEntries(): Array<[string, string]> {
   ];
   return [
     [PROFILE_KEY, JSON.stringify(profile)],
-    // A dev build posts a county standing only with this flag (`shouldPostCountyStanding`); the post is captured below.
+    // A dev build posts a county standing only with this flag (`shouldPostCountyStanding`), so with it seeded every
+    // standing the game tried to post would reach the route below: an empty capture is the hold's, not the opt-in's.
     [TELEMETRY_DEV_SEND_STORAGE_KEY, '1'],
     ...logical.flatMap(([key, value]): Array<[string, string]> => [[key, value], [profileDataKey(PROFILE_ID, key), value]]),
   ];
@@ -275,12 +287,39 @@ async function walkToTavern(page: Page): Promise<void> {
   throw new Error('the tavern was not reached in 70 steps');
 }
 
+/**
+ * The body `submitCountyStanding` would post for this score and reel, field for field (`Game.ts`, the body literal in
+ * `submitCountyStanding`): the ceremony's post is held, so the spec builds it here to keep the reel door-shaped.
+ */
+function doorShapedStanding(reel: RunTape, score: Score): Standing & Record<string, unknown> {
+  const sha256 = (text: string) => createHash('sha256').update(text).digest('hex');
+  return {
+    contractId: reel.contract,
+    epochId: 'epoch-10-deepsky',
+    score: {
+      secured: true,
+      waves: Math.max(0, Math.floor(score.waves ?? 0)),
+      timeAlive: Math.max(0, score.timeAlive ?? 0),
+      gold: Math.max(0, Math.floor(score.gold ?? 0)),
+      baseValue: Math.max(0, Math.floor(score.baseValue ?? 0)),
+    },
+    profileName: 'Robin',
+    anonId: DOOR_ANON_ID,
+    difficulty: reel.difficulty,
+    seed: reel.seed,
+    seedMode: 'live',
+    seedHash: sha256(reel.seed),
+    inputLogHash: sha256(JSON.stringify(reel.inputLog)),
+    tape: reel,
+  };
+}
+
 async function evidence(name: string, value: unknown): Promise<void> {
   await mkdir(EVIDENCE_DIR, { recursive: true });
   await writeFile(path.join(EVIDENCE_DIR, name), `${JSON.stringify(value, null, 2)}\n`);
 }
 
-test("the River's first pan writes one completed e10-river score, its reel and its standing, and never a second", async ({ page }, testInfo) => {
+test("the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second", async ({ page }, testInfo) => {
   test.setTimeout(240_000);
   const { errors, standings, countyCalls } = await prepare(page, true);
   await page.goto(LEVER.url);
@@ -320,13 +359,13 @@ test("the River's first pan writes one completed e10-river score, its reel and i
   expect(reel.inputLog.durationTicks).toBeGreaterThan(0);
   expect(reel.meta?.engineHash).toMatch(/^[a-f0-9]{64}$/);
 
-  // (b) THE STANDING carries e10-river with the ceremony's outcome and the same reel, and the door admits it.
-  await expect.poll(() => standings.length, { timeout: 15_000 }).toBe(1);
-  const standing = standings[0]!;
-  expect(standing).toMatchObject({ contractId: RIVER_ID, epochId: 'epoch-10-deepsky', seedMode: 'live' });
-  expect(standing.score).toMatchObject({ secured: true, waves: 0, timeAlive: rivers[0]!.timeAlive, gold: 5 });
-  expect(standing.tape?.id).toBe(reel.id);
-  expect(standing.tape?.outcome).toEqual(reel.outcome);
+  // (b) THE STANDING IS HELD: nothing reaches the county, although the dev-send flag would carry any post.
+  await page.waitForTimeout(1500);
+  expect(standings, 'the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)').toEqual([]);
+  // The kept reel stays door-shaped for the day the post is enabled: the client's validator reads it back whole, and
+  // the door's own handler, in-process with no store bound, admits the body `submitCountyStanding` would build.
+  expect(validateRunTape(reel), 'the client validator reads the kept reel back whole').toEqual(reel);
+  const standing = doorShapedStanding(reel, rivers[0]!);
   const verdict = await standingsDoor({
     request: new Request(`${COUNTY_ORIGIN}/api/standings`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(standing) }),
     env: {},
@@ -334,7 +373,7 @@ test("the River's first pan writes one completed e10-river score, its reel and i
   const door = await verdict.json() as { ok?: boolean; stored?: boolean; error?: string };
   expect({ status: verdict.status, door }, 'the door, run in-process with no store bound, admits the River standing').toEqual({ status: 200, door: { ok: true, stored: false } });
   await evidence(`reel-${testInfo.project.name}.json`, reel);
-  await evidence(`standing-${testInfo.project.name}.json`, { ...standing, door: { status: verdict.status, ...door } });
+  await evidence(`door-shaped-standing-${testInfo.project.name}.json`, { ...standing, door: { status: verdict.status, ...door } });
 
   // (3) A SECOND PAN on the same run writes nothing more.
   await expect.poll(async () => (await view(page)).gold, { timeout: 20_000 }).toBeGreaterThanOrEqual(15);
@@ -355,8 +394,8 @@ test("the River's first pan writes one completed e10-river score, its reel and i
   const afterRepull = await rawStore(page);
   expect(afterRepull.scores, 'a re-pull and a pan rewrite nothing').toBe(atPan.scores);
   expect(parsedTapes(afterRepull.tapes), 'a re-pull keeps no second reel').toEqual(reels);
-  await page.waitForTimeout(1000);
-  expect(standings, 'exactly one standing for the whole ending').toHaveLength(1);
+  await page.waitForTimeout(1500);
+  expect(standings, 'no standing through the pans, the reload and the re-pull').toEqual([]);
 
   // The ordinary exit (pause, Back to Town) suspends the River; the reload cell reads the score byte for byte.
   await page.getByTestId('hud-pause').click();
@@ -382,7 +421,8 @@ test("the River's first pan writes one completed e10-river score, its reel and i
     { type: 'pans', description: JSON.stringify({ first: pan, reloaded: reloadedPan, repulled: repulledPan }) },
     { type: 'county-calls', description: JSON.stringify(countyCalls) },
   );
-  expect(countyCalls.filter((call) => call.startsWith('POST ') && call !== 'POST /api/standings'), 'no other county write').toEqual([]);
+  expect(standings, 'no standing, from the lever to the Book').toEqual([]);
+  expect(countyCalls.filter((call) => call.startsWith('POST ')), 'no county write at all').toEqual([]);
   expect(errors).toEqual({ console: [], page: [] });
 });
 

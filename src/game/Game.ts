@@ -7734,11 +7734,12 @@ export class Game {
    * THE RIVER'S WIN (F-PP6-2; owner 2026-09-26, verbatim "2 - sure, lets do that", choosing "the pan is the win; the
    * game writes a completed score at the pan"). The finale lever opens a run with no waves, so the secure path
    * (`run_secured`, then a secured `run_ended` or `hero_died`), the only writer of a completed score, never fires on
-   * it. This is the ceremony's own completion instead, written through the same three sinks every secured run uses:
-   * the score (`recordRunScore`: waves 0, the time alive at the pan, the purse the pan filled, secured), the reel (the
-   * recorder's snapshot with the outcome a standing's reel declares, kept in the tape ring) and the county standing
-   * (`submitCountyStanding`, which attaches that same reel). The door's grammar (`validTapeOutcome`) admits
-   * `secured`, `rush` and `death` and nothing else, so the ceremony rides `secured` and the door is unchanged.
+   * it. This is the ceremony's own completion instead, written through the sinks every secured run uses: the score
+   * (`recordRunScore`: waves 0, the time alive at the pan, the purse the pan filled, secured) and the reel (the
+   * recorder's snapshot with the outcome a standing's reel declares, kept in the tape ring). The county standing
+   * (`submitCountyStanding`, which would attach that same reel) is HELD behind `RIVER_STANDING_POSTS_ENABLED` until a
+   * River reel can be assayed. The door's grammar (`validTapeOutcome`) admits `secured`, `rush` and `death` and
+   * nothing else, so the ceremony rides `secured`.
    *
    * THE EVENT is the first gold the player's own pan lands, called from the fixed step: the earliest act that is
    * certainly a pan (the channel's first swing yields nothing if the player steps off inside one pan tick, 1.5 s
@@ -7754,7 +7755,7 @@ export class Game {
     const { score } = this.recordRunScore(0, this.timeAlive, true, 0);
     const reel = this.runTapeRecorder?.snapshot(this.securedReelOutcome(score, 'secured'), this.runTapeEventLog());
     if (reel && appendRunTape(safeLocalStorage(), reel)) this.lastRunTape = reel;
-    void this.submitCountyStanding(score);
+    if (RIVER_STANDING_POSTS_ENABLED) void this.submitCountyStanding(score);
   }
 
   /** The contract a score, a reel and a standing are written under: the River ceremony scores `e10-river`. */
@@ -11137,6 +11138,14 @@ function countyAnonId(): string {
 
 // F-PP6-2: the contract THE RIVER's ending is scored under. The lever plays it as its lineage root, `the-claim`.
 const RIVER_ENDING_CONTRACT_ID = 'e10-river';
+
+// HELD (attended session, 2026-09-26): the River's county standing is not posted until a River reel can be assayed.
+// Today every instrument rejects one (F-RES1-1: a replay opens the raw `e10-river` manifest, not the lever's pressed
+// Claim under `nowaves`, and the browser arm reads RunManager's secure, which the ceremony never sets; F-RES1-6: the
+// browser's seams follow the `?seed=` pin, not the run's seed), so a posted River row would rank while pending and
+// then be rejected on the live board. The score and the reel are still written, and the reel stays door-shaped
+// (`e2e/river-ending-score.spec.ts` judges it with the door in-process). The assay slice flips this one line.
+const RIVER_STANDING_POSTS_ENABLED: boolean = false;
 
 /**
  * THE RIVER CEREMONY (F-PP6-2): `E10FinaleSystem.launchRiver` stamps THE RIVER charter onto its lineage root and boots it
