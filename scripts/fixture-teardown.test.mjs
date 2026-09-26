@@ -34,6 +34,7 @@ const subjects = readdirSync(SCRIPTS)
 test(`all ${subjects.length} scripts/*.test.mjs fixture owners remove their temp directories`, () => {
   assert.ok(subjects.length > 0, 'fixture teardown guard covered 0 mkdtemp-using scripts/*.test.mjs files');
   const results = [];
+  const failedChildren = []; // children that ran their tests but failed their own assertions (reported, never a sweep verdict)
 
   for (const { file, source } of subjects) {
     const name = relative(ROOT, file).replaceAll('\\', '/');
@@ -47,8 +48,12 @@ test(`all ${subjects.length} scripts/*.test.mjs fixture owners remove their temp
         encoding: 'utf8',
         env: { ...childEnv, TMPDIR: scratch },
       });
-      assert.equal(run.status, 0, `${name} child failed:\n${run.stderr || run.stdout}`);
-      assert.match(run.stdout, /^ℹ tests [1-9]\d*$/m, `${name} child reported zero executed tests`);
+      // The sweep judges SURVIVORS, not the child's own verdict (F-SWEEP-1, 2026-09-25): a child that fails its own
+      // assertions but cleans up is not a leak, and node-guards-contention fails by design whenever another battery runs
+      // on the host, which turned this sweep red in nine landings in one day while no fixture leaked. A child that
+      // never ran its tests (a crash before any test) is still a failure here, because its teardown never had a chance.
+      assert.match(run.stdout, /^ℹ tests [1-9]\d*$/m, `${name} child reported zero executed tests:\n${run.stderr || run.stdout}`);
+      if (run.status !== 0) failedChildren.push(name);
       const survivors = readdirSync(scratch).filter((entry) =>
         prefixes.some((prefix) => entry.startsWith(prefix)));
       results.push({ name, survivors });
@@ -59,7 +64,7 @@ test(`all ${subjects.length} scripts/*.test.mjs fixture owners remove their temp
 
   assert.ok(
     results.every(({ survivors }) => survivors.length === 0),
-    `fixture survivors by file:\n${results
+    `fixture survivors by file (children that ran but failed their own assertions, reported only: ${failedChildren.join(', ') || 'none'}):\n${results
       .map(({ name, survivors }) => `${name}: ${survivors.length} [${survivors.join(', ')}]`)
       .join('\n')}`,
   );

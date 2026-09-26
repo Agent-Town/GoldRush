@@ -216,37 +216,196 @@ async function enemyLightNear(page: Page, point: { x: number; z: number }): Prom
   return light!.light;
 }
 
-async function spriteLuminance(page: Page, point: { x: number; z: number }): Promise<number> {
-  const screen = await page.evaluate((pos) => window.__GR_TEST__?.screenPoint(pos.x, pos.z, 1.25) ?? null, point);
+/**
+ * THE SPRITE PROBE, REBUILT (F-SEF2-5b, test-truth-2, 2026-09-25).
+ *
+ * The helper this replaces read one fixed world point and was a desktop-shaped instrument, measured
+ * four ways wrong in `artifacts/e1-spec-truth-1/report.md` (section F-SEF2-5b):
+ *  1. the ramp test aimed it at world (0, 0) while the Night Shift hero starts at (0, 12)
+ *     (`contractHeroStart` in src/game/Game.ts; this contract declares no stake), so "dayHero" and
+ *     "darkHero" were river and ground, never the hero;
+ *  2. it returned a p95 of sRGB-ENCODED luma, and the ramp compared a ratio of two of those with a
+ *     LINEAR tint luminance;
+ *  3. on mobile it read 0.93262 in day and in dark alike, lighting-invariant: (0, 0) sits under a
+ *     parchment tip card on the 390 px layout, and an element screenshot is the PAGE clipped to the
+ *     canvas box, so the card was what it read (crop: artifacts/test-truth-2/probes/out/
+ *     mobile-chrome-night-day-origin-crop.png; with the card gone the same point reads 0.05655 dark);
+ *  4. its patch was +-6 x +-8 PNG pixels: +-6 x +-8 CSS px on desktop (DPR 1) but a third of that on the
+ *     Pixel 5 profile (DPR 2.75), a different piece of the world on each project.
+ *
+ * NOW the caller names a BODY, never a point. The hero is read at `diagnostics.heroPos`, an enemy at
+ * the `enemyPositions()` entry nearest the point it was spawned at (it must be within 1 m), each at its
+ * sprite's torso height above its own feet (`SPRITE_TORSO_Y`); the shot is the canvas as the renderer
+ * drew it (`CANVAS_ONLY_STYLE` hides every DOM layer for the duration of the screenshot); the patch is
+ * +-6 x +-8 CSS px scaled by the screenshot's own device-pixel ratio (PNG width over box width); and
+ * every reading comes back in three stated spaces, from the same pixels:
+ *  - `luma`: Rec. 709 weights on the sRGB-ENCODED channels. Display brightness, the space the
+ *    VISIBLE_LIGHT and DARK_SPRITE_LIGHT screen floors are written in, and exactly what the old helper
+ *    returned (so a luma reading at the old point reproduces the old number).
+ *  - `linear`: the same pixels after the sRGB decode. Display light.
+ *  - `scene`: scene-linear light. The ledger post overlay undone (`LedgerPostPass` in
+ *    src/world/LightRig.ts: a warm quad at alpha `(1 - edge) * postWarmth + edge * postVignette`, paper
+ *    grain taken as 0), the sRGB decode, then three.js's `ACESFilmicToneMapping` inverted at the game's
+ *    exposure (`Balance.render.exposure`; the two ACES matrices and the RRT/ODT fit are copied from
+ *    node_modules/three/src/renderers/shaders/ShaderChunk/tonemapping_pars_fragment.glsl.js). This is
+ *    the space `setWorldSpriteTint` multiplies a sprite's colour in, so the ratio of two `scene`
+ *    readings of one sprite is directly comparable with a tint's linear luminance, which a ratio of
+ *    display readings is not: ACES bends it by texel brightness (a grey texel under the full-dark
+ *    sprite multiplier reads 0.42 to 0.75 of its day value in display light, and the multiplier's own
+ *    0.587 in scene light).
+ * Each is the p95 over the patch, as before.
+ */
+type SpriteBody = { hero: true } | { enemyNear: { x: number; z: number } };
+type SpriteReading = {
+  body: { x: number; y: number; z: number };
+  screen: { x: number; y: number };
+  devicePixelsPerCss: number;
+  samples: number;
+  luma: number;
+  linear: number;
+  scene: number;
+};
+
+const HERO: SpriteBody = { hero: true };
+/**
+ * Torso height above the body's own feet, MEASURED: a height profile of each sprite on both projects
+ * (artifacts/test-truth-2/probes/out/*-night-hero.json, *-night-lantern.json). The hero's scene-light
+ * day/dark ratio sits on the sprite's plateau from 1.1 to 2.4 m (0.582..0.610 desktop, 0.586..0.589
+ * mobile) and leaves it below 0.9 m (0.80 at 0.6 m, 1.24 at 0.3 m on desktop: ground, not sprite); a
+ * lit bandit reads its plateau from 0.9 to 1.3 m (luma 0.81 desktop, 0.79 mobile) and legs and ground
+ * below 0.6 m. The old absolute y 1.25 was only 0.6 m above a bandit standing on the mounted sculpt at
+ * y 0.65, which is the mobile 0.237 the lantern test read on main.
+ */
+const SPRITE_TORSO_Y = { hero: 1.2, enemy: 1.1 } as const;
+/** The canvas as the renderer drew it: every DOM layer over it is hidden while the shot is taken. */
+const CANVAS_ONLY_STYLE = 'body *:not(#game-canvas):not(:has(#game-canvas)) { visibility: hidden !important; }';
+const SPRITE_PATCH_CSS = { halfWidth: 6, halfHeight: 8 } as const;
+const ACES_IN_COLUMNS = [[0.59719, 0.076, 0.0284], [0.35458, 0.90834, 0.13383], [0.04823, 0.01566, 0.83777]];
+const ACES_OUT_COLUMNS = [[1.60475, -0.10208, -0.00327], [-0.53108, 1.10813, -0.07276], [-0.07367, -0.00605, 1.07602]];
+
+function mulColumns(columns: number[][], v: readonly number[]): number[] {
+  return [0, 1, 2].map((row) => columns[0]![row]! * v[0]! + columns[1]![row]! * v[1]! + columns[2]![row]! * v[2]!);
+}
+
+function invertColumns(columns: number[][]): number[][] {
+  const m = [0, 1, 2].map((row) => [0, 1, 2].map((column) => columns[column]![row]!));
+  const [a, b, c] = m[0]!;
+  const [d, e, f] = m[1]!;
+  const [g, h, i] = m[2]!;
+  const A = e! * i! - f! * h!;
+  const B = -(d! * i! - f! * g!);
+  const C = d! * h! - e! * g!;
+  const det = a! * A + b! * B + c! * C;
+  const rows = [
+    [A / det, -(b! * i! - c! * h!) / det, (b! * f! - c! * e!) / det],
+    [B / det, (a! * i! - c! * g!) / det, -(a! * f! - c! * d!) / det],
+    [C / det, -(a! * h! - b! * g!) / det, (a! * e! - b! * d!) / det],
+  ];
+  return [0, 1, 2].map((column) => [0, 1, 2].map((row) => rows[row]![column]!));
+}
+
+const ACES_IN_INVERSE = invertColumns(ACES_IN_COLUMNS);
+const ACES_OUT_INVERSE = invertColumns(ACES_OUT_COLUMNS);
+
+/** The inverse of `RRTAndODTFit`, per channel: the positive root of its rational quadratic. */
+function rrtOdtInverse(y: number): number {
+  const a = 0.983729 * y - 1;
+  const b = 0.432951 * y - 0.0245786;
+  const c = 0.238081 * y + 0.000090537;
+  if (Math.abs(a) < 1e-9) return -c / b;
+  return (-b - Math.sqrt(Math.max(0, b * b - 4 * a * c))) / (2 * a);
+}
+
+const srgbToLinear = (channel: number): number =>
+  channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
+const rec709 = (rgb: readonly number[]): number => 0.2126 * rgb[0]! + 0.7152 * rgb[1]! + 0.0722 * rgb[2]!;
+
+/** One screenshot pixel in scene-linear light: overlay off, sRGB decoded, ACES inverted. */
+function sceneLinear(encoded: readonly number[], u: number, v: number, postEnabled: boolean): number[] {
+  let clean = encoded;
+  if (postEnabled) {
+    const t = Math.min(1, Math.max(0, (Math.hypot(u - 0.5, v - 0.5) * 1.42 - 0.28) / (0.74 - 0.28)));
+    const edge = t * t * (3 - 2 * t);
+    const ink = [1 - 0.78 * edge, 0.82 - 0.69 * edge, 0.5 - 0.43 * edge];
+    const alpha = Math.min(0.24, (1 - edge) * Balance.world.postWarmth + edge * Balance.world.postVignette);
+    clean = encoded.map((channel, index) => Math.min(1, Math.max(0, (channel - alpha * ink[index]!) / (1 - alpha))));
+  }
+  const fitted = mulColumns(ACES_OUT_INVERSE, clean.map(srgbToLinear)).map(rrtOdtInverse);
+  return mulColumns(ACES_IN_INVERSE, fitted).map((channel) => (channel * 0.6) / Balance.render.exposure);
+}
+
+async function spriteLuminance(page: Page, body: SpriteBody): Promise<SpriteReading> {
+  const found = await page.evaluate((wanted) => {
+    if ('hero' in wanted) {
+      const hero = window.__THREE_GAME_DIAGNOSTICS__?.heroPos;
+      return hero ? { x: hero.x, y: hero.y, z: hero.z, gap: 0 } : null;
+    }
+    let best = null as { x: number; y: number; z: number; gap: number } | null;
+    for (const enemy of window.__GR_TEST__?.enemyPositions() ?? []) {
+      const gap = Math.hypot(enemy.x - wanted.enemyNear.x, enemy.z - wanted.enemyNear.z);
+      if (!best || gap < best.gap) best = { x: enemy.x, y: enemy.y, z: enemy.z, gap };
+    }
+    return best;
+  }, body);
+  expect(found, `no sprite body for ${JSON.stringify(body)}`).toBeTruthy();
+  expect(found!.gap).toBeLessThan(1);
+  const torso = { x: found!.x, z: found!.z, y: found!.y + ('hero' in body ? SPRITE_TORSO_Y.hero : SPRITE_TORSO_Y.enemy) };
+  const screenOf = () => page.evaluate((pos) => window.__GR_TEST__?.screenPoint(pos.x, pos.z, pos.y) ?? null, torso);
+  // A STILL FRAME: the camera trails a teleport (`camera.lag`), and the lantern test reads 180 ms after
+  // one. Measured, that shot caught the camera still travelling (the out-of-radius bandit 10 to 18 CSS
+  // px from where it settles, on both projects), and on mobile it read 0.0644 where a settled shot of
+  // the same bandit reads 0.0607, against a 0.065 ceiling. So the shot waits until the body's screen
+  // point holds within half a CSS pixel for 120 ms.
+  let screen = await screenOf();
+  for (let settle = 0; settle < 30 && screen; settle += 1) {
+    await page.waitForTimeout(120);
+    const next = await screenOf();
+    if (!next) break;
+    const moved = Math.hypot(next.x - screen.x, next.y - screen.y);
+    screen = next;
+    if (moved < 0.5) break;
+  }
   expect(screen).toBeTruthy();
   expect(screen!.inView).toBe(true);
+  const postEnabled = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.postEnabled === true);
 
   const canvas = page.locator('#game-canvas');
-  const [box, buffer] = await Promise.all([canvas.boundingBox(), canvas.screenshot()]);
+  const [box, buffer] = await Promise.all([canvas.boundingBox(), canvas.screenshot({ style: CANVAS_ONLY_STYLE })]);
   expect(box).toBeTruthy();
   const png = PNG.sync.read(buffer);
-  const scaleX = png.width / box!.width;
-  const scaleY = png.height / box!.height;
-  const centerX = Math.round(screen!.x * scaleX);
-  const centerY = Math.round(screen!.y * scaleY);
-  const samples: number[] = [];
+  const devicePixelsPerCss = png.width / box!.width;
+  const centerX = Math.round(screen!.x * devicePixelsPerCss);
+  const centerY = Math.round(screen!.y * (png.height / box!.height));
+  const halfWidth = Math.round(SPRITE_PATCH_CSS.halfWidth * devicePixelsPerCss);
+  const halfHeight = Math.round(SPRITE_PATCH_CSS.halfHeight * devicePixelsPerCss);
+  const luma: number[] = [];
+  const linear: number[] = [];
+  const scene: number[] = [];
 
-  for (let y = centerY - 8; y <= centerY + 8; y += 1) {
+  for (let y = centerY - halfHeight; y <= centerY + halfHeight; y += 1) {
     if (y < 0 || y >= png.height) continue;
-    for (let x = centerX - 6; x <= centerX + 6; x += 1) {
+    for (let x = centerX - halfWidth; x <= centerX + halfWidth; x += 1) {
       if (x < 0 || x >= png.width) continue;
       const offset = (y * png.width + x) * 4;
-      if (png.data[offset + 3] < 64) continue;
-      const r = png.data[offset] / 255;
-      const g = png.data[offset + 1] / 255;
-      const b = png.data[offset + 2] / 255;
-      samples.push(0.2126 * r + 0.7152 * g + 0.0722 * b);
+      if (png.data[offset + 3]! < 64) continue;
+      const encoded = [png.data[offset]! / 255, png.data[offset + 1]! / 255, png.data[offset + 2]! / 255];
+      luma.push(rec709(encoded));
+      linear.push(rec709(encoded.map(srgbToLinear)));
+      scene.push(rec709(sceneLinear(encoded, (x + 0.5) / png.width, 1 - (y + 0.5) / png.height, postEnabled)));
     }
   }
 
-  expect(samples.length).toBeGreaterThan(0);
-  samples.sort((a, b) => a - b);
-  return samples[Math.floor(samples.length * 0.95)] ?? 0;
+  expect(luma.length).toBeGreaterThan(0);
+  const p95 = (values: number[]): number => values.sort((a, b) => a - b)[Math.floor(values.length * 0.95)] ?? 0;
+  return {
+    body: { x: found!.x, y: found!.y, z: found!.z },
+    screen: { x: screen!.x, y: screen!.y },
+    devicePixelsPerCss,
+    samples: luma.length,
+    luma: p95(luma),
+    linear: p95(linear),
+    scene: p95(scene),
+  };
 }
 
 async function groundLuminances(page: Page, points: readonly { x: number; z: number }[]): Promise<number[]> {
@@ -365,32 +524,59 @@ test('loads Night Shift contract data and ramps full, dusk, dark, dawn lighting'
     fogFar: 58,
   });
 
+  // THE HERO-BRIGHTNESS BAND, RE-AIMED (F-SEF2-5b, test-truth-2, 2026-09-25). The probe reads the HERO
+  // now (see `spriteLuminance`), and each read waits for the lighting state it names instead of 80 ms.
   await setWave(page, 4);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift.darkness ?? 1)).toBeLessThan(0.001);
   await page.waitForTimeout(80);
-  const dayHero = await spriteLuminance(page, { x: 0, z: 0 });
+  const dayHero = await spriteLuminance(page, HERO);
   await setWave(page, 10);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift)).toMatchObject({
+    phase: 'dark',
+    darkness: 1,
+  });
   await page.waitForTimeout(80);
-  const darkHero = await spriteLuminance(page, { x: 0, z: 0 });
-  const heroRatio = darkHero / Math.max(dayHero, 0.001);
+  const darkHero = await spriteLuminance(page, HERO);
   const darkTint = snapshot.registry?.twist.lightRamp?.keyframes?.find((keyframe) => keyframe.phase === 'dark')?.spriteTint;
   // RE-PINNED 2026-09-24 (F-SEF2-5, task e1-spec-truth-1). WAS `#34405a`; the dark keyframe's
   // `spriteTint` in assets/contracts/epoch-1-frontier/contracts.json has been `#44516b` since
   // `67e7d0af4` (2026-08-03, "night visibility: the dark keeps its fear, the ground keeps its shape"),
   // the only commit ever to touch that value. The hero-brightness band below DERIVES from this
-  // constant, so its three channels move with it: 0x34/0x40/0x5a -> 0x44/0x51/0x6b, which lifts
-  // tintLuminance from 0.0526 to 0.0819 and moves the +-0.04 band to 0.0419..0.1219.
+  // constant, so its three channels move with it.
   expect(darkTint).toBe('#44516b');
   const linear = (channel: number): number => {
     const srgb = channel / 255;
     return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
   };
-  const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
-  expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
-  expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+  // WHAT THE RENDERER MULTIPLIES THE HERO BY AT FULL DARK. Since `7c2744e5a` (2026-09-12)
+  // `LightRig.applyPalette` does not pass the keyframe's tint straight through: it lifts it,
+  // `tint * (1 - fill) + fill` with `fill = darkness * 0.55` ("Sprites do not receive point lights;
+  // preserve readable color under their carried lights"), so at darkness 1 every channel is
+  // 0.45 * linear(tint) + 0.55. The old band (tintLuminance 0.0819 +- 0.04) was derived from the raw tint
+  // before that lift, which no probe on the hero can read: the lifted multiplier is 0.576 / 0.587 / 0.616
+  // per channel, luminance 0.587.
+  const SPRITE_FILL_AT_DARK = 0.55;
+  const spriteMultiplier = [0x44, 0x51, 0x6b].map((channel) => linear(channel) * (1 - SPRITE_FILL_AT_DARK) + SPRITE_FILL_AT_DARK);
+  const tintLuminance = 0.2126 * spriteMultiplier[0]! + 0.7152 * spriteMultiplier[1]! + 0.0722 * spriteMultiplier[2]!;
+  const heroRatio = darkHero.scene / Math.max(dayHero.scene, 1e-6);
+  const evidence = JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance, spriteMultiplier });
+  // FIRST, PROVE THE PROBE SEES THE NIGHT, on both projects, before the band reads it. At full dark the
+  // hero passes at most 0.616 of its day light (the multiplier's largest channel), so a probe that is on
+  // the sprite must fall by at least 38%; the stated margin is 25%, clear of frame-to-frame noise, and a
+  // lighting-invariant read (the old mobile 0.93262 / 0.93262, ratio 1.0) fails it outright.
+  const HERO_PROBE_MIN_DIMMING = 0.25;
+  expect(darkHero.scene, evidence).toBeLessThan(dayHero.scene * (1 - HERO_PROBE_MIN_DIMMING));
+  // THEN THE BAND, in scene light: a sprite texel t lit by multiplier m reads sum(w t m) / sum(w t) of
+  // its day value, which lies between the smallest and the largest channel of m whatever t is; the
+  // tolerance covers 8-bit quantisation through the inverse tone curve and the idle animation moving
+  // the texels between the two frames.
+  const HERO_BAND_TOLERANCE = 0.05;
+  expect(heroRatio, evidence).toBeGreaterThan(Math.min(...spriteMultiplier) - HERO_BAND_TOLERANCE);
+  expect(heroRatio, evidence).toBeLessThan(Math.max(...spriteMultiplier) + HERO_BAND_TOLERANCE);
   await captureDuskStrip(page, testInfo);
   await writeFile(
     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
-    JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance }, null, 2),
+    JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance, spriteMultiplier }, null, 2),
   );
 
   await setWave(page, 25);
@@ -432,8 +618,16 @@ test('lantern post is Night Shift gated and relights a true-dark light ring', as
   await page.waitForTimeout(180);
   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
-  expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_SPRITE_LIGHT());
-  expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+  // RE-AIMED (F-SEF2-5b, test-truth-2, 2026-09-25): each read is now the spawned ENEMY's own sprite,
+  // found through `enemyPositions()` and read at its torso over a DPR-normalised patch, and it is
+  // compared in display luma, the space these two screen floors are written in (see `spriteLuminance`).
+  const outOfRadiusSprite = await spriteLuminance(page, { enemyNear: outOfRadius });
+  const inRadiusSprite = await spriteLuminance(page, { enemyNear: inRadius });
+  const spriteEvidence = JSON.stringify({ outOfRadiusSprite, inRadiusSprite });
+  await mkdir(LANTERN_ARTIFACT_DIR, { recursive: true });
+  await writeFile(path.join(LANTERN_ARTIFACT_DIR, `${testInfo.project.name}-sprite-luminance.json`), `${spriteEvidence}\n`);
+  expect(outOfRadiusSprite.luma, spriteEvidence).toBeLessThanOrEqual(DARK_SPRITE_LIGHT());
+  expect(inRadiusSprite.luma, spriteEvidence).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
   await shot(page, testInfo, 'true-dark-lantern-ring');
 

@@ -1,0 +1,42 @@
+// Scratch mutation runner (not committed as code): each run changes ONE clause of functions/api/standings.ts,
+// runs `node scripts/test-standings.mjs`, records rc and the first failing assertion, then restores the source
+// byte-identical and proves it with `git diff --quiet HEAD`. Run from the worktree root.
+import { spawnSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
+
+const FILE = 'functions/api/standings.ts';
+const original = readFileSync(FILE, 'utf8');
+const mutations = [
+  ['M0 none (control)', null, null],
+  ['M1 the client judges no place_build', "new Set(['place_build', 'pick_upgrade', 'set_agent_ability'])", "new Set(['pick_upgrade', 'set_agent_ability'])"],
+  ['M2 the client judges no pick_upgrade', "new Set(['place_build', 'pick_upgrade', 'set_agent_ability'])", "new Set(['place_build', 'set_agent_ability'])"],
+  ['M3 the client judges no set_agent_ability', "new Set(['place_build', 'pick_upgrade', 'set_agent_ability'])", "new Set(['place_build', 'pick_upgrade'])"],
+  ['M4 door gate removed', 'if (!stored && clientRefusesAction(value)) return false;', 'if (false && !stored && clientRefusesAction(value)) return false;'],
+  ['M5 gate also at read (the naive fix)', 'if (!stored && clientRefusesAction(value)) return false;', 'if (clientRefusesAction(value)) return false;'],
+  ['M6 read: no retirement clause', 'if (isRecord(action) && clientRefusesAction(action)) return', 'if (false && isRecord(action) && clientRefusesAction(action)) return'],
+  ['M7 over-tight: only values the client keeps unchanged', 'normalizeLockstepAction(action) === null;', 'JSON.stringify(normalizeLockstepAction(action)) !== JSON.stringify(action);'],
+  ['M8 read: retirement in primary entries only', 'if (isRecord(action) && clientRefusesAction(action)) return', 'if (entries === input.entries && isRecord(action) && clientRefusesAction(action)) return'],
+];
+const lines = [];
+try {
+  for (const [label, find, replace] of mutations) {
+    if (find !== null) {
+      const hits = original.split(find).length - 1;
+      if (hits !== 1) throw new Error(`${label}: expected one match, found ${hits}`);
+      writeFileSync(FILE, original.replace(find, replace));
+    }
+    const run = spawnSync(process.execPath, ['scripts/test-standings.mjs'], { encoding: 'utf8', timeout: 600_000 });
+    writeFileSync(FILE, original);
+    const restored = spawnSync('git', ['diff', '--quiet', 'HEAD', '--', FILE]).status === 0;
+    if (!restored) throw new Error(`${label}: source not restored`);
+    const output = `${run.stdout}\n${run.stderr}`;
+    const passed = [...output.matchAll(/checks passed \((\d+)\)/g)].map((match) => match[1]);
+    const failure = output.match(/^(AssertionError \[ERR_ASSERTION\]: [^\n]*|TypeError: [^\n]*)/m)?.[1];
+    const verdict = run.status === 0 ? `passed ${passed.join('/')}` : `RED: ${(failure ?? 'no assertion line').replace(/^AssertionError \[ERR_ASSERTION\]: /, '').slice(0, 170)}`;
+    lines.push(`${label.padEnd(56)} rc=${run.status} ${verdict}`);
+    console.log(lines.at(-1));
+  }
+} finally {
+  writeFileSync(FILE, original);
+}
+writeFileSync(process.argv[2], `${lines.join('\n')}\n`);
