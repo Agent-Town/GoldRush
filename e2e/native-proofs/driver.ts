@@ -418,6 +418,13 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
     const now = await read(page);
     if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     if (now.gold >= amount) return true;
+    if (RESTORE_GROUND) {
+      // Twin Banks' late seam trips leave the intact home ring behind (run 10).
+      if (row.contract === 'e1-twin-banks' && now.wave >= 14) {
+        row.notes.push(`restore-ground funding held: wave=${now.wave}, gold=${now.gold}, target=${amount}`);
+        return false;
+      }
+    }
     if (now.air && now.air.suit.seconds < 30) {
       if (!(await refillOrbital(page, row))) return false;
       continue;
@@ -448,6 +455,12 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
       const next = await read(page);
       if (!next || next.runState === 'dead') return false;
       if (next.gold >= amount) return true;
+      if (RESTORE_GROUND) {
+        if (row.contract === 'e1-twin-banks' && next.wave >= 14) {
+          row.notes.push(`restore-ground panning stopped: wave=${next.wave}, gold=${next.gold}, target=${amount}`);
+          return false;
+        }
+      }
       if (next.air && next.air.suit.seconds < 30) break;
       if (!next.nodes.find((entry) => entry.id === node.id)?.active) break;
       if (Math.hypot(next.hero.x - node.x, next.hero.z - node.z) > 1.5) break;
