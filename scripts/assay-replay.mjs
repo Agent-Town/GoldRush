@@ -150,11 +150,11 @@ try {
         // `round(economy.gold)`). Reading `economy.summary.panned` here verified the OTHER
         // quantity, so a browser reel and an agent reel could never be assayed by one meaning.
         gold: Math.floor(diagnostics.economy.gold),
-        // THE CLOCK AS THE SIM KEPT IT (river-assay-1, F-RES1-1 cause 3). A browser reel declares the raw float its
-        // run accumulated, so this reports the raw float the replay accumulated; a 1e-6 round here made every browser
-        // reel whose float is not six-decimal exact disagree with its own claim. The worker compares the two at a
-        // stated tolerance (`scripts/assay-worker.mjs`, TIME_ALIVE_TOLERANCE_SECONDS).
-        timeAlive: diagnostics.timeAlive,
+        // Printed to the microsecond, as it always has been (e2e/assay-replay-roundtrip.spec.ts pins it). A browser
+        // reel declares the raw float its run accumulated, so the worker does not compare the two exactly: it compares
+        // them at a stated tolerance (`scripts/assay-worker.mjs`, TIME_ALIVE_TOLERANCE_SECONDS; river-assay-1,
+        // F-RES1-1 cause 3). The secure snapshot below stays the raw float the county applies over a verified row.
+        timeAlive: Math.round(diagnostics.timeAlive * 1_000_000) / 1_000_000,
       },
       securedSnapshot: diagnostics.run.securedSnapshot,
       ...(mechanic ? { mechanic } : {}),

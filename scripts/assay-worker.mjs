@@ -71,12 +71,13 @@ async function replay(tape) {
 }
 
 // THE CLOCK IS COMPARED AT A STATED TOLERANCE (river-assay-1, F-RES1-1 cause 3). A browser reel declares the raw
-// float its run accumulated (4.833333333333326 for a pan at tick 145) and the browser instrument used to round its
-// replay to 1e-6, so a perfect replay of such a reel disagreed with its own claim. The instrument now reports the raw
-// float, and the two are equal when they differ by no more than one microsecond: that absorbs a double's
-// representation (about 1e-15 at these magnitudes) and nothing else, since the sim clock moves in fixed steps of
-// 1/30 s, so a replay that lands one step early or late misses by 33,333 microseconds. The published time is never
-// the claim anyway: a verdict posts the replay's own secure snapshot, which the county applies over the row.
+// float its run accumulated (4.833333333333326 for a pan at tick 145) while the browser instrument prints its replay
+// rounded to the microsecond (4.833333), so an exact comparison rejected a perfect replay of every browser reel whose
+// float is not six-decimal exact. The two are equal when they differ by no more than one microsecond: the round moves
+// a value by at most half of that, a double's representation by about 1e-15 at these magnitudes, and nothing else
+// fits, since the sim clock moves in fixed steps of 1/30 s and a replay one step early or late misses by 33,333
+// microseconds. The published time is never the claim anyway: a verdict posts the replay's own secure snapshot (the
+// raw float), which the county applies over the row and refuses when it is later than the score.
 const TIME_ALIVE_TOLERANCE_SECONDS = 1e-6;
 
 function sameTimeAlive(claimed, replayed) {
