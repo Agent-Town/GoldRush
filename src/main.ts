@@ -14,12 +14,15 @@ import { FIRST_CLAIM_DONE_KEY, activeProfile, loadProfileState, profileDataKey }
 import { applyStoredPerformanceTier } from './game/PerformanceTier';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
+import { areWavesDisabled } from './core/DebugParams';
 import {
   activeContract,
   activeEpochId,
+  clearPlayerContractLaunch,
   DEFAULT_CONTRACT_ID,
   loadContract,
   readCharterLaunch,
+  stageCharterLaunch,
   stagedPlayerContractLaunch,
   stageReplayContract,
   stagePlayerContractLaunch,
@@ -117,6 +120,9 @@ accountSync.install();
 let game: Game | undefined;
 let lanternBoot: { dispose: () => void } | undefined;
 const PENDING_LANTERN_KEY = 'gr.lantern.pending.v1';
+// The River ceremony's reel (`riverCeremonyReplay`, river-assay-1): the contract it is scored under, and whether its replay staged a launch.
+const RIVER_ENDING_CONTRACT_ID = 'e10-river';
+let riverCeremonyReplayStaged = false;
 let assayBench: AssayBench | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
@@ -526,21 +532,64 @@ function openRunTapeShelf(): void {
   void guardedImport('ui/LanternShow', () => import('./ui/LanternShow')).then(({ openTapeShelf }) => openTapeShelf(localStorage, watchRunTape));
 }
 
+// THE RIVER'S REEL REPLAYS IN ITS CEREMONY (river-assay-1, F-RES1-1 cause 1). A reel scored `e10-river` (`Game.ts`
+// RIVER_ENDING_CONTRACT_ID) was played on the finale lever's run, never on the raw River the Book names: THE RIVER
+// charter pressed onto its lineage root, under the charter's run policy. Its replay is staged the way
+// `E10FinaleSystem.launchRiver` stages that run, with the same calls: the lineage root as the contract, the same stamp
+// beside the launch (`stageCharterLaunch`), and `nowaves`. `nowaves` is read once, when a page loads (`DEBUG_PARAMS`),
+// and Terrain once, when the game first imports it, so the ceremony replays on a page of its own, booted from the
+// reel's link, which carries `nowaves` (`reelUrl`). Closing it clears the staged launch and reloads, so no later run
+// on that page inherits either. A release build compiles the harness flags out and carries no River: it stages none.
+// (`RIVER_ENDING_CONTRACT_ID` and `riverCeremonyReplayStaged` are declared beside PENDING_LANTERN_KEY, above the boot.)
+async function riverCeremonyReplay(tape: RunTape): Promise<{ templateId: string; document: string; nowaves: boolean } | null> {
+  if (__GR_RELEASE_E1__ || tape.contract !== RIVER_ENDING_CONTRACT_ID) return null;
+  const [{ getPostCreditsCharter }, { stampCharter }, { charterLineageRootId }] = await Promise.all([
+    guardedImport('charter/TheRiver', () => import('./charter/TheRiver')),
+    guardedImport('charter/CharterStamp', () => import('./charter/CharterStamp')),
+    guardedImport('charter/CharterSchema', () => import('./charter/CharterSchema')),
+  ]);
+  const charter = getPostCreditsCharter();
+  const stamped = stampCharter(charter);
+  return stamped.ok
+    ? { templateId: charterLineageRootId(charter), document: stamped.document, nowaves: charter.envelope.runPolicy?.waves === 'none' }
+    : null;
+}
+
+/** Ends a ceremony replay's staging: the launch it staged and the `nowaves` in the route. True when there was one. */
+function endRiverCeremonyReplay(): boolean {
+  if (!riverCeremonyReplayStaged) return false;
+  riverCeremonyReplayStaged = false;
+  clearPlayerContractLaunch();
+  const search = new URLSearchParams(window.location.search);
+  search.delete('nowaves');
+  const query = search.toString();
+  history.replaceState(history.state, '', `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`);
+  return true;
+}
+
 async function watchRunTape(tape: RunTape, epochId = activeEpochId(), closeToMenu = false, freshPage = false): Promise<void> {
   const initialOptions = new URLSearchParams(window.location.search);
   const tactical = initialOptions.get('reel') === 'tactical';
   const { usesLanternWorker } = await guardedImport('replay/LanternController', () => import('./replay/LanternController'));
   const independent = usesLanternWorker(tape);
+  const ceremony = independent ? null : await riverCeremonyReplay(tape);
   // Town/Game may already have evaluated Terrain for another contract. A fresh page is the
   // contract boundary, including local-only shelf reels which cannot be fetched from standings.
-  if (independent && !closeToMenu && !freshPage) {
+  // The River's ceremony always takes one, and it must be a page that loaded with `nowaves`.
+  if ((independent && !closeToMenu && !freshPage) || (ceremony && !(freshPage && (!ceremony.nowaves || areWavesDisabled())))) {
     sessionStorage.setItem(PENDING_LANTERN_KEY, JSON.stringify({ tape, epochId }));
     window.location.assign(reelUrl(tape.id, tape.contract, epochId));
     return;
   }
   teardownActiveScene();
-  stageReplayContract(tape.contract);
-  const bootSearch = new URLSearchParams({ contract: tape.contract, seed: tape.seed, difficulty: tape.difficulty, replay: tape.id, epoch: epochId });
+  if (ceremony) {
+    stageCharterLaunch(ceremony.templateId, ceremony.document);
+    riverCeremonyReplayStaged = true;
+  }
+  const bootContract = ceremony?.templateId ?? tape.contract;
+  stageReplayContract(bootContract);
+  const bootSearch = new URLSearchParams({ contract: bootContract, seed: tape.seed, difficulty: tape.difficulty, replay: tape.id, epoch: epochId });
+  if (ceremony?.nowaves) bootSearch.set('nowaves', '');
   if (tactical) bootSearch.set('reel', 'tactical');
   if (initialOptions.has('tier')) bootSearch.set('tier', initialOptions.get('tier')!);
   history.replaceState({ goldRushScene: 'replay' }, '', `${window.location.pathname}?${bootSearch.toString()}${window.location.hash}`);
@@ -600,6 +649,8 @@ function reelUrl(reelId: string, contractId: string, epochId: string): string {
   const search = new URLSearchParams({ watch: reelId, contract: contractId, epoch: epochId });
   if (url.searchParams.get('reel') === 'tactical') search.set('reel', 'tactical');
   if (url.searchParams.has('tier')) search.set('tier', url.searchParams.get('tier')!);
+  // The River's reel link boots the page its ceremony needs (`riverCeremonyReplay`).
+  if (!__GR_RELEASE_E1__ && contractId === RIVER_ENDING_CONTRACT_ID) search.set('nowaves', '');
   url.search = search.toString();
   return url.href;
 }
@@ -611,7 +662,8 @@ function closeRunTapeReplay(): void {
   restoreReplayStorage = undefined;
   stageReplayContract(null);
   replaceRunRoute('town');
-  if (independent) window.location.reload();
+  const ceremony = endRiverCeremonyReplay();
+  if (independent || ceremony) window.location.reload();
   else openTown();
 }
 
@@ -621,8 +673,9 @@ function closeDeepLinkToMenu(): void {
   restoreReplayStorage?.();
   restoreReplayStorage = undefined;
   stageReplayContract(null);
+  const ceremony = endRiverCeremonyReplay();
   history.replaceState({ goldRushScene: 'menu' }, '', window.location.pathname);
-  if (independent) window.location.reload();
+  if (independent || ceremony) window.location.reload();
   else showStartMenu();
 }
 

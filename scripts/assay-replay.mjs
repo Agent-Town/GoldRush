@@ -10,6 +10,40 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const inputPath = process.argv[2];
 const port = Number(process.env.GR_ASSAY_REPLAY_PORT ?? 5234);
 
+// THE RIVER REPLAYS IN ITS CEREMONY (river-assay-1, F-RES1-1 cause 1). A reel scored `e10-river` (`Game.ts`
+// RIVER_ENDING_CONTRACT_ID) was played on the finale lever's run, never on the raw River the Book names: THE RIVER
+// charter pressed onto its lineage root, under the charter's run policy. So it is replayed in that world, staged the
+// way `E10FinaleSystem.launchRiver` stages the run, with the game's own calls: the same stamp and the same two
+// session entries (`stageCharterLaunch`), the lineage root as `?contract=`, `?seed=` only for a fixed seed policy,
+// `?nowaves` for the no-wave run policy. `gr.contract.launch.v1` is module-private in `src/meta/ContractFamilies.ts`
+// (PLAYER_CONTRACT_LAUNCH_KEY); `e2e/river-ending-score.spec.ts` and `e2e/cp04-lever.spec.ts` stage the same literal.
+const RIVER_ENDING_CONTRACT_ID = 'e10-river';
+const PLAYER_CONTRACT_LAUNCH_KEY = 'gr.contract.launch.v1';
+
+async function riverCeremony(server, tape) {
+  if (tape.contract !== RIVER_ENDING_CONTRACT_ID) return null;
+  const [{ getPostCreditsCharter }, { stampCharter }, { charterLineageRootId }, { CHARTER_LAUNCH_KEY }] = await Promise.all([
+    server.ssrLoadModule('/src/charter/TheRiver.ts'),
+    server.ssrLoadModule('/src/charter/CharterStamp.ts'),
+    server.ssrLoadModule('/src/charter/CharterSchema.ts'),
+    server.ssrLoadModule('/src/meta/ContractFamilies.ts'),
+  ]);
+  const charter = getPostCreditsCharter();
+  const stamped = stampCharter(charter);
+  if (!stamped.ok) throw new Error(`THE RIVER no longer stamps: ${stamped.reasons.map((reason) => reason.code).join(', ')}`);
+  const templateId = charterLineageRootId(charter);
+  const search = { contract: templateId };
+  if (charter.envelope.seedPolicy.mode === 'fixed') search.seed = charter.envelope.seedPolicy.seed;
+  return {
+    search,
+    nowaves: charter.envelope.runPolicy?.waves === 'none',
+    session: [
+      [PLAYER_CONTRACT_LAUNCH_KEY, templateId],
+      [CHARTER_LAUNCH_KEY, JSON.stringify({ templateId, document: stamped.document })],
+    ],
+  };
+}
+
 if (!inputPath) {
   process.stderr.write('Usage: node scripts/assay-replay.mjs <reel.json>\n');
   process.exit(1);
@@ -53,16 +87,23 @@ try {
     if (message.type() === 'error') errors.push(`console: ${message.text()}`);
   });
   page.on('pageerror', (error) => errors.push(`page: ${error.message}`));
-  await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
+  const ceremony = await riverCeremony(vite, tape);
+  await page.addInitScript(({ reel, session }) => {
+    sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel));
+    for (const [key, value] of session) sessionStorage.setItem(key, value);
+  }, { reel: tape, session: ceremony?.session ?? [] });
 
-  const query = new URLSearchParams({
-    debug: '',
-    assayReplay: '',
-    replay: tape.id,
-    contract: tape.contract,
-    seed: tape.seed,
-    difficulty: tape.difficulty,
-  });
+  const query = new URLSearchParams(ceremony
+    ? { debug: '', assayReplay: '', replay: tape.id, ...ceremony.search, difficulty: tape.difficulty }
+    : {
+        debug: '',
+        assayReplay: '',
+        replay: tape.id,
+        contract: tape.contract,
+        seed: tape.seed,
+        difficulty: tape.difficulty,
+      });
+  if (ceremony?.nowaves) query.set('nowaves', '');
   const startedAt = performance.now();
   await page.goto(`http://127.0.0.1:${port}/?${query}`, { waitUntil: 'load', timeout: 60_000 });
   // Slow-box headroom (the DO worker droplet cold-transforms the whole game on its first replay):
