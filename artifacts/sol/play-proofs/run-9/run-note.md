@@ -42,7 +42,7 @@ Incline stays at wave 14 and completes its unchanged objective. Relative to run-
 - Actual flag-unset native battery: **44 skipped**, exit 0, [log](gate-unset.log). The three screenshot hooks are additionally gated by `GR_NATIVE_RUN=9` and native proof opt-in.
 - Unmodified adjacent repair-dwell/economy/replay test: **2 passed**, exit 0, [log](adjacent.log). Its generated review PNGs were copied into [adjacent-shots](adjacent-shots/) and restored outside the firewall.
 - `node artifacts/sol/play-proofs/run-9/verify-evidence.mjs`: PASS for scope, unchanged existing expectations, ride limits, clean browsers, and successful-ride screenshot presence. It explicitly retains the final-desktop/Twin Banks holds.
-- `git diff --check`: PASS. Only the four allowed native-proof files and run-9 artifacts are included. No production, balance, art-store, ledger or protected assertion changes.
+- `git diff --check`: PASS after stripping generated-log trailing whitespace and blank EOF lines (no semantic evidence edits). Only the four allowed native-proof files and run-9 artifacts are included. No production, balance, art-store, ledger or protected assertion changes.
 
 The first browser invocation stopped in global setup because the background server did not survive its command shell; **no ride began**. [Failure log](server-preflight-failure.log) retained, then Vite ran persistently at `http://127.0.0.1:5303`, PID 22748, stopped at closeout. Every browser invocation used one worker. Native rides used timescale 4, ordinary keyboard/HUD actions, read-only diagnostics and the existing progressed-profile seed, without debug URLs. The adjacent test retains its own pre-existing debug fixture. Task firewall excludes vault writes; this directory is the durable handoff.
 
