@@ -194,7 +194,13 @@ test('GET /api/stats guards methods and CORS preflight', async () => {
   const post = await statsRoute({ request: request('POST'), env: {} });
   expect(post.status).toBe(405);
 
-  const options = await statsRoute({ request: request('OPTIONS', 'http://localhost:5188'), env: {} });
+  // localhost-cors-2 (F-LC2-1): a localhost preflight is refused unless the development switch is set, and
+  // admitted with it (functions/api/_cors.ts).
+  const refused = await statsRoute({ request: request('OPTIONS', 'http://localhost:5188'), env: {} });
+  expect(refused.status).toBe(403);
+  expect(refused.headers.get('access-control-allow-origin')).toBeNull();
+
+  const options = await statsRoute({ request: request('OPTIONS', 'http://localhost:5188'), env: { ALLOW_LOCALHOST_ORIGINS: '1' } });
   expect(options.status).toBe(204);
   expect(options.headers.get('access-control-allow-origin')).toBe('http://localhost:5188');
   expect(options.headers.get('access-control-allow-methods')).toBe('GET, OPTIONS');
