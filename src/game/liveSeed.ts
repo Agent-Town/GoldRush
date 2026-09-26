@@ -68,3 +68,10 @@ export function liveSeedLabel(seed: string, rotations: readonly LiveRotation[] =
   const week = rotation ? ROTATION_ID.exec(rotation.id) : null;
   return week ? `Week ${Number(week[2])} claim` : null;
 }
+
+// The id of the registry week that minted a live seed (county-board-open-week-1, F-LSR1-1): the week the
+// county board asks the door for, so the board a player opens is the one their own live run posted to.
+// Null for any seed the registry did not mint.
+export function liveSeedRotationId(seed: string, rotations: readonly LiveRotation[] = REGISTRY): string | null {
+  return rotations.find((entry) => Object.values(entry.seeds).includes(seed))?.id ?? null;
+}

@@ -3,6 +3,7 @@ import { loadArchiveLore } from './archive';
 import './reader.css';
 import { gameApiUrl } from '../app/GameApi';
 import type { DifficultyPresetId } from '../game/Balance';
+import { liveSeedLabel, liveSeedRotationId, resolveLiveSeed } from '../game/liveSeed';
 import type { RunTape } from '../game/RunTape';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { activeEpochId, listContracts, listEpochs, loadEpoch } from '../meta/ContractFamilies';
@@ -40,6 +41,8 @@ type FieldBookView = 'byStack' | 'byHarness' | 'byParty';
 type StandingsDifficulty = DifficultyPresetId | 'all';
 type StandingsParty = 'solo' | '2' | '3' | '4';
 type StandingsSeason = 'current' | 'first';
+type StandingsWeek = 'live' | 'all';
+type StandingsWeekBoard = { rotationId: string; label: string };
 
 type StandingStack = {
   declared?: boolean;
@@ -181,6 +184,10 @@ let currentStandingsContractId = '';
 let currentStandingsDifficulty: StandingsDifficulty = 'all';
 let currentStandingsParty: StandingsParty = 'solo';
 let currentStandingsSeason: StandingsSeason = 'current';
+let currentStandingsWeek: StandingsWeek = 'live';
+// The week the rendered board shows (null on an all-time board), fixed at render so the label and the
+// request that fills it can never name two different weeks across a Monday.
+let currentStandingsShownWeek: StandingsWeekBoard | null = null;
 let currentStandingsRows: CountyStanding[] = [];
 let currentFieldBookView: FieldBookView = 'byStack';
 let currentSeasonId: string | null = null;
@@ -201,6 +208,8 @@ export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   currentStandingsDifficulty = 'all';
   currentStandingsParty = 'solo';
   currentStandingsSeason = 'current';
+  currentStandingsWeek = 'live';
+  currentStandingsShownWeek = null;
   currentStandingsRows = [];
   currentFieldBookView = 'byStack';
   currentSeasonId = null;
@@ -375,6 +384,8 @@ function renderStandingsLedger(): string {
   if (!contracts.some((contract) => contract.id === currentStandingsContractId)) {
     currentStandingsContractId = contracts[0]?.id ?? '';
   }
+  const week = currentStandingsSeason === 'first' ? null : standingsWeek(currentStandingsContractId);
+  currentStandingsShownWeek = week && currentStandingsWeek === 'live' ? week : null;
   return `
     <div class="claim-ledger__shell">
       ${renderHeader()}
@@ -395,6 +406,7 @@ function renderStandingsLedger(): string {
             .join('')}
         </nav>
         <p class="county-standings__contracts-hint" aria-hidden="true">Swipe for more contracts &rarr;</p>
+        ${renderStandingsWeeks(week)}
         <nav class="county-standings__parties" aria-label="County standings team sizes">
           ${PARTY_ORDER
             .map(
@@ -433,7 +445,11 @@ function renderStandingsLedger(): string {
         <p class="county-standings__message" data-testid="county-standings-message" role="status" aria-live="polite"></p>
         ${renderLocalClaims(contracts)}
         <p class="county-standings__board-label"><strong>${
-          currentStandingsSeason === 'first' ? 'First ledger &middot; closed' : 'County board'
+          currentStandingsSeason === 'first'
+            ? 'First ledger &middot; closed'
+            : currentStandingsShownWeek
+              ? escapeHtml(currentStandingsShownWeek.label)
+              : 'County board'
         }</strong><span class="county-standings__difficulty">Global</span></p>
         <p class="county-standings__provenance">Every rider names the mind and rig they declared. Rank still follows the result alone.</p>
         <div class="county-standings__board" data-testid="county-standings-board" aria-live="polite">
@@ -444,6 +460,32 @@ function renderStandingsLedger(): string {
       </div>
     </div>
   `;
+}
+
+// THE WEEK'S BOARD (county-board-open-week-1, F-LSR1-1; owner 2026-09-26, verbatim "3 - ok, lets do that").
+// A contract with a rotation seed opens on the week a plain run of it rides right now: the same
+// `resolveLiveSeed` Game.ts and RideTogether.ts start a run on, so a standing posted from a live run is on
+// the board its rider opens, named as the ride card names it (`liveSeedLabel`, "Week 40 claim"). The
+// all-time board is the other chip. A contract no week carries keeps the one board it always had.
+function standingsWeek(contractId: string): StandingsWeekBoard | null {
+  const seed = resolveLiveSeed(contractId);
+  const label = liveSeedLabel(seed);
+  const rotationId = liveSeedRotationId(seed);
+  return label && rotationId ? { rotationId, label } : null;
+}
+
+function renderStandingsWeeks(week: StandingsWeekBoard | null): string {
+  if (!week) return '';
+  const live = currentStandingsWeek === 'live';
+  return `<nav class="county-standings__weeks" aria-label="County standings weeks" data-testid="county-standings-weeks">
+          <button type="button" data-standings-week="live" data-testid="county-standings-week-live" aria-pressed="${live}">${escapeHtml(week.label)}</button>
+          <button type="button" data-standings-week="all" data-testid="county-standings-week-all" aria-pressed="${!live}">All time</button>
+        </nav>
+        <p class="county-standings__weeks-hint" data-testid="county-standings-weeks-hint">${
+          live
+            ? 'Everyone this week plays the same map; the seed changes every Monday, 00:00 UTC.'
+            : 'All time ranks every run ridden outside the weekly seeds.'
+        }</p>`;
 }
 
 function renderFieldBookLedger(): string {
@@ -904,6 +946,7 @@ async function loadCountyStandings(): Promise<void> {
   const difficulty = currentStandingsDifficulty;
   const party = currentStandingsParty;
   const season = currentStandingsSeason;
+  const week = currentStandingsShownWeek;
   if (!root || !contractId) return;
   if (globalThis.navigator?.onLine === false) {
     currentStandingsRows = [];
@@ -920,6 +963,8 @@ async function loadCountyStandings(): Promise<void> {
   if (party !== 'solo') url.searchParams.set('party', party);
   // Likewise the current season is the endpoint's default: only the archive names a season.
   if (season === 'first') url.searchParams.set('season', FIRST_LEDGER_SEASON);
+  // And the all-time board is the default partition: only the week's board names its week (F-LSR1-1).
+  if (week) url.searchParams.set('rotation', week.rotationId);
   let rows: CountyStanding[] = [];
   try {
     const response = await fetch(url);
@@ -937,6 +982,7 @@ async function loadCountyStandings(): Promise<void> {
     || currentStandingsDifficulty !== difficulty
     || currentStandingsParty !== party
     || currentStandingsSeason !== season
+    || currentStandingsShownWeek !== week
   ) {
     return;
   }
@@ -1429,6 +1475,13 @@ function onLedgerClick(event: MouseEvent): void {
     currentStandingsSeason = season;
     renderCurrentLedger();
     currentRoot?.querySelector<HTMLElement>(`[data-standings-season="${season}"]`)?.focus();
+    return;
+  }
+  const week = target?.closest<HTMLButtonElement>('[data-standings-week]')?.dataset.standingsWeek;
+  if ((week === 'live' || week === 'all') && week !== currentStandingsWeek) {
+    currentStandingsWeek = week;
+    renderCurrentLedger();
+    currentRoot?.querySelector<HTMLElement>(`[data-standings-week="${week}"]`)?.focus();
     return;
   }
   const fieldBookView = target?.closest<HTMLButtonElement>('[data-field-book-view]')?.dataset.fieldBookView as FieldBookView | undefined;
