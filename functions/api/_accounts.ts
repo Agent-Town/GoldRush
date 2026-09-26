@@ -1,4 +1,5 @@
 import { constantTimeEqual } from './_compare';
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
 import { bumpCounter } from './_ratelimit';
 
 export type LedgerListResult = {
@@ -23,7 +24,7 @@ export type AccountRegistryNamespace = {
   get(id: unknown): { fetch(request: Request): Promise<Response> };
 };
 
-type AccountsEnv = {
+type AccountsEnv = LocalhostOriginsEnv & {
   ACCOUNTS?: LedgerStorage;
   ACCOUNT_REGISTRY?: AccountRegistryNamespace;
   ACCOUNT_REGISTRY_SCOPE?: string;
@@ -373,26 +374,22 @@ async function route(
 
 // SEC-8 (outside review 2026-09-24): this allowlist admitted `http://localhost:*` and
 // `http://127.0.0.1:*` UNCONDITIONALLY, in production, on the door that mints and accepts sign-in
-// codes and hands back a session token. Anything a browser runs on the player's own machine — a
-// page on a dev server, an extension's injected origin — could therefore talk to the live accounts
-// door with the browser's cookies and read the answers, because the reply carried
+// codes and hands back a session token. Anything a browser runs on the player's own machine (a page
+// on a dev server, an extension's injected origin) could therefore talk to the live accounts door
+// with the browser's cookies and read the answers, because the reply carried
 // Access-Control-Allow-Origin for whatever localhost port asked.
 //
-// The dev arm now requires the PRODUCTION MAIL SENDER TO BE UNBOUND, which is the one marker a
-// REQUEST cannot reach: `RESEND_API_KEY` is an environment binding (Pages project vars;
-// `server/ledger/serve.mjs` for the droplet) and nothing derives it from a header, an origin or a
-// host. This is deliberately the same unspoofable condition sec-signin-hardening-1 chose for
-// `isDev` below, for the same reason recorded there: a localhost HOST or ORIGIN is whatever the
-// caller writes, and the droplet forwards the caller's own `Host:` header.
-//
-// WHY NOT `isDev(env)` ITSELF (which also demands DEV_AUTH === '1'), measured rather than assumed:
-// `scripts/test-accounts.mjs`'s unconfigured arm starts the worker with NEITHER binding and asserts
-// that `/api/request-code` answers an honest 503 — with `Origin: http://localhost:5188`. Requiring
-// DEV_AUTH here turns that answer into a 403 cors_forbidden, i.e. a developer who has configured
-// nothing yet gets a misleading CORS refusal instead of the truthful "sign-in is not enabled". The
-// half of `isDev` that closes the production hole is the sender binding, and that half is kept.
-// Both live doors bind the sender (the droplet since 2026-08-24, Pages for the accounts flow), so
-// production admits only the three named origins plus a `*.gold-rush-3in.pages.dev` preview.
+// SEC-8 keyed the dev arm on the PRODUCTION MAIL SENDER being unbound. That holds on the droplet, the
+// accounts door's live home since 2026-08-24, but not on Pages, whose production environment binds no
+// sender (F-SF1-8, measured by variable name 2026-09-25), so a Pages copy read "development" there.
+// localhost-cors-2 (2026-09-26): the arm asks the one shared development switch,
+// `localhostOriginAllowed` (./_cors), which reads ALLOW_LOCALHOST_ORIGINS === '1' and nothing else,
+// never a header, an origin or a host (the droplet forwards the caller's own `Host:`). Unset, as on
+// both live doors, only the three named origins, the droplet's configured extras and a
+// `*.gold-rush-3in.pages.dev` preview are admitted. A developer who has configured nothing gets a CORS
+// refusal from a localhost page; `.dev.vars.example` names the switch, and scripts/test-accounts.mjs
+// passes it to every fixture it starts, the unconfigured arm included, so that arm still measures the
+// honest 503 of a door with no sender and no DEV_AUTH.
 function corsHeaders(request: Request, env: AccountsEnv): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
@@ -402,12 +399,11 @@ function corsHeaders(request: Request, env: AccountsEnv): Record<string, string>
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  const devOrigins = !env.RESEND_API_KEY;
   if (
     ALLOWED_ORIGINS.has(origin) ||
     env.ALLOWED_CORS_ORIGINS?.has(origin) ||
     /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) ||
-    (devOrigins && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin))
+    localhostOriginAllowed(origin, env)
   ) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
@@ -770,15 +766,17 @@ async function sendEmail(env: AccountsEnv, email: string, code: string): Promise
 //
 // The second condition is the ABSENCE of the production mail sender binding, and it is chosen
 // because it is the one marker a REQUEST cannot reach. `RESEND_API_KEY` is an environment binding
-// (Pages project vars; `server/ledger/serve.mjs:119` for the droplet) and nothing derives it from a
-// header, an origin or a host. The alternative marker, a localhost host or origin, IS reachable by a
-// request: the droplet forwards the caller's own `Host:` header to the ledger
-// (`proxy_set_header Host $host`, ops/droplet/agenttown.app.nginx.conf), and `Origin` is whatever the
-// caller writes, so either could be spoofed into saying "localhost" from the public internet.
-// Both live doors bind the sender (the droplet since 2026-08-24, Pages for the accounts flow), so
-// production can never satisfy this and a code is never returned there. A dev box that wants dev
-// codes simply leaves the sender unbound, which is what every fixture in this repo already does
-// (scripts/test-accounts.mjs `cleanEnv`, playwright.accounts.config.ts, e2e/ratelimit-429-net).
+// (Pages project vars; the explicit env `main()` builds in `server/ledger/serve.mjs` for the droplet)
+// and nothing derives it from a header, an origin or a host. The alternative marker, a localhost host
+// or origin, IS reachable by a request: the droplet forwards the caller's own `Host:` header to the
+// ledger (`proxy_set_header Host $host`, ops/droplet/agenttown.app.nginx.conf), and `Origin` is
+// whatever the caller writes, so either could be spoofed into saying "localhost" from the public
+// internet. Production can never satisfy this: the droplet, the accounts door's live home since
+// 2026-08-24, binds the sender, and the Pages production environment binds neither the sender nor
+// DEV_AUTH (F-SF1-8: its one variable is ASSAY_WORKER_SECRET), so a code is never returned there. A
+// dev box that wants dev codes simply leaves the sender unbound, which is what every fixture in this
+// repo already does (scripts/test-accounts.mjs `cleanEnv`, playwright.accounts.config.ts,
+// e2e/ratelimit-429-net).
 function isDev(env: AccountsEnv): boolean {
   return env.DEV_AUTH === '1' && !env.RESEND_API_KEY;
 }

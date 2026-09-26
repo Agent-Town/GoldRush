@@ -1,3 +1,4 @@
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
 import {
   fallbackReason,
   LedgerRequestError,
@@ -23,7 +24,7 @@ type KVNamespaceLike = RateLimitKVNamespaceLike & {
   raise?(key: string, value: number): Promise<void>;
 };
 
-type TelemetryEnv = LedgerEnv & {
+type TelemetryEnv = LedgerEnv & LocalhostOriginsEnv & {
   TELEMETRY?: KVNamespaceLike; ACCOUNTS?: KVNamespaceLike;
 };
 
@@ -92,7 +93,7 @@ const KNOWN_CONTRACTS = new Set(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 
 const OTHER_CONTRACT = 'other';
 
 export async function onRequest(context: TelemetryContext): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'POST') return error(cors, 405, 'method_not_allowed', 'POST only');
@@ -404,7 +405,7 @@ async function readJson(request: Request, maxBytes: number): Promise<JsonRecord>
   throw new HttpError(400, 'bad_json', 'JSON not accepted.');
 }
 
-function corsHeaders(request: Request): Record<string, string> | null {
+function corsHeaders(request: Request, env: LocalhostOriginsEnv): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'content-type',
@@ -413,7 +414,7 @@ function corsHeaders(request: Request): Record<string, string> | null {
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || localhostOriginAllowed(origin, env)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;

@@ -764,8 +764,9 @@ async function loadDoors(names) {
 }
 
 async function callDoor(handler, route, body, env, ip, { method = 'POST', headers = {}, params } = {}) {
+  // localhost-cors-2: these requests carry the dev page's localhost Origin, so the door sees the development switch.
   const response = await handler({
-    env,
+    env: { ...env, ALLOW_LOCALHOST_ORIGINS: '1' },
     params,
     request: new Request(`http://localhost${route}`, {
       method,
@@ -880,6 +881,10 @@ async function startWrangler(name, devAuth, { port: requestedPort, stateRoot = S
     'error',
     '--show-interactive-dev-session=false',
   ];
+  // localhost-cors-2: every fixture here is a developer's own box asked from a localhost origin, so every arm (the
+  // unconfigured one and the --serve browser fixture included) opts into the development switch the doors now
+  // require for localhost (functions/api/_cors.ts); unset, they refuse it, as production does.
+  args.push('--binding', 'ALLOW_LOCALHOST_ORIGINS=1');
   if (devAuth) args.push('--binding', 'DEV_AUTH=1');
   if (registry) args.push('--do', `ACCOUNT_REGISTRY=AccountRegistry@${registry.name}`, '--binding', `ACCOUNT_REGISTRY_SCOPE=${registry.scope}`);
 
@@ -970,7 +975,8 @@ export async function startAccountRegistry(directory, { internal = false, bootst
 
 async function startLedger(name, devAuth) {
   const storage = new SqliteStorage(path.join(SQLITE_ROOT, `${name}.db`));
-  const server = await createLedgerServer({ storage, env: devAuth ? { DEV_AUTH: '1' } : {} });
+  // localhost-cors-2: the same development switch, handed to the ledger's doors (serve.mjs never forwards it).
+  const server = await createLedgerServer({ storage, env: { ALLOW_LOCALHOST_ORIGINS: '1', ...(devAuth ? { DEV_AUTH: '1' } : {}) } });
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
   return {
     url: `http://127.0.0.1:${server.address().port}`,

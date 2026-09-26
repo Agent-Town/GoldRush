@@ -90,7 +90,9 @@ async function serveCounty(page: Page, kv: MockKV, seen: string[]): Promise<void
     seen.push(new URL(request.url()).search);
     const response = await standingsRoute({
       request: new Request(request.url(), { method: request.method(), headers: request.headers() }),
-      env: { TELEMETRY: kv },
+      // localhost-cors-2 (F-LC2-4): the browser's own headers are forwarded, so whether or not they carry the page's
+      // localhost Origin, the door sees the development switch a developer's box would carry.
+      env: { TELEMETRY: kv, ALLOW_LOCALHOST_ORIGINS: '1' },
     });
     await route.fulfill({
       status: response.status,

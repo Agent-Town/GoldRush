@@ -13,10 +13,10 @@ import { constantTimeEqual } from './_compare';
 import { bumpCounter, clientIpHash } from './_ratelimit';
 import { recordSubmissionRefusal, type AssayRejectionReason, type RefusalStorage, type SubmissionRefusalReason } from './refusals';
 import type { LedgerStorage } from './_accounts';
-
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
 type StandingsStorage = Pick<LedgerStorage, 'get' | 'put'> & Pick<RefusalStorage, 'recordRefusal' | 'readRefusals'>;
 
-type StandingsEnv = {
+type StandingsEnv = LocalhostOriginsEnv & {
   TELEMETRY?: StandingsStorage;
   ACCOUNTS?: StandingsStorage;
   ASSAY_WORKER_SECRET?: string;
@@ -256,7 +256,7 @@ const KNOWN_SEASONS: ReadonlySet<number> = new Set([FIRST_SEASON, CURRENT_SEASON
 export async function onRequest(context: StandingsContext): Promise<Response> {
   const moved = canonicalRedirect(context);
   if (moved) return moved;
-  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
 
@@ -558,7 +558,7 @@ async function assayRequest(context: StandingsContext, handle: (cors: Record<str
   // The three assay routes are this file's other doors onto the store, so they move with the board.
   const moved = canonicalRedirect(context);
   if (moved) return moved;
-  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   const secret = context.env.ASSAY_WORKER_SECRET;
   if (!secret) return error(cors, 503, 'assay_unavailable', 'The assay worker is not configured.');
@@ -1932,7 +1932,7 @@ function canonicalRedirect(context: StandingsContext): Response | null {
   return new Response(null, {
     status: 308,
     headers: {
-      ...(corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS) ?? {}),
+      ...(corsHeaders(context.request, context.env) ?? {}),
       'Cache-Control': 'no-store',
       Location: `${canonical.origin}${url.pathname}${url.search}`,
     },
@@ -1952,7 +1952,7 @@ function canonicalOrigin(value: string | undefined): URL | null {
   return url.protocol === 'https:' && bare ? url : null;
 }
 
-function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Record<string, string> | null {
+function corsHeaders(request: Request, env: LocalhostOriginsEnv & { ALLOWED_CORS_ORIGINS?: ReadonlySet<string> }): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'content-type',
@@ -1961,7 +1961,7 @@ function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Reco
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || extraOrigins?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || env.ALLOWED_CORS_ORIGINS?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || localhostOriginAllowed(origin, env)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;

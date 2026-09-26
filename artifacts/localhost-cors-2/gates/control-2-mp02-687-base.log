@@ -1,0 +1,92 @@
+(node:61444) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+
+(node:61541) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/2] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders
+  1) [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      703 |     expect(phrase).toMatch(/^[A-Z]+-[A-Z]+-[0-9A-V]{20}$/);
+      704 |     await alice.getByTestId('ride-start').click();
+    > 705 |     await alice.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 15_000 });
+          |                 ^
+      706 |
+      707 |     await openTownBoard(bob, BOB);
+      708 |     await ensureRideOpen(bob);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ctl/wt/e2e/mp-02-lockstep.spec.ts:705:17
+
+    attachment #1: card (image/png) ────────────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/attachments/card-a21641682f789e7f29cc8aa2222027b8dbdd7115.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/error-context.md
+
+    Error Context: test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/error-context.md
+
+    attachment #6: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:62021) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/2] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders
+  2) [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      703 |     expect(phrase).toMatch(/^[A-Z]+-[A-Z]+-[0-9A-V]{20}$/);
+      704 |     await alice.getByTestId('ride-start').click();
+    > 705 |     await alice.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 15_000 });
+          |                 ^
+      706 |
+      707 |     await openTownBoard(bob, BOB);
+      708 |     await ensureRideOpen(bob);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/ctl/wt/e2e/mp-02-lockstep.spec.ts:705:17
+
+    attachment #1: card (image/png) ────────────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome-repeat1/attachments/card-a21641682f789e7f29cc8aa2222027b8dbdd7115.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome-repeat1/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome-repeat1/error-context.md
+
+    Error Context: test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome-repeat1/error-context.md
+
+    attachment #6: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders 
+    [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders 

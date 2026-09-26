@@ -1,0 +1,5 @@
+dev-vars-probe: wrangler pages dev public at the repo root, preflight OPTIONS /api/stats, loopback only
+arm A (no .dev.vars, pid 69856): localhost 403 allow=(none); county 204 allow=https://agenttown.app; wrangler read: (no variables file) :: ok
+arm B (.dev.vars from .dev.vars.example, pid 69916): localhost 204 allow=http://localhost:5188; county 204 allow=https://agenttown.app; wrangler read: Using secrets defined in .dev.vars :: ok
+git check-ignore: .gitignore:187:.dev.vars	.dev.vars; .dev.vars.example not ignored
+VERDICT: wrangler pages dev reads the root .dev.vars; without it a localhost page is refused, with it admitted; the county origin is admitted either way.

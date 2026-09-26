@@ -1,4 +1,5 @@
 import { constantTimeEqual } from './_compare';
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
 import {
   fallbackReason,
   LedgerRequestError,
@@ -20,12 +21,10 @@ type KVNamespaceLike = RateLimitKVNamespaceLike & {
   list(options?: { prefix?: string; cursor?: string; limit?: number }): Promise<KVListResult>;
 };
 
-export type BugsEnv = LedgerEnv & {
+export type BugsEnv = LedgerEnv & LocalhostOriginsEnv & {
   TELEMETRY?: KVNamespaceLike;
   ACCOUNTS?: KVNamespaceLike;
   BUG_OFFICE_TOKEN?: string;
-  // Read ONLY as the production marker for the CORS dev arm (F-SEC2-2, corsHeaders below). The office sends no mail.
-  RESEND_API_KEY?: string;
 };
 
 export type BugsContext = {
@@ -338,15 +337,14 @@ function parseStoredReport(value: string | null): BugReport | null {
 // F-SEC2-2 (reviews/sec-headers-and-data-hygiene-1.md; small-fixes-1, 2026-09-25): this allowlist
 // admitted `http://localhost:*` and `http://127.0.0.1:*` UNCONDITIONALLY, in production, on the office
 // that takes a screenshot from anyone and, with the office token, hands back the complaints ledger:
-// the SEC-8 hole the accounts door closed on 2026-09-24. The dev arm now asks the accounts handler's
-// question (functions/api/_accounts.ts, corsHeaders): is the PRODUCTION MAIL SENDER unbound?
-// `RESEND_API_KEY` is an environment binding, handed to every Pages function in the project, this
-// office included, and nothing derives it from a header, an origin or a host, so no request can talk
-// its way into the dev arm. Pages is this office's only live door: nginx forwards the residual /api/
-// to it, and the droplet ledger (server/ledger/serve.mjs) routes no bug path. Same predicate as the
-// accounts door, kept in step by hand: no shared helper exists, and making one would touch
-// _accounts.ts. The unconfigured arm (no sender: every local fixture, `wrangler pages dev`) still
-// admits localhost, so a developer's own office keeps working.
+// the SEC-8 hole the accounts door closed on 2026-09-24. small-fixes-1 keyed the dev arm on the mail
+// sender being unbound, but Pages is this office's only live CORS door (nginx forwards the residual
+// /api/ to it; the droplet ledger routes only `/api/ledger/bugs`, a server-to-server road behind the
+// proxy secret with no CORS answer) and Pages binds no sender (F-SF1-8, measured 2026-09-25), so
+// production kept admitting localhost. localhost-cors-2 (2026-09-26): the arm asks the one shared
+// development switch, `localhostOriginAllowed` (./_cors), which reads ALLOW_LOCALHOST_ORIGINS === '1'
+// and nothing else. Unset, as in production, localhost is refused; a developer's box opts in through
+// `.dev.vars`.
 function corsHeaders(request: Request, env: BugsEnv, methods: string): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
@@ -356,11 +354,10 @@ function corsHeaders(request: Request, env: BugsEnv, methods: string): Record<st
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  const devOrigins = !env.RESEND_API_KEY;
   if (
     ALLOWED_ORIGINS.has(origin) ||
     /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) ||
-    (devOrigins && /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin))
+    localhostOriginAllowed(origin, env)
   ) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }

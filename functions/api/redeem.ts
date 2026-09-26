@@ -1,4 +1,5 @@
 import { constantTimeEqual } from './_compare';
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
 import {
   fallbackReason,
   LedgerRequestError,
@@ -12,7 +13,7 @@ import {
 } from './_ledger';
 import { bumpCounter, clientIpHash, type KVNamespaceLike } from './_ratelimit';
 
-type RedeemEnv = LedgerEnv & {
+type RedeemEnv = LedgerEnv & LocalhostOriginsEnv & {
   TELEMETRY?: KVNamespaceLike;
   ACCOUNTS?: KVNamespaceLike;
   BUG_OFFICE_TOKEN?: string;
@@ -35,7 +36,7 @@ const BAD_STUB = { ok: false, error: 'bad_stub', message: 'The clerk turns the s
 const OFFICE_CLOSED = { ok: false, error: 'office_closed', message: 'The prize ledger is off the desk. Try again later.' };
 
 export async function onRequest(context: RedeemContext): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'The clerk cannot take stubs from that trail.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'POST') return json(cors, { ok: false, error: 'not_found', message: 'No office answers at this address.' }, 404);
@@ -190,7 +191,7 @@ function normalizeCode(value: unknown): string | null {
   return CODE_PATTERN.test(code) ? code : null;
 }
 
-function corsHeaders(request: Request): Record<string, string> | null {
+function corsHeaders(request: Request, env: LocalhostOriginsEnv): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers = {
     'Access-Control-Allow-Headers': 'authorization, content-type',
@@ -199,7 +200,7 @@ function corsHeaders(request: Request): Record<string, string> | null {
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || localhostOriginAllowed(origin, env)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;

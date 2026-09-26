@@ -183,3 +183,5 @@ bug-reports/
 # is a symlink to the primary checkout's. Vite rebuilds it on a checkout's first boot; it is a cache, never
 # history. Newly untracks nothing: `git ls-files .vite-cache` returned 0 before this line was written.
 .vite-cache/
+
+.dev.vars

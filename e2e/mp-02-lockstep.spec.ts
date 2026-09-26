@@ -1442,6 +1442,9 @@ async function startPages(worker: RelayProcess): Promise<RelayProcess> {
     `MULTIPLAYER_ROOMS=MultiplayerRoom@${SCRIPT_NAME}`,
     '--kv',
     'MULTIPLAYER_RATE_LIMITS',
+    // localhost-cors-2 (F-LC2-2): this dev relay is asked from localhost origins, so it opts into the development switch.
+    '--binding',
+    'ALLOW_LOCALHOST_ORIGINS=1',
   ], port);
   await waitForServer(worker.url, '/');
   return child;
