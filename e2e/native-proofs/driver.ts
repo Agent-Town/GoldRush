@@ -19,6 +19,7 @@ import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 
 const TIMESCALE = '4';
 const HOLD_GROUND = process.env.GR_NATIVE_STRATEGY === 'hold-ground';
+const RESTORE_GROUND = process.env.GR_NATIVE_STRATEGY === 'restore-ground';
 const BOOT_TIMEOUT_MS = 60_000;
 const PLAY_BUDGET_MS = 600_000;
 const PROFILE_ID = 'robin';
@@ -534,16 +535,19 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
   if (row.contract === "e2-incline" && now.wave >= 8) return;
   const hurt = now.defences
     .filter(entry => row.contract !== "e3-blackout-ridge" || Math.hypot(entry.x - home.x, entry.z - home.z) < 18)
-    .filter((entry) => (!entry.wrecked || row.contract === 'e3-fairground') && entry.hp < entry.maxHp * 0.55 && entry.repairCost > 0)
+    .filter((entry) => (!entry.wrecked || RESTORE_GROUND || row.contract === 'e3-fairground') && entry.hp < entry.maxHp * (RESTORE_GROUND ? 0.8 : 0.55) && entry.repairCost > 0)
     .sort((a, b) => a.hp / a.maxHp - b.hp / b.maxHp)[0];
   if (hurt) {
     if (row.contract === "e1-baron" && HOLD_GROUND && now.wave >= 12 && now.gold < hurt.repairCost) return;
-    if (!(await fund(page, row, hurt.repairCost, Math.min(deadline, Date.now() + 45_000), fords, unreachable))) return;
-    if (row.contract === 'e3-fairground') {
+    if (!(await fund(page, row, RESTORE_GROUND ? Math.max(40, hurt.repairCost) : hurt.repairCost, Math.min(deadline, Date.now() + 45_000), fords, unreachable))) return;
+    if (RESTORE_GROUND) {
+      // The native repair disc is 1.4 units; offset + tolerance could stop outside it.
+      if (!(await journey(page, row, hurt.x, hurt.z, 1.2, fords, 45))) return;
+    } else if (row.contract === 'e3-fairground') {
       if (!(await walkTo(page, row, hurt.x, hurt.z, 1.25, 45))) return;
     } else if (!(await journey(page, row, hurt.x, hurt.z - 1, 1, fords, 45))) return;
     const before = (await read(page))?.repairs ?? 0;
-    for (let tick = 0; tick < 40; tick += 1) {
+    for (let tick = 0; tick < (RESTORE_GROUND ? 8 : 40); tick += 1) {
       await takeUpgrades(page, row);
       const next = await read(page);
       if (!next || next.runState === 'dead') return;
@@ -556,6 +560,14 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
     return;
   }
 
+  if (RESTORE_GROUND) {
+    // Keep purchased cover alive; late expansion otherwise leaves no repair money.
+    if (now.gold < 40) {
+      await fund(page, row, 40, Math.min(deadline, Date.now() + 45_000), fords, unreachable);
+      return;
+    }
+    if (now.wave >= 12) return;
+  }
   if (row.contract === "e3-fairground") return;
   if (row.contract === "e1-baron" && HOLD_GROUND && now.wave >= 12) return;
   const room =
@@ -849,7 +861,7 @@ export function nativeProof(id: string, run = 1) {
         samples: [],
         consoleErrors,
         pageErrors,
-        notes: [`epoch=${epochOf(contract.id)}`, `strategy=${HOLD_GROUND || contract.id === "e2-incline" ? "hold-ground" : "gather-and-extend"}`],
+        notes: [`epoch=${epochOf(contract.id)}`, `strategy=${RESTORE_GROUND ? "restore-ground" : HOLD_GROUND || contract.id === "e2-incline" ? "hold-ground" : "gather-and-extend"}`],
         at: new Date().toISOString(),
       };
 
@@ -1124,7 +1136,7 @@ export function nativeProof(id: string, run = 1) {
             } else await page.waitForTimeout(200);
             continue;
           }
-          if (now.sim - lastMaintenance >= 25) {
+          if (now.sim - lastMaintenance >= (RESTORE_GROUND ? 8 : 25)) {
             lastMaintenance = now.sim;
             await maintain(page, row, home, deadline, fords, unreachable);
             continue;

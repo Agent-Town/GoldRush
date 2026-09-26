@@ -19,7 +19,7 @@ if (process.env.GR_NATIVE_DIAG === '1') {
       for (const name of ['keydown', 'keyup', 'click']) document.addEventListener(name, order, true);
       setInterval(() => {
         const d = window.__THREE_GAME_DIAGNOSTICS__;
-        if (!d || d.runState === 'menu') return;
+        if (!d) return;
         capture.samples.push({ t: d.timeAlive, wave: d.wave, hp: d.hp, gold: d.economy.gold,
           hero: d.heroPos, alive: d.enemiesAlive, defences: d.build.hp, repairs: d.wreck.repairs,
           progression: d.progression, runState: d.runState,
