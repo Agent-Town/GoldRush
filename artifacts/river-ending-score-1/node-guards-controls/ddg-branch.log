@@ -1,0 +1,76 @@
+✔ a desk item WITH a declaring row passes (61.442208ms)
+✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (45.349542ms)
+✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (46.810458ms)
+✔ a row whose id sits past the 90-char subject zone does NOT declare it (44.75875ms)
+✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (237.256333ms)
+✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (117.981459ms)
+✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (45.587959ms)
+✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (32.022375ms)
+✔ REFUSES (exit 2) when the desk segment holds zero keyed items (31.412916ms)
+✔ REFUSES (exit 2) when BACKLOG.md is missing (31.821833ms)
+✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (45.821959ms)
+✖ the live board is green under this guard (baseline is honest) (117.056042ms)
+✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (30.590709ms)
+✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (44.665625ms)
+✔ all five desk spellings are read — the majority form was invisible (230.034667ms)
+✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (44.9025ms)
+✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (46.115083ms)
+✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (46.188708ms)
+✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (31.072667ms)
+✔ a SLUG-keyed desk item WITH a declaring row passes (60.616958ms)
+✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (44.79225ms)
+✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (48.724ms)
+✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (59.689833ms)
+✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (58.020083ms)
+✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (58.684042ms)
+✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.306167ms)
+✔ every grandfathered id is still on the desk — the list must not rot (8.653209ms)
+✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (46.748333ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 27
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1763.357542
+
+✖ failing tests:
+
+test at scripts/desk-declaration-guard.test.mjs:163:1
+✖ the live board is green under this guard (baseline is honest) (117.056042ms)
+  AssertionError [ERR_ASSERTION]: === desk-declaration-guard ===
+  corpus tree       : linked-worktree
+  desk F-IDs        : 2
+  desk slugs        : 1
+  🔺 desk segments  : 3
+  unexamined        : 0
+  with a BACKLOG row: 3
+  undeclared        : 0 (grandfathered 0)
+  
+  desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+    line-1 is NOT the one main carries.
+    Both corpora here are TRACKED, so this tree is frozen at its branch point and
+    the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+    would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+    proven by manufacturing: a real defect on main read byte-identically to a clean
+    board from here).
+    Re-run from the main worktree, or pass --root <main worktree>.
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-rvs1/scripts/desk-declaration-guard.test.mjs:167:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

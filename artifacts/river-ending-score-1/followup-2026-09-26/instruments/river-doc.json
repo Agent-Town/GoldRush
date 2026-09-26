@@ -1,0 +1,11 @@
+{
+ "templateId": "the-claim",
+ "document": "{\n  \"id\": \"the-claim\",\n  \"name\": \"The River\",\n  \"tileParams\": {\n    \"tileId\": \"frontier-river-claim\",\n    \"biome\": \"river-claim\",\n    \"river\": true,\n    \"ford\": true,\n    \"waterSources\": [],\n    \"lanes\": {\n      \"spawnEdges\": [\n        \"north\",\n        \"south\",\n        \"east\",\n        \"west\"\n      ],\n      \"territoryRingBiasWaves\": 0,\n      \"territoryRingLaneBias\": 0\n    },\n    \"size\": 64,\n    \"fords\": [\n      {\n        \"id\": \"center-ford\",\n        \"x\": 0,\n        \"halfWidth\": 3\n      }\n    ],\n    \"harvestAnchors\": [\n      {\n        \"x\": -22,\n        \"z\": -6.8\n      },\n      {\n        \"x\": -9,\n        \"z\": 6.7\n      },\n      {\n        \"x\": -1.5,\n        \"z\": -6.4\n      },\n      {\n        \"x\": 7.5,\n        \"z\": 6.5\n      },\n      {\n        \"x\": 18,\n        \"z\": -7\n      },\n      {\n        \"x\": 25,\n        \"z\": 6.9\n      }\n    ],\n    \"water\": {\n      \"id\": \"frontier-river-depth\",\n      \"centerZ\": 0,\n      \"halfWidth\": 5,\n      \"visualHalfWidth\": 6.25\n    }\n  },\n  \"twist\": {\n    \"secureWave\": 10\n  },\n  \"boardRow\": {\n    \"name\": \"The River\",\n    \"ledgerBlurb\": \"The first claim, re-inked in dawn light.\",\n    \"tags\": [\n      \"river\"\n    ],\n    \"unlock\": \"post-credits\"\n  },\n  \"briefing\": {\n    \"goals\": [\n      \"Pan the dawn river.\"\n    ],\n    \"rules\": [\n      \"There are no enemies and no waves.\",\n      \"Names surface as gold flecks; when the last settles, the river keeps going.\"\n    ],\n    \"geographyLine\": \"The first claim returns in dawn light: one river, one ford, and one pan.\"\n  }\n}\n",
+ "keys": {
+  "PROFILE_KEY": "gr.profile.v2",
+  "SCOREBOARD_KEY": "gr.scores.v2",
+  "FIRST_CLAIM_DONE_KEY": "gr.firstClaim.done.v1",
+  "TOWN_NAME_KEY": "gr.town.name.v1",
+  "TOWN_WELCOME_SEEN_KEY": "gr.townWelcome.seen.v1"
+ }
+}

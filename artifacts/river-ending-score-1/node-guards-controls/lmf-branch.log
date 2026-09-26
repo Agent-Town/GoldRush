@@ -1,0 +1,54 @@
+✔ 1. a whole, current series reports WHOLE AND CURRENT and strict exits 0 (66.026833ms)
+✔ 2. an INTERIOR hole is NAMED and strict exits 1 — the defect LB-01 cannot see (63.692834ms)
+✔ 3. a STALE newest (no holes) is reported with its age and strict exits 1 (65.164625ms)
+✔ 4. an ABSENT mirror directory CANNOT VERIFY — strict exits 2, never 1 (62.550291ms)
+✔ 5. a readable but EMPTY series CANNOT VERIFY — an empty series has no gaps (62.274375ms)
+✔ 6. ADVISORY default is 0 in EVERY state, including a gap and an unreadable corpus (97.430666ms)
+✔ 7. the corpus is DECLARED on the HAPPY path too, not only on failure (31.673042ms)
+✔ 8. the CALENDAR is validated, not the digit count (31.92575ms)
+✔ 9. REVERSE CONTROL: cwd cannot change the corpus, and the ANCHOR is still read beside the script (97.72975ms)
+✔ 22. THE RULING, GUARDED: the DEFAULT destination is not inside the public repo (0.167458ms)
+✖ 23. ONE destination, THREE tools: pull, freshness and exposure cannot disagree (93.692708ms)
+✔ 24. the PROVENANCE rides with the path — an env-narrowed corpus cannot print like the default (62.473875ms)
+✔ 25. a RELATIVE destination override is REFUSED, never resolved against cwd (0.271042ms)
+✔ 10. gaps are computed across month and year boundaries (0.70875ms)
+✔ 11. day arithmetic is leap-correct and monotone (no Date, so no timezone) (0.075042ms)
+✔ 12. parseName accepts only well-formed calendar names (0.249292ms)
+✔ 13. exitCodeFor keeps 2 (could not answer) above 1 (refuses) above 0 (0.0815ms)
+✔ 16. THE DEFECT, GUARDED: 31 of 32 days deleted is NAMED, not read as a shorter perfect series (66.394708ms)
+✔ 17. an ABSENT anchor WITHHOLDS the verdict — 2 (could not answer), never a silent fallback (63.705125ms)
+✔ 18. a MALFORMED anchor is could-not-answer too — bad JSON and a non-calendar day alike (193.937292ms)
+✔ 19. the ANCHOR is declared on the HAPPY path too, with its source (F-2208-1) (33.122208ms)
+✔ 20. a file OLDER than the anchor widens the window and is never counted as a hole (63.309667ms)
+✔ 21. the repo's OWN anchor is present, parseable and a real calendar day (0.199416ms)
+✔ 15. localToday reads LOCAL components — the UTC date-only trap, guarded (0.200334ms)
+✔ 14. readMirrors DECLARES an unreadable corpus rather than returning an empty selection (0.106292ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 24
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1211.846292
+
+✖ failing tests:
+
+test at scripts/ledger-mirror-freshness-guard.test.mjs:249:1
+✖ 23. ONE destination, THREE tools: pull, freshness and exposure cannot disagree (93.692708ms)
+  AssertionError [ERR_ASSERTION]: the pull must write to the destination in force, got:
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-rvs1/scripts/ledger-mirror-freshness-guard.test.mjs:266:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

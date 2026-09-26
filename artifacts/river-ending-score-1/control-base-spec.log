@@ -1,0 +1,75 @@
+(node:31979) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:32049) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/6] [desktop-chrome] › e2e/river-ending-score.spec.ts:283:1 › the River's first pan writes one completed e10-river score, its reel and its standing, and never a second
+  1) [desktop-chrome] › e2e/river-ending-score.spec.ts:283:1 › the River's first pan writes one completed e10-river score, its reel and its standing, and never a second 
+
+    Error: run 6 banks cell: a new secured/completed e10-river score after the authored pan
+
+    expect(received).toBeTruthy()
+
+    Received: undefined
+
+      303 |   // The run-6 driver's failing bank assertion, verbatim (driver.ts:1416).
+      304 |   const completed = scores.find((s) => s.contractId === 'e10-river' && !beforeAts.has(s.at) && (s.secured || s.completed));
+    > 305 |   expect(completed, 'run 6 banks cell: a new secured/completed e10-river score after the authored pan').toBeTruthy();
+          |                                                                                                         ^
+      306 |   const rivers = scores.filter((score) => score.contractId === RIVER_ID);
+      307 |   expect(rivers).toHaveLength(1);
+      308 |   expect(rivers[0]).toMatchObject({ secured: true, waves: 0, secureWave: 0, deepestWave: 0, kills: 0, gold: 5 });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/control-base/e2e/river-ending-score.spec.ts:305:105
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../results-control/river-ending-score-the-Riv-af879-standing-and-never-a-second-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../results-control/river-ending-score-the-Riv-af879-standing-and-never-a-second-desktop-chrome/error-context.md
+
+
+
+(node:32216) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/6] [desktop-chrome] › e2e/river-ending-score.spec.ts:389:1 › a boot of the River with no player action writes nothing
+[3/6] [desktop-chrome] › e2e/river-ending-score.spec.ts:409:1 › a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing
+
+(node:32507) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/6] [mobile-chrome] › e2e/river-ending-score.spec.ts:283:1 › the River's first pan writes one completed e10-river score, its reel and its standing, and never a second
+  2) [mobile-chrome] › e2e/river-ending-score.spec.ts:283:1 › the River's first pan writes one completed e10-river score, its reel and its standing, and never a second 
+
+    Error: run 6 banks cell: a new secured/completed e10-river score after the authored pan
+
+    expect(received).toBeTruthy()
+
+    Received: undefined
+
+      303 |   // The run-6 driver's failing bank assertion, verbatim (driver.ts:1416).
+      304 |   const completed = scores.find((s) => s.contractId === 'e10-river' && !beforeAts.has(s.at) && (s.secured || s.completed));
+    > 305 |   expect(completed, 'run 6 banks cell: a new secured/completed e10-river score after the authored pan').toBeTruthy();
+          |                                                                                                         ^
+      306 |   const rivers = scores.filter((score) => score.contractId === RIVER_ID);
+      307 |   expect(rivers).toHaveLength(1);
+      308 |   expect(rivers[0]).toMatchObject({ secured: true, waves: 0, secureWave: 0, deepestWave: 0, kills: 0, gold: 5 });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/control-base/e2e/river-ending-score.spec.ts:305:105
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../results-control/river-ending-score-the-Riv-af879-standing-and-never-a-second-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../results-control/river-ending-score-the-Riv-af879-standing-and-never-a-second-mobile-chrome/error-context.md
+
+
+
+(node:32607) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/6] [mobile-chrome] › e2e/river-ending-score.spec.ts:389:1 › a boot of the River with no player action writes nothing
+[6/6] [mobile-chrome] › e2e/river-ending-score.spec.ts:409:1 › a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing
+  2 failed
+    [desktop-chrome] › e2e/river-ending-score.spec.ts:283:1 › the River's first pan writes one completed e10-river score, its reel and its standing, and never a second 
+    [mobile-chrome] › e2e/river-ending-score.spec.ts:283:1 › the River's first pan writes one completed e10-river score, its reel and its standing, and never a second 
+  4 passed (1.1m)

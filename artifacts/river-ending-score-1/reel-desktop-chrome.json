@@ -1,0 +1,102 @@
+{
+  "version": 2,
+  "id": "f49c9801-3012-4b56-a17a-18e1c5835d03",
+  "createdAt": 1790430738087,
+  "kept": false,
+  "contract": "e10-river",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "dev",
+    "viewVersion": 4,
+    "engineHash": "642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a",
+    "era": 6
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 999,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 40,
+          "science": 999,
+          "hero": 40,
+          "agent": 40
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "f49c9801-3012-4b56-a17a-18e1c5835d03",
+    "contractId": "e10-river",
+    "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 146,
+    "entries": [
+      {
+        "t": 45,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 75,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 76,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 84,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 98,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": [],
+    "playbookUses": []
+  },
+  "eventLogHash": "fnv1a32:5be08441",
+  "outcome": {
+    "reason": "secured",
+    "secured": true,
+    "waves": 0,
+    "timeAlive": 4.866666666666659,
+    "gold": 5
+  }
+}

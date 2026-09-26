@@ -1,0 +1,361 @@
+(node:75222) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:75284) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/6] [desktop-chrome] › e2e/river-ending-score.spec.ts:322:1 › the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second
+  1) [desktop-chrome] › e2e/river-ending-score.spec.ts:322:1 › the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second 
+
+    Error: the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 134
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "anonId": "6e46a6da920e85b1614dad760087dff3",
+    +     "contractId": "e10-river",
+    +     "difficulty": "trail",
+    +     "epochId": "epoch-10-deepsky",
+    +     "inputLogHash": "3d37374b0e4bd3d5e4b07e45b634771a9f6f866478e6a785bac0ed310d3b74b3",
+    +     "profileName": "Robin",
+    +     "score": Object {
+    +       "baseValue": 0,
+    +       "gold": 5,
+    +       "secured": true,
+    +       "timeAlive": 4.933333333333326,
+    +       "waves": 0,
+    +     },
+    +     "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    +     "seedHash": "e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282",
+    +     "seedMode": "live",
+    +     "tape": Object {
+    +       "contract": "e10-river",
+    +       "createdAt": 1790430984096,
+    +       "difficulty": "trail",
+    +       "eventLogHash": "fnv1a32:a8d16f71",
+    +       "id": "990d034b-7f5d-46d3-ad75-285ca66495bc",
+    +       "inputLog": Object {
+    +         "contractId": "e10-river",
+    +         "difficultyPreset": "trail",
+    +         "durationTicks": 148,
+    +         "entries": Array [
+    +           Object {
+    +             "a": Array [],
+    +             "mx": -0.707,
+    +             "my": -0.707,
+    +             "t": 46,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": 0,
+    +             "my": 0,
+    +             "t": 76,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": -0.707,
+    +             "my": -0.707,
+    +             "t": 77,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": 0,
+    +             "my": 0,
+    +             "t": 79,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": -0.707,
+    +             "my": -0.707,
+    +             "t": 80,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": -1,
+    +             "my": 0,
+    +             "t": 85,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": 0,
+    +             "my": 0,
+    +             "t": 100,
+    +           },
+    +         ],
+    +         "name": "990d034b-7f5d-46d3-ad75-285ca66495bc",
+    +         "playbookUses": Array [],
+    +         "primarySlot": 0,
+    +         "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    +         "start": Object {
+    +           "x": 0,
+    +           "z": 12,
+    +         },
+    +         "stepSeconds": 0.03333333333333333,
+    +         "streams": Array [],
+    +         "truncated": null,
+    +         "version": 1,
+    +       },
+    +       "kept": false,
+    +       "meta": Object {
+    +         "buildId": "dev",
+    +         "engineHash": "642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a",
+    +         "era": 6,
+    +         "viewVersion": 4,
+    +       },
+    +       "outcome": Object {
+    +         "gold": 5,
+    +         "reason": "secured",
+    +         "secured": true,
+    +         "timeAlive": 4.933333333333326,
+    +         "waves": 0,
+    +       },
+    +       "runStart": Object {
+    +         "meta": Object {
+    +           "tracks": Object {
+    +             "agent": 40,
+    +             "hero": 40,
+    +             "science": 999,
+    +             "territory": 40,
+    +           },
+    +           "version": 1,
+    +         },
+    +         "research": Object {
+    +           "epochId": "epoch-1-frontier",
+    +           "metaScienceCursor": 999,
+    +           "pinnedTarget": null,
+    +           "progress": Object {
+    +             "tracks": Object {
+    +               "agent": 40,
+    +               "hero": 40,
+    +               "science": 999,
+    +               "territory": 40,
+    +             },
+    +             "version": 1,
+    +           },
+    +           "proposalSalt": 0,
+    +           "taken": Array [],
+    +           "unlocks": Object {},
+    +           "version": 1,
+    +         },
+    +       },
+    +       "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    +       "simVersion": 1,
+    +       "version": 2,
+    +     },
+    +   },
+    + ]
+
+      362 |   // (b) THE STANDING IS HELD: nothing reaches the county, although the dev-send flag would carry any post.
+      363 |   await page.waitForTimeout(1500);
+    > 364 |   expect(standings, 'the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)').toEqual([]);
+          |                                                                                                                     ^
+      365 |   // The kept reel stays door-shaped for the day the post is enabled: the client's validator reads it back whole, and
+      366 |   // the door's own handler, in-process with no store bound, admits the body `submitCountyStanding` would build.
+      367 |   expect(validateRunTape(reel), 'the client validator reads the kept reel back whole').toEqual(reel);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts:364:117
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../results-fu-pre/river-ending-score-the-Riv-43d8b-g-and-never-writes-a-second-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../results-fu-pre/river-ending-score-the-Riv-43d8b-g-and-never-writes-a-second-desktop-chrome/error-context.md
+
+
+
+(node:75576) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/6] [desktop-chrome] › e2e/river-ending-score.spec.ts:429:1 › a boot of the River with no player action writes nothing
+[3/6] [desktop-chrome] › e2e/river-ending-score.spec.ts:449:1 › a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing
+
+(node:76016) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/6] [mobile-chrome] › e2e/river-ending-score.spec.ts:322:1 › the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second
+  2) [mobile-chrome] › e2e/river-ending-score.spec.ts:322:1 › the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second 
+
+    Error: the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 146
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "anonId": "796b59d56e1978edbc3afc235aa63b96",
+    +     "contractId": "e10-river",
+    +     "difficulty": "trail",
+    +     "epochId": "epoch-10-deepsky",
+    +     "inputLogHash": "79d4fa1de06d3edae63d4bed8797ef6ec35f05c410aef37ac073e6c602631990",
+    +     "profileName": "Robin",
+    +     "score": Object {
+    +       "baseValue": 0,
+    +       "gold": 5,
+    +       "secured": true,
+    +       "timeAlive": 4.933333333333326,
+    +       "waves": 0,
+    +     },
+    +     "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    +     "seedHash": "e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282",
+    +     "seedMode": "live",
+    +     "tape": Object {
+    +       "contract": "e10-river",
+    +       "createdAt": 1790431018657,
+    +       "difficulty": "trail",
+    +       "eventLogHash": "fnv1a32:f4a47e49",
+    +       "id": "844ee4bf-3a89-4ac3-b0cd-61dc83fb0355",
+    +       "inputLog": Object {
+    +         "contractId": "e10-river",
+    +         "difficultyPreset": "trail",
+    +         "durationTicks": 148,
+    +         "entries": Array [
+    +           Object {
+    +             "a": Array [],
+    +             "mx": -0.707,
+    +             "my": -0.707,
+    +             "t": 44,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": 0,
+    +             "my": 0,
+    +             "t": 49,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": -0.707,
+    +             "my": -0.707,
+    +             "t": 50,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": 0,
+    +             "my": 0,
+    +             "t": 78,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": -0.707,
+    +             "my": -0.707,
+    +             "t": 79,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": -1,
+    +             "my": 0,
+    +             "t": 84,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": 0,
+    +             "my": 0,
+    +             "t": 91,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": -1,
+    +             "my": 0,
+    +             "t": 92,
+    +           },
+    +           Object {
+    +             "a": Array [],
+    +             "mx": 0,
+    +             "my": 0,
+    +             "t": 100,
+    +           },
+    +         ],
+    +         "name": "844ee4bf-3a89-4ac3-b0cd-61dc83fb0355",
+    +         "playbookUses": Array [],
+    +         "primarySlot": 0,
+    +         "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    +         "start": Object {
+    +           "x": 0,
+    +           "z": 12,
+    +         },
+    +         "stepSeconds": 0.03333333333333333,
+    +         "streams": Array [],
+    +         "truncated": null,
+    +         "version": 1,
+    +       },
+    +       "kept": false,
+    +       "meta": Object {
+    +         "buildId": "dev",
+    +         "engineHash": "642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a",
+    +         "era": 6,
+    +         "viewVersion": 4,
+    +       },
+    +       "outcome": Object {
+    +         "gold": 5,
+    +         "reason": "secured",
+    +         "secured": true,
+    +         "timeAlive": 4.933333333333326,
+    +         "waves": 0,
+    +       },
+    +       "runStart": Object {
+    +         "meta": Object {
+    +           "tracks": Object {
+    +             "agent": 40,
+    +             "hero": 40,
+    +             "science": 999,
+    +             "territory": 40,
+    +           },
+    +           "version": 1,
+    +         },
+    +         "research": Object {
+    +           "epochId": "epoch-1-frontier",
+    +           "metaScienceCursor": 999,
+    +           "pinnedTarget": null,
+    +           "progress": Object {
+    +             "tracks": Object {
+    +               "agent": 40,
+    +               "hero": 40,
+    +               "science": 999,
+    +               "territory": 40,
+    +             },
+    +             "version": 1,
+    +           },
+    +           "proposalSalt": 0,
+    +           "taken": Array [],
+    +           "unlocks": Object {},
+    +           "version": 1,
+    +         },
+    +       },
+    +       "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    +       "simVersion": 1,
+    +       "version": 2,
+    +     },
+    +   },
+    + ]
+
+      362 |   // (b) THE STANDING IS HELD: nothing reaches the county, although the dev-send flag would carry any post.
+      363 |   await page.waitForTimeout(1500);
+    > 364 |   expect(standings, 'the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)').toEqual([]);
+          |                                                                                                                     ^
+      365 |   // The kept reel stays door-shaped for the day the post is enabled: the client's validator reads it back whole, and
+      366 |   // the door's own handler, in-process with no store bound, admits the body `submitCountyStanding` would build.
+      367 |   expect(validateRunTape(reel), 'the client validator reads the kept reel back whole').toEqual(reel);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts:364:117
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../results-fu-pre/river-ending-score-the-Riv-43d8b-g-and-never-writes-a-second-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../results-fu-pre/river-ending-score-the-Riv-43d8b-g-and-never-writes-a-second-mobile-chrome/error-context.md
+
+
+
+(node:76217) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/6] [mobile-chrome] › e2e/river-ending-score.spec.ts:429:1 › a boot of the River with no player action writes nothing
+[6/6] [mobile-chrome] › e2e/river-ending-score.spec.ts:449:1 › a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing
+  2 failed
+    [desktop-chrome] › e2e/river-ending-score.spec.ts:322:1 › the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second 
+    [mobile-chrome] › e2e/river-ending-score.spec.ts:322:1 › the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second 
+  4 passed (1.2m)

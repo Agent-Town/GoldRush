@@ -1,0 +1,17 @@
+Existing tapes replayed on base (be37d83cf, detached worktree) and on the tip (6af7bf60b), 2026-09-26, under the drain lock.
+Empty captures are listed here instead of kept as empty files.
+empty: replay-agent-1-base.err.txt
+empty: replay-agent-1-tip.err.txt
+empty: replay-agent-2-base.out
+empty: replay-agent-2-tip.out
+empty: replay-browser-1-base.err.txt
+empty: replay-browser-1-tip.err.txt
+empty: replay-browser-2-base.err.txt
+empty: replay-browser-2-tip.err.txt
+
+agent tape 1 probe-idle-tape.json: base rc=0 tip rc=0 stdout identical stderr identical (148 bytes)
+agent tape 2 e3-moth-season.tape.json: base rc=1 tip rc=1 stdout identical stderr identical (0 bytes)
+browser reel 1 reel-desktop-chrome.json: base rc=0 tip rc=0 identical (wallMs excluded)
+browser reel 2 reel-desktop-chrome-relabelled-the-claim.json: base rc=0 tip rc=0 identical (wallMs excluded)
+
+agent tape 2 stderr (base and tip, identical): assay replay failed: declared runStart is not installable by this door
