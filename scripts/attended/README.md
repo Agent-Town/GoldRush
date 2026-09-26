@@ -60,3 +60,5 @@ The chain computes its pin (#N is the registry index) BEFORE waiting for the fas
 
 ## The load gates and this Mac's baseline (2026-09-26, F-LAND-5)
 The host idles at a 1-minute load of 25 to 45 with the owner's iOS simulator, Chrome and the Codex desktop app running, before any battery of ours. A landing gate at 20 held the lock for an hour without starting a landing; the run-queue gate at 16 never opened. `land-queue.sh` now defaults to 40 (`GR_LAND_LOAD_MAX` overrides); the Astra queue jobs gate at 32. Read the load beside every timing, never as a verdict.
+
+- **Validate before you write (F-ATT-4, 2026-09-26):** any edit to a `landings/<tag>.json` is parsed (`node -e "JSON.parse(fs.readFileSync(...))"` or `require`) in the SAME command that writes it, before the commit and before any launch; a ruling quoted inside a JSON string uses single quotes. A landing launched on an unparsable config fails at loadConfig, but the invalid file is already on main by then.
