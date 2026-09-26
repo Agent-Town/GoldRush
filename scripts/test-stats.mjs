@@ -4,6 +4,8 @@ import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assertWranglerVersion } from './wrangler-binary.mjs';
+import engineEra from '../assets/engine-era.json' with { type: 'json' };
+import rotationSeeds from '../assets/rotations/rotation-seeds.json' with { type: 'json' };
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'http://localhost:5188';
@@ -25,6 +27,7 @@ async function main() {
     await checkPopulatedAggregates();
     await checkTelemetryIngestHardening();
     await checkTelemetryRateLimit();
+    await checkStandingsWeekBoard();
     await writeSummary('passed');
     console.log(`stats worker checks passed (${checks.length})`);
   } catch (err) {
@@ -146,6 +149,80 @@ async function checkTelemetryRateLimit() {
   } finally {
     await server.stop();
   }
+}
+
+// county-board-open-week-1 (F-LSR1-1; owner 2026-09-26, "3 - ok, lets do that"): the public board's
+// `?rotation=` shape, read through the Pages runtime rather than in-process. The wall clock cannot be pinned
+// inside wrangler, so the rows are seeded on the week the door itself calls open right now (the latest
+// rotation already opened, `currentOrLatestRotation`), and the not-yet-opened check runs only while the
+// registry holds a week that has not opened.
+async function checkStandingsWeekBoard() {
+  const now = Date.now();
+  const opened = rotationSeeds.rotations.filter((rotation) => Date.parse(rotation.opensAt) <= now)
+    .sort((a, b) => Date.parse(b.opensAt) - Date.parse(a.opensAt));
+  const week = opened[0];
+  assert(week && typeof week.seeds['the-claim'] === 'string', 'the registry holds an opened week that carries the Claim');
+  const unopened = rotationSeeds.rotations.find((rotation) => Date.parse(rotation.opensAt) > now);
+  const persistPath = path.join(STATE_ROOT, 'standings-week');
+  await seedKv(persistPath, [['standings:s2:epoch-1-frontier:the-claim', JSON.stringify([
+    standingRow('All-Time Rider', '1', 40, 'gold-rush', now),
+    standingRow('Week Rider', '2', 12, week.seeds['the-claim'], now, { rotationId: week.id }),
+    standingRow('Week Posse', '3', 15, week.seeds['the-claim'], now, { rotationId: week.id, riders: ['Ada', 'Robin'] }),
+  ])]]);
+  const server = await startPages('standings-week');
+  try {
+    const claim = '/api/standings?contract=the-claim&epoch=epoch-1-frontier';
+    const allTime = await getJson(server.url, claim);
+    assertEqual(allTime.status, 200, 'all-time standings board returns 200');
+    assertEqual(allTime.body.board?.map((row) => row.profileName).join(','), 'All-Time Rider', 'all-time board keeps only rows off the weekly seeds');
+    assert(!('rotationId' in allTime.body), 'all-time board names no week');
+
+    const named = await getJson(server.url, `${claim}&rotation=${week.id}`);
+    assertEqual(named.status, 200, 'named week board returns 200');
+    assertEqual(named.body.rotationId, week.id, 'named week board names its week');
+    assertEqual(named.body.board?.map((row) => `${row.profileName}@${row.rotationId}`).join(','), `Week Rider@${week.id}`, 'named week board serves that week alone');
+
+    const open = await getJson(server.url, `${claim}&rotation=open`);
+    assertEqual(JSON.stringify(open.body), JSON.stringify(named.body), 'open alias reads the week the door calls open');
+
+    const posse = await getJson(server.url, `${claim}&party=2&rotation=${week.id}`);
+    assertEqual(posse.body.board?.map((row) => `${row.profileName}:${row.party?.riderCount}`).join(','), 'Week Posse:2', 'week posse ranks within its size');
+
+    const unknown = await getJson(server.url, `${claim}&rotation=r1999w01`);
+    assertEqual(unknown.status, 400, 'unknown week refused');
+    assertEqual(unknown.body.error, 'bad_rotation', 'unknown week refusal code');
+    if (unopened) {
+      const early = await getJson(server.url, `${claim}&rotation=${unopened.id}`);
+      assertEqual(early.body.error, 'bad_rotation', `week ${unopened.id} is refused before it opens`);
+    }
+  } finally {
+    await server.stop();
+  }
+}
+
+// A stored standing the door validates and ranks: a current-era reel on the row's own seed.
+function standingRow(name, digit, waves, seed, now, { rotationId, riders } = {}) {
+  const id = `stats-week-${digit}`;
+  const outcome = { waves, timeAlive: 120, gold: 40 };
+  const progress = { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } };
+  return {
+    secured: true, ...outcome, baseValue: 60, profileName: name, anonId: digit.repeat(32), difficulty: 'trail',
+    seed, seedMode: 'live', seedHash: 'a'.repeat(64), inputLogHash: 'b'.repeat(64), submittedAt: now - 60_000,
+    ...(riders ? { party: { riderCount: riders.length, riders: riders.map((rider) => ({ name: rider })) } } : {}),
+    tape: {
+      version: 2, id, createdAt: 1, kept: true, contract: 'the-claim', seed, difficulty: 'trail', simVersion: 1,
+      meta: { buildId: 'abcdef12', engineHash: engineEra.engineHash, era: engineEra.era },
+      runStart: { meta: progress, research: { version: 1, progress, taken: [], proposalSalt: 0, pinnedTarget: null } },
+      inputLog: {
+        version: 1, name: id, contractId: 'the-claim', seed, difficultyPreset: 'trail', stepSeconds: 1 / 30,
+        start: { x: 0, z: 12 }, durationTicks: 1, entries: [], truncated: null, primarySlot: 0, streams: [],
+      },
+      eventLogHash: 'fnv1a32:1234abcd',
+      outcome: { reason: 'secured', secured: true, ...outcome },
+    },
+    assay: 'pending',
+    ...(rotationId ? { rotationId } : {}),
+  };
 }
 
 async function seedKv(persistPath, rows) {
