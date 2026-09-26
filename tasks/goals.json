@@ -6379,12 +6379,16 @@
             {
               "id": "kv-counters-to-ledger-2",
               "title": "The two KV writers kv-counters-to-ledger-1 left behind stop writing KV: the co-op door's KV fallback moves onto the shared real-hour limiter (F-KV1-4, census six to seven) and the Pages copy of standings answers 308 to STANDINGS_CANONICAL_ORIGIN when bound (F-KV1-5); nothing live until the ops evening binds the variable",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "kv-counters-to-ledger-2.md",
               "lane": "scratch worktree /Users/robin/Claude/Projects/wt-kv2 beside the primary, branch fix/kv-counters-to-ledger-2, Opus 5.5 implementer at max effort (the session inherits), functions gates, under the landing lock at drain time",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from the kv-counters-to-ledger-1 review findings F-KV1-4 and F-KV1-5, 2026-09-25",
-              "queuedAt": "2026-09-25"
+              "queuedAt": "2026-09-25",
+              "mergeHash": "f68542f50db74f5e19b2a856a136c0be079895c0",
+              "mergedAt": "2026-09-26",
+              "review": "reviews/kv-counters-to-ledger-2.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh kv2)"
             },
             {
               "id": "door-tape-grammar-1",
