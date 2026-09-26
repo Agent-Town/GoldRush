@@ -116,7 +116,7 @@ FIRE_MODEL=${FIRE_MODEL:-claude-opus-5-5}  # owner 2026-09-25: Opus 5.5 where we
 # ~/.claude-fires (launchd), the weekly-wall bounce is ~/.claude-alt; both are the owner's Anthropic
 # account. The codex path below stays intact for a future owner word; tasks/CODEX-WALL (same date)
 # keeps every lane queue empty so the idle Codex lane-runner has nothing to pick up.
-FIRE_ENGINE=${FIRE_ENGINE:-claude}
+FIRE_ENGINE=${FIRE_ENGINE:-codex}  # SWITCHED TO CODEX 2026-09-26 (owner, verbatim: "Can you switch the fires to Astra xhigh from Opus max? I am running out of Anthropic subscription now instead of OpenAI."): default is codex (gpt-6-astra, xhigh, from ~/.codex/config.toml) until the owner says otherwise; the claude path below stays intact.
 if [ "$FIRE_ENGINE" = "codex" ]; then
   # Resolution PROBES, never trusts paths (F-1635-3 dual-install met again 2026-08-12, twice in
   # one hour): launchd's PATH finds an orphaned homebrew 0.133; nvm-v24's wrapper is half-installed
