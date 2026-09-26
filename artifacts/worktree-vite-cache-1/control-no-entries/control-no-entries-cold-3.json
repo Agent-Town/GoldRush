@@ -1,0 +1,53 @@
+{
+  "label": "control-no-entries-cold-3",
+  "root": "/Users/robin/Claude/Projects/wt-wvc1",
+  "port": 5326,
+  "force": false,
+  "configFile": "artifacts/worktree-vite-cache-1/vite.no-entries.config.ts",
+  "spawnedAt": "2026-09-25T14:58:37.227Z",
+  "pid": 50213,
+  "load1AtStart": 11.73,
+  "load1AtBoot": 11.19,
+  "readyMs": 337,
+  "bootMs": 3557,
+  "page": {
+    "ok": true,
+    "pageStart": 1790348317786,
+    "pageMs": 2998,
+    "bootedAt": 1790348320784,
+    "error": null,
+    "navigationsAtBoot": 2,
+    "reloadsBeforeBoot": 1,
+    "reloadsInSettle": 0,
+    "consoleErrors": [],
+    "badResponses": [],
+    "failedRequests": [
+      "net::ERR_ABORTED /src/ui/TrueReelTerrain.ts",
+      "net::ERR_ABORTED /src/story/speakers.ts",
+      "net::ERR_ABORTED /.vite-cache/deps/three.module-BifoCqb3.js?v=9ffc9053",
+      "net::ERR_ABORTED /.vite-cache/deps/three_addons_utils_BufferGeometryUtils__js.js?v=9ffc9053",
+      "net::ERR_ABORTED /src/story/seenState.ts",
+      "net::ERR_ABORTED /assets/charters/the-river.json?import"
+    ]
+  },
+  "markers": {
+    "scanFailed": [
+      "+383ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ],
+    "tsconfigError": [
+      "+383ms \u001b[31m[TSCONFIG_ERROR] \u001b[0mFailed to load tsconfig '../tsconfig.json': Tsconfig not found"
+    ],
+    "newDepsOptimized": [],
+    "reoptimizing": [],
+    "reloading": [
+      "+1430ms 9:58:38 PM [vite] (client) optimized dependencies changed. reloading"
+    ],
+    "errors": [
+      "+383ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ]
+  },
+  "stop": {
+    "code": 143,
+    "signal": null
+  }
+}

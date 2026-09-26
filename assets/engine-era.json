@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa",
+  "engineHash": "9a995b76569235178101263919756b45713eb3f9e0dc71643ed8cf1d2cd74be6",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -460,6 +460,12 @@
       "engineHash": "755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa",
       "pinnedAt": "2026-09-25",
       "cause": "same era, pin #62: live-seed-rotation-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; owner: the seed changes every Monday): the run, its county standing and the co-op room ride the live rotation seed (src/game/liveSeed.ts, src/game/Game.ts two literals, src/mp/RideTogether.ts one literal, src/town/TownScene.ts the card label); no sim rule, contract, collision, floor or table moved. The store unchanged at 5793a96. reviews/live-seed-rotation-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "9a995b76569235178101263919756b45713eb3f9e0dc71643ed8cf1d2cd74be6",
+      "pinnedAt": "2026-09-25",
+      "cause": "same era, pin #63: canyon-works-traversal-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; from Astra's play-proofs finding F-PP2-2 of 2026-09-25): one line in the e3-canyon-works elevation block, creekBlendStart minus 8 to minus 14, so the creek bank's 1.5 m drop runs over 8 m (peak sim gradient 1.03 to 0.28 under the 0.35 limit); creekBlendEnd, creekHeight and railHeight unchanged, null floors 83 of 83, both canyon seeds' view streams byte-identical; no other contract, rule, collision or table moved. The store unchanged at 5793a96. reviews/canyon-works-traversal-1.md",
       "aliases": []
     }
   ],

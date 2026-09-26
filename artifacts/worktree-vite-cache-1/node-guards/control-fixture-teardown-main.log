@@ -1,0 +1,199 @@
+# control arm fixture-teardown: /Users/robin/Claude/Projects/wt-wvc1-control at 2526d626b, env-local no, lock acquired 2026-09-25T15:41:18Z load { 29.65 18.09 27.10 }
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (921976.327708ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 922028.400792
+
+✖ failing tests:
+
+test at scripts/fixture-teardown.test.mjs:34:1
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (921976.327708ms)
+  AssertionError [ERR_ASSERTION]: scripts/ledger-backup-fill-gaps-guard.test.mjs child failed:
+  ✖ --fill-gaps pulls exactly the missing dated backup, and nothing else (31.479083ms)
+  ✖ the recovered file is the REMOTE bytes, not a placeholder (28.324083ms)
+  ✖ --fill-gaps --dry-run names the gap and rsyncs NOTHING (28.459542ms)
+  ✖ the corpus is declared even on the happy path — "0 gaps" must not look like "I could not read the box" (F-2208-1) (28.589125ms)
+  ✖ THE DEFECT ARM: the default path leaves the hole behind today untouched (29.938708ms)
+  ✖ non-dated debris on the box is never pulled (29.724875ms)
+  ✖ a mirror directory that does not exist yet is created, not crashed on (29.980292ms)
+  ✔ an unreachable box fails LOUD — it must never report a clean series (31.699416ms)
+  ℹ tests 8
+  ℹ suites 0
+  ℹ pass 1
+  ℹ fail 7
+  ℹ cancelled 0
+  ℹ skipped 0
+  ℹ todo 0
+  ℹ duration_ms 285.158667
+  
+  ✖ failing tests:
+  
+  test at scripts/ledger-backup-fill-gaps-guard.test.mjs:85:1
+  ✖ --fill-gaps pulls exactly the missing dated backup, and nothing else (31.479083ms)
+    AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+    
+    
+    2 !== 0
+    
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-wvc1-control/scripts/ledger-backup-fill-gaps-guard.test.mjs:88:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.start (node:internal/test_runner/test:1242:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 2,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  test at scripts/ledger-backup-fill-gaps-guard.test.mjs:98:1
+  ✖ the recovered file is the REMOTE bytes, not a placeholder (28.324083ms)
+    Error: ENOENT: no such file or directory, open '/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-fixture-teardown-o7GgD1/lb01-fill-PyZAEZ/mirror/ledger-2026-08-27.db'
+        at readFileSync (node:fs:539:20)
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-wvc1-control/scripts/ledger-backup-fill-gaps-guard.test.mjs:102:5)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+      errno: -2,
+      code: 'ENOENT',
+      syscall: 'open',
+      path: '/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-fixture-teardown-o7GgD1/lb01-fill-PyZAEZ/mirror/ledger-2026-08-27.db'
+    }
+  
+  test at scripts/ledger-backup-fill-gaps-guard.test.mjs:107:1
+  ✖ --fill-gaps --dry-run names the gap and rsyncs NOTHING (28.459542ms)
+    AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+    
+    
+    2 !== 0
+    
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-wvc1-control/scripts/ledger-backup-fill-gaps-guard.test.mjs:110:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 2,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  test at scripts/ledger-backup-fill-gaps-guard.test.mjs:117:1
+  ✖ the corpus is declared even on the happy path — "0 gaps" must not look like "I could not read the box" (F-2208-1) (28.589125ms)
+    AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+    
+    
+    2 !== 0
+    
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-wvc1-control/scripts/ledger-backup-fill-gaps-guard.test.mjs:120:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 2,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  test at scripts/ledger-backup-fill-gaps-guard.test.mjs:127:1
+  ✖ THE DEFECT ARM: the default path leaves the hole behind today untouched (29.938708ms)
+    AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+    
+    
+    2 !== 0
+    
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-wvc1-control/scripts/ledger-backup-fill-gaps-guard.test.mjs:133:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 2,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  test at scripts/ledger-backup-fill-gaps-guard.test.mjs:138:1
+  ✖ non-dated debris on the box is never pulled (29.724875ms)
+    AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+    
+    
+    2 !== 0
+    
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-wvc1-control/scripts/ledger-backup-fill-gaps-guard.test.mjs:144:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 2,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  test at scripts/ledger-backup-fill-gaps-guard.test.mjs:148:1
+  ✖ a mirror directory that does not exist yet is created, not crashed on (29.980292ms)
+    AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+    
+    
+    2 !== 0
+    
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-wvc1-control/scripts/ledger-backup-fill-gaps-guard.test.mjs:151:10)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12)
+        at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+      generatedMessage: false,
+      code: 'ERR_ASSERTION',
+      actual: 2,
+      expected: 0,
+      operator: 'strictEqual',
+      diff: 'simple'
+    }
+  
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-wvc1-control/scripts/fixture-teardown.test.mjs:50:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+ℹ TAP-QUIET MAX: 915.3s of 2700s bound (F-POC-8 watchdog)
+# rc=1 secs=923 end 2026-09-25T15:56:41Z load { 7.40 27.61 33.00 }

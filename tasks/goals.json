@@ -6351,14 +6351,18 @@
             {
               "id": "canyon-works-traversal-1",
               "title": "F-PP2-2: the Canyon Works creek bank (1.5 m over 2 m, gradient near 1.1 against slopeMax 0.35) becomes walkable so the galleries and the connect deadline are reachable on foot",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "canyon-works-traversal-1.md",
               "lane": "scratch worktree beside the primary, Opus implementer on the Anthropic subscription",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from F-PP2-2 (Astra, sol-play-proofs-2), the derivation verified in assets/contracts and src/sim/TileHeight.ts",
               "liftedFrom": "gate-side: run by the attended session as an Opus implementer in a scratch worktree (/Users/robin/Claude/Projects/wt-cw1) under the drain lock when lane-c is idle (a native walk is the acceptance test; it must not share the machine with an Astra run); lifted by the attended session when it launches the run",
               "queuedAt": "2026-09-25",
-              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-cw1, branch fix/canyon-works-traversal-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\""
+              "runner": "attended-spawned opus-max implementer (Opus 5.5, effort max), scratch worktree /Users/robin/Claude/Projects/wt-cw1, branch fix/canyon-works-traversal-1, under the attended drain lock; the owner 2026-09-25: \"There is a ton of tokens left on this subscription ... Do we have some more work that we can do?\"",
+              "mergeHash": "752d624e8fee4c8e7330ee32b9af3b50019bdb1d",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/canyon-works-traversal-1.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh cw1)"
             },
             {
               "id": "launch-video-vibe-check-1",
@@ -6485,12 +6489,16 @@
             {
               "id": "worktree-vite-cache-1",
               "title": "Every checkout gets its own vite dependency cache (cacheDir inside the checkout, gitignored) so sibling worktrees stop re-optimising each other mid-boot and the dependency scan stops failing in worktrees (F-TT2-2; canyon-works-traversal-1 boot failure)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "worktree-vite-cache-1.md",
               "lane": "scratch worktree /Users/robin/Claude/Projects/wt-wvc1 beside the primary, branch fix/worktree-vite-cache-1, Opus 5.5 implementer at max effort; config only, no deploy",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from F-TT2-2 and the canyon-works-traversal-1 report, 2026-09-25",
-              "queuedAt": "2026-09-25"
+              "queuedAt": "2026-09-25",
+              "mergeHash": "052e295c3229fa091e6bb053c6678996ab2e9832",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/worktree-vite-cache-1.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh wvc1)"
             },
             {
               "id": "sol-play-proofs-4",
@@ -6509,12 +6517,16 @@
             {
               "id": "sol-play-proofs-5",
               "title": "Play-proofs run 5: Dome Basin onward through E9 and E10 (six ground maps), the E8 trio excluded until an orbital driver exists (F-PP4-4); Astra on lane-c, queued by the run-4 landing's queue job",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "sol-play-proofs-5.md",
               "lane": "lane-c (Astra, gpt-6-astra; the CODEX-WALL campaign lift of 2026-09-25); the queue copy is HELD until sol-play-proofs-3 has landed on main",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from run 4's REMAINING LIST, 2026-09-25",
-              "queuedAt": "2026-09-25 (by the queue job once run 4 has landed)"
+              "queuedAt": "2026-09-25 (by the queue job once run 4 has landed)",
+              "mergeHash": "6e4eab345622170af0ebff25b8da6cb7ebc62fe4",
+              "mergedAt": "2026-09-25",
+              "review": "reviews/sol-play-proofs-5.md",
+              "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh pp5)"
             },
             {
               "id": "sol-play-proofs-6",
