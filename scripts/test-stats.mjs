@@ -177,6 +177,10 @@ async function startPages(name) {
       '2026-07-08',
       '--kv',
       'TELEMETRY',
+      // localhost-cors-2 (F-LC2-3): every check asks from a localhost origin, so this dev run opts into the
+      // development switch (functions/api/_cors.ts); production never sets it.
+      '--binding',
+      'ALLOW_LOCALHOST_ORIGINS=1',
       '--port',
       String(port),
       '--ip',

@@ -293,6 +293,9 @@ async function startPages(name, doScriptName) {
     '--show-interactive-dev-session=false',
   ];
   if (unconfigured) args.push('--cwd', fixtureRoot);
+  // localhost-cors-2: both arms are a developer's own relay asked from a localhost origin, so both opt into the
+  // development switch (functions/api/_cors.ts); the unconfigured arm runs from a temp dir no root .dev.vars reaches.
+  args.push('--binding', 'ALLOW_LOCALHOST_ORIGINS=1');
   if (doScriptName) args.push('--do', `MULTIPLAYER_ROOMS=MultiplayerRoom@${doScriptName}`, '--kv', 'MULTIPLAYER_RATE_LIMITS');
   const child = spawnWrangler(args, `pages ${name}`);
   const url = `http://127.0.0.1:${port}`;
@@ -469,7 +472,8 @@ async function callRoomDoor(handler, door, code, env, ip) {
   });
   let response;
   try {
-    response = await handler({ request, env });
+    // localhost-cors-2: the request carries the dev page's localhost Origin, so the door sees the development switch.
+    response = await handler({ request, env: { ...env, ALLOW_LOCALHOST_ORIGINS: '1' } });
   } catch (error) {
     return { threw: error instanceof Error ? error.message : String(error) };
   }
