@@ -1,0 +1,90 @@
+
+Running 1 test using 1 worker
+
+
+(node:29311) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:815:5 › e10-river plays to its authored terminal, banks, reloads and returns to the board @slow
+[desktop-chrome] › e2e/native-proofs/driver.ts:815:5 › e10-river plays to its authored terminal, banks, reloads and returns to the board @slow
+e10-river {"t":10.1,"wave":0,"hp":100,"gold":0,"kills":0,"x":-0.2,"z":41,"alive":2,"seams":2}
+
+e10-river {"t":20.4,"wave":0,"hp":100,"gold":20,"kills":2,"x":11.7,"z":36.3,"alive":4,"seams":2}
+
+e10-river {"t":30.8,"wave":1,"hp":100,"gold":30,"kills":6,"x":11.7,"z":3,"alive":8,"seams":1}
+
+e10-river {"t":41.3,"wave":1,"hp":100,"gold":50,"kills":13,"x":9,"z":-8.5,"alive":4,"seams":1}
+
+e10-river {"t":51.9,"wave":1,"hp":100,"gold":50,"kills":14,"x":-9.9,"z":38.2,"alive":8,"seams":2}
+
+e10-river {"t":62.1,"wave":2,"hp":100,"gold":0,"kills":22,"x":8.1,"z":28.9,"alive":9,"seams":2}
+
+e10-river {"t":72.3,"wave":2,"hp":100,"gold":0,"kills":33,"x":12,"z":-10.7,"alive":4,"seams":2}
+
+e10-river {"t":82.8,"wave":2,"hp":100,"gold":10,"kills":35,"x":-11.5,"z":-35,"alive":7,"seams":1}
+
+e10-river {"t":93.3,"wave":3,"hp":100,"gold":25,"kills":38,"x":-12.2,"z":-9.2,"alive":14,"seams":1}
+
+e10-river {"t":103.6,"wave":3,"hp":100,"gold":25,"kills":43,"x":-13.8,"z":34.7,"alive":18,"seams":2}
+
+e10-river {"t":114,"wave":3,"hp":97,"gold":0,"kills":51,"x":-12.1,"z":34.3,"alive":15,"seams":2}
+
+e10-river {"t":124,"wave":4,"hp":92,"gold":15,"kills":67,"x":-12.1,"z":12.9,"alive":11,"seams":2}
+
+e10-river {"t":134.5,"wave":4,"hp":86,"gold":30,"kills":80,"x":-12.1,"z":-19.1,"alive":8,"seams":1}
+
+e10-river {"t":145.1,"wave":4,"hp":86,"gold":45,"kills":87,"x":-12.1,"z":-35.2,"alive":8,"seams":0}
+
+e10-river {"t":155.6,"wave":5,"hp":86,"gold":70,"kills":92,"x":-12.1,"z":-35.2,"alive":16,"seams":1}
+
+e10-river {"t":166,"wave":5,"hp":86,"gold":70,"kills":103,"x":-5.2,"z":31.8,"alive":18,"seams":2}
+
+e10-river {"t":176.1,"wave":5,"hp":83,"gold":0,"kills":112,"x":-13.4,"z":24.5,"alive":16,"seams":2}
+
+e10-river {"t":186.3,"wave":6,"hp":105,"gold":20,"kills":133,"x":-12.1,"z":12.7,"alive":8,"seams":2}
+
+e10-river {"t":196.9,"wave":6,"hp":128,"gold":30,"kills":148,"x":-12.1,"z":-27.5,"alive":9,"seams":1}
+
+e10-river {"t":207.2,"wave":6,"hp":128,"gold":35,"kills":154,"x":-12.1,"z":-35.6,"alive":11,"seams":0}
+
+e10-river {"t":217.3,"wave":7,"hp":128,"gold":40,"kills":157,"x":11.2,"z":-12.2,"alive":22,"seams":1}
+
+e10-river {"t":227.9,"wave":7,"hp":153,"gold":65,"kills":170,"x":11.3,"z":0.4,"alive":28,"seams":1}
+
+e10-river {"t":238.1,"wave":7,"hp":153,"gold":70,"kills":185,"x":11.9,"z":35.8,"alive":22,"seams":1}
+
+e10-river {"t":10,"wave":0,"hp":100,"gold":20,"kills":0,"x":-8,"z":6.5,"alive":0,"seams":2}
+
+e10-river {"t":20.1,"wave":0,"hp":100,"gold":30,"kills":0,"x":-8,"z":6.5,"alive":0,"seams":1}
+
+e10-river {"t":30.2,"wave":0,"hp":100,"gold":30,"kills":0,"x":-8,"z":6.5,"alive":0,"seams":1}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:815:5 › e10-river plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: native re-pull remains required
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+       at native-proofs/e10-river-ending.spec.ts:136
+
+      134 |     await page.screenshot({ path: path.join(root, `raw-${info.project.name}.png`) });
+      135 |     expect(errors).toEqual({ console: [], page: [] });
+    > 136 |     expect((result.repull as { ok: boolean }).ok, 'native re-pull remains required').toBe(true);
+          |                                                                                      ^
+      137 |   } finally {
+      138 |     result.observations = observations; result.errors = errors;
+      139 |     await writeFile(path.join(root, `ending-${info.project.name}.json`), JSON.stringify(result, null, 2) + '\n');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/e10-river-ending.spec.ts:136:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-7/e10-river/results-desktop/native-proofs-e10-river-en-91da4-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-7/e10-river/results-desktop/native-proofs-e10-river-en-91da4-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:815:5 › e10-river plays to its authored terminal, banks, reloads and returns to the board @slow 

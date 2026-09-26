@@ -69,7 +69,8 @@ function seedEntries(underTest: string): Array<[string, string]> {
     activeId: PROFILE_ID,
     profiles: [{ id: PROFILE_ID, name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
   };
-  const scores = BOARD_CONTRACTS.map((entry, index) =>
+  // An unplayed ending must not be seeded as already completed (F-RES1-2).
+  const scores = BOARD_CONTRACTS.filter(entry => entry.id !== 'e10-river').map((entry, index) =>
     entry.id === underTest
       ? { kills: 0, gold: 0, timeAlive: 1, at: index + 1, waves: 1, secured: true, contractId: entry.id, profileName: 'Robin' }
       : { kills: 40, gold: 400, timeAlive: 600, at: index + 1, waves: 30, secured: true, contractId: entry.id, profileName: 'Robin' },
@@ -78,6 +79,8 @@ function seedEntries(underTest: string): Array<[string, string]> {
   const research = JSON.stringify({ version: 1, steps: 999, taken: [], proposalSalt: 0, pinnedTarget: null, metaScienceCursor: 999 });
   const logical: Array<[string, string]> = [
     [SCOREBOARD_KEY, JSON.stringify(scores)],
+    // Exercise the River county-post hold even on a development server.
+    ...(process.env.GR_NATIVE_RIVER_POST_PROBE === '1' ? [['gr.telemetry.devSend.v1', '1'] as [string, string]] : []),
     [META_PROGRESS_KEY, meta],
     [TOWN_NAME_KEY, 'Quartz Hill'],
     [ACTIVE_EPOCH_KEY, 'epoch-10-deepsky'],
