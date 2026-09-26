@@ -30,7 +30,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
-
+import fs from 'node:fs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const CANONICAL_ASSAY_NODE_VERSION = '26.4.0';
 export const ENGINE_SOURCE_INPUTS = [
@@ -119,7 +119,7 @@ export async function replayAgentTape(rawTape) {
   }
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   const inputPath = process.argv[2];
   if (!inputPath) {
     process.stderr.write('Usage: node scripts/assay-replay-agent.mjs <reel.json>\n');
@@ -132,5 +132,24 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   } catch (error) {
     process.stderr.write(`assay replay failed: ${error instanceof Error ? error.message : String(error)}\n`);
     process.exitCode = 1;
+  }
+}
+
+/**
+ * A VERBATIM COPY of isMain from ./is-main.mjs (F-SF1-2, is-main-2), not an import: this file is
+ * relocated without its siblings twice. assay-worker.test.mjs copies it into a bare scratch
+ * scripts/ beside assay-worker.mjs alone (a fixed list), and the deploy mirror (scripts/deploy.sh,
+ * MIRROR_FILTERS) ships it to the droplet assayer by name, without is-main.mjs; both were measured
+ * red with the import applied. It is also the first ENGINE_SOURCE_INPUTS entry, so the check stays
+ * inside the hashed bytes. scripts/is-main.test.mjs asserts this copy still matches the original
+ * byte for byte; change them together.
+ */
+function isMain(importMetaUrl) {
+  const entry = process.argv[1];
+  if (!entry || !importMetaUrl) return false;
+  try {
+    return fs.realpathSync(entry) === fs.realpathSync(fileURLToPath(importMetaUrl));
+  } catch {
+    return false;
   }
 }

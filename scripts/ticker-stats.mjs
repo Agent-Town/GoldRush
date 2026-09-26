@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { readFile } from 'node:fs/promises';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './is-main.mjs';
 
 const QUIET_LINE = 'the wire is quiet.';
 const EMPTY_LINE = 'the office opens with the first assay.';
@@ -190,4 +190,4 @@ async function main() {
   console.log(parsed.help ? help() : await draftTickerStats(parsed));
 }
 
-if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) await main();
+if (isMain(import.meta.url)) await main();

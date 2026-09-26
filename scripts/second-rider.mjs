@@ -1,8 +1,8 @@
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
-
+import { isMain } from './is-main.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_URL = 'https://gold-rush-3in.pages.dev';
 const DEFAULT_NAME = 'The Second Rider';
@@ -312,7 +312,7 @@ async function main() {
   });
 }
 
-if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
+if (isMain(import.meta.url)) {
   main().catch((error) => {
     console.error(error instanceof Error ? error.message : String(error));
     process.exitCode = 1;

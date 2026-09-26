@@ -1,0 +1,16 @@
+=== desk-carryforward-guard ===
+corpus tree               : linked-worktree
+status corpus             : STATUS.md + 2 part(s): archive/status/2026-08.md, archive/status/2026-07.md
+ledger corpus             : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+previous desk (s2681): 3 items
+this desk                 : 3 items
+dropped                   : 0 (0 accounted for)
+
+desk-carryforward-guard: REFUSING — this is a linked worktree and its STATUS.md
+  line-1 is NOT the one main carries.
+  Both corpora here are TRACKED, so this tree is frozen at its branch point and
+  the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+  would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+  proven by manufacturing: a real defect on main read byte-identically to a clean
+  board from here).
+  Re-run from the main worktree, or pass --root <main worktree>.

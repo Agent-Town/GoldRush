@@ -51,7 +51,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
+import { isMain } from './is-main.mjs';
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
 const DIR = path.join(ROOT, 'scripts');
@@ -348,4 +348,4 @@ function main() {
   process.exit(0);
 }
 
-if (path.resolve(process.argv[1] || '') === fileURLToPath(import.meta.url)) main();
+if (isMain(import.meta.url)) main();

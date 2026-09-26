@@ -52,7 +52,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { scan } from './findings-state-guard.mjs';
 import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
-
+import { isMain } from './is-main.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 // A path token as the ledger writes them: inside backticks, optionally :NN or :NN-NN.
@@ -449,4 +449,4 @@ function main() {
   console.log('rotted) or the text it says is MISSING and ought to be added (gone => still LIVE).');
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+if (isMain(import.meta.url)) main();

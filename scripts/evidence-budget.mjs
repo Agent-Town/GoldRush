@@ -31,7 +31,7 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-
+import { isMain } from './is-main.mjs';
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_ROOT = resolve(HERE, '..');
 export const BASELINE_PATH = 'scripts/evidence-budget-baseline.json';
@@ -196,4 +196,4 @@ function main() {
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+if (isMain(import.meta.url)) main();

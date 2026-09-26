@@ -211,6 +211,24 @@ function main() {
 }
 
 // Run only when invoked directly; importing this module must have no side effects.
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   main();
+}
+
+/**
+ * A VERBATIM COPY of isMain from ./is-main.mjs (F-SF1-2, is-main-2), not an import: a guard fixture
+ * relocates this file as a DEPENDENCY with a fixed sibling list. backlog-split-closed.test.mjs
+ * copies DEPS (ledger-corpus.mjs and this file) into a bare scratch scripts/ beside a variant of
+ * backlog-split-closed.mjs, where a relative import of is-main.mjs dies ERR_MODULE_NOT_FOUND
+ * (measured: its manufactured-defect arm reds with the import applied). scripts/is-main.test.mjs
+ * asserts this copy still matches the original byte for byte; change them together.
+ */
+function isMain(importMetaUrl) {
+  const entry = process.argv[1];
+  if (!entry || !importMetaUrl) return false;
+  try {
+    return fs.realpathSync(entry) === fs.realpathSync(fileURLToPath(importMetaUrl));
+  } catch {
+    return false;
+  }
 }

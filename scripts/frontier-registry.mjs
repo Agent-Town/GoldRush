@@ -3,7 +3,7 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
+import { isMain } from './is-main.mjs';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DEFAULT_ARTIFACT = path.join(ROOT, 'assets/contracts/frontier-registry.json');
 const ERAS = [
@@ -119,7 +119,7 @@ function parseArgs(argv) {
   return options;
 }
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   const options = parseArgs(process.argv.slice(2));
   const boardExport = JSON.parse(readFileSync(options.input, 'utf8'));
   const previous = existsSync(options.output) ? JSON.parse(readFileSync(options.output, 'utf8')) : null;

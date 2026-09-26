@@ -31,7 +31,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { ARCHIVE_INDEX_PATH, archiveEntryFor, readArchiveIndex } from './evidence-readers.mjs';
-
+import { isMain } from './is-main.mjs';
 const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const BACKTICKED = /`([^`\n]*)`/g;
 
@@ -211,4 +211,4 @@ function main() {
   }
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
+if (isMain(import.meta.url)) main();

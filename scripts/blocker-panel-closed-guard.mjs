@@ -44,7 +44,7 @@ import { fileURLToPath } from 'node:url';
 import { scan, FINDING } from './findings-state-guard.mjs';
 import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
 import { subjectLedClosure } from './desk-state-audit.mjs';
-
+import { isMain } from './is-main.mjs';
 function arg(flag) {
   const i = process.argv.indexOf(flag);
   return i === -1 ? null : process.argv[i + 1];
@@ -234,6 +234,6 @@ function main() {
   console.log('blocker-panel-closed-guard: PASS');
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   main();
 }

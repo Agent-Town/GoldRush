@@ -1,0 +1,5 @@
+deploy-mirror-allowlist.test.mjs, one import at a time (is-main-2, 2026-09-26T02:03:35Z, load { 7.38 15.18 55.88 })
+only server/ledger/serve.mjs on the plain import: rc 1; the assertion every-derived-runtime-file-ships lists as missing: 'scripts/is-main.mjs' 
+only scripts/assay-replay-agent.mjs on the plain import: rc 1; the assertion every-derived-runtime-file-ships lists as missing: 'scripts/is-main.mjs' 
+both on the pinned copy (the cured tree): rc 0; mirror closure: ledger 2212 files; assay 2910 files; engine 662 files; total 3173
+tree:  24 files changed, 487 insertions(+), 67 deletions(-)
