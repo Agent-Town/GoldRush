@@ -8,6 +8,7 @@
 //          bridge's endRunForTest; the reel is the one the run's end kept (a death reel: it can be replayed and
 //          hashed, not verified, because the county assays secured standings only).
 // Usage (from the checkout root): node record-reel.mjs <river|claim> <desktop|mobile> <out.json>   (port GR_DIAG_PORT)
+// GR_RVA1_PAUSE=1 adds one pause and one resume (KeyP twice) at the start of the run (F-RVA1-6 evidence).
 import { writeFile } from 'node:fs/promises';
 import { chromium, devices } from 'playwright';
 import { createServer } from 'vite';
@@ -75,6 +76,16 @@ try {
     for (const key of keys) await page.keyboard.up(key);
   };
   result.start = await view();
+  // GR_RVA1_PAUSE=1: the player pauses once and resumes (KeyP twice), as a human does; the reel records what it records.
+  if (process.env.GR_RVA1_PAUSE === "1") {
+    await hold(["KeyA"], 200);
+    await page.keyboard.press("KeyP");
+    await page.waitForTimeout(600);
+    result.pausedMid = await view();
+    await page.keyboard.press("KeyP");
+    await page.waitForTimeout(300);
+    result.resumed = await view();
+  }
   if (kind === 'river') {
     const start = result.start;
     const bank = Math.sign(start.hero.z);
