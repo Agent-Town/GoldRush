@@ -1,0 +1,123 @@
+✔ a desk item WITH a declaring row passes (55.437709ms)
+✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (43.488125ms)
+✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (44.0715ms)
+✔ a row whose id sits past the 90-char subject zone does NOT declare it (41.461417ms)
+✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (213.72025ms)
+✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (106.38925ms)
+✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (40.791083ms)
+✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (29.29875ms)
+✔ REFUSES (exit 2) when the desk segment holds zero keyed items (28.869333ms)
+✔ REFUSES (exit 2) when BACKLOG.md is missing (28.072209ms)
+✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (40.557667ms)
+✖ the live board is green under this guard (baseline is honest) (111.403125ms)
+✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (31.005625ms)
+✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (43.929791ms)
+✔ all five desk spellings are read — the majority form was invisible (208.82325ms)
+✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (43.577584ms)
+✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (42.804583ms)
+✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (43.327917ms)
+✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (29.682334ms)
+✔ a SLUG-keyed desk item WITH a declaring row passes (53.771458ms)
+✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (44.146542ms)
+✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (43.411625ms)
+✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (57.010084ms)
+✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (55.526792ms)
+✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (53.167083ms)
+✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.285167ms)
+✔ every grandfathered id is still on the desk — the list must not rot (8.316167ms)
+✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (42.698084ms)
+✖ dry run prints a bounded plan without contacting the droplet (31.154958ms)
+✖ today's local backup makes the pull an offline no-op (29.616875ms)
+MANUFACTURED_DETECTION: shell + node sibling collapsed to 1 battery; reported 2 total
+EXIT_CODES: passing alone=0 sibling=0; failing alone=1 sibling=1
+✔ contention is advisory, correctly counted, and absent when alone (2629.530584ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 28
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2668.903167
+
+✖ failing tests:
+
+test at scripts/desk-declaration-guard.test.mjs:163:1
+✖ the live board is green under this guard (baseline is honest) (111.403125ms)
+  AssertionError [ERR_ASSERTION]: === desk-declaration-guard ===
+  corpus tree       : linked-worktree
+  desk F-IDs        : 2
+  desk slugs        : 1
+  🔺 desk segments  : 3
+  unexamined        : 0
+  with a BACKLOG row: 3
+  undeclared        : 0 (grandfathered 0)
+  
+  desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+    line-1 is NOT the one main carries.
+    Both corpora here are TRACKED, so this tree is frozen at its branch point and
+    the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+    would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+    proven by manufacturing: a real defect on main read byte-identically to a clean
+    board from here).
+    Re-run from the main worktree, or pass --root <main worktree>.
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-svf1/scripts/desk-declaration-guard.test.mjs:167:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-pull.test.mjs:11:1
+✖ dry run prints a bounded plan without contacting the droplet (31.154958ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-svf1/scripts/ledger-backup-pull.test.mjs:13:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/ledger-backup-pull.test.mjs:18:1
+✖ today's local backup makes the pull an offline no-op (29.616875ms)
+  AssertionError [ERR_ASSERTION]: ledger-backup-pull: GR_DROPLET_HOST missing from the environment and .env.local
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-svf1/scripts/ledger-backup-pull.test.mjs:26:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

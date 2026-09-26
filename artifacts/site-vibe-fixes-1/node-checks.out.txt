@@ -1,0 +1,25 @@
+== node-only checks, 2026-09-26T11:08:59Z, HEAD 21fe841e4, load 32.85 41.29 40.94
+--- node --test standing-rule-surfaces + gazette-scan-space-guard (site readers outside the battery roster)
+ℹ tests 10
+ℹ pass 10
+ℹ fail 0
+rc=0
+--- node --test site-contract + site-security-headers
+ℹ tests 11
+ℹ pass 11
+ℹ fail 0
+rc=0
+--- bash scripts/test-deploy-site-contract.sh (deploy-site.sh untouched; wrangler stubbed, no network)
+deploy-site contract PASS (no-url, real-url, wrangler-red, poisoned-log, poisoned-but-real, 2 skips)
+rc=0
+--- node scripts/site-share-card.mjs --check
+{"card":"site/assets/share-card.jpg","bytes":223899,"width":1200,"height":630,"sha256":"ed192fe5059ab979645e4c0632d15aabd58642480407bbdc0674afdc890700bf","source":"site/assets/heroine-with-pan-before-ridge-of-walkers.jpg","sourceSha256":"e1fe9e89e68869995fa39858cee5ecf7b434e0e23e7db3fd1b269beb476b6415","crop":"1200x630+0+8","quality":88,"sharp":"0.34.5","vips":"8.17.3","committedSha256":"ed192fe5059ab979645e4c0632d15aabd58642480407bbdc0674afdc890700bf","identical":true}
+rc=0
+--- extract-illustrations --verify --at 16c090887 (the extraction commit alone)
+{"base":"afd7393e9","at":"16c090887","dataImageUrisLeft":0,"pageEqualsBaseWithOnlyTheThreeSrcSwaps":true,"linesDifferingBeyondTheSwaps":[]}
+rc=0
+--- extract-illustrations --verify (working tree = branch tip)
+{"base":"afd7393e9","at":"working tree","dataImageUrisLeft":0,"pageEqualsBaseWithOnlyTheThreeSrcSwaps":false,"linesDifferingBeyondTheSwaps":[13,50,239]}
+rc=0
+--- engine hash after (pinned 642edcf65fca...)
+642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a
