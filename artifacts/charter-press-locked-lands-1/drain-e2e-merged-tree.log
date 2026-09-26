@@ -1,0 +1,745 @@
+(node:93864) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 82 tests using 1 worker
+
+[1/82] [desktop-chrome] › e2e/ap16-7-epoch-levers.spec.ts:4:1 › E5 and E6 epoch levers reach their existing socket laws
+
+[desktop-chrome] › e2e/ap16-7-epoch-levers.spec.ts:4:1 › E5 and E6 epoch levers reach their existing socket laws
+(node:93929) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[2/82] [desktop-chrome] › e2e/charter-press-totality.spec.ts:31:1 › every ordered pair of charter mutation arms is total
+[3/82] [desktop-chrome] › e2e/charter-press-totality.spec.ts:49:1 › blank briefing goal fires with a briefing and noops after missing briefing
+[4/82] [desktop-chrome] › e2e/charter-press-totality.spec.ts:127:3 › the Lever offers only unlocked lands › a fresh profile is offered The Claim alone, preselected, and pressing it opens The Claim
+[5/82] [desktop-chrome] › e2e/charter-press-totality.spec.ts:138:3 › the Lever offers only unlocked lands › a secured Claim adds The Dry Gulch and Twin Banks, and pressing Twin Banks opens Twin Banks
+[6/82] [desktop-chrome] › e2e/charter-press-totality.spec.ts:151:3 › the Lever offers only unlocked lands › the preview seam offers all five lands while it is open, and a land it opened presses through
+[7/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the six expected fixtures
+[8/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: the-claim
+[9/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-drill-yard
+[10/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-dry-gulch
+[11/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-night-shift
+[12/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-twin-banks
+[13/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-baron
+[14/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:61:3 › CP-01 round-trip gate › the envelope stays outside the contract format
+[15/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:77:3 › CP-01 round-trip gate › editing the charter contract does not disturb the source contract
+[16/82] [desktop-chrome] › e2e/cp01-charter-roundtrip.spec.ts:86:3 › CP-01 round-trip gate › a damaged shelf record is rejected with prose reasons
+[17/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:38:1 › all 45 Lever choices stamp, round-trip, and produce zero validator rejections
+[18/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam
+[19/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:129:1 › a plain boot remains inert
+[20/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:144:1 › a locked staged contract clear is observable
+[21/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot the-claim/defend/gentle starts clean
+[22/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot the-claim/explore-quiet/classic starts clean
+[23/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean
+  1) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Dry Gulch: Build Something Big"
+    Received: "The Dry Gulch"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Dry Gulch</h2>
+           - unexpected value "The Dry Gulch"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[24/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean
+  2) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Dry Gulch: Defend the Camp"
+    Received: "The Dry Gulch"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Dry Gulch</h2>
+           - unexpected value "The Dry Gulch"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[25/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean
+  3) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Night Shift: Explore Quietly"
+    Received: "Night Shift"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Night Shift</h2>
+           - unexpected value "Night Shift"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[26/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean
+  4) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Night Shift: Build Something Big"
+    Received: "Night Shift"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Night Shift</h2>
+           - unexpected value "Night Shift"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[27/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean
+  5) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Defend the Camp"
+    Received: "Twin Banks"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Twin Banks</h2>
+           - unexpected value "Twin Banks"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[28/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean
+  6) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Explore Quietly"
+    Received: "Twin Banks"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Twin Banks</h2>
+           - unexpected value "Twin Banks"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[29/82] [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean
+  7) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Baron's Claim: Build Something Big"
+    Received: "The Claim-Jumper Baron"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim-Jumper Baron</h2>
+           - unexpected value "The Claim-Jumper Baron"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[30/82] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[31/82] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[32/82] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[33/82] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[34/82] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[35/82] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[36/82] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[37/82] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[38/82] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[39/82] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[40/82] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[41/82] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[42/82] [mobile-chrome] › e2e/ap16-7-epoch-levers.spec.ts:4:1 › E5 and E6 epoch levers reach their existing socket laws
+
+[mobile-chrome] › e2e/ap16-7-epoch-levers.spec.ts:4:1 › E5 and E6 epoch levers reach their existing socket laws
+(node:97590) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[43/82] [mobile-chrome] › e2e/charter-press-totality.spec.ts:31:1 › every ordered pair of charter mutation arms is total
+[44/82] [mobile-chrome] › e2e/charter-press-totality.spec.ts:49:1 › blank briefing goal fires with a briefing and noops after missing briefing
+[45/82] [mobile-chrome] › e2e/charter-press-totality.spec.ts:127:3 › the Lever offers only unlocked lands › a fresh profile is offered The Claim alone, preselected, and pressing it opens The Claim
+[46/82] [mobile-chrome] › e2e/charter-press-totality.spec.ts:138:3 › the Lever offers only unlocked lands › a secured Claim adds The Dry Gulch and Twin Banks, and pressing Twin Banks opens Twin Banks
+[47/82] [mobile-chrome] › e2e/charter-press-totality.spec.ts:151:3 › the Lever offers only unlocked lands › the preview seam offers all five lands while it is open, and a land it opened presses through
+[48/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:27:3 › CP-01 round-trip gate › the epoch ships the six expected fixtures
+[49/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: the-claim
+[50/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-drill-yard
+[51/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-dry-gulch
+[52/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-night-shift
+[53/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-twin-banks
+[54/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:39:5 › CP-01 round-trip gate › round-trip: e1-baron
+[55/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:61:3 › CP-01 round-trip gate › the envelope stays outside the contract format
+[56/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:77:3 › CP-01 round-trip gate › editing the charter contract does not disturb the source contract
+[57/82] [mobile-chrome] › e2e/cp01-charter-roundtrip.spec.ts:86:3 › CP-01 round-trip gate › a damaged shelf record is rejected with prose reasons
+[58/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:38:1 › all 45 Lever choices stamp, round-trip, and produce zero validator rejections
+[59/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam
+[60/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:129:1 › a plain boot remains inert
+[61/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:144:1 › a locked staged contract clear is observable
+[62/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot the-claim/defend/gentle starts clean
+[63/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot the-claim/explore-quiet/classic starts clean
+[64/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean
+  8) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Dry Gulch: Build Something Big"
+    Received: "The Dry Gulch"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Dry Gulch</h2>
+           - unexpected value "The Dry Gulch"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[65/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean
+  9) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Dry Gulch: Defend the Camp"
+    Received: "The Dry Gulch"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Dry Gulch</h2>
+           - unexpected value "The Dry Gulch"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[66/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean
+  10) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Night Shift: Explore Quietly"
+    Received: "Night Shift"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Night Shift</h2>
+           - unexpected value "Night Shift"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[67/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean
+  11) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Night Shift: Build Something Big"
+    Received: "Night Shift"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Night Shift</h2>
+           - unexpected value "Night Shift"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[68/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean
+  12) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Defend the Camp"
+    Received: "Twin Banks"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Twin Banks</h2>
+           - unexpected value "Twin Banks"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[69/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean
+  13) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Explore Quietly"
+    Received: "Twin Banks"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Twin Banks</h2>
+           - unexpected value "Twin Banks"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[70/82] [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean
+  14) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Baron's Claim: Build Something Big"
+    Received: "The Claim-Jumper Baron"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim-Jumper Baron</h2>
+           - unexpected value "The Claim-Jumper Baron"
+
+
+      185 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      186 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 187 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      188 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      189 |     expect(errors).toEqual({ console: [], page: [] });
+      190 |   });
+        at /Users/robin/.goldrush/land/wt-cpl1/e2e/cp04-lever.spec.ts:187:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[71/82] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[72/82] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[73/82] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[74/82] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[75/82] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[76/82] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[77/82] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[78/82] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[79/82] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[80/82] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[81/82] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[82/82] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  14 failed
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean 
+  68 passed (5.7m)
