@@ -3107,3 +3107,15 @@ names that week. The six claims for week 40 are ready ahead of their September
 28 opening. Signed-in riders can reach the privacy notice from their account card.
 merge `752d624e8`, `da13ea750`, `73553e691`, `70cf2362f` · reviews `reviews/canyon-works-traversal-1.md`, `reviews/live-seed-rotation-1.md`, `reviews/rotation-r2026w40.md`, `reviews/small-fixes-1.md`
 ROUNDUP-CLASS — 2026-W39; s2690 closes the four GZ-01 omissions named by s2689. The week's three standalone slots are already spent. Owner approval still governs publication.
+
+## ROUNDUP — Walk the upper Canyon, choose an open land, keep the River's score
+The Canyon Works' upper ramp can now be walked and its two authored arc turrets stand;
+this completes the creek crossing reported in the preceding roundup, without claiming a secured run.
+The Charter Press offers only unlocked lands and opens the chosen land. The River's first
+successful quiet pan writes one completed score in the Book, with no duplicate on another pan or reload.
+The county retires reels carrying the sampled invalid orders, and co-op's fallback connection
+allowance resets after a real hour. Production county doors refuse localhost browser origins.
+The front page gains an illustrated share card, moves its three illustrations into separate files,
+and removes the token-chart footer link.
+merge `8eca6385e`, `df691d8b1`, `f68542f50`, `309b938eb`, `80854592d`, `b79e80acf`, `98c0c0505`, `f9f4c0d23`, `27e59383d` · reviews `reviews/door-tape-grammar-3.md`, `reviews/door-tape-grammar-4.md`, `reviews/kv-counters-to-ledger-2.md`, `reviews/canyon-works-traversal-2.md`, `reviews/localhost-cors-2.md`, `reviews/site-vibe-fixes-1.md`, `reviews/river-ending-score-1.md`, `reviews/charter-press-locked-lands-1.md`, `reviews/is-main-2.md`
+ROUNDUP-CLASS — 2026-W39; s2691 closes the remaining September 26 landing omissions in one item. Pin 66 records an assay-tool entry-point repair in era 6, with no new player mechanic. River county posting was held at this landing; its September 27 assay is separate news. The Pages standings redirect still needs its ops setting. Stale cached HTML still affected the live image URLs at day end (F-SVF1-10); working live previews are not claimed. Owner approval still governs publication.
