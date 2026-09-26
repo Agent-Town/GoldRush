@@ -64,6 +64,13 @@ test('the verdict allows only the configured e2e reds and the known battery clas
   rmSync(d, { recursive: true, force: true });
 });
 
+test('the verdict refuses a gates log whose battery has not run (F-LAND-7)', () => {
+  const gates = ['tsc/build/e1: 0 / 0 / 0', 'law-pointer: rc=0 ok', 'guards: ℹ pass 5 ℹ fail 0', 'null floors: rc=0 83 of 83', 'build:release (strict): rc=0', 'e2e: rc=0 40 passed', 'battery start 00:00Z'].join('\n') + '\n';
+  const d = mkdtempSync(join(tmpdir(), 'land-')); const gf = join(d, 'g.txt'); writeFileSync(gf, '\n' + gates);
+  withConfig({ ...base(), gates: { specs: ['e2e/x.spec.ts'] } }, (p) => { const r = lib.verdict(lib.loadConfig(p), gf); assert.equal(r.length, 1); assert.match(r[0], /battery not run/); });
+  rmSync(d, { recursive: true, force: true });
+});
+
 test('bookkeeping is idempotent and puts the phrase before the desk header without splicing', () => {
   const d = mkdtempSync(join(tmpdir(), 'land-')); const cwd = process.cwd();
   try {

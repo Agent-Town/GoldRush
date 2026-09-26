@@ -170,6 +170,7 @@ function verdict(cfg, gatesFile) {
   if (g.releaseSuite) { const rel = section(gates, 'release suite', 'e2e start').split('\n').filter((l) => /^\d+\) \[/.test(l)); if (rel.length) reasons.push('release suite reds: ' + rel.join(' ; ')); }
   const bat = section(gates, 'battery:', 'dirt after battery').split('\n').filter((l) => l.startsWith('✖')).filter((l) => !g.allowedBattery.some((s) => l.includes(s)));
   if (bat.length) reasons.push('battery reds: ' + bat.join(' ; '));
+  if (!/\nbattery: rc=/.test(gates)) reasons.push('battery not run'); // F-LAND-7 (2026-09-26): a log without the battery line read as clean
   if (!/\nguards: .*fail 0/.test(gates)) reasons.push('named guards red');
   if (!/\nlaw-pointer: rc=0/.test(gates)) reasons.push('law-pointer red');
   if (g.nullFloors && !/\nnull floors: rc=0/.test(gates)) reasons.push('null floors moved');
