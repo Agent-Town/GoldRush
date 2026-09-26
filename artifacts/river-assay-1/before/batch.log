@@ -1,0 +1,27 @@
+batch start 2026-09-26T18:28:07Z load { 11.19 37.35 37.96 } head 8f4be3286 port 5851
+replay report-desktop-3f5a03c5 rc=0 3s {"eventLogHash":"fnv1a32:9b896265","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.833333},"securedSnapshot":null,"ticks":145,"wallMs":2029}
+replay report-phone-647005f9 rc=0 2s {"eventLogHash":"fnv1a32:b350adce","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.8},"securedSnapshot":null,"ticks":144,"wallMs":1979}
+replay run7-desktop-a1a3a3f5 rc=0 3s {"eventLogHash":"fnv1a32:b1fdf4e8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.966667},"securedSnapshot":null,"ticks":149,"wallMs":2037}
+replay run7-phone-b9509309 rc=0 3s {"eventLogHash":"fnv1a32:a8c8b9fa","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.8},"securedSnapshot":null,"ticks":144,"wallMs":1957}
+replay heat15-probe-b131e18e rc=0 9s {"eventLogHash":"fnv1a32:b131e18e","outcome":{"secured":true,"waves":10,"gold":335,"timeAlive":300},"securedSnapshot":{"waves":10,"gold":335,"timeAlive":300},"ticks":9001,"engine":"headless-contract-sim","wallMs":9254}
+replay heat15-r1-f3a9c00c rc=0 5s {"eventLogHash":"fnv1a32:f3a9c00c","outcome":{"secured":true,"waves":12,"gold":0,"timeAlive":272},"securedSnapshot":{"waves":12,"gold":0,"timeAlive":272},"mechanic":{"id":"regatta-race","complete":true},"ticks":8760,"engine":"headless-contract-sim","wallMs":4158}
+replay heat15-r2-b92da1bf rc=0 6s {"eventLogHash":"fnv1a32:b92da1bf","outcome":{"secured":true,"waves":12,"gold":200,"timeAlive":272},"securedSnapshot":{"waves":12,"gold":200,"timeAlive":272},"mechanic":{"id":"regatta-race","complete":true},"ticks":8760,"engine":"headless-contract-sim","wallMs":6661}
+replay heat14-era6-idle-a45ba9ac rc=0 5s {"eventLogHash":"fnv1a32:5a139ec0","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":23.966667},"securedSnapshot":null,"ticks":2453,"wallMs":3766}
+agent-arm report-desktop-3f5a03c5 rc=1 (node:11351) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+assay replay failed: AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron and the curr
+agent-arm run7-desktop-a1a3a3f5 rc=1 (node:11794) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+assay replay failed: AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift, e1-twin-banks, e1-baron and the curr
+report-desktop-3f5a03c5: rejected (claimed fnv1a32:3f5a03c5, replayed fnv1a32:9b896265; eventLogHash mismatch: claimed fnv1a32:3f5a03c5, replayed fnv1a32:9b896265)
+report-phone-647005f9: rejected (claimed fnv1a32:647005f9, replayed fnv1a32:b350adce; eventLogHash mismatch: claimed fnv1a32:647005f9, replayed fnv1a32:b350adce)
+run7-desktop-a1a3a3f5: rejected (claimed fnv1a32:a1a3a3f5, replayed fnv1a32:b1fdf4e8; eventLogHash mismatch: claimed fnv1a32:a1a3a3f5, replayed fnv1a32:b1fdf4e8)
+run7-phone-b9509309: rejected (claimed fnv1a32:b9509309, replayed fnv1a32:a8c8b9fa; eventLogHash mismatch: claimed fnv1a32:b9509309, replayed fnv1a32:a8c8b9fa)
+heat15-probe-b131e18e: verified (claimed fnv1a32:b131e18e, replayed fnv1a32:b131e18e)
+heat15-r1-f3a9c00c: verified (claimed fnv1a32:f3a9c00c, replayed fnv1a32:f3a9c00c)
+heat15-r2-b92da1bf: verified (claimed fnv1a32:b92da1bf, replayed fnv1a32:b92da1bf)
+heat14-era6-idle-a45ba9ac: rejected (claimed fnv1a32:a45ba9ac, replayed fnv1a32:5a139ec0; eventLogHash mismatch: claimed fnv1a32:a45ba9ac, replayed fnv1a32:5a139ec0)
+worker rc=0
+batch end 2026-09-26T18:29:22Z load { 8.92 30.84 35.43 }
+agent-arm heat14-era6-idle-a45ba9ac rc=0 3s {"eventLogHash":"fnv1a32:a45ba9ac","outcome":{"secured":false,"waves":2,"gold":0,"timeAlive":81.767},"ticks":2453,"engine":"headless-contract-sim"}
+agent-arm heat15-probe-b131e18e rc=0 12s {"eventLogHash":"fnv1a32:b131e18e","outcome":{"secured":true,"waves":10,"gold":335,"timeAlive":300},"securedSnapshot":{"waves":10,"gold":335,"timeAlive":300},"ticks":9001,"engine":"headless-contract-sim"}

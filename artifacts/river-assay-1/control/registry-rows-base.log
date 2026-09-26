@@ -1,0 +1,28 @@
+registry rows on base 8f4be3286 2026-09-26T22:05:49Z
+✔ rotation registry stays outside the engine identity corpus (92.761916ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (96.735583ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 196.542917
+
+✖ failing tests:
+
+test at scripts/engine-era-guard.test.mjs:65:1
+✖ the landed registry names the live engine and stays outside its hash corpus (96.735583ms)
+  Error: ENOENT: no such file or directory, open '/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/artifacts/claude-debut-20260831/claude-opus-ride/attempt-2.tape.json'
+      at async open (node:internal/fs/promises:1360:25)
+      at async readFile (node:internal/fs/promises:2149:14)
+      at async TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/scripts/engine-era-guard.test.mjs:97:29)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'open',
+    path: '/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/artifacts/claude-debut-20260831/claude-opus-ride/attempt-2.tape.json'
+  }
+rc=1

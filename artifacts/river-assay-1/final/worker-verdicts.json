@@ -1,0 +1,354 @@
+{
+  "startedAt": "2026-09-26T20:44:16.996Z",
+  "node": "26.4.0",
+  "workerExit": 0,
+  "workerStderr": "",
+  "rows": [
+    {
+      "label": "report-desktop-3f5a03c5",
+      "file": "artifacts/river-assay-1/reels/report-desktop-3f5a03c5.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:3f5a03c5",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.833333333333326,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:cc10780d",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:3f5a03c5, replayed fnv1a32:cc10780d",
+      "wallMs": 2890
+    },
+    {
+      "label": "report-phone-647005f9",
+      "file": "artifacts/river-assay-1/reels/report-phone-647005f9.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:647005f9",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.799999999999993,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:95bceda6",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:647005f9, replayed fnv1a32:95bceda6",
+      "wallMs": 2699
+    },
+    {
+      "label": "run7-desktop-a1a3a3f5",
+      "file": "artifacts/river-assay-1/reels/run7-desktop-a1a3a3f5.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:a1a3a3f5",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.966666666666659,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:883207a0",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:a1a3a3f5, replayed fnv1a32:883207a0",
+      "wallMs": 2685
+    },
+    {
+      "label": "run7-phone-b9509309",
+      "file": "artifacts/river-assay-1/reels/run7-phone-b9509309.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:b9509309",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.799999999999993,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:f9a8b8f2",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:b9509309, replayed fnv1a32:f9a8b8f2",
+      "wallMs": 2654
+    },
+    {
+      "label": "heat15-probe-b131e18e",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/probe/submission.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:b131e18e",
+      "score": {
+        "secured": true,
+        "waves": 10,
+        "timeAlive": 300,
+        "gold": 335,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:b131e18e",
+      "reason": null,
+      "wallMs": 9446
+    },
+    {
+      "label": "heat15-r1-f3a9c00c",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/rides/r1/submission.json",
+      "contract": "e5-regatta",
+      "claimedHash": "fnv1a32:f3a9c00c",
+      "score": {
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:f3a9c00c",
+      "reason": null,
+      "wallMs": 4426
+    },
+    {
+      "label": "heat15-r2-b92da1bf",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/rides/r2/submission.json",
+      "contract": "e5-regatta",
+      "claimedHash": "fnv1a32:b92da1bf",
+      "score": {
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:b92da1bf",
+      "reason": null,
+      "wallMs": 6920
+    },
+    {
+      "label": "heat14-era6-idle-a45ba9ac",
+      "file": "artifacts/gauntlet-heat14-e3949bfa/rides/the-claim/work/probe-idle-tape.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:a45ba9ac",
+      "score": {
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 81.767,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:5a139ec0",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:a45ba9ac, replayed fnv1a32:5a139ec0",
+      "wallMs": 4385
+    },
+    {
+      "label": "fresh-river-desktop",
+      "file": "artifacts/river-assay-1/final/fresh-river-desktop.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:eef28ae4",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.7666666666666595,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:eef28ae4",
+      "reason": null,
+      "wallMs": 2579
+    },
+    {
+      "label": "fresh-river-mobile",
+      "file": "artifacts/river-assay-1/final/fresh-river-mobile.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:10904fbe",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.699999999999993,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:10904fbe",
+      "reason": null,
+      "wallMs": 2576
+    },
+    {
+      "label": "fresh-claim-desktop",
+      "file": "artifacts/river-assay-1/final/fresh-claim-desktop.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:edb5cd6a",
+      "score": {
+        "secured": false,
+        "waves": 0,
+        "timeAlive": 4.066666666666662,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "unassayable",
+      "replayedHash": null,
+      "reason": "instrument returned no valid securedSnapshot",
+      "wallMs": 13342
+    },
+    {
+      "label": "fresh-claim-mobile",
+      "file": "artifacts/river-assay-1/final/fresh-claim-mobile.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:44b865a8",
+      "score": {
+        "secured": false,
+        "waves": 0,
+        "timeAlive": 4.133333333333328,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "unassayable",
+      "replayedHash": null,
+      "reason": "instrument returned no valid securedSnapshot",
+      "wallMs": 13406
+    },
+    {
+      "label": "tampered-gold",
+      "file": "artifacts/river-assay-1/final/tampered-gold.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:eef28ae4",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.7666666666666595,
+        "gold": 50,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:eef28ae4",
+      "reason": "outcome mismatch: gold",
+      "wallMs": 2609
+    },
+    {
+      "label": "tampered-time",
+      "file": "artifacts/river-assay-1/final/tampered-time.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:eef28ae4",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.5999999999999925,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:eef28ae4",
+      "reason": "outcome mismatch: timeAlive",
+      "wallMs": 2628
+    },
+    {
+      "label": "tampered-pantick",
+      "file": "artifacts/river-assay-1/final/tampered-pantick.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:eef28ae4",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.5999999999999925,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:913bc99c",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:eef28ae4, replayed fnv1a32:913bc99c",
+      "wallMs": 2614
+    },
+    {
+      "label": "same-laws-human-a6c04f80",
+      "file": "artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-hud/same-laws-harvest-parity-m-6a30d-rider-rate-tick-per-command-desktop-chrome/same-laws-tape.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:a6c04f80",
+      "score": {
+        "secured": false,
+        "waves": 0,
+        "timeAlive": 20.033333333333488,
+        "gold": 10,
+        "baseValue": 0
+      },
+      "verdict": "unassayable",
+      "replayedHash": null,
+      "reason": "instrument returned no valid securedSnapshot",
+      "wallMs": 15640
+    }
+  ],
+  "retries": [
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "c5b73c98-ed77-491d-8069-057fd70f5737",
+        "rowId": "00000000000000000000000000000010:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 1,
+      "delayMs": 2000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "c5b73c98-ed77-491d-8069-057fd70f5737",
+        "rowId": "00000000000000000000000000000010:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 2,
+      "delayMs": 4000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "42d5015b-ac1c-468d-8103-254deb2ea330",
+        "rowId": "00000000000000000000000000000011:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 1,
+      "delayMs": 2000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "42d5015b-ac1c-468d-8103-254deb2ea330",
+        "rowId": "00000000000000000000000000000011:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 2,
+      "delayMs": 4000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "7f36dccb-e83e-4c37-ad3c-b4da7198a8e1",
+        "rowId": "00000000000000000000000000000015:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 1,
+      "delayMs": 2000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "7f36dccb-e83e-4c37-ad3c-b4da7198a8e1",
+        "rowId": "00000000000000000000000000000015:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 2,
+      "delayMs": 4000,
+      "error": "instrument returned no valid securedSnapshot"
+    }
+  ]
+}

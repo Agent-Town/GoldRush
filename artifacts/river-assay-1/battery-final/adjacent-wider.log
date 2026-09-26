@@ -1,0 +1,867 @@
+(node:32798) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 76 tests using 1 worker
+
+
+(node:33342) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/76] [desktop-chrome] › e2e/assay-replay-roundtrip.spec.ts:17:1 › fresh browser tapes reproduce with and without a death-screen restart
+[desktop-chrome] › e2e/assay-replay-roundtrip.spec.ts:17:1 › fresh browser tapes reproduce with and without a death-screen restart
+ASSAY_MATRIX {"noRestart":{"tape":{"version":2,"id":"91554855-1f0a-47de-b982-676b3783a76d","createdAt":1790457397810,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-live","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":0,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"91554855-1f0a-47de-b982-676b3783a76d","contractId":"the-claim","seed":"assay-roundtrip-live","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":210,"entries":[{"t":30,"mx":1,"my":0,"a":[]},{"t":90,"mx":0,"my":-1,"a":[]},{"t":150,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:09058204","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.999999999999985,"gold":0}},"replay":{"eventLogHash":"fnv1a32:09058204","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":7},"securedSnapshot":null,"ticks":210,"wallMs":2147}},"afterRestart":{"tape":{"version":2,"id":"49767acb-bd89-4b72-9ebd-d9b300992548","createdAt":1790457399637,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-live","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"49767acb-bd89-4b72-9ebd-d9b300992548","contractId":"the-claim","seed":"assay-roundtrip-live","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":181,"entries":[{"t":0,"mx":0,"my":0,"a":[{"type":"restart"}]},{"t":1,"mx":1,"my":0,"a":[]},{"t":61,"mx":0,"my":-1,"a":[]},{"t":121,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:a251ce02","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.033333333333322,"gold":0}},"replay":{"eventLogHash":"fnv1a32:a251ce02","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.033333},"securedSnapshot":null,"ticks":181,"wallMs":2082}},"curated":{"tape":{"version":2,"id":"b3dea7b9-86fd-4f6c-b663-ba03666991c8","createdAt":1790457400682,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-curated","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"b3dea7b9-86fd-4f6c-b663-ba03666991c8","contractId":"the-claim","seed":"assay-roundtrip-curated","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":209,"entries":[{"t":29,"mx":1,"my":0,"a":[]},{"t":89,"mx":0,"my":1,"a":[]},{"t":149,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:22d36e6b","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.966666666666652,"gold":0}},"replay":{"eventLogHash":"fnv1a32:22d36e6b","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.966667},"securedSnapshot":null,"ticks":209,"wallMs":2106}},"profileState":{"tape":{"version":2,"id":"1b79d42a-ed57-486d-b6a8-1abeb22f1871","createdAt":1790457402909,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-profile-state","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"1b79d42a-ed57-486d-b6a8-1abeb22f1871","contractId":"the-claim","seed":"assay-roundtrip-profile-state","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":119,"entries":[{"t":29,"mx":0,"my":0,"a":[{"type":"place_build","id":"palisade","position":{"x":3,"z":12},"rotationSteps":0}]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":3.9666666666666623,"gold":0}},"replay":{"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":3.966667},"securedSnapshot":null,"ticks":119,"wallMs":1949}},"profileStateRepeat":{"tape":{"version":2,"id":"1b79d42a-ed57-486d-b6a8-1abeb22f1871","createdAt":1790457402909,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-profile-state","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"1b79d42a-ed57-486d-b6a8-1abeb22f1871","contractId":"the-claim","seed":"assay-roundtrip-profile-state","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":119,"entries":[{"t":29,"mx":0,"my":0,"a":[{"type":"place_build","id":"palisade","position":{"x":3,"z":12},"rotationSteps":0}]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":3.9666666666666623,"gold":0}},"replay":{"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":3.966667},"securedSnapshot":null,"ticks":119,"wallMs":1996}}}
+
+[2/76] [desktop-chrome] › e2e/county-board-open-week.spec.ts:125:1 › door: a named week and the open alias serve that week alone, and the all-time board keeps its shape
+[3/76] [desktop-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar
+[4/76] [desktop-chrome] › e2e/county-board-open-week.spec.ts:308:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away
+[desktop-chrome] › e2e/county-board-open-week.spec.ts:308:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away
+county board open week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/76] [desktop-chrome] › e2e/county-board-open-week.spec.ts:388:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open
+[desktop-chrome] › e2e/county-board-open-week.spec.ts:388:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open
+own standing on the week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/76] [desktop-chrome] › e2e/county-board-open-week.spec.ts:433:1 › board: a contract no week carries keeps the one board it always had
+[desktop-chrome] › e2e/county-board-open-week.spec.ts:433:1 › board: a contract no week carries keeps the one board it always had
+a contract off the weeks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[7/76] [desktop-chrome] › e2e/f1297-2-plain-boot-tape-button.spec.ts:7:1 › the keep-run-tape button reaches the player on a plain boot with no debug flags
+[8/76] [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites
+  1) [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        122 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:62:44
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[9/76] [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites
+  2) [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   0
+
+    Call Log:
+    - Timeout 60000ms exceeded while waiting on the predicate
+
+      65 |   await expect(canvas).toHaveAttribute('data-contract', tape.contract);
+      66 |   await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready', { timeout: 90_000 });
+    > 67 |   await expect.poll(async () => Number(await canvas.getAttribute('data-rendered-sprites')), { timeout: 60_000 }).toBeGreaterThan(1);
+         |                                                                                                                  ^
+      68 |   expect(requests.some((url) => /terrain[^/]*\.glb/.test(url))).toBe(true);
+      69 |   expect(requests.some((url) => /\/src\/game\/Game\.ts/.test(url))).toBe(false);
+      70 |   expect(await page.evaluate(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__))).toBe(false);
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:67:114
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[10/76] [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu
+  3) [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[11/76] [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu
+  4) [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        122 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[12/76] [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu
+  5) [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        122 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[13/76] [desktop-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game
+  6) [desktop-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        122 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:142:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[14/76] [desktop-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash
+  7) [desktop-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('lantern-show')
+    Expected: visible
+    Timeout: 45000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 45000ms
+      - waiting for getByTestId('lantern-show')
+
+
+      165 |   if (await begin.isVisible()) await begin.click();
+      166 |   const show = page.getByTestId('lantern-show');
+    > 167 |   await expect(show).toBeVisible({ timeout: 45_000 });
+          |                      ^
+      168 |   await expect.poll(() => page.evaluate(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__))).toBe(true);
+      169 |   await page.getByTestId('lantern-speed-4').click();
+      170 |   await expect(show).toHaveAttribute('data-playback', 'complete', { timeout: 90_000 });
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:167:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[15/76] [desktop-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation
+  8) [desktop-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        61 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+           - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:177:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[16/76] [desktop-chrome] › e2e/lantern-true-world.spec.ts:184:1 › stationary works keep family identity and Night Shift renders its dark phase
+[17/76] [desktop-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session
+  9) [desktop-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 15
+    Received: 0
+
+      117 |     // THE EVENT-PARITY PROOF — normalized semantic outcomes match exactly.
+      118 |     expect(outcomeP.probes).toEqual(outcomeR.probes);
+    > 119 |     expect(outcomeP.kills).toBe(outcomeR.kills);
+          |                            ^
+      120 |     expect(outcomeP.gold).toBe(outcomeR.gold);
+      121 |     expect(outcomeP.wave).toBe(outcomeR.wave);
+      122 |     expect(outcomeP.economy).toEqual(outcomeR.economy);
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/pb02-replay-actor.spec.ts:119:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[18/76] [desktop-chrome] › e2e/pb02-replay-actor.spec.ts:136:3 › PB-02 replay actor › replay is debug-gated and validates its tape
+[19/76] [desktop-chrome] › e2e/perf-04-determinism.spec.ts:57:1 › ?debug without determinism leaves the harness dormant
+[20/76] [desktop-chrome] › e2e/perf-04-determinism.spec.ts:67:1 › resetRun rewinds every RNG stream on the same page
+[21/76] [desktop-chrome] › e2e/perf-04-determinism.spec.ts:103:1 › same seed produces identical future-state hash, economy hash, and entity timeline
+[22/76] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [desktop-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"securedSnapshot":null,"ticks":601,"wallMs":2794}
+
+[23/76] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+[24/76] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:38:1 › 30/60/144 fps render schedules produce the same 300-tick simulation
+[desktop-chrome] › e2e/sim-fixed-step.spec.ts:38:1 › 30/60/144 fps render schedules produce the same 300-tick simulation
+[sim-fixed-step] [{"fps":30,"renderFrames":300,"simTicks":300,"economyHash":"fnv1a32:0f6f2150","economyLogLength":7,"loop":{"fixed":true,"stepSeconds":0.03333333333333333,"alpha":0,"stepsLastFrame":1,"totalSteps":300,"droppedSeconds":0,"droppedTicks":0}},{"fps":60,"renderFrames":600,"simTicks":300,"economyHash":"fnv1a32:0f6f2150","economyLogLength":7,"loop":{"fixed":true,"stepSeconds":0.03333333333333333,"alpha":0,"stepsLastFrame":1,"totalSteps":300,"droppedSeconds":0,"droppedTicks":0}},{"fps":144,"renderFrames":1440,"simTicks":300,"economyHash":"fnv1a32:0f6f2150","economyLogLength":7,"loop":{"fixed":true,"stepSeconds":0.03333333333333333,"alpha":0,"stepsLastFrame":1,"totalSteps":300,"droppedSeconds":0,"droppedTicks":0}}]
+
+[25/76] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:79:1 › 144 fps presentation interpolates hero motion between fixed ticks
+[26/76] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:95:1 › paused fixed ticks keep the last rendered hero position stable
+[27/76] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:135:1 › a stalled frame runs at most five ticks and reports dropped time
+[28/76] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:157:1 › lethal contact ends the tick before XP and gold pickups mutate the run
+[29/76] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:195:1 › scripted waypoint arrival uses planar distance despite visual height
+[30/76] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:232:1 › fixed ticks carry fractional cooldown debt instead of losing volleys
+[31/76] [desktop-chrome] › e2e/sim-fixed-step.spec.ts:256:1 › Baron ceremony completion is independent of render cadence
+[32/76] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[33/76] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[34/76] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[35/76] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+(node:72807) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[36/76] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[37/76] [desktop-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel
+[38/76] [desktop-chrome] › e2e/trail-guide-plain-boot.spec.ts:127:1 › plain fresh boot teaches the first claim once
+
+(node:78160) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[39/76] [mobile-chrome] › e2e/assay-replay-roundtrip.spec.ts:17:1 › fresh browser tapes reproduce with and without a death-screen restart
+[mobile-chrome] › e2e/assay-replay-roundtrip.spec.ts:17:1 › fresh browser tapes reproduce with and without a death-screen restart
+ASSAY_MATRIX {"noRestart":{"tape":{"version":2,"id":"0f538ff3-5359-4c01-a4ee-808b590761b0","createdAt":1790458127744,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-live","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":0,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"0f538ff3-5359-4c01-a4ee-808b590761b0","contractId":"the-claim","seed":"assay-roundtrip-live","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":209,"entries":[{"t":29,"mx":1,"my":0,"a":[]},{"t":89,"mx":0,"my":-1,"a":[]},{"t":149,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:1aa28ca5","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.966666666666652,"gold":0}},"replay":{"eventLogHash":"fnv1a32:1aa28ca5","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.966667},"securedSnapshot":null,"ticks":209,"wallMs":2138}},"afterRestart":{"tape":{"version":2,"id":"0f23e3d6-f9a5-415e-bad6-be12d1fa415d","createdAt":1790458129551,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-live","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"0f23e3d6-f9a5-415e-bad6-be12d1fa415d","contractId":"the-claim","seed":"assay-roundtrip-live","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":181,"entries":[{"t":0,"mx":0,"my":0,"a":[{"type":"restart"}]},{"t":1,"mx":1,"my":0,"a":[]},{"t":61,"mx":0,"my":-1,"a":[]},{"t":121,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:a251ce02","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.033333333333322,"gold":0}},"replay":{"eventLogHash":"fnv1a32:a251ce02","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.033333},"securedSnapshot":null,"ticks":181,"wallMs":2168}},"curated":{"tape":{"version":2,"id":"1ab0eb79-b4a1-4c31-ac03-b81eb171ac7a","createdAt":1790458130480,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-curated","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"1ab0eb79-b4a1-4c31-ac03-b81eb171ac7a","contractId":"the-claim","seed":"assay-roundtrip-curated","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":206,"entries":[{"t":26,"mx":1,"my":0,"a":[]},{"t":86,"mx":0,"my":1,"a":[]},{"t":146,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:ada9906a","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.866666666666652,"gold":0}},"replay":{"eventLogHash":"fnv1a32:ada9906a","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.866667},"securedSnapshot":null,"ticks":206,"wallMs":2191}},"profileState":{"tape":{"version":2,"id":"7b4a3717-f30f-41ec-a86a-efc3a2c8adc1","createdAt":1790458132742,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-profile-state","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"7b4a3717-f30f-41ec-a86a-efc3a2c8adc1","contractId":"the-claim","seed":"assay-roundtrip-profile-state","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":118,"entries":[{"t":28,"mx":0,"my":0,"a":[{"type":"place_build","id":"palisade","position":{"x":3,"z":12},"rotationSteps":0}]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":3.933333333333329,"gold":0}},"replay":{"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":3.933333},"securedSnapshot":null,"ticks":118,"wallMs":1983}},"profileStateRepeat":{"tape":{"version":2,"id":"7b4a3717-f30f-41ec-a86a-efc3a2c8adc1","createdAt":1790458132742,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-profile-state","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"7b4a3717-f30f-41ec-a86a-efc3a2c8adc1","contractId":"the-claim","seed":"assay-roundtrip-profile-state","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":118,"entries":[{"t":28,"mx":0,"my":0,"a":[{"type":"place_build","id":"palisade","position":{"x":3,"z":12},"rotationSteps":0}]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":3.933333333333329,"gold":0}},"replay":{"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":3.933333},"securedSnapshot":null,"ticks":118,"wallMs":1962}}}
+
+[40/76] [mobile-chrome] › e2e/county-board-open-week.spec.ts:125:1 › door: a named week and the open alias serve that week alone, and the all-time board keeps its shape
+[41/76] [mobile-chrome] › e2e/county-board-open-week.spec.ts:171:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar
+[42/76] [mobile-chrome] › e2e/county-board-open-week.spec.ts:308:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away
+[mobile-chrome] › e2e/county-board-open-week.spec.ts:308:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away
+county board open week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[43/76] [mobile-chrome] › e2e/county-board-open-week.spec.ts:388:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open
+[mobile-chrome] › e2e/county-board-open-week.spec.ts:388:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open
+own standing on the week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[44/76] [mobile-chrome] › e2e/county-board-open-week.spec.ts:433:1 › board: a contract no week carries keeps the one board it always had
+[mobile-chrome] › e2e/county-board-open-week.spec.ts:433:1 › board: a contract no week carries keeps the one board it always had
+a contract off the weeks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[45/76] [mobile-chrome] › e2e/f1297-2-plain-boot-tape-button.spec.ts:7:1 › the keep-run-tape button reaches the player on a plain boot with no debug flags
+[46/76] [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites
+  10) [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:62:44
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[47/76] [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites
+  11) [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   0
+
+    Call Log:
+    - Timeout 60000ms exceeded while waiting on the predicate
+
+      65 |   await expect(canvas).toHaveAttribute('data-contract', tape.contract);
+      66 |   await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready', { timeout: 90_000 });
+    > 67 |   await expect.poll(async () => Number(await canvas.getAttribute('data-rendered-sprites')), { timeout: 60_000 }).toBeGreaterThan(1);
+         |                                                                                                                  ^
+      68 |   expect(requests.some((url) => /terrain[^/]*\.glb/.test(url))).toBe(true);
+      69 |   expect(requests.some((url) => /\/src\/game\/Game\.ts/.test(url))).toBe(false);
+      70 |   expect(await page.evaluate(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__))).toBe(false);
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:67:114
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[48/76] [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu
+  12) [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[49/76] [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu
+  13) [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[50/76] [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu
+  14) [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[51/76] [mobile-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game
+  15) [mobile-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        122 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:142:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[52/76] [mobile-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash
+  16) [mobile-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('lantern-show')
+    Expected: visible
+    Timeout: 45000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 45000ms
+      - waiting for getByTestId('lantern-show')
+
+
+      165 |   if (await begin.isVisible()) await begin.click();
+      166 |   const show = page.getByTestId('lantern-show');
+    > 167 |   await expect(show).toBeVisible({ timeout: 45_000 });
+          |                      ^
+      168 |   await expect.poll(() => page.evaluate(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__))).toBe(true);
+      169 |   await page.getByTestId('lantern-speed-4').click();
+      170 |   await expect(show).toHaveAttribute('data-playback', 'complete', { timeout: 90_000 });
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:167:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[53/76] [mobile-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation
+  17) [mobile-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        61 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+           - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:22:22)
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/lantern-true-world.spec.ts:177:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[54/76] [mobile-chrome] › e2e/lantern-true-world.spec.ts:184:1 › stationary works keep family identity and Night Shift renders its dark phase
+[55/76] [mobile-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session
+  18) [mobile-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 15
+    Received: 0
+
+      117 |     // THE EVENT-PARITY PROOF — normalized semantic outcomes match exactly.
+      118 |     expect(outcomeP.probes).toEqual(outcomeR.probes);
+    > 119 |     expect(outcomeP.kills).toBe(outcomeR.kills);
+          |                            ^
+      120 |     expect(outcomeP.gold).toBe(outcomeR.gold);
+      121 |     expect(outcomeP.wave).toBe(outcomeR.wave);
+      122 |     expect(outcomeP.economy).toEqual(outcomeR.economy);
+        at /Users/robin/Claude/Projects/wt-rva1/e2e/pb02-replay-actor.spec.ts:119:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/river-assay-1/battery-final/results-wider/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/river-assay-1/battery-final/results-wider/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/river-assay-1/battery-final/results-wider/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[56/76] [mobile-chrome] › e2e/pb02-replay-actor.spec.ts:136:3 › PB-02 replay actor › replay is debug-gated and validates its tape
+[57/76] [mobile-chrome] › e2e/perf-04-determinism.spec.ts:57:1 › ?debug without determinism leaves the harness dormant
+[58/76] [mobile-chrome] › e2e/perf-04-determinism.spec.ts:67:1 › resetRun rewinds every RNG stream on the same page
+[59/76] [mobile-chrome] › e2e/perf-04-determinism.spec.ts:103:1 › same seed produces identical future-state hash, economy hash, and entity timeline
+[60/76] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [mobile-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"securedSnapshot":null,"ticks":601,"wallMs":2912}
+
+[61/76] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+[62/76] [mobile-chrome] › e2e/sim-fixed-step.spec.ts:38:1 › 30/60/144 fps render schedules produce the same 300-tick simulation
+[63/76] [mobile-chrome] › e2e/sim-fixed-step.spec.ts:79:1 › 144 fps presentation interpolates hero motion between fixed ticks
+[64/76] [mobile-chrome] › e2e/sim-fixed-step.spec.ts:95:1 › paused fixed ticks keep the last rendered hero position stable
+[65/76] [mobile-chrome] › e2e/sim-fixed-step.spec.ts:135:1 › a stalled frame runs at most five ticks and reports dropped time
+[66/76] [mobile-chrome] › e2e/sim-fixed-step.spec.ts:157:1 › lethal contact ends the tick before XP and gold pickups mutate the run
+[67/76] [mobile-chrome] › e2e/sim-fixed-step.spec.ts:195:1 › scripted waypoint arrival uses planar distance despite visual height
+[68/76] [mobile-chrome] › e2e/sim-fixed-step.spec.ts:232:1 › fixed ticks carry fractional cooldown debt instead of losing volleys
+[69/76] [mobile-chrome] › e2e/sim-fixed-step.spec.ts:256:1 › Baron ceremony completion is independent of render cadence
+[70/76] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[71/76] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[72/76] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[73/76] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+(node:66967) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[74/76] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[75/76] [mobile-chrome] › e2e/tape-02-lantern-show.spec.ts:10:1 › plain town WATCH replays a fresh tape read-only and refuses a mismatched reel
+[76/76] [mobile-chrome] › e2e/trail-guide-plain-boot.spec.ts:127:1 › plain fresh boot teaches the first claim once
+  18 failed
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation 
+    [desktop-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation 
+    [mobile-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session 
+  8 skipped
+  50 passed (23.9m)

@@ -1,0 +1,189 @@
+{
+  "contractId": "e10-river",
+  "epochId": "epoch-10-deepsky",
+  "score": {
+    "secured": true,
+    "waves": 0,
+    "timeAlive": 5.199999999999991,
+    "gold": 5,
+    "baseValue": 0
+  },
+  "profileName": "Robin",
+  "anonId": "fe263b26a767ccf7fcecadfd95db44ed",
+  "difficulty": "trail",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "seedMode": "live",
+  "seedHash": "e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282",
+  "inputLogHash": "ebb6c0fcb67a28e2eca47fd1bc8077061532a5fd6cefc33d7559a9dfc7975960",
+  "tape": {
+    "version": 2,
+    "id": "4f7f8293-c72c-4b42-8f4d-c493bf44ba9c",
+    "createdAt": 1790457027784,
+    "kept": false,
+    "contract": "e10-river",
+    "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    "difficulty": "trail",
+    "simVersion": 1,
+    "meta": {
+      "buildId": "dev",
+      "viewVersion": 4,
+      "engineHash": "7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551",
+      "era": 6
+    },
+    "runStart": {
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 40,
+          "science": 999,
+          "hero": 40,
+          "agent": 40
+        }
+      },
+      "research": {
+        "version": 1,
+        "epochId": "epoch-1-frontier",
+        "metaScienceCursor": 999,
+        "progress": {
+          "version": 1,
+          "tracks": {
+            "territory": 40,
+            "science": 999,
+            "hero": 40,
+            "agent": 40
+          }
+        },
+        "taken": [],
+        "proposalSalt": 0,
+        "pinnedTarget": null,
+        "unlocks": {}
+      }
+    },
+    "inputLog": {
+      "version": 1,
+      "name": "4f7f8293-c72c-4b42-8f4d-c493bf44ba9c",
+      "contractId": "e10-river",
+      "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+      "difficultyPreset": "trail",
+      "stepSeconds": 0.03333333333333333,
+      "start": {
+        "x": 0,
+        "z": 12
+      },
+      "durationTicks": 156,
+      "entries": [
+        {
+          "t": 52,
+          "mx": -0.707,
+          "my": -0.707,
+          "a": []
+        },
+        {
+          "t": 72,
+          "mx": 0,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 73,
+          "mx": -0.707,
+          "my": -0.707,
+          "a": []
+        },
+        {
+          "t": 87,
+          "mx": -1,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 88,
+          "mx": -0.707,
+          "my": -0.707,
+          "a": []
+        },
+        {
+          "t": 90,
+          "mx": -1,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 91,
+          "mx": -0.707,
+          "my": -0.707,
+          "a": []
+        },
+        {
+          "t": 93,
+          "mx": -1,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 95,
+          "mx": 0,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 96,
+          "mx": -1,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 97,
+          "mx": 0,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 98,
+          "mx": -1,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 99,
+          "mx": 0,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 100,
+          "mx": -1,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 108,
+          "mx": 0,
+          "my": 0,
+          "a": []
+        }
+      ],
+      "truncated": null,
+      "primarySlot": 0,
+      "streams": [],
+      "playbookUses": []
+    },
+    "eventLogHash": "fnv1a32:ef71da37",
+    "outcome": {
+      "reason": "secured",
+      "secured": true,
+      "waves": 0,
+      "timeAlive": 5.199999999999991,
+      "gold": 5
+    }
+  },
+  "door": {
+    "status": 200,
+    "body": {
+      "ok": true,
+      "stored": true,
+      "rank": 1,
+      "decidedBy": "crown"
+    }
+  }
+}

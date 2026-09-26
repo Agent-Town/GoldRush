@@ -1,0 +1,67 @@
+{
+  "kind": "claim",
+  "project": "desktop",
+  "errors": [],
+  "held": [
+    {
+      "keys": [
+        "KeyA",
+        "KeyW"
+      ],
+      "ms": 1400
+    },
+    {
+      "keys": [
+        "KeyD",
+        "KeyS"
+      ],
+      "ms": 900
+    }
+  ],
+  "url": "/?debug&contract=the-claim",
+  "start": {
+    "sim": 1.3333333333333341,
+    "paused": false,
+    "gold": 0,
+    "hero": {
+      "x": 0,
+      "z": 12
+    },
+    "contract": "The Claim",
+    "seams": [
+      {
+        "id": "gold-seam-1",
+        "x": 25,
+        "z": 6.9
+      },
+      {
+        "id": "gold-seam-2",
+        "x": 18,
+        "z": -7
+      }
+    ]
+  },
+  "end": {
+    "sim": 4.033333333333329,
+    "paused": false,
+    "gold": 0,
+    "hero": {
+      "x": -2.1722564466625482,
+      "z": 9.82774355333745
+    },
+    "contract": "The Claim",
+    "seams": [
+      {
+        "id": "gold-seam-1",
+        "x": 25,
+        "z": 6.9
+      },
+      {
+        "id": "gold-seam-2",
+        "x": 18,
+        "z": -7
+      }
+    ]
+  },
+  "diagonalEntries": 2
+}
