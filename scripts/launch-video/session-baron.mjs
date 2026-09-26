@@ -43,8 +43,8 @@ installStopHandler(() => recorders);
 
 const HOME = { x: 0, z: 12 };
 // Seams are not fixed: two or three are live at a time, each placed at one of the map's six anchors at random and
-// holding 30 gold (src/systems/HarvestSystem.ts activateInitialNodes, Balance.goldSeam), so a plan's reach decides
-// its income. Each take's sidecar names the plan it rode.
+// holding 30 gold, and a spent seam comes back at another anchor (src/systems/HarvestSystem.ts activateInitialNodes
+// and pickOpenAnchor, Balance.goldSeam), so a plan's reach decides its income. Each take's sidecar names its plan.
 const PLANS = {
   // t2 (2026-09-27) rode this and fell at wave 19, one wave short: any live seam before wave 8 and only the home
   // bank's (13 m) after, so from wave 13 the purse stood at 6 gold and the defence stopped at four turrets and one
