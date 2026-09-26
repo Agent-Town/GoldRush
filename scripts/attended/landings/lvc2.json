@@ -1,0 +1,38 @@
+{
+  "tag": "lvc2",
+  "branch": "feat/launch-video-capture-2",
+  "port": 5402,
+  "mergeMessage": "drain: merge feat/launch-video-capture-2 — launch-video-capture-2 — the launch film's phase 2: all ten capture-list items shot per the treatment's runbook with the owner's three answers (the Baron cut at his arrival, printed slips, unnamed boards): 23 clips (4,455.7 s) and 145 stills in ~/.goldrush/launch-video/, every batch under the drain lock on port 5322 with zero live-county requests and zero console/page errors, the as-shot list in the treatment matching the disk (verify script green), capture scripts under scripts/launch-video/, nothing large in the repo, hash unchanged (owner 'C6 - lets keep it as it is, 7 - slips is good, 8 - unnamed, 9 - sure, do it' 2026-09-26; Opus 5.5 implementer at max effort)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": []
+  },
+  "cure": "scripts/attended/landings/lvc2-cure.sh",
+  "review": {
+    "path": "reviews/launch-video-capture-2.md",
+    "title": "Drain review: `launch-video-capture-2`, the launch film's live captures are shot, all ten items, with the owner's answers applied (Opus 5.5 implementer at max effort; F-VIBE-Q)",
+    "body": "scripts/attended/landings/lvc2-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "launch-video-capture-2.md",
+    "rowKey": "LAUNCH VIDEO CAPTURE 2 LANDED",
+    "rowEmoji": "🎬",
+    "rowText": "Phase 2 of the launch film is shot: all ten capture-list items per the treatment's runbook (headed Chromium, 1280x800 at DPR 1.5 for 1920x1200 masters at 60 fps, 390x844 for the 9:16 cut; the capture profile 'Wren'; telemetry opted out; no debug, no seed): the menu, the Claim (both sizes, the Prospector sent on camera), Night Shift (a lantern relit on camera, three takes), the Dry Gulch and Twin Banks entry walks, the Baron from the run's start to his ARRIVAL (a real 1x ride to wave 20 on the plain seed, the cut point 524.5 s, banner 529.5 s, his men at the ford 533 s; the unlock STAGED on a copy of Wren's ledger and disclosed; two earlier rides fell at 17 and 19), Herald No. 5 (STAGED), the Lantern Show replaying a secured Claim reel recorded on the day, the Field Book front desk and board (names hidden), the Ride Together card and invitation. 23 kept clips (4,455.7 s) and 145 stills in `~/.goldrush/launch-video/`, 22 cut files with reasons; the treatment's new 'Phase 2: capture list, as shot' section matches the disk (`scripts/launch-video/verify-capture-list.mjs` green, durations within 0.5 s). Ten batches under the drain lock on port 5322, every vite stopped by pid; zero live-county requests in any take; zero console/page errors (two Field Book takes log their aborted county requests). Build rc 0; engine hash unchanged; nothing under src, assets, site, e2e, functions or package.json; capture scripts under `scripts/launch-video/` (never in a battery); contact sheet 570,877 B. Phase 3 RULED by the owner 2026-09-26 (verbatim: 'yes, they can appear, real footage, keep the second line'): F-LVC2-1 staged frames may appear, disclosed; F-LVC2-2 the takes are real footage, disclosed as played by the capture pilot; F-LVC2-3 the end card keeps its second line. Findings for the game, DEFERRED: F-LVC2-4 (a bare `?contract=` link boots the Claim in a plain dev boot), F-LVC2-5 (the open charter swallows a click behind it), F-LVC2-6 (the dev-only 'Open every claim' button shows in board frames), F-LVC2-7 (the Lantern Show's control bar prints the page's local address). Remaining gaps as the treatment lists them (plates for the pan close-up, the vista and the lantern procession; fonts not in the repo; the Pan Theme 59.98 s against a 94 s film). `reviews/launch-video-capture-2.md`.",
+    "statusPhrase": "the launch film's live captures are shot, all ten items, the Baron cut at his arrival",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh lvc2, queued behind sgs3)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/launch-video-capture-2"
+}
