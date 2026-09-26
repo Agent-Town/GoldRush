@@ -21,3 +21,6 @@ Base `6cf158c4a`; the branch touches `src/charter/PressPanel.ts`, `e2e/charter-p
 - **F-CPL1-2 (OWNER'S DESK, by the cure):** the Full Press shelf's Launch of a locked charter also opens the Claim; the same fork on another surface; recommended: refuse with an honest line.
 - **F-CPL1-3 (DEFERRED, F-1179-3's successor):** cp04's seven hand-staged locked-land boots need their unlocks seeded per row; red on main today.
 - **F-CPL1-4 (inferred, not run):** a debug `epoch=` editor URL can make the offer and the boot's check read different eras; for whoever next touches the unlock predicate.
+
+### E2E attribution (drain, 2026-09-26 14:50Z)
+The landing's e2e gate (six specs, both projects) ran 82 rows: 68 passed, 14 failed, all fourteen `e2e/cp04-lever.spec.ts:173:3 › seeded boot <land>/<story>/<visitors> starts clean` (seven hand-staged locked-land boots x two projects). The implementer's detached base control (`6cf158c4a`) showed the same fourteen rows red with the same values (F-1179-3: the specs hand-stage a locked land's charter and the boot's re-check clears it; F-CPL1-3 records the successor task). Not the lever's path and not this slice's. The config's allowance named line 92 by a misread of the report; corrected to `:173:` and the verdict recomputed by the lib.
