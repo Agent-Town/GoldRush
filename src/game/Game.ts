@@ -188,6 +188,8 @@ import { E6TileConsumerSystem } from '../systems/E6TileConsumerSystem';
 import { E9ArsenalSystem } from '../systems/E9ArsenalSystem';
 import { E9CanalSystem } from '../systems/E9CanalSystem';
 import { E10FinaleSystem } from '../systems/E10FinaleSystem';
+import { stampCharter } from '../charter/CharterStamp';
+import { getPostCreditsCharter } from '../charter/TheRiver';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
 import { E7PlaybookLatch } from '../systems/E7PlaybookLatch';
@@ -1572,6 +1574,10 @@ export class Game {
   };
   private securedScoreAt: number | null = null;
   private countyStanding: CountyStandingView | null = null;
+  // F-PP6-2: true only on the run the finale lever opens (THE RIVER pressed onto its lineage root, under nowaves;
+  // `isRiverCeremonyContract`), and the one-shot latch of `completeRiverEnding`, the River's win.
+  private readonly riverCeremony = areWavesDisabled() && isRiverCeremonyContract(selectActiveContract());
+  private riverEndingSettled = false;
 
   private runManager?: RunManager;
   private drillYard?: DrillYard;
@@ -3304,6 +3310,7 @@ export class Game {
         this.speakTrailGuide('first-gold');
         if (this.hasBuiltStockpile()) this.audio.play('stockpile-deposit', 0.8);
         this.vfx.floatText(this.lastHarvestGoldPosition(), `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a', 1.7);
+        if (this.riverCeremony) this.completeRiverEnding();
       }
       this.updateBaronRocketVolley();
       this.combat.update(simDelta, this.timeAlive);
@@ -3903,7 +3910,7 @@ export class Game {
     const text = getPlaybookText(localStorage, name);
     if (!text) return { ok: false as const, reason: 'NOTHING_RECORDED' };
     const parsed = parsePlaybookText(text);
-    if (!parsed.ok || parsed.playbook.contractId !== this.activeContract.id || parsed.playbook.seed !== this.runSeed
+    if (!parsed.ok || parsed.playbook.contractId !== this.scoredContractId() || parsed.playbook.seed !== this.runSeed
       || parsed.playbook.difficultyPreset !== this.difficultyPreset) {
       return { ok: false as const, reason: parsed.ok ? 'PLAYBOOK_MISMATCH' : parsed.reason };
     }
@@ -4232,7 +4239,9 @@ export class Game {
     this.playbookReplay = null;
     this.playbookRecorder = new PlaybookRecorderSession(
       {
-        contractId: this.activeContract.id,
+        // The reel's contract (F-RES1-4): on the River ceremony a playbook is recorded, replayed and kept under
+        // `e10-river`, so its use can never put a `the-claim` page inside an `e10-river` reel.
+        contractId: this.scoredContractId(),
         seed: this.runSeed,
         difficultyPreset: this.difficultyPreset,
         start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
@@ -4286,8 +4295,9 @@ export class Game {
     const parsed = parsePlaybookText(text);
     if (!parsed.ok) return { ok: false, reason: parsed.reason };
     const playbook = parsed.playbook;
-    // The determinism contract holds on the same tile+seed only (spec law 2).
-    if (playbook.contractId !== this.activeContract.id) return { ok: false, reason: 'contract-mismatch' };
+    // The determinism contract holds on the same tile+seed only (spec law 2). Judged on the reel's contract
+    // (F-RES1-4): the River ceremony refuses a Claim playbook, whose use would spoil its `e10-river` reel.
+    if (playbook.contractId !== this.scoredContractId()) return { ok: false, reason: 'contract-mismatch' };
     if (playbook.seed !== this.runSeed) return { ok: false, reason: 'seed-mismatch' };
     if (playbook.difficultyPreset !== this.difficultyPreset) return { ok: false, reason: 'difficulty-mismatch' };
     const actor = this.ensurePlaybookReplayActor();
@@ -7717,10 +7727,54 @@ export class Game {
       deepestWave: waves,
       baseValue: Math.round(economySummary.baseValue),
       weaponSplit: this.weaponSplit(runStats),
-      contractId: this.activeContract.id,
+      contractId: this.scoredContractId(),
     };
     const scores = this.activeContract.practice?.scores === false ? loadScores() : recordScore(score);
     return { scoreAt, economySummary, runStats, score, scores };
+  }
+
+  /**
+   * THE RIVER'S WIN (F-PP6-2; owner 2026-09-26, verbatim "2 - sure, lets do that", choosing "the pan is the win; the
+   * game writes a completed score at the pan"). The finale lever opens a run with no waves, so the secure path
+   * (`run_secured`, then a secured `run_ended` or `hero_died`), the only writer of a completed score, never fires on
+   * it. This is the ceremony's own completion instead, written through the sinks every secured run uses: the score
+   * (`recordRunScore`: waves 0, the time alive at the pan, the purse the pan filled, secured) and the reel (the
+   * recorder's snapshot with the outcome a standing's reel declares, kept in the tape ring). The county standing
+   * (`submitCountyStanding`, which would attach that same reel) is HELD behind `RIVER_STANDING_POSTS_ENABLED` until a
+   * River reel can be assayed. The door's grammar (`validTapeOutcome`) admits `secured`, `rush` and `death` and
+   * nothing else, so the ceremony rides `secured`.
+   *
+   * THE EVENT is the first gold the player's own pan lands, called from the fixed step: the earliest act that is
+   * certainly a pan (the channel's first swing yields nothing if the player steps off inside one pan tick, 1.5 s
+   * unupgraded), the run-6 driver's own "panned" test (`fund` returns at the start gold plus 5), and never on boot
+   * or on the lever alone.
+   * ONCE (Mistake #7): the latch makes a second pan on this run write nothing, and a completed River already in this
+   * profile's scores makes a reload or a second pull of the lever write nothing more.
+   */
+  private completeRiverEnding(): void {
+    if (this.riverEndingSettled || this.runTapeReplay || this.mpClient) return;
+    this.riverEndingSettled = true;
+    if (loadScores().some((entry) => entry.contractId === RIVER_ENDING_CONTRACT_ID && entry.secured === true)) return;
+    const { score } = this.recordRunScore(0, this.timeAlive, true, 0);
+    const reel = this.runTapeRecorder?.snapshot(this.securedReelOutcome(score, 'secured'), this.runTapeEventLog());
+    if (reel && appendRunTape(safeLocalStorage(), reel)) this.lastRunTape = reel;
+    if (RIVER_STANDING_POSTS_ENABLED) void this.submitCountyStanding(score);
+  }
+
+  /** The contract a score, a reel and a standing are written under: the River ceremony scores `e10-river`. */
+  private scoredContractId(): string {
+    return this.riverCeremony ? RIVER_ENDING_CONTRACT_ID : this.activeContract.id;
+  }
+
+  /** The outcome a secured reel declares for `score`; the standing's reel and the River's kept reel share it. */
+  private securedReelOutcome(score: ScoreRecord, reason: RunEndReason): RunTapeOutcome {
+    return {
+      reason,
+      secured: true,
+      waves: Math.max(0, Math.floor(score.deepestWave ?? score.waves)),
+      timeAlive: Math.max(0, score.timeAlive),
+      gold: Math.max(0, Math.floor(score.gold)),
+    };
   }
 
   private startRunTapeReplay(tape: RunTape): void {
@@ -8005,12 +8059,12 @@ export class Game {
     this.lastRunTape = null;
     const suspended = readRunSuspend();
     this.runTapeRecorder = new RunTapeRecorder({
-      contract: this.activeContract.id,
+      contract: this.scoredContractId(),
       seed: this.runSeed,
       difficulty: this.difficultyPreset,
       meta: runTapeRecordingMeta(
         safeLocalStorage(),
-        this.activeContract.id,
+        this.scoredContractId(),
         {
           buildId: __APP_BUILD__,
           viewVersion: engineEra.viewSchema.version,
@@ -8087,10 +8141,12 @@ export class Game {
     const multiplayerState = this.mpClient?.state();
     if (multiplayerState?.connected && !isMultiplayerStandingSubmitter(multiplayerState.roster, multiplayerState.playerId)) return;
     try {
-      const epoch = listEpochs().find((entry) => loadEpoch(entry.id).contracts.some((contract) => contract.id === this.activeContract.id));
+      const contractId = this.scoredContractId();
+      const epoch = listEpochs().find((entry) => loadEpoch(entry.id).contracts.some((contract) => contract.id === contractId));
       if (!epoch) return;
+      // The River ceremony stands on a pressed page by design, and `riverCeremony` already proved it is THE RIVER's own stamp.
       const descriptor = contractDescriptorJson(this.activeContract);
-      if (descriptor !== contractDescriptorJson(loadContract(this.activeContract.id, epoch.id))) return;
+      if (!this.riverCeremony && descriptor !== contractDescriptorJson(loadContract(this.activeContract.id, epoch.id))) return;
       const pinnedSeed = getDebugSeed();
       const roster = [...this.multiplayerStandingRoster.values()];
       const party = multiplayerStandingParty(roster);
@@ -8099,7 +8155,7 @@ export class Game {
       // Invited agents ride live county seeds. Pinned seeds remain the agents-only exam.
       if (mixedAgentRide && pinnedSeed !== null) return;
       // A non-member pinned seed is neither comparable bench data nor live play; the owner may reverse this submission policy.
-      if (pinnedSeed !== null && !(benchSeeds as Record<string, string[]>)[this.activeContract.id]?.includes(pinnedSeed)) return;
+      if (pinnedSeed !== null && !(benchSeeds as Record<string, string[]>)[contractId]?.includes(pinnedSeed)) return;
       // The seed this run was RIDDEN on (`runSeed`, resolved once at birth), never a second resolution:
       // the reel records `runSeed` and the door requires the two to match, so a run that straddles
       // Monday 00:00 UTC names last week's seed and the door answers `rotation_closed` (transfer-board L3).
@@ -8108,23 +8164,14 @@ export class Game {
         ? this.runManager?.diagnostics.rush ? 'rush' : 'death'
         : 'secured';
       const eventLog = this.runTapeEventLog();
-      const tape = this.runTapeRecorder?.snapshot(
-        {
-          reason,
-          secured: true,
-          waves: Math.max(0, Math.floor(score.deepestWave ?? score.waves)),
-          timeAlive: Math.max(0, score.timeAlive),
-          gold: Math.max(0, Math.floor(score.gold)),
-        },
-        eventLog,
-      );
+      const tape = this.runTapeRecorder?.snapshot(this.securedReelOutcome(score, reason), eventLog);
       const submittedTape = tape ? submittedRunTape(tape) : undefined;
       const [seedHash, inputLogHash] = await Promise.all([
         sha256Hex(seed),
         sha256Hex(JSON.stringify(tape?.inputLog ?? [])),
       ]);
       const body = JSON.stringify({
-        contractId: this.activeContract.id,
+        contractId,
         epochId: epoch.id,
         score: {
           secured: true,
@@ -9058,6 +9105,7 @@ export class Game {
     this.kills = 0;
     this.securedScoreAt = null;
     this.countyStanding = null;
+    this.riverEndingSettled = false;
     this.baronBeatenThisRun = false;
     this.baronCeremony = null;
     this.baronStandardPlanted = false;
@@ -11089,6 +11137,30 @@ function countyAnonId(): string {
   } catch {
     return randomHex(16);
   }
+}
+
+// F-PP6-2: the contract THE RIVER's ending is scored under. The lever plays it as its lineage root, `the-claim`.
+const RIVER_ENDING_CONTRACT_ID = 'e10-river';
+
+// HELD (attended session, 2026-09-26): the River's county standing is not posted until a River reel can be assayed.
+// Today every instrument rejects one (F-RES1-1: a replay opens the raw `e10-river` manifest, not the lever's pressed
+// Claim under `nowaves`, and the browser arm reads RunManager's secure, which the ceremony never sets; F-RES1-6: the
+// browser's seams follow the `?seed=` pin, not the run's seed), so a posted River row would rank while pending and
+// then be rejected on the live board. The score and the reel are still written, and the reel stays door-shaped
+// (`e2e/river-ending-score.spec.ts` judges it with the door in-process). The assay slice flips this one line.
+const RIVER_STANDING_POSTS_ENABLED: boolean = false;
+
+/**
+ * THE RIVER CEREMONY (F-PP6-2): `E10FinaleSystem.launchRiver` stamps THE RIVER charter onto its lineage root and boots it
+ * under `nowaves`, so the run is `the-claim` pressed with that page, never `e10-river` itself. The pressed page must be
+ * byte for byte the shipped charter's stamp, so the raw `e10-river` board route, a player's own Press charter and every
+ * ordinary Claim answer false.
+ */
+function isRiverCeremonyContract(contract: ContractManifest): boolean {
+  const river = getPostCreditsCharter();
+  if (contract.name !== river.contract.name) return false;
+  const stamped = stampCharter(river);
+  return stamped.ok && contractDescriptorJson(contract) === stamped.document;
 }
 
 function shouldPostCountyStanding(): boolean {

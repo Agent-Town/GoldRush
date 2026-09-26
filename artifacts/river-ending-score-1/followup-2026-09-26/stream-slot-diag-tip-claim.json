@@ -1,0 +1,62 @@
+{
+ "mode": "claim",
+ "startedAt": "2026-09-26T13:59:32.407Z",
+ "console": [],
+ "pageErrors": [],
+ "notes": [],
+ "requests": [],
+ "boot": {
+  "sim": 0.8999999999999999,
+  "gold": 0,
+  "paused": false,
+  "hero": {
+   "x": 0,
+   "z": 12
+  },
+  "name": "The Claim",
+  "seams": [
+   {
+    "x": 18,
+    "z": -7
+   },
+   {
+    "x": -22,
+    "z": -6.8
+   }
+  ]
+ },
+ "recordStart": {
+  "ok": true
+ },
+ "recordStop": {
+  "ok": true,
+  "saved": true
+ },
+ "replay": {
+  "ok": true
+ },
+ "replayStop": {
+  "ok": true
+ },
+ "reelCount": 1,
+ "reel": {
+  "contract": "the-claim",
+  "primarySlot": 0,
+  "streamSlots": [
+   0
+  ],
+  "streamEntries": [
+   0
+  ],
+  "streamSlotEqualsPrimary": true,
+  "playbookUses": [
+   {
+    "atTick": 66,
+    "contractId": "the-claim"
+   }
+  ],
+  "validateRunTape": "null (refused)",
+  "validateRunTapeWithoutStreams": "valid",
+  "validateRunTapeWithoutPlaybookUses": "null (refused)"
+ }
+}

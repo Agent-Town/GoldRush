@@ -1,0 +1,146 @@
+{
+ "project": "desktop",
+ "scenario": "lever-river",
+ "startedAt": "2026-09-26T11:03:44.718Z",
+ "samples": [],
+ "events": [],
+ "requests": [],
+ "console": [],
+ "pageErrors": [],
+ "notes": [],
+ "bootMs": 2476,
+ "url": "http://127.0.0.1:5447/?contract=the-claim&nowaves=",
+ "atBoot": {
+  "frame": 14,
+  "sim": 0.8666666666666666,
+  "wave": 0,
+  "paused": false,
+  "runState": "playing",
+  "gold": 0,
+  "hero": {
+   "x": 0,
+   "z": 12
+  },
+  "enemies": 0,
+  "channeling": false,
+  "channels": [
+   {
+    "actorId": "0",
+    "channelNodeId": null,
+    "progress": 0,
+    "channeling": false
+   }
+  ],
+  "nodes": [
+   {
+    "id": "gold-seam-1",
+    "x": -9,
+    "z": 6.7,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-2",
+    "x": -1.5,
+    "z": -6.4,
+    "remaining": 30
+   }
+  ],
+  "contract": {
+   "activeId": "the-claim",
+   "fallbackReason": null,
+   "name": "The River"
+  },
+  "secured": false
+ },
+ "rawAtBoot": {
+  "scores": "[{\"kills\":40,\"gold\":120,\"timeAlive\":240,\"at\":1000,\"waves\":8,\"secured\":true,\"contractId\":\"e10-last-claim\",\"profileName\":\"Robin\"}]",
+  "tapes": "{\"version\":1,\"tapes\":[],\"recording\":{\"contract\":\"the-claim\",\"meta\":{\"buildId\":\"dev\",\"viewVersion\":4,\"engineHash\":\"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\"era\":6}}}",
+  "history": null,
+  "keys": [
+   "gr.firstClaim.done.v1",
+   "gr.meta.v1",
+   "gr.profile.v2",
+   "gr.profile.v2.robin.gr.firstClaim.done.v1",
+   "gr.profile.v2.robin.gr.meta.v1",
+   "gr.profile.v2.robin.gr.research.epoch-1-frontier.v1",
+   "gr.profile.v2.robin.gr.scores.v2",
+   "gr.profile.v2.robin.gr.story.firstBoot.v1",
+   "gr.profile.v2.robin.gr.story.tales.v1",
+   "gr.profile.v2.robin.gr.tapes.v1",
+   "gr.profile.v2.robin.gr.town.name.v1",
+   "gr.profile.v2.robin.gr.townWelcome.seen.v1",
+   "gr.scores.v2",
+   "gr.story.tales.v1",
+   "gr.telemetry.devSend.v1",
+   "gr.town.name.v1",
+   "gr.townWelcome.seen.v1"
+  ]
+ },
+ "briefing": "The River",
+ "afterIdle": {
+  "frame": 1840,
+  "sim": 16.533333333333314,
+  "wave": 0,
+  "paused": false,
+  "runState": "playing",
+  "gold": 0,
+  "hero": {
+   "x": 0,
+   "z": 12
+  },
+  "enemies": 0,
+  "channeling": false,
+  "channels": [
+   {
+    "actorId": "0",
+    "channelNodeId": null,
+    "progress": 0,
+    "channeling": false
+   }
+  ],
+  "nodes": [
+   {
+    "id": "gold-seam-1",
+    "x": -9,
+    "z": 6.7,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-2",
+    "x": -1.5,
+    "z": -6.4,
+    "remaining": 30
+   }
+  ],
+  "contract": {
+   "activeId": "the-claim",
+   "fallbackReason": null,
+   "name": "The River"
+  },
+  "secured": false
+ },
+ "rawAfterIdle": {
+  "scores": "[{\"kills\":40,\"gold\":120,\"timeAlive\":240,\"at\":1000,\"waves\":8,\"secured\":true,\"contractId\":\"e10-last-claim\",\"profileName\":\"Robin\"}]",
+  "tapes": "{\"version\":1,\"tapes\":[],\"recording\":{\"contract\":\"the-claim\",\"meta\":{\"buildId\":\"dev\",\"viewVersion\":4,\"engineHash\":\"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\"era\":6}}}",
+  "history": null,
+  "keys": [
+   "gr.firstClaim.done.v1",
+   "gr.meta.v1",
+   "gr.profile.v2",
+   "gr.profile.v2.robin.gr.firstClaim.done.v1",
+   "gr.profile.v2.robin.gr.meta.v1",
+   "gr.profile.v2.robin.gr.research.epoch-1-frontier.v1",
+   "gr.profile.v2.robin.gr.scores.v2",
+   "gr.profile.v2.robin.gr.story.firstBoot.v1",
+   "gr.profile.v2.robin.gr.story.tales.v1",
+   "gr.profile.v2.robin.gr.tapes.v1",
+   "gr.profile.v2.robin.gr.town.name.v1",
+   "gr.profile.v2.robin.gr.townWelcome.seen.v1",
+   "gr.scores.v2",
+   "gr.story.tales.v1",
+   "gr.telemetry.devSend.v1",
+   "gr.town.name.v1",
+   "gr.townWelcome.seen.v1"
+  ]
+ }
+}
