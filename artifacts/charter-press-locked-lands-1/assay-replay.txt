@@ -1,0 +1,8 @@
+assay replay of an existing agent tape, the county's headless instrument (node scripts/assay-replay-agent.mjs <tape>), Node v26.4.0, charter-press-locked-lands-1, 2026-09-26
+tape: artifacts/gauntlet-heat15-cd24d12d/probe/tape.json (committed; the-claim, seed e1-the-claim-01, version 2)
+recorded: eventLogHash fnv1a32:b131e18e, outcome {"reason":"secured","secured":true,"waves":10,"timeAlive":300,"gold":335}, durationTicks 9001, recorded by engine 52a84bc29feb
+base 6cf158c4a (this worktree before the first edit, 11:05Z), rc 0, 9.9 s wall:
+{"eventLogHash":"fnv1a32:b131e18e","outcome":{"secured":true,"waves":10,"gold":335,"timeAlive":300},"securedSnapshot":{"waves":10,"gold":335,"timeAlive":300},"ticks":9001,"engine":"headless-contract-sim"}
+branch 3ed71bbce (after the PressPanel commit, 11:13Z), rc 0, 10.1 s wall:
+{"eventLogHash":"fnv1a32:b131e18e","outcome":{"secured":true,"waves":10,"gold":335,"timeAlive":300},"securedSnapshot":{"waves":10,"gold":335,"timeAlive":300},"ticks":9001,"engine":"headless-contract-sim"}
+cmp base branch stdout: IDENTICAL

@@ -1,0 +1,88 @@
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/cp04-lever-cpl1.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam
+  1) [desktop-chrome] › e2e/cp04-lever-cpl1.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-lever-land]')
+    Expected: 1
+    Received: 5
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('[data-lever-land]')
+        14 × locator resolved to 5 elements
+           - unexpected value "5"
+
+
+      76 |   // Lever re-read when it is opened again. The cards are rendered when the Lever opens, so their plates load then:
+      77 |   // the poll waits for all five before the one-shot image check below.
+    > 78 |   await expect(page.locator('[data-lever-land]')).toHaveCount(1);
+         |                                                   ^
+      79 |   await expect(page.getByTestId('lever-land-the-claim')).toHaveAttribute('aria-pressed', 'true');
+      80 |   expect(await page.evaluate(async () => ((await Function('return import("/src/meta/ContractUnlock.ts")')()) as typeof import('../src/meta/ContractUnlock')).setPreviewUnlockAll(true))).toBe(true);
+      81 |   await page.getByTestId('press-mode-full').click();
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cpl1/wt-control/e2e/cp04-lever-cpl1.spec.ts:78:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-cpl1-the-Lever--35d12-es-through-the-charter-seam-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-cpl1-the-Lever--35d12-es-through-the-charter-seam-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-cpl1-the-Lever--35d12-es-through-the-charter-seam-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-cpl1-the-Lever--35d12-es-through-the-charter-seam-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[2/2] [mobile-chrome] › e2e/cp04-lever-cpl1.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam
+  2) [mobile-chrome] › e2e/cp04-lever-cpl1.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  locator('[data-lever-land]')
+    Expected: 1
+    Received: 5
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for locator('[data-lever-land]')
+        14 × locator resolved to 5 elements
+           - unexpected value "5"
+
+
+      76 |   // Lever re-read when it is opened again. The cards are rendered when the Lever opens, so their plates load then:
+      77 |   // the poll waits for all five before the one-shot image check below.
+    > 78 |   await expect(page.locator('[data-lever-land]')).toHaveCount(1);
+         |                                                   ^
+      79 |   await expect(page.getByTestId('lever-land-the-claim')).toHaveAttribute('aria-pressed', 'true');
+      80 |   expect(await page.evaluate(async () => ((await Function('return import("/src/meta/ContractUnlock.ts")')()) as typeof import('../src/meta/ContractUnlock')).setPreviewUnlockAll(true))).toBe(true);
+      81 |   await page.getByTestId('press-mode-full').click();
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cpl1/wt-control/e2e/cp04-lever-cpl1.spec.ts:78:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp04-lever-cpl1-the-Lever--35d12-es-through-the-charter-seam-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp04-lever-cpl1-the-Lever--35d12-es-through-the-charter-seam-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp04-lever-cpl1-the-Lever--35d12-es-through-the-charter-seam-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp04-lever-cpl1-the-Lever--35d12-es-through-the-charter-seam-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/cp04-lever-cpl1.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam 
+    [mobile-chrome] › e2e/cp04-lever-cpl1.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam 

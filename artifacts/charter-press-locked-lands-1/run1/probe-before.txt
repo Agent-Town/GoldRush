@@ -1,0 +1,10 @@
+before desktop-chrome fresh: offered [the-claim*, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron] pressed e1-twin-banks -> contract=e1-twin-banks briefing "The Claim" clear={"reason":"staged-contract-locked","charterDocumentPresent":true} errors 0/0
+before desktop-chrome secured-claim: offered [the-claim*, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron] pressed e1-twin-banks -> contract=e1-twin-banks briefing "Twin Banks: Defend the Camp" clear=null errors 0/0
+before desktop-chrome preview: offered [the-claim*, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron] pressed e1-baron -> contract=e1-baron briefing "The Baron's Claim: Defend the Camp" clear=null errors 0/0
+before mobile-chrome fresh: offered [the-claim*, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron] pressed e1-twin-banks -> contract=e1-twin-banks briefing "The Claim" clear={"reason":"staged-contract-locked","charterDocumentPresent":true} errors 0/0
+before mobile-chrome secured-claim: offered [the-claim*, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron] pressed e1-twin-banks -> contract=e1-twin-banks briefing "Twin Banks: Defend the Camp" clear=null errors 0/0
+before mobile-chrome preview: offered [the-claim*, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron] pressed e1-baron -> contract=e1-baron briefing "The Baron's Claim: Defend the Camp" clear=null errors 0/0
+before desktop-chrome plain town: NOT REACHED errors 0/0 PROBE-ERROR locator.click: Timeout 30000ms exceeded.
+before desktop-chrome plain press: press panel, Lever open errors 0/0 offered [the-claim, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron]
+before mobile-chrome plain town: NOT REACHED errors 0/0 PROBE-ERROR locator.click: Timeout 30000ms exceeded.
+before mobile-chrome plain press: press panel, Lever open errors 0/0 offered [the-claim, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron]
