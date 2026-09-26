@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "id": "8486c824-c55e-436f-9040-4f9ac1751e3a",
-  "createdAt": 1790426933967,
+  "id": "f49c9801-3012-4b56-a17a-18e1c5835d03",
+  "createdAt": 1790430738087,
   "kept": false,
   "contract": "e10-river",
   "seed": "e1-the-claim-r2026w39-492bfb6017b9",
@@ -44,7 +44,7 @@
   },
   "inputLog": {
     "version": 1,
-    "name": "8486c824-c55e-436f-9040-4f9ac1751e3a",
+    "name": "f49c9801-3012-4b56-a17a-18e1c5835d03",
     "contractId": "e10-river",
     "seed": "e1-the-claim-r2026w39-492bfb6017b9",
     "difficultyPreset": "trail",
@@ -53,7 +53,7 @@
       "x": 0,
       "z": 12
     },
-    "durationTicks": 145,
+    "durationTicks": 146,
     "entries": [
       {
         "t": 45,
@@ -62,13 +62,25 @@
         "a": []
       },
       {
-        "t": 83,
+        "t": 75,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 76,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 84,
         "mx": -1,
         "my": 0,
         "a": []
       },
       {
-        "t": 97,
+        "t": 98,
         "mx": 0,
         "my": 0,
         "a": []
@@ -79,12 +91,12 @@
     "streams": [],
     "playbookUses": []
   },
-  "eventLogHash": "fnv1a32:3f5a03c5",
+  "eventLogHash": "fnv1a32:5be08441",
   "outcome": {
     "reason": "secured",
     "secured": true,
     "waves": 0,
-    "timeAlive": 4.833333333333326,
+    "timeAlive": 4.866666666666659,
     "gold": 5
   }
 }

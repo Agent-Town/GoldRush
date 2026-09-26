@@ -117,3 +117,92 @@ The door admits only `death`, `secured` and `rush`, so no named ceremony reason 
 2. F-RES1-1 and F-RES1-6, or an owner word.
 3. F-RES1-2.
 4. F-RES1-3, -4, -5 to the desk.
+
+## 13. Addendum, 2026-09-26: the county post held, F-RES1-4 fixed, re-run (the attended session's follow-up)
+
+**Verdict: READY-FOR-GATES.** Two commits on top of `bea0a4dcb`, then this addendum with its evidence (`followup-2026-09-26/`). The tip's `src/game/Game.ts` is the only engine input that moved.
+
+### 13.1 The county post is held (commit `0d1387632`)
+- `const RIVER_STANDING_POSTS_ENABLED: boolean = false;` (`Game.ts:11151`), with the comment citing F-RES1-1 and F-RES1-6 above it. `completeRiverEnding` (`:7754-7762`) still writes the completed score and keeps the reel in the tape ring, and calls `submitCountyStanding` only `if (RIVER_STANDING_POSTS_ENABLED)` (`:7761`). The standing path's River branches (the scored epoch, the descriptor-check skip) stay in place, so the assay slice flips one line.
+- Spec (a)+(b) now asserts ZERO standing POSTs after the first pan, through a second pan, a reload and a re-pull, and from the lever to the Book (`county-calls: []` on both projects). The dev-send flag stays seeded, so the silence is the hold's, not the opt-in's.
+- The kept reel is still judged in-process. `validateRunTape(reel)` returns the reel whole. The door's own `onRequest`, given the body `submitCountyStanding` would build (`doorShapedStanding`, field for field), answers 200 `{ok: true, stored: false}` on both projects (`door-shaped-standing-*.json`).
+- Row, reel and Book assertions unchanged: one secured `e10-river` row (waves 0, gold 5), one reel with the `secured` outcome, "Secured: wave 0, 5 gold".
+- **Control:** the same new spec on the pre-change tip `bea0a4dcb` fails exactly at "the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false" on both projects (it received the POST body); its other 4 tests pass (`control-prechange-spec.log`). The older `standing-*.json` (commit `c580007a4`) are that pre-hold POST, kept as history.
+
+### 13.2 F-RES1-4 fixed (commit `6af7bf60b`)
+- **The change.** Three sites now use `scoredContractId()` instead of `activeContract.id`, so on the River a playbook is recorded, replayed and kept under `e10-river`. On every other run the id is the same as before.
+  - the replay guard (`Game.ts:4300`);
+  - the agent rider's `PLAYBOOK_USE` guard (`:3913`);
+  - the recorder's label (`:4244`).
+- **Correction to section 9, with measurement: no plain boot reaches this.**
+  - The Tape Reel surface mounts only when `activeEpoch.order >= 7` (`Game.ts:1917`).
+  - A `?contract=` run takes its contract's epoch (`ContractFamilies.ts:1122-1124`), and `the-claim` is E1.
+  - The only paths left are the `?debug` dev bridge, and an agent rider in a multiplayer room, where `completeRiverEnding` writes nothing (`:7755`).
+- **So no spec row** (it would need `?debug`). A probe runs instead, through the dev bridge (`followup-2026-09-26/instruments/playbook-guard-probe.mjs`, `playbook-probe-*.json`):
+
+| probe, desktop and phone | pre-change `bea0a4dcb` | tip `6af7bf60b` |
+| --- | --- | --- |
+| a playbook recorded on the River is labelled | `the-claim` | `e10-river` |
+| a Claim playbook's replay | accepted | refused, `contract-mismatch` |
+| the River playbook's replay | accepted | accepted |
+| the reel's playbook uses | 2, both `the-claim` | 1, `e10-river` |
+| standing POSTs | 1 | 0 |
+| `validateRunTape(reel)` | refused | refused, for a different and older reason (F-RES1-7) |
+
+### 13.3 F-RES1-7 (new): a stopped playbook replay spoils ANY run's reel (pre-existing, not River-specific)
+- **Why the tip's reel is still refused, although its one playbook use is now lawful:**
+  1. While a playbook replay is active, the recorder takes the replay actor as its primary slot (`Game.ts:8024`, `RunTape.ts:158`) and records the player's hero as an additional stream, slot 0 (`RunTape.ts:186`).
+  2. When the replay stops, the primary returns to slot 0 and the empty slot-0 stream stays.
+  3. `validateInputStreams` refuses a stream on the primary slot (`RunTape.ts:518-521`).
+- **Measured** with `instruments/playbook-reel-diag.mjs` (`stream-slot-diag-*.json`): record a playbook, replay it, stop the replay, take the reel.
+
+| run | primary slot | stream slots (entries) | `validateRunTape` | without streams | without playbook uses |
+| --- | --- | --- | --- | --- | --- |
+| tip, River (reel at the pan) | 0 | [0] (0) | refused | valid | refused |
+| tip, plain Claim (reel at run end) | 0 | [0] (0) | refused | valid | refused |
+| BASE `be37d83cf`, plain Claim (reel at run end) | 0 | [0] (0) | refused | valid | refused |
+
+- **Attribution:** it happens on base and on every contract, and it lies outside this firewall (`RunTape.ts` is open to this slice only for the outcome).
+- **Consequence:** any E7-or-later run whose agent replay stops before the reel is taken keeps a reel that the client and the door refuse.
+- **Owner:** the tape/playbook owner. The shape of the cure: drop or re-slot a stream that lands on the primary slot when the reel is taken, or stop switching the primary slot during a replay.
+
+### 13.4 The re-run, tip `6af7bf60b` (all servers under the drain lock, started and stopped by PID)
+
+| gate | result | file |
+| --- | --- | --- |
+| tsc | rc 0 | `followup-2026-09-26/tsc.log` |
+| `npm run build` | `EXIT=0` | `followup-2026-09-26/build.log` |
+| the spec, both projects | 6 passed (1.8 m) | `spec-both-projects.log`, `spec-results.json` |
+| the master's three adjacent specs, both projects (task-025, m2-01, charter-press-totality) | 28 passed (1.7 m) | `adjacent-three.log` |
+| the new spec on the pre-change tip (control) | 2 failed at the zero-POST assertion, 4 passed | `control-prechange-spec.log` |
+| existing tapes replayed on base `be37d83cf` and on the tip | byte-identical | `replay-comparison.txt` |
+| law-pointer-guard, source-pointer-guard | PASS, PASS | `law-pointer-guard.log`, `source-pointer-guard.log` |
+| the two engine-registry rows | 2 failed, both the pre-pin rows naming `29324ba8...` (7 of 9 pass) | `registry-rows-prepin.log` |
+
+The four replays behind "byte-identical":
+- **Agent arm, `probe-idle-tape.json`** (heat 14, the Claim): rc 0 on both, the same 148 bytes of stdout.
+- **Agent arm, `e3-moth-season.tape.json`**: rc 1 on both ("declared runStart is not installable by this door"), with the same stderr.
+- **Browser arm, the River reel:** identical outputs with `wallMs` excluded.
+- **Browser arm, the reel relabelled to `the-claim`:** identical outputs with `wallMs` excluded.
+
+Pans measured in the spec, as swing then landing:
+- desktop: 3.400 / 4.867 s;
+- phone: 3.433 / 4.867 s;
+- after a reload and after a re-pull: each landing between 4.60 and 4.73 s.
+
+### 13.5 Engine hash
+- **Before:** `642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a` (pin #66).
+- **After, tip `6af7bf60b`:** `29324ba84fc802adf46cd38825f4721686a75f8d62e4d6089f0d6854c8a21b1f` (`followup-2026-09-26/engine-hash-tip.txt`). This replaces section 7's `0f2c5904...`, which the drain must not pin.
+- **Cause, one line:** `src/game/Game.ts` only. The River ceremony's first pan records a completed score and reel, its county post is held, and the River's playbooks are judged under the reel's contract. No sim rule, contract, collision, floor or table moved.
+
+### 13.6 Commits and remaining
+- **Commits:**
+  - `0d1387632`: the hold, and the spec asserting it.
+  - `6af7bf60b`: F-RES1-4.
+  - This addendum and `followup-2026-09-26/` in the next commit, with the refreshed pan, Book and reel evidence of the re-run.
+- **Remaining, in order:**
+  1. The drain pins `29324ba8...`.
+  2. F-RES1-1 and F-RES1-6 become the assay follow-up slice, which flips `RIVER_STANDING_POSTS_ENABLED`.
+  3. F-RES1-2 goes to the Astra harness line.
+  4. F-RES1-3 and F-RES1-5 go to the owner's desk.
+  5. F-RES1-7 goes to the tape/playbook owner.

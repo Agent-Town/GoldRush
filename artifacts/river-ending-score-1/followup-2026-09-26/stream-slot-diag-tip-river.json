@@ -1,0 +1,82 @@
+{
+ "mode": "river",
+ "startedAt": "2026-09-26T13:59:23.451Z",
+ "console": [],
+ "pageErrors": [],
+ "notes": [],
+ "requests": [],
+ "boot": {
+  "sim": 0.8666666666666666,
+  "gold": 0,
+  "paused": false,
+  "hero": {
+   "x": 0,
+   "z": 12
+  },
+  "name": "The River",
+  "seams": [
+   {
+    "x": -9,
+    "z": 6.7
+   },
+   {
+    "x": -1.5,
+    "z": -6.4
+   }
+  ]
+ },
+ "recordStart": {
+  "ok": true
+ },
+ "recordStop": {
+  "ok": true,
+  "saved": true
+ },
+ "replay": {
+  "ok": true
+ },
+ "replayStop": {
+  "ok": true
+ },
+ "panned": {
+  "sim": 5.366666666666657,
+  "gold": 5,
+  "paused": false,
+  "hero": {
+   "x": -8.188598971942778,
+   "z": 6.854252371396804
+  },
+  "name": "The River",
+  "seams": [
+   {
+    "x": -9,
+    "z": 6.7
+   },
+   {
+    "x": -1.5,
+    "z": -6.4
+   }
+  ]
+ },
+ "reelCount": 1,
+ "reel": {
+  "contract": "e10-river",
+  "primarySlot": 0,
+  "streamSlots": [
+   0
+  ],
+  "streamEntries": [
+   0
+  ],
+  "streamSlotEqualsPrimary": true,
+  "playbookUses": [
+   {
+    "atTick": 64,
+    "contractId": "e10-river"
+   }
+  ],
+  "validateRunTape": "null (refused)",
+  "validateRunTapeWithoutStreams": "valid",
+  "validateRunTapeWithoutPlaybookUses": "null (refused)"
+ }
+}

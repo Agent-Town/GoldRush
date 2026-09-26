@@ -1,0 +1,453 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/node_modules/.bin/playwright",
+      "test",
+      "e2e/river-ending-score.spec.ts",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line,json",
+      "--trace=off",
+      "--output=/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-fu-pre"
+    ],
+    "configFile": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/playwright.config.ts",
+    "rootDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "bea0a4dcba11173316e0a7af414f2a1e2db50f28",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-fu-pre",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "bea0a4dcba11173316e0a7af414f2a1e2db50f28",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-fu-pre",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "bea0a4dcba11173316e0a7af414f2a1e2db50f28",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-fu-pre",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "bea0a4dcba11173316e0a7af414f2a1e2db50f28",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "river-ending-score.spec.ts",
+      "file": "river-ending-score.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8176,
+                  "error": {
+                    "message": "Error: the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 134\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"anonId\": \"6e46a6da920e85b1614dad760087dff3\",\u001b[39m\n\u001b[31m+     \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+     \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+     \"epochId\": \"epoch-10-deepsky\",\u001b[39m\n\u001b[31m+     \"inputLogHash\": \"3d37374b0e4bd3d5e4b07e45b634771a9f6f866478e6a785bac0ed310d3b74b3\",\u001b[39m\n\u001b[31m+     \"profileName\": \"Robin\",\u001b[39m\n\u001b[31m+     \"score\": Object {\u001b[39m\n\u001b[31m+       \"baseValue\": 0,\u001b[39m\n\u001b[31m+       \"gold\": 5,\u001b[39m\n\u001b[31m+       \"secured\": true,\u001b[39m\n\u001b[31m+       \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+       \"waves\": 0,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+     \"seedHash\": \"e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282\",\u001b[39m\n\u001b[31m+     \"seedMode\": \"live\",\u001b[39m\n\u001b[31m+     \"tape\": Object {\u001b[39m\n\u001b[31m+       \"contract\": \"e10-river\",\u001b[39m\n\u001b[31m+       \"createdAt\": 1790430984096,\u001b[39m\n\u001b[31m+       \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+       \"eventLogHash\": \"fnv1a32:a8d16f71\",\u001b[39m\n\u001b[31m+       \"id\": \"990d034b-7f5d-46d3-ad75-285ca66495bc\",\u001b[39m\n\u001b[31m+       \"inputLog\": Object {\u001b[39m\n\u001b[31m+         \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+         \"difficultyPreset\": \"trail\",\u001b[39m\n\u001b[31m+         \"durationTicks\": 148,\u001b[39m\n\u001b[31m+         \"entries\": Array [\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 46,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 76,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 77,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 79,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 80,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -1,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 85,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 100,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+         ],\u001b[39m\n\u001b[31m+         \"name\": \"990d034b-7f5d-46d3-ad75-285ca66495bc\",\u001b[39m\n\u001b[31m+         \"playbookUses\": Array [],\u001b[39m\n\u001b[31m+         \"primarySlot\": 0,\u001b[39m\n\u001b[31m+         \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+         \"start\": Object {\u001b[39m\n\u001b[31m+           \"x\": 0,\u001b[39m\n\u001b[31m+           \"z\": 12,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"stepSeconds\": 0.03333333333333333,\u001b[39m\n\u001b[31m+         \"streams\": Array [],\u001b[39m\n\u001b[31m+         \"truncated\": null,\u001b[39m\n\u001b[31m+         \"version\": 1,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"kept\": false,\u001b[39m\n\u001b[31m+       \"meta\": Object {\u001b[39m\n\u001b[31m+         \"buildId\": \"dev\",\u001b[39m\n\u001b[31m+         \"engineHash\": \"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\u001b[39m\n\u001b[31m+         \"era\": 6,\u001b[39m\n\u001b[31m+         \"viewVersion\": 4,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"outcome\": Object {\u001b[39m\n\u001b[31m+         \"gold\": 5,\u001b[39m\n\u001b[31m+         \"reason\": \"secured\",\u001b[39m\n\u001b[31m+         \"secured\": true,\u001b[39m\n\u001b[31m+         \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+         \"waves\": 0,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"runStart\": Object {\u001b[39m\n\u001b[31m+         \"meta\": Object {\u001b[39m\n\u001b[31m+           \"tracks\": Object {\u001b[39m\n\u001b[31m+             \"agent\": 40,\u001b[39m\n\u001b[31m+             \"hero\": 40,\u001b[39m\n\u001b[31m+             \"science\": 999,\u001b[39m\n\u001b[31m+             \"territory\": 40,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"research\": Object {\u001b[39m\n\u001b[31m+           \"epochId\": \"epoch-1-frontier\",\u001b[39m\n\u001b[31m+           \"metaScienceCursor\": 999,\u001b[39m\n\u001b[31m+           \"pinnedTarget\": null,\u001b[39m\n\u001b[31m+           \"progress\": Object {\u001b[39m\n\u001b[31m+             \"tracks\": Object {\u001b[39m\n\u001b[31m+               \"agent\": 40,\u001b[39m\n\u001b[31m+               \"hero\": 40,\u001b[39m\n\u001b[31m+               \"science\": 999,\u001b[39m\n\u001b[31m+               \"territory\": 40,\u001b[39m\n\u001b[31m+             },\u001b[39m\n\u001b[31m+             \"version\": 1,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"proposalSalt\": 0,\u001b[39m\n\u001b[31m+           \"taken\": Array [],\u001b[39m\n\u001b[31m+           \"unlocks\": Object {},\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+       \"simVersion\": 1,\u001b[39m\n\u001b[31m+       \"version\": 2,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 134\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"anonId\": \"6e46a6da920e85b1614dad760087dff3\",\u001b[39m\n\u001b[31m+     \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+     \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+     \"epochId\": \"epoch-10-deepsky\",\u001b[39m\n\u001b[31m+     \"inputLogHash\": \"3d37374b0e4bd3d5e4b07e45b634771a9f6f866478e6a785bac0ed310d3b74b3\",\u001b[39m\n\u001b[31m+     \"profileName\": \"Robin\",\u001b[39m\n\u001b[31m+     \"score\": Object {\u001b[39m\n\u001b[31m+       \"baseValue\": 0,\u001b[39m\n\u001b[31m+       \"gold\": 5,\u001b[39m\n\u001b[31m+       \"secured\": true,\u001b[39m\n\u001b[31m+       \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+       \"waves\": 0,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+     \"seedHash\": \"e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282\",\u001b[39m\n\u001b[31m+     \"seedMode\": \"live\",\u001b[39m\n\u001b[31m+     \"tape\": Object {\u001b[39m\n\u001b[31m+       \"contract\": \"e10-river\",\u001b[39m\n\u001b[31m+       \"createdAt\": 1790430984096,\u001b[39m\n\u001b[31m+       \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+       \"eventLogHash\": \"fnv1a32:a8d16f71\",\u001b[39m\n\u001b[31m+       \"id\": \"990d034b-7f5d-46d3-ad75-285ca66495bc\",\u001b[39m\n\u001b[31m+       \"inputLog\": Object {\u001b[39m\n\u001b[31m+         \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+         \"difficultyPreset\": \"trail\",\u001b[39m\n\u001b[31m+         \"durationTicks\": 148,\u001b[39m\n\u001b[31m+         \"entries\": Array [\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 46,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 76,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 77,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 79,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 80,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -1,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 85,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 100,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+         ],\u001b[39m\n\u001b[31m+         \"name\": \"990d034b-7f5d-46d3-ad75-285ca66495bc\",\u001b[39m\n\u001b[31m+         \"playbookUses\": Array [],\u001b[39m\n\u001b[31m+         \"primarySlot\": 0,\u001b[39m\n\u001b[31m+         \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+         \"start\": Object {\u001b[39m\n\u001b[31m+           \"x\": 0,\u001b[39m\n\u001b[31m+           \"z\": 12,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"stepSeconds\": 0.03333333333333333,\u001b[39m\n\u001b[31m+         \"streams\": Array [],\u001b[39m\n\u001b[31m+         \"truncated\": null,\u001b[39m\n\u001b[31m+         \"version\": 1,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"kept\": false,\u001b[39m\n\u001b[31m+       \"meta\": Object {\u001b[39m\n\u001b[31m+         \"buildId\": \"dev\",\u001b[39m\n\u001b[31m+         \"engineHash\": \"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\u001b[39m\n\u001b[31m+         \"era\": 6,\u001b[39m\n\u001b[31m+         \"viewVersion\": 4,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"outcome\": Object {\u001b[39m\n\u001b[31m+         \"gold\": 5,\u001b[39m\n\u001b[31m+         \"reason\": \"secured\",\u001b[39m\n\u001b[31m+         \"secured\": true,\u001b[39m\n\u001b[31m+         \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+         \"waves\": 0,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"runStart\": Object {\u001b[39m\n\u001b[31m+         \"meta\": Object {\u001b[39m\n\u001b[31m+           \"tracks\": Object {\u001b[39m\n\u001b[31m+             \"agent\": 40,\u001b[39m\n\u001b[31m+             \"hero\": 40,\u001b[39m\n\u001b[31m+             \"science\": 999,\u001b[39m\n\u001b[31m+             \"territory\": 40,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"research\": Object {\u001b[39m\n\u001b[31m+           \"epochId\": \"epoch-1-frontier\",\u001b[39m\n\u001b[31m+           \"metaScienceCursor\": 999,\u001b[39m\n\u001b[31m+           \"pinnedTarget\": null,\u001b[39m\n\u001b[31m+           \"progress\": Object {\u001b[39m\n\u001b[31m+             \"tracks\": Object {\u001b[39m\n\u001b[31m+               \"agent\": 40,\u001b[39m\n\u001b[31m+               \"hero\": 40,\u001b[39m\n\u001b[31m+               \"science\": 999,\u001b[39m\n\u001b[31m+               \"territory\": 40,\u001b[39m\n\u001b[31m+             },\u001b[39m\n\u001b[31m+             \"version\": 1,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"proposalSalt\": 0,\u001b[39m\n\u001b[31m+           \"taken\": Array [],\u001b[39m\n\u001b[31m+           \"unlocks\": Object {},\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+       \"simVersion\": 1,\u001b[39m\n\u001b[31m+       \"version\": 2,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts:364:117",
+                    "location": {
+                      "file": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts",
+                      "column": 117,
+                      "line": 364
+                    },
+                    "snippet": "  362 |   // (b) THE STANDING IS HELD: nothing reaches the county, although the dev-send flag would carry any post.\n  363 |   await page.waitForTimeout(1500);\n> 364 |   expect(standings, 'the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)').toEqual([]);\n      |                                                                                                                     ^\n  365 |   // The kept reel stays door-shaped for the day the post is enabled: the client's validator reads it back whole, and\n  366 |   // the door's own handler, in-process with no store bound, admits the body `submitCountyStanding` would build.\n  367 |   expect(validateRunTape(reel), 'the client validator reads the kept reel back whole').toEqual(reel);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts",
+                        "column": 117,
+                        "line": 364
+                      },
+                      "message": "Error: the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 134\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"anonId\": \"6e46a6da920e85b1614dad760087dff3\",\u001b[39m\n\u001b[31m+     \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+     \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+     \"epochId\": \"epoch-10-deepsky\",\u001b[39m\n\u001b[31m+     \"inputLogHash\": \"3d37374b0e4bd3d5e4b07e45b634771a9f6f866478e6a785bac0ed310d3b74b3\",\u001b[39m\n\u001b[31m+     \"profileName\": \"Robin\",\u001b[39m\n\u001b[31m+     \"score\": Object {\u001b[39m\n\u001b[31m+       \"baseValue\": 0,\u001b[39m\n\u001b[31m+       \"gold\": 5,\u001b[39m\n\u001b[31m+       \"secured\": true,\u001b[39m\n\u001b[31m+       \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+       \"waves\": 0,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+     \"seedHash\": \"e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282\",\u001b[39m\n\u001b[31m+     \"seedMode\": \"live\",\u001b[39m\n\u001b[31m+     \"tape\": Object {\u001b[39m\n\u001b[31m+       \"contract\": \"e10-river\",\u001b[39m\n\u001b[31m+       \"createdAt\": 1790430984096,\u001b[39m\n\u001b[31m+       \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+       \"eventLogHash\": \"fnv1a32:a8d16f71\",\u001b[39m\n\u001b[31m+       \"id\": \"990d034b-7f5d-46d3-ad75-285ca66495bc\",\u001b[39m\n\u001b[31m+       \"inputLog\": Object {\u001b[39m\n\u001b[31m+         \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+         \"difficultyPreset\": \"trail\",\u001b[39m\n\u001b[31m+         \"durationTicks\": 148,\u001b[39m\n\u001b[31m+         \"entries\": Array [\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 46,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 76,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 77,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 79,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 80,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -1,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 85,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 100,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+         ],\u001b[39m\n\u001b[31m+         \"name\": \"990d034b-7f5d-46d3-ad75-285ca66495bc\",\u001b[39m\n\u001b[31m+         \"playbookUses\": Array [],\u001b[39m\n\u001b[31m+         \"primarySlot\": 0,\u001b[39m\n\u001b[31m+         \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+         \"start\": Object {\u001b[39m\n\u001b[31m+           \"x\": 0,\u001b[39m\n\u001b[31m+           \"z\": 12,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"stepSeconds\": 0.03333333333333333,\u001b[39m\n\u001b[31m+         \"streams\": Array [],\u001b[39m\n\u001b[31m+         \"truncated\": null,\u001b[39m\n\u001b[31m+         \"version\": 1,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"kept\": false,\u001b[39m\n\u001b[31m+       \"meta\": Object {\u001b[39m\n\u001b[31m+         \"buildId\": \"dev\",\u001b[39m\n\u001b[31m+         \"engineHash\": \"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\u001b[39m\n\u001b[31m+         \"era\": 6,\u001b[39m\n\u001b[31m+         \"viewVersion\": 4,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"outcome\": Object {\u001b[39m\n\u001b[31m+         \"gold\": 5,\u001b[39m\n\u001b[31m+         \"reason\": \"secured\",\u001b[39m\n\u001b[31m+         \"secured\": true,\u001b[39m\n\u001b[31m+         \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+         \"waves\": 0,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"runStart\": Object {\u001b[39m\n\u001b[31m+         \"meta\": Object {\u001b[39m\n\u001b[31m+           \"tracks\": Object {\u001b[39m\n\u001b[31m+             \"agent\": 40,\u001b[39m\n\u001b[31m+             \"hero\": 40,\u001b[39m\n\u001b[31m+             \"science\": 999,\u001b[39m\n\u001b[31m+             \"territory\": 40,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"research\": Object {\u001b[39m\n\u001b[31m+           \"epochId\": \"epoch-1-frontier\",\u001b[39m\n\u001b[31m+           \"metaScienceCursor\": 999,\u001b[39m\n\u001b[31m+           \"pinnedTarget\": null,\u001b[39m\n\u001b[31m+           \"progress\": Object {\u001b[39m\n\u001b[31m+             \"tracks\": Object {\u001b[39m\n\u001b[31m+               \"agent\": 40,\u001b[39m\n\u001b[31m+               \"hero\": 40,\u001b[39m\n\u001b[31m+               \"science\": 999,\u001b[39m\n\u001b[31m+               \"territory\": 40,\u001b[39m\n\u001b[31m+             },\u001b[39m\n\u001b[31m+             \"version\": 1,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"proposalSalt\": 0,\u001b[39m\n\u001b[31m+           \"taken\": Array [],\u001b[39m\n\u001b[31m+           \"unlocks\": Object {},\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+       \"simVersion\": 1,\u001b[39m\n\u001b[31m+       \"version\": 2,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  362 |   // (b) THE STANDING IS HELD: nothing reaches the county, although the dev-send flag would carry any post.\n  363 |   await page.waitForTimeout(1500);\n> 364 |   expect(standings, 'the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)').toEqual([]);\n      |                                                                                                                     ^\n  365 |   // The kept reel stays door-shaped for the day the post is enabled: the client's validator reads it back whole, and\n  366 |   // the door's own handler, in-process with no store bound, admits the body `submitCountyStanding` would build.\n  367 |   expect(validateRunTape(reel), 'the client validator reads the kept reel back whole').toEqual(reel);\n    at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts:364:117"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-26T13:56:22.495Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-fu-pre/river-ending-score-the-Riv-43d8b-g-and-never-writes-a-second-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-fu-pre/river-ending-score-the-Riv-43d8b-g-and-never-writes-a-second-desktop-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts",
+                    "column": 117,
+                    "line": 364
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "968c022e3c7f3e8821d9-aea0e33594daaae9f84f",
+          "file": "river-ending-score.spec.ts",
+          "line": 322,
+          "column": 1
+        },
+        {
+          "title": "a boot of the River with no player action writes nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14499,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-26T13:56:31.365Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "968c022e3c7f3e8821d9-510484d10088eec45222",
+          "file": "river-ending-score.spec.ts",
+          "line": 429,
+          "column": 1
+        },
+        {
+          "title": "a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "plain-boot",
+                  "description": "{\"activeId\":\"the-claim\",\"fallbackReason\":\"debug-disabled\",\"name\":\"The Claim\"}"
+                },
+                {
+                  "type": "raw-river",
+                  "description": "{\"activeId\":\"e10-river\",\"fallbackReason\":null,\"name\":\"The River\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10677,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-26T13:56:46.046Z",
+                  "annotations": [
+                    {
+                      "type": "plain-boot",
+                      "description": "{\"activeId\":\"the-claim\",\"fallbackReason\":\"debug-disabled\",\"name\":\"The Claim\"}"
+                    },
+                    {
+                      "type": "raw-river",
+                      "description": "{\"activeId\":\"e10-river\",\"fallbackReason\":null,\"name\":\"The River\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "968c022e3c7f3e8821d9-5b765a48f8f85dae4c5c",
+          "file": "river-ending-score.spec.ts",
+          "line": 449,
+          "column": 1
+        },
+        {
+          "title": "the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8374,
+                  "error": {
+                    "message": "Error: the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 146\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"anonId\": \"796b59d56e1978edbc3afc235aa63b96\",\u001b[39m\n\u001b[31m+     \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+     \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+     \"epochId\": \"epoch-10-deepsky\",\u001b[39m\n\u001b[31m+     \"inputLogHash\": \"79d4fa1de06d3edae63d4bed8797ef6ec35f05c410aef37ac073e6c602631990\",\u001b[39m\n\u001b[31m+     \"profileName\": \"Robin\",\u001b[39m\n\u001b[31m+     \"score\": Object {\u001b[39m\n\u001b[31m+       \"baseValue\": 0,\u001b[39m\n\u001b[31m+       \"gold\": 5,\u001b[39m\n\u001b[31m+       \"secured\": true,\u001b[39m\n\u001b[31m+       \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+       \"waves\": 0,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+     \"seedHash\": \"e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282\",\u001b[39m\n\u001b[31m+     \"seedMode\": \"live\",\u001b[39m\n\u001b[31m+     \"tape\": Object {\u001b[39m\n\u001b[31m+       \"contract\": \"e10-river\",\u001b[39m\n\u001b[31m+       \"createdAt\": 1790431018657,\u001b[39m\n\u001b[31m+       \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+       \"eventLogHash\": \"fnv1a32:f4a47e49\",\u001b[39m\n\u001b[31m+       \"id\": \"844ee4bf-3a89-4ac3-b0cd-61dc83fb0355\",\u001b[39m\n\u001b[31m+       \"inputLog\": Object {\u001b[39m\n\u001b[31m+         \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+         \"difficultyPreset\": \"trail\",\u001b[39m\n\u001b[31m+         \"durationTicks\": 148,\u001b[39m\n\u001b[31m+         \"entries\": Array [\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 44,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 49,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 50,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 78,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 79,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -1,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 84,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 91,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -1,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 92,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 100,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+         ],\u001b[39m\n\u001b[31m+         \"name\": \"844ee4bf-3a89-4ac3-b0cd-61dc83fb0355\",\u001b[39m\n\u001b[31m+         \"playbookUses\": Array [],\u001b[39m\n\u001b[31m+         \"primarySlot\": 0,\u001b[39m\n\u001b[31m+         \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+         \"start\": Object {\u001b[39m\n\u001b[31m+           \"x\": 0,\u001b[39m\n\u001b[31m+           \"z\": 12,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"stepSeconds\": 0.03333333333333333,\u001b[39m\n\u001b[31m+         \"streams\": Array [],\u001b[39m\n\u001b[31m+         \"truncated\": null,\u001b[39m\n\u001b[31m+         \"version\": 1,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"kept\": false,\u001b[39m\n\u001b[31m+       \"meta\": Object {\u001b[39m\n\u001b[31m+         \"buildId\": \"dev\",\u001b[39m\n\u001b[31m+         \"engineHash\": \"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\u001b[39m\n\u001b[31m+         \"era\": 6,\u001b[39m\n\u001b[31m+         \"viewVersion\": 4,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"outcome\": Object {\u001b[39m\n\u001b[31m+         \"gold\": 5,\u001b[39m\n\u001b[31m+         \"reason\": \"secured\",\u001b[39m\n\u001b[31m+         \"secured\": true,\u001b[39m\n\u001b[31m+         \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+         \"waves\": 0,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"runStart\": Object {\u001b[39m\n\u001b[31m+         \"meta\": Object {\u001b[39m\n\u001b[31m+           \"tracks\": Object {\u001b[39m\n\u001b[31m+             \"agent\": 40,\u001b[39m\n\u001b[31m+             \"hero\": 40,\u001b[39m\n\u001b[31m+             \"science\": 999,\u001b[39m\n\u001b[31m+             \"territory\": 40,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"research\": Object {\u001b[39m\n\u001b[31m+           \"epochId\": \"epoch-1-frontier\",\u001b[39m\n\u001b[31m+           \"metaScienceCursor\": 999,\u001b[39m\n\u001b[31m+           \"pinnedTarget\": null,\u001b[39m\n\u001b[31m+           \"progress\": Object {\u001b[39m\n\u001b[31m+             \"tracks\": Object {\u001b[39m\n\u001b[31m+               \"agent\": 40,\u001b[39m\n\u001b[31m+               \"hero\": 40,\u001b[39m\n\u001b[31m+               \"science\": 999,\u001b[39m\n\u001b[31m+               \"territory\": 40,\u001b[39m\n\u001b[31m+             },\u001b[39m\n\u001b[31m+             \"version\": 1,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"proposalSalt\": 0,\u001b[39m\n\u001b[31m+           \"taken\": Array [],\u001b[39m\n\u001b[31m+           \"unlocks\": Object {},\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+       \"simVersion\": 1,\u001b[39m\n\u001b[31m+       \"version\": 2,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 146\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"anonId\": \"796b59d56e1978edbc3afc235aa63b96\",\u001b[39m\n\u001b[31m+     \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+     \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+     \"epochId\": \"epoch-10-deepsky\",\u001b[39m\n\u001b[31m+     \"inputLogHash\": \"79d4fa1de06d3edae63d4bed8797ef6ec35f05c410aef37ac073e6c602631990\",\u001b[39m\n\u001b[31m+     \"profileName\": \"Robin\",\u001b[39m\n\u001b[31m+     \"score\": Object {\u001b[39m\n\u001b[31m+       \"baseValue\": 0,\u001b[39m\n\u001b[31m+       \"gold\": 5,\u001b[39m\n\u001b[31m+       \"secured\": true,\u001b[39m\n\u001b[31m+       \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+       \"waves\": 0,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+     \"seedHash\": \"e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282\",\u001b[39m\n\u001b[31m+     \"seedMode\": \"live\",\u001b[39m\n\u001b[31m+     \"tape\": Object {\u001b[39m\n\u001b[31m+       \"contract\": \"e10-river\",\u001b[39m\n\u001b[31m+       \"createdAt\": 1790431018657,\u001b[39m\n\u001b[31m+       \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+       \"eventLogHash\": \"fnv1a32:f4a47e49\",\u001b[39m\n\u001b[31m+       \"id\": \"844ee4bf-3a89-4ac3-b0cd-61dc83fb0355\",\u001b[39m\n\u001b[31m+       \"inputLog\": Object {\u001b[39m\n\u001b[31m+         \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+         \"difficultyPreset\": \"trail\",\u001b[39m\n\u001b[31m+         \"durationTicks\": 148,\u001b[39m\n\u001b[31m+         \"entries\": Array [\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 44,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 49,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 50,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 78,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 79,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -1,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 84,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 91,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -1,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 92,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 100,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+         ],\u001b[39m\n\u001b[31m+         \"name\": \"844ee4bf-3a89-4ac3-b0cd-61dc83fb0355\",\u001b[39m\n\u001b[31m+         \"playbookUses\": Array [],\u001b[39m\n\u001b[31m+         \"primarySlot\": 0,\u001b[39m\n\u001b[31m+         \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+         \"start\": Object {\u001b[39m\n\u001b[31m+           \"x\": 0,\u001b[39m\n\u001b[31m+           \"z\": 12,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"stepSeconds\": 0.03333333333333333,\u001b[39m\n\u001b[31m+         \"streams\": Array [],\u001b[39m\n\u001b[31m+         \"truncated\": null,\u001b[39m\n\u001b[31m+         \"version\": 1,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"kept\": false,\u001b[39m\n\u001b[31m+       \"meta\": Object {\u001b[39m\n\u001b[31m+         \"buildId\": \"dev\",\u001b[39m\n\u001b[31m+         \"engineHash\": \"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\u001b[39m\n\u001b[31m+         \"era\": 6,\u001b[39m\n\u001b[31m+         \"viewVersion\": 4,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"outcome\": Object {\u001b[39m\n\u001b[31m+         \"gold\": 5,\u001b[39m\n\u001b[31m+         \"reason\": \"secured\",\u001b[39m\n\u001b[31m+         \"secured\": true,\u001b[39m\n\u001b[31m+         \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+         \"waves\": 0,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"runStart\": Object {\u001b[39m\n\u001b[31m+         \"meta\": Object {\u001b[39m\n\u001b[31m+           \"tracks\": Object {\u001b[39m\n\u001b[31m+             \"agent\": 40,\u001b[39m\n\u001b[31m+             \"hero\": 40,\u001b[39m\n\u001b[31m+             \"science\": 999,\u001b[39m\n\u001b[31m+             \"territory\": 40,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"research\": Object {\u001b[39m\n\u001b[31m+           \"epochId\": \"epoch-1-frontier\",\u001b[39m\n\u001b[31m+           \"metaScienceCursor\": 999,\u001b[39m\n\u001b[31m+           \"pinnedTarget\": null,\u001b[39m\n\u001b[31m+           \"progress\": Object {\u001b[39m\n\u001b[31m+             \"tracks\": Object {\u001b[39m\n\u001b[31m+               \"agent\": 40,\u001b[39m\n\u001b[31m+               \"hero\": 40,\u001b[39m\n\u001b[31m+               \"science\": 999,\u001b[39m\n\u001b[31m+               \"territory\": 40,\u001b[39m\n\u001b[31m+             },\u001b[39m\n\u001b[31m+             \"version\": 1,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"proposalSalt\": 0,\u001b[39m\n\u001b[31m+           \"taken\": Array [],\u001b[39m\n\u001b[31m+           \"unlocks\": Object {},\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+       \"simVersion\": 1,\u001b[39m\n\u001b[31m+       \"version\": 2,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts:364:117",
+                    "location": {
+                      "file": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts",
+                      "column": 117,
+                      "line": 364
+                    },
+                    "snippet": "  362 |   // (b) THE STANDING IS HELD: nothing reaches the county, although the dev-send flag would carry any post.\n  363 |   await page.waitForTimeout(1500);\n> 364 |   expect(standings, 'the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)').toEqual([]);\n      |                                                                                                                     ^\n  365 |   // The kept reel stays door-shaped for the day the post is enabled: the client's validator reads it back whole, and\n  366 |   // the door's own handler, in-process with no store bound, admits the body `submitCountyStanding` would build.\n  367 |   expect(validateRunTape(reel), 'the client validator reads the kept reel back whole').toEqual(reel);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts",
+                        "column": 117,
+                        "line": 364
+                      },
+                      "message": "Error: the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -   1\u001b[39m\n\u001b[31m+ Received  + 146\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"anonId\": \"796b59d56e1978edbc3afc235aa63b96\",\u001b[39m\n\u001b[31m+     \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+     \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+     \"epochId\": \"epoch-10-deepsky\",\u001b[39m\n\u001b[31m+     \"inputLogHash\": \"79d4fa1de06d3edae63d4bed8797ef6ec35f05c410aef37ac073e6c602631990\",\u001b[39m\n\u001b[31m+     \"profileName\": \"Robin\",\u001b[39m\n\u001b[31m+     \"score\": Object {\u001b[39m\n\u001b[31m+       \"baseValue\": 0,\u001b[39m\n\u001b[31m+       \"gold\": 5,\u001b[39m\n\u001b[31m+       \"secured\": true,\u001b[39m\n\u001b[31m+       \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+       \"waves\": 0,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+     \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+     \"seedHash\": \"e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282\",\u001b[39m\n\u001b[31m+     \"seedMode\": \"live\",\u001b[39m\n\u001b[31m+     \"tape\": Object {\u001b[39m\n\u001b[31m+       \"contract\": \"e10-river\",\u001b[39m\n\u001b[31m+       \"createdAt\": 1790431018657,\u001b[39m\n\u001b[31m+       \"difficulty\": \"trail\",\u001b[39m\n\u001b[31m+       \"eventLogHash\": \"fnv1a32:f4a47e49\",\u001b[39m\n\u001b[31m+       \"id\": \"844ee4bf-3a89-4ac3-b0cd-61dc83fb0355\",\u001b[39m\n\u001b[31m+       \"inputLog\": Object {\u001b[39m\n\u001b[31m+         \"contractId\": \"e10-river\",\u001b[39m\n\u001b[31m+         \"difficultyPreset\": \"trail\",\u001b[39m\n\u001b[31m+         \"durationTicks\": 148,\u001b[39m\n\u001b[31m+         \"entries\": Array [\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 44,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 49,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 50,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 78,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -0.707,\u001b[39m\n\u001b[31m+             \"my\": -0.707,\u001b[39m\n\u001b[31m+             \"t\": 79,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -1,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 84,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 91,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": -1,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 92,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           Object {\u001b[39m\n\u001b[31m+             \"a\": Array [],\u001b[39m\n\u001b[31m+             \"mx\": 0,\u001b[39m\n\u001b[31m+             \"my\": 0,\u001b[39m\n\u001b[31m+             \"t\": 100,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+         ],\u001b[39m\n\u001b[31m+         \"name\": \"844ee4bf-3a89-4ac3-b0cd-61dc83fb0355\",\u001b[39m\n\u001b[31m+         \"playbookUses\": Array [],\u001b[39m\n\u001b[31m+         \"primarySlot\": 0,\u001b[39m\n\u001b[31m+         \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+         \"start\": Object {\u001b[39m\n\u001b[31m+           \"x\": 0,\u001b[39m\n\u001b[31m+           \"z\": 12,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"stepSeconds\": 0.03333333333333333,\u001b[39m\n\u001b[31m+         \"streams\": Array [],\u001b[39m\n\u001b[31m+         \"truncated\": null,\u001b[39m\n\u001b[31m+         \"version\": 1,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"kept\": false,\u001b[39m\n\u001b[31m+       \"meta\": Object {\u001b[39m\n\u001b[31m+         \"buildId\": \"dev\",\u001b[39m\n\u001b[31m+         \"engineHash\": \"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\u001b[39m\n\u001b[31m+         \"era\": 6,\u001b[39m\n\u001b[31m+         \"viewVersion\": 4,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"outcome\": Object {\u001b[39m\n\u001b[31m+         \"gold\": 5,\u001b[39m\n\u001b[31m+         \"reason\": \"secured\",\u001b[39m\n\u001b[31m+         \"secured\": true,\u001b[39m\n\u001b[31m+         \"timeAlive\": 4.933333333333326,\u001b[39m\n\u001b[31m+         \"waves\": 0,\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"runStart\": Object {\u001b[39m\n\u001b[31m+         \"meta\": Object {\u001b[39m\n\u001b[31m+           \"tracks\": Object {\u001b[39m\n\u001b[31m+             \"agent\": 40,\u001b[39m\n\u001b[31m+             \"hero\": 40,\u001b[39m\n\u001b[31m+             \"science\": 999,\u001b[39m\n\u001b[31m+             \"territory\": 40,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+         \"research\": Object {\u001b[39m\n\u001b[31m+           \"epochId\": \"epoch-1-frontier\",\u001b[39m\n\u001b[31m+           \"metaScienceCursor\": 999,\u001b[39m\n\u001b[31m+           \"pinnedTarget\": null,\u001b[39m\n\u001b[31m+           \"progress\": Object {\u001b[39m\n\u001b[31m+             \"tracks\": Object {\u001b[39m\n\u001b[31m+               \"agent\": 40,\u001b[39m\n\u001b[31m+               \"hero\": 40,\u001b[39m\n\u001b[31m+               \"science\": 999,\u001b[39m\n\u001b[31m+               \"territory\": 40,\u001b[39m\n\u001b[31m+             },\u001b[39m\n\u001b[31m+             \"version\": 1,\u001b[39m\n\u001b[31m+           },\u001b[39m\n\u001b[31m+           \"proposalSalt\": 0,\u001b[39m\n\u001b[31m+           \"taken\": Array [],\u001b[39m\n\u001b[31m+           \"unlocks\": Object {},\u001b[39m\n\u001b[31m+           \"version\": 1,\u001b[39m\n\u001b[31m+         },\u001b[39m\n\u001b[31m+       },\u001b[39m\n\u001b[31m+       \"seed\": \"e1-the-claim-r2026w39-492bfb6017b9\",\u001b[39m\n\u001b[31m+       \"simVersion\": 1,\u001b[39m\n\u001b[31m+       \"version\": 2,\u001b[39m\n\u001b[31m+     },\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  362 |   // (b) THE STANDING IS HELD: nothing reaches the county, although the dev-send flag would carry any post.\n  363 |   await page.waitForTimeout(1500);\n> 364 |   expect(standings, 'the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)').toEqual([]);\n      |                                                                                                                     ^\n  365 |   // The kept reel stays door-shaped for the day the post is enabled: the client's validator reads it back whole, and\n  366 |   // the door's own handler, in-process with no store bound, admits the body `submitCountyStanding` would build.\n  367 |   expect(validateRunTape(reel), 'the client validator reads the kept reel back whole').toEqual(reel);\n    at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts:364:117"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-26T13:56:57.190Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-fu-pre/river-ending-score-the-Riv-43d8b-g-and-never-writes-a-second-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-fu-pre/river-ending-score-the-Riv-43d8b-g-and-never-writes-a-second-mobile-chrome/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/wt-prefix/e2e/river-ending-score.spec.ts",
+                    "column": 117,
+                    "line": 364
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "968c022e3c7f3e8821d9-6bb9a3825cd81ddd3af2",
+          "file": "river-ending-score.spec.ts",
+          "line": 322,
+          "column": 1
+        },
+        {
+          "title": "a boot of the River with no player action writes nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14565,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-26T13:57:06.192Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "968c022e3c7f3e8821d9-c2ceb449c70aa9be1630",
+          "file": "river-ending-score.spec.ts",
+          "line": 429,
+          "column": 1
+        },
+        {
+          "title": "a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "plain-boot",
+                  "description": "{\"activeId\":\"the-claim\",\"fallbackReason\":\"debug-disabled\",\"name\":\"The Claim\"}"
+                },
+                {
+                  "type": "raw-river",
+                  "description": "{\"activeId\":\"e10-river\",\"fallbackReason\":null,\"name\":\"The River\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10520,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-26T13:57:20.927Z",
+                  "annotations": [
+                    {
+                      "type": "plain-boot",
+                      "description": "{\"activeId\":\"the-claim\",\"fallbackReason\":\"debug-disabled\",\"name\":\"The Claim\"}"
+                    },
+                    {
+                      "type": "raw-river",
+                      "description": "{\"activeId\":\"e10-river\",\"fallbackReason\":null,\"name\":\"The River\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "968c022e3c7f3e8821d9-649ea9833d0d0a73ee1a",
+          "file": "river-ending-score.spec.ts",
+          "line": 449,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-26T13:56:21.684Z",
+    "duration": 69833.03600000001,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
