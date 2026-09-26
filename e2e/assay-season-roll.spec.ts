@@ -118,6 +118,7 @@ test('the county board opens on the season now riding and reaches the closed fir
   // The default view is the current season — and the reader proves it by NOT naming a season.
   await expect(page.getByTestId('county-standings-season-current')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByTestId('county-standings-season-first')).toHaveAttribute('aria-pressed', 'false');
+  await page.getByTestId('county-standings-week-all').click();
   await expect(page.getByTestId('county-standings-row-1')).toContainText('Fresh Season Rider');
   await expect(page.getByTestId('county-standings-row-2')).toHaveCount(0);
   await expect(page.locator('.county-standings__board-label')).toContainText('County board');
