@@ -1,0 +1,34 @@
+branch feat/county-board-open-week-1 tip 97ec5b5dd 2026-09-26 17:14Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/cbw1.json
+scratch store at the store's main 5793a96
+chain base 9536e0358
+merged 40c1ee15b
+F-CBW1-4: skill.md names ?rotation= after line 42
+ℹ pass 18 ℹ fail 1 
+cure cbw1: skill.md guard red after the insertion; reverted, F-CBW1-4 left for a doc slice
+cure cbw1: ledger row committed d9cc954ab
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551 (pinned af0e2d889eb353cef53fc6b4eaa695d4460961d4aea894ee22b544f396041e45)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1128 files, 97722583 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34350209 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (311.2s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 140 ℹ fail 0 
+functions gates: accounts rc=0 | mp rc=0 | stats rc=0
+ledger battery start 17:26Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 17:31Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/live-seed-rotation.spec.ts e2e/tl-02-public-stats.spec.ts e2e/county-board-open-week.spec.ts
+e2e: rc=0   62 passed (3.8m)  17:35Z
+battery start 17:35Z
+battery: rc=1 ℹ tests 1037 ℹ pass 1030 ℹ fail 2 ℹ skipped 5  17:51Z
+✖ rotation registry stays outside the engine identity corpus (694.681959ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (239.037625ms)
+dirt after battery: 0
+cbw1-PREP-DONE
+verdict: clean
+hash at pin time: 7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551
+pin #69 `7bfbed8b`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/county-board-open-week-1.md
