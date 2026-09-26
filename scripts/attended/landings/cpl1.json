@@ -1,0 +1,46 @@
+{
+  "tag": "cpl1",
+  "branch": "feat/charter-press-locked-lands-1",
+  "port": 5395,
+  "mergeMessage": "drain: merge feat/charter-press-locked-lands-1 — charter-press-locked-lands-1 — the Charter Press lever offers only the lands the player has unlocked (a fresh profile: the Claim; a secured Claim: the Claim, the Dry Gulch, Twin Banks) and the press-through opens the land chosen, where before all five cards showed and Twin Banks briefed 'The Claim' (F-1179-4 (a), owner 'a' 2026-09-26; Opus 5.5 implementer at max effort; the cards render when the lever opens, nothing on boot)",
+  "hash": "pin",
+  "pinCause": "charter-press-locked-lands-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-1179-4 (a), owner 2026-09-26): the Charter Press panel offers only unlocked lands; src/charter/PressPanel.ts is the one differing input of 662; no sim, contract, floor or table changed; the heat-15 probe tape replays byte-identical on base and branch (fnv1a32:b131e18e, secured, 10 waves, 335 gold, 300 s).",
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/charter-press-totality.spec.ts",
+      "e2e/ap16-7-epoch-levers.spec.ts",
+      "e2e/cp01-charter-roundtrip.spec.ts",
+      "e2e/cp04-lever.spec.ts"
+    ],
+    "guards": [],
+    "allowedE2E": [
+      "cp04-lever\\.spec\\.ts:92:"
+    ]
+  },
+  "cure": "scripts/attended/landings/cpl1-cure.sh",
+  "review": {
+    "path": "reviews/charter-press-locked-lands-1.md",
+    "title": "Drain review: `charter-press-locked-lands-1`, the Charter Press lever offers only unlocked lands (Opus 5.5 implementer at max effort; F-1179-4 (a))",
+    "body": "scripts/attended/landings/cpl1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "charter-press-locked-lands-1.md",
+    "rowKey": "CHARTER PRESS LOCKED LANDS 1 LANDED",
+    "rowEmoji": "🗝️",
+    "rowText": "The lever builds its land cards when the player opens it and offers only lands whose contract `contractUnlockStatus` reports unlocked: a fresh profile sees the Claim alone, preselected, and it opens 'The Claim: Defend the Camp' (before: five cards, and pressing Twin Banks opened `contract=e1-twin-banks` briefing 'The Claim', the boot clearing the launch as staged-contract-locked); a secured Claim offers the Claim, the Dry Gulch and Twin Banks, and Twin Banks opens 'Twin Banks: Defend the Camp' with the launch kept; the preview seam still offers all five. Boot renders 0 cards and fetches 0 land images (before 5 and 5). `LeverTemplates.ts` and `ContractUnlock.ts` untouched. Specs: ap16-7 2/2, charter-press-totality 10/10 (three new rows + a secured-Claim rig fixture), cp01 20/20, task-025 10/10, m2-01 14/14; cp04's five-card assertion re-expressed under a named lift (F-CPL1-1) and its seven seeded boots red on base and branch alike (F-1179-3, F-CPL1-3). tsc, build, E1 release build and assert-release-build rc 0. Engine hash PINNED {PIN} (PressPanel.ts the one differing input of 662; the heat-15 tape replays byte-identical). F-CPL1-2 on the OWNER'S DESK (the Full Press shelf's Launch of a locked charter also opens the Claim; recommended: refuse with an honest line). F-CPL1-3 (cp04's seeded boots need their unlocks seeded per row) and F-CPL1-4 (a debug `epoch=` editor URL may split the offer's era from the boot's) recorded, DEFERRED. Deployed. `reviews/charter-press-locked-lands-1.md`.",
+    "statusPhrase": "the Charter Press lever offers only the lands the player has unlocked, and the press-through opens the land chosen",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh cpl1, queued behind svf1)"
+  },
+  "deploy": true,
+  "preview": false,
+  "evidenceDir": "artifacts/charter-press-locked-lands-1"
+}
