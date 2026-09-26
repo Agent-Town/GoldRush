@@ -1,0 +1,37 @@
+{
+  "tag": "sgs2",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5400,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-ground-strategy-2 — Astra's run 9: restore-ground refined on the F-SGS1-1 premise (turrets before beacons at equal urgency; abandon a piece on its second wreck; from wave 16 upgrade the strongest turret or buy a replacement at the choke): Old Canal PHONE PASS on the final driver with the bank-cell image (wave 20, 600.1 s, 116.6 HP); Old Canal DESKTOP secured wave 20 on both attempts, but on the revision before the final funding correction, so the final-driver desktop proof is still owed; Twin Banks phone HELD at wave 17 (a funding excursion with the defenses intact); Incline flag-unset PASS; no balance changes (owner 'Yes, let it run please' 2026-09-26; Astra on lane-c)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/sol-ground-strategy-2.md",
+    "title": "Drain review: `sol-ground-strategy-2`, Old Canal secured on both screens by the refined strategy (desktop on the penultimate revision), Twin Banks holds at wave 17",
+    "body": "scripts/attended/landings/sgs2-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-ground-strategy-2.md",
+    "rowKey": "SOL GROUND STRATEGY 2 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra's run 9 (`artifacts/sol/play-proofs/run-9/`): three rules added to `restore-ground` on the F-SGS1-1 premise (at equal HP-fraction urgency turrets before beacons and support; abandon a piece on its second observed wreck in the current or previous wave; from wave 16 upgrade the strongest standing turret at the native price or buy an affordable replacement at the home choke, guarded before wave 19). Old Canal PHONE PASS on the final driver: wave 20, 600.133 s, 116.6 HP, bank, Book, reload and the previously missing bank-cell image (F-SGS1-2 closed). Old Canal DESKTOP: both attempts secured wave 20 at 600.133 s (attempt 1: 94.2 HP, 37 gold, 15 repairs; the second on a written changed premise about the upgrade approach radius), but both rides predate the final funding correction in the committed driver, so Astra refuses to relabel them: the final-driver desktop proof is OWED (F-SGS2-1). Twin Banks phone HELD: died wave 17 at 521.333 s on a failed funding excursion with the defenses intact (F-SGS2-2, a different failure mode from Old Canal's); Twin Banks desktop not run under the gate. Incline flag-unset PASS (wave 14, 577.333 s); the default path's normalized syntax identical with the flag false. Recommendation, verbatim: 'Keep restore-ground opt-in. Do not change map balance from these holds alone.' Engine hash unchanged. `reviews/sol-ground-strategy-2.md`.",
+    "statusPhrase": "Astra's refined strategy secures Old Canal on both screens (desktop on the penultimate driver revision); Twin Banks holds at wave 17",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh sgs2; Astra on lane-c, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-9"
+}
