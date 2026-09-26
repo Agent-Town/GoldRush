@@ -2,7 +2,7 @@
   "tag": "svf1",
   "branch": "feat/site-vibe-fixes-1",
   "port": 5394,
-  "mergeMessage": "drain: merge feat/site-vibe-fixes-1 — site-vibe-fixes-1 — the landing page's three illustrations become byte-exact files under site/assets (the page 938,556 -> 17,913 B), a real 1200x630 share card from the heroine-with-pan illustration replaces the HUD-cropped frame (og:image, twitter:image), and the footer's token-chart link goes per the brand book §5 (owner 'sure, do it' 2026-09-26; F-VIBE-2, F-VIBE-3, F-VIBE-5; Opus 5.5 implementer at max effort)",
+  "mergeMessage": "drain: merge feat/site-vibe-fixes-1 — site-vibe-fixes-1 — the landing page's three illustrations become byte-exact files under site/assets (the page 938,556 -> 17,735 B), a real 1200x630 share card from the heroine-with-pan illustration replaces the HUD-cropped frame (og:image, twitter:image), and the footer's token-chart link goes per the brand book §5 (owner 'sure, do it' 2026-09-26; F-VIBE-2, F-VIBE-3, F-VIBE-5; Opus 5.5 implementer at max effort)",
   "hash": "unchanged",
   "gates": {
     "releaseBuild": false,
@@ -27,11 +27,12 @@
     "taskFile": "site-vibe-fixes-1.md",
     "rowKey": "SITE VIBE FIXES 1 LANDED",
     "rowEmoji": "🖼️",
-    "rowText": "F-VIBE-3: the three inlined illustrations are byte-exact files under `site/assets/` (`heroine-with-pan-before-ridge-of-walkers.jpg` 211,205 B, `heroine-mid-fight.jpg` 208,743 B, `calculating-house-glass-hall.jpg` 270,568 B, each 1200x800; the page 938,556 -> 17,913 B; proof by re-encoding and SHA-256). F-VIBE-2: `og:image` and `twitter:image` point at `site/assets/share-card.jpg`, 1200x630, 223,899 B, made from the heroine-with-pan illustration by `scripts/site-share-card.mjs` (sharp, already a devDependency; `--check` reproduces it byte for byte). F-VIBE-5: the footer's token-chart link is removed (brand book §5). Desktop renders pixel-exact apart from the footer over three runs; at 390 px only the footer differs strongly, the rest within Chromium's full-page capture flicker (F-SVF1-1, non-blocking). Site guards 11/11; build rc 0; engine hash unchanged; node-guards reds attributed to the scratch worktree on a clean control. Deployed to the site by `scripts/deploy-site.sh` after the ff (by hand: `land.sh` deploys the game, not the site). `reviews/site-vibe-fixes-1.md`.",
+    "rowText": "F-VIBE-3: the three inlined illustrations are byte-exact files under `site/assets/` (`heroine-with-pan-before-ridge-of-walkers.jpg` 211,205 B, `heroine-mid-fight.jpg` 208,743 B, `calculating-house-glass-hall.jpg` 270,568 B, each 1200x800; the page 938,556 -> 17,735 B; proof by re-encoding and SHA-256). F-VIBE-2: `og:image` and `twitter:image` point at `site/assets/share-card.jpg`, 1200x630, 223,899 B, made from the heroine-with-pan illustration by `scripts/site-share-card.mjs` (sharp, already a devDependency; `--check` reproduces it byte for byte). F-VIBE-5: the footer's token-chart link is removed (brand book §5). Desktop renders pixel-exact apart from the footer over three runs; at 390 px only the footer differs strongly, the rest within Chromium's full-page capture flicker (F-SVF1-1, non-blocking). Site guards 11/11; build rc 0; engine hash unchanged; node-guards reds attributed to the scratch worktree on a clean control. Deployed to the site by `scripts/deploy-site.sh` after the ff (by hand: `land.sh` deploys the game, not the site). `reviews/site-vibe-fixes-1.md`.",
     "statusPhrase": "the landing page's key art is a real share card, its three illustrations are files, its footer has no token link",
     "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh svf1; site deploy by hand after the ff)"
   },
   "deploy": false,
   "preview": false,
-  "evidenceDir": "artifacts/site-vibe-fixes-1"
+  "evidenceDir": "artifacts/site-vibe-fixes-1",
+  "cure": "scripts/attended/landings/svf1-cure.sh"
 }
