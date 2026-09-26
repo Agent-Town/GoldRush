@@ -15,7 +15,8 @@
 // key by key, and the take is labelled STAGED. Without it the session plays Wren's ledger as earned.
 //
 // Usage, inside the drain lock (see batch.sh):
-//   node scripts/launch-video/session-baron.mjs --take t1 [--staged-unlock | --staged-if-locked] [--handle-seconds 15]
+//   node scripts/launch-video/session-baron.mjs --take t1 [--staged-unlock | --staged-if-locked] [--plan rider|home]
+//     [--handle-seconds 15]
 
 import { parseArgs } from 'node:util';
 import {
@@ -32,6 +33,7 @@ const { values: args } = parseArgs({
     'staged-unlock': { type: 'boolean', default: false },
     'staged-if-locked': { type: 'boolean', default: false },
     'handle-seconds': { type: 'string', default: '15' },
+    plan: { type: 'string', default: 'rider' },
   },
 });
 const viewport = 'desktop';
@@ -40,33 +42,66 @@ const recorders = [];
 installStopHandler(() => recorders);
 
 const HOME = { x: 0, z: 12 };
-// t1 (2026-09-27) fell at wave 17: late in the run the pilot crossed the ford to far seams with 29 to 35 walkers
-// alive, the fifth and sixth beacon spots (z 14.5 beside the turrets) were refused again and again, and 114 gold went
-// unspent. So: any live seam while the waves are young, only the home bank's after wave 8; back under the turrets
-// below half health; the two turret upgrades before the last beacons; beacon spots that place.
-const PLAN = {
-  home: HOME,
-  seamAnchor: HOME,
-  seamRange: (run) => (run.wave < 8 ? 40 : 13),
-  retreatBelow: 0.5,
-  builds: [
-    { id: 'sluice', at: [{ x: -5.5, z: 6.6 }, { x: 5.5, z: 6.6 }, { x: -4, z: 6.4 }] },
-    { id: 'turret', at: [{ x: -2.7, z: 12 }, { x: -3.2, z: 11 }] },
-    { id: 'turret', at: [{ x: 2.7, z: 12 }, { x: 3.2, z: 11 }] },
-    { id: 'turret', at: [{ x: -5.4, z: 12 }, { x: -6, z: 11 }] },
-    { id: 'turret', at: [{ x: 5.4, z: 12 }, { x: 6, z: 11 }] },
-    { id: 'sentry_beacon', at: [{ x: 0, z: 9.5 }] },
-    { id: 'sentry_beacon', at: [{ x: 0, z: 14.5 }] },
-    { upgrade: true, id: 'turret', at: { x: -2.7, z: 12 }, cost: 150 },
-    { upgrade: true, id: 'turret', at: { x: 2.7, z: 12 }, cost: 150 },
-    { id: 'sentry_beacon', at: [{ x: -2.7, z: 9.5 }, { x: -4.2, z: 9.5 }] },
-    { id: 'sentry_beacon', at: [{ x: 2.7, z: 9.5 }, { x: 4.2, z: 9.5 }] },
-    { id: 'sentry_beacon', at: [{ x: -1.4, z: 8.2 }, { x: -5.6, z: 9.2 }] },
-    { id: 'sentry_beacon', at: [{ x: 1.4, z: 8.2 }, { x: 5.6, z: 9.2 }] },
-    { upgrade: true, id: 'turret', at: { x: -5.4, z: 12 }, cost: 150 },
-    { upgrade: true, id: 'turret', at: { x: 5.4, z: 12 }, cost: 150 },
-  ],
+// Seams are not fixed: two or three are live at a time, each placed at one of the map's six anchors at random and
+// holding 30 gold (src/systems/HarvestSystem.ts activateInitialNodes, Balance.goldSeam), so a plan's reach decides
+// its income. Each take's sidecar names the plan it rode.
+const PLANS = {
+  // t2 (2026-09-27) rode this and fell at wave 19, one wave short: any live seam before wave 8 and only the home
+  // bank's (13 m) after, so from wave 13 the purse stood at 6 gold and the defence stopped at four turrets and one
+  // beacon. (t1 had ridden any seam all run with a sluice first, and fell at wave 17 mid-crossing, far from home.)
+  home: {
+    home: HOME,
+    seamAnchor: HOME,
+    seamRange: (run) => (run.wave < 8 ? 40 : 13),
+    retreatBelow: 0.5,
+    builds: [
+      { id: 'sluice', at: [{ x: -5.5, z: 6.6 }, { x: 5.5, z: 6.6 }, { x: -4, z: 6.4 }] },
+      { id: 'turret', at: [{ x: -2.7, z: 12 }, { x: -3.2, z: 11 }] },
+      { id: 'turret', at: [{ x: 2.7, z: 12 }, { x: 3.2, z: 11 }] },
+      { id: 'turret', at: [{ x: -5.4, z: 12 }, { x: -6, z: 11 }] },
+      { id: 'turret', at: [{ x: 5.4, z: 12 }, { x: 6, z: 11 }] },
+      { id: 'sentry_beacon', at: [{ x: 0, z: 9.5 }] },
+      { id: 'sentry_beacon', at: [{ x: 0, z: 14.5 }] },
+      { upgrade: true, id: 'turret', at: { x: -2.7, z: 12 }, cost: 150 },
+      { upgrade: true, id: 'turret', at: { x: 2.7, z: 12 }, cost: 150 },
+      { id: 'sentry_beacon', at: [{ x: -2.7, z: 9.5 }, { x: -4.2, z: 9.5 }] },
+      { id: 'sentry_beacon', at: [{ x: 2.7, z: 9.5 }, { x: 4.2, z: 9.5 }] },
+      { id: 'sentry_beacon', at: [{ x: -1.4, z: 8.2 }, { x: -5.6, z: 9.2 }] },
+      { id: 'sentry_beacon', at: [{ x: 1.4, z: 8.2 }, { x: 5.6, z: 9.2 }] },
+      { upgrade: true, id: 'turret', at: { x: -5.4, z: 12 }, cost: 150 },
+      { upgrade: true, id: 'turret', at: { x: 5.4, z: 12 }, cost: 150 },
+    ],
+  },
+  // The rider's own order, from the tape that reached the twentieth horn at full health
+  // (artifacts/gauntlet-heat5-20260824/e1-baron/attempt-3-tape.json, attempt-3.log): no sluice; four turrets on the
+  // home bank by about 3:00; six beacons by about 4:30; any live seam in between. Kept from t2: back under the
+  // turrets when hurt, and no far seam unless she is above 70 percent health. The two outer beacons aim at z 15.2,
+  // because an aim at z 14.5 lands its ghost on z 14, two metres from a turret, where t1 was refused six times.
+  rider: {
+    home: HOME,
+    seamAnchor: HOME,
+    seamRange: (run) => (run.maxHp > 0 && run.hp < run.maxHp * 0.7 ? 13 : 40),
+    retreatBelow: 0.45,
+    builds: [
+      { id: 'turret', at: [{ x: -2.7, z: 12 }, { x: -3.2, z: 11 }] },
+      { id: 'turret', at: [{ x: 2.7, z: 12 }, { x: 3.2, z: 11 }] },
+      { id: 'turret', at: [{ x: -5.4, z: 12 }, { x: -6, z: 11 }] },
+      { id: 'turret', at: [{ x: 5.4, z: 12 }, { x: 6, z: 11 }] },
+      { id: 'sentry_beacon', at: [{ x: 0, z: 9.5 }, { x: 0.8, z: 9.5 }] },
+      { id: 'sentry_beacon', at: [{ x: 0, z: 14.5 }, { x: 0, z: 15.2 }] },
+      { id: 'sentry_beacon', at: [{ x: -2.7, z: 9.5 }, { x: -4.2, z: 9.5 }] },
+      { id: 'sentry_beacon', at: [{ x: 2.7, z: 9.5 }, { x: 4.2, z: 9.5 }] },
+      { id: 'sentry_beacon', at: [{ x: -2.7, z: 15.2 }, { x: -1.4, z: 8.2 }] },
+      { id: 'sentry_beacon', at: [{ x: 2.7, z: 15.2 }, { x: 1.4, z: 8.2 }] },
+      { upgrade: true, id: 'turret', at: { x: -2.7, z: 12 }, cost: 150 },
+      { upgrade: true, id: 'turret', at: { x: 2.7, z: 12 }, cost: 150 },
+      { upgrade: true, id: 'turret', at: { x: -5.4, z: 12 }, cost: 150 },
+      { upgrade: true, id: 'turret', at: { x: 5.4, z: 12 }, cost: 150 },
+    ],
+  },
 };
+const PLAN = PLANS[args.plan];
+if (!PLAN) throw new Error(`unknown --plan ${args.plan} (rider or home)`);
 
 /**
  * The STAGED grant: Wren's own ledger plus exactly the facts the Baron's gate reads. Every key it touches is
@@ -124,7 +159,7 @@ const BARON_PICKS = [
 ];
 
 const browser = await launchCaptureBrowser();
-const summary = { script: 'session-baron', take: args.take, startedAt: new Date().toISOString() };
+const summary = { script: 'session-baron', take: args.take, plan: args.plan, startedAt: new Date().toISOString() };
 let watching = false;
 try {
   const state = loadLineage(args.lineage);
@@ -248,7 +283,7 @@ try {
     take: recorder.name, map: 'e1-baron', beats: ['B6', 'B8'], viewport: shape.id, deviceScaleFactor: shape.context.deviceScaleFactor,
     staged, stagedReason: staged ? `Baron unlock granted on a copy of Wren's ledger (her own: science ${gate.science}, secured ${gate.securedContracts.join(', ')}); the grant adds only what the gate reads; the play itself is real at 1x` : null, gate,
     grant, pilot: PILOT_DISCLOSURE, plainBoot: true, capture: { name: CAPTURE_NAME, town: CAPTURE_TOWN }, hudOffRule: HUD_OFF_SELECTORS,
-    cutPoint: arrival, outcome, summary, pilotEvents: pilot.events, network, errors, recording,
+    plan: args.plan, cutPoint: arrival, outcome, summary, pilotEvents: pilot.events, network, errors, recording,
   });
   summary.take = { name: recorder.name, seconds: recording.seconds, receivedFps: recording.receivedFps, network, errors };
   await context.close();
