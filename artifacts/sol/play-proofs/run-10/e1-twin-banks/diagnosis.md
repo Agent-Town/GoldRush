@@ -1,0 +1,27 @@
+# Twin Banks — excursion diagnosis before the fresh diagnostic ride
+
+Written 2026-09-26T20:22:05.957030+00:00. Driver remains byte-identical to committed strategy 2. This initial record precedes the diagnostic ride; measured findings will be appended before any strategy change or changed-premise ride.
+
+Run 9 died at wave 17 / 521.333 s, hero (24.0504, 6.8402), 30.552 units from home (0,-12), with 62 gold and all six defenses standing. The final snapshot is channeling within 0.951 units of active gold-seam-2 at (25,6.9), itself 31.340 units from home. The 150-gold upgrade offer had been reached at wave 16 with 49 gold; the funding operation returned false at wave 17. Samples show 42 gold at 500.7 s and 62 at death. The exact funding-entry HP/time and the intermediate target sequence were not recorded, so these are not fabricated. The notes establish a west-ford crossing toward the north bank; the final target is inferred from the proximity and channeling snapshot.
+
+Defenses at death: beacons (-5,-11) 40/40 and (8,-11) 68/76; turrets (-1,-16) 18/50, (5,-14) 50/50, (-6,-9) 58/58, (-7,-8) 82/82. Three repairs, no wrecks. Their intact state does not prove firing continuously or coverage of the hero; the sampled record has no shot/target telemetry.
+
+Source composition: Twin Banks declares north/south spawn edges and no enemyRoster override. WaveSystem uses the default rusher/thief/wrecker split (thief and wrecker eligibility/pulse constraints apply), rather than Old Canal's E9 roster. Run 9 ends with 27 enemies alive; its terminal image reports a north-bank wrecking crew. Exact surviving class counts and the killing attacker are UNKNOWN in ordinary diagnostics (enemyPositions is debug-only). No debug URL or state mutation is authorized or needed.
+
+Working hypothesis: late funding leaves the home defenses to cross and pan under wave pressure. This is a driver strategy question, not evidence of impossible map balance. Run 1 already lost a stationary hold-ground attempt at wave 18 with 115 gold; stopping all movement is not the proposed correction. The diagnostic ride retains committed restore-ground unchanged and adds read-only 200 ms samples of hero, HP, gold, seams, defenses, kills and actual input events.
+
+## Fresh diagnostic — measured before implementation
+
+Recorded 2026-09-26T20:28:35.776457+00:00. One phone ride on the exact committed driver: **HELD**, wave 17 / 518.400 s, 0 HP, 80 gold, 0 repairs, 6/6 defenses standing, `spent=false`; zero console/page errors. Exit 1 on the unchanged secure assertion. Driver SHA remains in ../committed-driver.sha256. Evidence archived under [diagnostic/](diagnostic/).
+
+The late offer is `need 150g`, wave 16, purse 40. At 492.533 s the hero is (-6.107,-12.367), 95 HP, 40 gold, all six pieces standing. It travels to gold-seam-1 (-22,-6.8), **22.606 units from home**, and channels there at 498.933 s with 47 HP / 45 gold. It then crosses the west ford; at 502.133 s it has 31 HP / 50 gold. At 505.333 s it is on the north bank with 23 HP / 50 gold. It channels beside gold-seam-2 (7.5,6.5), **19.962 units from home**, and dies at (6.721,6.297), **19.492 units from home**, with 80 gold. Funding returns false, target 150 unmet. Targets are corroborated by active seam coordinates, channeling and route; the helper has no explicit target-event log.
+
+All six defenses stay alive throughout this late excursion. At death: four turrets 50/50, 50/50, 58/58, 82/82; beacons 40/40 and 62/70. Kills rise 692→742 from the near-home sample to the final late sample, but ordinary diagnostics do not partition those kills between hero and defenses. Thus defense survival is measured; continuous firing/target choices are not claimed. The nearest turret to the death position is 19.271 units away, beyond its base 16-unit range. No upgraded turret tier was purchased.
+
+Wave composition correction: Game.ts supplies `hasBuiltStockpile()` as thief eligibility; this run built none. With no contract roster override, the source-supported pressure is rushers plus eligible wreckers (from wave 4, every second pulse, nominal 25% share; exact surviving split unknown). Wave 17 rises from 11 alive at 508.533 s to 29 at 511.733 s; the final sample has 35 alive. No debug enemy list or killing-attacker identity was available. This is not an E9 roster or a demonstrated balance defect.
+
+### Written changed premise (before code and second phone ride)
+
+**Twin Banks only, inside restore-ground: from wave 14, do not start another unfunded journey or panning tick; retain affordable actions and the existing home circuit.** Apply the guard to both funding observations (before journey and during panning). A journey already started below wave 14 may finish before the next funding observation; no claim of interrupting walkTo is made. The threshold provides a buffer before the observed wave-16 excursion and run-9's wave-15 erosion. Scope this to Twin Banks because Old Canal's distant-seam economics and attrition differ. No changes to priorities, prices, health, wave composition, movement circuit or default behavior.
+
+This rule tests excursion safety, not stationary camping (run-1's hold-ground died at wave 18). It may defer upgrades/repairs if their required reserve is unavailable, and may still lose; one changed-premise phone attempt is authorized, with desktop only after a full phone pass. Old Canal's committed-driver hold remains a separate recorded result; no retry is proposed here.

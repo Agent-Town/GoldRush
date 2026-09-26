@@ -6,10 +6,10 @@ test.skip(!process.env.GR_NATIVE_PROOF, 'full native objective run — set GR_NA
 test.use({ trace: 'off' });
 nativeProof('e2-incline');
 
-if (process.env.GR_NATIVE_RUN === '9' && process.env.GR_NATIVE_PROOF) {
+if (['9', '10'].includes(process.env.GR_NATIVE_RUN ?? '') && process.env.GR_NATIVE_PROOF) {
   test.afterEach(async ({ page }, info) => {
     if (info.status !== 'passed') return;
-    const root = path.resolve('artifacts/sol/play-proofs/run-9/e2-incline');
+    const root = path.resolve(`artifacts/sol/play-proofs/run-${process.env.GR_NATIVE_RUN}/e2-incline`);
     await mkdir(root, { recursive: true });
     const tab = page.locator('[data-testid^="contract-chapter-tab-epoch-2-"]');
     await tab.click();
