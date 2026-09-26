@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "ca12dc2a4cb327689084adbe0664bc2c680b6a8e8fa452fc806790e84a9cdda1",
+  "engineHash": "642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -478,6 +478,12 @@
       "engineHash": "ca12dc2a4cb327689084adbe0664bc2c680b6a8e8fa452fc806790e84a9cdda1",
       "pinnedAt": "2026-09-26",
       "cause": "same era, pin #65: canyon-works-traversal-2 (Opus 5.5 implementer at max effort on the Anthropic subscription; from Astra's F-PP2-2 and F-CW1-1): two numbers in the e3-canyon-works elevation block, t2RampStart 18 to 14 and t2RampEnd 28 to 32, so the ramp's 4 m rise runs over 18 m (peak sim gradient 0.333 under the 0.35 limit) and the whole works can be walked; the cliff, creek and every other number unchanged; the two canyon null floors moved on event hash only because the contract's authored turrets now stand (81 others byte-identical). The store unchanged at 5793a96. reviews/canyon-works-traversal-2.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #66: is-main-2 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-SF1-2): scripts/assay-replay-agent.mjs decides main-module through the pinned isMain copy instead of an unresolved process.argv[1] comparison; the agent's bytes are part of the engine hash corpus, the sim, contracts, floors and tables are untouched (83 of 83 floors). The store unchanged at 5793a96. reviews/is-main-2.md",
       "aliases": []
     }
   ],
