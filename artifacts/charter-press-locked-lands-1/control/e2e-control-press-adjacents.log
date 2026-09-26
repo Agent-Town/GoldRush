@@ -1,0 +1,253 @@
+
+Running 20 tests using 1 worker
+
+[1/20] [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return
+  1) [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks, Re-pressed"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        60 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      62 |   await page.getByTestId('press-launch-0').click();
+      63 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 64 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText(CHARTER_NAME, { timeout: 30_000 });
+         |                                                            ^
+      65 |   await page.screenshot({ path: path.join(SHOT_DIR, `charter-run-briefing-${testInfo.project.name}.png`) });
+      66 |   await page.getByTestId('contract-briefing-dismiss').click();
+      67 |   await page.waitForTimeout(1_000);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cpl1/wt-control/e2e/cp03-press-loop.spec.ts:64:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[2/20] [desktop-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing
+[3/20] [desktop-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run
+[4/20] [desktop-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:24:1 › editor live-applies a descriptor edit and export/import round-trips byte-equal
+  2) [desktop-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:24:1 › editor live-applies a descriptor edit and export/import round-trips byte-equal 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 0.68
+
+      50 |     wave: window.__THREE_GAME_DIAGNOSTICS__?.wave,
+      51 |   }));
+    > 52 |   expect(after.depth).toBe(0);
+         |                       ^
+      53 |   expect(after.minHeight).not.toBe(before.minHeight);
+      54 |   expect(after.wave).toBe(0);
+      55 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cpl1/wt-control/e2e/ed-01-descriptor-inspector.spec.ts:52:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ed-01-descriptor-inspector-efe4d-port-round-trips-byte-equal-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ed-01-descriptor-inspector-efe4d-port-round-trips-byte-equal-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ed-01-descriptor-inspector-efe4d-port-round-trips-byte-equal-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ed-01-descriptor-inspector-efe4d-port-round-trips-byte-equal-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[5/20] [desktop-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:98:1 › descriptor validation accepts heterogeneous E2 rows and rejects unsafe shapes and values
+[6/20] [desktop-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:113:1 › edited descriptor opens visibly with the applied value
+[7/20] [desktop-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:133:1 › plain boot does not load or install the editor chunk
+[8/20] [desktop-chrome] › e2e/press-edit-visibility.spec.ts:35:1 › raise and pond edits render live, then survive the stamped launch
+  3) [desktop-chrome] › e2e/press-edit-visibility.spec.ts:35:1 › raise and pond edits render live, then survive the stamped launch 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Dry Gulch Visibility Proof"
+    Received: "The Claim"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        11 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      73 |   await page.getByTestId('press-launch-0').click();
+      74 |   await page.waitForURL((url) => !url.searchParams.has('editor') && url.searchParams.get('contract') === 'e1-dry-gulch');
+    > 75 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText('Dry Gulch Visibility Proof');
+         |                                                            ^
+      76 |   await page.getByTestId('contract-briefing-dismiss').click();
+      77 |   if (testInfo.project.name === 'desktop-chrome') await page.screenshot({ path: path.join(SHOT_DIR, 'pond-in-run.png') });
+      78 |   await page.goto('/?debug&contract=e1-dry-gulch&nowaves&nolevel&nokill&nopause&seed=press-edit-launched');
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cpl1/wt-control/e2e/press-edit-visibility.spec.ts:75:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/press-edit-visibility-rais-ae571--survive-the-stamped-launch-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/press-edit-visibility-rais-ae571--survive-the-stamped-launch-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/press-edit-visibility-rais-ae571--survive-the-stamped-launch-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/press-edit-visibility-rais-ae571--survive-the-stamped-launch-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[9/20] [desktop-chrome] › e2e/press-edit-visibility.spec.ts:88:1 › an un-stamped dirty draft warns first and disappears on reload
+[10/20] [desktop-chrome] › e2e/press-edit-visibility.spec.ts:113:1 › plain boot remains inert
+[11/20] [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return
+  4) [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks, Re-pressed"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        61 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      62 |   await page.getByTestId('press-launch-0').click();
+      63 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 64 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText(CHARTER_NAME, { timeout: 30_000 });
+         |                                                            ^
+      65 |   await page.screenshot({ path: path.join(SHOT_DIR, `charter-run-briefing-${testInfo.project.name}.png`) });
+      66 |   await page.getByTestId('contract-briefing-dismiss').click();
+      67 |   await page.waitForTimeout(1_000);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cpl1/wt-control/e2e/cp03-press-loop.spec.ts:64:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[12/20] [mobile-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing
+[13/20] [mobile-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run
+[14/20] [mobile-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:24:1 › editor live-applies a descriptor edit and export/import round-trips byte-equal
+  5) [mobile-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:24:1 › editor live-applies a descriptor edit and export/import round-trips byte-equal 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 0.68
+
+      50 |     wave: window.__THREE_GAME_DIAGNOSTICS__?.wave,
+      51 |   }));
+    > 52 |   expect(after.depth).toBe(0);
+         |                       ^
+      53 |   expect(after.minHeight).not.toBe(before.minHeight);
+      54 |   expect(after.wave).toBe(0);
+      55 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cpl1/wt-control/e2e/ed-01-descriptor-inspector.spec.ts:52:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ed-01-descriptor-inspector-efe4d-port-round-trips-byte-equal-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ed-01-descriptor-inspector-efe4d-port-round-trips-byte-equal-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ed-01-descriptor-inspector-efe4d-port-round-trips-byte-equal-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ed-01-descriptor-inspector-efe4d-port-round-trips-byte-equal-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[15/20] [mobile-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:98:1 › descriptor validation accepts heterogeneous E2 rows and rejects unsafe shapes and values
+[16/20] [mobile-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:113:1 › edited descriptor opens visibly with the applied value
+[17/20] [mobile-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:133:1 › plain boot does not load or install the editor chunk
+[18/20] [mobile-chrome] › e2e/press-edit-visibility.spec.ts:35:1 › raise and pond edits render live, then survive the stamped launch
+  6) [mobile-chrome] › e2e/press-edit-visibility.spec.ts:35:1 › raise and pond edits render live, then survive the stamped launch 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Dry Gulch Visibility Proof"
+    Received: "The Claim"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        11 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      73 |   await page.getByTestId('press-launch-0').click();
+      74 |   await page.waitForURL((url) => !url.searchParams.has('editor') && url.searchParams.get('contract') === 'e1-dry-gulch');
+    > 75 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText('Dry Gulch Visibility Proof');
+         |                                                            ^
+      76 |   await page.getByTestId('contract-briefing-dismiss').click();
+      77 |   if (testInfo.project.name === 'desktop-chrome') await page.screenshot({ path: path.join(SHOT_DIR, 'pond-in-run.png') });
+      78 |   await page.goto('/?debug&contract=e1-dry-gulch&nowaves&nolevel&nokill&nopause&seed=press-edit-launched');
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cpl1/wt-control/e2e/press-edit-visibility.spec.ts:75:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/press-edit-visibility-rais-ae571--survive-the-stamped-launch-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/press-edit-visibility-rais-ae571--survive-the-stamped-launch-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/press-edit-visibility-rais-ae571--survive-the-stamped-launch-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/press-edit-visibility-rais-ae571--survive-the-stamped-launch-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[19/20] [mobile-chrome] › e2e/press-edit-visibility.spec.ts:88:1 › an un-stamped dirty draft warns first and disappears on reload
+[20/20] [mobile-chrome] › e2e/press-edit-visibility.spec.ts:113:1 › plain boot remains inert
+  6 failed
+    [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+    [desktop-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:24:1 › editor live-applies a descriptor edit and export/import round-trips byte-equal 
+    [desktop-chrome] › e2e/press-edit-visibility.spec.ts:35:1 › raise and pond edits render live, then survive the stamped launch 
+    [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+    [mobile-chrome] › e2e/ed-01-descriptor-inspector.spec.ts:24:1 › editor live-applies a descriptor edit and export/import round-trips byte-equal 
+    [mobile-chrome] › e2e/press-edit-visibility.spec.ts:35:1 › raise and pond edits render live, then survive the stamped launch 
+  14 passed (2.6m)

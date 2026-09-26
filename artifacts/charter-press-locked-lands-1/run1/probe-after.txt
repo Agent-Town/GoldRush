@@ -1,0 +1,10 @@
+after desktop-chrome fresh: offered [the-claim*] pressed the-claim -> contract=the-claim briefing "The Claim: Defend the Camp" clear=null errors 0/0
+after desktop-chrome secured-claim: offered [the-claim*, e1-dry-gulch, e1-twin-banks] pressed e1-twin-banks -> contract=e1-twin-banks briefing "Twin Banks: Defend the Camp" clear=null errors 0/0
+after desktop-chrome preview: offered [the-claim*, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron] pressed e1-baron -> contract=e1-baron briefing "The Baron's Claim: Defend the Camp" clear=null errors 0/0
+after mobile-chrome fresh: offered [the-claim*] pressed the-claim -> contract=the-claim briefing "The Claim: Defend the Camp" clear=null errors 0/0
+after mobile-chrome secured-claim: offered [the-claim*, e1-dry-gulch, e1-twin-banks] pressed e1-twin-banks -> contract=e1-twin-banks briefing "Twin Banks: Defend the Camp" clear=null errors 0/0
+after mobile-chrome preview: offered [the-claim*, e1-dry-gulch, e1-night-shift, e1-twin-banks, e1-baron] pressed e1-baron -> contract=e1-baron briefing "The Baron's Claim: Defend the Camp" clear=null errors 0/0
+after desktop-chrome plain town: NOT REACHED errors 0/0 PROBE-ERROR locator.click: Timeout 30000ms exceeded.
+after desktop-chrome plain press: press panel, Lever open errors 0/0 offered [the-claim]
+after mobile-chrome plain town: NOT REACHED errors 0/0 PROBE-ERROR locator.click: Timeout 30000ms exceeded.
+after mobile-chrome plain press: press panel, Lever open errors 0/0 offered [the-claim]

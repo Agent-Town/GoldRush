@@ -1,4 +1,5 @@
-import { stageCharterLaunch, clearCharterLaunch, type ContractManifest } from '../meta/ContractFamilies';
+import { listBoardContracts, stageCharterLaunch, clearCharterLaunch, type ContractManifest } from '../meta/ContractFamilies';
+import { contractUnlockStatus } from '../meta/ContractUnlock';
 import { activeProfileName } from '../game/ProfileStorage';
 import { charterLineageRootId, importContract, type Charter, type CharterClock } from './CharterSchema';
 import { stampCharter } from './CharterStamp';
@@ -86,9 +87,7 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
       <p class="charter-lever__intro">Pick what feels right. You can change any choice until you pull the lever.</p>
       <fieldset data-testid="lever-land-cards">
         <legend>Pick a land</legend>
-        <div class="charter-lever__choices charter-lever__lands">
-          ${LEVER_LANDS.map((choice, index) => `<button class="charter-lever__choice charter-lever__land" type="button" data-lever-land="${choice.id}" data-testid="lever-land-${choice.id}" aria-pressed="${index === 0}"><img src="${choice.imageUrl}" alt=""><span>${choice.label}</span><small>${choice.blurb}</small></button>`).join('')}
-        </div>
+        <div class="charter-lever__choices charter-lever__lands"></div>
       </fieldset>
       <fieldset>
         <legend>Pick a story</legend>
@@ -129,7 +128,10 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
     title.textContent = mode === 'full' ? 'Press a charter' : 'The Lever';
   };
   panel.querySelector<HTMLButtonElement>('[data-testid="press-mode-full"]')!.addEventListener('click', () => setMode('full'));
-  panel.querySelector<HTMLButtonElement>('[data-testid="press-mode-lever"]')!.addEventListener('click', () => setMode('lever'));
+  panel.querySelector<HTMLButtonElement>('[data-testid="press-mode-lever"]')!.addEventListener('click', () => {
+    renderLeverLands();
+    setMode('lever');
+  });
 
   const returnBanner = panel.querySelector<HTMLElement>('[data-testid="press-return-banner"]')!;
   const pressReturn = new URLSearchParams(location.search).get('press');
@@ -331,15 +333,31 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
     }
   };
 
-  let selectedLand: LeverLandId = LEVER_LANDS[0].id;
+  // F-1179-4, owner ruling (a) 2026-09-26: the Lever offers only the lands this profile has unlocked, and a
+  // locked land is not rendered at all. Offered means exactly what the boot re-checks before it honours the
+  // launch the press stages (`reverifyStagedContractLaunch`): the land's contract is on the board and
+  // `contractUnlockStatus` opens it, the preview-only "Open every claim" seam included. So the land pressed is
+  // the land that opens. Read when the player opens the Lever, never while the panel is built at boot: the
+  // predicate reads the save, and `loadResearchState` under it writes a research registry when none is saved.
+  const landChoices = panel.querySelector<HTMLElement>('.charter-lever__lands')!;
+  let selectedLand: LeverLandId | null = null;
   let selectedStory: LeverStoryId = LEVER_STORIES[0].id;
   let selectedVisitors: LeverVisitorsId = LEVER_VISITORS[0].id;
-  for (const choice of LEVER_LANDS) {
-    panel.querySelector<HTMLButtonElement>(`[data-lever-land="${choice.id}"]`)!.addEventListener('click', () => {
-      selectedLand = choice.id;
-      panel.querySelectorAll<HTMLButtonElement>('[data-lever-land]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.leverLand === choice.id)));
+  const renderLeverLands = () => {
+    const board = listBoardContracts();
+    const offered = LEVER_LANDS.filter((choice) => {
+      const contract = board.find((entry) => entry.id === choice.id);
+      return contract !== undefined && contractUnlockStatus(contract).unlocked;
     });
-  }
+    if (!offered.some((choice) => choice.id === selectedLand)) selectedLand = offered[0]?.id ?? null;
+    landChoices.innerHTML = offered.map((choice) => `<button class="charter-lever__choice charter-lever__land" type="button" data-lever-land="${choice.id}" data-testid="lever-land-${choice.id}" aria-pressed="${choice.id === selectedLand}"><img src="${choice.imageUrl}" alt=""><span>${choice.label}</span><small>${choice.blurb}</small></button>`).join('');
+    for (const choice of offered) {
+      landChoices.querySelector<HTMLButtonElement>(`[data-lever-land="${choice.id}"]`)!.addEventListener('click', () => {
+        selectedLand = choice.id;
+        landChoices.querySelectorAll<HTMLButtonElement>('[data-lever-land]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.leverLand === choice.id)));
+      });
+    }
+  };
   for (const choice of LEVER_STORIES) {
     panel.querySelector<HTMLButtonElement>(`[data-lever-story="${choice.id}"]`)!.addEventListener('click', () => {
       selectedStory = choice.id;
@@ -355,6 +373,10 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
 
   const leverStatus = panel.querySelector<HTMLElement>('[data-testid="lever-status"]')!;
   panel.querySelector<HTMLButtonElement>('[data-testid="lever-press"]')!.addEventListener('click', () => {
+    if (selectedLand === null) {
+      leverStatus.textContent = 'The Press needs a grown-up to check its paper.';
+      return;
+    }
     const charter = createLeverCharter(selectedLand, selectedStory, selectedVisitors, { author, clock: stampClock });
     const result = stampCharter(charter);
     if (!result.ok) {
