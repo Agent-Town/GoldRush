@@ -1,6 +1,6 @@
 # charter-press-locked-lands-1: the Charter Press Lever offers only unlocked lands
 
-Task `tasks/charter-press-locked-lands-1.md` (F-1179-4, owner ruling "a", 2026-09-26). Implementer: Claude Opus 5.5 at maximum effort, spawned by the attended session. Scratch worktree `/Users/robin/Claude/Projects/wt-cpl1`, branch `feat/charter-press-locked-lands-1`, base `6cf158c4a` (main when cut), tip: the commit that adds this report (the three code commits are listed in section 9).
+Task `tasks/charter-press-locked-lands-1.md` (F-1179-4, owner ruling "a", 2026-09-26). Implementer: Claude Opus 5.5 at maximum effort, spawned by the attended session. Scratch worktree `/Users/robin/Claude/Projects/wt-cpl1`, branch `feat/charter-press-locked-lands-1`, base `6cf158c4a` (main when cut), tip: the commit that last updated this report (every commit is listed in section 9).
 
 **Verdict: READY-FOR-GATES.** The Lever renders only the lands this profile has unlocked (a locked land is not rendered at all), preselects the first land it offers, and every land it offers opens when pressed, with the briefing naming it. One source file changed, `src/charter/PressPanel.ts`. The engine hash moves `642edcf6` to `f8b1c19a` on that file alone (the pin is the drain's), and the existing agent tape replays to its recorded score, byte-identical before and after.
 
@@ -14,12 +14,12 @@ Task `tasks/charter-press-locked-lands-1.md` (F-1179-4, owner ruling "a", 2026-0
 | secured Claim (the rig fixture) | 5 | pressed Twin Banks: `contract=e1-twin-banks`, "Twin Banks: Defend the Camp", clear null | **3: The Claim, The Dry Gulch, Twin Banks** | pressed Twin Banks: `contract=e1-twin-banks`, "Twin Banks: Defend the Camp", clear null |
 | preview seam open | 5 | pressed The Baron's Claim: `contract=e1-baron`, "The Baron's Claim: Defend the Camp", clear null | 5 | the same |
 
-Every row is identical in both projects, with 0 console and 0 page errors in all 24 rows (12 per arm).
+Every row is identical in both projects, with 0 console and 0 page errors in all 12 save rows (6 per arm).
 
 Also measured (`before/probe.json`, `after/probe.json`):
 - land cards in the DOM before the player opens the Lever: 5 before, **0** after;
 - land plates requested by an `?editor` boot before the Lever is opened: 5 before, **0** after; on opening, after: only the offered plates (1, 3 and 5 of them);
-- localStorage keys written by opening the Lever: 0 in all 12 rows of both arms (the run boot had already saved its research registry);
+- localStorage keys written by opening the Lever: 0 in all 6 save rows of each arm (the run boot had already saved its research registry);
 - plain boots, both projects, both arms: the town (`/` with the default profile seeded the way `e2e/044-start-screen.spec.ts:20-33` does, then Enter Town, town frame > 10) and the press (`/?editor`, the Lever opened): 0 console / 0 page errors; the plain press offered all five before and `[the-claim]` after.
 
 Screenshots: `<project>-<save>-lever.png` is the Lever face (the inspector's overlapping sections hidden with the rules `e2e/cp04-lever.spec.ts:92-102` (`:81-91` on main) uses for its own shots); `<project>-<save>-press-<land>-briefing.png` is the briefing card that press opened. The F-1179-4 symptom is `before/desktop-chrome-fresh-press-e1-twin-banks-briefing.png` (Twin Banks pressed, The Claim briefed); the cure is `after/*-fresh-lever.png` (one card) and `after/*-secured-claim-press-e1-twin-banks-briefing.png` (Twin Banks: Defend the Camp).
@@ -41,7 +41,7 @@ The mapping is sound, so `LeverTemplates.ts` stayed untouched: the lever land id
 
 ## 4. Specs
 
-**F-CPL1-1, a premise the master got wrong, and the lift that answered it.** Measured: `grep -n "lever-land|press-mode-lever|lever-press" e2e/*.ts` hits only `e2e/cp04-lever.spec.ts` and `e2e/wd04-postscripts.spec.ts:115-116`. None of the three specs the master names renders the Lever: `ap16-7-epoch-levers.spec.ts` is the E5 and E6 sim levers through `HeadlessContractSim`, `charter-press-totality.spec.ts` the mutation-arm totality, `cp01-charter-roundtrip.spec.ts` the CP-01 round trip, all node-side. The five-card assertion the master expected to update was `e2e/cp04-lever.spec.ts:73` (`toHaveCount(5)` on a fresh profile), outside TOUCH-ONLY; it asserted the defect. The attended session granted a one-file lift on 2026-09-26, recorded here as the named lift F-CPL1-1, committed alone as `5dc23a6b6`: cp04 now asserts the fresh truth (one card, The Claim, preselected), then flips the preview seam by its own function and re-opens the Lever to reach the five cards the rest of that test uses (every plate loads, the land-cards shot, the Twin Banks press), after a poll that waits for the five plates because the cards now render when the Lever opens. The preview seam and not the secured-Claim fixture, because the downstream checks all five plates and the five-card shot, which only five offered cards reach. Nothing else in that file changed. On the branch the lifted test reaches its press-through for the first time since the unlock gate landed: `treatment/cp04-lifted-lever-test-stamped-launch-desktop-chrome.png` is its own `:119` shot, briefing "Twin Banks: Build Something Big".
+**F-CPL1-1, a premise the master got wrong, and the lift that answered it.** Measured on the base: `grep -n "lever-land|press-mode-lever|lever-press" e2e/*.ts` hits only `e2e/cp04-lever.spec.ts` and `e2e/wd04-postscripts.spec.ts:115-116`. None of the three specs the master names renders the Lever: `ap16-7-epoch-levers.spec.ts` is the E5 and E6 sim levers through `HeadlessContractSim`, `charter-press-totality.spec.ts` the mutation-arm totality, `cp01-charter-roundtrip.spec.ts` the CP-01 round trip, all node-side. The five-card assertion the master expected to update was `e2e/cp04-lever.spec.ts:73` (`toHaveCount(5)` on a fresh profile), outside TOUCH-ONLY; it asserted the defect. The attended session granted a one-file lift on 2026-09-26, recorded here as the named lift F-CPL1-1, committed alone as `5dc23a6b6`: cp04 now asserts the fresh truth (one card, The Claim, preselected), then flips the preview seam by its own function and re-opens the Lever to reach the five cards the rest of that test uses (every plate loads, the land-cards shot, the Twin Banks press), after a poll that waits for the five plates because the cards now render when the Lever opens. The preview seam and not the secured-Claim fixture, because the downstream checks all five plates and the five-card shot, which only five offered cards reach. Nothing else in that file changed. On the branch the lifted test reaches its press-through for the first time since the unlock gate landed: `treatment/cp04-lifted-lever-test-stamped-launch-desktop-chrome.png` is its own `:119` shot, briefing "Twin Banks: Build Something Big".
 
 **New rows** (commit `9fb7cd9b6`), in `e2e/charter-press-totality.spec.ts` (a named spec, and already the rig's importer), `test.describe('the Lever offers only unlocked lands')`, both projects. Each row asserts the whole offer and a press-through (URL `contract=`, `activeId`, the briefing, `stagedLaunchClear` null) with zero console and page errors:
 - a fresh profile is offered `['the-claim']`, preselected, with no Twin Banks card; pressing opens The Claim ("The Claim: Defend the Camp");
@@ -64,7 +64,7 @@ All e2e with `--workers=1`, `GR_CAPTURE_EXTERNAL_SERVER=1`, scratch ports 5742 (
 | the Lever's other specs | cp04 12/26: the lifted Lever test 2/2 green, the 14 reds are the seeded boots and match the control row for row; wd04 4/6: the Lever-pull test 2/2 green, `:33` x2 match the control |
 | the rig's importers and the press panel's specs | cp02-charter-stamp 28/28, cp02-charter-boot 18/18, cp06-share 4/4; cp03 4/6, press-edit-visibility 4/6, ed-01 6/8 (reds attributed in section 7) |
 | treatment, all 13 files | 136 passed, 22 failed of 158, 9.8 min, 12:21Z (`treatment/e2e-treatment.log`) |
-| control | 18 passed, 24 failed of 42, 6.0 min; lift mutation 0/2; adjacents D-PENDING (`control/`) |
+| control | 18 passed, 24 failed of 42, 6.0 min; the lift's mutation control 0/2; the press-panel adjacents (cp03, ed-01, press-edit-visibility) 14 passed, 6 failed of 20, 2.6 min (`control/`) |
 | node-guards, `GR_GUARD_NO_ARTIFACT=1 npm run test:node-guards` | tests 1037, pass 1026, fail 6, skipped 5, rc 1, 17.3 min at load 6 to 9 (`treatment/node-guards-battery.log`); every red attributed in section 7 |
 | zero errors | plain town and plain press 0/0 in both projects on both arms; every new row asserts 0/0 |
 | engine hash | `642edcf65fca...` before (the pin, #66) to `f8b1c19ab586...` after; 1 of 662 inputs differs: `src/charter/PressPanel.ts` (`engine-hash-attribution.txt`) |
@@ -83,8 +83,8 @@ Control = a detached worktree of `6cf158c4a` in the same environment (no `.env.l
 e2e (22 on the branch):
 - cp04 seeded boots, 7 x 2 (14): the same 14 rows red on the control with the same values (for example "The Dry Gulch: Build Something Big" expected, "The Dry Gulch" received). F-1179-3: these specs hand-stage a locked land's charter and the boot's re-check clears it; not the Lever's path (F-CPL1-3).
 - wd04 `:33` x 2: red on the control identically (`matches: false` at `:63`, the E5 ceremony postscript registration); unrelated to the press.
-- cp03 `:64` x 2 and press-edit-visibility `:75` x 2: a Full Press shelf Launch of a locked contract (Twin Banks, The Dry Gulch) on a fresh profile briefs "The Claim". D-PENDING-SHELF. The same mechanism is measured directly on both arms by the shelf probe (F-CPL1-2); that code path is byte-identical between the arms.
-- ed-01 `:52` x 2: terrain depth 0.68 where 0 is expected after a descriptor edit. D-PENDING-ED01.
+- cp03 `:64` x 2 and press-edit-visibility `:75` x 2: a Full Press shelf Launch of a locked contract (Twin Banks, The Dry Gulch) on a fresh profile briefs "The Claim". Red on the control identically (`control/e2e-control-press-adjacents.log`: cp03 expected "Twin Banks, Re-pressed", press-edit-visibility "Dry Gulch Visibility Proof", both received "The Claim", both projects). The same mechanism is measured directly on both arms by the shelf probe (F-CPL1-2); that code path is byte-identical between the arms.
+- ed-01 `:52` x 2: terrain depth 0.68 where 0 is expected after a descriptor edit; red on the control identically (0.68, both projects), and unrelated to the press panel.
 
 node-guards (6 on the branch):
 - `bench-seeds` "rotation registry stays outside the engine identity corpus" and `engine-era-guard` "the landed registry names the live engine and stays outside its hash corpus": this branch's hash move; both pass on the control (base hash = the pin). The drain's same-era pin cures them.
@@ -109,7 +109,8 @@ node-guards (6 on the branch):
 | `3ed71bbce` | the Lever offers only unlocked lands (`src/charter/PressPanel.ts`) |
 | `9fb7cd9b6` | the three new rows and the rig's profile fixture |
 | `5dc23a6b6` | the F-CPL1-1 lift in `e2e/cp04-lever.spec.ts` |
-| this commit | this report and its evidence (14.1 MB in 52 files including this report, under the 40 MB per-landing budget) |
+| `f1e182932` | this report and its evidence (`node scripts/evidence-budget.mjs 6cf158c4a HEAD`: PASS, 14.6 MB added, inside the 40.0 MB ceiling) |
+| the commit after it | the base control of the three press-panel adjacents (queued behind the drain lock until 13:19Z) folded into sections 5 and 7, and its logs |
 
 Not committed, and not work (the F-1407-1 factory-churn classes): the spec runs rewrote the tracked shots `reviews/shots-cp04/{land-cards,lever-mode}.png`, `reviews/shots-press-cp01-03/press-panel-{desktop,mobile}-chrome.png` and `reviews/shots-press-visibility/{dirty-hint,pond-preview,raise-before-after}.png`, and left the untracked `artifacts/056/`, `artifacts/ed-01/*.png` and `reviews/shots-cp04/stamped-launch.png` (copied into `treatment/` above). They stay in the worktree for the drain to keep or revert.
 
