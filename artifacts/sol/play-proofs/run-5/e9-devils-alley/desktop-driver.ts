@@ -497,17 +497,8 @@ async function build(
     const turn = (nudge * 2.39996) % (Math.PI * 2);
     await steer(page, Math.cos(turn) * 2, Math.sin(turn) * 2, 170);
   }
-  // An upgrade can open between choosing a valid ghost and confirming it.
-  // Observe the purchase, and retry only while the same live preview remains valid.
-  for (let confirm = 0; confirm < 3; confirm++) {
-    await takeUpgrades(page, row);
-    const state = await read(page);
-    if (!state || state.runState === 'dead' || state.secured ||
-        (state.buildables.find(b => b.id === id)?.count ?? 0) > offer.count ||
-        !state.buildMode || !state.ghostValid) break;
-    await page.keyboard.press('Space');
-    await page.waitForTimeout(250);
-  }
+  await page.keyboard.press('Space');
+  await page.waitForTimeout(250);
   const after = await read(page);
   if (!after) return false;
   const placed = (after.buildables.find((entry) => entry.id === id)?.count ?? 0) > offer.count;

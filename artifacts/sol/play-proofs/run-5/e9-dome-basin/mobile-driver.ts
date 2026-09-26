@@ -140,8 +140,6 @@ type Snapshot = {
   nodes: Array<{ id: string; anchorIndex: number; active: boolean; x: number; z: number; respawnIn: number; respawnScheduled: boolean }>;
   buildables: Array<{ id: string; cost: number; count: number; maxCount: number; canAfford: boolean }>;
   defences: Array<{ id: string; index: number; hp: number; maxHp: number; wrecked: boolean; repairCost: number; x: number; z: number }>;
-  devils: ThreeGameDiagnostics['devilsAlley'];
-  caravan: ThreeGameDiagnostics['seedCaravan'];
   canal: ThreeGameDiagnostics['e9Canal'];
   physics: ThreeGameDiagnostics['e8Physics'];
   air: ThreeGameDiagnostics['e8SuitAir'];
@@ -165,8 +163,6 @@ async function read(page: Page): Promise<Snapshot | null> {
       const d = window.__THREE_GAME_DIAGNOSTICS__;
       if (!d) return null;
       return {
-        devils: d.devilsAlley,
-        caravan: d.seedCaravan,
         canal: d.e9Canal,
         physics: d.e8Physics,
         air: d.e8SuitAir,
@@ -179,7 +175,7 @@ async function read(page: Page): Promise<Snapshot | null> {
         crowdFlocks: d.crowdFlocks,
         power: d.power,
         pressure: d.pressure,
-        objective: { devils: d.devilsAlley, caravan: d.seedCaravan, canal: d.e9Canal, air: d.e8SuitAir, probe: d.probeRecovery, fuel: d.fuel, vehicle: d.vehicle, landYacht: d.landYachtBoss, fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
+        objective: { canal: d.e9Canal, air: d.e8SuitAir, probe: d.probeRecovery, fuel: d.fuel, vehicle: d.vehicle, landYacht: d.landYachtBoss, fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -313,7 +309,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
   const zones = tile.buildZones ?? [];
 
   const holding = stake ? zones.find((entry) => stake.x >= entry.minX && stake.x <= entry.maxX && stake.z >= entry.minZ && stake.z <= entry.maxZ) : undefined;
-  const zone = contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
+  const zone = contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
   const centre =
     stake && (holding || zones.length === 0)
       ? { x: stake.x, z: stake.z }
@@ -324,8 +320,6 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
   if (contract.id === "e1-baron") { centre.x = 3; centre.z = 11; }
   if (contract.id === "e2-incline") { centre.x = 0; centre.z = -18; }
   if (contract.id === 'e8-low-orbit') { centre.x = 10; centre.z = -6; }
-  if (contract.id === 'e9-devils-alley') { centre.x = 0; centre.z = 0; }
-  if (contract.id === 'e9-seed-run') { centre.x = 0; centre.z = 3; }
   if (contract.id === 'e9-dome-basin') { centre.x = 30; centre.z = -25; }
   const radius = 4;
   const clampX = (v: number) => (zone ? Math.min(zone.maxX - 2, Math.max(zone.minX + 2, v)) : v);
@@ -497,17 +491,8 @@ async function build(
     const turn = (nudge * 2.39996) % (Math.PI * 2);
     await steer(page, Math.cos(turn) * 2, Math.sin(turn) * 2, 170);
   }
-  // An upgrade can open between choosing a valid ghost and confirming it.
-  // Observe the purchase, and retry only while the same live preview remains valid.
-  for (let confirm = 0; confirm < 3; confirm++) {
-    await takeUpgrades(page, row);
-    const state = await read(page);
-    if (!state || state.runState === 'dead' || state.secured ||
-        (state.buildables.find(b => b.id === id)?.count ?? 0) > offer.count ||
-        !state.buildMode || !state.ghostValid) break;
-    await page.keyboard.press('Space');
-    await page.waitForTimeout(250);
-  }
+  await page.keyboard.press('Space');
+  await page.waitForTimeout(250);
   const after = await read(page);
   if (!after) return false;
   const placed = (after.buildables.find((entry) => entry.id === id)?.count ?? 0) > offer.count;
@@ -710,13 +695,6 @@ async function motorOpening(page: Page, row: Row): Promise<void> {
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
-  if (contract.id === 'e9-devils-alley') return [
-    { id: 'turret', dx: 0, dz: -3 },
-    { id: 'sentry_beacon', dx: -40, dz: -10 },
-    { id: 'sentry_beacon', dx: 40, dz: 10 },
-    { id: 'turret', dx: -5, dz: 3 },
-    { id: 'turret', dx: 5, dz: 3 },
-  ];
   if (contract.id === 'e9-dome-basin') return [
     { id: 'turret', dx: 0, dz: 0 },
     { id: 'sentry_beacon', dx: 5, dz: 25 },
@@ -882,28 +860,6 @@ export function nativeProof(id: string, run = 1) {
         const fords = crossingsFor(contract);
         const unreachable = new Set<string>();
 
-        if (contract.id === 'e9-devils-alley') {
-          // Cross from the south yard to the north, then cluster within the anchor circles.
-          for (const z of [-48, 48]) {
-            const reached = await walkTo(page, row, 0, z, 1.5, 200);
-            row.notes.push(`alley yard ${z}: reached=${reached}, hero=${JSON.stringify((await read(page))?.hero)}`);
-          }
-        }
-        if (contract.id === 'e9-seed-run') {
-          // Stay with the caravan. Declining optional plants preserves its guard for this crossing.
-          row.notes.push('Escort-first: decline planting to retain all caravan guard; follow its published position and take upgrades.');
-          while (Date.now() < deadline) {
-            await takeUpgrades(page, row);
-            const state = await read(page);
-            if (!state || state.runState === 'dead' || state.secured || state.caravan?.arrived || state.caravan?.state === 'lost') break;
-            const target = state.caravan?.position;
-            if (!target) break;
-            if (Math.hypot(target.x - state.hero.x, target.z - state.hero.z) > 2) {
-              await steer(page, target.x - state.hero.x, target.z - state.hero.z, 100);
-            } else await page.waitForTimeout(150);
-          }
-          row.notes.push(`escort end: ${JSON.stringify((await read(page))?.caravan)}`);
-        }
         if (contract.id === 'e9-dome-basin') {
           // Quarry work and gate holds pay through the same native proximity verbs as panning.
           for (const node of opened?.canal.quarry.nodes ?? []) {
@@ -1027,10 +983,6 @@ export function nativeProof(id: string, run = 1) {
               seams: now.nodes.filter((node) => node.active).length,
             });
           }
-          if (contract.id === 'e9-seed-run' && now.caravan?.state === 'lost') {
-            died = `seed caravan lost at wave ${now.wave}, sim ${now.sim.toFixed(1)}: ${JSON.stringify(now.caravan)}`;
-            break;
-          }
           if (now.runState === 'dead') {
             died = `runState=dead at wave ${Math.max(now.wave, now.hudWave)} / ${now.sim.toFixed(1)}s sim, ${now.kills} kills, ${Math.round(now.gold)} gold`;
             break;
@@ -1152,16 +1104,6 @@ export function nativeProof(id: string, run = 1) {
                 `never secured: peak wave ${row.peakWave} of ${secureWave} after ${row.simAtEnd.toFixed(1)}s sim (runState=${row.runStateAtEnd || 'unknown'}, ${row.builds.length} buildings, ${row.killsAtEnd} kills)`,
             );
 
-        if (contract.id === 'e9-devils-alley') {
-          const bays = (contract.tileParams.buildZones ?? []).filter(z => z.id.includes('anchor-bay'));
-          const built = bays.filter(z => row.builds.some(b => b.x >= z.minX && b.x <= z.maxX && b.z >= z.minZ && b.z <= z.maxZ));
-          if (built.length !== 3 || ![-48, 48].every(z => row.notes.some(n => n.startsWith(`alley yard ${z}: reached=true`)))) {
-            row.secures = fail(`${row.secures.detail}; yard crossing or three anchor-bay builds incomplete (${built.map(z => z.id).join(',')})`);
-          }
-        }
-        if (contract.id === 'e9-seed-run' && !atSecure?.caravan?.arrived) {
-          row.secures = fail(`${row.secures.detail}; caravan did not arrive: ${JSON.stringify(atSecure?.caravan)}`);
-        }
         if (contract.id === 'e9-dome-basin') {
           const zones = contract.tileParams.buildZones ?? [];
           const required = zones.filter(z => z.id !== 'old-digger-renovation');
