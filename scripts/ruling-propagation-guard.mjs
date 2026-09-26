@@ -32,7 +32,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { FINDING } from './findings-state-guard.mjs';
 import { BACKLOG_INDEX, backlogParts, corpusDeclaration as ledgerCorpus } from './ledger-corpus.mjs';
-
+import { isMain } from './is-main.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORT = process.argv.includes('--report');
 
@@ -215,11 +215,11 @@ function main() {
   return REPORT ? 0 : 1;
 }
 
-// NOTE: the usual `import.meta.url === \`file://${process.argv[1]}\`` idiom is WRONG in this repo —
-// the checkout path contains a space ("Gold Rush"), which import.meta.url percent-encodes to %20
-// while process.argv[1] does not. The comparison silently fails and main() never runs, so the guard
-// prints nothing and exits 0: a green that means "executed nothing", the worst kind. Compare
-// resolved paths instead.
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+// NOTE: never a `file://${process.argv[1]}` template (the checkout path contains a space, which
+// import.meta.url percent-encodes to %20) and never a resolved-path comparison either: node realpaths
+// the entry point, so under a symlinked path both are false, main() never runs, and the guard prints
+// nothing and exits 0: a green that means "executed nothing", the worst kind. isMain compares REAL
+// paths on both sides (./is-main.mjs; F-SF1-2, is-main-2).
+if (isMain(import.meta.url)) {
   process.exit(main());
 }
