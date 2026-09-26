@@ -3910,7 +3910,7 @@ export class Game {
     const text = getPlaybookText(localStorage, name);
     if (!text) return { ok: false as const, reason: 'NOTHING_RECORDED' };
     const parsed = parsePlaybookText(text);
-    if (!parsed.ok || parsed.playbook.contractId !== this.activeContract.id || parsed.playbook.seed !== this.runSeed
+    if (!parsed.ok || parsed.playbook.contractId !== this.scoredContractId() || parsed.playbook.seed !== this.runSeed
       || parsed.playbook.difficultyPreset !== this.difficultyPreset) {
       return { ok: false as const, reason: parsed.ok ? 'PLAYBOOK_MISMATCH' : parsed.reason };
     }
@@ -4239,7 +4239,9 @@ export class Game {
     this.playbookReplay = null;
     this.playbookRecorder = new PlaybookRecorderSession(
       {
-        contractId: this.activeContract.id,
+        // The reel's contract (F-RES1-4): on the River ceremony a playbook is recorded, replayed and kept under
+        // `e10-river`, so its use can never put a `the-claim` page inside an `e10-river` reel.
+        contractId: this.scoredContractId(),
         seed: this.runSeed,
         difficultyPreset: this.difficultyPreset,
         start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
@@ -4293,8 +4295,9 @@ export class Game {
     const parsed = parsePlaybookText(text);
     if (!parsed.ok) return { ok: false, reason: parsed.reason };
     const playbook = parsed.playbook;
-    // The determinism contract holds on the same tile+seed only (spec law 2).
-    if (playbook.contractId !== this.activeContract.id) return { ok: false, reason: 'contract-mismatch' };
+    // The determinism contract holds on the same tile+seed only (spec law 2). Judged on the reel's contract
+    // (F-RES1-4): the River ceremony refuses a Claim playbook, whose use would spoil its `e10-river` reel.
+    if (playbook.contractId !== this.scoredContractId()) return { ok: false, reason: 'contract-mismatch' };
     if (playbook.seed !== this.runSeed) return { ok: false, reason: 'seed-mismatch' };
     if (playbook.difficultyPreset !== this.difficultyPreset) return { ok: false, reason: 'difficulty-mismatch' };
     const actor = this.ensurePlaybookReplayActor();
