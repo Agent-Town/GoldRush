@@ -1,0 +1,142 @@
+
+Running 40 tests using 1 worker
+
+[1/40] [desktop-chrome] › e2e/e3-canyon-works-traversal.spec.ts:40:1 › the hero walks down the works bank past z -6 at the bridge and both flanks
+[desktop-chrome] › e2e/e3-canyon-works-traversal.spec.ts:40:1 › the hero walks down the works bank past z -6 at the bridge and both flanks
+[canyon-traversal] desktop-chrome [{"approach":"works-bridge","x":0,"peakSlope":0.2798,"start":{"x":0,"z":-16},"end":{"x":0,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0},{"approach":"west-flank","x":-24,"peakSlope":0.2798,"start":{"x":-24,"z":-16},"end":{"x":-24,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0},{"approach":"east-flank","x":24,"peakSlope":0.2798,"start":{"x":24,"z":-16},"end":{"x":24,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0}]
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/40] [desktop-chrome] › e2e/e3-canyon-works-traversal.spec.ts:120:1 › the hero walks from the works bridge up the t2 ramp to the first gallery target, round the cliff
+[desktop-chrome] › e2e/e3-canyon-works-traversal.spec.ts:120:1 › the hero walks from the works bridge up the t2 ramp to the first gallery target, round the cliff
+[canyon-traversal-t2] desktop-chrome {"approach":"bridge-to-first-gallery-target","peakSlope":0.333,"start":{"x":0,"z":-5},"end":{"x":-34.13955335122941,"z":30.60025136856002},"closestToTarget":0.616,"shelfHeight":4.431,"legs":[{"leg":"bridge-to-bench","from":{"x":0,"z":-5},"end":{"x":0,"z":12.38273855698996},"simSeconds":3.5,"stalls":0,"drift":0},{"leg":"bench-west","from":{"x":0,"z":12.38273855698996},"end":{"x":-28.58897033203799,"z":12.544690910077028},"simSeconds":4.5,"stalls":0,"drift":0.162},{"leg":"t2-ramp","from":{"x":-28.58897033203799,"z":12.544690910077028},"end":{"x":-28.75058301754124,"z":30.41982132407171},"simSeconds":3.875,"stalls":0,"drift":0.162},{"leg":"gallery-shelf","from":{"x":-28.75058301754124,"z":30.41982132407171},"end":{"x":-34.13955335122941,"z":30.60025136856002},"simSeconds":0.875,"stalls":0,"drift":0.18}]}
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/40] [desktop-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+[desktop-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/40] [desktop-chrome] › e2e/e3-canyon-works.spec.ts:133:1 › keeps the Voltage era gate and saboteur ledger explicit
+[desktop-chrome] › e2e/e3-canyon-works.spec.ts:133:1 › keeps the Voltage era gate and saboteur ledger explicit
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/40] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics
+  1) [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.85
+    Received:   1.037
+
+      144 |   await writeFile(path.join(ARTIFACT_DIR, `slope-report-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
+      145 |
+    > 146 |   expect(report.uphillVsFlatSpeed).toBeLessThan(0.85);
+          |                                    ^
+      147 |   expect(report.downhillVsFlatSpeed).toBeGreaterThanOrEqual(0.98);
+      148 |   expect(uphill.terrain?.grounded).toBe(true);
+      149 |   expect(uphill.terrain?.traversable).toBe(true);
+        at /Users/robin/.goldrush/land/wt-cw2/e2e/gt-03-enemy-elevation.spec.ts:146:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[6/40] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge
+[7/40] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:247:1 › seeded basin diagnostics include hash-identical enemy positions
+[8/40] [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:261:1 › basin stress stays in frame envelope while the flat claim remains neutral
+[9/40] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[10/40] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[11/40] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[12/40] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[13/40] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[14/40] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[15/40] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[16/40] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[17/40] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[18/40] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[19/40] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[20/40] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[21/40] [mobile-chrome] › e2e/e3-canyon-works-traversal.spec.ts:40:1 › the hero walks down the works bank past z -6 at the bridge and both flanks
+[mobile-chrome] › e2e/e3-canyon-works-traversal.spec.ts:40:1 › the hero walks down the works bank past z -6 at the bridge and both flanks
+[canyon-traversal] mobile-chrome [{"approach":"works-bridge","x":0,"peakSlope":0.2798,"start":{"x":0,"z":-16},"end":{"x":0,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0},{"approach":"west-flank","x":-24,"peakSlope":0.2798,"start":{"x":-24,"z":-16},"end":{"x":-24,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0},{"approach":"east-flank","x":24,"peakSlope":0.2798,"start":{"x":24,"z":-16},"end":{"x":24,"z":-5.055637142496669},"crossedAtSimSeconds":1.75,"stalls":0}]
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[22/40] [mobile-chrome] › e2e/e3-canyon-works-traversal.spec.ts:120:1 › the hero walks from the works bridge up the t2 ramp to the first gallery target, round the cliff
+[mobile-chrome] › e2e/e3-canyon-works-traversal.spec.ts:120:1 › the hero walks from the works bridge up the t2 ramp to the first gallery target, round the cliff
+[canyon-traversal-t2] mobile-chrome {"approach":"bridge-to-first-gallery-target","peakSlope":0.333,"start":{"x":0,"z":-5},"end":{"x":-34.13955335122941,"z":30.60025136856002},"closestToTarget":0.616,"shelfHeight":4.431,"legs":[{"leg":"bridge-to-bench","from":{"x":0,"z":-5},"end":{"x":0,"z":12.38273855698996},"simSeconds":3.5,"stalls":0,"drift":0},{"leg":"bench-west","from":{"x":0,"z":12.38273855698996},"end":{"x":-28.58897033203799,"z":12.544690910077028},"simSeconds":4.5,"stalls":0,"drift":0.162},{"leg":"t2-ramp","from":{"x":-28.58897033203799,"z":12.544690910077028},"end":{"x":-28.75058301754124,"z":30.41982132407171},"simSeconds":3.875,"stalls":0,"drift":0.162},{"leg":"gallery-shelf","from":{"x":-28.75058301754124,"z":30.41982132407171},"end":{"x":-34.13955335122941,"z":30.60025136856002},"simSeconds":0.875,"stalls":0,"drift":0.18}]}
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[23/40] [mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+[mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[24/40] [mobile-chrome] › e2e/e3-canyon-works.spec.ts:133:1 › keeps the Voltage era gate and saboteur ledger explicit
+[mobile-chrome] › e2e/e3-canyon-works.spec.ts:133:1 › keeps the Voltage era gate and saboteur ledger explicit
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[25/40] [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics
+  2) [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.85
+    Received:   2.121
+
+      144 |   await writeFile(path.join(ARTIFACT_DIR, `slope-report-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
+      145 |
+    > 146 |   expect(report.uphillVsFlatSpeed).toBeLessThan(0.85);
+          |                                    ^
+      147 |   expect(report.downhillVsFlatSpeed).toBeGreaterThanOrEqual(0.98);
+      148 |   expect(uphill.terrain?.grounded).toBe(true);
+      149 |   expect(uphill.terrain?.traversable).toBe(true);
+        at /Users/robin/.goldrush/land/wt-cw2/e2e/gt-03-enemy-elevation.spec.ts:146:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[26/40] [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge
+[27/40] [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:247:1 › seeded basin diagnostics include hash-identical enemy positions
+[28/40] [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:261:1 › basin stress stays in frame envelope while the flat claim remains neutral
+[29/40] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[30/40] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[31/40] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[32/40] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[33/40] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[34/40] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[35/40] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[36/40] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[37/40] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[38/40] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[39/40] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[40/40] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  2 failed
+    [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+    [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+  2 skipped
+  36 passed (3.3m)

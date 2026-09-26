@@ -1,0 +1,38 @@
+# Drain review: `canyon-works-traversal-2`, the second wall is slope-legal and the authored turrets stand (Opus 5.5 implementer at max effort; from F-CW1-1)
+
+**Branch** `fix/canyon-works-traversal-2` at `0c128d194` · **merge** `309b938eb` · engine hash #65 `ca12dc2a` · drained attended 2026-09-26 04:20Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `cw2`).
+
+**Verdict: LANDED.**
+
+### What it does
+The Canyon Works' second wall (F-CW1-1): the t2 ramp rose 4 m over z 18 to 28, a smoothstep peak gradient of 0.598 against the 0.35 limit, refusing z 19.8 to 26.2 at every x, so no seam, gallery, lamp or turret was reachable on foot. The implementer (Opus 5.5 at max effort) measured three windows with the sim's own `simSlope` and `isTraversable`: 18 to 28 (0.598, no target reached), 14 to 32 (0.333 at z 23, margin 0.017, every target reached) and 13 to 33 (0.2998); a 17 m run reads 0.3525, so 18 m is the narrowest window with the 0.015 margin, and 14 to 32 is the change: the same 4 m over 18 m, still centred on z 23. The scripted cliff is untouched (833 of 833 points refused, still 2.2 m above the ramp); the mask-table mirror carries the two numbers (guard 30 of 30); the traversal spec gains a t2 row (bridge to the seam at minus 34, 30 in four legs, 0 stalls, both projects). **What it uncovered (F-CW2-1):** the contract's two authored arc turrets at (plus or minus 18, 22) had never stood, because the old ramp refused their ground and placement skips an unwalkable site; now they stand, so the two canyon null floors moved on event hash only (waves, gold, kills identical), and the e3-canyon-works spec's step at `:81` needed a re-baseline (the east turret kills the moth it expected), done by the implementer under a named lift. gt-03's four goal-side rows had never met the cliff; they slid on the old wall and are re-baselined to what they measure now, with the basin rows still proving no enemy enters the cliff footprint. **Astra's acceptance still does not secure the map:** `crossed` 4 of 4 and gold from a gallery seam 4 of 4, `secures` 0 of 4, with deaths at waves 3 to 12 at the ford and the CONNECT missed at 4 of 6 beacons, measured at a 1-minute load of 165 to 230 (F-CW2-3): enemy pressure and the 240-gold CONNECT economy, not terrain; re-run on a quiet host before any balance talk. Where the player sees it: the whole Canyon Works can be walked, and its two turrets stand.
+
+### Measured
+Peak gradient 0.598 to 0.333 with margin 0.017; no refused point outside the cliff; 4 of 4 seams, 2 of 2 galleries, lamps and turrets reachable (before 0, 0). Engine hash `9a995b76` (pin #63) to `172b8279…`; the drain pins it. Null floors 81 of 83 before the re-pin (the two canyon seeds, event hash only; the cure re-pins them on the merged tree and proves the other 81 byte-identical). tsc, build and the e1 build rc 0; task-025, m2-01 and the traversal spec green; guards 52 of 52 on the clean tree and the two registry rows red until the pin; `gt-03:155` green on both projects, `:125` red on the clean tree too.
+
+### Merge classification
+LANE-TOUCHED: `assets/contracts/epoch-3-voltage/contracts.json` (two t2 numbers), `assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json`, `e2e/e3-canyon-works-traversal.spec.ts` (the t2 row), `e2e/gt-03-enemy-elevation.spec.ts` (baseline numbers with reasons), `e2e/e3-canyon-works.spec.ts` (the `:81` re-baseline under the named lift), `artifacts/canyon-works-traversal-2/**`. Drain cure: `assets/contracts/null-floors.json` (two seeds) and the desk row.
+
+### Findings
+- **F-CW2-1 (the owner's, on the desk):** the authored turrets stand; a balance change by restoring authored content; veto by one word.
+- **F-CW2-2 (a slice):** the owner-mandated goal-side steer rows have no wall left on this map (re-aims: 3 of 4 slide at the cliff, 0 of 4 at the river); a goal-side fixture with a wall no router avoids.
+- **F-CW2-3:** the win is blocked by enemy pressure at the ford and the CONNECT cost; re-run Astra's acceptance at baseline load (a run-7 candidate).
+- **F-CW2-4 (art):** the GLB's t2 face now sits up to 0.91 m off the sim ground (was 0.57); with F-CW1-2, the art owner's regrade.
+
+### E2E attribution (drain, 04:16Z)
+`e2e/gt-03-enemy-elevation.spec.ts:125` red on both projects: the implementer measured this row red on the CLEAN tree too (its report: "`:125` is red on the clean tree too"; `:155` green on both), so it is not this change; allowed for this landing only by name.
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| strict release build (the assertion) | `(strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97714938 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)` |
+| first-town payload | `34352207 bytes` |
+| halo | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu` |
+| null floors | `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (289.7s).` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 168 ℹ fail 0` |
+| the release suite under its own config | `(own config): rc=0   30 passed (2.2m)` |
+| e2e both projects, --workers=1 | `rc=1   2 failed   2 skipped   36 passed (3.3m)  04:02Z` |
+| full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 1032 ℹ pass 1025 ℹ fail 2 ℹ skipped 5  04:20Z` |
+| engine hash | `merged: ca12dc2a4cb327689084adbe0664bc2c680b6a8e8fa452fc806790e84a9cdda1 (pinned 2cf26ba49f0ed0f08bf38791408c625187808ed81d6a3ebc3d00d9e9a148405b)` |
