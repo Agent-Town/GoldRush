@@ -91,7 +91,7 @@ import { MotorSocket, type MotorDiagnostics } from '../sim/MotorSocket';
 import { META_PROGRESS_KEY, agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { baronArrivalEdge } from './BaronFort';
-import { resolveLiveSeed } from './liveSeed';
+import { LIVE_SEED_CONSTANT, liveSeedRotationId, resolveLiveSeed } from './liveSeed';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentRegattaSource, type AgentViewSource } from '../agent/View';
@@ -1620,14 +1620,9 @@ export class Game {
     // THE LIVE SEED (owner ruling 2026-09-24, "(a)": humans ride the open rotation's seed per contract).
     // A replay tape's seed and a dev `?seed=` pin still come first; the rules live in src/game/liveSeed.ts.
     this.runSeed = this.boot.replay?.tape.seed ?? getDebugSeed() ?? resolveLiveSeed(this.activeContract.id);
-    // THE SEAMS FOLLOW THE RUN'S SEED (F-RES1-6, river-assay-1). The harvest's generator was seeded from the `?seed=`
-    // pin alone (`HarvestSystem`'s default, `createRng(getDebugSeed())`, written at m1-04 when the pin was the only seed
-    // there was; no comment gave another reason): an unpinned run, which is every live run, laid its seams from the
-    // constant default while its reel recorded `runSeed`, so no replay could put them back. Now they are seeded from
-    // `runSeed`, the seed the reel records. A pinned run and a replay booted with its reel's seed as the pin (the assay's
-    // browser arm) seed them exactly as before, because `runSeed` is that pin; an unpinned run seeds them from the
-    // rotation's seed its reel carries, and the in-game Lantern Show replays them from it.
-    this.harvestSystem.resetFromSeed(this.runSeed);
+    // THE SEAMS FOLLOW THE RUN'S SEED (F-RES1-6, river-assay-1): seeded from `harvestSeedFor(runSeed)`, a pure function of
+    // the seed the reel records, so a replay of any run lays that run's seams (see the function).
+    this.harvestSystem.resetFromSeed(harvestSeedFor(this.runSeed));
     this.harvestSnapshot = this.harvestSystem.snapshot;
     this.waveSystem = new WaveSystem(
       this.enemies,
@@ -11185,6 +11180,23 @@ function isRiverCeremonyContract(contract: ContractManifest): boolean {
   if (contract.name !== river.contract.name) return false;
   const stamped = stampCharter(river);
   return stamped.ok && contractDescriptorJson(contract) === stamped.document;
+}
+
+/**
+ * THE SEAMS' SEED (F-RES1-6, river-assay-1, form (b) as ruled by the attended session, 2026-09-27). The harvest's
+ * generator was seeded from the `?seed=` pin alone (`HarvestSystem`'s default, `createRng(getDebugSeed())`, written at
+ * m1-04 when the pin was the only seed there was; no comment gave another reason), so a replay, which knows only the
+ * seed its reel records (`runSeed`), could not tell which layout the run had laid. This derives the layout from that
+ * seed alone, keeping live play exactly as it was:
+ *   - a live seed (a rotation's, or the `gold-rush` constant a contract off the rotation rides) keeps the one layout
+ *     every unpinned run has always laid, the generator's default (`createRng(null)`): the Claim's seams are design and
+ *     do not move with the week;
+ *   - any other seed (a bench or a test pin) seeds the seams itself, exactly as the pin always did.
+ * A replay derives the same answer from the reel's seed, so it lays the run's own seams, pinned or not, before this
+ * slice or after it. Nothing in `liveSeed.ts` changes; its registry is only read.
+ */
+function harvestSeedFor(runSeed: string): string | null {
+  return runSeed === LIVE_SEED_CONSTANT || liveSeedRotationId(runSeed) !== null ? null : runSeed;
 }
 
 /**
