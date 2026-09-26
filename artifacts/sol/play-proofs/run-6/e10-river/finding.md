@@ -1,0 +1,15 @@
+# F-PP6-2 — River's authored pan works; a completed River score is not written
+
+2026-09-26. PARTIAL desktop/phone. Both earned the real Last Claim wave-8 prelude, banked it, waited for the Charter Press, and clicked its River lever. Both reached the authored no-wave pan and returned to the Book with zero console/page errors. Both full enabled commands fail at the unchanged bank requirement; exactly two journeys, one per project, no host-load retry.
+
+The lever itself navigated to `/?contract=the-claim&nowaves=`. The harness never constructs that URL, stages a charter, adds debug flags, teleports, grants resources or changes balance. The briefing names The River and the diagnostics name the authored `the-claim` lineage with no fallback. The prelude is retained separately under `objective.prelude`; all top-level terminal fields and samples describe the River, not raw wave-20 survival.
+
+Desktop pans from 0 to 30 gold and remains wave 0 / zero enemies through 35.10 sim seconds at approximately (-8,6.8). Phone also pans 0 to 30 gold, wave 0 / zero enemies through 35.00 s at approximately (-7.9,6.8). Neither has a Claim Secured overlay or bank action. Scoreboard has 42 seeded/prelude rows before and after the pan, no new secured/completed `e10-river` score. The ordinary pause Back to Town exit reaches the Book; after a plain reload its 7,396 score bytes remain identical and the Book is reopened, but those bytes contain no completed River score. Therefore completed-score persistence cannot pass. The source names this exit as suspension, not completion.
+
+## Attribution and limit
+
+`src/systems/E10FinaleSystem.ts:launchRiver` stamps `getPostCreditsCharter()` and navigates using its lineage root. `assets/charters/the-river.json` declares lineage/id `the-claim`, `runPolicy.waves=none`, and the no-wave pan. `src/game/Game.ts:recordRunScore` uses `activeContract.id`; its score writers subscribe to secure/end/death, not this pan. The ordinary Back to Town handler navigates to the start menu and flushes run suspension. These observations explain the absence of the requested completed `e10-river` score without implying broken survival or an inaccessible ending.
+
+The River is explicitly an ending, door-exempt by design in `specs/agent-play/door-completion-sheet.md`, not an ordinary scored contract. The task's all-six acceptance rule and the authored ending do not currently agree. Owner/finale decision: accept native lever + quiet pan + ordinary Book return as ending evidence, or separately authorize a persistent ending-completion record and corresponding return flow. Do not quietly waive the bank assertion, claim the earlier raw wave-20 census as this ending, or alter production within this proof task. No credits-name animation or broader presentation acceptance is claimed.
+
+[Desktop row](row-desktop-chrome.json) · [phone row](row-mobile-chrome.json) · [desktop pan](terminal-desktop-chrome.png) · [phone pan](terminal-mobile-chrome.png) · [desktop Book](board-desktop-chrome.png) · [phone Book](board-mobile-chrome.png). The driver and command log are retained alongside the rows.

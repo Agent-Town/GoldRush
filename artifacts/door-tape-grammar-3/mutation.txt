@@ -1,0 +1,14 @@
+Mutation check at a3531c91b (runner: mutate.mjs.txt). Each run changes ONE clause of functions/api/standings.ts, runs node scripts/test-standings.mjs, then restores the source and proves it byte-identical with git diff --quiet HEAD.
+
+M0 none (control)                                        rc=0 passed 514/514
+M1 the client judges no place_build                      rc=1 RED: the door refuses a place_build id and a pick_upgrade id of whitespace only and an ability the client does not know: [{"ok":true,"stored":true,"rank":1,"decidedBy":"crown"
+M2 the client judges no pick_upgrade                     rc=1 RED: the door refuses a place_build id and a pick_upgrade id of whitespace only and an ability the client does not know: [{"ok":false,"error":"bad_payload","message":"Standing
+M3 the client judges no set_agent_ability                rc=1 RED: the door refuses a place_build id and a pick_upgrade id of whitespace only and an ability the client does not know: [{"ok":false,"error":"bad_payload","message":"Standing
+M4 door gate removed                                     rc=1 RED: the door refuses a place_build id and a pick_upgrade id of whitespace only and an ability the client does not know: [{"ok":false,"error":"reel_not_current","message":"Thi
+M5 gate also at read (the naive fix)                     rc=1 RED: at read the grammar keeps a stored reel with a place_build id of whitespace only, which the client cannot load
+M6 read: no retirement clause                            rc=1 RED: a stored row with a place_build id of whitespace only is RETIRED and COUNTED, not dropped and not ranked
+M7 over-tight: only values the client keeps unchanged    rc=1 RED: a place_build id with edge whitespace is still accepted (the client trims it)
+M8 read: retirement in primary entries only              rc=1 RED: a stored row with a second rider's set_agent_ability naming an ability the client does not know is RETIRED and COUNTED, not dropped and not ranked
+
+M4 re-run alone after the batches, for its full answer array (source restored, git diff --quiet HEAD): all three shapes answered 400 reel_not_current, not bad_payload:
+  [{"ok":false,"error":"reel_not_current","message":"This reel carries a place_build the client cannot load, so it cannot replay; it stands retired under ADR-004."},{"ok":false,"error":"reel_not_current","message":"This reel carries a pick_upgrade the client cannot load, so it cannot replay; it stands retired under ADR-004."},{"ok":false,"error":"reel_not_current","message":"This reel carries a set_agent_ability the client cannot load, so it cannot replay; it stands retired under ADR-004."}]

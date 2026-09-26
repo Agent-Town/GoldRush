@@ -1,0 +1,13 @@
+A full reel: 1 playbook use + 1 motor action                                         keys=14 actions=-                    door=200 stored       validateTape=valid validateRunTape=valid
+B plain reel: playbookUses [] and no motorActions                                    keys=13 actions=-                    door=200 stored       validateTape=valid validateRunTape=valid
+C plain reel with its empty playbookUses dropped (live-seed control)                 keys=12 actions=-                    door=200 stored       validateTape=valid validateRunTape=valid
+D full reel, playbookUses dropped, motorActions kept                                 keys=13 actions=-                    door=200 stored       validateTape=valid validateRunTape=valid
+E full reel, motorActions dropped, playbookUses kept                                 keys=13 actions=-                    door=200 stored       validateTape=valid validateRunTape=valid
+F plain reel + prospector_dispatch (Game.ts:8257-8261)                               keys=13 actions=prospector_dispatch  door=200 stored       validateTape=valid validateRunTape=valid
+G plain reel + context_action recover (Game.ts:5727)                                 keys=13 actions=context_action       door=200 stored       validateTape=valid validateRunTape=valid
+H plain reel + pick_upgrade as Game.ts:7995-7998 records it (defaulted stripped)     keys=13 actions=pick_upgrade         door=200 stored       validateTape=valid validateRunTape=valid
+I plain reel + lockstep agent_orders (MP slot actions, Game.ts:7969-7971)            keys=13 actions=agent_orders         door=200 stored       validateTape=valid validateRunTape=valid
+F2 = F with playbookUses dropped (twelve keys)                                       keys=12 actions=prospector_dispatch  door=200 stored       validateTape=valid validateRunTape=valid
+G2 = G with playbookUses dropped (twelve keys)                                       keys=12 actions=context_action       door=200 stored       validateTape=valid validateRunTape=valid
+H2 = H with playbookUses dropped (twelve keys)                                       keys=12 actions=pick_upgrade         door=200 stored       validateTape=valid validateRunTape=valid
+I2 = I with playbookUses dropped (twelve keys)                                       keys=12 actions=agent_orders         door=200 stored       validateTape=valid validateRunTape=valid

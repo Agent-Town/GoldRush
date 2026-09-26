@@ -1,0 +1,44 @@
+branch fix/small-fixes-1 tip a5f9d8581 2026-09-25 18:29Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/sf1.json
+scratch store at the store's main 5793a96
+chain base dac1b3ecc
+merged 70cf2362f
+desk row F-SF1-7: inserted at line 52
+cure sf1: desk row committed 0c41cedf6
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 13e5735c2e784834f640dd99e65d674cf0295c3d0d899c2364da4b60baa42fab (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97708589 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34349969 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (314.3s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 147 ℹ fail 0 
+functions gates: accounts rc=0 | mp rc=0 | stats rc=0
+release suite (own config): rc=0   30 passed (2.3m) 
+e2e start 18:40Z: e2e/account-card-privacy-link.spec.ts e2e/profile-first-boot.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   40 passed (2.4m)  18:43Z
+battery start 18:43Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1010 ℹ fail 3 ℹ skipped 5  18:51Z
+✖ all 162 scripts/*.test.mjs fixture owners remove their temp directories (190985.622833ms)
+✖ rotation registry stays outside the engine identity corpus (998.137291ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (146.530875ms)
+dirt after battery: 0
+sf1-PREP-DONE
+battery reds: ✖ all 162 scripts/*.test.mjs fixture owners remove their temp directories (190985.622833ms)
+verdict — needs hands
+RESUME-PREP 18:51Z: fixture owners remove their temp directories = the sweep failed on "scripts/bench-seeds.test.mjs child failed": on this hash-moving branch that is the pre-pin red seen through the sweep child (the pin cures it), or the contention shape; not fixture survivors
+verdict: clean
+RESUME 2026-09-25 22:44Z: chain 0c41cedf6, merge 70cf2362f, continuing at the pin
+hash at pin time: 13e5735c2e784834f640dd99e65d674cf0295c3d0d899c2364da4b60baa42fab
+pin #62 `13e5735c`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/small-fixes-1.md
+bookkeeping: leaf merged, row, STATUS phrase (70cf2362f)
+STATUS.md: theirs (main)
+engine-era conflict (another pin landed) — needs hands
+main-merge conflict assets/engine-era.json — needs hands
+RESUME 2026-09-26 00:55Z: chain d7fedbefd, merge 70cf2362f, continuing at the pin
+hash at pin time: 2cf26ba49f0ed0f08bf38791408c625187808ed81d6a3ebc3d00d9e9a148405b
+pin #64 `2cf26ba4`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/small-fixes-1.md

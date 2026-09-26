@@ -92,7 +92,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './is-main.mjs';
 import { subjectLedClosure } from './desk-state-audit.mjs';
 // F-2231-1: the whole-token containment test F-2230-1 ruled on, imported rather
 // than re-implemented. No new cycle — desk-birth-guard reaches only
@@ -527,7 +527,7 @@ function main() {
 // NOT `file://${process.argv[1]}` — this repo's path contains a space, which
 // import.meta.url percent-encodes and process.argv[1] does not (the s1334 trap:
 // that comparison is false here, so the guard ran as a no-op and exited 0).
-// The argv[1] guard is not decoration either: `node -e "import(...)"` leaves it
-// undefined and pathToFileURL then THROWS, so an unguarded compare turns any
-// programmatic import into a crash (found s1533 while debugging this file).
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+// isMain (./is-main.mjs) keeps the s1533 half, found while debugging this file: no
+// argv[1] (`node -e "import(...)"`) is "not main", never a throw. It compares REAL
+// paths too, so a symlinked spelling no longer turns the guard into a no-op (F-LS1-2).
+if (isMain(import.meta.url)) main();

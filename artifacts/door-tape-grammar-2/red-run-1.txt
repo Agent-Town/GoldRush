@@ -1,0 +1,46 @@
+contract clock census 42/25/17/0
+recorder reel kv checks (40)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the door accepts the recorder's reels with a dispatch, a recovery and a seated rider's orders: [{"ok":false,"error":"bad_payload","message":"Standing not accepted."},{"ok":false,"error":"bad_payload","message":"Standing not accepted."},{"ok":false,"error":"bad_payload","message":"Standing not accepted."}]
++ actual - expected
+
+  [
+    [
++     400,
++     'bad_payload'
+-     200,
+-     true
+    ],
+    [
++     400,
++     'bad_payload'
+-     200,
+-     true
+    ],
+    [
++     400,
++     'bad_payload'
+-     200,
+-     true
+    ]
+  ]
+
+    at equal (file:///Users/robin/Claude/Projects/wt-dtg1/scripts/test-standings.mjs:1874:10)
+    at checkRecorderVerbs (file:///Users/robin/Claude/Projects/wt-dtg1/scripts/test-standings.mjs:473:3)
+    at async file:///Users/robin/Claude/Projects/wt-dtg1/scripts/test-standings.mjs:55:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    [ 400, 'bad_payload' ],
+    [ 400, 'bad_payload' ],
+    [ 400, 'bad_payload' ]
+  ],
+  expected: [ [ 200, true ], [ 200, true ], [ 200, true ] ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.4.0

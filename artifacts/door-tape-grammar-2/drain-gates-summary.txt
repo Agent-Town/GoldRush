@@ -1,0 +1,21 @@
+branch fix/door-tape-grammar-2 tip 0033aca89 2026-09-25 16:23Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/dtg2.json
+scratch store at the store's main 5793a96
+chain base 26109c151
+merged dd5c74b97
+same-game audit re-pinned 511 -> 595
+cure dtg2: audit re-pinned d38672d44
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 140 ℹ fail 0 
+functions gates: accounts rc=0 | mp rc=0 | stats rc=0
+ledger battery start 16:25Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+battery start 16:27Z
+battery: rc=0 ℹ tests 1018 ℹ pass 1013 ℹ fail 0 ℹ skipped 5 ℹ tests 82 ℹ pass 82 ℹ fail 0 ℹ skipped 0  16:48Z
+dirt after battery: 0
+dtg2-PREP-DONE
+verdict: clean
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+review: reviews/door-tape-grammar-2.md

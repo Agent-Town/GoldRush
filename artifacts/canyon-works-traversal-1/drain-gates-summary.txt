@@ -1,0 +1,47 @@
+branch fix/canyon-works-traversal-1 tip 2bba21639 2026-09-25 15:34Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/cw1.json
+scratch store at the store's main 5793a96
+chain base 630392c1a
+merged 752d624e8
+mirror: creekBlendStart -14
+mask-tables guard green
+desk row F-CW1-1: inserted at line 46
+desk row F-CW1-2: inserted at line 46
+cure cw1: committed 4d538baf6
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 76aedf0c3ab4145f8b14786de9d8a04b706f8475f00a4b43649c1d3d3f459ced (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97708423 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34349803 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (311.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 167 ℹ fail 0 
+release suite (own config): rc=0   30 passed (2.3m) 
+e2e start 15:45Z: e2e/e3-canyon-works-traversal.spec.ts e2e/e3-canyon-works.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   30 passed (2.2m)  15:47Z
+battery start 15:47Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1009 ℹ fail 4 ℹ skipped 5  15:56Z
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (202771.246333ms)
+✖ contention is advisory, correctly counted, and absent when alone (6444.258667ms)
+✖ rotation registry stays outside the engine identity corpus (660.596291ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (269.1625ms)
+dirt after battery: 0
+cw1-PREP-DONE
+battery reds: ✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (202771.246333ms)
+verdict — needs hands
+RESUME-PREP 15:58Z: sweep child = bench-seeds pre-pin red (the pin cures it); registry rows and contention default-allowed
+verdict: clean
+RESUME 2026-09-25 22:43Z: chain 4d538baf6, merge 752d624e8, continuing at the pin
+hash at pin time: 76aedf0c3ab4145f8b14786de9d8a04b706f8475f00a4b43649c1d3d3f459ced
+pin #62 `76aedf0c`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/canyon-works-traversal-1.md
+bookkeeping: leaf merged, row, STATUS phrase (752d624e8)
+STATUS.md: theirs (main)
+engine-era conflict (another pin landed) — needs hands
+main-merge conflict assets/engine-era.json — needs hands
+RESUME 2026-09-26 00:31Z: chain 4c5807910, merge 752d624e8, continuing at the pin
+hash at pin time: 9a995b76569235178101263919756b45713eb3f9e0dc71643ed8cf1d2cd74be6
+pin #63 `9a995b76`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/canyon-works-traversal-1.md

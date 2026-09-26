@@ -6,7 +6,7 @@
 # Batteries keep dlock.sh. Landings serialize among themselves here and gate on LOAD instead, because the only thing a
 # concurrent battery can cost a landing is a load-class row, which the drain attributes by reading the log (F-PP3-6).
 set -u
-LOCK="$HOME/.goldrush/land.lock"; MAX="${GR_LAND_LOAD_MAX:-20}"
+LOCK="$HOME/.goldrush/land.lock"; MAX="${GR_LAND_LOAD_MAX:-40}"  # 40, not 20 (F-LAND-5, 2026-09-26): this Mac idles at 25 to 45 with the owner's simulator, Chrome and Codex desktop; at 20 a wrapper held the lock an hour without starting
 until mkdir "$LOCK" 2>/dev/null; do
   H=$(awk '{print $1}' "$LOCK/holder" 2>/dev/null)
   if [ -n "$H" ] && ! kill -0 "$H" 2>/dev/null; then echo "land-queue: reclaiming the landing lock from dead holder $H" >&2; rm -rf "$LOCK"; continue; fi

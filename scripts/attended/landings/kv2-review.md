@@ -14,3 +14,6 @@ LANE-TOUCHED: `functions/api/_multiplayer.ts` (the fallback onto the shared limi
 - **F-KV2-4 (noted):** `_multiplayer.ts` keeps a byte-identical copy of `clientIpHash`.
 - **F-KV2-5 (noted):** `docs/bench/same-game-audit.md` cites a `standings.ts` line that was already wrong and moved eight more.
 - **F-KV2-7 (implementer shells):** the default node is 23 and fails `test:stats`; the attended session now tells every implementer to put Node 26 first on PATH.
+
+### Battery attribution (drain, 14:50Z)
+Two reds in the chain battery at 14:49Z, both allowed for this landing only after reading their assertions: (1) the fixture-teardown sweep failed on "scripts/node-guards-contention.test.mjs child failed", the load shape (another battery on the host), not "fixture survivors"; (2) `scripts/open-sea-water.test.mjs` failed as a whole file in 150 ms with a process crash trace, passes 1 of 1 alone on main, and reads nothing this branch touches (edge functions, two tests, a runbook). Neither names a file of this branch.

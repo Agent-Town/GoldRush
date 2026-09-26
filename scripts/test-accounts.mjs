@@ -4,13 +4,14 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import net from 'node:net';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { createServer as createViteServer } from 'vite';
 import { assertWranglerVersion } from './wrangler-binary.mjs';
 import { createLedgerServer, loadLedgerHandlers } from '../server/ledger/serve.mjs';
 import { SqliteStorage } from '../server/ledger/storage.mjs';
 import { sweepExpiredLedgerRows } from '../ops/droplet/ledger-backup.mjs';
 import { applyImport, planImport, TELEMETRY_MARKER } from './kv-to-ledger-migrate.mjs';
+import { isMain } from './is-main.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'http://localhost:5188';
@@ -33,7 +34,7 @@ const KV_WRITES_BEFORE = { legacyWorstCase: 15, freshNonceReplay: 13, renderDemo
 const TINY_JPEG = 'data:image/jpeg;base64,/9j/2Q==';
 const checks = [];
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+if (isMain(import.meta.url)) {
   if (process.argv[2] === '--serve') await serve(process.argv[3]);
   else await main();
 }

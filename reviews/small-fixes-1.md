@@ -1,0 +1,42 @@
+# Drain review: `small-fixes-1`, four small findings closed with tests (Opus 5.5 implementer at max effort; owner 2026-09-25 spare budget)
+
+**Branch** `fix/small-fixes-1` at `a5f9d8581` · **merge** `70cf2362f` · engine hash #64 `2cf26ba4` · drained attended 2026-09-26 00:55Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `sf1`).
+
+**Verdict: LANDED.**
+
+### What it does
+Four small findings the landings of 2026-09-25 left open, each closed with a test and its own commit (Opus 5.5 implementer at max effort on the owner's Anthropic subscription; owner: "There is a ton of tokens left on this subscription as well ... Do we have some more work that we can do?"). **F-SEC2-2:** the bug office handler admitted any localhost origin in production, the hole the accounts handler closed the same day; the in-process handler probe has 20 rows and before the fix 6 were wrong (production answered localhost 201/200 with an allow-origin header); after, production refuses localhost with 403/404 and no header, the site's own origins are allowed, and an unconfigured setup still admits localhost. **F-SEC2-4:** the privacy notice was linked from the sign-in form and the complaints desk but not from the card a signed-in player sees; now the account card carries the same link and wording (`data-testid="account-privacy-link"`), proved by `e2e/account-card-privacy-link.spec.ts` on desktop and phone with zero console errors and no off-origin request. **F-LS1-2:** thirteen scripts decided "am I the main module" by a path comparison that fails under a symlinked path (the scratch worktrees are reached through one); `scripts/is-main.mjs` compares real paths on both sides, eleven scripts import it and two (`authorable-candidates.mjs`, `dry-board-probe.mjs`) carry a byte-identical copy because test fixtures relocate those two files alone (measured: 5 and 3 red arms with the import), and `is-main.test.mjs` pins each copy to the original and runs `source-pointer-guard` through a symlinked temp path (exit 1 and the same output; the old spelling exits 0 and prints nothing). **F-EO1-5:** the desk-displacement guard removes its temp directories (10 of 10 green, 100 of 100 in a flake run, 0 left behind); main had fixed the same file and its s2677 sibling at `c3cd93c77` while this ran, and the two versions merged without conflict. Where the player sees it: Profiles, the account card, in a plain boot, signed in or not: the privacy link. Everything else is edge and factory hygiene.
+
+### Measured
+tsc and build rc 0 (vite 2931 modules). The bug office probe 20 rows, 6 wrong before, 0 after. The privacy spec 4 of 4 on both projects; the adjacent `profile-first-boot` 12 of 12. `is-main.test.mjs` 7 arms; 638 tests touching the thirteen scripts pass. The desk guard 10 of 10 and 100 of 100. On the merged branch (main merged in by the drain, one import conflict in `scripts/test-accounts.mjs` resolved by keeping main's two new imports and adding `isMain`): test:accounts 26 + 86 + 16 checks, test:mp 528, is-main 7 of 7. The engine hash moves by exactly one line in `src/game/ProfileManager.ts` (the privacy link on the account card); no sim rule, contract, floor or table moved.
+
+### Merge classification
+LANE-TOUCHED: `functions/api/_bugs.ts`, `src/game/ProfileManager.ts` (one line), `scripts/is-main.mjs` and `scripts/is-main.test.mjs` (new), thirteen scripts moved onto `isMain`, `scripts/status-line1-desk-displacement-guard.test.mjs` (teardown; merged cleanly with main's), `scripts/test-accounts.mjs` (the isMain guard; import block merged by hand), `package.json` (the roster gains `is-main.test.mjs`), `e2e/account-card-privacy-link.spec.ts` (new), `artifacts/small-fixes-1/**` (37 files: probes, before and after, shots, logs, the report).
+
+### Findings
+- **F-SF1-8 (measured by the drain, a corrective, and the reason F-SEC2-2 is closed in code but NOT yet effective in production):** the localhost refusal keys on `RESEND_API_KEY` being set, and a read of the Pages project through the Cloudflare API (variable NAMES only, no value read) shows the production environment holds exactly one variable, `ASSAY_WORKER_SECRET`, and the preview environment none. The mail key lives on the droplet, where the accounts moved on 2026-08-24; the Pages copy of the accounts handler is unserved in production, so that predicate never had a production reading. The bug office IS served by Pages in production (nginx forwards every unmatched `/api/` path there), so it will keep admitting localhost after this deploy exactly as before: no regression, no fix. Cure, in `localhost-cors-2` after `kv-counters-to-ledger-2` lands: an explicit local-development allow variable (`ALLOW_LOCALHOST_ORIGINS=1` in `.dev.vars`, absent in production) as the predicate in the bug office, the accounts copy and the six doors of F-SF1-1, so production refuses by default. The implementer's own note asked the owner to confirm the key; the API answered instead.
+- **F-SF1-7 (the owner's, optional):** the leaked temp directories on this Mac (250 `s2673-desk-*`, 78 `s2677-stamp-*`, 8,834 `s2337-*` from F-SF1-6, about 333 MB, all test fixtures, none factory history) are listed, not deleted; deletion is your word.
+- **F-SF1-6 (attended corrective, next):** `status-archive-empty-corpus-guard.test.mjs:52` makes its dirs with a template-literal prefix and never removes them, 12 per run, and the fixture sweep's extractor reads only string literals, so the biggest leaker is invisible to it. Cure: an `after()` teardown there and the sweep reading a template literal up to its first `${`.
+- **F-SF1-1 (a slice, after kv-counters-to-ledger-2 lands):** six more doors admit localhost unconditionally (`redeem.ts:109`, `standings.ts:1780`, refusals, telemetry, stats, `_multiplayer`); the same predicate the bug office now uses, `redeem.ts` first.
+- **F-SF1-2 (a slice, after the test and seed implementers land):** twenty-three more main-module checks share the symlink defect in other spellings (`artifacts/small-fixes-1/other-main-module-spellings.txt`), 8 of them measured exiting 0 under a symlinked path; `server/ledger/serve.mjs` and `ruling-propagation-guard.mjs` first.
+- **F-SF1-3 (discharged):** the sweep's second offender was fixed on main at `c3cd93c77`; the branch's `F-SF1-3-ready.patch` is superseded and was NOT applied.
+- **F-SF1-4, F-SF1-5 (noted):** two fixtures relocate scripts alone (hence the two copies of `isMain`); the master drifted in three places (130 stale directories were 250; one offender was two; a grep split). Recorded, nothing owed.
+
+### Battery attribution (drain, 18:51Z)
+Row "fixture owners remove their temp directories" allowed for this landing only: the sweep failed on "scripts/bench-seeds.test.mjs child failed": on this hash-moving branch that is the pre-pin red seen through the sweep child (the pin cures it), or the contention shape; not fixture survivors
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| strict release build (the assertion) | `(strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97708589 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)` |
+| first-town payload | `34349969 bytes` |
+| halo | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu` |
+| null floors | `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (314.3s).` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 147 ℹ fail 0` |
+| the three functions gates | `accounts rc=0 / mp rc=0 / stats rc=0` |
+| the release suite under its own config | `(own config): rc=0   30 passed (2.3m)` |
+| e2e both projects, --workers=1 | `rc=0   40 passed (2.4m)  18:43Z` |
+| full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 1018 ℹ pass 1010 ℹ fail 3 ℹ skipped 5  18:51Z` |
+| engine hash | `merged: 13e5735c2e784834f640dd99e65d674cf0295c3d0d899c2364da4b60baa42fab (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)` |

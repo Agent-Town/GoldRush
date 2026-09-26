@@ -1,0 +1,13 @@
+{
+  "tag": "sga1", "branch": "fix/same-game-audit-verbs-1", "port": 5387,
+  "mergeMessage": "drain: merge fix/same-game-audit-verbs-1 — same-game-audit-verbs-1 — the audit exempts agent_orders (the rider's own channel, 42 rows leave the table) and pairs prospector_dispatch with HARVEST after measuring all 38 admitted boards (same walk, arrival, seam and gold), re-pinned 0/515/1290/0 over 1805; the bench doc regenerated (Opus 5.5 implementer at max effort; F-DTG2-1)",
+  "hash": "unchanged",
+  "gates": { "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": false, "ledgerBattery": false, "specs": [], "guards": ["scripts/same-game-audit.test.mjs"] },
+  "cure": "scripts/attended/landings/sga1-cure.sh",
+  "review": { "path": "reviews/same-game-audit-verbs-1.md", "title": "Drain review: `same-game-audit-verbs-1`, the bench audit exempts the rider's channel and measures the dispatch pairing (Opus 5.5 implementer at max effort; F-DTG2-1)", "body": "scripts/attended/landings/sga1-review.md" },
+  "bookkeeping": { "taskFile": "same-game-audit-verbs-1.md", "rowKey": "SAME GAME AUDIT VERBS LANDED", "rowEmoji": "🧪",
+    "rowText": "`agent_orders` exempt as the seated rider's own channel (`SeatedLockstepSim.ts:208`; applied only for a headless slot): 42 rows leave the table (595 to 553 lacks, rows 1847 to 1805, sets differ by exactly those 42). `prospector_dispatch` PAIRED with HARVEST after measuring: Game.ts's dispatch lifted into the headless sim beside a HARVEST order and a control on the same contract and seed, each arm twice, all 38 admitted boards pair (same walk, arrival tick, seam, gold, economy; dispatch pans 2 ticks later, leaves 26 sooner; the Claim's 1.867 s matches the browser e2e): 38 rows to equal. Re-pinned 0/515/1290/0 over 1805; the four attribution corners measured. Bench doc regenerated (F-KV2-5 fixed), three rotted exemption citations resolve live. Hash unchanged {PIN}. Desk: F-SGA1-2 (the harness's HARVEST out-earns a dispatch with two pan_legend stacks: double gold on 41/41 seam boards). To author: F-SGA1-5 (the debug-spawn key T ungated on the lockstep action path, inferred: verify then gate). Audit-owner notes F-SGA1-1/3/4/6.",
+    "statusPhrase": "the bench audit stops counting the rider's own channel against the agent and pairs a dispatch with the harness's harvest after measuring every admitted board",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh sga1)" },
+  "deploy": false, "preview": false, "evidenceDir": "artifacts/same-game-audit-verbs-1"
+}
