@@ -3097,3 +3097,13 @@ merge `1920cfbbe` · review `reviews/hm-06-twin-banks-braid-water.md`
 ROUNDUP-CLASS — 2026-W39; batched because the week's three standalone headlines are already spent. Owner approval still governs publication.
 
 NOT PLAYER-VISIBLE (s2687, 2026-09-25) — `961f07fe2` appends engine-era pin #61 and rotates the identity hash. Judged by READING the diff against its parent, not its subject line (F-2612-1, the method of the s2676 note above): the sole file is `assets/engine-era.json`, the registry parses to `"era": 6` on both sides, and only `engineHash`, `pinnedAt`, `cause` and an empty `aliases` move — no era bumped. The water change this pin records is reported as news in the Twin Banks roundup entry; the pin itself draws nothing.
+
+
+## ROUNDUP — a crossing in the Canyon, weekly claims and a privacy link
+The Canyon Works' creek bank can now be crossed on foot, reaching all six pylons
+and the bridge. The higher ramp still blocks the route to completing the map.
+New runs and Ride Together rooms use the open week's seed, and the room card
+names that week. The six claims for week 40 are ready ahead of their September
+28 opening. Signed-in riders can reach the privacy notice from their account card.
+merge `752d624e8`, `da13ea750`, `73553e691`, `70cf2362f` · reviews `reviews/canyon-works-traversal-1.md`, `reviews/live-seed-rotation-1.md`, `reviews/rotation-r2026w40.md`, `reviews/small-fixes-1.md`
+ROUNDUP-CLASS — 2026-W39; s2690 closes the four GZ-01 omissions named by s2689. The week's three standalone slots are already spent. Owner approval still governs publication.
