@@ -294,6 +294,13 @@ async function openCountyStandings(page: Page): Promise<void> {
 
 async function shoot(page: Page, name: string): Promise<void> {
   await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+  // The ledger scrolls inside itself: bring the week row (else the contract row) to its top, so the chips, the
+  // board label and the rows share one frame on both viewports.
+  await page.evaluate(() => {
+    const top = document.querySelector('[data-testid="county-standings-weeks"]') ?? document.querySelector('.county-standings__contracts');
+    top?.scrollIntoView({ block: 'start' });
+  });
+  await expect(page.getByTestId('county-standings-row-1')).toBeInViewport();
   mkdirSync(ART, { recursive: true });
   await page.getByTestId('claim-ledger').screenshot({ path: path.join(ART, name) });
 }
