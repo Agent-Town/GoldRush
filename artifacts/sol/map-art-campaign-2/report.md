@@ -1007,3 +1007,5 @@ Final verification: build/TypeScript PASS; default collection PASS; gate-unset b
 
 - Old Canal: FAIL desktop/phone, all three choices complete, eight/seven builds, deaths wave 19/18. Central demolish opens the defense ground; both outer re-digs register. No map defect established, zero errors. [F-PP6-1](../play-proofs/run-6/e9-old-canal/finding.md).
 - Initial required Incline regression: PASS both projects, wave 14, cart 180/180, all six cells, zero errors.
+- Last Claim: PASS desktop/phone, wave 8, vent alive, banked, actual finale Return to the Ark reaches Book, score byte-identical after reload, zero errors. Prior census text preserved. [Proof](../play-proofs/run-6/e10-last-claim/proof.md).
+- Final shared-driver Incline regression: PASS both projects at wave 14, all six cells and full-health carts, zero errors.

@@ -1,75 +1,61 @@
 {
   "project": "desktop-chrome",
-  "contract": "e2-incline",
-  "name": "The Incline",
-  "secureWave": 12,
+  "contract": "e10-last-claim",
+  "name": "The Last Claim",
+  "secureWave": 8,
   "boots": {
     "ok": true,
-    "detail": "activeId=e2-incline secureWave=12"
+    "detail": "activeId=e10-last-claim secureWave=8"
   },
   "secures": {
     "ok": true,
-    "detail": "Claim Secured at wave 14 / 591.3s sim, 87 HP, 5 buildings"
+    "detail": "Claim Secured at wave 8 / 240.1s sim, 150 HP, 3 buildings"
   },
   "banks": {
     "ok": true,
-    "detail": "a NEW secured row for e2-incline: waves=14 gold=3 timeAlive=591 kills=340 (42 new row(s) since pre-play, retained after Return to Town)"
+    "detail": "a NEW secured row for e10-last-claim: waves=8 gold=75 timeAlive=240 kills=188 (42 new row(s) since pre-play, retained after Return to Town)"
   },
   "board": {
     "ok": true,
-    "detail": "the Book is on screen straight off the run ledger"
+    "detail": "the Book is on screen after the finale Return to the Ark button"
   },
   "reload": {
     "ok": true,
-    "detail": "score retained across reload (7397 bytes) and the Book reopened on foot"
+    "detail": "score retained across reload (7396 bytes) and the Book reopened on foot"
   },
   "clean": {
     "ok": true,
     "detail": "0 console, 0 page"
   },
-  "peakWave": 14,
-  "simAtEnd": 591.3333333333101,
+  "peakWave": 8,
+  "simAtEnd": 240.13333333332994,
   "runStateAtEnd": "playing",
-  "hpAtEnd": 87.39999999999999,
-  "goldAtEnd": 3,
-  "killsAtEnd": 340,
+  "hpAtEnd": 149.8,
+  "goldAtEnd": 75,
+  "killsAtEnd": 188,
   "peakHotBoilers": 0,
   "powerBanksPeak": {},
   "builds": [
     {
-      "id": "sentry_beacon",
-      "at": 33.199999999999925,
-      "wave": 0,
-      "x": 9,
-      "z": -22
-    },
-    {
       "id": "turret",
-      "at": 47.33333333333321,
+      "at": 54.666666666666515,
       "wave": 1,
-      "x": -7,
-      "z": -22
+      "x": -10,
+      "z": 45
     },
     {
-      "id": "turret",
-      "at": 124.40000000000282,
+      "id": "sentry_beacon",
+      "at": 102.53333333333507,
       "wave": 3,
-      "x": 8,
-      "z": -21
+      "x": -14,
+      "z": 50
     },
     {
       "id": "turret",
-      "at": 214.26666666666475,
+      "at": 169.73333333333395,
       "wave": 5,
-      "x": -7,
-      "z": -15
-    },
-    {
-      "id": "turret",
-      "at": 324.1333333333252,
-      "wave": 8,
-      "x": 8,
-      "z": -15
+      "x": -5,
+      "z": 46
     }
   ],
   "upgrades": [
@@ -82,653 +68,281 @@
     "tinkers_plating",
     "tinkers_plating",
     "tinkers_plating",
-    "heavy_spark",
-    "heavy_spark",
-    "spring_heels",
-    "spring_heels",
-    "double_tap_coil",
-    "long_resonator"
+    "heavy_spark"
   ],
   "samples": [
     {
-      "t": 10.3,
+      "t": 10,
       "wave": 0,
       "hp": 100,
       "gold": 0,
       "kills": 0,
-      "x": -4.9,
-      "z": -21.3,
+      "x": 4.1,
+      "z": 35.9,
       "alive": 2,
       "seams": 2
     },
     {
-      "t": 20.7,
+      "t": 20.1,
       "wave": 0,
       "hp": 100,
+      "gold": 25,
+      "kills": 1,
+      "x": 11.2,
+      "z": 35.9,
+      "alive": 5,
+      "seams": 2
+    },
+    {
+      "t": 30.7,
+      "wave": 1,
+      "hp": 97,
+      "gold": 30,
+      "kills": 6,
+      "x": 11.2,
+      "z": 2.1,
+      "alive": 8,
+      "seams": 1
+    },
+    {
+      "t": 41.3,
+      "wave": 1,
+      "hp": 97,
+      "gold": 50,
+      "kills": 14,
+      "x": 9.6,
+      "z": -8.3,
+      "alive": 3,
+      "seams": 2
+    },
+    {
+      "t": 51.6,
+      "wave": 1,
+      "hp": 97,
+      "gold": 50,
+      "kills": 14,
+      "x": -10.2,
+      "z": 42.5,
+      "alive": 8,
+      "seams": 2
+    },
+    {
+      "t": 61.9,
+      "wave": 2,
+      "hp": 97,
+      "gold": 0,
+      "kills": 22,
+      "x": 12.3,
+      "z": 22.4,
+      "alive": 9,
+      "seams": 2
+    },
+    {
+      "t": 72.3,
+      "wave": 2,
+      "hp": 94,
+      "gold": 10,
+      "kills": 28,
+      "x": 6.1,
+      "z": -17.8,
+      "alive": 9,
+      "seams": 1
+    },
+    {
+      "t": 82.5,
+      "wave": 2,
+      "hp": 94,
+      "gold": 25,
+      "kills": 35,
+      "x": -11.7,
+      "z": -29.2,
+      "alive": 7,
+      "seams": 1
+    },
+    {
+      "t": 92.9,
+      "wave": 3,
+      "hp": 94,
+      "gold": 25,
+      "kills": 39,
+      "x": -14.6,
+      "z": 18.2,
+      "alive": 13,
+      "seams": 2
+    },
+    {
+      "t": 103.5,
+      "wave": 3,
+      "hp": 94,
+      "gold": 0,
+      "kills": 45,
+      "x": -10.6,
+      "z": 49,
+      "alive": 15,
+      "seams": 2
+    },
+    {
+      "t": 113.9,
+      "wave": 3,
+      "hp": 89,
       "gold": 5,
-      "kills": 0,
-      "x": 29.5,
-      "z": -20.2,
+      "kills": 60,
+      "x": -11.9,
+      "z": 12.6,
       "alive": 6,
       "seams": 2
     },
     {
-      "t": 30.9,
-      "wave": 0,
-      "hp": 100,
-      "gold": 25,
-      "kills": 0,
-      "x": 9.7,
-      "z": -20.2,
+      "t": 124.3,
+      "wave": 4,
+      "hp": 86,
+      "gold": 30,
+      "kills": 70,
+      "x": -11.9,
+      "z": -3.4,
+      "alive": 8,
+      "seams": 1
+    },
+    {
+      "t": 134.4,
+      "wave": 4,
+      "hp": 83,
+      "gold": 40,
+      "kills": 77,
+      "x": -11.9,
+      "z": -35.5,
+      "alive": 11,
+      "seams": 1
+    },
+    {
+      "t": 144.8,
+      "wave": 4,
+      "hp": 83,
+      "gold": 55,
+      "kills": 86,
+      "x": -11.9,
+      "z": -35.5,
+      "alive": 9,
+      "seams": 1
+    },
+    {
+      "t": 155.3,
+      "wave": 5,
+      "hp": 83,
+      "gold": 70,
+      "kills": 91,
+      "x": -2.5,
+      "z": -7.1,
+      "alive": 17,
+      "seams": 2
+    },
+    {
+      "t": 165.9,
+      "wave": 5,
+      "hp": 83,
+      "gold": 70,
+      "kills": 95,
+      "x": -5.9,
+      "z": 40.6,
+      "alive": 26,
+      "seams": 2
+    },
+    {
+      "t": 176,
+      "wave": 5,
+      "hp": 78,
+      "gold": 0,
+      "kills": 117,
+      "x": -14.7,
+      "z": 26.4,
       "alive": 11,
       "seams": 2
     },
     {
-      "t": 40.9,
-      "wave": 1,
-      "hp": 100,
-      "gold": 55,
-      "kills": 3,
-      "x": 17.6,
-      "z": -20.2,
-      "alive": 16,
-      "seams": 1
-    },
-    {
-      "t": 51.3,
-      "wave": 1,
-      "hp": 100,
-      "gold": 5,
-      "kills": 4,
-      "x": -12.1,
-      "z": -4.5,
-      "alive": 18,
-      "seams": 1
-    },
-    {
-      "t": 61.7,
-      "wave": 1,
-      "hp": 92,
-      "gold": 10,
-      "kills": 10,
-      "x": -29.8,
-      "z": 25.4,
-      "alive": 17,
+      "t": 186.4,
+      "wave": 6,
+      "hp": 103,
+      "gold": 20,
+      "kills": 132,
+      "x": -12.2,
+      "z": 13,
+      "alive": 9,
       "seams": 2
     },
     {
-      "t": 71.7,
-      "wave": 1,
-      "hp": 92,
-      "gold": 35,
-      "kills": 17,
-      "x": -21.1,
-      "z": 16.7,
-      "alive": 15,
+      "t": 196.8,
+      "wave": 6,
+      "hp": 125,
+      "gold": 30,
+      "kills": 150,
+      "x": -12.2,
+      "z": -28.1,
+      "alive": 7,
       "seams": 1
     },
     {
-      "t": 82.1,
-      "wave": 2,
-      "hp": 92,
+      "t": 207.2,
+      "wave": 6,
+      "hp": 125,
       "gold": 35,
-      "kills": 19,
-      "x": -29.5,
-      "z": -20.1,
+      "kills": 154,
+      "x": -12.2,
+      "z": -35.2,
+      "alive": 11,
+      "seams": 0
+    },
+    {
+      "t": 217.9,
+      "wave": 7,
+      "hp": 125,
+      "gold": 40,
+      "kills": 157,
+      "x": 11.1,
+      "z": -11.9,
       "alive": 22,
       "seams": 1
     },
     {
-      "t": 92.5,
-      "wave": 2,
-      "hp": 92,
+      "t": 228.3,
+      "wave": 7,
+      "hp": 150,
       "gold": 65,
-      "kills": 22,
-      "x": -26.4,
-      "z": -17,
-      "alive": 25,
+      "kills": 171,
+      "x": 11.2,
+      "z": 0.7,
+      "alive": 28,
       "seams": 1
     },
     {
-      "t": 102.5,
-      "wave": 2,
-      "hp": 71,
-      "gold": 65,
-      "kills": 33,
-      "x": 2.6,
-      "z": 19.2,
+      "t": 238.7,
+      "wave": 7,
+      "hp": 150,
+      "gold": 70,
+      "kills": 188,
+      "x": 12.3,
+      "z": 35.3,
       "alive": 19,
       "seams": 1
-    },
-    {
-      "t": 112.5,
-      "wave": 2,
-      "hp": 63,
-      "gold": 70,
-      "kills": 41,
-      "x": 22.3,
-      "z": 19.3,
-      "alive": 17,
-      "seams": 2
-    },
-    {
-      "t": 123.3,
-      "wave": 3,
-      "hp": 63,
-      "gold": 70,
-      "kills": 51,
-      "x": 7.9,
-      "z": -19.3,
-      "alive": 17,
-      "seams": 2
-    },
-    {
-      "t": 133.7,
-      "wave": 3,
-      "hp": 39,
-      "gold": 0,
-      "kills": 58,
-      "x": 23.6,
-      "z": 17.8,
-      "alive": 19,
-      "seams": 2
-    },
-    {
-      "t": 144.4,
-      "wave": 3,
-      "hp": 39,
-      "gold": 25,
-      "kills": 68,
-      "x": 27.1,
-      "z": 28.1,
-      "alive": 15,
-      "seams": 1
-    },
-    {
-      "t": 154.7,
-      "wave": 3,
-      "hp": 39,
-      "gold": 25,
-      "kills": 77,
-      "x": -29.1,
-      "z": 26,
-      "alive": 13,
-      "seams": 1
-    },
-    {
-      "t": 165.1,
-      "wave": 4,
-      "hp": 39,
-      "gold": 55,
-      "kills": 86,
-      "x": -29.1,
-      "z": 26,
-      "alive": 15,
-      "seams": 1
-    },
-    {
-      "t": 176,
-      "wave": 4,
-      "hp": 39,
-      "gold": 85,
-      "kills": 90,
-      "x": -29.1,
-      "z": 26,
-      "alive": 23,
-      "seams": 0
-    },
-    {
-      "t": 186.5,
-      "wave": 4,
-      "hp": 39,
-      "gold": 85,
-      "kills": 95,
-      "x": -24.7,
-      "z": 26,
-      "alive": 25,
-      "seams": 1
-    },
-    {
-      "t": 196.7,
-      "wave": 4,
-      "hp": 39,
-      "gold": 85,
-      "kills": 107,
-      "x": 28.9,
-      "z": 26,
-      "alive": 21,
-      "seams": 2
-    },
-    {
-      "t": 207.1,
-      "wave": 5,
-      "hp": 39,
-      "gold": 95,
-      "kills": 116,
-      "x": 9.5,
-      "z": -8.5,
-      "alive": 24,
-      "seams": 2
-    },
-    {
-      "t": 217.5,
-      "wave": 5,
-      "hp": 64,
-      "gold": 0,
-      "kills": 120,
-      "x": 5.7,
-      "z": -19.2,
-      "alive": 35,
-      "seams": 2
-    },
-    {
-      "t": 228.1,
-      "wave": 5,
-      "hp": 64,
-      "gold": 15,
-      "kills": 128,
-      "x": 29.6,
-      "z": -19.8,
-      "alive": 35,
-      "seams": 2
-    },
-    {
-      "t": 238.1,
-      "wave": 5,
-      "hp": 89,
-      "gold": 23,
-      "kills": 145,
-      "x": 10.5,
-      "z": -4.3,
-      "alive": 26,
-      "seams": 1
-    },
-    {
-      "t": 248.4,
-      "wave": 6,
-      "hp": 78,
-      "gold": 28,
-      "kills": 162,
-      "x": 29.8,
-      "z": 25,
-      "alive": 32,
-      "seams": 1
-    },
-    {
-      "t": 258.8,
-      "wave": 6,
-      "hp": 87,
-      "gold": 43,
-      "kills": 174,
-      "x": 22,
-      "z": 38.8,
-      "alive": 29,
-      "seams": 1
-    },
-    {
-      "t": 269.1,
-      "wave": 6,
-      "hp": 87,
-      "gold": 73,
-      "kills": 183,
-      "x": 22,
-      "z": 38.8,
-      "alive": 29,
-      "seams": 0
-    },
-    {
-      "t": 279.2,
-      "wave": 6,
-      "hp": 87,
-      "gold": 73,
-      "kills": 190,
-      "x": 12.6,
-      "z": 8.6,
-      "alive": 32,
-      "seams": 1
-    },
-    {
-      "t": 289.6,
-      "wave": 7,
-      "hp": 87,
-      "gold": 78,
-      "kills": 197,
-      "x": 30,
-      "z": -20,
-      "alive": 50,
-      "seams": 2
-    },
-    {
-      "t": 299.7,
-      "wave": 7,
-      "hp": 87,
-      "gold": 103,
-      "kills": 207,
-      "x": 7.7,
-      "z": -20,
-      "alive": 50,
-      "seams": 1
-    },
-    {
-      "t": 309.7,
-      "wave": 7,
-      "hp": 87,
-      "gold": 108,
-      "kills": 223,
-      "x": -28.8,
-      "z": -20,
-      "alive": 44,
-      "seams": 1
-    },
-    {
-      "t": 319.7,
-      "wave": 7,
-      "hp": 87,
-      "gold": 128,
-      "kills": 239,
-      "x": -7.1,
-      "z": -13,
-      "alive": 39,
-      "seams": 2
-    },
-    {
-      "t": 330.3,
-      "wave": 8,
-      "hp": 87,
-      "gold": 3,
-      "kills": 251,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 56,
-      "seams": 2
-    },
-    {
-      "t": 340.7,
-      "wave": 8,
-      "hp": 87,
-      "gold": 3,
-      "kills": 261,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 58,
-      "seams": 2
-    },
-    {
-      "t": 350.8,
-      "wave": 8,
-      "hp": 87,
-      "gold": 3,
-      "kills": 269,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 58,
-      "seams": 2
-    },
-    {
-      "t": 361.2,
-      "wave": 9,
-      "hp": 87,
-      "gold": 3,
-      "kills": 283,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 371.9,
-      "wave": 9,
-      "hp": 87,
-      "gold": 3,
-      "kills": 290,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 382.4,
-      "wave": 9,
-      "hp": 87,
-      "gold": 3,
-      "kills": 299,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 393.1,
-      "wave": 9,
-      "hp": 87,
-      "gold": 3,
-      "kills": 307,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 403.6,
-      "wave": 10,
-      "hp": 87,
-      "gold": 3,
-      "kills": 312,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 58,
-      "seams": 2
-    },
-    {
-      "t": 414.1,
-      "wave": 10,
-      "hp": 87,
-      "gold": 3,
-      "kills": 319,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 58,
-      "seams": 2
-    },
-    {
-      "t": 424.5,
-      "wave": 10,
-      "hp": 87,
-      "gold": 3,
-      "kills": 321,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 435.3,
-      "wave": 10,
-      "hp": 87,
-      "gold": 3,
-      "kills": 326,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 446,
-      "wave": 11,
-      "hp": 87,
-      "gold": 3,
-      "kills": 330,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 59,
-      "seams": 2
-    },
-    {
-      "t": 456.7,
-      "wave": 11,
-      "hp": 87,
-      "gold": 3,
-      "kills": 332,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 467.1,
-      "wave": 11,
-      "hp": 87,
-      "gold": 3,
-      "kills": 333,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 477.6,
-      "wave": 11,
-      "hp": 87,
-      "gold": 3,
-      "kills": 334,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 488.1,
-      "wave": 12,
-      "hp": 87,
-      "gold": 3,
-      "kills": 336,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 62,
-      "seams": 2
-    },
-    {
-      "t": 498.5,
-      "wave": 12,
-      "hp": 87,
-      "gold": 3,
-      "kills": 336,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 62,
-      "seams": 2
-    },
-    {
-      "t": 509.1,
-      "wave": 12,
-      "hp": 87,
-      "gold": 3,
-      "kills": 337,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 61,
-      "seams": 2
-    },
-    {
-      "t": 519.5,
-      "wave": 12,
-      "hp": 87,
-      "gold": 3,
-      "kills": 337,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 61,
-      "seams": 2
-    },
-    {
-      "t": 530,
-      "wave": 13,
-      "hp": 87,
-      "gold": 3,
-      "kills": 337,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 61,
-      "seams": 2
-    },
-    {
-      "t": 540.4,
-      "wave": 13,
-      "hp": 87,
-      "gold": 3,
-      "kills": 337,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 61,
-      "seams": 2
-    },
-    {
-      "t": 550.8,
-      "wave": 13,
-      "hp": 87,
-      "gold": 3,
-      "kills": 337,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 61,
-      "seams": 2
-    },
-    {
-      "t": 561.3,
-      "wave": 14,
-      "hp": 87,
-      "gold": 3,
-      "kills": 338,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 571.7,
-      "wave": 14,
-      "hp": 87,
-      "gold": 3,
-      "kills": 338,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
-    },
-    {
-      "t": 582.3,
-      "wave": 14,
-      "hp": 87,
-      "gold": 3,
-      "kills": 339,
-      "x": 1.2,
-      "z": -18.6,
-      "alive": 60,
-      "seams": 2
     }
   ],
   "consoleErrors": [],
   "pageErrors": [],
   "notes": [
-    "epoch=epoch-2-steamworks",
-    "strategy=hold-ground",
-    "engine secureWave=12 cadenceMult=0.75",
-    "home=0.0,-18.0 circuit=[[-4,-22],[4,-22],[4,-14],[-4,-14]]",
-    "kit=sentry_beacon+turret+turret+turret+turret",
-    "crossing at the ford x=-12 (-20.2 -> 26.0)",
-    "crossing at the ford x=-12 (25.4 -> -20.0)",
-    "crossing at the ford x=-12 (-20.1 -> 26.0)",
-    "crossing at the ford x=12 (25.9 -> -20.0)",
-    "crossing at the ford x=12 (-19.3 -> 26.0)",
-    "crossing at the ford x=12 (26.0 -> -13.0)",
-    "crossing at the ford x=12 (-19.8 -> 26.0)",
-    "crossing at the ford x=12 (38.8 -> -20.0)",
-    "WARNING: run still reported paused after three KeyP presses"
+    "epoch=epoch-10-deepsky",
+    "strategy=gather-and-extend",
+    "engine secureWave=8 cadenceMult=1",
+    "home=-10.0,50.0 circuit=[[-14,46],[-6,46],[-6,52],[-14,52]]",
+    "kit=turret+sentry_beacon+turret+turret",
+    "could not fund turret (cost 95, purse 0)"
   ],
-  "at": "2026-09-26T02:05:33.593Z",
+  "at": "2026-09-26T02:11:12.836Z",
   "objective": {
     "canalChoices": null,
-    "preserve": null,
+    "preserve": {
+      "hp": 331.2,
+      "maxHp": 360,
+      "alive": true
+    },
     "devils": null,
     "caravan": null,
     "canal": {
@@ -869,8 +483,8 @@
     "boss": {
       "visible": false,
       "ratio": 0,
-      "renderedRatio": 0.01,
-      "litSegments": 0,
+      "renderedRatio": 1,
+      "litSegments": 7,
       "segments": 0,
       "groupId": null,
       "aliveComponents": 0,
@@ -883,42 +497,42 @@
       "rocketCartCaptured": false
     },
     "pressure": {
-      "enabled": true,
+      "enabled": false,
       "multiplayerPosture": "single-player-gated",
       "coal": 0,
       "seams": [
         {
-          "x": 0,
-          "z": -28,
+          "x": -12,
+          "z": 39,
           "harvested": false,
           "progress": 0,
           "marked": false,
-          "visualY": -0.029708249171574885,
-          "groundY": -0.3497082491715749,
-          "spriteVisible": true
+          "visualY": null,
+          "groundY": 0.36470353603363037,
+          "spriteVisible": false
         },
         {
-          "x": 4,
-          "z": -26,
+          "x": -5,
+          "z": 43,
           "harvested": false,
           "progress": 0,
           "marked": false,
-          "visualY": -0.029066793918609612,
-          "groundY": -0.3490667939186096,
-          "spriteVisible": true
+          "visualY": null,
+          "groundY": 0.34706562757492065,
+          "spriteVisible": false
         },
         {
-          "x": 7,
-          "z": -22,
+          "x": 3,
+          "z": 39,
           "harvested": false,
           "progress": 0,
           "marked": false,
-          "visualY": -0.035125119288762385,
-          "groundY": -0.3551251192887624,
-          "spriteVisible": true
+          "visualY": null,
+          "groundY": 0.3028619587421417,
+          "spriteVisible": false
         }
       ],
-      "seamSource": "twist.coalSeams",
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
       "boilers": [
         {
           "index": 0,
@@ -954,27 +568,15 @@
       "vents": 0,
       "safeBand": null,
       "objective": {
-        "active": true,
-        "failed": true,
+        "active": false,
+        "failed": false,
         "complete": false,
         "hotBoilers": 0,
         "waves": "8-12"
       }
     },
     "escort": {
-      "enabled": true,
-      "active": false,
-      "state": "arrived",
-      "hp": 180,
-      "maxHp": 180,
-      "progress": 0.999999999999995,
-      "repairProgress": 0,
-      "x": 12,
-      "z": 46,
-      "objectiveLost": false,
-      "arrived": 1,
-      "required": 1,
-      "payout": 50
+      "enabled": false
     },
     "power": {
       "active": false,
@@ -1023,7 +625,11 @@
   },
   "finalSnapshot": {
     "canalChoices": null,
-    "preserve": null,
+    "preserve": {
+      "hp": 331.2,
+      "maxHp": 360,
+      "alive": true
+    },
     "devils": null,
     "caravan": null,
     "canal": {
@@ -1110,7 +716,7 @@
     },
     "physics": {
       "active": false,
-      "contractId": "e2-incline",
+      "contractId": "e10-last-claim",
       "source": "default",
       "movement": "normal",
       "feelG": 1,
@@ -1149,19 +755,7 @@
     "fuel": null,
     "vehicle": null,
     "escort": {
-      "enabled": true,
-      "active": false,
-      "state": "arrived",
-      "hp": 180,
-      "maxHp": 180,
-      "progress": 0.999999999999995,
-      "repairProgress": 0,
-      "x": 12,
-      "z": 46,
-      "objectiveLost": false,
-      "arrived": 1,
-      "required": 1,
-      "payout": 50
+      "enabled": false
     },
     "canyonWorks": null,
     "fairground": null,
@@ -1211,42 +805,42 @@
       }
     },
     "pressure": {
-      "enabled": true,
+      "enabled": false,
       "multiplayerPosture": "single-player-gated",
       "coal": 0,
       "seams": [
         {
-          "x": 0,
-          "z": -28,
+          "x": -12,
+          "z": 39,
           "harvested": false,
           "progress": 0,
           "marked": false,
-          "visualY": -0.029708249171574885,
-          "groundY": -0.3497082491715749,
-          "spriteVisible": true
+          "visualY": null,
+          "groundY": 0.36470353603363037,
+          "spriteVisible": false
         },
         {
-          "x": 4,
-          "z": -26,
+          "x": -5,
+          "z": 43,
           "harvested": false,
           "progress": 0,
           "marked": false,
-          "visualY": -0.029066793918609612,
-          "groundY": -0.3490667939186096,
-          "spriteVisible": true
+          "visualY": null,
+          "groundY": 0.34706562757492065,
+          "spriteVisible": false
         },
         {
-          "x": 7,
-          "z": -22,
+          "x": 3,
+          "z": 39,
           "harvested": false,
           "progress": 0,
           "marked": false,
-          "visualY": -0.035125119288762385,
-          "groundY": -0.3551251192887624,
-          "spriteVisible": true
+          "visualY": null,
+          "groundY": 0.3028619587421417,
+          "spriteVisible": false
         }
       ],
-      "seamSource": "twist.coalSeams",
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
       "boilers": [
         {
           "index": 0,
@@ -1282,8 +876,8 @@
       "vents": 0,
       "safeBand": null,
       "objective": {
-        "active": true,
-        "failed": true,
+        "active": false,
+        "failed": false,
         "complete": false,
         "hotBoilers": 0,
         "waves": "8-12"
@@ -1291,7 +885,11 @@
     },
     "objective": {
       "canalChoices": null,
-      "preserve": null,
+      "preserve": {
+        "hp": 331.2,
+        "maxHp": 360,
+        "alive": true
+      },
       "devils": null,
       "caravan": null,
       "canal": {
@@ -1432,8 +1030,8 @@
       "boss": {
         "visible": false,
         "ratio": 0,
-        "renderedRatio": 0.01,
-        "litSegments": 0,
+        "renderedRatio": 1,
+        "litSegments": 7,
         "segments": 0,
         "groupId": null,
         "aliveComponents": 0,
@@ -1446,42 +1044,42 @@
         "rocketCartCaptured": false
       },
       "pressure": {
-        "enabled": true,
+        "enabled": false,
         "multiplayerPosture": "single-player-gated",
         "coal": 0,
         "seams": [
           {
-            "x": 0,
-            "z": -28,
+            "x": -12,
+            "z": 39,
             "harvested": false,
             "progress": 0,
             "marked": false,
-            "visualY": -0.029708249171574885,
-            "groundY": -0.3497082491715749,
-            "spriteVisible": true
+            "visualY": null,
+            "groundY": 0.36470353603363037,
+            "spriteVisible": false
           },
           {
-            "x": 4,
-            "z": -26,
+            "x": -5,
+            "z": 43,
             "harvested": false,
             "progress": 0,
             "marked": false,
-            "visualY": -0.029066793918609612,
-            "groundY": -0.3490667939186096,
-            "spriteVisible": true
+            "visualY": null,
+            "groundY": 0.34706562757492065,
+            "spriteVisible": false
           },
           {
-            "x": 7,
-            "z": -22,
+            "x": 3,
+            "z": 39,
             "harvested": false,
             "progress": 0,
             "marked": false,
-            "visualY": -0.035125119288762385,
-            "groundY": -0.3551251192887624,
-            "spriteVisible": true
+            "visualY": null,
+            "groundY": 0.3028619587421417,
+            "spriteVisible": false
           }
         ],
-        "seamSource": "twist.coalSeams",
+        "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
         "boilers": [
           {
             "index": 0,
@@ -1517,27 +1115,15 @@
         "vents": 0,
         "safeBand": null,
         "objective": {
-          "active": true,
-          "failed": true,
+          "active": false,
+          "failed": false,
           "complete": false,
           "hotBoilers": 0,
           "waves": "8-12"
         }
       },
       "escort": {
-        "enabled": true,
-        "active": false,
-        "state": "arrived",
-        "hp": 180,
-        "maxHp": 180,
-        "progress": 0.999999999999995,
-        "repairProgress": 0,
-        "x": 12,
-        "z": 46,
-        "objectiveLost": false,
-        "arrived": 1,
-        "required": 1,
-        "payout": 50
+        "enabled": false
       },
       "power": {
         "active": false,
@@ -1584,47 +1170,47 @@
         }
       }
     },
-    "frame": 17872,
-    "sim": 591.3333333333101,
-    "wave": 14,
-    "hudWave": 14,
+    "frame": 9521,
+    "sim": 240.13333333332994,
+    "wave": 8,
+    "hudWave": 8,
     "runState": "playing",
     "paused": true,
     "secured": true,
-    "hp": 87.39999999999999,
+    "hp": 149.8,
     "maxHp": 175,
-    "gold": 3,
+    "gold": 75,
     "hero": {
-      "x": 1.2355252822370153,
-      "z": -18.580802909483396
+      "x": 12.275313253357583,
+      "z": 35.34402346607293
     },
-    "enemiesAlive": 59,
-    "kills": 340,
+    "enemiesAlive": 20,
+    "kills": 188,
     "pendingLevels": 0,
     "offer": null,
     "upgradeOpen": false,
     "buildMode": false,
     "ghostValid": false,
     "ghostPos": {
-      "x": 8,
-      "z": -15
+      "x": -5,
+      "z": 46
     },
     "nodes": [
       {
         "id": "gold-seam-1",
-        "anchorIndex": 2,
-        "active": true,
-        "x": -30,
-        "z": 26,
-        "respawnIn": 0,
-        "respawnScheduled": false
+        "anchorIndex": 1,
+        "active": false,
+        "x": 12,
+        "z": -12,
+        "respawnIn": 4.400000000000887,
+        "respawnScheduled": true
       },
       {
         "id": "gold-seam-2",
-        "anchorIndex": 0,
+        "anchorIndex": 3,
         "active": true,
-        "x": -30,
-        "z": -20,
+        "x": 12,
+        "z": 36,
         "respawnIn": 0,
         "respawnScheduled": false
       },
@@ -1645,24 +1231,6 @@
         "z": 0,
         "respawnIn": 0,
         "respawnScheduled": false
-      },
-      {
-        "id": "gold-seam-5",
-        "anchorIndex": -1,
-        "active": false,
-        "x": 0,
-        "z": 0,
-        "respawnIn": 0,
-        "respawnScheduled": false
-      },
-      {
-        "id": "gold-seam-6",
-        "anchorIndex": -1,
-        "active": false,
-        "x": 0,
-        "z": 0,
-        "respawnIn": 0,
-        "respawnScheduled": false
       }
     ],
     "buildables": [
@@ -1671,7 +1239,7 @@
         "cost": 35,
         "count": 1,
         "maxCount": 6,
-        "canAfford": false
+        "canAfford": true
       },
       {
         "id": "palisade",
@@ -1685,26 +1253,19 @@
         "cost": 40,
         "count": 0,
         "maxCount": 3,
-        "canAfford": false
+        "canAfford": true
       },
       {
         "id": "stockpile",
         "cost": 60,
         "count": 0,
         "maxCount": 2,
-        "canAfford": false
-      },
-      {
-        "id": "boiler_house",
-        "cost": 70,
-        "count": 0,
-        "maxCount": 3,
-        "canAfford": false
+        "canAfford": true
       },
       {
         "id": "turret",
-        "cost": 170,
-        "count": 4,
+        "cost": 95,
+        "count": 2,
         "maxCount": 4,
         "canAfford": false
       },
@@ -1724,8 +1285,8 @@
         "maxHp": 40,
         "wrecked": false,
         "repairCost": 0,
-        "x": 9,
-        "z": -22
+        "x": -14,
+        "z": 50
       },
       {
         "id": "turret",
@@ -1734,8 +1295,8 @@
         "maxHp": 50,
         "wrecked": false,
         "repairCost": 0,
-        "x": -7,
-        "z": -22
+        "x": -10,
+        "z": 45
       },
       {
         "id": "turret",
@@ -1744,31 +1305,11 @@
         "maxHp": 50,
         "wrecked": false,
         "repairCost": 0,
-        "x": 8,
-        "z": -21
-      },
-      {
-        "id": "turret",
-        "index": 2,
-        "hp": 50,
-        "maxHp": 50,
-        "wrecked": false,
-        "repairCost": 0,
-        "x": -7,
-        "z": -15
-      },
-      {
-        "id": "turret",
-        "index": 3,
-        "hp": 74,
-        "maxHp": 74,
-        "wrecked": false,
-        "repairCost": 0,
-        "x": 8,
-        "z": -15
+        "x": -5,
+        "z": 46
       }
     ],
-    "repairs": 1,
-    "channeling": false
+    "repairs": 0,
+    "channeling": true
   }
 }
