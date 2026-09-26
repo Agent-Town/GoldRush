@@ -805,11 +805,10 @@ const KIT: Array<{ id: string; dx: number; dz: number }> = [
 ];
 
 export function nativeProof(id: string, run = 1) {
-  // River's only authored entrance is the earned Last Claim finale lever.
-  const contract = BOARD_CONTRACTS.find(entry => entry.id === (id === 'e10-river' ? 'e10-last-claim' : id))!;
+  const contract = BOARD_CONTRACTS.find(entry => entry.id === id)!;
   const ARTIFACT_ROOT = path.resolve(`artifacts/sol/play-proofs/run-${process.env.GR_NATIVE_RUN ?? run}`, id);
 
-    test(`${id} plays to its authored terminal, banks, reloads and returns to the board`, { tag: '@slow' }, async ({ page }, testInfo) => {
+    test(`${contract.id} plays to its secure wave, banks, reloads and returns to the board`, { tag: '@slow' }, async ({ page }, testInfo) => {
       test.setTimeout(PLAY_BUDGET_MS + BOOT_TIMEOUT_MS + 180_000);
       await mkdir(ARTIFACT_ROOT, { recursive: true });
 
@@ -824,8 +823,8 @@ export function nativeProof(id: string, run = 1) {
       let secureWave = Math.max(0, Math.floor(contract.twist?.secureWave ?? 0));
       const row: Row = {
         project: testInfo.project.name,
-        contract: id,
-        name: BOARD_CONTRACTS.find(entry => entry.id === id)!.name,
+        contract: contract.id,
+        name: contract.name,
         secureWave,
         boots: fail('not run'),
         secures: fail('not run'),
@@ -1177,9 +1176,6 @@ export function nativeProof(id: string, run = 1) {
                 `never secured: peak wave ${row.peakWave} of ${secureWave} after ${row.simAtEnd.toFixed(1)}s sim (runState=${row.runStateAtEnd || 'unknown'}, ${row.builds.length} buildings, ${row.killsAtEnd} kills)`,
             );
 
-        if (contract.id === 'e10-last-claim' && !atSecure?.preserve?.alive) {
-          row.secures = fail(`${row.secures.detail}; warm vent did not survive: ${JSON.stringify(atSecure?.preserve)}`);
-        }
         if (contract.id === 'e9-old-canal' && !atSecure?.canalChoices?.allDecided) {
           row.secures = fail(`${row.secures.detail}; canal choices incomplete: ${JSON.stringify(atSecure?.canalChoices)}`);
         }
@@ -1248,22 +1244,17 @@ export function nativeProof(id: string, run = 1) {
           row.banks = fail('skipped: never secured');
         }
 
-        if (id === 'e10-river' && sawOverlay) {
-          await riverEnding(page, row, ARTIFACT_ROOT);
-        } else if (row.banks.ok) {
+        if (row.banks.ok) {
           try {
-            if (contract.id === 'e10-last-claim') {
-              await page.getByTestId('e10-return-town').click({ timeout: 20_000 });
-            }
             for (let card = 0; card < 2; card += 1) {
               if (await page.getByTestId('research-card-0').isVisible().catch(() => false)) {
                 await page.getByTestId('research-card-0').click({ timeout: 5_000 }).catch(() => undefined);
                 await page.waitForTimeout(250);
               }
             }
-            if (contract.id !== 'e10-last-claim') await page.getByTestId('stake-again').click({ timeout: 10_000 });
+            await page.getByTestId('stake-again').click({ timeout: 10_000 });
             await expect(page.getByTestId('contract-board-title')).toBeVisible({ timeout: 20_000 });
-            row.board = pass(contract.id === 'e10-last-claim' ? 'the Book is on screen after the finale Return to the Ark button' : 'the Book is on screen straight off the run ledger');
+            row.board = pass('the Book is on screen straight off the run ledger');
             await page.screenshot({ path: path.join(ARTIFACT_ROOT, `board-${testInfo.project.name}.png`) });
           } catch (error) {
             row.board = fail(String((error as Error).message).split('\n').slice(0, 3).join(' | '));
@@ -1272,7 +1263,7 @@ export function nativeProof(id: string, run = 1) {
           row.board = fail('skipped: never banked');
         }
 
-        if (id !== 'e10-river' && row.banks.ok) {
+        if (row.banks.ok) {
           try {
             const before = await rawScores(page);
             await page.goto('/');
@@ -1290,7 +1281,7 @@ export function nativeProof(id: string, run = 1) {
           } catch (error) {
             row.reload = fail(String((error as Error).message).split('\n').slice(0, 3).join(' | '));
           }
-        } else if (id !== 'e10-river') {
+        } else {
           row.reload = fail('skipped: never banked');
         }
 
@@ -1301,7 +1292,7 @@ export function nativeProof(id: string, run = 1) {
       } finally {
         if (!row.banks.ok) row.finalSnapshot = (await read(page)) ?? undefined;
         if (row.finalSnapshot) {
-          if (id !== 'e10-river') row.objective = row.finalSnapshot.objective;
+          row.objective = row.finalSnapshot.objective;
           if (!row.banks.ok) {
             row.peakWave = Math.max(row.peakWave, row.finalSnapshot.wave, row.finalSnapshot.hudWave);
             row.simAtEnd = row.finalSnapshot.sim;
@@ -1323,7 +1314,7 @@ export function nativeProof(id: string, run = 1) {
     });
 }
 
-type Score = { contractId?: string; secured?: boolean; completed?: boolean; waves?: number; gold?: number; timeAlive?: number; kills?: number; at?: number };
+type Score = { contractId?: string; secured?: boolean; waves?: number; gold?: number; timeAlive?: number; kills?: number; at?: number };
 
 async function rawScores(page: Page): Promise<string | null> {
   return page.evaluate(
@@ -1359,84 +1350,4 @@ async function walkToTavern(page: Page, row: Row): Promise<boolean> {
   }
   row.notes.push('could not reach the tavern in 70 steps');
   return false;
-}
-
-/** The no-wave River ending starts at the real lever, after a native wave-8 prelude. */
-async function riverEnding(page: Page, row: Row, root: string): Promise<void> {
-  const prelude = { secures: row.secures, banks: row.banks, finalSnapshot: row.finalSnapshot, builds: [...row.builds], samples: [...row.samples], upgrades: [...row.upgrades] };
-  row.notes.push('Last Claim prelude retained in objective.prelude; River fields below measure the lever-launched ending.');
-  const beforeScores = await readScores(page);
-  const beforeAts = new Set(beforeScores.map(s => s.at));
-  await page.screenshot({ path: path.join(root, `prelude-${row.project}.png`) });
-  await page.getByTestId('e10-river-lever').click({ timeout: 20_000 });
-  await page.waitForURL(url => url.searchParams.get('contract') === 'the-claim', { timeout: BOOT_TIMEOUT_MS });
-  // The application itself writes nowaves. We do not construct or modify this URL.
-  const launchUrl = page.url();
-  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 12, undefined, { timeout: BOOT_TIMEOUT_MS });
-  const active = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract);
-  const briefing = await page.getByTestId('contract-briefing-name').textContent();
-  row.boots = active?.activeId === 'the-claim' && active.fallbackReason === null && briefing?.trim() === 'The River'
-    ? pass(`earned finale lever launched The River, activeId=${active.activeId}; application URL=${launchUrl}`)
-    : fail(`lever launch mismatch: ${JSON.stringify(active)}, briefing=${briefing}`);
-  await page.getByTestId('contract-briefing-dismiss').click({ timeout: 10_000 });
-  await unpause(page, row);
-  row.samples = [];
-  row.builds = [];
-  row.upgrades = [];
-  row.peakWave = 0;
-  row.secureWave = 0;
-  const opened = await read(page);
-  const startGold = opened?.gold ?? 0;
-  const started = Date.now();
-  const panned = await fund(page, row, startGold + 5, started + 60_000, [{ x: 0 }], new Set());
-  // Observe beyond the ordinary first-wave interval; the ending must remain quiet.
-  while (Date.now() < started + 75_000) {
-    await takeUpgrades(page, row);
-    const state = await read(page);
-    if (!state || state.wave > 0 || state.enemiesAlive > 0 || state.sim >= 35) break;
-    await page.waitForTimeout(250);
-  }
-  const end = await read(page);
-  row.finalSnapshot = end ?? undefined;
-  row.peakWave = end?.wave ?? 0;
-  row.simAtEnd = end?.sim ?? 0;
-  row.runStateAtEnd = end?.runState ?? '';
-  row.hpAtEnd = end?.hp ?? 0;
-  row.goldAtEnd = end?.gold ?? 0;
-  row.killsAtEnd = end?.kills ?? 0;
-  const quiet = end && end.sim >= 35 && end.wave === 0 && end.enemiesAlive === 0 && row.samples.every(s => s.wave === 0 && s.alive === 0);
-  row.secures = panned && quiet
-    ? pass(`authored no-wave pan: gold ${startGold} -> ${end.gold}, wave 0, zero enemies through ${end.sim.toFixed(1)}s; no Claim Secured overlay`)
-    : fail(`River pan=${panned}, gold=${end?.gold}, wave=${end?.wave}, enemies=${end?.enemiesAlive}, sim=${end?.sim}`);
-  row.objective = { prelude, river: { launchUrl, briefing, startGold, panned, quiet, end } };
-  await page.screenshot({ path: path.join(root, `terminal-${row.project}.png`) });
-  const atPan = await readScores(page);
-  const bankButton = page.getByTestId('bank-secured-claim');
-  if (await bankButton.isVisible().catch(() => false)) await bankButton.click();
-  const completed = (await readScores(page)).find(s => s.contractId === 'e10-river' && !beforeAts.has(s.at) && (s.secured || s.completed));
-  row.banks = completed
-    ? pass(`new completed River score: ${JSON.stringify(completed)}`)
-    : fail(`no new secured/completed score for e10-river after the authored pan; no terminal bank action. Score rows before=${beforeScores.length}, after pan=${atPan.length}; active lineage=${active?.activeId}`);
-  // Exercise the ordinary exit independently, without treating a suspended run as a bank.
-  await page.getByTestId('hud-pause').click();
-  await page.getByTestId('pause-back-to-town').click();
-  await page.getByTestId('start-menu-enter-town').click({ timeout: 20_000 });
-  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10, undefined, { timeout: BOOT_TIMEOUT_MS });
-  expect(await walkToTavern(page, row), 'River exit can reach the tavern').toBe(true);
-  await page.getByTestId('town-open-board').click();
-  await expect(page.getByTestId('contract-board')).toBeVisible();
-  row.board = pass('Book reached through ordinary pause Back to Town exit; this suspends, not banks, the River');
-  await page.screenshot({ path: path.join(root, `board-${row.project}.png`) });
-  const saved = await rawScores(page);
-  await page.goto('/');
-  const after = await rawScores(page);
-  await page.getByTestId('start-menu-enter-town').click({ timeout: 20_000 });
-  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10, undefined, { timeout: BOOT_TIMEOUT_MS });
-  expect(await walkToTavern(page, row)).toBe(true);
-  await page.getByTestId('town-open-board').click();
-  await expect(page.getByTestId('contract-board')).toBeVisible();
-  const unchanged = saved === after && saved === await rawScores(page);
-  row.reload = row.banks.ok && unchanged
-    ? pass('completed River score retained byte for byte and Book reopened')
-    : fail(`score storage byte-identical=${unchanged} (${saved?.length ?? 0} bytes), Book reopened; no completed River score exists to prove persistence`);
 }
