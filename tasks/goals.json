@@ -6551,12 +6551,16 @@
             {
               "id": "sol-play-proofs-6",
               "title": "Play-proofs run 6: the last three untouched maps (Old Canal, Last Claim, River with its post-credits ending), then the campaign table and the recommendation for the owner; Astra on lane-c, queued by the run-5 landing's queue job",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "sol-play-proofs-6.md",
               "lane": "lane-c (Astra, gpt-6-astra; the CODEX-WALL campaign lift of 2026-09-25); the queue copy is HELD until sol-play-proofs-3 has landed on main",
               "authoredAt": "2026-09-25",
               "authoredBy": "attended (Fable) from run 5's REMAINING LIST, 2026-09-25",
-              "queuedAt": "2026-09-25 (by the queue job once run 5 has landed)"
+              "queuedAt": "2026-09-25 (by the queue job once run 5 has landed)",
+              "mergeHash": "eb0abfa6ef36c6af9b28f6347a4d18b586150310",
+              "mergedAt": "2026-09-26",
+              "review": "reviews/sol-play-proofs-6.md",
+              "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh pp6)"
             }
           ]
         }
