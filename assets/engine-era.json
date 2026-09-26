@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551",
+  "engineHash": "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -502,6 +502,12 @@
       "engineHash": "7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551",
       "pinnedAt": "2026-09-26",
       "cause": "same era, pin #69: county-board-open-week-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-LSR1-1, owner 2026-09-26): the county board reader (src/encyclopedia/reader.ts) shows the open week's partition and src/game/liveSeed.ts gains one export (liveSeedRotationId); no sim, contract, floor or table changed; the door half alone leaves the hash unchanged; an existing era-6 tape replays identical on base and branch; null floors 83 of 83. The store unchanged at 5793a96. reviews/county-board-open-week-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #70: river-assay-1: a River reel replays in its ceremony world and verifies to its completed score; the harvest seams follow the run's seed (live seeds keep the constant layout); a live solo run moves by the rounded axes its reel records (F-RVA1-1); the headless arm refuses e10-river. No contract, collision, floor or table moved (3 of 662 inputs differ: scripts/assay-replay-agent.mjs, src/game/Game.ts, src/main.ts; seven existing replays byte-identical; null floors 83 of 83). The store unchanged at 5793a96. reviews/river-assay-1.md",
       "aliases": []
     }
   ],
