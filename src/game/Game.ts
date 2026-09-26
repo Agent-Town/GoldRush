@@ -1620,6 +1620,15 @@ export class Game {
     // THE LIVE SEED (owner ruling 2026-09-24, "(a)": humans ride the open rotation's seed per contract).
     // A replay tape's seed and a dev `?seed=` pin still come first; the rules live in src/game/liveSeed.ts.
     this.runSeed = this.boot.replay?.tape.seed ?? getDebugSeed() ?? resolveLiveSeed(this.activeContract.id);
+    // THE SEAMS FOLLOW THE RUN'S SEED (F-RES1-6, river-assay-1). The harvest's generator was seeded from the `?seed=`
+    // pin alone (`HarvestSystem`'s default, `createRng(getDebugSeed())`, written at m1-04 when the pin was the only seed
+    // there was; no comment gave another reason): an unpinned run, which is every live run, laid its seams from the
+    // constant default while its reel recorded `runSeed`, so no replay could put them back. Now they are seeded from
+    // `runSeed`, the seed the reel records. A pinned run and a replay booted with its reel's seed as the pin (the assay's
+    // browser arm) seed them exactly as before, because `runSeed` is that pin; an unpinned run seeds them from the
+    // rotation's seed its reel carries, and the in-game Lantern Show replays them from it.
+    this.harvestSystem.resetFromSeed(this.runSeed);
+    this.harvestSnapshot = this.harvestSystem.snapshot;
     this.waveSystem = new WaveSystem(
       this.enemies,
       this.primaryActor.group.position,
