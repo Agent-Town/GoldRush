@@ -39,3 +39,14 @@ Base `39f88d36f`. Main moved since the cut on STATUS.md, the ledger, im2's tools
 | e2e both projects, --workers=1 | `rc=0   38 passed (2.9m)  10:38Z` |
 | full npm run test:node-guards (before the pin) | `rc=0 ℹ tests 1037 ℹ pass 1032 ℹ fail 0 ℹ skipped 5 ℹ tests 87 ℹ pass 87 ℹ fail 0 ℹ skipped 0  10:57Z` |
 | engine hash | `merged: 642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a (pinned 642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a)` |
+
+## Post-deploy verification (attended, 2026-09-26 11:00Z, read-only OPTIONS preflights against production)
+| Host | Door | Origin | Answer |
+| --- | --- | --- | --- |
+| agenttown.app and gold-rush-3in.pages.dev | `/api/stats` | `http://localhost:5173`, `http://127.0.0.1:5188` | 403, no allow-origin header |
+| both | `/api/stats` | `https://agenttown.app` | 204, `access-control-allow-origin: https://agenttown.app` |
+| both | `/api/standings?contract=the-claim` | the two localhost origins | 403, no header |
+| both | `/api/standings?contract=the-claim` | `https://agenttown.app` | 204 with the header |
+| both | `/api/accounts/health` (not a route) | every origin | 405 with `access-control-allow-origin: *` |
+
+F-SEC2-2 is effective in production: the localhost arm is closed on the stats and standings doors of both hosts, the site origin is admitted. **Observation F-LC2-14 (non-blocking):** an unknown accounts subpath answers 405 with a wildcard allow-origin on every origin; nothing is served behind a 405 and the eight doors' own CORS paths were probed 0 of 782 off the rule, so this is the platform's or router's default on a method refusal, recorded for the next accounts slice to read, not this landing's defect. Deployed as `c5763d86`, droplet services restarted (assayer synced).
