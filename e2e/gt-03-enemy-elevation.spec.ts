@@ -209,11 +209,17 @@ test('cliff blocks enemies and local routing sends them around the ridge', async
   const goalSideRows = await page.evaluate(() => {
     const harness = window.__GR_TEST__!;
     harness.setManualSim(true);
+    // Re-baselined by canyon-works-traversal-2 (2026-09-26, measured on both projects). At x -38 and 38 these enemies
+    // met no cliff: they slid on the Canyon Works t2 ramp (0.5 to 4.5 m over z 18..28, peak |simSlope| 0.598), which
+    // isTraversable refused over z 19.8..26.2 at every x, and the first slide came after 12 or 13 samples on the goal's
+    // side. The ramp now runs z 14..32 (peak 0.333, slope-legal), so each enemy walks from z 32 to its target at z 8 and
+    // never slides: passSide null after all 80 samples. The goal-side steer these rows were written for (gt-03b) no
+    // longer has a wall on this map; see artifacts/canyon-works-traversal-2/report.md (F-CW2-2).
     const cases = [
-      { startX: -38, targetX: -46, expectedPassSide: 'west', polarity: 'same' },
-      { startX: -38, targetX: -28, expectedPassSide: 'east', polarity: 'opposite' },
-      { startX: 38, targetX: 46, expectedPassSide: 'east', polarity: 'same' },
-      { startX: 38, targetX: 28, expectedPassSide: 'west', polarity: 'opposite' },
+      { startX: -38, targetX: -46, expectedPassSide: null, polarity: 'same' },
+      { startX: -38, targetX: -28, expectedPassSide: null, polarity: 'opposite' },
+      { startX: 38, targetX: 46, expectedPassSide: null, polarity: 'same' },
+      { startX: 38, targetX: 28, expectedPassSide: null, polarity: 'opposite' },
     ] as const;
     return cases.map((scenario) => {
       harness.clearEnemies();
@@ -230,8 +236,9 @@ test('cliff blocks enemies and local routing sends them around the ridge', async
   });
   await writeFile(path.join(ARTIFACT_DIR, `goal-side-report-${testInfo.project.name}.json`), `${JSON.stringify(goalSideRows, null, 2)}\n`);
   for (const row of goalSideRows) {
-    expect(row.samples, `${row.polarity}: ${row.startX} → ${row.targetX}`).toBeGreaterThan(5);
-    expect(row.passSide, `${row.polarity}: ${row.startX} → ${row.targetX}`).toBe(row.expectedPassSide);
+    const baseline = 'the t2 ramp is slope-legal since canyon-works-traversal-2 (z 14..32, peak 0.333): measured 2026-09-26, no slide in 80 samples on both projects; before, a slide on the ramp wall after 12 or 13';
+    expect(row.samples, `${row.polarity}: ${row.startX} → ${row.targetX}; ${baseline}`).toBeGreaterThan(5);
+    expect(row.passSide, `${row.polarity}: ${row.startX} → ${row.targetX}; ${baseline}`).toBe(row.expectedPassSide);
   }
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);

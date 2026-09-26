@@ -1,0 +1,70 @@
+(node:70700) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:72098) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+e3-canyon-works {"t":10.8,"wave":0,"hp":100,"gold":0,"kills":0,"x":0,"z":-30.5,"alive":2,"seams":2}
+e3-canyon-works {"t":21.5,"wave":0,"hp":100,"gold":0,"kills":0,"x":-6.4,"z":8.8,"alive":6,"seams":2}
+e3-canyon-works {"t":32.8,"wave":1,"hp":100,"gold":0,"kills":1,"x":-30.3,"z":31.7,"alive":13,"seams":2}
+e3-canyon-works {"t":43.2,"wave":1,"hp":100,"gold":20,"kills":5,"x":-22.4,"z":33.9,"alive":13,"seams":2}
+e3-canyon-works {"t":53.9,"wave":1,"hp":92,"gold":25,"kills":11,"x":-1,"z":2.5,"alive":12,"seams":2}
+e3-canyon-works {"t":64.8,"wave":2,"hp":84,"gold":25,"kills":16,"x":-11.7,"z":-30.1,"alive":15,"seams":2}
+e3-canyon-works {"t":75.1,"wave":2,"hp":84,"gold":0,"kills":21,"x":1.7,"z":-13.4,"alive":17,"seams":2}
+e3-canyon-works {"t":85.2,"wave":2,"hp":76,"gold":0,"kills":22,"x":-7.4,"z":13.4,"alive":21,"seams":2}
+e3-canyon-works {"t":95.2,"wave":3,"hp":76,"gold":5,"kills":25,"x":-22.3,"z":32.9,"alive":27,"seams":1}
+e3-canyon-works {"t":105.3,"wave":3,"hp":68,"gold":5,"kills":30,"x":34.1,"z":29.7,"alive":32,"seams":1}
+e3-canyon-works {"t":115.5,"wave":3,"hp":68,"gold":30,"kills":33,"x":27.5,"z":23.1,"alive":34,"seams":2}
+e3-canyon-works {"t":126,"wave":4,"hp":28,"gold":30,"kills":45,"x":-1.9,"z":5.2,"alive":33,"seams":2}
+e3-canyon-works {"t":136.1,"wave":4,"hp":20,"gold":30,"kills":64,"x":-23.5,"z":-17.7,"alive":25,"seams":2}
+e3-canyon-works {"t":146.4,"wave":4,"hp":20,"gold":0,"kills":73,"x":-5.3,"z":-6.3,"alive":23,"seams":2}
+e3-canyon-works {"t":156.8,"wave":5,"hp":20,"gold":0,"kills":79,"x":-12.2,"z":16.7,"alive":29,"seams":2}
+e3-canyon-works {"t":167.1,"wave":5,"hp":20,"gold":10,"kills":82,"x":-32.9,"z":30.2,"alive":39,"seams":2}
+e3-canyon-works {"t":177.9,"wave":5,"hp":20,"gold":30,"kills":94,"x":-9.7,"z":30.2,"alive":35,"seams":1}
+e3-canyon-works {"t":188,"wave":6,"hp":45,"gold":30,"kills":105,"x":33.7,"z":30.2,"alive":36,"seams":1}
+e3-canyon-works {"t":198.1,"wave":6,"hp":37,"gold":35,"kills":123,"x":-1.5,"z":6.9,"alive":35,"seams":1}
+e3-canyon-works {"t":208.9,"wave":6,"hp":54,"gold":0,"kills":133,"x":-24.7,"z":12.6,"alive":33,"seams":1}
+e3-canyon-works {"t":219.5,"wave":7,"hp":54,"gold":10,"kills":149,"x":-22,"z":32.9,"alive":43,"seams":2}
+e3-canyon-works {"t":229.6,"wave":7,"hp":79,"gold":30,"kills":170,"x":-33.7,"z":30.1,"alive":30,"seams":1}
+e3-canyon-works {"t":240.3,"wave":8,"hp":79,"gold":45,"kills":181,"x":-10.4,"z":9.5,"alive":41,"seams":1}
+e3-canyon-works {"t":250.7,"wave":8,"hp":71,"gold":45,"kills":190,"x":11.2,"z":-17.3,"alive":47,"seams":2}
+e3-canyon-works {"t":261.2,"wave":8,"hp":63,"gold":0,"kills":209,"x":5.2,"z":-27.1,"alive":37,"seams":2}
+e3-canyon-works {"t":271.9,"wave":9,"hp":63,"gold":0,"kills":224,"x":7.6,"z":13.7,"alive":46,"seams":2}
+e3-canyon-works {"t":282.3,"wave":9,"hp":63,"gold":10,"kills":230,"x":21.7,"z":32.9,"alive":58,"seams":2}
+e3-canyon-works {"t":292.4,"wave":9,"hp":63,"gold":26,"kills":248,"x":6.6,"z":30.8,"alive":49,"seams":1}
+e3-canyon-works {"t":302.7,"wave":10,"hp":63,"gold":36,"kills":259,"x":-33.5,"z":30.3,"alive":58,"seams":1}
+e3-canyon-works {"t":313.1,"wave":10,"hp":63,"gold":37,"kills":275,"x":-22.3,"z":34,"alive":54,"seams":1}
+e3-canyon-works {"t":323.3,"wave":10,"hp":63,"gold":48,"kills":298,"x":-1.9,"z":7,"alive":42,"seams":1}
+e3-canyon-works {"t":335.9,"wave":11,"hp":63,"gold":48,"kills":307,"x":24.7,"z":-17.1,"alive":58,"seams":2}
+e3-canyon-works {"t":348.1,"wave":11,"hp":55,"gold":48,"kills":330,"x":24.7,"z":-17.1,"alive":55,"seams":2}
+e3-canyon-works {"t":358.1,"wave":11,"hp":55,"gold":48,"kills":336,"x":24.7,"z":-17.1,"alive":60,"seams":2}
+  ✘  1 [desktop-chrome] › e2e/native-proofs/driver.ts:800:5 › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow (1.6m)
+
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:800:5 › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: CONNECT deadline missed: {"powered":0,"required":2,"byWave":8,"complete":false,"failed":true}; hero={"x":24.65893428302259,"z":-17.050000811863296}, gold=48; both galleries were not connected by wave 8
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1280 |       }
+      1281 |
+    > 1282 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1283 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1284 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1285 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/native-proofs/driver.ts:1282:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/native-a1-desktop/native-proofs-e3-canyon-wo-932b8-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/native-a1-desktop/native-proofs-e3-canyon-wo-932b8-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:800:5 › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow 

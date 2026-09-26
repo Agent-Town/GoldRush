@@ -76,10 +76,27 @@ test('strings the gorge, holds the night, and restores a cut span', async ({ pag
   expect(lamp?.state).toBe('powered');
   const full = await page.evaluate(() => window.__GR_TEST__!.lightCoverage(37.5, 32));
   expect(full).toBeGreaterThan(0.95);
+  // F-CW2-1 (canyon-works-traversal-2, 2026-09-26, measured on both projects). The contract's two authored arc turrets
+  // (tileParams.prePlacedBuildables, x -18 and 18 at z 22) never stood before that task: placeFree refuses unwalkable
+  // ground, and the old t2 ramp (z 18..28) read |simSlope| 0.574 at both sites. On the slope-legal ramp (z 14..32) both
+  // stand, and the east one (index 1) now sees this lamp over the gentler shoulder and kills the moth below before it
+  // attaches (killsByOwner turrets 1, mothSwarm alive 0; artifacts/canyon-works-traversal-2/moth-lamp/). This step is
+  // about a moth dimming an unguarded lamp, so it reads the map as it now is, wrecks the east turret first, and the
+  // moth then attaches to lantern:1 and drops the coverage at (37.5, 32) from 1 to 0.179 (measured 0.17928).
+  expect(await page.evaluate(() => (window.__THREE_GAME_DIAGNOSTICS__!.build?.hp ?? [])
+    .filter((building) => building.id === 'turret')
+    .map((building) => ({ index: building.index, x: building.position.x, z: building.position.z, wrecked: building.wrecked }))),
+  'F-CW2-1: both authored arc turrets stand on the slope-legal t2 ramp').toEqual([
+    { index: 0, x: -18, z: 22, wrecked: false },
+    { index: 1, x: 18, z: 22, wrecked: false },
+  ]);
+  expect(await page.evaluate(() => window.__GR_TEST__!.wreck('turret', 1)), 'F-CW2-1: the east arc turret, which guards this lamp').toBe(true);
+  await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.2));
   expect(await page.evaluate(() => window.__GR_TEST__!.spawnMoths(1, 30, 32))).toBe(1);
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(2));
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.mothSwarm)).toMatchObject({ alive: 1, attached: 1, sourceId: 'lantern:1' });
   expect(await page.evaluate(() => window.__GR_TEST__!.lightCoverage(37.5, 32))).toBeLessThan(full * 0.6);
+  expect(await page.evaluate(() => window.__GR_TEST__!.lightCoverage(37.5, 32)), 'F-CW2-1: one attached moth on the unguarded east lamp (effective radius 7 to 4.9), measured 0.17928 on both projects').toBeCloseTo(0.179, 3);
   await shot(page, testInfo, 'moth-cloud-lamp');
   await page.evaluate(() => {
     window.__GR_TEST__!.setBalance('sparkRig.damage', 100);

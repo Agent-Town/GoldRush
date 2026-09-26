@@ -1,0 +1,49 @@
+(node:75019) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:76737) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+e3-canyon-works {"t":10.3,"wave":0,"hp":100,"gold":0,"kills":0,"x":0,"z":-27.3,"alive":2,"seams":2}
+e3-canyon-works {"t":20.5,"wave":0,"hp":100,"gold":0,"kills":0,"x":-6.3,"z":12.1,"alive":6,"seams":2}
+e3-canyon-works {"t":30.9,"wave":1,"hp":100,"gold":0,"kills":2,"x":-27.7,"z":35.6,"alive":12,"seams":2}
+e3-canyon-works {"t":40.9,"wave":1,"hp":100,"gold":25,"kills":5,"x":-20.1,"z":31.1,"alive":12,"seams":2}
+e3-canyon-works {"t":51.1,"wave":1,"hp":84,"gold":25,"kills":12,"x":-0.3,"z":-4.4,"alive":10,"seams":2}
+e3-canyon-works {"t":62.1,"wave":2,"hp":76,"gold":25,"kills":16,"x":-12.2,"z":-33.1,"alive":15,"seams":2}
+e3-canyon-works {"t":72.4,"wave":2,"hp":76,"gold":0,"kills":23,"x":0.1,"z":-1.4,"alive":14,"seams":2}
+e3-canyon-works {"t":82.9,"wave":2,"hp":76,"gold":0,"kills":24,"x":-21.3,"z":26.4,"alive":18,"seams":2}
+e3-canyon-works {"t":93.2,"wave":3,"hp":68,"gold":5,"kills":27,"x":12.1,"z":29.8,"alive":25,"seams":1}
+e3-canyon-works {"t":103.6,"wave":3,"hp":68,"gold":25,"kills":29,"x":33.4,"z":29.8,"alive":32,"seams":1}
+e3-canyon-works {"t":113.6,"wave":3,"hp":44,"gold":30,"kills":34,"x":0.6,"z":7.2,"alive":32,"seams":2}
+e3-canyon-works {"t":124,"wave":4,"hp":20,"gold":30,"kills":44,"x":-20.6,"z":-16,"alive":34,"seams":2}
+e3-canyon-works {"t":134,"wave":4,"hp":4,"gold":0,"kills":52,"x":-5.3,"z":-5.9,"alive":36,"seams":2}
+  ✘  1 [mobile-chrome] › e2e/native-proofs/driver.ts:800:5 › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow (38.2s)
+
+
+  1) [mobile-chrome] › e2e/native-proofs/driver.ts:800:5 › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 4 / 134.1s sim, 52 kills, 0 gold; both galleries were not connected by wave 8
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1280 |       }
+      1281 |
+    > 1282 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1283 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1284 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1285 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/native-proofs/driver.ts:1282:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/native-a2-mobile/native-proofs-e3-canyon-wo-932b8-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/native-a2-mobile/native-proofs-e3-canyon-wo-932b8-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  1 failed
+    [mobile-chrome] › e2e/native-proofs/driver.ts:800:5 › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow 

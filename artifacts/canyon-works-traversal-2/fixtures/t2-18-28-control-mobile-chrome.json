@@ -1,0 +1,110 @@
+{
+  "label": "t2-18-28-control",
+  "project": "mobile-chrome",
+  "at": "2026-09-26T01:39:17.168Z",
+  "elevation": {
+    "t2RampStart": 18,
+    "t2RampEnd": 28
+  },
+  "authored": [
+    {
+      "id": "lantern_post",
+      "x": -32,
+      "z": 32,
+      "sim": {
+        "height": 4.5,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedEast": 1,
+        "speedWest": 1
+      },
+      "ground": {
+        "walkable": true,
+        "speedMul": 1,
+        "zone": "bank"
+      }
+    },
+    {
+      "id": "lantern_post",
+      "x": 32,
+      "z": 32,
+      "sim": {
+        "height": 4.5,
+        "slope": {
+          "dx": 0,
+          "dz": 0
+        },
+        "traversable": true,
+        "speedEast": 1,
+        "speedWest": 1
+      },
+      "ground": {
+        "walkable": true,
+        "speedMul": 1,
+        "zone": "bank"
+      }
+    },
+    {
+      "id": "turret",
+      "x": -18,
+      "z": 22,
+      "sim": {
+        "height": 1.9080000000000004,
+        "slope": {
+          "dx": 0,
+          "dz": 0.5740000000000007
+        },
+        "traversable": false,
+        "speedEast": 1,
+        "speedWest": 1
+      },
+      "ground": {
+        "walkable": false,
+        "speedMul": 0,
+        "zone": "out"
+      }
+    },
+    {
+      "id": "turret",
+      "x": 18,
+      "z": 22,
+      "sim": {
+        "height": 1.9080000000000004,
+        "slope": {
+          "dx": 0,
+          "dz": 0.5740000000000007
+        },
+        "traversable": false,
+        "speedEast": 1,
+        "speedWest": 1
+      },
+      "ground": {
+        "walkable": false,
+        "speedMul": 0,
+        "zone": "out"
+      }
+    }
+  ],
+  "standing": [
+    {
+      "id": "lantern_post",
+      "index": 0,
+      "x": -32,
+      "z": 32,
+      "hp": 35,
+      "wrecked": false
+    },
+    {
+      "id": "lantern_post",
+      "index": 1,
+      "x": 32,
+      "z": 32,
+      "hp": 35,
+      "wrecked": false
+    }
+  ],
+  "errors": []
+}

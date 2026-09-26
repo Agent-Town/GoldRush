@@ -1,0 +1,9 @@
+
+Running 2 tests using 1 worker
+
+[fixtures] t2-14-32 desktop-chrome {"elevation":{"t2RampStart":14,"t2RampEnd":32},"standing":["turret@-18,22","turret@18,22","lantern_post@-32,32","lantern_post@32,32"],"errors":0}
+  ✓  1 [desktop-chrome] › artifacts/canyon-works-traversal-2/probes/fixtures.probe.ts:22:1 › canyon fixtures standing (t2-14-32) (4.4s)
+[fixtures] t2-14-32 mobile-chrome {"elevation":{"t2RampStart":14,"t2RampEnd":32},"standing":["turret@-18,22","turret@18,22","lantern_post@-32,32","lantern_post@32,32"],"errors":0}
+  ✓  2 [mobile-chrome] › artifacts/canyon-works-traversal-2/probes/fixtures.probe.ts:22:1 › canyon fixtures standing (t2-14-32) (4.1s)
+
+  2 passed (11.9s)
