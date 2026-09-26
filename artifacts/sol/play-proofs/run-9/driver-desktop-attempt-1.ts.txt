@@ -557,9 +557,7 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
     if (!state.spent && now.wave >= 16 && now.wave < 19) {
       const strongest = now.defences.filter(piece => piece.id === 'turret' && !piece.wrecked)
         .sort((a, b) => b.hp - a.hp || b.maxHp - a.maxHp)[0];
-      const reached = strongest ? await journey(page, row, strongest.x, strongest.z, 1.2, fords, 45) : false;
-      row.notes.push(`restore-ground late approach: turret=${strongest?.index ?? 'none'}, reached=${reached}, wave=${now.wave}`);
-      if (strongest && reached) {
+      if (strongest && await journey(page, row, strongest.x, strongest.z, 0.7, fords, 45)) {
         await takeUpgrades(page, row);
         const button = page.getByTestId('upgrade-confirm');
         const tierBefore = await page.evaluate(index => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.find(piece => piece.id === 'turret' && piece.index === index)?.tier, strongest.index);
@@ -569,19 +567,8 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
         }
         const at = await read(page);
         const nearest = at?.defences.slice().sort((a, b) => Math.hypot(a.x - at.hero.x, a.z - at.hero.z) - Math.hypot(b.x - at.hero.x, b.z - at.hero.z))[0];
-        if (nearest?.id === strongest.id && nearest.index === strongest.index && await button.isVisible()) {
-          const label = await button.innerText();
-          row.notes.push(`restore-ground late upgrade offer: ${label}, wave=${at?.wave}, gold=${at?.gold}`);
-          const needed = label.match(/^need (\d+)g$/);
-          if (needed) {
-            if (at?.buildMode) await page.getByTestId('hud-build').click();
-            const funded = await fund(page, row, Number(needed[1]), Math.min(deadline, Date.now() + 15_000), fords, unreachable);
-            row.notes.push(`restore-ground late upgrade funding: target=${needed[1]}, funded=${funded}, wave=${(await read(page))?.wave}`);
-            return;
-          }
-        }
         if (nearest?.id === strongest.id && nearest.index === strongest.index &&
-            (at?.wave ?? 19) < 19 && await button.isVisible() && await button.isEnabled()) {
+            await button.isVisible() && await button.isEnabled()) {
           await button.click();
           await page.waitForTimeout(150);
           const after = await read(page);
