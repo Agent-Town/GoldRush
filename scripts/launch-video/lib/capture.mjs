@@ -189,8 +189,9 @@ export function collectErrors(page) {
 // Beside `#hud` it hides the other layers a player's chrome lives in, each mounted on `#app` rather than inside
 // `#hud` (src/game/Game.ts:1928, :1961; src/story/StoryRuntime.ts:47; src/ui/WorldInfoNotes.ts:190): the story
 // cards (clicking one can open the Claim Ledger and pause the run, so they are hidden, not clicked), the Patent
-// Office choice (the pilot answers it at once; the sim waits meanwhile), the hover note and the prompt stack.
-export const HUD_OFF_SELECTORS = ['#hud', '[data-testid="story-beat-layer"]', '[data-testid="upgrade-overlay"]', '[data-testid="world-info-note"]', '[data-testid="prompt-stack"]'];
+// Office choice (the pilot answers it at once; the sim waits meanwhile), the hover note, the prompt stack, and on a
+// touch device the stick and its buttons (`#touch-controls`, index.html:19).
+export const HUD_OFF_SELECTORS = ['#hud', '[data-testid="story-beat-layer"]', '[data-testid="upgrade-overlay"]', '[data-testid="world-info-note"]', '[data-testid="prompt-stack"]', '#touch-controls'];
 const HUD_STYLE_ID = 'lv-capture-hud-off';
 export async function setHudVisible(page, visible, { alsoHide = [], only = null } = {}) {
   await page.evaluate(({ id, visible: show, selectors }) => {

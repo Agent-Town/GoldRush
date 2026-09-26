@@ -429,17 +429,33 @@ export class Pilot {
     await this.pointerAway();
   }
 
-  /** A live seam the Prospector can be sent to: not the hero's own, and inside the frame clear of the HUD. */
-  async orderableSeam(margin = { x: 110, top: 150, bottom: 170 }) {
-    const run = await this.run();
-    const { width, height } = this.viewport;
-    const seams = (run.seams ?? [])
-      .filter((seam) => seam.active !== false && Number.isFinite(seam.x) && (seam.remaining ?? 1) > 0)
-      .filter((seam) => Math.hypot(seam.x - run.hero.x, seam.z - run.hero.z) > 3.5)
-      .map((seam) => ({ ...seam, screen: projectToScreen(run, seam, this.viewport), distance: Math.hypot(seam.x - run.hero.x, seam.z - run.hero.z) }))
-      .filter((seam) => seam.screen.x > margin.x && seam.screen.x < width - margin.x && seam.screen.y > margin.top && seam.screen.y < height - margin.bottom)
-      .sort((a, b) => a.distance - b.distance);
-    return seams[0] ?? null;
+  /**
+   * A live seam the Prospector can be sent to: not the hero's own, and inside the frame clear of the HUD (margins
+   * scale with the viewport, so the 390x844 vertical keeps a usable middle). When none is in frame, the hero walks
+   * toward the nearest live seam until it is, as a player would, then the seam is returned.
+   */
+  async orderableSeam() {
+    const inFrame = async () => {
+      const run = await this.run();
+      const { width, height } = this.viewport;
+      const margin = { x: width * 0.12, top: height * 0.16, bottom: height * 0.2 };
+      const seams = (run.seams ?? [])
+        .filter((seam) => seam.active !== false && Number.isFinite(seam.x) && (seam.remaining ?? 1) > 0)
+        .filter((seam) => Math.hypot(seam.x - run.hero.x, seam.z - run.hero.z) > 3.5)
+        .map((seam) => ({ ...seam, screen: projectToScreen(run, seam, this.viewport), distance: Math.hypot(seam.x - run.hero.x, seam.z - run.hero.z) }))
+        .sort((a, b) => a.distance - b.distance);
+      const visible = seams.find((seam) => seam.screen.x > margin.x && seam.screen.x < width - margin.x && seam.screen.y > margin.top && seam.screen.y < height - margin.bottom);
+      return { visible, nearest: seams[0] ?? null, run };
+    };
+    let found = await inFrame();
+    if (found.visible || !found.nearest) return found.visible ?? null;
+    const target = found.nearest;
+    const toward = { x: target.x + (found.run.hero.x - target.x) * (5 / target.distance), z: target.z + (found.run.hero.z - target.z) * (5 / target.distance) };
+    this.note('walk-into-view-of-seam', { seam: target.id, toward });
+    await this.walkTo(toward, { tolerance: 1, timeoutMs: 10_000 });
+    await this.settleCamera(600);
+    found = await inFrame();
+    return found.visible ?? null;
   }
 
   // ---- the camera ---------------------------------------------------------------------------

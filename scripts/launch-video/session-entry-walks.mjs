@@ -92,7 +92,7 @@ try {
     const recording = await recorder.stop();
     const network = networkVerdict(ledger);
     writeSidecar(recorder.name, {
-      take: recorder.name, map, landmark: walk.landmark, viewport: shape.id, deviceScaleFactor: shape.context.deviceScaleFactor,
+      take: recorder.name, map, beats: ['B6'], landmark: walk.landmark, viewport: shape.id, deviceScaleFactor: shape.context.deviceScaleFactor,
       staged: false, pilot: PILOT_DISCLOSURE, plainBoot: true, capture: { name: CAPTURE_NAME, town: CAPTURE_TOWN },
       hudOffRule: HUD_OFF_SELECTORS, contract: run?.contract, pilotEvents: pilot.events, network, errors, recording,
     });

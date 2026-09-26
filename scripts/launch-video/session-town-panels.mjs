@@ -107,10 +107,16 @@ async function take(browser, { name, beats, map, staged, stagedReason, storageSt
   }
 }
 
+// Story cards (a seeded store's first-boot card, a ledger page) would land over the panels; the capture hides only
+// their layer, the same capture-side rule the HUD-off takes use, and never clicks one.
+const STORY_LAYER_ONLY = ['[data-testid="story-beat-layer"]'];
+
 async function enterTown(page) {
   await page.goto('/');
+  await setHudVisible(page, false, { only: STORY_LAYER_ONLY });
   await page.getByTestId('start-menu-enter-town').click({ timeout: 60_000 });
   await waitForTown(page);
+  await setHudVisible(page, false, { only: STORY_LAYER_ONLY });
 }
 
 const browser = await launchCaptureBrowser();
@@ -156,6 +162,7 @@ try {
   if (args['field-book']) {
     const openFieldBook = async (page) => {
       await page.goto('/');
+      await setHudVisible(page, false, { only: STORY_LAYER_ONLY });
       await page.getByTestId('start-menu-claim-ledger').click({ timeout: 60_000 });
       await page.getByTestId('claim-ledger-field-book').click();
       await page.getByTestId('field-book').waitFor({ timeout: 15_000 });
@@ -185,7 +192,7 @@ try {
       fulfil: [{ name: 'field-book-fixture', test: (url) => url.pathname === '/api/standings' && url.searchParams.has('view'), handle: (route, url) => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(fieldBookFixture(url)) }) }],
       run: async (page, recorder) => {
         await openFieldBook(page);
-        await setHudVisible(page, false, { only: UNNAMED_BOARD_RULE });
+        await setHudVisible(page, false, { only: [...STORY_LAYER_ONLY, ...UNNAMED_BOARD_RULE] });
         await page.getByTestId('field-book-aggregate').waitFor({ timeout: 15_000 });
         recorder.mark('minds');
         await sleep(3000);

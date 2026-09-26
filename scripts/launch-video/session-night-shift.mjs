@@ -40,11 +40,15 @@ installStopHandler(() => recorders);
 const COLD_POSTS = [[0, 16], [-16, 18], [16, 18], [-22, -12], [22, -12], [-10, -24], [10, -24]].map(([x, z]) => ({ x, z, r: 2.2 }));
 const RELIGHT = { post: { x: 0, z: 16 }, stand: { x: 0, z: 14.9 } };
 const HOME = { x: 0, z: 11.5 };
+// t1 (2026-09-27) panned one seam and then waited: every seam that respawned lay beyond a 16 m range from the home
+// bank, so the purse sat at 30 gold from wave 1 to wave 9 and no turret was ever raised. Any live seam on the map is
+// fair game now, and a sluice by the water comes first for a steady income.
 const PLAN = {
   home: HOME,
   seamAnchor: { x: 0, z: 8 },
-  seamRange: 16,
+  seamRange: 40,
   builds: [
+    { id: 'sluice', at: [{ x: -5.5, z: 6.6 }, { x: 5.5, z: 6.6 }, { x: -4, z: 6.4 }], reserve: 0 },
     { id: 'turret', at: [{ x: -2.7, z: 11 }, { x: -3.5, z: 12 }], reserve: 0 },
     { id: 'turret', at: [{ x: 2.7, z: 11 }, { x: 3.5, z: 12 }], reserve: 0 },
     { id: 'sentry_beacon', at: [{ x: 0, z: 9 }, { x: 1, z: 9 }], reserve: 10 },
@@ -147,7 +151,8 @@ try {
 
   // Hold the light to the take's end (the runbook records to 5:30), or on to dawn when asked.
   const home = relit ? RELIGHT.stand : HOME;
-  const hold = await turtle(pilot, { ...PLAN, home, seamAnchor: home, seamRange: 10 }, {
+  // She holds the lit post, pans whatever seam is live, and comes back to the light.
+  const hold = await turtle(pilot, { ...PLAN, home, seamAnchor: home, seamRange: 40 }, {
     until: (tick) => (args.dawn ? false : tick.timeAlive >= untilSeconds),
     timeoutMs: args.dawn ? 12 * 60_000 : 4 * 60_000,
     onTick: lightMarks,

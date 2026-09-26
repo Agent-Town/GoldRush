@@ -29,6 +29,7 @@ const { values: args } = parseArgs({
     take: { type: 'string', default: 't1' },
     lineage: { type: 'string', default: 'wren' },
     'staged-unlock': { type: 'boolean', default: false },
+    'staged-if-locked': { type: 'boolean', default: false },
     'handle-seconds': { type: 'string', default: '15' },
   },
 });
@@ -94,11 +95,29 @@ function stagedUnlock(state) {
   return grant;
 }
 
+/** The Baron's gate as src/meta/ContractUnlock.ts reads it ('science-complete+2-secured'), on the saved ledger. */
+function baronGate(state) {
+  const origin = state.origins?.[0];
+  const get = (name) => origin?.localStorage.find((item) => item.name === name)?.value ?? null;
+  const profile = JSON.parse(get('gr.profile.v2') ?? 'null');
+  const prefix = `gr.profile.v2.${profile?.activeId}.`;
+  const science = JSON.parse(get(`${prefix}gr.meta.v1`) ?? '{"tracks":{"science":0}}').tracks?.science ?? 0;
+  const scores = JSON.parse(get(`${prefix}gr.scores.v2`) ?? '[]');
+  const contracts = [...new Set(scores.filter((score) => score.secured).map((score) => score.contractId || 'the-claim'))];
+  return { science, securedContracts: contracts, open: science >= 6 && contracts.length >= 2 };
+}
+
 const browser = await launchCaptureBrowser();
-const summary = { script: 'session-baron', take: args.take, staged: args['staged-unlock'], startedAt: new Date().toISOString() };
+const summary = { script: 'session-baron', take: args.take, startedAt: new Date().toISOString() };
 try {
   const state = loadLineage(args.lineage);
-  const grant = args['staged-unlock'] ? stagedUnlock(state) : [];
+  // --staged-if-locked: read Wren's ledger against the Baron's gate first (Frontier science complete, two different
+  // contracts secured); grant only when she has not earned it, and say so in the sidecar either way.
+  const gate = baronGate(state);
+  summary.gate = gate;
+  const staged = args['staged-unlock'] || (args['staged-if-locked'] && !gate.open);
+  const grant = staged ? stagedUnlock(state) : [];
+  summary.staged = staged;
   summary.grant = grant;
   const { context, ledger } = await newCaptureContext(browser, viewport, { storageState: state });
   const page = await context.newPage();
@@ -151,19 +170,27 @@ try {
       summary.lastWave = tick.wave;
       recorder.mark(`wave-${tick.wave}`, { hp: tick.hp, gold: tick.gold, alive: tick.enemiesAlive, p95: tick.frameMs?.p95, timeAlive: Number(tick.timeAlive.toFixed(1)) });
     }
+    // The HUD's wave banner (src/ui/Hud.ts: `[data-hud-wave]` text, `[data-hud-wave-title]` title, and
+    // `#hud[data-announcement-kind="baron"]` for his taunts and his arrival).
     const banner = await page.evaluate(() => {
       const hud = document.querySelector('#hud');
       if (!hud?.classList.contains('hud--announcement-visible')) return null;
-      return { kind: hud.dataset.announcementKind ?? null, text: hud.querySelector('[data-testid*="announce"], .hud-announcement, [class*="announcement"]')?.textContent?.trim()?.slice(0, 160) ?? null };
+      return {
+        kind: hud.dataset.announcementKind ?? null,
+        title: hud.querySelector('[data-hud-wave-title]')?.textContent?.trim() ?? null,
+        text: hud.querySelector('[data-hud-wave]')?.textContent?.trim()?.slice(0, 160) ?? null,
+      };
     }).catch(() => null);
-    if (banner?.text?.includes('The Baron sends his regards') && !seen.has(`taunt-${tick.wave}`)) {
+    if (banner?.kind === 'baron' && tick.wave < 20 && !seen.has(`taunt-${tick.wave}`)) {
       seen.add(`taunt-${tick.wave}`);
       recorder.mark('taunt', { wave: tick.wave, banner });
       void recorder.still(`taunt-wave-${tick.wave}`);
     }
-    const boss = tick.baron?.standardVisible || tick.canvas && false;
-    if (!arrival && (tick.wave >= 20) && (boss || (await page.evaluate(() => document.querySelector('#game-canvas')?.dataset.bossBarVisible === 'true').catch(() => false)))) {
-      arrival = recorder.mark('arrival', { cutPoint: true, wave: tick.wave, timeAlive: Number(tick.timeAlive.toFixed(1)), hp: tick.hp });
+    // The arrival: the twentieth horn's own banner, his standard planted, or his boss bar, whichever shows first.
+    const bossBar = await page.evaluate(() => document.querySelector('#game-canvas')?.dataset.bossBarVisible === 'true').catch(() => false);
+    const arrivalBanner = banner?.kind === 'baron' && tick.wave >= 20;
+    if (!arrival && tick.wave >= 20 && (arrivalBanner || tick.baron?.standardVisible || bossBar)) {
+      arrival = recorder.mark('arrival', { cutPoint: true, wave: tick.wave, timeAlive: Number(tick.timeAlive.toFixed(1)), hp: tick.hp, by: arrivalBanner ? 'banner' : tick.baron?.standardVisible ? 'standard' : 'boss-bar', banner });
       void recorder.still('arrival');
     }
     if (arrival && Date.now() - Date.parse(arrival.wall) >= handleMs) return undefined;
@@ -183,7 +210,7 @@ try {
   const network = networkVerdict(ledger);
   writeSidecar(recorder.name, {
     take: recorder.name, map: 'e1-baron', beats: ['B6', 'B8'], viewport: shape.id, deviceScaleFactor: shape.context.deviceScaleFactor,
-    staged: args['staged-unlock'], stagedReason: args['staged-unlock'] ? 'Baron unlock granted on a copy of Wren\'s ledger (science to 6, a second secured contract); the play itself is real at 1x' : null,
+    staged, stagedReason: staged ? `Baron unlock granted on a copy of Wren's ledger (her own: science ${gate.science}, secured ${gate.securedContracts.join(', ')}); the grant adds only what the gate reads; the play itself is real at 1x` : null, gate,
     grant, pilot: PILOT_DISCLOSURE, plainBoot: true, capture: { name: CAPTURE_NAME, town: CAPTURE_TOWN }, hudOffRule: HUD_OFF_SELECTORS,
     cutPoint: arrival, outcome, summary, pilotEvents: pilot.events, network, errors, recording,
   });
