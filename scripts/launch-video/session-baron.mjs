@@ -7,14 +7,15 @@
 // the entry walk, for the taunts and the boss bar. The take runs a few seconds past the arrival as handle; the cut
 // point is the `arrival` mark in the sidecar. The pilot plays the turtle that a rider rode to the Baron's twentieth
 // horn from an empty profile (artifacts/gauntlet-heat5-20260824/e1-baron/attempt-3-tape.json): pan seam 2, four
-// turrets on the home bank, six sentry beacons, two turret upgrades.
+// turrets on the home bank, six sentry beacons, two turret upgrades. A watcher beside the pilot reads the HUD every
+// 150 ms, so a banner that shows only 3.8 s is marked even while the pilot is mid-walk.
 // STAGED: only when --staged-unlock is passed. The Baron opens after Frontier science is complete and two claims are
 // secured (src/meta/ContractUnlock.ts 'science-complete+2-secured'). --staged-unlock copies Wren's ledger and grants
 // exactly the missing unlock facts (science to 6, a second secured contract); the grant is written into the sidecar
 // key by key, and the take is labelled STAGED. Without it the session plays Wren's ledger as earned.
 //
 // Usage, inside the drain lock (see batch.sh):
-//   node scripts/launch-video/session-baron.mjs --take t1 [--staged-unlock] [--handle-seconds 15]
+//   node scripts/launch-video/session-baron.mjs --take t1 [--staged-unlock | --staged-if-locked] [--handle-seconds 15]
 
 import { parseArgs } from 'node:util';
 import {
@@ -39,12 +40,15 @@ const recorders = [];
 installStopHandler(() => recorders);
 
 const HOME = { x: 0, z: 12 };
-// Night Shift t1 (2026-09-27) starved at a 16 m reach (every respawned seam lay farther), so the Baron's turtle pans
-// any live seam and raises a sluice first for a steady income.
+// t1 (2026-09-27) fell at wave 17: late in the run the pilot crossed the ford to far seams with 29 to 35 walkers
+// alive, the fifth and sixth beacon spots (z 14.5 beside the turrets) were refused again and again, and 114 gold went
+// unspent. So: any live seam while the waves are young, only the home bank's after wave 8; back under the turrets
+// below half health; the two turret upgrades before the last beacons; beacon spots that place.
 const PLAN = {
   home: HOME,
   seamAnchor: HOME,
-  seamRange: 40,
+  seamRange: (run) => (run.wave < 8 ? 40 : 13),
+  retreatBelow: 0.5,
   builds: [
     { id: 'sluice', at: [{ x: -5.5, z: 6.6 }, { x: 5.5, z: 6.6 }, { x: -4, z: 6.4 }] },
     { id: 'turret', at: [{ x: -2.7, z: 12 }, { x: -3.2, z: 11 }] },
@@ -53,12 +57,14 @@ const PLAN = {
     { id: 'turret', at: [{ x: 5.4, z: 12 }, { x: 6, z: 11 }] },
     { id: 'sentry_beacon', at: [{ x: 0, z: 9.5 }] },
     { id: 'sentry_beacon', at: [{ x: 0, z: 14.5 }] },
-    { id: 'sentry_beacon', at: [{ x: -2.7, z: 9.5 }] },
-    { id: 'sentry_beacon', at: [{ x: 2.7, z: 9.5 }] },
-    { id: 'sentry_beacon', at: [{ x: -2.7, z: 14.5 }] },
-    { id: 'sentry_beacon', at: [{ x: 2.7, z: 14.5 }] },
     { upgrade: true, id: 'turret', at: { x: -2.7, z: 12 }, cost: 150 },
     { upgrade: true, id: 'turret', at: { x: 2.7, z: 12 }, cost: 150 },
+    { id: 'sentry_beacon', at: [{ x: -2.7, z: 9.5 }, { x: -4.2, z: 9.5 }] },
+    { id: 'sentry_beacon', at: [{ x: 2.7, z: 9.5 }, { x: 4.2, z: 9.5 }] },
+    { id: 'sentry_beacon', at: [{ x: -1.4, z: 8.2 }, { x: -5.6, z: 9.2 }] },
+    { id: 'sentry_beacon', at: [{ x: 1.4, z: 8.2 }, { x: 5.6, z: 9.2 }] },
+    { upgrade: true, id: 'turret', at: { x: -5.4, z: 12 }, cost: 150 },
+    { upgrade: true, id: 'turret', at: { x: 5.4, z: 12 }, cost: 150 },
   ],
 };
 
@@ -110,8 +116,16 @@ function baronGate(state) {
   return { science, securedContracts: contracts, open: science >= 6 && contracts.length >= 2 };
 }
 
+// Survival ranks higher on the Baron's faster waves than on the Claim: the plating (+25 health and 25 healed, three
+// stacks) second, the field dressing (30 healed) in the middle (src/game/Upgrades.ts).
+const BARON_PICKS = [
+  'heavy_spark', 'tinkers_plating', 'double_tap_coil', 'split_spark', 'field_dressing', 'long_resonator', 'beacon_dynamo',
+  'quick_fuse', 'powder_charge', 'sharpen', 'prospectors_luck',
+];
+
 const browser = await launchCaptureBrowser();
 const summary = { script: 'session-baron', take: args.take, startedAt: new Date().toISOString() };
+let watching = false;
 try {
   const state = loadLineage(args.lineage);
   // --staged-if-locked: read Wren's ledger against the Baron's gate first (Frontier science complete, two different
@@ -125,7 +139,7 @@ try {
   const { context, ledger } = await newCaptureContext(browser, viewport, { storageState: state });
   const page = await context.newPage();
   const errors = collectErrors(page);
-  const pilot = new Pilot(page, { viewport: shape.context.viewport, river: CENTER_RIVER });
+  const pilot = new Pilot(page, { viewport: shape.context.viewport, river: CENTER_RIVER, picks: BARON_PICKS });
   await page.goto('/');
   await page.getByTestId('start-menu-enter-town').click({ timeout: 60_000 });
   await waitForTown(page);
@@ -164,7 +178,9 @@ try {
   await setHudVisible(page, true);
   recorder.mark('hud-on');
 
-  // B8: the taunts, then the twentieth horn.
+  // B8: the taunts, then the twentieth horn. A Baron banner shows for 3.8 s of sim (src/game/Game.ts showBaronBanner)
+  // and one of the pilot's walks can last longer, so t1 (2026-09-27) marked the wave-5 taunt and missed wave 12's: the
+  // banners are now read by a watcher of their own, every 150 ms, beside the pilot.
   const seen = new Set();
   let arrival = null;
   const handleMs = Number(args['handle-seconds']) * 1000;
@@ -173,37 +189,54 @@ try {
       summary.lastWave = tick.wave;
       recorder.mark(`wave-${tick.wave}`, { hp: tick.hp, gold: tick.gold, alive: tick.enemiesAlive, p95: tick.frameMs?.p95, timeAlive: Number(tick.timeAlive.toFixed(1)) });
     }
-    // The HUD's wave banner (src/ui/Hud.ts: `[data-hud-wave]` text, `[data-hud-wave-title]` title, and
-    // `#hud[data-announcement-kind="baron"]` for his taunts and his arrival).
-    const banner = await page.evaluate(() => {
-      const hud = document.querySelector('#hud');
-      if (!hud?.classList.contains('hud--announcement-visible')) return null;
-      return {
+    return undefined;
+  };
+  // The HUD's banner (src/ui/Hud.ts: `[data-hud-wave]` text, `[data-hud-wave-title]` title, and
+  // `#hud[data-announcement-kind="baron"]` for his taunts and his arrival), his standard, and his boss bar.
+  const lookAtTheHud = () => page.evaluate(() => {
+    const d = window.__THREE_GAME_DIAGNOSTICS__;
+    const hud = document.querySelector('#hud');
+    const shown = hud?.classList.contains('hud--announcement-visible') ?? false;
+    return {
+      wave: d?.wave ?? null,
+      timeAlive: d?.timeAlive ?? null,
+      hp: d?.hp ?? null,
+      standard: d?.baronStandard?.visible ?? false,
+      bossBar: document.querySelector('#game-canvas')?.dataset.bossBarVisible === 'true',
+      banner: shown ? {
         kind: hud.dataset.announcementKind ?? null,
         title: hud.querySelector('[data-hud-wave-title]')?.textContent?.trim() ?? null,
         text: hud.querySelector('[data-hud-wave]')?.textContent?.trim()?.slice(0, 160) ?? null,
-      };
-    }).catch(() => null);
-    if (banner?.kind === 'baron' && tick.wave < 20 && !seen.has(`taunt-${tick.wave}`)) {
-      seen.add(`taunt-${tick.wave}`);
-      recorder.mark('taunt', { wave: tick.wave, banner });
-      void recorder.still(`taunt-wave-${tick.wave}`);
+      } : null,
+    };
+  }).catch(() => null);
+  watching = true;
+  const watcher = (async () => {
+    while (watching && !page.isClosed()) {
+      const look = await lookAtTheHud();
+      if (look && look.wave !== null) {
+        if (look.banner?.kind === 'baron' && look.wave < 20 && !seen.has(`taunt-${look.wave}`)) {
+          seen.add(`taunt-${look.wave}`);
+          recorder.mark('taunt', { wave: look.wave, timeAlive: Number((look.timeAlive ?? 0).toFixed(1)), banner: look.banner });
+          void recorder.still(`taunt-wave-${look.wave}`);
+        }
+        // The arrival: the twentieth horn's own banner, his standard planted, or his boss bar, whichever shows first.
+        const arrivalBanner = look.banner?.kind === 'baron' && look.wave >= 20;
+        if (!arrival && look.wave >= 20 && (arrivalBanner || look.standard || look.bossBar)) {
+          arrival = recorder.mark('arrival', { cutPoint: true, wave: look.wave, timeAlive: Number((look.timeAlive ?? 0).toFixed(1)), hp: look.hp, by: arrivalBanner ? 'banner' : look.standard ? 'standard' : 'boss-bar', banner: look.banner });
+          void recorder.still('arrival');
+        }
+      }
+      await sleep(150);
     }
-    // The arrival: the twentieth horn's own banner, his standard planted, or his boss bar, whichever shows first.
-    const bossBar = await page.evaluate(() => document.querySelector('#game-canvas')?.dataset.bossBarVisible === 'true').catch(() => false);
-    const arrivalBanner = banner?.kind === 'baron' && tick.wave >= 20;
-    if (!arrival && tick.wave >= 20 && (arrivalBanner || tick.baron?.standardVisible || bossBar)) {
-      arrival = recorder.mark('arrival', { cutPoint: true, wave: tick.wave, timeAlive: Number(tick.timeAlive.toFixed(1)), hp: tick.hp, by: arrivalBanner ? 'banner' : tick.baron?.standardVisible ? 'standard' : 'boss-bar', banner });
-      void recorder.still('arrival');
-    }
-    if (arrival && Date.now() - Date.parse(arrival.wall) >= handleMs) return undefined;
-    return undefined;
-  };
+  })();
   const outcome = await turtle(pilot, PLAN, {
     until: async () => Boolean(arrival) && Date.now() - Date.parse(arrival.wall) >= handleMs,
     timeoutMs: 12 * 60_000,
     onTick,
   });
+  watching = false;
+  await watcher;
   recorder.mark('take-end', { outcome });
   if (arrival) await recorder.still('arrival-handle-end');
   run = await readRun(page);
@@ -225,6 +258,7 @@ try {
   log(`session failed: ${error?.message}`);
   for (const recorder of recorders) await recorder.stop().catch(() => {});
 } finally {
+  watching = false;
   summary.finishedAt = new Date().toISOString();
   writeSidecar(`session-baron-${args.take}`, summary);
   await browser.close();

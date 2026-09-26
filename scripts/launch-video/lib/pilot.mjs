@@ -570,8 +570,16 @@ export async function turtle(pilot, plan, { until = null, timeoutMs = 15 * 60_00
       if (ok) next.done = true; else next.failures += 1;
       continue;
     }
+    // Below the plan's retreat line the heroine goes back under her turrets and waits (the Baron t1, 2026-09-27, fell
+    // at wave 17 far from home, with 35 walkers alive).
+    if (plan.retreatBelow && run.maxHp > 0 && run.hp < run.maxHp * plan.retreatBelow) {
+      if (Math.hypot(run.hero.x - plan.home.x, run.hero.z - plan.home.z) > 1.2) await pilot.walkTo(plan.home, { tolerance: 0.8, timeoutMs: 12_000 });
+      else await pilot.wait(600);
+      continue;
+    }
     const anchor = plan.seamAnchor ?? plan.home;
-    const seam = chooseSeam(run, anchor, { maxDistance: plan.seamRange ?? 16, avoid: pilot.avoid });
+    const range = typeof plan.seamRange === 'function' ? plan.seamRange(run) : (plan.seamRange ?? 16);
+    const seam = chooseSeam(run, anchor, { maxDistance: range, avoid: pilot.avoid });
     if (seam && run.gold < (run.bankCap ?? 200) - 5) {
       const stand = { x: seam.x + (plan.seamSide?.x ?? 0), z: seam.z + (plan.seamSide?.z ?? 0.9) };
       if (Math.hypot(run.hero.x - seam.x, run.hero.z - seam.z) > 1.3) {
