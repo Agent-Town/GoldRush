@@ -70,9 +70,24 @@ async function replay(tape) {
   }
 }
 
+// THE CLOCK IS COMPARED AT A STATED TOLERANCE (river-assay-1, F-RES1-1 cause 3). A browser reel declares the raw
+// float its run accumulated (4.833333333333326 for a pan at tick 145) and the browser instrument used to round its
+// replay to 1e-6, so a perfect replay of such a reel disagreed with its own claim. The instrument now reports the raw
+// float, and the two are equal when they differ by no more than one microsecond: that absorbs a double's
+// representation (about 1e-15 at these magnitudes) and nothing else, since the sim clock moves in fixed steps of
+// 1/30 s, so a replay that lands one step early or late misses by 33,333 microseconds. The published time is never
+// the claim anyway: a verdict posts the replay's own secure snapshot, which the county applies over the row.
+const TIME_ALIVE_TOLERANCE_SECONDS = 1e-6;
+
+function sameTimeAlive(claimed, replayed) {
+  return Number.isFinite(claimed) && Number.isFinite(replayed) && Math.abs(claimed - replayed) <= TIME_ALIVE_TOLERANCE_SECONDS;
+}
+
 function outcomeMismatch(claim, actual) {
   if (!claim || !actual || typeof claim !== 'object' || typeof actual !== 'object') return 'malformed outcome';
-  const mismatches = ['secured', 'waves', 'timeAlive', 'gold'].filter((field) => actual[field] !== claim[field]);
+  const mismatches = ['secured', 'waves', 'timeAlive', 'gold'].filter((field) => (field === 'timeAlive'
+    ? !sameTimeAlive(claim.timeAlive, actual.timeAlive)
+    : actual[field] !== claim[field]));
   return mismatches.length ? `outcome mismatch: ${mismatches.join(', ')}` : null;
 }
 

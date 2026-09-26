@@ -1578,6 +1578,10 @@ export class Game {
   // `isRiverCeremonyContract`), and the one-shot latch of `completeRiverEnding`, the River's win.
   private readonly riverCeremony = areWavesDisabled() && isRiverCeremonyContract(selectActiveContract());
   private riverEndingSettled = false;
+  // river-assay-1 (F-RES1-1): what a REPLAY of a River reel measured at the ceremony's pan, the fields the live pan's
+  // completed score carries. Published as the replay's secure (`publishDiagnostics`, `run`) so the assay reads the
+  // ceremony's outcome where RunManager's secure never fires; nothing is ever written from it.
+  private riverEndingReplayScore: { waves: number; gold: number; timeAlive: number } | null = null;
 
   private runManager?: RunManager;
   private drillYard?: DrillYard;
@@ -6049,6 +6053,8 @@ export class Game {
             sizeBytes: 0,
           },
         }),
+        // A River replay's secure is the ceremony's pan (river-assay-1): the run never secures through RunManager.
+        ...(this.riverEndingReplayScore ? { secured: true, securedSnapshot: { ...this.riverEndingReplayScore } } : {}),
         ...(this.preserveFell ? { lastRunEndedReason: 'preserve_fell' } : {}),
         ...(this.ventGuttered ? { lastRunEndedReason: 'vent_guttered' } : {}),
       },
@@ -7750,10 +7756,17 @@ export class Game {
    * or on the lever alone.
    * ONCE (Mistake #7): the latch makes a second pan on this run write nothing, and a completed River already in this
    * profile's scores makes a reload or a second pull of the lever write nothing more.
+   * A REPLAY of the reel writes nothing either (river-assay-1, F-RES1-1): it measures the same fields the live pan's
+   * score carries, at the same tick, and keeps them for the assay (`riverEndingReplayScore`).
    */
   private completeRiverEnding(): void {
-    if (this.riverEndingSettled || this.runTapeReplay || this.mpClient) return;
+    if (this.riverEndingSettled || this.mpClient) return;
     this.riverEndingSettled = true;
+    if (this.runTapeReplay) {
+      // `recordRunScore(0, this.timeAlive, true, 0)` below, field for field: waves 0, the purse held, the time alive.
+      this.riverEndingReplayScore = { waves: 0, gold: Math.floor(this.economy.gold), timeAlive: this.timeAlive };
+      return;
+    }
     if (loadScores().some((entry) => entry.contractId === RIVER_ENDING_CONTRACT_ID && entry.secured === true)) return;
     const { score } = this.recordRunScore(0, this.timeAlive, true, 0);
     const reel = this.runTapeRecorder?.snapshot(this.securedReelOutcome(score, 'secured'), this.runTapeEventLog());
@@ -9106,6 +9119,7 @@ export class Game {
     this.securedScoreAt = null;
     this.countyStanding = null;
     this.riverEndingSettled = false;
+    this.riverEndingReplayScore = null;
     this.baronBeatenThisRun = false;
     this.baronCeremony = null;
     this.baronStandardPlanted = false;

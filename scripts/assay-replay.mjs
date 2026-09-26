@@ -137,6 +137,9 @@ try {
       : null;
     return {
       eventLogHash: status.getAttribute('data-hash'),
+      // `run.secured` and `run.securedSnapshot` are RunManager's secure, or, for a River reel, the ceremony's pan: the
+      // River never secures through RunManager, and its replay publishes the score the pan wrote there instead
+      // (`Game.completeRiverEnding`, river-assay-1, F-RES1-1 cause 2).
       outcome: {
         secured: diagnostics.run.secured,
         waves: Math.floor(diagnostics.wave),
@@ -147,7 +150,11 @@ try {
         // `round(economy.gold)`). Reading `economy.summary.panned` here verified the OTHER
         // quantity, so a browser reel and an agent reel could never be assayed by one meaning.
         gold: Math.floor(diagnostics.economy.gold),
-        timeAlive: Math.round(diagnostics.timeAlive * 1_000_000) / 1_000_000,
+        // THE CLOCK AS THE SIM KEPT IT (river-assay-1, F-RES1-1 cause 3). A browser reel declares the raw float its
+        // run accumulated, so this reports the raw float the replay accumulated; a 1e-6 round here made every browser
+        // reel whose float is not six-decimal exact disagree with its own claim. The worker compares the two at a
+        // stated tolerance (`scripts/assay-worker.mjs`, TIME_ALIVE_TOLERANCE_SECONDS).
+        timeAlive: diagnostics.timeAlive,
       },
       securedSnapshot: diagnostics.run.securedSnapshot,
       ...(mechanic ? { mechanic } : {}),
