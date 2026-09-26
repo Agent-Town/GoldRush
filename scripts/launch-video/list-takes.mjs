@@ -39,6 +39,15 @@ for (const sidecar of sidecars) {
   if (freed) notes.push(`${freed} FREED labels`);
   if (sidecar.relit !== undefined) notes.push(sidecar.relit ? 'lantern relit on camera' : 'no relight');
   if (sidecar.secured) notes.push('claim secured');
+  const ordered = marks.find((mark) => mark.name === 'prospector-ordered');
+  if (sidecar.map === 'the-claim') notes.push(ordered ? `Prospector sent to a seam at ${ordered.t.toFixed(1)} s` : 'no Prospector order (no seam in the usable frame)');
+  const taunts = marks.filter((mark) => mark.name === 'taunt').map((mark) => mark.wave);
+  if (taunts.length) notes.push(`taunt marked at wave ${taunts.join(', ')}`);
+  const final = sidecar.summary?.final;
+  if (final?.runState === 'dead') {
+    const clock = `${Math.floor(final.timeAlive / 60)}:${String(Math.floor(final.timeAlive % 60)).padStart(2, '0')}`;
+    notes.push(`Wren falls at wave ${final.wave}, ${clock} into the run, at the take's end${sidecar.map === 'e1-baron' && !cut ? ', before the arrival' : ''}`);
+  }
   const verdict = sidecar.network;
   if (verdict) notes.push(`county requests ${verdict.countyAttempts} (reached network ${verdict.reachedNetwork})`);
   rows.push(`| \`${clip}\` | clip | ${beatsOf(sidecar).join(', ')} | ${sidecar.viewport} | ${duration(path.join(OUT, clip)).toFixed(1)} s | ${label(sidecar)} | ${notes.join('; ')} |`);
@@ -71,7 +80,8 @@ for (const name of cutFiles) console.log(`| \`${name}\` | ${reasons[name] ?? rea
 //   name plus 3 s | B4 Begin to the ford beacon (the Claim) or 5 s of issue No. 1 (the menu takes) | B5 the first
 //   FREED label less 3 s to the last plus 5 s | B6 the walk (entry walks), 20 s around golden (Night Shift), the HUD-off
 //   entry (the Baron) | B7 golden less 20 s to the relight | B8 each taunt's 4 s plus the arrival less 5 s to the
-//   take's end (the Baron), the whole paper (the Herald) | B9 the HUD-on window around the order | B10 the whole panel.
+//   take's end (the Baron), the whole paper (the Herald) | B9 the HUD-on window around the order, where the order
+//   was sent | B10 the whole panel.
 const TARGET = { B1: 5, B2: 9, B3: 4, B4: 8, B5: 9, B6: 6, B7: 9, B8: 10, B9: 9, B10: 11, B11: 7, B12: 7 };
 function usable(sidecar, seconds) {
   const marks = sidecar.recording.marks ?? [];
@@ -90,7 +100,7 @@ function usable(sidecar, seconds) {
     if (at('begin') !== undefined && at('ford-beacon') !== undefined) out.B4 = at('ford-beacon') - at('begin');
     const freed = all('freed-labelled');
     if (freed.length) out.B5 = freed.at(-1) + 5 - (freed[0] - 3);
-    if (at('hud-on-b9') !== undefined && at('hud-off-after-b9') !== undefined) out.B9 = at('hud-off-after-b9') - at('hud-on-b9');
+    if (at('prospector-ordered') !== undefined && at('hud-on-b9') !== undefined && at('hud-off-after-b9') !== undefined) out.B9 = at('hud-off-after-b9') - at('hud-on-b9');
   }
   if (beats.includes('B6') && at('walk') !== undefined && at('walk-end') !== undefined) out.B6 = at('walk-end') - at('walk');
   if (map === 'e1-night-shift') {
