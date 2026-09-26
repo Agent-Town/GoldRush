@@ -52,7 +52,7 @@ The master's required beats map as follows: the hook is B1; the world is B2 and 
 
 ## Shot cards
 
-Each card has the seven fields: source, visual, motion, duration, on-screen text, voice, and capture plan or plate. "Runbook" means the capture runbook further down.
+Each card has the seven fields: source, visual, motion, duration, on-screen text, slip, and capture plan or plate. The slip is the printed line that stands where a spoken voice would have: the owner ruled printed text slips only, no voice (2026-09-26, verbatim: "7 - slips is good"). Every slip sits on the parchment slip with brass rivets (teal rivets on the Prospector's card), in Wellfleet unless it says otherwise. "Runbook" means the capture runbook further down.
 
 ### B1 · 0:00 to 0:05 · The hook: they want your gold
 - **Source.** Night Shift (`e1-night-shift`) on the plain seed, in the dark phase (wave 10 and after), camera wheeled in to the 0.7 minimum, HUD off. The frame that proves it today is `reviews/shots-night/desktop-chrome-after.png`; for the vertical, `reviews/shots-night/mobile-chrome-after.png`.
@@ -60,7 +60,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Motion.** The camera holds; the world moves. The pool opens from nothing as a cold post is relit (the real Night Shift action: 8 gold), and the walkers come to its edge. No speed-ramp.
 - **Duration.** 5 s: 1 s of black, 1 s for the relight, 3 s of the walkers arriving.
 - **On-screen text.** Rye, two lines, low centre, the second landing a beat after the first: "THEY DON'T WANT YOUR BRAINS." / "THEY WANT YOUR GOLD." This is the brand book's first differentiator (`docs/marketing/BRAND-BOOK.md` §1).
-- **Voice.** None, by design. Sound only: silence, then one metal-pan tap (the Pan Theme's own first sound, `specs/music/README.md`, the pilot prompt), a lantern catching, water, slow footsteps.
+- **Slip.** None: the hook's two Rye cards are its only type. Sound carries the rest: silence, then one metal-pan tap (the Pan Theme's own first sound, `specs/music/README.md`, the pilot prompt), a lantern catching, water, slow footsteps.
 - **Capture plan.** Runbook. `http://localhost:5322/?contract=e1-night-shift` on the onboarded capture profile, 1280x800 plus one 390x844 take. Play at 1x. Build two turrets on the home bank before wave 8. At wave 10 (about 5:00), walk to a cold post and relight it as the walkers approach. Record 2:30 to 5:30 in one take (it also feeds B6 and B7). Hide `#hud`. The first-boot card must already have been seen.
 
 ### B2 · 0:05 to 0:14 · The world: "What is a claim?"
@@ -69,7 +69,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Motion.** 2.5D parallax cut by hand in the edit: the near scrub and rocks on one layer, the valley on another, with a 5 percent push over 5 s. Then a slow drift across the pair. No generated motion.
 - **Duration.** 9 s: 5 s on the valley, 4 s on the pair.
 - **On-screen text.** Wellfleet, on a slip in the lower third, typed in two beats: "What is a claim?" then "Gold, they will tell you."
-- **Voice.** The tavernkeeper's first line to every new player (`src/story/beats.ts`, the `first-boot` beat): "What is a claim? Gold, they will tell you. Simple, wrong, and the reason every one of us is standing here." If there is no spoken voice (question 2), the slip prints it in full.
+- **Slip.** The Tavernkeeper's first line to every new player, verbatim (`src/story/beats.ts:52`, the `first-boot` beat), printed in full across the two plates. Over the valley: "What is a claim? Gold, they will tell you." Over the pair: "Simple, wrong, and the reason every one of us is standing here." The game prints the same words on the Tavernkeeper's own card at a new profile's second boot; phase 2 filmed that card (see "Phase 2: capture list, as shot").
 - **Plate.** Both plates exist. The parallax layers are cut from the stills, and both sit inside the page border.
 
 ### B3 · 0:14 to 0:18 · The title
@@ -78,7 +78,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Motion.** A match-dissolve from B2's valley plate into the live menu at the same framing. A name is typed into the claim-holder field, and the card lifts away.
 - **Duration.** 4 s.
 - **On-screen text.** The menu's own words; nothing added.
-- **Voice.** None. The Pan Theme's guitar enters on the dissolve.
+- **Slip.** None: the menu's own words are the type. The Pan Theme's guitar enters on the dissolve.
 - **Capture plan.** `http://localhost:5322/` on a fresh profile with storage cleared, at 1280x800 and 390x844. Record 15 s from load and type the capture name. Keep the "ledger local only" chip, because it is true.
 
 ### B4 · 0:18 to 0:26 · Stake the claim
@@ -87,7 +87,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Motion.** Follow-cam as played. Three shots, cut on the fiddle's phrases: the pan (3 s), the sluice placed (3 s), the beacon lit (2 s).
 - **Duration.** 8 s.
 - **On-screen text.** Rye, one line: "STAKE THE CLAIM.", which echoes the HUD's own "Stake your claim." (`src/ui/Hud.ts`). Then a Wellfleet slip with the seam's tooltip: "Stand close and the pan works itself."
-- **Voice.** The Herald's first front page, printed as a masthead slip: "NEW HANDS, WELCOME." (edition 1, `lore/claim-herald.md`, the edition ladder).
+- **Slip.** A masthead slip in the Herald's ledger capitals: "NEW HANDS, WELCOME." (issue No. 1, `src/news/editionLadder.ts:237`; the standing headline, `lore/claim-herald.md:12`). The real front page is on film too: the newsie hands issue No. 1 to every new player in town, and phase 2 filmed it.
 - **Capture plan.** `http://localhost:5322/?contract=the-claim` on the onboarded profile, 1280x800 and 390x844. Record from boot to 1:30 at 1x. Stand at the seam nearest the ford until the pan plays (the kneel is proven in `artifacts/map-art-inventory-20260908/stations/e1-night-shift--seven_lantern_terraces.png`). Build a sluice by the water and a sentry beacon at the ford. Hide `#hud` once the banner has shown, and dismiss the contract card after its first second.
 
 ### B5 · 0:26 to 0:35 · The cure
@@ -96,7 +96,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Motion.** In the world only: the approach, the arc, the turn. The edit adds a 5 percent push on the FREED moment.
 - **Duration.** 9 s: 3 s approach, 2 s arc, 4 s turn.
 - **On-screen text.** Rye, two cards: "YOUR WEAPONS DON'T KILL." then "THEY CURE." (`docs/marketing/FEVER-CAMPAIGN.md`, pillar 2; `docs/marketing/BRAND-BOOK.md` §1).
-- **Voice.** The Herald, edition No. 5, printed on a slip or read aloud: "They were neighbours with gold dust in the creases of their faces, and they were freed, every one of them, and every one of them went home."
+- **Slip.** Wellfleet italic over the turn, the Herald's own sentence from issue No. 5 (`src/news/editionLadder.ts:289`, the Baron edition): "They were neighbours with gold dust in the creases of their faces, and they were freed, every one of them, and every one of them went home."
 - **Capture plan.** Continue the B4 run to wave 8 (about 4:00). Keep the heroine just north of the ford with the rig in reach, record 90 s, and take stills at the FREED moment. Phase 2 checks first whether the FREED labels live inside `#hud`. If they do, keep the HUD for this shot and crop its panels out.
 
 ### B6 · 0:35 to 0:41 · Five contracts
@@ -105,7 +105,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Motion.** Hard cuts on the fiddle, 1.2 s each. Each shot is a short walk toward the map's landmark, with no camera tricks.
 - **Duration.** 6 s: four shots of 1.2 s, then the card for 1.2 s.
 - **On-screen text.** A Wellfleet slip per shot carrying the contract's own name (`assets/contracts/epoch-1-frontier/contracts.json`): "The Dry Gulch", "Twin Banks", "Night Shift", "The Claim-Jumper Baron". Then Rye: "FIVE CONTRACTS. FIVE TWISTS." (the landing's "each its own map and twist", `site/index.html`).
-- **Voice.** None spoken; the slips are the voice. If one line is wanted, the Dry Gulch's own rule: "The river is gone; enemies can press from every edge."
+- **Slip.** The four contract-name slips are the voice. If one more line is wanted, the Dry Gulch's own rule on its slip: "The river is gone; enemies can press from every edge." (the Dry Gulch briefing, `assets/contracts/epoch-1-frontier/contracts.json`).
 - **Capture plan.** `?contract=e1-dry-gulch`, `?contract=e1-twin-banks` and `?contract=e1-baron` on the onboarded profile, 1280x800 and 390x844, HUD off. Take 20 s of the heroine walking toward each landmark: the spring, the west ford, the banners. The Night Shift shot is the B1 run at wave 6.5 (about 3:15).
 
 ### B7 · 0:41 to 0:50 · Night
@@ -114,17 +114,17 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Motion.** The camera follows the heroine, who holds her post. Three hard cuts. No speed-ramp: gameplay is shown at real speed only (`docs/marketing/BRAND-BOOK.md` §4).
 - **Duration.** 9 s, 3 s per phase.
 - **On-screen text.** A Wellfleet slip with the contract's own rule: "Beyond your light, the night owns the claim."
-- **Voice.** None. The band drops out, leaving a low drone, the river, and a heartbeat near 60.
+- **Slip.** Only the rule slip above; nothing else prints over the night. The band drops out, leaving a low drone, the river, and a heartbeat near 60.
 - **Capture plan.** The B1 run, with stills at 3:15, 4:00 and 5:00 at both sizes. The Prospector is itself one of the night's light sources: the night-mode lane lists "hero, Prospector, powered lanterns, carried lanterns" (`reviews/lane-night-mode-truth.md`, "Mesh light truth"), and the teal pool round the pair in `artifacts/landmark-lighting-calibration/after-e1-night-shift-desktop-chrome.png` (a debug capture) is what that looks like. So frame the two lights together once in the dark: hers warm, its teal. Phase 2 checks the look in a plain boot.
 
 ### B8 · 0:50 to 1:00 · The Baron
 - **Source.** The plate `store:plate-contract-baron.png` (the shadow), then the Claim-Jumper Baron (`e1-baron`) at the wave-5 taunt and the wave-20 arrival, about 8:40 in because waves come 15 percent faster. HUD on for the boss bar. Then the Herald's front page, recaptured live (today: `reviews/shots-gazette-unique/desktop-chrome-edition-5-baron.png`).
-- **Visual.** First his shadow, laid across the valley road toward the lit tents while five rockets streak the sunset. Then the man himself, four times a man's height, under a tattered crossed-pickaxe banner, with the red Rocket Cart wheeling in and three telegraph rings on the sand before the rockets land like fireworks. Then the town's paper, cream and ink: THE BARON IS TURNED BACK.
-- **Motion.** A 3 percent push on the plate, follow-cam in the fight, then a slow tilt down the front page from the headline to its first line, "Dragged off by his own men, swearing revenge."
-- **Duration.** 10 s: plate 1.5 s, taunt card 1.5 s, arrival 3 s, rockets 2 s, the Herald 2 s.
+- **Visual.** First his shadow, laid across the valley road toward the lit tents while five rockets streak the sunset. Then the man himself, four times a man's height, under a tattered crossed-pickaxe banner, with the red Rocket Cart wheeling in. The film cuts as he arrives: no fall is filmed (owner, 2026-09-26, answering question 1: "C6 - lets keep it as it is"). Then the town's paper, cream and ink, prints the ending: THE BARON IS TURNED BACK.
+- **Motion.** A 3 percent push on the plate, follow-cam to the arrival, then a slow tilt down the front page from the headline to its first line, "Dragged off by his own men, swearing revenge."
+- **Duration.** 10 s: plate 1.5 s, taunt card 1.5 s, arrival 3 s (the cut lands on it), the Herald 4 s.
 - **On-screen text.** The game's own taunt card, in frame: "The Baron sends his regards. The claim won't hold." Then the Herald's headline, in frame.
-- **Voice.** The Baron (`lore/characters.md`): "My banner arrives before my bill." Printed on a slip under the plate, or spoken (question 2).
-- **Capture plan.** `?contract=e1-baron` on the onboarded profile at 1280x800: one full run at 1x from boot to 60 s past the Baron's arrival, about 10 minutes. The fall itself is question 1. Then the Herald: the town, then the paper, on a profile that has turned the Baron back. That is either the live ride's profile, or the gazette e2e's seeded profile, labelled STAGED.
+- **Slip.** Under the plate, the Baron's own line (`lore/characters.md:25`): "My banner arrives before my bill." After the cut, the Herald's front page carries the ending in its own print; no slip is laid over it.
+- **Capture plan.** Launched from the town board on the capture profile, at 1280x800: one run at 1x from boot to the Baron's arrival at the twentieth horn (about 8:40 in), with a few seconds of handle after the arrival mark; the cut point is the arrival, marked in the take's sidecar. No defeat is filmed. Then the Herald: the town, then the paper, on the gazette e2e's seeded profile (`e2e/gazette-living.spec.ts`), labelled STAGED, because no profile has turned the Baron back on this engine.
 
 ### B9 · 1:00 to 1:09 · Her deputy
 - **Source.** The B4 run at 390x844, and at 1280x800 with the camera at 0.7, with the HUD's Prospector chip and toast in frame. Plate `store:mkt-hero-16x9-f.png` establishes the pair, and the portrait `store:codex-prospector-e1.png` serves as the slip's badge.
@@ -132,7 +132,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Motion.** In the world only: its hover, its bolt, the order, its trip to the seam. The edit adds only type.
 - **Duration.** 9 s: the pair 3 s, the order 3 s, the ladder card 3 s.
 - **On-screen text.** Wellfleet, three lines appearing one by one on a slip whose rivets are teal, because this card is about the agent. They are the game's own three job titles (`src/game/Game.ts`): "follows and observes." / "can gather and mend with approval." / "does trusted chores." Then Rye: "CLAIM WINS GROW IT.", in the HUD toast's own words.
-- **Voice.** The Prospector (`lore/characters.md`): "I will keep the claim books steady."
+- **Slip.** On the teal-riveted slip, after the three job titles, the Prospector's own line (`lore/characters.md:11`): "I will keep the claim books steady."
 - **Capture plan.** The B4 run: press G to open its charter, select the Prospector, then click a seam, following the HUD's own tooltip ("Select it, then click a seam to send it panning"). Record 60 s, with the close at 390x844. Phase 2 confirms that the order works at the starting rung. If it needs a higher rung, secure the Claim on the capture profile first (wave 10, about 5 minutes a run) and film the rung change when its toast appears.
 
 ### B10 · 1:09 to 1:20 · The same door
@@ -140,8 +140,8 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Visual.** The schoolhouse ledger opens at THE FRONT DESK: RIDE IT YOURSELF on one side, SEND YOUR RIG on the other. The tavern's Book stamps a claim word, BRASS-PAN, and invites "your agent from the Calculating House". Then the lantern room, a row of bulbs down each side, replays a ride on the claim under the words THIS IS THE RIDE.
 - **Motion.** Slow pushes across the panels in the edit. The Lantern Show plays at its own 1x.
 - **Duration.** 11 s: the Field Book 3.5 s, Ride Together 3 s, the Lantern Show 4.5 s.
-- **On-screen text.** Rye: "SAME MAPS. SAME DOOR." Then a Wellfleet slip: "Every standing replays in your browser." (`site/index.html`).
-- **Voice.** The county, in the landing page's own colophon (`site/index.html`): "The county keeps every run."
+- **On-screen text.** Rye: "SAME MAPS. SAME DOOR." Then a Wellfleet slip: "Every standing replays in your browser." (after the landing's own line, `site/index.html:234`: "Every standing here replays in your browser.").
+- **Slip.** The county's own colophon (`site/index.html:238`): "The county keeps every run." Every board on camera is unnamed: no rider's model or harness name is shown (owner, 2026-09-26, answering question 3: "8 - unnamed").
 - **Capture plan.** The town, then the Claim Ledger, then The Field Book, with `**/api/standings**` served from the fixture the e2e suite uses (`e2e/field-book.spec.ts`) and every other request to `https://agenttown.app/**` aborted. For Ride Together, open the tavern's Book, then Ride Together, then open the claim, and film the invitation panel only; the relay is a live service, so there is no join. For the Lantern Show, first record a real ride on the capture day (the Claim, secured at wave 10, on the current engine), then open it from the local reel shelf. The alternative is to boot `http://localhost:5322/?watch=<reel id>&contract=the-claim&epoch=epoch-1-frontier` with the standings route fulfilled locally by that same tape. That follows the pattern of `e2e/lantern-true-world.spec.ts`, but the tape is never re-stamped (report, F-VIBE-11). Whether riders' names show is question 3.
 
 ### B11 · 1:20 to 1:27 · The road: ten eras
@@ -149,8 +149,8 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Visual.** One fixed vantage over the valley as the claim grows a stamp mill and a train on the trestle, then electric night, derricks, a dredge and a lighthouse, a reactor dome, radio rings, a silver rocket on its gantry, a red plain with a green canal, and last the Ark in cutaway: ten decks in ten palettes. It is framed as the road ahead, drawn, not played.
 - **Motion.** 0.7 s per plate, dissolving under one continuous 8 percent push: one camera, ten eras. Or the reel's own dissolves.
 - **Duration.** 7 s.
-- **On-screen text.** Rye: "THE FRONTIER IS OPEN." Then a Wellfleet slip in the landing page's own words (`site/index.html`): "Nine more eras on the survey table."
-- **Voice.** The storybook's second sentence (`lore/STORYBOOK.md:8`): "The world catches the Fever; the town catches the future."
+- **On-screen text.** Rye: "THE FRONTIER IS OPEN." Then a Wellfleet slip: "Nine more eras on the survey table." (after the landing's line at `site/index.html:182`, "nine more epochs on the survey table").
+- **Slip.** The storybook's second sentence (`lore/STORYBOOK.md:8`): "The world catches the Fever; the town catches the future."
 - **Plate.** No capture; both sources exist, and the E1 plate opens the run so it continues B2's valley. The clip `/Users/robin/GoldRushStream/loop/003-ceremony-e3-voltage.mp4` sits in the same folder. It is a ceremony and stays out (the mystery law, `docs/marketing/RELEASE-AND-EPOCH-PLAN.md`).
 
 ### B12 · 1:27 to 1:34 · The close
@@ -159,7 +159,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 - **Motion.** A slow push onto the pan (3 s). Cut to the card, hold 4 s, and fade to black over the last half second.
 - **Duration.** 7 s.
 - **On-screen text.** Over the pan, in Wellfleet italic: "The gold rush was never about the gold." (`lore/STORYBOOK.md:6`). The end card: see "The title cards and the end card" below.
-- **Voice.** The storybook's last words (`lore/STORYBOOK.md:623`), which are also Mei's sign-off (`lore/world-dispatches.md`, Era 10): "Go on. It's your claim now."
+- **Slip.** None added over the pan beyond the italic line above. The storybook's last words (`lore/STORYBOOK.md:623`), which are also Mei's sign-off (`lore/world-dispatches.md:242`, Era 10), "Go on. It's your claim now.", already print at the top of the end card.
 - **Plate.** Both exist; no capture.
 
 ---
@@ -193,7 +193,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 | 1:27 | The theme resolves "open like dawn over a river valley" (`specs/music/README.md`). |
 | 1:33 | One last pan tap, then silence on the card. |
 
-**Voice delivery.** The film is written to work with no voice at all: every voice line prints on a slip. A spoken read is question 2.
+**Voice delivery.** Printed slips only; no voice is recorded and none is generated (owner, 2026-09-26, answering question 2: "7 - slips is good"). Every line that would have been spoken prints on the beat's slip.
 
 ---
 
@@ -233,7 +233,7 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 2. The Claim, 0:00 to 4:00, at both sizes (B4, B5, B9).
 3. Night Shift, 2:30 to 5:30, at both sizes (B1, B6, B7).
 4. Dry Gulch and Twin Banks entry walks, 20 s each, at both sizes (B6).
-5. The Baron, a full run, at 1280x800 (B6, B8).
+5. The Baron, from the run's start to the Baron's ARRIVAL, at 1280x800 (B6, B8). No defeat is filmed; the take carries a few seconds of handle and marks the cut point (owner, 2026-09-26: "C6 - lets keep it as it is").
 6. The Herald, edition No. 5 (B8).
 7. The Field Book with fixtures (B10).
 8. The Ride Together invitation (B10).
@@ -263,6 +263,8 @@ Each card has the seven fields: source, visual, motion, duration, on-screen text
 ---
 
 ## Three questions for the owner
+
+**ANSWERED 2026-09-26.** The owner, verbatim: "C6 - lets keep it as it is, 7 - slips is good, 8 - unnamed, 9 - sure, do it". Read against these questions: (1) he will not ride the Baron for the camera, so the film keeps the fallback and cuts on the Baron's arrival while the Herald prints the ending; (2) printed text slips only, no spoken voice; (3) the county's boards are unnamed on camera. The fourth answer ("9 - sure, do it") approved the three public-site changes, which landed as site-vibe-fixes-1. The questions stand below as they were asked.
 
 1. **The Baron's fall: will you ride the Baron for the camera on the capture day?** The 2026-09-02 launch facts name the county's founder as the only human to have felled him (`marketing/outbox/launch-facts-vE1.md`). The alternative is to cut on his arrival and let the Herald print the ending. *Recommendation:* your ride, if you can spare about twelve minutes. If not, the cut is honest and still lands.
 2. **The voice: printed slips only, or a spoken read?** A spoken read would use a human voice you choose, yours or a family member's. The repo's voice path spends credits (`specs/audio/README.md`), so there is no generated voice without your word. *Recommendation:* printed slips for this cut. The Pan Theme carries it, and a voice can be added later without re-cutting.
