@@ -1,6 +1,6 @@
 # Task charter-press-locked-lands-1: the Charter Press lever offers only unlocked lands (F-1179-4 (a); owner "a", 2026-09-26)
 
-⛔ GATE-SIDE HOLD: run by the attended session as an Opus 5.5 implementer at maximum effort; not for a Codex lane. Engine hash expected UNCHANGED (charter UI only).
+⛔ GATE-SIDE HOLD: run by the attended session as an Opus 5.5 implementer at maximum effort; not for a Codex lane. Engine hash MOVES (every .ts under src/ is an engine input, `scripts/assay-replay-agent.mjs:36-44`, measured by the county-board implementer 2026-09-26); the landing pins it. One pinned landing at a time is the drain's problem, not yours.
 
 You are the implementer for Gold Rush, working in a scratch worktree cut by the attended session (Claude Opus 5.5 on the owner's Anthropic subscription; never Codex): `/Users/robin/Claude/Projects/wt-cpl1`, branch `feat/charter-press-locked-lands-1`, cut from main at `be37d83cf`. Node 26 is first on PATH (`export PATH=/opt/homebrew/bin:$PATH`). Commit prefix `feat:`, path-scoped adds, every commit ends with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`. Never touch the primary checkout, main, STATUS.md, tasks/BACKLOG.md or another worktree. Batteries run under the drain lock (`scripts/attended/README.md`, `dlock.sh`).
 
@@ -17,11 +17,11 @@ F-1179-4 (design fork, measured, explicitly not fixed then): "THE CHARTER PRESS 
 3. **Locked lands are not rendered**: ruling (a); no locked affordance (that was (b)).
 4. **The preview seam is preserved:** `previewUnlockAllActive()` keeps offering all five in preview builds; the `RELEASE_E1` behaviour of the predicate is untouched.
 5. **Specs.** Extend the charter specs: a fresh profile (only the Claim unlocked) sees exactly its unlocked land(s); after unlocking Twin Banks through the rig's existing seam (the preview toggle or a profile fixture: use what the rig provides, do not invent a new debug flag), the card appears and pressing it opens `contract=e1-twin-banks` whose briefing names Twin Banks. Existing assertions in the three specs stay green, or are updated ONLY where they asserted the five-card render (say which and why). Both projects.
-6. **Report** `artifacts/charter-press-locked-lands-1/report.md`: what was rendered before and after (fresh profile, unlocked profile), screenshots both projects, the mapping/gate finding if any, engine hash before and after (expected unchanged; if it moves, stop and say why).
+6. **Report** `artifacts/charter-press-locked-lands-1/report.md`: what was rendered before and after (fresh profile, unlocked profile), screenshots both projects, the mapping/gate finding if any, engine hash before and after with a one-line cause for the pin (the press panel's bytes; no sim, contract, floor or table changed), and the assay replay of an existing tape reproducing its score unchanged.
 
 ## Firewall
 Touch ONLY: `src/charter/PressPanel.ts`, `src/charter/templates/LeverTemplates.ts` (only if a land-to-contract map is missing), the three charter specs named and `e2e/charter-press.rig.ts`, `artifacts/charter-press-locked-lands-1/**`. NO changes to: `src/meta/ContractUnlock.ts`, unlock rules or thresholds, `src/game/**`, `assets/**`, `package.json`, the ledgers.
 
 ## Self-check (evidence, not vibes)
-tsc and `npm run build` green; the three charter specs with the new rows green desktop and mobile (390px); adjacent unmodified-green both projects: `e2e/task-025-bandits-dont-swim.spec.ts`, `e2e/m2-01-build-menu.spec.ts`; zero console/page errors on a plain boot of the town and the press; under the drain lock `GR_GUARD_NO_ARTIFACT=1 npm run test:node-guards`; engine hash unchanged. If you find yourself about to exit without changes, write WHY into the report first.
+tsc and `npm run build` green; the three charter specs with the new rows green desktop and mobile (390px); adjacent unmodified-green both projects: `e2e/task-025-bandits-dont-swim.spec.ts`, `e2e/m2-01-build-menu.spec.ts`; zero console/page errors on a plain boot of the town and the press; under the drain lock `GR_GUARD_NO_ARTIFACT=1 npm run test:node-guards`; engine hash before and after with the cause line. If you find yourself about to exit without changes, write WHY into the report first.
 End: READY-FOR-GATES + what the lever offers now + anything adapted.
