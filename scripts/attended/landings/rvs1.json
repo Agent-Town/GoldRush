@@ -1,0 +1,41 @@
+{
+  "tag": "rvs1",
+  "branch": "feat/river-ending-score-1",
+  "port": 5396,
+  "mergeMessage": "drain: merge feat/river-ending-score-1 — river-ending-score-1 — the River's quiet pan is the win: the first gold the player's own pan lands on the lever's no-wave Claim writes one completed e10-river score (secured, wave 0, 5 gold, time at the pan) and keeps its reel, once, nothing on boot or on the lever alone; the county post is HELD behind RIVER_STANDING_POSTS_ENABLED until River reels can be assayed (F-RES1-1/-6); a Claim playbook can no longer spoil a River reel (F-RES1-4) (owner 'sure, lets do that' 2026-09-26, F-PP6-2; Opus 5.5 implementer at max effort)",
+  "hash": "pin",
+  "pinCause": "river-ending-score-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-PP6-2, owner 2026-09-26): src/game/Game.ts records the River ceremony's first pan as a completed e10-river score and reel, holds its county post behind RIVER_STANDING_POSTS_ENABLED, and labels replays by scoredContractId; no sim rule, contract, collision, floor or table moved; two agent-arm tapes and two browser-arm reels replay byte-identical on base and tip.",
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/charter-press-totality.spec.ts",
+      "e2e/river-ending-score.spec.ts"
+    ],
+    "guards": []
+  },
+  "cure": "scripts/attended/landings/rvs1-cure.sh",
+  "review": {
+    "path": "reviews/river-ending-score-1.md",
+    "title": "Drain review: `river-ending-score-1`, the River's quiet pan writes the completed score, its county post held until the assay can read a River reel (Opus 5.5 implementer at max effort; F-PP6-2)",
+    "body": "scripts/attended/landings/rvs1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "river-ending-score-1.md",
+    "rowKey": "RIVER ENDING SCORE 1 LANDED",
+    "rowEmoji": "🌊",
+    "rowText": "On the lever's River (the no-wave Claim the finale lever opens, `?contract=the-claim&nowaves=`), the first gold the player's own pan lands (sim 4.87 s desktop, 4.77 s phone from the run-6 driver's own walk) writes ONE completed `e10-river` score (secured, wave 0, 5 gold, time at the pan) through `recordRunScore` and keeps the reel in the tape ring; a second pan, a reload or a re-pull writes nothing more; nothing writes on boot or on the lever alone (no seam within 6.4 m of the spawn). The run-6 bank assertion is red on base, green on the branch, both projects; the Book reads 'Secured: wave 0, 5 gold'. The COUNTY POST IS HELD (`RIVER_STANDING_POSTS_ENABLED = false`, `Game.ts:11151`): the assay cannot replay a River reel yet (F-RES1-1: the replay opens the raw River with no seams and reads a RunManager secure the ceremony never sets; F-RES1-6: browser seams follow the `?seed=` pin), so a posted standing would rank while pending and then be rejected; the follow-up slice `river-assay-1` flips the one line. F-RES1-4 fixed alongside (replay guard, agent rider, recorder label by `scoredContractId`). Spec `e2e/river-ending-score.spec.ts` 6/6 both projects (zero county POSTs asserted; the kept reel door-shaped: `validateRunTape` whole, the door's `onRequest` 200); task-025, m2-01, charter-press-totality 28/28; tsc, build rc 0; four existing tapes replay byte-identical on base and tip. Engine hash PINNED {PIN} (`Game.ts` only). Desk: F-RES1-3 (the raw River route spawns enemies with no seams), F-RES1-5 (the ending is silent in the run). Ledger: F-RES1-2 (the run-6 driver seeds a fake River row), F-RES1-7 (a playbook replay that stops early leaves an empty stream and the reel is refused, every contract, pre-existing). Deployed. `reviews/river-ending-score-1.md`.",
+    "statusPhrase": "the River's quiet pan writes the completed score (the county post held until a River reel can be assayed)",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh rvs1, queued behind cpl1)"
+  },
+  "deploy": true,
+  "preview": false,
+  "evidenceDir": "artifacts/river-ending-score-1"
+}
