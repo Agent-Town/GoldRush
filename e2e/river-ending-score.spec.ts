@@ -5,29 +5,35 @@
 // tests prove the pan now writes that score and its reel exactly once, and that nothing writes on boot or on the
 // lever alone.
 //
-// THE COUNTY POST IS HELD (`RIVER_STANDING_POSTS_ENABLED = false` in `src/game/Game.ts`, attended session
-// 2026-09-26): no assay instrument can reproduce a River reel yet (F-RES1-1, F-RES1-6), so a posted River row would
-// rank while pending and then be rejected. The spec asserts ZERO standing POSTs through every pan, reload and
-// re-pull, with the dev-send flag seeded so the silence is the hold's and not the opt-in's; and it keeps the kept
-// reel door-shaped by judging it in-process, with the client's `validateRunTape` and with the door's own
-// `onRequest` on the body `submitCountyStanding` would build, for the day the one line flips.
+// THE COUNTY POST (river-assay-1; `RIVER_STANDING_POSTS_ENABLED = true` in `src/game/Game.ts`). It was held while no
+// assay instrument could reproduce a River reel (F-RES1-1, F-RES1-6, and F-RVA1-1: a live run moved by raw axes its
+// reel records rounded). Now the pan posts ONE standing carrying the reel it kept, a second pan, a reload and a re-pull
+// post nothing more, the county's own door stores it pending, and the county's own assay worker, run here against
+// that standing, replays the reel in the ceremony world and VERIFIES it; the verified row then stands on the Claim
+// Ledger's county board.
 //
 // NO `?debug` ANYWHERE (Mistake #10). The River is reached the way the lever reaches it: the spec computes the
 // lever's two sessionStorage entries and its URL with the same calls `E10FinaleSystem.launchRiver` makes
 // (`getPostCreditsCharter`, `stampCharter`, `charterLineageRootId`, the `nowaves` run policy) and boots that URL.
 // The real lever click behind a native Last Claim prelude is the run-6 native driver's job; it is not repeated.
 //
-// NOTHING LEAVES THIS MACHINE: every request to the county's origin is answered here, and the door's handler runs
-// in-process with no storage bound, so it validates and stores nothing.
+// NOTHING LEAVES THIS MACHINE: every request to the county's origin is answered here by the door's own handlers,
+// in-process, over an in-memory store that lives for one test; the worker reaches the same handlers over 127.0.0.1,
+// and its instrument's vite server binds a free local port.
 //
-// EVIDENCE (the pan and Book screenshots, the reel, the door-shaped body and the door's answer) lands in the gitignored
-// test-results/evidence/river-ending-score-1/ unless GR_REFRESH_EVIDENCE=1 asks for artifacts/river-ending-score-1/,
-// so a gate run never churns a tracked file (F-RRR-5's rule, as in scripts/board-tape-gold.test.mjs).
-import { createHash } from 'node:crypto';
+// EVIDENCE (the pan, Book and county-board screenshots, the reel, the posted standing and the door's answers) lands in
+// the gitignored test-results/evidence/river-assay-1/ unless GR_REFRESH_EVIDENCE=1 asks for
+// artifacts/river-assay-1/spec/, so a gate run never churns a tracked file (F-RRR-5's rule, as in
+// scripts/board-tape-gold.test.mjs).
+import { spawn } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { createServer as createHttpServer, type IncomingMessage } from 'node:http';
+import { createServer as createNetServer } from 'node:net';
+import { homedir } from 'node:os';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
-import { onRequest as standingsDoor } from '../functions/api/standings';
+import { onRequest as standingsDoor, onRequestAssayQueue, onRequestAssayVerdict } from '../functions/api/standings';
 import { charterLineageRootId } from '../src/charter/CharterSchema';
 import { stampCharter } from '../src/charter/CharterStamp';
 import { getPostCreditsCharter } from '../src/charter/TheRiver';
@@ -59,8 +65,16 @@ const SEEDED_SCORES = JSON.stringify([
   { kills: 40, gold: 120, timeAlive: 240, at: SEEDED_AT, waves: 8, secureWave: 8, deepestWave: 8, secured: true, contractId: 'e10-last-claim' },
 ]);
 const EVIDENCE_DIR = path.resolve(process.env.GR_REFRESH_EVIDENCE === '1'
-  ? 'artifacts/river-ending-score-1'
-  : 'test-results/evidence/river-ending-score-1');
+  ? 'artifacts/river-assay-1/spec'
+  : 'test-results/evidence/river-assay-1');
+// The assay worker's shared secret, for the door this spec serves in-process and nowhere else.
+const WORKER_SECRET = 'river-ending-score-local-assay';
+// The worker refuses every Node but the canonical one (`assertCanonicalAssayNode`); its version is read from the
+// script that declares it (a plain .mjs this TypeScript cannot import), and resolved as the worker's own tests do.
+const CANONICAL_ASSAY_NODE_VERSION = /CANONICAL_ASSAY_NODE_VERSION = '([^']+)'/.exec(readFileSync('scripts/assay-replay-agent.mjs', 'utf8'))?.[1] ?? 'unknown';
+const WORKER_NODE = process.versions.node === CANONICAL_ASSAY_NODE_VERSION
+  ? process.execPath
+  : path.join(homedir(), '.nvm/versions/node', `v${CANONICAL_ASSAY_NODE_VERSION}`, 'bin/node');
 
 // THE LEVER, derived exactly as `E10FinaleSystem.launchRiver` derives it.
 const RIVER_CHARTER = getPostCreditsCharter();
@@ -101,8 +115,111 @@ type RunView = {
 };
 type Errors = { console: string[]; page: string[] };
 type Standing = { contractId: string; epochId: string; seedMode: string; score: Record<string, number | boolean>; tape?: RunTape };
-// A fixed, well-formed anonymous id for the in-process door judgement; the door only checks its shape.
-const DOOR_ANON_ID = '0123456789abcdef0123456789abcdef';
+type Store = { get(key: string): Promise<string | null>; put(key: string, value: string): Promise<void> };
+type DoorAnswer = { status: number; body: Record<string, unknown> };
+type County = { errors: Errors; standings: Standing[]; answers: DoorAnswer[]; countyCalls: string[]; store: Store };
+
+// The county's store for one test: the door's handlers read and write it, in this process.
+function makeStore(): Store {
+  const values = new Map<string, string>();
+  return { get: async (key) => values.get(key) ?? null, put: async (key, value) => { values.set(key, value); } };
+}
+
+// One request to the county's own door (`functions/api/standings.ts`), in-process, over the test's store.
+async function door(
+  handler: typeof standingsDoor,
+  store: Store,
+  request: { method: string; path: string; body?: string; assayKey?: string },
+): Promise<{ status: number; text: string }> {
+  const response = await handler({
+    request: new Request(`http://127.0.0.1${request.path}`, {
+      method: request.method,
+      headers: { 'content-type': 'application/json', 'CF-Connecting-IP': '127.0.0.1', ...(request.assayKey ? { 'x-assay-key': request.assayKey } : {}) },
+      ...(request.body === undefined ? {} : { body: request.body }),
+    }),
+    env: { TELEMETRY: store, ASSAY_WORKER_SECRET: WORKER_SECRET },
+  });
+  return { status: response.status, text: await response.text() };
+}
+
+async function slip(store: Store, reel: RunTape): Promise<Record<string, unknown>> {
+  const query = new URLSearchParams({ contract: RIVER_ID, epoch: 'epoch-10-deepsky', verdict: reel.id });
+  return JSON.parse((await door(standingsDoor, store, { method: 'GET', path: `/api/standings?${query}` })).text);
+}
+
+async function freePort(): Promise<number> {
+  const server = createNetServer();
+  await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
+  const address = server.address();
+  await new Promise<void>((resolve) => server.close(() => resolve()));
+  if (!address || typeof address === 'string') throw new Error('no free port');
+  return address.port;
+}
+
+/**
+ * The county's own assay worker (`scripts/assay-worker.mjs --once`, no dry run) against the door's two assay routes,
+ * served over 127.0.0.1 from the test's store: it fetches the pending River row, replays its reel with the real browser
+ * instrument (`scripts/assay-replay.mjs`) and posts the verdict back to the door, which records it.
+ */
+async function runAssayWorker(store: Store): Promise<{ code: number | null; lines: Array<Record<string, unknown>>; stderr: string }> {
+  const routes: Record<string, typeof standingsDoor> = {
+    '/api/standings/assay-queue': onRequestAssayQueue,
+    '/api/standings/assay-verdict': onRequestAssayVerdict,
+  };
+  const readBody = async (incoming: IncomingMessage) => {
+    const chunks: Buffer[] = [];
+    for await (const chunk of incoming) chunks.push(chunk as Buffer);
+    return Buffer.concat(chunks).toString('utf8');
+  };
+  const server = createHttpServer(async (incoming, outgoing) => {
+    const url = new URL(incoming.url ?? '/', 'http://127.0.0.1');
+    const handler = routes[url.pathname];
+    if (!handler) {
+      outgoing.writeHead(404, { 'content-type': 'application/json' }).end('{"ok":false}');
+      return;
+    }
+    const body = incoming.method === 'POST' ? await readBody(incoming) : undefined;
+    const answer = await door(handler, store, {
+      method: incoming.method ?? 'GET',
+      path: `${url.pathname}${url.search}`,
+      ...(body === undefined ? {} : { body }),
+      assayKey: String(incoming.headers['x-assay-key'] ?? ''),
+    });
+    outgoing.writeHead(answer.status, { 'content-type': 'application/json' }).end(answer.text);
+  });
+  await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
+  const address = server.address();
+  if (!address || typeof address === 'string') throw new Error('the local county did not bind');
+  const replayPort = await freePort();
+  try {
+    return await new Promise((resolve, reject) => {
+      const child = spawn(WORKER_NODE, ['scripts/assay-worker.mjs', '--once'], {
+        cwd: process.cwd(),
+        env: {
+          ...process.env,
+          ASSAY_API_BASE: `http://127.0.0.1:${address.port}`,
+          ASSAY_WORKER_SECRET: WORKER_SECRET,
+          GR_ASSAY_REPLAY_PORT: String(replayPort),
+          ASSAY_BACKOFF_INITIAL_MS: '1000',
+          ASSAY_BACKOFF_MAX_MS: '2000',
+        },
+        stdio: ['ignore', 'pipe', 'pipe'],
+      });
+      let stdout = '';
+      let stderr = '';
+      child.stdout.on('data', (chunk) => { stdout += chunk; });
+      child.stderr.on('data', (chunk) => { stderr += chunk; });
+      child.on('error', reject);
+      child.on('close', (code) => resolve({
+        code,
+        lines: stdout.trim().split('\n').filter(Boolean).map((line) => JSON.parse(line) as Record<string, unknown>),
+        stderr,
+      }));
+    });
+  } finally {
+    await new Promise<void>((resolve) => server.close(() => resolve()));
+  }
+}
 
 // A progressed profile that has just earned the lever: ONE secured Last Claim, nothing for the River. Chapters and
 // research are opened the way the run-6 driver opened them, so the Book can show the E10 chapter.
@@ -132,20 +249,29 @@ function seedEntries(): Array<[string, string]> {
   ];
 }
 
-async function prepare(page: Page, stageLever: boolean): Promise<{ errors: Errors; standings: Standing[]; countyCalls: string[] }> {
+async function prepare(page: Page, stageLever: boolean): Promise<County> {
   const errors: Errors = { console: [], page: [] };
   page.on('console', (message) => {
     if (message.type() === 'error') errors.console.push(message.text());
   });
   page.on('pageerror', (error) => errors.page.push(error.message));
   const standings: Standing[] = [];
+  const answers: DoorAnswer[] = [];
   const countyCalls: string[] = [];
+  const store = makeStore();
+  // The county's standings route is the county's own door, in-process, over this test's store: a POST is judged and
+  // stored exactly as the droplet would, and the board the Claim Ledger reads is that store. Anything else the county
+  // is asked answers `ok`.
   await page.route(`${COUNTY_ORIGIN}/**`, async (route) => {
     const request = route.request();
-    countyCalls.push(`${request.method()} ${new URL(request.url()).pathname}`);
-    if (request.method() === 'POST' && new URL(request.url()).pathname === '/api/standings') {
-      standings.push(JSON.parse(request.postData() ?? '{}') as Standing);
-      await route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true,"stored":true,"rank":1}' });
+    const url = new URL(request.url());
+    countyCalls.push(`${request.method()} ${url.pathname}`);
+    if (url.pathname === '/api/standings') {
+      const body = request.postData() ?? undefined;
+      if (request.method() === 'POST') standings.push(JSON.parse(body ?? '{}') as Standing);
+      const answer = await door(standingsDoor, store, { method: request.method(), path: `${url.pathname}${url.search}`, ...(body === undefined ? {} : { body }) });
+      if (request.method() === 'POST') answers.push({ status: answer.status, body: JSON.parse(answer.text) as Record<string, unknown> });
+      await route.fulfill({ status: answer.status, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: answer.text });
       return;
     }
     await route.fulfill({ status: 200, contentType: 'application/json', body: '{"ok":true}' });
@@ -161,7 +287,7 @@ async function prepare(page: Page, stageLever: boolean): Promise<{ errors: Error
     sessionStorage.setItem(launchKey, lever.templateId);
     sessionStorage.setItem(charterKey, JSON.stringify({ templateId: lever.templateId, document: lever.document }));
   }, { entries: seedEntries(), lever: stageLever ? LEVER : null, launchKey: PLAYER_LAUNCH_KEY, charterKey: CHARTER_LAUNCH_KEY });
-  return { errors, standings, countyCalls };
+  return { errors, standings, answers, countyCalls, store };
 }
 
 // The lever's own staging, repeated on a live page: `stageCharterLaunch` writes the launch key, clears and then
@@ -287,41 +413,14 @@ async function walkToTavern(page: Page): Promise<void> {
   throw new Error('the tavern was not reached in 70 steps');
 }
 
-/**
- * The body `submitCountyStanding` would post for this score and reel, field for field (`Game.ts`, the body literal in
- * `submitCountyStanding`): the ceremony's post is held, so the spec builds it here to keep the reel door-shaped.
- */
-function doorShapedStanding(reel: RunTape, score: Score): Standing & Record<string, unknown> {
-  const sha256 = (text: string) => createHash('sha256').update(text).digest('hex');
-  return {
-    contractId: reel.contract,
-    epochId: 'epoch-10-deepsky',
-    score: {
-      secured: true,
-      waves: Math.max(0, Math.floor(score.waves ?? 0)),
-      timeAlive: Math.max(0, score.timeAlive ?? 0),
-      gold: Math.max(0, Math.floor(score.gold ?? 0)),
-      baseValue: Math.max(0, Math.floor(score.baseValue ?? 0)),
-    },
-    profileName: 'Robin',
-    anonId: DOOR_ANON_ID,
-    difficulty: reel.difficulty,
-    seed: reel.seed,
-    seedMode: 'live',
-    seedHash: sha256(reel.seed),
-    inputLogHash: sha256(JSON.stringify(reel.inputLog)),
-    tape: reel,
-  };
-}
-
 async function evidence(name: string, value: unknown): Promise<void> {
   await mkdir(EVIDENCE_DIR, { recursive: true });
   await writeFile(path.join(EVIDENCE_DIR, name), `${JSON.stringify(value, null, 2)}\n`);
 }
 
-test("the River's first pan writes one completed e10-river score and its reel, posts nothing, and never writes a second", async ({ page }, testInfo) => {
-  test.setTimeout(240_000);
-  const { errors, standings, countyCalls } = await prepare(page, true);
+test("the River's first pan writes one completed e10-river score and its reel, posts one standing the assay verifies, and never writes a second", async ({ page }, testInfo) => {
+  test.setTimeout(420_000);
+  const { errors, standings, answers, countyCalls, store } = await prepare(page, true);
   await page.goto(LEVER.url);
   const opened = await enterRiver(page);
   const before = await rawStore(page);
@@ -359,21 +458,21 @@ test("the River's first pan writes one completed e10-river score and its reel, p
   expect(reel.inputLog.durationTicks).toBeGreaterThan(0);
   expect(reel.meta?.engineHash).toMatch(/^[a-f0-9]{64}$/);
 
-  // (b) THE STANDING IS HELD: nothing reaches the county, although the dev-send flag would carry any post.
-  await page.waitForTimeout(1500);
-  expect(standings, 'the River posts no standing while RIVER_STANDING_POSTS_ENABLED is false (F-RES1-1, F-RES1-6)').toEqual([]);
-  // The kept reel stays door-shaped for the day the post is enabled: the client's validator reads it back whole, and
-  // the door's own handler, in-process with no store bound, admits the body `submitCountyStanding` would build.
+  // (b) THE STANDING: ONE post at the pan, carrying the reel the pan kept; the county's door stores it, pending.
   expect(validateRunTape(reel), 'the client validator reads the kept reel back whole').toEqual(reel);
-  const standing = doorShapedStanding(reel, rivers[0]!);
-  const verdict = await standingsDoor({
-    request: new Request(`${COUNTY_ORIGIN}/api/standings`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(standing) }),
-    env: {},
+  await expect.poll(() => standings.length, { message: 'the pan posts its standing', timeout: 15_000 }).toBe(1);
+  const standing = standings[0]!;
+  expect(standing, 'the standing is the River\'s completed score').toMatchObject({
+    contractId: RIVER_ID,
+    epochId: 'epoch-10-deepsky',
+    seedMode: 'live',
+    score: { secured: true, waves: 0, gold: 5, timeAlive: rivers[0]!.timeAlive, baseValue: 0 },
   });
-  const door = await verdict.json() as { ok?: boolean; stored?: boolean; error?: string };
-  expect({ status: verdict.status, door }, 'the door, run in-process with no store bound, admits the River standing').toEqual({ status: 200, door: { ok: true, stored: false } });
+  expect(standing.tape, 'the standing carries the reel the pan kept, byte for byte').toEqual(reel);
+  expect(answers[0], 'the county\'s door stores the standing').toMatchObject({ status: 200, body: { ok: true, stored: true } });
+  expect(await slip(store, reel), 'its verdict is pending until the assay').toMatchObject({ ok: true, tapeId: reel.id, assay: 'pending' });
   await evidence(`reel-${testInfo.project.name}.json`, reel);
-  await evidence(`door-shaped-standing-${testInfo.project.name}.json`, { ...standing, door: { status: verdict.status, ...door } });
+  await evidence(`standing-${testInfo.project.name}.json`, { ...standing, door: answers[0] });
 
   // (3) A SECOND PAN on the same run writes nothing more.
   await expect.poll(async () => (await view(page)).gold, { timeout: 20_000 }).toBeGreaterThanOrEqual(15);
@@ -395,7 +494,20 @@ test("the River's first pan writes one completed e10-river score and its reel, p
   expect(afterRepull.scores, 'a re-pull and a pan rewrite nothing').toBe(atPan.scores);
   expect(parsedTapes(afterRepull.tapes), 'a re-pull keeps no second reel').toEqual(reels);
   await page.waitForTimeout(1500);
-  expect(standings, 'no standing through the pans, the reload and the re-pull').toEqual([]);
+  expect(standings, 'still one standing through the second pan, the reload and the re-pull').toHaveLength(1);
+
+  // (c) THE ASSAY. The county's own worker, run against that standing, replays the reel in the ceremony world (the
+  // instrument stages the lever's charter and `nowaves`) and verifies it; the county applies the replay's snapshot.
+  expect(existsSync(WORKER_NODE), `the assay worker requires Node ${CANONICAL_ASSAY_NODE_VERSION}`).toBe(true);
+  const worker = await runAssayWorker(store);
+  expect(worker.code, worker.stderr).toBe(0);
+  const workerVerdict = worker.lines.find((line) => (line.locator as { tapeId?: string } | undefined)?.tapeId === reel.id);
+  expect(workerVerdict, 'the worker verifies the River reel').toMatchObject({
+    verdict: 'verified',
+    hashes: { claimed: reel.eventLogHash, replayed: reel.eventLogHash },
+  });
+  expect(await slip(store, reel), 'the county records the verdict').toMatchObject({ assay: 'verified', assayHash: reel.eventLogHash, ranked: true });
+  await evidence(`assay-${testInfo.project.name}.json`, { worker: worker.lines, slip: await slip(store, reel) });
 
   // The ordinary exit (pause, Back to Town) suspends the River; the reload cell reads the score byte for byte.
   await page.getByTestId('hud-pause').click();
@@ -417,12 +529,30 @@ test("the River's first pan writes one completed e10-river score and its reel, p
   await expect(riverBest, 'the Book shows the River ending').toHaveText('Secured: wave 0, 5 gold');
   await page.screenshot({ path: path.join(EVIDENCE_DIR, `book-${testInfo.project.name}.png`) });
   expect((await rawStore(page)).scores).toBe(saved.scores);
+
+  // (d) THE COUNTY BOARD, where the player sees it: the Claim Ledger's County Standings, the River's board, read from
+  // the same door. The verified standing ranks first with the replay's own score.
+  await page.goto('/');
+  await page.getByTestId('start-menu-claim-ledger').click({ timeout: 20_000 });
+  await page.getByTestId('claim-ledger-county-standings').click();
+  await page.getByTestId(`county-standings-contract-${RIVER_ID}`).click();
+  const row = page.getByTestId('county-standings-row-1');
+  await expect(row, 'the verified River standing ranks first on its county board').toContainText('Robin', { timeout: 20_000 });
+  await row.scrollIntoViewIfNeeded();
+  await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
+  await page.getByTestId('claim-ledger').screenshot({ path: path.join(EVIDENCE_DIR, `county-board-${testInfo.project.name}.png`) });
+  const board = JSON.parse((await door(standingsDoor, store, { method: 'GET', path: `/api/standings?${new URLSearchParams({ contract: RIVER_ID, epoch: 'epoch-10-deepsky' })}` })).text) as {
+    board: Array<Record<string, unknown>>;
+  };
+  expect(board.board, 'one ranked River row, verified, at the replay\'s own score').toEqual([
+    expect.objectContaining({ rank: 1, profileName: 'Robin', assay: 'verified', secured: true, waves: 0, gold: 5, timeAlive: rivers[0]!.timeAlive }),
+  ]);
   testInfo.annotations.push(
     { type: 'pans', description: JSON.stringify({ first: pan, reloaded: reloadedPan, repulled: repulledPan }) },
     { type: 'county-calls', description: JSON.stringify(countyCalls) },
   );
-  expect(standings, 'no standing, from the lever to the Book').toEqual([]);
-  expect(countyCalls.filter((call) => call.startsWith('POST ')), 'no county write at all').toEqual([]);
+  expect(standings, 'one standing, from the lever to the county board').toHaveLength(1);
+  expect(countyCalls.filter((call) => call.startsWith('POST ')), 'one county write: the standing').toEqual(['POST /api/standings']);
   expect(errors).toEqual({ console: [], page: [] });
 });
 

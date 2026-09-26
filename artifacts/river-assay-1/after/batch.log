@@ -1,0 +1,43 @@
+batch start 2026-09-26T18:51:57Z load { 10.75 20.72 27.75 } head 0f6f2d1cf port 5855
+replay report-desktop-3f5a03c5 rc=0 3s {"eventLogHash":"fnv1a32:9b896265","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.833333333333326},"securedSnapshot":null,"ticks":145,"wallMs":1897}
+replay report-phone-647005f9 rc=0 2s {"eventLogHash":"fnv1a32:b350adce","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.799999999999993},"securedSnapshot":null,"ticks":144,"wallMs":1929}
+replay run7-desktop-a1a3a3f5 rc=0 3s {"eventLogHash":"fnv1a32:b1fdf4e8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.966666666666659},"securedSnapshot":null,"ticks":149,"wallMs":1941}
+replay run7-phone-b9509309 rc=0 3s {"eventLogHash":"fnv1a32:a8c8b9fa","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.799999999999993},"securedSnapshot":null,"ticks":144,"wallMs":1920}
+replay heat15-probe-b131e18e rc=0 9s {"eventLogHash":"fnv1a32:b131e18e","outcome":{"secured":true,"waves":10,"gold":335,"timeAlive":300},"securedSnapshot":{"waves":10,"gold":335,"timeAlive":300},"ticks":9001,"engine":"headless-contract-sim","wallMs":9166}
+replay heat15-r1-f3a9c00c rc=0 5s {"eventLogHash":"fnv1a32:f3a9c00c","outcome":{"secured":true,"waves":12,"gold":0,"timeAlive":272},"securedSnapshot":{"waves":12,"gold":0,"timeAlive":272},"mechanic":{"id":"regatta-race","complete":true},"ticks":8760,"engine":"headless-contract-sim","wallMs":4352}
+replay heat15-r2-b92da1bf rc=0 7s {"eventLogHash":"fnv1a32:b92da1bf","outcome":{"secured":true,"waves":12,"gold":200,"timeAlive":272},"securedSnapshot":{"waves":12,"gold":200,"timeAlive":272},"mechanic":{"id":"regatta-race","complete":true},"ticks":8760,"engine":"headless-contract-sim","wallMs":6917}
+replay heat14-era6-idle-a45ba9ac rc=0 4s {"eventLogHash":"fnv1a32:5a139ec0","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":23.966666666667017},"securedSnapshot":null,"ticks":2453,"wallMs":3585}
+replay fresh-river-desktop rc=0 3s {"eventLogHash":"fnv1a32:98c7c8bc","outcome":{"secured":true,"waves":0,"gold":5,"timeAlive":7.533333333333316},"securedSnapshot":{"waves":0,"gold":5,"timeAlive":7.533333333333316},"ticks":226,"wallMs":2037}
+replay fresh-river-mobile rc=0 3s {"eventLogHash":"fnv1a32:4be51475","outcome":{"secured":true,"waves":0,"gold":5,"timeAlive":7.3999999999999835},"securedSnapshot":{"waves":0,"gold":5,"timeAlive":7.3999999999999835},"ticks":222,"wallMs":1979}
+replay fresh-claim-desktop rc=0 3s {"eventLogHash":"fnv1a32:fa46aaf2","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.033333333333329},"securedSnapshot":null,"ticks":121,"wallMs":1899}
+replay fresh-claim-mobile rc=0 2s {"eventLogHash":"fnv1a32:f8c3032c","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.166666666666662},"securedSnapshot":null,"ticks":125,"wallMs":1865}
+replay tampered-gold rc=0 3s {"eventLogHash":"fnv1a32:98c7c8bc","outcome":{"secured":true,"waves":0,"gold":5,"timeAlive":7.533333333333316},"securedSnapshot":{"waves":0,"gold":5,"timeAlive":7.533333333333316},"ticks":226,"wallMs":1958}
+replay tampered-time rc=0 3s {"eventLogHash":"fnv1a32:98c7c8bc","outcome":{"secured":true,"waves":0,"gold":5,"timeAlive":7.533333333333316},"securedSnapshot":{"waves":0,"gold":5,"timeAlive":7.533333333333316},"ticks":226,"wallMs":1993}
+replay tampered-pantick rc=0 3s {"eventLogHash":"fnv1a32:8c73ccf4","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":7.36666666666665},"securedSnapshot":null,"ticks":221,"wallMs":1987}
+replay precure-river-desktop rc=0 3s {"eventLogHash":"fnv1a32:a8642f5a","outcome":{"secured":true,"waves":0,"gold":5,"timeAlive":7.266666666666651},"securedSnapshot":{"waves":0,"gold":5,"timeAlive":7.266666666666651},"ticks":218,"wallMs":2075}
+replay precure-claim-desktop rc=0 2s {"eventLogHash":"fnv1a32:08cd5ab9","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":4.199999999999995},"securedSnapshot":null,"ticks":126,"wallMs":1866}
+replay same-laws-human-a6c04f80 rc=0 3s {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333333333488},"securedSnapshot":null,"ticks":601,"wallMs":2498}
+agent-arm report-desktop-3f5a03c5 rc=1  assay replay failed: e10-river is the River ceremony, a browser run: its reel is assayed by the browser arm (scripts/assay-replay.mjs), never by the headless door
+agent-arm run7-desktop-a1a3a3f5 rc=1  assay replay failed: e10-river is the River ceremony, a browser run: its reel is assayed by the browser arm (scripts/assay-replay.mjs), never by the headless door
+agent-arm heat14-era6-idle-a45ba9ac rc=0 {"eventLogHash":"fnv1a32:a45ba9ac","outcome":{"secured":false,"waves":2,"gold":0,"timeAlive":81.767},"ticks":2453,"engine":"headless-contract-sim"} 
+agent-arm heat15-probe-b131e18e rc=0 {"eventLogHash":"fnv1a32:b131e18e","outcome":{"secured":true,"waves":10,"gold":335,"timeAlive":300},"securedSnapshot":{"waves":10,"gold":335,"timeAlive":300},"ticks":9001,"engine":"headless-contract-sim"} 
+report-desktop-3f5a03c5: rejected (claimed fnv1a32:3f5a03c5, replayed fnv1a32:9b896265; eventLogHash mismatch: claimed fnv1a32:3f5a03c5, replayed fnv1a32:9b896265)
+report-phone-647005f9: rejected (claimed fnv1a32:647005f9, replayed fnv1a32:b350adce; eventLogHash mismatch: claimed fnv1a32:647005f9, replayed fnv1a32:b350adce)
+run7-desktop-a1a3a3f5: rejected (claimed fnv1a32:a1a3a3f5, replayed fnv1a32:b1fdf4e8; eventLogHash mismatch: claimed fnv1a32:a1a3a3f5, replayed fnv1a32:b1fdf4e8)
+run7-phone-b9509309: rejected (claimed fnv1a32:b9509309, replayed fnv1a32:a8c8b9fa; eventLogHash mismatch: claimed fnv1a32:b9509309, replayed fnv1a32:a8c8b9fa)
+heat15-probe-b131e18e: verified (claimed fnv1a32:b131e18e, replayed fnv1a32:b131e18e)
+heat15-r1-f3a9c00c: verified (claimed fnv1a32:f3a9c00c, replayed fnv1a32:f3a9c00c)
+heat15-r2-b92da1bf: verified (claimed fnv1a32:b92da1bf, replayed fnv1a32:b92da1bf)
+heat14-era6-idle-a45ba9ac: rejected (claimed fnv1a32:a45ba9ac, replayed fnv1a32:5a139ec0; eventLogHash mismatch: claimed fnv1a32:a45ba9ac, replayed fnv1a32:5a139ec0)
+fresh-river-desktop: verified (claimed fnv1a32:98c7c8bc, replayed fnv1a32:98c7c8bc)
+fresh-river-mobile: verified (claimed fnv1a32:4be51475, replayed fnv1a32:4be51475)
+fresh-claim-desktop: unassayable (claimed fnv1a32:fa46aaf2, replayed null; instrument returned no valid securedSnapshot)
+fresh-claim-mobile: unassayable (claimed fnv1a32:f8c3032c, replayed null; instrument returned no valid securedSnapshot)
+tampered-gold: rejected (claimed fnv1a32:98c7c8bc, replayed fnv1a32:98c7c8bc; outcome mismatch: gold)
+tampered-time: rejected (claimed fnv1a32:98c7c8bc, replayed fnv1a32:98c7c8bc; outcome mismatch: timeAlive)
+tampered-pantick: rejected (claimed fnv1a32:98c7c8bc, replayed fnv1a32:8c73ccf4; eventLogHash mismatch: claimed fnv1a32:98c7c8bc, replayed fnv1a32:8c73ccf4)
+precure-river-desktop: rejected (claimed fnv1a32:7deb7e49, replayed fnv1a32:a8642f5a; eventLogHash mismatch: claimed fnv1a32:7deb7e49, replayed fnv1a32:a8642f5a)
+precure-claim-desktop: rejected (claimed fnv1a32:856f8a54, replayed fnv1a32:08cd5ab9; eventLogHash mismatch: claimed fnv1a32:856f8a54, replayed fnv1a32:08cd5ab9)
+same-laws-human-a6c04f80: unassayable (claimed fnv1a32:a6c04f80, replayed null; instrument returned no valid securedSnapshot)
+worker rc=0
+batch end 2026-09-26T18:54:50Z load { 8.83 15.36 24.23 }

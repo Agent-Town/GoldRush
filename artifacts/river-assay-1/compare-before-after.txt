@@ -1,0 +1,10 @@
+Existing reels through the worker's seam (scripts/assay-replay.mjs) and the two agent tapes through the headless arm
+(scripts/assay-replay-agent.mjs), on the base 8f4be3286 (before/) and on 7c15a2444 (final/: items 1-3, form (b), the F-RVA1-1 cure;
+the flip after it changes no replay). wallMs excluded; nothing else.
+replay heat15-probe-b131e18e        IDENTICAL  {"eventLogHash": "fnv1a32:b131e18e", "outcome": {"secured": true, "waves": 10, "gold": 335, "timeAlive": 300}, "securedSnapshot": {"waves": 10, "gold": 335, "timeAlive": 
+replay heat15-r1-f3a9c00c           IDENTICAL  {"eventLogHash": "fnv1a32:f3a9c00c", "outcome": {"secured": true, "waves": 12, "gold": 0, "timeAlive": 272}, "securedSnapshot": {"waves": 12, "gold": 0, "timeAlive": 272}
+replay heat15-r2-b92da1bf           IDENTICAL  {"eventLogHash": "fnv1a32:b92da1bf", "outcome": {"secured": true, "waves": 12, "gold": 200, "timeAlive": 272}, "securedSnapshot": {"waves": 12, "gold": 200, "timeAlive": 
+agent  heat14-era6-idle-a45ba9ac    IDENTICAL  {"eventLogHash": "fnv1a32:a45ba9ac", "outcome": {"secured": false, "waves": 2, "gold": 0, "timeAlive": 81.767}, "ticks": 2453, "engine": "headless-contract-sim"}
+agent  heat15-probe-b131e18e        IDENTICAL  {"eventLogHash": "fnv1a32:b131e18e", "outcome": {"secured": true, "waves": 10, "gold": 335, "timeAlive": 300}, "securedSnapshot": {"waves": 10, "gold": 335, "timeAlive": 
+replay heat14-era6-idle-a45ba9ac    IDENTICAL  {"eventLogHash": "fnv1a32:5a139ec0", "outcome": {"secured": false, "waves": 0, "gold": 0, "timeAlive": 23.966667}, "securedSnapshot": null, "ticks": 2453}
+replay same-laws-human-a6c04f80     IDENTICAL  {"eventLogHash": "fnv1a32:a6c04f80", "outcome": {"secured": false, "waves": 0, "gold": 10, "timeAlive": 20.033333}, "securedSnapshot": null, "ticks": 601}

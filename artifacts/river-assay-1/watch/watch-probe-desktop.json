@@ -1,0 +1,71 @@
+{
+  "project": "desktop",
+  "errors": [],
+  "urls": [
+    "?contract=the-claim&nowaves=",
+    "?watch=1ed878f5-0728-4d75-8038-7eb05df5d360&contract=e10-river&epoch=epoch-10-deepsky",
+    "?watch=1ed878f5-0728-4d75-8038-7eb05df5d360&contract=e10-river&epoch=epoch-10-deepsky&nowaves=",
+    "?contract=the-claim&seed=e1-the-claim-r2026w39-492bfb6017b9&difficulty=trail&replay=1ed878f5-0728-4d75-8038-7eb05df5d360&epoch=epoch-10-deepsky&nowaves=",
+    "?watch=1ed878f5-0728-4d75-8038-7eb05df5d360&contract=e10-river&epoch=epoch-10-deepsky&nowaves=",
+    "?epoch=epoch-10-deepsky&nowaves=",
+    "?epoch=epoch-10-deepsky",
+    "?epoch=epoch-10-deepsky"
+  ],
+  "liveSeams": [
+    {
+      "x": -9,
+      "z": 6.7
+    },
+    {
+      "x": -1.5,
+      "z": -6.4
+    }
+  ],
+  "reel": {
+    "id": "1ed878f5-0728-4d75-8038-7eb05df5d360",
+    "eventLogHash": "fnv1a32:a4b3f10f",
+    "outcome": {
+      "reason": "secured",
+      "secured": true,
+      "waves": 0,
+      "timeAlive": 4.699999999999993,
+      "gold": 5
+    },
+    "durationTicks": 141
+  },
+  "replay": {
+    "search": "?watch=1ed878f5-0728-4d75-8038-7eb05df5d360&contract=e10-river&epoch=epoch-10-deepsky&nowaves=",
+    "hash": "fnv1a32:a4b3f10f",
+    "contract": {
+      "activeId": "the-claim",
+      "name": "The River"
+    },
+    "seams": [
+      {
+        "x": -9,
+        "z": 6.7,
+        "remaining": 25
+      },
+      {
+        "x": -1.5,
+        "z": -6.4,
+        "remaining": 30
+      }
+    ],
+    "gold": 5,
+    "waves": 0,
+    "staged": {
+      "launch": "the-claim",
+      "charter": true
+    }
+  },
+  "sameHash": true,
+  "afterClose": {
+    "search": "?epoch=epoch-10-deepsky",
+    "scene": "town",
+    "staged": {
+      "launch": null,
+      "charter": false
+    }
+  }
+}

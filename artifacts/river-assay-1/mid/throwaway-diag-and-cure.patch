@@ -1,0 +1,34 @@
+diff --git a/src/game/Game.ts b/src/game/Game.ts
+index 91d0ec3d9..a9e98ecac 100644
+--- a/src/game/Game.ts
++++ b/src/game/Game.ts
+@@ -4174,7 +4174,7 @@ export class Game {
+         if (input.actions.length > 0) this.mpActionsThisTick = input.actions.map((action) => ({ slot, action }));
+       }
+     }
+-    return sampledIntents;
++    { const sample = lockstepInputFromIntents(sampledIntents); return { ...sampledIntents, move: new THREE.Vector2(sample.mx, sample.my) }; } // rva1-diag CURE EXPERIMENT
+   }
+ 
+   /**
+@@ -7765,10 +7765,12 @@ export class Game {
+     if (this.runTapeReplay) {
+       // `recordRunScore(0, this.timeAlive, true, 0)` below, field for field: waves 0, the purse held, the time alive.
+       this.riverEndingReplayScore = { waves: 0, gold: Math.floor(this.economy.gold), timeAlive: this.timeAlive };
++      { const primary = this.runTapeReplay.sessions.get(this.runTapeReplay.tape.inputLog.primarySlot); console.info('[rva1-diag] replay-at-pan ' + JSON.stringify({ log: { probes: primary ? [...primary.probeSamples] : [], kills: this.kills, gold: this.economy.gold, wave: this.waveSystem.diagnostics.wave, economy: summarizeLog(this.economy.log) }, timeAlive: this.timeAlive, simTick: this.simTick, sessionTick: primary?.status().tick, events: this.economy.log })); }
+       return;
+     }
+     if (loadScores().some((entry) => entry.contractId === RIVER_ENDING_CONTRACT_ID && entry.secured === true)) return;
+     const { score } = this.recordRunScore(0, this.timeAlive, true, 0);
++    console.info('[rva1-diag] live-at-pan ' + JSON.stringify({ log: this.runTapeEventLog(), timeAlive: this.timeAlive, simTick: this.simTick, events: this.economy.log }));
+     const reel = this.runTapeRecorder?.snapshot(this.securedReelOutcome(score, 'secured'), this.runTapeEventLog());
+     if (reel && appendRunTape(safeLocalStorage(), reel)) this.lastRunTape = reel;
+     if (RIVER_STANDING_POSTS_ENABLED) void this.submitCountyStanding(score);
+@@ -7939,6 +7941,7 @@ export class Game {
+           economy: summarizeLog(this.economy.log),
+           ...(this.motorSocket ? { motor: motorTapeEvents(this.motorSocket.diagnostics(this.timeAlive, this.secureWaveForRun())) } : {}),
+         });
++    console.info('[rva1-diag] replay-end ' + JSON.stringify({ log: { probes: primary ? [...primary.probeSamples] : [], kills: this.kills, gold: this.economy.gold, wave: this.waveSystem.diagnostics.wave, economy: summarizeLog(this.economy.log) }, hash: replay.hash, timeAlive: this.timeAlive, simTick: this.simTick, events: this.economy.log }));
+     replay.complete = true;
+     replay.divergedAtWave = divergedAtWave;
+     replay.skipWave = null;

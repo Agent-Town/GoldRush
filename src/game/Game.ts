@@ -91,7 +91,7 @@ import { MotorSocket, type MotorDiagnostics } from '../sim/MotorSocket';
 import { META_PROGRESS_KEY, agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { baronArrivalEdge } from './BaronFort';
-import { resolveLiveSeed } from './liveSeed';
+import { LIVE_SEED_CONSTANT, liveSeedRotationId, resolveLiveSeed } from './liveSeed';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentRegattaSource, type AgentViewSource } from '../agent/View';
@@ -1578,6 +1578,10 @@ export class Game {
   // `isRiverCeremonyContract`), and the one-shot latch of `completeRiverEnding`, the River's win.
   private readonly riverCeremony = areWavesDisabled() && isRiverCeremonyContract(selectActiveContract());
   private riverEndingSettled = false;
+  // river-assay-1 (F-RES1-1): what a REPLAY of a River reel measured at the ceremony's pan, the fields the live pan's
+  // completed score carries. Published as the replay's secure (`publishDiagnostics`, `run`) so the assay reads the
+  // ceremony's outcome where RunManager's secure never fires; nothing is ever written from it.
+  private riverEndingReplayScore: { waves: number; gold: number; timeAlive: number } | null = null;
 
   private runManager?: RunManager;
   private drillYard?: DrillYard;
@@ -1616,6 +1620,10 @@ export class Game {
     // THE LIVE SEED (owner ruling 2026-09-24, "(a)": humans ride the open rotation's seed per contract).
     // A replay tape's seed and a dev `?seed=` pin still come first; the rules live in src/game/liveSeed.ts.
     this.runSeed = this.boot.replay?.tape.seed ?? getDebugSeed() ?? resolveLiveSeed(this.activeContract.id);
+    // THE SEAMS FOLLOW THE RUN'S SEED (F-RES1-6, river-assay-1): seeded from `harvestSeedFor(runSeed)`, a pure function of
+    // the seed the reel records, so a replay of any run lays that run's seams (see the function).
+    this.harvestSystem.resetFromSeed(harvestSeedFor(this.runSeed));
+    this.harvestSnapshot = this.harvestSystem.snapshot;
     this.waveSystem = new WaveSystem(
       this.enemies,
       this.primaryActor.group.position,
@@ -2970,7 +2978,8 @@ export class Game {
     this.mpTickThisFrame = null;
     this.mpActorIntents = null;
     this.mpActionsThisTick = [];
-    const sampledIntents = this.runTapeReplay ? intentsFromLockstepInput(null) : this.input.readIntents();
+    // RECORD WHAT RAN (F-RVA1-1): the live run moves by the axes its reel records, rounded to 1e-3 (`recordedIntents`).
+    const sampledIntents = this.runTapeReplay ? intentsFromLockstepInput(null) : recordedIntents(this.input.readIntents());
     if (this.mpClient && this.manualLockstepPausedForTest) return false;
     const cancelConsumed =
       this.mpClient || this.playbookLiveRecording() ? this.applyLocalMultiplayerPresentation(sampledIntents) : false;
@@ -6049,6 +6058,8 @@ export class Game {
             sizeBytes: 0,
           },
         }),
+        // A River replay's secure is the ceremony's pan (river-assay-1): the run never secures through RunManager.
+        ...(this.riverEndingReplayScore ? { secured: true, securedSnapshot: { ...this.riverEndingReplayScore } } : {}),
         ...(this.preserveFell ? { lastRunEndedReason: 'preserve_fell' } : {}),
         ...(this.ventGuttered ? { lastRunEndedReason: 'vent_guttered' } : {}),
       },
@@ -7739,10 +7750,10 @@ export class Game {
    * (`run_secured`, then a secured `run_ended` or `hero_died`), the only writer of a completed score, never fires on
    * it. This is the ceremony's own completion instead, written through the sinks every secured run uses: the score
    * (`recordRunScore`: waves 0, the time alive at the pan, the purse the pan filled, secured) and the reel (the
-   * recorder's snapshot with the outcome a standing's reel declares, kept in the tape ring). The county standing
-   * (`submitCountyStanding`, which would attach that same reel) is HELD behind `RIVER_STANDING_POSTS_ENABLED` until a
-   * River reel can be assayed. The door's grammar (`validTapeOutcome`) admits `secured`, `rush` and `death` and
-   * nothing else, so the ceremony rides `secured`.
+   * recorder's snapshot with the outcome a standing's reel declares, kept in the tape ring) and the county standing
+   * (`submitCountyStanding`, which attaches that same reel; `RIVER_STANDING_POSTS_ENABLED`, on since river-assay-1 made a
+   * River reel assayable). The door's grammar (`validTapeOutcome`) admits `secured`, `rush` and `death` and nothing
+   * else, so the ceremony rides `secured`.
    *
    * THE EVENT is the first gold the player's own pan lands, called from the fixed step: the earliest act that is
    * certainly a pan (the channel's first swing yields nothing if the player steps off inside one pan tick, 1.5 s
@@ -7750,10 +7761,17 @@ export class Game {
    * or on the lever alone.
    * ONCE (Mistake #7): the latch makes a second pan on this run write nothing, and a completed River already in this
    * profile's scores makes a reload or a second pull of the lever write nothing more.
+   * A REPLAY of the reel writes nothing either (river-assay-1, F-RES1-1): it measures the same fields the live pan's
+   * score carries, at the same tick, and keeps them for the assay (`riverEndingReplayScore`).
    */
   private completeRiverEnding(): void {
-    if (this.riverEndingSettled || this.runTapeReplay || this.mpClient) return;
+    if (this.riverEndingSettled || this.mpClient) return;
     this.riverEndingSettled = true;
+    if (this.runTapeReplay) {
+      // `recordRunScore(0, this.timeAlive, true, 0)` below, field for field: waves 0, the purse held, the time alive.
+      this.riverEndingReplayScore = { waves: 0, gold: Math.floor(this.economy.gold), timeAlive: this.timeAlive };
+      return;
+    }
     if (loadScores().some((entry) => entry.contractId === RIVER_ENDING_CONTRACT_ID && entry.secured === true)) return;
     const { score } = this.recordRunScore(0, this.timeAlive, true, 0);
     const reel = this.runTapeRecorder?.snapshot(this.securedReelOutcome(score, 'secured'), this.runTapeEventLog());
@@ -9106,6 +9124,7 @@ export class Game {
     this.securedScoreAt = null;
     this.countyStanding = null;
     this.riverEndingSettled = false;
+    this.riverEndingReplayScore = null;
     this.baronBeatenThisRun = false;
     this.baronCeremony = null;
     this.baronStandardPlanted = false;
@@ -11142,13 +11161,13 @@ function countyAnonId(): string {
 // F-PP6-2: the contract THE RIVER's ending is scored under. The lever plays it as its lineage root, `the-claim`.
 const RIVER_ENDING_CONTRACT_ID = 'e10-river';
 
-// HELD (attended session, 2026-09-26): the River's county standing is not posted until a River reel can be assayed.
-// Today every instrument rejects one (F-RES1-1: a replay opens the raw `e10-river` manifest, not the lever's pressed
-// Claim under `nowaves`, and the browser arm reads RunManager's secure, which the ceremony never sets; F-RES1-6: the
-// browser's seams follow the `?seed=` pin, not the run's seed), so a posted River row would rank while pending and
-// then be rejected on the live board. The score and the reel are still written, and the reel stays door-shaped
-// (`e2e/river-ending-score.spec.ts` judges it with the door in-process). The assay slice flips this one line.
-const RIVER_STANDING_POSTS_ENABLED: boolean = false;
+// ON since river-assay-1 (the county-board half of the owner's F-PP6-2 ruling, 2026-09-26). It was HELD (attended
+// session, 2026-09-26) while every instrument rejected a River reel, so a posted River row would have ranked while
+// pending and then been rejected on the live board. The assay now verifies one: a replay opens the lever's ceremony
+// world and reads the pan's completed score (F-RES1-1), the seams follow the run's seed (F-RES1-6), and a live run moves
+// by the axes its reel records (F-RVA1-1); `scripts/river-assay.test.mjs` and `e2e/river-ending-score.spec.ts` prove it
+// through the county's own door and worker. Holding the post again is this one line.
+const RIVER_STANDING_POSTS_ENABLED: boolean = true;
 
 /**
  * THE RIVER CEREMONY (F-PP6-2): `E10FinaleSystem.launchRiver` stamps THE RIVER charter onto its lineage root and boots it
@@ -11161,6 +11180,37 @@ function isRiverCeremonyContract(contract: ContractManifest): boolean {
   if (contract.name !== river.contract.name) return false;
   const stamped = stampCharter(river);
   return stamped.ok && contractDescriptorJson(contract) === stamped.document;
+}
+
+/**
+ * THE SEAMS' SEED (F-RES1-6, river-assay-1, form (b) as ruled by the attended session, 2026-09-27). The harvest's
+ * generator was seeded from the `?seed=` pin alone (`HarvestSystem`'s default, `createRng(getDebugSeed())`, written at
+ * m1-04 when the pin was the only seed there was; no comment gave another reason), so a replay, which knows only the
+ * seed its reel records (`runSeed`), could not tell which layout the run had laid. This derives the layout from that
+ * seed alone, keeping live play exactly as it was:
+ *   - a live seed (a rotation's, or the `gold-rush` constant a contract off the rotation rides) keeps the one layout
+ *     every unpinned run has always laid, the generator's default (`createRng(null)`): the Claim's seams are design and
+ *     do not move with the week;
+ *   - any other seed (a bench or a test pin) seeds the seams itself, exactly as the pin always did.
+ * A replay derives the same answer from the reel's seed, so it lays the run's own seams, pinned or not, before this
+ * slice or after it. Nothing in `liveSeed.ts` changes; its registry is only read.
+ */
+function harvestSeedFor(runSeed: string): string | null {
+  return runSeed === LIVE_SEED_CONSTANT || liveSeedRotationId(runSeed) !== null ? null : runSeed;
+}
+
+/**
+ * RECORD WHAT RAN (F-RVA1-1, river-assay-1; firewall lift by the attended session, 2026-09-27). A reel stores each
+ * tick's movement through `lockstepInputFromIntents`, which rounds both axes to 1e-3, and a replay can only move by what
+ * the reel stores. A live solo run used to move by the raw axes instead: a keyboard diagonal is 0.7071067811865476, a
+ * phone joystick anything at all, so every run that walked other than straight drifted from its own reel (0.001 m after
+ * a 7 m diagonal, measured on a River pan) and its reel's probes, inside the event-log hash, could never be reproduced.
+ * The live run now moves by exactly the rounded axes it records, as multiplayer's lockstep input and the playbook
+ * recorder already did; every other intent passes through untouched.
+ */
+function recordedIntents(intents: Intents): Intents {
+  const { mx, my } = lockstepInputFromIntents(intents);
+  return { ...intents, move: new THREE.Vector2(mx, my) };
 }
 
 function shouldPostCountyStanding(): boolean {
