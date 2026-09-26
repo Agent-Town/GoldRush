@@ -694,7 +694,9 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   }
   const difficultyParam = url.searchParams.get('difficulty');
   const partyParam = url.searchParams.get('party');
-  const expectedParams = 2 + seasonParams + (difficultyParam === null ? 0 : 1) + (partyParam === null ? 0 : 1);
+  const rotationParam = url.searchParams.get('rotation');
+  const expectedParams = 2 + seasonParams + (difficultyParam === null ? 0 : 1) + (partyParam === null ? 0 : 1)
+    + (rotationParam === null ? 0 : 1);
   if (url.searchParams.size !== expectedParams || !knownContract(epochId, contractId)) {
     return error(cors, 400, 'bad_contract', 'Contract and epoch not accepted.');
   }
@@ -705,13 +707,21 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   if (difficulty !== 'all' && !isDifficultyPreset(difficulty)) {
     return error(cors, 400, 'bad_difficulty', 'Difficulty not accepted.');
   }
+  // THE WEEK'S BOARD (county-board-open-week-1, F-LSR1-1; owner 2026-09-26, verbatim "3 - ok, lets do that").
+  // A human who secures the week's claim is stamped with its `rotationId` and so never reached this board,
+  // which keeps only rows without one. `?rotation=<id>`, or `?rotation=open` for the week the held-out cell
+  // reads, serves that week's rows instead, under every rule below unchanged. Omitted, the board is the
+  // all-time constant-seed board exactly as it was, so no reader written before this sees a byte move.
+  const week = rotationParam === null ? null : boardWeek(rotationParam, contractId, Date.now());
+  if (rotationParam !== null && !week) return error(cors, 400, 'bad_rotation', 'Rotation not accepted.');
   const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
   const rows = kv ? await readBoard(kv, epochId, contractId, true, season) : [];
   // Posses rank WITHIN their size and nowhere else (owner 2026-08-05), so the size partitions the
   // field BEFORE ranks are minted: a posse row can never move a solo rank, and an omitted party
   // param is the solo board — which is byte-identical to the board this endpoint served before.
   const partySize = partyParam === null || partyParam === 'solo' ? 1 : Number(partyParam);
-  const partition = rows.filter((row) => !row.rotationId && (row.party?.riderCount ?? 1) === partySize);
+  const partition = rows.filter((row) => (week ? row.rotationId === week.id : !row.rotationId)
+    && (row.party?.riderCount ?? 1) === partySize);
   const ranked = rankedRows(partition, contractId);
   const rotation = currentOrLatestRotation(Date.now());
   const board = ranked.map((row, index) => boardRow(row, index, heldOutFor(row, rows, contractId, rotation)));
@@ -727,6 +737,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     epochId,
     contractId,
     party: partyParam === null ? 'solo' : partyParam,
+    ...(week ? { rotationId: week.id } : {}),
     board: difficulty === 'all' ? board : board.filter((row) => row.difficulty === difficulty),
     rejectedCount,
     retiredCount,
@@ -1292,6 +1303,15 @@ function rotationForSeed(contractId: string, seed: string): Rotation | undefined
 function currentOrLatestRotation(now: number): Rotation | null {
   return [...ROTATIONS].filter((rotation) => Date.parse(rotation.opensAt) <= now)
     .sort((a, b) => Date.parse(b.opensAt) - Date.parse(a.opensAt))[0] ?? null;
+}
+
+// The week a public board read names (F-LSR1-1): `open` resolves exactly as the held-out cell does, any
+// other value must be a registry id. A week that has not opened is refused like an unknown one, because
+// its seeds are held out until it opens (specs/transfer-board.md L2); so is a week that does not carry
+// the contract, whose board could only ever be empty. A closed week stays readable as history.
+function boardWeek(param: string, contractId: string, now: number): Rotation | null {
+  const week = param === 'open' ? currentOrLatestRotation(now) : ROTATIONS.find(({ id }) => id === param) ?? null;
+  return week && Date.parse(week.opensAt) <= now && typeof week.seeds[contractId] === 'string' ? week : null;
 }
 
 function scoreOf(row: ScoreRow): ScoreRow {
