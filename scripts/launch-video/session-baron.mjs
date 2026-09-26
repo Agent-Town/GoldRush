@@ -39,11 +39,14 @@ const recorders = [];
 installStopHandler(() => recorders);
 
 const HOME = { x: 0, z: 12 };
+// Night Shift t1 (2026-09-27) starved at a 16 m reach (every respawned seam lay farther), so the Baron's turtle pans
+// any live seam and raises a sluice first for a steady income.
 const PLAN = {
   home: HOME,
   seamAnchor: HOME,
-  seamRange: 14,
+  seamRange: 40,
   builds: [
+    { id: 'sluice', at: [{ x: -5.5, z: 6.6 }, { x: 5.5, z: 6.6 }, { x: -4, z: 6.4 }] },
     { id: 'turret', at: [{ x: -2.7, z: 12 }, { x: -3.2, z: 11 }] },
     { id: 'turret', at: [{ x: 2.7, z: 12 }, { x: 3.2, z: 11 }] },
     { id: 'turret', at: [{ x: -5.4, z: 12 }, { x: -6, z: 11 }] },
