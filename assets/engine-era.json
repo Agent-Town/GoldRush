@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "af0e2d889eb353cef53fc6b4eaa695d4460961d4aea894ee22b544f396041e45",
+  "engineHash": "7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -496,6 +496,12 @@
       "engineHash": "af0e2d889eb353cef53fc6b4eaa695d4460961d4aea894ee22b544f396041e45",
       "pinnedAt": "2026-09-26",
       "cause": "same era, pin #68: charter-press-locked-lands-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-1179-4 (a), owner 2026-09-26): the Charter Press panel offers only unlocked lands; src/charter/PressPanel.ts is the one differing input of 662; no sim, contract, floor or table changed; the heat-15 probe tape replays byte-identical on base and branch (fnv1a32:b131e18e, secured, 10 waves, 335 gold, 300 s). The store unchanged at 5793a96. reviews/charter-press-locked-lands-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #69: county-board-open-week-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-LSR1-1, owner 2026-09-26): the county board reader (src/encyclopedia/reader.ts) shows the open week's partition and src/game/liveSeed.ts gains one export (liveSeedRotationId); no sim, contract, floor or table changed; the door half alone leaves the hash unchanged; an existing era-6 tape replays identical on base and branch; null floors 83 of 83. The store unchanged at 5793a96. reviews/county-board-open-week-1.md",
       "aliases": []
     }
   ],
