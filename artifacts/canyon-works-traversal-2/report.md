@@ -3,7 +3,7 @@
 **READY-FOR-GATES**, with three reds attributed below. Opus 5.5 implementer at max effort, 2026-09-26, worktree `/Users/robin/Claude/Projects/wt-cw2`, branch `fix/canyon-works-traversal-2` cut at `dc3d6e6d3`. Pre-flight: `canyon-works-traversal-1` is on main (`752d624e8`), the contract read `"creekBlendStart": -14`, `git log main..HEAD` was empty, the only untracked entry was the `node_modules` symlink, and `npm run build` passed (rc 0) before anything changed.
 
 ## Verdict
-The t2 ramp is slope-legal: `t2RampStart`/`t2RampEnd` go from 18..28 to 14..32, the same 4 m over 18 m, with a peak |simSlope| of 0.333 (a 0.017 margin under slopeMax 0.35). No point outside the cliff footprint is refused anywhere on the tile, and on foot from the bridge you can reach all four seams, both galleries, both lamps and both turrets without entering that footprint. The scripted cliff is untouched and still refuses 833 of 833 points. Astra's acceptance crossed in 4 of 4 runs, and in 4 of 4 it reached a gallery seam and banked gold (first gold 20 or 25 at 40.7 to 43.2 s of sim). Its `secures` cell failed in 0 of 4 runs for a third obstacle that is not the terrain (F-CW2-3). Two things fall outside this firewall and are reported, not fixed. The contract's two pre-placed arc turrets had never stood on the map; now they do, and one of them kills the moth in `e2e/e3-canyon-works.spec.ts:81` (F-CW2-1). gt-03's Canyon Works goal-side rows lost the wall they slid on (F-CW2-2).
+The t2 ramp is slope-legal: `t2RampStart`/`t2RampEnd` go from 18..28 to 14..32, the same 4 m over 18 m, with a peak |simSlope| of 0.333 (a 0.017 margin under slopeMax 0.35). No point outside the cliff footprint is refused anywhere on the tile, and on foot from the bridge you can reach all four seams, both galleries, both lamps and both turrets without entering that footprint. The scripted cliff is untouched and still refuses 833 of 833 points. Astra's acceptance crossed in 4 of 4 runs, and in 4 of 4 it reached a gallery seam and banked gold (first gold 20 or 25 at 40.7 to 43.2 s of sim). Its `secures` cell failed in 0 of 4 runs for a third obstacle that is not the terrain (F-CW2-3). Two things fall outside this firewall and are reported, not fixed. The contract's two pre-placed arc turrets had never stood on the map; now they do, and one of them kills the moth in `e2e/e3-canyon-works.spec.ts:81` (F-CW2-1, since re-baselined under the coordinator's named firewall lift; see the addendum). gt-03's Canyon Works goal-side rows lost the wall they slid on (F-CW2-2).
 
 ## 1. The slope table and the chosen window
 Measured with the sim's own `simSlope`, `isTraversable` and `Terrain.sample`, loaded through vite SSR the way gr-sim loads them (the canyon-works-traversal-1 method). Each window is served in memory to its own module graph. Tables: `slope-t2.txt` (+ `.json`, tool `slope-t2.mjs`), and the committed block re-read as served in `slope-t2-as-served.txt`. slopeMax 0.35, central-difference step 0.5 m, rise 4 m. The cliff footprint is the cliff term plus its feather plus the difference step: x -13.5..13.5, z 16.5..27.5.
@@ -78,7 +78,7 @@ No leg stalls, drift is at most 0.18 m, the closest approach to the seam is 0.61
 | suite | control (`dc3d6e6d3`, load 69 to 49) | treatment (`10a039c40` plus the t2 row, load 46 to 129) |
 |---|---|---|
 | e3-canyon-works-traversal | 2 of 2 | 4 of 4 (with the t2 row) |
-| e3-canyon-works | 4 of 4 | `:116` 2 of 2; **`:34` red on both at `:81` (F-CW2-1)** |
+| e3-canyon-works | 4 of 4 | `:116` 2 of 2; **`:34` red on both at `:81` (F-CW2-1)**; after the addendum's re-baseline 4 of 4 |
 | gt-03-enemy-elevation | `:155` 2 of 2, `:240`/`:254` desktop 2 of 2, `:125` red on both | `:155` red (the goal-side rows, re-baselined, then green on both); `:240`/`:254` 2 of 2; `:125` red on both (already red in the control) |
 | task-025 | 10 of 10 | 10 of 10 |
 | m2-01 | 14 of 14 | 14 of 14 |
@@ -133,7 +133,18 @@ Totals: control 34 passed, 2 failed, 2 skipped. Treatment 32 passed, 6 failed, 2
 
 ## Remaining list, in order
 1. Drain: pin engine hash `172b8279...` and the two moved canyon floors (eventLogHash only, reason in section 4).
-2. F-CW2-1: `e2e/e3-canyon-works.spec.ts:81` needs a re-baseline outside this firewall; the measured cure is above.
+2. ~~F-CW2-1: `e2e/e3-canyon-works.spec.ts:81` needs a re-baseline.~~ DONE under the named lift (addendum).
 3. F-CW2-3: re-run Astra's acceptance at baseline load. If it still stops, route to the owner as a balance or driver question for the Canyon Works CONNECT.
 4. F-CW2-2: a wall-backed goal-side steer fixture.
 5. F-CW2-4: regrade the GLB t2 face.
+
+## Addendum: F-CW2-1 re-baselined under the named firewall lift (2026-09-26)
+The coordinator lifted the firewall for this one purpose (F-1082-1 form): "you may edit `e2e/e3-canyon-works.spec.ts` for F-CW2-1 only". The edit is 17 inserted lines in the test at `:34`, placed just before the moth spawn. Every original line is byte-identical, including the `:81` expectation `{ alive: 1, attached: 1, sourceId: 'lantern:1' }` and the `toBeLessThan(full * 0.6)` line after it. Nothing else in `e2e/` moved, and `src/**` is byte-identical to the branch base. The reason sits above the new lines, naming F-CW2-1 and this task. The step now:
+1. Reads the map as it is: `build.hp` turrets `toEqual([{ index: 0, x: -18, z: 22, wrecked: false }, { index: 1, x: 18, z: 22, wrecked: false }])`.
+2. Wrecks the east arc turret, which guards the lamp: `wreck('turret', 1)` must return true, then `advanceSim(0.2)`, the spec's own wreck idiom.
+3. Keeps the original expectations: the moth attaches to `lantern:1`, and coverage falls below 60% of full.
+4. Pins the measured value: `lightCoverage(37.5, 32)` `toBeCloseTo(0.179, 3)`, measured 0.17928 on both projects in the probe.
+
+The rest of the test is unchanged and green: the kill with the boosted Spark Rig, the cut span (`cutWireCount` 1), the repair and the secure step. That matches the code, since only sentry beacons on pylon sites and capacitor banks drive power nodes and wires (`src/game/Game.ts:7602-7627`), so a wrecked turret cannot cut a span.
+
+Run: the whole spec on both projects, `--workers=1`, under the drain lock, own vite on 5325, spec blob `41f38770`, 2026-09-26 01:47Z, load 99.45 at start and 76.87 at end. Result: **4 of 4 passed in 23.1 s**. `:34` took 6.3 s on desktop and 6.4 s on the phone; `:133` (the old `:116`, moved by the 17 inserted lines) took 4.1 s and 3.8 s. There were zero console or page errors (the watch suppressed 0 known errors in all 4 tests) and no timing red, so no re-run. Evidence is in `e2e/f-cw2-1-e3-canyon-works/`: run.txt with head, blobs, load and the vite PID; playwright.log; and the spec's own `moth-cloud-lamp` boards at 1280 and 390. The camera follows the hero at the Sub-Hall, so the moth itself is off frame and the sim numbers are the proof. The batch runner now also skips this spec in its churn restore and records the blob of every dirty file it tested.

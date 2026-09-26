@@ -18,7 +18,7 @@ PWOUT=${CW2_PW_OUTPUT_ROOT:-/private/tmp/claude-501/-Users-robin-Claude-Projects
 mkdir -p "$OUT"
 cd "$WT" || exit 90
 export PATH=/opt/homebrew/bin:$PATH
-{ echo "label $LABEL"; echo "head $(git rev-parse HEAD)"; echo "dirty-tracked:"; git status --porcelain --untracked-files=no; echo "start $(date -u '+%FT%TZ') load $(uptime | sed 's/.*load averages*: //')"; } > "$OUT/run.txt"
+{ echo "label $LABEL"; echo "head $(git rev-parse HEAD)"; echo "dirty-tracked:"; git status --porcelain --untracked-files=no; git status --porcelain --untracked-files=no | awk '{print $2}' | while read -r f; do echo "  blob $f $(git hash-object "$f")"; done; echo "start $(date -u '+%FT%TZ') load $(uptime | sed 's/.*load averages*: //')"; } > "$OUT/run.txt"
 BEFORE_UNTRACKED=$(git ls-files --others --exclude-standard | grep -v '^node_modules' | sort)
 node node_modules/vite/bin/vite.js --host 127.0.0.1 --port $PORT --strictPort > "$OUT/vite.log" 2>&1 &
 VPID=$!
@@ -48,7 +48,7 @@ CHURN=${CW2_CHURN_ROOT:-/private/tmp/claude-501/-Users-robin-Claude-Projects-Gol
 mkdir -p "$CHURN"
 git diff --name-only | while read -r f; do
   case "$f" in artifacts/canyon-works-traversal-2/*) continue ;; esac
-  case "$f" in assets/contracts/epoch-3-voltage/contracts.json|assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json|e2e/e3-canyon-works-traversal.spec.ts|e2e/gt-03-enemy-elevation.spec.ts) continue ;; esac
+  case "$f" in assets/contracts/epoch-3-voltage/contracts.json|assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json|e2e/e3-canyon-works-traversal.spec.ts|e2e/gt-03-enemy-elevation.spec.ts|e2e/e3-canyon-works.spec.ts) continue ;; esac
   mkdir -p "$CHURN/$(dirname "$f")"; cp "$f" "$CHURN/$f"; git show "HEAD:$f" > "$f"; echo "restored $f" >> "$OUT/run.txt"
 done
 AFTER_UNTRACKED=$(git ls-files --others --exclude-standard | grep -v '^node_modules' | sort)
