@@ -44,3 +44,11 @@ No source landing, goal closure, done-move rename, engine pin, runtime deploy or
 4. September 27 ticker and weekly-board Gazette draft are done; publication remains owner-only. Next private coverage pull and memory mirror: September 28 after 02:10 UTC. Week 40 is registered; the Wednesday mint is not due.
 
 The final ledger battery runs after these rows are committed and before the last lock-clearing commit.
+
+## Final ledger and handoff
+
+Final ledger **rc 0, 1263/1263, zero failures/skips**, plus **83/83** runner-kit checks, **183.262 s**, on committed checkpoint **7fc54ded272be0e1b7902c3b8c9d3b4c3593af74**. Complete transcript ledger-final.txt and result ledger-result.json. Bounded status archive regression check: zero missing or abridged handoffs across 40 commits. Predecessor archive and three-item Owner's Desk checked byte-for-byte. Final board still has two real done-moves; fixture cleanup and holds-1 leaves both queued, no mergeHash.
+
+Commits this fire: **870fa5eb0** lock; **11b3487b6** ticker/Gazette drafts; **7fc54ded2** gate checkpoint. Candidate source gate commit **b34e4745c** remains detached. These main commits are documentation/evidence and do not count as a source landing.
+
+Lock clearance at 2026-09-27T23:28Z is the final main write of this fire. Only backup push and read-only verification follow. The launcher retains tasks/.fire.lock until this process exits. No owner approval was requested or needed for the authorized checkpoint and duty drafts.
