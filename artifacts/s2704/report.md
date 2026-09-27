@@ -42,3 +42,7 @@ The full 6 MB reader census was moved intact to `~/.goldrush/fire-s2704/offload-
 ## Final verification
 
 The ledger battery runs after the new rows/master/review are present and before the final lock-clearing commit. Exact results are appended below before that commit; push and read-only verification follow it.
+
+The prescribed `npm run test:ledger-guards` passed unchanged: **rc 0, 1263/1263**, zero failures, cancellations or skips, all chained guard and shell legs green including the final kit **83/83**. Elapsed **190.160 s**, completed **2026-09-27T10:16:11.847Z**, Node v23.11.1. No retry, assertion change or timeout adjustment. Evidence: `ledger-guards.txt`, `ledger-result.json`.
+
+Finding/master/goal/review commit: **27c6fe73f**. The final handoff commit is the last write to main; it preserves the exact three-item owner desk. Push and read-only verification follow.
