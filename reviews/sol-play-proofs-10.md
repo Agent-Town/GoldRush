@@ -1,8 +1,8 @@
 # sol-play-proofs-10 — Run 14 proof evidence
 
-Source: `sol/map-art-campaign-2`, tip `4cada136986ff342d1a1c8fbb0cb68b786154f7f`. Fires: s2719 and s2720. Verified candidate: `fcae3063201a05268e70fe666b646bb5d445f9e3` (original source merge `a4ac5b58306b45f2a4c8d90240c6383e00d07d99`) at `/Users/robin/.goldrush/fire-s2719/wt-pp10`.
+Source: `sol/map-art-campaign-2`, tip `4cada136986ff342d1a1c8fbb0cb68b786154f7f`. Fires: s2719, s2720 and s2721. Verified candidate: `fcae3063201a05268e70fe666b646bb5d445f9e3` (original source merge `a4ac5b58306b45f2a4c8d90240c6383e00d07d99`) at `/Users/robin/.goldrush/fire-s2719/wt-pp10`.
 
-**Verdict: CANDIDATE GATES COMPLETE, NOT LANDED — landing and full Node verification on main remain.** All four map verdicts remain HELD. This review accepts no new gameplay completion or map defect.
+**Verdict: ACCEPTED QA EVIDENCE — candidate gates complete; s2721 lands the drain commit set, with required full Node verification on main pending.** All four map verdicts remain HELD. This review accepts no new gameplay completion or map defect.
 
 ## What this measures
 
@@ -58,8 +58,14 @@ The original s2719 diff-wrapper receipt remains rc 1: its full Node child was st
 
 Newer main at the start of s2720 contained only documentation/evidence changes, synchronized into the detached candidate before the direct gate. Executable, dependency, art and browser inputs remained unchanged from s2719. The eight raw-record equivalence checks and the evidence budget were rerun and passed. Both store views remain clean at `5793a967d`. No engine pin was added.
 
-WHY NO LANDING: this one complete gate consumed the fire increment. Main has received no Run 10 source bytes. The next fire must policy-check, synchronize any newer bookkeeping, and reuse the complete candidate receipts only after proving their relevant inputs unchanged. Complete the goal/ledger/review drain commit set, fast-forward main, rename the original done-move and push. Then run the mandatory full Node verification on main directly, without repeating the known 900-second wrapper interruption. Any new executable inputs require fresh applicable gates. Exact continuation and remaining list: `artifacts/s2720/report.md`.
+Historical s2720 checkpoint — WHY NO LANDING THEN: this one complete gate consumed the fire increment. Main has received no Run 10 source bytes. The next fire must policy-check, synchronize any newer bookkeeping, and reuse the complete candidate receipts only after proving their relevant inputs unchanged. Complete the goal/ledger/review drain commit set, fast-forward main, rename the original done-move and push. Then run the mandatory full Node verification on main directly, without repeating the known 900-second wrapper interruption. Any new executable inputs require fresh applicable gates. Exact continuation and remaining list: `artifacts/s2720/report.md`.
 
 ## Follow-up ownership
 
-No proven map defect and no new F-PP10 finding. The attended `sol-play-proofs-holds-3` owns these four objective/air-driver corrections, after holds-1 and holds-2. The source observations do not authorize balance changes. The existing attended queue jobs retain dispatch ownership. The done-move, source branch and goal remain open until the landing. Lane-a fixture-cleanup attempt 2 became ready during this gate; its attended handoff was preserved separately, without draining it or changing its ownership.
+No proven map defect and no new F-PP10 finding. The attended `sol-play-proofs-holds-3` owns these four objective/air-driver corrections, after holds-1 and holds-2. The source observations do not authorize balance changes. The existing attended queue jobs retain dispatch ownership. At that checkpoint the done-move, source branch and goal remained open until the landing. Lane-a fixture-cleanup attempt 2 became ready during this gate; its attended handoff was preserved separately, without draining it or changing its ownership.
+
+## s2721 landing
+
+Strict policy CLEAR on the authoritative board. Newer main since the completed candidate contains only bookkeeping and evidence, synchronized without conflicts as `57a28a21d8e4a428d089e65dd2684383cb012f8c`; applicable executable, dependency, browser and art inputs are identical to the completed receipts. All 65 source paths remain additive. Store HEAD/main is clean at `5793a967da46e8f00c0ba16f92f17dc10d36558d` in both views. Eight raw equivalence checks pass again, source evidence remains 1,615,430 B. No gate is repeated merely because the bookkeeping commit changed.
+
+The actual source merge is `a4ac5b58306b45f2a4c8d90240c6383e00d07d99`. This drain commit set updates the goal, BACKLOG and this review before fast-forwarding main. The original done-move is renamed on the primary board after the fast-forward. Full Node on main is the next gate; its receipt and verdict will be appended here before handoff. Dispatch of holds-1/-2/-3 stays with the attended queue jobs. No runtime change or era bump means no Gazette item or deployment is due.

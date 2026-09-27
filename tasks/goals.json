@@ -6806,7 +6806,7 @@
             {
               "id": "sol-play-proofs-10",
               "title": "Play-proofs run 10 (run 14 on disk): Relay Valley, the Mare Claim, the Archive World, the Ember Shore, then the complete 42-map campaign table with hold classes and the closing recommendation for the owner",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "sol-play-proofs-10.md",
               "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'continue the play test'); dispatched attended after the F-2717-1 lift",
               "authoredAt": "2026-09-27",
@@ -6819,7 +6819,10 @@
                 "liftedAt": "2026-09-27T18:33Z",
                 "liftedBy": "attended (Fable)",
                 "verdict": "the same spec (scripts/gr-sim-campaign.test.mjs) alone passes 6/6 three times on the landed tree (29.9, 29.9, 30.8 s, Node 26.4.0) and 6/6 on the clean base 1d34e71fc (19.0 s, detached control worktree, assets/pilots link re-pointed absolutely per F-ATT-9); the sweep red is intermittent under the 1017 s fixture sweep, the child assertion unretained; the cleanup-and-retain corrective gr-campaign-fixture-cleanup-1 goes to Astra on lane-a"
-              }
+              },
+              "mergeHash": "a4ac5b58306b45f2a4c8d90240c6383e00d07d99",
+              "mergedBy": "s2721",
+              "mergedAt": "2026-09-27"
             },
             {
               "id": "sol-play-proofs-holds-1",
