@@ -1,13 +1,13 @@
 # s2711 — Play proofs 8 lands and passes the full main gate
 
-**READY-FOR-GATES — LANDED, main verification complete; final ledger closeout follows below.** One evidence/test drain. Original merge `e3375fbd1`; synchronized merge `018c814afb23b4d683964c0be502d33d39021b5a`; metadata landing `9fafd73e624d9644007045a5a040a0ceaef1a3b6`, fast-forwarded and pushed. Source tip `e1b6c1ea1`; all six source commits are ancestors of main. Review: `reviews/sol-play-proofs-8.md`.
+**READY-FOR-GATES — LANDED AND VERIFIED; all required gates complete.** One evidence/test drain. Original merge `e3375fbd1`; synchronized merge `018c814afb23b4d683964c0be502d33d39021b5a`; metadata landing `9fafd73e624d9644007045a5a040a0ceaef1a3b6`, fast-forwarded and pushed. Source tip `e1b6c1ea1`; all six source commits are ancestors of main. Review: `reviews/sol-play-proofs-8.md`.
 
 ## Gates and evidence
 
 - **Full Node on main: npm rc 0, 2529.827 s (42.2 minutes), 1032 pass / 8 skips / zero failures**, every chained leg including final **87/87**. Node 26.4.0, normal fire file concurrency 1. `main-node.txt`, `main-node-result.json`, `main-node-summary.txt`.
 - Fixture teardown passed in **1001.698 s**; longest TAP silence **995.3 s**, below the unchanged 2700 s watchdog. This one required command exceeded the approximate drain window; no second drain was started and no timeout or test was changed. `progress.jsonl` records advancing child suites throughout.
 - The copied scratch launcher errored AFTER the gate because it assigned the whole `runBattery` object to `process.exitCode`. The npm exit and battery overall are both **0**, preserved before the wrapper error; wrapper exit **1** is recorded separately in `launcher-result.json`. The final ledger launcher uses `result.overall`. This is an invocation/reporting correction, not a product failure, and does not justify repeating a complete 42-minute gate.
-- Reused complete unchanged-input receipts: tsc, normal/E1 builds rc 0; E1 payload **34,350,664 B**; adjacents/plain boots **42/42**, both projects, workers=1; eight plain boots with zero console/page errors; six opt-in specs correctly skipped in 12 default projects; fresh Regatta **2/2**, full bank/Book/reload. Candidate full Node **1032 pass / 8 skips**, tail 87/87.
+- Reused complete unchanged-input receipts: tsc, normal/E1 builds rc 0; E1 payload **34,350,664 B**; adjacents/plain boots **42/42**, both projects, workers=1; eight plain boots with zero console/page errors; six opt-in specs correctly skipped in 12 cases across both projects; fresh Regatta **2/2**, full bank/Book/reload. Candidate full Node **1032 pass / 8 skips**, tail 87/87.
 - Final synchronization changed **34 bookkeeping/evidence paths**, no executable/test/dependency/art inputs. Post-landing drift is STATUS and attended handover bookkeeping only (`b1ad4db5a`, preserved). `input-equivalence.json`, `final-state.json`.
 - Engine identity remains era **6**, pin **71**, `2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d`; main and scratch store `5793a967da46e8f00c0ba16f92f17dc10d36558d`. No pin made. Source evidence **4,146,186 B**, under 25 MB task and 40 MB landing limits.
 
@@ -36,4 +36,6 @@ The s2710 handoff is archived byte-for-byte; the three-item OWNER'S DESK tail is
 
 ## Closeout
 
-Final ledger battery is run after these row/report changes and before the clearing commit. Its actual result is appended here before the last write to main.
+Final ledger battery **rc 0**, **1263/1263 tests**, zero failures/skips, all chained legs including **83/83**, in **176.381 seconds**, completed at **2026-09-27T14:59:16.254Z**. Evidence: `ledger-final.txt`, `ledger-final-result.json`, `ledger-final-summary.txt`. It ran after evidence/closeout commit `61583481a`; HEAD was rechecked unchanged before clearing. Whole-landing evidence adds **4.4 MB**, within 40 MB (`evidence-budget-closeout.txt`).
+
+The drain-lock directory was preserved by an intact move to `/Users/robin/.goldrush/fire-s2711/drain-lock-released`. All gate processes have exited. The launcher still owns `tasks/.fire.lock` until this fire exits. The clearing commit is this fire's **last write to main** and is pushed; no new drain is started. The Obsidian session digest records the final commit.
