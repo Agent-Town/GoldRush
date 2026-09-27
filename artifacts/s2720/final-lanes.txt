@@ -1,0 +1,577 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=4  behind=2  paths=89  tracked-dirt=0  untracked=0
+    HELD LANE-ONLY  artifacts/056/desktop-build-menu-icons-blurb.png  (BINARY)
+    HELD LANE-ONLY  artifacts/056/desktop-build-menu-palisade.png  (BINARY)
+    HELD LANE-ONLY  artifacts/056/mobile-390-build-menu-icons-blurb.png  (BINARY)
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/attempt-1-report.md  (25 of 25 added lines absent from main)
+      "# Campaign fixture cleanup — pre-flight blocked"
+      "WHY NO IMPLEMENTATION: the required lane-c clean-worktree check found an existing tracked `package-…"
+      "**READY-FOR-GATES: NO — pre-flight blocked; report-only commit.**"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/browser-driver.txt  (37 of 37 added lines absent from main)
+      "===== plain desktop and 390px boots — rc=1 16.4s ====="
+      "node:internal/modules/run_main:107"
+      "    triggerUncaughtException("
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/browser-gates.mjs  (29 of 29 added lines absent from main)
+      "import { spawn } from 'node:child_process';"
+      "import { openSync, closeSync } from 'node:fs';"
+      "import { runBattery } from '../../scripts/gate-battery.mjs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/browser-gates.txt  (61 of 61 added lines absent from main)
+      "gate battery transcript (append-only — see scripts/gate-battery.mjs)"
+      "######## BATTERY 2026-09-27T20:01:26.483Z — campaign fixture cleanup ########"
+      "cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/capture-sweep.cjs  (16 of 16 added lines absent from main)
+      "// Read-only control instrumentation: retain nested runner output before its scratch cleanup."
+      "const cp = require('node:child_process');"
+      "const fs = require('node:fs');"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/chained-driver.txt  (90 of 90 added lines absent from main)
+      "===== original chained leg 2 — rc=0 0.0s ====="
+      "ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison …"
+      "===== original chained leg 3 — rc=0 0.2s ====="
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/chained-gates.mjs  (8 of 8 added lines absent from main)
+      "// Measure every original chained leg even though the first full-battery leg failed."
+      "// These independent receipts do not change the original npm command's red verdict."
+      "import { readFileSync } from 'node:fs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/chained-gates.txt  (221 of 221 added lines absent from main)
+      "gate battery transcript (append-only — see scripts/gate-battery.mjs)"
+      "######## BATTERY 2026-09-27T20:39:44.617Z — independent receipts for skipped original npm legs ####…"
+      "cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-children.jsonl  (162 of 162 added lines absent from main)
+      "{\"command\":\"/opt/homebrew/Cellar/node/26.4.0/bin/node\",\"args\":[\"--test\",\"--test-reporter=spec\",\"/Us…"
+      "{\"command\":\"/opt/homebrew/Cellar/node/26.4.0/bin/node\",\"args\":[\"--test\",\"--test-reporter=spec\",\"/Us…"
+      "{\"command\":\"/opt/homebrew/Cellar/node/26.4.0/bin/node\",\"args\":[\"--test\",\"--test-reporter=spec\",\"/Us…"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-corrected-children.jsonl  (162 of 162 added lines absent from main)
+      "{\"command\":\"/opt/homebrew/Cellar/node/26.4.0/bin/node\",\"args\":[\"--test\",\"--test-reporter=spec\",\"/Us…"
+      "{\"command\":\"/opt/homebrew/Cellar/node/26.4.0/bin/node\",\"args\":[\"--test\",\"--test-reporter=spec\",\"/Us…"
+      "{\"command\":\"/opt/homebrew/Cellar/node/26.4.0/bin/node\",\"args\":[\"--test\",\"--test-reporter=spec\",\"/Us…"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-corrected-result.txt  (5 of 5 added lines absent from main)
+      "COMMAND: /opt/homebrew/bin/node --require ../capture-sweep.cjs --test --test-reporter=spec scripts/…"
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node v26.4.0"
+      "Sun Sep 27 20:24:01 UTC 2026"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-corrected-summary.json  (23 of 23 added lines absent from main)
+      "{"
+      "  \"owners\": 162,"
+      "  \"exit\": 0,"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-corrected-sweep.txt  (9 of 9 added lines absent from main)
+      "✔ all 162 scripts/*.test.mjs fixture owners remove their temp directories (928660.716958ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-corrected.sh  (12 of 12 added lines absent from main)
+      "#!/bin/bash"
+      "export PATH=/opt/homebrew/bin:$PATH"
+      "cd '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1…"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-environment-note.txt  (1 of 1 added lines absent from main)
+      "Arena raw/assets relative links resolved through evidence-directory GoldRush-assets alias before ca…"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-environment-recheck.txt  (59 of 59 added lines absent from main)
+      "gate battery transcript (append-only — see scripts/gate-battery.mjs)"
+      "######## BATTERY 2026-09-27T19:58:26.764Z ########"
+      "cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1…"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-npm-ci.txt  (7 of 7 added lines absent from main)
+      "added 55 packages in 1s"
+      "npm warn allow-scripts 3 packages have install scripts not yet covered by allowScripts:"
+      "npm warn allow-scripts   fsevents@2.3.2 (install: (install scripts present))"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-original-pilots  (1 of 1 added lines absent from main)
+      "../../GoldRush-assets/pilots"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-result.txt  (5 of 5 added lines absent from main)
+      "COMMAND: /opt/homebrew/bin/node --require ../capture-sweep.cjs --test --test-reporter=spec scripts/…"
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node v26.4.0"
+      "Sun Sep 27 19:42:19 UTC 2026"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-summary.json  (79 of 79 added lines absent from main)
+      "{"
+      "  \"owners\": 162,"
+      "  \"failedChildren\": ["
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control-sweep.txt  (187 of 187 added lines absent from main)
+      "✖ all 162 scripts/*.test.mjs fixture owners remove their temp directories (950068.916334ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/control.sh  (12 of 12 added lines absent from main)
+      "#!/bin/bash"
+      "export PATH=/opt/homebrew/bin:$PATH"
+      "cd '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1…"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/corrected-gates-result.txt  (2 of 2 added lines absent from main)
+      "PLAIN_EXIT=0"
+      "CONTROL_EXIT=0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/corrected-gates.sh  (9 of 9 added lines absent from main)
+      "#!/bin/bash"
+      "export PATH=/opt/homebrew/bin:$PATH"
+      "node artifacts/gr-campaign-fixture-cleanup-1/plain-recheck.mjs > artifacts/gr-campaign-fixture-clea…"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-clean.txt  (38 of 38 added lines absent from main)
+      "✔ all 1 scripts/*.test.mjs fixture owners remove their temp directories (75.044167ms)"
+      "ℹ scripts/subject.test.mjs child status=1 signal=null error=none"
+      "stdout:"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-clean/scripts/fixture-teardown.test.mjs  (70 of 70 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import { spawnSync } from 'node:child_process';"
+      "import { mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-clean/scripts/gate-caller-baseline.json  (1 of 1 added lines absent from main)
+      "{\"grandfathered\":{}}"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-clean/scripts/subject.test.mjs  (10 of 10 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import test from 'node:test';"
+      "import { mkdtempSync, rmSync } from 'node:fs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-gates.txt  (13 of 13 added lines absent from main)
+      "gate battery transcript (append-only — see scripts/gate-battery.mjs)"
+      "######## BATTERY 2026-09-27T20:01:10.666Z ########"
+      "cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-leak-attempt-1.txt  (41 of 41 added lines absent from main)
+      "✔ all 1 scripts/*.test.mjs fixture owners remove their temp directories (62.244708ms)"
+      "ℹ scripts/subject.test.mjs child status=1 signal=null error=none"
+      "stdout:"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-leak.txt  (55 of 55 added lines absent from main)
+      "✖ all 1 scripts/*.test.mjs fixture owners remove their temp directories (69.589958ms)"
+      "ℹ scripts/subject.test.mjs child status=1 signal=null error=none"
+      "stdout:"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-leak/scripts/fixture-teardown.test.mjs  (70 of 70 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import { spawnSync } from 'node:child_process';"
+      "import { mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-leak/scripts/gate-caller-baseline.json  (1 of 1 added lines absent from main)
+      "{\"grandfathered\":{}}"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-leak/scripts/subject.test.mjs  (10 of 10 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import test from 'node:test';"
+      "import { mkdtempSync, rmSync } from 'node:fs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-results.json  (14 of 14 added lines absent from main)
+      "["
+      "  {"
+      "    \"mode\": \"clean\","
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-zero-native-node26.txt  (10 of 10 added lines absent from main)
+      "✔ all 1 scripts/*.test.mjs fixture owners remove their temp directories (69.559625ms)"
+      "ℹ fixture owners=1; survivors=0; failed children (reported only)=none"
+      "ℹ tests 1"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-zero.txt  (34 of 34 added lines absent from main)
+      "✖ all 1 scripts/*.test.mjs fixture owners remove their temp directories (1.107875ms)"
+      "ℹ scripts/subject.test.mjs child status=1 signal=null error=none"
+      "stdout:"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-zero/scripts/fixture-teardown.test.mjs  (70 of 70 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import { spawnSync } from 'node:child_process';"
+      "import { mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-zero/scripts/gate-caller-baseline.json  (1 of 1 added lines absent from main)
+      "{\"grandfathered\":{}}"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-zero/scripts/no-summary.cjs  (2 of 2 added lines absent from main)
+      "    require('node:child_process').spawnSync = () => ({ status: 1, signal: null, stdout: 'stdout-bef…"
+      "    require('node:module').syncBuiltinESMExports();"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-zero/scripts/subject.test.mjs  (11 of 11 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import test from 'node:test';"
+      "import { mkdtempSync, rmSync } from 'node:fs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/evidence-manifest.json  (362 of 362 added lines absent from main)
+      "{"
+      "  \"sourceCommit\": \"a3764d3a3b97b6d6c02e265eeaccdfa1a016f499\","
+      "  \"runtime\": \"/opt/homebrew/Cellar/node/26.4.0/bin/node v26.4.0\","
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/focused-gates.txt  (3379 of 3379 added lines absent from main)
+      "gate battery transcript (append-only — see scripts/gate-battery.mjs)"
+      "######## BATTERY 2026-09-27T19:59:27.727Z ########"
+      "cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/full-node-driver.txt  (27 of 27 added lines absent from main)
+      "===== complete npm run test:node-guards — rc=1 1155.4s ====="
+      "    code: 'ERR_ASSERTION',"
+      "    actual: 2,"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/full-node-failures-so-far.txt  (38 of 38 added lines absent from main)
+      "not ok 223 - the live board is green under this guard (baseline is honest)"
+      "  ---"
+      "  duration_ms: 236.338"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/full-node-summary.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"command\": \"npm run test:node-guards\","
+      "  \"exit\": 1,"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/full-node.txt  (3931 of 3931 added lines absent from main)
+      "gate battery transcript (append-only — see scripts/gate-battery.mjs)"
+      "######## BATTERY 2026-09-27T20:04:31.725Z ########"
+      "cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/injection-contract-helper.txt  (24 of 24 added lines absent from main)
+      "✖ --contract selects exactly one named contract (2.50425ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/injection-early-exit.txt  (19 of 19 added lines absent from main)
+      "✖ a killed campaign resumes from its last profile checkpoint (19.271958ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/injection-fingerprint-check.json  (9 of 9 added lines absent from main)
+      "{"
+      "  \"first-helper\": true,"
+      "  \"second-helper\": true,"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/injection-first-helper.txt  (24 of 24 added lines absent from main)
+      "✖ campaign walks E1 legally, persists each leg, and hashes deterministically (2.557333ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/injection-live-child.txt  (23 of 23 added lines absent from main)
+      "✖ a killed campaign resumes from its last profile checkpoint (4.17475ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/injection-results.json  (94 of 94 added lines absent from main)
+      "{"
+      "  \"results\": ["
+      "    {"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/injection-resume-assertion.txt  (23 of 23 added lines absent from main)
+      "✖ a killed campaign resumes from its last profile checkpoint (1922.9755ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/injection-second-helper.txt  (24 of 24 added lines absent from main)
+      "✖ campaign walks E1 legally, persists each leg, and hashes deterministically (2106.495708ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/injection-startup.txt  (22 of 22 added lines absent from main)
+      "✖ a killed campaign resumes from its last profile checkpoint (3.954542ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-boots-attempt-1.mjs  (29 of 29 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import { fileURLToPath } from 'node:url';"
+      "import { chromium, devices } from '@playwright/test';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-boots.json  (42 of 42 added lines absent from main)
+      "["
+      "  {"
+      "    \"name\": \"desktop\","
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-boots.mjs  (34 of 34 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import { fileURLToPath } from 'node:url';"
+      "import { chromium, devices } from '@playwright/test';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-desktop-menu.png  (BINARY)
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-desktop-run.png  (BINARY)
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-mobile-menu.png  (BINARY)
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-mobile-run.png  (BINARY)
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-recheck-driver.txt  (5 of 5 added lines absent from main)
+      "===== plain desktop and 390px boots — rc=0 6.8s ====="
+      "[{\"name\":\"desktop\",\"scene\":\"menu\",\"viewport\":{\"width\":1280,\"height\":800},\"errors\":[],\"url\":\"http://…"
+      "SUMMARY {\"plain desktop and 390px boots\":0}"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-recheck.mjs  (28 of 28 added lines absent from main)
+      "import { spawn } from 'node:child_process';"
+      "import { openSync, closeSync } from 'node:fs';"
+      "import { runBattery } from '../../scripts/gate-battery.mjs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/plain-recheck.txt  (10 of 10 added lines absent from main)
+      "gate battery transcript (append-only — see scripts/gate-battery.mjs)"
+      "######## BATTERY 2026-09-27T20:23:54.189Z — campaign fixture cleanup ########"
+      "cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/playwright-results/.last-run.json  (4 of 4 added lines absent from main)
+      "{"
+      "  \"status\": \"passed\","
+      "  \"failedTests\": []"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/preflight-build.txt  (3204 of 3204 added lines absent from main)
+      "> gold-rush@0.1.0 build"
+      "> tsc && vite build && node scripts/asset-diet.mjs"
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/preflight-install.txt  (7 of 7 added lines absent from main)
+      "up to date in 128ms"
+      "npm warn allow-scripts 3 packages have install scripts not yet covered by allowScripts:"
+      "npm warn allow-scripts   fsevents@2.3.2 (install: (install scripts present))"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/preflight.json  (12 of 12 added lines absent from main)
+      "{"
+      "  \"initialHead\": \"36d3905f6d8c3d1cabe373b83ce9ca27f229e5ae\","
+      "  \"implementationBase\": \"4be0b47dad74f21041ffc2fafafb77d0185f7279\","
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/remaining-gates-result.txt  (2 of 2 added lines absent from main)
+      "BROWSER_EXIT=1"
+      "NODE_EXIT=1"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/remaining-gates.sh  (9 of 9 added lines absent from main)
+      "#!/bin/bash"
+      "export PATH=/opt/homebrew/bin:$PATH"
+      "node artifacts/gr-campaign-fixture-cleanup-1/browser-gates.mjs > artifacts/gr-campaign-fixture-clea…"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/report.md  (46 of 46 added lines absent from main)
+      "# Campaign fixtures clean up after failure and retain nested diagnostics"
+      "**READY-FOR-GATES WITH A GATE HOLD.** Implementation, campaign cleanup proofs, all-owner cleanup, T…"
+      "## Change and preserved behavior"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/same-assertion-after.txt  (23 of 23 added lines absent from main)
+      "✖ a killed campaign resumes from its last profile checkpoint (2.444208ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/same-assertion-before.txt  (23 of 23 added lines absent from main)
+      "✖ a killed campaign resumes from its last profile checkpoint (1.495833ms)"
+      "ℹ tests 1"
+      "ℹ suites 0"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/same-assertion-gates.txt  (36 of 36 added lines absent from main)
+      "gate battery transcript (append-only — see scripts/gate-battery.mjs)"
+      "######## BATTERY 2026-09-27T20:40:31.382Z ########"
+      "cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/same-assertion-results.json  (32 of 32 added lines absent from main)
+      "{"
+      "  \"results\": ["
+      "    {"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/semantic-preservation.json  (5 of 5 added lines absent from main)
+      "{"
+      "  \"allAssertionStatementsIdentical\": true,"
+      "  \"timeoutsIdentical\": true,"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/verify-before-after.py  (32 of 32 added lines absent from main)
+      "\"\"\"The same failing assertion leaks on the original source and cleans up on the fix.\"\"\""
+      "import hashlib, json, os, pathlib, subprocess"
+      "base = pathlib.Path(__file__).resolve().parent"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/verify-cleanup.py  (50 of 50 added lines absent from main)
+      "\"\"\"Failure injection on the detached scratch copy; always restore exact original bytes.\"\"\""
+      "import hashlib, json, os, pathlib, subprocess"
+      "base = pathlib.Path(__file__).resolve().parent"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/verify-sweep.mjs  (44 of 44 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import { spawnSync } from 'node:child_process';"
+      "import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';"
+    HELD LANE-ONLY  artifacts/gr-campaign-fixture-cleanup-1/vite.txt  (15 of 15 added lines absent from main)
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+      "  - import \"./src/crafting/CraftingQueueContract\" without a file extension (vite.config.ts:20:8). A…"
+      "Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning."
+    HELD LANE-ONLY  scripts/fixture-teardown.test.mjs  (5 of 7 added lines absent from main)
+      "      if (run.status !== 0) {"
+      "        failedChildren.push(name);"
+      "        t.diagnostic(`${name} child status=${run.status} signal=${run.signal} error=${run.error?.me…"
+    HELD LANE-ONLY  scripts/gr-sim-campaign.test.mjs  (22 of 45 added lines absent from main)
+      "  const first = await runCampaign(t);"
+      "  const second = await runCampaign(t);"
+      "  let child;"
+  => HOLDS: drain or rule on the held paths first — never auto-reset over them
+lane-b  sol/wave-lane-b  ahead=0  behind=924  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/wave-lane-b is 924 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/wave-lane-b
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 322 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          e2e/cp04-lever.spec.ts
+          … and 314 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-c  sol/map-art-campaign-2  ahead=4  behind=16  paths=65  tracked-dirt=0  untracked=0
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/adjacent.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/adjacent.log  (8 of 8 added lines absent from main)
+      "Running 2 tests using 1 worker"
+      "(node:46308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/base.txt  (1 of 1 added lines absent from main)
+      "59733b98d6d98e6bfc8713240c470e2e12e11ce8"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/build-final.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/build-final.log  (18 of 18 added lines absent from main)
+      "> gold-rush@0.1.0 build"
+      "> tsc && vite build && node scripts/asset-diet.mjs"
+      "Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/checks.json  (56 of 56 added lines absent from main)
+      "["
+      "  {"
+      "    \"name\": \"tsc-final\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/checks.py  (25 of 25 added lines absent from main)
+      "\"\"\"Run closeout checks serially with direct return-code receipts.\"\"\""
+      "import os,subprocess,json"
+      "from pathlib import Path"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/driver-equivalence.json  (6 of 6 added lines absent from main)
+      "{"
+      "  \"base\": \"59733b98d6d98e6bfc8713240c470e2e12e11ce8\","
+      "  \"baseSha256\": \"122d48a79419cc098bb16c88363e495a02cb71877deb2e5003166ab5d4876da0\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/default/command-tail.log  (22 of 22 added lines absent from main)
+      "e10-archive-world {\"t\":565.7,\"wave\":18,\"hp\":71,\"gold\":0,\"kills\":857,\"x\":3.2,\"z\":-51.4,\"alive\":7,\"se…"
+      "e10-archive-world {\"t\":576,\"wave\":19,\"hp\":71,\"gold\":0,\"kills\":870,\"x\":4,\"z\":-45.3,\"alive\":19,\"seams…"
+      "e10-archive-world {\"t\":586.5,\"wave\":19,\"hp\":15,\"gold\":0,\"kills\":903,\"x\":-1.4,\"z\":-46.8,\"alive\":14,\"…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/default/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/default/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/default/objective-desktop-chrome.json  (415 of 415 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e10-archive-world&timescale=4\","
+      "  \"sim\": 606.9333333333092,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/default/objective-mobile-chrome.json  (415 of 415 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e10-archive-world&timescale=4\","
+      "  \"sim\": 611.0666666666423,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/default/row-desktop-chrome.json  (1177 of 1177 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e10-archive-world\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/default/row-mobile-chrome.json  (1176 of 1176 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e10-archive-world\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/default/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/default/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-archive-world/finding.md  (5 of 5 added lines absent from main)
+      "# Archive World — HELD: objective never engaged"
+      "Default native desktop / 390×844 phone rides die at **wave 20**, **606.933 / 611.067 seconds**, res…"
+      "Both objective records report `restoredWingIds=[]`, `restoredThisRun=[]`, `holdingWingId=null`, `co…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/default/command-tail.log  (22 of 22 added lines absent from main)
+      "e10-ember-shore {\"t\":51.3,\"wave\":1,\"hp\":92,\"gold\":0,\"kills\":17,\"x\":0.1,\"z\":-9.5,\"alive\":5,\"seams\":2}"
+      "e10-ember-shore {\"t\":61.7,\"wave\":2,\"hp\":92,\"gold\":15,\"kills\":25,\"x\":-6.2,\"z\":-23.7,\"alive\":6,\"seams…"
+      "e10-ember-shore {\"t\":71.7,\"wave\":2,\"hp\":92,\"gold\":0,\"kills\":32,\"x\":-7.4,\"z\":-14,\"alive\":4,\"seams\":2}"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/default/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/default/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/default/objective-desktop-chrome.json  (199 of 199 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e10-ember-shore&timescale=4\","
+      "  \"sim\": 92.93333333333459,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/default/objective-mobile-chrome.json  (199 of 199 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e10-ember-shore&timescale=4\","
+      "  \"sim\": 92.93333333333459,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/default/row-desktop-chrome.json  (1051 of 1051 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e10-ember-shore\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/default/row-mobile-chrome.json  (1050 of 1050 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e10-ember-shore\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/default/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/default/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e10-ember-shore/finding.md  (5 of 5 added lines absent from main)
+      "# Ember Shore — HELD: objective never engaged"
+      "Desktop and 390×844 phone both lose at **wave 3 / 92.933333 s**, with **92 HP, 15 gold, 0 repairs, …"
+      "The warmth consumer records `warmth=0`, `guttered=true`, `warmthLost=100`, `warmthRestored=0`, **st…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/default/command-tail.log  (22 of 22 added lines absent from main)
+      "e7-relay-valley {\"t\":463.6,\"wave\":15,\"hp\":139,\"gold\":55,\"kills\":586,\"x\":-46.6,\"z\":45.4,\"alive\":59,\"…"
+      "e7-relay-valley {\"t\":474.3,\"wave\":15,\"hp\":123,\"gold\":0,\"kills\":613,\"x\":-19.8,\"z\":20.9,\"alive\":44,\"s…"
+      "e7-relay-valley {\"t\":484.7,\"wave\":16,\"hp\":64,\"gold\":40,\"kills\":651,\"x\":-12.9,\"z\":18.2,\"alive\":32,\"s…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/default/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/default/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/default/objective-desktop-chrome.json  (380 of 380 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-relay-valley&timescale=4\","
+      "  \"sim\": 516.799999999981,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/default/objective-mobile-chrome.json  (380 of 380 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-relay-valley&timescale=4\","
+      "  \"sim\": 515.1999999999811,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/default/row-desktop-chrome.json  (1172 of 1172 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e7-relay-valley\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/default/row-mobile-chrome.json  (1172 of 1172 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e7-relay-valley\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/default/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/default/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e7-relay-valley/finding.md  (5 of 5 added lines absent from main)
+      "# Relay Valley — HELD: objective never engaged"
+      "Default native rides, desktop then 390×844 phone, public seed via the town Book. Both die at wave 1…"
+      "The consumer reports `objective=relay`, `uses=0`, `relaysLitByProgram=[]`, `objectiveMet=false` on …"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/default/command-tail.log  (22 of 22 added lines absent from main)
+      "e8-mare-claim {\"t\":30.5,\"wave\":1,\"hp\":100,\"gold\":50,\"kills\":7,\"x\":-22.8,\"z\":24.9,\"alive\":7,\"seams\":…"
+      "e8-mare-claim {\"t\":40.7,\"wave\":1,\"hp\":100,\"gold\":0,\"kills\":12,\"x\":-38.8,\"z\":40.1,\"alive\":5,\"seams\":…"
+      "e8-mare-claim {\"t\":51.3,\"wave\":1,\"hp\":100,\"gold\":10,\"kills\":18,\"x\":-26.2,\"z\":21.5,\"alive\":4,\"seams\"…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/default/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/default/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/default/objective-desktop-chrome.json  (172 of 172 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e8-mare-claim&timescale=4\","
+      "  \"sim\": 80.13333333333395,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/default/objective-mobile-chrome.json  (172 of 172 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e8-mare-claim&timescale=4\","
+      "  \"sim\": 80.13333333333395,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/default/row-desktop-chrome.json  (1068 of 1068 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e8-mare-claim\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/default/row-mobile-chrome.json  (1068 of 1068 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e8-mare-claim\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/default/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/default/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/e8-mare-claim/finding.md  (8 of 8 added lines absent from main)
+      "# Mare Claim — HELD: orbital movement / driver instrumentation"
+      "Both default rides die at **wave 2 / 80.133333 s**, 0 HP, 0 gold, 0 repairs, **2/2 works standing**…"
+      "## Root cause and exact stall"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/gate-unset.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/gate-unset.log  (10 of 10 added lines absent from main)
+      "Running 8 tests using 1 worker"
+      "[1/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-archive-world plays to its authore…"
+      "[2/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-ember-shore plays to its authored …"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/measurements.json  (1250 of 1250 added lines absent from main)
+      "["
+      "  {"
+      "    \"contract\": \"e10-archive-world\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/preflight.md  (4 of 4 added lines absent from main)
+      "# Run 14 pre-flight"
+      "2026-09-28. Initial HEAD 3d2baae0d, clean lane, no ahead commits. Main 59733b98d includes run 13 an…"
+      "Two npm install --no-audit --no-fund and npm run build passes exited 0. Restored only the npm-gener…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/proof-hooks.ts  (54 of 54 added lines absent from main)
+      "/** Evidence-only adapter. Gameplay remains in the shared native driver. */"
+      "import { expect, test } from '@playwright/test';"
+      "import { mkdir, readFile, writeFile } from 'node:fs/promises';"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/run-map.py  (28 of 28 added lines absent from main)
+      "\"\"\"Run a single authorized ride pair, preserving direct exits outside the tree.\"\"\""
+      "import os, pathlib, subprocess, sys, json"
+      "contract = sys.argv[1]"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/run-note.md  (82 of 82 added lines absent from main)
+      "# Native play proofs — run 14 (sol-play-proofs-10)"
+      "2026-09-28. **READY-FOR-GATES with recorded holds. All four maps HELD on desktop and 390×844 phone.…"
+      "**Run 14 closes the map list: 42/42 measured; 7 PROVED both screens, 3 PROVED one screen, 2 PARTIAL…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/server.txt  (2 of 2 added lines absent from main)
+      "Own Vite PID 20567, http://127.0.0.1:5303, strictPort. Started through npm run dev."
+      "Stopped with kill -TERM 20567 after final checks."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/summarize.py  (15 of 15 added lines absent from main)
+      "\"\"\"Read retained terminal observations; never infer a passed objective from survival.\"\"\""
+      "import json"
+      "from pathlib import Path"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/tsc-final.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/tsc-final.log  (0 of 0 added lines absent from main)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/verification.json  (82 of 82 added lines absent from main)
+      "{"
+      "  \"campaignInventory\": 42,"
+      "  \"campaignVerdicts\": {"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-14/verify.py  (59 of 59 added lines absent from main)
+      "\"\"\"Audit retained measurements, scope and ride limits without promoting holds.\"\"\""
+      "import json, subprocess, re"
+      "from collections import Counter"
+    HELD LANE-ONLY  e2e/native-proofs/e10-archive-world.spec.ts  (7 of 7 added lines absent from main)
+      "import { test } from '@playwright/test';"
+      "import { nativeProof } from './driver';"
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-14/proof-hooks';"
+    HELD LANE-ONLY  e2e/native-proofs/e10-ember-shore.spec.ts  (7 of 7 added lines absent from main)
+      "import { test } from '@playwright/test';"
+      "import { nativeProof } from './driver';"
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-14/proof-hooks';"
+    HELD LANE-ONLY  e2e/native-proofs/e7-relay-valley.spec.ts  (7 of 7 added lines absent from main)
+      "import { test } from '@playwright/test';"
+      "import { nativeProof } from './driver';"
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-14/proof-hooks';"
+    HELD LANE-ONLY  e2e/native-proofs/e8-mare-claim.spec.ts  (7 of 7 added lines absent from main)
+      "import { test } from '@playwright/test';"
+      "import { nativeProof } from './driver';"
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-14/proof-hooks';"
+  => HOLDS: drain or rule on the held paths first — never auto-reset over them
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=1344  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but art/portraits-e5-e10-generated is 1344 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> art/portraits-e5-e10-generated
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-d) — F-1320-2.
+     📋 run-surface drift: 367 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          … and 359 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+
+worktree coverage: reported 4 of 56 registered — 52 NOT reported (1 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported

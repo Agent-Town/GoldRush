@@ -1,0 +1,103 @@
+h, ['"'--test', '--test-reporter=spec', fileURLToPath(new URL('fixture-teardown.test.mjs', directory))], { cwd: root, encoding: 'utf8' });
+  writeFileSync(new URL("'`diagnostic-${mode}.txt`, import.meta.url), run.stdout + run.stderr);
+  results.push({ mode, status: run.status });
+  assert.equal(run.status, mode === '"'clean' ? 0 : 1);
+  if (mode "'!== '"'zero') assert.match(run.stdout, /CONTROLLED_NESTED_ASSERTION/);
+  else {
+    assert.match(run.stdout, /stdout-before-crash/);
+    assert.match(run.stdout, /stderr-before-crash/);
+  }
+}
+writeFileSync(new URL('diagnostic-results.json', import.meta.url), JSON.stringify(results, null, 2) + '\\n');
+console.log(results);
+EOF" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 0ms:
+exec
+/bin/zsh -lc "python3 - <<'PY'
+import json,pathlib
+rows=[json.loads(x) for x in pathlib.Path('artifacts/gr-campaign-fixture-cleanup-1/control-children.jsonl').read_text().splitlines()]
+print('Completed',len(rows),'Last',pathlib.Path(rows[-1]['args'][-1]).name)
+print('Nonzero',[(pathlib.Path(r['args'][-1]).name,r['status'],r['entries']) for r in rows if r['status'] "'!= 0])
+PY' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 0ms:
+Completed 49 Last desk-state-audit.test.mjs
+Nonzero [('deploy-mirror-allowlist.test.mjs', 1, [])]
+
+codex
+The clean-base control has completed 49 owners. One unrelated child, `deploy-mirror-allowlist.test.mjs`, failed but left no fixtures; its full output is retained. I’m also preparing controlled probes for the sweep’s diagnostic and verdict behavior.
+exec
+/bin/zsh -lc "python3 - <<'PY'
+import json,pathlib
+for line in pathlib.Path('artifacts/gr-campaign-fixture-cleanup-1/control-children.jsonl').read_text().splitlines():
+ r=json.loads(line)
+ if r['status'] "'!= 0: print(pathlib.Path(r['"'args'][-1]).name, r['stdout'][-6500:], r['stderr'][-1500:])
+PY
+rg -n 'mkdtemp|runCampaign\\(|runContract\\(' scripts/gr-sim-campaign.test.mjs
+ git diff 1d34e71fcc33c3a83cd02b2f9bee41cd749a9482 HEAD -- scripts/gr-sim-campaign.test.mjs scripts/gr-sim-campaign.mjs scripts/fixture-teardown.test.mjs" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 0ms:
+deploy-mirror-allowlist.test.mjs ✖ droplet mirror ships the runtime closure and deletes only unprotected spillover (202.423833ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 294.738208
+
+✖ failing tests:
+
+test at scripts/deploy-mirror-allowlist.test.mjs:97:1
+✖ droplet mirror ships the runtime closure and deletes only unprotected spillover (202.423833ms)
+  AssertionError [ERR_ASSERTION]: src/systems/LandYachtBossSystem.ts resolves ../../assets/raw/boss-land-yacht.png
+      at importClosure (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/control-arena/scripts/deploy-mirror-allowlist.test.mjs:77:14)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/control-arena/scripts/deploy-mirror-allowlist.test.mjs:102:18)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+ 
+3:import { mkdtemp, readdir, readFile, rm } from 'node:fs/promises';
+63:  const first = await runCampaign();
+64:  const second = await runCampaign();
+83:  const dir = await mkdtemp(join(tmpdir(), 'gr-campaign-resume-'));
+129:  const run = await runContract('the-claim');
+167:    const run = await runContract(contractId);
+178:  const run = await runContract('');
+187:async function runCampaign() {
+188:  const dir = await mkdtemp(join(tmpdir(), 'gr-campaign-'));
+203:async function runContract(contractId) {
+204:  const dir = await mkdtemp(join(tmpdir(), 'gr-campaign-contract-'));
+
+exec
+/bin/zsh -lc "ls -ld assets/pilots assets/raw artifacts/gr-campaign-fixture-cleanup-1/control-arena/assets/raw
+readlink assets/raw
+ls -l assets/raw/boss-land-yacht.png artifacts/gr-campaign-fixture-cleanup-1/control-arena/assets/raw/boss-land-yacht.png
+python3 - <<'PY'
+import json,pathlib
+rows=[json.loads(x) for x in pathlib.Path('artifacts/gr-campaign-fixture-cleanup-1/control-children.jsonl').read_text().splitlines()]
+print('Completed',len(rows),'last',pathlib.Path(rows[-1]['args'][-1]).name)
+for r in rows:
+ if r['args'][-1].endswith('/gr-sim-campaign.test.mjs'): print(r['status'],r['entries'],r['stdout'],r['stderr'])
+PY" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 0ms:
+lrwxr-xr-x  1 robin  staff  25 Sep 28 02:41 artifacts/gr-campaign-fixture-cleanup-1/control-arena/assets/raw -> ../../GoldRush-assets/raw
+lrwxr-xr-x  1 robin  staff  28 Sep 20 13:54 assets/pilots -> ../../GoldRush-assets/pilots
+lrwxr-xr-x  1 robin  staff  25 Sep 20 13:54 assets/raw -> ../../GoldRush-assets/raw
+../../GoldRush-assets/raw
+ls: artifacts/gr-campaign-fixture-cleanup-1/control-arena/assets/raw/boss-land-yacht.png: No such file or directory
+-rw-r--r--  1 robin  staff  3367423 Sep 22 14:08 assets/raw/boss-land-yacht.png
+Completed 68 last dry-board-sibling-refusal-guard.test.mjs
+
+exec
+/bin/zsh -lc "ln -s /Users/robin/Claude/Projects/GoldRush-assets artifacts/gr-campaign-fixture-cleanup-1/GoldRush-assets
+ls -l artifacts/gr-campaign-fixture-cleanup-1/control-arena/assets/raw/boss-land-yacht.png
+printf 'Arena raw/assets relative links resolved through evidence-directory GoldRush-assets alias before campaign owner ran; deploy-mirror child had already reported missing raw asset with zero survivors.\\n' > artifacts/gr-campaign-fixture-cleanup-1/control-environment-note.txt" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 0ms:
+-rw-r--r--  1 robin  staff  3367423 Sep 20 11:48 artifacts/gr-campaign-fixture-cleanup-1/control-arena/assets/raw/boss-land-yacht.png
+
