@@ -1,0 +1,5013 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e5-deepwater-claim&timescale=4",
+  "deepwater": {
+    "contractId": "e5-deepwater-claim",
+    "tileId": "e5-deepwater-claim",
+    "size": 128,
+    "boat": {
+      "id": "claim-boat",
+      "anchor": {
+        "id": "lagoon",
+        "x": 0,
+        "z": 30
+      },
+      "motion": {
+        "x": 0,
+        "z": 30,
+        "heading": 0,
+        "speed": 0,
+        "aboard": null,
+        "steerable": false
+      },
+      "pads": [
+        {
+          "id": "bow",
+          "x": 0,
+          "z": -3,
+          "occupied": false
+        },
+        {
+          "id": "port",
+          "x": -3,
+          "z": 1,
+          "occupied": false
+        },
+        {
+          "id": "starboard",
+          "x": 3,
+          "z": 1,
+          "occupied": false
+        }
+      ],
+      "buildings": []
+    },
+    "storm": {
+      "time": 2406.4000000004407,
+      "weather": {
+        "era": 5,
+        "contractId": "e5-deepwater-claim",
+        "phase": "telegraph",
+        "phaseProgress": 0.4666666668135804,
+        "cycle": 100,
+        "simTime": 2406.4000000004407,
+        "movementMultiplier": 1,
+        "visibilityMultiplier": 1,
+        "hazeColor": "#335f64",
+        "hazeStrength": 0.13066666670780253,
+        "warning": true
+      },
+      "frontX": null,
+      "waves": [
+        {
+          "wave": 1,
+          "cycle": 0,
+          "scheduledAt": 8,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 2,
+          "cycle": 1,
+          "scheduledAt": 32,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 3,
+          "cycle": 2,
+          "scheduledAt": 56,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 4,
+          "cycle": 3,
+          "scheduledAt": 80,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 5,
+          "cycle": 4,
+          "scheduledAt": 104,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 6,
+          "cycle": 5,
+          "scheduledAt": 128,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 7,
+          "cycle": 6,
+          "scheduledAt": 152,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 8,
+          "cycle": 7,
+          "scheduledAt": 176,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 9,
+          "cycle": 8,
+          "scheduledAt": 200,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 10,
+          "cycle": 9,
+          "scheduledAt": 224,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 11,
+          "cycle": 10,
+          "scheduledAt": 248,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 12,
+          "cycle": 11,
+          "scheduledAt": 272,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 13,
+          "cycle": 12,
+          "scheduledAt": 296,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 14,
+          "cycle": 13,
+          "scheduledAt": 320,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 15,
+          "cycle": 14,
+          "scheduledAt": 344,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 16,
+          "cycle": 15,
+          "scheduledAt": 368,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 17,
+          "cycle": 16,
+          "scheduledAt": 392,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 18,
+          "cycle": 17,
+          "scheduledAt": 416,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 19,
+          "cycle": 18,
+          "scheduledAt": 440,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 20,
+          "cycle": 19,
+          "scheduledAt": 464,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 21,
+          "cycle": 20,
+          "scheduledAt": 488,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 22,
+          "cycle": 21,
+          "scheduledAt": 512,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 23,
+          "cycle": 22,
+          "scheduledAt": 536,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 24,
+          "cycle": 23,
+          "scheduledAt": 560,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 25,
+          "cycle": 24,
+          "scheduledAt": 584,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 26,
+          "cycle": 25,
+          "scheduledAt": 608,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 27,
+          "cycle": 26,
+          "scheduledAt": 632,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 28,
+          "cycle": 27,
+          "scheduledAt": 656,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 29,
+          "cycle": 28,
+          "scheduledAt": 680,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 30,
+          "cycle": 29,
+          "scheduledAt": 704,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 31,
+          "cycle": 30,
+          "scheduledAt": 728,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 32,
+          "cycle": 31,
+          "scheduledAt": 752,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 33,
+          "cycle": 32,
+          "scheduledAt": 776,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 34,
+          "cycle": 33,
+          "scheduledAt": 800,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 35,
+          "cycle": 34,
+          "scheduledAt": 824,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 36,
+          "cycle": 35,
+          "scheduledAt": 848,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 37,
+          "cycle": 36,
+          "scheduledAt": 872,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 38,
+          "cycle": 37,
+          "scheduledAt": 896,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 39,
+          "cycle": 38,
+          "scheduledAt": 920,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 40,
+          "cycle": 39,
+          "scheduledAt": 944,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 41,
+          "cycle": 40,
+          "scheduledAt": 968,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 42,
+          "cycle": 41,
+          "scheduledAt": 992,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 43,
+          "cycle": 42,
+          "scheduledAt": 1016,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 44,
+          "cycle": 43,
+          "scheduledAt": 1040,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 45,
+          "cycle": 44,
+          "scheduledAt": 1064,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 46,
+          "cycle": 45,
+          "scheduledAt": 1088,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 47,
+          "cycle": 46,
+          "scheduledAt": 1112,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 48,
+          "cycle": 47,
+          "scheduledAt": 1136,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 49,
+          "cycle": 48,
+          "scheduledAt": 1160,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 50,
+          "cycle": 49,
+          "scheduledAt": 1184,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 51,
+          "cycle": 50,
+          "scheduledAt": 1208,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 52,
+          "cycle": 51,
+          "scheduledAt": 1232,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 53,
+          "cycle": 52,
+          "scheduledAt": 1256,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 54,
+          "cycle": 53,
+          "scheduledAt": 1280,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 55,
+          "cycle": 54,
+          "scheduledAt": 1304,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 56,
+          "cycle": 55,
+          "scheduledAt": 1328,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 57,
+          "cycle": 56,
+          "scheduledAt": 1352,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 58,
+          "cycle": 57,
+          "scheduledAt": 1376,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 59,
+          "cycle": 58,
+          "scheduledAt": 1400,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 60,
+          "cycle": 59,
+          "scheduledAt": 1424,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 61,
+          "cycle": 60,
+          "scheduledAt": 1448,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 62,
+          "cycle": 61,
+          "scheduledAt": 1472,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 63,
+          "cycle": 62,
+          "scheduledAt": 1496,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 64,
+          "cycle": 63,
+          "scheduledAt": 1520,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 65,
+          "cycle": 64,
+          "scheduledAt": 1544,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 66,
+          "cycle": 65,
+          "scheduledAt": 1568,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 67,
+          "cycle": 66,
+          "scheduledAt": 1592,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 68,
+          "cycle": 67,
+          "scheduledAt": 1616,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 69,
+          "cycle": 68,
+          "scheduledAt": 1640,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 70,
+          "cycle": 69,
+          "scheduledAt": 1664,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 71,
+          "cycle": 70,
+          "scheduledAt": 1688,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 72,
+          "cycle": 71,
+          "scheduledAt": 1712,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 73,
+          "cycle": 72,
+          "scheduledAt": 1736,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 74,
+          "cycle": 73,
+          "scheduledAt": 1760,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 75,
+          "cycle": 74,
+          "scheduledAt": 1784,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 76,
+          "cycle": 75,
+          "scheduledAt": 1808,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 77,
+          "cycle": 76,
+          "scheduledAt": 1832,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 78,
+          "cycle": 77,
+          "scheduledAt": 1856,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 79,
+          "cycle": 78,
+          "scheduledAt": 1880,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 80,
+          "cycle": 79,
+          "scheduledAt": 1904,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 81,
+          "cycle": 80,
+          "scheduledAt": 1928,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 82,
+          "cycle": 81,
+          "scheduledAt": 1952,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 83,
+          "cycle": 82,
+          "scheduledAt": 1976,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 84,
+          "cycle": 83,
+          "scheduledAt": 2000,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 85,
+          "cycle": 84,
+          "scheduledAt": 2024,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 86,
+          "cycle": 85,
+          "scheduledAt": 2048,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 87,
+          "cycle": 86,
+          "scheduledAt": 2072,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 88,
+          "cycle": 87,
+          "scheduledAt": 2096,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 89,
+          "cycle": 88,
+          "scheduledAt": 2120,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 90,
+          "cycle": 89,
+          "scheduledAt": 2144,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 91,
+          "cycle": 90,
+          "scheduledAt": 2168,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 92,
+          "cycle": 91,
+          "scheduledAt": 2192,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 93,
+          "cycle": 92,
+          "scheduledAt": 2216,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 94,
+          "cycle": 93,
+          "scheduledAt": 2240,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 95,
+          "cycle": 94,
+          "scheduledAt": 2264,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 96,
+          "cycle": 95,
+          "scheduledAt": 2288,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 97,
+          "cycle": 96,
+          "scheduledAt": 2312,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 98,
+          "cycle": 97,
+          "scheduledAt": 2336,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 99,
+          "cycle": 98,
+          "scheduledAt": 2360,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        },
+        {
+          "wave": 100,
+          "cycle": 99,
+          "scheduledAt": 2384,
+          "direction": "west-to-east",
+          "fromX": -64,
+          "toX": 64
+        }
+      ]
+    },
+    "corsairWaves": [
+      {
+        "wave": 1,
+        "cycle": 0,
+        "scheduledAt": 8,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-1-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-1-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-1-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 2,
+        "cycle": 1,
+        "scheduledAt": 32,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-2-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-2-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-2-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 3,
+        "cycle": 2,
+        "scheduledAt": 56,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-3-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-3-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-3-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 4,
+        "cycle": 3,
+        "scheduledAt": 80,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-4-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-4-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-4-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 5,
+        "cycle": 4,
+        "scheduledAt": 104,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-5-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-5-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-5-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 6,
+        "cycle": 5,
+        "scheduledAt": 128,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-6-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-6-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-6-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 7,
+        "cycle": 6,
+        "scheduledAt": 152,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-7-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-7-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-7-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 8,
+        "cycle": 7,
+        "scheduledAt": 176,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-8-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-8-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-8-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 9,
+        "cycle": 8,
+        "scheduledAt": 200,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-9-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-9-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-9-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 10,
+        "cycle": 9,
+        "scheduledAt": 224,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-10-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-10-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-10-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 11,
+        "cycle": 10,
+        "scheduledAt": 248,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-11-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-11-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-11-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 12,
+        "cycle": 11,
+        "scheduledAt": 272,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-12-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-12-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-12-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 13,
+        "cycle": 12,
+        "scheduledAt": 296,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-13-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-13-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-13-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 14,
+        "cycle": 13,
+        "scheduledAt": 320,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-14-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-14-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-14-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 15,
+        "cycle": 14,
+        "scheduledAt": 344,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-15-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-15-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-15-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 16,
+        "cycle": 15,
+        "scheduledAt": 368,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-16-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-16-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-16-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 17,
+        "cycle": 16,
+        "scheduledAt": 392,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-17-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-17-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-17-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 18,
+        "cycle": 17,
+        "scheduledAt": 416,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-18-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-18-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-18-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 19,
+        "cycle": 18,
+        "scheduledAt": 440,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-19-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-19-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-19-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 20,
+        "cycle": 19,
+        "scheduledAt": 464,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-20-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-20-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-20-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 21,
+        "cycle": 20,
+        "scheduledAt": 488,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-21-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-21-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-21-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 22,
+        "cycle": 21,
+        "scheduledAt": 512,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-22-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-22-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-22-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 23,
+        "cycle": 22,
+        "scheduledAt": 536,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-23-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-23-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-23-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 24,
+        "cycle": 23,
+        "scheduledAt": 560,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-24-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-24-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-24-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 25,
+        "cycle": 24,
+        "scheduledAt": 584,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-25-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-25-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-25-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 26,
+        "cycle": 25,
+        "scheduledAt": 608,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-26-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-26-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-26-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 27,
+        "cycle": 26,
+        "scheduledAt": 632,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-27-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-27-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-27-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 28,
+        "cycle": 27,
+        "scheduledAt": 656,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-28-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-28-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-28-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 29,
+        "cycle": 28,
+        "scheduledAt": 680,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-29-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-29-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-29-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 30,
+        "cycle": 29,
+        "scheduledAt": 704,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-30-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-30-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-30-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 31,
+        "cycle": 30,
+        "scheduledAt": 728,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-31-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-31-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-31-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 32,
+        "cycle": 31,
+        "scheduledAt": 752,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-32-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-32-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-32-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 33,
+        "cycle": 32,
+        "scheduledAt": 776,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-33-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-33-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-33-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 34,
+        "cycle": 33,
+        "scheduledAt": 800,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-34-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-34-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-34-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 35,
+        "cycle": 34,
+        "scheduledAt": 824,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-35-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-35-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-35-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 36,
+        "cycle": 35,
+        "scheduledAt": 848,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-36-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-36-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-36-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 37,
+        "cycle": 36,
+        "scheduledAt": 872,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-37-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-37-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-37-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 38,
+        "cycle": 37,
+        "scheduledAt": 896,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-38-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-38-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-38-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 39,
+        "cycle": 38,
+        "scheduledAt": 920,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-39-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-39-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-39-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 40,
+        "cycle": 39,
+        "scheduledAt": 944,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-40-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-40-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-40-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 41,
+        "cycle": 40,
+        "scheduledAt": 968,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-41-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-41-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-41-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 42,
+        "cycle": 41,
+        "scheduledAt": 992,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-42-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-42-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-42-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 43,
+        "cycle": 42,
+        "scheduledAt": 1016,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-43-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-43-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-43-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 44,
+        "cycle": 43,
+        "scheduledAt": 1040,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-44-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-44-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-44-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 45,
+        "cycle": 44,
+        "scheduledAt": 1064,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-45-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-45-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-45-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 46,
+        "cycle": 45,
+        "scheduledAt": 1088,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-46-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-46-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-46-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 47,
+        "cycle": 46,
+        "scheduledAt": 1112,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-47-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-47-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-47-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 48,
+        "cycle": 47,
+        "scheduledAt": 1136,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-48-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-48-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-48-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 49,
+        "cycle": 48,
+        "scheduledAt": 1160,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-49-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-49-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-49-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 50,
+        "cycle": 49,
+        "scheduledAt": 1184,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-50-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-50-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-50-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 51,
+        "cycle": 50,
+        "scheduledAt": 1208,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-51-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-51-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-51-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 52,
+        "cycle": 51,
+        "scheduledAt": 1232,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-52-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-52-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-52-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 53,
+        "cycle": 52,
+        "scheduledAt": 1256,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-53-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-53-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-53-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 54,
+        "cycle": 53,
+        "scheduledAt": 1280,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-54-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-54-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-54-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 55,
+        "cycle": 54,
+        "scheduledAt": 1304,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-55-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-55-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-55-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 56,
+        "cycle": 55,
+        "scheduledAt": 1328,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-56-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-56-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-56-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 57,
+        "cycle": 56,
+        "scheduledAt": 1352,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-57-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-57-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-57-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 58,
+        "cycle": 57,
+        "scheduledAt": 1376,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-58-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-58-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-58-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 59,
+        "cycle": 58,
+        "scheduledAt": 1400,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-59-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-59-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-59-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 60,
+        "cycle": 59,
+        "scheduledAt": 1424,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-60-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-60-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-60-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 61,
+        "cycle": 60,
+        "scheduledAt": 1448,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-61-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-61-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-61-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 62,
+        "cycle": 61,
+        "scheduledAt": 1472,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-62-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-62-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-62-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 63,
+        "cycle": 62,
+        "scheduledAt": 1496,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-63-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-63-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-63-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 64,
+        "cycle": 63,
+        "scheduledAt": 1520,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-64-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-64-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-64-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 65,
+        "cycle": 64,
+        "scheduledAt": 1544,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-65-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-65-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-65-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 66,
+        "cycle": 65,
+        "scheduledAt": 1568,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-66-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-66-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-66-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 67,
+        "cycle": 66,
+        "scheduledAt": 1592,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-67-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-67-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-67-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 68,
+        "cycle": 67,
+        "scheduledAt": 1616,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-68-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-68-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-68-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 69,
+        "cycle": 68,
+        "scheduledAt": 1640,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-69-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-69-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-69-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 70,
+        "cycle": 69,
+        "scheduledAt": 1664,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-70-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-70-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-70-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 71,
+        "cycle": 70,
+        "scheduledAt": 1688,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-71-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-71-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-71-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 72,
+        "cycle": 71,
+        "scheduledAt": 1712,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-72-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-72-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-72-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 73,
+        "cycle": 72,
+        "scheduledAt": 1736,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-73-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-73-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-73-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 74,
+        "cycle": 73,
+        "scheduledAt": 1760,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-74-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-74-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-74-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 75,
+        "cycle": 74,
+        "scheduledAt": 1784,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-75-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-75-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-75-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 76,
+        "cycle": 75,
+        "scheduledAt": 1808,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-76-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-76-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-76-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 77,
+        "cycle": 76,
+        "scheduledAt": 1832,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-77-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-77-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-77-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 78,
+        "cycle": 77,
+        "scheduledAt": 1856,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-78-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-78-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-78-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 79,
+        "cycle": 78,
+        "scheduledAt": 1880,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-79-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-79-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-79-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 80,
+        "cycle": 79,
+        "scheduledAt": 1904,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-80-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-80-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-80-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 81,
+        "cycle": 80,
+        "scheduledAt": 1928,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-81-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-81-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-81-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 82,
+        "cycle": 81,
+        "scheduledAt": 1952,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-82-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-82-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-82-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 83,
+        "cycle": 82,
+        "scheduledAt": 1976,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-83-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-83-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-83-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 84,
+        "cycle": 83,
+        "scheduledAt": 2000,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-84-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-84-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-84-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 85,
+        "cycle": 84,
+        "scheduledAt": 2024,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-85-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-85-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-85-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 86,
+        "cycle": 85,
+        "scheduledAt": 2048,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-86-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-86-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-86-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 87,
+        "cycle": 86,
+        "scheduledAt": 2072,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-87-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-87-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-87-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 88,
+        "cycle": 87,
+        "scheduledAt": 2096,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-88-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-88-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-88-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 89,
+        "cycle": 88,
+        "scheduledAt": 2120,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-89-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-89-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-89-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 90,
+        "cycle": 89,
+        "scheduledAt": 2144,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-90-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-90-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-90-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 91,
+        "cycle": 90,
+        "scheduledAt": 2168,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-91-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-91-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-91-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 92,
+        "cycle": 91,
+        "scheduledAt": 2192,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-92-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-92-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-92-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 93,
+        "cycle": 92,
+        "scheduledAt": 2216,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-93-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-93-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-93-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 94,
+        "cycle": 93,
+        "scheduledAt": 2240,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-94-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-94-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-94-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 95,
+        "cycle": 94,
+        "scheduledAt": 2264,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-95-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-95-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-95-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 96,
+        "cycle": 95,
+        "scheduledAt": 2288,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-96-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-96-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-96-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 97,
+        "cycle": 96,
+        "scheduledAt": 2312,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-97-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-97-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-97-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 98,
+        "cycle": 97,
+        "scheduledAt": 2336,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-98-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-98-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-98-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 99,
+        "cycle": 98,
+        "scheduledAt": 2360,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-99-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-99-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-99-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      },
+      {
+        "wave": 100,
+        "cycle": 99,
+        "scheduledAt": 2384,
+        "direction": "west-to-east",
+        "fromX": -64,
+        "toX": 64,
+        "enemies": [
+          {
+            "id": "corsair-skiff-100-1",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": -6
+          },
+          {
+            "id": "corsair-skiff-100-2",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 0
+          },
+          {
+            "id": "corsair-skiff-100-3",
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "art": "placeholder",
+            "waterRegionId": "open-water",
+            "x": -62,
+            "z": 6
+          }
+        ]
+      }
+    ],
+    "wrecks": [
+      {
+        "id": "w1-supply-barge",
+        "era": "E1",
+        "x": -36,
+        "z": -24,
+        "depthClass": "wreck"
+      },
+      {
+        "id": "w2-locomotive",
+        "era": "E2",
+        "x": -18,
+        "z": -30,
+        "depthClass": "wreck"
+      },
+      {
+        "id": "w3-pylon-barge",
+        "era": "E3",
+        "x": 0,
+        "z": -22,
+        "depthClass": "wreck"
+      },
+      {
+        "id": "w4-land-yacht-sister",
+        "era": "E4",
+        "x": 20,
+        "z": -34,
+        "depthClass": "wreck"
+      },
+      {
+        "id": "w5-mystery-hull",
+        "era": "mystery",
+        "x": 36,
+        "z": -20,
+        "depthClass": "wreck"
+      }
+    ],
+    "dredgeQueenBoss": {
+      "active": true,
+      "act": 1,
+      "stormFrontWave": 1,
+      "approaching": false,
+      "anchored": true,
+      "anchor": {
+        "x": 0,
+        "z": -22
+      },
+      "clawCycleProgress": 0.53,
+      "clawCycles": 945,
+      "clawInterrupts": 0,
+      "holdLoot": 5,
+      "livePaddles": 2,
+      "act2Locked": true,
+      "repositions": 472,
+      "swatTelegraphed": false,
+      "swats": 0,
+      "escortMultiplier": 1,
+      "escortSkiffs": 3,
+      "escortsExiting": false,
+      "escortsExited": 0,
+      "spillPickups": 0,
+      "crewQuit": false,
+      "hulkPresent": false,
+      "persistentWreck": false
+    }
+  },
+  "regatta": null,
+  "homemaker": null,
+  "vehicle": null,
+  "fuel": null,
+  "repairs": 0,
+  "harvest": {
+    "activeNodes": [
+      {
+        "id": "gold-seam-1",
+        "active": true,
+        "anchorIndex": 1,
+        "position": {
+          "x": -18,
+          "z": -30
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "anchorIndex": 4,
+        "position": {
+          "x": 36,
+          "z": -20
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      }
+    ],
+    "channeling": false,
+    "channelNodeId": null,
+    "progress": 0,
+    "channels": [
+      {
+        "actorId": "0",
+        "channelNodeId": null,
+        "progress": 0,
+        "channeling": false
+      }
+    ],
+    "lastGoldGain": 0,
+    "lastGoldPosition": null
+  }
+}

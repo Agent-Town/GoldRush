@@ -13,5 +13,9 @@ cmd = ['npx', 'playwright', 'test', f'e2e/native-proofs/{contract}.spec.ts', *[f
 with (root / 'command.log').open('w') as log:
     result = subprocess.run(cmd, env=env, stdout=log, stderr=subprocess.STDOUT)
 (root / 'command.exit').write_text(str(result.returncode)+'\n')
+evidence = pathlib.Path(f'artifacts/sol/play-proofs/run-12/{strategy}/{contract}')
+evidence.mkdir(parents=True, exist_ok=True)
+(evidence / 'command.json').write_text((root / 'command.json').read_text())
+(evidence / 'command.exit').write_text(str(result.returncode)+'\n')
 print(json.dumps({'contract':contract,'strategy':strategy,'projects':projects,'exit':result.returncode,'log':str(root/'command.log')}))
 sys.exit(result.returncode)
