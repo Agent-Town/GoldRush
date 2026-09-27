@@ -3133,4 +3133,4 @@ A recorded pause no longer stops a replay forever. Fresh paused River reels
 verify on desktop and phone, and old reels carrying the same pause can play
 past it. Historical reels with the earlier movement drift remain rejected.
 merge `28272092e` · pin `52cac1459` · review `reviews/tape-pause-fix-1.md`
-ROUNDUP-CLASS — 2026-W39; s2696. Pin 71 remains in era 6. Implementation landed; production availability awaits deployment. Draft only; publication stays owner-only.
+ROUNDUP-CLASS — 2026-W39; s2696. Pin 71 remains in era 6. Production build 198fae78 verified, assayer synchronized. Draft only; publication stays owner-only.

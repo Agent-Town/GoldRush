@@ -1,6 +1,6 @@
 # Drain review: tape-pause-fix-1 — replay tolerates recorded pauses
 
-**Verdict: LANDED — candidate acceptance and post-landing full Node PASS. Deployment remains pending.**
+**Verdict: SHIPPED — candidate and main gates PASS; production build 198fae78 verified, ASSAYER SYNCED. F-RVA1-6 resolved.**
 
 s2693 fire, 2026-09-27. Lane `sol/map-art-campaign-2` at `19dc0195fbf72f69d24334dede5538c709b977a5`; fork `3c35d5bed250427a254ab10f1fe22071da44aad2`; main base `49a0479a0cf0b5d0de0d5ca1f1b06c7809242239`; detached candidate merge `63cd904a9b81c2cc62ced7061be263a7cc624fc5`. Candidate worktree: `/Users/robin/.goldrush/fire-s2693/wt-tpf1`. Scratch art store is clean at its landed main `5793a967da46e8f00c0ba16f92f17dc10d36558d`; no store change is proposed.
 
@@ -93,3 +93,13 @@ Fresh evidence: `artifacts/s2696/reuse-proof.json`, `identity.json`, `report.md`
 ### Main validation, s2696
 
 Full `npm run test:node-guards` on main returned **0** in **2524.4 s**: 1040 primary tests, **1032 pass, 0 fail, 8 existing skips**, followed by **87/87** in the chained tail. Fixture cleanup passed all **162 owners** in **984.2 s**; maximum TAP silence **980.3 s**, below the unchanged **2700 s** watchdog. Node **26.4.0**, file concurrency **1**. Engine hash remeasured unchanged after the run. Evidence: `artifacts/s2696/main-node.txt`, `main-node-result.json`. The temporary observer assigned the battery result object to process.exitCode after writing the result, so its wrapper exited 1; the recorded npm child and battery both exited 0. No test was repeated or waived. Deployment and live assay synchronization remain to be measured.
+
+### Production and browser transfer verification
+
+The prescribed unwrapped `bash scripts/deploy.sh` returned 0 and deployed **198fae78**; the production alias immediately reported that build. **ASSAYER SYNCED**: tree/pin copied and services restarted; mirror **1684 MB**, under its 2184 MB ceiling. E1 payload **34,350,580 / 52,000,000 B** (17,649,420 B headroom). The deploy's non-gating browser tripwire initially measured nothing because port **5297** was occupied by an unrelated process; neither it nor the listener on 5298 was stopped. A fresh serial battery on available port **62736** passed warm-up **1/1** and both viewports **2/2**, each **15,180,965 / 30,000,000 B** in the cue window (settled 25,781,287 B), zero watched errors. Original refusal and replacement evidence are retained in `artifacts/s2696/deploy.txt` and `transfer-probe.txt`. The missing device verdict remains the inherited B1 owner duty, not a new desk request.
+
+F-RVA1-6 is resolved in production. Historical movement-divergent reels remain rejected; an optional re-assay of older player standings was not performed.
+
+### Preview parity
+
+All-epochs preview full build passed in 22.1 s on the retained candidate, whose build inputs were proven identical to main. Its prior dist was moved intact. Branch deployment rc 0 (32 new files, 3144 reused); preview alias and production each returned HTTP 200 and build 198fae78. Evidence: `artifacts/s2696/preview-build.txt`, `preview-deploy.txt`, `live-verification.json`.
