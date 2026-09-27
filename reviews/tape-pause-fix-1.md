@@ -1,0 +1,45 @@
+# Drain review: tape-pause-fix-1 — replay tolerates recorded pauses
+
+**Verdict: HELD — mandatory full node battery incomplete; NOT LANDED or deployed.**
+
+s2693 fire, 2026-09-27. Lane `sol/map-art-campaign-2` at `19dc0195fbf72f69d24334dede5538c709b977a5`; fork `3c35d5bed250427a254ab10f1fe22071da44aad2`; main base `49a0479a0cf0b5d0de0d5ca1f1b06c7809242239`; detached candidate merge `63cd904a9b81c2cc62ced7061be263a7cc624fc5`. Candidate worktree: `/Users/robin/.goldrush/fire-s2693/wt-tpf1`. Scratch art store is clean at its landed main `5793a967da46e8f00c0ba16f92f17dc10d36558d`; no store change is proposed.
+
+## What the candidate does
+
+The shared action handler skips recorded `set_pause` actions only during a run-tape replay. A tape counts active simulation ticks, so replaying its one-way recorded pause used to stop the replay forever. The recorder and multiplayer remain unchanged, and the viewer's pause controls use their separate handler. A player encounters the fix by pausing a normal run and then watching or submitting its reel. The added River row uses plain entry, actual pause/resume, the county worker and zero-console assertions on desktop and 390 px mobile.
+
+The attended session released this drain to the fires in handover 13z-79, superseding 13z-78 and s2692's attended-custody claim. Current policy is CLEAR from the primary repository's live board. The three code/test paths merge without conflicts: `src/game/Game.ts`, `e2e/river-ending-score.spec.ts`, `scripts/same-game-audit.mjs` are LANE-TOUCHED only; main did not move them since the fork. The remaining 47 paths are new lane evidence. The third lane commit is the attended audit-anchor repair, explicitly recorded in 13z-79. No blob over 50 MB was found.
+
+## Fire gates on the detached merged tree
+
+| Check | Result |
+| --- | --- |
+| Policy, merged checker reading current primary board | CLEAR, queued leaf; `artifacts/s2693/policy-current-main.txt` |
+| TypeScript | rc 0, 5.9 s |
+| Normal build | rc 0, 21.8 s |
+| E1 build | rc 0, 8.2 s |
+| E1 content assertion | rc 0 |
+| E1 first-town payload | 34,350,664 B, below 52,000,000 B |
+| Diff-selected guards | rc 1, 904.1 s; 4/5 groups passed |
+| Full node guards inside that wrapper | SIGTERM at its 900 s outer limit; no final counts or complete npm tail |
+| Other selected groups | power-budget, task-guards, citations, gate-callers all rc 0; power p95 0.377 ms |
+| New evidence budget | 7.4 MB from the lane, below 40 MB; whole-tree ceiling not yet banked, advisory only |
+| Null-floor rerun | cancelled after wrapper refusal; no verdict claimed |
+| Fire browser/boot gates | not run; remain owed |
+| Engine pin | not written; current registry is era 6 pin 70, `f6084527` |
+
+Evidence: `artifacts/s2693/phase1-gates.txt` is append-only and retains failed invocation setup as well as the measured gates. An initial driver invocation refused a release job lacking an explicit battery environment; no tests ran in that invocation. A policy call from the linked tree refused its stale-board arrangement; the exact merged checker was then rerun from primary main and returned CLEAR. These are instrument setup refusals, not product regressions. Normal build and tsc passed independently of that policy refusal. The release jobs were rerun with explicit `GR_RELEASE=e1` and passed.
+
+## Lane acceptance evidence, separately identified
+
+`artifacts/tape-pause-fix-1/report.md` and its committed fixtures record fresh paused River reels VERIFIED on desktop (`abebc77c`) and phone (`2c982352`), the old paused River reel VERIFIED (`a8c5af79`), a three-pause Claim death reel reproducing `8b17af1a` at tick 176, and the historical seed run advancing beyond tick 274 to its end. That historical standing still fails on pre-axes-fix divergence; it is not rescued. Heat-15 and era-6 agent outputs are unchanged, and the lane's 83/83 floors and 42/42 adjacent tests passed. These are the implementer's results, not substitutes for the incomplete fire battery.
+
+## Finding and next gate
+
+**F-2693-1 — OPEN, gate-side, fire-owned:** the diff wrapper's fixed 15-minute timeout interrupted the still-active fixture sweep. Partial TAP reached 504 completed rows and showed only the two expected pre-pin identity failures: bench-seeds and engine-era-guard compare `2d180e6b` to the old pin. This is not a completed battery and does not establish absence of other failures. No clean-main control was run, so no additional failure is attributed or excused.
+
+Source verified: `scripts/run-guards.mjs` sets `timeout: 15 * 60 * 1000`; `scripts/run-node-guards.mjs` already owns a 300 s per-test bound and a 45-minute TAP-stall watchdog. The existing F-2549-1 recovery applies: run the full node command directly through `gate-battery.mjs`, retaining its watchdog, rather than retrying the capped wrapper. No timeout, assertion or concurrency rule was changed, and no new implementation task or redispatch is needed. The old finding is retained as historical, not silently reopened.
+
+The wrapper left its node-guard descendant alive after returning SIGTERM. Only s2693-owned processes were stopped by numeric PID; the interrupted floor rerun was stopped with them. Their identities and ancestry are in `stopped-gate-processes.json`, and `processes-stopped.txt` proves those PIDs are gone. The drain-lock directory was moved intact to `/Users/robin/.goldrush/fire-s2693/drain-lock-released`; the launcher's fire lock remains its responsibility. Candidate content and all evidence remain on disk.
+
+Resume instructions and the direct full-node job list are in `artifacts/s2693/report.md` and `artifacts/s2693/full-node-next-jobs.json`. F-RVA1-6 remains OPEN until the candidate is fully gated, landed and deployed.

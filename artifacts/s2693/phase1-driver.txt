@@ -1,0 +1,139 @@
+job "release-assert" runs a release build without GR_RELEASE=e1, which cannot pass (scripts/assert-release-build.mjs refuses a bare invocation by design). Add --env GR_RELEASE=e1 to this battery — see F-RB-1, tasks/BACKLOG.md:3344.
+
+===== policy — rc=2 0.0s =====
+
+  ⛔ CANNOT VERIFY — DO NOT DRAIN, DO NOT QUEUE off this run
+    corpus tree     : LINKED WORKTREE — the board lives in /Users/robin/Claude/Projects/Gold Rush
+    cwd             : /Users/robin/.goldrush/fire-s2693/wt-tpf1
+    tasks/goals.json and tasks/done/ are TRACKED, so this tree hands the check a
+    board FROZEN at that branch's commit. A master registered after the branch
+    point resolves to "? UNKNOWN" — which exits 0 — and a leaf the owner has
+    since unblocked still reads "blocked". Measured s2224: from worktrees/lane-c
+    an already-SHIPPED master answered "? UNKNOWN" rc=0 where the repo root
+    answered "⛔ ALREADY SHIPPED — DO NOT QUEUE" rc=1 (F-2223-1).
+    Re-run from the repo root. Do NOT re-run elsewhere until it goes green.
+
+
+
+===== tsc — rc=0 5.9s =====
+
+
+===== build — rc=0 21.8s =====
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 34 | 262548708 | 36923264 | 86% | compress |
+| landmarks | 213 | 382800564 | 58455012 | 85% | compress |
+| panoramas | 34 | 78357908 | 8957316 | 89% | compress |
+| town-buildings | 9 | 18058896 | 2604264 | 86% | compress |
+| town-era-variants | 73 | 112127592 | 17922008 | 84% | compress |
+| props | 62 | 30189152 | 3172404 | 89% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 7 | 26457976 | 4353216 | 84% | compress |
+| finale | 2 | 4597344 | 469860 | 90% | compress |
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+[asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png
+
+
+SUMMARY {"policy":2,"tsc":0,"build":0}
+OVERALL rc=1
+transcript -> artifacts/s2693/phase1-gates.txt
+
+===== build-e1 — rc=0 8.2s =====
+[asset-diet] Herald dev-path art 1158214 bytes (1500000 byte ceiling).
+[asset-diet] 60 manifest GLBs 119390904 -> 17043272 bytes (86% cut); 8 plate-class PNGs 26703061 -> 3744766 bytes (86% cut); herald spot cuts 375470 bytes.
+[asset-diet] GLB bytes by manifest family:
+| Family | GLBs | Before bytes | After bytes | Cut | Policy |
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 5 | 36156888 | 4406152 | 88% | compress |
+| landmarks | 25 | 49985436 | 6833280 | 86% | compress |
+| panoramas | 5 | 2510108 | 436048 | 83% | compress |
+| town-buildings | 8 | 16651832 | 2452664 | 85% | compress |
+| town-era-variants | 0 | 0 | 0 | 0% | compress |
+| props | 16 | 9763068 | 2020176 | 79% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 1 | 4323572 | 894952 | 79% | compress |
+| finale | 0 | 0 | 0 | 0% | compress |
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+[asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png
+
+
+===== release-assert — rc=0 0.1s =====
+[release-build] E1-only: 1128 files, 97726554 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+
+
+===== payload — rc=0 0.0s =====
+      "family": "the-claim-terrain.glb",
+      "why": "The NEXT map, held by the F-BUDGET-3 scene hold; inside the recorded cue window only because that window's end is polled over CDP with ~500 ms of skirt (F-AUDIO-4).",
+      "bytes": 966064,
+      "inBuild": true
+    },
+    {
+      "family": "version.json",
+      "why": "Written into dist by scripts/deploy.sh AFTER the build (its :81), so it is not a build output the payload can be computed from. ~60 bytes.",
+      "bytes": 0,
+      "inBuild": false
+    }
+  ],
+  "corpus": {
+    "read": [
+      "town-transfer-desktop-chrome.json",
+      "town-transfer-mobile-chrome.json"
+    ],
+    "observed": 82,
+    "undeclared": [
+      "char-hero-sheet-attack8.png",
+      "char-hero-sheet-work8.png"
+    ]
+  }
+}
+
+
+SUMMARY {"build-e1":0,"release-assert":0,"payload":0}
+OVERALL rc=0
+transcript -> artifacts/s2693/phase1-gates.txt
+
+===== diff-guards — rc=1 904.1s =====
+--- test:node-guards (rc=signal:SIGTERM) last 20 lines ---
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+WebSocket server error: Port 24678 is already in use
+✔ shipped Fairground crowd consumer loads without a missing dependency declaration (292.742208ms)
+✔ real history has exactly the four former double-state findings and current BACKLOG has none (121.977667ms)
+✔ prose citations are not declarations, only struck declarations close, and duplicate opens stay open (32.152042ms)
+✔ regression arm: narrow open vocabulary is byte-identical when explicitly selected (0.3115ms)
+✔ wide open vocabulary admits an explicit 🟠 OPEN declaration (0.088417ms)
+✔ 🟢 RULING without a state word is not an open declaration (0.062708ms)
+✔ wide open vocabulary exposes a ✅ plus separate 🔬 OPEN conflict without reddening narrow (25.509042ms)
+✔ wide-open advisory reports skipped rows, hidden open IDs, and narrow closed-only IDs (26.894333ms)
+✔ a conflict SPLIT ACROSS the index and a part file is still caught, with both coordinates (52.278958ms)
+✔ with no tasks/backlog/ at all the corpus line says so and the census is unchanged (27.275542ms)
+✔ fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1 (249.085375ms)
+✔ non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism (251.803ms)
+✔ the pinned family lists are sorted, deduped and disjoint (0.630708ms)
+✔ the family derivation survives a rebuild (0.284792ms)
+✔ every first-town request belongs to a pinned family (2.4345ms)
+✔ no second map is warmed inside the first town window (1.012333ms)
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.
+
+guards: 4/5 passed -- RED: test:node-guards
+guard-stats: appended 5 record(s) to /Users/robin/.goldrush/fire-s2693/wt-tpf1/logs/guard-stats.jsonl
+
