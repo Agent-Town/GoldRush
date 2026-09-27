@@ -1,0 +1,35 @@
+
+e7-relay-rush {"t":534.8,"wave":17,"hp":33,"gold":0,"kills":775,"x":-22.1,"z":46.7,"alive":22,"seams":2}
+
+e7-relay-rush {"t":545.2,"wave":18,"hp":33,"gold":0,"kills":794,"x":-29,"z":44.4,"alive":30,"seams":2}
+
+e7-relay-rush {"t":555.5,"wave":18,"hp":33,"gold":0,"kills":822,"x":-21.4,"z":46,"alive":29,"seams":2}
+
+e7-relay-rush {"t":565.9,"wave":18,"hp":33,"gold":0,"kills":838,"x":-26.8,"z":40.7,"alive":26,"seams":2}
+
+e7-relay-rush {"t":576.3,"wave":19,"hp":33,"gold":0,"kills":857,"x":-26.1,"z":40,"alive":32,"seams":2}
+
+  2) [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e7-relay-rush plays to its authored terminal, banks, reloads and returns to the board @slow
+
+    Error: secures: runState=dead at wave 19 / 579.3s sim, 866 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1454 |       }
+      1455 |
+    > 1456 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1457 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1458 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1459 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1456:64
+
+    Error Context: ../../../../../.goldrush/play-proofs/run-13/default/e7-relay-rush/results/native-proofs-e7-relay-rus-c45b5-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e7-relay-rush plays to its authored terminal, banks, reloads and returns to the board @slow
+    [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e7-relay-rush plays to its authored terminal, banks, reloads and returns to the board @slow
