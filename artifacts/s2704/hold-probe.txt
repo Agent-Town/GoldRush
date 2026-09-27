@@ -1,0 +1,17 @@
+
+  ⛔ BLOCKED — DO NOT DRAIN: tasks/done/20260927-160815-sol-play-proofs-7.md
+
+  goal leaf       : sol-play-proofs-7  (tasks/goals.json, status="blocked")
+  reason          : F-2704-1 (s2704): candidate 0c43f9524443fc86272a530eced87515347aa3d4 adds 86,013,547 evidence bytes against the 40,000,000-byte limit; archive plan pins all 231 files. Preserve lane and done-move. Lift only after retention-safe packaging/archive yields a candidate within the unchanged budget, then perform normal merged-tree drain gates. Corrective play-proofs-evidence-retention-1 is authored, not dispatched; no fire refill under CODEX-WALL.
+
+  BACKLOG context:
+    tasks/BACKLOG.md:1  ⛔ **F-2704-1 — GATE-SIDE HOLD (s2704, 2026-09-27): play-proofs-7 evidence cannot yet land within its byte budget.** Verified source base `1ddb5f4537cf
+    tasks/BACKLOG.md:56  🎯 **SOL PLAY PROOFS 8 — `sol-play-proofs-8` AUTHORED 2026-09-27, queue copy HELD until `sol-play-proofs-7` lands (Astra on lane-c; the campaign's con
+    tasks/BACKLOG.md:57  ⛔ **SOL PLAY PROOFS 7 — `sol-play-proofs-7` AUTHORED 2026-09-27, QUEUED on lane-c 2026-09-27 09:10Z on the owner's "go" (Astra on lane-c; owner verbat
+
+  blockClass=gate-side — a FIRE-RECORDED readiness hold, NOT an owner debt. No
+  owner word exists that would lift this one, so carrying it to the desk parks it
+  forever. It still refuses the drain (rc=1): lift it by SATISFYING the condition
+  printed above and re-registering the leaf IN THE SAME COMMIT — not by merging
+  first, and not by a green battery that answers a narrower question than the hold.
+

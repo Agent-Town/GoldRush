@@ -6745,12 +6745,17 @@
             {
               "id": "sol-play-proofs-7",
               "title": "Play-proofs run 7 (the campaign's run 11 on disk): the first six of the 22 maps the campaign never reached (Drill Yard, Dry Gulch, Night Shift, Hill Mine, Trestle, Moth Season), the campaign acceptance on both screens, defects as F-IDs with owners, the remaining sixteen carried",
-              "status": "queued",
+              "status": "blocked",
               "taskFile": "sol-play-proofs-7.md",
-              "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'continue the play test ... the Astra budget will be excellent to use for that'); the queue copy is HELD until the owner says go after his desk decisions",
+              "lane": "lane-c (completed Astra run, source branch sol/map-art-campaign-2; preserve undrained content)",
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable) from the owner's word of 2026-09-27",
-              "queuedAt": "2026-09-27"
+              "queuedAt": "2026-09-27",
+              "blockClass": "gate-side",
+              "blockedReason": "F-2704-1 (s2704): candidate 0c43f9524443fc86272a530eced87515347aa3d4 adds 86,013,547 evidence bytes against the 40,000,000-byte limit; archive plan pins all 231 files. Preserve lane and done-move. Lift only after retention-safe packaging/archive yields a candidate within the unchanged budget, then perform normal merged-tree drain gates. Corrective play-proofs-evidence-retention-1 is authored, not dispatched; no fire refill under CODEX-WALL.",
+              "review": "reviews/sol-play-proofs-7.md",
+              "heldAt": "2026-09-27",
+              "heldBy": "s2704"
             },
             {
               "id": "sol-play-proofs-8",
@@ -6761,6 +6766,18 @@
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable), the campaign's continuation, 2026-09-27",
               "queuedAt": "2026-09-27"
+            },
+            {
+              "id": "play-proofs-evidence-retention-1",
+              "title": "F-2704-1: separate run-11 frozen proof evidence from live inputs and outputs, preserving every byte and preparing a landing below the unchanged 40 MB budget",
+              "status": "blocked",
+              "blockClass": "gate-side",
+              "blockedReason": "Authored, not dispatched. Attended session assigns the scratch packaging corrective and coordinates its bounded archive execution under ruling 14a. CODEX-WALL bars fire dispatch. Do not reset or refill lane-c while run 7 is held.",
+              "taskFile": "play-proofs-evidence-retention-1.md",
+              "lane": "attended-assigned scratch worktree /Users/robin/Claude/Projects/wt-pp7-evidence; branch chore/play-proofs-evidence-retention-1; no fire dispatch",
+              "authoredAt": "2026-09-27",
+              "authoredBy": "s2704 from F-2704-1 and owner evidence ruling 14a",
+              "sourceCommit": "0c43f9524443fc86272a530eced87515347aa3d4"
             }
           ]
         }

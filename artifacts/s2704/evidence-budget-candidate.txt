@@ -1,0 +1,19 @@
+evidence-budget — the evidence bytes this landing adds
+  range    : 1ddb5f4537cf2765cfc384605e106bf40679c952..0c43f9524443fc86272a530eced87515347aa3d4
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 231 changed evidence path(s)
+  added    : 86.0 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 86.0 MB
+  limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+          2.3 MB  A  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-mobile-chrome/test-failed-1.png
+          2.3 MB  A  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/last-mobile-chrome.png
+          2.0 MB  A  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/terminal-mobile-chrome.png
+          1.8 MB  A  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/terminal-mobile-chrome.png
+          1.8 MB  A  artifacts/sol/play-proofs/run-11/e1-drill-yard/terminal-mobile-chrome.png
+          1.8 MB  A  artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/terminal-mobile-chrome.png
+          1.8 MB  A  artifacts/sol/play-proofs/run-11/e1-drill-yard/board-mobile-chrome.png
+          1.8 MB  A  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/board-mobile-chrome.png
+      … and 220 more growing path(s)
+  tree     : 9196.4 MB tracked under artifacts/ (no ceiling banked yet)
+  OVER BUDGET — 86.0 MB added against a 40.0 MB ceiling. Offload first (node scripts/evidence-offload.mjs --plan), or raise the ceiling as an OWNER act with a reason.
