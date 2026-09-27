@@ -1,0 +1,189 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T02:09:04.612Z — s2695 browser ########
+cwd=/Users/robin/.goldrush/fire-s2693/wt-tpf1
+env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0rnHUyj:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5404
+
+===== slice and adjacent suites =====
+$ npx playwright test e2e/tape-01-run-tape.spec.ts e2e/river-ending-score.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts e2e/live-seed-rotation.spec.ts --workers=1 --reporter=line
+rc=0 579.2s
+
+Running 72 tests using 1 worker
+
+
+
+
+[1/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+dev rng seeds watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+dev claim room watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+live standing inside its week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:164:1 › a run ridden on last week and submitted after Monday 00:00 UTC is refused, and the player reads why
+[5/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+dev the-claim watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+dev e1-drill-yard watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[7/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+dev e1-dry-gulch watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[8/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+dev e1-night-shift watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[9/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+dev e1-twin-banks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[10/72] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+dev e1-baron watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[11/72] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[12/72] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[13/72] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[14/72] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[15/72] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[16/72] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[17/72] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[18/72] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[19/72] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[20/72] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[21/72] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[22/72] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[23/72] [desktop-chrome] › e2e/river-ending-score.spec.ts:421:1 › the River's first pan writes one completed e10-river score and its reel, posts one standing the assay verifies, and never writes a second
+[24/72] [desktop-chrome] › e2e/river-ending-score.spec.ts:559:1 › a River run paused and resumed mid-run replays to its live hash
+[25/72] [desktop-chrome] › e2e/river-ending-score.spec.ts:589:1 › a boot of the River with no player action writes nothing
+[26/72] [desktop-chrome] › e2e/river-ending-score.spec.ts:609:1 › a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing
+[27/72] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[28/72] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[29/72] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[30/72] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[31/72] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[32/72] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[33/72] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[34/72] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[35/72] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[36/72] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+
+
+[37/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+dev rng seeds watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[38/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+dev claim room watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[39/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+live standing inside its week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[40/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:164:1 › a run ridden on last week and submitted after Monday 00:00 UTC is refused, and the player reads why
+[41/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+dev the-claim watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[42/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+dev e1-drill-yard watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[43/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+dev e1-dry-gulch watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[44/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+dev e1-night-shift watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[45/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+dev e1-twin-banks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[46/72] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+dev e1-baron watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[47/72] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[48/72] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[49/72] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[50/72] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[51/72] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[52/72] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[53/72] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[54/72] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[55/72] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[56/72] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[57/72] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[58/72] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[59/72] [mobile-chrome] › e2e/river-ending-score.spec.ts:421:1 › the River's first pan writes one completed e10-river score and its reel, posts one standing the assay verifies, and never writes a second
+[60/72] [mobile-chrome] › e2e/river-ending-score.spec.ts:559:1 › a River run paused and resumed mid-run replays to its live hash
+[61/72] [mobile-chrome] › e2e/river-ending-score.spec.ts:589:1 › a boot of the River with no player action writes nothing
+[62/72] [mobile-chrome] › e2e/river-ending-score.spec.ts:609:1 › a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing
+[63/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[64/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[65/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[66/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[67/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[68/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[69/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[70/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[71/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[72/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  72 passed (9.6m)
+(node:43910) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43973) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+(node:48854) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:48854) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+
+
+===== plain boot desktop and 390px =====
+$ npx playwright test e2e/f-astra-6-plain-boot.spec.ts -g plain the-claim boot --workers=1 --reporter=line
+rc=0 12.4s
+
+Running 2 tests using 1 worker
+
+
+
+
+[1/2] [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors
+
+
+
+[2/2] [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors
+  2 passed (11.8s)
+(node:53369) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53430) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53430) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:53525) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53525) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"slice and adjacent suites":0,"plain boot desktop and 390px":0}
+OVERALL rc=0

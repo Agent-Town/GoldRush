@@ -1,0 +1,104 @@
+{
+  "rawVerdicts": [],
+  "answers": [
+    {
+      "status": 403,
+      "body": {
+        "ok": false,
+        "error": "rotation_closed",
+        "message": "That rotation is not open."
+      }
+    }
+  ],
+  "bodies": [
+    {
+      "contractId": "the-claim",
+      "epochId": "epoch-1-frontier",
+      "score": {
+        "secured": true,
+        "waves": 10,
+        "timeAlive": 33.33333333333333,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "profileName": "Robin",
+      "anonId": "2953d6406e1c563db7c5b36aabfecf63",
+      "difficulty": "trail",
+      "seed": "e1-the-claim-r2026w38-f94c101b7c67",
+      "seedMode": "live",
+      "seedHash": "eddfe970b50063971c161e508ec324e792f492f1ce0cb993eb93036b5c462adb",
+      "inputLogHash": "7a13de6a654ded67f99ec72c008869f62ffe6ef2def70d3271142be65876ef08",
+      "tape": {
+        "version": 2,
+        "id": "2a1e343e-c20a-4f2f-94cb-894f2baf4798",
+        "createdAt": 1789646400000,
+        "kept": false,
+        "contract": "the-claim",
+        "seed": "e1-the-claim-r2026w38-f94c101b7c67",
+        "difficulty": "trail",
+        "simVersion": 1,
+        "meta": {
+          "buildId": "dev",
+          "viewVersion": 4,
+          "engineHash": "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0",
+          "era": 6
+        },
+        "runStart": {
+          "meta": {
+            "version": 1,
+            "tracks": {
+              "territory": 0,
+              "science": 0,
+              "hero": 0,
+              "agent": 0
+            }
+          },
+          "research": {
+            "version": 1,
+            "epochId": "epoch-1-frontier",
+            "metaScienceCursor": 0,
+            "progress": {
+              "version": 1,
+              "tracks": {
+                "territory": 0,
+                "science": 0,
+                "hero": 0,
+                "agent": 0
+              }
+            },
+            "taken": [],
+            "proposalSalt": 0,
+            "pinnedTarget": null,
+            "unlocks": {}
+          }
+        },
+        "inputLog": {
+          "version": 1,
+          "name": "2a1e343e-c20a-4f2f-94cb-894f2baf4798",
+          "contractId": "the-claim",
+          "seed": "e1-the-claim-r2026w38-f94c101b7c67",
+          "difficultyPreset": "trail",
+          "stepSeconds": 0.03333333333333333,
+          "start": {
+            "x": 0,
+            "z": 12
+          },
+          "durationTicks": 10,
+          "entries": [],
+          "truncated": null,
+          "primarySlot": 0,
+          "streams": [],
+          "playbookUses": []
+        },
+        "eventLogHash": "fnv1a32:2e1d6c37",
+        "outcome": {
+          "reason": "secured",
+          "secured": true,
+          "waves": 10,
+          "timeAlive": 33.33333333333333,
+          "gold": 0
+        }
+      }
+    }
+  ]
+}

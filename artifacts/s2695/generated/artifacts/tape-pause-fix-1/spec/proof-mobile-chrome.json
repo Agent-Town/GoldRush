@@ -1,0 +1,27 @@
+{
+  "pausedAt": 2.4666666666666677,
+  "worker": {
+    "code": 0,
+    "lines": [
+      {
+        "locator": {
+          "epochId": "epoch-10-deepsky",
+          "contractId": "e10-river",
+          "tapeId": "6a9594f7-5437-44a9-83b3-b85b6ef90bf6",
+          "rowId": "c97f9977b13ed12503622bf1024349af:1:1790475454139:d4c7a07dc1d0ed6e88d381176f2367397186625a0bf2cd518405e470fc39ff17"
+        },
+        "verdict": "verified",
+        "hashes": {
+          "claimed": "fnv1a32:00832e01",
+          "replayed": "fnv1a32:00832e01"
+        },
+        "wallMs": 5124
+      }
+    ],
+    "stderr": "(node:52330) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+  },
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}
