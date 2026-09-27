@@ -78,5 +78,5 @@ Call log:
   39 |     return goto(launch.toString(), options);
   40 |   };
   41 | }
-  42 | 
+  42 |
 ```
