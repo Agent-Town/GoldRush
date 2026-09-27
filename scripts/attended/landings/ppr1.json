@@ -1,0 +1,42 @@
+{
+  "tag": "ppr1",
+  "branch": "sol/open-findings-astra",
+  "port": 5405,
+  "mergeMessage": "drain: merge sol/open-findings-astra — play-proofs-evidence-retention-1 — run 11 of the play proofs (sol-play-proofs-7: Drill Yard PASS both screens; Dry Gulch, Night Shift, Hill Mine, Trestle, Moth Season HELD; no map defect) lands within the evidence budget: its six specs unchanged, its frozen record (230 files, 86,011,222 bytes) sealed byte-identically and offloaded by the factory's own mover to the private archive's evidence branch with index, pointers and previews in the tree (owner ruling 2026-09-24 item 14(a)); the fire's F-2704-1 hold satisfied (Astra on lane-a packaged; the attended drain archived)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/m1-01-claim-jumpers-death.spec.ts"
+    ],
+    "guards": [
+      "scripts/evidence-readers.test.mjs",
+      "scripts/review-evidence-audit.test.mjs"
+    ]
+  },
+  "cure": "scripts/attended/landings/ppr1-cure.sh",
+  "review": {
+    "path": "reviews/play-proofs-evidence-retention-1.md",
+    "title": "Drain review: `play-proofs-evidence-retention-1`, run 11 of the play proofs lands within the evidence budget through the first real evidence offload (Astra on lane-a; the fire's F-2704-1)",
+    "body": "scripts/attended/landings/ppr1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "play-proofs-evidence-retention-1.md",
+    "rowKey": "PLAY PROOFS EVIDENCE RETENTION 1 LANDED",
+    "rowEmoji": "📦",
+    "rowText": "Run 11 (`sol-play-proofs-7`) lands within the 40,000,000-byte evidence budget: Astra (lane-a) separated the frozen record (230 files, 86,011,222 bytes) from the live inputs into `artifacts/sol-play-proofs-7-record/` byte-identically (every SHA-256 in a manifest), kept `board-entry.ts` at its import path, imported the six specs unchanged and left the source lane untouched; the drain's cure ran the factory's mover (`scripts/evidence-offload.mjs --apply … --drain-authorized`) so the record now lives on the PRIVATE archive's `evidence` branch (`Agent-Town/GoldRush-archive`, visibility re-checked before the push, remote tip verified) with the index, `ARCHIVED.md` pointers and previews in the tree; `verify-archive.py` green, `review-evidence-audit --all` green, `evidence-budget` under the ceiling. The six maps' verdicts: Drill Yard PASS both screens (the practice terminal, Book, reload, the standings refusal); Dry Gulch HELD (deaths at 16), Night Shift HELD (17/16, 15/16), Hill Mine HELD (deaths at waves 1 to 2 on the terrace approach, escorts done), Trestle HELD (13/13, 13/11, escorts done), Moth Season HELD (the driver never establishes CONNECT); no reproducible map defect. The first per-landing offload under the owner's 2026-09-24 ruling 14(a); F-2704-1 satisfied. The run-7 leaf flips to merged by hand with this landing's hash; the source lane's six commits are kept as `archive/sol-play-proofs-7-run-11`. `reviews/play-proofs-evidence-retention-1.md`.",
+    "statusPhrase": "run 11 of the play proofs is on main within the evidence budget; its record lives on the private archive's evidence branch",
+    "drainedBy": "attended 2026-09-27 (scripts/attended/land.sh ppr1 under a fire hold; Astra packaged on lane-a)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/play-proofs-evidence-retention-1"
+}
