@@ -1,0 +1,64 @@
+bdfc85893 test: prove Stillwater wave terminal and persistent bank
+7c43ae31b test: sail Regatta course and prove both native bank journeys
+0622bbb1c test: prove Flotilla terminal bank and reload on both screens
+d92d1e5cc test: record Deepwater native boss engagement holds
+d9996b82a test: record Long Road native survival and convoy holds
+
+context compacted
+codex
+**READY-FOR-GATES — with recorded holds.** Full measurements and evidence: [run-12 report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-12/run-note.md>).
+
+| Map | Desktop / mobile verdict | Commit |
+|---|---|---|
+| Long Road | **HELD** — deaths at waves 4/5; convoy never dispatched | `d9996b82a` |
+| Deepwater Claim | **HELD** — both reached wave 100 without boss engagement | `d92d1e5cc` |
+| Flotilla | **PASS terminal journey** — wave 12, bank/Book/reload verified | `0622bbb1c` |
+| Regatta | **PASS** — course finished in 147.7/148.1s; bank/Book/reload verified | `7c43ae31b` |
+| Stillwater | **PASS terminal journey** — wave 12, bank/Book/reload verified | `bdfc85893` |
+| Glow Mesa | **PARTIAL** — authored endings at waves 8/9; driver’s wave-12 bank filter prevented persistence verification | `e1b6c1ea1` |
+
+No reproducible map defects or F-PP8 IDs. Follow-ups belong to **QA/native-proof instrumentation**: objective engagement for Long Road/Deepwater and early-ending bank acceptance for Glow Mesa. Broader Flotilla/Stillwater mechanics remain unproven.
+
+Validation: 14 rides, zero console/page errors; TypeScript and build green; adjacent checks **2 passed**. Evidence **4,146,186 bytes**, below budget. Working tree clean; no push.
+
+Remaining maps, in order:
+
+1. e6-half-life-hollow
+2. e6-picnic
+3. e6-showroom
+4. e7-dead-band
+5. e7-echo-canyon
+6. e7-relay-rush
+7. e7-relay-valley
+8. e8-mare-claim
+9. e10-archive-world
+10. e10-ember-shore
+tokens used
+320,612
+**READY-FOR-GATES — with recorded holds.** Full measurements and evidence: [run-12 report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-12/run-note.md>).
+
+| Map | Desktop / mobile verdict | Commit |
+|---|---|---|
+| Long Road | **HELD** — deaths at waves 4/5; convoy never dispatched | `d9996b82a` |
+| Deepwater Claim | **HELD** — both reached wave 100 without boss engagement | `d92d1e5cc` |
+| Flotilla | **PASS terminal journey** — wave 12, bank/Book/reload verified | `0622bbb1c` |
+| Regatta | **PASS** — course finished in 147.7/148.1s; bank/Book/reload verified | `7c43ae31b` |
+| Stillwater | **PASS terminal journey** — wave 12, bank/Book/reload verified | `bdfc85893` |
+| Glow Mesa | **PARTIAL** — authored endings at waves 8/9; driver’s wave-12 bank filter prevented persistence verification | `e1b6c1ea1` |
+
+No reproducible map defects or F-PP8 IDs. Follow-ups belong to **QA/native-proof instrumentation**: objective engagement for Long Road/Deepwater and early-ending bank acceptance for Glow Mesa. Broader Flotilla/Stillwater mechanics remain unproven.
+
+Validation: 14 rides, zero console/page errors; TypeScript and build green; adjacent checks **2 passed**. Evidence **4,146,186 bytes**, below budget. Working tree clean; no push.
+
+Remaining maps, in order:
+
+1. e6-half-life-hollow
+2. e6-picnic
+3. e6-showroom
+4. e7-dead-band
+5. e7-echo-canyon
+6. e7-relay-rush
+7. e7-relay-valley
+8. e8-mare-claim
+9. e10-archive-world
+10. e10-ember-shore

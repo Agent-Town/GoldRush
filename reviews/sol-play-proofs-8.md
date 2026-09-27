@@ -1,6 +1,6 @@
-# Play proofs 8 — direct Node gate complete; final landing pending
+# Play proofs 8 — accepted evidence drain, three passes and three recorded limits
 
-**Verdict: READY FOR FINAL LANDING, NOT LANDED (s2710, 2026-09-27).** Source branch `sol/map-art-campaign-2`, tip `e1b6c1ea129577a07eb8cf853d08e3c6b61d46d0`; synchronized detached candidate `7910baa342b020c281454b6236bb71a3c3d40f20` at `/Users/robin/.goldrush/fire-s2709/wt-pp8`. The direct full Node command passed, including its chained legs. This long gate consumed the fire window; the goal remains queued and the done-move intact pending final landing and the required full Node run on main.
+**Verdict: ACCEPTED FOR LANDING (s2711, 2026-09-27); post-landing main Node gate pending.** Source branch `sol/map-art-campaign-2`, tip `e1b6c1ea129577a07eb8cf853d08e3c6b61d46d0`; final synchronized candidate `018c814afb23b4d683964c0be502d33d39021b5a` at `/Users/robin/.goldrush/fire-s2709/wt-pp8`. s2711 rechecked the complete synchronization diff: 34 bookkeeping/evidence paths, no executable, test, dependency or art input changes. The completed s2709 browser/build and s2710 full Node receipts remain valid. Goal, BACKLOG and done-move close in this drain commit set.
 
 The candidate adds six opt-in native proof specs, their run-12 record, and a Regatta-only movement helper. It changes no player-facing runtime, asset, balance, or existing assertion. The driver uses native inputs to board and steer the race boat. Removing that helper and its map-id-guarded call reproduces the previous driver byte-for-byte.
 
@@ -36,11 +36,10 @@ These are QA-driver limitations, not established map defects. The attended corre
 
 ## Merge classification
 
-Fork `1168df70bd8980049fa11c2fb4bb59f50b9e24d3`; primary base `da85d7ea3a72d5530f96ac11a048161dff03137e`. Of 103 paths, 102 are NEW and `e2e/native-proofs/driver.ts` is LANE-TOUCHED only. No MAIN-MOVED collision, no conflict, no blob over 50 MB. The complete per-file table is `artifacts/s2709/classification.json`; driver isolation is `artifacts/s2709/scope-audit.json`. s2710 merged newer primary bookkeeping at `762434518` into the candidate without conflict. `artifacts/s2710/input-equivalence.json` lists the complete synchronization diff; no executable inputs moved. Later handoff bookkeeping must be classified and synchronized before landing.
+Fork `1168df70bd8980049fa11c2fb4bb59f50b9e24d3`; primary base `da85d7ea3a72d5530f96ac11a048161dff03137e`. Of 103 paths, 102 are NEW and `e2e/native-proofs/driver.ts` is LANE-TOUCHED only. No MAIN-MOVED collision, no conflict, no blob over 50 MB. The complete per-file table is `artifacts/s2709/classification.json`; driver isolation is `artifacts/s2709/scope-audit.json`. s2710 merged newer primary bookkeeping at `762434518` into the candidate without conflict. `artifacts/s2710/input-equivalence.json` lists the complete synchronization diff; no executable inputs moved. s2711 synchronized the remaining 34 bookkeeping/evidence paths without conflicts; `artifacts/s2711/input-equivalence.json` proves no executable input changed.
 
-## Resume in order
+## Landing and remaining work
 
-1. Recheck primary policy and ownership; classify and merge newer main bookkeeping into the preserved candidate. Keep the source lane and its done-move intact until landing.
-2. Reuse the completed full Node, build and browser receipts only while their executable/test/dependency/art inputs remain unchanged. Do not repeat the capped wrapper. Measure final engine identity after any cure; this test-only candidate still matches era 6 pin 71.
-3. Complete the review, goal status/mergeHash, BACKLOG and done-move rename in the drain commit set; fast-forward main and push. Run the full Node command again on main after the fast-forward. The recent main precedent took 2524.416 s (`artifacts/s2696/main-node-result.json`), so reserve its fire window. No runtime deploy or player-visible Gazette item is owed by this test-only candidate.
-4. Run 9, run 10 and the holds corrective remain attended-dispatched, serial after their prerequisites land. Ten maps remain in the campaign; the source run-note carries their order.
+Candidate merge `018c814afb23b4d683964c0be502d33d39021b5a`; original lane merge `e3375fbd10dbde323eb38e9d4ceec1d07aab0385`. Final engine identity is unchanged (era 6, pin 71), and the evidence budget passes at 4,146,186 B. The final metadata commit closes the goal, BACKLOG and done-move together; main is fast-forwarded and pushed before its full Node verification. See `artifacts/s2711/report.md` for that required closeout result. This test-only slice has no player-visible change, runtime deployment or Gazette item.
+
+Run 9, run 10 and the holds corrective remain attended-dispatched, serial after their prerequisites land. Ten maps remain in the campaign; the source run-note carries their order. The existing corrective owns all three driver limits; this drain infers no balance defect.
