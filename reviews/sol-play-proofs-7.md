@@ -1,3 +1,9 @@
+# sol-play-proofs-7 — landed through the retention corrective
+
+**Current verdict: LANDED as `4615253db` by the attended session, 2026-09-27.** F-2704-1 is resolved. The final merged-tree gates are in [the retention drain review](play-proofs-evidence-retention-1.md). Fire s2706 independently re-verified all 231 original hashes, the private archive tip `65f83e203bbb7d8f67c72f65d18f3db4a0f9582a`, and the complete landed range through `ecc71a4df`: 7,230,021 added evidence bytes against 40,000,000. See `artifacts/s2706/report.md`. The six map verdicts are unchanged; run 8 dispatch is attended-owned.
+
+The following is the preserved historical s2704/s2705 hold report. Its pending-archive and blocked statements describe that earlier state.
+
 # sol-play-proofs-7 — evidence-budget hold
 
 2026-09-27, s2704. Branch `sol/map-art-campaign-2`, tip `0c43f9524443fc86272a530eced87515347aa3d4`, source base `1ddb5f4537cf2765cfc384605e106bf40679c952`.

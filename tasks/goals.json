@@ -6747,7 +6747,7 @@
               "title": "Play-proofs run 7 (the campaign's run 11 on disk): the first six of the 22 maps the campaign never reached (Drill Yard, Dry Gulch, Night Shift, Hill Mine, Trestle, Moth Season), the campaign acceptance on both screens, defects as F-IDs with owners, the remaining sixteen carried",
               "status": "merged",
               "taskFile": "sol-play-proofs-7.md",
-              "lane": "lane-c (completed Astra run, source branch sol/map-art-campaign-2; preserve undrained content)",
+              "lane": "lane-c (completed Astra run; original source preserved as archive/sol-play-proofs-7-run-11; landed through retention corrective 4615253db)",
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable) from the owner's word of 2026-09-27",
               "queuedAt": "2026-09-27",
@@ -6763,7 +6763,7 @@
               "title": "Play-proofs run 8 (run 12 on disk): the Long Road, the Deepwater Claim, the Flotilla, the Regatta, Stillwater, the Glow Mesa; the campaign acceptance on both screens; defects as F-IDs with owners; the remaining ten carried",
               "status": "queued",
               "taskFile": "sol-play-proofs-8.md",
-              "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'continue the play test'); the queue copy is HELD until sol-play-proofs-7 has landed on main",
+              "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 continue the play test; attended-only dispatch; predecessor sol-play-proofs-7 landed as 4615253db)",
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable), the campaign's continuation, 2026-09-27",
               "queuedAt": "2026-09-27"
@@ -6778,9 +6778,7 @@
               "authoredBy": "s2704 from F-2704-1 and owner evidence ruling 14a",
               "sourceCommit": "0c43f9524443fc86272a530eced87515347aa3d4",
               "queuedAt": "2026-09-27",
-              "liftedBy": "attended 2026-09-27: gate-side condition satisfied (assigned to Astra on lane-a)",
-              "blockClass": "gate-side",
-              "blockedReason": "F-2704-1, s2705: packaging completed as 6974a5cc7, but its lane still carries the sealed evidence. The 6,822,605-byte result is a local fixture, not a published private archive. The task reserves the real archive for attended coordination. Lift after verified private archive retention/push and an actual candidate within 40,000,000 added evidence bytes, then perform normal merged-tree drain gates. Preserve both lane tips and done-moves; no re-queue.",
+              "liftedBy": "s2706 verification of attended landing 4615253db: private archive evidence tip 65f83e203, all 231 original hashes retained, actual landing through ecc71a4df adds 7,230,021 B below 40,000,000 B; final gates in reviews/play-proofs-evidence-retention-1.md",
               "review": "reviews/play-proofs-evidence-retention-1.md",
               "heldAt": "2026-09-27",
               "heldBy": "s2705",
@@ -6788,6 +6786,16 @@
               "mergeHash": "4615253db6d21ca9dd162e85b149d1f0b2ae1f8e",
               "mergedAt": "2026-09-27",
               "drainedBy": "attended 2026-09-27 (scripts/attended/land.sh ppr1 under a fire hold; Astra packaged on lane-a)"
+            },
+            {
+              "id": "sol-play-proofs-9",
+              "title": "Play-proofs run 9 (run 13 on disk): Half-Life Hollow, the Picnic, the Showroom, the Dead Band, Echo Canyon, Relay Rush; the campaign acceptance on both screens; defects as F-IDs with owners; evidence under 25 MB; the last four carried",
+              "status": "queued",
+              "taskFile": "sol-play-proofs-9.md",
+              "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'continue the play test'); the queue copy is HELD until sol-play-proofs-8 has landed on main",
+              "authoredAt": "2026-09-27",
+              "authoredBy": "attended (Fable), the campaign's continuation, 2026-09-27",
+              "queuedAt": "2026-09-27"
             }
           ]
         }

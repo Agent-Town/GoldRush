@@ -43,3 +43,7 @@ Base fresh main; the candidate touches the six new specs, `artifacts/sol-play-pr
 | e2e both projects, --workers=1 | `rc=0   34 passed (2.8m)  10:48Z` |
 | full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 1040 ℹ pass 1034 ℹ fail 1 ℹ skipped 5  11:08Z` |
 | engine hash | `merged: 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)` |
+
+### s2706 independent post-landing verification (2026-09-27)
+
+The unchanged `verify-archive.py` passes on main against the clean private evidence checkout: all 231 original hashes, 230 archived files / 86,011,222 bytes, live helper, six specs, shared driver, manifest, report, pointer and preview preserved. The checkout and remote evidence head both equal `65f83e203bbb7d8f67c72f65d18f3db4a0f9582a`; GitHub visibility is PRIVATE. The actual complete landing from `4615253db^1` through `ecc71a4df` adds **7,230,021 B** across 53 changed evidence paths, below 40,000,000 B. This is the full landed-range measurement; the earlier 6,822,605 B remains the narrower local fixture result. Evidence: `artifacts/s2706/archive-verification.txt`, `artifacts/s2706/landed-budget.json`, `artifacts/s2706/duties.json`. The stale F-2704-1 ledger descriptions and gate-side fields were retired without rerunning or relabelling the attended runtime gates.
