@@ -3119,3 +3119,11 @@ The front page gains an illustrated share card, moves its three illustrations in
 and removes the token-chart footer link.
 merge `8eca6385e`, `df691d8b1`, `f68542f50`, `309b938eb`, `80854592d`, `b79e80acf`, `98c0c0505`, `f9f4c0d23`, `27e59383d` · reviews `reviews/door-tape-grammar-3.md`, `reviews/door-tape-grammar-4.md`, `reviews/kv-counters-to-ledger-2.md`, `reviews/canyon-works-traversal-2.md`, `reviews/localhost-cors-2.md`, `reviews/site-vibe-fixes-1.md`, `reviews/river-ending-score-1.md`, `reviews/charter-press-locked-lands-1.md`, `reviews/is-main-2.md`
 ROUNDUP-CLASS — 2026-W39; s2691 closes the remaining September 26 landing omissions in one item. Pin 66 records an assay-tool entry-point repair in era 6, with no new player mechanic. River county posting was held at this landing; its September 27 assay is separate news. The Pages standings redirect still needs its ops setting. Stale cached HTML still affected the live image URLs at day end (F-SVF1-10); working live previews are not claimed. Owner approval still governs publication.
+
+## ROUNDUP — the River's quiet pan can earn a county standing
+The River's first successful quiet pan now sends one standing to the county.
+Its reel is checked before the result is verified on the Claim Ledger. Fresh
+runs with diagonal movement can also verify: the reel follows the same steps
+as the rider, on keyboard and phone.
+merge `712db42e2` · pin `9ce6ecba9` · review `reviews/river-assay-1.md`
+ROUNDUP-CLASS — 2026-W39; s2692 closes the River assay's GZ-01 omission. The week's three standalone slots are spent. Pin 70 remains in era 6. At this landing, paused human reels still stop during replay (F-RVA1-6); the attended `tape-pause-fix-1` drain is pending. Old reels with the original diagonal drift remain rejected. Draft only; publication stays owner-only.
