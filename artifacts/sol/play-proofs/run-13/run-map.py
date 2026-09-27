@@ -19,7 +19,7 @@ evidence.mkdir(parents=True, exist_ok=True)
 (evidence / 'command.exit').write_text(str(result.returncode)+'\n')
 # Keep the full recorder and failure dump external; cite the short command tail.
 lines = (root / 'command.log').read_text().splitlines()
-(evidence / 'command-tail.log').write_text('\n'.join(lines[-35:])+'\n')
+(evidence / 'command-tail.log').write_text('\n'.join(line.rstrip() for line in lines[-35:])+'\n')
 final = pathlib.Path(f'artifacts/sol/play-proofs/run-13/{contract}/{strategy}')
 final.mkdir(parents=True, exist_ok=True)
 for file in evidence.iterdir():
