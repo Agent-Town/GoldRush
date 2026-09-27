@@ -1,0 +1,56 @@
+[
+  {
+    "name": "tsc-final",
+    "argv": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "build-final",
+    "argv": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "gate-unset",
+    "argv": [
+      "npx",
+      "playwright",
+      "test",
+      "e2e/native-proofs/e7-relay-valley.spec.ts",
+      "e2e/native-proofs/e8-mare-claim.spec.ts",
+      "e2e/native-proofs/e10-archive-world.spec.ts",
+      "e2e/native-proofs/e10-ember-shore.spec.ts",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line",
+      "--output=/Users/robin/.goldrush/play-proofs/run-14/skip-results"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "adjacent",
+    "argv": [
+      "npx",
+      "playwright",
+      "test",
+      "e2e/locked-win.spec.ts",
+      "--grep",
+      "The Claim card names",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--trace=off",
+      "--reporter=line",
+      "--output=/Users/robin/.goldrush/play-proofs/run-14/adjacent-results"
+    ],
+    "exit": 0
+  }
+]

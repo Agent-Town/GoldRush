@@ -1,0 +1,1250 @@
+[
+  {
+    "contract": "e10-archive-world",
+    "project": "desktop-chrome",
+    "strategy": "default",
+    "wave": 20,
+    "sim": 606.9333333333092,
+    "hp": 0,
+    "gold": 0,
+    "repairs": 0,
+    "standing": 8,
+    "pieces": 8,
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e10-archive-world secureWave=12"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 20 / 606.9s sim, 938 kills, 0 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "objective": {
+      "playbookUse": null,
+      "air": null,
+      "atmosphere": null,
+      "physics": {
+        "active": false,
+        "contractId": "e10-archive-world",
+        "source": "default",
+        "movement": "normal",
+        "feelG": 1,
+        "lobArcDistanceMultiplier": 1,
+        "lobAirTimeMultiplier": 1,
+        "knockbackScale": 1,
+        "orbitalReturn": false,
+        "vacuum": false,
+        "fixedTimestepOnly": true,
+        "filteredMovement": {
+          "x": 0,
+          "y": 0
+        },
+        "adaptedLobs": [
+          {
+            "resumeKey": "orbital:kineticLobber",
+            "range": 15,
+            "airTime": 1.68
+          }
+        ]
+      },
+      "archive": {
+        "restoredWingIds": [],
+        "restoredThisRun": [],
+        "holdingWingId": null,
+        "completedHolds": 0,
+        "objectiveAllowsSecure": false
+      },
+      "preserveVent": null,
+      "squall": {
+        "declared": true,
+        "calmSeconds": 60,
+        "telegraphSeconds": 8,
+        "squallSeconds": 25,
+        "recoverSeconds": 8,
+        "cycleSeconds": 101,
+        "phase": "calm",
+        "phaseProgress": 0.015555555555152978,
+        "cycle": 6,
+        "tick": 4552,
+        "elapsedSeconds": 606.933,
+        "secondsToNextPhase": 59.067,
+        "secondsToNextSquall": 67.067,
+        "squallsStarted": 6,
+        "squallsCompleted": 6,
+        "motePressureMultiplier": 2,
+        "blowing": false,
+        "transitions": [
+          {
+            "from": null,
+            "to": "calm",
+            "tick": 0,
+            "atSeconds": 0,
+            "cycle": 0
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 451,
+            "atSeconds": 60.133,
+            "cycle": 0
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 510,
+            "atSeconds": 68,
+            "cycle": 0
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 698,
+            "atSeconds": 93.067,
+            "cycle": 0
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 758,
+            "atSeconds": 101.067,
+            "cycle": 1
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 1208,
+            "atSeconds": 161.067,
+            "cycle": 1
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 1268,
+            "atSeconds": 169.067,
+            "cycle": 1
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 1456,
+            "atSeconds": 194.133,
+            "cycle": 1
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 1516,
+            "atSeconds": 202.133,
+            "cycle": 2
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 1966,
+            "atSeconds": 262.133,
+            "cycle": 2
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 2026,
+            "atSeconds": 270.133,
+            "cycle": 2
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 2213,
+            "atSeconds": 295.067,
+            "cycle": 2
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 2273,
+            "atSeconds": 303.067,
+            "cycle": 3
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 2723,
+            "atSeconds": 363.067,
+            "cycle": 3
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 2783,
+            "atSeconds": 371.067,
+            "cycle": 3
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 2971,
+            "atSeconds": 396.133,
+            "cycle": 3
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 3031,
+            "atSeconds": 404.133,
+            "cycle": 4
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 3481,
+            "atSeconds": 464.133,
+            "cycle": 4
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 3541,
+            "atSeconds": 472.133,
+            "cycle": 4
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 3728,
+            "atSeconds": 497.067,
+            "cycle": 4
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 3788,
+            "atSeconds": 505.067,
+            "cycle": 5
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 4238,
+            "atSeconds": 565.067,
+            "cycle": 5
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 4298,
+            "atSeconds": 573.067,
+            "cycle": 5
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 4486,
+            "atSeconds": 598.133,
+            "cycle": 5
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 4546,
+            "atSeconds": 606.133,
+            "cycle": 6
+          }
+        ]
+      }
+    },
+    "evidence": "e10-archive-world/default/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e10-archive-world",
+    "project": "mobile-chrome",
+    "strategy": "default",
+    "wave": 20,
+    "sim": 611.0666666666423,
+    "hp": 0,
+    "gold": 0,
+    "repairs": 0,
+    "standing": 8,
+    "pieces": 8,
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e10-archive-world secureWave=12"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 20 / 611.1s sim, 949 kills, 0 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "objective": {
+      "playbookUse": null,
+      "air": null,
+      "atmosphere": null,
+      "physics": {
+        "active": false,
+        "contractId": "e10-archive-world",
+        "source": "default",
+        "movement": "normal",
+        "feelG": 1,
+        "lobArcDistanceMultiplier": 1,
+        "lobAirTimeMultiplier": 1,
+        "knockbackScale": 1,
+        "orbitalReturn": false,
+        "vacuum": false,
+        "fixedTimestepOnly": true,
+        "filteredMovement": {
+          "x": 0,
+          "y": 0
+        },
+        "adaptedLobs": [
+          {
+            "resumeKey": "orbital:kineticLobber",
+            "range": 15,
+            "airTime": 1.68
+          }
+        ]
+      },
+      "archive": {
+        "restoredWingIds": [],
+        "restoredThisRun": [],
+        "holdingWingId": null,
+        "completedHolds": 0,
+        "objectiveAllowsSecure": false
+      },
+      "preserveVent": null,
+      "squall": {
+        "declared": true,
+        "calmSeconds": 60,
+        "telegraphSeconds": 8,
+        "squallSeconds": 25,
+        "recoverSeconds": 8,
+        "cycleSeconds": 101,
+        "phase": "calm",
+        "phaseProgress": 0.08444444444403795,
+        "cycle": 6,
+        "tick": 4583,
+        "elapsedSeconds": 611.067,
+        "secondsToNextPhase": 54.933,
+        "secondsToNextSquall": 62.933,
+        "squallsStarted": 6,
+        "squallsCompleted": 6,
+        "motePressureMultiplier": 2,
+        "blowing": false,
+        "transitions": [
+          {
+            "from": null,
+            "to": "calm",
+            "tick": 0,
+            "atSeconds": 0,
+            "cycle": 0
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 451,
+            "atSeconds": 60.133,
+            "cycle": 0
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 510,
+            "atSeconds": 68,
+            "cycle": 0
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 698,
+            "atSeconds": 93.067,
+            "cycle": 0
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 758,
+            "atSeconds": 101.067,
+            "cycle": 1
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 1208,
+            "atSeconds": 161.067,
+            "cycle": 1
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 1268,
+            "atSeconds": 169.067,
+            "cycle": 1
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 1456,
+            "atSeconds": 194.133,
+            "cycle": 1
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 1516,
+            "atSeconds": 202.133,
+            "cycle": 2
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 1966,
+            "atSeconds": 262.133,
+            "cycle": 2
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 2026,
+            "atSeconds": 270.133,
+            "cycle": 2
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 2213,
+            "atSeconds": 295.067,
+            "cycle": 2
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 2273,
+            "atSeconds": 303.067,
+            "cycle": 3
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 2723,
+            "atSeconds": 363.067,
+            "cycle": 3
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 2783,
+            "atSeconds": 371.067,
+            "cycle": 3
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 2971,
+            "atSeconds": 396.133,
+            "cycle": 3
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 3031,
+            "atSeconds": 404.133,
+            "cycle": 4
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 3481,
+            "atSeconds": 464.133,
+            "cycle": 4
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 3541,
+            "atSeconds": 472.133,
+            "cycle": 4
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 3728,
+            "atSeconds": 497.067,
+            "cycle": 4
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 3788,
+            "atSeconds": 505.067,
+            "cycle": 5
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 4238,
+            "atSeconds": 565.067,
+            "cycle": 5
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 4298,
+            "atSeconds": 573.067,
+            "cycle": 5
+          },
+          {
+            "from": "squall",
+            "to": "recover",
+            "tick": 4486,
+            "atSeconds": 598.133,
+            "cycle": 5
+          },
+          {
+            "from": "recover",
+            "to": "calm",
+            "tick": 4546,
+            "atSeconds": 606.133,
+            "cycle": 6
+          }
+        ]
+      }
+    },
+    "evidence": "e10-archive-world/default/row-mobile-chrome.json"
+  },
+  {
+    "contract": "e10-ember-shore",
+    "project": "desktop-chrome",
+    "strategy": "default",
+    "wave": 3,
+    "sim": 92.93333333333459,
+    "hp": 92,
+    "gold": 15,
+    "repairs": 0,
+    "standing": 2,
+    "pieces": 2,
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e10-ember-shore secureWave=12"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 3 / 92.9s sim, 48 kills, 15 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "objective": {
+      "playbookUse": null,
+      "air": null,
+      "atmosphere": null,
+      "physics": {
+        "active": false,
+        "contractId": "e10-ember-shore",
+        "source": "default",
+        "movement": "normal",
+        "feelG": 1,
+        "lobArcDistanceMultiplier": 1,
+        "lobAirTimeMultiplier": 1,
+        "knockbackScale": 1,
+        "orbitalReturn": false,
+        "vacuum": false,
+        "fixedTimestepOnly": true,
+        "filteredMovement": {
+          "x": 0,
+          "y": 0
+        },
+        "adaptedLobs": [
+          {
+            "resumeKey": "orbital:kineticLobber",
+            "range": 15,
+            "airTime": 1.68
+          }
+        ]
+      },
+      "archive": null,
+      "preserveVent": {
+        "declared": true,
+        "stakeId": "last-warm-vent",
+        "position": {
+          "x": 3,
+          "z": -10
+        },
+        "warmth": 0,
+        "maxWarmth": 100,
+        "alight": false,
+        "guttered": true,
+        "gutteredAtSeconds": 92.933,
+        "decayPerSecond": 4,
+        "decaying": false,
+        "warmthLost": 100,
+        "warmthRestored": 0,
+        "stoke": {
+          "action": "STOKE",
+          "goldCost": 15,
+          "warmthRestore": 40,
+          "radius": 4,
+          "uses": 0,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 0
+          },
+          "lastRefusal": null
+        },
+        "squallsSurvived": 0,
+        "squallsRequired": 1,
+        "motePressure": {
+          "multiplier": 2,
+          "active": false,
+          "pressShare": 0
+        },
+        "objectiveMet": false
+      },
+      "squall": {
+        "declared": true,
+        "calmSeconds": 60,
+        "telegraphSeconds": 8,
+        "squallSeconds": 25,
+        "recoverSeconds": 8,
+        "cycleSeconds": 101,
+        "phase": "squall",
+        "phaseProgress": 0.9973333333333835,
+        "cycle": 0,
+        "tick": 697,
+        "elapsedSeconds": 92.933,
+        "secondsToNextPhase": 0.067,
+        "secondsToNextSquall": 0,
+        "squallsStarted": 1,
+        "squallsCompleted": 0,
+        "motePressureMultiplier": 2,
+        "blowing": true,
+        "transitions": [
+          {
+            "from": null,
+            "to": "calm",
+            "tick": 0,
+            "atSeconds": 0,
+            "cycle": 0
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 451,
+            "atSeconds": 60.133,
+            "cycle": 0
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 510,
+            "atSeconds": 68,
+            "cycle": 0
+          }
+        ]
+      }
+    },
+    "evidence": "e10-ember-shore/default/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e10-ember-shore",
+    "project": "mobile-chrome",
+    "strategy": "default",
+    "wave": 3,
+    "sim": 92.93333333333459,
+    "hp": 92,
+    "gold": 15,
+    "repairs": 0,
+    "standing": 2,
+    "pieces": 2,
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e10-ember-shore secureWave=12"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 3 / 92.9s sim, 47 kills, 15 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "objective": {
+      "playbookUse": null,
+      "air": null,
+      "atmosphere": null,
+      "physics": {
+        "active": false,
+        "contractId": "e10-ember-shore",
+        "source": "default",
+        "movement": "normal",
+        "feelG": 1,
+        "lobArcDistanceMultiplier": 1,
+        "lobAirTimeMultiplier": 1,
+        "knockbackScale": 1,
+        "orbitalReturn": false,
+        "vacuum": false,
+        "fixedTimestepOnly": true,
+        "filteredMovement": {
+          "x": 0,
+          "y": 0
+        },
+        "adaptedLobs": [
+          {
+            "resumeKey": "orbital:kineticLobber",
+            "range": 15,
+            "airTime": 1.68
+          }
+        ]
+      },
+      "archive": null,
+      "preserveVent": {
+        "declared": true,
+        "stakeId": "last-warm-vent",
+        "position": {
+          "x": 3,
+          "z": -10
+        },
+        "warmth": 0,
+        "maxWarmth": 100,
+        "alight": false,
+        "guttered": true,
+        "gutteredAtSeconds": 92.933,
+        "decayPerSecond": 4,
+        "decaying": false,
+        "warmthLost": 100,
+        "warmthRestored": 0,
+        "stoke": {
+          "action": "STOKE",
+          "goldCost": 15,
+          "warmthRestore": 40,
+          "radius": 4,
+          "uses": 0,
+          "refusals": {
+            "undeclared": 0,
+            "guttered": 0,
+            "out-of-reach": 0,
+            "insufficient-gold": 0,
+            "already-warm": 0
+          },
+          "lastRefusal": null
+        },
+        "squallsSurvived": 0,
+        "squallsRequired": 1,
+        "motePressure": {
+          "multiplier": 2,
+          "active": false,
+          "pressShare": 0
+        },
+        "objectiveMet": false
+      },
+      "squall": {
+        "declared": true,
+        "calmSeconds": 60,
+        "telegraphSeconds": 8,
+        "squallSeconds": 25,
+        "recoverSeconds": 8,
+        "cycleSeconds": 101,
+        "phase": "squall",
+        "phaseProgress": 0.9973333333333835,
+        "cycle": 0,
+        "tick": 697,
+        "elapsedSeconds": 92.933,
+        "secondsToNextPhase": 0.067,
+        "secondsToNextSquall": 0,
+        "squallsStarted": 1,
+        "squallsCompleted": 0,
+        "motePressureMultiplier": 2,
+        "blowing": true,
+        "transitions": [
+          {
+            "from": null,
+            "to": "calm",
+            "tick": 0,
+            "atSeconds": 0,
+            "cycle": 0
+          },
+          {
+            "from": "calm",
+            "to": "telegraph",
+            "tick": 451,
+            "atSeconds": 60.133,
+            "cycle": 0
+          },
+          {
+            "from": "telegraph",
+            "to": "squall",
+            "tick": 510,
+            "atSeconds": 68,
+            "cycle": 0
+          }
+        ]
+      }
+    },
+    "evidence": "e10-ember-shore/default/row-mobile-chrome.json"
+  },
+  {
+    "contract": "e7-relay-valley",
+    "project": "desktop-chrome",
+    "strategy": "default",
+    "wave": 17,
+    "sim": 516.799999999981,
+    "hp": 0,
+    "gold": 0,
+    "repairs": 0,
+    "standing": 8,
+    "pieces": 8,
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e7-relay-valley secureWave=20"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 17 / 516.8s sim, 701 kills, 0 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "objective": {
+      "playbookUse": {
+        "declared": true,
+        "objective": "relay",
+        "objectiveMet": false,
+        "uses": 0,
+        "relaysLitByProgram": []
+      },
+      "air": null,
+      "atmosphere": null,
+      "physics": {
+        "active": false,
+        "contractId": "e7-relay-valley",
+        "source": "default",
+        "movement": "normal",
+        "feelG": 1,
+        "lobArcDistanceMultiplier": 1,
+        "lobAirTimeMultiplier": 1,
+        "knockbackScale": 1,
+        "orbitalReturn": false,
+        "vacuum": false,
+        "fixedTimestepOnly": true,
+        "filteredMovement": {
+          "x": 0,
+          "y": 0
+        },
+        "adaptedLobs": [
+          {
+            "resumeKey": "orbital:kineticLobber",
+            "range": 15,
+            "airTime": 1.68
+          }
+        ]
+      },
+      "archive": null,
+      "preserveVent": null,
+      "squall": null
+    },
+    "evidence": "e7-relay-valley/default/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e7-relay-valley",
+    "project": "mobile-chrome",
+    "strategy": "default",
+    "wave": 17,
+    "sim": 515.1999999999811,
+    "hp": 0,
+    "gold": 0,
+    "repairs": 0,
+    "standing": 8,
+    "pieces": 8,
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e7-relay-valley secureWave=20"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 17 / 515.2s sim, 711 kills, 0 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "objective": {
+      "playbookUse": {
+        "declared": true,
+        "objective": "relay",
+        "objectiveMet": false,
+        "uses": 0,
+        "relaysLitByProgram": []
+      },
+      "air": null,
+      "atmosphere": null,
+      "physics": {
+        "active": false,
+        "contractId": "e7-relay-valley",
+        "source": "default",
+        "movement": "normal",
+        "feelG": 1,
+        "lobArcDistanceMultiplier": 1,
+        "lobAirTimeMultiplier": 1,
+        "knockbackScale": 1,
+        "orbitalReturn": false,
+        "vacuum": false,
+        "fixedTimestepOnly": true,
+        "filteredMovement": {
+          "x": 0,
+          "y": 0
+        },
+        "adaptedLobs": [
+          {
+            "resumeKey": "orbital:kineticLobber",
+            "range": 15,
+            "airTime": 1.68
+          }
+        ]
+      },
+      "archive": null,
+      "preserveVent": null,
+      "squall": null
+    },
+    "evidence": "e7-relay-valley/default/row-mobile-chrome.json"
+  },
+  {
+    "contract": "e8-mare-claim",
+    "project": "desktop-chrome",
+    "strategy": "default",
+    "wave": 2,
+    "sim": 80.13333333333395,
+    "hp": 0,
+    "gold": 0,
+    "repairs": 0,
+    "standing": 2,
+    "pieces": 2,
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e8-mare-claim secureWave=20"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 2 / 80.1s sim, 38 kills, 0 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "objective": {
+      "playbookUse": null,
+      "air": null,
+      "atmosphere": {
+        "declared": true,
+        "wall": "suit-timer",
+        "suit": {
+          "body": "hero",
+          "seconds": 0,
+          "capacity": 60,
+          "refillPerSecond": 4,
+          "harmPerSecond": 5,
+          "inDome": null,
+          "empty": true,
+          "drainedTotal": 60,
+          "emptySeconds": 20.133,
+          "harmDealt": 100,
+          "harmTicks": 20
+        },
+        "domes": [
+          {
+            "id": "dome-cluster-pad-west",
+            "air": 1,
+            "breached": false,
+            "breaches": 0,
+            "siegers": 0
+          },
+          {
+            "id": "dome-cluster-pad-center",
+            "air": 1,
+            "breached": false,
+            "breaches": 0,
+            "siegers": 0
+          },
+          {
+            "id": "dome-cluster-pad-east",
+            "air": 1,
+            "breached": false,
+            "breaches": 0,
+            "siegers": 0
+          }
+        ],
+        "regolith": {
+          "grounds": 6,
+          "required": 4,
+          "worked": [
+            2
+          ],
+          "runsOnAir": 12,
+          "breathlessPans": 3,
+          "complete": false,
+          "windowWaves": 4,
+          "window": 0,
+          "creditedThisWindow": 1,
+          "windowHeldPans": 6
+        }
+      },
+      "physics": {
+        "active": true,
+        "contractId": "e8-mare-claim",
+        "source": "gravity",
+        "movement": "floaty",
+        "feelG": 0.6,
+        "lobArcDistanceMultiplier": 2.4,
+        "lobAirTimeMultiplier": 2.4,
+        "knockbackScale": 1.3,
+        "orbitalReturn": false,
+        "vacuum": true,
+        "fixedTimestepOnly": true,
+        "filteredMovement": {
+          "x": -0.049,
+          "y": -0.705
+        },
+        "adaptedLobs": [
+          {
+            "resumeKey": "orbital:kineticLobber",
+            "range": 36,
+            "airTime": 4.032
+          }
+        ]
+      },
+      "archive": null,
+      "preserveVent": null,
+      "squall": null
+    },
+    "evidence": "e8-mare-claim/default/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e8-mare-claim",
+    "project": "mobile-chrome",
+    "strategy": "default",
+    "wave": 2,
+    "sim": 80.13333333333395,
+    "hp": 0,
+    "gold": 0,
+    "repairs": 0,
+    "standing": 2,
+    "pieces": 2,
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e8-mare-claim secureWave=20"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 2 / 80.1s sim, 37 kills, 0 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "objective": {
+      "playbookUse": null,
+      "air": null,
+      "atmosphere": {
+        "declared": true,
+        "wall": "suit-timer",
+        "suit": {
+          "body": "hero",
+          "seconds": 0,
+          "capacity": 60,
+          "refillPerSecond": 4,
+          "harmPerSecond": 5,
+          "inDome": null,
+          "empty": true,
+          "drainedTotal": 60,
+          "emptySeconds": 20.133,
+          "harmDealt": 100,
+          "harmTicks": 20
+        },
+        "domes": [
+          {
+            "id": "dome-cluster-pad-west",
+            "air": 1,
+            "breached": false,
+            "breaches": 0,
+            "siegers": 0
+          },
+          {
+            "id": "dome-cluster-pad-center",
+            "air": 1,
+            "breached": false,
+            "breaches": 0,
+            "siegers": 0
+          },
+          {
+            "id": "dome-cluster-pad-east",
+            "air": 1,
+            "breached": false,
+            "breaches": 0,
+            "siegers": 0
+          }
+        ],
+        "regolith": {
+          "grounds": 6,
+          "required": 4,
+          "worked": [
+            2
+          ],
+          "runsOnAir": 15,
+          "breathlessPans": 0,
+          "complete": false,
+          "windowWaves": 4,
+          "window": 0,
+          "creditedThisWindow": 1,
+          "windowHeldPans": 9
+        }
+      },
+      "physics": {
+        "active": true,
+        "contractId": "e8-mare-claim",
+        "source": "gravity",
+        "movement": "floaty",
+        "feelG": 0.6,
+        "lobArcDistanceMultiplier": 2.4,
+        "lobAirTimeMultiplier": 2.4,
+        "knockbackScale": 1.3,
+        "orbitalReturn": false,
+        "vacuum": true,
+        "fixedTimestepOnly": true,
+        "filteredMovement": {
+          "x": -0.057,
+          "y": -0.3
+        },
+        "adaptedLobs": [
+          {
+            "resumeKey": "orbital:kineticLobber",
+            "range": 36,
+            "airTime": 4.032
+          }
+        ]
+      },
+      "archive": null,
+      "preserveVent": null,
+      "squall": null
+    },
+    "evidence": "e8-mare-claim/default/row-mobile-chrome.json"
+  }
+]
