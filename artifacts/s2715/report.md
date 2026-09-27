@@ -43,4 +43,6 @@ The s2714 line-1 handoff is archived verbatim and its three-item OWNER'S DESK ta
 
 ## Closeout
 
-Final ledger battery pending at this write; its exact result will be appended before the lock-clearing commit. That commit must be this fire's last write to main, then pushed. The launcher retains tasks/.fire.lock until process exit.
+Final ledger battery **rc 0**, **1263/1263 tests**, zero failures/skips, all chained legs including **83/83**, in **172.940 seconds**, finished 2026-09-27T16:22:29.258Z. It ran after evidence/row commit **9ba2c08d3**; main was rechecked unchanged before clearing. Receipts: ledger-final.txt, ledger-final-result.json and ledger-final-summary.txt. This green gates the handoff, not the incomplete product Node battery. The bounded archive audit is clean. The authored Markdown passes diff --check; an inherited generated dashboard line has trailing whitespace and is retained as factory output.
+
+The drain-lock directory is preserved by an intact move to /Users/robin/.goldrush/fire-s2715/drain-lock-released. No gate process remains. The lock-clearing commit is this fire's last write to main, then pushed. The launcher retains tasks/.fire.lock until this process exits. The Obsidian session digest records the final hash.
