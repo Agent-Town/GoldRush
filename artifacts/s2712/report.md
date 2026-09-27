@@ -2,7 +2,7 @@
 
 **WHY NO PRODUCT CHANGE:** run 9 is still executing on lane-c. The done board has zero eligible drains and zero unknowns, no new failed move, and no pending crafting order. Autonomous dispatch remains forbidden by CODEX-WALL. No scope was invented.
 
-**READY-FOR-GATES — heartbeat evidence prepared; final ledger closeout pending.**
+**READY-FOR-GATES — heartbeat complete, ledger green, no product drain.**
 
 ## Verified state
 
@@ -29,3 +29,5 @@ The s2711 line-1 handoff is archived verbatim and its three-item OWNER'S DESK ta
 ## Closeout
 
 Lock commit: 67c575993. Final ledger result and clearing commit follow below. The clearing commit will be this fire's last write to main; the launcher retains process-lock cleanup ownership.
+
+Final ledger battery **rc 0**, **1263/1263 tests**, zero failures/skips, all chained checks including **83/83**, in **199.515 seconds**, finished **2026-09-27T15:14:10.773Z**. See ledger-final.txt and ledger-final-result.json. HEAD stayed at evidence commit b96c50f90 throughout the gate. Run 9 was still in flight at closeout. The original s2711 handoff and owner tail were checked byte-for-byte before clearing. No source, test, goal or BACKLOG changes were made.
