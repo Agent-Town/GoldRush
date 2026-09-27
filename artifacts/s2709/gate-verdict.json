@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-09-27T13:01:41.407Z",
+  "candidate": "e3375fbd10dbde323eb38e9d4ceec1d07aab0385",
+  "wt": "/Users/robin/.goldrush/fire-s2709/wt-pp8",
+  "sourceTip": "e1b6c1ea129577a07eb8cf853d08e3c6b61d46d0",
+  "verdict": "HELD: incomplete full Node gate",
+  "cause": "scripts/run-guards.mjs:256 timeout 15 * 60 * 1000; test:node-guards rc=signal:SIGTERM; 903.9s outer gate",
+  "completedGroups": 4,
+  "totalGroups": 5,
+  "partialTapHasFailures": false,
+  "completeNodeCounts": false,
+  "otherGates": {
+    "tsc": 0,
+    "build": 0,
+    "releaseBuild": 0,
+    "entryPayloadBytes": 34350664,
+    "warmupPass": 1,
+    "adjacentAndPlainBootPass": 42,
+    "flagUnsetSkip": 12,
+    "freshRegattaPass": 2
+  },
+  "requiredContinuation": "Direct npm run test:node-guards through gate-battery.mjs under Node 26.4.0; do not re-run the capped run-guards wrapper; no timeout changes."
+}
