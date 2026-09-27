@@ -3776,7 +3776,8 @@ export class Game {
       this.deferMultiplayerTransition(() => this.resetRun());
       return true;
     }
-    if (action.type === 'set_pause' && !this.secureClaimChoicePending() && this.state.isPaused !== action.paused) {
+    // Reels count active sim ticks, not wall-clock pauses; old reels also carry pause without resume.
+    if (action.type === 'set_pause' && !this.runTapeReplay && !this.secureClaimChoicePending() && this.state.isPaused !== action.paused) {
       this.togglePlayerPause();
     }
     if (action.type === 'debug_spawn') this.spawnDebugPack();

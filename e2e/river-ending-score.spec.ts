@@ -556,6 +556,36 @@ test("the River's first pan writes one completed e10-river score and its reel, p
   expect(errors).toEqual({ console: [], page: [] });
 });
 
+test('a River run paused and resumed mid-run replays to its live hash', async ({ page }, testInfo) => {
+  test.setTimeout(180_000);
+  const { errors, standings, store } = await prepare(page, true);
+  await page.goto(LEVER.url);
+  await enterRiver(page);
+  await steer(page, -1, 0, 200);
+  await page.keyboard.press('KeyP');
+  await expect.poll(async () => (await view(page)).paused).toBe(true);
+  const pausedAt = (await view(page)).sim;
+  await page.waitForTimeout(250);
+  expect((await view(page)).sim).toBe(pausedAt);
+  await page.keyboard.press('KeyP');
+  await expect.poll(async () => (await view(page)).paused).toBe(false);
+  await panOnce(page);
+  await expect.poll(() => standings.length).toBe(1);
+  const reel = parsedTapes((await rawStore(page)).tapes)[0]!;
+  expect(reel.inputLog.entries.flatMap((entry) => entry.a ?? []).filter((action) => 'type' in action && action.type === 'set_pause'))
+    .toEqual([{ type: 'set_pause', paused: true }]);
+  const worker = await runAssayWorker(store);
+  expect(worker.code, worker.stderr).toBe(0);
+  expect(worker.lines.find((line) => (line.locator as { tapeId?: string } | undefined)?.tapeId === reel.id))
+    .toMatchObject({ verdict: 'verified', hashes: { claimed: reel.eventLogHash, replayed: reel.eventLogHash } });
+  expect(errors).toEqual({ console: [], page: [] });
+  const directory = path.resolve('artifacts/tape-pause-fix-1/spec');
+  await mkdir(directory, { recursive: true });
+  await writeFile(path.join(directory, `reel-${testInfo.project.name}.json`), `${JSON.stringify(reel, null, 2)}\n`);
+  await writeFile(path.join(directory, `proof-${testInfo.project.name}.json`), `${JSON.stringify({ pausedAt, worker, errors }, null, 2)}\n`);
+  await page.screenshot({ path: path.join(directory, `pan-${testInfo.project.name}.png`) });
+});
+
 test('a boot of the River with no player action writes nothing', async ({ page }) => {
   test.setTimeout(90_000);
   const { errors, standings } = await prepare(page, true);

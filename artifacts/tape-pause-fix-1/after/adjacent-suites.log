@@ -1,0 +1,58 @@
+[WebServer] (node:34147) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+Running 42 tests using 1 worker
+
+(node:34542) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (4.6s)
+  ✓   2 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (4.0s)
+  ✓   3 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (3.7s)
+  ✓   4 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (3.9s)
+  ✓   5 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (6.4s)
+  ✓   6 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.5s)
+  ✓   7 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (6.3s)
+  ✓   8 [desktop-chrome] › e2e/river-ending-score.spec.ts:421:1 › the River's first pan writes one completed e10-river score and its reel, posts one standing the assay verifies, and never writes a second (35.9s)
+  ✓   9 [desktop-chrome] › e2e/river-ending-score.spec.ts:559:1 › a River run paused and resumed mid-run replays to its live hash (13.5s)
+  ✓  10 [desktop-chrome] › e2e/river-ending-score.spec.ts:589:1 › a boot of the River with no player action writes nothing (15.2s)
+  ✓  11 [desktop-chrome] › e2e/river-ending-score.spec.ts:609:1 › a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing (14.7s)
+  ✓  12 [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs (3ms)
+  ✓  13 [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write (0ms)
+[run-tape] recording truncated: max-ticks at tick 18000
+  ✓  14 [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling (7ms)
+  ✓  15 [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build (0ms)
+  ✓  16 [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash (8.5s)
+  ✓  17 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.5s)
+  ✓  18 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (7.4s)
+  ✓  19 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (4.2s)
+  ✓  20 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (3.2s)
+  ✓  21 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (4.2s)
+(node:11122) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  22 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (4.2s)
+  ✓  23 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (3.8s)
+  ✓  24 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (3.9s)
+  ✓  25 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (3.5s)
+  ✓  26 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (5.8s)
+  ✓  27 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.6s)
+  ✓  28 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (6.5s)
+  ✓  29 [mobile-chrome] › e2e/river-ending-score.spec.ts:421:1 › the River's first pan writes one completed e10-river score and its reel, posts one standing the assay verifies, and never writes a second (34.6s)
+  ✓  30 [mobile-chrome] › e2e/river-ending-score.spec.ts:559:1 › a River run paused and resumed mid-run replays to its live hash (10.7s)
+  ✓  31 [mobile-chrome] › e2e/river-ending-score.spec.ts:589:1 › a boot of the River with no player action writes nothing (14.0s)
+  ✓  32 [mobile-chrome] › e2e/river-ending-score.spec.ts:609:1 › a plain boot of ?contract=e10-river, and the Book-staged raw River, are clean and write nothing (11.5s)
+  ✓  33 [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs (2ms)
+  ✓  34 [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write (0ms)
+[run-tape] recording truncated: max-ticks at tick 18000
+  ✓  35 [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling (5ms)
+  ✓  36 [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build (0ms)
+  ✓  37 [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash (5.7s)
+  ✓  38 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.6s)
+  ✓  39 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.6s)
+  ✓  40 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.4s)
+  ✓  41 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.7s)
+  ✓  42 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.7s)
+
+  42 passed (4.8m)

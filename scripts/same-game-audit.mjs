@@ -246,7 +246,7 @@ const tapeDoorVerb = {
 const tapeExemptions = [
   { actions: 'death_action', parityRow: true, reason: 'Post-death overlay transition; the headless terminal is already the run end.', citation: line('src/game/Game.ts', "if (action.type === 'death_action') {") },
   { actions: 'research_pick / research_skip', parityRow: true, reason: 'Between-run science progression lives outside the run window.', citation: `${line('src/game/Game.ts', "if (action.type === 'research_pick') {")} · ${line('src/game/Game.ts', "if (action.type === 'research_skip') {")}` },
-  { actions: 'set_pause', parityRow: true, reason: 'Pacing only; the agent door is turn-based.', citation: line('src/game/Game.ts', "if (action.type === 'set_pause' && !this.secureClaimChoicePending()") },
+  { actions: 'set_pause', parityRow: true, reason: 'Pacing only; the agent door is turn-based.', citation: line('src/game/Game.ts', "if (action.type === 'set_pause' && !this.runTapeReplay && !this.secureClaimChoicePending()") },
   { actions: 'skip_ceremony', parityRow: true, reason: 'Baron ceremony is presentation-only; headless spawns the Baron directly without a ceremony gate.', citation: line('src/sim/HeadlessContractSim.ts', '(position, at, escorts) => this.postBaronSpawn(position, at, escorts)') },
   {
     actions: 'agent_orders',

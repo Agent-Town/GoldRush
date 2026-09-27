@@ -1,0 +1,26 @@
+{
+  "startedAt": "2026-09-26T23:59:42.946Z",
+  "node": "26.4.0",
+  "workerExit": 0,
+  "workerStderr": "",
+  "rows": [
+    {
+      "label": "seedrun-human",
+      "file": "artifacts/river-assay-1/human/seedrun-human-submission.json",
+      "contract": "e9-seed-run",
+      "claimedHash": "fnv1a32:c218335c",
+      "score": {
+        "secured": true,
+        "waves": 20,
+        "timeAlive": 600.0000000001116,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:0827c33c",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:c218335c, replayed fnv1a32:0827c33c",
+      "wallMs": 56236
+    }
+  ],
+  "retries": []
+}

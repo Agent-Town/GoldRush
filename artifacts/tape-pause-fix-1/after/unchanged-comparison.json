@@ -1,0 +1,69 @@
+{
+  "heat15RowsIdenticalExcludingWallMs": true,
+  "heat15Rows": [
+    {
+      "label": "probe",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/probe/submission.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:b131e18e",
+      "score": {
+        "secured": true,
+        "waves": 10,
+        "timeAlive": 300,
+        "gold": 335,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:b131e18e",
+      "reason": null
+    },
+    {
+      "label": "r1",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/rides/r1/submission.json",
+      "contract": "e5-regatta",
+      "claimedHash": "fnv1a32:f3a9c00c",
+      "score": {
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:f3a9c00c",
+      "reason": null
+    },
+    {
+      "label": "r2",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/rides/r2/submission.json",
+      "contract": "e5-regatta",
+      "claimedHash": "fnv1a32:b92da1bf",
+      "score": {
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:b92da1bf",
+      "reason": null
+    }
+  ],
+  "era6HeadlessByteIdentical": true,
+  "era6Result": {
+    "eventLogHash": "fnv1a32:a45ba9ac",
+    "outcome": {
+      "secured": false,
+      "waves": 2,
+      "gold": 0,
+      "timeAlive": 81.767
+    },
+    "ticks": 2453,
+    "engine": "headless-contract-sim"
+  },
+  "seedrunRow0TapeMatches": true,
+  "fixtureRows": 1,
+  "pendingFixtureRows": 0,
+  "seedrunRow0Assay": "rejected"
+}
