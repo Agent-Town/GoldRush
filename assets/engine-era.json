@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0",
+  "engineHash": "2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -508,6 +508,12 @@
       "engineHash": "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0",
       "pinnedAt": "2026-09-26",
       "cause": "same era, pin #70: river-assay-1: a River reel replays in its ceremony world and verifies to its completed score; the harvest seams follow the run's seed (live seeds keep the constant layout); a live solo run moves by the rounded axes its reel records (F-RVA1-1); the headless arm refuses e10-river. No contract, collision, floor or table moved (3 of 662 inputs differ: scripts/assay-replay-agent.mjs, src/game/Game.ts, src/main.ts; seven existing replays byte-identical; null floors 83 of 83). The store unchanged at 5793a96. reviews/river-assay-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d",
+      "pinnedAt": "2026-09-27",
+      "cause": "same era, pin #71: tape-pause-fix-1 (Astra, gpt-6-astra on the ChatGPT subscription; F-RVA1-6): src/game/Game.ts ignores recorded set_pause actions during a run-tape replay only; no recorder, sim rule, contract, floor or table moved; heat-15 reels and the era-6 agent tape replay byte-identical. The store unchanged at 5793a967da46e8f00c0ba16f92f17dc10d36558d. reviews/tape-pause-fix-1.md",
       "aliases": []
     }
   ],
