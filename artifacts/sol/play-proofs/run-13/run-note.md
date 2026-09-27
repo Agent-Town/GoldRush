@@ -1,10 +1,9 @@
 # Native play proofs — run 13 (sol-play-proofs-9)
 
-IN PROGRESS. Base `37062bef74ea586cb280ab8962826c6c786ac47f`. Half-Life Hollow HELD both: four wave-4 deaths; crossing complete; no defects. Default desktop then phone; one restore-ground ride only for survival holds with working objectives. Picnic HELD both: stakes lost at wave 2 with full HP; driver placement gap. Showroom HELD both: budget exits waves 79/78, captures 0/6. Dead Band HELD both: death 18, refusal latch unexercised. No production changes.
+IN PROGRESS. Base `37062bef74ea586cb280ab8962826c6c786ac47f`. Half-Life Hollow HELD both: four wave-4 deaths; crossing complete; no defects. Default desktop then phone; one restore-ground ride only for survival holds with working objectives. Picnic HELD both: stakes lost at wave 2 with full HP; driver placement gap. Showroom HELD both: budget exits waves 79/78, captures 0/6. Dead Band HELD both: death 18, refusal latch unexercised. Echo Canyon HELD both: deaths 16/19, mirror untouched. No production changes.
 
 ## REMAINING LIST IN ORDER
 
-5. e7-echo-canyon
 6. e7-relay-rush
 7. e7-relay-valley
 8. e8-mare-claim
