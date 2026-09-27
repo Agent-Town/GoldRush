@@ -1,8 +1,8 @@
-# Play proofs 9 — six measured holds; drain gates pending
+# Play proofs 9 — six measured holds; candidate gates complete
 
-**Verdict: HELD FOR FULL NODE GATES. Not landed.** s2715, 2026-09-27. The accepted deliverable is a measured QA record, not six successful gameplay proofs. The source task expressly permits READY-FOR-GATES with recorded holds.
+**Verdict: ACCEPTED QA EVIDENCE; LANDING PENDING.** s2716, 2026-09-27 UTC. The preserved candidate passed its complete direct Node gate; main landing and the post-landing Node gate remain. Original s2715 evidence follows. The accepted deliverable is a measured QA record, not six successful gameplay proofs. The source task expressly permits READY-FOR-GATES with recorded holds.
 
-Source: `sol/map-art-campaign-2`, tip `3d2baae0d750489434afeed8c589d61db21e08b8`; six map commits. Detached merged candidate: `26dc6acc63f86472900ca777d2d867527b3bedb8`, `/Users/robin/.goldrush/fire-s2715/wt-pp9`. The source evidence remains on that candidate until a completed drain lands it.
+Source: `sol/map-art-campaign-2`, tip `3d2baae0d750489434afeed8c589d61db21e08b8`; six map commits. Detached merged candidate: originally `26dc6acc63f86472900ca777d2d867527b3bedb8`, synchronized with newer main bookkeeping as `9bb92b2195170c8704cda7799f23d7db8c604909`, `/Users/robin/.goldrush/fire-s2715/wt-pp9`. The source evidence remains on that candidate until a completed drain lands it.
 
 ## What it does
 
@@ -52,6 +52,12 @@ The source budget tool initially returned truncated JSON through a pipe; that un
 
 ## Findings and continuation
 
-No proven map defect and no new F-PP9 finding. Follow-up ownership is QA/native movement, objective actions and survival strategy. The existing attended `sol-play-proofs-holds-1` owns the authorized driver follow-up after run 10; survival limits do not authorize balance edits. Its bounded allowance for additional instrument holds is decided from the completed campaign.
+No proven map defect and no new F-PP9 finding. Follow-up ownership is QA/native movement, objective actions and survival strategy. The attended `sol-play-proofs-holds-2` now owns these five instrument holds after run 10 and holds-1. Half-Life Hollow remains the existing survival hold; survival limits do not authorize balance edits. This ownership was authored attended after s2715 and is preserved by the synchronization.
 
-The next drain must finish the full Node command, preserve/control any actual red, synchronize newer main only after classifying it, then land with goal status/mergeHash and BACKLOG updates, push, and complete the required full Node gate on main. The done-move and goal remain open until then. Run 10 and holds-1 dispatch stay with the attended queue jobs.
+### s2716 completed continuation
+
+Direct full Node **rc 0 in 2198.515 seconds**: **1040 tests, 1032 pass, 8 declared skips, zero failures/cancellations**, every chained leg complete, final **87/87**. Fixture teardown passed all 162 owners in **901.346666 seconds**; longest TAP silence **895.3 seconds**, below the unchanged 2700-second watchdog. Node 26.4.0, file concurrency 1. No timeout, assertion, source or limit changed. `artifacts/s2716/full-node.txt`, `full-node-summary.txt`, `node-result.json`.
+
+Current main bookkeeping was merged without conflict. Executable/test/dependency/art inputs are unchanged, so the complete s2715 build/browser receipts remain valid. Fresh 14/14 raw-record equivalence and evidence budget rc 0 confirm the retained measurements and **2,658,831 B** source size. Final main/candidate/current-pin identity remains `2d180e6b…`, era 6 pin 71, clean store `5793a967d`; no pin made. `artifacts/s2716/input-equivalence.json`, `evidence-reuse.json`, `raw-evidence-verification.json`, `engine-final.json`.
+
+WHY NO LANDING THIS FIRE: this single full gate consumed the approximate drain window. The next drain must classify/synchronize newer bookkeeping, reuse the completed receipts only if their inputs remain unchanged, then land with goal status/mergeHash and BACKLOG updates, push, and complete full Node on main. The done-move and goal remain open until then. Run 10, holds-1 and holds-2 dispatch stay with their attended queue jobs.
