@@ -1,8 +1,8 @@
 # sol-play-proofs-10 — Run 14 proof evidence
 
-Source: `sol/map-art-campaign-2`, tip `4cada136986ff342d1a1c8fbb0cb68b786154f7f`. Fire: s2719. Detached candidate: `a4ac5b58306b45f2a4c8d90240c6383e00d07d99` at `/Users/robin/.goldrush/fire-s2719/wt-pp10`.
+Source: `sol/map-art-campaign-2`, tip `4cada136986ff342d1a1c8fbb0cb68b786154f7f`. Fires: s2719 and s2720. Verified candidate: `fcae3063201a05268e70fe666b646bb5d445f9e3` (original source merge `a4ac5b58306b45f2a4c8d90240c6383e00d07d99`) at `/Users/robin/.goldrush/fire-s2719/wt-pp10`.
 
-**Verdict: STAGED, NOT LANDED — direct full Node continuation required.** All four map verdicts remain HELD. This review accepts no new gameplay completion or map defect.
+**Verdict: CANDIDATE GATES COMPLETE, NOT LANDED — landing and full Node verification on main remain.** All four map verdicts remain HELD. This review accepts no new gameplay completion or map defect.
 
 ## What this measures
 
@@ -38,7 +38,9 @@ The complete table has one row for each of 42 contracts: seven PROVED both scree
 | Visual inspection | Four loss screens inspected, one per map, waves and counters agree | `artifacts/s2719/visual-inspection.json` |
 | Diff-selected guards | Four of five groups PASS; full Node child stopped by the outer 900 s limit | `artifacts/s2719/diff-guards.txt`, `diff-guards-result.json` |
 | Partial Node record | 504 top-level passes, no failing record; no final totals or chained tail | `artifacts/s2719/node-before-wrapper-limit.tap` |
-| Final engine identity | Main, candidate and current era 6 pin 71 match `2d180e6b…`; no pin made | `artifacts/s2719/engine-final.json` |
+| Direct full Node continuation | PASS, rc 0; 1032 pass / 8 existing skips / 0 fail; chained tail 87/87; 3650.374 s | `artifacts/s2720/full-node-candidate.txt`, `node-result.json` |
+| Fixture sweep in direct continuation | PASS, 162 owners, 1588.862 s; no fixture survivors | `artifacts/s2720/node-after-fixture.tap` |
+| Final engine identity | Main, candidate and current era 6 pin 71 match `2d180e6b…`; no pin made | `artifacts/s2720/engine-final.json` |
 
 The build battery's aggregate rc is 1 because its policy job correctly refuses a frozen linked-worktree board with rc 2. That is an instrument-location refusal, not a policy clearance or a build failure. The required live-board reassertion was rerun at the primary root and returned CLEAR. All four build/payload jobs returned 0. Both receipts are retained.
 
@@ -50,12 +52,14 @@ The first arena check caught this fire's absolute `assets/pilots` symlink as tra
 
 All npm children use the verified Node 26.4.0 runtime through an explicit `/opt/homebrew/bin` PATH. No timeout, assertion, source or test limit is altered.
 
-## Gate continuation
+## Gate continuation completed by s2720
 
-The prescribed diff wrapper returned rc 1: `test:node-guards` received SIGTERM at its fixed 900-second outer limit while the fixture-owner sweep was active. Process samples show changing child tests, not a diagnosed hang. The retained partial TAP has 504 top-level passes and no failing record, but no completed totals. All sampled gate processes have exited. The remaining four groups passed; power-budget p95 was 0.350 ms. The transcript also retains the nonfatal Vite WebSocket-port warning.
+The original s2719 diff-wrapper receipt remains rc 1: its full Node child was stopped at the fixed 900-second outer limit. The direct continuation uses the exact full npm command and changes no assertion, per-test timeout or watchdog. It passed on synchronized candidate `fcae3063201a05268e70fe666b646bb5d445f9e3`: **1032 pass, eight existing skips, zero failures; chained audits green, final tail 87/87; total 3650.374 s**. The 162-owner fixture sweep passed in 1588.862 s, by itself longer than the outer wrapper's cutoff. Maximum TAP silence was 1587.2 s, below the unchanged 2700 s watchdog. Host one-minute load reached 197.104; process samples show advancing children. No fixture-cleanup red reproduced, and that single pass does not close F-2717-1's failure-path corrective.
 
-This is the previously recorded outer-limit class from the Run 9 staging. No new runtime regression is established. The next fire must run the complete direct Node command on this candidate using `artifacts/s2719/resume-node-jobs.json`, without the diff wrapper's outer limit. Reuse the completed receipts only after checking their executable, dependency and art inputs against any newer main changes. Then resolve any actual red by a same-spec clean-main control, measure final identity, land the goal/ledger/review commit set, push and finish the required main verification. Exact command and remaining list are in `artifacts/s2719/report.md`.
+Newer main at the start of s2720 contained only documentation/evidence changes, synchronized into the detached candidate before the direct gate. Executable, dependency, art and browser inputs remained unchanged from s2719. The eight raw-record equivalence checks and the evidence budget were rerun and passed. Both store views remain clean at `5793a967d`. No engine pin was added.
+
+WHY NO LANDING: this one complete gate consumed the fire increment. Main has received no Run 10 source bytes. The next fire must policy-check, synchronize any newer bookkeeping, and reuse the complete candidate receipts only after proving their relevant inputs unchanged. Complete the goal/ledger/review drain commit set, fast-forward main, rename the original done-move and push. Then run the mandatory full Node verification on main directly, without repeating the known 900-second wrapper interruption. Any new executable inputs require fresh applicable gates. Exact continuation and remaining list: `artifacts/s2720/report.md`.
 
 ## Follow-up ownership
 
-No proven map defect and no new F-PP10 finding. The attended `sol-play-proofs-holds-3` owns these four objective/air-driver corrections, after holds-1 and holds-2. The source observations do not authorize balance changes. The existing attended queue jobs retain dispatch ownership. The done-move, source branch and goal remain open until a fully gated landing.
+No proven map defect and no new F-PP10 finding. The attended `sol-play-proofs-holds-3` owns these four objective/air-driver corrections, after holds-1 and holds-2. The source observations do not authorize balance changes. The existing attended queue jobs retain dispatch ownership. The done-move, source branch and goal remain open until the landing. Lane-a fixture-cleanup attempt 2 became ready during this gate; its attended handoff was preserved separately, without draining it or changing its ownership.
