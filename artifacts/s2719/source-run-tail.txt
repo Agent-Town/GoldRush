@@ -1,0 +1,44 @@
+ git status --short
+ git log -4 --oneline" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c
+ succeeded in 284ms:
+{'tip': 'HEAD', 'added': 1615430, 'files': 61, 'limit': 25000000, 'over': False}
+4cada1369 test: measure Ember hold and close the 42-map play-proof campaign
+04d422aa5 test: measure Archive World missing light-hold route
+0f1854373 test: measure Mare air-consumer and orbital movement hold
+da1672950 test: measure Relay Valley native objective hold on both screens
+
+codex
+READY-FOR-GATES — all four maps measured on both screens:
+
+- Relay Valley: HELD, wave 17; no playbook use.
+- Mare Claim: HELD, wave 2; driver misses air diagnostics/refill.
+- Archive World: HELD, wave 20; no light holds.
+- Ember Shore: HELD, wave 3; no stokes.
+
+No proven map defects or F-IDs. Follow-up owner: QA/native driver. No balance changes.
+
+Checks passed: typecheck, build, 8 default skips, 2 adjacent tests. All rides had zero browser errors. Evidence: **1,615,430 bytes**.
+
+Campaign closed: **42/42 measured — 7 proved both screens, 3 one screen, 2 partial, 29 held, 1 corrected historical defect.**
+
+[Complete report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-14/run-note.md>)
+
+Commits: `da1672950`, `0f1854373`, `04d422aa5`, `4cada1369`. Working tree clean.
+tokens used
+165,294
+READY-FOR-GATES — all four maps measured on both screens:
+
+- Relay Valley: HELD, wave 17; no playbook use.
+- Mare Claim: HELD, wave 2; driver misses air diagnostics/refill.
+- Archive World: HELD, wave 20; no light holds.
+- Ember Shore: HELD, wave 3; no stokes.
+
+No proven map defects or F-IDs. Follow-up owner: QA/native driver. No balance changes.
+
+Checks passed: typecheck, build, 8 default skips, 2 adjacent tests. All rides had zero browser errors. Evidence: **1,615,430 bytes**.
+
+Campaign closed: **42/42 measured — 7 proved both screens, 3 one screen, 2 partial, 29 held, 1 corrected historical defect.**
+
+[Complete report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-14/run-note.md>)
+
+Commits: `da1672950`, `0f1854373`, `04d422aa5`, `4cada1369`. Working tree clean.

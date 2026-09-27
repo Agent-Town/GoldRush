@@ -1,0 +1,103 @@
+
+===== policy — rc=2 0.1s =====
+
+  ⛔ CANNOT VERIFY — DO NOT DRAIN, DO NOT QUEUE off this run
+    corpus tree     : LINKED WORKTREE — the board lives in /Users/robin/Claude/Projects/Gold Rush
+    cwd             : /Users/robin/.goldrush/fire-s2719/wt-pp10
+    tasks/goals.json and tasks/done/ are TRACKED, so this tree hands the check a
+    board FROZEN at that branch's commit. A master registered after the branch
+    point resolves to "? UNKNOWN" — which exits 0 — and a leaf the owner has
+    since unblocked still reads "blocked". Measured s2224: from worktrees/lane-c
+    an already-SHIPPED master answered "? UNKNOWN" rc=0 where the repo root
+    answered "⛔ ALREADY SHIPPED — DO NOT QUEUE" rc=1 (F-2223-1).
+    Re-run from the repo root. Do NOT re-run elsewhere until it goes green.
+
+
+
+===== tsc — rc=0 7.1s =====
+
+
+===== build — rc=0 39.4s =====
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 34 | 262548708 | 36923264 | 86% | compress |
+| landmarks | 213 | 382800564 | 58455012 | 85% | compress |
+| panoramas | 34 | 78357908 | 8957316 | 89% | compress |
+| town-buildings | 9 | 18058896 | 2604264 | 86% | compress |
+| town-era-variants | 73 | 112127592 | 17922008 | 84% | compress |
+| props | 62 | 30189152 | 3172404 | 89% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 7 | 26457976 | 4353216 | 84% | compress |
+| finale | 2 | 4597344 | 469860 | 90% | compress |
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+[asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png
+
+
+===== E1 build — rc=0 12.1s =====
+[asset-diet] Herald dev-path art 1158214 bytes (1500000 byte ceiling).
+[asset-diet] 60 manifest GLBs 119390904 -> 17043272 bytes (86% cut); 8 plate-class PNGs 26703061 -> 3744766 bytes (86% cut); herald spot cuts 375470 bytes.
+[asset-diet] GLB bytes by manifest family:
+| Family | GLBs | Before bytes | After bytes | Cut | Policy |
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 5 | 36156888 | 4406152 | 88% | compress |
+| landmarks | 25 | 49985436 | 6833280 | 86% | compress |
+| panoramas | 5 | 2510108 | 436048 | 83% | compress |
+| town-buildings | 8 | 16651832 | 2452664 | 85% | compress |
+| town-era-variants | 0 | 0 | 0 | 0% | compress |
+| props | 16 | 9763068 | 2020176 | 79% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 1 | 4323572 | 894952 | 79% | compress |
+| finale | 0 | 0 | 0 | 0% | compress |
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+[asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png
+
+
+===== payload — rc=0 0.1s =====
+    2100135  cast  char-newsie-mei-sheet-walk8.png
+    1448922  cast  char-prospector-sheet-hover8.png
+    1375134  hero  char-hero-sheet-walkdiag8.png
+
+Save Data arm (advance stream drops dynamo-hall, stamp-mill): 34167504 bytes (-183160)
+excluded by declaration: 10 families, 5882455 bytes in this build
+     758234  char-hero-sheet-attack8-r2-east-clean-v1.png
+     320931  char-hero-sheet-work8-east-clean-v1.png
+     429930  char-hero-sheet-work8-north-clean-v1.png
+     956740  char-hero-sheet-work8-south-clean-v7.png
+     563224  char-hero-sheet-work8-west-recovered-v1.png
+        107  era-e1-frontier-loop.js
+    1800881  era-e1-frontier-loop.mp3
+      86344  the-claim-panorama.glb
+     966064  the-claim-terrain.glb
+          0  version.json (not emitted by this build)
+
+cue-window corpus cross-check: 2 files, 82 families observed, 2 undeclared
+  UNDECLARED (reported, not counted): char-hero-sheet-attack8.png
+  UNDECLARED (reported, not counted): char-hero-sheet-work8.png
+
+first-town payload demand-paged: 0 bytes
+first-town payload declared: 34350664 bytes
+first-town payload: 34350664 bytes
+
+
+SUMMARY {"policy":2,"tsc":0,"build":0,"E1 build":0,"payload":0}
+OVERALL rc=1
+transcript -> artifacts/s2719/build-gates.txt
