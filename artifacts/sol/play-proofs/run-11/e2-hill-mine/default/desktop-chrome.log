@@ -1,0 +1,48 @@
+
+Running 1 test using 1 worker
+
+
+(node:11209) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e2-hill-mine plays to its authored terminal, banks, reloads and returns to the board @slow
+[desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e2-hill-mine plays to its authored terminal, banks, reloads and returns to the board @slow
+e2-hill-mine {"t":10.1,"wave":0,"hp":100,"gold":0,"kills":0,"x":-11.5,"z":16.7,"alive":2,"seams":2}
+
+e2-hill-mine {"t":20.8,"wave":0,"hp":84,"gold":0,"kills":3,"x":8.2,"z":39.2,"alive":3,"seams":2}
+
+e2-hill-mine {"t":31.1,"wave":0,"hp":84,"gold":20,"kills":3,"x":25.7,"z":39.2,"alive":8,"seams":2}
+
+e2-hill-mine {"t":41.2,"wave":1,"hp":84,"gold":70,"kills":4,"x":14.2,"z":27.7,"alive":15,"seams":1}
+
+e2-hill-mine {"t":54.7,"wave":1,"hp":76,"gold":70,"kills":6,"x":11.9,"z":26.9,"alive":18,"seams":2}
+
+e2-hill-mine {"t":65.2,"wave":1,"hp":20,"gold":70,"kills":11,"x":-2.7,"z":24.2,"alive":18,"seams":2}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e2-hill-mine plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 1 / 68.1s sim, 12 kills, 70 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1419 |       }
+      1420 |
+    > 1421 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1422 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1423 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1424 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1421:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-11/e2-hill-mine/default/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-11/e2-hill-mine/default/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e2-hill-mine plays to its authored terminal, banks, reloads and returns to the board @slow 
