@@ -1,0 +1,37 @@
+{
+  "command": "node scripts/lane-usable.mjs --all",
+  "exitCode": 0,
+  "lanes": {
+    "lane-a": {
+      "branch": "sol/open-findings-astra",
+      "ahead": 0,
+      "behind": 1,
+      "state": "BUSY, live runner"
+    },
+    "lane-b": {
+      "branch": "sol/wave-lane-b",
+      "ahead": 0,
+      "behind": 823
+    },
+    "lane-c": {
+      "branch": "sol/map-art-campaign-2",
+      "ahead": 6,
+      "behind": 11,
+      "changedPaths": 237,
+      "state": "HOLDS lane-only source"
+    },
+    "lane-d": {
+      "branch": "art/portraits-e5-e10-generated",
+      "ahead": 0,
+      "behind": 1244
+    }
+  },
+  "worktreeCoverage": {
+    "reported": 4,
+    "registered": 51,
+    "unreportedAhead": 0,
+    "couldNotAnswer": 0
+  },
+  "fullTranscript": "logs/fire-20260927.log (disk-local launcher transcript)",
+  "recordedAt": "2026-09-27T10:27Z"
+}

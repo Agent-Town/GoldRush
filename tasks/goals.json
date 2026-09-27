@@ -6752,7 +6752,7 @@
               "authoredBy": "attended (Fable) from the owner's word of 2026-09-27",
               "queuedAt": "2026-09-27",
               "blockClass": "gate-side",
-              "blockedReason": "F-2704-1 (s2704): candidate 0c43f9524443fc86272a530eced87515347aa3d4 adds 86,013,547 evidence bytes against the 40,000,000-byte limit; archive plan pins all 231 files. Preserve lane and done-move. Lift only after retention-safe packaging/archive yields a candidate within the unchanged budget, then perform normal merged-tree drain gates. Corrective play-proofs-evidence-retention-1 is authored, not dispatched; no fire refill under CODEX-WALL.",
+              "blockedReason": "F-2704-1 (s2704): candidate 0c43f9524443fc86272a530eced87515347aa3d4 adds 86,013,547 evidence bytes against the 40,000,000-byte limit; archive plan pins all 231 files. Preserve lane and done-move. Lift only after retention-safe packaging/archive yields a candidate within the unchanged budget, then perform normal merged-tree drain gates. Corrective play-proofs-evidence-retention-1 was assigned and dispatched attended in 6044a45fe; s2705 verified its completion as 6974a5cc7. Prepared packaging awaits the real attended archive step; the evidence/archive condition remains unsatisfied; no fire refill under CODEX-WALL.",
               "review": "reviews/sol-play-proofs-7.md",
               "heldAt": "2026-09-27",
               "heldBy": "s2704"
@@ -6770,14 +6770,20 @@
             {
               "id": "play-proofs-evidence-retention-1",
               "title": "F-2704-1: separate run-11 frozen proof evidence from live inputs and outputs, preserving every byte and preparing a landing below the unchanged 40 MB budget",
-              "status": "queued",
+              "status": "blocked",
               "taskFile": "play-proofs-evidence-retention-1.md",
               "lane": "lane-a (Astra, gpt-6-astra, the ChatGPT subscription; assigned by the attended session 2026-09-27, lifting the fire's gate-side hold by satisfying its condition: the attended session assigns); reads the lane-c candidate 0c43f9524, never resets it",
               "authoredAt": "2026-09-27",
               "authoredBy": "s2704 from F-2704-1 and owner evidence ruling 14a",
               "sourceCommit": "0c43f9524443fc86272a530eced87515347aa3d4",
               "queuedAt": "2026-09-27",
-              "liftedBy": "attended 2026-09-27: gate-side condition satisfied (assigned to Astra on lane-a)"
+              "liftedBy": "attended 2026-09-27: gate-side condition satisfied (assigned to Astra on lane-a)",
+              "blockClass": "gate-side",
+              "blockedReason": "F-2704-1, s2705: packaging completed as 6974a5cc7, but its lane still carries the sealed evidence. The 6,822,605-byte result is a local fixture, not a published private archive. The task reserves the real archive for attended coordination. Lift after verified private archive retention/push and an actual candidate within 40,000,000 added evidence bytes, then perform normal merged-tree drain gates. Preserve both lane tips and done-moves; no re-queue.",
+              "review": "reviews/play-proofs-evidence-retention-1.md",
+              "heldAt": "2026-09-27",
+              "heldBy": "s2705",
+              "laneTip": "6974a5cc7"
             }
           ]
         }
