@@ -29,3 +29,9 @@ The launcher process ancestry identifies PID 23178 as this fire's parent, starte
 ## Final verification
 
 Pending: ledger battery, bounded STATUS archive audit, final board snapshot and lock-clearing backup. Results will be appended before the final main write.
+
+### Ledger red and same-fire cure
+
+The first full ledger command failed: 1262/1263 passed, one failure, rc 1, 246.332 s. The banked-master guard takes the first worktrees/lane-* mention; the attended ATTEMPT 2 history preceded the role and named the old lane-c check. Its corrected reset named lane-a, so the guard reported a lane mismatch. The master now declares its actual lane-a assignment and preflight before the unchanged historical paragraph. No test, assertion, command or task scope changed. First-run output is retained in ledger-first/. A full ledger rerun follows this cure.
+
+The supported STATUS helper automatically appends (line-1 archive); the initial call supplied it twice. The duplicated label was corrected, and the predecessor bytes plus Owner's Desk tail were checked exactly against the saved originals. No handoff content was lost.
