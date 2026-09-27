@@ -32,4 +32,4 @@ F-2693-1 is resolved: the 900-second wrapper cap was avoided using the establish
 
 ## Closeout
 
-The long existing battery exceeded the nominal drain window; it was allowed to finish rather than manufacturing another interrupted result. No second drain or browser batch was started. Ledger verification is pending before the final clearing commit.
+The long existing battery exceeded the nominal drain window; it was allowed to finish rather than manufacturing another interrupted result. No second drain or browser batch was started. Closeout ledger verification passed before the final clearing commit: rc 0, 1263/1263 tests passed, zero failures, 186.6 s, all chained shell legs green (last leg 83/83). Evidence: ledger-guards.txt and ledger-guards-result.json. The completed full-Node process IDs are gone. The drain-lock directory was moved intact to /Users/robin/.goldrush/fire-s2694/drain-lock-released. Content/evidence commit: a2b19dec4. The clearing commit is the last write to main.
