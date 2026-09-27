@@ -30,7 +30,7 @@ for id in ids:
             if full:
                 for label in ['board','bank-cell']: assert (p.parent/f'{label}-{project}.jpg').exists()
                 assert json.loads((p.parent/f'bank-cell-{project}.json').read_text())['originalContext']
-                if id=='e8-mare-claim': assert o['air']['regolith']['complete']
+                if id=='e8-mare-claim': assert o['atmosphere']['regolith']['complete']
                 if id=='e10-archive-world': assert o['archive']['objectiveAllowsSecure']
                 if id=='e10-ember-shore': assert o['preserveVent']['objectiveMet']
             rides.append(dict(contract=id,project=project,strategy=p.parent.name,fullDriverPass=full,consoleErrors=len(row['consoleErrors']),pageErrors=len(row['pageErrors'])))

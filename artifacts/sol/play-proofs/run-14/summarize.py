@@ -9,7 +9,7 @@ for p in sorted(root.glob('*/*/row-*.json')):
  rows.append(dict(contract=r['contract'],project=r['project'],strategy=p.parent.name,
   wave=o['wave'],sim=o['sim'],hp=o['hp'],gold=o['gold'],repairs=o['repairs'],standing=sum(d['hp']>0 for d in ds),pieces=len(ds),
   checks={k:r[k] for k in ['boots','secures','banks','board','reload','clean']},
-  objective={k:o.get(k) for k in ['playbookUse','air','physics','archive','preserveVent','squall']},evidence=str(p.relative_to(root))))
+  objective={k:o.get(k) for k in ['playbookUse','air','atmosphere','physics','archive','preserveVent','squall']},evidence=str(p.relative_to(root))))
 (root/'measurements.json').write_text(json.dumps(rows,indent=2)+'\n')
 for r in rows:
  print(r['contract'],r['project'],r['strategy'],r['wave'],round(r['sim'],3),r['hp'],r['gold'],r['repairs'],f"{r['standing']}/{r['pieces']}")
