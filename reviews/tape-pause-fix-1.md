@@ -1,6 +1,6 @@
 # Drain review: tape-pause-fix-1 — replay tolerates recorded pauses
 
-**Verdict: HELD — mandatory full node battery incomplete; NOT LANDED or deployed.**
+**Verdict: HELD — full Node completed in s2694 with only the two expected pre-pin failures; remaining floor/browser/release/boot gates and final pin owed. NOT LANDED or deployed.**
 
 s2693 fire, 2026-09-27. Lane `sol/map-art-campaign-2` at `19dc0195fbf72f69d24334dede5538c709b977a5`; fork `3c35d5bed250427a254ab10f1fe22071da44aad2`; main base `49a0479a0cf0b5d0de0d5ca1f1b06c7809242239`; detached candidate merge `63cd904a9b81c2cc62ced7061be263a7cc624fc5`. Candidate worktree: `/Users/robin/.goldrush/fire-s2693/wt-tpf1`. Scratch art store is clean at its landed main `5793a967da46e8f00c0ba16f92f17dc10d36558d`; no store change is proposed.
 
@@ -36,10 +36,27 @@ Evidence: `artifacts/s2693/phase1-gates.txt` is append-only and retains failed i
 
 ## Finding and next gate
 
-**F-2693-1 — OPEN, gate-side, fire-owned:** the diff wrapper's fixed 15-minute timeout interrupted the still-active fixture sweep. Partial TAP reached 504 completed rows and showed only the two expected pre-pin identity failures: bench-seeds and engine-era-guard compare `2d180e6b` to the old pin. This is not a completed battery and does not establish absence of other failures. No clean-main control was run, so no additional failure is attributed or excused.
+**F-2693-1 — RESOLVED by the s2694 direct run below; historical gate-side failure:** the diff wrapper's fixed 15-minute timeout interrupted the still-active fixture sweep. Partial TAP reached 504 completed rows and showed only the two expected pre-pin identity failures: bench-seeds and engine-era-guard compare `2d180e6b` to the old pin. This is not a completed battery and does not establish absence of other failures. No clean-main control was run, so no additional failure is attributed or excused.
 
 Source verified: `scripts/run-guards.mjs` sets `timeout: 15 * 60 * 1000`; `scripts/run-node-guards.mjs` already owns a 300 s per-test bound and a 45-minute TAP-stall watchdog. The existing F-2549-1 recovery applies: run the full node command directly through `gate-battery.mjs`, retaining its watchdog, rather than retrying the capped wrapper. No timeout, assertion or concurrency rule was changed, and no new implementation task or redispatch is needed. The old finding is retained as historical, not silently reopened.
 
 The wrapper left its node-guard descendant alive after returning SIGTERM. Only s2693-owned processes were stopped by numeric PID; the interrupted floor rerun was stopped with them. Their identities and ancestry are in `stopped-gate-processes.json`, and `processes-stopped.txt` proves those PIDs are gone. The drain-lock directory was moved intact to `/Users/robin/.goldrush/fire-s2693/drain-lock-released`; the launcher's fire lock remains its responsibility. Candidate content and all evidence remain on disk.
 
 Resume instructions and the direct full-node job list are in `artifacts/s2693/report.md` and `artifacts/s2693/full-node-next-jobs.json`. F-RVA1-6 remains OPEN until the candidate is fully gated, landed and deployed.
+
+## s2694 continuation — full Node completed, remaining gates held
+
+The preserved candidate merged locked main `0fd459d068438f40f7ecbd0faa1f4d4c93b8a1ab` without conflict, producing `7875d9a8a772df1848c10246e82b58d5c2ae2774`. The incoming paths were STATUS, BACKLOG, the held review and s2693 evidence only; no runtime or test source moved. The scratch store remains clean at `5793a967da46e8f00c0ba16f92f17dc10d36558d`. Dependencies were prepared with `npm ci` in the candidate's own node_modules; the inherited dependency symlink was moved intact to `~/.goldrush/fire-s2694/inherited-node_modules-link`. Tracked candidate files remained clean after the battery.
+
+| Gate | Measured result |
+| --- | --- |
+| Direct full Node, Node 26.4.0, file concurrency 1 | rc 1; 1040 tests, 1030 pass, 2 fail, 8 skipped, 0 cancelled; 2349.6 s |
+| Failure fingerprints | bench-seeds and engine-era-guard: candidate `2d180e6b…` versus existing pin `f6084527…`; no other failures |
+| Same identity specs on clean main, Node 26.4.0 | 9/9 pass, rc 0 |
+| Fixture cleanup | all 162 owners pass, 940.8 s |
+| TAP silence / watchdog | max 935.2 s against unchanged 2700 s bound; no watchdog fired |
+| Exact npm chained tail, run separately after pre-pin short circuit | rc 0, 31.3 s; final test leg 87/87 |
+| Floor, release, browser and plain-boot gates | not run by s2694; still owed |
+| Pin / landing / deployment | none |
+
+Full evidence: `artifacts/s2694/full-node.txt`, `identity-control.txt`, `node-tail.txt` and `report.md`. The first identity-control invocation inherited the default Node PATH; its preserved result is followed by the canonical Node 26.4.0 run, which is the cited control. The complete direct battery resolves F-2693-1's interruption without a timeout increase or an identical wrapper retry. The long in-flight gate exceeded the nominal fire drain window; no second drain or further browser battery was started. F-RVA1-6 remains open until this cure lands and deploys.

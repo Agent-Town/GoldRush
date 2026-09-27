@@ -1,0 +1,27 @@
+[
+  [
+    "slice and adjacent suites",
+    "npx",
+    "playwright",
+    "test",
+    "e2e/tape-01-run-tape.spec.ts",
+    "e2e/river-ending-score.spec.ts",
+    "e2e/task-025-bandits-dont-swim.spec.ts",
+    "e2e/m1-01-claim-jumpers-death.spec.ts",
+    "e2e/m2-01-build-menu.spec.ts",
+    "e2e/live-seed-rotation.spec.ts",
+    "--workers=1",
+    "--reporter=line"
+  ],
+  [
+    "plain boot desktop and 390px",
+    "npx",
+    "playwright",
+    "test",
+    "e2e/f-astra-6-plain-boot.spec.ts",
+    "-g",
+    "plain the-claim boot",
+    "--workers=1",
+    "--reporter=line"
+  ]
+]

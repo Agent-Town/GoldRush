@@ -1,0 +1,12 @@
+[
+  [
+    "release suite owning config",
+    "npx",
+    "playwright",
+    "test",
+    "-c",
+    "playwright.release.config.ts",
+    "--workers=1",
+    "--reporter=line"
+  ]
+]
