@@ -2,7 +2,7 @@
 
 **WHY NO PRODUCT CHANGE:** run 9 is still executing on lane-c. The done-board probe finds zero eligible drains and zero unknowns; no failed move or crafting order is new. The wall reserves dispatch to the attended jobs. No new scope was invented.
 
-**READY-FOR-GATES — heartbeat recorded; final ledger gate pending below.**
+**READY-FOR-GATES — heartbeat complete; final ledger gate green; no product drain.**
 
 ## Verified state
 
@@ -31,4 +31,6 @@ The s2712 line-1 handoff is archived verbatim and its three-item OWNER'S DESK ta
 
 ## Closeout
 
-Final ledger receipt and exact completion state will be appended before the clearing commit. That commit is this fire's last write to main; process-lock cleanup remains the launcher's responsibility.
+Final ledger battery **rc 0**, **1263/1263 tests**, zero failures/skips, chained tail **83/83**, completed in **286.762 seconds** at **2026-09-27T15:29:14.884Z**. See `ledger-final.txt` and `ledger-final-result.json`. HEAD remained `e38623ecc` throughout the gate. Its initial `FAIL` banner is the deliberately failing desk fixture inside the passing tests; the complete npm command exited 0.
+
+The closeout probe still finds zero drains and zero unknowns; run 9 remains in flight, lane-c two commits ahead, and pending orders remain empty. See `closeout-state.json` and `dry-board-closeout.txt`. Lock `b61072714`, bookkeeping `998f51956`, evidence `e38623ecc`; the clearing commit follows this report and is this fire's last write to main. Process-lock cleanup remains the launcher's responsibility.
