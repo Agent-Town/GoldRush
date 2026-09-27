@@ -815,6 +815,40 @@ async function motorOpening(page: Page, row: Row): Promise<void> {
   }
 }
 
+// Regatta alone needs a helmed course: walking the generic home circuit cannot race a boat.
+// Native keys only; surveyed waypoints follow the heat-15 route and stay inside its water clamp.
+async function regattaJourney(page: Page, row: Row, contract: ContractManifest, deadline: number): Promise<void> {
+  const course = contract.tileParams.raceCourse;
+  if (!course) return;
+  const boat = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.regatta?.boat);
+  if (!boat) return;
+  // Reuse the ground helper for the port gangway crossing, as the native boat spec does.
+  await journey(page, row, boat.x - 6, boat.z + 2, 0.8, [], 90);
+  await journey(page, row, boat.x + 2, boat.z + 6, 1.2, [], 90);
+  const gates = [...course.beacons, { id: 'claim-boat', x: boat.x, z: boat.z }];
+  let lastGate = '';
+  while (Date.now() < deadline) {
+    await takeUpgrades(page, row);
+    const now = await read(page);
+    const state = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.regatta);
+    if (!now || now.runState === 'dead' || !state || state.race.finished || state.race.forfeited || now.wave >= row.secureWave) break;
+    const gate = state.race.nextGate;
+    if (!gate || !state.boat.aboard) break;
+    if (gate.id !== lastGate) {
+      row.notes.push(`Regatta next=${gate.id}, wave=${now.wave}, sim=${now.sim.toFixed(3)}, passed=${state.race.gatesPassed.length}`);
+      lastGate = gate.id;
+    }
+    const next = gates[gates.findIndex(g => g.id === gate.id) + 1];
+    const dx = next ? next.x - gate.x : 1;
+    const dz = next ? next.z - gate.z : 0;
+    const length = Math.hypot(dx, dz) || 1;
+    const x = Math.max(-44, Math.min(44, gate.x + dx / length * 4.5));
+    const z = Math.max(-44, Math.min(44, gate.z + dz / length * 4.5));
+    await steer(page, x - state.boat.x, z - state.boat.z, 100);
+  }
+  row.notes.push(`Regatta movement end: ${JSON.stringify(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.regatta))}`);
+}
+
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
@@ -1118,6 +1152,7 @@ export function nativeProof(id: string, run = 1) {
             }
           }
         }
+        if (contract.id === 'e5-regatta') await regattaJourney(page, row, contract, deadline);
         const kit = kitFor(contract);
         row.notes.push(`kit=${kit.map((piece) => piece.id).join('+')}`);
         let kitIndex = 0;
