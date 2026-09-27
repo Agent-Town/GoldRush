@@ -17,5 +17,9 @@ evidence = pathlib.Path(f'artifacts/sol/play-proofs/run-12/{strategy}/{contract}
 evidence.mkdir(parents=True, exist_ok=True)
 (evidence / 'command.json').write_text((root / 'command.json').read_text())
 (evidence / 'command.exit').write_text(str(result.returncode)+'\n')
+final = pathlib.Path(f'artifacts/sol/play-proofs/run-12/{contract}/{strategy}')
+final.mkdir(parents=True, exist_ok=True)
+for file in evidence.iterdir():
+    if file.is_file(): file.rename(final / file.name)
 print(json.dumps({'contract':contract,'strategy':strategy,'projects':projects,'exit':result.returncode,'log':str(root/'command.log')}))
 sys.exit(result.returncode)

@@ -6,8 +6,8 @@ The driver repeatedly uses ordinary ground ghosts on a deck-pad map (`ghostValid
 
 No restoration retry: this is objective non-engagement, not a death with a working objective. No F-ID. No balance change recommended. Bank, Book return and byte-identical score reload are unproved; no successful-bank screenshots fabricated.
 
-[Desktop row](../default/e5-deepwater-claim/row-desktop-chrome.json) · [Desktop objective](../default/e5-deepwater-claim/objective-desktop-chrome.json) · [Desktop terminal](../default/e5-deepwater-claim/terminal-desktop-chrome.jpg). Direct image inspection confirms wave 100 / 100 HP / 0 gold, active play and empty deck.
+[Desktop row](default/row-desktop-chrome.json) · [Desktop objective](default/objective-desktop-chrome.json) · [Desktop terminal](default/terminal-desktop-chrome.jpg). Direct image inspection confirms wave 100 / 100 HP / 0 gold, active play and empty deck.
 
 Command: `python3 artifacts/sol/play-proofs/run-12/run-map.py e5-deepwater-claim`. One worker, default strategy, desktop before phone. Full logs/rows under `~/.goldrush/play-proofs/run-12/default/e5-deepwater-claim/`.
 
-[Phone row](../default/e5-deepwater-claim/row-mobile-chrome.json) · [Phone objective](../default/e5-deepwater-claim/objective-mobile-chrome.json) · [Phone terminal](../default/e5-deepwater-claim/terminal-mobile-chrome.jpg).
+[Phone row](default/row-mobile-chrome.json) · [Phone objective](default/objective-mobile-chrome.json) · [Phone terminal](default/terminal-mobile-chrome.jpg).

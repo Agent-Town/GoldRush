@@ -31,7 +31,7 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e4-long-road/row-desktop-chrome.json"
+    "path": "e4-long-road/default/row-desktop-chrome.json"
   },
   {
     "contract": "e4-long-road",
@@ -65,7 +65,7 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e4-long-road/row-mobile-chrome.json"
+    "path": "e4-long-road/default/row-mobile-chrome.json"
   },
   {
     "contract": "e5-deepwater-claim",
@@ -99,7 +99,7 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e5-deepwater-claim/row-desktop-chrome.json"
+    "path": "e5-deepwater-claim/default/row-desktop-chrome.json"
   },
   {
     "contract": "e5-deepwater-claim",
@@ -133,7 +133,7 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e5-deepwater-claim/row-mobile-chrome.json"
+    "path": "e5-deepwater-claim/default/row-mobile-chrome.json"
   },
   {
     "contract": "e5-flotilla",
@@ -167,7 +167,7 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e5-flotilla/row-desktop-chrome.json"
+    "path": "e5-flotilla/default/row-desktop-chrome.json"
   },
   {
     "contract": "e5-flotilla",
@@ -201,7 +201,7 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e5-flotilla/row-mobile-chrome.json"
+    "path": "e5-flotilla/default/row-mobile-chrome.json"
   },
   {
     "contract": "e5-regatta",
@@ -235,7 +235,7 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e5-regatta/row-desktop-chrome.json"
+    "path": "e5-regatta/default/row-desktop-chrome.json"
   },
   {
     "contract": "e5-regatta",
@@ -269,7 +269,7 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e5-regatta/row-mobile-chrome.json"
+    "path": "e5-regatta/default/row-mobile-chrome.json"
   },
   {
     "contract": "e5-stillwater",
@@ -303,7 +303,7 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e5-stillwater/row-desktop-chrome.json"
+    "path": "e5-stillwater/default/row-desktop-chrome.json"
   },
   {
     "contract": "e5-stillwater",
@@ -337,6 +337,146 @@
       "ok": true,
       "detail": "0 console, 0 page"
     },
-    "path": "default/e5-stillwater/row-mobile-chrome.json"
+    "path": "e5-stillwater/default/row-mobile-chrome.json"
+  },
+  {
+    "contract": "e6-glow-mesa",
+    "project": "desktop-chrome",
+    "strategy": "default",
+    "wave": 6,
+    "simSeconds": 183.6,
+    "hp": 0,
+    "gold": 1,
+    "repairs": 0,
+    "standing": 3,
+    "pieces": 3,
+    "newBuilds": 3,
+    "secure": {
+      "ok": false,
+      "detail": "runState=dead at wave 6 / 183.6s sim, 123 kills, 1 gold"
+    },
+    "bank": {
+      "ok": false,
+      "detail": "skipped: never secured"
+    },
+    "board": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "reload": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "clean": {
+      "ok": true,
+      "detail": "0 console, 0 page"
+    },
+    "path": "e6-glow-mesa/default/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e6-glow-mesa",
+    "project": "mobile-chrome",
+    "strategy": "default",
+    "wave": 6,
+    "simSeconds": 187.467,
+    "hp": 0,
+    "gold": 37,
+    "repairs": 0,
+    "standing": 3,
+    "pieces": 3,
+    "newBuilds": 2,
+    "secure": {
+      "ok": false,
+      "detail": "runState=dead at wave 6 / 187.5s sim, 110 kills, 37 gold"
+    },
+    "bank": {
+      "ok": false,
+      "detail": "skipped: never secured"
+    },
+    "board": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "reload": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "clean": {
+      "ok": true,
+      "detail": "0 console, 0 page"
+    },
+    "path": "e6-glow-mesa/default/row-mobile-chrome.json"
+  },
+  {
+    "contract": "e6-glow-mesa",
+    "project": "desktop-chrome",
+    "strategy": "restore-ground",
+    "wave": 8,
+    "simSeconds": null,
+    "hp": null,
+    "gold": null,
+    "repairs": null,
+    "standing": null,
+    "pieces": null,
+    "newBuilds": 4,
+    "secure": {
+      "ok": true,
+      "detail": "Claim Secured at wave 8 / 263.1s sim, 51 HP, 4 buildings"
+    },
+    "bank": {
+      "ok": false,
+      "detail": "no new secured row since pre-play for e6-glow-mesa at >= wave 12 (41 new row(s): [{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":41,\"waves\":30,\"secured\":true,\"contractId\":\"e10-last-claim\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}},{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":40,\"waves\":30,\"secured\":true,\"contractId\":\"e10-archive-world\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}}])"
+    },
+    "board": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "reload": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "clean": {
+      "ok": true,
+      "detail": "0 console, 0 page"
+    },
+    "path": "e6-glow-mesa/restore-ground/row-desktop-chrome.json",
+    "postBankReset": true,
+    "terminalEvidence": "e6-glow-mesa/terminal-audit.json"
+  },
+  {
+    "contract": "e6-glow-mesa",
+    "project": "mobile-chrome",
+    "strategy": "restore-ground",
+    "wave": 9,
+    "simSeconds": null,
+    "hp": null,
+    "gold": null,
+    "repairs": null,
+    "standing": null,
+    "pieces": null,
+    "newBuilds": 5,
+    "secure": {
+      "ok": true,
+      "detail": "Claim Secured at wave 9 / 288.7s sim, 9 HP, 5 buildings"
+    },
+    "bank": {
+      "ok": false,
+      "detail": "no new secured row since pre-play for e6-glow-mesa at >= wave 12 (41 new row(s): [{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":41,\"waves\":30,\"secured\":true,\"contractId\":\"e10-last-claim\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}},{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":40,\"waves\":30,\"secured\":true,\"contractId\":\"e10-archive-world\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}}])"
+    },
+    "board": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "reload": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "clean": {
+      "ok": true,
+      "detail": "0 console, 0 page"
+    },
+    "path": "e6-glow-mesa/restore-ground/row-mobile-chrome.json",
+    "postBankReset": true,
+    "terminalEvidence": "e6-glow-mesa/terminal-audit.json"
   }
 ]
