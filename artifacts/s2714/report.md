@@ -2,7 +2,7 @@
 
 **WHY NO PRODUCT MERGE:** run 9 is still executing on lane-c. The done-board probe finds zero real drains and zero unknowns. No new failed move or pending crafting order exists. CODEX-WALL and the current handover leave run 10 and holds-1 dispatch with their attended queue jobs; this fire dispatches nothing.
 
-**READY-FOR-GATES — heartbeat evidence recorded; final ledger battery pending.**
+**READY-FOR-GATES — heartbeat complete; final ledger gate green; no product drain.**
 
 ## Verified state
 
@@ -31,4 +31,8 @@ The complete s2713 line-1 handoff is archived verbatim in STATUS.md. Its three-i
 
 ## Closeout
 
-Final ledger results and closeout receipt will be appended before clearing the lock. The clearing commit will be this fire's last write to main; the launcher owns process-lock cleanup.
+Final ledger battery **rc 0**, **1263/1263 tests**, zero failures/skips, final chained leg **83/83**, completed in **298.680 seconds** at **2026-09-27T15:45:12.608Z**. See ledger-final.txt and ledger-final-result.json. HEAD stayed at 430bb2e05 throughout. The fixture-generated FAIL banner inside the log is a deliberate negative control; the complete command exited 0.
+
+The closeout probe still finds zero drains and zero unknowns; run 9 remains live, now five commits ahead, and no crafting orders are pending. See closeout-state.json and dry-board-closeout.txt. No implementation, drain, dispatch or deploy occurred.
+
+Lock commit: 9f97d652b. Bookkeeping: b5f0c9b04. Evidence: 430bb2e05. The clearing commit follows this report and is this fire's last write to main. Process-lock cleanup remains the launcher's responsibility.
