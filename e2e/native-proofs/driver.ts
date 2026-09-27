@@ -834,6 +834,16 @@ async function motorOpening(page: Page, row: Row): Promise<void> {
 
 async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest, deadline: number): Promise<void> {
   const readBoat = () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.deepwaterClaim);
+  const deckAction = async (id: string) => {
+    try {
+      if (await page.getByTestId('building-context-prompt').getAttribute('open') === null) {
+        await page.getByTestId('building-context-toggle').click({ timeout: 2000 });
+      }
+      await page.getByTestId(id).click({ timeout: 2000 });
+    } catch (error) {
+      row.notes.push(`${id} refused: ${String((error as Error).message).split('\n')[0]}`);
+    }
+  };
   // The moored Claim Boat has no helm physics. Boarding means standing on its deck;
   // its native anchor action carries the rider and all occupied pads together.
   const initial = await readBoat();
@@ -846,7 +856,7 @@ async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest
     const z = boat.anchor.z + pad.z;
     const reached = await walkTo(page, row, x, z, 0.7);
     await takeUpgrades(page, row);
-    if (reached) await page.getByTestId('deck-build').click({ timeout: 2000 }).catch(() => undefined);
+    if (reached) await deckAction('deck-build');
     const placed = (await readBoat())?.boat.buildings.find(building => building.padId === pad.id);
     row.notes.push(`deck pad ${pad.id}: reached=${reached}, placement=${JSON.stringify(placed ?? null)}`);
     if (placed) {
@@ -857,7 +867,7 @@ async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest
   const anchor = contract.tileParams.deepwater!.claimBoat.anchors.find(anchor => anchor.id !== initial.boat.anchor.id);
   if (anchor) {
     await walkTo(page, row, initial.boat.anchor.x, initial.boat.anchor.z, 0.8);
-    await page.getByTestId(`deck-anchor-${anchor.id}`).click({ timeout: 2000 }).catch(() => undefined);
+    await deckAction(`deck-anchor-${anchor.id}`);
     row.notes.push(`board and reanchor: boat=${JSON.stringify((await readBoat())?.boat)}, hero=${JSON.stringify((await read(page))?.hero)}`);
   }
   let lastStage = '';
