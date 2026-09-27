@@ -2,7 +2,7 @@
 
 Source: `sol/map-art-campaign-2`, tip `4cada136986ff342d1a1c8fbb0cb68b786154f7f`. Fires: s2719, s2720 and s2721. Verified candidate: `fcae3063201a05268e70fe666b646bb5d445f9e3` (original source merge `a4ac5b58306b45f2a4c8d90240c6383e00d07d99`) at `/Users/robin/.goldrush/fire-s2719/wt-pp10`.
 
-**Verdict: ACCEPTED QA EVIDENCE — candidate gates complete; s2721 lands the drain commit set, with required full Node verification on main pending.** All four map verdicts remain HELD. This review accepts no new gameplay completion or map defect.
+**Verdict: ACCEPTED QA EVIDENCE, LANDED AND VERIFIED — candidate and post-landing main gates pass.** All four map verdicts remain HELD. This review accepts no new gameplay completion or map defect.
 
 ## What this measures
 
@@ -68,4 +68,12 @@ No proven map defect and no new F-PP10 finding. The attended `sol-play-proofs-ho
 
 Strict policy CLEAR on the authoritative board. Newer main since the completed candidate contains only bookkeeping and evidence, synchronized without conflicts as `57a28a21d8e4a428d089e65dd2684383cb012f8c`; applicable executable, dependency, browser and art inputs are identical to the completed receipts. All 65 source paths remain additive. Store HEAD/main is clean at `5793a967da46e8f00c0ba16f92f17dc10d36558d` in both views. Eight raw equivalence checks pass again, source evidence remains 1,615,430 B. No gate is repeated merely because the bookkeeping commit changed.
 
-The actual source merge is `a4ac5b58306b45f2a4c8d90240c6383e00d07d99`. This drain commit set updates the goal, BACKLOG and this review before fast-forwarding main. The original done-move is renamed on the primary board after the fast-forward. Full Node on main is the next gate; its receipt and verdict will be appended here before handoff. Dispatch of holds-1/-2/-3 stays with the attended queue jobs. No runtime change or era bump means no Gazette item or deployment is due.
+The actual source merge is `a4ac5b58306b45f2a4c8d90240c6383e00d07d99`. This drain commit set updates the goal, BACKLOG and this review before fast-forwarding main. The original done-move is renamed on the primary board after the fast-forward. Full Node on main subsequently passed; exact receipt and verdict follow. Dispatch of holds-1/-2/-3 stays with the attended queue jobs. No runtime change or era bump means no Gazette item or deployment is due.
+
+## Post-landing main result
+
+**PASS, rc 0: 1032 passed, eight existing skips, zero failures or cancellations; all chained audits green, final tail 87/87.** Complete command time: **2582.864 seconds**; test-body time: 2548.677 s. The 162-owner fixture cleanup sweep passed in **1029.425 s**, with no survivors. Maximum TAP silence: 1025.3 s under the unchanged 2700 s watchdog. Transcript and direct exit: `artifacts/s2721/full-node-main.txt`, `artifacts/s2721/node-result.json`; execution identity: `node-start.json`. No control or code cure was needed for this green run.
+
+Main was fast-forwarded to `1c13a248793c89ab9a0abec1d03c190e1e520251` and pushed; the original done-move was renamed `drained-s2721-20260928-013750-sol-play-proofs-10.md`. The first fast-forward refused to overwrite the fire's identical untracked evidence copies; those were moved intact to `~/.goldrush/fire-s2721-prelanding-local`, then the fast-forward succeeded. Both receipts remain. During the gate only the UTC ACTIVE heartbeat changed in `d8074251e`; executable inputs stayed fixed.
+
+Final engine hash on main still matches era 6 pin 71: `2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d`. The source lane is absorbed. Holds-1's landing prerequisite is recorded as met, with dispatch still attended-owned. F-2717-1 and lane-a's cleanup corrective remain open for their own drain. The long completed gate consumed this fire increment, so no second drain starts.
