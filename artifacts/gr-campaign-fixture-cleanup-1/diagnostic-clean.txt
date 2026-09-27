@@ -1,0 +1,42 @@
+✔ all 1 scripts/*.test.mjs fixture owners remove their temp directories (75.044167ms)
+ℹ scripts/subject.test.mjs child status=1 signal=null error=none
+stdout:
+✖ controlled nested assertion (0.711958ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41.712333
+
+✖ failing tests:
+
+test at scripts/subject.test.mjs:8:1
+✖ controlled nested assertion (0.711958ms)
+  AssertionError [ERR_ASSERTION]: CONTROLLED_NESTED_ASSERTION
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/diagnostic-clean/scripts/subject.test.mjs:10:16)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'fail',
+    diff: 'simple'
+  }
+
+stderr:
+
+ℹ fixture owners=1; survivors=0; failed children (reported only)=scripts/subject.test.mjs
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115.621167

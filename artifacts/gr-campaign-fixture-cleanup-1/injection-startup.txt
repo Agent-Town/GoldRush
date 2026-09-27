@@ -1,0 +1,24 @@
+✖ a killed campaign resumes from its last profile checkpoint (3.954542ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 100.927542
+
+✖ failing tests:
+
+test at scripts/gr-sim-campaign.test.mjs:77:1
+✖ a killed campaign resumes from its last profile checkpoint (3.954542ms)
+  Error: spawn /nonexistent/campaign-cleanup-node ENOENT
+      at ChildProcess._handle.onexit (node:internal/child_process:286:19)
+      at onErrorNT (node:internal/child_process:524:16)
+      at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'spawn /nonexistent/campaign-cleanup-node',
+    path: '/nonexistent/campaign-cleanup-node',
+    spawnargs: [ 'scripts/gr-sim-campaign.mjs', '--player', 'scripts/gr-sim-campaign.fixture-player.mjs', '--test-fixture', '--output', '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/injection-startup/gr-campaign-resume-1allDU/first', '--checkpoint', '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/injection-startup/gr-campaign-resume-1allDU/checkpoint.json' ]
+  }

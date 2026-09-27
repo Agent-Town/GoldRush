@@ -1,0 +1,31 @@
+
+===== complete npm run test:node-guards — rc=1 1155.4s =====
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/node-guards-contention.test.mjs:124:1
+✖ contention is advisory, correctly counted, and absent when alone (7149.043083ms)
+  AssertionError [ERR_ASSERTION]: node-guards board did not stay quiet for 300ms
+      at waitForQuietBoard (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/node-guards-contention.test.mjs:65:10)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/node-guards-contention.test.mjs:166:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'fail',
+    diff: 'simple'
+  }
+CONTENDED — 2 concurrent batteries
+ℹ TAP-QUIET MAX: 915.3s of 2700s bound (F-POC-8 watchdog)
+CONTENDED — 2 concurrent batteries
+
+
+SUMMARY {"complete npm run test:node-guards":1}
+OVERALL rc=1
+transcript -> artifacts/gr-campaign-fixture-cleanup-1/full-node.txt
