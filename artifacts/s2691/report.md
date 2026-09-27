@@ -22,7 +22,7 @@ Every headline was checked against its review. Limits remain explicit: Canyon tr
 
 ## Final checks
 
-Digest headline lengths, all thirteen landing citations, referenced paths, nine added Gazette citations and the weekly census passed. The mandatory final ledger battery is recorded in `ledger-guards.txt`, with its process exit in `ledger-guards.rc`; it runs before the clearing commit. No game build or browser gate is needed for this documentation-only increment. The report does not claim new game gates.
+Digest headline lengths, all thirteen landing citations, referenced paths, nine added Gazette citations and the weekly census passed. The mandatory final ledger battery PASSED: process exit 0, 1,263 tests passed, zero failed (test phase 267.491 seconds); every subsequent shell leg also completed. Evidence is in `ledger-guards.txt` and `ledger-guards.rc`. It finished before the clearing commit. Content commit: `54bd265f0`. No game build or browser gate is needed for this documentation-only increment. The report does not claim new game gates.
 
 ## Remaining, in order
 
