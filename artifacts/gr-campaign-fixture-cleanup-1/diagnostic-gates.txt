@@ -1,0 +1,18 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T20:01:10.666Z ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+
+===== sweep verdict and diagnostic probes =====
+$ node artifacts/gr-campaign-fixture-cleanup-1/verify-sweep.mjs
+rc=0 0.4s
+[
+  { mode: 'clean', status: 0 },
+  { mode: 'leak', status: 1 },
+  { mode: 'zero', status: 1 }
+]
+
+
+SUMMARY {"sweep verdict and diagnostic probes":0}
+OVERALL rc=0

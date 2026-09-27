@@ -1,0 +1,15 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T20:23:54.189Z — campaign fixture cleanup ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5317
+
+===== plain desktop and 390px boots =====
+$ /opt/homebrew/Cellar/node/26.4.0/bin/node artifacts/gr-campaign-fixture-cleanup-1/plain-boots.mjs
+rc=0 6.8s
+[{"name":"desktop","scene":"menu","viewport":{"width":1280,"height":800},"errors":[],"url":"http://127.0.0.1:5317/"},{"name":"desktop","scene":"run","viewport":{"width":1280,"height":800},"errors":[],"url":"http://127.0.0.1:5317/?seed=campaign-fixture-plain"},{"name":"mobile","scene":"menu","viewport":{"width":390,"height":844},"errors":[],"url":"http://127.0.0.1:5317/"},{"name":"mobile","scene":"run","viewport":{"width":390,"height":844},"errors":[],"url":"http://127.0.0.1:5317/?seed=campaign-fixture-plain"}]
+
+
+SUMMARY {"plain desktop and 390px boots":0}
+OVERALL rc=0

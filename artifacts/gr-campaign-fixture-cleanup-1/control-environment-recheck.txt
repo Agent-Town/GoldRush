@@ -1,0 +1,64 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T19:58:26.764Z ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/control-arena
+
+===== arena environment recheck =====
+$ node --test --test-reporter=spec scripts/deploy-mirror-allowlist.test.mjs scripts/ledger-backup-fill-gaps-guard.test.mjs scripts/ledger-backup-pull.test.mjs scripts/ledger-mirror-freshness-guard.test.mjs scripts/ledger-pull-supply-window-guard.test.mjs
+rc=0 5.8s
+mirror closure: ledger 2213 files; assay 2910 files; engine 662 files; total 3174
+✔ droplet mirror ships the runtime closure and deletes only unprotected spillover (1290.992125ms)
+✔ --fill-gaps pulls exactly the missing dated backup, and nothing else (1243.705583ms)
+✔ the recovered file is the REMOTE bytes, not a placeholder (1028.386667ms)
+✔ --fill-gaps --dry-run names the gap and rsyncs NOTHING (446.237166ms)
+✔ the corpus is declared even on the happy path — "0 gaps" must not look like "I could not read the box" (F-2208-1) (432.844709ms)
+✔ THE DEFECT ARM: the default path leaves the hole behind today untouched (421.236ms)
+✔ non-dated debris on the box is never pulled (850.411375ms)
+✔ a mirror directory that does not exist yet is created, not crashed on (868.826333ms)
+✔ an unreachable box fails LOUD — it must never report a clean series (424.209959ms)
+✔ dry run prints a bounded plan without contacting the droplet (33.480916ms)
+✔ today's local backup makes the pull an offline no-op (31.235417ms)
+✔ 1. a whole, current series reports WHOLE AND CURRENT and strict exits 0 (63.846292ms)
+✔ 2. an INTERIOR hole is NAMED and strict exits 1 — the defect LB-01 cannot see (60.96325ms)
+✔ 3. a STALE newest (no holes) is reported with its age and strict exits 1 (63.300458ms)
+✔ 4. an ABSENT mirror directory CANNOT VERIFY — strict exits 2, never 1 (60.722583ms)
+✔ 5. a readable but EMPTY series CANNOT VERIFY — an empty series has no gaps (60.928333ms)
+✔ 6. ADVISORY default is 0 in EVERY state, including a gap and an unreadable corpus (91.375542ms)
+✔ 7. the corpus is DECLARED on the HAPPY path too, not only on failure (31.676167ms)
+✔ 8. the CALENDAR is validated, not the digit count (30.342333ms)
+✔ 9. REVERSE CONTROL: cwd cannot change the corpus, and the ANCHOR is still read beside the script (94.393417ms)
+✔ 22. THE RULING, GUARDED: the DEFAULT destination is not inside the public repo (0.171625ms)
+✔ 23. ONE destination, THREE tools: pull, freshness and exposure cannot disagree (94.362792ms)
+✔ 24. the PROVENANCE rides with the path — an env-narrowed corpus cannot print like the default (62.599083ms)
+✔ 25. a RELATIVE destination override is REFUSED, never resolved against cwd (0.246833ms)
+✔ 10. gaps are computed across month and year boundaries (0.521667ms)
+✔ 11. day arithmetic is leap-correct and monotone (no Date, so no timezone) (0.060042ms)
+✔ 12. parseName accepts only well-formed calendar names (0.127ms)
+✔ 13. exitCodeFor keeps 2 (could not answer) above 1 (refuses) above 0 (0.059833ms)
+✔ 16. THE DEFECT, GUARDED: 31 of 32 days deleted is NAMED, not read as a shorter perfect series (65.778459ms)
+✔ 17. an ABSENT anchor WITHHOLDS the verdict — 2 (could not answer), never a silent fallback (63.052625ms)
+✔ 18. a MALFORMED anchor is could-not-answer too — bad JSON and a non-calendar day alike (187.689375ms)
+✔ 19. the ANCHOR is declared on the HAPPY path too, with its source (F-2208-1) (30.491417ms)
+✔ 20. a file OLDER than the anchor widens the window and is never counted as a hole (64.918708ms)
+✔ 21. the repo's OWN anchor is present, parseable and a real calendar day (0.208583ms)
+✔ 15. localToday reads LOCAL components — the UTC date-only trap, guarded (0.198042ms)
+✔ 14. readMirrors DECLARES an unreadable corpus rather than returning an empty selection (0.105041ms)
+✔ the newest-already-present exit names TODAY as still outstanding (831.628833ms)
+✔ the declaration names the supply window rather than blaming the fetch (500.909042ms)
+✔ the exit stays advisory — a no-op must never red the LB-01 duty (511.515958ms)
+✔ REVERSE CONTROL: a genuine discharge does NOT claim to be outstanding (45.55025ms)
+✔ the site records how the supply window was measured (0.166583ms)
+✔ the site names the RANDOMIZED mechanism, so no fixed threshold can creep back (451.11125ms)
+ℹ tests 42
+ℹ suites 0
+ℹ pass 42
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5770.201167
+
+
+SUMMARY {"arena environment recheck":0}
+OVERALL rc=0

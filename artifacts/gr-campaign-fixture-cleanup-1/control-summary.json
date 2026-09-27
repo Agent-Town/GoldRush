@@ -1,0 +1,79 @@
+{
+  "owners": 162,
+  "failedChildren": [
+    {
+      "name": "deploy-mirror-allowlist.test.mjs",
+      "status": 1,
+      "entries": []
+    },
+    {
+      "name": "ledger-backup-fill-gaps-guard.test.mjs",
+      "status": 1,
+      "entries": []
+    },
+    {
+      "name": "ledger-backup-pull.test.mjs",
+      "status": 1,
+      "entries": []
+    },
+    {
+      "name": "ledger-mirror-freshness-guard.test.mjs",
+      "status": 1,
+      "entries": [
+        "s2672-dest-iJVSNT"
+      ]
+    },
+    {
+      "name": "ledger-pull-supply-window-guard.test.mjs",
+      "status": 1,
+      "entries": []
+    },
+    {
+      "name": "node-guards-contention.test.mjs",
+      "status": 1,
+      "entries": []
+    }
+  ],
+  "otherScratchEntries": [
+    {
+      "name": "guard-stats-persistence.test.mjs",
+      "entries": [
+        "node-compile-cache"
+      ]
+    },
+    {
+      "name": "run-guards.test.mjs",
+      "entries": [
+        "node-compile-cache"
+      ]
+    },
+    {
+      "name": "town-spec-collection.test.mjs",
+      "entries": [
+        "node-compile-cache",
+        "playwright-transform-cache-501"
+      ]
+    },
+    {
+      "name": "whole-suite-collection.test.mjs",
+      "entries": [
+        "node-compile-cache",
+        "playwright-transform-cache-501"
+      ]
+    }
+  ],
+  "fixtureSurvivors": [
+    {
+      "name": "ledger-mirror-freshness-guard.test.mjs",
+      "survivors": [
+        "s2672-dest-iJVSNT"
+      ]
+    }
+  ],
+  "campaign": {
+    "tests": 6,
+    "passed": 6,
+    "exit": 0,
+    "survivors": []
+  }
+}

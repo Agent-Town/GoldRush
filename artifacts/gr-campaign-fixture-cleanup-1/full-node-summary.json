@@ -1,0 +1,19 @@
+{
+  "command": "npm run test:node-guards",
+  "exit": 1,
+  "tests": 1040,
+  "passed": 1033,
+  "failed": 2,
+  "skipped": 5,
+  "cancelled": 0,
+  "durationSeconds": 1155.196596916,
+  "fixtureOwners": 162,
+  "fixtureSurvivors": 0,
+  "failures": [
+    "desk-declaration-guard: linked worktree handoff differs from main",
+    "node-guards-contention: node-guards board did not stay quiet for 300ms"
+  ],
+  "tapQuietMaxSeconds": 915.3,
+  "watchdogSeconds": 2700,
+  "chainedLegs": "not run because the first npm leg failed"
+}
