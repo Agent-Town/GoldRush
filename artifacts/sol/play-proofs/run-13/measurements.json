@@ -270,5 +270,73 @@
       "detail": "0 console, 0 page"
     },
     "path": "e6-showroom/default/row-mobile-chrome.json"
+  },
+  {
+    "contract": "e7-dead-band",
+    "project": "desktop-chrome",
+    "strategy": "default",
+    "wave": 18,
+    "simSeconds": 550.0,
+    "hp": 0,
+    "gold": 0,
+    "repairs": 0,
+    "standing": 8,
+    "pieces": 8,
+    "newBuilds": 8,
+    "secure": {
+      "ok": false,
+      "detail": "runState=dead at wave 18 / 550.0s sim, 817 kills, 0 gold"
+    },
+    "bank": {
+      "ok": false,
+      "detail": "skipped: never secured"
+    },
+    "board": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "reload": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "clean": {
+      "ok": true,
+      "detail": "0 console, 0 page"
+    },
+    "path": "e7-dead-band/default/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e7-dead-band",
+    "project": "mobile-chrome",
+    "strategy": "default",
+    "wave": 18,
+    "simSeconds": 547.467,
+    "hp": 0,
+    "gold": 0,
+    "repairs": 0,
+    "standing": 8,
+    "pieces": 8,
+    "newBuilds": 8,
+    "secure": {
+      "ok": false,
+      "detail": "runState=dead at wave 18 / 547.5s sim, 809 kills, 0 gold"
+    },
+    "bank": {
+      "ok": false,
+      "detail": "skipped: never secured"
+    },
+    "board": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "reload": {
+      "ok": false,
+      "detail": "skipped: never banked"
+    },
+    "clean": {
+      "ok": true,
+      "detail": "0 console, 0 page"
+    },
+    "path": "e7-dead-band/default/row-mobile-chrome.json"
   }
 ]
