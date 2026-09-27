@@ -12,3 +12,5 @@ Policy passes from the primary checkout. The linked-worktree policy invocation d
 The full diff-selected guards and counted browser gates are pending. Do not land or mark the leaf merged before their verdict. Native run-12 records were checked against all 14 external raw rows: equivalent apart from the deliberate two-sample compaction, zero console/page errors, six complete journeys and eight honest failed proofs.
 
 The attended task sol-play-proofs-holds-1 owns Long Road convoy engagement, Deepwater deck/boss interaction, and Glow Mesa early-bank/snapshot instrumentation after run 10. Run 9 and 10 dispatch remain attended-owned.
+
+Update 2026-09-27T13:07Z: browser gates completed (42/42 plus fresh Regatta 2/2); the full Node child was terminated by the outer 900-second wrapper. The current verdict and continuation are in report.md and gate-verdict.json. No candidate landing occurred.

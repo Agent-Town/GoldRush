@@ -36,4 +36,4 @@ All captured gate PIDs, including this fire's Vite PID 50566, are gone. The Vite
 
 ## Final verification
 
-Pending the mandatory ledger battery and final clearing commit. This paragraph is completed before the lock is cleared; the held Node gate remains held regardless of ledger results.
+The full `npm run test:ledger-guards` command passed with **rc 0**, **1263/1263 tests, zero failures/skips**, all chained legs completed, in **188.483 seconds**, at 2026-09-27T13:07:45.908Z. It gated main `5aea8e594435d825c0edbde1a1faa367a9de7d7b`; the head was rechecked unchanged before clearing. Evidence: `ledger-final.txt`, `ledger-final-result.json`. The review/evidence/held-row commit is `5aea8e594`. This ledger green does not replace the incomplete gameplay Node gate. The final commit clears the lock and is the last write to main; it is then pushed. The done-board still has one real drain, zero unknowns; all queues are empty and lane-c remains six commits ahead (`final-state.json`).
