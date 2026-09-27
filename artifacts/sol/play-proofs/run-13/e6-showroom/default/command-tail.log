@@ -1,0 +1,35 @@
+e6-showroom {"t":2318.3,"wave":77,"hp":175,"gold":10,"kills":1091,"x":-31.9,"z":-5.2,"alive":96,"seams":2}
+
+e6-showroom {"t":2330.5,"wave":77,"hp":175,"gold":10,"kills":1091,"x":-31.9,"z":-5.2,"alive":96,"seams":2}
+
+e6-showroom {"t":2342.7,"wave":78,"hp":175,"gold":10,"kills":1091,"x":-31.9,"z":-5.2,"alive":96,"seams":2}
+
+e6-showroom {"t":2354.9,"wave":78,"hp":175,"gold":10,"kills":1091,"x":-31.9,"z":-5.2,"alive":96,"seams":2}
+
+  2) [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-showroom plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: never secured: peak wave 78 of 20 after 2367.1s sim (runState=playing, 1 buildings, 1091 kills)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1454 |       }
+      1455 |
+    > 1456 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1457 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1458 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1459 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1456:64
+
+    Error Context: ../../../../../.goldrush/play-proofs/run-13/default/e6-showroom/results/native-proofs-e6-showroom--a2bbb-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  Slow test file: [desktop-chrome] › e2e/native-proofs/driver.ts (10.1m)
+  Slow test file: [mobile-chrome] › e2e/native-proofs/driver.ts (10.1m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  2 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-showroom plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-showroom plays to its authored terminal, banks, reloads and returns to the board @slow 
