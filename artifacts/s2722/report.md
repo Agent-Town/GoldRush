@@ -54,3 +54,11 @@ Run from the primary checkout after synchronizing the candidate:
 ```
 
 Replace NEXT-FIRE with the new session's own evidence directory. The final ledger result is recorded below before lock clearance.
+
+## Final ledger and handoff
+
+Full ledger **rc 0, 1263/1263, zero failures/skips; final kit 83/83**, in **197.083 s**, on stable main checkpoint **bd6c51e0c64fc2c106b6bd7f849efa1295b86522**. Exact receipts: ledger-start.json, ledger-final.txt, ledger-result.json, ledger-summary.json. The predecessor handoff archive and unchanged Owner's Desk were checked byte-for-byte. This is a documentation/evidence checkpoint, not a source landing.
+
+The final board probe reports **two** real done-moves: fixture cleanup and the newly finished attended holds-1 (tasks/done/20260928-045750-sol-play-proofs-holds-1.md). Finish the current corrective's direct Node gate before beginning that next serial drain. The earlier live-lane observation was true when measured; it is superseded by this final board check. No source output was relabeled merged.
+
+The clearing commit is this fire's last write to main; only its backup push and read-only verification follow. The launcher retains the process-lock directory until exit.
