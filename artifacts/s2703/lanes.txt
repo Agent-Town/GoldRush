@@ -1,0 +1,436 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=1237  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 1237 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 346 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          … and 338 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-b  sol/wave-lane-b  ahead=0  behind=817  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/wave-lane-b is 817 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/wave-lane-b
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 301 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          e2e/cp04-lever.spec.ts
+          … and 293 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-c  sol/map-art-campaign-2  ahead=3  behind=5  paths=130  tracked-dirt=1  untracked=39  BUSY
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/base.txt  (1 of 1 added lines absent from main)
+      "1ddb5f4537cf2765cfc384605e106bf40679c952"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/board-entry.ts  (41 of 41 added lines absent from main)
+      "/** Run-11-only entry adapter: preserve the shared driver's play strategy unchanged. */"
+      "import { expect, type Page } from '@playwright/test';"
+      "export async function steer(page: Page, dx: number, dz: number, ms = 120) {"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/contracts.json  (701 of 701 added lines absent from main)
+      "["
+      "  {"
+      "    \"id\": \"e1-drill-yard\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/drill-corrected.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/drill-corrected.log  (8 of 8 added lines absent from main)
+      "Running 2 tests using 1 worker"
+      "(node:15327) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/drill-native.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/drill-native.log  (46 of 46 added lines absent from main)
+      "Running 2 tests using 1 worker"
+      "(node:99824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/drill.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/drill.log  (4 of 4 added lines absent from main)
+      "SyntaxError: The requested module '../../src/game/ProfileStorage' does not provide an export named …"
+      "Error: No tests found."
+      "Make sure that arguments are regular expressions matching test files."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/driver-before.sha256  (1 of 1 added lines absent from main)
+      "88c19e1496da5f0aae62773032a87a5771a3394ac21b20c013c4c98cd994ead1  e2e/native-proofs/driver.ts"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/board-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/board-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/board-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/board-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/last-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/last-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/no-bank-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/no-bank-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/.last-run.json  (7 of 7 added lines absent from main)
+      "{"
+      "  \"status\": \"failed\","
+      "  \"failedTests\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-desktop-chrome/error-context.md  (72 of 72 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-desktop-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-mobile-chrome/error-context.md  (72 of 72 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-mobile-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/row-desktop-chrome.json  (91 of 91 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"errors\": [],"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/row-mobile-chrome.json  (91 of 91 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"errors\": [],"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/terminal-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/terminal-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/last-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/last-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/no-bank-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/no-bank-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/proof.md  (8 of 8 added lines absent from main)
+      "# Drill Yard — PASS on desktop and phone"
+      "The shipped contract is free practice, not a finite tutorial: scheduledWaves/scores/metaProgress/ru…"
+      "| Project | Sim seconds | HP | Gold | Cleared bell waves | Browser errors |"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/refusal-results/.last-run.json  (4 of 4 added lines absent from main)
+      "{"
+      "  \"status\": \"passed\","
+      "  \"failedTests\": []"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/refusal.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/refusal.log  (8 of 8 added lines absent from main)
+      "Running 2 tests using 1 worker"
+      "(node:15971) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/results/.last-run.json  (4 of 4 added lines absent from main)
+      "{"
+      "  \"status\": \"passed\","
+      "  \"failedTests\": []"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/row-desktop-chrome.json  (99 of 99 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"errors\": [],"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/row-mobile-chrome.json  (99 of 99 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"errors\": [],"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/terminal-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-drill-yard/terminal-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/command-desktop-chrome.json  (18 of 18 added lines absent from main)
+      "{"
+      "  \"command\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/command-mobile-chrome.json  (18 of 18 added lines absent from main)
+      "{"
+      "  \"command\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/desktop-chrome.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/desktop-chrome.log  (70 of 70 added lines absent from main)
+      "Running 1 test using 1 worker"
+      "(node:37868) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/last-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/last-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/row-desktop-chrome.json  (1669 of 1669 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e1-dry-gulch\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/row-mobile-chrome.json  (1685 of 1685 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e1-dry-gulch\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/terminal-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/terminal-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/mobile-chrome.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/mobile-chrome.log  (71 of 71 added lines absent from main)
+      "Running 1 test using 1 worker"
+      "(node:44829) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-desktop-chrome/.last-run.json  (6 of 6 added lines absent from main)
+      "{"
+      "  \"status\": \"failed\","
+      "  \"failedTests\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/error-context.md  (350 of 350 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-mobile-chrome/.last-run.json  (6 of 6 added lines absent from main)
+      "{"
+      "  \"status\": \"failed\","
+      "  \"failedTests\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/error-context.md  (353 of 353 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/finding.md  (10 of 10 added lines absent from main)
+      "# e1-dry-gulch — HELD"
+      "Four rides, all deaths at wave 16 before the authored wave-20 terminal. The working gather/build/wa…"
+      "| Project / strategy | Wave | Sim seconds | HP | Gold | Repairs | Pieces standing | Checks | Eviden…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/command-desktop-chrome.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"command\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/command-mobile-chrome.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"command\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/desktop-chrome.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/desktop-chrome.log  (71 of 71 added lines absent from main)
+      "Running 1 test using 1 worker"
+      "(node:42091) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/last-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/last-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/row-desktop-chrome.json  (1702 of 1702 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e1-dry-gulch\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/row-mobile-chrome.json  (1677 of 1677 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e1-dry-gulch\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/terminal-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/terminal-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/mobile-chrome.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/mobile-chrome.log  (71 of 71 added lines absent from main)
+      "Running 1 test using 1 worker"
+      "(node:47494) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-desktop-chrome/.last-run.json  (6 of 6 added lines absent from main)
+      "{"
+      "  \"status\": \"failed\","
+      "  \"failedTests\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/error-context.md  (350 of 350 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-mobile-chrome/.last-run.json  (6 of 6 added lines absent from main)
+      "{"
+      "  \"status\": \"failed\","
+      "  \"failedTests\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/error-context.md  (353 of 353 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/command-desktop-chrome.json  (18 of 18 added lines absent from main)
+      "{"
+      "  \"command\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/command-mobile-chrome.json  (18 of 18 added lines absent from main)
+      "{"
+      "  \"command\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/desktop-chrome.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/desktop-chrome.log  (73 of 73 added lines absent from main)
+      "Running 1 test using 1 worker"
+      "(node:65898) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/last-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/last-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/row-desktop-chrome.json  (1746 of 1746 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e1-night-shift\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/row-mobile-chrome.json  (1694 of 1694 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e1-night-shift\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/terminal-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/terminal-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/mobile-chrome.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/mobile-chrome.log  (68 of 68 added lines absent from main)
+      "Running 1 test using 1 worker"
+      "(node:1597) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-desktop-chrome/.last-run.json  (6 of 6 added lines absent from main)
+      "{"
+      "  \"status\": \"failed\","
+      "  \"failedTests\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/error-context.md  (350 of 350 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-mobile-chrome/.last-run.json  (6 of 6 added lines absent from main)
+      "{"
+      "  \"status\": \"failed\","
+      "  \"failedTests\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/error-context.md  (353 of 353 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/finding.md  (10 of 10 added lines absent from main)
+      "# e1-night-shift — HELD"
+      "Default desktop/phone deaths at waves 17/15; restore-ground deaths at 16/16. Wave-25 dawn, bank and…"
+      "| Project / strategy | Wave | Sim seconds | HP | Gold | Repairs | Pieces standing | Checks | Eviden…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/command-desktop-chrome.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"command\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/command-mobile-chrome.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"command\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/desktop-chrome.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/desktop-chrome.log  (71 of 71 added lines absent from main)
+      "Running 1 test using 1 worker"
+      "(node:33742) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/last-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/last-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/row-desktop-chrome.json  (1813 of 1813 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e1-night-shift\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/row-mobile-chrome.json  (1802 of 1802 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e1-night-shift\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/terminal-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/terminal-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/mobile-chrome.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/mobile-chrome.log  (70 of 70 added lines absent from main)
+      "Running 1 test using 1 worker"
+      "(node:7692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-desktop-chrome/.last-run.json  (6 of 6 added lines absent from main)
+      "{"
+      "  \"status\": \"failed\","
+      "  \"failedTests\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/error-context.md  (350 of 350 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-mobile-chrome/.last-run.json  (6 of 6 added lines absent from main)
+      "{"
+      "  \"status\": \"failed\","
+      "  \"failedTests\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/error-context.md  (353 of 353 added lines absent from main)
+      "# Instructions"
+      "- Following Playwright test failed."
+      "- Explain why, be concise, respect Playwright best practices."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/gate-unset.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/gate-unset.log  (14 of 14 added lines absent from main)
+      "Running 12 tests using 1 worker"
+      "[1/12] [desktop-chrome] › e2e/native-proofs/e1-drill-yard.spec.ts:21:1 › Drill Yard practice wave, …"
+      "[2/12] [desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e1-dry-gulch plays to its authored te…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/preflight-build.log  (3206 of 3206 added lines absent from main)
+      "> gold-rush@0.1.0 build"
+      "> tsc && vite build && node scripts/asset-diet.mjs"
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/preflight-install.log  (1 of 1 added lines absent from main)
+      "up to date in 141ms"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/preflight.md  (3 of 3 added lines absent from main)
+      "# Run 11 pre-flight"
+      "2026-09-27. Initial lane sol/map-art-campaign-2 clean, zero ahead commits, 39 behind main. Authoriz…"
+      "Task firewall excludes vault writes; the run note is the durable handoff. No art-store changes. Dri…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/record-map.py  (23 of 23 added lines absent from main)
+      "\"\"\"Write a measured finding from saved rows; interpretation is supplied explicitly.\"\"\""
+      "import json, sys"
+      "from pathlib import Path"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/run-map.py  (18 of 18 added lines absent from main)
+      "\"\"\"Run one authorized ride, recording its command and exit status without a pipe.\"\"\""
+      "import json, os, subprocess, sys"
+      "from pathlib import Path"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/run-note.md  (4 of 4 added lines absent from main)
+      "# Native play proofs — run 11"
+      "IN PROGRESS. Base in base.txt. Drill Yard PASS both projects; Dry Gulch HELD both (all four deaths …"
+      "## REMAINING LIST IN ORDER"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/server.log  (11 of 11 added lines absent from main)
+      "> gold-rush@0.1.0 dev"
+      "> vite --host 127.0.0.1 --host 127.0.0.1 --port 5303 --strictPort"
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/summarize.py  (8 of 8 added lines absent from main)
+      "\"\"\"Read saved proof rows; never infer a win from a command's mere completion.\"\"\""
+      "import json, sys"
+      "from pathlib import Path"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/tsc-initial.log  (2 of 2 added lines absent from main)
+      "e2e/native-proofs/e1-drill-yard.spec.ts(4,77): error TS2459: Module '\"../../src/game/ProfileStorage…"
+      "e2e/native-proofs/e1-drill-yard.spec.ts(34,79): error TS7006: Parameter 'k' implicitly has an 'any'…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/tsc.log  (0 of 0 added lines absent from main)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-11/unset-results/.last-run.json  (4 of 4 added lines absent from main)
+      "{"
+      "  \"status\": \"passed\","
+      "  \"failedTests\": []"
+    HELD LANE-ONLY  e2e/native-proofs/e1-drill-yard.spec.ts  (71 of 71 added lines absent from main)
+      "import { expect, test, type Page } from '@playwright/test';"
+      "import { mkdir, writeFile } from 'node:fs/promises';"
+      "import path from 'node:path';"
+    HELD LANE-ONLY  e2e/native-proofs/e1-dry-gulch.spec.ts  (24 of 24 added lines absent from main)
+      "import { expect, test } from '@playwright/test';"
+      "import { readFile, writeFile } from 'node:fs/promises';"
+      "import path from 'node:path';"
+    HELD LANE-ONLY  e2e/native-proofs/e1-night-shift.spec.ts  (24 of 24 added lines absent from main)
+      "import { expect, test } from '@playwright/test';"
+      "import { readFile, writeFile } from 'node:fs/promises';"
+      "import path from 'node:path';"
+    TRACKED-DIRT artifacts/sol/play-proofs/run-11/server.log
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/command-desktop-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/command-mobile-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/desktop-chrome.exit
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/desktop-chrome.log
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/last-desktop-chrome.png
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/last-mobile-chrome.png
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/row-desktop-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/row-mobile-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/terminal-desktop-chrome.png
+    untracked (clean -fd) artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/terminal-mobile-chrome.png
+  => BUSY: a runner holds this slot — leave it alone
+     holder pid is ALIVE — a real runner is working here. Leave it alone.
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=1237  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but art/portraits-e5-e10-generated is 1237 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> art/portraits-e5-e10-generated
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-d) — F-1320-2.
+     📋 run-surface drift: 346 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          … and 338 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+
+worktree coverage: reported 4 of 51 registered — 47 NOT reported (0 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported
