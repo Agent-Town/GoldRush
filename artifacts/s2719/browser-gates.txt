@@ -1,0 +1,107 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T19:11:13.788Z — s2719 Run 10 browser gates ########
+cwd=/Users/robin/.goldrush/fire-s2719/wt-pp10
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5319
+
+===== warmup =====
+$ npx playwright test e2e/m2-01-build-menu.spec.ts --project=desktop-chrome -g six ready icons --reporter=line --output=/Users/robin/.goldrush/fire-s2719/warmup-results --workers=1
+rc=0 8.6s
+
+Running 1 test using 1 worker
+
+
+
+[1/1] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+  1 passed (7.0s)
+(node:20311) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== adjacent and plain boots =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts e2e/f-astra-6-plain-boot.spec.ts --reporter=line --output=/Users/robin/.goldrush/fire-s2719/adjacent-results --workers=1
+rc=0 224.9s
+
+Running 42 tests using 1 worker
+
+
+
+
+[1/42] [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors
+[2/42] [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain town boot has no console or page errors
+[3/42] [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-dry-gulch boot has no console or page errors
+[4/42] [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-twin-banks boot has no console or page errors
+[5/42] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[6/42] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[7/42] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[8/42] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[9/42] [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[10/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[11/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[12/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[13/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[14/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[15/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[16/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[17/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[18/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[19/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[20/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[21/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+
+
+[22/42] [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors
+[23/42] [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain town boot has no console or page errors
+[24/42] [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-dry-gulch boot has no console or page errors
+[25/42] [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-twin-banks boot has no console or page errors
+[26/42] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place
+[27/42] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent
+[28/42] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[29/42] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[30/42] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[31/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[32/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[33/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[34/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[35/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[36/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[37/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[38/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[39/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[40/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[41/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[42/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  42 passed (3.7m)
+(node:20427) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20493) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20493) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:33071) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:33071) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+===== native opt-in skips =====
+$ npx playwright test e2e/native-proofs/e10-archive-world.spec.ts e2e/native-proofs/e10-ember-shore.spec.ts e2e/native-proofs/e7-relay-valley.spec.ts e2e/native-proofs/e8-mare-claim.spec.ts --reporter=line --output=/Users/robin/.goldrush/fire-s2719/spec-results --workers=1
+rc=0 0.8s
+
+Running 8 tests using 1 worker
+
+[1/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-archive-world plays to its authored terminal, banks, reloads and returns to the board @slow
+[2/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-ember-shore plays to its authored terminal, banks, reloads and returns to the board @slow
+[3/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow
+[4/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e8-mare-claim plays to its authored terminal, banks, reloads and returns to the board @slow
+[5/8] [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-archive-world plays to its authored terminal, banks, reloads and returns to the board @slow
+[6/8] [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-ember-shore plays to its authored terminal, banks, reloads and returns to the board @slow
+[7/8] [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow
+[8/8] [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e8-mare-claim plays to its authored terminal, banks, reloads and returns to the board @slow
+  8 skipped
+(node:53593) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup":0,"adjacent and plain boots":0,"native opt-in skips":0}
+OVERALL rc=0

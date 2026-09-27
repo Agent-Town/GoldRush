@@ -1,0 +1,34 @@
+run-guards: 76 file(s) changed since cb967452967767c95ab5ce31730cb32d700a392b
+  base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
+  (no path rule matched -- base gate only)
+
+FAIL  rc=signal:SIGTERM  900s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.350ms
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  3s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+--- test:node-guards (rc=signal:SIGTERM) last 20 lines ---
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+WebSocket server error: Port 24678 is already in use
+✔ shipped Fairground crowd consumer loads without a missing dependency declaration (298.0205ms)
+✔ real history has exactly the four former double-state findings and current BACKLOG has none (150.798583ms)
+✔ prose citations are not declarations, only struck declarations close, and duplicate opens stay open (35.61675ms)
+✔ regression arm: narrow open vocabulary is byte-identical when explicitly selected (0.326042ms)
+✔ wide open vocabulary admits an explicit 🟠 OPEN declaration (0.093417ms)
+✔ 🟢 RULING without a state word is not an open declaration (0.070709ms)
+✔ wide open vocabulary exposes a ✅ plus separate 🔬 OPEN conflict without reddening narrow (31.052458ms)
+✔ wide-open advisory reports skipped rows, hidden open IDs, and narrow closed-only IDs (29.112916ms)
+✔ a conflict SPLIT ACROSS the index and a part file is still caught, with both coordinates (58.328583ms)
+✔ with no tasks/backlog/ at all the corpus line says so and the census is unchanged (30.520292ms)
+✔ fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1 (261.747125ms)
+✔ non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism (261.96475ms)
+✔ the pinned family lists are sorted, deduped and disjoint (0.729167ms)
+✔ the family derivation survives a rebuild (0.570959ms)
+✔ every first-town request belongs to a pinned family (3.818709ms)
+✔ no second map is warmed inside the first town window (1.033542ms)
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.
+
+guards: 4/5 passed -- RED: test:node-guards
+guard-stats: appended 5 record(s) to /Users/robin/.goldrush/fire-s2719/wt-pp10/logs/guard-stats.jsonl
