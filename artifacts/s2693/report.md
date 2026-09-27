@@ -39,6 +39,8 @@ Use the installed Node 26.4.0 binary/PATH as this fire did. Read complete counts
 
 ## Fire closeout
 
-The mandatory ledger battery will be recorded below before the final clearing commit. All code, build and test commands above are completed or explicitly pending; no future result is claimed.
+The mandatory ledger battery passed before the clearing commit: rc 0, 1,263 tests passed, 0 failed and 0 skipped; full npm command 184.32 seconds, including all subsequent shell legs (last leg 83 passed / 0 failed). Evidence: `ledger-guards.txt`, `ledger-guards-result.json`. This ledger green does not replace the incomplete gameplay node battery. The final clearing commit is this fire's last write to main.
 
 Closeout adaptation: an accidental unbounded status archive walk exhausted Node 23's default heap and produced no verdict. The script itself identifies `--limit 40 --quiet` as the regression gate; its separate result is in `status-archive-bounded.txt`. No limits were increased and no historical archive was changed.
+
+Content/evidence commit: `cbaad6643`. Raw TAP, build output and health output retain their original whitespace; the broad staged whitespace check reports those verbatim transcript lines. The authored Markdown check is separate.
