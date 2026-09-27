@@ -37,3 +37,9 @@ Daily duties rechecked: zero pending assays, ledger mirror whole/current 35/35 d
 4. Run the next ticker and private coverage duties when their scheduled windows open.
 
 The already-started 43-minute main gate consumed this fire's drain window. No second drain or new product scope was started. Final ledger verification precedes the final clearing commit below.
+
+## Final ledger and handoff
+
+**READY-FOR-GATES — drain complete.** The final ledger battery passed **1263/1263**, zero skips/failures/cancellations, every chained audit green and final kit **83/83**, in **194.601 seconds**, Node 26.4.0. HEAD stayed at a085c8f19a4f4aaf6c9656b5dfab9126f58cab7b for the battery. Exact receipts: ledger-start.json, ledger-final.txt, ledger-result.json, ledger-summary.json.
+
+The s2720 predecessor archive and all three Owner's Desk items were verified byte-for-byte. The session/project vault notes are recorded in vault-notes.json. The clearing commit is the last write to main; only backup push and read-only verification follow. The launcher retains its process-lock directory until exit.
