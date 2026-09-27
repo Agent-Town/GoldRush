@@ -870,7 +870,7 @@ async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest
       const claim = d?.deepwaterClaim as (NonNullable<ThreeGameDiagnostics['deepwaterClaim']> & {
         dredgeQueenBoss: import('../../src/systems/DredgeQueenBossSystem').DredgeQueenBossDiagnostics;
       }) | null;
-      return { boss: claim?.dredgeQueenBoss, components: d?.readability.bossHpBar.components ?? [], weapon: d?.ui.weapon };
+      return { boss: claim?.dredgeQueenBoss, components: d?.readability.bossHpBar.components ?? [], weapon: d?.ui?.weapon };
     });
     const boss = fight.boss;
     if (!boss) { row.notes.push('Dredge-Queen diagnostics unavailable'); break; }
