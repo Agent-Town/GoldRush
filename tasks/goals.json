@@ -6745,17 +6745,18 @@
             {
               "id": "sol-play-proofs-7",
               "title": "Play-proofs run 7 (the campaign's run 11 on disk): the first six of the 22 maps the campaign never reached (Drill Yard, Dry Gulch, Night Shift, Hill Mine, Trestle, Moth Season), the campaign acceptance on both screens, defects as F-IDs with owners, the remaining sixteen carried",
-              "status": "blocked",
+              "status": "merged",
               "taskFile": "sol-play-proofs-7.md",
               "lane": "lane-c (completed Astra run, source branch sol/map-art-campaign-2; preserve undrained content)",
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable) from the owner's word of 2026-09-27",
               "queuedAt": "2026-09-27",
-              "blockClass": "gate-side",
-              "blockedReason": "F-2704-1 (s2704): candidate 0c43f9524443fc86272a530eced87515347aa3d4 adds 86,013,547 evidence bytes against the 40,000,000-byte limit; archive plan pins all 231 files. Preserve lane and done-move. Lift only after retention-safe packaging/archive yields a candidate within the unchanged budget, then perform normal merged-tree drain gates. Corrective play-proofs-evidence-retention-1 was assigned and dispatched attended in 6044a45fe; s2705 verified its completion as 6974a5cc7. Prepared packaging awaits the real attended archive step; the evidence/archive condition remains unsatisfied; no fire refill under CODEX-WALL.",
-              "review": "reviews/sol-play-proofs-7.md",
+              "review": "reviews/play-proofs-evidence-retention-1.md",
               "heldAt": "2026-09-27",
-              "heldBy": "s2704"
+              "heldBy": "s2704",
+              "mergeHash": "4615253db6d21ca9dd162e85b149d1f0b2ae1f8e",
+              "mergedAt": "2026-09-27",
+              "drainedBy": "attended 2026-09-27: landed within the evidence budget through play-proofs-evidence-retention-1 (ppr1), the raw record on the private archive; F-2704-1 satisfied"
             },
             {
               "id": "sol-play-proofs-8",
