@@ -17,3 +17,7 @@ The required full Node command runs directly through the permanent battery on ma
 1. Complete full Node on main; attribute any genuine new red against clean base.
 2. Final ledger battery, evidence handoff, lock-clearing final commit and backup push.
 3. Attended run 10, then holds-1, then holds-2. The owner-controlled queue jobs retain dispatch; no fire refill.
+
+## Runtime correction
+
+The login shell initially selected Node 23.11.1 while the preserved candidate used Node 26.4.0. After 109.206 seconds this fire stopped only its own gate PIDs by number and preserved the incomplete attempt under node23-attempt/ (SIGTERM, no gate verdict). The replacement uses /opt/homebrew/bin/node 26.4.0 and places /opt/homebrew/bin first in the child PATH, so npm and every node subprocess share the verified runtime. No source, test, timeout or limit changed.
