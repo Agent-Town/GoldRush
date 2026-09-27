@@ -1,6 +1,6 @@
 # Drain review: tape-pause-fix-1 — replay tolerates recorded pauses
 
-**Verdict: HELD — candidate acceptance gates and same-era pin COMPLETE in s2695; main landing, post-landing full Node and deployment remain owed. NOT LANDED.**
+**Verdict: ACCEPTED FOR LANDING — candidate gates complete; s2696 records the landing below. Main post-landing full Node and deployment are pending until measured.**
 
 s2693 fire, 2026-09-27. Lane `sol/map-art-campaign-2` at `19dc0195fbf72f69d24334dede5538c709b977a5`; fork `3c35d5bed250427a254ab10f1fe22071da44aad2`; main base `49a0479a0cf0b5d0de0d5ca1f1b06c7809242239`; detached candidate merge `63cd904a9b81c2cc62ced7061be263a7cc624fc5`. Candidate worktree: `/Users/robin/.goldrush/fire-s2693/wt-tpf1`. Scratch art store is clean at its landed main `5793a967da46e8f00c0ba16f92f17dc10d36558d`; no store change is proposed.
 
@@ -83,3 +83,9 @@ Evidence: artifacts/s2695/remaining-node.txt, release.txt, warmup.txt, browser.t
 The s2694 full Node evidence remains valid for these executable inputs: evidence-reuse.json enumerates the 31 incoming bookkeeping/evidence paths, with no executable or dependency changes. Its two pre-pin identity failures are now green in the post-pin check; the complete Node command still MUST run again on main after the fast-forward. That command measured 2349.6 s in s2694, which cannot fit after this increment's gates inside the roughly 35-minute fire budget. The candidate stays in detached custody; main's runtime and registry remain unchanged, goal stays queued, and the done-move remains intact. This is a deliberate fire-window handoff, not a new product finding or a failed gate.
 
 Remaining, in order: recheck policy and merge only classified newer main bookkeeping into the retained candidate; confirm the engine hash and pin are unchanged; update the goal/mergeHash, BACKLOG and review together, rename the done-move, fast-forward and push; run the complete Node command on main directly (never the capped diff wrapper); deploy via the prescribed unwrapped command and verify ASSAYER SYNCED; append the player-visible Gazette item. F-RVA1-6 remains open until landing and deployment.
+
+## s2696 landing
+
+Accepted candidate merge `28272092ee10ccf4dc135eb3b01cfcb2b28ed947` includes main through lock `75f9a6724`. The 81 incoming paths are exclusively STATUS, BACKLOG, this review and s2695 evidence; no executable or dependency input moved. The code diff is the same two-line Game.ts replay guard, added River spec row, and attended same-game-audit anchor correction already gated. Scratch store clean at `5793a967da46e8f00c0ba16f92f17dc10d36558d`; measured engine `2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d`, era 6 pin 71. Policy CLEAR; evidence 7.4 MB of 40 MB. Existing s2693–s2695 acceptance evidence applies byte-for-byte. Goal and ledger updated, done-move renamed, Gazette draft appended in the drain commit set before fast-forward. Main full Node is required next, directly through the battery, not the capped diff wrapper. F-RVA1-6 remains open for deployment until ASSAYER SYNCED.
+
+Fresh evidence: `artifacts/s2696/reuse-proof.json`, `identity.json`, `report.md`.

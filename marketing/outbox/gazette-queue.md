@@ -3127,3 +3127,10 @@ runs with diagonal movement can also verify: the reel follows the same steps
 as the rider, on keyboard and phone.
 merge `712db42e2` · pin `9ce6ecba9` · review `reviews/river-assay-1.md`
 ROUNDUP-CLASS — 2026-W39; s2692 closes the River assay's GZ-01 omission. The week's three standalone slots are spent. Pin 70 remains in era 6. At this landing, paused human reels still stop during replay (F-RVA1-6); the attended `tape-pause-fix-1` drain is pending. Old reels with the original diagonal drift remain rejected. Draft only; publication stays owner-only.
+
+## ROUNDUP — paused runs can replay to the end
+A recorded pause no longer stops a replay forever. Fresh paused River reels
+verify on desktop and phone, and old reels carrying the same pause can play
+past it. Historical reels with the earlier movement drift remain rejected.
+merge `28272092e` · pin `52cac1459` · review `reviews/tape-pause-fix-1.md`
+ROUNDUP-CLASS — 2026-W39; s2696. Pin 71 remains in era 6. Implementation landed; production availability awaits deployment. Draft only; publication stays owner-only.
