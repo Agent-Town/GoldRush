@@ -1,0 +1,52 @@
+# Campaign fixture cleanup — detached gate review
+
+Verdict: **HOLD — full candidate Node verdict required before landing.** s2722, 2026-09-27 UTC.
+
+Task: `gr-campaign-fixture-cleanup-1`, attempt 2. Source branch `sol/open-findings-astra`, tip `a7ea93c4694252ddbf2e02b9497090976938b1e9`; implementation `a3764d3a3b97b6d6c02e265eeaccdfa1a016f499`. Initial detached candidate `e2f7e1d4c`, cured candidate `20edb6d4e` at `/Users/robin/.goldrush/fire-s2722/wt-fixture`. Main has not received the source changes.
+
+## Behavior and root cause
+
+Campaign fixtures previously registered cleanup after operations that could throw. A failure in the second helper could strand the first directory; the resume test removed its directory only after all assertions passed. The fix registers native `t.after` ownership immediately after allocation, and closes the resume child before removing its checkpoint directory. The fixture sweep now retains failed children's status, signal, error, stdout and stderr. Its existing verdict remains unchanged: surviving fixtures fail; a child assertion failure that cleans up is reported, not treated as a fixture leak.
+
+This is test infrastructure. There is no player-facing feature, gameplay change, balance change, art change or changed e2e assertion. Fresh plain boots verify the existing player surface. An independent AST comparison found all **27 campaign assertions unchanged**. Existing command arrays and timeouts are unchanged in the reviewed diff.
+
+The source's controlled identical assertion fails on both versions while survivors fall **1 → 0**. Seven failure injections remain nonzero with zero campaign survivors, including helper, live-child, startup, early-exit and contract-helper paths. These are retained implementer receipts, not newly repeated by this drain. The corrected same-runtime pre-landing control ran 162 owners with zero survivors, rc 0, 928.750 s. Its campaign passed 6/6. The original intermittent campaign assertion remains unreproduced and UNVERIFIED; the first environment-misconfigured control is retained, not relabeled green.
+
+## Evidence
+
+| Gate | Result | Receipt |
+| --- | --- | --- |
+| Authoritative policy | CLEAR, rc 0, before drain and after staging | `artifacts/s2722/policy.txt` |
+| Detached preparation | `npm ci` rc 0; clean before merge | `artifacts/s2722/install.txt`, `arena-clean.txt` |
+| Campaign assertions | 27 before / 27 after, byte-equivalent after whitespace normalization | `artifacts/s2722/assertion-review.json` |
+| TypeScript | PASS, 6.8 s | `artifacts/s2722/build-gates.txt` |
+| Normal / E1 builds | PASS, 27.2 / 12.7 s | Same transcript |
+| E1 payload | 34,350,664 B, below 52,000,000 B | Same transcript |
+| Source evidence | 11,053,702 added bytes, below 40,000,000 B | `artifacts/s2722/evidence-budget.json` |
+| Browser warmup | 1/1 PASS, 5.5 s | `artifacts/s2722/browser-gates.txt` |
+| Adjacent and plain boots | 42/42 PASS, desktop and mobile, 336.2 s | Same transcript |
+| Plain boots | 8/8, no debug, zero console/page errors; mobile 390px | `artifacts/s2722/plain-boots.json`, `plain-boot-shots/` |
+| Campaign spec | 6/6 PASS, rc 0, 26.9 s | `artifacts/s2722/diff-guards.txt` |
+| Diff guards | Original 3/5; full Node interrupted at 900 s, caller audit refused six diagnostic snapshots | Same transcript |
+| Caller-audit control and cure | Clean main PASS; byte-identical snapshot renames, cured candidate PASS | `artifacts/s2722/gate-callers-main-control.txt`, `gate-callers-cured.txt`, `fixture-snapshot-renames.json` |
+| Partial Node | 504 TAP records, no failing record; totals/tail absent | `artifacts/s2722/partial-node-summary.json` |
+
+The first warmup filter matched no test and exited 1. The verified test title then ran successfully. Both receipts remain in the append-only transcript. No assertion or limit was changed. All children use Node 26.4.0 with `/opt/homebrew/bin` first in PATH. Browser jobs ran serially on port 5317, one owned Vite server at a time; both owned servers exited, and the drain-lock directories were moved aside rather than deleted.
+
+## Merge classification and custody
+
+Common ancestor `4be0b47dad74f21041ffc2fafafb77d0185f7279`; main base `fac058b65018292857b3c58c84b2db296d55027f`. **84 NEW paths, three LANE-TOUCHED-only paths** (two test scripts and the report replacing the previously landed attempt-1 report). No MAIN-MOVED overlap or conflicts. Every file is classified in `artifacts/s2722/classification.json`; no source-range blob exceeds 50 MB. Four regenerated `artifacts/056` screenshots came from the runner; they are evidence, not a scope expansion into game code.
+
+The attended fix-up already removed the accidental control-arena gitlink and art-store alias from the source tip, retaining the 9.8 GB arena outside the repo. The candidate uses its original relative art links through a scratch sibling alias to the clean landed store `5793a967da46e8f00c0ba16f92f17dc10d36558d`. No store content changes. Eleven files regenerated by this fire's browser checks were moved to `artifacts/s2722/regenerated/` before their candidate paths were restored; source evidence was not overwritten.
+
+## Findings and remaining gate
+
+F-2717-1 remains open until this corrective lands with its full Node disposition. No additional code defect was found in the reviewed change. Main, the goal status, the done-move and the lane branch retain their pre-drain custody. The attended holds-1 → holds-2 → holds-3 chain remains attended-owned. No autonomous dispatch or re-queue is authorized by this review.
+
+The final gate disposition and ordered continuation are recorded in `artifacts/s2722/report.md` before handoff.
+
+## Final s2722 disposition
+
+**HOLD; not landed.** The prescribed diff wrapper interrupted full Node with SIGTERM at 900 s, during the actively advancing fixture sweep. Original aggregate 3/5 remains red. Its separate caller audit exposed six generated diagnostic fixture snapshots classified as uncalled tests. Clean main passes the same audit. Candidate cure `20edb6d4e06db07010d57298f73a5c20d371cfac` renames those six snapshots to `.test.mjs.txt` byte-identically; the original generator still recreates executable fixtures when explicitly run. No baseline exception, assertion change or source change was made. The caller audit then passes. SHA-256 mapping is retained. This packaging correction is part of the existing F-2717-1 corrective, not a claimed main landing.
+
+All sampled gate processes exited after the interruption. Main and cured candidate retain era 6 pin 71 (`2d180e6b…`), measured after the cure. Next: synchronize current main bookkeeping into the preserved candidate, verify unchanged gate inputs, then run full Node directly through the permanent battery. Do not repeat the already measured capped wrapper. Only after the complete gate may the normal goal/BACKLOG/review landing and required post-fast-forward full Node proceed.
