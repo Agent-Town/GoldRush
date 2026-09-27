@@ -6806,12 +6806,14 @@
             {
               "id": "sol-play-proofs-10",
               "title": "Play-proofs run 10 (run 14 on disk): Relay Valley, the Mare Claim, the Archive World, the Ember Shore, then the complete 42-map campaign table with hold classes and the closing recommendation for the owner",
-              "status": "queued",
+              "status": "blocked",
               "taskFile": "sol-play-proofs-10.md",
               "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'continue the play test'); the queue copy is HELD until sol-play-proofs-9 has landed on main",
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable), the campaign's close, 2026-09-27",
-              "queuedAt": "2026-09-27"
+              "queuedAt": "2026-09-27",
+              "blockClass": "gate-side",
+              "blockedReason": "F-2717-1: run-9 evidence landed but post-landing full Node failed fixture cleanup. Lift after the same-spec clean-base control attributes the red or the corrective lands with green full Node; record the verdict and re-register this leaf. Dispatch remains attended-owned; re-arm the queue job if its gate already refused."
             },
             {
               "id": "sol-play-proofs-holds-1",
@@ -6832,6 +6834,15 @@
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable), from run 13's five instrument findings, 2026-09-27",
               "queuedAt": "2026-09-27"
+            },
+            {
+              "id": "gr-campaign-fixture-cleanup-1",
+              "title": "F-2717-1: retain nested campaign failure evidence and guarantee fixture cleanup on failure; same-spec clean-base control first",
+              "status": "planned",
+              "taskFile": "gr-campaign-fixture-cleanup-1.md",
+              "lane": "main (authored only; CODEX-WALL forbids fire dispatch; attended assigns implementer)",
+              "authoredAt": "2026-09-27",
+              "authoredBy": "s2717 fire from the measured post-landing fixture failure"
             }
           ]
         }
