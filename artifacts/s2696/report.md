@@ -1,6 +1,6 @@
 # s2696 — Pause replay cure lands
 
-READY-FOR-GATES — tape-pause-fix-1 LANDED and DEPLOYED. Main full Node passed; production and all-epochs preview report build 198fae78, and production ASSAYER SYNCED. Closeout ledger result follows below.
+READY-FOR-GATES — tape-pause-fix-1 LANDED and DEPLOYED. Main full Node passed; production and all-epochs preview report build 198fae78, and production ASSAYER SYNCED. Closeout ledger PASS: 1263/1263; final handoff clears the lock.
 
 Root cause: run tapes record a one-way pause. Replay now skips that pacing action; simulation rules and live pause are unchanged. Reused s2693–s2695 gates only after proving no executable or dependency input moved in 81 incoming bookkeeping/evidence paths. No redispatch, assertion edits, timeout changes or extra implementation.
 
@@ -40,4 +40,10 @@ The board probe returned 0 real drains, 0 unknown and all subjects merged or clo
 
 Commits: lock 75f9a6724; accepted content merge 28272092ee10ccf4dc135eb3b01cfcb2b28ed947; landing records df0f305b94c5113c7e7fa53ddb1c23d9507cf522; same-era pin 52cac1459ba53c8c2fb0c56b67cca796b7872fff; full main evidence / published build 198fae7800e3a95f7a6d6129d5314a1a79acd825. The final closeout commit writes lock CLEARED and is this fire's last write to main.
 
-REMAINING LIST IN ORDER: closeout ledger battery, then the final lock-clearing commit/push. No implementation, deploy, preview, backup or assay-sync work remains. Existing owner items remain the same three: account-registry deploy day; B1 device verdict; token revocation. Gazette/ticker publication stays owner-only.
+REMAINING LIST IN ORDER: none for this fire. No implementation, deploy, preview, backup or assay-sync work remains. Existing owner items remain the same three: account-registry deploy day; B1 device verdict; token revocation. Gazette/ticker publication stays owner-only.
+
+## Final closeout
+
+Ledger battery **rc 0**, **1263/1263**, zero failures/skips, every chained shell leg green, **173.6 s**. This ran after the final ledger rows and before the lock-clearing commit. Full s2695 predecessor and the three-item OWNER'S DESK tail were compared byte-for-byte. No listener remains on the owned probe port 62736. The owned drain lock was moved intact to ~/.goldrush/fire-s2696/drain-lock-released; the launcher retains tasks/.fire.lock until this process exits.
+
+Verification inherited claims: runner alive; landing/game/API 200; queues, running tasks and pending orders empty; all lane branches ahead=0; dry-board probe 0 real drains and 0 unknown; September 26 ticker and r2026w40 present; September 27 private ledger mirror pushed, fire memory current. No refills under the wall. The final lock-clearing commit is the last write to main, followed only by push and read-only verification.
