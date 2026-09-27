@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-27T22:33:09.826Z",
+  "goal": [
+    {
+      "id": "gr-campaign-fixture-cleanup-1",
+      "title": "F-2717-1: retain nested campaign failure evidence and guarantee fixture cleanup on failure; same-spec clean-base control first",
+      "status": "queued",
+      "taskFile": "gr-campaign-fixture-cleanup-1.md",
+      "lane": "lane-a (Astra, gpt-6-astra, the ChatGPT subscription; adapted from the s2717 fire's main-slot master by the attended session 2026-09-27; CODEX-WALL still forbids FIRE dispatch, this copy was dispatched attended)",
+      "authoredAt": "2026-09-27",
+      "authoredBy": "s2717 fire from the measured post-landing fixture failure",
+      "queuedAt": "2026-09-27",
+      "note": "s2718: attempt 1 retired as stopped-s2718-20260928-013750-gr-campaign-fixture-cleanup-1.md. Report-only commit 36d3905f6d8c3d1cabe373b83ce9ca27f229e5ae preserved at save/gr-campaign-fixture-cleanup-1-attempt-1 locally and on origin. No implementation merged; mergeHash remains unset. Attempt 2 master corrects the cross-lane pre-flight (F-ATT-10); dispatch remains attended-owned. See reviews/gr-campaign-fixture-cleanup-1-attempt-1.md."
+    }
+  ],
+  "doneMoveExists": true,
+  "predecessorArchived": true,
+  "lock": "ACTIVE 2026-09-27T22:03Z (s2722 fire) — gate fixture-cleanup attempt 2; preserve attended holds chain",
+  "pending": []
+}

@@ -1,0 +1,107 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T22:06:53.734Z ########
+cwd=/Users/robin/.goldrush/fire-s2722/wt-fixture
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0OP0qTp:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5317
+
+===== warmup =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --workers=1 --grep bandits never swim
+rc=1 1.3s
+Error: No tests found.
+Make sure that arguments are regular expressions matching test files.
+You may need to escape symbols like "$" or "*" and quote the arguments.
+
+
+
+SUMMARY {"warmup":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-09-27T22:07:36.337Z ########
+cwd=/Users/robin/.goldrush/fire-s2722/wt-fixture
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0OP0qTp:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5317
+
+===== warmup verified test title =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --workers=1 --grep enemy crossing the river reaches the hero through the ford only
+rc=0 5.5s
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.4s)
+
+  1 passed (5.0s)
+(node:22127) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup verified test title":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-27T22:07:41.879Z ########
+cwd=/Users/robin/.goldrush/fire-s2722/wt-fixture
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0OP0qTp:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5317
+
+===== adjacent and plain boots =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts e2e/f-astra-6-plain-boot.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2722/playwright-results
+rc=0 336.2s
+
+Running 42 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors (5.9s)
+  ✓   2 [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain town boot has no console or page errors (4.6s)
+  ✓   3 [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-dry-gulch boot has no console or page errors (5.9s)
+  ✓   4 [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-twin-banks boot has no console or page errors (6.6s)
+  ✓   5 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (12.4s)
+  ✓   6 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent (5.4s)
+  ✓   7 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs (6.1s)
+  ✓   8 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth (13.6s)
+  ✓   9 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget (7.2s)
+  ✓  10 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (8.8s)
+  ✓  11 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (9.6s)
+  ✓  12 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (9.4s)
+  ✓  13 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (9.0s)
+  ✓  14 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (11.5s)
+  ✓  15 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (11.7s)
+  ✓  16 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (14.5s)
+  ✓  17 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (7.9s)
+  ✓  18 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (8.0s)
+  ✓  19 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (6.6s)
+  ✓  20 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (5.9s)
+  ✓  21 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (7.3s)
+  ✓  22 [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors (7.7s)
+  ✓  23 [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain town boot has no console or page errors (5.4s)
+  ✓  24 [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-dry-gulch boot has no console or page errors (7.0s)
+  ✓  25 [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-twin-banks boot has no console or page errors (6.3s)
+  ✓  26 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (12.0s)
+  ✓  27 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent (3.9s)
+  ✓  28 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs (4.9s)
+  ✓  29 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth (10.9s)
+  ✓  30 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget (5.4s)
+  ✓  31 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (5.5s)
+  ✓  32 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (5.9s)
+  ✓  33 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (6.8s)
+  ✓  34 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (7.3s)
+  ✓  35 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (8.9s)
+  ✓  36 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (11.4s)
+  ✓  37 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (9.9s)
+  ✓  38 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (6.6s)
+  ✓  39 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (8.6s)
+  ✓  40 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (7.1s)
+  ✓  41 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (5.7s)
+  ✓  42 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (6.9s)
+
+  42 passed (5.6m)
+(node:22275) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22338) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:22338) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:43567) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43567) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"adjacent and plain boots":0}
+OVERALL rc=0
