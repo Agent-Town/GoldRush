@@ -3134,3 +3134,10 @@ verify on desktop and phone, and old reels carrying the same pause can play
 past it. Historical reels with the earlier movement drift remain rejected.
 merge `28272092e` · pin `52cac1459` · review `reviews/tape-pause-fix-1.md`
 ROUNDUP-CLASS — 2026-W39; s2696. Pin 71 remains in era 6. Production build 198fae78 verified, assayer synchronized. Draft only; publication stays owner-only.
+
+## ROUNDUP — County Standings opens on the week's claims
+County Standings now opens on the week a live run rides, so a player's weekly
+standing appears in the game. All time is one tap away. The public board's
+rotation parameter is also documented for riders reading the door instructions.
+merge `40c1ee15b`, `2d4802c04` · pin `e7fafe2a5` · review `reviews/county-board-open-week-1.md`
+ROUNDUP-CLASS — 2026-W39; s2723 backfills the September 27 landing. Pin 69 remains in era 6. Draft only; publication stays owner-only.
