@@ -1,0 +1,31 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T02:20:06.908Z — s2695 pin identities ########
+cwd=/Users/robin/.goldrush/fire-s2693/wt-tpf1
+env+ PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0rnHUyj:/Users/robin/.foundry/bin
+
+===== post-pin identity checks =====
+$ node --test scripts/engine-era-guard.test.mjs scripts/bench-seeds.test.mjs
+rc=0 0.3s
+✔ rotation registry stays outside the engine identity corpus (69.810625ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.147792ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.161083ms)
+✔ rotation mint is deterministic, week-sensitive, and requires a salt (113.441958ms)
+✔ the landed registry names the live engine and stays outside its hash corpus (76.794875ms)
+✔ same-era re-pins append, and removing an earlier pin reds (9.960666ms)
+✔ tooling edits stay outside the engine identity while src edits rotate it (5.420666ms)
+✔ a new-basis alias keeps its old-basis pin in the current era (4.461166ms)
+✔ an era bump starts a fresh lineage (7.749875ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 267.621875
+
+
+SUMMARY {"post-pin identity checks":0}
+OVERALL rc=0

@@ -1,6 +1,6 @@
 # Drain review: tape-pause-fix-1 — replay tolerates recorded pauses
 
-**Verdict: HELD — full Node completed in s2694 with only the two expected pre-pin failures; remaining floor/browser/release/boot gates and final pin owed. NOT LANDED or deployed.**
+**Verdict: HELD — candidate acceptance gates and same-era pin COMPLETE in s2695; main landing, post-landing full Node and deployment remain owed. NOT LANDED.**
 
 s2693 fire, 2026-09-27. Lane `sol/map-art-campaign-2` at `19dc0195fbf72f69d24334dede5538c709b977a5`; fork `3c35d5bed250427a254ab10f1fe22071da44aad2`; main base `49a0479a0cf0b5d0de0d5ca1f1b06c7809242239`; detached candidate merge `63cd904a9b81c2cc62ced7061be263a7cc624fc5`. Candidate worktree: `/Users/robin/.goldrush/fire-s2693/wt-tpf1`. Scratch art store is clean at its landed main `5793a967da46e8f00c0ba16f92f17dc10d36558d`; no store change is proposed.
 
@@ -60,3 +60,26 @@ The preserved candidate merged locked main `0fd459d068438f40f7ecbd0faa1f4d4c93b8
 | Pin / landing / deployment | none |
 
 Full evidence: `artifacts/s2694/full-node.txt`, `identity-control.txt`, `node-tail.txt` and `report.md`. The first identity-control invocation inherited the default Node PATH; its preserved result is followed by the canonical Node 26.4.0 run, which is the cited control. The complete direct battery resolves F-2693-1's interruption without a timeout increase or an identical wrapper retry. The long in-flight gate exceeded the nominal fire drain window; no second drain or further browser battery was started. F-RVA1-6 remains open until this cure lands and deploys.
+
+## s2695 continuation — candidate gates complete; landing held
+
+The preserved tree merged only s2694/main bookkeeping, becoming e7fa70341af6d2d04f84dd0c0cb22473dd80f08e, then received same-era pin #71 in **52cac1459ba53c8c2fb0c56b67cca796b7872fff**. That is the retained candidate at /Users/robin/.goldrush/fire-s2693/wt-tpf1, NOT main. Era remains 6; store remains clean at 5793a967da46e8f00c0ba16f92f17dc10d36558d. The measured engine hash is 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d. No implementation, assertion, timeout, recorder or simulation rule changed during this fire.
+
+| Gate | Measured result |
+| --- | --- |
+| Null floors | 83/83 unchanged; rc 0; 335.9 s |
+| Halo | rc 0; 48.0 s; 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged |
+| Release suite, owning config | 30/30 passed, both projects; rc 0; 159.1 s |
+| Warm-up | 1/1 passed before the browser suite |
+| Tape, River, task-025, m1-01, m2-01, live-seed-rotation | 72/72 passed, both projects, workers=1; rc 0; 579.2 s |
+| Plain Claim boot | 2/2 passed; desktop 1280x800 and mobile 390x844; no debug parameter; zero console/page errors |
+| Fresh pause/resume regression through county worker | Desktop 58d2708a and mobile 00832e01: claimed = replayed, VERIFIED, zero console/page errors |
+| Same-era pin measured after acceptance gates | Era 6, pin #71, 2d180e6b; only the replay pause handler moved engine inputs; unchanged store |
+| Post-pin engine-era and bench-seeds identities | 9/9 passed, rc 0 |
+| Candidate evidence budget | 7.4 MB / 40 MB; whole-tree ceiling remains an existing advisory |
+
+Evidence: artifacts/s2695/remaining-node.txt, release.txt, warmup.txt, browser.txt, pin-identities.txt, pin.json and generated/. The fresh plain-boot JSON and screenshots are under generated/artifacts/sol/open-findings/; both screenshots were inspected. Fresh River proofs and reels are under generated/artifacts/tape-pause-fix-1/spec/. All regenerated tracked files were copied into this fire's evidence before restoring only this fire's test regeneration; new shots were moved intact. Historical lane evidence remains unchanged. No browser reds required a clean-main attribution run. No renderer input changed, so a rendering performance comparison is not applicable.
+
+The s2694 full Node evidence remains valid for these executable inputs: evidence-reuse.json enumerates the 31 incoming bookkeeping/evidence paths, with no executable or dependency changes. Its two pre-pin identity failures are now green in the post-pin check; the complete Node command still MUST run again on main after the fast-forward. That command measured 2349.6 s in s2694, which cannot fit after this increment's gates inside the roughly 35-minute fire budget. The candidate stays in detached custody; main's runtime and registry remain unchanged, goal stays queued, and the done-move remains intact. This is a deliberate fire-window handoff, not a new product finding or a failed gate.
+
+Remaining, in order: recheck policy and merge only classified newer main bookkeeping into the retained candidate; confirm the engine hash and pin are unchanged; update the goal/mergeHash, BACKLOG and review together, rename the done-move, fast-forward and push; run the complete Node command on main directly (never the capped diff wrapper); deploy via the prescribed unwrapped command and verify ASSAYER SYNCED; append the player-visible Gazette item. F-RVA1-6 remains open until landing and deployment.
