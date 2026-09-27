@@ -1,0 +1,137 @@
+{
+  "version": 2,
+  "id": "70e572b5-7c73-4796-b959-fb5dbb3b3d09",
+  "createdAt": 1790467323332,
+  "kept": false,
+  "contract": "e10-river",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "dev",
+    "viewVersion": 4,
+    "engineHash": "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0",
+    "era": 6
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 999,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 40,
+          "science": 999,
+          "hero": 40,
+          "agent": 40
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "70e572b5-7c73-4796-b959-fb5dbb3b3d09",
+    "contractId": "e10-river",
+    "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 153,
+    "entries": [
+      {
+        "t": 48,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 54,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "type": "set_pause",
+            "paused": true
+          }
+        ]
+      },
+      {
+        "t": 57,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 58,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 72,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 73,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 92,
+        "mx": 0,
+        "my": -1,
+        "a": []
+      },
+      {
+        "t": 93,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 95,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 105,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": [],
+    "playbookUses": []
+  },
+  "eventLogHash": "fnv1a32:3d47373d",
+  "outcome": {
+    "reason": "secured",
+    "secured": true,
+    "waves": 0,
+    "timeAlive": 5.099999999999992,
+    "gold": 5
+  }
+}
