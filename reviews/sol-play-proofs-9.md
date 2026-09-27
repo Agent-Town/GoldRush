@@ -1,8 +1,8 @@
-# Play proofs 9 — six measured holds; candidate gates complete
+# Play proofs 9 — accepted QA evidence; six measured holds
 
-**Verdict: ACCEPTED QA EVIDENCE; LANDING PENDING.** s2716, 2026-09-27 UTC. The preserved candidate passed its complete direct Node gate; main landing and the post-landing Node gate remain. Original s2715 evidence follows. The accepted deliverable is a measured QA record, not six successful gameplay proofs. The source task expressly permits READY-FOR-GATES with recorded holds.
+**Verdict: ACCEPTED QA EVIDENCE; LANDED.** s2717, 2026-09-27 UTC. Candidate integration `5838a071a2fe2160f7c4a33d7c2067d3ce19005b`; post-landing full Node verification is in progress. Original s2715 evidence follows. The accepted deliverable is a measured QA record, not six successful gameplay proofs. The source task expressly permits READY-FOR-GATES with recorded holds.
 
-Source: `sol/map-art-campaign-2`, tip `3d2baae0d750489434afeed8c589d61db21e08b8`; six map commits. Detached merged candidate: originally `26dc6acc63f86472900ca777d2d867527b3bedb8`, synchronized with newer main bookkeeping as `9bb92b2195170c8704cda7799f23d7db8c604909`, `/Users/robin/.goldrush/fire-s2715/wt-pp9`. The source evidence remains on that candidate until a completed drain lands it.
+Source: `sol/map-art-campaign-2`, tip `3d2baae0d750489434afeed8c589d61db21e08b8`; six map commits. Detached merged candidate: originally `26dc6acc63f86472900ca777d2d867527b3bedb8`, synchronized with newer main bookkeeping as `9bb92b2195170c8704cda7799f23d7db8c604909`, `/Users/robin/.goldrush/fire-s2715/wt-pp9`. s2717 synchronized the candidate with main `1d34e71fc` as `5838a071a`, without changing executable, dependency, test or art inputs, then landed the drain commit set.
 
 ## What it does
 
@@ -61,3 +61,9 @@ Direct full Node **rc 0 in 2198.515 seconds**: **1040 tests, 1032 pass, 8 declar
 Current main bookkeeping was merged without conflict. Executable/test/dependency/art inputs are unchanged, so the complete s2715 build/browser receipts remain valid. Fresh 14/14 raw-record equivalence and evidence budget rc 0 confirm the retained measurements and **2,658,831 B** source size. Final main/candidate/current-pin identity remains `2d180e6b…`, era 6 pin 71, clean store `5793a967d`; no pin made. `artifacts/s2716/input-equivalence.json`, `evidence-reuse.json`, `raw-evidence-verification.json`, `engine-final.json`.
 
 WHY NO LANDING THIS FIRE: this single full gate consumed the approximate drain window. The next drain must classify/synchronize newer bookkeeping, reuse the completed receipts only if their inputs remain unchanged, then land with goal status/mergeHash and BACKLOG updates, push, and complete full Node on main. The done-move and goal remain open until then. Run 10, holds-1 and holds-2 dispatch stay with their attended queue jobs.
+
+### s2717 landing
+
+All 91 source paths remain byte-identical; 47 newer bookkeeping paths were merged without conflict. Full candidate receipts were re-read and their executable inputs compared, not rerun: s2715 builds and browser gates, s2716 direct Node rc 0. Fresh raw verification again matches all 14 compact rows and raw SHA-256 values. Source evidence remains 2,658,831 B. Final pre-landing identity is unchanged at era 6 pin 71 (`2d180e6b…`). `artifacts/s2717/sync-classification.json`, `candidate.json`, `raw-evidence-verification.json`, `engine-before-landing.json`, `evidence-budget.json`.
+
+Goal status/mergeHash, BACKLOG and done-move rename accompany this review in the drain commit set. Run 10 now satisfies its predecessor gate; its attended queue job retains dispatch ownership. No runtime deployment or Gazette item is due for this test/evidence-only landing. The required full Node command on main follows fast-forward and push; its result will be recorded here and in `artifacts/s2717/report.md`.
