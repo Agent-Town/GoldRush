@@ -32,4 +32,4 @@ The complete prior s2709 handoff was archived byte-for-byte; the three-item OWNE
 
 ## Closeout
 
-Ledger verification and final clearing commit are pending at this report revision. The clearing commit must be the last write to main.
+Content/evidence/review/held-row commit **`e2e23a62b`**. The final ledger battery passed **rc 0**, **1263/1263 tests**, zero failures/skips, all chained legs including **83/83**, in **187.672 seconds**, at `2026-09-27T13:58:41.837Z`. Evidence: `ledger-final.txt`, `ledger-final-result.json`. Main was rechecked unchanged at the gated head before clearing. Full-Node gate processes have exited. The drain-lock directory is preserved by an intact move into `/Users/robin/.goldrush/fire-s2710/drain-lock-released`. The final clearing commit is the last write to main and is then pushed. Candidate, goal and done-move remain unchanged (`final-state.json`).
