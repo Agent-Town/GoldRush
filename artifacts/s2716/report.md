@@ -37,4 +37,6 @@ The s2715 line-1 handoff is archived verbatim, with its three-item OWNER'S DESK 
 
 ## Closeout
 
-The final ledger battery must pass after the evidence/row commit and before lock clearance. Its completed receipt will be recorded here before the clearing commit, which is the last write to main. The drain directory is then preserved by a move, never deletion; the launcher retains ownership of `tasks/.fire.lock`.
+Evidence/row commit **8a94611bc6d4ccf0668be8c4fbb64802ce6cf39a** was followed by the final ledger battery: **rc 0, 1263/1263 tests, zero failures/skips, every chained leg including 83/83**, in **185.453 seconds**, finished **2026-09-27T17:16:02.009Z**. Main HEAD remained unchanged during that battery. Receipts: ledger-battery.txt, ledger-result.json, ledger-summary.txt. The authored Markdown passes diff --check; the bounded archive audit is clean.
+
+The shared drain directory was preserved intact at /Users/robin/.goldrush/fire-s2716/drain-lock-released; the completed gate processes exited. The source lane and candidate remain untouched. The next fire starts at the landing step and runs the required full Node command on main after fast-forward. No deployment is owed by this test/evidence-only slice. The lock-clearing commit is this fire's last write to main, followed by the origin push. The launcher retains tasks/.fire.lock until process exit; the external Obsidian digest records the final commit.
