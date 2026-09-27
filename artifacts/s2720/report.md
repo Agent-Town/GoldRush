@@ -52,3 +52,10 @@ After the lawful fast-forward, the exact direct-main gate shape is:
 ```
 
 Replace `NEXT-FIRE` with that fire's own evidence directory. This command is a next step, not evidence that main was tested by s2720. The final ledger result and clearing commit are recorded below before exit.
+
+
+## Final ledger and handoff
+
+Gate checkpoint: `f4171afa06627f9b7305cf8d599ad74f817b2f82`. Full ledger **rc 0, 1263/1263, zero failures or skips, every chained audit green, final kit 83/83**, in **192.888 seconds**, Node 26.4.0. HEAD remained at that checkpoint for the battery. Exact receipts: `ledger-start.json`, `ledger-final.txt`, `ledger-result.json`, `ledger-summary.json`. The bounded STATUS archive audit passed inside the battery.
+
+The predecessor archive and the complete three-item Owner's Desk were checked byte-for-byte. The clearing commit is the last write to main; only its backup push and read-only verification follow. The launcher retains its own process-lock directory until exit. No source merge, done-move rename, goal closure, dispatch, deploy or engine pin occurred. The next action is the ordered landing procedure above, with this complete candidate proof retained.
