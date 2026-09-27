@@ -1,0 +1,207 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T01:44:21.559Z — s2694 exact Node chained tail ########
+cwd=/Users/robin/.goldrush/fire-s2693/wt-tpf1
+env+ GR_GUARD_NO_ARTIFACT=1 CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+===== Node command chained tail =====
+$ sh -c node scripts/test-ticker-stats.mjs && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:desk-declaration && node scripts/nul-audit.mjs && npm run test:review-fixes scripts/node-guards-watchdog.test.mjs scripts/ratelimit-window.test.mjs scripts/landing-rotation-derivation.test.mjs scripts/world-dispatch-boss-trigger-guard.test.mjs scripts/landmark-collision.test.mjs scripts/site-security-headers.test.mjs scripts/status-rotate-month.test.mjs scripts/backlog-split-closed.test.mjs scripts/attended-land.test.mjs
+rc=0 31.3s
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+
+> gold-rush@0.1.0 test:findings-state
+> node scripts/findings-state-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+declared subjects : 695
+declared closed   : 510
+declared open     : 185
+double-state      : 0
+wide-open advisory : 376 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+
+> gold-rush@0.1.0 test:blocker-panel
+> node scripts/blocker-panel-closed-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+panel rows        : 45
+rows with an F-ID : 42
+census closed     : 620
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+
+> gold-rush@0.1.0 test:ruling-propagation
+> node scripts/ruling-propagation-guard.mjs
+
+ruling-propagation: 14 findings recorded RULED · 70 goal leaves still refuse work · 0 stale
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+  reason corpus     : 62/70 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+      unread: stopped     b4v3-picnic-active-defense  [note_s2131, note]
+      unread: stopped     b4v2-picnic-stake-pressure  [note_s2090, note_s2088, note_s2089, note_s2139, note]
+      unread: stopped     f2251-1-county-board-red  [note_s2251b, note]
+      unread: superseded  art-jumper-rotation-retake  [note_s_att_20260824, note_s2249, note]
+      unread: superseded  lane-vp-02b-jumper-slot-red  [authorNotes, drainNotes]
+      unread: superseded  lane-c-f1148-1-trajectory-split  [authorNotes, drainNotes]
+      unread: superseded  jumper-8way-wiring  [note_s_att_20260824]
+      unread: superseded  ap-orders-adapter-wiring  [note]
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs
+
+=== desk-declaration-guard ===
+corpus tree       : linked-worktree
+SKIP — STATUS.md line-1 is a live ACTIVE lock, not a handoff.
+  The desk is written at handoff time; test:ledger-guards gates it then.
+nul-audit: corpus 28231 text subject(s) — 27757 read, 474 empty.
+nul-audit: excluded 12133 known-binary, 133 UNCLASSIFIED of 40497 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .cpuprofile×29 .exit×23 .bak×14 (no extension)×10 .pid×10 .sha256×8 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .done×3 .stderr×2 .meta×2 .timer×2 .example×1 .stranded-1e057810×1 .progress×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+
+> gold-rush@0.1.0 test:review-fixes
+> node --test --test-concurrency=1 scripts/review-mixed-hashes.test.mjs scripts/review-party-retention.test.mjs scripts/review-save-names.test.mjs scripts/review-wrecked-turrets.test.mjs scripts/node-guards-watchdog.test.mjs scripts/ratelimit-window.test.mjs scripts/landing-rotation-derivation.test.mjs scripts/world-dispatch-boss-trigger-guard.test.mjs scripts/landmark-collision.test.mjs scripts/site-security-headers.test.mjs scripts/status-rotate-month.test.mjs scripts/backlog-split-closed.test.mjs scripts/attended-land.test.mjs
+
+✔ the lock predicate knows the four STATUS line-1 shapes and nothing else (0.494416ms)
+✔ a config must carry the fields a landing needs and refuses an F-ID in the STATUS phrase (2.270542ms)
+✔ the env file is single-quoted and survives apostrophes, spaces and dollar signs (0.579417ms)
+✔ union keeps both sides of a conflict block and refuses leftover markers (0.621209ms)
+✔ the evidence table lists only the gates that ran, last line per gate (0.137416ms)
+✔ the verdict allows only the configured e2e reds and the known battery classes (1.896458ms)
+✔ the verdict refuses a gates log whose battery has not run (F-LAND-7) (0.591375ms)
+✔ bookkeeping is idempotent and puts the phrase before the desk header without splicing (2.491625ms)
+✔ bookkeeping works on a chain whose stale line 1 carries a fire lock shape (the live lock is the ff gate, not this file) (2.001208ms)
+✔ --dry-run states rows, bytes and keys per destination and leaves the tree untouched (35.750792ms)
+✔ --apply moves closed rows below the title and keeps open, desk, gate, RULED and OWNER rows (37.544792ms)
+✔ every byte that left the index is in a part file, plus the headers and pointers it added (36.643833ms)
+✔ a second --apply moves nothing, doubles no pointer and changes no byte (69.025791ms)
+✔ a baseline key follows the row that carried its citation, and the allowance is not grown (34.618334ms)
+✔ GROUND TRUTH — a STRADDLING coordinate is allowed on both sides, and the addition is named (35.671791ms)
+✔ MANUFACTURED DEFECT — a baseline key whose citation is nowhere REFUSES and writes nothing (34.520667ms)
+✔ REVERSE CONTROL — the same board with a placeable baseline applies cleanly (34.679625ms)
+✔ REFUSES when the baseline is absent — a ratchet without its baseline is not a ratchet (32.5285ms)
+✔ MANUFACTURED DEFECT — pointer bytes that go uncounted REFUSE and write nothing (38.646125ms)
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (34.265833ms)
+✔ an index with no # Task backlog title moves nothing and says so (27.422792ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (76.1325ms)
+✔ the landing page holds no hand-written rotation id (18.465041ms)
+✔ the landing page declares no CURRENT_ROTATION_ID constant (15.313625ms)
+✔ the page derives the id the registry minted, for every rotation the county ships (1.25075ms)
+✔ the page and the door pick the same rotation at every instant the registry covers (0.33675ms)
+✔ a week that was never minted walks back to the latest rotation that did open (0.25725ms)
+✔ a resting door is asked once, not twelve times (0.237041ms)
+✔ e6-picnic retains the parent blockers and appends its own registered solids (0.839417ms)
+✔ e7-dead-band retains the parent blockers and appends its own registered solids (0.089708ms)
+✔ e7-relay-rush retains the parent blockers and appends its own registered solids (0.054792ms)
+✔ e8-far-side retains the parent blockers and appends its own registered solids (0.061958ms)
+✔ alias-only maps retain exactly their parent blockers (0.063833ms)
+✔ plain maps retain their footprints without duplication (0.088584ms)
+✔ a file that stops producing TAP is sampled, killed, retried once, and reported red (16513.186667ms)
+✔ a battery that keeps producing TAP is never killed, however long it runs (5127.841709ms)
+✔ the stall bound is finite, reported, and can only be LOWERED from the environment (784.715542ms)
+✔ the rider cap is 60 and the sixty-first submission inside one hour is refused (0.96375ms)
+✔ an hour is an hour: the limit refills once the window from the first write has passed (0.313875ms)
+✔ a refusal never bumps the count and never re-arms the window (0.112292ms)
+✔ the stored ttl is the remainder of the window, never a fresh hour (0.111916ms)
+✔ a counter written before the window start was stored keeps its count (0.532583ms)
+✔ the co-op door (KV fallback): a connect admitted at minute 59 does not extend its window (42.823166ms)
+✔ the co-op door (KV fallback): the count restarts at the hour measured from the first connect (0.664333ms)
+✔ the co-op door (KV fallback): a rider who filled the limit is let back in at the hour, not an hour after the last connect (2.491583ms)
+✔ every door that shares this limiter still passes its own ttl (18.123292ms)
+✔ the TTL handed to KV never drops below Cloudflare's 60-second minimum near the end of the hour (F-KV2-1) (0.146875ms)
+✔ browser-only: matching peer, remote after local (0.963333ms)
+✔ browser-only: mismatching peer, remote after local (0.1665ms)
+✔ browser-only: matching peer, remote before local (0.124791ms)
+✔ browser-only: mismatching peer, remote before local (0.095833ms)
+✔ mixed: matching peer, remote after local (0.160083ms)
+✔ mixed: mismatching peer, remote after local (0.111541ms)
+✔ mixed: matching peer, remote before local (0.097209ms)
+✔ mixed: mismatching peer, remote before local (0.101416ms)
+✔ headless-only: matching peer, remote after local (0.08325ms)
+✔ headless-only: mismatching peer, remote after local (0.13625ms)
+✔ headless-only: matching peer, remote before local (0.067917ms)
+✔ headless-only: mismatching peer, remote before local (0.054458ms)
+✔ a thin seat, unknown ID, or self hash cannot satisfy or poison the browser quorum (0.09225ms)
+✔ one browser with thin seats ignores their incompatible hashes (0.059167ms)
+✔ headless-only rooms require each headless peer (0.051542ms)
+✔ thin seats keep hash exchange disabled (0.215417ms)
+✔ an outstanding comparison keeps the roster of its sampled tick after a peer leaves (0.28225ms)
+✔ later ticks use the smaller roster and ignore a departed peer (0.114375ms)
+✔ snapshot compression keeps the sampled quorum even when the roster changes before encoding finishes (6.805833ms)
+party retention checks passed (party sizes 1–4, top-100/leftover bounds, replay survival, archives, rotations)
+✔ scripts/review-party-retention.test.mjs (581.555375ms)
+(node:33962) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ the untouched default saves and remains readable on the manual shelf (3.149542ms)
+✔ legal town names and the fallback fit every supported wave digit count (14.76125ms)
+✔ manual input keeps its punctuation, reserved-name, profanity, and duplicate checks (0.308ms)
+(node:33972) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+✔ later-era mounts stop on wreck or suspension and return on repair with stable relay IDs (2045.366041ms)
+public/_headers "/*": 5 security headers, 10 CSP directives
+✔ public/_headers sends the five security headers on every path (1.439709ms)
+✔ the Cache-Control rules 058-device-tiers gates are still there (0.086959ms)
+✔ the bug-office report TTL and the number the fetch script prints are the same (0.3335ms)
+✔ the audit catches a deleted policy, a widened source and an enforcing flip (1.129917ms)
+✔ --dry-run states the accounting per destination and leaves the tree untouched (33.503334ms)
+✔ --apply moves the closed months and keeps line 1, the law bullets and the current month (30.79525ms)
+✔ a second --apply moves nothing and changes no byte (56.677583ms)
+✔ the trailing window holds the newest bullets on the board whatever their month (27.165333ms)
+✔ an unstamped bullet is filed by its session neighbours, and prose dates never decide (24.619541ms)
+✔ a bullet that cannot be placed at all STAYS ON THE BOARD (25.041ms)
+✔ MANUFACTURED DEFECT — a header whose bytes go uncounted REFUSES and writes nothing (30.461625ms)
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (35.229833ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (73.269125ms)
+✔ every boss-kind dispatch trigger names a contract that declares a boss (3.482541ms)
+✔ M8-5 is keyed to Low Orbit being secured, not to a boss it never had (1.406583ms)
+✔ the guard BITES: a boss trigger on a bossless map is rejected (1.232875ms)
+ℹ tests 87
+ℹ suites 0
+ℹ pass 87
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27665.358125
+
+
+SUMMARY {"Node command chained tail":0}
+OVERALL rc=0

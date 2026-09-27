@@ -1,0 +1,61 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T01:44:22.661Z — s2694 clean main identity control ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+env+ GR_GUARD_NO_ARTIFACT=1
+
+===== same identity specs on clean main =====
+$ node --test scripts/bench-seeds.test.mjs scripts/engine-era-guard.test.mjs
+rc=0 0.4s
+✔ rotation registry stays outside the engine identity corpus (134.877584ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.127ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.221125ms)
+✔ rotation mint is deterministic, week-sensitive, and requires a salt (129.083667ms)
+✔ the landed registry names the live engine and stays outside its hash corpus (144.7285ms)
+✔ same-era re-pins append, and removing an earlier pin reds (10.601875ms)
+✔ tooling edits stay outside the engine identity while src edits rotate it (5.586958ms)
+✔ a new-basis alias keeps its old-basis pin in the current era (4.756334ms)
+✔ an era bump starts a fresh lineage (5.607875ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 381.831084
+
+
+SUMMARY {"same identity specs on clean main":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-27T01:44:44.331Z — s2694 clean main identity control canonical Node 26.4.0 ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+env+ GR_GUARD_NO_ARTIFACT=1 PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+===== same identity specs on clean main Node26 =====
+$ node --test scripts/bench-seeds.test.mjs scripts/engine-era-guard.test.mjs
+rc=0 0.3s
+✔ rotation registry stays outside the engine identity corpus (71.298792ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.139959ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.159084ms)
+✔ rotation mint is deterministic, week-sensitive, and requires a salt (109.585125ms)
+✔ the landed registry names the live engine and stays outside its hash corpus (75.7735ms)
+✔ same-era re-pins append, and removing an earlier pin reds (9.002541ms)
+✔ tooling edits stay outside the engine identity while src edits rotate it (4.980291ms)
+✔ a new-basis alias keeps its old-basis pin in the current era (3.927167ms)
+✔ an era bump starts a fresh lineage (7.086542ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 265.1825
+
+
+SUMMARY {"same identity specs on clean main Node26":0}
+OVERALL rc=0
