@@ -47,4 +47,8 @@ Remaining, in order: recheck policy and merge only classified newer main bookkee
 
 LB-01 attempted at 02:10 UTC, rc 0 but NOT DISCHARGED: September 27 backup did not yet exist on the box. The 34 older mirrors passed exposure checks (1674 keys, no account-class or unrecognised rows), and the private archive already held the series. FM-01 discharged unchanged. No private database entered this repository. RT-01 and TK-01 are already satisfied as verified above. No pending orders, new art, runtime landing, Gazette item, refill or dispatch.
 
-Closeout ledger result will be recorded before the final lock-clearing commit. The full s2694 predecessor is archived in STATUS and the three-item OWNER'S DESK tail is preserved verbatim.
+Closeout ledger PASS before the final lock-clearing commit: rc 0, 1263/1263 tests, zero failures/skips; all chained shell legs green; 183.1 s total. The full s2694 predecessor is archived in STATUS and the three-item OWNER'S DESK tail is preserved verbatim.
+
+Main evidence/bookkeeping commit: 157b5162285bbd3ba2a8bb5ad3ecf5b86d9914f4. Lock commit: f06d75da268e69dda16d629f9d37f4c0e1ace20c. Candidate pin commit: 52cac1459ba53c8c2fb0c56b67cca796b7872fff. No main runtime merge occurred.
+
+The owned vite PID 43631 is gone. The drain lock was moved intact to /Users/robin/.goldrush/fire-s2695/drain-lock-released. The launcher retains its own tasks/.fire.lock until this fire exits. The lock-clearing commit is the final write to main; no runtime landing, deploy or further gate is started.
