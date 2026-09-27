@@ -38,3 +38,9 @@ Source lane has zero commits ahead of main; all 91 accepted source paths are ret
 Daily duty verification: 35/35 private ledger coverage days through September 27; private ledger-backups and fire-memory refs unchanged; memory corpus 848 files, newest September 25; September 26 ticker exists; r2026w40 opens September 28 UTC. No duplicate backup, mint, assay or art work was due. The September 27 ticker is due after 06:00 local; next LB-01/FM-01 coverage not before September 28 02:10 UTC. No news item or runtime deployment is due for this QA-only landing.
 
 The predecessor handoff is archived verbatim and the OWNER'S DESK has the same three items. The final ledger battery follows this row, review, task and report commit; its result must be recorded before the final lock-clearing commit. That clearing commit will be the last main write and then pushed. The shared drain directory will be moved intact to the session archive; the launcher retains tasks/.fire.lock until exit.
+
+## Closeout
+
+Final ledger **rc 0, 1263/1263 tests, zero failures or skips, all chained legs including 83/83**, **184.671 s**, finished 2026-09-27T18:19:22.916Z; main HEAD stayed 8ac093b71658ad45bd20974afe242b6d7ec8bf31 during the battery. Ledger receipts accompany the final lock-clearing commit. The bounded STATUS archive audit is clean and the predecessor/three-item desk tail match byte for byte. The shared drain directory was preserved intact at /Users/robin/.goldrush/fire-s2717/drain-lock-released; the launcher retains its process directory until exit. The last main commit writes lock CLEARED and is then pushed.
+
+WHY NOT A GREEN DRAIN CLOSE: the full main gate really failed on fixture cleanup. That outstanding work is recorded in F-2717-1 and the authored corrective, with run 10 blocked. No controller, timeout, assertion or source was altered to obtain a pass. The next increment starts with the same-spec control, not another claim that the main gate passed.
