@@ -1,0 +1,9 @@
+evidence-offload --apply against a fixture remote, branch evidence
+  slice ceiling 1500.0 MB · blob ceiling 95.0 MB · worktree /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gr-run11-retention-pc_1w9hj/archive
+
+  artifacts/sol-play-proofs-7-record: 230 movable file(s) 86.0 MB · 0 kept · 0 oversize left in place · 1 slice(s)
+    slice 1/1  f0699d656e7c  230 file(s) 86.0 MB  VERIFIED in the archive commit
+    pointer artifacts/sol-play-proofs-7-record/ARCHIVED.md · preview artifacts/sol-play-proofs-7-record/PREVIEW.png from artifacts/sol-play-proofs-7-record/e1-drill-yard/board-desktop-chrome.png
+
+  repo commit 0650686fc9480bcfc2189fe4aa9890ccfb515bbe — files gone from git AND disk, index and pointers in the same commit
+  NEXT (the drain, never this tool): git -C /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gr-run11-retention-pc_1w9hj/archive push origin evidence:evidence  then  git push origin main
