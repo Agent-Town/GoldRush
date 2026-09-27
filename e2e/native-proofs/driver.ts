@@ -1460,11 +1460,13 @@ export function nativeProof(id: string, run = 1) {
             await expect(page.getByTestId('claim-secured')).toBeHidden({ timeout: 10_000 });
             const scores = await readScores(page);
             const fresh = scores.filter((score) => !before.has(JSON.stringify(score)));
-            const banked = fresh.find((score) => score.contractId === contract.id && score.secured === true && (score.waves ?? 0) >= secureWave);
+            // This branch already observed Claim Secured. Authored boss endings can
+            // finish before secureWave; require a fresh secured score, not a later wave.
+            const banked = fresh.find((score) => score.contractId === contract.id && score.secured === true);
             row.banks = banked
               ? pass(`a NEW secured row for ${contract.id}: waves=${banked.waves} gold=${banked.gold} timeAlive=${Math.round(banked.timeAlive ?? 0)} kills=${banked.kills ?? '?'} (${fresh.length} new row(s) since pre-play, retained after Return to Town)`)
               : fail(
-                  `no new secured row since pre-play for ${contract.id} at >= wave ${secureWave} (${fresh.length} new row(s): ${JSON.stringify(fresh.slice(0, 2))})`,
+                  `no new secured row since pre-play for ${contract.id} after Claim Secured (${fresh.length} new row(s): ${JSON.stringify(fresh.slice(0, 2))})`,
                 );
           } catch (error) {
             row.banks = fail(String((error as Error).message).split('\n').slice(0, 3).join(' | '));
@@ -1524,7 +1526,8 @@ export function nativeProof(id: string, run = 1) {
             ? pass('0 console, 0 page')
             : fail(`${consoleErrors.length} console / ${pageErrors.length} page: ${[...consoleErrors, ...pageErrors].slice(0, 3).join(' || ')}`);
       } finally {
-        if (!row.banks.ok) row.finalSnapshot = (await read(page)) ?? undefined;
+        // Preserve the terminal captured before Return to Town, even if banking fails.
+        if (!row.finalSnapshot) row.finalSnapshot = (await read(page)) ?? undefined;
         if (row.finalSnapshot) {
           if (id !== 'e10-river') row.objective = row.finalSnapshot.objective;
           if (!row.banks.ok) {
