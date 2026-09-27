@@ -1,0 +1,7 @@
+board corpus     : STATUS.md + 2 archive month(s): archive/status/2026-08.md, archive/status/2026-07.md
+UNBOUNDED WALK (no --limit): every STATUS.md commit is examined before anything prints.
+  corpus   : 5972 STATUS.md commit(s); the board is 20.2 MB across 3 file(s) (STATUS.md + 2 rotated month(s))
+  price    : ~33 ms per blob read x 2 per commit = ~6.6 min before a verdict
+  ANSWER ALREADY KNOWN (live board): this ends rc=1 over ~81 legacy drops predating
+             §4's archive law -- measured s2224, analysed at :41-50, known and EXCUSED.
+  The REGRESSION question is the bounded one: --limit 40 --quiet (the battery leg).

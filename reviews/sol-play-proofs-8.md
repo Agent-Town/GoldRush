@@ -1,6 +1,6 @@
-# Play proofs 8 — candidate held for the full Node gate
+# Play proofs 8 — direct Node gate complete; final landing pending
 
-**Verdict: HELD, NOT LANDED (s2709, 2026-09-27).** Source branch `sol/map-art-campaign-2`, tip `e1b6c1ea129577a07eb8cf853d08e3c6b61d46d0`; detached merge `e3375fbd10dbde323eb38e9d4ceec1d07aab0385` at `/Users/robin/.goldrush/fire-s2709/wt-pp8`. The goal remains queued and its done-move remains intact. This review is not a shipping claim.
+**Verdict: READY FOR FINAL LANDING, NOT LANDED (s2710, 2026-09-27).** Source branch `sol/map-art-campaign-2`, tip `e1b6c1ea129577a07eb8cf853d08e3c6b61d46d0`; synchronized detached candidate `7910baa342b020c281454b6236bb71a3c3d40f20` at `/Users/robin/.goldrush/fire-s2709/wt-pp8`. The direct full Node command passed, including its chained legs. This long gate consumed the fire window; the goal remains queued and the done-move intact pending final landing and the required full Node run on main.
 
 The candidate adds six opt-in native proof specs, their run-12 record, and a Regatta-only movement helper. It changes no player-facing runtime, asset, balance, or existing assertion. The driver uses native inputs to board and steer the race boat. Removing that helper and its map-id-guarded call reproduces the previous driver byte-for-byte.
 
@@ -12,16 +12,18 @@ The candidate adds six opt-in native proof specs, their run-12 record, and a Reg
 | Dependencies / custody | `npm ci` rc 0; clean before merging; detached store at `5793a967da46e8f00c0ba16f92f17dc10d36558d` | `artifacts/s2709/npm-ci.txt`, `artifacts/s2709/session.json` |
 | TypeScript / normal build / E1 build | rc 0 / 0 / 0 | `artifacts/s2709/build-gates.txt` |
 | E1 entry payload | 34,350,664 B, below 52,000,000 B | `artifacts/s2709/payload.json` |
-| Diff-selected guards | 4/5 groups passed; full Node interrupted at the outer 900 s cap (903.9 s), no complete verdict | `artifacts/s2709/build-gates.txt`, `artifacts/s2709/node-partial.tap` |
+| Diff-selected guards | Prior 4/5 groups green; the direct full Node continuation below completes the outstanding group | `artifacts/s2709/build-gates.txt`, `artifacts/s2710/full-node.txt` |
+| Direct full Node, final candidate | **rc 0, 2191.3 s; 1032 pass, 8 skips, zero failures; chained tail 87/87, all npm legs complete** | `artifacts/s2710/full-node.txt`, `artifacts/s2710/full-node-result.json`, `artifacts/s2710/full-node-summary.txt` |
+| Reused browser/build evidence | Complete synchronization diff is bookkeeping only; no executable, test, dependency or art input changed | `artifacts/s2710/input-equivalence.json`, `artifacts/s2710/evidence-reuse.json` |
 | Adjacent suites and plain boots | 42/42 passed, both projects, workers=1; separate warmup 1/1 | `artifacts/s2709/browser-gates.txt` |
 | Plain boots | Eight boots, desktop 1280×800 and mobile 390×844; zero console/page errors, no debug flag | `artifacts/s2709/plain-boots.json`, `artifacts/s2709/plain-boot-shots/` |
 | Own specs, flag unset | 12 correctly skipped, rc 0 | `artifacts/s2709/browser-gates.txt` |
 | Fresh Regatta verification | 2/2 passed; six gates finished at 160.667 / 160.000 sim seconds; wave-12 secure, bank, Book and reload, zero errors | `artifacts/s2709/regatta-gates.txt`, `artifacts/s2709/regatta-verification.json` |
 | Original native evidence | All 14 compact rows match their external raw rows apart from sample compaction; six complete journeys, eight honest failed proofs, zero browser errors | `artifacts/s2709/native-evidence-audit.json` |
 | Evidence budget | Candidate adds 4,146,186 B, below the task's 25 MB target and the landing's 40 MB ceiling | `artifacts/s2709/evidence-budget-source-complete.json` |
-| Engine identity | Candidate = main = era 6 pin 71, `2d180e6b…`; no pin made | `artifacts/s2709/engine-initial.json` |
+| Engine identity | Candidate = main = era 6 pin 71, `2d180e6b…`; no pin made | `artifacts/s2710/engine-final.json` |
 
-The build transcript's policy rc 2 is an invocation refusal from a linked worktree, not clearance and not a tree defect. The checker was re-run from primary main and passed. The Node interruption is separate and still blocks acceptance: `scripts/run-guards.mjs:256` supplies a 15-minute timeout to each npm child. It terminated the full command during fixture teardown. The partial TAP contains no failing record, but has no final counts or chained-tail verdict. All captured gate PIDs are gone; no process was killed by this fire to obtain a verdict.
+The initial build transcript's policy rc 2 was an invocation refusal from a linked worktree; fresh primary policy checks are CLEAR. The prior Node interruption is resolved by the complete direct command under Node 26.4.0 and normal fire file concurrency 1. Fixture teardown alone passed in **910.721 s**, explaining why the 900-second diff-wrapper could not finish. The longest TAP silence was **905.3 s**, below the unchanged 2700 s watchdog. No timeout, test, source or pipeline code changed. The complete result supersedes the earlier partial transcript; no control run is required because there were no reds.
 
 ## Map verdicts and follow-up
 
@@ -34,11 +36,11 @@ These are QA-driver limitations, not established map defects. The attended corre
 
 ## Merge classification
 
-Fork `1168df70bd8980049fa11c2fb4bb59f50b9e24d3`; primary base `da85d7ea3a72d5530f96ac11a048161dff03137e`. Of 103 paths, 102 are NEW and `e2e/native-proofs/driver.ts` is LANE-TOUCHED only. No MAIN-MOVED collision, no conflict, no blob over 50 MB. The complete per-file table is `artifacts/s2709/classification.json`; driver isolation is `artifacts/s2709/scope-audit.json`. Subsequent primary changes are attended task/handover bookkeeping and must be merged into the candidate before continuation.
+Fork `1168df70bd8980049fa11c2fb4bb59f50b9e24d3`; primary base `da85d7ea3a72d5530f96ac11a048161dff03137e`. Of 103 paths, 102 are NEW and `e2e/native-proofs/driver.ts` is LANE-TOUCHED only. No MAIN-MOVED collision, no conflict, no blob over 50 MB. The complete per-file table is `artifacts/s2709/classification.json`; driver isolation is `artifacts/s2709/scope-audit.json`. s2710 merged newer primary bookkeeping at `762434518` into the candidate without conflict. `artifacts/s2710/input-equivalence.json` lists the complete synchronization diff; no executable inputs moved. Later handoff bookkeeping must be classified and synchronized before landing.
 
 ## Resume in order
 
-1. Recheck primary policy/ownership and classify newer main changes. Preserve this detached candidate and its lane; do not redispatch or re-run the capped wrapper.
-2. Follow the established direct full-Node recovery in `artifacts/s2694/report.md`, using Node 26.4.0 and `artifacts/s2709/resume-node-jobs.json` through `gate-battery.mjs`. Keep existing watchdogs and limits. Read the full counts and npm's chained tail; control any real red on clean main.
-3. Reuse the completed browser/build evidence only if its executable inputs are unchanged. Measure engine identity last, then finish review, goal/BACKLOG updates, done-move rename, fast-forward and push with the required gates. No runtime deploy or player-visible Gazette item is owed by this test-only candidate.
+1. Recheck primary policy and ownership; classify and merge newer main bookkeeping into the preserved candidate. Keep the source lane and its done-move intact until landing.
+2. Reuse the completed full Node, build and browser receipts only while their executable/test/dependency/art inputs remain unchanged. Do not repeat the capped wrapper. Measure final engine identity after any cure; this test-only candidate still matches era 6 pin 71.
+3. Complete the review, goal status/mergeHash, BACKLOG and done-move rename in the drain commit set; fast-forward main and push. Run the full Node command again on main after the fast-forward. The recent main precedent took 2524.416 s (`artifacts/s2696/main-node-result.json`), so reserve its fire window. No runtime deploy or player-visible Gazette item is owed by this test-only candidate.
 4. Run 9, run 10 and the holds corrective remain attended-dispatched, serial after their prerequisites land. Ten maps remain in the campaign; the source run-note carries their order.
