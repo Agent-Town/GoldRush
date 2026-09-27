@@ -1,0 +1,3 @@
+# Run 15 pre-flight
+
+Base `cabbffa32f64fcbcbca4d5233952a7a04d92cc3b`. Initial lane HEAD `4cada136986ff342d1a1c8fbb0cb68b786154f7f`, clean, no ahead commits. Fresh `git fetch origin main`: local main equals origin/main. Required log predicate exit 0; run-14 evidence is present via `a1eeff84c`. Advanced lane to main using the authorized checkout/reset and clean. Removed only empty regenerated `artifacts/sol/play-proofs/run-14/default/`. Both npm install and build invocations exit 0 (before and after advance). Restored npm-generated optional-platform package-lock metadata; post-install lane status clean. Full second build log `/tmp/gr-holds1-preflight-build.log`. No source, tasks or other lane changes. Vault writes excluded by TOUCH-ONLY; run-15 is the durable handoff.

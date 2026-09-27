@@ -758,11 +758,28 @@ async function motorStop(page: Page, row: Row, x: number, z: number, tolerance =
 }
 
 async function motorOpening(page: Page, row: Row): Promise<void> {
+  const contract = BOARD_CONTRACTS.find(entry => entry.id === row.contract)!;
+  const convoy = row.contract === 'e4-long-road' ? contract.twist.motorFrontier?.convoy : undefined;
+  const road = convoy ? contract.tileParams.roadCorridors?.find(road => road.id === convoy.corridorId) : undefined;
+  if (convoy) {
+    if (!road || !(await walkTo(page, row, road.start.x, road.start.z, 0.8, 120))) {
+      row.notes.push('Long Road stalled before grading the authored convoy road');
+      return;
+    }
+    await takeUpgrades(page, row);
+    await page.keyboard.press('Space');
+    await page.waitForTimeout(250);
+    row.notes.push(`survey stake Confirm: ${road.id} at ${road.start.x},${road.start.z}`);
+  }
   const initial = await read(page);
   for (const node of initial?.fuel?.nodes ?? []) {
     const reached = await walkTo(page, row, node.x, node.z, 0.8, 120);
     if (reached) await page.waitForTimeout(350);
     row.notes.push(`tar ${node.x},${node.z}: reached=${reached}, fuel=${JSON.stringify((await read(page))?.fuel)}`);
+  }
+  if (road) {
+    const arrived = await motorStop(page, row, road.end.x, road.end.z);
+    row.notes.push(`Long Road errand: arrived=${arrived}; vehicle=${JSON.stringify((await read(page))?.vehicle)}`);
   }
   if (row.contract === 'e4-boneyard') {
     // Aim outside the solid boiler centre but within hitch reach; this approach remains unproved.
@@ -1098,6 +1115,7 @@ export function nativeProof(id: string, run = 1) {
           await motorOpening(page, row);
         }
         if (contract.id === 'e4-gusher-county') await motorOpening(page, row);
+        if (contract.id === 'e4-long-road') await motorOpening(page, row);
         if (contract.id === 'e4-dust-flats') {
           // Establish cover before the long railhead errand; the haul-first attempt died gathering.
           await build(page, row, 'turret', 0, 4, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
