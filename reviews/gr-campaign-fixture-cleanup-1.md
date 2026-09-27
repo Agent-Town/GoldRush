@@ -1,6 +1,6 @@
 # Campaign fixture cleanup — detached gate review
 
-Verdict: **HOLD — full candidate Node verdict required before landing.** s2722, 2026-09-27 UTC.
+Verdict: **CANDIDATE GATES PASS — not landed; main landing and verification remain.** s2723, 2026-09-27 UTC.
 
 Task: `gr-campaign-fixture-cleanup-1`, attempt 2. Source branch `sol/open-findings-astra`, tip `a7ea93c4694252ddbf2e02b9497090976938b1e9`; implementation `a3764d3a3b97b6d6c02e265eeaccdfa1a016f499`. Initial detached candidate `e2f7e1d4c`, cured candidate `20edb6d4e` at `/Users/robin/.goldrush/fire-s2722/wt-fixture`. Main has not received the source changes.
 
@@ -50,3 +50,9 @@ The final gate disposition and ordered continuation are recorded in `artifacts/s
 **HOLD; not landed.** The prescribed diff wrapper interrupted full Node with SIGTERM at 900 s, during the actively advancing fixture sweep. Original aggregate 3/5 remains red. Its separate caller audit exposed six generated diagnostic fixture snapshots classified as uncalled tests. Clean main passes the same audit. Candidate cure `20edb6d4e06db07010d57298f73a5c20d371cfac` renames those six snapshots to `.test.mjs.txt` byte-identically; the original generator still recreates executable fixtures when explicitly run. No baseline exception, assertion change or source change was made. The caller audit then passes. SHA-256 mapping is retained. This packaging correction is part of the existing F-2717-1 corrective, not a claimed main landing.
 
 All sampled gate processes exited after the interruption. Main and cured candidate retain era 6 pin 71 (`2d180e6b…`), measured after the cure. Next: synchronize current main bookkeeping into the preserved candidate, verify unchanged gate inputs, then run full Node directly through the permanent battery. Do not repeat the already measured capped wrapper. Only after the complete gate may the normal goal/BACKLOG/review landing and required post-fast-forward full Node proceed.
+
+## s2723 direct continuation
+
+Candidate **b34e4745cf47b89c6023b8c3b4c0ed1df4fab4a3** synchronizes current main bookkeeping into the s2722 cure without changing executable, dependency, art or test inputs. The earlier build/browser/campaign/caller receipts therefore remain applicable. Full direct Node now **PASS, rc 0, 2192.290 s: 1032 pass, eight existing skips, zero fail; complete chained tail 87/87**. Fixture sweep **162 owners, zero survivors, no failed children**, 915.025 s. Maximum TAP quiet 910.3/2700 s. No assertion, timeout or watchdog change. Engine identity remains era 6 pin 71, measured after the gate.
+
+WHY NOT LANDED: completing this gate consumed the fire's drain window; the next serial increment must land and run full Node on main. F-2717-1, the queued goal and original done-move remain open. Exact candidate path, current input comparison and ordered continuation: artifacts/s2723/report.md. Complete receipts: artifacts/s2723/full-node-candidate.txt, node-result.json, node-summary.json, fixture-result.tap, candidate-sync.json, engine-final.json.
