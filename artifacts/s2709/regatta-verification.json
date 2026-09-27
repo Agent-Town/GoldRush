@@ -1,0 +1,128 @@
+[
+  {
+    "project": "desktop-chrome",
+    "race": {
+      "nextGate": null,
+      "gatesPassed": [
+        {
+          "id": "start-beacon",
+          "passedAt": 13.199999999999992
+        },
+        {
+          "id": "northwest-checkpoint",
+          "passedAt": 43.19999999999989
+        },
+        {
+          "id": "midcourse-checkpoint",
+          "passedAt": 59.0666666666665
+        },
+        {
+          "id": "northeast-checkpoint",
+          "passedAt": 80.53333333333397
+        },
+        {
+          "id": "finish-beacon",
+          "passedAt": 104.93333333333518
+        },
+        {
+          "id": "claim-boat",
+          "passedAt": 160.6666666666678
+        }
+      ],
+      "finished": true,
+      "finishedAt": 160.6666666666678,
+      "forfeited": false,
+      "forfeitedAt": null,
+      "fastWaterMultiplier": 1.5
+    },
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e5-regatta secureWave=12"
+      },
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 12 / 272.1s sim, 92 HP, 0 buildings"
+      },
+      "banks": {
+        "ok": true,
+        "detail": "a NEW secured row for e5-regatta: waves=12 gold=10 timeAlive=272 kills=26 (41 new row(s) since pre-play, retained after Return to Town)"
+      },
+      "board": {
+        "ok": true,
+        "detail": "the Book is on screen straight off the run ledger"
+      },
+      "reload": {
+        "ok": true,
+        "detail": "score retained across reload (7224 bytes) and the Book reopened on foot"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    }
+  },
+  {
+    "project": "mobile-chrome",
+    "race": {
+      "nextGate": null,
+      "gatesPassed": [
+        {
+          "id": "start-beacon",
+          "passedAt": 13.199999999999992
+        },
+        {
+          "id": "northwest-checkpoint",
+          "passedAt": 43.73333333333322
+        },
+        {
+          "id": "midcourse-checkpoint",
+          "passedAt": 59.4666666666665
+        },
+        {
+          "id": "northeast-checkpoint",
+          "passedAt": 81.06666666666733
+        },
+        {
+          "id": "finish-beacon",
+          "passedAt": 105.73333333333522
+        },
+        {
+          "id": "claim-boat",
+          "passedAt": 160.00000000000117
+        }
+      ],
+      "finished": true,
+      "finishedAt": 160.00000000000117,
+      "forfeited": false,
+      "forfeitedAt": null,
+      "fastWaterMultiplier": 1.5
+    },
+    "checks": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e5-regatta secureWave=12"
+      },
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 12 / 272.1s sim, 100 HP, 0 buildings"
+      },
+      "banks": {
+        "ok": true,
+        "detail": "a NEW secured row for e5-regatta: waves=12 gold=5 timeAlive=272 kills=26 (41 new row(s) since pre-play, retained after Return to Town)"
+      },
+      "board": {
+        "ok": true,
+        "detail": "the Book is on screen straight off the run ledger"
+      },
+      "reload": {
+        "ok": true,
+        "detail": "score retained across reload (7223 bytes) and the Book reopened on foot"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    }
+  }
+]

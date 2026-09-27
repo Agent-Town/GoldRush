@@ -1,0 +1,128 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T12:52:51.440Z — s2709 Regatta movement verification, second ride only ########
+cwd=/Users/robin/.goldrush/fire-s2709/wt-pp8
+env+ GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5319 GR_NATIVE_PROOF=1 GR_NATIVE_RUN=s2709 GR_NATIVE_STRATEGY=s2709-verification
+
+===== Regatta desktop and phone =====
+$ npx playwright test e2e/native-proofs/e5-regatta.spec.ts --reporter=line --workers=1
+rc=0 171.3s
+
+Running 2 tests using 1 worker
+
+
+
+[1/2] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e5-regatta plays to its authored terminal, banks, reloads and returns to the board @slow
+[desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e5-regatta plays to its authored terminal, banks, reloads and returns to the board @slow
+e5-regatta {"t":10.5,"wave":1,"hp":100,"gold":0,"kills":1,"x":-49,"z":-1.3,"alive":2,"seams":2}
+
+e5-regatta {"t":20.5,"wave":1,"hp":100,"gold":5,"kills":3,"x":-45.6,"z":6.3,"alive":0,"seams":2}
+
+e5-regatta {"t":30.5,"wave":1,"hp":100,"gold":5,"kills":3,"x":-34.8,"z":17.1,"alive":0,"seams":2}
+
+e5-regatta {"t":40.7,"wave":2,"hp":100,"gold":5,"kills":3,"x":-24.3,"z":29.3,"alive":3,"seams":2}
+
+e5-regatta {"t":51.1,"wave":2,"hp":100,"gold":5,"kills":3,"x":-15.3,"z":26.2,"alive":3,"seams":2}
+
+e5-regatta {"t":61.2,"wave":3,"hp":100,"gold":5,"kills":3,"x":-2.8,"z":23.1,"alive":6,"seams":2}
+
+e5-regatta {"t":71.3,"wave":3,"hp":100,"gold":5,"kills":3,"x":9,"z":33.8,"alive":6,"seams":2}
+
+e5-regatta {"t":81.9,"wave":4,"hp":100,"gold":5,"kills":3,"x":25.4,"z":32.6,"alive":6,"seams":2}
+
+e5-regatta {"t":92,"wave":4,"hp":100,"gold":5,"kills":3,"x":36.6,"z":21.1,"alive":6,"seams":2}
+
+e5-regatta {"t":102.3,"wave":4,"hp":100,"gold":5,"kills":3,"x":44,"z":7.6,"alive":3,"seams":2}
+
+e5-regatta {"t":112.8,"wave":5,"hp":100,"gold":5,"kills":5,"x":33.6,"z":0.2,"alive":4,"seams":2}
+
+e5-regatta {"t":123.2,"wave":5,"hp":100,"gold":5,"kills":6,"x":16.8,"z":0.2,"alive":3,"seams":2}
+
+e5-regatta {"t":133.6,"wave":6,"hp":100,"gold":5,"kills":9,"x":0.1,"z":0.2,"alive":3,"seams":2}
+
+e5-regatta {"t":143.6,"wave":6,"hp":100,"gold":5,"kills":11,"x":-16.1,"z":0.2,"alive":1,"seams":2}
+
+e5-regatta {"t":153.9,"wave":7,"hp":100,"gold":5,"kills":12,"x":-32.1,"z":0.2,"alive":3,"seams":2}
+
+e5-regatta {"t":164.1,"wave":7,"hp":100,"gold":5,"kills":15,"x":-52.7,"z":-2.6,"alive":0,"seams":2}
+
+e5-regatta {"t":174.7,"wave":7,"hp":100,"gold":5,"kills":15,"x":-60.4,"z":1.9,"alive":0,"seams":2}
+
+e5-regatta {"t":187.1,"wave":8,"hp":100,"gold":5,"kills":18,"x":-58.8,"z":0.7,"alive":0,"seams":2}
+
+e5-regatta {"t":199.1,"wave":8,"hp":100,"gold":5,"kills":18,"x":-57.4,"z":1.7,"alive":0,"seams":2}
+
+e5-regatta {"t":210,"wave":9,"hp":100,"gold":5,"kills":20,"x":-58.3,"z":9.8,"alive":1,"seams":2}
+
+e5-regatta {"t":224.8,"wave":10,"hp":100,"gold":5,"kills":20,"x":-57.5,"z":4.9,"alive":4,"seams":2}
+
+e5-regatta {"t":235.1,"wave":10,"hp":92,"gold":5,"kills":23,"x":-44.2,"z":0.7,"alive":1,"seams":2}
+
+e5-regatta {"t":246.7,"wave":10,"hp":92,"gold":5,"kills":23,"x":-42,"z":4.6,"alive":0,"seams":2}
+
+e5-regatta {"t":257.5,"wave":11,"hp":92,"gold":5,"kills":26,"x":-51.7,"z":1.5,"alive":0,"seams":2}
+
+
+
+[2/2] [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e5-regatta plays to its authored terminal, banks, reloads and returns to the board @slow
+[mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e5-regatta plays to its authored terminal, banks, reloads and returns to the board @slow
+e5-regatta {"t":10.9,"wave":1,"hp":100,"gold":0,"kills":1,"x":-49,"z":-1.3,"alive":2,"seams":2}
+
+e5-regatta {"t":21.5,"wave":1,"hp":100,"gold":5,"kills":3,"x":-45.4,"z":6.9,"alive":0,"seams":2}
+
+e5-regatta {"t":31.7,"wave":1,"hp":100,"gold":5,"kills":3,"x":-34.5,"z":18.2,"alive":0,"seams":2}
+
+e5-regatta {"t":42,"wave":2,"hp":100,"gold":5,"kills":3,"x":-24.5,"z":30.3,"alive":3,"seams":2}
+
+e5-regatta {"t":52.3,"wave":2,"hp":100,"gold":5,"kills":3,"x":-14.9,"z":25.8,"alive":3,"seams":2}
+
+e5-regatta {"t":62.4,"wave":3,"hp":100,"gold":5,"kills":3,"x":-2.1,"z":23.6,"alive":6,"seams":2}
+
+e5-regatta {"t":72.8,"wave":3,"hp":100,"gold":5,"kills":3,"x":10.3,"z":33.9,"alive":3,"seams":2}
+
+e5-regatta {"t":82.8,"wave":4,"hp":100,"gold":5,"kills":3,"x":25.8,"z":32.3,"alive":6,"seams":2}
+
+e5-regatta {"t":93.1,"wave":4,"hp":100,"gold":5,"kills":3,"x":37.5,"z":20.4,"alive":6,"seams":2}
+
+e5-regatta {"t":103.2,"wave":4,"hp":100,"gold":5,"kills":3,"x":43.8,"z":6.7,"alive":3,"seams":2}
+
+e5-regatta {"t":113.6,"wave":5,"hp":100,"gold":5,"kills":6,"x":32.2,"z":0.1,"alive":3,"seams":2}
+
+e5-regatta {"t":124,"wave":5,"hp":100,"gold":5,"kills":6,"x":15.3,"z":0.1,"alive":3,"seams":2}
+
+e5-regatta {"t":134.3,"wave":6,"hp":100,"gold":5,"kills":9,"x":-1.4,"z":0.1,"alive":3,"seams":2}
+
+e5-regatta {"t":144.4,"wave":6,"hp":100,"gold":5,"kills":12,"x":-17.9,"z":0.1,"alive":0,"seams":2}
+
+e5-regatta {"t":154.7,"wave":7,"hp":100,"gold":5,"kills":12,"x":-34.7,"z":0.1,"alive":3,"seams":2}
+
+e5-regatta {"t":164.9,"wave":7,"hp":100,"gold":5,"kills":15,"x":-50.4,"z":-3.4,"alive":0,"seams":2}
+
+e5-regatta {"t":175.1,"wave":7,"hp":100,"gold":5,"kills":15,"x":-54.9,"z":3.2,"alive":0,"seams":2}
+
+e5-regatta {"t":185.2,"wave":8,"hp":100,"gold":5,"kills":18,"x":-55.9,"z":0.6,"alive":0,"seams":2}
+
+e5-regatta {"t":196.8,"wave":8,"hp":100,"gold":5,"kills":18,"x":-52.3,"z":7.7,"alive":0,"seams":2}
+
+e5-regatta {"t":207.3,"wave":9,"hp":100,"gold":5,"kills":20,"x":-54.7,"z":7.5,"alive":1,"seams":2}
+
+e5-regatta {"t":218.9,"wave":9,"hp":100,"gold":5,"kills":20,"x":-51,"z":6.3,"alive":1,"seams":2}
+
+e5-regatta {"t":229.3,"wave":10,"hp":100,"gold":5,"kills":23,"x":-51.1,"z":-5.2,"alive":1,"seams":2}
+
+e5-regatta {"t":243.5,"wave":10,"hp":100,"gold":5,"kills":23,"x":-57.8,"z":5.8,"alive":0,"seams":2}
+
+e5-regatta {"t":253.9,"wave":11,"hp":100,"gold":5,"kills":25,"x":-45.1,"z":0.1,"alive":1,"seams":2}
+
+e5-regatta {"t":267.3,"wave":11,"hp":100,"gold":5,"kills":26,"x":-52.9,"z":9.5,"alive":0,"seams":2}
+
+  2 passed (2.8m)
+(node:2305) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:7688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"Regatta desktop and phone":0}
+OVERALL rc=0
