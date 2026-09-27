@@ -23,7 +23,7 @@ The citation classifier changed both hashes from candidate to reported. Week 202
 
 ## Verification
 
-Gazette citations and the weekly count passed. Runtime code and assertions are unchanged, so this increment needs no game build or browser gate. The mandatory final ledger battery is pending; its result will be recorded before the clearing commit. The clearing commit will be this fire's last write to main.
+Gazette citations and the weekly count passed. Runtime code and assertions are unchanged, so this increment needs no game build or browser gate. The mandatory final ledger battery passed: exit 0, 1,263 tests passed, zero failures and zero skips; test phase 203.052 seconds. All subsequent shell legs also completed. Evidence: `ledger-guards.txt` and `ledger-guards.rc`. Content commit `9ca2a35a1` is pushed to origin. The full battery finished before the clearing commit, which is this fire's last write to main. A broad whitespace probe initially found a trailing space in pre-existing generated `logs/dashboard.html`; the path-scoped check of this increment passed, and the generated file was not altered.
 
 ## Remaining, in order
 
