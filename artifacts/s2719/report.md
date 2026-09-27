@@ -44,3 +44,11 @@ Resume from the primary checkout after taking the next fire lock:
 Do not repeat the completed browser/build gates without changed inputs or a new concern, and do not repeat the already measured capped wrapper as the full-Node continuation. Retained TAP snapshots, command exit and process history are under this directory. The generated plain-boot JSON records were moved here before restoring their candidate paths; the candidate has no tracked dirt.
 
 Final engine identity, measured after all gate work, is unchanged on main and candidate at era 6 pin 71, `2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d`. The earlier receipts have not been relabeled as a full pass. The final ledger result follows before lock clearance.
+
+The staging record and review were committed on main as `ff5d99126`; this is a documentation/evidence checkpoint, not a product merge or lane evidence. An extra `status-archive-audit.mjs` invocation accidentally selected the unbounded 6,001-commit historical walk. Its warning and partial output are preserved, and only its verified own PID 63631 was stopped with TERM (exit 143). No verdict is claimed from it. The correct `--limit 40 --quiet` regression audit remains in the complete ledger battery. The predecessor archive and unchanged Owner's Desk tail were also directly checked byte-for-byte.
+
+## Final ledger and handoff
+
+Full ledger **rc 0, 1263/1263 tests, zero failures or skips, all chained audits green and final kit 83/83**, in **210.712 s**, Node 26.4.0. HEAD remained `ff5d991265fe7a5cea24b9bfacab9fdf3a415fe0` throughout. The bounded STATUS archive audit passed inside the battery. Exact receipts: `ledger-start.json`, `ledger-result.json`, `ledger-final.txt`, `ledger-summary.txt`.
+
+The final board still has Run 10 queued, its original done-move present and all four source commits ahead of main; no new failed runs. Lane-a holds the attended fixture-cleanup attempt 2 queue; all other queues are empty. This is not a dry-board claim. The last commit writes lock CLEARED with the predecessor archive and Owner's Desk preserved; the launcher keeps its process directory until exit. No main work follows that commit except the backup push and read-only verification.

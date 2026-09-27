@@ -1,0 +1,11 @@
+{
+  "process": {
+    "pid": 63631,
+    "ppid": 77782,
+    "command": "/opt/homebrew/bin/node scripts/status-archive-audit.mjs"
+  },
+  "verifiedParent": "77782, this fire Codex exec",
+  "reason": "Accidental unbounded historical audit; bounded --limit 40 --quiet regression audit is already in the full ledger battery.",
+  "status": 0,
+  "stderr": ""
+}
