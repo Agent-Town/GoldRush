@@ -22,13 +22,19 @@ The launcher process ancestry identifies PID 23178 as this fire's parent, starte
 ## Remaining list in order
 
 1. Attended dispatcher starts corrected fixture-cleanup attempt 2 after this fire releases custody; implementer proves failure-path cleanup and retained nested diagnostics, then the next drain gates the actual diff.
-2. Run 10 finishes the final four-map evidence and 42-map table. Drain when complete, with every HELD verdict preserved.
+2. Run 10 finished during closeout: drain its four commits through 4cada1369, with every HELD verdict preserved. The strict policy check is CLEAR. Its 42-map table is runner evidence awaiting drain review, not a newly accepted campaign verdict.
 3. Attended continuation chain: holds-1 after run 10 lands, then holds-2. Follow existing goal gates and subscription ownership.
 4. Scheduled ticker and private backup/memory duties at their next due windows; the unchanged three-item Owner's Desk remains visible.
 
 ## Final verification
 
-Pending: ledger battery, bounded STATUS archive audit, final board snapshot and lock-clearing backup. Results will be appended before the final main write.
+Final full ledger PASS: rc 0, 1263/1263 tests, zero failures or skips, all chained audits green and the final kit 83/83; 309.707 seconds, Node 26.4.0. HEAD stayed 5ef83d88490337de8a7b020955396d73066361a8 throughout. `ledger-guards.txt`, `ledger-start.json`, `ledger-result.json`. The bounded STATUS archive audit completed inside the battery.
+
+Run 10 arrived during closeout: `20260928-013750-sol-play-proofs-10.md`, four lane commits through `4cada1369`. Strict policy CLEAR, no live holder, queues empty (`closeout-board.json`, `run10-policy.txt`). The runner reports four HELD maps, no established map defect, and 1,615,430 B of evidence. No run-10 gate or merge was attempted: the previous mandatory main Node leg alone cost 2540.855 seconds (s2717), exceeding the remaining fire window. This new done-move is the next drain, not a dry-board claim.
+
+The first closeout assertion caught this arrival before creating the handoff file or changing STATUS. Its shell nevertheless committed the completed ledger receipts as 762b42d95 under the intended clearing message; that MESSAGE does not describe a lock clearance. STATUS stayed ACTIVE, verified immediately. The actual final commit writes lock CLEARED only after this corrected report and is then pushed; no further main write follows. Original receipt snapshot: `final-board.json`; updated snapshot: `closeout-board.json`.
+
+Stopped-run closure 884440b4c and master-ordering cure 5ef83d884 are retained. The predecessor and unchanged three-item Owner's Desk were verified byte-for-byte. The launcher retains tasks/.fire.lock until this process exits.
 
 ### Ledger red and same-fire cure
 
