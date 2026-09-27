@@ -1,0 +1,196 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=14  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 14 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 4 file(s) main has moved that this lane lacks:
+          scripts/attended/README.md
+          scripts/attended/landings/ppr1-cure.sh
+          scripts/attended/landings/ppr1-review.md
+          scripts/attended/landings/ppr1.json
+lane-b  sol/wave-lane-b  ahead=0  behind=837  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/wave-lane-b is 837 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/wave-lane-b
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 310 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          e2e/cp04-lever.spec.ts
+          … and 302 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-c  sol/map-art-campaign-2  ahead=3  behind=3  paths=40  tracked-dirt=1  untracked=14  BUSY
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e4-long-road/objective-desktop-chrome.json  (139 of 139 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e4-long-road&timescale=4\","
+      "  \"deepwater\": null,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e4-long-road/objective-mobile-chrome.json  (139 of 139 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e4-long-road&timescale=4\","
+      "  \"deepwater\": null,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e4-long-road/row-desktop-chrome.json  (1191 of 1191 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e4-long-road\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e4-long-road/row-mobile-chrome.json  (1193 of 1193 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e4-long-road\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e4-long-road/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e4-long-road/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-deepwater-claim/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-deepwater-claim/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-deepwater-claim/objective-desktop-chrome.json  (5013 of 5013 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e5-deepwater-claim&timescale=4\","
+      "  \"deepwater\": {"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-deepwater-claim/objective-mobile-chrome.json  (5013 of 5013 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e5-deepwater-claim&timescale=4\","
+      "  \"deepwater\": {"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-deepwater-claim/row-desktop-chrome.json  (1153 of 1153 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e5-deepwater-claim\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-deepwater-claim/row-mobile-chrome.json  (1153 of 1153 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e5-deepwater-claim\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-deepwater-claim/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-deepwater-claim/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/bank-cell-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/bank-cell-desktop-chrome.json  (5 of 5 added lines absent from main)
+      "{"
+      "  \"text\": \"Secured: wave 12, 0 gold\","
+      "  \"url\": \"http://127.0.0.1:5303/\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/bank-cell-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/bank-cell-mobile-chrome.json  (5 of 5 added lines absent from main)
+      "{"
+      "  \"text\": \"Secured: wave 12, 0 gold\","
+      "  \"url\": \"http://127.0.0.1:5303/\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/board-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/board-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/command.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/objective-desktop-chrome.json  (763 of 763 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e5-flotilla&timescale=4\","
+      "  \"deepwater\": {"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/objective-mobile-chrome.json  (763 of 763 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e5-flotilla&timescale=4\","
+      "  \"deepwater\": {"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/row-desktop-chrome.json  (1018 of 1018 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e5-flotilla\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/row-mobile-chrome.json  (1018 of 1018 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e5-flotilla\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/default/e5-flotilla/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/e4-long-road/finding.md  (8 of 8 added lines absent from main)
+      "# The Long Road — HELD, convoy route not exercised"
+      "| Project / strategy | Death wave | Sim seconds | Gold | Repairs | Pieces standing |"
+      "| --- | ---: | ---: | ---: | ---: | ---: |"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/e5-deepwater-claim/finding.md  (7 of 7 added lines absent from main)
+      "# The Deepwater Claim — HELD, native driver does not engage the boss"
+      "Desktop default: bounded 600-second play budget exhausted alive at wave 100, 2406.667 simulation se…"
+      "The driver repeatedly uses ordinary ground ghosts on a deck-pad map (`ghostValid=false`); the scree…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/e5-flotilla/proof.md  (9 of 9 added lines absent from main)
+      "# The Flotilla — PASS, terminal journey on both screens"
+      "| Project / default | Secure wave | Sim seconds | HP | Gold banked | Kills | Hulls surviving |"
+      "| --- | ---: | ---: | ---: | ---: | ---: | ---: |"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/measurements.json  (206 of 206 added lines absent from main)
+      "["
+      "  {"
+      "    \"contract\": \"e4-long-road\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/preflight.md  (4 of 4 added lines absent from main)
+      "# Run 12 pre-flight"
+      "2026-09-27. Initial lane `sol/map-art-campaign-2` clean, no ahead commits, HEAD `7178d48dd7d831d620…"
+      "Run 11 landed and its six specs and shared driver are present. Its original note read directly from…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/proof-hooks.ts  (51 of 51 added lines absent from main)
+      "/** Evidence-only adapter. Gameplay remains in the shared native driver. */"
+      "import { expect, test } from '@playwright/test';"
+      "import { mkdir, readFile, writeFile } from 'node:fs/promises';"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/run-map.py  (21 of 21 added lines absent from main)
+      "\"\"\"Run a single authorized ride pair, preserving direct exits outside the tree.\"\"\""
+      "import os, pathlib, subprocess, sys, json"
+      "contract = sys.argv[1]"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/run-note.md  (12 of 12 added lines absent from main)
+      "# Native play proofs — run 12 (sol-play-proofs-8)"
+      "In progress, base `1168df70bd8980049fa11c2fb4bb59f50b9e24d3`. [Pre-flight](preflight.md). Shared su…"
+      "| Map | Desktop | Phone | Verdict |"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-12/summarize.py  (13 of 13 added lines absent from main)
+      "\"\"\"Compact measured rides; never infer a pass from survival alone.\"\"\""
+      "import json"
+      "from pathlib import Path"
+    HELD LANE-ONLY  e2e/native-proofs/e4-long-road.spec.ts  (7 of 7 added lines absent from main)
+      "import { test } from '@playwright/test';"
+      "import { nativeProof } from './driver';"
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-12/proof-hooks';"
+    HELD LANE-ONLY  e2e/native-proofs/e5-deepwater-claim.spec.ts  (7 of 7 added lines absent from main)
+      "import { test } from '@playwright/test';"
+      "import { nativeProof } from './driver';"
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-12/proof-hooks';"
+    HELD LANE-ONLY  e2e/native-proofs/e5-flotilla.spec.ts  (7 of 7 added lines absent from main)
+      "import { test } from '@playwright/test';"
+      "import { nativeProof } from './driver';"
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-12/proof-hooks';"
+    TRACKED-DIRT e2e/native-proofs/driver.ts
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/default/e5-regatta/bank-cell-desktop-chrome.jpg
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/default/e5-regatta/bank-cell-desktop-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/default/e5-regatta/board-desktop-chrome.jpg
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/default/e5-regatta/objective-desktop-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/default/e5-regatta/row-desktop-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/default/e5-regatta/terminal-desktop-chrome.jpg
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/driver-equivalence.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/gate-unset.exit
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/gate-unset.log
+    untracked (clean -fd) artifacts/sol/play-proofs/run-12/verify-driver.py
+  => BUSY: a runner holds this slot — leave it alone
+     holder pid is ALIVE — a real runner is working here. Leave it alone.
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=1257  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but art/portraits-e5-e10-generated is 1257 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> art/portraits-e5-e10-generated
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-d) — F-1320-2.
+     📋 run-surface drift: 355 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          … and 347 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+
+worktree coverage: reported 4 of 51 registered — 47 NOT reported (0 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported
