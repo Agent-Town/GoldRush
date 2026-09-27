@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-27T16:36:50.304Z",
+  "priorCandidate": "26dc6acc63f86472900ca777d2d867527b3bedb8",
+  "candidate": "9bb92b2195170c8704cda7799f23d7db8c604909",
+  "inputEquivalence": "artifacts/s2716/input-equivalence.json",
+  "receipts": {
+    "build": "artifacts/s2715/build-gates.txt",
+    "browser": "artifacts/s2715/browser-gates.txt",
+    "plainBoots": "artifacts/s2715/plain-boots.json",
+    "fourOtherDiffGuardGroups": "artifacts/s2715/diff-guards.txt"
+  },
+  "retainedComplete": {
+    "tsc": 0,
+    "normalBuild": 0,
+    "e1Build": 0,
+    "e1PayloadBytes": 34350664,
+    "warmupPass": 1,
+    "adjacentPlainBootPass": 42,
+    "optInSkips": 12,
+    "plainBoots": 8,
+    "consoleErrors": 0,
+    "pageErrors": 0
+  },
+  "nodeGate": "fresh direct full command in progress; previous partial is not reusable",
+  "changedBookkeepingPaths": 65
+}

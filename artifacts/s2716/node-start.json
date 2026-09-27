@@ -1,0 +1,20 @@
+{
+  "startedAt": "2026-09-27T16:33:09.201Z",
+  "head": "9bb92b2195170c8704cda7799f23d7db8c604909",
+  "cwd": "/Users/robin/.goldrush/fire-s2715/wt-pp9",
+  "nodeVersion": "v26.4.0",
+  "args": [
+    "scripts/gate-battery.mjs",
+    "--label",
+    "s2716 play-proofs-9 direct full Node",
+    "--cwd",
+    "/Users/robin/.goldrush/fire-s2715/wt-pp9",
+    "--transcript",
+    "/Users/robin/Claude/Projects/Gold Rush/artifacts/s2716/full-node.txt",
+    "--env",
+    "CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires",
+    "--env",
+    "GR_GUARD_NO_ARTIFACT=1",
+    "[\n  [\n    \"direct full Node command\",\n    \"npm\",\n    \"run\",\n    \"test:node-guards\"\n  ]\n]\n"
+  ]
+}
