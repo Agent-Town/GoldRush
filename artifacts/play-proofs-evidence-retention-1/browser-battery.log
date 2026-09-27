@@ -1,0 +1,142 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T10:20:19.321Z ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+
+===== warm plain boots =====
+$ node artifacts/play-proofs-evidence-retention-1/boot.mjs
+rc=1 61.5s
+node:internal/modules/run_main:104
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 60000ms exceeded.
+Call log:
+[2m  - waiting for getByTestId('start-menu-enter-town') to be visible[22m
+
+    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/play-proofs-evidence-retention-1/boot.mjs:13:53 {
+  log: [
+    "  - waiting for getByTestId('start-menu-enter-town') to be visible"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v23.11.1
+
+
+===== unset native specs =====
+$ npx playwright test e2e/native-proofs/e1-drill-yard.spec.ts e2e/native-proofs/e1-dry-gulch.spec.ts e2e/native-proofs/e1-night-shift.spec.ts e2e/native-proofs/e2-hill-mine.spec.ts e2e/native-proofs/e2-trestle.spec.ts e2e/native-proofs/e3-moth-season.spec.ts --project=desktop-chrome --project=mobile-chrome --trace=off --output=artifacts/play-proofs-evidence-retention-1/unset-results --workers=1
+rc=0 1.0s
+
+Running 12 tests using 1 worker
+
+  -   1 [desktop-chrome] › e2e/native-proofs/e1-drill-yard.spec.ts:21:1 › Drill Yard practice wave, Book return and unchanged plain-reload persistence
+  -   2 [desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e1-dry-gulch plays to its authored terminal, banks, reloads and returns to the board @slow
+  -   3 [desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e1-night-shift plays to its authored terminal, banks, reloads and returns to the board @slow
+  -   4 [desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e2-hill-mine plays to its authored terminal, banks, reloads and returns to the board @slow
+  -   5 [desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e2-trestle plays to its authored terminal, banks, reloads and returns to the board @slow
+  -   6 [desktop-chrome] › e2e/native-proofs/driver.ts:915:5 › e3-moth-season plays to its authored terminal, banks, reloads and returns to the board @slow
+  -   7 [mobile-chrome] › e2e/native-proofs/e1-drill-yard.spec.ts:21:1 › Drill Yard practice wave, Book return and unchanged plain-reload persistence
+  -   8 [mobile-chrome] › e2e/native-proofs/driver.ts:915:5 › e1-dry-gulch plays to its authored terminal, banks, reloads and returns to the board @slow
+  -   9 [mobile-chrome] › e2e/native-proofs/driver.ts:915:5 › e1-night-shift plays to its authored terminal, banks, reloads and returns to the board @slow
+  -  10 [mobile-chrome] › e2e/native-proofs/driver.ts:915:5 › e2-hill-mine plays to its authored terminal, banks, reloads and returns to the board @slow
+  -  11 [mobile-chrome] › e2e/native-proofs/driver.ts:915:5 › e2-trestle plays to its authored terminal, banks, reloads and returns to the board @slow
+  -  12 [mobile-chrome] › e2e/native-proofs/driver.ts:915:5 › e3-moth-season plays to its authored terminal, banks, reloads and returns to the board @slow
+
+  12 skipped
+
+
+===== desktop-chrome adjacent =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts --project=desktop-chrome --trace=off --output=artifacts/play-proofs-evidence-retention-1/desktop-chrome-results --workers=1
+rc=0 92.6s
+
+Running 17 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (13.8s)
+  ✓   2 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent (3.6s)
+  ✓   3 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs (3.5s)
+  ✓   4 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth (9.1s)
+  ✓   5 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget (3.4s)
+  ✓   6 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (5.1s)
+  ✓   7 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (3.9s)
+  ✓   8 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (3.6s)
+  ✓   9 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (4.2s)
+  ✓  10 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (5.6s)
+  ✓  11 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.6s)
+  ✓  12 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (6.1s)
+  ✓  13 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.0s)
+  ✓  14 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (5.8s)
+  ✓  15 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (2.6s)
+  ✓  16 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.4s)
+  ✓  17 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (4.3s)
+
+  17 passed (1.5m)
+(node:61685) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== mobile-chrome adjacent =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts --project=mobile-chrome --trace=off --output=artifacts/play-proofs-evidence-retention-1/mobile-chrome-results --workers=1
+rc=0 81.5s
+
+Running 17 tests using 1 worker
+
+  ✓   1 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (13.7s)
+  ✓   2 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent (2.1s)
+  ✓   3 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs (2.2s)
+  ✓   4 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth (8.1s)
+  ✓   5 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget (3.0s)
+  ✓   6 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (2.5s)
+  ✓   7 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (2.6s)
+  ✓   8 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (2.8s)
+  ✓   9 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (3.2s)
+  ✓  10 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (5.2s)
+  ✓  11 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.3s)
+  ✓  12 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (5.8s)
+  ✓  13 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.8s)
+  ✓  14 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (5.8s)
+  ✓  15 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.6s)
+  ✓  16 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.3s)
+  ✓  17 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.1s)
+
+  17 passed (1.3m)
+(node:64390) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== measured plain boots =====
+$ node artifacts/play-proofs-evidence-retention-1/boot.mjs
+rc=1 61.0s
+node:internal/modules/run_main:104
+    triggerUncaughtException(
+    ^
+
+locator.waitFor: Timeout 60000ms exceeded.
+Call log:
+[2m  - waiting for getByTestId('start-menu-enter-town') to be visible[22m
+
+    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/play-proofs-evidence-retention-1/boot.mjs:13:53 {
+  log: [
+    "  - waiting for getByTestId('start-menu-enter-town') to be visible"
+  ],
+  name: 'TimeoutError'
+}
+
+Node.js v23.11.1
+
+
+SUMMARY {"warm plain boots":1,"unset native specs":0,"desktop-chrome adjacent":0,"mobile-chrome adjacent":0,"measured plain boots":1}
+OVERALL rc=1
+
+
+######## BATTERY 2026-09-27T10:25:27.935Z ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+
+===== corrected plain boots =====
+$ node artifacts/play-proofs-evidence-retention-1/boot.mjs
+rc=0 4.2s
+
+
+SUMMARY {"corrected plain boots":0}
+OVERALL rc=0
