@@ -1,0 +1,232 @@
+Updating c39dd316e..9fafd73e6
+Fast-forward
+ STATUS.md                                          |    2 +
+ artifacts/s2711/desk-tail.txt                      |    1 +
+ artifacts/s2711/done-move.md                       |   27 +
+ artifacts/s2711/engine-final.json                  |   11 +
+ artifacts/s2711/evidence-budget.txt                |   19 +
+ artifacts/s2711/input-equivalence.json             |   53 +
+ artifacts/s2711/policy.txt                         |    1 +
+ artifacts/s2711/predecessor.txt                    |    1 +
+ artifacts/s2711/report.md                          |   15 +
+ artifacts/s2711/run-tail.txt                       |   64 +
+ artifacts/s2711/sync-main.txt                      |   67 +
+ artifacts/sol/play-proofs/run-12/adjacent.exit     |    1 +
+ artifacts/sol/play-proofs/run-12/adjacent.log      |   14 +
+ artifacts/sol/play-proofs/run-12/build-final.exit  |    1 +
+ artifacts/sol/play-proofs/run-12/build-final.log   |   30 +
+ .../sol/play-proofs/run-12/driver-equivalence.json |    7 +
+ .../default/objective-desktop-chrome.json          |  139 +
+ .../default/objective-mobile-chrome.json           |  139 +
+ .../e4-long-road/default/row-desktop-chrome.json   | 1191 +++++
+ .../e4-long-road/default/row-mobile-chrome.json    | 1193 +++++
+ .../default/terminal-desktop-chrome.jpg            |  Bin 0 -> 82519 bytes
+ .../default/terminal-mobile-chrome.jpg             |  Bin 0 -> 214475 bytes
+ .../sol/play-proofs/run-12/e4-long-road/finding.md |   12 +
+ .../run-12/e5-deepwater-claim/default/command.exit |    1 +
+ .../run-12/e5-deepwater-claim/default/command.json |   19 +
+ .../default/objective-desktop-chrome.json          | 5013 ++++++++++++++++++++
+ .../default/objective-mobile-chrome.json           | 5013 ++++++++++++++++++++
+ .../default/row-desktop-chrome.json                | 1153 +++++
+ .../default/row-mobile-chrome.json                 | 1153 +++++
+ .../default/terminal-desktop-chrome.jpg            |  Bin 0 -> 115395 bytes
+ .../default/terminal-mobile-chrome.jpg             |  Bin 0 -> 221056 bytes
+ .../run-12/e5-deepwater-claim/finding.md           |   13 +
+ .../default/bank-cell-desktop-chrome.jpg           |  Bin 0 -> 2202 bytes
+ .../default/bank-cell-desktop-chrome.json          |    5 +
+ .../default/bank-cell-mobile-chrome.jpg            |  Bin 0 -> 6016 bytes
+ .../default/bank-cell-mobile-chrome.json           |    5 +
+ .../e5-flotilla/default/board-desktop-chrome.jpg   |  Bin 0 -> 161767 bytes
+ .../e5-flotilla/default/board-mobile-chrome.jpg    |  Bin 0 -> 335401 bytes
+ .../run-12/e5-flotilla/default/command.exit        |    1 +
+ .../run-12/e5-flotilla/default/command.json        |   19 +
+ .../default/objective-desktop-chrome.json          |  763 +++
+ .../default/objective-mobile-chrome.json           |  763 +++
+ .../e5-flotilla/default/row-desktop-chrome.json    | 1018 ++++
+ .../e5-flotilla/default/row-mobile-chrome.json     | 1018 ++++
+ .../default/terminal-desktop-chrome.jpg            |  Bin 0 -> 82521 bytes
+ .../e5-flotilla/default/terminal-mobile-chrome.jpg |  Bin 0 -> 190503 bytes
+ .../sol/play-proofs/run-12/e5-flotilla/proof.md    |   14 +
+ .../default/bank-cell-desktop-chrome.jpg           |  Bin 0 -> 2049 bytes
+ .../default/bank-cell-desktop-chrome.json          |    5 +
+ .../e5-regatta/default/bank-cell-mobile-chrome.jpg |  Bin 0 -> 6014 bytes
+ .../default/bank-cell-mobile-chrome.json           |    5 +
+ .../e5-regatta/default/board-desktop-chrome.jpg    |  Bin 0 -> 161767 bytes
+ .../e5-regatta/default/board-mobile-chrome.jpg     |  Bin 0 -> 335317 bytes
+ .../run-12/e5-regatta/default/command.exit         |    1 +
+ .../run-12/e5-regatta/default/command.json         |   19 +
+ .../default/objective-desktop-chrome.json          |  832 ++++
+ .../default/objective-mobile-chrome.json           |  832 ++++
+ .../e5-regatta/default/row-desktop-chrome.json     | 1035 ++++
+ .../e5-regatta/default/row-mobile-chrome.json      | 1035 ++++
+ .../e5-regatta/default/terminal-desktop-chrome.jpg |  Bin 0 -> 95129 bytes
+ .../e5-regatta/default/terminal-mobile-chrome.jpg  |  Bin 0 -> 188825 bytes
+ .../sol/play-proofs/run-12/e5-regatta/proof.md     |   18 +
+ .../default/bank-cell-desktop-chrome.jpg           |  Bin 0 -> 2199 bytes
+ .../default/bank-cell-desktop-chrome.json          |    5 +
+ .../default/bank-cell-mobile-chrome.jpg            |  Bin 0 -> 6004 bytes
+ .../default/bank-cell-mobile-chrome.json           |    5 +
+ .../e5-stillwater/default/board-desktop-chrome.jpg |  Bin 0 -> 161767 bytes
+ .../e5-stillwater/default/board-mobile-chrome.jpg  |  Bin 0 -> 335401 bytes
+ .../run-12/e5-stillwater/default/command.exit      |    1 +
+ .../run-12/e5-stillwater/default/command.json      |   19 +
+ .../default/objective-desktop-chrome.json          |  614 +++
+ .../default/objective-mobile-chrome.json           |  614 +++
+ .../e5-stillwater/default/row-desktop-chrome.json  | 1052 ++++
+ .../e5-stillwater/default/row-mobile-chrome.json   | 1053 ++++
+ .../default/terminal-desktop-chrome.jpg            |  Bin 0 -> 93956 bytes
+ .../default/terminal-mobile-chrome.jpg             |  Bin 0 -> 192045 bytes
+ .../sol/play-proofs/run-12/e5-stillwater/proof.md  |   14 +
+ .../run-12/e6-glow-mesa/default/command.exit       |    1 +
+ .../run-12/e6-glow-mesa/default/command.json       |   19 +
+ .../default/objective-desktop-chrome.json          |  132 +
+ .../default/objective-mobile-chrome.json           |  132 +
+ .../e6-glow-mesa/default/row-desktop-chrome.json   | 1089 +++++
+ .../e6-glow-mesa/default/row-mobile-chrome.json    | 1081 +++++
+ .../sol/play-proofs/run-12/e6-glow-mesa/finding.md |   26 +
+ .../e6-glow-mesa/restore-ground/command.exit       |    1 +
+ .../e6-glow-mesa/restore-ground/command.json       |   20 +
+ .../restore-ground/objective-desktop-chrome.json   |  132 +
+ .../restore-ground/objective-mobile-chrome.json    |  142 +
+ .../restore-ground/row-desktop-chrome.json         | 1082 +++++
+ .../restore-ground/row-mobile-chrome.json          | 1086 +++++
+ .../restore-ground/terminal-desktop-chrome.jpg     |  Bin 0 -> 122403 bytes
+ .../restore-ground/terminal-mobile-chrome.jpg      |  Bin 0 -> 228791 bytes
+ .../run-12/e6-glow-mesa/terminal-audit.json        |   27 +
+ artifacts/sol/play-proofs/run-12/gate-unset.exit   |    1 +
+ artifacts/sol/play-proofs/run-12/gate-unset.log    |   16 +
+ artifacts/sol/play-proofs/run-12/measurements.json |  482 ++
+ artifacts/sol/play-proofs/run-12/preflight.md      |    7 +
+ artifacts/sol/play-proofs/run-12/proof-hooks.ts    |   52 +
+ artifacts/sol/play-proofs/run-12/run-map.py        |   25 +
+ artifacts/sol/play-proofs/run-12/run-note.md       |  110 +
+ .../sol/play-proofs/run-12/server-warnings.log     |    2 +
+ artifacts/sol/play-proofs/run-12/summarize.py      |   16 +
+ artifacts/sol/play-proofs/run-12/tsc-final.exit    |    1 +
+ artifacts/sol/play-proofs/run-12/tsc-final.log     |    0
+ artifacts/sol/play-proofs/run-12/verification.json |  121 +
+ artifacts/sol/play-proofs/run-12/verify-driver.py  |   17 +
+ artifacts/sol/play-proofs/run-12/verify.py         |   36 +
+ e2e/native-proofs/driver.ts                        |   35 +
+ e2e/native-proofs/e4-long-road.spec.ts             |    7 +
+ e2e/native-proofs/e5-deepwater-claim.spec.ts       |    7 +
+ e2e/native-proofs/e5-flotilla.spec.ts              |    7 +
+ e2e/native-proofs/e5-regatta.spec.ts               |   16 +
+ e2e/native-proofs/e5-stillwater.spec.ts            |    7 +
+ e2e/native-proofs/e6-glow-mesa.spec.ts             |    7 +
+ reviews/sol-play-proofs-8.md                       |   15 +-
+ tasks/BACKLOG.md                                   |    2 +-
+ tasks/goals.json                                   |    7 +-
+ 117 files changed, 32073 insertions(+), 11 deletions(-)
+ create mode 100644 artifacts/s2711/desk-tail.txt
+ create mode 100644 artifacts/s2711/done-move.md
+ create mode 100644 artifacts/s2711/engine-final.json
+ create mode 100644 artifacts/s2711/evidence-budget.txt
+ create mode 100644 artifacts/s2711/input-equivalence.json
+ create mode 100644 artifacts/s2711/policy.txt
+ create mode 100644 artifacts/s2711/predecessor.txt
+ create mode 100644 artifacts/s2711/report.md
+ create mode 100644 artifacts/s2711/run-tail.txt
+ create mode 100644 artifacts/s2711/sync-main.txt
+ create mode 100644 artifacts/sol/play-proofs/run-12/adjacent.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/adjacent.log
+ create mode 100644 artifacts/sol/play-proofs/run-12/build-final.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/build-final.log
+ create mode 100644 artifacts/sol/play-proofs/run-12/driver-equivalence.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e4-long-road/default/objective-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e4-long-road/default/objective-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e4-long-road/default/row-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e4-long-road/default/row-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e4-long-road/default/terminal-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e4-long-road/default/terminal-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e4-long-road/finding.md
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-deepwater-claim/default/command.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-deepwater-claim/default/command.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-deepwater-claim/default/objective-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-deepwater-claim/default/objective-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-deepwater-claim/default/row-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-deepwater-claim/default/row-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-deepwater-claim/default/terminal-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-deepwater-claim/default/terminal-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-deepwater-claim/finding.md
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/bank-cell-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/bank-cell-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/bank-cell-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/bank-cell-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/board-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/board-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/command.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/command.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/objective-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/objective-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/row-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/row-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/terminal-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/default/terminal-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-flotilla/proof.md
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/bank-cell-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/bank-cell-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/bank-cell-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/bank-cell-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/board-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/board-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/command.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/command.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/objective-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/objective-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/row-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/row-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/terminal-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/default/terminal-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-regatta/proof.md
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/bank-cell-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/bank-cell-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/bank-cell-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/bank-cell-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/board-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/board-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/command.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/command.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/objective-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/objective-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/row-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/row-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/terminal-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/default/terminal-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e5-stillwater/proof.md
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/default/command.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/default/command.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/default/objective-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/default/objective-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/default/row-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/default/row-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/finding.md
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/restore-ground/command.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/restore-ground/command.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/restore-ground/objective-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/restore-ground/objective-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/restore-ground/row-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/restore-ground/row-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/restore-ground/terminal-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/restore-ground/terminal-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-12/e6-glow-mesa/terminal-audit.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/gate-unset.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/gate-unset.log
+ create mode 100644 artifacts/sol/play-proofs/run-12/measurements.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/preflight.md
+ create mode 100644 artifacts/sol/play-proofs/run-12/proof-hooks.ts
+ create mode 100644 artifacts/sol/play-proofs/run-12/run-map.py
+ create mode 100644 artifacts/sol/play-proofs/run-12/run-note.md
+ create mode 100644 artifacts/sol/play-proofs/run-12/server-warnings.log
+ create mode 100644 artifacts/sol/play-proofs/run-12/summarize.py
+ create mode 100644 artifacts/sol/play-proofs/run-12/tsc-final.exit
+ create mode 100644 artifacts/sol/play-proofs/run-12/tsc-final.log
+ create mode 100644 artifacts/sol/play-proofs/run-12/verification.json
+ create mode 100644 artifacts/sol/play-proofs/run-12/verify-driver.py
+ create mode 100644 artifacts/sol/play-proofs/run-12/verify.py
+ create mode 100644 e2e/native-proofs/e4-long-road.spec.ts
+ create mode 100644 e2e/native-proofs/e5-deepwater-claim.spec.ts
+ create mode 100644 e2e/native-proofs/e5-flotilla.spec.ts
+ create mode 100644 e2e/native-proofs/e5-regatta.spec.ts
+ create mode 100644 e2e/native-proofs/e5-stillwater.spec.ts
+ create mode 100644 e2e/native-proofs/e6-glow-mesa.spec.ts
