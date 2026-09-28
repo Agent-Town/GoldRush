@@ -1,0 +1,113 @@
+
+/Users/robin/.goldrush/land/tdi1-gates.txt
+branch sol/open-findings-astra tip 5670f2134 2026-09-28 10:05Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/tdi1.json
+scratch store at the store's main 5793a96
+chain base a825b1486
+merged f6b61e4c5
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1128 files, 97727876 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34350679 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=1 
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+ledger battery start 10:07Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 10:13Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/e7-playbook-surface.spec.ts e2e/e7-tape-toggle-phone-hit-target.spec.ts
+e2e: rc=0   30 passed (5.1m)  10:18Z
+battery start 10:18Z
+battery: rc=1 ℹ tests 4 ℹ pass 3 ℹ fail 1 ℹ skipped 0 ℹ tests 5 ℹ pass 4 ℹ fail 1 ℹ skipped 0 ℹ tests 1040 ℹ pass 1033 ℹ fail 2 ℹ skipped 5  10:36Z
+✖ rotation registry stays outside the engine identity corpus (415.401291ms)
+✖ rotation registry stays outside the engine identity corpus (71.675459ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (542.597292ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (73.534625ms)
+dirt after battery: 0
+tdi1-PREP-DONE
+null floors moved
+verdict — needs hands
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (306.9s). — re-run 10:59Z in the chain worktree under the drain lock after the first run's vite transport disconnect (crash, not a moved floor)
+verdict: clean
+
+/Users/robin/.goldrush/land/tdi1-run.out
+held 2026-09-28T10:05Z (unnamed); touch loop pid 96993
+fire hold on 10:05Z; landing tdi1
+land-queue: admitted at load { 29.81 79.52 74.68 } 10:05Z
+release requested; tasks/.fire.lock gone
+fire hold released at the verdict () 10:36Z
+landing wrapper exited rc=1 10:36Z
+
+tdi1 battery failures and totals
+
+Battery tail
+  AssertionError [ERR_ASSERTION]: engine hash 2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c is absent from era 6; append a same-era pin with its cause, or bump the era with a fresh pins array
+      at assertCurrentEra (file:///Users/robin/.goldrush/land/wt-tdi1/scripts/engine-era-guard.test.mjs:34:10)
+      at async TestContext.<anonymous> (file:///Users/robin/.goldrush/land/wt-tdi1/scripts/engine-era-guard.test.mjs:69:20)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+ℹ TAP-QUIET MAX: 890.3s of 2700s bound (F-POC-8 watchdog)
+
+/Users/robin/.goldrush/land/rgw1-gates.txt
+branch art/portraits-e5-e10-generated tip a9fca769e 2026-09-28 10:37Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/rgw1.json
+scratch store at the store's main 5793a96
+chain base cabc68d90
+merged 3717fb210
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 149 ℹ fail 0 
+ledger battery start 10:39Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+e2e start 10:41Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   24 passed (1.8m)  10:43Z
+battery start 10:43Z
+battery: rc=0 ℹ tests 1040 ℹ pass 1035 ℹ fail 0 ℹ skipped 5 ℹ tests 87 ℹ pass 87 ℹ fail 0 ℹ skipped 0  11:02Z
+dirt after battery: 0
+rgw1-PREP-DONE
+verdict: clean
+hash at pin time: 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d
+review: reviews/run-guards-node-watchdog-1.md
+bookkeeping: leaf merged, row, STATUS phrase (3717fb210)
+
+/Users/robin/.goldrush/land/rgw1-run.out
+held 2026-09-28T10:37Z (unnamed); touch loop pid 36767
+fire hold on 10:37Z; landing rgw1
+land-queue: admitted at load { 34.46 36.12 44.65 } 10:37Z
+release requested; tasks/.fire.lock gone
+fire hold released at the verdict (verdict: clean) 11:02Z
+
+rgw1 battery failures and totals
+
+Battery tail
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (37.16575ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (87.055959ms)
+✔ every boss-kind dispatch trigger names a contract that declares a boss (3.618291ms)
+✔ M8-5 is keyed to Low Orbit being secured, not to a boss it never had (1.525459ms)
+✔ the guard BITES: a boss trigger on a bossless map is rejected (1.339208ms)
+ℹ tests 87
+ℹ suites 0
+ℹ pass 87
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28264.438458
+
+Live custody
+  PID  PPID TTY      STAT STARTED
+25494     1 ??       SN   Sun Sep 20 13:55:15 2026    
+36774 36750 ??       SN   Mon Sep 28 17:37:20 2026    
+36786 36774 ??       SN   Mon Sep 28 17:37:20 2026    
+
+land holder
+36774 2026-09-28T10:37Z /bin/bash scripts/attended/land.sh scripts/attended/landings/rgw1.json
