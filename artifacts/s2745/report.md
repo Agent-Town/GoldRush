@@ -24,8 +24,12 @@ WHY no product drain: the board resolves zero real drains and zero unknown subje
 
 ## Closing verification
 
-Pending the complete literal npm run test:ledger-guards on Node v26.4.0 before the final lock-clearing commit.
+The final green receipt follows the retained first-attempt failure and control below.
 
 Closing attempt 1: full ledger battery rc 1 in 308.867 s; the Gazette scan-space child reached its unchanged 240-second timeout. The original log and result remain at ledger-guards.txt and ledger-result.json. An independent unchanged single-file control follows before any retry; no production source, assertion, timeout or concurrency setting was changed.
 
 The unchanged Gazette control passed 9/9, rc 0 in 133.543 s on Node v26.4.0 (gazette-control.txt and gazette-control-result.json). This supplies current attribution for the timed-out child. The full literal ledger battery is retried once; no code, assertion, timeout or concurrency change.
+
+## Final handoff
+
+At 2026-09-28T14:22Z, the second complete literal npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **441.284 s**, Node v26.4.0, checkpoint 587f1b150. All chained checks completed. The first 240-second Gazette timeout (1262/1263, rc 1) and unchanged 9/9 isolated control (133.543 s, rc 0) remain committed; no source/assertion/timeout/concurrency change. The exact predecessor and four-item Owner's Desk were reverified. The final observed ahr1 receipt still has no LAND-ahr1-DONE; attended final main verification remains pending. Deployment 954bb2cd and ASSAYER SYNCED are verified separately. Origin remains blocked by F-2742-1; no unchanged push retry or history repair. Commits before clearance: 0c2659daf, 93d3741dd, 587f1b150. No fire product drain, source edit, dispatch, pin or deploy. This lock-clearing commit is the final main write; only read-only verification and the external vault digest follow.
