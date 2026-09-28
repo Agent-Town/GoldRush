@@ -1,24 +1,33 @@
-# s2747 — audio first-boot correction passes detached gates
+# s2747 — audio persistence regression test is landed
 
-Initial triage (superseded by the completion below): the prescribed board probe finds zero real drains and zero unknowns. Lane-b is BUSY with the attended-authored audio-integration-first-boot-spec-1; its working test and evidence belong to that live run. The whole factory is not DRY. CODEX-WALL bars independent fire dispatch and refills.
+**READY-FOR-GATES. One test-only drain landed at 15da41c60515658c4ea93724d66b816fbdcb190d; closing ledger verification remains pending below.**
 
-## Verification
+The lane finished during this fire. Initial triage had no ready drains, so the initial ledger battery ran; triage restarted when the done-move arrived. The test now reaches Settings through a returning-player profile, preserves volume and mute across reload, and checks the live SoundSystem values. The prior test cleared storage into the first-boot card, where Settings does not exist. The task quoted the preceding audio-lock test title; the changed row is settings volume and mute persist across reload. F-AUD-16 is corrected.
 
-- Lock commit 0ca633dce. This fire's launcher is PID 73077, with node 73123 and Codex 73124 beneath it; its fresh directory is our semaphore. Previous s2746 was CLEARED. Its complete line is archived verbatim in STATUS and its four-item Owner's Desk tail is retained for clearance. The main-slot predicate is scripts/lane-runner-v3.sh:239 (ACTIVE present, lock CLEARED absent).
-- dry-board.txt: 1,473 done-moves; 88 subjects, zero real drains, zero unknowns, 13 closed/blocked and 75 merged ghosts. lane-usable.txt: all four named lane branches have zero ahead commits at the probe; lane-b has a live runner holder and a modified audio-integration spec. Five ahead scratch worktrees remain attended-owned. No gate or source edit performed on the live task.
-- factory-state.json and latest-run-tail.txt: runner 25494, PPID 1, alive; audio correction runs as lane-b--20260928-214502-audio-integration-first-boot-spec-1.md; all six queues empty, no failures newer than the previous handoff, no pending crafting orders. No assay, retry or restart due. Health landing/game/API 200/200/200. Generated logs are factory churn, with no unattended STATUS/task bookkeeping dirt to commit.
-- The 19-file ledger corpus, current handover and goal leaf confirm the correction is queued on lane-b by the attended session. It must prove the Settings persistence route with a returning profile, both browser projects and the unchanged adjacent suites. Its gates and landing remain outstanding; no completion claim is made.
-- LB-01 and FM-01 already ran today: the s2727 private receipts record backup rc 0 at 02:19Z with today's file present, and memory rc 0 at 02:10Z. Fresh strict mirror probe proves 36/36 days from August 24 through September 28. Live archive heads match the duty receipts: ledger-backups 409ffd397abde6b0d465fb8a79be145112f9e9f6, fire-memory 53d87470fb2670626fb4605d4dc0eb5bffd899fb. No duplicate transfer and no mirror material in the public tree.
-- TK-01 September 27 draft exists with the UTC+07 local-midnight window and 136-commit busy-day control recorded in its evidence. Rotation r2026w40 opens September 28; week 41 is due Wednesday September 30. Current skillmd checks pass 19/19, zero failures, Node v26.4.0. No new player-visible merge by this fire, so no duplicate Gazette item or publication.
-- Origin freshly resolves to 0979de76328c5a225f543d620f47c66a9f5c4382. Historical blob 6e329b47a526bb6ad14ee86877f98b2669ca7606 remains 113,467,543 bytes and its introducing commit 7eda17dd7 remains an ancestor of main. Existing F-2742-1 still requires the owner's attended archive-first repair decision. No unchanged rejected push or history rewrite.
+## Landing and evidence
+
+- Source commits: 52860648a, f9a1a26e5, 68ad3e06f (Astra lane-b; run log 147,262 tokens). Implementation merge bf65df7de6402fc0efa7ff63746cc65a1171cdcc; review/goal/backlog drain commit 15da41c60515658c4ea93724d66b816fbdcb190d. Review: reviews/audio-integration-first-boot-spec-1.md. The done-move is now tasks/done/drained-s2747-20260928-214502-audio-integration-first-boot-spec-1.md.
+- Fresh detached arena prepared with npm ci and a clean git status. Classification: one LANE-TOUCHED spec, NEW source evidence, no main-side spec edits, conflicts or oversized lane blobs. Main was fast-forwarded only after acceptance.
+- TypeScript, ordinary build and E1 build rc 0. E1 first-town payload **34,355,296 bytes**, below 52,000,000. Final evidence **28.2 MB**, below 40 MB, including source evidence and preserved regenerated screenshots. Nothing discarded.
+- Browser warm-up **1/1**; own and five adjacent suites **62/62** across desktop and mobile, workers=1. Eight plain surfaces at 1280x800 and 390x844 had **zero console and page errors**. JSON/screenshots: plain-boots/.
+- Literal diff-selected guards **5/5, rc 0**, **2252.199 seconds**, Node v26.4.0. Full npm Node command **rc 0 in 2249 seconds**, including its chained tail. Observed fixture sweep: **162 owners, zero survivors, no failed children**. Power p95 **0.336 ms**. The wrapper retains passing command verdicts but suppresses passing per-test output; no unrecorded final Node test count is claimed.
+- Final candidate and main engine hash both **999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4**, equal to the existing pin; store 5793a967da46e8f00c0ba16f92f17dc10d36558d. No src/assets/functions diff. No pin, deployment or Gazette item: this corrects a test route without a player-visible change.
+- Invocation correction retained: strict policy refuses a linked worktree with rc 2; both primary-root policy probes were CLEAR. The candidate static bundle records that refusal beside green tsc/build; the subsequent correct live-board probe controls policy. Ordinary screenshot directories were mistakenly described as failures mid-run, then corrected against the completed **62 passed, rc 0** result. The prepared clean-main control was not run. No product red was excused, assertion weakened or guard limit changed.
+- This one drain exceeded the approximate fire duration to finish the already-running required full Node command; no additional drain was taken. ACTIVE was refreshed at db4868b73, and the live launcher's own directory heartbeat was renewed before it could be reaped as stale.
+
+## Re-verified factory and duties
+
+- Final health is **200/200/200**, runner alive, queues/running/pending orders all zero, no staged art. Final board and lane probes are retained. No independent fire dispatch, refill, retry or restart.
+- Today's LB-01/FM-01 receipts are already complete; strict external mirror coverage **36/36** through September 28. Both live private archive heads match the s2727 duty receipts. The mirror stays outside the public repo. Yesterday's ticker draft exists with its UTC+07 window and busy-day control; rotation week 40 is present; skillmd **19/19**. Next coverage September 29 after 02:10 UTC; week-41 mint September 30.
+- Live origin still reads **0979de76328c5a225f543d620f47c66a9f5c4382**. The 113,467,543-byte historical blob and its introducing ancestor remain reachable. Existing F-2742-1 forbids an unchanged rejected push and requires the owner's attended archive-first repair decision. This landing is local and is not claimed backed up to origin.
+- The complete predecessor s2746 line is archived verbatim, and the four-item Owner's Desk tail will be retained byte-for-byte at clearance. Main semaphore: scripts/lane-runner-v3.sh:239. Initial lock commit 0ca633dce; initial bookkeeping 075e97b6c; lock refresh db4868b73; evidence checkpoint db523ec78.
 
 ## Remaining list in order
 
-1. Let the live lane-b audio first-boot correction finish; review its evidence and ownership before any drain.
-2. Owner decides F-2742-1; attended archive-first repair restores accepted origin backup.
-3. Owner listens to the available audio comparison and decides keep or revert; inherited four-item Owner's Desk remains unchanged.
-4. September 29 private coverage after 02:10 UTC; September 30 week-41 mint.
+1. Owner decides F-2742-1; attended archive-first repair restores accepted origin backup, including this local landing.
+2. Owner listens to the available before/after audio and decides keep or revert; inherited four-item Owner's Desk stays unchanged.
+3. September 29 private coverage after 02:10 UTC; September 30 week-41 mint.
 
 ## Closing verification
 
-The initial pre-drain ledger command passed 1263/1263 plus kit 83/83, rc 0, in 348.315 seconds. The lane completed during that battery, so triage restarted and policy returned CLEAR. Detached candidate bf65df7de6402fc0efa7ff63746cc65a1171cdcc passed TypeScript, both builds, E1 payload 34,355,296 bytes, browser 62/62 and eight zero-error plain surfaces. The literal diff-selected guard command passed 5/5, rc 0, in 2252.199 seconds; full Node was rc 0 in 2249 seconds, power p95 0.336 ms. The observed fixture sweep passed 162 owners, zero survivors and no failed children. The wrapper retains only successful command summaries, so no final Node per-test count is claimed. This one drain exceeded the approximate fire time budget to finish its already-running required command; no second drain was started. Final identity, landing and closing ledger checks follow before clearance.
+Initial pre-drain ledger: **1263/1263 plus kit 83/83**, rc 0, **348.315 seconds**. The fresh post-landing literal ledger battery follows this report; its completed receipt must precede lock clearance.
