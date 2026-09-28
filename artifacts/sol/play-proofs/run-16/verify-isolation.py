@@ -7,6 +7,7 @@ original=subprocess.check_output(['git','show',f'{base}:{name}']).decode()
 s=pathlib.Path(name).read_text()
 current=s
 s=s.replace("import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json' with { type: 'json' };\nimport { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';\n\n",'')
+s=s.replace("const zone = contract.id === 'e6-showroom' ? zones.find(z => z.id === 'model-home-village') : contract.id === 'e9-old-canal'", "const zone = contract.id === 'e9-old-canal'")
 start=s.index("    if (row.contract === 'e6-picnic') {")
 end=s.index('    if (now) for (const node',start)
 s=s[:start]+s[end:]

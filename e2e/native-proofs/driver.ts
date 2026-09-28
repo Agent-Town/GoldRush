@@ -331,7 +331,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
   const zones = tile.buildZones ?? [];
 
   const holding = stake ? zones.find((entry) => stake.x >= entry.minX && stake.x <= entry.maxX && stake.z >= entry.minZ && stake.z <= entry.maxZ) : undefined;
-  const zone = contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
+  const zone = contract.id === 'e6-showroom' ? zones.find(z => z.id === 'model-home-village') : contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
   const centre =
     stake && (holding || zones.length === 0)
       ? { x: stake.x, z: stake.z }

@@ -26,7 +26,8 @@ export function proofHooks(id: string, epoch: string) {
             showroomCaptureObjective: d.showroomCaptureObjective, wrangle: d.wrangle,
             interferenceFront: d.interferenceFront, broadcastMirror: d.broadcastMirror,
             playbookUse: d.playbookUse, e7Signal: d.e7Signal,
-            repairs: d.wreck?.repairs } : null;
+            repairs: d.wreck?.repairs,
+            tapeShelf: Object.keys(localStorage).filter(key => key.includes('gr.playbooks.v1')).map(key => ({ key, value: localStorage.getItem(key) })) } : null;
         });
         if (state) await writeFile(path.join(root, `objective-${info.project.name}.json`), JSON.stringify(state, null, 2) + '\n');
       }
