@@ -3148,3 +3148,10 @@ After reaching the Signal Era, the Prospector keeps the Tape Reel when returning
 to earlier maps. Explicit epoch previews still show that map's own state.
 merge `f6b61e4c5` · pin `ab573c67a` · review `reviews/e7-tape-drawer-inheritance-1.md`
 ROUNDUP-CLASS — 2026-W40; s2742 records the attended September 28 landing. Pin 72 remains in era 6. Draft only; publication stays owner-only.
+
+## ROUNDUP — Turn the music off with one tap
+Music has its own switch in a run, in town and on the opening screens.
+Turning it off leaves sound effects on, keeps the chosen music volume, and
+remembers the choice for each profile. Muted music is no longer downloaded.
+merge `cdf30c09e` · pin `3cc0c92e7` · review `reviews/audio-music-toggle-1.md`
+ROUNDUP-CLASS — 2026-W40; s2743 records the attended September 28 landing. Pin 73 remains in era 6. Draft only; publication stays owner-only.
