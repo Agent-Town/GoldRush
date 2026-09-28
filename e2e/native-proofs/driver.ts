@@ -365,7 +365,8 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
 
   const holding = stake ? zones.find((entry) => stake.x >= entry.minX && stake.x <= entry.maxX && stake.z >= entry.minZ && stake.z <= entry.maxZ) : undefined;
   const archiveWing = contract.id === 'e10-archive-world' ? E10ArchiveSystem.create(contract)?.wings[0] : undefined;
-  const zone = archiveWing ? zones.find(z => z.id === archiveWing.id) : contract.id === 'e6-showroom' ? zones.find(z => z.id === 'model-home-village') : contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
+  const mareDome = contract.id === 'e8-mare-claim' ? zones.find(z => z.id === 'dome-cluster-pad-center') : undefined;
+  const zone = mareDome ?? (archiveWing ? zones.find(z => z.id === archiveWing.id) : contract.id === 'e6-showroom' ? zones.find(z => z.id === 'model-home-village') : contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0]);
   const centre =
     stake && (holding || zones.length === 0)
       ? { x: stake.x, z: stake.z }
@@ -770,7 +771,7 @@ async function refillOrbital(page: Page, row: Row): Promise<boolean> {
     row.notes.push(`Mare refill stalled ${dome.id}: reached=${reached}; state=${JSON.stringify(await read(page))}`);
     return false;
   }
-  const target = row.contract === 'e8-far-side'  ? [10, -34] : row.contract === 'e8-eclipse' ? [0, 0] : [10, -6];
+  const target = row.contract === 'e8-far-side' ? [10, -34] : row.contract === 'e8-eclipse' ? [0, 0] : [10, -6];
   if (!(await walkTo(page, row, target[0], target[1], 1.5, 150))) return false;
   for (let tick = 0; tick < 100; tick++) {
     await takeUpgrades(page, row);
