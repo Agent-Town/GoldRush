@@ -26,3 +26,12 @@ Closing ledger verification runs after these ledger/report writes and before the
 
 
 Evidence retention correction: four Playwright traces total 400,312,439 bytes. They were accidentally included in unpublished bookkeeping commit b38e48967 because a newline-separated shell sequence continued after the size check failed. That commit is preserved; no history was rewritten. The files were moved intact to the local external archive named in artifacts/s2733/trace-archive.json, with SHA-256 hashes and original paths. Screenshots, error contexts, TAP and gate transcripts remain in the review bundle. Historical trace blobs remain reachable in the retained commit; the final evidence tree excludes them.
+
+
+## Final handoff
+
+At 2026-09-28T05:37Z, closing ledger **1263/1263 + kit 83/83**, all chained checks green, **rc 0**, **209.932 s**, Node **v26.4.0**, checkpoint **3088d9bfe533edab4cc98713ff5a132300e9a426**. Exact predecessor and three-item Owner's Desk verified; bounded archive check rc 0. Final evidence-budget check: **21.2 MB**, below 40 MB; the historical trace blobs remain in the retained bookkeeping commit as documented above.
+
+Final re-triage: **2 real drains / 0 unknown**. Holds-3 has now finished at source tip **404583963** and has a done-move; its source claims Ember passed both screens, with Mare, Relay and Archive held. Those are unreviewed source claims, not this fire's gates. Lane-c has 10 unmerged commits; lane-a still has the two audit commits. No second drain was started after this fire's budget. Remaining order: finish the Tape candidate's full Node verification, land its audit and release the attended inheritance corrective, then independently gate Holds-3 under attended sequencing.
+
+Commit trail: lock **f6ddda011**, generated bookkeeping **bc9d86e19**, review checkpoint **b38e48967**, trace retention **3088d9bfe**. The final clearing commit includes this receipt and is the last write to main. The owned drain lock has been moved aside intact; the launcher retains tasks/.fire.lock until process exit. Normal origin backup and read-only verification follow.
