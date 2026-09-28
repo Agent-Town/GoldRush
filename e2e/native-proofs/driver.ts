@@ -19,6 +19,7 @@ import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 
 import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json' with { type: 'json' };
 import { E10ArchiveSystem } from '../../src/systems/E10ArchiveSystem';
+import { phoneTapMoment } from '../../artifacts/sol/play-proofs/run-18/phone-tap';
 import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';
 
 const TIMESCALE = '4';
@@ -849,6 +850,7 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
       }
       try { await page.getByTestId(id).click({ timeout: 600 }); return; }
       catch (error) {
+        if (attempt === 0 && id === 'playbook-toggle' && row.contract === 'e7-relay-valley' && row.project === 'mobile-chrome') await phoneTapMoment(page, error);
         row.notes.push(`Tape ${id} attempt ${attempt + 1}: ${String(error).split('\n')[0]}`);
         if (attempt === 7) throw error;
       }
