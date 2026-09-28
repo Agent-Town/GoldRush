@@ -17,7 +17,7 @@ import { ACTIVE_EPOCH_KEY, listBoardContracts, listEpochs, type ContractManifest
 import { researchStateKey } from '../../src/meta/ResearchTree';
 import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 
-import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json';
+import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json' with { type: 'json' };
 import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';
 
 const TIMESCALE = '4';
