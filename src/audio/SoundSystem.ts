@@ -65,6 +65,7 @@ type SoundDiagnostics = {
 type LoopState = {
   source: AudioBufferSourceNode;
   gain: GainNode;
+  envelope: GainNode;
   voiceId: number;
   volume: number;
   sourceCount: number;
@@ -162,7 +163,7 @@ export class SoundSystem {
     if (!loop || !entry) return;
     loop.volume = volume;
     loop.sourceCount = this.loopSourceCount(name, loop.sourceCount);
-    loop.gain.gain.value = this.effectiveVolume(entry.volume * volume * loopSourceScale(loop.sourceCount) * this.groupVolume(entry));
+    loop.gain.gain.setTargetAtTime(this.effectiveVolume(entry.volume * volume * loopSourceScale(loop.sourceCount) * this.groupVolume(entry)), this.context!.currentTime, 0.03);
   }
 
   stopLoop(name: SoundName): void {
@@ -221,7 +222,10 @@ export class SoundSystem {
     window.removeEventListener('keydown', this.unlock);
     this.unsubscribePreferences();
     for (const voice of [...this.voices.values()]) this.releaseVoice(voice.id, true);
-    void this.context?.close();
+    const context = this.context;
+    // Keep the scene's audio context alive until its music fade has actually played.
+    if (context?.state === 'running') window.setTimeout(() => { void context.close().catch(() => undefined); }, 550);
+    else void context?.close().catch(() => undefined);
     this.context = null;
     this.masterGain = null;
     this.musicGain = null;
@@ -301,8 +305,8 @@ export class SoundSystem {
   private ensureContext(): AudioContext {
     if (!this.context) {
       this.context = new AudioContext();
-      this.masterGain = this.context.createGain();
-      this.musicGain = this.context.createGain();
+      this.masterGain = new GainNode(this.context, { gain: 0 });
+      this.musicGain = new GainNode(this.context, { gain: 0 });
       const shelf = this.context.createBiquadFilter();
       shelf.type = 'highshelf';
       shelf.frequency.value = 4_000;
@@ -329,10 +333,10 @@ export class SoundSystem {
     if (!voice) return;
     const entry: SoundManifestEntry = soundManifest[name];
     const source = context.createBufferSource();
-    const gain = context.createGain();
+    const gain = new GainNode(context, { gain: 0 });
     source.buffer = buffer;
     source.playbackRate.value = this.playbackRate(entry.pitchVariance);
-    gain.gain.value = this.effectiveVolume(entry.volume * volume * this.groupVolume(entry));
+    gain.gain.setTargetAtTime(this.effectiveVolume(entry.volume * volume * this.groupVolume(entry)), context.currentTime, 0.005);
     source.connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
     voice.source = source;
     source.onended = () => this.releaseVoice(voiceId);
@@ -364,13 +368,15 @@ export class SoundSystem {
       return;
     }
     const source = context.createBufferSource();
-    const gain = context.createGain();
+    const gain = new GainNode(context, { gain: 0 });
     const entry: SoundManifestEntry = soundManifest[name];
+    const envelope = new GainNode(context, { gain: entry.group === 'music' ? 0 : 1 });
+    if (entry.group === 'music') envelope.gain.setTargetAtTime(1, context.currentTime, 0.2);
     source.buffer = buffer;
     source.loop = true;
-    source.connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
+    source.connect(envelope).connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
     voice.source = source;
-    this.loops.set(name, { source, gain, voiceId, volume, sourceCount: this.loopSourceCount(name, 1), startedAt: context.currentTime });
+    this.loops.set(name, { source, gain, envelope, voiceId, volume, sourceCount: this.loopSourceCount(name, 1), startedAt: context.currentTime });
     this.setLoopVolume(name, volume);
     source.onended = () => {
       if (this.loops.get(name)?.source === source) this.loops.delete(name);
@@ -436,10 +442,13 @@ export class SoundSystem {
     if (!voice) return;
     this.voices.delete(voiceId);
     if (voice.countsPerSound) this.releaseSoundSlot(voice.name);
-    if (voice.loop && this.loops.get(voice.name)?.voiceId === voiceId) this.loops.delete(voice.name);
+    const loop = voice.loop && this.loops.get(voice.name)?.voiceId === voiceId ? this.loops.get(voice.name) : undefined;
+    if (loop) this.loops.delete(voice.name);
+    const fade = stop && loop && soundManifest[voice.name].group === 'music' && this.context?.state === 'running';
+    if (fade) loop.envelope.gain.setTargetAtTime(0, this.context!.currentTime, 0.1);
     if (stop && voice.source) {
       try {
-        voice.source.stop();
+        voice.source.stop(fade ? this.context!.currentTime + 0.5 : 0);
       } catch {}
     }
     this.updateMasterGain();
@@ -532,8 +541,8 @@ export class SoundSystem {
 
   private updateMasterGain(): void {
     const volume = readAudioMuted() ? 0 : readAudioVolume();
-    if (this.masterGain) this.masterGain.gain.value = volume * this.headroomGain();
-    if (this.musicGain) this.musicGain.gain.value = volume;
+    if (this.masterGain) this.masterGain.gain.setTargetAtTime(volume * this.headroomGain(), this.context!.currentTime, 0.03);
+    if (this.musicGain) this.musicGain.gain.setTargetAtTime(volume, this.context!.currentTime, 0.03);
   }
 
   private governedVoiceCount(): number {
