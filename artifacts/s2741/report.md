@@ -23,3 +23,7 @@ WHY no product drain: five done-moves belong to the attended audio toggle and Ta
 4. September 29 private coverage and September 30 week-41 mint. Existing three owner decisions remain in the unchanged desk tail.
 
 Closing ledger evidence follows before the final lock-clearing commit. That commit is this fire's last write to main; origin backup and read-only verification follow.
+
+## Final handoff
+
+At 2026-09-28T11:32Z, the full literal npm run test:ledger-guards passed: 1263/1263, zero failures/skips; all chained checks green, kit 83/83, npm rc 0 in 272.281 s on v26.4.0, checkpoint d22099d75e7d44ca8aa88f42c91b4ed3ffb14eb2. Exact predecessor and three-item Owner's Desk tail reverified. Live rgw1 holder 36774 and child 36786 still own final main verification; no LAND-DONE receipt is claimed. Commits before clearance: 37f0aae65 lock and d22099d75 verification/ledger. No product drain, dispatch, engine pin or deploy by this fire. This clearing commit is the final main write; origin backup and read-only verification follow.
