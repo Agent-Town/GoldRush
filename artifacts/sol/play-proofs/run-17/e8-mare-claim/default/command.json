@@ -1,0 +1,21 @@
+{
+  "head": "f57e97325c11f99e69603cfa9d20c54455b882fe",
+  "driverSha256": "0e4f6fb5e15a845aaa06e07ea7af5bf2f6ebcb0d260758f686b2ad4a93300be4",
+  "argv": [
+    "npx",
+    "playwright",
+    "test",
+    "e2e/native-proofs/e8-mare-claim.spec.ts",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--workers=1",
+    "--reporter=line",
+    "--output=/Users/robin/.goldrush/play-proofs/run-17/default/e8-mare-claim/results"
+  ],
+  "env": {
+    "GR_NATIVE_PROOF": "1",
+    "GR_NATIVE_RUN": "17/default",
+    "GR_CAPTURE_EXTERNAL_SERVER": "1",
+    "GR_CAPTURE_BASE_URL": "http://127.0.0.1:5303"
+  }
+}
