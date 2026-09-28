@@ -86,7 +86,7 @@ All 42 contracts appear once. Only Long Road, Deepwater and Glow Mesa rows move 
 | Stillwater (e5-stillwater) | PROVED both screens — terminal journey; five-ground work not proved | 12 | [Proof](../run-12/e5-stillwater/proof.md) |
 | Glow Mesa (e6-glow-mesa) | PROVED both screens — authored wave-8 ending, bank/Book/reload | 15 | [Proof](../run-15/e6-glow-mesa/proof.md) |
 | Half-Life Hollow (e6-half-life-hollow) | HELD — survival ceiling; crossing complete; all four deaths wave 4 | 13 | [Finding](../run-13/e6-half-life-hollow/finding.md) |
-| The Picnic (e6-picnic) | HELD — objective never engaged; stakes lost at wave 2 with full hero HP | 13 | [Finding](../run-13/e6-picnic/finding.md) |
+| The Picnic (e6-picnic) | HELD — three stakes held all rides; survival deaths 17/17 default, 18/17 restore | 16 | [Finding](../run-16/e6-picnic/finding.md) |
 | The Showroom (e6-showroom) | HELD — objective never engaged; alive budget exits 79/78; captures 0/6 | 13 | [Finding](../run-13/e6-showroom/finding.md) |
 | The Dead Band (e7-dead-band) | HELD — objective never engaged; deaths 18/18; refusal unexercised | 13 | [Finding](../run-13/e7-dead-band/finding.md) |
 | Echo Canyon (e7-echo-canyon) | HELD — objective never engaged; deaths 16/19; no playbook/mirror | 13 | [Finding](../run-13/e7-echo-canyon/finding.md) |

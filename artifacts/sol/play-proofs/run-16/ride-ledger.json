@@ -1,0 +1,19 @@
+{
+  "rule": "At most one default and one survival-only restore-ground ride per project and map. Collection failure started zero rides. No Half-Life Hollow ride.",
+  "orderedContracts": [
+    "e6-picnic",
+    "e6-showroom",
+    "e7-dead-band",
+    "e7-echo-canyon",
+    "e7-relay-rush"
+  ],
+  "started": [
+    "e6-picnic/default/desktop-chrome",
+    "e6-picnic/default/mobile-chrome",
+    "e6-picnic/restore-ground/desktop-chrome",
+    "e6-picnic/restore-ground/mobile-chrome"
+  ],
+  "retryReason": {
+    "e6-picnic": "Both defaults died with all three stakes held; survival-only retry allowed."
+  }
+}
