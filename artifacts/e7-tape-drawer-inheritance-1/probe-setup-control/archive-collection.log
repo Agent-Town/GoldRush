@@ -1,0 +1,8 @@
+[WebServer] (node:24076) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+Error: Cannot find module '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/src/meta/ContractFamilies' imported from /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/e7-tape-drawer-inheritance-1/probe-setup-control/plain-boots.spec.ts
+Did you mean to import "../../../../../src/meta/ContractFamilies.ts"?
+
