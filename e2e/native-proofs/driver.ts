@@ -577,11 +577,19 @@ async function build(
   }
   if (!selected) { row.notes.push(`could not select ${id} after upgrade interruptions`); return false; }
   await page.waitForTimeout(200);
-  for (let nudge = 0; nudge < 10; nudge += 1) {
+  const archiveSite = row.contract === 'e10-archive-world' && id === 'sentry_beacon'
+    ? E10ArchiveSystem.create(BOARD_CONTRACTS.find(c => c.id === row.contract)!)!.wings[0] : undefined;
+  for (let nudge = 0; nudge < (archiveSite ? 24 : 10); nudge += 1) {
     const now = await read(page);
     if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
-    if (now.ghostValid) break;
-
+    const inside = !archiveSite || Math.hypot(now.ghostPos.x - archiveSite.x, now.ghostPos.z - archiveSite.z) <= archiveSite.radius;
+    if (now.ghostValid && inside) break;
+    if (archiveSite && !inside) {
+      // The native preview follows the hero/camera. Steer its observed miss inward
+      // rather than accepting the first valid position outside the objective disc.
+      await steer(page, archiveSite.x - now.ghostPos.x, archiveSite.z - now.ghostPos.z, 55);
+      continue;
+    }
     const turn = (nudge * 2.39996) % (Math.PI * 2);
     await steer(page, Math.cos(turn) * 2, Math.sin(turn) * 2, 170);
   }
