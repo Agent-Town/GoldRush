@@ -1095,5 +1095,411 @@
     "pageErrors": 0,
     "row": "artifacts/sol/play-proofs/run-17/e10-archive-world/default/row-mobile-chrome.json",
     "raw": "/Users/robin/.goldrush/play-proofs/run-17/default/e10-archive-world/row-mobile-chrome.json"
+  },
+  {
+    "contract": "e10-ember-shore",
+    "strategy": "default",
+    "project": "desktop-chrome",
+    "wave": 12,
+    "sim": 360.13333333332315,
+    "hp": 167,
+    "gold": 60,
+    "repairs": 0,
+    "worksStanding": 4,
+    "worksTotal": 4,
+    "objectiveMet": true,
+    "air": null,
+    "relay": null,
+    "archive": null,
+    "vent": {
+      "declared": true,
+      "stakeId": "last-warm-vent",
+      "position": {
+        "x": 3,
+        "z": -10
+      },
+      "warmth": 74.933,
+      "maxWarmth": 100,
+      "alight": true,
+      "guttered": false,
+      "gutteredAtSeconds": null,
+      "decayPerSecond": 4,
+      "decaying": false,
+      "warmthLost": 300.267,
+      "warmthRestored": 275.2,
+      "stoke": {
+        "action": "STOKE",
+        "goldCost": 15,
+        "warmthRestore": 40,
+        "radius": 4,
+        "uses": 7,
+        "refusals": {
+          "undeclared": 0,
+          "guttered": 0,
+          "out-of-reach": 0,
+          "insufficient-gold": 0,
+          "already-warm": 0
+        },
+        "lastRefusal": null
+      },
+      "squallsSurvived": 3,
+      "squallsRequired": 1,
+      "motePressure": {
+        "multiplier": 2,
+        "active": false,
+        "pressShare": 0.25
+      },
+      "objectiveMet": true
+    },
+    "squall": {
+      "declared": true,
+      "calmSeconds": 60,
+      "telegraphSeconds": 8,
+      "squallSeconds": 25,
+      "recoverSeconds": 8,
+      "cycleSeconds": 101,
+      "phase": "calm",
+      "phaseProgress": 0.9499999999998304,
+      "cycle": 3,
+      "tick": 2700,
+      "elapsedSeconds": 360,
+      "secondsToNextPhase": 3,
+      "secondsToNextSquall": 11,
+      "squallsStarted": 3,
+      "squallsCompleted": 3,
+      "motePressureMultiplier": 2,
+      "blowing": false,
+      "transitions": [
+        {
+          "from": null,
+          "to": "calm",
+          "tick": 0,
+          "atSeconds": 0,
+          "cycle": 0
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 451,
+          "atSeconds": 60.133,
+          "cycle": 0
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 510,
+          "atSeconds": 68,
+          "cycle": 0
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 698,
+          "atSeconds": 93.067,
+          "cycle": 0
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 758,
+          "atSeconds": 101.067,
+          "cycle": 1
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1208,
+          "atSeconds": 161.067,
+          "cycle": 1
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 1268,
+          "atSeconds": 169.067,
+          "cycle": 1
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 1456,
+          "atSeconds": 194.133,
+          "cycle": 1
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 1516,
+          "atSeconds": 202.133,
+          "cycle": 2
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1966,
+          "atSeconds": 262.133,
+          "cycle": 2
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2026,
+          "atSeconds": 270.133,
+          "cycle": 2
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2213,
+          "atSeconds": 295.067,
+          "cycle": 2
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 2273,
+          "atSeconds": 303.067,
+          "cycle": 3
+        }
+      ]
+    },
+    "hero": {
+      "x": -19.38560456684077,
+      "y": 0.34803450126283786,
+      "z": -33.72547862939548
+    },
+    "cells": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e10-ember-shore secureWave=12"
+      },
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 12 / 360.1s sim, 167 HP, 4 buildings"
+      },
+      "banks": {
+        "ok": true,
+        "detail": "a NEW secured row for e10-ember-shore: waves=12 gold=60 timeAlive=360 kills=413 (41 new row(s) since pre-play, retained after Return to Town)"
+      },
+      "board": {
+        "ok": true,
+        "detail": "the Book is on screen straight off the run ledger"
+      },
+      "reload": {
+        "ok": true,
+        "detail": "score retained across reload (7229 bytes) and the Book reopened on foot"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "row": "artifacts/sol/play-proofs/run-17/e10-ember-shore/default/row-desktop-chrome.json",
+    "raw": "/Users/robin/.goldrush/play-proofs/run-17/default/e10-ember-shore/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e10-ember-shore",
+    "strategy": "default",
+    "project": "mobile-chrome",
+    "wave": 12,
+    "sim": 360.13333333332315,
+    "hp": 159,
+    "gold": 60,
+    "repairs": 0,
+    "worksStanding": 3,
+    "worksTotal": 3,
+    "objectiveMet": true,
+    "air": null,
+    "relay": null,
+    "archive": null,
+    "vent": {
+      "declared": true,
+      "stakeId": "last-warm-vent",
+      "position": {
+        "x": 3,
+        "z": -10
+      },
+      "warmth": 78.133,
+      "maxWarmth": 100,
+      "alight": true,
+      "guttered": false,
+      "gutteredAtSeconds": null,
+      "decayPerSecond": 4,
+      "decaying": false,
+      "warmthLost": 300.267,
+      "warmthRestored": 278.4,
+      "stoke": {
+        "action": "STOKE",
+        "goldCost": 15,
+        "warmthRestore": 40,
+        "radius": 4,
+        "uses": 7,
+        "refusals": {
+          "undeclared": 0,
+          "guttered": 0,
+          "out-of-reach": 0,
+          "insufficient-gold": 0,
+          "already-warm": 0
+        },
+        "lastRefusal": null
+      },
+      "squallsSurvived": 3,
+      "squallsRequired": 1,
+      "motePressure": {
+        "multiplier": 2,
+        "active": false,
+        "pressShare": 0.25
+      },
+      "objectiveMet": true
+    },
+    "squall": {
+      "declared": true,
+      "calmSeconds": 60,
+      "telegraphSeconds": 8,
+      "squallSeconds": 25,
+      "recoverSeconds": 8,
+      "cycleSeconds": 101,
+      "phase": "calm",
+      "phaseProgress": 0.9499999999998304,
+      "cycle": 3,
+      "tick": 2700,
+      "elapsedSeconds": 360,
+      "secondsToNextPhase": 3,
+      "secondsToNextSquall": 11,
+      "squallsStarted": 3,
+      "squallsCompleted": 3,
+      "motePressureMultiplier": 2,
+      "blowing": false,
+      "transitions": [
+        {
+          "from": null,
+          "to": "calm",
+          "tick": 0,
+          "atSeconds": 0,
+          "cycle": 0
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 451,
+          "atSeconds": 60.133,
+          "cycle": 0
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 510,
+          "atSeconds": 68,
+          "cycle": 0
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 698,
+          "atSeconds": 93.067,
+          "cycle": 0
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 758,
+          "atSeconds": 101.067,
+          "cycle": 1
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1208,
+          "atSeconds": 161.067,
+          "cycle": 1
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 1268,
+          "atSeconds": 169.067,
+          "cycle": 1
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 1456,
+          "atSeconds": 194.133,
+          "cycle": 1
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 1516,
+          "atSeconds": 202.133,
+          "cycle": 2
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1966,
+          "atSeconds": 262.133,
+          "cycle": 2
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2026,
+          "atSeconds": 270.133,
+          "cycle": 2
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2213,
+          "atSeconds": 295.067,
+          "cycle": 2
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 2273,
+          "atSeconds": 303.067,
+          "cycle": 3
+        }
+      ]
+    },
+    "hero": {
+      "x": -36.99492443486385,
+      "y": -0.038862816122335414,
+      "z": -22.035018500636262
+    },
+    "cells": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e10-ember-shore secureWave=12"
+      },
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 12 / 360.1s sim, 159 HP, 3 buildings"
+      },
+      "banks": {
+        "ok": true,
+        "detail": "a NEW secured row for e10-ember-shore: waves=12 gold=60 timeAlive=360 kills=413 (41 new row(s) since pre-play, retained after Return to Town)"
+      },
+      "board": {
+        "ok": true,
+        "detail": "the Book is on screen straight off the run ledger"
+      },
+      "reload": {
+        "ok": true,
+        "detail": "score retained across reload (7229 bytes) and the Book reopened on foot"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "row": "artifacts/sol/play-proofs/run-17/e10-ember-shore/default/row-mobile-chrome.json",
+    "raw": "/Users/robin/.goldrush/play-proofs/run-17/default/e10-ember-shore/row-mobile-chrome.json"
   }
 ]
