@@ -253,7 +253,8 @@ for (const guard of selected) {
   const started = Date.now();
   const run = spawnSync('npm', ['run', '--silent', guard], {
     encoding: 'utf8',
-    timeout: 15 * 60 * 1000,
+    // The full Node battery has measured 42.8 minutes; its quiet watchdog is 45.
+    timeout: (guard === 'test:node-guards' ? 60 : 15) * 60 * 1000,
     // Keeps the tree clean mid-gate: test:accounts / test:mp otherwise rewrite a
     // tracked artifact with nothing but a fresh timestamp (F-1229-1). This runner
     // produces VERDICTS; `npm run test:accounts` produces the artifact.
