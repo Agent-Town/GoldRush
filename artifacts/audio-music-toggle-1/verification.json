@@ -12,10 +12,13 @@
     "reason": "test destination expected menu after profile creation; corrected to town"
   },
   "new_spec": {
-    "exit": 1,
-    "passed": 8,
-    "failed": 2,
-    "reason": "literal firewall excludes actual src/game/ProfileStorage.ts registry; pending approval"
+    "exit": 0,
+    "passed": 10,
+    "failed": 0,
+    "projects": {
+      "desktop-chrome": 5,
+      "mobile-chrome": 5
+    }
   },
   "console_and_page_errors": 0,
   "adjacent": {
@@ -25,6 +28,19 @@
     "projects": {
       "desktop-chrome": 22,
       "mobile-chrome": 22
-    }
-  }
+    },
+    "attempt": 2
+  },
+  "attempt": 2,
+  "predecessor_commits": [
+    "a029c8f8e",
+    "88542b748"
+  ],
+  "attempt_1_new_spec": {
+    "exit": 1,
+    "passed": 8,
+    "failed": 2,
+    "reason": "literal firewall excludes actual src/game/ProfileStorage.ts registry; pending approval"
+  },
+  "registry_patch_applied": true
 }

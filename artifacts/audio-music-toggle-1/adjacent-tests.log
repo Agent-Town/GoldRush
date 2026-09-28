@@ -1,14 +1,10 @@
-(node:66460) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
-(Use `node --trace-warnings ...` to show where the warning was created)
 
 Running 44 tests using 1 worker
 
 
-(node:67131) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:95200) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
 
-
-(node:67131) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 [1/44] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings
 [2/44] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast
 [3/44] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics
@@ -19,17 +15,17 @@ Running 44 tests using 1 worker
 [8/44] [desktop-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly
 [9/44] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
 [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
-[audio-defer] desktop-chrome/loopback cue 2667 responses 74638983 bytes; townReady observed 3037 ms, published 2954 ms; cue-window music 2; music before playable 0; after-ready music 0
+[audio-defer] desktop-chrome/loopback cue 2667 responses 74638782 bytes; townReady observed 2357 ms, published 2187 ms; cue-window music 2; music before playable 0; after-ready music 0
 
-[audio-defer] desktop-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 3021 ms (scene the town ready)
+[audio-defer] desktop-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 2239 ms (scene the town ready)
 
-[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 2123 ms
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 1348 ms
 
-[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 2222 ms
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 1414 ms
 
-[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 3033 ms
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 2246 ms
 
-[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 3035 ms
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 2251 ms
 
 watchErrors suppressed 0 known GLTFLoader blob error(s)
 
@@ -53,11 +49,9 @@ watchErrors suppressed 0 known GLTFLoader blob error(s)
 [21/44] [desktop-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop
 [22/44] [desktop-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting
 
-(node:99651) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:51160) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
 
-
-(node:99651) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
 [23/44] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings
 [24/44] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast
 [25/44] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics
@@ -68,17 +62,17 @@ watchErrors suppressed 0 known GLTFLoader blob error(s)
 [30/44] [mobile-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly
 [31/44] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
 [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
-[audio-defer] mobile-chrome/loopback cue 2567 responses 59959724 bytes; townReady observed 1370 ms, published 1292 ms; cue-window music 2; music before playable 0; after-ready music 0
+[audio-defer] mobile-chrome/loopback cue 2566 responses 58230378 bytes; townReady observed 1699 ms, published 1660 ms; cue-window music 0; music before playable 0; after-ready music 2
 
-[audio-defer] mobile-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 1334 ms (scene the town ready)
+[audio-defer] mobile-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 1700 ms (scene the town ready)
 
-[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 701 ms
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 844 ms
 
-[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 720 ms
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 881 ms
 
-[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 1337 ms
+[audio-defer] mobile-chrome/loopback after-ready mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 1704 ms
 
-[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 1338 ms
+[audio-defer] mobile-chrome/loopback after-ready mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 1705 ms
 
 watchErrors suppressed 0 known GLTFLoader blob error(s)
 
@@ -101,4 +95,4 @@ watchErrors suppressed 0 known GLTFLoader blob error(s)
 [42/44] [mobile-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile
 [43/44] [mobile-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop
 [44/44] [mobile-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting
-  44 passed (4.0m)
+  44 passed (3.3m)

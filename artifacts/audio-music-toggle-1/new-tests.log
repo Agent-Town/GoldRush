@@ -2,94 +2,21 @@
 Running 10 tests using 1 worker
 
 
-(node:37939) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:91520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
 
 [1/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload
 [2/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings
 [3/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists
 [4/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile
-  1) [desktop-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile ─────
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: "1"
-    Received: null
-
-      155 |   await page.goto('/');
-      156 |   await page.getByTestId('start-menu').getByTestId('music-toggle').click();
-    > 157 |   expect(await page.evaluate(key => localStorage.getItem(`gr.profile.v2.music-toggle.${key}`), OFF)).toBe('1');
-          |                                                                                                      ^
-      158 |   await page.evaluate(() => {
-      159 |     const state = JSON.parse(localStorage.getItem('gr.profile.v2')!);
-      160 |     state.profiles.push({ id: 'second', name: 'Second', createdAt: 2, updatedAt: 2, difficultyPreset: 'trail', hintsSeen: [] });
-        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-music-toggle.spec.ts:157:102
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    test-results/audio-music-toggle-music-off-is-stored-per-profile-desktop-chrome/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: test-results/audio-music-toggle-music-off-is-stored-per-profile-desktop-chrome/error-context.md
-
-    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results/audio-music-toggle-music-off-is-stored-per-profile-desktop-chrome/trace.zip
-    Usage:
-
-        npx playwright show-trace test-results/audio-music-toggle-music-off-is-stored-per-profile-desktop-chrome/trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-
-
-(node:42092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
-(Use `node --trace-warnings ...` to show where the warning was created)
-
 [5/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start
 
-(node:42259) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(node:93785) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
 (Use `node --trace-warnings ...` to show where the warning was created)
 
 [6/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload
 [7/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings
 [8/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists
 [9/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile
-  2) [mobile-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile ──────
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: "1"
-    Received: null
-
-      155 |   await page.goto('/');
-      156 |   await page.getByTestId('start-menu').getByTestId('music-toggle').click();
-    > 157 |   expect(await page.evaluate(key => localStorage.getItem(`gr.profile.v2.music-toggle.${key}`), OFF)).toBe('1');
-          |                                                                                                      ^
-      158 |   await page.evaluate(() => {
-      159 |     const state = JSON.parse(localStorage.getItem('gr.profile.v2')!);
-      160 |     state.profiles.push({ id: 'second', name: 'Second', createdAt: 2, updatedAt: 2, difficultyPreset: 'trail', hintsSeen: [] });
-        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-music-toggle.spec.ts:157:102
-
-    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
-    test-results/audio-music-toggle-music-off-is-stored-per-profile-mobile-chrome/test-failed-1.png
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-    Error Context: test-results/audio-music-toggle-music-off-is-stored-per-profile-mobile-chrome/error-context.md
-
-    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
-    test-results/audio-music-toggle-music-off-is-stored-per-profile-mobile-chrome/trace.zip
-    Usage:
-
-        npx playwright show-trace test-results/audio-music-toggle-music-off-is-stored-per-profile-mobile-chrome/trace.zip
-
-    ────────────────────────────────────────────────────────────────────────────────────────────────
-
-
-
-(node:53788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
-(Use `node --trace-warnings ...` to show where the warning was created)
-
 [10/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start
-  2 failed
-    [desktop-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile ──────
-    [mobile-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile ───────
-  8 passed (47.3s)
+  10 passed (45.3s)
