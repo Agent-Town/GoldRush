@@ -1,0 +1,43 @@
+{
+  "utc": "2026-09-28T22:06Z",
+  "local": "2026-09-29T05:06+0700",
+  "rotations": [
+    {
+      "id": "r2026w37",
+      "opensAt": "2026-09-07T00:00:00.000Z",
+      "closesAt": "2026-09-14T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w38",
+      "opensAt": "2026-09-14T00:00:00.000Z",
+      "closesAt": "2026-09-21T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w39",
+      "opensAt": "2026-09-21T00:00:00.000Z",
+      "closesAt": "2026-09-28T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w40",
+      "opensAt": "2026-09-28T00:00:00.000Z",
+      "closesAt": "2026-10-05T00:00:00.000Z"
+    }
+  ],
+  "tickerPresent": true,
+  "nextTicker": "2026-09-29 after 06:00 +07",
+  "nextPrivateCoverage": "2026-09-29 after 02:10 UTC",
+  "nextRotationMint": "2026-09-30 after 00:00 UTC, week 41",
+  "audioGoal": [
+    {
+      "id": "audio-integration-first-boot-spec-1",
+      "title": "The audio persistence e2e boots the way a player who can reach Settings does (F-AUD-16: the test clears storage into the first-boot card, which offers the music toggle and no Settings entry); test only, no src",
+      "status": "merged",
+      "taskFile": "audio-integration-first-boot-spec-1.md",
+      "lane": "lane-b (Astra, gpt-6-astra, the ChatGPT subscription)",
+      "authoredAt": "2026-09-28",
+      "authoredBy": "attended (Fable), from F-AUD-16, 2026-09-28",
+      "queuedAt": "2026-09-28",
+      "mergeHash": "bf65df7de6402fc0efa7ff63746cc65a1171cdcc"
+    }
+  ]
+}
