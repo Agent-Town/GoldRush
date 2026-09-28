@@ -801,10 +801,12 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
   };
   const tape = 'Native movement and build';
   const relay = contract.id === 'e7-relay-rush';
-  const sites = (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront?.sites ?? []))
+  const valley = contract.id === 'e7-relay-valley';
+  const sites = (valley ? (contract.tileParams.buildZones ?? []).filter(zone => zone.id.startsWith('relay-site'))
+    : await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront?.sites ?? []))
     .slice().sort((a, b) => Math.abs((a.minX + a.maxX) / 2 - home.x) - Math.abs((b.minX + b.maxX) / 2 - home.x));
-  const x = relay && sites[0] ? (sites[0].minX + sites[0].maxX) / 2 : home.x;
-  const z = relay && sites[0] ? (sites[0].minZ + sites[0].maxZ) / 2 : home.z - 4;
+  const x = (relay || valley) && sites[0] ? (sites[0].minX + sites[0].maxX) / 2 : home.x;
+  const z = (relay || valley) && sites[0] ? (sites[0].minZ + sites[0].maxZ) / 2 : home.z - 4;
   // Gather before recording so the tape contains a short walk and a funded placement.
   if (contract.id !== 'e7-dead-band') {
     const cost = (await read(page))?.buildables.find(b => b.id === 'turret')?.cost;
@@ -1451,7 +1453,7 @@ export function nativeProof(id: string, run = 1) {
             }
           }
         }
-        if (['e7-dead-band', 'e7-echo-canyon', 'e7-relay-rush'].includes(contract.id)) await tapeDemonstration(page, row, contract, home, deadline, unreachable);
+        if (['e7-dead-band', 'e7-echo-canyon', 'e7-relay-rush', 'e7-relay-valley'].includes(contract.id)) await tapeDemonstration(page, row, contract, home, deadline, unreachable);
         if (contract.id === 'e6-showroom') await showroomCaptures(page, row, Math.min(deadline, Date.now() + 180_000));
         if (contract.id === 'e6-picnic') await picnicOpening(page, row, contract, deadline, unreachable);
         if (contract.id === 'e5-regatta') await regattaJourney(page, row, contract, deadline);
