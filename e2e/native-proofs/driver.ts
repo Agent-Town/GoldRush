@@ -17,6 +17,9 @@ import { ACTIVE_EPOCH_KEY, listBoardContracts, listEpochs, type ContractManifest
 import { researchStateKey } from '../../src/meta/ResearchTree';
 import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 
+import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json' with { type: 'json' };
+import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';
+
 const TIMESCALE = '4';
 const HOLD_GROUND = process.env.GR_NATIVE_STRATEGY === 'hold-ground';
 const RESTORE_GROUND = process.env.GR_NATIVE_STRATEGY === 'restore-ground';
@@ -274,6 +277,13 @@ async function takeUpgrades(page: Page, row: Row): Promise<void> {
       row.samples.push({ t: +now.sim.toFixed(1), wave: Math.max(now.wave, now.hudWave), hp: Math.round(now.hp), gold: Math.round(now.gold), kills: now.kills, x: +now.hero.x.toFixed(1), z: +now.hero.z.toFixed(1), alive: now.enemiesAlive, seams: now.nodes.filter(n => n.active).length });
       console.log(row.contract, JSON.stringify(row.samples.at(-1)));
     }
+    if (row.contract === 'e6-picnic') {
+      const stakes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.picnicHold ?? []);
+      for (const stake of stakes.filter(s => s.claimed)) {
+        const prefix = `stake lost ${stake.id}:`;
+        if (!row.notes.some(note => note.startsWith(prefix))) row.notes.push(`${prefix} wave=${now?.wave}, sim=${now?.sim}, state=${JSON.stringify(stake)}`);
+      }
+    }
     if (now) for (const node of now.power.nodes) {
       if (node.kind === 'storage') row.powerBanksPeak[node.id] = Math.max(row.powerBanksPeak[node.id] ?? 0, node.storedWh ?? 0);
     }
@@ -321,7 +331,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
   const zones = tile.buildZones ?? [];
 
   const holding = stake ? zones.find((entry) => stake.x >= entry.minX && stake.x <= entry.maxX && stake.z >= entry.minZ && stake.z <= entry.maxZ) : undefined;
-  const zone = contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
+  const zone = contract.id === 'e6-showroom' ? zones.find(z => z.id === 'model-home-village') : contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
   const centre =
     stake && (holding || zones.length === 0)
       ? { x: stake.x, z: stake.z }
@@ -329,6 +339,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
         ? { x: (zone.minX + zone.maxX) / 2, z: (zone.minZ + zone.maxZ) / 2 }
         : { x: hero.x, z: hero.z };
 
+  if (contract.id === 'e6-showroom') { centre.x = 0; centre.z = 6; }
   if (contract.id === "e1-baron") { centre.x = 3; centre.z = 11; }
   if (contract.id === "e2-incline") { centre.x = 0; centre.z = -18; }
   if (contract.id === 'e8-low-orbit') { centre.x = 10; centre.z = -6; }
@@ -356,6 +367,7 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
   let stalled = 0;
   for (let step = 0; step < steps; step += 1) {
     await takeUpgrades(page, row);
+    if (row.contract === 'e6-showroom') await captureShowroom(page, row);
     const now = await read(page);
     if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     const dx = x - now.hero.x;
@@ -397,6 +409,7 @@ function crossingsFor(contract: ContractManifest): Crossing[] {
 }
 
 async function journey(page: Page, row: Row, x: number, z: number, tolerance: number, fords: Crossing[], steps = 90): Promise<boolean> {
+  if (row.contract === 'e6-showroom') await showroomDoorway(page, row);
   if (fords.length > 0) {
     const now = await read(page);
     if (!now) return false;
@@ -527,6 +540,10 @@ async function build(
     if (!state || state.runState === 'dead' || state.secured ||
         (state.buildables.find(b => b.id === id)?.count ?? 0) > offer.count ||
         !state.buildMode || !state.ghostValid) break;
+    if (row.contract === 'e6-picnic' && Math.hypot(state.ghostPos.x - x, state.ghostPos.z - z) > PICNIC_HOLD_RADIUS - 1) {
+      row.notes.push(`stake placement refused outside target disc: target=${x},${z}; ghost=${JSON.stringify(state.ghostPos)}`);
+      break;
+    }
     await page.keyboard.press('Space');
     await page.waitForTimeout(250);
   }
@@ -725,6 +742,159 @@ async function lowOrbitCrossing(page: Page, row: Row, deadline: number, unreacha
 }
 
 // Motor errands use the ordinary confirm key at surveyed stakes and haul destinations.
+async function tapeDemonstration(page: Page, row: Row, contract: ContractManifest, home: Home, deadline: number, unreachable: Set<string>): Promise<void> {
+  // The mobile HUD can move beneath an upgrade overlay between observation and click.
+  // Retry native clicks with bounded waits; never click through a death ledger.
+  const clickTape = async (id: string): Promise<void> => {
+    for (let attempt = 0; attempt < 8; attempt++) {
+      const state = await read(page);
+      if (!state || state.runState === 'dead' || state.secured) throw new Error(`Tape ${id}: run ended before control`);
+      if (state.upgradeOpen) {
+        const offer = state.offer ?? [];
+        const preferred = UPGRADE_PRIORITY.map(id => offer.indexOf(id)).find(index => index >= 0) ?? 0;
+        row.upgrades.push(offer[preferred] ?? `card${preferred}`);
+        await page.getByTestId(`upgrade-card-${preferred}`).click({ timeout: 1000 });
+      }
+      try { await page.getByTestId(id).click({ timeout: 600 }); return; }
+      catch (error) {
+        row.notes.push(`Tape ${id} attempt ${attempt + 1}: ${String(error).split('\n')[0]}`);
+        if (attempt === 7) throw error;
+      }
+    }
+  };
+  const tape = 'Native movement and build';
+  const relay = contract.id === 'e7-relay-rush';
+  const sites = (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront?.sites ?? []))
+    .slice().sort((a, b) => Math.abs((a.minX + a.maxX) / 2 - home.x) - Math.abs((b.minX + b.maxX) / 2 - home.x));
+  const x = relay && sites[0] ? (sites[0].minX + sites[0].maxX) / 2 : home.x;
+  const z = relay && sites[0] ? (sites[0].minZ + sites[0].maxZ) / 2 : home.z - 4;
+  // Gather before recording so the tape contains a short walk and a funded placement.
+  if (contract.id !== 'e7-dead-band') {
+    const cost = (await read(page))?.buildables.find(b => b.id === 'turret')?.cost;
+    if (cost !== undefined) await fund(page, row, cost, Math.min(deadline, Date.now() + 60_000), [], unreachable);
+    await walkTo(page, row, x, z + 4, 1.2);
+  }
+  await takeUpgrades(page, row);
+  await clickTape('playbook-toggle');
+  await page.getByTestId('playbook-name').fill(tape, { timeout: 4000 });
+  await clickTape('playbook-record');
+  const recording = await page.getByTestId('playbook-record').getAttribute('data-recording');
+  if (recording !== 'true') {
+    row.notes.push(`Tape Record refused: ${await page.getByTestId('playbook-message').innerText()}`);
+    await clickTape('playbook-toggle');
+    row.notes.push(`Tape latch after refusal: ${JSON.stringify(await page.evaluate(() => ({ latch: window.__THREE_GAME_DIAGNOSTICS__?.playbookUse, arsenal: window.__THREE_GAME_DIAGNOSTICS__?.e7Arsenal })))}`);
+    return;
+  }
+  await steer(page, 1, 0, 120);
+  await build(page, row, 'turret', x, z, Math.min(deadline, Date.now() + 25_000), [], unreachable);
+  await takeUpgrades(page, row);
+  await clickTape('playbook-toggle');
+  await clickTape('playbook-record');
+  row.notes.push(`Tape saved: ${await page.getByTestId('playbook-message').innerText()}`);
+  await clickTape('playbook-toggle');
+  if (relay) {
+    for (const site of sites.slice(1, 3)) {
+      await build(page, row, 'sentry_beacon', (site.minX + site.maxX) / 2, (site.minZ + site.maxZ) / 2,
+        Math.min(deadline, Date.now() + 50_000), [], unreachable);
+      row.notes.push(`relay service ${site.id}: ${JSON.stringify(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront))}`);
+    }
+    // Wait on an authored corridor point; the moving front must reach the player.
+    await walkTo(page, row, home.x, home.z, 1.2);
+  }
+  const recordedWave = (await read(page))?.wave ?? 0;
+  const useDeadline = Math.min(deadline, Date.now() + 40_000);
+  while (Date.now() < useDeadline) {
+    await takeUpgrades(page, row);
+    const now = await read(page);
+    if (!now || now.runState === 'dead' || now.secured) break;
+    const front = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront);
+    const covered = front?.centerX !== null && front?.centerX !== undefined && Math.abs(now.hero.x - front.centerX) < front.halfWidth - 1;
+    if (relay ? covered : now.wave > recordedWave) {
+      await clickTape('playbook-toggle');
+      await clickTape(`playbook-replay-${tape}`);
+      row.notes.push(`Tape USE wave=${now.wave}, hero=${JSON.stringify(now.hero)}, front=${JSON.stringify(front)}: ${await page.getByTestId('playbook-message').innerText()}`);
+      break;
+    }
+    await page.waitForTimeout(80);
+  }
+  if (await page.getByTestId('playbook-library').isVisible()) await clickTape('playbook-toggle');
+  // Echo fields the mirror at the wave AFTER use. Observe that consumer before stopping.
+  const mirrorDeadline = Math.min(deadline, Date.now() + 15_000);
+  while (!relay && Date.now() < mirrorDeadline) {
+    await takeUpgrades(page, row);
+    const state = await page.evaluate(() => ({ latch: window.__THREE_GAME_DIAGNOSTICS__?.playbookUse, hp: window.__THREE_GAME_DIAGNOSTICS__?.hp }));
+    if (state.latch?.objectiveMet || !state.hp) break;
+    await page.waitForTimeout(150);
+  }
+  await clickTape('playbook-toggle');
+  const replay = page.getByTestId(`playbook-replay-${tape}`);
+  if (await replay.innerText() === 'Stop') await clickTape(`playbook-replay-${tape}`);
+  await clickTape('playbook-toggle');
+  row.notes.push(`Tape objective: ${JSON.stringify(await page.evaluate(() => ({ latch: window.__THREE_GAME_DIAGNOSTICS__?.playbookUse, mirror: window.__THREE_GAME_DIAGNOSTICS__?.broadcastMirror, front: window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront })))}`);
+}
+
+async function captureShowroom(page: Page, row: Row): Promise<void> {
+  const state = await page.evaluate(() => {
+    const d = window.__THREE_GAME_DIAGNOSTICS__;
+    return d ? { runState: d.runState, hp: d.hp, objective: d.showroomCaptureObjective, build: d.build.mode, exhausted: d.wrangle.active.filter(m => m.state === 'exhausted') } : null;
+  });
+  if (!state || state.runState === 'dead' || state.hp <= 0 || state.build || state.objective?.complete || !state.exhausted.length) return;
+  await page.keyboard.press('Space');
+  const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.showroomCaptureObjective);
+  if (after && after.captures !== state.objective?.captures) row.notes.push(`capture ${after.captures}/${after.quota}: ${JSON.stringify(state.exhausted)}`);
+}
+
+async function showroomDoorway(page: Page, row: Row): Promise<void> {
+  const now = await read(page);
+  if (!now) return;
+  for (const house of showroomTerrain.landmarkMounts) {
+    if (house.role !== 'display-home' || !house.walkSurfaces?.length) continue;
+    const [x, , z] = house.position;
+    const floor = house.walkSurfaces[0];
+    if (now.hero.x < x + floor.minX || now.hero.x > x + floor.maxX || now.hero.z < z + floor.minZ || now.hero.z > z + floor.maxZ) continue;
+    // Authored stair surfaces locate the open doorway; exit across its centre.
+    const stair = house.walkSurfaces.at(-1)!;
+    const doorX = x + (stair.minX + stair.maxX) / 2;
+    const aligned = await walkTo(page, row, doorX, now.hero.z, 0.7, 50);
+    const exited = aligned && await walkTo(page, row, doorX, z + stair.maxZ + 2, 0.8, 70);
+    row.notes.push(`showroom doorway ${house.id}: aligned=${aligned}, exited=${exited}; hero=${JSON.stringify((await read(page))?.hero)}`);
+    break;
+  }
+}
+
+async function showroomCaptures(page: Page, row: Row, deadline: number): Promise<void> {
+  await showroomDoorway(page, row);
+  // The clear village aisle runs between the two rows of authored display homes.
+  // Walk its length to meet the exhausted crawlers, confirming only out of build mode.
+  let side = -1;
+  while (Date.now() < deadline) {
+    await takeUpgrades(page, row);
+    const now = await read(page);
+    const objective = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.showroomCaptureObjective);
+    if (!now || now.runState === 'dead' || now.secured || objective?.complete) break;
+    await walkTo(page, row, side * 37, 6, 1.2, 90);
+    for (let tick = 0; tick < 12; tick++) {
+      const state = await read(page);
+      if (!state || state.runState === 'dead' || state.secured) break;
+      await takeUpgrades(page, row);
+      await captureShowroom(page, row);
+      await page.waitForTimeout(150);
+    }
+    side *= -1;
+  }
+  row.notes.push(`showroom capture route end: ${JSON.stringify(await page.evaluate(() => ({ objective: window.__THREE_GAME_DIAGNOSTICS__?.showroomCaptureObjective, wrangle: window.__THREE_GAME_DIAGNOSTICS__?.wrangle })))}`);
+}
+
+async function picnicOpening(page: Page, row: Row, contract: ContractManifest, deadline: number, unreachable: Set<string>): Promise<void> {
+  const stakes = contract.tileParams.stakeMarkers ?? [];
+  for (const stake of stakes) {
+    await build(page, row, 'palisade', stake.x, stake.z, Math.min(deadline, Date.now() + 30_000), [], unreachable);
+    const now = await read(page);
+    const distances = now?.defences.filter(b => b.hp > 0 && !b.wrecked).map(b => ({ id: b.id, x: b.x, z: b.z, distance: Math.hypot(b.x - stake.x, b.z - stake.z) })) ?? [];
+    row.notes.push(`stake ${stake.id}: radius=${PICNIC_HOLD_RADIUS}; wave=${now?.wave}; works=${JSON.stringify(distances)}; heldByWork=${distances.some(b => b.distance <= PICNIC_HOLD_RADIUS)}`);
+  }
+}
+
 async function motorStop(page: Page, row: Row, x: number, z: number, tolerance = 0.8): Promise<boolean> {
   if (!(await walkTo(page, row, x, z, tolerance, 120))) {
     row.notes.push(`motor stop unreachable: ${x},${z}; hero=${JSON.stringify((await read(page))?.hero)}`);
@@ -1017,6 +1187,7 @@ function kitFor(contract: ContractManifest): KitPiece[] {
     { id: 'turret', dx: -5, dz: 2 },
     { id: 'turret', dx: 1, dz: 6 },
   ];
+  if (contract.id === 'e6-picnic') return [{ id: 'turret', dx: 0, dz: -1 }, { id: 'sentry_beacon', dx: 1, dz: 1 }];
   const pieces = [...KIT];
   if ((contract.twist as { lightRamp?: unknown }).lightRamp) {
     pieces.splice(1, 0, { id: 'lantern_post', dx: 4, dz: 4 }, { id: 'lantern_post', dx: -4, dz: -4 });
@@ -1243,6 +1414,9 @@ export function nativeProof(id: string, run = 1) {
             }
           }
         }
+        if (['e7-dead-band', 'e7-echo-canyon', 'e7-relay-rush'].includes(contract.id)) await tapeDemonstration(page, row, contract, home, deadline, unreachable);
+        if (contract.id === 'e6-showroom') await showroomCaptures(page, row, Math.min(deadline, Date.now() + 180_000));
+        if (contract.id === 'e6-picnic') await picnicOpening(page, row, contract, deadline, unreachable);
         if (contract.id === 'e5-regatta') await regattaJourney(page, row, contract, deadline);
         if (contract.id === 'e5-deepwater-claim') await deepwaterJourney(page, row, contract, deadline);
         const kit = contract.id === 'e5-deepwater-claim' ? [] : kitFor(contract);

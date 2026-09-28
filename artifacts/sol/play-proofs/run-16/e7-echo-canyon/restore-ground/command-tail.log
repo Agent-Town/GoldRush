@@ -1,0 +1,35 @@
+e7-echo-canyon {"t":465.1,"wave":15,"hp":69,"gold":5,"kills":647,"x":2.4,"z":-5.9,"alive":11,"seams":2}
+
+e7-echo-canyon {"t":475.2,"wave":15,"hp":69,"gold":40,"kills":662,"x":-13.9,"z":-5.9,"alive":9,"seams":2}
+
+e7-echo-canyon {"t":485.5,"wave":16,"hp":69,"gold":40,"kills":676,"x":-4.3,"z":-13.5,"alive":20,"seams":2}
+
+e7-echo-canyon {"t":496.1,"wave":16,"hp":61,"gold":40,"kills":711,"x":0,"z":-8.3,"alive":13,"seams":2}
+
+e7-echo-canyon {"t":506.5,"wave":16,"hp":61,"gold":40,"kills":724,"x":0.8,"z":-14.5,"alive":13,"seams":2}
+
+e7-echo-canyon {"t":517.5,"wave":17,"hp":53,"gold":45,"kills":748,"x":-13.4,"z":-6,"alive":13,"seams":1}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-echo-canyon plays to its authored terminal, banks, reloads and returns to the board @slow
+
+    Error: secures: runState=dead at wave 17 / 527.1s sim, 771 kills, 45 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1728 |       }
+      1729 |
+    > 1730 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1731 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1732 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1733 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1730:64
+
+    Error Context: ../../../../../.goldrush/play-proofs/run-16/restore-ground/e7-echo-canyon/results/native-proofs-e7-echo-cany-2ea34-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-echo-canyon plays to its authored terminal, banks, reloads and returns to the board @slow
