@@ -1,0 +1,34 @@
+run-guards: 13 file(s) changed since 87a88f983e40bb4a28da5f4ad7dc0c5acebe57c5
+  base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
+  (no path rule matched -- base gate only)
+
+FAIL  rc=1  1178s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.401ms
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  3s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+--- test:node-guards (rc=1) last 20 lines ---
+    Re-run from the main worktree, or pass --root <main worktree>.
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/scripts/desk-declaration-guard.test.mjs:167:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+ℹ TAP-QUIET MAX: 950.4s of 2700s bound (F-POC-8 watchdog)
+
+guards: 4/5 passed -- RED: test:node-guards
+guard-stats: appended 5 record(s) to /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/run-guards-node-watchdog-1/guard-stats.jsonl

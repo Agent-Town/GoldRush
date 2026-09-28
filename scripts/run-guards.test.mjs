@@ -272,8 +272,36 @@ test('a signal-killed guard is never a pass', (t) => {
   assert.ok(rc && rc !== '0', row);
 });
 
-test('each guard gets a 15-minute outer timeout', () => {
-  const source = fs.readFileSync(SCRIPT, 'utf8');
-  assert.match(source, /timeout: 15 \* 60 \* 1000,/);
-  assert.doesNotMatch(source, /timeout: 10 \* 60 \* 1000,/);
+test('Node battery gets 60 minutes and every other guard gets 15 minutes at spawn', (t) => {
+  const dir = fixture();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const probe = path.join(dir, 'spawn-probe.mjs');
+  const calls = path.join(dir, 'spawn-calls.jsonl');
+  // Observe the real runner's options, then execute only the fixture's no-op
+  // npm scripts. No source-text assertion, long sleep, or recursive battery.
+  fs.writeFileSync(probe, `
+    import childProcess from 'node:child_process';
+    import { syncBuiltinESMExports } from 'node:module';
+    import { appendFileSync } from 'node:fs';
+    const original = childProcess.spawnSync;
+    childProcess.spawnSync = (command, args, options) => {
+      if (command === 'npm') {
+        appendFileSync(${JSON.stringify(calls)}, JSON.stringify({ args, timeout: options.timeout }) + '\\n');
+      }
+      return original(command, args, options);
+    };
+    syncBuiltinESMExports();
+  `);
+  const result = spawnSync(process.execPath, ['--import', probe, SCRIPT], {
+    cwd: dir,
+    encoding: 'utf8',
+    timeout: 60_000,
+    env: { ...process.env, ...statsEnv(dir) },
+  });
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  const observed = fs.readFileSync(calls, 'utf8').trim().split('\n').map(JSON.parse);
+  assert.deepEqual(observed, GUARDS.map((guard) => ({
+    args: ['run', '--silent', guard],
+    timeout: guard === 'test:node-guards' ? 3_600_000 : 900_000,
+  })));
 });
