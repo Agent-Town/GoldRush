@@ -15,13 +15,20 @@ WHY no product drain: the three remaining done-moves are attempts of the attende
 - The inheritance landing had no Gazette draft. Added one W40 roundup covering the player change and same-era pin, linked to its review. Draft only; publication remains owner-only.
 - LB-01/FM-01 already covered September 28. Freshness is **36/36 days**, August 24 through September 28, at the private external mirror. Live private remote heads match the existing receipts: ledger-backups `409ffd397abde6b0d465fb8a79be145112f9e9f6`, fire-memory `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. No duplicate transfer or public mirror.
 - September 27 ticker is present with the UTC+07 midnight window and its busy-day control. Week 40 is in the registry, opening September 28; next scheduled mint is September 30 for week 41. Fresh skillmd test **19/19**, rc 0 (235.479 s under host contention). The first freshness command used a nonexistent filename; corrected to `scripts/ledger-mirror-freshness.mjs` and verified above.
-- Initial live origin was **0979de763**, behind the inheritance landing. Both attended summaries recorded push failures. This fire's normal origin backup will include that already-landed source; no history rewrite.
-- Exact predecessor s2741 line archived, including its appended attended inheritance phrase. Three-item Owner's Desk tail retained byte for byte. No new owner decision.
+- Initial live origin was **0979de763**, behind the inheritance landing. Both attended summaries recorded push failures. The fire's normal push was also rejected: GH001, historical blob 113,467,543 B. F-2742-1 is now on the Owner's Desk; no unchanged retry and no history rewrite.
+- Exact predecessor s2741 line archived, including its appended attended inheritance phrase. The three inherited Owner's Desk items remain byte-identical; the count is now four with F-2742-1 added.
 
 ## Remaining list in order
 
-1. Attended tdi1 owner completes final main verification and its final receipt.
-2. Attended amt1 owner integrates the third-attempt toggle, then the already-owned audio-harshness sequence.
-3. September 29 private coverage after 02:10 UTC; September 30 week-41 mint. Existing three owner decisions remain in the unchanged desk tail.
+1. Owner decides F-2742-1: attended archive-first clean re-land of the unpublished history, with preservation, gates and accepted origin backup. Current origin remains behind; no unchanged push retry.
+2. Attended tdi1 owner completes final main verification and its final receipt.
+3. Attended amt1 owner integrates the third-attempt toggle, then the already-owned audio-harshness sequence.
+4. September 29 private coverage after 02:10 UTC; September 30 week-41 mint. The three inherited owner decisions remain alongside the new backup decision.
 
 Closing ledger receipt follows before the final lock-clearing commit. That commit is this fire's last write to main, followed by origin backup and read-only verification.
+
+## Backup rejection and first ledger receipt
+
+The first complete literal ledger run passed **1263/1263, zero failures/skips, kit 83/83, npm rc 0**, **356.932 s**, Node v26.4.0, checkpoint caa6786b3. The subsequently verified origin rejection required a new desk row; a second complete ledger run follows those changes. Both receipts are retained.
+
+F-2742-1 root cause: evidence commit 7eda17dd7 added the 113,467,543-byte before-desktop trace; 5670f2134 removed it, but the merged ancestry retains the blob. The current trace path is absent and the offloaded local evidence directory exists. An ordinary append-only commit cannot cure this; source and history stay intact pending the attended repair decision. This is a backup blocker, not a claim of a broken deployed game.
