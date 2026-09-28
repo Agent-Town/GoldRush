@@ -27,3 +27,7 @@ No player-visible merge or engine pin changed in this fire, so no new Gazette it
 4. LB/FM next coverage day September 29 after 02:10 UTC; rotation mint September 30. The existing three-item Owner's Desk remains unchanged.
 
 Closing ledger receipt and command-derived clearance are appended after verification. No gameplay success claim is added by this handoff.
+
+## Closing citation correction
+
+The initial full ledger run passed all **1263/1263** Node tests, then exited **1** in the chained citation-title guard (**249.254 s**). The inherited Tape audit BACKLOG row cited the inheritance spec line without its durable test title. This fire inserted the existing exact title beside that citation; no test or assertion changed. The first receipt is retained in `ledger-first.txt` and `ledger-first-result.json`. The closing full battery is rerun after this one-row bookkeeping correction.
