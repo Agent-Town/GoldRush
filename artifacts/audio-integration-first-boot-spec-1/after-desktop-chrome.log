@@ -1,0 +1,61 @@
+
+[WebServer] (node:74280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+Running 5 tests using 1 worker
+
+
+(node:74286) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/5] [desktop-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound
+[2/5] [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
+  1) [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
+
+    Error: expect(received).toMatchObject(expected)
+
+    Matcher error: received value must be a non-null object
+
+    Received has value: undefined
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      116 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('25');
+      117 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
+    > 118 |   await expect.poll(() => page.evaluate(() => window.__GR_AUDIO_DIAGNOSTICS__)).toMatchObject({ volume: 0.25, muted: true });
+          |                                                                                 ^
+      119 |   assertNoErrors(errors);
+      120 | });
+      121 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:118:81
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/audio-integration-first-boot-spec-1/after-desktop-chrome-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/audio-integration-first-boot-spec-1/after-desktop-chrome-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/audio-integration-first-boot-spec-1/after-desktop-chrome-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/audio-integration-first-boot-spec-1/after-desktop-chrome-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:74576) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[3/5] [desktop-chrome] › e2e/audio-integration.spec.ts:122:1 › legacy audio preferences migrate into profile storage
+[4/5] [desktop-chrome] › e2e/audio-integration.spec.ts:159:1 › first-use bursts respect the per-sound pool cap
+[5/5] [desktop-chrome] › e2e/audio-integration.spec.ts:177:1 › missing audio names are silent no-ops
+  1 failed
+    [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
+  4 passed (19.5s)
