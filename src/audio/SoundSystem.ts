@@ -116,7 +116,7 @@ export class SoundSystem {
     if (audioWasUnlocked) this.unlock();
   }
 
-  play(name: SoundName | string, volume = 1): void {
+  play(name: SoundName | string, volume = 1, gainScale = 1): void {
     if (this.disposed) return;
     this.requests += 1;
     this.lastRequested = name;
@@ -134,7 +134,7 @@ export class SoundSystem {
     const voiceId = this.reserveVoice(name, false, true);
     if (voiceId === null) return;
     this.activeBySound.set(name, count + 1);
-    void this.playLoaded(name, volume, voiceId);
+    void this.playLoaded(name, volume * this.effectiveVolume(gainScale), voiceId);
   }
 
   setLoop(name: SoundName, on: boolean, volume = 1): void {
@@ -191,13 +191,13 @@ export class SoundSystem {
     this.play('invalid', 0.8);
   }
 
-  playShot(kind: ProjectileKind, ownerId: string): void {
+  playShot(kind: ProjectileKind, ownerId: string, gainScale = 1): void {
     if (ownerId === 'turrets') {
-      this.play('turret-fire');
+      this.play('turret-fire', 1, gainScale);
     } else if (kind === 'lob') {
       this.play('blast-charge-arm');
     } else {
-      this.play('spark-bolt-fire');
+      this.play('spark-bolt-fire', 1, gainScale);
     }
   }
 
@@ -303,7 +303,11 @@ export class SoundSystem {
       this.context = new AudioContext();
       this.masterGain = this.context.createGain();
       this.musicGain = this.context.createGain();
-      this.masterGain.connect(this.context.destination);
+      const shelf = this.context.createBiquadFilter();
+      shelf.type = 'highshelf';
+      shelf.frequency.value = 4_000;
+      shelf.gain.setTargetAtTime(-3, this.context.currentTime, 0.03);
+      this.masterGain.connect(shelf).connect(this.context.destination);
       this.musicGain.connect(this.context.destination);
       this.updateMasterGain();
     }
@@ -678,4 +682,9 @@ function soundPriority(name: SoundName): SoundPriority {
 
 function priorityRank(priority: SoundPriority): number {
   return priority === 'ui' ? 3 : priority === 'combat' ? 2 : priority === 'economy' ? 1 : 0;
+}
+
+/** Audio-only falloff: full within the rig's 10m reach, 0.35 at 60m and beyond. */
+export function buildingShotGain(distance: number): number {
+  return Math.max(0.35, 1 - 0.65 * Math.max(0, distance - 10) / 50);
 }
