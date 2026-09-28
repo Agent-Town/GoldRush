@@ -180,7 +180,7 @@ async function read(page: Page): Promise<Snapshot | null> {
         caravan: d.seedCaravan,
         canal: d.e9Canal,
         physics: d.e8Physics,
-        air: d.e8SuitAir,
+        air: d.e8SuitAir ?? d.e8Atmosphere,
         probe: d.probeRecovery,
         fuel: d.fuel,
         vehicle: d.vehicle,
@@ -190,7 +190,7 @@ async function read(page: Page): Promise<Snapshot | null> {
         crowdFlocks: d.crowdFlocks,
         power: d.power,
         pressure: d.pressure,
-        objective: { canalChoices: d.canalChoices, preserve: d.preserve, devils: d.devilsAlley, caravan: d.seedCaravan, canal: d.e9Canal, air: d.e8SuitAir, probe: d.probeRecovery, fuel: d.fuel, vehicle: d.vehicle, landYacht: d.landYachtBoss, fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
+        objective: { canalChoices: d.canalChoices, preserve: d.preserve, devils: d.devilsAlley, caravan: d.seedCaravan, canal: d.e9Canal, air: d.e8SuitAir ?? d.e8Atmosphere, probe: d.probeRecovery, fuel: d.fuel, vehicle: d.vehicle, landYacht: d.landYachtBoss, fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -342,6 +342,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
   if (contract.id === 'e6-showroom') { centre.x = 0; centre.z = 6; }
   if (contract.id === "e1-baron") { centre.x = 3; centre.z = 11; }
   if (contract.id === "e2-incline") { centre.x = 0; centre.z = -18; }
+  if (contract.id === 'e8-mare-claim') { centre.x = 0; centre.z = 0; }
   if (contract.id === 'e8-low-orbit') { centre.x = 10; centre.z = -6; }
   if (contract.id === 'e9-devils-alley') { centre.x = 0; centre.z = 0; }
   if (contract.id === 'e9-seed-run') { centre.x = 0; centre.z = 3; }
@@ -377,7 +378,19 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
     const velocity = now.physics.filteredMovement;
     // Position is the walking goal. A sub-unit arrival must not wait for an
     // unrelated momentum threshold while suit air drains; fund rechecks pan range.
-    if (gap <= tolerance) return true;
+    if (row.contract === 'e8-mare-claim' && drifting) {
+      // Arrive stopped: a position-only arrival coasts straight out of the pan/dome.
+      if (gap <= tolerance && Math.hypot(velocity.x, velocity.y) < 0.12) return true;
+      if (gap < 10) {
+        await steer(page, dx - 5 * velocity.x, dz - 5 * velocity.y, 35);
+        continue;
+      }
+      // Leave air for the return trip; the refill helper itself targets a dome.
+      const zones = BOARD_CONTRACTS.find(c => c.id === row.contract)!.tileParams.buildZones ?? [];
+      const domeTarget = zones.some(zone => now.air?.domes.some(dome => dome.id === zone.id)
+        && x === (zone.minX + zone.maxX) / 2 && z === (zone.minZ + zone.maxZ) / 2);
+      if (!domeTarget && (now.air?.suit.seconds ?? 60) < 25) return false;
+    } else if (gap <= tolerance) return true;
     if (drifting && gap < 8) {
       // Counter-thrust against the published momentum before calling a seam reached.
       // Releasing keys alone coasts out of the 1.6-unit harvest disc.
@@ -445,7 +458,7 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
     const live = now.nodes.filter((node) => node.active && !unreachable.has(`${node.x},${node.z}`));
     const bank = fords.length > 0 ? live.filter((node) => Math.sign(node.z) === Math.sign(now.hero.z) || Math.abs(node.z) < 1.5) : live;
     let pool = bank.length > 0 ? bank : live;
-    if (row.contract === 'e8-eclipse' && now.air?.regolith.creditedThisWindow === 0) {
+    if (['e8-eclipse', 'e8-mare-claim'].includes(row.contract) && now.air?.regolith.creditedThisWindow === 0) {
       const fresh = pool.filter(n => !now.air!.regolith.worked.includes(n.anchorIndex));
       if (fresh.length) pool = fresh;
     }
@@ -687,7 +700,31 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 
 // Return to this map's authored pressurised ground, using ordinary movement.
 async function refillOrbital(page: Page, row: Row): Promise<boolean> {
-  const target = row.contract === 'e8-far-side' ? [10, -34] : row.contract === 'e8-eclipse' ? [0, 0] : [10, -6];
+  if (row.contract === 'e8-mare-claim') {
+    const before = await read(page);
+    if (!before?.air) return false;
+    const zones = BOARD_CONTRACTS.find(c => c.id === row.contract)!.tileParams.buildZones ?? [];
+    const domes = zones.filter(zone => before.air!.domes.some(d => d.id === zone.id && d.air > 0))
+      .map(zone => ({ id: zone.id, x: (zone.minX + zone.maxX) / 2, z: (zone.minZ + zone.maxZ) / 2 }))
+      .sort((a, b) => Math.hypot(a.x - before.hero.x, a.z - before.hero.z) - Math.hypot(b.x - before.hero.x, b.z - before.hero.z));
+    const dome = domes[0];
+    if (!dome) return false;
+    const reached = await walkTo(page, row, dome.x, dome.z, 1.5, 180);
+    for (let tick = 0; reached && tick < 100; tick++) {
+      await takeUpgrades(page, row);
+      const now = await read(page);
+      if (!now || now.runState === 'dead' || now.secured) break;
+      if (now.air?.suit.inDome && now.air.suit.seconds >= now.air.suit.capacity - 2) {
+        row.notes.push(`Mare refill ${dome.id}: ${before.air.suit.seconds}->${now.air.suit.seconds}; hero=${JSON.stringify(now.hero)}; window=${now.air.regolith.window}`);
+        return true;
+      }
+      if (Math.hypot(now.hero.x - dome.x, now.hero.z - dome.z) > 2) await walkTo(page, row, dome.x, dome.z, 1.5, 30);
+      else await page.waitForTimeout(100);
+    }
+    row.notes.push(`Mare refill stalled ${dome.id}: reached=${reached}; state=${JSON.stringify(await read(page))}`);
+    return false;
+  }
+  const target = row.contract === 'e8-far-side'  ? [10, -34] : row.contract === 'e8-eclipse' ? [0, 0] : [10, -6];
   if (!(await walkTo(page, row, target[0], target[1], 1.5, 150))) return false;
   for (let tick = 0; tick < 100; tick++) {
     await takeUpgrades(page, row);
@@ -1479,7 +1516,7 @@ export function nativeProof(id: string, run = 1) {
             continue;
           }
 
-          if (contract.id === 'e8-eclipse' && now.air && !now.air.regolith.complete && now.air.regolith.creditedThisWindow === 0) {
+          if (['e8-eclipse', 'e8-mare-claim'].includes(contract.id) && now.air && !now.air.regolith.complete && now.air.regolith.creditedThisWindow === 0) {
             await fund(page, row, now.gold + 5, Math.min(deadline, Date.now() + 25_000), fords, unreachable);
             continue;
           }
