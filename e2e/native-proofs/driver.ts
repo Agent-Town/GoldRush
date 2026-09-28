@@ -758,11 +758,28 @@ async function motorStop(page: Page, row: Row, x: number, z: number, tolerance =
 }
 
 async function motorOpening(page: Page, row: Row): Promise<void> {
+  const contract = BOARD_CONTRACTS.find(entry => entry.id === row.contract)!;
+  const convoy = row.contract === 'e4-long-road' ? contract.twist.motorFrontier?.convoy : undefined;
+  const road = convoy ? contract.tileParams.roadCorridors?.find(road => road.id === convoy.corridorId) : undefined;
+  if (convoy) {
+    if (!road || !(await walkTo(page, row, road.start.x, road.start.z, 0.8, 120))) {
+      row.notes.push('Long Road stalled before grading the authored convoy road');
+      return;
+    }
+    await takeUpgrades(page, row);
+    await page.keyboard.press('Space');
+    await page.waitForTimeout(250);
+    row.notes.push(`survey stake Confirm: ${road.id} at ${road.start.x},${road.start.z}`);
+  }
   const initial = await read(page);
   for (const node of initial?.fuel?.nodes ?? []) {
     const reached = await walkTo(page, row, node.x, node.z, 0.8, 120);
     if (reached) await page.waitForTimeout(350);
     row.notes.push(`tar ${node.x},${node.z}: reached=${reached}, fuel=${JSON.stringify((await read(page))?.fuel)}`);
+  }
+  if (road) {
+    const arrived = await motorStop(page, row, road.end.x, road.end.z);
+    row.notes.push(`Long Road errand: arrived=${arrived}; vehicle=${JSON.stringify((await read(page))?.vehicle)}`);
   }
   if (row.contract === 'e4-boneyard') {
     // Aim outside the solid boiler centre but within hitch reach; this approach remains unproved.
@@ -813,6 +830,79 @@ async function motorOpening(page: Page, row: Row): Promise<void> {
     if (await motorStop(page, row, 0, 12)) await motorStop(page, row, 0, 72);
     await walkTo(page, row, 0, 8, 1.2, 120);
   }
+}
+
+async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest, deadline: number): Promise<void> {
+  const readBoat = () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.deepwaterClaim);
+  const deckAction = async (id: string) => {
+    try {
+      if (await page.getByTestId('building-context-prompt').getAttribute('open') === null) {
+        await page.getByTestId('building-context-toggle').click({ timeout: 2000 });
+      }
+      await page.getByTestId(id).click({ timeout: 2000 });
+    } catch (error) {
+      row.notes.push(`${id} refused: ${String((error as Error).message).split('\n')[0]}`);
+    }
+  };
+  // The moored Claim Boat has no helm physics. Boarding means standing on its deck;
+  // its native anchor action carries the rider and all occupied pads together.
+  const initial = await readBoat();
+  if (!initial) return;
+  await walkTo(page, row, initial.boat.anchor.x, initial.boat.anchor.z, 0.8);
+  for (const pad of contract.tileParams.deepwater!.claimBoat.pads) {
+    const boat = (await readBoat())?.boat;
+    if (!boat) return;
+    const x = boat.anchor.x + pad.x;
+    const z = boat.anchor.z + pad.z;
+    const reached = await walkTo(page, row, x, z, 0.7);
+    await takeUpgrades(page, row);
+    if (reached) await deckAction('deck-build');
+    const placed = (await readBoat())?.boat.buildings.find(building => building.padId === pad.id);
+    row.notes.push(`deck pad ${pad.id}: reached=${reached}, placement=${JSON.stringify(placed ?? null)}`);
+    if (placed) {
+      const state = await read(page);
+      row.builds.push({ id: placed.buildingId, x: placed.x, z: placed.z, at: state?.sim ?? 0, wave: state?.wave ?? 0 });
+    }
+  }
+  const anchor = contract.tileParams.deepwater!.claimBoat.anchors.find(anchor => anchor.id !== initial.boat.anchor.id);
+  if (anchor) {
+    await walkTo(page, row, initial.boat.anchor.x, initial.boat.anchor.z, 0.8);
+    await deckAction(`deck-anchor-${anchor.id}`);
+    row.notes.push(`board and reanchor: boat=${JSON.stringify((await readBoat())?.boat)}, hero=${JSON.stringify((await read(page))?.hero)}`);
+  }
+  let lastStage = '';
+  while (Date.now() < deadline) {
+    await takeUpgrades(page, row);
+    const state = await read(page);
+    if (!state || state.runState === 'dead' || state.secured) break;
+    const fight = await page.evaluate(() => {
+      const d = window.__THREE_GAME_DIAGNOSTICS__;
+      const claim = d?.deepwaterClaim as (NonNullable<ThreeGameDiagnostics['deepwaterClaim']> & {
+        dredgeQueenBoss: import('../../src/systems/DredgeQueenBossSystem').DredgeQueenBossDiagnostics;
+      }) | null;
+      return { boss: claim?.dredgeQueenBoss, components: d?.readability.bossHpBar.components ?? [], weapon: d?.ui?.weapon };
+    });
+    const boss = fight.boss;
+    if (!boss) { row.notes.push('Dredge-Queen diagnostics unavailable'); break; }
+    const stage = `${boss.act}/${boss.livePaddles}/${boss.persistentWreck}`;
+    if (stage !== lastStage) {
+      row.notes.push(`Dredge-Queen ${stage}: sim=${state.sim}, hp=${state.hp}, components=${JSON.stringify(fight.components)}`);
+      lastStage = stage;
+    }
+    if (boss.persistentWreck) break;
+    // Rig remains armed in E5 dive zones. Auto-fire resolves damage through the game.
+    if (fight.weapon !== 'rig') await page.keyboard.press('KeyQ');
+    if (!boss.anchored) { await page.waitForTimeout(150); continue; }
+    const component = fight.components.find(component => component.hp > 0);
+    const offset = contract.twist.baron?.components?.find(entry => entry.id === component?.id);
+    const x = boss.anchor.x + (offset?.xOffset ?? 0);
+    // Stay south of the act-2 claw's swat half-disc, inside weapon range.
+    const z = boss.anchor.z + (offset?.zOffset ?? 0) + 4;
+    if (Math.hypot(x - state.hero.x, z - state.hero.z) > 1.2) {
+      await steer(page, x - state.hero.x, z - state.hero.z, 100);
+    } else await page.waitForTimeout(150);
+  }
+  row.notes.push(`Dredge-Queen journey end: ${JSON.stringify(await readBoat())}`);
 }
 
 // Regatta alone needs a helmed course: walking the generic home circuit cannot race a boat.
@@ -1098,6 +1188,7 @@ export function nativeProof(id: string, run = 1) {
           await motorOpening(page, row);
         }
         if (contract.id === 'e4-gusher-county') await motorOpening(page, row);
+        if (contract.id === 'e4-long-road') await motorOpening(page, row);
         if (contract.id === 'e4-dust-flats') {
           // Establish cover before the long railhead errand; the haul-first attempt died gathering.
           await build(page, row, 'turret', 0, 4, Math.min(deadline, Date.now() + 90_000), fords, unreachable);
@@ -1153,7 +1244,8 @@ export function nativeProof(id: string, run = 1) {
           }
         }
         if (contract.id === 'e5-regatta') await regattaJourney(page, row, contract, deadline);
-        const kit = kitFor(contract);
+        if (contract.id === 'e5-deepwater-claim') await deepwaterJourney(page, row, contract, deadline);
+        const kit = contract.id === 'e5-deepwater-claim' ? [] : kitFor(contract);
         row.notes.push(`kit=${kit.map((piece) => piece.id).join('+')}`);
         let kitIndex = 0;
         let corner = 0;
@@ -1207,6 +1299,11 @@ export function nativeProof(id: string, run = 1) {
             break;
           }
           if (now.paused) await unpause(page, row);
+
+          if (contract.id === 'e5-deepwater-claim') {
+            await page.waitForTimeout(200);
+            continue;
+          }
 
           if (contract.id === 'e8-eclipse' && now.air && !now.air.regolith.complete && now.air.regolith.creditedThisWindow === 0) {
             await fund(page, row, now.gold + 5, Math.min(deadline, Date.now() + 25_000), fords, unreachable);
@@ -1373,11 +1470,13 @@ export function nativeProof(id: string, run = 1) {
             await expect(page.getByTestId('claim-secured')).toBeHidden({ timeout: 10_000 });
             const scores = await readScores(page);
             const fresh = scores.filter((score) => !before.has(JSON.stringify(score)));
-            const banked = fresh.find((score) => score.contractId === contract.id && score.secured === true && (score.waves ?? 0) >= secureWave);
+            // This branch already observed Claim Secured. Authored boss endings can
+            // finish before secureWave; require a fresh secured score, not a later wave.
+            const banked = fresh.find((score) => score.contractId === contract.id && score.secured === true);
             row.banks = banked
               ? pass(`a NEW secured row for ${contract.id}: waves=${banked.waves} gold=${banked.gold} timeAlive=${Math.round(banked.timeAlive ?? 0)} kills=${banked.kills ?? '?'} (${fresh.length} new row(s) since pre-play, retained after Return to Town)`)
               : fail(
-                  `no new secured row since pre-play for ${contract.id} at >= wave ${secureWave} (${fresh.length} new row(s): ${JSON.stringify(fresh.slice(0, 2))})`,
+                  `no new secured row since pre-play for ${contract.id} after Claim Secured (${fresh.length} new row(s): ${JSON.stringify(fresh.slice(0, 2))})`,
                 );
           } catch (error) {
             row.banks = fail(String((error as Error).message).split('\n').slice(0, 3).join(' | '));
@@ -1437,7 +1536,8 @@ export function nativeProof(id: string, run = 1) {
             ? pass('0 console, 0 page')
             : fail(`${consoleErrors.length} console / ${pageErrors.length} page: ${[...consoleErrors, ...pageErrors].slice(0, 3).join(' || ')}`);
       } finally {
-        if (!row.banks.ok) row.finalSnapshot = (await read(page)) ?? undefined;
+        // Preserve the terminal captured before Return to Town, even if banking fails.
+        if (!row.finalSnapshot) row.finalSnapshot = (await read(page)) ?? undefined;
         if (row.finalSnapshot) {
           if (id !== 'e10-river') row.objective = row.finalSnapshot.objective;
           if (!row.banks.ok) {
