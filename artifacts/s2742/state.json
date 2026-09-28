@@ -1,0 +1,68 @@
+{
+  "stamp": "2026-09-28T11:46Z",
+  "head": "dc0258e95b71f11f04d887a5d65ce58f6312484f",
+  "ancestry": {
+    "3717fb210": 0,
+    "f6b61e4c5": 0,
+    "ab573c67a": 0,
+    "97a6a6493": 1
+  },
+  "lanes": {
+    "sol/open-findings-astra": "",
+    "sol/wave-lane-b": "425f29fe2 test: re-record the phone HUD entry census on the merged tree (main's UI sources moved its hash; boxes and coverage unchanged)\nf12318fe1 merge: main into sol/wave-lane-b before the amt1 landing — the phone HUD census evidence stays the lane's (it matches the lane's UI), the regenerated build-menu screenshots take main's (F-1266-1 churn)\nca7508ab3 runner(lane-b): audio-music-toggle-1.md\n97a6a6493 feat: preserve phone HUD geometry for music toggle\na65a958fd test: take main's regenerated evidence for 3 conflicting artifact path(s) (F-1266-1 churn, never byte-gated) so the amt1 landing merges cleanly\nf2cdc6533 runner(lane-b): audio-music-toggle-1.md\nbdd70d410 feat: complete per-profile music toggle persistence\n88542b748 runner(lane-b): audio-music-toggle-1.md\na029c8f8e feat: add one-tap music controls pending profile registry approval",
+    "sol/map-art-campaign-2": "",
+    "art/portraits-e5-e10-generated": ""
+  },
+  "goals": [
+    {
+      "id": "e7-tape-drawer-inheritance-1",
+      "title": "A profile that reached the Signal Era keeps its Tape Reel on earlier maps again: the mount reads the campaign's epoch as well as the previewed map's (F-SPH2-2, the unrecorded main red in e7-playbook-surface's inheritance test since 7c2744e5a)",
+      "status": "merged",
+      "taskFile": "e7-tape-drawer-inheritance-1.md",
+      "lane": "lane-a (Astra, gpt-6-astra, the ChatGPT subscription); the queue copy is HELD until e7-tape-toggle-phone-hit-target-1 has landed on main",
+      "authoredAt": "2026-09-28",
+      "authoredBy": "attended (Fable), from the sph2 drain's e2e red and the lane-a audit's control, 2026-09-28",
+      "queuedAt": "2026-09-28",
+      "mergeHash": "f6b61e4c5f4af90bf24338224e1c5bef8d4d9251",
+      "mergedAt": "2026-09-28",
+      "review": "reviews/e7-tape-drawer-inheritance-1.md",
+      "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh tdi1; Astra on lane-a, the ChatGPT subscription)"
+    },
+    {
+      "id": "audio-music-toggle-1",
+      "title": "One tap turns the music off everywhere a player hears it: a fourth per-profile key, a 44 px toggle in the run HUD, the town bar, the start menu and the first-boot card, music-off skips the fetch; no new key (owner Q1); the review's pause-panel measurement",
+      "status": "queued",
+      "taskFile": "audio-music-toggle-1.md",
+      "lane": "lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md rank 1; owner 2026-09-28 'users asked about how to disable the music quickly')",
+      "authoredAt": "2026-09-28",
+      "authoredBy": "attended (Fable), from the Opus 5.5 audio review, 2026-09-28",
+      "queuedAt": "2026-09-28"
+    },
+    {
+      "id": "audio-harshness-1",
+      "title": "The sound stops being spiky: one-shots normalized to the LEDGER's -14 LUFS, the manifest re-balanced by simulation, a high-shelf and distance attenuation for building shots, ramped gains, faded and seam-free (crossfaded) music loops, before/after renders for the owner's listen; no limiter (none needed), no music content change (owner Q2/Q3)",
+      "status": "queued",
+      "taskFile": "audio-harshness-1.md",
+      "lane": "lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md ranks 2 to 4); the queue copy is HELD until audio-music-toggle-1 has landed on main",
+      "authoredAt": "2026-09-28",
+      "authoredBy": "attended (Fable), from the Opus 5.5 audio review, 2026-09-28",
+      "queuedAt": "2026-09-28"
+    },
+    {
+      "id": "run-guards-node-watchdog-1",
+      "title": "F-2737-1: let the full Node guard battery complete within its measured outer budget; preserve the test and progress bounds",
+      "status": "merged",
+      "taskFile": "run-guards-node-watchdog-1.md",
+      "lane": "lane-d (Astra, gpt-6-astra, the ChatGPT subscription; adapted from the s2737 fire's scratch master by the attended session 2026-09-28; CODEX-WALL still forbids FIRE dispatch, this copy was dispatched attended)",
+      "authoredAt": "2026-09-28",
+      "authoredBy": "s2737 fire",
+      "spec": "tasks/run-guards-node-watchdog-1.md",
+      "note": "AUTHORED ONLY, no queue copy or dispatch. Source policy 900 s verified; healthy full main receipt 2566.773 s at s2724. Audio integration remains held.",
+      "queuedAt": "2026-09-28",
+      "mergeHash": "3717fb210388131df019a5f4e2005b10afcc316c",
+      "mergedAt": "2026-09-28",
+      "review": "reviews/run-guards-node-watchdog-1.md",
+      "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh rgw1; Astra on lane-d, the ChatGPT subscription)"
+    }
+  ]
+}
