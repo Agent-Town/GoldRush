@@ -38,3 +38,13 @@ Initial ledger checkpoint `f62f25248`: **1263/1263 + kit 83/83, rc 0, 320.156 s*
 4. September 29 LB/FM after 02:10 UTC; September 30 rotation mint. Existing three-item Owner's Desk remains unchanged.
 
 Final ledger receipt and lock clearance follow before this fire's last commit on main.
+
+## Final handoff
+
+Closing ledger **1263/1263 + kit 83/83, rc 0**, zero failures/skips/cancellations, **264.968 s**, Node **26.4.0**, checkpoint **45b401dd85d92768269353eb09579d4a562e3279**. Receipts: ledger-close.txt and ledger-close-result.json. This closing battery follows the ledger edit and precedes the last lock-clearing commit. Predecessor archive and three-item Owner's Desk verified byte-for-byte; main-slot semaphore code re-read at scripts/lane-runner-v3.sh:238-240.
+
+Source remains unlanded; candidate **2a6ccc4e09c05bf4a3b3a68403a4beb25eda65de** and original done-move retained. Source and final gate receipts are distinguished above. Evidence growth measured **16,686,942 B** before these small closing receipts, below 40 MB. The first budget JSON pipe was truncated at 8192 bytes; retained as checkpoint-budget-truncated.txt, then repeated to a file descriptor and parsed successfully. No gate threshold or implementation changed.
+
+Project reference and session digest saved in the shared vault (vault-notes.json). Prior commits: lock **4cfee0953**, inherited bookkeeping **94065e317**, initial receipt checkpoint **f62f25248**, candidate builds **f4596ef24**, adjacent review **08a41cfcd**, control preparation **e80127d9b**, partial-drain checkpoint **45b401dd8**.
+
+Lock clearance **2026-09-28T03:43Z** is the last main write/commit. The owned drain-lock directory is archived intact in ~/.goldrush/fire-s2730/drain-lock-released; the launcher retains tasks/.fire.lock until exit. Normal backup of main and the saved candidate, followed by read-only remote verification, is the only remaining action. The ordered gate continuation is above and in the review.
