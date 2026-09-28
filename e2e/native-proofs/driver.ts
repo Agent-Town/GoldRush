@@ -17,6 +17,7 @@ import { ACTIVE_EPOCH_KEY, listBoardContracts, listEpochs, type ContractManifest
 import { researchStateKey } from '../../src/meta/ResearchTree';
 import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 
+import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json';
 import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';
 
 const TIMESCALE = '4';
@@ -338,6 +339,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
         ? { x: (zone.minX + zone.maxX) / 2, z: (zone.minZ + zone.maxZ) / 2 }
         : { x: hero.x, z: hero.z };
 
+  if (contract.id === 'e6-showroom') { centre.x = 0; centre.z = 6; }
   if (contract.id === "e1-baron") { centre.x = 3; centre.z = 11; }
   if (contract.id === "e2-incline") { centre.x = 0; centre.z = -18; }
   if (contract.id === 'e8-low-orbit') { centre.x = 10; centre.z = -6; }
@@ -365,6 +367,7 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
   let stalled = 0;
   for (let step = 0; step < steps; step += 1) {
     await takeUpgrades(page, row);
+    if (row.contract === 'e6-showroom') await captureShowroom(page, row);
     const now = await read(page);
     if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
     const dx = x - now.hero.x;
@@ -406,6 +409,7 @@ function crossingsFor(contract: ContractManifest): Crossing[] {
 }
 
 async function journey(page: Page, row: Row, x: number, z: number, tolerance: number, fords: Crossing[], steps = 90): Promise<boolean> {
+  if (row.contract === 'e6-showroom') await showroomDoorway(page, row);
   if (fords.length > 0) {
     const now = await read(page);
     if (!now) return false;
@@ -738,6 +742,56 @@ async function lowOrbitCrossing(page: Page, row: Row, deadline: number, unreacha
 }
 
 // Motor errands use the ordinary confirm key at surveyed stakes and haul destinations.
+async function captureShowroom(page: Page, row: Row): Promise<void> {
+  const state = await page.evaluate(() => {
+    const d = window.__THREE_GAME_DIAGNOSTICS__;
+    return d ? { objective: d.showroomCaptureObjective, build: d.build.mode, exhausted: d.wrangle.active.filter(m => m.state === 'exhausted') } : null;
+  });
+  if (!state || state.build || state.objective?.complete || !state.exhausted.length) return;
+  await page.keyboard.press('Space');
+  const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.showroomCaptureObjective);
+  if (after && after.captures !== state.objective?.captures) row.notes.push(`capture ${after.captures}/${after.quota}: ${JSON.stringify(state.exhausted)}`);
+}
+
+async function showroomDoorway(page: Page, row: Row): Promise<void> {
+  const now = await read(page);
+  if (!now) return;
+  for (const house of showroomTerrain.landmarkMounts) {
+    if (house.role !== 'display-home' || !house.walkSurfaces?.length) continue;
+    const [x, , z] = house.position;
+    const floor = house.walkSurfaces[0];
+    if (now.hero.x < x + floor.minX || now.hero.x > x + floor.maxX || now.hero.z < z + floor.minZ || now.hero.z > z + floor.maxZ) continue;
+    // Authored stair surfaces locate the open doorway; exit across its centre.
+    const stair = house.walkSurfaces.at(-1)!;
+    const doorX = x + (stair.minX + stair.maxX) / 2;
+    const aligned = await walkTo(page, row, doorX, now.hero.z, 0.7, 50);
+    const exited = aligned && await walkTo(page, row, doorX, z + stair.maxZ + 2, 0.8, 70);
+    row.notes.push(`showroom doorway ${house.id}: aligned=${aligned}, exited=${exited}; hero=${JSON.stringify((await read(page))?.hero)}`);
+    break;
+  }
+}
+
+async function showroomCaptures(page: Page, row: Row, deadline: number): Promise<void> {
+  await showroomDoorway(page, row);
+  // The clear village aisle runs between the two rows of authored display homes.
+  // Walk its length to meet the exhausted crawlers, confirming only out of build mode.
+  let side = -1;
+  while (Date.now() < deadline) {
+    await takeUpgrades(page, row);
+    const now = await read(page);
+    const objective = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.showroomCaptureObjective);
+    if (!now || now.runState === 'dead' || now.secured || objective?.complete) break;
+    await walkTo(page, row, side * 37, 6, 1.2, 90);
+    for (let tick = 0; tick < 12; tick++) {
+      await takeUpgrades(page, row);
+      await captureShowroom(page, row);
+      await page.waitForTimeout(150);
+    }
+    side *= -1;
+  }
+  row.notes.push(`showroom capture route end: ${JSON.stringify(await page.evaluate(() => ({ objective: window.__THREE_GAME_DIAGNOSTICS__?.showroomCaptureObjective, wrangle: window.__THREE_GAME_DIAGNOSTICS__?.wrangle })))}`);
+}
+
 async function picnicOpening(page: Page, row: Row, contract: ContractManifest, deadline: number, unreachable: Set<string>): Promise<void> {
   const stakes = contract.tileParams.stakeMarkers ?? [];
   for (const stake of stakes) {
@@ -1267,6 +1321,7 @@ export function nativeProof(id: string, run = 1) {
             }
           }
         }
+        if (contract.id === 'e6-showroom') await showroomCaptures(page, row, Math.min(deadline, Date.now() + 180_000));
         if (contract.id === 'e6-picnic') await picnicOpening(page, row, contract, deadline, unreachable);
         if (contract.id === 'e5-regatta') await regattaJourney(page, row, contract, deadline);
         if (contract.id === 'e5-deepwater-claim') await deepwaterJourney(page, row, contract, deadline);
