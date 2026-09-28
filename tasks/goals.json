@@ -6886,12 +6886,16 @@
             {
               "id": "sol-play-proofs-holds-3",
               "title": "Play-proofs holds 3 (run 17 on disk): the driver learns the Mare's declared air consumer and dome braking, the relay program, the Archive light hold and the Ember Stoke, then re-rides run 14's four holds (plus at most three run-4 E8 orbital holds if the same air cure applies)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "sol-play-proofs-holds-3.md",
               "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'fix the maps where we find issues'); the queue copy is HELD until sol-play-proofs-holds-2 has landed on main",
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable), from run 14's four instrument findings, 2026-09-27",
-              "queuedAt": "2026-09-27"
+              "queuedAt": "2026-09-27",
+              "mergeHash": "ee16b7954368cd1abed1bc2d7778aabeb56a8126",
+              "mergedAt": "2026-09-28",
+              "review": "reviews/sol-play-proofs-holds-3-landing.md",
+              "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh sph3; Astra on lane-c, the ChatGPT subscription; native-ride landings are attended-owned, 13z-91)"
             },
             {
               "id": "gr-glow-mesa-proof-attribution-1",
