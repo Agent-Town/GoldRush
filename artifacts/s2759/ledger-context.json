@@ -1,0 +1,62 @@
+{
+  "parts": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "rowCount": 6629,
+  "active": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1,
+      "line": "🎧 **AUDIO HARSHNESS 1 LANDED — `audio-harshness-1` as `a214c82d7` (drained attended 2026-09-28).** From `reviews/audio-review-1.md` ranks 2 to 4. Astra on lane-b (168,590 tokens; commits `30ade2e31` to `26eefc242`): 41 one-shot mp3s normalized in place to the LEDGER's -14 LUFS / -1 dBTP (byte-for-byte reproducible by `artifacts/audio-harshness-1/normalize.py`; git keeps the old versions), the manifest re-balanced by re-running the review's `simulate.py`: early Spark Rig SFX energy above 2 kHz 68.2% → 28.4%, SFX over music +2.6 → +1.7 LU (late Spark Rig +4.2 → +2.9), the four loud cues about 6 LU quieter, the two hits within 2 LU of the music, mix peaks lower at default and maximum settings; a gentle SFX high-shelf and distance attenuation for beacon and turret shots; every gain write ramped; music loops fade in and out and cross the seam through two alternating sources; no limiter (the review measured no clipping), no music content change (F-AUD-13/14 are the owner's). Listen clips: `artifacts/audio-harshness-1/listen-before.ogg` and `listen-after.ogg` (30 s each, the early Spark Rig scenario). tsc/build green; the seven audio suites plus the toggle spec 48/50 with the two reds pre-existing on the exact pre-task source (`audio-integration.spec.ts`, first-boot Settings expectation, F-AUD-16); six plain boots zero errors; evidence 968,650 B. Landed attended and pinned; s2745 verified deployment `954bb2cd` and ASSAYER SYNCED in the attended receipt; s2746 verified `LAND-ahr1-DONE`: the complete final main Node command returned rc 0, 1035 passed / five skipped / zero failures plus the 87/87 chained tail. This closes the pending receipt in s2745. Candidate pre-pin engine-registry and contention reds remain recorded; the two pre-existing browser Settings reds remain attributed under F-AUD-16. Evidence: `artifacts/s2746/ahr1-gates-observed.txt`. REVERSIBLE on the owner's word after the listen (F-AUD-15 on the desk) `reviews/audio-harshness-1.md`.",
+      "where": "1"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 2,
+      "line": "🎧 **AUDIO MUSIC TOGGLE 1 LANDED — `audio-music-toggle-1` as `cdf30c09e` (drained attended 2026-09-28).** From `reviews/audio-review-1.md` rank 1 (Opus 5.5, at the owner's word: users asked how to disable the music quickly). Astra on lane-b, three attempts (`a029c8f8e`, `bdd70d410`, `97a6a6493`; 348,776 tokens; the second completed profile registration after F-ATT-11, the third preserved the phone HUD census without re-baselining): a fourth per-profile key `gr.audio.music-off.v1` registered in `src/game/ProfileStorage.ts`; `SoundSystem` treats music-off like mute for music loops only (no fetch, live resume, SFX untouched, the Music Volume level preserved); a 44 px `music-toggle` beside pause in the run HUD, on the town bar, on the start menu and on the first-boot card; a Music checkbox beside the slider; one Gazette clause. Interactions to silence the music: a run 3 plus a scroll → 1 tap, town and menu 2 → 1, first boot none → 1; the pause slider needs a scroll on both devices (measured). New spec 10/10, six adjacent audio suites 44/44, zero console/page errors, evidence 7.7 MB. No new keyboard key and M unchanged (owner F-AUD-12). The fires' diff-selected wrapper could not finish the full Node battery inside its 900 s cap (F-2737-1, the fire's wrapper corrective handed to Astra), so the landing was done attended and pinned `reviews/audio-music-toggle-1.md`. **s2743 verification 2026-09-28:** merge `cdf30c09e`, pin `3cc0c92e7` and bookkeeping `80ba31fd1` are on main; the goal is merged. Attended deployment verified `80ba31fd` with ASSAYER SYNCED, first-town payload 34,353,396 / 52,000,000 B. Candidate browser 64/64 and release 30/30; its two pre-pin engine-registry failures were followed by the same-era pin and 9/9 era checks. Historical s2743 snapshot: final attended main verification was still pending. **s2744 verification 2026-09-28:** `LAND-amt1-DONE` is now present; final main battery rc 0, 1035 pass / five skips / zero failures plus the complete 87/87 tail. This closes that pending receipt. Audio harshness finished on lane-b (five held commits, tip `26eefc242`), but its goal remains queued and the attended `ahr1` landing has no gate receipt yet; no harshness landing or deployment is claimed. Evidence `artifacts/s2744/amt1-gates-observed.txt` and `artifacts/s2744/report.md`. GZ-01 draft added with the landing and pin. Origin still `0979de763`, blocked by F-2742-1; no unchanged push retry. Evidence `artifacts/s2743/report.md`.",
+      "where": "2"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 3,
+      "line": "🔺 **F-AUD-15 — OWNER'S DESK **F-AUD-15 — OWNER'S DESK (2026-09-28, the harshness re-balance from `reviews/audio-review-1.md` ranks 2 to 4): LISTEN, then say keep or revert.** The re-balance landed attended and deployed as `954bb2cd` with ASSAYER SYNCED (one revert landing remains available); the source measurements move toward the review's targets: the early Spark Rig's sound-effect energy above 2 kHz 68.2% → 28.4%, effects over music +2.6 → +1.7 LU, the four loud cues about 6 LU quieter, the hit sounds audible again, mix peaks lower. Thirty seconds of the early Spark Rig scenario before and after: `artifacts/audio-harshness-1/listen-before.ogg` and `listen-after.ogg`. The clips are now on main; s2746 verified the completed attended final main gate and deployment receipt. Recommendation after listening: keep, then decide F-AUD-14 (process only or darker takes) with your own ears.",
+      "where": "3"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 5,
+      "line": "🔺 **F-2742-1 — OWNER'S DESK (2026-09-28, from s2742): origin rejects the inheritance history's 108.21 MiB trace.** A normal `git push origin main` returned rc 1 / GH001: historical blob `6e329b47a526bb6ad14ee86877f98b2669ca7606` is 113,467,543 B, above GitHub's 100 MiB limit. Evidence commit `7eda17dd7` introduced it; `5670f2134` removed the file from the tree, but merge `f6b61e4c5` still carries that ancestry. Live origin remains `0979de763`; deployed inheritance `5b868b11` and subsequent local bookkeeping are not backed up there. The traces remain in git and the existing private local evidence directory. Recommendation: an attended archive-first clean re-land from the last accepted origin tip, preserving the rejected lineage before changing any main pointer, then ordinary push; no force-push and no deletion. GATE: owner authorizes that history repair, rejected lineage preservation is verified, the replacement passes its required gates and origin accepts it. Fires do not repeat unchanged rejected pushes or rewrite this history. Current tdi1 main verification and audio custody remain attended-owned. Decision and options: `docs/OWNER-DESK-2026-09-19.md` §8; evidence `artifacts/s2742/origin-push-failure.txt`, `artifacts/s2742/origin-large-blobs.json`. **Attended 2026-09-28T15:57Z: the clean re-land is BUILT and BACKED UP. In a scratch clone, `git filter-repo --invert-paths` dropped only the five oversized trace-results directories from the 53 unpublished commits since `0979de763`; the new tip's tree is byte-identical to main's, no blob over 100 MB remains, 53 commits preserved, and the lineage is pushed to origin as `candidate/main-repair-2026-09-28b` (tip `23f27b940`), so today's landings are on GitHub now. The rejected lineage is kept locally as `archive/main-rejected-2026-09-28`. The old→new commit map is at `~/.goldrush/repair/commit-map-2026-09-28b.txt`; the re-point pass over every cited id (the A3 precedent) is scripted and dry-run. What waits on your word: moving local `main` onto the candidate (an ordinary fast-forward push, no force-push), the re-point commit, and rebasing lane-b's three unlanded commits. Fires are held during the move.** **s2748 verification (2026-09-28):** live origin confirms candidate `23f27b940`, but its commit-map source is `075e97b6c`, the early s2747 checkpoint. Both trees are `3df9cafafb5dd15b3ad2f7412e062f1d8de6cc35`; this is a backup through that checkpoint, not current main. The later accepted audio test drain `15da41c60` (implementation `bf65df7de`), its review/evidence and subsequent bookkeeping are absent from the candidate. Lane-b now has zero commits ahead of main; the earlier rebase/landing to-do is superseded. Attended repair must refresh against current main and preserve this accepted drain before any pointer move. Origin main remains `0979de763`; owner gate unchanged. Evidence: `artifacts/s2748/repair-boundary.json`, `artifacts/s2748/candidate-delta.txt`.",
+      "where": "5"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 90,
+      "line": "🎯 **AUDIO INTEGRATION FIRST-BOOT SPEC 1 LANDED — `audio-integration-first-boot-spec-1` as `bf65df7de` (s2747 fire, 2026-09-28).** F-AUD-16 corrected: the Settings persistence test seeds a returning-player profile, retains its stored/control volume and mute assertions across reload, and checks the live SoundSystem values. Astra lane-b source `52860648a`, `f9a1a26e5`, `68ad3e06f`; no runtime change. Detached gates: TypeScript and normal/E1 builds green; E1 payload 34,355,296 B; own plus adjacent desktop/mobile suites 62/62, eight plain surfaces zero console/page errors; literal diff-selected guards 5/5 rc 0 in 2252.199 s, including full Node rc 0 in 2249 s. Engine hash unchanged. Origin backup remains blocked under the existing history-repair decision; no unchanged push retry. `reviews/audio-integration-first-boot-spec-1.md`, `artifacts/s2747/report.md`.",
+      "where": "90"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 91,
+      "line": "🎯 **AUDIO HARSHNESS 1 — `audio-harshness-1` AUTHORED 2026-09-28, queue copy HELD until `audio-music-toggle-1` lands (Astra on lane-b):** the review's ranks 2 to 4: one-shots normalized to -14 LUFS / -1 dBTP in place (git keeps the old versions), manifest re-balanced by re-running the review's `simulate.py` (SFX bus within +2 LU of the music, the four loud cues cut about 6 dB, the hits within 6 LU), a gentle SFX high-shelf and distance attenuation for building shots, ramped gains, faded music, seam-free loops by code crossfade; two 30 s before/after renders under 1 MB for the owner's listen; no limiter; music content untouched (owner F-AUD-13/14). GATE: the before/after table's four scenarios, the listen files, seven audio suites unchanged-green, evidence under 25 MB. ⏳ READY 2026-09-28 13:01Z (lane-b, 168,590 tokens, evidence 968,650 B, five commits, tip `26eefc242`): 41 one-shots normalized in place (byte-for-byte reproducible), the manifest re-balanced by the review's simulation (early Spark Rig brightness 68.2% → 28.4%, SFX over music +2.6 → +1.7 LU, the four loud cues about 6 LU quieter, the hits within 2 LU), SFX high-shelf, distance attenuation for building shots, ramped gains, faded and crossfaded loops; listen clips `artifacts/audio-harshness-1/listen-before.ogg` / `listen-after.ogg`; audio suites 48/50 with both reds pre-existing on main (F-AUD-16). Awaiting the attended pinned landing (`ahr1`) and deployment as a reversible change for the owner's listen (F-AUD-15). **s2744 verification:** goal still queued, five lane commits unmerged, no `ahr1` gate/deploy receipt observed. The prepared landing config is not completion evidence; custody remains attended-owned.",
+      "where": "91"
+    }
+  ]
+}
