@@ -61,11 +61,33 @@ Commands use a dedicated Vite dev server on port 5176, with `GR_CAPTURE_EXTERNAL
 - `src/town/TownScene.ts`: 101, 491, 716, 1166, 1228.
 - `src/ui/Hud.ts`: 6, 162, 300, 360, 419.
 - `src/ui/menu/StartMenu.ts`: 13, 58, 98, 111, 149, 173, 197.
-- `src/ui/theme.css`: 2121–2165.
+- `src/ui/theme.css`: 2121–2187 (including the attempt-3 placement correction).
 
 
 ## Handoff
 
-**READY-FOR-GATES** following the attempt-2 checks recorded above. The actual profile registry is authorized and patched; no permission is pending. The orchestrator owns integration. Evidence sizes are recorded in `evidence-sizes.json` (sum excludes the inventory itself).
+**READY-FOR-GATES** following the attempt-3 checks recorded below. The actual profile registry is authorized and patched; no permission is pending. The orchestrator owns integration. Evidence sizes are recorded in `evidence-sizes.json` (sum excludes the inventory itself).
 
 Adjacent tests regenerated `artifacts/050/`, `artifacts/056/`, and both tracked `artifacts/first-town-audio-deferred/timeline-*-loopback.json` files. These and the pre-existing `logs/guard-stats.jsonl` are left unstaged under the task's factory-churn exception. Nothing outside the task paths is included in the commit. The dedicated port-5176 dev server was stopped after verification.
+
+
+## Attempt 3 — preserve the phone HUD census
+
+CSS-only correction to place the phone music toggle within the weapon panel's existing footprint. The hidden Exchange slot is reused on ordinary maps; when the Exchange is visible, the toggle shares the agent chip's painted footprint and the chip text makes room for it. The toggle is absolutely positioned against the existing third grid row, so it cannot increase the preceding row's height. Paused and desktop placement retain their separate rules.
+
+Preflight preserved all five authorized predecessor commits (including evidence-only a65a958fd), with no uncommitted source changes. The pre-existing logs/guard-stats.jsonl is untouched. npm install and baseline build exited 0; install-only package-lock.json churn was restored. No pre-existing evidence was discarded.
+
+- Final `npx tsc --noEmit` and `npm run build`: exit 0 (`tsc-attempt-3.log`, `build-attempt-3.log`).
+- `node scripts/phone-hud-entry-census.mjs after`: exit 0; all 20 rows captured. A direct comparison against the committed pre-task `after.json` at a65a958fd confirms **persistent union unchanged and every panel box unchanged, 20/20**, zero console/page errors (`census-comparison-attempt-3.json`).
+- `node --test scripts/phone-hud-entry-census.test.mjs`: **3 passed, 0 failed, exit 0** (`census-guard-attempt-3.log`). Neither this test, the census script, run-10 before.json, nor any run-8 file was changed. The original six-map baseline pin passes unchanged.
+- Final music spec: **10 passed, 0 failed, exit 0**, 5 per project (`new-tests-attempt-3.log`). All ten strict error records are empty. Every delivered surface JPEG is below 400 KB.
+- Final adjacent suite: **44 passed, 0 failed, exit 0**, 22 per project (`adjacent-tests-attempt-3.log`). Existing e2e assertions are unchanged; all printed console-watch suppression counts are zero.
+
+The census and browser checks use the lane's port-5312 Vite server while holding the canonical `scripts/attended/dlock.sh` drain lock (PID-first holder record). The server is started through the equivalent direct Vite Node entrypoint so its exact PID can be stopped. Initial layout trials were discarded before the final census: a new slot reduced painted coverage; sharing the existing footprint preserves the pin. Two immediate post-edit capture launches correctly refused stale Vite CSS, before taking any captures; rerunning after the watcher update succeeded. No test or budget was weakened.
+
+The source delta for this retry is only `src/ui/theme.css:2156–2187`; complete feature hunks are refreshed in `changed-lines.json` and `source.patch`. On Exchange maps, the Prospector name and permission text use ellipsis within their remaining space; the agent control, its accessible label, and the Exchange board remain available. Visually checked the phone archive and Exchange census shots and final HUD screenshot. Desktop toggle placement and all existing outer panel geometry remain unchanged.
+
+Interaction counts and pause-slider geometry above are reverified and unchanged: one tap on every surface, and scrolling is still needed to reach the slider on both devices. **src/** changed; engine-pinned landing is still required.
+
+
+Attempt-3 closeout: the port-5312 server was stopped by its recorded PID and the drain lock released. Regenerated adjacent evidence outside the firewall is left unstaged; no protected source, existing e2e test, census baseline, or other-lane file is included in the commit. The current source change is CSS only; all earlier feature commits are preserved. Full refreshed evidence byte counts are in `evidence-sizes.json`.

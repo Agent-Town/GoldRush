@@ -18,7 +18,8 @@
     "projects": {
       "desktop-chrome": 5,
       "mobile-chrome": 5
-    }
+    },
+    "attempt": 3
   },
   "console_and_page_errors": 0,
   "adjacent": {
@@ -29,12 +30,15 @@
       "desktop-chrome": 22,
       "mobile-chrome": 22
     },
-    "attempt": 2
+    "attempt": 3
   },
-  "attempt": 2,
+  "attempt": 3,
   "predecessor_commits": [
     "a029c8f8e",
-    "88542b748"
+    "88542b748",
+    "bdd70d410",
+    "f2cdc6533",
+    "a65a958fd"
   ],
   "attempt_1_new_spec": {
     "exit": 1,
@@ -42,5 +46,16 @@
     "failed": 2,
     "reason": "literal firewall excludes actual src/game/ProfileStorage.ts registry; pending approval"
   },
-  "registry_patch_applied": true
+  "registry_patch_applied": true,
+  "census": {
+    "exit": 0,
+    "guard_exit": 0,
+    "guard_passed": 3,
+    "rows": 20,
+    "union_unchanged": true,
+    "boxes_unchanged": true,
+    "console_and_page_errors": 0
+  },
+  "server_stopped": true,
+  "drain_lock_released": true
 }

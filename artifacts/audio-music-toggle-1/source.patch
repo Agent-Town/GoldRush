@@ -150,10 +150,10 @@ index ca2cb8c03..a03cd5d75 100644
 @@ -191,0 +197 @@ export class StartMenu {
 +        ${renderMusicToggle('gr-start-menu__button')}
 diff --git a/src/ui/theme.css b/src/ui/theme.css
-index aa984609a..83df9dc89 100644
+index aa984609a..35344b4d9 100644
 --- a/src/ui/theme.css
 +++ b/src/ui/theme.css
-@@ -2120,0 +2121,45 @@
+@@ -2120,0 +2121,67 @@
 +
 +/* One-tap music controls share the audio preference across scene owners. */
 +.music-toggle {
@@ -189,13 +189,35 @@ index aa984609a..83df9dc89 100644
 +  }
 +}
 +@media (min-width: 390px) and (max-width: 430px) and (min-height: 701px) {
-+  #hud .hud-music-toggle {
-+    position: static;
-+    grid-column: 3;
-+    grid-row: 2;
++  /* Share the agent chip's painted footprint without adding a HUD grid row. */
++  #hud:has(.hud-music-toggle) .hud-panel--weapon .hud-agent-chip {
++    padding-right: 50px;
++  }
++  #hud:has(.hud-music-toggle) .hud-panel--weapon [data-hud-agent-label] {
++    overflow: hidden;
++    text-overflow: ellipsis;
++    white-space: nowrap;
++  }
++  #hud:has(.hud-music-toggle) .hud-panel--weapon:has(.e7-jack-board[hidden]) .hud-agent-chip {
++    padding-right: 6px;
++  }
++  #hud:not([data-paused="true"]) .hud-music-toggle {
++    position: absolute;
++    grid-column: 1 / 3;
++    grid-row: 3;
++    top: 0;
++    right: 82px;
++    bottom: auto;
 +    width: 44px;
 +    padding: 2px;
 +    font-size: .6875rem;
 +    line-height: 1.1;
++  }
++  #hud:not([data-paused="true"]):has(.e7-jack-board) .hud-music-toggle {
++    grid-column: 1 / -1;
++    right: 184px;
++  }
++  #hud:not([data-paused="true"]):has(.e7-jack-board[hidden]) .hud-music-toggle {
++    right: 0;
 +  }
 +}
