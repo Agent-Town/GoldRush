@@ -17,3 +17,7 @@ WHY no product drain: the prescribed board probe found zero real drains and zero
 1. Owner decides F-2742-1; attended repair refreshes the candidate against current main, preserving the accepted audio test and subsequent evidence before moving main.
 2. Owner listens to the audio comparison and chooses keep or revert; inherited Owner's Desk items remain unchanged.
 3. Next daily private coverage September 29 after 02:10 UTC; week-41 mint September 30.
+
+## Closing verification
+
+**READY-FOR-GATES.** At 2026-09-28T16:43Z, the complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **210.844 seconds**, Node v26.4.0, checkpoint 05796822e. Every chained leg completed. The first run also passed (199.094 seconds), but its Node 23.11.1 runtime differed from .nvmrc; both original receipts are preserved as node23-ledger-guards.txt and node23-ledger-result.json, and the full pinned-runtime repeat is the accepted evidence. Final queues, running tasks and pending orders remain empty; all four named runner lanes have zero ahead commits. The exact s2749 predecessor and four-item Owner's Desk tail are preserved byte-for-byte. No product drain, source edit, dispatch, pin, deploy, history repair or unchanged rejected push. Commits before clearance: 7f6e2461d and 05796822e. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
