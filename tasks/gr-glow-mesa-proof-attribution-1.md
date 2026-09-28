@@ -1,3 +1,5 @@
+⛔ SATISFIED 2026-09-28T01:11Z — the attended session ran this protocol itself (`artifacts/f2725-1-attribution/`, F-2725-1 CONTROLLED); DO NOT QUEUE.
+
 # Task gr-glow-mesa-proof-attribution-1: attribute the unmatched phone survival red before holds-1 can land (SCRATCH, commit prefix "test:")
 
 AUTHORED ONLY by s2725 (2026-09-28); attended-owned dispatch under CODEX-WALL. This is a bounded evidence task, not a gameplay or strategy rewrite.

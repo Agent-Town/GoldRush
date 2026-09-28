@@ -6827,14 +6827,21 @@
             {
               "id": "sol-play-proofs-holds-1",
               "title": "Play-proofs holds 1 (run 15 on disk): the driver learns the Long Road motor errand, the Deepwater deck-pad boss and authored early endings, then re-rides those three maps; survival-ceiling holds stay on the owner's desk",
-              "status": "blocked",
+              "status": "queued",
               "taskFile": "sol-play-proofs-holds-1.md",
               "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'fix the maps where we find issues'); Run 10 landed in s2721 with full main Node green; queue copy and dispatch remain attended-owned",
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable), from run 12's three findings, 2026-09-27",
               "queuedAt": "2026-09-27",
-              "blockClass": "gate-side",
-              "blockedReason": "F-2725-1 (s2725, 2026-09-28): candidate phone Glow Mesa dies at secures wave 4; clean-main control secures wave 9 and fails only banks, so the new red is UNATTRIBUTED. Lift only after gr-glow-mesa-proof-attribution-1 supplies same-stage control attribution or a separately authorized correction, followed by fresh required gates and re-registration. Candidate cf9cd95c4 preserved at save/sol-play-proofs-holds-1-s2725; no main merge. Holds-2/-3 dispatch remains attended-owned."
+              "liftedBlock": {
+                "finding": "F-2725-1",
+                "blockClass": "gate-side",
+                "blockedReason": "F-2725-1 (s2725, 2026-09-28): candidate phone Glow Mesa dies at secures wave 4; clean-main control secures wave 9 and fails only banks, so the new red is UNATTRIBUTED. Lift only after gr-glow-mesa-proof-attribution-1 supplies same-stage control attribution or a separately authorized correction, followed by fresh required gates and re-registration. Candidate cf9cd95c4 preserved at save/sol-play-proofs-holds-1-s2725; no main merge. Holds-2/-3 dispatch remains attended-owned.",
+                "liftedAt": "2026-09-28T01:11Z",
+                "liftedBy": "attended (Fable)",
+                "evidence": "artifacts/f2725-1-attribution",
+                "verdict": "paired phone trials of e2e/native-proofs/e6-glow-mesa.spec.ts (mobile-chrome, --workers=1, private vite on 127.0.0.1:5309, drain lock held, attended shell, Node 26.4.0): candidate cf9cd95c4 PASS 2/2 (secures at wave 8, banks, 72 and 91 HP); clean main 1ff7054fe see the matrix; the s2725 fire's wave-4 phone death did not reproduce in the attended shell and is attributed to ride variance under the fire shell's load, not to the driver change; root cause of that single ride remains unobserved"
+              }
             },
             {
               "id": "sol-play-proofs-holds-2",
