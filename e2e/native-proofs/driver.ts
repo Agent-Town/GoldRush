@@ -20,6 +20,7 @@ import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json' with { type: 'json' };
 import { deriveMechanicsManifest } from '../../src/agent/MechanicsManifest';
 import { E10ArchiveSystem } from '../../src/systems/E10ArchiveSystem';
+import { readWreck } from '../../artifacts/sol/play-proofs/run-18/wreck';
 import { phoneTapMoment } from '../../artifacts/sol/play-proofs/run-18/phone-tap';
 import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';
 
@@ -57,6 +58,7 @@ type Row = {
   consoleErrors: string[];
   pageErrors: string[];
   notes: string[];
+  wreckReceipts?: { before: Awaited<ReturnType<typeof readWreck>>; ceremony?: Awaited<ReturnType<typeof readWreck>> };
   objective?: unknown;
   finalSnapshot?: Snapshot;
   peakHotBoilers: number;
@@ -1130,6 +1132,7 @@ async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest
   // its native anchor action carries the rider and all occupied pads together.
   const initial = await readBoat();
   if (!initial) return;
+  row.wreckReceipts = { before: await readWreck(page) };
   await walkTo(page, row, initial.boat.anchor.x, initial.boat.anchor.z, 0.8);
   for (const pad of contract.tileParams.deepwater!.claimBoat.pads) {
     const boat = (await readBoat())?.boat;
@@ -1166,6 +1169,7 @@ async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest
     });
     const boss = fight.boss;
     if (!boss) { row.notes.push('Dredge-Queen diagnostics unavailable'); break; }
+    if (boss.crewQuit && !row.wreckReceipts.ceremony) row.wreckReceipts.ceremony = await readWreck(page);
     const stage = `${boss.act}/${boss.livePaddles}/${boss.persistentWreck}`;
     if (stage !== lastStage) {
       row.notes.push(`Dredge-Queen ${stage}: sim=${state.sim}, hp=${state.hp}, components=${JSON.stringify(fight.components)}`);
@@ -1184,6 +1188,7 @@ async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest
       await steer(page, x - state.hero.x, z - state.hero.z, 100);
     } else await page.waitForTimeout(150);
   }
+  if (!row.wreckReceipts.ceremony) row.wreckReceipts.ceremony = await readWreck(page);
   row.notes.push(`Dredge-Queen journey end: ${JSON.stringify(await readBoat())}`);
 }
 
@@ -1841,6 +1846,7 @@ export function nativeProof(id: string, run = 1) {
         }
         await page.screenshot({ path: path.join(ARTIFACT_ROOT, `last-${testInfo.project.name}.png`) }).catch(() => undefined);
         row.clean = consoleErrors.length === 0 && pageErrors.length === 0 ? pass('0 console, 0 page') : fail(JSON.stringify({consoleErrors, pageErrors}));
+        if (row.wreckReceipts) await writeFile(path.join(ARTIFACT_ROOT, `wreck-write-${testInfo.project.name}.json`), JSON.stringify(row.wreckReceipts, null, 2) + '\n');
         await writeFile(path.join(ARTIFACT_ROOT, `row-${testInfo.project.name}.json`), JSON.stringify(row, null, 2) + '\n');
       }
 
