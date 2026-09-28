@@ -10,6 +10,7 @@ EXPECTED-HOLDS: artifacts/056/desktop-build-menu-icons-blurb.png
 EXPECTED-HOLDS: artifacts/056/desktop-build-menu-palisade.png
 EXPECTED-HOLDS: artifacts/056/mobile-390-build-menu-icons-blurb.png
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/adjacent-tests.log
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/baseline-build-attempt-2.log
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/build.log
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/changed-lines.json
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-desktop-chrome-first-boot-can-silence-music-before-a-profile-exists.json
@@ -27,6 +28,7 @@ EXPECTED-HOLDS: artifacts/audio-music-toggle-1/first-boot-desktop-chrome.jpg
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/first-boot-mobile-chrome.jpg
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/hud-desktop-chrome.jpg
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/hud-mobile-chrome.jpg
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/install-attempt-2.log
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/menu-desktop-chrome.jpg
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/menu-mobile-chrome.jpg
 EXPECTED-HOLDS: artifacts/audio-music-toggle-1/new-tests-initial.log
@@ -47,11 +49,14 @@ EXPECTED-HOLDS: e2e/audio-music-toggle.spec.ts
 EXPECTED-HOLDS: src/audio/AudioSettingsControl.ts
 EXPECTED-HOLDS: src/audio/SoundSystem.ts
 EXPECTED-HOLDS: src/audio/settings.ts
+EXPECTED-HOLDS: src/game/ProfileStorage.ts
 EXPECTED-HOLDS: src/news/greenhornGazette.ts
 EXPECTED-HOLDS: src/town/TownScene.ts
 EXPECTED-HOLDS: src/ui/Hud.ts
 EXPECTED-HOLDS: src/ui/menu/StartMenu.ts
 EXPECTED-HOLDS: src/ui/theme.css
+
+ATTEMPT 3 (2026-09-28T10:04Z): attempt 2 completed the feature (spec 10/10, adjacent 44/44) and its attended pinned landing passed the release build, payload, halo, null floors, the release suite (30/30), the e2e gate (64/64) and the ledger battery, then stopped on ONE guard: `scripts/phone-hud-entry-census.test.mjs` ("current census pins persistent union, entry coverage and unchanged desktop boxes"). The attended session re-ran the census on the merged tree (a vite server on 127.0.0.1:5312, then `node scripts/phone-hud-entry-census.mjs after`): the persistent HUD coverage union is UNCHANGED on every census map at both widths (the coverage law holds), no panel was added or removed, but on the six original maps at 390 px the toggle pushed the weapon panel (and on some maps the suit-air or archive panel) DOWN by 12 px (`hud-weapon` box y 92 → 104, same width and height), and the census pins those six maps' panel boxes against the run-10 `before.json` baseline ("original six-map layout moved"). That pin is the owner's phone HUD reduction (F-F2-39, 2026-09-24) guarding against creep; it is not to be edited or re-baselined. THIS ATTEMPT BUILDS ON ATTEMPTS 1 AND 2 (the lane's held commits are your own base; do NOT reset the lane). Do exactly this: (1) place the run-HUD toggle at 390 px so that NO existing panel box changes on any census map: for example in the pause control's own row beside it (the `.hud-pause` element's row, right-aligned) or inside the weapon panel's existing footprint, never as a new row above or below a panel; desktop may keep its placement if its boxes are unchanged; (2) verify with the census: start `npx vite --port 5312 --strictPort --host 127.0.0.1` in the lane, run `node scripts/phone-hud-entry-census.mjs after` under the attended drain lock protocol, stop your server by its PID, and run `node --test scripts/phone-hud-entry-census.test.mjs` until it is GREEN WITHOUT editing that test or its baselines (`before.json`, run-8 files); commit the regenerated `artifacts/sol/map-art-campaign-2/run-10/phone-hud/**` with your CSS change (the census evidence is part of the feature); (3) rerun `e2e/audio-music-toggle.spec.ts` (10/10) and the adjacent list on both projects; (4) update the report with the census result (union unchanged, boxes unchanged) and commit path-scoped with `feat:`. The pre-flight's SAFE-DUPE clause does not apply to your own commits (the declared holds above).
 
 ATTEMPT 2 (2026-09-28T07:15Z): attempt 1 (`a029c8f8e` + the runner commit `88542b748`, 141,712 tokens, 06:06Z to 06:20Z) did everything except the per-profile registration, because this master's firewall named a file that does not exist (`src/core/ProfileStorage.ts`; the registry is `src/game/ProfileStorage.ts`), and Codex rightly stopped at the wall with the patch prepared and validated (`artifacts/audio-music-toggle-1/profile-registry.patch`, `git apply --check` exit 0). THIS ATTEMPT BUILDS ON ATTEMPT 1: the lane's two ahead commits are your own base; do NOT reset the lane, do NOT re-implement. Do exactly this: apply the prepared patch to `src/game/ProfileStorage.ts` (or re-derive it if it no longer applies), rerun `e2e/audio-music-toggle.spec.ts` on both projects until 10/10 (the two `music off is stored per profile` tests), rerun tsc, build and the adjacent list, update the report and `changed-lines.json`, commit path-scoped with the `feat:` prefix, and end READY-FOR-GATES. The pre-flight's SAFE-DUPE clause does not apply to your own attempt-1 commits (they are the declared holds above); everything else in the pre-flight still holds.
 
@@ -73,7 +78,7 @@ Silencing just the music takes three interactions on every device (pause, drag M
 Stop rule: when the subscription refuses (rate limit, quota, a disconnect) or the session ends, commit the finished items, write the report with what remains, and end READY-FOR-GATES. If you find yourself about to exit without changes, WRITE WHY into your report first: a silent no-op wastes a queue slot and a gate.
 
 ## Firewall
-Touch ONLY: `src/audio/settings.ts`, `src/audio/SoundSystem.ts`, `src/audio/AudioSettingsControl.ts`, `src/ui/Hud.ts`, `src/ui/theme.css` (the toggle's rules only), `src/town/TownScene.ts` (the bar control only), `src/ui/menu/StartMenu.ts` (the menu and first-boot toggle only), `src/game/Game.ts` (wiring the HUD toggle to the setting only), `src/game/ProfileStorage.ts` (the per-profile key registry: register the new key exactly like the three audio keys it already lists; the attempt-1 master wrote a wrong path here, F-ATT-11), `src/news/greenhornGazette.ts` (one clause), `e2e/audio-music-toggle.spec.ts` (new), `artifacts/audio-music-toggle-1/**`.
+Touch ONLY: `artifacts/sol/map-art-campaign-2/run-10/phone-hud/**` (the regenerated census evidence, attempt 3), `src/audio/settings.ts`, `src/audio/SoundSystem.ts`, `src/audio/AudioSettingsControl.ts`, `src/ui/Hud.ts`, `src/ui/theme.css` (the toggle's rules only), `src/town/TownScene.ts` (the bar control only), `src/ui/menu/StartMenu.ts` (the menu and first-boot toggle only), `src/game/Game.ts` (wiring the HUD toggle to the setting only), `src/game/ProfileStorage.ts` (the per-profile key registry: register the new key exactly like the three audio keys it already lists; the attempt-1 master wrote a wrong path here, F-ATT-11), `src/news/greenhornGazette.ts` (one clause), `e2e/audio-music-toggle.spec.ts` (new), `artifacts/audio-music-toggle-1/**`.
 NO changes to: `src/core/InputController.ts` (no new key, M unchanged: owner question Q1), `src/audio/manifest.ts` and any asset under `assets/audio/` (the harshness task's), gameplay or sim, existing e2e assertions (especially `e2e/050-audio-mix-and-access.spec.ts:90-103` ("pause overlay volume and mute persist and sync with Settings")), `scripts/**`, `tasks/**`, `specs/**`, `reviews/*.md`, `CLAUDE.md`, `STATUS.md`, `tasks/BACKLOG.md`, `logs/**`, the other lanes' work.
 
 ## Self-check (evidence, not vibes)
