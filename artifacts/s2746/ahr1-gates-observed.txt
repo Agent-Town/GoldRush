@@ -1,0 +1,42 @@
+branch sol/wave-lane-b tip 26eefc242 2026-09-28 13:18Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/ahr1.json
+scratch store at the store's main 5793a96
+chain base 136cb54fd
+merged a214c82d7
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4 (pinned cd76fd088099119c9233e6ac50b2319fa07611ae1955082110b5043f2c7458f9)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1128 files, 97732997 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34355296 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (310.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+ledger battery start 13:26Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.3m) 
+e2e start 13:32Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/050-audio-mix-and-access.spec.ts e2e/051-audio-governor.spec.ts e2e/mu-02-music.spec.ts e2e/mu-03-era-audio.spec.ts e2e/music-survives-pause.spec.ts e2e/audio-integration.spec.ts e2e/audio-music-toggle.spec.ts
+e2e: rc=1   2 failed   72 passed (5.7m)  13:37Z
+1) [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+2) [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+battery start 13:37Z
+battery: rc=1 ℹ tests 4 ℹ pass 3 ℹ fail 1 ℹ skipped 0 ℹ tests 5 ℹ pass 4 ℹ fail 1 ℹ skipped 0 ℹ tests 1040 ℹ pass 1032 ℹ fail 3 ℹ skipped 5  13:57Z
+✖ contention is advisory, correctly counted, and absent when alone (2974.169833ms)
+✖ rotation registry stays outside the engine identity corpus (566.325375ms)
+✖ rotation registry stays outside the engine identity corpus (80.63425ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (428.486417ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (61.579708ms)
+dirt after battery: 0
+ahr1-PREP-DONE
+verdict: clean
+hash at pin time: 999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4
+pin #74 `99920310`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/audio-harshness-1.md
+bookkeeping: leaf merged, row, STATUS phrase (a214c82d7)
+main now 954bb2cde
+error: failed to push some refs to 'github.com:Agent-Town/GoldRush.git'
+post-ff: law rc=0 | desk ℹ pass 57 ℹ fail 0 
+deploy: rc=0 [deploy] DEPLOYED ok https://010b0180.gold-rush-3in.pages.dev [deploy] VERIFIED published 954bb2cd at https://gold-rush-3in.pages.dev [deploy] ASSAYER SYNCED: droplet tree + pin 954bb2cd, services restarted [deploy] Outcome: deployed 
+battery on main: rc=0 ℹ tests 1040 ℹ pass 1035 ℹ fail 0 ℹ skipped 5 ℹ tests 87 ℹ pass 87 ℹ fail 0 ℹ skipped 0 
+chain worktree removed
+LAND-ahr1-DONE

@@ -3161,4 +3161,4 @@ ROUNDUP-CLASS — 2026-W40; s2743 records the attended September 28 landing. Pin
 Sound effects sit more gently beside the music, and distant building shots
 are quieter. Music fades in and out and crosses its loop seams smoothly.
 merge `a214c82d7` · pin `ade1f4120` · review `reviews/audio-harshness-1.md`
-ROUNDUP-CLASS — 2026-W40; s2745 records the attended September 28 landing. Pin 74 remains in era 6. Attended deployment 954bb2cd and ASSAYER SYNCED are verified; final main verification is still pending. The owner's listen decides keep or revert. Draft only; publication stays owner-only.
+ROUNDUP-CLASS — 2026-W40; s2745 records the attended September 28 landing. Pin 74 remains in era 6. Attended deployment 954bb2cd and ASSAYER SYNCED are verified; s2746 verified LAND-ahr1-DONE, final main Node 1035 passed / five skipped / zero failures plus 87/87 chained checks. The owner's listen decides keep or revert. Draft only; publication stays owner-only.
