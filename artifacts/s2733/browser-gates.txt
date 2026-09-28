@@ -1,0 +1,180 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-28T05:15:39.095Z — s2733 warmup ########
+cwd=/Users/robin/.goldrush/s2733/wt-tape
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0jy2d5v:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5413
+
+===== warmup =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --grep enemy crossing the river reaches the hero through the ford only --workers=1
+rc=0 7.6s
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (6.1s)
+
+  1 passed (6.9s)
+(node:19681) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-28T05:15:46.702Z — s2733 own and adjacent gates ########
+cwd=/Users/robin/.goldrush/s2733/wt-tape
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0jy2d5v:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5413
+
+===== Tape audit and adjacent plain boots =====
+$ npx playwright test e2e/e7-tape-toggle-phone-hit-target.spec.ts e2e/e7-playbook-surface.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts e2e/m2-01-build-menu.spec.ts e2e/f-astra-6-plain-boot.spec.ts --project=desktop-chrome --project=mobile-chrome --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2733/playwright-results --workers=1
+rc=1 578.2s
+
+Running 48 tests using 1 worker
+
+  ✘   1 [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward (27.5s)
+  ✓   2 [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:54:1 › record, name, shelf, and replay use the profile tape store and the slaved rig actor (9.4s)
+  ✓   3 [desktop-chrome] › e2e/e7-tape-toggle-phone-hit-target.spec.ts:66:1 › plain E7 board launches expose the Tape Reel hit target (1.4m)
+  ✓   4 [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors (4.1s)
+  ✓   5 [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain town boot has no console or page errors (3.7s)
+  ✓   6 [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-dry-gulch boot has no console or page errors (5.6s)
+  ✓   7 [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-twin-banks boot has no console or page errors (6.3s)
+  ✓   8 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (12.0s)
+  ✓   9 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent (5.9s)
+  ✓  10 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs (7.4s)
+  ✓  11 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth (17.0s)
+  ✓  12 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget (7.5s)
+  ✓  13 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (7.5s)
+  ✓  14 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (8.5s)
+  ✓  15 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (7.2s)
+  ✓  16 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (7.1s)
+  ✓  17 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (8.5s)
+  ✓  18 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (11.1s)
+  ✓  19 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (10.0s)
+  ✓  20 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (6.8s)
+  ✓  21 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (8.4s)
+  ✓  22 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (7.4s)
+  ✓  23 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (6.5s)
+  ✓  24 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (7.1s)
+  ✘  25 [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward (24.0s)
+  ✓  26 [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:54:1 › record, name, shelf, and replay use the profile tape store and the slaved rig actor (7.1s)
+  ✓  27 [mobile-chrome] › e2e/e7-tape-toggle-phone-hit-target.spec.ts:66:1 › plain E7 board launches expose the Tape Reel hit target (1.7m)
+  ✓  28 [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors (6.8s)
+  ✓  29 [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain town boot has no console or page errors (5.4s)
+  ✓  30 [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-dry-gulch boot has no console or page errors (6.6s)
+  ✓  31 [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain e1-twin-banks boot has no console or page errors (7.8s)
+  ✓  32 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (12.9s)
+  ✓  33 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent (5.9s)
+  ✓  34 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs (5.9s)
+  ✓  35 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth (12.2s)
+  ✓  36 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget (6.3s)
+  ✓  37 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (6.5s)
+  ✓  38 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (6.3s)
+  ✓  39 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (5.5s)
+  ✓  40 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (5.3s)
+  ✓  41 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (8.1s)
+  ✓  42 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (10.6s)
+  ✓  43 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (7.2s)
+  ✓  44 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (5.5s)
+  ✓  45 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (7.3s)
+  ✓  46 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (5.4s)
+  ✓  47 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (5.7s)
+  ✓  48 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (7.4s)
+
+
+  1) [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('playbook-toggle')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('playbook-toggle')
+
+
+      47 |
+      48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');
+    > 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+         |                                                     ^
+      50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+      51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      52 | });
+        at /Users/robin/.goldrush/s2733/wt-tape/e2e/e7-playbook-surface.spec.ts:49:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../Claude/Projects/Gold Rush/artifacts/s2733/playwright-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2733/playwright-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../Claude/Projects/Gold Rush/artifacts/s2733/playwright-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace "../../../Claude/Projects/Gold Rush/artifacts/s2733/playwright-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/trace.zip"
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('playbook-toggle')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('playbook-toggle')
+
+
+      47 |
+      48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');
+    > 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+         |                                                     ^
+      50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+      51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      52 | });
+        at /Users/robin/.goldrush/s2733/wt-tape/e2e/e7-playbook-surface.spec.ts:49:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../Claude/Projects/Gold Rush/artifacts/s2733/playwright-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2733/playwright-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../Claude/Projects/Gold Rush/artifacts/s2733/playwright-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace "../../../Claude/Projects/Gold Rush/artifacts/s2733/playwright-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/trace.zip"
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+    [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+  46 passed (9.6m)
+(node:20022) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20085) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20085) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:20647) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20647) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:26244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26244) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:26620) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26620) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"Tape audit and adjacent plain boots":1}
+OVERALL rc=1

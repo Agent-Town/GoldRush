@@ -1,0 +1,46 @@
+LEDGER MIRROR FRESHNESS — LB-01, advisory
+  destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+
+  corpus                  : read (36 entries, 36 dated)
+  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus
+  newest                  : ledger-2026-09-28.db  (today)
+  span                    : 2026-08-24 -> 2026-09-28  (36/36 day(s) present, left edge from the anchor)
+
+  ✅ WHOLE AND CURRENT — every calendar day from the DECLARED first coverage day
+     (2026-08-24, anchored outside the corpus) to the newest mirror is present,
+     and the newest is not behind. Nothing owed.
+
+node scripts/ledger-mirror-freshness.mjs rc=0
+✔ score screen, landing, and rider protocol carry one county ranking rule (1.514083ms)
+✔ skill.md pins the lawful world-model disclosure (1.542541ms)
+✔ skill.md pins the operator-probe ranking law (0.090042ms)
+✔ skill.md pins the E10 preserve ranking law (0.120542ms)
+✔ skill.md pins the Regatta mechanic-first ranking law (0.050416ms)
+✔ the door mirrors the engine's mechanic contracts (0.606417ms)
+✔ skill.md pins optional declared tokens outside ranking (0.045ms)
+✔ skill.md pins the harness receipt law (0.161875ms)
+✔ every standings submission refusal branch is enumerated (0.691ms)
+✔ skill.md refusal list matches the executable taxonomy (0.764667ms)
+✔ the refusal enumeration BITES an unrecorded branch (31016.388708ms)
+✔ skill.md pins the tape checkpoint command (0.226334ms)
+✔ skill.md grammar matches every StandingOrder source form (2.232417ms)
+✔ skill.md buildables match BuildableId (0.280833ms)
+✔ skill.md bench seeds match the source registry (0.429625ms)
+✔ skill.md rotations match the source registry (0.231291ms)
+✔ skill.md door-contracts match SUPPORTED_CONTRACTS in HeadlessContractSim (0.254666ms)
+✔ the guard BITES a drifted skill.md (positive control, manufactured defect) (35380.352916ms)
+✔ the Regatta paragraph publishes terminal seconds and the standable-ground query (1.160542ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 83417.702708
+
+node --test scripts/skillmd-guard.test.mjs rc=0
+53d87470fb2670626fb4605d4dc0eb5bffd899fb	refs/heads/fire-memory
+409ffd397abde6b0d465fb8a79be145112f9e9f6	refs/heads/ledger-backups
+
+git ls-remote archive refs/heads/ledger-backups refs/heads/fire-memory rc=0
