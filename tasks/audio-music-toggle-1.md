@@ -1,6 +1,59 @@
 # Task audio-music-toggle-1: one tap turns the music off, everywhere a player hears it (LANE-B, Astra, commit prefix "feat:")
 
 CODEX: model=gpt-6-astra
+LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR
+EXPECTED-HOLDS: artifacts/050/desktop-chrome-mute-toast.png
+EXPECTED-HOLDS: artifacts/050/desktop-chrome-pause-audio-settings.png
+EXPECTED-HOLDS: artifacts/050/mobile-chrome-mute-toast.png
+EXPECTED-HOLDS: artifacts/050/mobile-chrome-pause-audio-settings.png
+EXPECTED-HOLDS: artifacts/056/desktop-build-menu-icons-blurb.png
+EXPECTED-HOLDS: artifacts/056/desktop-build-menu-palisade.png
+EXPECTED-HOLDS: artifacts/056/mobile-390-build-menu-icons-blurb.png
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/adjacent-tests.log
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/build.log
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/changed-lines.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-desktop-chrome-first-boot-can-silence-music-before-a-profile-exists.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-desktop-chrome-menu-and-town-share-one-music-preference-with-Settings.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-desktop-chrome-music-off-is-stored-per-profile.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-desktop-chrome-run-one-tap-stops-music-preserves-volume-resumes-live-and-survives-reload.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-desktop-chrome-turning-off-during-a-music-fetch-prevents-its-late-start.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-mobile-chrome-first-boot-can-silence-music-before-a-profile-exists.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-mobile-chrome-menu-and-town-share-one-music-preference-with-Settings.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-mobile-chrome-music-off-is-stored-per-profile.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-mobile-chrome-run-one-tap-stops-music-preserves-volume-resumes-live-and-survives-reload.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/errors-mobile-chrome-turning-off-during-a-music-fetch-prevents-its-late-start.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/evidence-sizes.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/first-boot-desktop-chrome.jpg
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/first-boot-mobile-chrome.jpg
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/hud-desktop-chrome.jpg
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/hud-mobile-chrome.jpg
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/menu-desktop-chrome.jpg
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/menu-mobile-chrome.jpg
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/new-tests-initial.log
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/new-tests.log
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/pause-panel-desktop-chrome.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/pause-panel-mobile-chrome.json
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/profile-registry.patch
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/report.md
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/server.log
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/source.patch
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/town-desktop-chrome.jpg
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/town-mobile-chrome.jpg
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/tsc.log
+EXPECTED-HOLDS: artifacts/audio-music-toggle-1/verification.json
+EXPECTED-HOLDS: artifacts/first-town-audio-deferred/timeline-desktop-chrome-loopback.json
+EXPECTED-HOLDS: artifacts/first-town-audio-deferred/timeline-mobile-chrome-loopback.json
+EXPECTED-HOLDS: e2e/audio-music-toggle.spec.ts
+EXPECTED-HOLDS: src/audio/AudioSettingsControl.ts
+EXPECTED-HOLDS: src/audio/SoundSystem.ts
+EXPECTED-HOLDS: src/audio/settings.ts
+EXPECTED-HOLDS: src/news/greenhornGazette.ts
+EXPECTED-HOLDS: src/town/TownScene.ts
+EXPECTED-HOLDS: src/ui/Hud.ts
+EXPECTED-HOLDS: src/ui/menu/StartMenu.ts
+EXPECTED-HOLDS: src/ui/theme.css
+
+ATTEMPT 2 (2026-09-28T07:15Z): attempt 1 (`a029c8f8e` + the runner commit `88542b748`, 141,712 tokens, 06:06Z to 06:20Z) did everything except the per-profile registration, because this master's firewall named a file that does not exist (`src/core/ProfileStorage.ts`; the registry is `src/game/ProfileStorage.ts`), and Codex rightly stopped at the wall with the patch prepared and validated (`artifacts/audio-music-toggle-1/profile-registry.patch`, `git apply --check` exit 0). THIS ATTEMPT BUILDS ON ATTEMPT 1: the lane's two ahead commits are your own base; do NOT reset the lane, do NOT re-implement. Do exactly this: apply the prepared patch to `src/game/ProfileStorage.ts` (or re-derive it if it no longer applies), rerun `e2e/audio-music-toggle.spec.ts` on both projects until 10/10 (the two `music off is stored per profile` tests), rerun tsc, build and the adjacent list, update the report and `changed-lines.json`, commit path-scoped with the `feat:` prefix, and end READY-FOR-GATES. The pre-flight's SAFE-DUPE clause does not apply to your own attempt-1 commits (they are the declared holds above); everything else in the pre-flight still holds.
 
 You are Codex (gpt-6-astra), implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b` (branch `sol/wave-lane-b`). You do not touch STATUS.md, reviews, tasks or other lanes.
 READ FIRST: AGENTS.md; `reviews/audio-review-1.md` (the Opus 5.5 review this task implements: sections 3(d), 3(e), 4 F-AUD-8/9/10, 5 rank 1); `src/audio/settings.ts` (the three profile keys and defaults at lines 63, 71, 79), `src/audio/SoundSystem.ts` (loops stop only for mute or master volume zero, lines 143-146; music gain at 165 and 557-569), `src/audio/AudioSettingsControl.ts` (the Volume, Music Volume and Mute controls, lines 15-31, 50-55), `src/ui/Hud.ts` (the pause control at 299-301 and 395-398; the pause panel's audio block at 742-767), `src/ui/theme.css` (the phone pause control at 2068-2082 and 1777-1781), `src/town/TownScene.ts` (town Settings at 1165-1170), `src/ui/menu/StartMenu.ts` (the title theme at 86; the first-boot card at 127-148, which has no route to Settings), `src/core/InputController.ts` (the key map, 3-28: M at 24 is mute-all and stays so), `src/game/Game.ts` (mute at 3017 and 9273-9276), `src/news/greenhornGazette.ts` (the only hint that mute exists, lines 30 and 36-40), `e2e/050-audio-mix-and-access.spec.ts` (pins M as mute-all, "pause overlay volume and mute persist and sync with Settings", lines 90-103; do not change it).
@@ -20,7 +73,7 @@ Silencing just the music takes three interactions on every device (pause, drag M
 Stop rule: when the subscription refuses (rate limit, quota, a disconnect) or the session ends, commit the finished items, write the report with what remains, and end READY-FOR-GATES. If you find yourself about to exit without changes, WRITE WHY into your report first: a silent no-op wastes a queue slot and a gate.
 
 ## Firewall
-Touch ONLY: `src/audio/settings.ts`, `src/audio/SoundSystem.ts`, `src/audio/AudioSettingsControl.ts`, `src/ui/Hud.ts`, `src/ui/theme.css` (the toggle's rules only), `src/town/TownScene.ts` (the bar control only), `src/ui/menu/StartMenu.ts` (the menu and first-boot toggle only), `src/game/Game.ts` (wiring the HUD toggle to the setting only), `src/core/ProfileStorage.ts` (only if it enumerates the audio keys), `src/news/greenhornGazette.ts` (one clause), `e2e/audio-music-toggle.spec.ts` (new), `artifacts/audio-music-toggle-1/**`.
+Touch ONLY: `src/audio/settings.ts`, `src/audio/SoundSystem.ts`, `src/audio/AudioSettingsControl.ts`, `src/ui/Hud.ts`, `src/ui/theme.css` (the toggle's rules only), `src/town/TownScene.ts` (the bar control only), `src/ui/menu/StartMenu.ts` (the menu and first-boot toggle only), `src/game/Game.ts` (wiring the HUD toggle to the setting only), `src/game/ProfileStorage.ts` (the per-profile key registry: register the new key exactly like the three audio keys it already lists; the attempt-1 master wrote a wrong path here, F-ATT-11), `src/news/greenhornGazette.ts` (one clause), `e2e/audio-music-toggle.spec.ts` (new), `artifacts/audio-music-toggle-1/**`.
 NO changes to: `src/core/InputController.ts` (no new key, M unchanged: owner question Q1), `src/audio/manifest.ts` and any asset under `assets/audio/` (the harshness task's), gameplay or sim, existing e2e assertions (especially `e2e/050-audio-mix-and-access.spec.ts:90-103` ("pause overlay volume and mute persist and sync with Settings")), `scripts/**`, `tasks/**`, `specs/**`, `reviews/*.md`, `CLAUDE.md`, `STATUS.md`, `tasks/BACKLOG.md`, `logs/**`, the other lanes' work.
 
 ## Self-check (evidence, not vibes)
