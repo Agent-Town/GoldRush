@@ -26,8 +26,16 @@ No player-visible merge or engine pin changed in this fire, so no new Gazette it
 3. Attended sequencing owns Holds-3 and `e7-tape-drawer-inheritance-1`; this fire dispatches neither.
 4. LB/FM next coverage day September 29 after 02:10 UTC; rotation mint September 30. The existing three-item Owner's Desk remains unchanged.
 
-Closing ledger receipt and command-derived clearance are appended after verification. No gameplay success claim is added by this handoff.
+No gameplay success claim is added by this handoff.
 
 ## Closing citation correction
 
 The initial full ledger run passed all **1263/1263** Node tests, then exited **1** in the chained citation-title guard (**249.254 s**). The inherited Tape audit BACKLOG row cited the inheritance spec line without its durable test title. This fire inserted the existing exact title beside that citation; no test or assertion changed. The first receipt is retained in `ledger-first.txt` and `ledger-first-result.json`. The closing full battery is rerun after this one-row bookkeeping correction.
+
+## Final handoff
+
+Closing battery **1263/1263 + kit 83/83**, all chained checks green, npm **rc 0**, **222.053 s**, Node **v26.4.0**, checkpoint **748356cee5bcf9e0271f777c9b59f8ae50afe1b6**. Initial citation failure and its one-row correction remain recorded above. Fresh skillmd **19/19**; private backup corpus **36/36** and the remote ledger/fire-memory heads match today's earlier receipts; health **200/200/200**, runner alive.
+
+Exact predecessor archive and the three-item Owner's Desk verified. Holds-2 still awaits its attended fast-forward; the process lock is retained by the launcher until this invocation exits. The board is NOT DRY. No product source, assertion, goal status or engine pin changed. No deploy.
+
+Commit trail: lock **aa0f8c376**, inherited bookkeeping **fe983df08**, custody checkpoint **3f28c6aa7**, citation cure **748356cee**. The lock-clearing commit contains this final receipt and is this fire's last write to main; only the normal origin push and read-only verification follow. Clearance: **2026-09-28T04:29Z**. Ordered remaining work is above.
