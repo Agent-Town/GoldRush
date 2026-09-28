@@ -1,0 +1,181 @@
+{
+  "label": "sibling-after",
+  "concurrent": false,
+  "rootA": "/Users/robin/Claude/Projects/wt-wvc1",
+  "portA": 5326,
+  "cacheA": "/Users/robin/Claude/Projects/wt-wvc1/.vite-cache",
+  "rootB": "/Users/robin/Claude/Projects/Gold Rush",
+  "portB": 5327,
+  "cacheB": "/Users/robin/Claude/Projects/Gold Rush/node_modules/.vite",
+  "load1AtStart": 89.25,
+  "snapshots": {
+    "beforeA": {
+      "deps": "/Users/robin/Claude/Projects/wt-wvc1/.vite-cache/deps",
+      "exists": false
+    },
+    "afterPage1": {
+      "a": {
+        "deps": "/Users/robin/Claude/Projects/wt-wvc1/.vite-cache/deps",
+        "exists": true,
+        "at": "2026-09-25T14:54:30.254Z",
+        "fileCount": 15,
+        "hasThree": true,
+        "threeMtime": "2026-09-25T14:54:12.518Z",
+        "metadata": {
+          "hash": "fadc479d",
+          "configHash": "c0775a59",
+          "browserHash": "f17848a1",
+          "optimized": 6,
+          "chunks": 1
+        },
+        "tempDirs": 0
+      },
+      "b": {
+        "deps": "/Users/robin/Claude/Projects/Gold Rush/node_modules/.vite/deps",
+        "exists": true,
+        "at": "2026-09-25T14:54:30.254Z",
+        "fileCount": 2,
+        "hasThree": false,
+        "threeMtime": null,
+        "metadata": {
+          "hash": "185e98e4",
+          "configHash": "b64545a8",
+          "browserHash": "d87f623a",
+          "optimized": 0,
+          "chunks": 0
+        },
+        "tempDirs": 243
+      }
+    },
+    "afterB": {
+      "a": {
+        "deps": "/Users/robin/Claude/Projects/wt-wvc1/.vite-cache/deps",
+        "exists": true,
+        "at": "2026-09-25T14:54:38.967Z",
+        "fileCount": 15,
+        "hasThree": true,
+        "threeMtime": "2026-09-25T14:54:12.518Z",
+        "metadata": {
+          "hash": "fadc479d",
+          "configHash": "c0775a59",
+          "browserHash": "f17848a1",
+          "optimized": 6,
+          "chunks": 1
+        },
+        "tempDirs": 0
+      },
+      "b": {
+        "deps": "/Users/robin/Claude/Projects/Gold Rush/node_modules/.vite/deps",
+        "exists": true,
+        "at": "2026-09-25T14:54:38.967Z",
+        "fileCount": 4,
+        "hasThree": true,
+        "threeMtime": "2026-09-25T14:54:31.957Z",
+        "metadata": {
+          "hash": "a78f1364",
+          "configHash": "58311e4d",
+          "browserHash": "72297a71",
+          "optimized": 1,
+          "chunks": 0
+        },
+        "tempDirs": 243
+      }
+    },
+    "afterPage2": {
+      "a": {
+        "deps": "/Users/robin/Claude/Projects/wt-wvc1/.vite-cache/deps",
+        "exists": true,
+        "at": "2026-09-25T14:54:51.079Z",
+        "fileCount": 15,
+        "hasThree": true,
+        "threeMtime": "2026-09-25T14:54:12.518Z",
+        "metadata": {
+          "hash": "fadc479d",
+          "configHash": "c0775a59",
+          "browserHash": "f17848a1",
+          "optimized": 6,
+          "chunks": 1
+        },
+        "tempDirs": 0
+      },
+      "b": {
+        "deps": "/Users/robin/Claude/Projects/Gold Rush/node_modules/.vite/deps",
+        "exists": true,
+        "at": "2026-09-25T14:54:51.079Z",
+        "fileCount": 2,
+        "hasThree": false,
+        "threeMtime": null,
+        "metadata": {
+          "hash": "185e98e4",
+          "configHash": "b64545a8",
+          "browserHash": "d87f623a",
+          "optimized": 0,
+          "chunks": 0
+        },
+        "tempDirs": 243
+      }
+    }
+  },
+  "readyAMs": 341,
+  "page1": {
+    "ok": true,
+    "pageStart": 1790348052578,
+    "pageMs": 2657,
+    "bootedAt": 1790348055235,
+    "error": null,
+    "navigationsAtBoot": 1,
+    "reloadsBeforeBoot": 0,
+    "reloadsInSettle": 0,
+    "consoleErrors": [],
+    "badResponses": [],
+    "failedRequests": []
+  },
+  "bSpawnedAtMsOfA": 18297,
+  "page2": {
+    "ok": true,
+    "pageStart": 1790348079085,
+    "pageMs": 1982,
+    "bootedAt": 1790348081067,
+    "error": null,
+    "navigationsAtBoot": 1,
+    "reloadsBeforeBoot": 0,
+    "reloadsInSettle": 0,
+    "consoleErrors": [],
+    "badResponses": [],
+    "failedRequests": []
+  },
+  "load1AtEnd": 52.49,
+  "markersB": {
+    "scanFailed": [
+      "+1502ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ],
+    "tsconfigError": [
+      "+1503ms \u001b[31m[TSCONFIG_ERROR] \u001b[0mFailed to load tsconfig '../tsconfig.json': Tsconfig not found",
+      "+1503ms \u001b[31m[TSCONFIG_ERROR] \u001b[0mFailed to load tsconfig 'worktrees/tsconfig.json': Tsconfig not found"
+    ],
+    "newDepsOptimized": [],
+    "reoptimizing": [
+      "+136ms 9:54:30 PM [vite] (client) Re-optimizing dependencies because vite config has changed"
+    ],
+    "reloading": [],
+    "errors": [
+      "+1502ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ]
+  },
+  "stopB": {
+    "code": 143,
+    "signal": null
+  },
+  "markersA": {
+    "scanFailed": [],
+    "tsconfigError": [],
+    "newDepsOptimized": [],
+    "reoptimizing": [],
+    "reloading": [],
+    "errors": []
+  },
+  "stopA": {
+    "code": 143,
+    "signal": null
+  }
+}

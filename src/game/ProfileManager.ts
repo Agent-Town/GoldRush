@@ -277,6 +277,9 @@ export class ProfileManager {
               : ''
           }
           <p class="gr-account-note" data-testid="account-message">${escapeHtml(account.message)}</p>
+          <!-- SEC-7 (outside review 2026-09-24): the only disclosure in the game covered telemetry,
+               and the form that asks for an email address carried none. One line, before the ask. -->
+          <p class="gr-account-note"><a href="${import.meta.env.BASE_URL}privacy.html" target="_blank" rel="noopener" data-testid="account-privacy-link">What the Office keeps about you</a></p>
         </section>
       `;
     }
@@ -317,6 +320,7 @@ export class ProfileManager {
           <button class="death-overlay__button gr-account-danger" type="button" data-testid="account-burn-confirm"${disabled}>Burn it</button>
           <button class="death-overlay__button" type="button" data-testid="account-burn-cancel"${disabled}>Keep it</button>
         </div>` : ''}
+        <p class="gr-account-note"><a href="${import.meta.env.BASE_URL}privacy.html" target="_blank" rel="noopener" data-testid="account-privacy-link">What the Office keeps about you</a></p>
       </section>
     `;
   }

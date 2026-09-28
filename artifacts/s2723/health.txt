@@ -1,0 +1,17 @@
+=== Gold Rush factory — 2026-09-28 05:45:20 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : RUNNING
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-27T22:44Z (s2723 fire) — resume fixture cleanup direct Node gate; preserve attended holds chain. 🔺 *
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+  sol/open-findings-astra: 4 commit(s) ahead
+  sol/map-art-campaign-2: 9 commit(s) ahead
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: 
+

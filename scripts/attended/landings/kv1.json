@@ -1,0 +1,21 @@
+{
+  "tag": "kv1",
+  "branch": "fix/kv-counters-to-ledger-1",
+  "port": 5374,
+  "mergeMessage": "drain: merge fix/kv-counters-to-ledger-1 — kv-counters-to-ledger-1 — telemetry costs the edge zero KV writes with the ledger bound (up to fifteen before), the rate limiters and the connect door call the ledger's atomic increment with a KV fallback that says so in a header and refuses instead of throwing, bug reports and prize codes gain ledger routes with a 90-day expires_at swept daily, the migration written and not run; nothing live until the ops evening binds the secret (Opus 5.5 implementer on the Anthropic subscription; owner ruling 7 (b) of 2026-09-24)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": true, "ledgerBattery": false,
+    "specs": [],
+    "guards": ["scripts/function-cors-allowlist.test.mjs", "scripts/worker-type-coverage.test.mjs"]
+  },
+  "cure": "scripts/attended/landings/kv1-cure.sh",
+  "review": { "path": "reviews/kv-counters-to-ledger-1.md", "title": "Drain review: `kv-counters-to-ledger-1`, the free-tier KV budget stops being one visitor's to exhaust (Opus 5.5 implementer; owner ruling 7 (b) of 2026-09-24)", "body": "scripts/attended/landings/kv1-review.md" },
+  "bookkeeping": {
+    "taskFile": "kv-counters-to-ledger-1.md", "rowKey": "KV COUNTERS TO LEDGER LANDED", "rowEmoji": "🧮",
+    "rowText": "With `LEDGER_PROXY_SECRET` bound every beacon shape costs the edge ZERO KV writes (up to fifteen before, thirteen on a fresh-nonce replay; unbound, the replay now costs one); the rate limiters and the connect door use the ledger's atomic increment with a KV fallback declared in `X-Ledger-Fallback`, and a failing store answers 429 instead of throwing; ledger routes for telemetry, increment, bug reports and prize codes with the same allowlists and caps, a 90-day `expires_at` swept daily at 02:00 UTC; `scripts/kv-to-ledger-migrate.mjs` written, NOT run; the two split bindings written in the report, not applied. Gates: accounts 241, mp 528, stats unchanged, guards 22/22. NOTHING IS LIVE until the ops evening binds the secret (`docs/ops/ops-evening-2026-09.md` Part C, eight steps, with two owner decisions there: F-KV1-7 bug reports and hashed IPs entering the backups and the archive; F-KV1-3 the demotion count). Slices left: F-KV1-4 (the multiplayer fallback's own limiter), F-KV1-5 (the Pages standings copy still writes KV). Engine hash unchanged {PIN}; no deploy (the edge functions deploy with the next production deploy and stay inert unbound).",
+    "statusPhrase": "the counters move to the droplet ledger behind a secret the ops evening binds; until then nothing changes on the edge",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh kv1)"
+  },
+  "deploy": false, "preview": false, "evidenceDir": "artifacts/kv-counters-to-ledger-1"
+}

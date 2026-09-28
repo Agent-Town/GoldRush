@@ -1,0 +1,17 @@
+PASS desktop/light v0-base -> v1-files (identical): 1280x2174 vs 1280x2174, 0 px differ
+PASS desktop/light v1-files -> v2-card (identical): 1280x2174 vs 1280x2174, 0 px differ
+PASS desktop/light v2-card -> v3-footer (footer-only): 1280x2174 vs 1280x2174, 1616 px differ, box y 2096..2107 x 757..1136, footer band y 2073..2111
+PASS desktop/light v0-base -> v3-footer (footer-only): 1280x2174 vs 1280x2174, 1616 px differ, box y 2096..2107 x 757..1136, footer band y 2073..2111
+PASS desktop/dark v0-base -> v1-files (identical): 1280x2174 vs 1280x2174, 0 px differ
+PASS desktop/dark v1-files -> v2-card (identical): 1280x2174 vs 1280x2174, 0 px differ
+PASS desktop/dark v2-card -> v3-footer (footer-only): 1280x2174 vs 1280x2174, 1616 px differ, box y 2096..2107 x 757..1136, footer band y 2073..2111
+PASS desktop/dark v0-base -> v3-footer (footer-only): 1280x2174 vs 1280x2174, 1616 px differ, box y 2096..2107 x 757..1136, footer band y 2073..2111
+PASS mobile390/light v0-base -> v1-files (identical): 1073x8723 vs 1073x8723, 0 px differ
+FAIL mobile390/light v1-files -> v2-card (identical): 1073x8723 vs 1073x8723, 382430 px differ, box y 0..8252 x 0..1072, footer band y 8250..8549
+FAIL mobile390/light v2-card -> v3-footer (footer-only): 1073x8723 vs 1073x8674, 382564 px differ, box y 0..8537 x 0..1072, footer band y 8250..8549
+FAIL mobile390/light v0-base -> v3-footer (footer-only): 1073x8723 vs 1073x8674, 7541 px differ, box y 1718..8537 x 49..1020, footer band y 8250..8549
+FAIL mobile390/dark v0-base -> v1-files (identical): 1073x8723 vs 1073x8723, 32 px differ, box y 17..246 x 273..370, footer band y 8250..8549
+FAIL mobile390/dark v1-files -> v2-card (identical): 1073x8723 vs 1073x8723, 379228 px differ, box y 0..7793 x 0..1072, footer band y 8250..8549
+FAIL mobile390/dark v2-card -> v3-footer (footer-only): 1073x8723 vs 1073x8674, 7391 px differ, box y 1718..8537 x 51..1020, footer band y 8250..8549
+FAIL mobile390/dark v0-base -> v3-footer (footer-only): 1073x8723 vs 1073x8674, 379339 px differ, box y 0..8537 x 0..1072, footer band y 8250..8549
+verdict {"comparisonsPass":false,"zeroConsoleAndPageErrors":true,"zeroNotFound":true}; 16 captures in 21s

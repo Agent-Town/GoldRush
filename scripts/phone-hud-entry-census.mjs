@@ -4,7 +4,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './is-main.mjs';
 import { PNG } from 'pngjs';
 
 export const EVIDENCE = 'artifacts/sol/map-art-campaign-2/run-10/phone-hud';
@@ -162,6 +162,6 @@ export async function census(phase, { maps = MAPS, widths = [390, 1280] } = {}) 
   } finally { await browser.close(); }
   return report;
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (isMain(import.meta.url)) {
   await census(process.argv[2] ?? 'after', { maps: process.env.MAP ? [process.env.MAP] : MAPS, widths: process.env.WIDTH ? [Number(process.env.WIDTH)] : [390, 1280] });
 }

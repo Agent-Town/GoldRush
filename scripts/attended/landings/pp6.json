@@ -1,0 +1,44 @@
+{
+  "tag": "pp6",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5391,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-play-proofs-6 — Last Claim PROVED on both projects (the vent at wave 8, banked, the finale Book, byte-identical reload), River PARTIAL by design gap (the authored ending writes no completed score, F-PP6-2), Old Canal HELD (F-PP6-1); the campaign closed with its table of 20 measured maps and Astra's recommendation for the owner (Astra on the owner ChatGPT subscription, lane-c)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": false,
+    "specs": [
+      "e2e/native-proofs/the-claim.spec.ts",
+      "e2e/locked-win.spec.ts",
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "warmup": [
+      "/",
+      "/?contract=the-claim"
+    ],
+    "allowedBattery": []
+  },
+  "review": {
+    "path": "reviews/sol-play-proofs-6.md",
+    "title": "Drain review: `sol-play-proofs-6`, the last three maps and the campaign close (Astra, lane-c)",
+    "body": "scripts/attended/landings/pp6-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-play-proofs-6.md",
+    "rowKey": "SOL PLAY PROOFS RUN 6 LANDED, CAMPAIGN CLOSED",
+    "rowEmoji": "🧭",
+    "rowText": "Last Claim PROVED both projects (vent at wave 8 / 240.07 s, 331 and 338 of 360 HP, banked, the finale's Book return, byte-identical reload, clean); River PARTIAL by design gap (F-PP6-2: the authored lever-and-pan ending works, 30 gold, wave 0, no enemies through 35 s, Book returns; no completed score is written, so bank and reload cannot pass); Old Canal HELD (F-PP6-1: all three choices work, deaths waves 19/18). Eight rows clean; hash unchanged {PIN}. CAMPAIGN CLOSED after six runs, 20 measured contracts: proved both screens Incline and Last Claim; one screen the Claim (control) and Devil's Alley (phone); partial Blackout Ridge and River; defect Canyon Works (corrected today, acceptance pressure-bound); held twelve on the driver's survival ceiling (waves 13 to 17) or its ground-only movement. Desk: F-PP-CAMPAIGN (Astra's recommendation verbatim: end the sweep, one ground strategy, an orbital driver, human playtests; no balance changes from holds) and F-PP6-2 (the River ending's score).",
+    "statusPhrase": "the play-proofs campaign is closed after six runs: Last Claim proved on both screens, the River's authored ending works but writes no score, and the holds measure the driver, not the maps",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh pp6)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-6",
+  "cure": "scripts/attended/landings/pp6-cure.sh"
+}

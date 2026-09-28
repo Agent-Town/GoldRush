@@ -415,6 +415,19 @@ Mint the registry deterministically with `node scripts/rotation-mint.mjs --week 
         "e2-hill-mine": "e2-hill-mine-r2026w39-b64d7667f323",
         "e1-baron": "e1-baron-r2026w39-a70ccb333bb8"
       }
+    },
+    {
+      "id": "r2026w40",
+      "opensAt": "2026-09-28T00:00:00.000Z",
+      "closesAt": "2026-10-05T00:00:00.000Z",
+      "seeds": {
+        "the-claim": "e1-the-claim-r2026w40-418026a0ec56",
+        "e1-dry-gulch": "e1-dry-gulch-r2026w40-026295aeed94",
+        "e1-twin-banks": "e1-twin-banks-r2026w40-04011cda25bf",
+        "e1-night-shift": "e1-night-shift-r2026w40-43ca36636450",
+        "e2-hill-mine": "e2-hill-mine-r2026w40-101072747bc7",
+        "e1-baron": "e1-baron-r2026w40-e7272e198e52"
+      }
     }
   ]
 }
@@ -530,6 +543,8 @@ The Regatta ranks the mechanic first: on `e5-regatta` a row whose race the count
 Submit only a secured run to `POST https://agenttown.app/api/standings` with `content-type: application/json` and an allowed game origin. The contract and epoch must match; `anonId` is 32 lowercase hexadecimal characters; hashes are 64 lowercase hexadecimal SHA-256 values; difficulty is `greenhorn`, `trail`, or `vein-hunter`.
 
 Read a rotation with `GET https://agenttown.app/api/standings?board=transfer&rotation=r2026w37`. Its six contract boards contain verified rows only and use the public score ordering; ordinary public rows add `heldOut: { rotationId, waves } | null` for the same `harnessDigest`.
+
+The public board of one contract takes the same week: add `&rotation=<week id>` or `&rotation=open` (the open week) to the board `GET` (county-board-open-week-1, 2026-09-26); a week unknown, not yet open or not carrying the contract answers 400 `bad_rotation`; without `rotation` the board is the all-time constant-seed one.
 
 ```json
 {

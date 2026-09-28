@@ -1,0 +1,239 @@
+{
+  "revision": "90a26053c",
+  "commit": "90a26053c",
+  "ledgerClientPresent": false,
+  "telemetry": {
+    "unconfigured": [
+      {
+        "scenario": "first run beacon ever (end, unsecured)",
+        "kvWritesThisBeacon": 14,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:a1ceb3dc7b127ea22d04f67b50908245",
+          "telemetry:dedup:2026-09:7097edb765e10c3b92dd88eb31ce37b7a67252829e29db7a736f6f497049400f",
+          "telemetry:runs:total",
+          "telemetry:runs:day:2026-09-25",
+          "telemetry:contract:e1-dry-gulch",
+          "telemetry:tier:BALANCED",
+          "telemetry:device:desktop",
+          "telemetry:frameP95:16-25",
+          "telemetry:device:desktop:frameP95:16-25",
+          "telemetry:duration:5-10m",
+          "telemetry:waves:10-19",
+          "telemetry:waves:max",
+          "telemetry:continuation:unsecured",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "next distinct run within the minute (end, unsecured)",
+        "kvWritesThisBeacon": 13,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:cdd7d717470134c78ea853e0b26db3e2",
+          "telemetry:dedup:2026-09:6dda783c8e31f0d1ba8a2d7ecef0d96772d7d33211d232ad196c19e07c8e879b",
+          "telemetry:runs:total",
+          "telemetry:runs:day:2026-09-25",
+          "telemetry:contract:e1-dry-gulch",
+          "telemetry:tier:BALANCED",
+          "telemetry:device:desktop",
+          "telemetry:frameP95:16-25",
+          "telemetry:device:desktop:frameP95:16-25",
+          "telemetry:duration:5-10m",
+          "telemetry:waves:10-19",
+          "telemetry:continuation:unsecured",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "secure beacon",
+        "kvWritesThisBeacon": 11,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:8a41be1b9384df10fe153ecb37c4ccce",
+          "telemetry:dedup:2026-09:d463b357437500c99af8b1991ced13124b38d420068e80f0d1dd9aa691c26867",
+          "telemetry:runs:total",
+          "telemetry:runs:day:2026-09-25",
+          "telemetry:contract:e1-dry-gulch",
+          "telemetry:tier:BALANCED",
+          "telemetry:device:desktop",
+          "telemetry:frameP95:16-25",
+          "telemetry:device:desktop:frameP95:16-25",
+          "telemetry:secured-at:5-9",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "end beacon after a secure",
+        "kvWritesThisBeacon": 7,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:5aa23fc6904a74c72a2a2a9067fc55d7",
+          "telemetry:dedup:2026-09:0cb042d69b8bed95740555518342b34c63cb86ebc9abd56a24d6046bdfd761b1",
+          "telemetry:duration:5-10m",
+          "telemetry:waves:10-19",
+          "telemetry:waves:max",
+          "telemetry:continuation:continued",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "legacy client, secured, deepest wave record (the worst case)",
+        "kvWritesThisBeacon": 15,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:440a628a0c975ea32d4db42ca94acebc",
+          "telemetry:dedup:2026-09:c521f12d0d7f9d701dbfc61e09e946043c1afffeac1a052b294d63231bf3bb8a",
+          "telemetry:runs:total",
+          "telemetry:runs:day:2026-09-25",
+          "telemetry:contract:e1-dry-gulch",
+          "telemetry:tier:BALANCED",
+          "telemetry:device:desktop",
+          "telemetry:frameP95:16-25",
+          "telemetry:device:desktop:frameP95:16-25",
+          "telemetry:duration:10-20m",
+          "telemetry:waves:40plus",
+          "telemetry:waves:max",
+          "telemetry:continuation:continued",
+          "telemetry:secured-at:5-9",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "same run replayed with the SAME nonce",
+        "kvWritesThisBeacon": 1,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:67c29aecb747836784e2af72a780064f"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": true
+          }
+        }
+      },
+      {
+        "scenario": "same run replayed with a FRESH nonce (the flood shape)",
+        "kvWritesThisBeacon": 13,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:fec52565aa0cf18f57d7cf5b3ac72850",
+          "telemetry:dedup:2026-09:9cf8f17e84b0e248a016ff4b4bccca77e601d3e3cc2bb5695099ea5d4dfd71bc",
+          "telemetry:runs:total",
+          "telemetry:runs:day:2026-09-25",
+          "telemetry:contract:e1-dry-gulch",
+          "telemetry:tier:BALANCED",
+          "telemetry:device:desktop",
+          "telemetry:frameP95:16-25",
+          "telemetry:device:desktop:frameP95:16-25",
+          "telemetry:duration:5-10m",
+          "telemetry:waves:10-19",
+          "telemetry:continuation:unsecured",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "render demotion, first",
+        "kvWritesThisBeacon": 8,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:ddbea5471056690e5b1dcfe0c39ffca2",
+          "telemetry:render-demotion:latest:the-claim",
+          "telemetry:render-demotion:total",
+          "telemetry:render-demotion:day:2026-09-25",
+          "telemetry:render-demotion:reason:webgl-context-lost",
+          "telemetry:render-demotion:contract:the-claim",
+          "telemetry:render-demotion:tier:LITE",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "render demotion, identical replay",
+        "kvWritesThisBeacon": 8,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:d861b7e91033ebc1c1e8e7af39290101",
+          "telemetry:render-demotion:latest:the-claim",
+          "telemetry:render-demotion:total",
+          "telemetry:render-demotion:day:2026-09-25",
+          "telemetry:render-demotion:reason:webgl-context-lost",
+          "telemetry:render-demotion:contract:the-claim",
+          "telemetry:render-demotion:tier:LITE",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      }
+    ]
+  },
+  "connectWithFailingKv": {
+    "outcome": "threw",
+    "error": "KV PUT failed: 429 Too Many Requests (daily write limit)",
+    "roomCalls": 0
+  }
+}

@@ -1,0 +1,701 @@
+# Canyon Works t2 ramp: slope table by window (goldrush.cw2.slope-t2.v1)
+measured with the sim's own simSlope / isTraversable / Terrain.sample loaded through vite SSR (the canyon-works-traversal-1 method)
+slopeMax (Balance.terrainSim) 0.35; isTraversable = outside the scripted cliff rectangle AND hypot(simSlope) <= slopeMax; simSlope central-difference step 0.5 m
+t2 rise 4 m (t1Height -> t2Height); smoothstep peak gradient 1.5 h / r, central difference rise * (1.5/r - 2 s^2/r^3)
+cliff (unchanged): x -12..12, z 18..26, amp 2.2, feather 1; footprint (cliff term + feather + difference step) x -13.5..13.5, z 16.5..27.5
+
+## summary: one row per window
+window     run  1.5h/r peak outside footprint (tile 0.25 m / band 0.05 m)    margin refused outside  seams  galleries lamps turrets  cliff rect refused
+18..28      10  0.6000 0.598 at (-48,23) / 0.598 at (-48,23)                -0.2480   6900 + 178020  0/4    0/2       0/2   0/2      833/833
+14..32      18  0.3333 0.333 at (-48,23) / 0.333 at (-48,23)                 0.0170           0 + 0  4/4    2/2       2/2   2/2      833/833
+13..33      20  0.3000 0.2998 at (-48,23) / 0.2998 at (-48,23)               0.0502           0 + 0  4/4    2/2       2/2   2/2      833/833
+15..31      16  0.3750 0.3745 at (-48,23) / 0.3745 at (-48,23)              -0.0245   4692 + 111780  0/4    0/2       0/2   2/2      833/833
+14..31      17  0.3529 0.3525 at (-48,22.5) / 0.3525 at (-48,22.5)          -0.0025    1380 + 40020  0/4    0/2       0/2   2/2      833/833
+15..32      17  0.3529 0.3525 at (-48,23.5) / 0.3525 at (-48,23.5)          -0.0025    1380 + 40020  0/4    0/2       0/2   2/2      833/833
+
+(refused outside = refused points outside the cliff footprint on the 0.25 m whole-tile lattice + on the 0.05 m t2-band lattice; seams/galleries/lamps/turrets = reached on foot from the bridge at (0,-5) with the cliff footprint excluded from the walk)
+
+## window t2RampStart 18 .. t2RampEnd 28 (run 10 m)
+source: working tree (assets/contracts/epoch-3-voltage/contracts.json) + t2RampStart 18, t2RampEnd 28 (in memory only; served 18..28)
+active contract: e3-canyon-works (fallbackReason null); neighbours: t1 ramp 6..14, t3 ramp 40..50
+peak: analytic 1.5h/r 0.6, central difference 0.598; outside the cliff footprint, whole tile (0.25 m): 0.598 at (-48,23), margin -0.248, refused points 6900 in x -48..48, z 20..26
+      t2 band z 8..38 (0.05 m, 1034960 points): 0.598 at (-48,23), margin -0.248, refused points 178020 in x -48..48, z 19.8..26.2
+cliff still a cliff: scripted rectangle refused 833/833 (0.5 m lattice); height on top at (0,22) 4.108 m against 1.908 m on the ramp beside it at x 14.5
+### columns, t2 band z 8..38 (step 0.01): peak |simSlope| (all / outside footprint) and every refused band (kind: cliff = inside the footprint, ramp = outside it)
+x=  0 (crosses the cliff footprint): peak 2.2 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.76..27.18 (10.42 m, cliff, peak 2.2 at z 17.5)
+x= -8 (crosses the cliff footprint): peak 2.2 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.76..27.18 (10.42 m, cliff, peak 2.2 at z 17.5)
+x=  8 (crosses the cliff footprint): peak 2.2 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.76..27.18 (10.42 m, cliff, peak 2.2 at z 17.5)
+x=-14: peak 0.598 at z 23; outside footprint 0.598 at z 23; refused: z 19.79..26.21 (6.42 m, ramp, peak 0.598 at z 23)
+x= 14: peak 0.598 at z 23; outside footprint 0.598 at z 23; refused: z 19.79..26.21 (6.42 m, ramp, peak 0.598 at z 23)
+x=-20: peak 0.598 at z 23; outside footprint 0.598 at z 23; refused: z 19.79..26.21 (6.42 m, ramp, peak 0.598 at z 23)
+x= 20: peak 0.598 at z 23; outside footprint 0.598 at z 23; refused: z 19.79..26.21 (6.42 m, ramp, peak 0.598 at z 23)
+x=-30: peak 0.598 at z 23; outside footprint 0.598 at z 23; refused: z 19.79..26.21 (6.42 m, ramp, peak 0.598 at z 23)
+x= 30: peak 0.598 at z 23; outside footprint 0.598 at z 23; refused: z 19.79..26.21 (6.42 m, ramp, peak 0.598 at z 23)
+### columns, whole tile z -56..56 (step 0.05): every refused band
+x=  0: z 16.8..27.15 (10.35 m, cliff)
+x= -8: z 16.8..27.15 (10.35 m, cliff)
+x=  8: z 16.8..27.15 (10.35 m, cliff)
+x=-14: z 19.8..26.2 (6.4 m, ramp)
+x= 14: z 19.8..26.2 (6.4 m, ramp)
+x=-20: z 19.8..26.2 (6.4 m, ramp)
+x= 20: z 19.8..26.2 (6.4 m, ramp)
+x=-30: z 19.8..26.2 (6.4 m, ramp)
+x= 30: z 19.8..26.2 (6.4 m, ramp)
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 24896 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  UNREACHABLE turret turret-west (-18,22)
+  UNREACHABLE turret turret-east (18,22)
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 24965 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  UNREACHABLE turret turret-west (-18,22)
+  UNREACHABLE turret turret-east (18,22)
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-44); a target is reached when a reached point lies within 1.5 m; 24896 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  UNREACHABLE turret turret-west (-18,22)
+  UNREACHABLE turret turret-east (18,22)
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 50.5 m, enters cliff footprint: false
+### height profile (step 1 m): simHeight / |simSlope| / isTraversable (T or -) / Terrain.sample walkable (w or x)
+   z                    x=0                  x=-14                  x=-20                  x=-30
+   8  -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w  
+   9  -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w  
+  10  -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w  
+  11   0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w  
+  12   0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w  
+  13   0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w  
+  14   0.500  0.0168 T w     0.500  0.0168 T w     0.500  0.0168 T w     0.500  0.0168 T w  
+  15   0.500  0.0000 T w     0.500  0.0000 T w     0.500  0.0000 T w     0.500  0.0000 T w  
+  16   0.500  0.0000 T w     0.500  0.0000 T w     0.500  0.0000 T w     0.500  0.0000 T w  
+  17   0.500  1.1000 - x     0.500  0.0000 T w     0.500  0.0000 T w     0.500  0.0000 T w  
+  18   2.700  1.1290 - x     0.500  0.0290 T w     0.500  0.0290 T w     0.500  0.0290 T w  
+  19   2.812  0.2140 - x     0.612  0.2140 T w     0.612  0.2140 T w     0.612  0.2140 T w  
+  20   3.116  0.3820 - x     0.916  0.3820 - x     0.916  0.3820 - x     0.916  0.3820 - x  
+  21   3.564  0.5020 - x     1.364  0.5020 - x     1.364  0.5020 - x     1.364  0.5020 - x  
+  22   4.108  0.5740 - x     1.908  0.5740 - x     1.908  0.5740 - x     1.908  0.5740 - x  
+  23   4.700  0.5980 - x     2.500  0.5980 - x     2.500  0.5980 - x     2.500  0.5980 - x  
+  24   5.292  0.5740 - x     3.092  0.5740 - x     3.092  0.5740 - x     3.092  0.5740 - x  
+  25   5.836  0.5020 - x     3.636  0.5020 - x     3.636  0.5020 - x     3.636  0.5020 - x  
+  26   6.284  0.7180 - x     4.084  0.3820 - x     4.084  0.3820 - x     4.084  0.3820 - x  
+  27   4.388  0.8860 - x     4.388  0.2140 T w     4.388  0.2140 T w     4.388  0.2140 T w  
+  28   4.500  0.0290 T w     4.500  0.0290 T w     4.500  0.0290 T w     4.500  0.0290 T w  
+  29   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  30   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  31   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  32   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  33   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  34   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  35   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  36   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  37   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  38   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+
+## window t2RampStart 14 .. t2RampEnd 32 (run 18 m)
+source: working tree (assets/contracts/epoch-3-voltage/contracts.json) + t2RampStart 14, t2RampEnd 32 (in memory only; served 18..28)
+active contract: e3-canyon-works (fallbackReason null); neighbours: t1 ramp 6..14, t3 ramp 40..50
+peak: analytic 1.5h/r 0.3333, central difference 0.333; outside the cliff footprint, whole tile (0.25 m): 0.333 at (-48,23), margin 0.017, refused points 0
+      t2 band z 8..38 (0.05 m, 1034960 points): 0.333 at (-48,23), margin 0.017, refused points 0
+cliff still a cliff: scripted rectangle refused 833/833 (0.5 m lattice); height on top at (0,22) 4.368 m against 2.168 m on the ramp beside it at x 14.5
+### columns, t2 band z 8..38 (step 0.01): peak |simSlope| (all / outside footprint) and every refused band (kind: cliff = inside the footprint, ramp = outside it)
+x=  0 (crosses the cliff footprint): peak 2.4085 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.68..27.15 (10.47 m, cliff, peak 2.4085 at z 17.5)
+x= -8 (crosses the cliff footprint): peak 2.4085 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.68..27.15 (10.47 m, cliff, peak 2.4085 at z 17.5)
+x=  8 (crosses the cliff footprint): peak 2.4085 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.68..27.15 (10.47 m, cliff, peak 2.4085 at z 17.5)
+x=-14: peak 0.333 at z 23; outside footprint 0.333 at z 23; refused: none
+x= 14: peak 0.333 at z 23; outside footprint 0.333 at z 23; refused: none
+x=-20: peak 0.333 at z 23; outside footprint 0.333 at z 23; refused: none
+x= 20: peak 0.333 at z 23; outside footprint 0.333 at z 23; refused: none
+x=-30: peak 0.333 at z 23; outside footprint 0.333 at z 23; refused: none
+x= 30: peak 0.333 at z 23; outside footprint 0.333 at z 23; refused: none
+### columns, whole tile z -56..56 (step 0.05): every refused band
+x=  0: z 16.7..27.15 (10.45 m, cliff)
+x= -8: z 16.7..27.15 (10.45 m, cliff)
+x=  8: z 16.7..27.15 (10.45 m, cliff)
+x=-14: none
+x= 14: none
+x=-20: none
+x= 20: none
+x=-30: none
+x= 30: none
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 38024 lattice points reached
+  REACHED     seam anchor-0 (-34,30) path 52.3 m, enters cliff footprint: false
+  REACHED     seam anchor-1 (-22,34) path 48.1 m, enters cliff footprint: false
+  REACHED     seam anchor-2 (22,34) path 48.1 m, enters cliff footprint: false
+  REACHED     seam anchor-3 (34,30) path 52.3 m, enters cliff footprint: false
+  REACHED     gallery gallery-west (-28,28) path 45.5 m, enters cliff footprint: false
+  REACHED     gallery gallery-east (28,28) path 45.5 m, enters cliff footprint: false
+  REACHED     turret turret-west (-18,22) path 34.5 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 34.5 m, enters cliff footprint: false
+  REACHED     lamp lamp-west (-32,32) path 51.1 m, enters cliff footprint: false
+  REACHED     lamp lamp-east (32,32) path 51.1 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 38182 lattice points reached
+  REACHED     seam anchor-0 (-34,30) path 52.3 m, enters cliff footprint: false
+  REACHED     seam anchor-1 (-22,34) path 48.1 m, enters cliff footprint: true
+  REACHED     seam anchor-2 (22,34) path 48.1 m, enters cliff footprint: true
+  REACHED     seam anchor-3 (34,30) path 52.3 m, enters cliff footprint: false
+  REACHED     gallery gallery-west (-28,28) path 45.5 m, enters cliff footprint: false
+  REACHED     gallery gallery-east (28,28) path 45.5 m, enters cliff footprint: false
+  REACHED     turret turret-west (-18,22) path 34.5 m, enters cliff footprint: true
+  REACHED     turret turret-east (18,22) path 34.5 m, enters cliff footprint: true
+  REACHED     lamp lamp-west (-32,32) path 51.1 m, enters cliff footprint: false
+  REACHED     lamp lamp-east (32,32) path 51.1 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-44); a target is reached when a reached point lies within 1.5 m; 38024 lattice points reached
+  REACHED     seam anchor-0 (-34,30) path 91.3 m, enters cliff footprint: false
+  REACHED     seam anchor-1 (-22,34) path 87.1 m, enters cliff footprint: false
+  REACHED     seam anchor-2 (22,34) path 87.1 m, enters cliff footprint: false
+  REACHED     seam anchor-3 (34,30) path 91.3 m, enters cliff footprint: false
+  REACHED     gallery gallery-west (-28,28) path 84.5 m, enters cliff footprint: false
+  REACHED     gallery gallery-east (28,28) path 84.5 m, enters cliff footprint: false
+  REACHED     turret turret-west (-18,22) path 73.5 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 73.5 m, enters cliff footprint: false
+  REACHED     lamp lamp-west (-32,32) path 90.1 m, enters cliff footprint: false
+  REACHED     lamp lamp-east (32,32) path 90.1 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-base (-12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 50.5 m, enters cliff footprint: false
+### height profile (step 1 m): simHeight / |simSlope| / isTraversable (T or -) / Terrain.sample walkable (w or x)
+   z                    x=0                  x=-14                  x=-20                  x=-30
+   8  -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w  
+   9  -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w  
+  10  -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w  
+  11   0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w  
+  12   0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w  
+  13   0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w  
+  14   0.500  0.0259 T w     0.500  0.0259 T w     0.500  0.0259 T w     0.500  0.0259 T w  
+  15   0.536  0.0696 T w     0.536  0.0696 T w     0.536  0.0696 T w     0.536  0.0696 T w  
+  16   0.637  0.1313 T w     0.637  0.1313 T w     0.637  0.1313 T w     0.637  0.1313 T w  
+  17   0.796  1.2848 - x     0.796  0.1848 T w     0.796  0.1848 T w     0.796  0.1848 T w  
+  18   3.205  1.3301 - x     1.005  0.2301 T w     1.005  0.2301 T w     1.005  0.2301 T w  
+  19   3.454  0.2671 - x     1.254  0.2671 T w     1.254  0.2671 T w     1.254  0.2671 T w  
+  20   3.737  0.2960 - x     1.537  0.2960 T w     1.537  0.2960 T w     1.537  0.2960 T w  
+  21   4.044  0.3165 - x     1.844  0.3165 T w     1.844  0.3165 T w     1.844  0.3165 T w  
+  22   4.368  0.3289 - x     2.168  0.3289 T w     2.168  0.3289 T w     2.168  0.3289 T w  
+  23   4.700  0.3330 - x     2.500  0.3330 T w     2.500  0.3330 T w     2.500  0.3330 T w  
+  24   5.032  0.3289 - x     2.832  0.3289 T w     2.832  0.3289 T w     2.832  0.3289 T w  
+  25   5.356  0.3165 - x     3.156  0.3165 T w     3.156  0.3165 T w     3.156  0.3165 T w  
+  26   5.663  0.8040 - x     3.463  0.2960 T w     3.463  0.2960 T w     3.463  0.2960 T w  
+  27   3.746  0.8329 - x     3.746  0.2671 T w     3.746  0.2671 T w     3.746  0.2671 T w  
+  28   3.995  0.2301 T w     3.995  0.2301 T w     3.995  0.2301 T w     3.995  0.2301 T w  
+  29   4.204  0.1848 T w     4.204  0.1848 T w     4.204  0.1848 T w     4.204  0.1848 T w  
+  30   4.363  0.1313 T w     4.363  0.1313 T w     4.363  0.1313 T w     4.363  0.1313 T w  
+  31   4.464  0.0696 T w     4.464  0.0696 T w     4.464  0.0696 T w     4.464  0.0696 T w  
+  32   4.500  0.0091 T w     4.500  0.0091 T w     4.500  0.0091 T w     4.500  0.0091 T w  
+  33   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  34   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  35   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  36   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  37   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  38   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+
+## window t2RampStart 13 .. t2RampEnd 33 (run 20 m)
+source: working tree (assets/contracts/epoch-3-voltage/contracts.json) + t2RampStart 13, t2RampEnd 33 (in memory only; served 18..28)
+active contract: e3-canyon-works (fallbackReason null); neighbours: t1 ramp 6..14, t3 ramp 40..50
+peak: analytic 1.5h/r 0.3, central difference 0.2998; outside the cliff footprint, whole tile (0.25 m): 0.2998 at (-48,23), margin 0.0502, refused points 0
+      t2 band z 8..38 (0.05 m, 1034960 points): 0.2998 at (-48,23), margin 0.0502, refused points 0
+cliff still a cliff: scripted rectangle refused 833/833 (0.5 m lattice); height on top at (0,22) 4.401 m against 2.201 m on the ramp beside it at x 14.5
+### columns, t2 band z 8..38 (step 0.01): peak |simSlope| (all / outside footprint) and every refused band (kind: cliff = inside the footprint, ramp = outside it)
+x=  0 (crosses the cliff footprint): peak 2.409 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.68..27.15 (10.47 m, cliff, peak 2.409 at z 17.5)
+x= -8 (crosses the cliff footprint): peak 2.409 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.68..27.15 (10.47 m, cliff, peak 2.409 at z 17.5)
+x=  8 (crosses the cliff footprint): peak 2.409 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.68..27.15 (10.47 m, cliff, peak 2.409 at z 17.5)
+x=-14: peak 0.2998 at z 23; outside footprint 0.2998 at z 23; refused: none
+x= 14: peak 0.2998 at z 23; outside footprint 0.2998 at z 23; refused: none
+x=-20: peak 0.2998 at z 23; outside footprint 0.2998 at z 23; refused: none
+x= 20: peak 0.2998 at z 23; outside footprint 0.2998 at z 23; refused: none
+x=-30: peak 0.2998 at z 23; outside footprint 0.2998 at z 23; refused: none
+x= 30: peak 0.2998 at z 23; outside footprint 0.2998 at z 23; refused: none
+### columns, whole tile z -56..56 (step 0.05): every refused band
+x=  0: z 16.7..27.15 (10.45 m, cliff)
+x= -8: z 16.7..27.15 (10.45 m, cliff)
+x=  8: z 16.7..27.15 (10.45 m, cliff)
+x=-14: none
+x= 14: none
+x=-20: none
+x= 20: none
+x=-30: none
+x= 30: none
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 38024 lattice points reached
+  REACHED     seam anchor-0 (-34,30) path 52.3 m, enters cliff footprint: false
+  REACHED     seam anchor-1 (-22,34) path 48.1 m, enters cliff footprint: false
+  REACHED     seam anchor-2 (22,34) path 48.1 m, enters cliff footprint: false
+  REACHED     seam anchor-3 (34,30) path 52.3 m, enters cliff footprint: false
+  REACHED     gallery gallery-west (-28,28) path 45.5 m, enters cliff footprint: false
+  REACHED     gallery gallery-east (28,28) path 45.5 m, enters cliff footprint: false
+  REACHED     turret turret-west (-18,22) path 34.5 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 34.5 m, enters cliff footprint: false
+  REACHED     lamp lamp-west (-32,32) path 51.1 m, enters cliff footprint: false
+  REACHED     lamp lamp-east (32,32) path 51.1 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 38182 lattice points reached
+  REACHED     seam anchor-0 (-34,30) path 52.3 m, enters cliff footprint: false
+  REACHED     seam anchor-1 (-22,34) path 48.1 m, enters cliff footprint: true
+  REACHED     seam anchor-2 (22,34) path 48.1 m, enters cliff footprint: true
+  REACHED     seam anchor-3 (34,30) path 52.3 m, enters cliff footprint: false
+  REACHED     gallery gallery-west (-28,28) path 45.5 m, enters cliff footprint: false
+  REACHED     gallery gallery-east (28,28) path 45.5 m, enters cliff footprint: false
+  REACHED     turret turret-west (-18,22) path 34.5 m, enters cliff footprint: true
+  REACHED     turret turret-east (18,22) path 34.5 m, enters cliff footprint: true
+  REACHED     lamp lamp-west (-32,32) path 51.1 m, enters cliff footprint: false
+  REACHED     lamp lamp-east (32,32) path 51.1 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-44); a target is reached when a reached point lies within 1.5 m; 38024 lattice points reached
+  REACHED     seam anchor-0 (-34,30) path 91.3 m, enters cliff footprint: false
+  REACHED     seam anchor-1 (-22,34) path 87.1 m, enters cliff footprint: false
+  REACHED     seam anchor-2 (22,34) path 87.1 m, enters cliff footprint: false
+  REACHED     seam anchor-3 (34,30) path 91.3 m, enters cliff footprint: false
+  REACHED     gallery gallery-west (-28,28) path 84.5 m, enters cliff footprint: false
+  REACHED     gallery gallery-east (28,28) path 84.5 m, enters cliff footprint: false
+  REACHED     turret turret-west (-18,22) path 73.5 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 73.5 m, enters cliff footprint: false
+  REACHED     lamp lamp-west (-32,32) path 90.1 m, enters cliff footprint: false
+  REACHED     lamp lamp-east (32,32) path 90.1 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-base (-12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 50.5 m, enters cliff footprint: false
+### height profile (step 1 m): simHeight / |simSlope| / isTraversable (T or -) / Terrain.sample walkable (w or x)
+   z                    x=0                  x=-14                  x=-20                  x=-30
+   8  -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w  
+   9  -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w  
+  10  -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w  
+  11   0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w  
+  12   0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w  
+  13   0.436  0.1290 T w     0.436  0.1290 T w     0.436  0.1290 T w     0.436  0.1290 T w  
+  14   0.529  0.0736 T w     0.529  0.0736 T w     0.529  0.0736 T w     0.529  0.0736 T w  
+  15   0.612  0.1078 T w     0.612  0.1078 T w     0.612  0.1078 T w     0.612  0.1078 T w  
+  16   0.743  0.1527 T w     0.743  0.1527 T w     0.743  0.1527 T w     0.743  0.1527 T w  
+  17   0.916  1.2918 - x     0.916  0.1918 T w     0.916  0.1918 T w     0.916  0.1918 T w  
+  18   3.325  1.3248 - x     1.125  0.2248 T w     1.125  0.2248 T w     1.125  0.2248 T w  
+  19   3.564  0.2517 - x     1.364  0.2517 T w     1.364  0.2517 T w     1.364  0.2517 T w  
+  20   3.827  0.2727 - x     1.627  0.2727 T w     1.627  0.2727 T w     1.627  0.2727 T w  
+  21   4.108  0.2877 - x     1.908  0.2877 T w     1.908  0.2877 T w     1.908  0.2877 T w  
+  22   4.401  0.2967 - x     2.201  0.2967 T w     2.201  0.2967 T w     2.201  0.2967 T w  
+  23   4.700  0.2998 - x     2.500  0.2998 T w     2.500  0.2998 T w     2.500  0.2998 T w  
+  24   4.999  0.2967 - x     2.799  0.2967 T w     2.799  0.2967 T w     2.799  0.2967 T w  
+  25   5.292  0.2877 - x     3.092  0.2878 T w     3.092  0.2878 T w     3.092  0.2878 T w  
+  26   5.573  0.8273 - x     3.373  0.2728 T w     3.373  0.2728 T w     3.373  0.2728 T w  
+  27   3.636  0.8482 - x     3.636  0.2517 T w     3.636  0.2517 T w     3.636  0.2517 T w  
+  28   3.875  0.2248 T w     3.875  0.2248 T w     3.875  0.2248 T w     3.875  0.2248 T w  
+  29   4.084  0.1917 T w     4.084  0.1917 T w     4.084  0.1917 T w     4.084  0.1917 T w  
+  30   4.257  0.1528 T w     4.257  0.1528 T w     4.257  0.1528 T w     4.257  0.1528 T w  
+  31   4.388  0.1078 T w     4.388  0.1078 T w     4.388  0.1078 T w     4.388  0.1078 T w  
+  32   4.471  0.0568 T w     4.471  0.0568 T w     4.471  0.0568 T w     4.471  0.0568 T w  
+  33   4.500  0.0074 T w     4.500  0.0074 T w     4.500  0.0074 T w     4.500  0.0074 T w  
+  34   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  35   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  36   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  37   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  38   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+
+## window t2RampStart 15 .. t2RampEnd 31 (run 16 m)
+source: working tree (assets/contracts/epoch-3-voltage/contracts.json) + t2RampStart 15, t2RampEnd 31 (in memory only; served 18..28)
+active contract: e3-canyon-works (fallbackReason null); neighbours: t1 ramp 6..14, t3 ramp 40..50
+peak: analytic 1.5h/r 0.375, central difference 0.3745; outside the cliff footprint, whole tile (0.25 m): 0.3745 at (-48,23), margin -0.0245, refused points 4692 in x -48..48, z 21..25
+      t2 band z 8..38 (0.05 m, 1034960 points): 0.3745 at (-48,23), margin -0.0245, refused points 111780 in x -48..48, z 21..25
+cliff still a cliff: scripted rectangle refused 833/833 (0.5 m lattice); height on top at (0,22) 4.327 m against 2.127 m on the ramp beside it at x 14.5
+### columns, t2 band z 8..38 (step 0.01): peak |simSlope| (all / outside footprint) and every refused band (kind: cliff = inside the footprint, ramp = outside it)
+x=  0 (crosses the cliff footprint): peak 2.3973 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.7..27.14 (10.44 m, cliff, peak 2.3973 at z 17.5)
+x= -8 (crosses the cliff footprint): peak 2.3973 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.7..27.14 (10.44 m, cliff, peak 2.3973 at z 17.5)
+x=  8 (crosses the cliff footprint): peak 2.3973 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.7..27.14 (10.44 m, cliff, peak 2.3973 at z 17.5)
+x=-14: peak 0.3745 at z 23; outside footprint 0.3745 at z 23; refused: z 20.96..25.04 (4.08 m, ramp, peak 0.3745 at z 23)
+x= 14: peak 0.3745 at z 23; outside footprint 0.3745 at z 23; refused: z 20.96..25.04 (4.08 m, ramp, peak 0.3745 at z 23)
+x=-20: peak 0.3745 at z 23; outside footprint 0.3745 at z 23; refused: z 20.96..25.04 (4.08 m, ramp, peak 0.3745 at z 23)
+x= 20: peak 0.3745 at z 23; outside footprint 0.3745 at z 23; refused: z 20.96..25.04 (4.08 m, ramp, peak 0.3745 at z 23)
+x=-30: peak 0.3745 at z 23; outside footprint 0.3745 at z 23; refused: z 20.96..25.04 (4.08 m, ramp, peak 0.3745 at z 23)
+x= 30: peak 0.3745 at z 23; outside footprint 0.3745 at z 23; refused: z 20.96..25.04 (4.08 m, ramp, peak 0.3745 at z 23)
+### columns, whole tile z -56..56 (step 0.05): every refused band
+x=  0: z 16.7..27.1 (10.4 m, cliff)
+x= -8: z 16.7..27.1 (10.4 m, cliff)
+x=  8: z 16.7..27.1 (10.4 m, cliff)
+x=-14: z 21..25 (4 m, ramp)
+x= 14: z 21..25 (4 m, ramp)
+x=-20: z 21..25 (4 m, ramp)
+x= 20: z 21..25 (4 m, ramp)
+x=-30: z 21..25 (4 m, ramp)
+x= 30: z 21..25 (4 m, ramp)
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 25172 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  REACHED     turret turret-west (-18,22) path 33 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 33 m, enters cliff footprint: false
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 25245 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  REACHED     turret turret-west (-18,22) path 33 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 33 m, enters cliff footprint: false
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-44); a target is reached when a reached point lies within 1.5 m; 25172 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  REACHED     turret turret-west (-18,22) path 72 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 72 m, enters cliff footprint: false
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 50.5 m, enters cliff footprint: false
+### height profile (step 1 m): simHeight / |simSlope| / isTraversable (T or -) / Terrain.sample walkable (w or x)
+   z                    x=0                  x=-14                  x=-20                  x=-30
+   8  -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w  
+   9  -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w  
+  10  -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w  
+  11   0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w  
+  12   0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w  
+  13   0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w  
+  14   0.500  0.0168 T w     0.500  0.0168 T w     0.500  0.0168 T w     0.500  0.0168 T w  
+  15   0.500  0.0115 T w     0.500  0.0115 T w     0.500  0.0115 T w     0.500  0.0115 T w  
+  16   0.545  0.0874 T w     0.545  0.0874 T w     0.545  0.0874 T w     0.545  0.0874 T w  
+  17   0.672  1.2636 - x     0.672  0.1636 T w     0.672  0.1636 T w     0.672  0.1636 T w  
+  18   3.069  1.3280 - x     0.869  0.2280 T w     0.869  0.2280 T w     0.869  0.2280 T w  
+  19   3.325  0.2808 - x     1.125  0.2808 T w     1.125  0.2808 T w     1.125  0.2808 T w  
+  20   3.628  0.3218 - x     1.428  0.3218 T w     1.428  0.3218 T w     1.428  0.3218 T w  
+  21   3.966  0.3511 - x     1.766  0.3511 - x     1.766  0.3511 - x     1.766  0.3511 - x  
+  22   4.327  0.3687 - x     2.127  0.3687 - x     2.127  0.3687 - x     2.127  0.3687 - x  
+  23   4.700  0.3745 - x     2.500  0.3745 - x     2.500  0.3745 - x     2.500  0.3745 - x  
+  24   5.073  0.3687 - x     2.873  0.3687 - x     2.873  0.3687 - x     2.873  0.3687 - x  
+  25   5.434  0.3511 - x     3.234  0.3511 - x     3.234  0.3511 - x     3.234  0.3511 - x  
+  26   5.772  0.7782 - x     3.572  0.3218 T w     3.572  0.3218 T w     3.572  0.3218 T w  
+  27   3.875  0.8192 - x     3.875  0.2808 T w     3.875  0.2808 T w     3.875  0.2808 T w  
+  28   4.131  0.2280 T w     4.131  0.2280 T w     4.131  0.2280 T w     4.131  0.2280 T w  
+  29   4.328  0.1636 T w     4.328  0.1636 T w     4.328  0.1636 T w     4.328  0.1636 T w  
+  30   4.455  0.0874 T w     4.455  0.0874 T w     4.455  0.0874 T w     4.455  0.0874 T w  
+  31   4.500  0.0115 T w     4.500  0.0115 T w     4.500  0.0115 T w     4.500  0.0115 T w  
+  32   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  33   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  34   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  35   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  36   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  37   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  38   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+
+## window t2RampStart 14 .. t2RampEnd 31 (run 17 m)
+source: working tree (assets/contracts/epoch-3-voltage/contracts.json) + t2RampStart 14, t2RampEnd 31 (in memory only; served 18..28)
+active contract: e3-canyon-works (fallbackReason null); neighbours: t1 ramp 6..14, t3 ramp 40..50
+peak: analytic 1.5h/r 0.3529, central difference 0.3525; outside the cliff footprint, whole tile (0.25 m): 0.3525 at (-48,22.5), margin -0.0025, refused points 1380 in x -48..48, z 22..23
+      t2 band z 8..38 (0.05 m, 1034960 points): 0.3525 at (-48,22.5), margin -0.0025, refused points 40020 in x -48..48, z 21.8..23.2
+cliff still a cliff: scripted rectangle refused 833/833 (0.5 m lattice); height on top at (0,22) 4.524 m against 2.324 m on the ramp beside it at x 14.5
+### columns, t2 band z 8..38 (step 0.01): peak |simSlope| (all / outside footprint) and every refused band (kind: cliff = inside the footprint, ramp = outside it)
+x=  0 (crosses the cliff footprint): peak 2.4304 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.67..27.15 (10.48 m, cliff, peak 2.4304 at z 17.5)
+x= -8 (crosses the cliff footprint): peak 2.4304 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.67..27.15 (10.48 m, cliff, peak 2.4304 at z 17.5)
+x=  8 (crosses the cliff footprint): peak 2.4304 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.67..27.15 (10.48 m, cliff, peak 2.4304 at z 17.5)
+x=-14: peak 0.3525 at z 22.5; outside footprint 0.3525 at z 22.5; refused: z 21.78..23.22 (1.44 m, ramp, peak 0.3525 at z 22.5)
+x= 14: peak 0.3525 at z 22.5; outside footprint 0.3525 at z 22.5; refused: z 21.78..23.22 (1.44 m, ramp, peak 0.3525 at z 22.5)
+x=-20: peak 0.3525 at z 22.5; outside footprint 0.3525 at z 22.5; refused: z 21.78..23.22 (1.44 m, ramp, peak 0.3525 at z 22.5)
+x= 20: peak 0.3525 at z 22.5; outside footprint 0.3525 at z 22.5; refused: z 21.78..23.22 (1.44 m, ramp, peak 0.3525 at z 22.5)
+x=-30: peak 0.3525 at z 22.5; outside footprint 0.3525 at z 22.5; refused: z 21.78..23.22 (1.44 m, ramp, peak 0.3525 at z 22.5)
+x= 30: peak 0.3525 at z 22.5; outside footprint 0.3525 at z 22.5; refused: z 21.78..23.22 (1.44 m, ramp, peak 0.3525 at z 22.5)
+### columns, whole tile z -56..56 (step 0.05): every refused band
+x=  0: z 16.7..27.15 (10.45 m, cliff)
+x= -8: z 16.7..27.15 (10.45 m, cliff)
+x=  8: z 16.7..27.15 (10.45 m, cliff)
+x=-14: z 21.8..23.2 (1.4 m, ramp)
+x= 14: z 21.8..23.2 (1.4 m, ramp)
+x=-20: z 21.8..23.2 (1.4 m, ramp)
+x= 20: z 21.8..23.2 (1.4 m, ramp)
+x=-30: z 21.8..23.2 (1.4 m, ramp)
+x= 30: z 21.8..23.2 (1.4 m, ramp)
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 25448 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  REACHED     turret turret-west (-18,22) path 34 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 34 m, enters cliff footprint: false
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 25525 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  REACHED     turret turret-west (-18,22) path 34 m, enters cliff footprint: true
+  REACHED     turret turret-east (18,22) path 34 m, enters cliff footprint: true
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-44); a target is reached when a reached point lies within 1.5 m; 25448 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  REACHED     turret turret-west (-18,22) path 73 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 73 m, enters cliff footprint: false
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 50.5 m, enters cliff footprint: false
+### height profile (step 1 m): simHeight / |simSlope| / isTraversable (T or -) / Terrain.sample walkable (w or x)
+   z                    x=0                  x=-14                  x=-20                  x=-30
+   8  -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w  
+   9  -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w  
+  10  -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w  
+  11   0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w  
+  12   0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w  
+  13   0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w  
+  14   0.500  0.0270 T w     0.500  0.0270 T w     0.500  0.0270 T w     0.500  0.0270 T w  
+  15   0.540  0.0778 T w     0.540  0.0778 T w     0.540  0.0778 T w     0.540  0.0778 T w  
+  16   0.653  0.1461 T w     0.653  0.1461 T w     0.653  0.1461 T w     0.653  0.1461 T w  
+  17   0.830  1.3048 - x     0.830  0.2048 T w     0.830  0.2048 T w     0.830  0.2048 T w  
+  18   3.260  1.3536 - x     1.060  0.2536 T w     1.060  0.2536 T w     1.060  0.2536 T w  
+  19   3.535  0.2927 - x     1.335  0.2927 T w     1.335  0.2927 T w     1.335  0.2927 T w  
+  20   3.843  0.3220 - x     1.643  0.3220 T w     1.643  0.3220 T w     1.643  0.3220 T w  
+  21   4.176  0.3415 - x     1.976  0.3415 T w     1.976  0.3415 T w     1.976  0.3415 T w  
+  22   4.524  0.3513 - x     2.324  0.3513 - x     2.324  0.3513 - x     2.324  0.3513 - x  
+  23   4.876  0.3513 - x     2.676  0.3513 - x     2.676  0.3513 - x     2.676  0.3513 - x  
+  24   5.224  0.3415 - x     3.024  0.3415 T w     3.024  0.3415 T w     3.024  0.3415 T w  
+  25   5.557  0.3220 - x     3.357  0.3220 T w     3.357  0.3220 T w     3.357  0.3220 T w  
+  26   5.865  0.8073 - x     3.665  0.2927 T w     3.665  0.2927 T w     3.665  0.2927 T w  
+  27   3.940  0.8464 - x     3.940  0.2536 T w     3.940  0.2536 T w     3.940  0.2536 T w  
+  28   4.170  0.2048 T w     4.170  0.2048 T w     4.170  0.2048 T w     4.170  0.2048 T w  
+  29   4.347  0.1461 T w     4.347  0.1461 T w     4.347  0.1461 T w     4.347  0.1461 T w  
+  30   4.460  0.0778 T w     4.460  0.0778 T w     4.460  0.0778 T w     4.460  0.0778 T w  
+  31   4.500  0.0102 T w     4.500  0.0102 T w     4.500  0.0102 T w     4.500  0.0102 T w  
+  32   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  33   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  34   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  35   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  36   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  37   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  38   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+
+## window t2RampStart 15 .. t2RampEnd 32 (run 17 m)
+source: working tree (assets/contracts/epoch-3-voltage/contracts.json) + t2RampStart 15, t2RampEnd 32 (in memory only; served 18..28)
+active contract: e3-canyon-works (fallbackReason null); neighbours: t1 ramp 6..14, t3 ramp 40..50
+peak: analytic 1.5h/r 0.3529, central difference 0.3525; outside the cliff footprint, whole tile (0.25 m): 0.3525 at (-48,23.5), margin -0.0025, refused points 1380 in x -48..48, z 23..24
+      t2 band z 8..38 (0.05 m, 1034960 points): 0.3525 at (-48,23.5), margin -0.0025, refused points 40020 in x -48..48, z 22.8..24.2
+cliff still a cliff: scripted rectangle refused 833/833 (0.5 m lattice); height on top at (0,22) 4.176 m against 1.976 m on the ramp beside it at x 14.5
+### columns, t2 band z 8..38 (step 0.01): peak |simSlope| (all / outside footprint) and every refused band (kind: cliff = inside the footprint, ramp = outside it)
+x=  0 (crosses the cliff footprint): peak 2.3767 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.7..27.14 (10.44 m, cliff, peak 2.3767 at z 17.5)
+x= -8 (crosses the cliff footprint): peak 2.3767 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.7..27.14 (10.44 m, cliff, peak 2.3767 at z 17.5)
+x=  8 (crosses the cliff footprint): peak 2.3767 at z 17.5; outside footprint 0.2798 at z 10; refused: z 16.7..27.14 (10.44 m, cliff, peak 2.3767 at z 17.5)
+x=-14: peak 0.3525 at z 23.5; outside footprint 0.3525 at z 23.5; refused: z 22.78..24.22 (1.44 m, ramp, peak 0.3525 at z 23.5)
+x= 14: peak 0.3525 at z 23.5; outside footprint 0.3525 at z 23.5; refused: z 22.78..24.22 (1.44 m, ramp, peak 0.3525 at z 23.5)
+x=-20: peak 0.3525 at z 23.5; outside footprint 0.3525 at z 23.5; refused: z 22.78..24.22 (1.44 m, ramp, peak 0.3525 at z 23.5)
+x= 20: peak 0.3525 at z 23.5; outside footprint 0.3525 at z 23.5; refused: z 22.78..24.22 (1.44 m, ramp, peak 0.3525 at z 23.5)
+x=-30: peak 0.3525 at z 23.5; outside footprint 0.3525 at z 23.5; refused: z 22.78..24.22 (1.44 m, ramp, peak 0.3525 at z 23.5)
+x= 30: peak 0.3525 at z 23.5; outside footprint 0.3525 at z 23.5; refused: z 22.78..24.22 (1.44 m, ramp, peak 0.3525 at z 23.5)
+### columns, whole tile z -56..56 (step 0.05): every refused band
+x=  0: z 16.7..27.1 (10.4 m, cliff)
+x= -8: z 16.7..27.1 (10.4 m, cliff)
+x=  8: z 16.7..27.1 (10.4 m, cliff)
+x=-14: z 22.8..24.2 (1.4 m, ramp)
+x= 14: z 22.8..24.2 (1.4 m, ramp)
+x=-20: z 22.8..24.2 (1.4 m, ramp)
+x= 20: z 22.8..24.2 (1.4 m, ramp)
+x=-30: z 22.8..24.2 (1.4 m, ramp)
+x= 30: z 22.8..24.2 (1.4 m, ramp)
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 25724 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  REACHED     turret turret-west (-18,22) path 34.5 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 34.5 m, enters cliff footprint: false
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable on a 0.5 m lattice from (0,-5); a target is reached when a reached point lies within 1.5 m; 25805 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  REACHED     turret turret-west (-18,22) path 34.5 m, enters cliff footprint: true
+  REACHED     turret turret-east (18,22) path 34.5 m, enters cliff footprint: true
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 36 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 30.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 37.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 11.5 m, enters cliff footprint: false
+### on foot: 8-connected flood over Terrain.sample(x,z).walkable minus the cliff footprint on a 0.5 m lattice from (0,-44); a target is reached when a reached point lies within 1.5 m; 25724 lattice points reached
+  UNREACHABLE seam anchor-0 (-34,30)
+  UNREACHABLE seam anchor-1 (-22,34)
+  UNREACHABLE seam anchor-2 (22,34)
+  UNREACHABLE seam anchor-3 (34,30)
+  UNREACHABLE gallery gallery-west (-28,28)
+  UNREACHABLE gallery gallery-east (28,28)
+  REACHED     turret turret-west (-18,22) path 73.5 m, enters cliff footprint: false
+  REACHED     turret turret-east (18,22) path 73.5 m, enters cliff footprint: false
+  UNREACHABLE lamp lamp-west (-32,32)
+  UNREACHABLE lamp lamp-east (32,32)
+  REACHED     pylon site pylon-west-base (-12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-switch (-24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-west-rim (-28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-base (12,-36) path 15.3 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-switch (24,-20) path 33.9 m, enters cliff footprint: false
+  REACHED     pylon site pylon-east-rim (28,8) path 76.2 m, enters cliff footprint: false
+  REACHED     bridge north end works-bridge-north (0,6.5) path 50.5 m, enters cliff footprint: false
+### height profile (step 1 m): simHeight / |simSlope| / isTraversable (T or -) / Terrain.sample walkable (w or x)
+   z                    x=0                  x=-14                  x=-20                  x=-30
+   8  -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w    -0.766  0.2095 T w  
+   9  -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w    -0.525  0.2622 T w  
+  10  -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w    -0.250  0.2798 T w  
+  11   0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w     0.025  0.2622 T w  
+  12   0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w     0.266  0.2095 T w  
+  13   0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w     0.436  0.1216 T w  
+  14   0.500  0.0168 T w     0.500  0.0168 T w     0.500  0.0168 T w     0.500  0.0168 T w  
+  15   0.500  0.0102 T w     0.500  0.0102 T w     0.500  0.0102 T w     0.500  0.0102 T w  
+  16   0.540  0.0778 T w     0.540  0.0778 T w     0.540  0.0778 T w     0.540  0.0778 T w  
+  17   0.653  1.2461 - x     0.653  0.1461 T w     0.653  0.1461 T w     0.653  0.1461 T w  
+  18   3.030  1.3048 - x     0.830  0.2048 T w     0.830  0.2048 T w     0.830  0.2048 T w  
+  19   3.260  0.2536 - x     1.060  0.2536 T w     1.060  0.2536 T w     1.060  0.2536 T w  
+  20   3.535  0.2927 - x     1.335  0.2927 T w     1.335  0.2927 T w     1.335  0.2927 T w  
+  21   3.843  0.3220 - x     1.643  0.3220 T w     1.643  0.3220 T w     1.643  0.3220 T w  
+  22   4.176  0.3415 - x     1.976  0.3415 T w     1.976  0.3415 T w     1.976  0.3415 T w  
+  23   4.524  0.3513 - x     2.324  0.3513 - x     2.324  0.3513 - x     2.324  0.3513 - x  
+  24   4.876  0.3513 - x     2.676  0.3513 - x     2.676  0.3513 - x     2.676  0.3513 - x  
+  25   5.224  0.3415 - x     3.024  0.3415 T w     3.024  0.3415 T w     3.024  0.3415 T w  
+  26   5.557  0.7780 - x     3.357  0.3220 T w     3.357  0.3220 T w     3.357  0.3220 T w  
+  27   3.665  0.8073 - x     3.665  0.2927 T w     3.665  0.2927 T w     3.665  0.2927 T w  
+  28   3.940  0.2536 T w     3.940  0.2536 T w     3.940  0.2536 T w     3.940  0.2536 T w  
+  29   4.170  0.2048 T w     4.170  0.2048 T w     4.170  0.2048 T w     4.170  0.2048 T w  
+  30   4.347  0.1461 T w     4.347  0.1461 T w     4.347  0.1461 T w     4.347  0.1461 T w  
+  31   4.460  0.0778 T w     4.460  0.0778 T w     4.460  0.0778 T w     4.460  0.0778 T w  
+  32   4.500  0.0102 T w     4.500  0.0102 T w     4.500  0.0102 T w     4.500  0.0102 T w  
+  33   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  34   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  35   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  36   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  37   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+  38   4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w     4.500  0.0000 T w  
+

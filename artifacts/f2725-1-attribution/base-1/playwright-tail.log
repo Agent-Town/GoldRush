@@ -1,0 +1,40 @@
+
+e6-glow-mesa {"t":219.7,"wave":7,"hp":90,"gold":71,"kills":164,"x":3.6,"z":38,"alive":28,"seams":1}
+
+e6-glow-mesa {"t":229.7,"wave":7,"hp":69,"gold":96,"kills":185,"x":3.6,"z":38,"alive":15,"seams":1}
+
+e6-glow-mesa {"t":240.4,"wave":8,"hp":69,"gold":96,"kills":190,"x":-5.9,"z":-9.4,"alive":34,"seams":1}
+
+e6-glow-mesa {"t":250.7,"wave":8,"hp":63,"gold":46,"kills":203,"x":4.2,"z":-4.1,"alive":36,"seams":2}
+
+e6-glow-mesa {"t":261.1,"wave":8,"hp":5,"gold":72,"kills":227,"x":1.1,"z":-15.3,"alive":22,"seams":2}
+
+e6-glow-mesa {"t":272.7,"wave":9,"hp":5,"gold":22,"kills":247,"x":-3.7,"z":-37.6,"alive":26,"seams":2}
+
+e6-glow-mesa {"t":282.9,"wave":9,"hp":5,"gold":11,"kills":270,"x":2.9,"z":-26.7,"alive":21,"seams":2}
+
+e6-glow-mesa {"t":293.5,"wave":9,"hp":5,"gold":11,"kills":282,"x":-4,"z":-37.7,"alive":19,"seams":2}
+
+  1) [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-glow-mesa plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 10 / 303.1s sim, 291 kills, 11 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1454 |       }
+      1455 |
+    > 1456 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1457 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1458 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1459 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/control/wt-1ff7054fe/e2e/native-proofs/driver.ts:1456:64
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/attr/base-1/results/native-proofs-e6-glow-mesa-b3350-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-glow-mesa plays to its authored terminal, banks, reloads and returns to the board @slow 

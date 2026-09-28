@@ -1,0 +1,84 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T10:19:40.983Z ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+
+===== tsc =====
+$ npx tsc --noEmit
+rc=0 6.1s
+
+
+===== retention tests =====
+$ node --test scripts/evidence-readers.test.mjs scripts/evidence-offload.test.mjs scripts/evidence-budget.test.mjs scripts/evidence-archive-buckets.test.mjs
+rc=0 6.4s
+✔ a citation to a moved file is ARCHIVED, not ABSENT, and --strict stays green (131.883ms)
+✔ a file the offload KEPT still reads TRACKED, though its subtree is archived (156.499375ms)
+✔ without an index the same tree goes BLIND, which is why the index is declared on every run (135.248833ms)
+✔ the index is declared in BOTH states, so ABSENT=0 can never be read as "archived" (250.327208ms)
+✔ evidence that is genuinely on disk and untracked still reds --strict (the gate is not weakened) (160.278583ms)
+✔ an index that is absent, empty or malformed never crashes the audit (491.910667ms)
+✔ a path the index names reads SAFE (archive <commit>), not AT RISK (362.975708ms)
+✔ the SAME tree without an index reads AT RISK, so the arm is not vacuous (226.236792ms)
+✔ the census declares the index in both states (438.231875ms)
+✔ an unarchived modified evidence file in the same tree still reads AT RISK beside an archived one (434.948208ms)
+      tracked under artifacts/: 28940 file(s) 9196.5 MB · ceiling NOT BANKED YET
+✔ the baseline file exists, parses, and carries every field the tool reads (0.970625ms)
+✔ the per-landing ceiling is the owner ruling 14a default until someone rules otherwise (0.178709ms)
+✔ the tree total is REPORTED, and the unbanked state names who banks it (429.471625ms)
+✔ --total on the live tree prints the number and passes while unbanked (161.203333ms)
+✔ a landing inside the ceiling passes; one byte over it reds (413.542667ms)
+✔ a path outside the evidence prefixes is not counted at all (189.203167ms)
+✔ `reviews/shots-*` counts and the rest of reviews/ does not (205.062375ms)
+✔ a deletion is reported but never credited against the ceiling (290.7895ms)
+✔ growth of a MODIFIED evidence file counts, and shrinkage does not go negative (418.072833ms)
+✔ a banked tree ceiling reds when the tree is over it, and passes when it is under (358.03725ms)
+✔ an unbanked ceiling is advisory: it reports and never refuses (183.092125ms)
+✔ a missing or malformed baseline falls back to the declared defaults rather than crashing (195.901167ms)
+✔ a bad range or a bad limit exits 2, never 1: "could not measure" is not "refused" (221.890625ms)
+✔ measureLanding and measureTotal are usable without the CLI, so a drain can script them (169.916375ms)
+✔ --plan lists the movable subtree with its citations and omits the must-stay one (379.074666ms)
+✔ the human --plan prints the must-stay derivation it used, not just the movable list (331.742375ms)
+✔ --apply moves a subtree, verifies it in the archive commit, and empties it from git AND disk in one commit (603.468ms)
+✔ the preview is one small PNG per subtree, made from its board shot (529.728792ms)
+✔ a must-stay subtree is REFUSED, and nothing moves (380.030666ms)
+✔ a dirty archive worktree is REFUSED before anything is copied (255.447333ms)
+✔ a worktree pointing at the REAL archive remote is REFUSED without --drain-authorized (585.105833ms)
+✔ --apply without an archive worktree is REFUSED rather than fetching one itself (190.787125ms)
+✔ a modified tracked evidence file blocks its subtree rather than being moved mid-edit (413.531084ms)
+✔ --slice-bytes splits the move into several archive commits (716.938542ms)
+✔ a blob over the ceiling is LEFT IN PLACE and listed, never silently dropped (483.235834ms)
+✔ a NESTED subtree can be applied on its own, so the drain can push between slices (807.729667ms)
+✔ a subtree whose every file must stay is REFUSED with that reason, not silently emptied (325.122458ms)
+✔ a ceiling that excludes every file REFUSES rather than writing an empty archive commit (351.29425ms)
+✔ sliceFiles never opens an empty slice and never splits below one file (0.216208ms)
+✔ the readers module and the mover agree on the must-stay predicate (one implementation of the word) (0.180667ms)
+✔ every Class 1 subtree the reader map §A4 names is must-stay on the live tree (1.496875ms)
+✔ the campaign is FILE-EXACT: its readers stay, the rest of it moves (0.296084ms)
+✔ run-3 carries no must-stay file at all, so it is movable whole (37.937542ms)
+✔ every report.md under artifacts/ stays, wherever it sits (0.5055ms)
+✔ the derivation leaves a movable majority: the offload has to be worth running (921.497625ms)
+✔ THE §A4 CONTROL IS NOT VACUOUS: this feature's own files feed nothing into the scan (23.420875ms)
+✔ the archive index keeps itself: the one file that says where every byte went cannot be offloaded (0.145583ms)
+✔ no must-stay pattern is a stray fragment of source code (0.166584ms)
+✔ a reader below a prose apostrophe is still found (the regex tokeniser lost four subtrees here) (97.10825ms)
+✔ a multi-line embedded source literal mints no pattern (the truncation regex could not cross a newline) (95.027875ms)
+✔ a template substitution becomes a one-segment wildcard, never a whole-tree wildcard (112.872042ms)
+✔ an author-task `artifacts/<id>/report.md` law line pins report files, NEVER the whole tree (100.435833ms)
+✔ a write target with nothing tracked under it still stays (artifacts/ledger-backups is exactly this) (95.37875ms)
+✔ normaliseLiteral keeps a path and drops everything a path cannot contain (0.058833ms)
+✔ literalToPattern and patternToRegExp keep a wildcard inside one segment (0.09975ms)
+✔ subtreeRootOf treats sol/ as a namespace, not a subtree (0.033125ms)
+✔ codeLiterals reads a template expression whole and ignores comments (0.146708ms)
+ℹ tests 57
+ℹ suites 0
+ℹ pass 57
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6402.987291
+
+
+SUMMARY {"tsc":0,"retention tests":0}
+OVERALL rc=0

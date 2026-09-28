@@ -1,0 +1,104 @@
+{
+  "samples": 14336,
+  "errors": [],
+  "anchors": [
+    {
+      "x": 0,
+      "z": 0,
+      "sample": {
+        "walkable": true,
+        "speedMul": 1,
+        "zone": "bank"
+      },
+      "buildable": false
+    },
+    {
+      "x": 0,
+      "z": 2,
+      "sample": {
+        "walkable": false,
+        "speedMul": 0,
+        "zone": "river",
+        "waterSource": "river",
+        "waterDepth": 1.25,
+        "waterClass": "deep"
+      },
+      "buildable": false
+    },
+    {
+      "x": 0,
+      "z": -2,
+      "sample": {
+        "walkable": false,
+        "speedMul": 0,
+        "zone": "river",
+        "waterSource": "river",
+        "waterDepth": 1.25,
+        "waterClass": "deep"
+      },
+      "buildable": false
+    },
+    {
+      "x": -28,
+      "z": 0,
+      "sample": {
+        "walkable": false,
+        "speedMul": 0,
+        "zone": "river",
+        "waterSource": "river",
+        "waterDepth": 1.25,
+        "waterClass": "deep"
+      },
+      "buildable": false
+    },
+    {
+      "x": -16,
+      "z": 0,
+      "sample": {
+        "walkable": true,
+        "speedMul": 0.85,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.35,
+        "waterClass": "wade"
+      },
+      "buildable": false
+    },
+    {
+      "x": 16,
+      "z": 0,
+      "sample": {
+        "walkable": true,
+        "speedMul": 0.85,
+        "zone": "ford",
+        "waterSource": "river",
+        "waterDepth": 0.35,
+        "waterClass": "wade"
+      },
+      "buildable": false
+    },
+    {
+      "x": -7.5,
+      "z": 0.2,
+      "sample": {
+        "walkable": true,
+        "speedMul": 1,
+        "zone": "bank"
+      },
+      "buildable": false
+    },
+    {
+      "x": 7.4,
+      "z": -0.25,
+      "sample": {
+        "walkable": true,
+        "speedMul": 1,
+        "zone": "bank"
+      },
+      "buildable": false
+    }
+  ],
+  "vertices": 341,
+  "triangles": 335,
+  "visualHalfWidth": 5.5
+}

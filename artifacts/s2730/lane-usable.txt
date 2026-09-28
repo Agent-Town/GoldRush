@@ -1,0 +1,432 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=74  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 74 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 12 file(s) main has moved that this lane lacks:
+          e2e/native-proofs/driver.ts
+          e2e/native-proofs/e10-archive-world.spec.ts
+          e2e/native-proofs/e10-ember-shore.spec.ts
+          e2e/native-proofs/e4-long-road.spec.ts
+          e2e/native-proofs/e5-deepwater-claim.spec.ts
+          e2e/native-proofs/e6-glow-mesa.spec.ts
+          e2e/native-proofs/e7-relay-valley.spec.ts
+          e2e/native-proofs/e8-mare-claim.spec.ts
+          … and 4 more
+lane-b  sol/wave-lane-b  ahead=0  behind=1000  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/wave-lane-b is 1000 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/wave-lane-b
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 330 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          e2e/cp04-lever.spec.ts
+          … and 322 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-c  sol/map-art-campaign-2  ahead=13  behind=16  paths=105  tracked-dirt=2  untracked=18  BUSY
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-15/run-note.md  (5 of 5 added lines absent from main)
+      "| The Picnic (e6-picnic) | HELD — three stakes held all rides; survival deaths 17/17 default, 18/17…"
+      "| The Showroom (e6-showroom) | HELD — default captures 6/6 both; deaths 5/13; restore terminal capt…"
+      "| The Dead Band (e7-dead-band) | HELD — refusal latch met all rides; survival deaths 19/12 default,…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/driver-isolation.json  (7 of 7 added lines absent from main)
+      "{"
+      "  \"base\": \"a2e0e6f089c3fa90485cf7ee3dd89b7823e64330\","
+      "  \"path\": \"e2e/native-proofs/driver.ts\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/collection-failure/command-tail.log  (4 of 4 added lines absent from main)
+      "TypeError: Module \"file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/GoldRush-assets/pilots…"
+      "Error: No tests found."
+      "Make sure that arguments are regular expressions matching test files."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/collection-failure/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/collection-failure/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/default/command-tail.log  (22 of 22 added lines absent from main)
+      "e6-picnic {\"t\":471.1,\"wave\":15,\"hp\":75,\"gold\":0,\"kills\":653,\"x\":-19.9,\"z\":16.2,\"alive\":11,\"seams\":2}"
+      "e6-picnic {\"t\":481.7,\"wave\":16,\"hp\":75,\"gold\":0,\"kills\":667,\"x\":-16,\"z\":11.4,\"alive\":27,\"seams\":2}"
+      "e6-picnic {\"t\":492.3,\"wave\":16,\"hp\":55,\"gold\":0,\"kills\":693,\"x\":-13.9,\"z\":20.6,\"alive\":24,\"seams\":2}"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/default/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/default/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/default/objective-desktop-chrome.json  (371 of 371 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e6-picnic&timescale=4\","
+      "  \"sim\": 528.5333333333136,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/default/objective-mobile-chrome.json  (455 of 455 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e6-picnic&timescale=4\","
+      "  \"sim\": 520.5333333333141,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/default/row-desktop-chrome.json  (1187 of 1187 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e6-picnic\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/default/row-mobile-chrome.json  (1179 of 1179 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e6-picnic\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/finding.md  (12 of 12 added lines absent from main)
+      "# The Picnic — HELD on survival, both screens"
+      "The stake driver gap is cured. All four rides hold all three stakes through their terminal. The ope…"
+      "| Strategy | Project | Death wave | Sim seconds | HP | Gold | Repairs | Standing |"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/command-tail.log  (22 of 22 added lines absent from main)
+      "e6-picnic {\"t\":477.7,\"wave\":15,\"hp\":136,\"gold\":40,\"kills\":659,\"x\":-12.4,\"z\":23.8,\"alive\":13,\"seams\"…"
+      "e6-picnic {\"t\":487.7,\"wave\":16,\"hp\":136,\"gold\":40,\"kills\":681,\"x\":-12.9,\"z\":18.2,\"alive\":13,\"seams\"…"
+      "e6-picnic {\"t\":498.1,\"wave\":16,\"hp\":97,\"gold\":40,\"kills\":706,\"x\":-18.9,\"z\":22,\"alive\":18,\"seams\":2}"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/command.json  (20 of 20 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/objective-desktop-chrome.json  (413 of 413 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e6-picnic&timescale=4\","
+      "  \"sim\": 554.3999999999788,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/objective-mobile-chrome.json  (492 of 492 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e6-picnic&timescale=4\","
+      "  \"sim\": 520.9333333333141,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/row-desktop-chrome.json  (1196 of 1196 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e6-picnic\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/row-mobile-chrome.json  (1198 of 1198 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e6-picnic\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/default/command-tail.log  (22 of 22 added lines absent from main)
+      "e6-showroom {\"t\":355.9,\"wave\":11,\"hp\":52,\"gold\":30,\"kills\":395,\"x\":-3.3,\"z\":8.5,\"alive\":15,\"seams\":…"
+      "e6-showroom {\"t\":367.9,\"wave\":12,\"hp\":52,\"gold\":36,\"kills\":414,\"x\":-3.3,\"z\":8.5,\"alive\":19,\"seams\":…"
+      "e6-showroom {\"t\":379.1,\"wave\":12,\"hp\":18,\"gold\":36,\"kills\":443,\"x\":-3.3,\"z\":8.5,\"alive\":21,\"seams\":…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/default/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/default/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/default/objective-desktop-chrome.json  (247 of 247 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e6-showroom&timescale=4\","
+      "  \"sim\": 150.8000000000017,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/default/objective-mobile-chrome.json  (399 of 399 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e6-showroom&timescale=4\","
+      "  \"sim\": 400.1333333333209,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/default/row-desktop-chrome.json  (1037 of 1037 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e6-showroom\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/default/row-mobile-chrome.json  (1088 of 1088 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e6-showroom\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/default/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/default/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/finding.md  (14 of 14 added lines absent from main)
+      "# The Showroom — HELD, six captures proved on both defaults"
+      "The default native route reaches **6/6 captures on both screens**, with the objective complete and …"
+      "| Default | Death wave | Sim seconds | HP | Gold | Repairs | Standing | Captures |"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/restore-ground/command-tail.log  (22 of 22 added lines absent from main)
+      "e6-showroom {\"t\":82,\"wave\":2,\"hp\":75,\"gold\":0,\"kills\":28,\"x\":31.7,\"z\":5.8,\"alive\":14,\"seams\":2}"
+      "e6-showroom {\"t\":92.3,\"wave\":3,\"hp\":42,\"gold\":0,\"kills\":35,\"x\":-34.5,\"z\":5.8,\"alive\":17,\"seams\":2}"
+      "e6-showroom {\"t\":102.7,\"wave\":3,\"hp\":28,\"gold\":0,\"kills\":45,\"x\":-22.9,\"z\":5.8,\"alive\":15,\"seams\":2}"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/restore-ground/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/restore-ground/command.json  (20 of 20 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/restore-ground/row-desktop-chrome.json  (82 of 82 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e6-showroom\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e6-showroom/restore-ground/row-mobile-chrome.json  (83 of 83 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e6-showroom\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/default/command-tail.log  (22 of 22 added lines absent from main)
+      "e7-dead-band {\"t\":329.3,\"wave\":10,\"hp\":79,\"gold\":30,\"kills\":345,\"x\":25.7,\"z\":4.6,\"alive\":15,\"seams\"…"
+      "e7-dead-band {\"t\":339.3,\"wave\":11,\"hp\":60,\"gold\":35,\"kills\":363,\"x\":33.4,\"z\":36.7,\"alive\":34,\"seams…"
+      "e7-dead-band {\"t\":349.9,\"wave\":11,\"hp\":34,\"gold\":40,\"kills\":388,\"x\":25.8,\"z\":29.1,\"alive\":21,\"seams…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/default/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/default/command.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"argv\": ["
+      "    \"npx\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/default/objective-desktop-chrome.json  (217 of 217 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-dead-band&timescale=4\","
+      "  \"sim\": 577.3333333333109,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/default/objective-mobile-chrome.json  (202 of 202 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-dead-band&timescale=4\","
+      "  \"sim\": 371.3333333333225,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/default/row-desktop-chrome.json  (1176 of 1176 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e7-dead-band\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/default/row-mobile-chrome.json  (1153 of 1153 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e7-dead-band\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/finding.md  (12 of 12 added lines absent from main)
+      "# The Dead Band — HELD on survival, refusal proved on both screens"
+      "All four rides use the player-facing Tape Reel Record control once and receive `Recording refused: …"
+      "The distinction is explicit: `uses` counts successful replays and remains zero. `Game.playbookObjec…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/command-tail.log  (22 of 22 added lines absent from main)
+      "e7-dead-band {\"t\":381.3,\"wave\":12,\"hp\":66,\"gold\":5,\"kills\":449,\"x\":-17.9,\"z\":36.7,\"alive\":24,\"seams…"
+      "e7-dead-band {\"t\":391.6,\"wave\":13,\"hp\":66,\"gold\":15,\"kills\":458,\"x\":33.1,\"z\":36.7,\"alive\":44,\"seams…"
+      "e7-dead-band {\"t\":402.3,\"wave\":13,\"hp\":21,\"gold\":35,\"kills\":486,\"x\":21.7,\"z\":25.3,\"alive\":39,\"seams…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/command.json  (22 of 22 added lines absent from main)
+      "{"
+      "  \"head\": \"068e9d2a156d13b42d39e170a1d7c4c28405d066\","
+      "  \"driverSha256\": \"36b52d8139825a252f1bb52edff2a12b11de7e3ef6fbbe6a7cac00d2306f46f4\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/objective-desktop-chrome.json  (204 of 204 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-dead-band&timescale=4\","
+      "  \"sim\": 526.6666666666471,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/objective-mobile-chrome.json  (204 of 204 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-dead-band&timescale=4\","
+      "  \"sim\": 431.8666666666524,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/row-desktop-chrome.json  (1170 of 1170 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e7-dead-band\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/row-mobile-chrome.json  (1160 of 1160 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e7-dead-band\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/terminal-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/default/command-tail.log  (30 of 30 added lines absent from main)
+      "          - performing click action"
+      "          - <canvas width=\"780\" height=\"1688\" id=\"game-canvas\" data-hero-skin=\"stock\" data-hero-she…"
+      "      - retrying click action"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/default/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/default/command.json  (21 of 21 added lines absent from main)
+      "{"
+      "  \"head\": \"068e9d2a156d13b42d39e170a1d7c4c28405d066\","
+      "  \"driverSha256\": \"36b52d8139825a252f1bb52edff2a12b11de7e3ef6fbbe6a7cac00d2306f46f4\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/default/objective-desktop-chrome.json  (314 of 314 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-echo-canyon&timescale=4\","
+      "  \"sim\": 498.26666666664863,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/default/phone-timeout-context.md  (97 of 97 added lines absent from main)
+      "# Echo Canyon phone timeout — retained page snapshot"
+      "Source: `/Users/robin/.goldrush/play-proofs/run-16/default/e7-echo-canyon/results/native-proofs-e7-…"
+      "Test timeout of 840000ms exceeded."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/default/row-desktop-chrome.json  (1143 of 1143 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e7-echo-canyon\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/default/row-mobile-chrome.json  (97 of 97 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e7-echo-canyon\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/finding.md  (13 of 13 added lines absent from main)
+      "# Echo Canyon — HELD, desktop mirror proved; phone Tape toggle blocked"
+      "Both desktop rides record real movement plus a native turret placement through the plain Tape Reel,…"
+      "The default tape has 26 ticks, six entries, three movement entries and one `place_build` turret act…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/restore-ground/command-tail.log  (22 of 22 added lines absent from main)
+      "e7-echo-canyon {\"t\":465.1,\"wave\":15,\"hp\":69,\"gold\":5,\"kills\":647,\"x\":2.4,\"z\":-5.9,\"alive\":11,\"seams…"
+      "e7-echo-canyon {\"t\":475.2,\"wave\":15,\"hp\":69,\"gold\":40,\"kills\":662,\"x\":-13.9,\"z\":-5.9,\"alive\":9,\"sea…"
+      "e7-echo-canyon {\"t\":485.5,\"wave\":16,\"hp\":69,\"gold\":40,\"kills\":676,\"x\":-4.3,\"z\":-13.5,\"alive\":20,\"se…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/restore-ground/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/restore-ground/command.json  (21 of 21 added lines absent from main)
+      "{"
+      "  \"head\": \"cdcaccdecc6cf38e4a2cb06ae87e4d52dd980834\","
+      "  \"driverSha256\": \"758a4f9caf5ede193723a31ecd035b422ee3899036fdcbd2ac081a8cb3082dab\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/restore-ground/objective-desktop-chrome.json  (274 of 274 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-echo-canyon&timescale=4\","
+      "  \"sim\": 527.066666666647,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/restore-ground/row-desktop-chrome.json  (1138 of 1138 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e7-echo-canyon\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-echo-canyon/restore-ground/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/default/blocked-tape-mobile-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/default/command-tail.log  (30 of 30 added lines absent from main)
+      "        2 × waiting for element to be visible, enabled and stable"
+      "          - element is visible, enabled and stable"
+      "          - scrolling into view if needed"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/default/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/default/command.json  (21 of 21 added lines absent from main)
+      "{"
+      "  \"head\": \"cdcaccdecc6cf38e4a2cb06ae87e4d52dd980834\","
+      "  \"driverSha256\": \"758a4f9caf5ede193723a31ecd035b422ee3899036fdcbd2ac081a8cb3082dab\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/default/objective-desktop-chrome.json  (383 of 383 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-relay-rush&timescale=4\","
+      "  \"sim\": 487.1999999999826,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/default/objective-mobile-chrome.json  (154 of 154 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-relay-rush&timescale=4\","
+      "  \"sim\": 76.66666666666711,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/default/row-desktop-chrome.json  (1160 of 1160 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e7-relay-rush\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/default/row-mobile-chrome.json  (1019 of 1019 added lines absent from main)
+      "{"
+      "  \"project\": \"mobile-chrome\","
+      "  \"contract\": \"e7-relay-rush\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/finding.md  (12 of 12 added lines absent from main)
+      "# Relay Rush — HELD, desktop objectives proved; phone Tape toggle blocked"
+      "Both desktop rides record a short movement-and-build tape through the visible Tape Reel. The tape c…"
+      "The driver returns to the authored command stake and waits for the front to cover the player. One o…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/restore-ground/command-tail.log  (22 of 22 added lines absent from main)
+      "e7-relay-rush {\"t\":500.8,\"wave\":16,\"hp\":41,\"gold\":40,\"kills\":706,\"x\":-1.4,\"z\":46.9,\"alive\":21,\"seam…"
+      "e7-relay-rush {\"t\":510.9,\"wave\":17,\"hp\":41,\"gold\":40,\"kills\":727,\"x\":-24.4,\"z\":39.2,\"alive\":32,\"sea…"
+      "e7-relay-rush {\"t\":521.1,\"wave\":17,\"hp\":41,\"gold\":40,\"kills\":754,\"x\":-30.7,\"z\":38.3,\"alive\":26,\"sea…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/restore-ground/command.exit  (1 of 1 added lines absent from main)
+      "1"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/restore-ground/command.json  (21 of 21 added lines absent from main)
+      "{"
+      "  \"head\": \"0b10608176628facee476c9ace1ac70dce36912d\","
+      "  \"driverSha256\": \"758a4f9caf5ede193723a31ecd035b422ee3899036fdcbd2ac081a8cb3082dab\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/restore-ground/objective-desktop-chrome.json  (383 of 383 added lines absent from main)
+      "{"
+      "  \"url\": \"http://127.0.0.1:5303/?contract=e7-relay-rush&timescale=4\","
+      "  \"sim\": 556.2666666666454,"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/restore-ground/row-desktop-chrome.json  (1175 of 1175 added lines absent from main)
+      "{"
+      "  \"project\": \"desktop-chrome\","
+      "  \"contract\": \"e7-relay-rush\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/e7-relay-rush/restore-ground/terminal-desktop-chrome.jpg  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/equivalence.py  (38 of 38 added lines absent from main)
+      "\"\"\"Re-run the unchanged Flotilla/Regatta specs on desktop; compare the run-12 terminal contract.\"\"\""
+      "import os, pathlib, subprocess, json, shutil"
+      "root = pathlib.Path('artifacts/sol/play-proofs/run-16')"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/measure.py  (29 of 29 added lines absent from main)
+      "\"\"\"Summarize compact rows and independently retained pre-bank objective captures.\"\"\""
+      "import json, pathlib"
+      "root=pathlib.Path(__file__).parent"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/measurements.json  (1208 of 1208 added lines absent from main)
+      "["
+      "  {"
+      "    \"contract\": \"e6-picnic\","
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/preflight.md  (2 of 2 added lines absent from main)
+      "# Pre-flight"
+      "Fresh `git fetch origin main` succeeded; main and origin/main = a2e0e6f089c3fa90485cf7ee3dd89b7823e…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/proof-hooks.ts  (56 of 56 added lines absent from main)
+      "/** Evidence-only adapter. Gameplay remains in the shared native driver. */"
+      "import { expect, test } from '@playwright/test';"
+      "import { mkdir, readFile, writeFile } from 'node:fs/promises';"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/ride-ledger.json  (19 of 19 added lines absent from main)
+      "{"
+      "  \"rule\": \"At most one default and one survival-only restore-ground ride per project and map. Colle…"
+      "  \"orderedContracts\": ["
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/run-map.py  (28 of 28 added lines absent from main)
+      "\"\"\"Run a single authorized ride pair, preserving direct exits outside the tree.\"\"\""
+      "import os, pathlib, subprocess, sys, json, hashlib"
+      "contract = sys.argv[1]"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/run-note.md  (57 of 57 added lines absent from main)
+      "# Native play proofs — run 16 (sol-play-proofs-holds-2)"
+      "2026-09-28. Work in progress. Base `a2e0e6f089c3fa90485cf7ee3dd89b7823e64330`; lane `sol/map-art-ca…"
+      "Three driver correctives committed: stake-radius opening, Showroom doorway/capture route, and share…"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/task-guards-main.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/task-guards-main.log  (4 of 4 added lines absent from main)
+      "> gold-rush@0.1.0 test:task-guards"
+      "> node scripts/task-guard-audit.mjs"
+      "task-guard-audit: 1448 masters, 0 invisible (baseline 0)."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/task-guards.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/task-guards.log  (6 of 6 added lines absent from main)
+      "> gold-rush@0.1.0 test:task-guards"
+      "> node scripts/task-guard-audit.mjs"
+      "task-guard-audit: SKIPPED -- cwd is a linked worktree (.git is a file)."
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/tsc-final.exit  (1 of 1 added lines absent from main)
+      "0"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/tsc-final.log  (0 of 0 added lines absent from main)
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/verify-isolation.py  (24 of 24 added lines absent from main)
+      "\"\"\"Strip only the five-map additions and compare all original driver bytes.\"\"\""
+      "import pathlib, subprocess, hashlib, json"
+      "root=pathlib.Path(__file__).parent"
+    HELD LANE-ONLY  artifacts/sol/play-proofs/run-16/verify.py  (59 of 59 added lines absent from main)
+      "\"\"\"Audit evidence honesty, ride budget and task firewall without replaying gameplay.\"\"\""
+      "import pathlib, json, subprocess, math"
+      "root=pathlib.Path(__file__).parent"
+    HELD LANE-ONLY  e2e/native-proofs/driver.ts  (123 of 169 added lines absent from main)
+      "import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json' …"
+      "import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';"
+      "    if (row.contract === 'e6-picnic') {"
+    HELD LANE-ONLY  e2e/native-proofs/e6-picnic.spec.ts  (2 of 2 added lines absent from main)
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-16/proof-hooks';"
+      "nativeProof('e6-picnic', 16);"
+    HELD LANE-ONLY  e2e/native-proofs/e6-showroom.spec.ts  (2 of 2 added lines absent from main)
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-16/proof-hooks';"
+      "nativeProof('e6-showroom', 16);"
+    HELD LANE-ONLY  e2e/native-proofs/e7-dead-band.spec.ts  (2 of 2 added lines absent from main)
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-16/proof-hooks';"
+      "nativeProof('e7-dead-band', 16);"
+    HELD LANE-ONLY  e2e/native-proofs/e7-echo-canyon.spec.ts  (2 of 2 added lines absent from main)
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-16/proof-hooks';"
+      "nativeProof('e7-echo-canyon', 16);"
+    HELD LANE-ONLY  e2e/native-proofs/e7-relay-rush.spec.ts  (2 of 2 added lines absent from main)
+      "import { proofHooks } from '../../artifacts/sol/play-proofs/run-16/proof-hooks';"
+      "nativeProof('e7-relay-rush', 16);"
+    TRACKED-DIRT artifacts/sol/play-proofs/run-16/ride-ledger.json
+    TRACKED-DIRT artifacts/sol/play-proofs/run-16/run-note.md
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/build-final.exit
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/build-final.log
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/driver-equivalence.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/e5-flotilla/equivalence/bank-cell-desktop-chrome.jpg
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/e5-flotilla/equivalence/bank-cell-desktop-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/e5-flotilla/equivalence/board-desktop-chrome.jpg
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/e5-flotilla/equivalence/objective-desktop-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/e5-flotilla/equivalence/row-desktop-chrome.json
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/e5-flotilla/equivalence/terminal-desktop-chrome.jpg
+    untracked (clean -fd) artifacts/sol/play-proofs/run-16/e5-regatta/equivalence/bank-cell-desktop-chrome.jpg
+  => BUSY: a runner holds this slot — leave it alone
+     holder pid is ALIVE — a real runner is working here. Leave it alone.
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=1420  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but art/portraits-e5-e10-generated is 1420 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> art/portraits-e5-e10-generated
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-d) — F-1320-2.
+     📋 run-surface drift: 375 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          … and 367 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+
+worktree coverage: reported 4 of 61 registered — 57 NOT reported (2 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported

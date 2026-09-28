@@ -1,0 +1,415 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e10-archive-world&timescale=4",
+  "sim": 611.0666666666423,
+  "wave": 20,
+  "hp": 0,
+  "gold": 0,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "hero": {
+    "x": -3.2296736751563344,
+    "y": 0.24000000715255737,
+    "z": -52.17016823863124
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -4,
+        "z": -51
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 1,
+      "tier": 1,
+      "hp": 58,
+      "maxHp": 58,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -8,
+        "z": -53
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 2,
+      "tier": 1,
+      "hp": 64,
+      "maxHp": 64,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 9,
+        "z": -53
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 3,
+      "tier": 1,
+      "hp": 70,
+      "maxHp": 70,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -2,
+        "z": -47
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 4,
+      "tier": 1,
+      "hp": 82,
+      "maxHp": 82,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -2,
+        "z": -54
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 3,
+        "z": -53
+      }
+    },
+    {
+      "id": "turret",
+      "index": 1,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 4,
+        "z": -52
+      }
+    },
+    {
+      "id": "turret",
+      "index": 2,
+      "tier": 1,
+      "hp": 58,
+      "maxHp": 58,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -4,
+        "z": -49
+      }
+    }
+  ],
+  "e7Signal": {
+    "enabled": false,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "playbookUse": null,
+  "air": null,
+  "physics": {
+    "active": false,
+    "contractId": "e10-archive-world",
+    "source": "default",
+    "movement": "normal",
+    "feelG": 1,
+    "lobArcDistanceMultiplier": 1,
+    "lobAirTimeMultiplier": 1,
+    "knockbackScale": 1,
+    "orbitalReturn": false,
+    "vacuum": false,
+    "fixedTimestepOnly": true,
+    "filteredMovement": {
+      "x": 0,
+      "y": 0
+    },
+    "adaptedLobs": [
+      {
+        "resumeKey": "orbital:kineticLobber",
+        "range": 15,
+        "airTime": 1.68
+      }
+    ]
+  },
+  "atmosphere": null,
+  "squall": {
+    "declared": true,
+    "calmSeconds": 60,
+    "telegraphSeconds": 8,
+    "squallSeconds": 25,
+    "recoverSeconds": 8,
+    "cycleSeconds": 101,
+    "phase": "calm",
+    "phaseProgress": 0.08444444444403795,
+    "cycle": 6,
+    "tick": 4583,
+    "elapsedSeconds": 611.067,
+    "secondsToNextPhase": 54.933,
+    "secondsToNextSquall": 62.933,
+    "squallsStarted": 6,
+    "squallsCompleted": 6,
+    "motePressureMultiplier": 2,
+    "blowing": false,
+    "transitions": [
+      {
+        "from": null,
+        "to": "calm",
+        "tick": 0,
+        "atSeconds": 0,
+        "cycle": 0
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 451,
+        "atSeconds": 60.133,
+        "cycle": 0
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 510,
+        "atSeconds": 68,
+        "cycle": 0
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 698,
+        "atSeconds": 93.067,
+        "cycle": 0
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 758,
+        "atSeconds": 101.067,
+        "cycle": 1
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 1208,
+        "atSeconds": 161.067,
+        "cycle": 1
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 1268,
+        "atSeconds": 169.067,
+        "cycle": 1
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 1456,
+        "atSeconds": 194.133,
+        "cycle": 1
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 1516,
+        "atSeconds": 202.133,
+        "cycle": 2
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 1966,
+        "atSeconds": 262.133,
+        "cycle": 2
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 2026,
+        "atSeconds": 270.133,
+        "cycle": 2
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 2213,
+        "atSeconds": 295.067,
+        "cycle": 2
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 2273,
+        "atSeconds": 303.067,
+        "cycle": 3
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 2723,
+        "atSeconds": 363.067,
+        "cycle": 3
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 2783,
+        "atSeconds": 371.067,
+        "cycle": 3
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 2971,
+        "atSeconds": 396.133,
+        "cycle": 3
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 3031,
+        "atSeconds": 404.133,
+        "cycle": 4
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 3481,
+        "atSeconds": 464.133,
+        "cycle": 4
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 3541,
+        "atSeconds": 472.133,
+        "cycle": 4
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 3728,
+        "atSeconds": 497.067,
+        "cycle": 4
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 3788,
+        "atSeconds": 505.067,
+        "cycle": 5
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 4238,
+        "atSeconds": 565.067,
+        "cycle": 5
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 4298,
+        "atSeconds": 573.067,
+        "cycle": 5
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 4486,
+        "atSeconds": 598.133,
+        "cycle": 5
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 4546,
+        "atSeconds": 606.133,
+        "cycle": 6
+      }
+    ]
+  },
+  "preserveVent": null,
+  "archive": {
+    "restoredWingIds": [],
+    "restoredThisRun": [],
+    "holdingWingId": null,
+    "completedHolds": 0,
+    "objectiveAllowsSecure": false
+  },
+  "repairs": 0
+}

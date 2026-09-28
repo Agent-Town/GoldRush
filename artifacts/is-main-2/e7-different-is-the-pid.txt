@@ -1,0 +1,6 @@
+e7-playbook-digest.mjs no-such-contract: real path rc 1, symlinked rc 1; diff of the two outputs (is-main-2, 2026-09-26T02:15:00Z):
+1c1
+< (node:70521) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+---
+> (node:71487) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(the only difference is the process id in node's own ExperimentalWarning line; the error and its stack are identical)

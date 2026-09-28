@@ -1,0 +1,3 @@
+# Pre-flight
+
+Fresh `git fetch origin main` succeeded; main and origin/main = a2e0e6f089c3fa90485cf7ee3dd89b7823e64330, containing holds-1 merge a69534fe9. Lane HEAD 67300360529086da32cf668e7fc41a9e22668d46 was an ancestor, no ahead commits, clean worktree. Authorized `git checkout -B sol/map-art-campaign-2 main && git clean -fd` removed only empty regenerated run-15/default and run-15/equivalence directories. `npm install --no-audit --no-fund` and `npm run build`: exit 0. Restored npm-generated package-lock metadata (30 deleted optional-platform lines); post-build lane status clean. No source, task, spec or user edits discarded. Task firewall excludes vault writes.

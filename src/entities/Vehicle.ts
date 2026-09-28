@@ -7,7 +7,28 @@ import { visualY } from '../world/Terrain';
 import { createGltfLoader } from '../assets/AssetLoading';
 import { disposeObject3D } from '../utils/dispose';
 
-const haulerBodyUrl = new URL('../../assets/pilots/map-rebuild-spike/landmarks/motor-hauler/motor-hauler.glb', import.meta.url).href;
+// THE E4 HAULER BODY IS NOT E1 CONTENT (F-SEF2-2, re-measured on this tree 2026-09-24).
+// `specs/release-e1/README.md` ("THE FRONTIER IS PHYSICAL"): a later-era asset must be ABSENT from
+// the E1 bundle, not merely unreachable inside it. The static `new URL(..., import.meta.url)` that
+// used to stand here was the ONE path by which `motor-hauler.glb` reached every build, and it held
+// the release door shut: `GR_RELEASE=e1 npm run build:release` exited 1 on exactly that file
+// (scripts/assert-release-build.mjs:46).
+//
+// A define does not cure it. Measured here first: `__GR_RELEASE_E1__ ? '' : new URL(...)` STILL
+// emitted `motor-hauler-*.glb` into the E1 dist, because Vite resolves and emits an asset in its
+// transform hook, long before the dead branch is folded away. Tree-shaking cannot un-emit a file.
+//
+// So the URL now comes from the one pattern `releaseE1ContentPlugin` already narrows for every
+// other landmark consumer (vite.config.ts:118 rewrites this exact glob string to the five E1 map
+// directories), read the lazy `?url` way `src/world/Terrain3dClaimPilot.ts:222` reads it. In an E1
+// build the key below is simply not in the map, `buildBody` keeps the placeholder chassis exactly
+// as it already does on the lite tier, and no caller changes. The glob must stay character-for-
+// character identical to the plugin's search string: it is a plain `replaceAll`, so one different
+// space and the narrowing silently stops happening.
+const HAULER_BODY_KEY = '../../assets/pilots/map-rebuild-spike/landmarks/motor-hauler/motor-hauler.glb';
+const LANDMARK_BODY_URLS = import.meta.glob([
+  '../../assets/pilots/map-rebuild-spike/landmarks/**/*.glb',
+], { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
 
 type VehiclePoint = Readonly<{ x: number; z: number }>;
 
@@ -161,7 +182,12 @@ export class Vehicle {
     this.group.userData.bodySource = 'placeholder';
     const search = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search);
     if (search.has('terrain2d') || search.get('tier') === 'lite' || performanceTierDiagnostics().tier === 'lite') return;
-    void createGltfLoader().loadAsync(haulerBodyUrl).then(({ scene }) => {
+    // Absent in an E1 release build (see the glob above), where the placeholder chassis IS the
+    // hauler. `bodySource` stays 'placeholder', which is already one of the three values this
+    // method can leave behind, so nothing downstream learns a new state.
+    const resolveHaulerBody = LANDMARK_BODY_URLS[HAULER_BODY_KEY];
+    if (!resolveHaulerBody) return;
+    void resolveHaulerBody().then((url) => createGltfLoader().loadAsync(url)).then(({ scene }) => {
       if (this.bodyDisposed) { disposeObject3D(scene); return; }
       this.clearBody();
       scene.traverse(part => {

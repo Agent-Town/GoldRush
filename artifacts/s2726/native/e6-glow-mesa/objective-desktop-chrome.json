@@ -1,0 +1,222 @@
+{
+  "url": "http://127.0.0.1:5317/?contract=e6-glow-mesa&timescale=4",
+  "sim": 242.79999999999646,
+  "wave": 8,
+  "hp": 135.39999999999998,
+  "gold": 95,
+  "run": {
+    "secured": true,
+    "rush": false,
+    "lastRunEndedReason": null,
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 41,
+        "science": 1000,
+        "hero": 41,
+        "agent": 41
+      }
+    },
+    "victoryPayout": {
+      "territory": 1,
+      "science": 1,
+      "hero": 1,
+      "agent": 1
+    },
+    "secureWaveReached": 8,
+    "securedResultAt": 1790558641889,
+    "securedSnapshot": {
+      "waves": 8,
+      "gold": 95,
+      "timeAlive": 242.79999999999646
+    },
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": 1790558641890,
+      "lastWriteMs": 0.5,
+      "sizeBytes": 78755
+    }
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -4,
+        "z": -31
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 0,
+        "z": -36
+      }
+    },
+    {
+      "id": "turret",
+      "index": 1,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 5,
+        "z": -34
+      }
+    }
+  ],
+  "deepwater": null,
+  "regatta": null,
+  "homemaker": {
+    "active": false,
+    "act": 3,
+    "position": {
+      "x": 2.6,
+      "z": 3.37
+    },
+    "tidiedMarkers": 2,
+    "liveComponents": [],
+    "unbuilds": 0,
+    "unbuildOrder": [],
+    "partsStackPickups": 0,
+    "rackArcs": 0,
+    "rackTelegraphed": false,
+    "structureDamageEvents": 0,
+    "playerDamageEvents": 0,
+    "pickupsCurated": 0,
+    "loosePickups": 0,
+    "pileCenters": [
+      {
+        "x": 1.1,
+        "z": 5.57
+      },
+      {
+        "x": 4.1,
+        "z": 5.57
+      }
+    ],
+    "pictogram": "DONE",
+    "chairPlaced": true,
+    "poweredDown": true,
+    "nonHostile": true,
+    "kept": true,
+    "persistentKept": false
+  },
+  "vehicle": null,
+  "fuel": null,
+  "repairs": 0,
+  "harvest": {
+    "activeNodes": [
+      {
+        "id": "gold-seam-1",
+        "active": false,
+        "anchorIndex": 2,
+        "position": {
+          "x": 4,
+          "z": 38
+        },
+        "remaining": 0,
+        "respawnScheduled": true,
+        "respawnIn": 5.333333333334167
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "anchorIndex": 2,
+        "position": {
+          "x": 4,
+          "z": 38
+        },
+        "remaining": 20,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      }
+    ],
+    "channeling": false,
+    "channelNodeId": null,
+    "progress": 0,
+    "channels": [
+      {
+        "actorId": "0",
+        "channelNodeId": null,
+        "progress": 0,
+        "channeling": false
+      }
+    ],
+    "lastGoldGain": 0,
+    "lastGoldPosition": null
+  }
+}

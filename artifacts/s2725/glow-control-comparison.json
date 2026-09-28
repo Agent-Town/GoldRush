@@ -1,0 +1,27 @@
+{
+  "candidate": {
+    "commit": "cf9cd95c4",
+    "stage": "secures",
+    "wave": 4,
+    "seconds": 142.80000000000214,
+    "hp": 0,
+    "purse": 47
+  },
+  "cleanMain": {
+    "commit": "1ff7054fe39b8f55b8e0c0a1cf372fde419f4496",
+    "stage": "banks",
+    "wave": 9,
+    "secures": {
+      "ok": true,
+      "detail": "Claim Secured at wave 9 / 273.3s sim, 90 HP, 3 buildings"
+    },
+    "banks": {
+      "ok": false,
+      "detail": "no new secured row since pre-play for e6-glow-mesa at >= wave 12 (41 new row(s): [{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":41,\"waves\":30,\"secured\":true,\"contractId\":\"e10-last-claim\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}},{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":40,\"waves\":30,\"secured\":true,\"contractId\":\"e10-archive-world\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}}])"
+    },
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  "matched": false,
+  "conclusion": "New candidate survival failure is UNATTRIBUTED. Clean main failed later at the historical bank predicate; not the same red. No proven gameplay defect or root cause."
+}

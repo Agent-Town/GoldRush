@@ -1,0 +1,84 @@
+{
+  "before": {
+    "url": "http://127.0.0.1:5303/?contract=e5-deepwater-claim&timescale=4",
+    "at": "2026-09-28T07:27:40.559Z",
+    "sim": 6.000000000000005,
+    "wave": 0,
+    "key": "gr.profile.v2.robin.tilestate.e5-deepwater-claim",
+    "raw": null,
+    "wreck": null,
+    "boss": {
+      "active": false,
+      "act": 0,
+      "stormFrontWave": null,
+      "approaching": false,
+      "anchored": false,
+      "anchor": {
+        "x": 36,
+        "z": -20
+      },
+      "clawCycleProgress": 0,
+      "clawCycles": 0,
+      "clawInterrupts": 0,
+      "holdLoot": 0,
+      "livePaddles": 2,
+      "act2Locked": true,
+      "repositions": 0,
+      "swatTelegraphed": false,
+      "swats": 0,
+      "escortMultiplier": 1,
+      "escortSkiffs": 0,
+      "escortsExiting": false,
+      "escortsExited": 0,
+      "spillPickups": 0,
+      "crewQuit": false,
+      "hulkPresent": false,
+      "persistentWreck": false
+    }
+  },
+  "ceremony": {
+    "url": "http://127.0.0.1:5303/?contract=e5-deepwater-claim&timescale=4",
+    "at": "2026-09-28T07:27:49.334Z",
+    "sim": 40.93333333333323,
+    "wave": 0,
+    "key": "gr.profile.v2.robin.tilestate.e5-deepwater-claim",
+    "raw": "{\"schemaVersion\":1,\"entries\":[{\"kind\":\"render\",\"id\":\"dredge-queen-wreck\",\"payload\":{\"x\":-18,\"z\":-30},\"schemaVersion\":1}]}",
+    "wreck": {
+      "kind": "render",
+      "id": "dredge-queen-wreck",
+      "payload": {
+        "x": -18,
+        "z": -30
+      },
+      "schemaVersion": 1
+    },
+    "boss": {
+      "active": true,
+      "act": 3,
+      "stormFrontWave": 1,
+      "approaching": false,
+      "anchored": true,
+      "anchor": {
+        "x": -18,
+        "z": -30
+      },
+      "clawCycleProgress": 0,
+      "clawCycles": 7,
+      "clawInterrupts": 4,
+      "holdLoot": 5,
+      "livePaddles": 0,
+      "act2Locked": false,
+      "repositions": 3,
+      "swatTelegraphed": false,
+      "swats": 3,
+      "escortMultiplier": 1,
+      "escortSkiffs": 0,
+      "escortsExiting": true,
+      "escortsExited": 0,
+      "spillPickups": 5,
+      "crewQuit": true,
+      "hulkPresent": true,
+      "persistentWreck": false
+    }
+  }
+}

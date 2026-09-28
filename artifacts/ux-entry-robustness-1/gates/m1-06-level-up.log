@@ -1,0 +1,28 @@
+
+Running 24 tests using 1 worker
+
+[1/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:86:1 › X opens level-up and freezes sim clocks while enemies are alive
+[2/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:103:1 › draft shows its clock and a normal pick beats expiry
+[3/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:126:1 › draft expiry files the first offer and the run continues
+[4/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:142:1 › picking a card applies stacks and resumes after pending choices without wave drift
+[5/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:161:1 › first offer is deterministic for a fixed seed and has no duplicates
+[6/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:177:1 › investment weighting prefers owned families without losing discovery
+[7/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:212:1 › owned-family cards show a compact stack pip
+[8/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:225:1 › sampled offers never contain duplicate ids
+[9/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:238:1 › maxed upgrades leave the offer pool
+[10/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:263:1 › Beacon Dynamo is gated until a beacon stands
+[11/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:283:1 › Split Spark visibly increases volley stats and live bolts
+[12/24] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:320:1 › resetRun clears progression and HUD XP truth
+[13/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:86:1 › X opens level-up and freezes sim clocks while enemies are alive
+[14/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:103:1 › draft shows its clock and a normal pick beats expiry
+[15/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:126:1 › draft expiry files the first offer and the run continues
+[16/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:142:1 › picking a card applies stacks and resumes after pending choices without wave drift
+[17/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:161:1 › first offer is deterministic for a fixed seed and has no duplicates
+[18/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:177:1 › investment weighting prefers owned families without losing discovery
+[19/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:212:1 › owned-family cards show a compact stack pip
+[20/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:225:1 › sampled offers never contain duplicate ids
+[21/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:238:1 › maxed upgrades leave the offer pool
+[22/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:263:1 › Beacon Dynamo is gated until a beacon stands
+[23/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:283:1 › Split Spark visibly increases volley stats and live bolts
+[24/24] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:320:1 › resetRun clears progression and HUD XP truth
+  24 passed (2.2m)

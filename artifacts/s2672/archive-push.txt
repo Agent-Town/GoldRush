@@ -1,0 +1,24 @@
+destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+local series: 32 dated mirror(s), 159084544 B, 2026-08-24 -> 2026-09-24
+LEDGER MIRROR EXPOSURE — LB-01 standing encryption gate
+
+  corpus                  : read (32 mirror(s), 32 read, 0 unreadable)
+  dir                     : /Users/robin/.goldrush/ledger-backups  (argument)
+  tables inspected        : ledger-2026-08-24.db:kv[key]; ledger-2026-08-25.db:kv[key]; ledger-2026-08-26.db:kv[key]; ledger-2026-08-27.db:kv[key]; ledger-2026-08-28.db:kv[key]; ledger-2026-08-29.db:kv[key]; ledger-2026-08-30.db:kv[key]; ledger-2026-08-31.db:kv[key]; ledger-2026-09-01.db:kv[key]; ledger-2026-09-02.db:kv[key]; ledger-2026-09-03.db:kv[key]; ledger-2026-09-04.db:kv[key]; ledger-2026-09-04.db:refusals[anon_id,profile_name]; ledger-2026-09-04.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-05.db:kv[key]; ledger-2026-09-05.db:refusals[anon_id,profile_name]; ledger-2026-09-05.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-06.db:kv[key]; ledger-2026-09-06.db:refusals[anon_id,profile_name]; ledger-2026-09-06.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-07.db:kv[key]; ledger-2026-09-07.db:refusals[anon_id,profile_name]; ledger-2026-09-07.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-08.db:kv[key]; ledger-2026-09-08.db:refusals[anon_id,profile_name]; ledger-2026-09-08.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-09.db:kv[key]; ledger-2026-09-09.db:refusals[anon_id,profile_name]; ledger-2026-09-09.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-10.db:kv[key]; ledger-2026-09-10.db:refusals[anon_id,profile_name]; ledger-2026-09-10.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-11.db:kv[key]; ledger-2026-09-11.db:refusals[anon_id,profile_name]; ledger-2026-09-11.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-12.db:kv[key]; ledger-2026-09-12.db:refusals[anon_id,profile_name]; ledger-2026-09-12.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-13.db:kv[key]; ledger-2026-09-13.db:refusals[anon_id,profile_name]; ledger-2026-09-13.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-14.db:kv[key]; ledger-2026-09-14.db:refusals[anon_id,profile_name]; ledger-2026-09-14.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-15.db:kv[key]; ledger-2026-09-15.db:refusals[anon_id,profile_name]; ledger-2026-09-15.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-16.db:kv[key]; ledger-2026-09-16.db:refusals[anon_id,profile_name]; ledger-2026-09-16.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-17.db:kv[key]; ledger-2026-09-17.db:refusals[anon_id,profile_name]; ledger-2026-09-17.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-18.db:kv[key]; ledger-2026-09-18.db:refusals[anon_id,profile_name]; ledger-2026-09-18.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-19.db:kv[key]; ledger-2026-09-19.db:refusals[anon_id,profile_name]; ledger-2026-09-19.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-20.db:kv[key]; ledger-2026-09-20.db:refusals[anon_id,profile_name]; ledger-2026-09-20.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-21.db:kv[key]; ledger-2026-09-21.db:refusals[anon_id,profile_name]; ledger-2026-09-21.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-22.db:kv[key]; ledger-2026-09-22.db:refusals[anon_id,profile_name]; ledger-2026-09-22.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-23.db:kv[key]; ledger-2026-09-23.db:refusals[anon_id,profile_name]; ledger-2026-09-23.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-24.db:kv[key]; ledger-2026-09-24.db:refusals[anon_id,profile_name]; ledger-2026-09-24.db:sqlite_sequence[SKIPPED: no declared columns]
+  keys inspected          : 1486
+  column-class verdicts   : refusals.anon_id, refusals.profile_name = county-standings by SCHEMA (account denylist still checked first)
+  account-class rows      : 0
+  unrecognised rows       : 0
+
+✅ CLEAN — every key in every mirror is county-standings class.
+   Nothing here carries account data; these mirrors are safe to commit.
+archive remote: github.com:Agent-Town/GoldRush-archive.git (branch ledger-backups)
+archive branch: does not exist yet, creating it
+To github.com:Agent-Town/GoldRush-archive.git
+*	refs/heads/ledger-backups:refs/heads/ledger-backups	[new branch]
+Done
+✅ PUSHED — 32 file(s) to ledger-backups on the private archive at 2026-09-24T15:00Z.
+
+--- stderr ---
+
+rc=0  elapsed=18.8s

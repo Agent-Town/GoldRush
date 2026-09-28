@@ -36,6 +36,8 @@ import { statSync, lstatSync, readdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join, dirname, resolve } from 'node:path';
 
+import { ARCHIVE_INDEX_PATH, archiveEntryFor, readArchiveIndex } from './evidence-readers.mjs';
+
 const HERE = dirname(fileURLToPath(import.meta.url));
 
 // Anchored to the git-resolved MAIN worktree root, never to process.cwd(): this tool diffs
@@ -94,7 +96,20 @@ export function isFactorySide(treePath, root = ROOT) {
   return /^worktrees\/lane-[a-d]$/.test(rel) || FIRE_GATE_IN_ROOT.test(rel);
 }
 
-export function bucketOf(present, onRemote, onAnyRef) {
+// THE FIFTH READING, `SAFE (archive <commit>)` (task evidence-offload-1, owner ruling 2026-09-24
+// item 14a). Cited-only evidence now leaves this repository for the private `archive` remote behind
+// `artifacts/ARCHIVE-INDEX.json`. Blob identity cannot see that: the reader map §A5 measured what
+// happens without this arm - "must learn the archive remote, or 26,163 files read AT RISK /
+// UNREFERENCED" - which is the F-2570-1 shape one more time, an instrument that is exact about the
+// wrong quantity. A path the index names is held in a git repository the OWNER owns, at a commit
+// this tool prints, which is a STRONGER durability claim than "reachable from some local ref", so it
+// files as SAFE and carries the commit in its verdict rather than hiding inside a plain `SAFE`.
+//
+// The fourth argument is OPTIONAL on purpose: the three-argument contract arm 10 of
+// `modified-tracked-evidence-census-guard.test.mjs` pins is unchanged, and a caller with no index
+// gets exactly the old four answers.
+export function bucketOf(present, onRemote, onAnyRef, archiveCommit = null) {
+  if (archiveCommit) return `SAFE (archive ${String(archiveCommit).slice(0, 12)})`;
   if (!present) return 'AT RISK';
   if (onRemote) return 'SAFE';
   if (onAnyRef) return 'LOCAL-REF-ONLY';
@@ -184,6 +199,10 @@ function main() {
   const out = [];
   const say = (s) => { if (!asJson) out.push(s); };
 
+  // The index is read BEFORE the controls and declared with them: absent is the normal state until
+  // the first offload lands, and it must never be confusable with "the index named nothing".
+  const archiveIndex = readArchiveIndex(ROOT);
+
   // ---- CONTROLS FIRST: a zero must be an ANSWER, not a failed read (F-2215-1) ----
   let tracked, remoteObjs, allObjs;
   try {
@@ -239,6 +258,9 @@ function main() {
   say(`  population: modified TRACKED files only (git status --porcelain -uno); the untracked half is F-2357-1`);
   say(`  prefixes  : ${EVIDENCE_PREFIXES.join(' ')}`);
   say(`  controls  : ${tracked} tracked · ${remoteObjs.size} remote-reachable · ${allObjs.size} all-ref-reachable`);
+  say(`  archive   : ${archiveIndex
+    ? `${ARCHIVE_INDEX_PATH} — ${Object.keys(archiveIndex.subtrees ?? {}).length} subtree(s), ${Object.keys(archiveIndex.files ?? {}).length} file(s); a path it names reads SAFE (archive <commit>)`
+    : `${ARCHIVE_INDEX_PATH} ABSENT — nothing has been offloaded, so no path can read SAFE (archive …)`}`);
   say(`  subjects  : ${subjects.length}`);
 
   const buckets = { 'AT RISK': [], UNREFERENCED: [], 'LOCAL-REF-ONLY': [], SAFE: [] };
@@ -258,7 +280,11 @@ function main() {
       const h = hashes[i];
       let size = 0;
       try { size = statSync(s.abs).size; } catch {}
-      buckets[bucketOf(!check[i].includes('missing'), remoteObjs.has(h), allObjs.has(h))].push({ ...s, blob: h, size });
+      const archived = archiveEntryFor(archiveIndex, s.path);
+      const verdict = bucketOf(!check[i].includes('missing'), remoteObjs.has(h), allObjs.has(h), archived?.commit);
+      // A verdict carrying a commit still belongs in the SAFE bucket; what it must NOT do is lose
+      // the commit, which is the only thing that makes the claim checkable.
+      buckets[verdict.startsWith('SAFE') ? 'SAFE' : verdict].push({ ...s, blob: h, size, verdict, archive: archived ?? null });
     });
   }
 
@@ -293,6 +319,9 @@ function main() {
   for (const k of ['AT RISK', 'UNREFERENCED', 'LOCAL-REF-ONLY', 'SAFE']) {
     say(`    ${k.padEnd(15)} ${String(buckets[k].length).padStart(6)} file(s)  ${mb(bytesOf(buckets[k])).padStart(10)}  ${treesOf(buckets[k])} tree(s)`);
   }
+  const byArchive = buckets.SAFE.filter((r) => r.archive);
+  say(`    ${'of which ARCHIVE'.padEnd(15)} ${String(byArchive.length).padStart(6)} file(s)  ${mb(bytesOf(byArchive)).padStart(10)}  `
+      + `${byArchive.length ? [...new Set(byArchive.map((r) => r.verdict))].slice(0, 3).join(' ') : 'none offloaded'}`);
   say('');
   say(`  ➡️  THE DESK FIGURE is the AT RISK bucket — in NO object database:`);
   say(`      ${atRisk.length} file(s) / ${mb(bytesOf(atRisk))} across ${treesOf(atRisk)} tree(s)`);
@@ -453,6 +482,10 @@ function main() {
       treesAnswered: answered,
       treesCouldNotAnswer: couldNot.length,
       subjects: subjects.length,
+      archiveIndex: archiveIndex
+        ? { path: ARCHIVE_INDEX_PATH, subtrees: Object.keys(archiveIndex.subtrees ?? {}).length, files: Object.keys(archiveIndex.files ?? {}).length }
+        : null,
+      safeByArchive: { files: byArchive.length, bytes: bytesOf(byArchive), trees: treesOf(byArchive) },
       deskFigure: { files: atRisk.length, bytes: bytesOf(atRisk), trees: treesOf(atRisk) },
       nonSafe: { files: nonSafe.length, bytes: bytesOf(nonSafe), trees: treesOf(nonSafe) },
       buckets: Object.fromEntries(Object.entries(buckets).map(([k, v]) => [k, { files: v.length, bytes: bytesOf(v), trees: treesOf(v) }])),

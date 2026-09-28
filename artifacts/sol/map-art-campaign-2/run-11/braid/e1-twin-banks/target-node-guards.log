@@ -1,0 +1,21 @@
+✔ e6-picnic retains the parent blockers and appends its own registered solids (0.75725ms)
+✔ e7-dead-band retains the parent blockers and appends its own registered solids (0.179458ms)
+✔ e7-relay-rush retains the parent blockers and appends its own registered solids (0.147541ms)
+✔ e8-far-side retains the parent blockers and appends its own registered solids (0.074917ms)
+✔ alias-only maps retain exactly their parent blockers (0.076167ms)
+✔ plain maps retain their footprints without duplication (0.092209ms)
+✔ same-game audit runs over every contract and keeps its row schema (12095.553416ms)
+✔ same-game audit follows the door grammar through the final AP-16 verbs (12427.145875ms)
+✔ same-game audit also emits a complete markdown table (13487.111ms)
+✔ every door verb is mapped to a human control (ADR-005) (0.800458ms)
+✔ same-game audit publishes the ADR-005 controls section (13871.255291ms)
+✔ the committed same-game report carries a controls row for every door verb (1.090042ms)
+✔ every functions/**/*.ts is type-checked (7370.449583ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59592.742541

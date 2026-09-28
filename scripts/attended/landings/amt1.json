@@ -1,0 +1,44 @@
+{
+  "tag": "amt1",
+  "branch": "sol/wave-lane-b",
+  "port": 5411,
+  "mergeMessage": "drain: merge sol/wave-lane-b — audio-music-toggle-1 — one tap turns the music off everywhere a player hears it: a fourth per-profile key, a 44 px toggle beside pause in the run HUD, on the town bar, on the start menu and the first-boot card, a Music checkbox beside the slider, music-off skips the loop fetch; from reviews/audio-review-1.md rank 1 (owner 2026-09-28: users asked how to disable the music quickly); no new key, M unchanged; engine-pinned",
+  "hash": "pin",
+  "pinCause": "audio-music-toggle-1: a fourth per-profile audio key (music off), SoundSystem treats it like mute for music loops only (no fetch, live resume), one-tap toggles in the run HUD, the town bar, the start menu and the first-boot card, a Music checkbox in AudioSettingsControl, one Gazette clause; nine src files under src/audio, src/ui, src/town, src/game, src/news; no gameplay or sim change",
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/audio-music-toggle.spec.ts",
+      "e2e/050-audio-mix-and-access.spec.ts",
+      "e2e/051-audio-governor.spec.ts",
+      "e2e/mu-02-music.spec.ts",
+      "e2e/music-survives-pause.spec.ts",
+      "e2e/first-town-audio-deferred.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/audio-music-toggle-1.md",
+    "title": "Drain review: `audio-music-toggle-1`, one tap turns the music off on every surface a player hears it, the setting per profile, the loop fetch skipped when off",
+    "body": "scripts/attended/landings/amt1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "audio-music-toggle-1.md",
+    "rowKey": "AUDIO MUSIC TOGGLE 1 LANDED",
+    "rowEmoji": "🎧",
+    "rowText": "From `reviews/audio-review-1.md` rank 1 (Opus 5.5, at the owner's word: users asked how to disable the music quickly). Astra on lane-b, two attempts (`a029c8f8e`, `bdd70d410`; 226,516 tokens; the second built on the first after the attended firewall path error F-ATT-11): a fourth per-profile key `gr.audio.music-off.v1` registered in `src/game/ProfileStorage.ts`; `SoundSystem` treats music-off like mute for music loops only (no fetch, live resume, SFX untouched, the Music Volume level preserved); a 44 px `music-toggle` beside pause in the run HUD, on the town bar, on the start menu and on the first-boot card; a Music checkbox beside the slider; one Gazette clause. Interactions to silence the music: a run 3 plus a scroll → 1 tap, town and menu 2 → 1, first boot none → 1; the pause slider needs a scroll on both devices (measured). New spec 10/10, six adjacent audio suites 44/44, zero console/page errors, evidence 7.7 MB. No new keyboard key and M unchanged (owner F-AUD-12). The fires' diff-selected wrapper could not finish the full Node battery inside its 900 s cap (F-2737-1, the fire's wrapper corrective handed to Astra), so the landing was done attended and pinned",
+    "statusPhrase": "one tap turns the music off on every surface a player hears it, per profile, with the loop fetch skipped when off; the pause slider is no longer the only way",
+    "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh amt1; Astra on lane-b, the ChatGPT subscription; the fires' wrapper cap F-2737-1 kept them from landing it)"
+  },
+  "deploy": true,
+  "preview": false,
+  "evidenceDir": "artifacts/audio-music-toggle-1"
+}

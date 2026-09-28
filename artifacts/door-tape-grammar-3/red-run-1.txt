@@ -1,0 +1,51 @@
+RED 1: the new rows (scripts/test-standings.mjs, as committed in a3531c91b) run against the untouched door: functions/ and src/ equal to base 3b12c4236 (git diff --quiet). Command: node scripts/test-standings.mjs
+
+contract clock census 42/25/17/0
+recorder reel kv checks (40)
+recorder verbs kv checks (41)
+retired embedded orders kv checks (14)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the door refuses a place_build id and a pick_upgrade id of whitespace only and an ability the client does not know: [{"ok":true,"stored":true,"rank":1,"decidedBy":"crown"},{"ok":true,"stored":true,"rank":2,"decidedBy":"submittedAt"},{"ok":true,"stored":true,"rank":3,"decidedBy":"submittedAt"}]
++ actual - expected
+
+  [
+    [
++     200,
++     true
+-     400,
+-     'bad_payload'
+    ],
+    [
++     200,
++     true
+-     400,
+-     'bad_payload'
+    ],
+    [
++     200,
++     true
+-     400,
+-     'bad_payload'
+    ]
+  ]
+
+    at equal (file:///Users/robin/Claude/Projects/wt-dtg3/scripts/test-standings.mjs:2009:10)
+    at checkClientGrammar (file:///Users/robin/Claude/Projects/wt-dtg3/scripts/test-standings.mjs:618:3)
+    at async file:///Users/robin/Claude/Projects/wt-dtg3/scripts/test-standings.mjs:57:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ [ 200, true ], [ 200, true ], [ 200, true ] ],
+  expected: [
+    [ 400, 'bad_payload' ],
+    [ 400, 'bad_payload' ],
+    [ 400, 'bad_payload' ]
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.4.0
+rc=1

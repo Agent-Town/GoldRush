@@ -940,3 +940,75 @@ Required development-browser run: 47 passed/7 failed; final frozen-source four-s
 Engine `dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b` → `0b017ed5230a0b8c2e46d756004388034a3dc58bca94848b2708a33d35d4dce7`. Store `5793a967da46e8f00c0ba16f92f17dc10d36558d` unchanged; no pin move. Requested implementation remaining list is **EMPTY**; gate-owner work is ordered in the handoff.
 
 [Complete handoff, per-map engine hash pairs and remaining gate work](run-10/code-presentation/run-note.md) · [Twin Banks](run-10/code-presentation/e1-twin-banks/review.md) · [Trestle and every rail map](run-10/code-presentation/e2-trestle/review.md) · [Relay Rush](run-10/code-presentation/e7-relay-rush/review.md) · [Failure attribution](run-10/code-presentation/failure-attribution.md).
+
+## 2026-09-25 run 11: braid - firewall stop
+
+Twin Banks HM-06 is BLOCKED before implementation. Pre-flight install and build pass; the normal GLB path already renders two ribbons, while the fallback retains the band. The mask-driven source-box pool and production-mask ownership require the shared pilot constructor, outside the permitted Twin Banks water entry. No runtime, test or store bytes changed. [Finding, evidence and remaining list](run-11/braid/e1-twin-banks/report.md).
+
+
+## 2026-09-25 run 11: Twin Banks braid, HM-06 run 2
+
+**IMPLEMENTED; READY-FOR-GATES.** The lifted shared-constructor firewall allows production-mask authority, a region-driven source pool within the existing confluence draw, and mask-shaped fallback water. The existing two mounted ribbons are reused. No sculpt, collision, simulation or contract change. Implementation **96fc2b9ce**.
+
+Measured delivered beds -0.452156/-0.315686 m; dry plait +0.259180 m and bar anchors +0.711866/+0.658148 m. Store branch `astra/hm-06-braid` is pushed, unchanged at `5793a967da46e8f00c0ba16f92f17dc10d36558d`. Mask geometry 14,336/14,336; hero probes 8/8; focused braid/routing 6/6; legacy construction captures 10/10 byte-identical. Draws 95→95 desktop /65→65 phone; p95 medians 9.0→8.7 /9.2→9.2 ms. Floors 83/83 match. First-town payload 34,346,281→34,349,803 B (+3,522 B), below 52,000,000 B. Both builds and release 30/30 pass.
+
+The broad dev battery is 52 pass/2 skip/2 red: existing reed motion and a hero-height boot race, both controlled against pre-task source. The drain owns floor re-record/check and the same-era pin; the lane does not change `engine-era.json`. Full paired-bank entry remains camera/HUD-owned; a river-station diagnostic is not called a plain-entry fix. [Every board, command, guard limitation, and remaining item](run-11/braid/e1-twin-banks/report.md).
+
+Canonical Node 26.4.0 battery: 1,009 pass / 5 skip / 4 expected pin/status failures / 0 cancelled; same-game audit and separately run landmark-collision rows pass. The four reds are enumerated in the run-2 report; no pin/status edit was made outside the firewall.
+
+## 2026-09-25 — native play proofs, run 1
+
+Task sol-play-proofs-1, lane-c, Astra. No production/contract/balance or existing-test changes. Pre-flight: no ahead commits and only untracked evidence/log churn; synced lane to main, removed permitted regenerated artifact directories and `logs/guard-stats.jsonl`. Install/build passed; npm-only lockfile metadata churn restored, clean status verified. Own Vite port 5303, one worker, desktop then phone.
+
+- **Baron: FAIL desktop/phone, F-PP1-1.** Desktop died wave 16; phone wave 23, boss at 62.3% HP. Boot/clean pass both, zero errors; terminal/bank/reload unproved. Two attempted strategies do not prove impossibility. [Finding, exact positions and rows](../play-proofs/run-1/e1-baron/finding.md).
+
+- **Twin Banks: FAIL desktop/phone, F-PP1-2.** Desktop died wave 19 / 582.9s, phone wave 18 / 554.1s. Both boot/clean pass, zero errors. [Two attempts and remaining driver limitations](../play-proofs/run-1/e1-twin-banks/finding.md).
+
+- **Pressure Garden: FAIL desktop/phone, F-PP1-3.** Authored route reaches all three coal seams. Desktop died wave 3; phone built two turrets and three boilers, reached two hot boilers, died wave 11. No full secure. [Rows and route findings](../play-proofs/run-1/e2-pressure-garden/finding.md).
+
+- **The Incline: PASS desktop/phone.** Both deliver the cart at 180/180 HP, defeat the railcar and secure at wave 14; all six cells pass, byte-identical score on reload, zero errors. F-PP1-4 resolved: the actual Book launch selects escort mode. Holding four turrets after wave 8 succeeds where extra funding trips failed. [Proof and boards](../play-proofs/run-1/e2-incline/proof.md).
+
+- **Blackout Ridge: PARTIAL desktop/phone, F-PP1-5.** Both wave-12 secure/bank/Book/reload journeys pass with zero errors. The full card goal remains red: phone builds both banks and records eight repairs, but both banks finish wrecked and no current storage is observed. [Exact readings and boundaries](../play-proofs/run-1/e3-blackout-ridge/finding.md).
+
+The new banking check compares to pre-play scores, correcting census instrument finding F-MPP1-1: secure already writes the score before Return to Town. New specs are gated by GR_NATIVE_PROOF. See [run note](../play-proofs/run-1/run-note.md) for final checks, commits and continuation order.
+
+Final verification: build/TypeScript PASS; default collection PASS; gate-unset browser invocation 10 skipped; bounded existing secure-wave briefing check 2/2 PASS. All ten final rows have zero console/page errors. Only Incline passes all six cells on both projects; unresolved full-objective assertions remain red when enabled. Scope check confirms five second-column-only edits and allowed paths. Owned Vite stopped; five-map batch closed, next untouched map Canyon Works.
+
+## 2026-09-25 — Native play proofs, run 2
+
+- Blackout Ridge: PARTIAL desktop/phone; wave 12, bank/Book/reload/clean PASS, authored current storage FAIL, 0 Wh both banks. Two repair strategies, 15/12 repairs. [F-PP2-1](../play-proofs/run-2/e3-blackout-ridge/finding.md).
+- Canyon Works: FAIL desktop/phone; bridge and opposite flank routes stop near z=-7.88, CONNECT 0/2 misses wave 8, zero gold/builds. Full-width slope rejection confirmed by static calculation; no runtime fix within scope. [F-PP2-2](../play-proofs/run-2/e3-canyon-works/finding.md).
+- Fairground: FAIL desktop/phone; six-wall opening loses the wheel at wave 2, early-beacon opening at wave 1. Phone gets one flock across; wheel first-hit stop is irreversible. Both clean, no bank/reload proof. [F-PP2-3](../play-proofs/run-2/e3-fairground/finding.md).
+- Gates: final TypeScript/build PASS; native gate unset gives 14 skipped. Shared-driver Incline regression PASS desktop wave 17 / phone wave 14, full-health cart delivery, bank/Book/reload and zero errors. Scope check confirms only the three objective-evidence cells changed. No new full map proof this batch. [Ordered continuation and commands](../play-proofs/run-2/run-note.md).
+
+## 2026-09-25 — Native play proofs, run 3
+
+- Dust Flats: FAIL desktop/phone. Haul-first reaches railhead at 43.9 s but dies wave 2; defense-first builds two defenses but dies wave 4 before dispatch. Zero console/page errors. Strategy limits, not impossibility. [F-PP3-1](../play-proofs/run-3/e4-dust-flats/finding.md).
+- Gusher County: FAIL desktop/phone. Desktop stops after two deliveries on a missed north dispatch, dies wave 14; phone verifies all three deliveries using 27.631 fuel, then dies wave 4 funding its first defense. Zero errors. [F-PP3-2](../play-proofs/run-3/e4-gusher-county/finding.md).
+- Boneyard: FAIL desktop/phone. Desktop approach stalls at the boiler west edge; phone stops 1.112 units from the road head, outside driver tolerance, and never reaches the hitch. Deaths at waves 4/10; phone builds four defenses. Zero errors. Route limits, no impossibility claim. [F-PP3-3](../play-proofs/run-3/e4-boneyard/finding.md).
+- Gates: TypeScript/build PASS; native gate unset gives 20 skipped; Incline regression PASS desktop/phone at wave 14 with 180/180 HP carts, bank/Book/reload and zero errors. Existing secure-wave briefing check 2/2 PASS. Scope verification confirms exactly three second-column-only status edits and allowed files. No new full proof; next untouched map Far Side. [Ordered continuation, commands and commits](../play-proofs/run-3/run-note.md).
+
+## 2026-09-25 — Native play proofs, run 4
+
+- Driver control: Claim PASS desktop with the unchanged driver, wave 10 / 300.07 s, 143 HP, six buildings, bank/Book/plain reload and zero console/page errors. The control permits the ordered E8 continuation; earlier holds remain strategy findings. [Run note](../play-proofs/run-4/run-note.md).
+- Far Side: FAIL desktop/phone. Desktop coasts out of seam reach (zero gold, death wave 12); corrected phone gathers and proves four air-supported crossings plus one probe playback, but dies wave 17 with four landing-yard defenses. Northern build and full terminal unproved. [F-PP4-1](../play-proofs/run-4/e8-far-side/finding.md).
+- Low Orbit: FAIL desktop/phone, death waves 13/14. Both earn four air-supported entries; phone builds on all three decks. Zero suit harm and console/page errors; wave-20 bank/reload unproved. [F-PP4-2](../play-proofs/run-4/e8-low-orbit/finding.md).
+- Eclipse: FAIL desktop/phone, death waves 16/13, three of four grounds each. Phone proves dome/rim builds and post-shadow harvest, then spends air waiting on a needless velocity arrival threshold (45 suit harm). The final helper accepts actual position; its E8 result remains unproved after the two-attempt cap. [F-PP4-3](../play-proofs/run-4/e8-eclipse/finding.md).
+- Closing gates: TypeScript/build PASS; opt-in gate unset gives 28 skipped; final-driver Incline PASS desktop/phone (waves 14/17, carts 180/180 HP, bank/Book/reload, zero errors); adjacent secure-wave briefing check 2/2 PASS. Nine rows clean. Three second-column-only status edits and allowed paths verified against actual reset base e6336dd0c. No new full proof; next untouched map Dome Basin. [Commands, limits, commits and ordered continuation](../play-proofs/run-4/run-note.md).
+
+## 2026-09-25 — Native play proofs run 5
+
+- Dome Basin: FAIL desktop/phone, waves 15/13. Quarry 4/4, gates 3/3 and all five named building grounds complete; eight builds each, zero errors. Corrected the circuit clamping to the wrong zone; phone still fails survival. No map defect established. [F-PP5-1](../play-proofs/run-5/e9-dome-basin/finding.md).
+- Seed Run: FAIL desktop/phone, death waves 13/14. Caravan arrives with 236.4/234.8 guard; three/four late defenses cannot carry these attempts to wave 20. Zero errors; no banking or planting-persistence proof. [F-PP5-2](../play-proofs/run-5/e9-seed-run/finding.md).
+- Devil's Alley: PASS phone, PARTIAL desktop. Both wave 20, bank, Book, byte-identical reload and zero errors. Desktop missed the east-bay build; phone confirms all three bays after native build-confirmation retries. Two attempts exhausted; desktop full goal remains red. [F-PP5-3](../play-proofs/run-5/e9-devils-alley/finding.md).
+- Closing gates: TypeScript/build PASS; collection 3,452 tests, gate unset 34 skipped; final-driver Incline PASS desktop/phone at wave 14 with carts 180/180 HP; bounded adjacent check 2/2 PASS. Eight final rows clean. Three second-column status cells and allowed paths verified. No new full desktop/phone map acceptance; next untouched Old Canal. [Commands, commits and remaining order](../play-proofs/run-5/run-note.md).
+
+## 2026-09-26 — Native play proofs run 6 and campaign close
+
+- Old Canal: FAIL desktop/phone, all three choices complete, eight/seven builds, deaths wave 19/18. Central demolish opens the defense ground; both outer re-digs register. No map defect established, zero errors. [F-PP6-1](../play-proofs/run-6/e9-old-canal/finding.md).
+- Initial required Incline regression: PASS both projects, wave 14, cart 180/180, all six cells, zero errors.
+- Last Claim: PASS desktop/phone, wave 8, vent alive, banked, actual finale Return to the Ark reaches Book, score byte-identical after reload, zero errors. Prior census text preserved. [Proof](../play-proofs/run-6/e10-last-claim/proof.md).
+- Final shared-driver Incline regression: PASS both projects at wave 14, all six cells and full-health carts, zero errors.
+- River: PARTIAL desktop/phone. Real earned finale lever, no-wave pan 0→30 gold and clean Book return; no completed River score or terminal bank action, so bank/persistence remain FAIL. Raw wave-20 census text preserved and explicitly distinguished. This is an ending-acceptance mismatch, not survival impossibility. [F-PP6-2](../play-proofs/run-6/e10-river/finding.md).
+- Closing gates: TypeScript/build PASS; collection 3,484 tests / 472 files; actual env-unset native run 40 skipped; final-driver Incline and bounded adjacent check each 2/2 PASS. Eight final rows clean, three objective-only status edits verified, prior E10 instrument text preserved. Owned Vite stopped. [Campaign table, exact commands, commits and ordered follow-ups](../play-proofs/run-6/run-note.md).
+- Campaign inventory reconciles to 20 unique measured contracts (19 original targets plus the Claim control), not the task's stated 26: 2 PROVED both, 2 PROVED one, 2 PARTIAL, 13 HELD, 1 historical DEFECT. The run note links every row and explains the overlapping prior tally. Recommendation: finish the broad sweep, strengthen ground survival/repair and orbital movement separately, use targeted human playtests, and resolve River's ending-specific acceptance before treating it as a scored contract.

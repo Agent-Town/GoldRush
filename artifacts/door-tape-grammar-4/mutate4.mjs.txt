@@ -1,0 +1,54 @@
+// Scratch mutation runner for door-tape-grammar-4 (committed as evidence text only). Each run changes ONE clause of
+// functions/api/standings.ts, runs `node scripts/test-standings.mjs`, records rc and the first failing assertion
+// (for the door row, which answer flipped), then restores the source and proves it with `git diff --quiet HEAD`.
+// Per shape it exempts exactly that shape once at the door only and once at read only. Run from the worktree root.
+import { spawnSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
+
+const FILE = 'functions/api/standings.ts';
+const original = readFileSync(FILE, 'utf8');
+const SET = "new Set(['place_build', 'pick_upgrade', 'research_pick', 'set_agent_ability', 'context_action'])";
+const DOOR = 'if (!stored && clientRefusesAction(value)) return false;';
+const READ = 'if (isRecord(action) && clientRefusesAction(action)) return';
+const shapes = [
+  ['a research_pick id of whitespace only', (x) => `${x}.type === 'research_pick' && ${x}.id === '   '`],
+  ['a research_pick id of a tab and a newline', (x) => `${x}.type === 'research_pick' && ${x}.id === '\\t\\n'`],
+  ['an upgrade whose target id is whitespace only', (x) => `${x}.type === 'context_action' && ${x}.action === 'upgrade' && JSON.stringify(${x}.target) === '{"id":"   ","index":0}'`],
+  ['a demolition whose target id is whitespace only', (x) => `${x}.type === 'context_action' && ${x}.action === 'demolish' && JSON.stringify(${x}.target) === '{"id":"   ","index":0}'`],
+  ['an upgrade whose target names no building', (x) => `${x}.type === 'context_action' && ${x}.action === 'upgrade' && JSON.stringify(${x}.target) === '{"id":"nonsense","index":0}'`],
+  ['a demolition whose target names no building', (x) => `${x}.type === 'context_action' && ${x}.action === 'demolish' && JSON.stringify(${x}.target) === '{"id":"nonsense","index":0}'`],
+];
+const mutations = [
+  ['M0 none (control)', null, null],
+  ['M1 the set without research_pick', SET, SET.replace("'research_pick', ", '')],
+  ['M2 the set without context_action', SET, SET.replace(", 'context_action'", '')],
+  ...shapes.map(([label, pred], index) => [`M${3 + index} door only: ${label} let through`, DOOR, DOOR.replace('clientRefusesAction(value)', `clientRefusesAction(value) && !(${pred('value')})`)]),
+  ...shapes.map(([label, pred], index) => [`M${9 + index} read only: ${label} not retired`, READ, READ.replace('clientRefusesAction(action)', `clientRefusesAction(action) && !(${pred('action')})`)]),
+];
+const answersOf = (line) => [...line.matchAll(/\{"ok":(true|false)(?:,"error":"([a-z_]+)")?[^}]*\}/g)].map((m) => (m[1] === 'true' ? 'stored' : m[2]));
+const lines = [];
+try {
+  for (const [label, find, replace] of mutations) {
+    if (find !== null) {
+      const hits = original.split(find).length - 1;
+      if (hits !== 1) throw new Error(`${label}: expected one match, found ${hits}`);
+      writeFileSync(FILE, original.replace(find, replace));
+    }
+    const run = spawnSync(process.execPath, ['scripts/test-standings.mjs'], { encoding: 'utf8', timeout: 600_000 });
+    writeFileSync(FILE, original);
+    if (spawnSync('git', ['diff', '--quiet', 'HEAD', '--', FILE]).status !== 0) throw new Error(`${label}: source not restored`);
+    const output = `${run.stdout}\n${run.stderr}`;
+    const passed = [...output.matchAll(/checks passed \((\d+)\)/g)].map((match) => match[1]);
+    const failure = output.match(/^AssertionError \[ERR_ASSERTION\]: ([^\n]*)/m)?.[1] ?? output.match(/^(\w*Error: [^\n]*)/m)?.[1];
+    let verdict = run.status === 0 ? `passed ${passed.join('/')}` : 'RED: no assertion line';
+    if (run.status !== 0 && failure) {
+      const answers = answersOf(failure);
+      verdict = answers.length ? `RED: ${failure.split(': [')[0]}: answers [${answers.join(', ')}]` : `RED: ${failure.slice(0, 170)}`;
+    }
+    lines.push(`${label.padEnd(76)} rc=${run.status} ${verdict}`);
+    console.log(lines.at(-1));
+  }
+} finally {
+  writeFileSync(FILE, original);
+}
+writeFileSync(process.argv[2], `${lines.join('\n')}\n`);

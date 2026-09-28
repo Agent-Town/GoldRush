@@ -1,6 +1,9 @@
 export type KVNamespaceLike = {
   get(key: string): Promise<string | null>;
   put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
+  // kv-counters-to-ledger-1: the droplet ledger's one-statement count-and-read
+  // (server/ledger/storage.mjs `increment`). SqliteStorage offers it; Cloudflare KV cannot.
+  increment?(key: string, ttlSeconds: number): Promise<number>;
 };
 
 // F-HEAT14-7, owner ruling 2026-09-19 (verbatim: "I agree with all your recommendations on the
@@ -13,8 +16,9 @@ export type KVNamespaceLike = {
 // The stored value now carries the window START beside the count (`"<count>:<startedAtMs>"`) and the
 // TTL is the REMAINDER of the window measured from that start, so an hour is an hour for every door
 // this limiter serves. Nothing else moved: the signature, the return type, the refuse-before-write
-// order and every caller's limit are byte-identical, so the six doors that share it
-// (`standings`, `_accounts`, `telemetry`, `redeem`, `_bugs`, `refusals`) keep their own numbers. The
+// order and every caller's limit are byte-identical, so the seven doors that share it
+// (`standings`, `_accounts`, `telemetry`, `redeem`, `_bugs`, `refusals`, and `_multiplayer`'s KV fallback since
+// kv-counters-to-ledger-2, F-KV1-4) keep their own numbers. The
 // one behaviour every door inherits is the fixed window — which is the ruling.
 const WINDOW_SEPARATOR = ':';
 
@@ -34,6 +38,17 @@ function parseWindow(raw: string | null, now: number): RateWindow {
 }
 
 export async function bumpCounter(kv: KVNamespaceLike, key: string, limit: number, ttlSeconds: number): Promise<boolean> {
+  // kv-counters-to-ledger-1 (owner ruling 2026-09-24, item 7 "(b)"): where the store can count
+  // atomically - the sqlite ledger behind every door the droplet serves, and the ledger routes the
+  // Pages doors now call - the window counter IS that count. The read-then-write below lets a burst
+  // share one number (the SEC-1 defect, measured on the guess counter), and the ledger's statement
+  // cannot: each caller is refused on the count its own call produced. The window is the same fixed
+  // window this file already promises: `increment` arms `expires_at` once, from the first counted
+  // request, and never re-arms it. One difference, deliberate: a refused request is counted too, so
+  // the stored number can pass the limit. That buys nothing and costs nothing, because the window it
+  // sits in still ends on time. A value this file wrote as `<count>:<start>` keeps its count: sqlite
+  // reads `CAST('7:1788...' AS INTEGER)` as 7, measured.
+  if (kv.increment) return (await kv.increment(key, ttlSeconds)) <= limit;
   const now = Date.now();
   const stored = parseWindow(await kv.get(key), now);
   const elapsedMs = now - stored.startedAt;
@@ -44,7 +59,10 @@ export async function bumpCounter(kv: KVNamespaceLike, key: string, limit: numbe
   // A refusal never bumps and never re-arms the window: the hour that refused you is the hour that
   // has to pass, not an hour restarted by your own refused attempt.
   if (count >= limit) return false;
-  const remainingSeconds = Math.max(1, Math.ceil((startedAt + ttlSeconds * 1000 - now) / 1000));
+  // Cloudflare KV refuses an expirationTtl under 60 s (F-KV2-1, 2026-09-25): floor it, so the last 59 s of a
+  // rider's hour do not throw and 429 at the door. The window START stored beside the count still rolls the
+  // hour on the next read, so the floor costs at most 59 s of key life, never a longer window.
+  const remainingSeconds = Math.max(60, Math.ceil((startedAt + ttlSeconds * 1000 - now) / 1000));
   await kv.put(key, `${count + 1}${WINDOW_SEPARATOR}${startedAt}`, { expirationTtl: remainingSeconds });
   return true;
 }

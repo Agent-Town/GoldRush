@@ -1,0 +1,66 @@
+(node:61007) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:61067) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/county-board-open-week.spec.ts:301:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away
+  1) [desktop-chrome] › e2e/county-board-open-week.spec.ts:301:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('county-standings-row-1')
+    Timeout: 5000ms
+    - Expected substring  - 1
+    + Received string     + 7
+
+    - Week Rider
+    +
+    +     1
+    +     All-Time RiderTrailUndeclared rider
+    +     40 waves · 02:00 · 40 gold
+    +     9d ago
+    +     Watch this run
+    +   
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('county-standings-row-1')
+        14 × locator resolved to <tr data-testid="county-standings-row-1">…</tr>
+           - unexpected value "
+        1
+        All-Time RiderTrailUndeclared rider
+        40 waves · 02:00 · 40 gold
+        9d ago
+        Watch this run
+      "
+
+
+      330 |   await expect(allTime).toHaveAttribute('aria-pressed', 'false');
+      331 |   await expect(boardLabel).toHaveText(label!);
+    > 332 |   await expect(page.getByTestId('county-standings-row-1')).toContainText('Week Rider');
+          |                                                            ^
+      333 |   await expect(rows).toHaveCount(1);
+      334 |   expect(traffic.asks.at(-1)).toBe(`?${CLAIM}&rotation=${weekId}`);
+      335 |   await shoot(page, `board-week-${testInfo.project.name}.png`);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:332:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/county-board-open-week-boa-8ccd7-all-time-board-one-tap-away-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/county-board-open-week-boa-8ccd7-all-time-board-one-tap-away-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/county-board-open-week-boa-8ccd7-all-time-board-one-tap-away-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/county-board-open-week-boa-8ccd7-all-time-board-one-tap-away-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chrome] › e2e/county-board-open-week.spec.ts:301:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away 

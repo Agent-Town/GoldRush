@@ -1,0 +1,34 @@
+✔ a bare spec:line citation fails the guard (175.152708ms)
+✔ a citation carrying an exact test title passes (160.026209ms)
+✔ a short code span cannot consume the following quoted title (154.697459ms)
+✔ a bare apostrophe cannot consume the following quoted title (155.958458ms)
+✔ an odd same-kind delimiter cannot consume the following quoted title (154.674292ms)
+✔ a test helper string is not harvested as a title (154.931541ms)
+✔ chained describe modifiers remain title declarations (152.424042ms)
+✔ a citation carrying an ELIDED test title passes (154.464125ms)
+✔ a quoted title that does not exist in the spec still fails (156.531333ms)
+✔ a grandfathered bare citation passes, and a second copy of it does not (286.221375ms)
+✔ --report never gates (154.217875ms)
+✔ REFUSES when no tracked task markdown exists (denominator 0 docs) (146.198125ms)
+✔ REFUSES when task docs exist but carry zero citations (141.408583ms)
+✔ REFUSES when the baseline it ratchets against is missing (210.535042ms)
+✔ a citation quoting a real NON-TEST source line is carried, not a violation (156.376333ms)
+✔ a quote matching NEITHER a title nor any source line still fails (156.239541ms)
+✔ the verdict names the citations it did NOT gate (162.723625ms)
+✔ --report still never gates, even on a denominator it could not read (151.108209ms)
+scan space: 300 tracked src TS files (292 scanned, 8 skipped)
+✔ visitor copy and contract text fields contain no em dashes (1211.194583ms)
+✔ same-game audit runs over every contract and keeps its row schema (10282.61525ms)
+✔ same-game audit follows the door grammar through the final AP-16 verbs (10658.896208ms)
+✔ same-game audit also emits a complete markdown table (31571.123042ms)
+✔ every door verb is mapped to a human control (ADR-005) (0.91175ms)
+✔ same-game audit publishes the ADR-005 controls section (28544.824875ms)
+✔ the committed same-game report carries a controls row for every door verb (1.811958ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 85500.344

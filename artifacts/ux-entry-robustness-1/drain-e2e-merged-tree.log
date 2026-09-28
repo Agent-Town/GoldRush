@@ -1,0 +1,309 @@
+(node:6283) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 108 tests using 1 worker
+
+
+(node:6344) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/108] [desktop-chrome] › e2e/044-start-screen.spec.ts:45:1 › plain boot shows the Storybook start menu without Continue
+[2/108] [desktop-chrome] › e2e/044-start-screen.spec.ts:70:1 › debug boot skips the start menu and enters the game
+[3/108] [desktop-chrome] › e2e/044-start-screen.spec.ts:80:1 › Enter Town opens the town scene and disposes the menu
+[4/108] [desktop-chrome] › e2e/044-start-screen.spec.ts:92:1 › Profile opens the existing selector with arrow and Enter
+[5/108] [desktop-chrome] › e2e/044-start-screen.spec.ts:104:1 › the profiles page offers a way back to the menu
+[6/108] [desktop-chrome] › e2e/044-start-screen.spec.ts:119:1 › Settings volume writes through
+[7/108] [desktop-chrome] › e2e/044-start-screen.spec.ts:135:1 › Continue appears only for an existing suspend slot and enters the run path
+[8/108] [desktop-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+[desktop-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[9/108] [desktop-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture
+[10/108] [desktop-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[desktop-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[11/108] [desktop-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+[desktop-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[12/108] [desktop-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[desktop-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[13/108] [desktop-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[desktop-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+Regatta schema 4 watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[14/108] [desktop-chrome] › e2e/entry-params.spec.ts:82:3 › /?utm_source=x&fbclid=y shows the start menu and mints no profile
+[15/108] [desktop-chrome] › e2e/entry-params.spec.ts:82:3 › /?gclid=z shows the start menu and mints no profile
+[16/108] [desktop-chrome] › e2e/entry-params.spec.ts:82:3 › /?contract=e1-night-shift shows the start menu and mints no profile
+[17/108] [desktop-chrome] › e2e/entry-params.spec.ts:96:1 › a staged board launch still launches the run through ?contract=
+[18/108] [desktop-chrome] › e2e/entry-params.spec.ts:109:1 › a chunk that never arrives gets the parchment card, not a blank page
+[19/108] [desktop-chrome] › e2e/entry-params.spec.ts:125:1 › a browser refusing webgl2 gets the parchment card, not a blank page
+[20/108] [desktop-chrome] › e2e/entry-params.spec.ts:148:1 › losing the window clears every held key and re-arms the next press
+[21/108] [desktop-chrome] › e2e/entry-params.spec.ts:209:1 › the hero stops walking when the window loses focus mid-stride
+[22/108] [desktop-chrome] › e2e/entry-params.spec.ts:232:1 › the solo pick clock freezes while the tab is hidden and resumes with the time left
+[23/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:86:1 › X opens level-up and freezes sim clocks while enemies are alive
+[24/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:103:1 › draft shows its clock and a normal pick beats expiry
+[25/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:126:1 › draft expiry files the first offer and the run continues
+[26/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:142:1 › picking a card applies stacks and resumes after pending choices without wave drift
+[27/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:161:1 › first offer is deterministic for a fixed seed and has no duplicates
+[28/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:177:1 › investment weighting prefers owned families without losing discovery
+[29/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:212:1 › owned-family cards show a compact stack pip
+[30/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:225:1 › sampled offers never contain duplicate ids
+[31/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:238:1 › maxed upgrades leave the offer pool
+[32/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:263:1 › Beacon Dynamo is gated until a beacon stands
+[33/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:283:1 › Split Spark visibly increases volley stats and live bolts
+[34/108] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:320:1 › resetRun clears progression and HUD XP truth
+[35/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[36/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[37/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[38/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[39/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[40/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[41/108] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[42/108] [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run
+  1) [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('start-menu-enter-town')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('start-menu-enter-town')
+
+
+       7 |   page.on('pageerror', (error) => errors.push(error.message));
+       8 |   await page.goto('/?town3dPilot=all');
+    >  9 |   await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+         |                                                           ^
+      10 |   await page.getByTestId('start-menu-enter-town').click();
+      11 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+      12 |   await expect
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-ux1-land/e2e/menu-safe-params.spec.ts:9:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[43/108] [desktop-chrome] › e2e/menu-safe-params.spec.ts:18:1 › a contract param still launches the run path
+
+(node:9557) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[44/108] [desktop-chrome] › e2e/profile-first-boot.spec.ts:41:1 › cleared-storage boot asks who is prospecting and creates no Robin ghost
+[45/108] [desktop-chrome] › e2e/profile-first-boot.spec.ts:72:1 › existing profile state boots straight to the menu
+[46/108] [desktop-chrome] › e2e/profile-first-boot.spec.ts:85:1 › pack the ledger downloads human-readable active profile data
+[47/108] [desktop-chrome] › e2e/profile-first-boot.spec.ts:106:1 › unpack a ledger previews, imports as a new profile, and suffixes collisions
+[48/108] [desktop-chrome] › e2e/profile-first-boot.spec.ts:138:1 › malformed ledgers are rejected warmly and the picker fits at 390px
+[49/108] [desktop-chrome] › e2e/profile-first-boot.spec.ts:264:1 › blocked profile storage boots without offering an unusable first profile
+[50/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[51/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[52/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[53/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[54/108] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:10869) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[55/108] [mobile-chrome] › e2e/044-start-screen.spec.ts:45:1 › plain boot shows the Storybook start menu without Continue
+[56/108] [mobile-chrome] › e2e/044-start-screen.spec.ts:70:1 › debug boot skips the start menu and enters the game
+[57/108] [mobile-chrome] › e2e/044-start-screen.spec.ts:80:1 › Enter Town opens the town scene and disposes the menu
+[58/108] [mobile-chrome] › e2e/044-start-screen.spec.ts:92:1 › Profile opens the existing selector with arrow and Enter
+[59/108] [mobile-chrome] › e2e/044-start-screen.spec.ts:104:1 › the profiles page offers a way back to the menu
+[60/108] [mobile-chrome] › e2e/044-start-screen.spec.ts:119:1 › Settings volume writes through
+[61/108] [mobile-chrome] › e2e/044-start-screen.spec.ts:135:1 › Continue appears only for an existing suspend slot and enters the run path
+[62/108] [mobile-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+[mobile-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[63/108] [mobile-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture
+[64/108] [mobile-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[mobile-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[65/108] [mobile-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+[mobile-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[66/108] [mobile-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[mobile-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[67/108] [mobile-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[mobile-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+Regatta schema 4 watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[68/108] [mobile-chrome] › e2e/entry-params.spec.ts:82:3 › /?utm_source=x&fbclid=y shows the start menu and mints no profile
+[69/108] [mobile-chrome] › e2e/entry-params.spec.ts:82:3 › /?gclid=z shows the start menu and mints no profile
+[70/108] [mobile-chrome] › e2e/entry-params.spec.ts:82:3 › /?contract=e1-night-shift shows the start menu and mints no profile
+[71/108] [mobile-chrome] › e2e/entry-params.spec.ts:96:1 › a staged board launch still launches the run through ?contract=
+[72/108] [mobile-chrome] › e2e/entry-params.spec.ts:109:1 › a chunk that never arrives gets the parchment card, not a blank page
+[73/108] [mobile-chrome] › e2e/entry-params.spec.ts:125:1 › a browser refusing webgl2 gets the parchment card, not a blank page
+[74/108] [mobile-chrome] › e2e/entry-params.spec.ts:148:1 › losing the window clears every held key and re-arms the next press
+[75/108] [mobile-chrome] › e2e/entry-params.spec.ts:209:1 › the hero stops walking when the window loses focus mid-stride
+[76/108] [mobile-chrome] › e2e/entry-params.spec.ts:232:1 › the solo pick clock freezes while the tab is hidden and resumes with the time left
+[77/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:86:1 › X opens level-up and freezes sim clocks while enemies are alive
+[78/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:103:1 › draft shows its clock and a normal pick beats expiry
+[79/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:126:1 › draft expiry files the first offer and the run continues
+[80/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:142:1 › picking a card applies stacks and resumes after pending choices without wave drift
+[81/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:161:1 › first offer is deterministic for a fixed seed and has no duplicates
+[82/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:177:1 › investment weighting prefers owned families without losing discovery
+[83/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:212:1 › owned-family cards show a compact stack pip
+[84/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:225:1 › sampled offers never contain duplicate ids
+[85/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:238:1 › maxed upgrades leave the offer pool
+[86/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:263:1 › Beacon Dynamo is gated until a beacon stands
+[87/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:283:1 › Split Spark visibly increases volley stats and live bolts
+[88/108] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:320:1 › resetRun clears progression and HUD XP truth
+[89/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[90/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[91/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[92/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[93/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[94/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[95/108] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[96/108] [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run
+  2) [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('start-menu-enter-town')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('start-menu-enter-town')
+
+
+       7 |   page.on('pageerror', (error) => errors.push(error.message));
+       8 |   await page.goto('/?town3dPilot=all');
+    >  9 |   await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+         |                                                           ^
+      10 |   await page.getByTestId('start-menu-enter-town').click();
+      11 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+      12 |   await expect
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-ux1-land/e2e/menu-safe-params.spec.ts:9:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[97/108] [mobile-chrome] › e2e/menu-safe-params.spec.ts:18:1 › a contract param still launches the run path
+
+(node:14034) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[98/108] [mobile-chrome] › e2e/profile-first-boot.spec.ts:41:1 › cleared-storage boot asks who is prospecting and creates no Robin ghost
+[99/108] [mobile-chrome] › e2e/profile-first-boot.spec.ts:72:1 › existing profile state boots straight to the menu
+[100/108] [mobile-chrome] › e2e/profile-first-boot.spec.ts:85:1 › pack the ledger downloads human-readable active profile data
+[101/108] [mobile-chrome] › e2e/profile-first-boot.spec.ts:106:1 › unpack a ledger previews, imports as a new profile, and suffixes collisions
+[102/108] [mobile-chrome] › e2e/profile-first-boot.spec.ts:138:1 › malformed ledgers are rejected warmly and the picker fits at 390px
+[103/108] [mobile-chrome] › e2e/profile-first-boot.spec.ts:264:1 › blocked profile storage boots without offering an unusable first profile
+[104/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[105/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[106/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[107/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[108/108] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  2 failed
+    [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+    [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+  106 passed (6.1m)

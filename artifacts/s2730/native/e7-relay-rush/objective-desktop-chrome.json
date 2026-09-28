@@ -1,0 +1,427 @@
+{
+  "url": "http://127.0.0.1:5317/?contract=e7-relay-rush&timescale=4",
+  "sim": 549.7333333333124,
+  "wave": 18,
+  "hp": 0,
+  "gold": 0,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "hero": {
+    "x": -27.60356278849791,
+    "y": 5.06,
+    "z": 42.252505756208805
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -45,
+        "z": 40
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 1,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 24,
+        "z": 41
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 2,
+      "tier": 1,
+      "hp": 64,
+      "maxHp": 64,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -29,
+        "z": 42
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 3,
+      "tier": 1,
+      "hp": 106,
+      "maxHp": 106,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -25,
+        "z": 38
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -25,
+        "z": 41
+      }
+    },
+    {
+      "id": "turret",
+      "index": 1,
+      "tier": 1,
+      "hp": 74,
+      "maxHp": 74,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -24,
+        "z": 37
+      }
+    },
+    {
+      "id": "turret",
+      "index": 2,
+      "tier": 1,
+      "hp": 106,
+      "maxHp": 106,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -20,
+        "z": 38
+      }
+    },
+    {
+      "id": "turret",
+      "index": 3,
+      "tier": 1,
+      "hp": 130,
+      "maxHp": 130,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -30,
+        "z": 43
+      }
+    }
+  ],
+  "hollowCrossing": {
+    "declared": false,
+    "stage": "launch",
+    "routeId": null,
+    "onGlowBridge": false,
+    "radiationDamageDealt": 0
+  },
+  "picnicHold": [],
+  "wrangle": {
+    "enabled": false,
+    "windDownSeconds": 8,
+    "windDownTicks": 240,
+    "captureRadius": 2.2,
+    "exhaustedSpeedMultiplier": 0.2,
+    "active": [],
+    "pen": {
+      "roster": [],
+      "total": 0,
+      "tickSeconds": 15,
+      "goldPerMachine": 1,
+      "incomeGranted": 0
+    }
+  },
+  "interferenceFront": {
+    "declared": true,
+    "cadenceSeconds": 90,
+    "crossingSeconds": 20,
+    "halfWidth": 6,
+    "relayTarget": 3,
+    "deadlineFront": 3,
+    "phase": "crossing",
+    "frontsArrived": 6,
+    "frontsCompleted": 5,
+    "centerX": -1.6,
+    "secondsToNextFront": 80.267,
+    "sites": [
+      {
+        "id": "relay-site-r1",
+        "minX": -50,
+        "maxX": -40,
+        "minZ": 36,
+        "maxZ": 46,
+        "lit": true,
+        "litBy": "sentry_beacon",
+        "muted": false
+      },
+      {
+        "id": "relay-site-r2",
+        "minX": -30,
+        "maxX": -20,
+        "minZ": 36,
+        "maxZ": 46,
+        "lit": true,
+        "litBy": "sentry_beacon",
+        "muted": false
+      },
+      {
+        "id": "relay-site-r3",
+        "minX": 20,
+        "maxX": 30,
+        "minZ": 36,
+        "maxZ": 46,
+        "lit": true,
+        "litBy": "sentry_beacon",
+        "muted": false
+      },
+      {
+        "id": "relay-site-r4",
+        "minX": 40,
+        "maxX": 50,
+        "minZ": 36,
+        "maxZ": 46,
+        "lit": false,
+        "litBy": null,
+        "muted": false
+      }
+    ],
+    "litCount": 3,
+    "deadlineResolved": true,
+    "litAtDeadline": 3,
+    "objectiveMet": true,
+    "refusals": {
+      "drones": 0,
+      "playbooks": 1,
+      "relayChains": 0
+    },
+    "mutedWorkSteps": 405
+  },
+  "broadcastMirror": null,
+  "playbookUse": {
+    "declared": true,
+    "objective": "suspended",
+    "objectiveMet": true,
+    "uses": 0,
+    "relaysLitByProgram": []
+  },
+  "e7Signal": {
+    "enabled": true,
+    "graphHash": "fnv1a32:ac45b54d",
+    "nodes": [
+      {
+        "id": "beacon-0",
+        "x": -45,
+        "z": 40
+      },
+      {
+        "id": "beacon-1",
+        "x": 24,
+        "z": 41
+      },
+      {
+        "id": "beacon-2",
+        "x": -29,
+        "z": 42
+      },
+      {
+        "id": "beacon-3",
+        "x": -25,
+        "z": 38
+      },
+      {
+        "id": "turret-0",
+        "x": -25,
+        "z": 41
+      },
+      {
+        "id": "turret-1",
+        "x": -24,
+        "z": 37
+      },
+      {
+        "id": "turret-2",
+        "x": -20,
+        "z": 38
+      },
+      {
+        "id": "turret-3",
+        "x": -30,
+        "z": 43
+      }
+    ],
+    "links": [
+      {
+        "from": "beacon-0",
+        "to": "beacon-2"
+      },
+      {
+        "from": "beacon-0",
+        "to": "beacon-3"
+      },
+      {
+        "from": "beacon-0",
+        "to": "turret-0"
+      },
+      {
+        "from": "beacon-0",
+        "to": "turret-1"
+      },
+      {
+        "from": "beacon-0",
+        "to": "turret-2"
+      },
+      {
+        "from": "beacon-0",
+        "to": "turret-3"
+      },
+      {
+        "from": "beacon-2",
+        "to": "beacon-3"
+      },
+      {
+        "from": "beacon-2",
+        "to": "turret-0"
+      },
+      {
+        "from": "beacon-2",
+        "to": "turret-1"
+      },
+      {
+        "from": "beacon-2",
+        "to": "turret-2"
+      },
+      {
+        "from": "beacon-2",
+        "to": "turret-3"
+      },
+      {
+        "from": "beacon-3",
+        "to": "turret-0"
+      },
+      {
+        "from": "beacon-3",
+        "to": "turret-1"
+      },
+      {
+        "from": "beacon-3",
+        "to": "turret-2"
+      },
+      {
+        "from": "beacon-3",
+        "to": "turret-3"
+      },
+      {
+        "from": "turret-0",
+        "to": "turret-1"
+      },
+      {
+        "from": "turret-0",
+        "to": "turret-2"
+      },
+      {
+        "from": "turret-0",
+        "to": "turret-3"
+      },
+      {
+        "from": "turret-1",
+        "to": "turret-2"
+      },
+      {
+        "from": "turret-1",
+        "to": "turret-3"
+      },
+      {
+        "from": "turret-2",
+        "to": "turret-3"
+      }
+    ],
+    "linkedCoverage": true,
+    "threatVisibilityBonus": true,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [
+      {
+        "id": "ford-table",
+        "label": "The ford table",
+        "state": "lit",
+        "patched": false
+      },
+      {
+        "id": "lighthouse-keeper",
+        "label": "Lighthouse keeper",
+        "state": "lit",
+        "patched": false
+      }
+    ],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 2,
+    "latestFragment": "First tower up. A wrong number answered, confused and kind. The line stays open."
+  },
+  "repairs": 0,
+  "tapeShelf": [
+    {
+      "key": "gr.profile.v2.robin.gr.playbooks.v1",
+      "value": "{\"version\":1,\"playbooks\":{\"Native movement and build\":\"{\\\"contractId\\\":\\\"e7-relay-rush\\\",\\\"difficultyPreset\\\":\\\"trail\\\",\\\"durationTicks\\\":29,\\\"entries\\\":[{\\\"a\\\":[],\\\"mx\\\":1,\\\"my\\\":0,\\\"t\\\":0},{\\\"a\\\":[],\\\"mx\\\":-0.707,\\\"my\\\":-0.707,\\\"t\\\":4},{\\\"a\\\":[],\\\"mx\\\":0,\\\"my\\\":0,\\\"t\\\":8},{\\\"a\\\":[],\\\"mx\\\":-1,\\\"my\\\":0,\\\"t\\\":11},{\\\"a\\\":[],\\\"mx\\\":0,\\\"my\\\":0,\\\"t\\\":12},{\\\"a\\\":[{\\\"id\\\":\\\"turret\\\",\\\"position\\\":{\\\"x\\\":-25,\\\"z\\\":41},\\\"rotationSteps\\\":0,\\\"type\\\":\\\"place_build\\\"}],\\\"mx\\\":0,\\\"my\\\":0,\\\"t\\\":20}],\\\"name\\\":\\\"Native movement and build\\\",\\\"seed\\\":\\\"gold-rush\\\",\\\"start\\\":{\\\"x\\\":-24.743,\\\"z\\\":45.288},\\\"stepSeconds\\\":0.03333333333333333,\\\"truncated\\\":null,\\\"version\\\":1}\"}}"
+    }
+  ]
+}

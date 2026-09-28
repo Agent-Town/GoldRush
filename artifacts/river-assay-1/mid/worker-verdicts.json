@@ -1,0 +1,145 @@
+{
+  "startedAt": "2026-09-26T18:37:38.017Z",
+  "node": "26.4.0",
+  "workerExit": 0,
+  "workerStderr": "",
+  "rows": [
+    {
+      "label": "report-desktop-3f5a03c5",
+      "file": "artifacts/river-assay-1/reels/report-desktop-3f5a03c5.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:3f5a03c5",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.833333333333326,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:cc10780d",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:3f5a03c5, replayed fnv1a32:cc10780d",
+      "wallMs": 2684
+    },
+    {
+      "label": "report-phone-647005f9",
+      "file": "artifacts/river-assay-1/reels/report-phone-647005f9.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:647005f9",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.799999999999993,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:95bceda6",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:647005f9, replayed fnv1a32:95bceda6",
+      "wallMs": 2657
+    },
+    {
+      "label": "run7-desktop-a1a3a3f5",
+      "file": "artifacts/river-assay-1/reels/run7-desktop-a1a3a3f5.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:a1a3a3f5",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.966666666666659,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:883207a0",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:a1a3a3f5, replayed fnv1a32:883207a0",
+      "wallMs": 2619
+    },
+    {
+      "label": "run7-phone-b9509309",
+      "file": "artifacts/river-assay-1/reels/run7-phone-b9509309.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:b9509309",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.799999999999993,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:f9a8b8f2",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:b9509309, replayed fnv1a32:f9a8b8f2",
+      "wallMs": 2668
+    },
+    {
+      "label": "heat15-probe-b131e18e",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/probe/submission.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:b131e18e",
+      "score": {
+        "secured": true,
+        "waves": 10,
+        "timeAlive": 300,
+        "gold": 335,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:b131e18e",
+      "reason": null,
+      "wallMs": 9913
+    },
+    {
+      "label": "heat15-r1-f3a9c00c",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/rides/r1/submission.json",
+      "contract": "e5-regatta",
+      "claimedHash": "fnv1a32:f3a9c00c",
+      "score": {
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:f3a9c00c",
+      "reason": null,
+      "wallMs": 4404
+    },
+    {
+      "label": "heat15-r2-b92da1bf",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/rides/r2/submission.json",
+      "contract": "e5-regatta",
+      "claimedHash": "fnv1a32:b92da1bf",
+      "score": {
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:b92da1bf",
+      "reason": null,
+      "wallMs": 6912
+    },
+    {
+      "label": "heat14-era6-idle-a45ba9ac",
+      "file": "artifacts/gauntlet-heat14-e3949bfa/rides/the-claim/work/probe-idle-tape.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:a45ba9ac",
+      "score": {
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 81.767,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:5a139ec0",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:a45ba9ac, replayed fnv1a32:5a139ec0",
+      "wallMs": 4232
+    }
+  ],
+  "retries": []
+}

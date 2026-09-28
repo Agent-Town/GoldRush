@@ -1,0 +1,46 @@
+BATCH cwmob start 2026-09-25T06:16:36Z
+ids=e3-canyon-works projects=--project=mobile-chrome
+13:16  up 28 days, 21:16, 10 users, load averages: 6.20 6.70 7.91
+vite dev up 06:16:38Z (Content-Type: text/javascript)
+(node:36156) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:36212) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: never secured: peak wave 79 of 12 after 2387.1s sim (runState=playing, 0 buildings, 131 kills)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       }
+      899 |
+    > 900 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      901 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      902 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      903 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/wt-mpp1/e2e/playability-secure.spec.ts:900:64
+
+    Test timeout of 30000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/playability-secure-playabi-182c2-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/playability-secure-playabi-182c2-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  Slow test file: [mobile-chrome] › e2e/playability-secure.spec.ts (11.1m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 failed
+    [mobile-chrome] › e2e/playability-secure.spec.ts:658:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow 
+port 5319 released
+BATCH cwmob RC=1 ended 2026-09-25T06:28:18Z

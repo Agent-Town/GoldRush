@@ -113,6 +113,46 @@ export class InputController {
     this.keys.delete(event.code);
   };
 
+  /**
+   * UX-4 (outside review 2026-09-24): only keydown/keyup/pointer were bound, and there was no `blur`
+   * listener anywhere in `src/`. A browser sends NO keyup for a key still held when the window loses
+   * focus, so alt-tabbing mid-stride left the key DOWN forever - the hero walked off on his own, the
+   * build ghost stayed armed, and nothing short of pressing and releasing the same key cleared it.
+   *
+   * Losing the window and hiding the document both mean the same thing: no key is held any more.
+   */
+  private readonly onWindowBlur = () => this.clearHeldInput();
+
+  private readonly onVisibilityChange = () => {
+    if (document.visibilityState === 'hidden') this.clearHeldInput();
+  };
+
+  /**
+   * Drops every held key, buffered tap and pointer latch, and RE-ARMS the edge detectors.
+   *
+   * The `previous*` reset is the half that is easy to miss and the half a player would feel. Those
+   * flags carry "this key was already down at the last sample" so a held key fires its intent once.
+   * Clearing `keys` alone leaves them stuck true, and the FIRST press after coming back gets eaten as
+   * a repeat: the player returns to the tab, hits Space to confirm, and nothing happens.
+   */
+  clearHeldInput(): void {
+    this.keys.clear();
+    this.tapped.clear();
+    this.pointer.set(0, 0);
+    this.pointerState.active = false;
+    this.pointerState.id = null;
+    this.previousConfirm = false;
+    this.previousBuild = false;
+    this.previousUpgrade = false;
+    this.previousRotateBuild = false;
+    this.previousWeaponToggle = false;
+    this.previousMute = false;
+    this.previousDebugXp = false;
+    this.previousDebugPlant = false;
+    this.confirmIssueAllowed = true;
+    this.updateKnob();
+  }
+
   private readonly onStickDown = (event: PointerEvent) => {
     event.preventDefault();
     const rect = this.stick.getBoundingClientRect();
@@ -190,6 +230,9 @@ export class InputController {
     window.addEventListener('keydown', this.onKeyDown);
     // Key releases must clear held input even when a focused panel stops bubbling.
     window.addEventListener('keyup', this.onKeyUp, true);
+    // The keyup that never comes (UX-4): a window losing focus or a document going hidden.
+    window.addEventListener('blur', this.onWindowBlur);
+    document.addEventListener('visibilitychange', this.onVisibilityChange);
     this.stick.addEventListener('pointerdown', this.onStickDown);
     this.stick.addEventListener('pointermove', this.onStickMove);
     this.stick.addEventListener('pointerup', this.onStickUp);
@@ -274,6 +317,8 @@ export class InputController {
   dispose(): void {
     window.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('keyup', this.onKeyUp, true);
+    window.removeEventListener('blur', this.onWindowBlur);
+    document.removeEventListener('visibilitychange', this.onVisibilityChange);
     this.stick.removeEventListener('pointerdown', this.onStickDown);
     this.stick.removeEventListener('pointermove', this.onStickMove);
     this.stick.removeEventListener('pointerup', this.onStickUp);

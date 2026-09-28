@@ -1,0 +1,34 @@
+
+===== tsc — rc=0 6.1s =====
+
+
+===== retention tests — rc=0 6.4s =====
+✔ the campaign is FILE-EXACT: its readers stay, the rest of it moves (0.296084ms)
+✔ run-3 carries no must-stay file at all, so it is movable whole (37.937542ms)
+✔ every report.md under artifacts/ stays, wherever it sits (0.5055ms)
+✔ the derivation leaves a movable majority: the offload has to be worth running (921.497625ms)
+✔ THE §A4 CONTROL IS NOT VACUOUS: this feature's own files feed nothing into the scan (23.420875ms)
+✔ the archive index keeps itself: the one file that says where every byte went cannot be offloaded (0.145583ms)
+✔ no must-stay pattern is a stray fragment of source code (0.166584ms)
+✔ a reader below a prose apostrophe is still found (the regex tokeniser lost four subtrees here) (97.10825ms)
+✔ a multi-line embedded source literal mints no pattern (the truncation regex could not cross a newline) (95.027875ms)
+✔ a template substitution becomes a one-segment wildcard, never a whole-tree wildcard (112.872042ms)
+✔ an author-task `artifacts/<id>/report.md` law line pins report files, NEVER the whole tree (100.435833ms)
+✔ a write target with nothing tracked under it still stays (artifacts/ledger-backups is exactly this) (95.37875ms)
+✔ normaliseLiteral keeps a path and drops everything a path cannot contain (0.058833ms)
+✔ literalToPattern and patternToRegExp keep a wildcard inside one segment (0.09975ms)
+✔ subtreeRootOf treats sol/ as a namespace, not a subtree (0.033125ms)
+✔ codeLiterals reads a template expression whole and ignores comments (0.146708ms)
+ℹ tests 57
+ℹ suites 0
+ℹ pass 57
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6402.987291
+
+
+SUMMARY {"tsc":0,"retention tests":0}
+OVERALL rc=0
+transcript -> artifacts/play-proofs-evidence-retention-1/checks.log

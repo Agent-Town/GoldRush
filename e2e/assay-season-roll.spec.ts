@@ -90,7 +90,9 @@ async function serveCounty(page: Page, kv: MockKV, seen: string[]): Promise<void
     seen.push(new URL(request.url()).search);
     const response = await standingsRoute({
       request: new Request(request.url(), { method: request.method(), headers: request.headers() }),
-      env: { TELEMETRY: kv },
+      // localhost-cors-2 (F-LC2-4): the browser's own headers are forwarded, so whether or not they carry the page's
+      // localhost Origin, the door sees the development switch a developer's box would carry.
+      env: { TELEMETRY: kv, ALLOW_LOCALHOST_ORIGINS: '1' },
     });
     await route.fulfill({
       status: response.status,
@@ -118,6 +120,7 @@ test('the county board opens on the season now riding and reaches the closed fir
   // The default view is the current season — and the reader proves it by NOT naming a season.
   await expect(page.getByTestId('county-standings-season-current')).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByTestId('county-standings-season-first')).toHaveAttribute('aria-pressed', 'false');
+  await page.getByTestId('county-standings-week-all').click();
   await expect(page.getByTestId('county-standings-row-1')).toContainText('Fresh Season Rider');
   await expect(page.getByTestId('county-standings-row-2')).toHaveCount(0);
   await expect(page.locator('.county-standings__board-label')).toContainText('County board');

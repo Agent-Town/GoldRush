@@ -1,0 +1,61 @@
+Batch timeline for site-vibe-fixes-1. Every batch ran under scripts/attended/dlock.sh (the drain lock); <scratchpad> is the session scratchpad.
+=== batch 1
+BATCH1 start 2026-09-26T10:55:39Z load 27.02 29.08 26.92
+BUILD_RC=0
+BATCH1 end 2026-09-26T10:55:58Z load 26.84 28.99 26.94
+EXIT=0
+=== batch 2
+BATCH2 start 2026-09-26T11:08:43Z load 30.03 41.21 40.90
+CAPTURE_RC=1
+capture done 2026-09-26T11:09:04Z load 33.51 41.29 40.94
+BUILD_RC=0
+build done 2026-09-26T11:09:25Z load 37.04 41.64 41.07
+GUARDS_RC=1
+BATCH2 end 2026-09-26T11:27:06Z load 6.20 19.35 37.76
+EXIT=0
+=== batch 3
+BATCH3 start 2026-09-26T11:27:07Z load 5.86 19.06 37.55
+CAPTURE_RC=1
+BATCH3 end 2026-09-26T11:27:45Z load 7.19 17.96 36.40
+EXIT=0
+=== batch 4
+BATCH4 start 2026-09-26T11:32:52Z load 8.99 11.81 27.84
+CAPTURE_RC=1
+capture done 2026-09-26T11:33:41Z load 9.89 11.64 26.95
+=== branch: 21fe841e4 at /Users/robin/Claude/Projects/wt-svf1; .env.local absent
+STATUS.md line 1 here  : sha256 3e434b4ed5ea, 2089 bytes
+STATUS.md line 1 (main): sha256 ea1e68ec2a72
+three files rc=1
+✖ the live board is green under this guard (baseline is honest)
+✖ dry run prints a bounded plan without contacting the droplet
+✖ today's local backup makes the pull an offline no-op
+✔ contention is advisory, correctly counted, and absent when alone
+✖ the live board is green under this guard (baseline is honest)
+✖ dry run prints a bounded plan without contacting the droplet
+✖ today's local backup makes the pull an offline no-op
+ℹ tests 31 ℹ pass 28 ℹ fail 3 
+  desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+sweep child ledger-mirror-freshness-guard rc=1
+ℹ tests 25 ℹ pass 24 ℹ fail 1 
+survivors in its TMPDIR matching s2672-dest-: 1 [s2672-dest-EnfmLK ]
+=== control: afd7393e9 at <scratchpad>/ctl-base; .env.local absent
+STATUS.md line 1 here  : sha256 3e434b4ed5ea, 2089 bytes
+STATUS.md line 1 (main): sha256 ea1e68ec2a72
+three files rc=1
+✖ the live board is green under this guard (baseline is honest)
+✖ dry run prints a bounded plan without contacting the droplet
+✖ today's local backup makes the pull an offline no-op
+✔ contention is advisory, correctly counted, and absent when alone
+✖ the live board is green under this guard (baseline is honest)
+✖ dry run prints a bounded plan without contacting the droplet
+✖ today's local backup makes the pull an offline no-op
+ℹ tests 31 ℹ pass 28 ℹ fail 3 
+  desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+sweep child ledger-mirror-freshness-guard rc=1
+ℹ tests 25 ℹ pass 24 ℹ fail 1 
+survivors in its TMPDIR matching s2672-dest-: 1 [s2672-dest-yzKYW9 ]
+BATCH4 end 2026-09-26T11:33:49Z load 11.11 11.83 26.84
+EXIT=0
+=== batch 5
+EXIT=143
+=== batch 5 was queued at 11:38Z behind four other implementers' batches and withdrawn at 13:19Z on the attended session's word: SIGTERM to its own waiter (pid 23136) and that waiter's sleep, before it ever held the lock.

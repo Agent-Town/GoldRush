@@ -1,0 +1,45 @@
+SAME  ?contract=the-claim&epoch=epoch-1-frontier
+      before: 200 [1. All-Time Rider] rejected 0
+      after:  200 [1. All-Time Rider] rejected 0
+SAME  ?contract=the-claim&epoch=epoch-1-frontier&party=2
+      before: 200 [] rejected 0
+      after:  200 [] rejected 0
+SAME  ?contract=the-claim&epoch=epoch-1-frontier&difficulty=trail
+      before: 200 [1. All-Time Rider] rejected 0
+      after:  200 [1. All-Time Rider] rejected 0
+SAME  ?contract=the-claim&epoch=epoch-1-frontier&season=1
+      before: 200 [] rejected 0
+      after:  200 [] rejected 0
+SAME  ?contract=the-claim&epoch=epoch-1-frontier&season=2
+      before: 200 [1. All-Time Rider] rejected 0
+      after:  200 [1. All-Time Rider] rejected 0
+SAME  ?board=transfer&rotation=r2026w40
+      before: 200 transfer the-claim:1 e1-dry-gulch:0 e1-twin-banks:0 e1-night-shift:0 e2-hill-mine:0 e1-baron:0
+      after:  200 transfer the-claim:1 e1-dry-gulch:0 e1-twin-banks:0 e1-night-shift:0 e2-hill-mine:0 e1-baron:0
+SAME  ?view=byStack&epoch=epoch-1-frontier
+      before: 200 ok,view,season,assayEra,epochId,contracts,byStack
+      after:  200 ok,view,season,assayEra,epochId,contracts,byStack
+MOVED ?contract=the-claim&epoch=epoch-1-frontier&rotation=r2026w40
+      before: 400 bad_contract
+      after:  200 week r2026w40 [1. Week Rider @r2026w40] rejected 1
+MOVED ?contract=the-claim&epoch=epoch-1-frontier&rotation=open
+      before: 400 bad_contract
+      after:  200 week r2026w40 [1. Week Rider @r2026w40] rejected 1
+MOVED ?contract=the-claim&epoch=epoch-1-frontier&party=2&rotation=r2026w40
+      before: 400 bad_contract
+      after:  200 week r2026w40 [1. Week Posse @r2026w40] rejected 0
+MOVED ?contract=the-claim&epoch=epoch-1-frontier&rotation=r2026w39
+      before: 400 bad_contract
+      after:  200 week r2026w39 [1. Last Week Rider @r2026w39] rejected 0
+MOVED ?contract=the-claim&epoch=epoch-1-frontier&rotation=r1999w01
+      before: 400 bad_contract
+      after:  400 bad_rotation
+SAME  ?contract=e1-drill-yard&epoch=epoch-1-frontier&rotation=r2026w40
+      before: 400 bad_contract
+      after:  400 bad_contract
+MOVED ?contract=e2-trestle&epoch=epoch-2-steamworks&rotation=r2026w40
+      before: 400 bad_contract
+      after:  400 bad_rotation
+MOVED ?contract=e2-trestle&epoch=epoch-2-steamworks&rotation=open
+      before: 400 bad_contract
+      after:  400 bad_rotation

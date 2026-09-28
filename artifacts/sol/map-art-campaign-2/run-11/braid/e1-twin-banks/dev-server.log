@@ -1,0 +1,21 @@
+
+> gold-rush@0.1.0 dev
+> vite --host 127.0.0.1 --host 127.0.0.1 --port 5188
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+  VITE v8.3.0  ready in 97 ms
+
+  ➜  Local:   http://127.0.0.1:5188/
+9:30:29 AM [vite] (client) dependency optimized: three
+9:30:29 AM [vite] (client) dependencies optimized: lil-gui, meshoptimizer, three/addons/utils/BufferGeometryUtils.js, three/examples/jsm/loaders/GLTFLoader.js, three/examples/jsm/math/ConvexHull.js
+9:30:29 AM [vite] (client) optimized dependencies changed. reloading
+9:31:23 AM [vite] (client) [console.error] [boot-guard] chunk: game/Game: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5188/src/game/Game.ts
+9:32:12 AM [vite] (client) [console.error] [boot-guard] chunk: game/Game: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5188/src/game/Game.ts
+9:32:42 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+9:32:46 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+9:33:25 AM [vite] (client) [console.error] [boot-guard] chunk: game/Game: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5188/src/game/Game.ts
+9:35:57 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+9:36:03 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.

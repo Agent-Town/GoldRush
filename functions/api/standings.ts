@@ -3,22 +3,28 @@ import rotationSeeds from '../../assets/rotations/rotation-seeds.json' with { ty
 import engineEra from '../../assets/engine-era.json' with { type: 'json' };
 import nullFloors from '../../assets/contracts/null-floors.json' with { type: 'json' };
 import type { DifficultyPresetId } from '../../src/game/Balance';
+import { validateRunTape } from '../../src/game/RunTape';
+import { normalizeLockstepAction } from '../../src/mp/LockstepClient';
 import { validateStandingOrders } from '../../src/agent/StandingOrders';
-import { CONTRACT_BUNDLES, runTapeEnvelopeForContract } from '../../src/playbook/PlaybookFormat';
+import { CONTRACT_BUNDLES, runTapeEnvelopeForContract, validatePlaybook, type RunTapeEnvelope } from '../../src/playbook/PlaybookFormat';
 import { engineEraIncludes } from '../../src/replay/EngineEraLineage.mjs';
 import { resolveSeasonAt, SEASONS } from '../../src/seasons/registry';
+import { constantTimeEqual } from './_compare';
 import { bumpCounter, clientIpHash } from './_ratelimit';
 import { recordSubmissionRefusal, type AssayRejectionReason, type RefusalStorage, type SubmissionRefusalReason } from './refusals';
 import type { LedgerStorage } from './_accounts';
-
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
 type StandingsStorage = Pick<LedgerStorage, 'get' | 'put'> & Pick<RefusalStorage, 'recordRefusal' | 'readRefusals'>;
 
-type StandingsEnv = {
+type StandingsEnv = LocalhostOriginsEnv & {
   TELEMETRY?: StandingsStorage;
   ACCOUNTS?: StandingsStorage;
   ASSAY_WORKER_SECRET?: string;
   ASSAY_INDEX_MAX_AGE_MS?: string;
   ALLOWED_CORS_ORIGINS?: ReadonlySet<string>;
+  // kv-counters-to-ledger-2 (F-KV1-5): where the county's boards live. Bound on the Pages project (the
+  // ops evening, Part C step 9), this copy answers every request with a 308 there (`canonicalRedirect`).
+  STANDINGS_CANONICAL_ORIGIN?: string;
 };
 
 type StandingsContext = {
@@ -248,7 +254,9 @@ const CURRENT_SEASON = 2;
 const KNOWN_SEASONS: ReadonlySet<number> = new Set([FIRST_SEASON, CURRENT_SEASON]);
 
 export async function onRequest(context: StandingsContext): Promise<Response> {
-  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
+  const moved = canonicalRedirect(context);
+  if (moved) return moved;
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
 
@@ -547,7 +555,10 @@ function isRetiredRow(row: StoredRow): boolean {
 }
 
 async function assayRequest(context: StandingsContext, handle: (cors: Record<string, string>) => Promise<Response>): Promise<Response> {
-  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
+  // The three assay routes are this file's other doors onto the store, so they move with the board.
+  const moved = canonicalRedirect(context);
+  if (moved) return moved;
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   const secret = context.env.ASSAY_WORKER_SECRET;
   if (!secret) return error(cors, 503, 'assay_unavailable', 'The assay worker is not configured.');
@@ -560,14 +571,6 @@ async function assayRequest(context: StandingsContext, handle: (cors: Record<str
     if (err instanceof HttpError) return error(cors, err.status, err.code, err.message);
     return error(cors, 500, 'server_error', 'The county book is unavailable.');
   }
-}
-
-function constantTimeEqual(left: string, right: string): boolean {
-  const a = new TextEncoder().encode(left);
-  const b = new TextEncoder().encode(right);
-  let mismatch = a.length ^ b.length;
-  for (let index = 0; index < Math.max(a.length, b.length); index += 1) mismatch |= (a[index] ?? 0) ^ (b[index] ?? 0);
-  return mismatch === 0;
 }
 
 async function getBoard(context: StandingsContext, cors: Record<string, string>): Promise<Response> {
@@ -691,7 +694,9 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   }
   const difficultyParam = url.searchParams.get('difficulty');
   const partyParam = url.searchParams.get('party');
-  const expectedParams = 2 + seasonParams + (difficultyParam === null ? 0 : 1) + (partyParam === null ? 0 : 1);
+  const rotationParam = url.searchParams.get('rotation');
+  const expectedParams = 2 + seasonParams + (difficultyParam === null ? 0 : 1) + (partyParam === null ? 0 : 1)
+    + (rotationParam === null ? 0 : 1);
   if (url.searchParams.size !== expectedParams || !knownContract(epochId, contractId)) {
     return error(cors, 400, 'bad_contract', 'Contract and epoch not accepted.');
   }
@@ -702,13 +707,21 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   if (difficulty !== 'all' && !isDifficultyPreset(difficulty)) {
     return error(cors, 400, 'bad_difficulty', 'Difficulty not accepted.');
   }
+  // THE WEEK'S BOARD (county-board-open-week-1, F-LSR1-1; owner 2026-09-26, verbatim "3 - ok, lets do that").
+  // A human who secures the week's claim is stamped with its `rotationId` and so never reached this board,
+  // which keeps only rows without one. `?rotation=<id>`, or `?rotation=open` for the week the held-out cell
+  // reads, serves that week's rows instead, under every rule below unchanged. Omitted, the board is the
+  // all-time constant-seed board exactly as it was, so no reader written before this sees a byte move.
+  const week = rotationParam === null ? null : boardWeek(rotationParam, contractId, Date.now());
+  if (rotationParam !== null && !week) return error(cors, 400, 'bad_rotation', 'Rotation not accepted.');
   const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
   const rows = kv ? await readBoard(kv, epochId, contractId, true, season) : [];
   // Posses rank WITHIN their size and nowhere else (owner 2026-08-05), so the size partitions the
   // field BEFORE ranks are minted: a posse row can never move a solo rank, and an omitted party
   // param is the solo board — which is byte-identical to the board this endpoint served before.
   const partySize = partyParam === null || partyParam === 'solo' ? 1 : Number(partyParam);
-  const partition = rows.filter((row) => !row.rotationId && (row.party?.riderCount ?? 1) === partySize);
+  const partition = rows.filter((row) => (week ? row.rotationId === week.id : !row.rotationId)
+    && (row.party?.riderCount ?? 1) === partySize);
   const ranked = rankedRows(partition, contractId);
   const rotation = currentOrLatestRotation(Date.now());
   const board = ranked.map((row, index) => boardRow(row, index, heldOutFor(row, rows, contractId, rotation)));
@@ -724,6 +737,7 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
     epochId,
     contractId,
     party: partyParam === null ? 'solo' : partyParam,
+    ...(week ? { rotationId: week.id } : {}),
     board: difficulty === 'all' ? board : board.filter((row) => row.difficulty === difficulty),
     rejectedCount,
     retiredCount,
@@ -1239,18 +1253,23 @@ function currentLineageRefusal(tape: JsonRecord): string | null {
 }
 
 // A stored reel whose orders name a verb the door has since retired (ADR-005) is RETIRED at read:
-// unranked and counted, exactly like a cross-era reel, and the county says why. Walks the primary
-// entries and every stream; the first refusal is the reason.
+// unranked and counted, exactly like a cross-era reel, and the county says why. So is a reel stored
+// before door-tape-grammar-3 with an action the client cannot load (F-DTG2-2, `clientRefusesAction`),
+// because it cannot replay (ADR-004). Walks the primary entries, every stream and every recording a
+// playbook use carries (F-DTG1-2), and judges both order forms, an entry's `kind: 'agent_orders'` and a
+// seated rider's wire `agent_orders`; the first refusal is the reason.
 function tapeGrammarRefusal(tape: JsonRecord): string | null {
   const input = isRecord(tape.inputLog) ? tape.inputLog : null;
   if (!input) return null;
   const lists: unknown[] = [input.entries, ...(Array.isArray(input.streams) ? input.streams.map((stream) => (isRecord(stream) ? stream.entries : undefined)) : [])];
+  if (Array.isArray(input.playbookUses)) lists.push(...input.playbookUses.map((use) => (isRecord(use) && isRecord(use.playbook) ? use.playbook.entries : undefined)));
   for (const entries of lists) {
     if (!Array.isArray(entries)) continue;
     for (const entry of entries) {
       if (!isRecord(entry) || !Array.isArray(entry.a)) continue;
       for (const action of entry.a) {
-        if (!isRecord(action) || action.kind !== 'agent_orders') continue;
+        if (isRecord(action) && clientRefusesAction(action)) return `This reel carries a ${String(action.type)} the client cannot load, so it cannot replay; it stands retired under ADR-004.`;
+        if (!isRecord(action) || (action.kind !== 'agent_orders' && action.type !== 'agent_orders')) continue;
         const verdict = validateStandingOrders(action.orders);
         if (!verdict.ok) return `This reel's orders name a verb the door has retired (${verdict.message}); it stands retired under ADR-005.`;
       }
@@ -1284,6 +1303,15 @@ function rotationForSeed(contractId: string, seed: string): Rotation | undefined
 function currentOrLatestRotation(now: number): Rotation | null {
   return [...ROTATIONS].filter((rotation) => Date.parse(rotation.opensAt) <= now)
     .sort((a, b) => Date.parse(b.opensAt) - Date.parse(a.opensAt))[0] ?? null;
+}
+
+// The week a public board read names (F-LSR1-1): `open` resolves exactly as the held-out cell does, any
+// other value must be a registry id. A week that has not opened is refused like an unknown one, because
+// its seeds are held out until it opens (specs/transfer-board.md L2); so is a week that does not carry
+// the contract, whose board could only ever be empty. A closed week stays readable as history.
+function boardWeek(param: string, contractId: string, now: number): Rotation | null {
+  const week = param === 'open' ? currentOrLatestRotation(now) : ROTATIONS.find(({ id }) => id === param) ?? null;
+  return week && Date.parse(week.opensAt) <= now && typeof week.seeds[contractId] === 'string' ? week : null;
 }
 
 function scoreOf(row: ScoreRow): ScoreRow {
@@ -1570,11 +1598,14 @@ function validateParty(value: unknown, stored = false): SubmittedParty | null {
   return { riderCount, riders };
 }
 
-// `stored` is true when the county re-reads a row it already accepted: the tape's SHAPE is still
-// required, but its order grammar is judged by `tapeGrammarRefusal` (a retired verb makes the row
-// RETIRED and COUNTED, never silently dropped). At the door (`stored` false) the grammar is strict.
-// ADR-005 stage 3 (2026-09-07): the first read after the grammar deploy emptied 25 boards with a
-// retiredCount of zero because every retired-verb tape simply stopped validating (F-RPG-21).
+// `stored` is true when the county re-reads a row it already accepted. At the door (`stored` false) the
+// grammar is strict: every field must have the door's own shape, and every action whose verb is in
+// `CLIENT_JUDGED_ACTIONS` must also be one the client's own normalizer keeps. At read the SHAPE is still
+// required, but two judgments move to `tapeGrammarRefusal`: the standing orders' verbs (ADR-005) and the
+// client-judged actions (ADR-004 rule 2: a reel the client cannot load cannot replay). Either makes the row
+// RETIRED and COUNTED, never silently dropped. ADR-005 stage 3 (2026-09-07): the first read after the grammar
+// deploy emptied 25 boards with a retiredCount of zero because every retired-verb tape simply stopped
+// validating (F-RPG-21).
 export function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null, stored = false): JsonRecord | null {
   if (!isRecord(value) || new TextEncoder().encode(JSON.stringify(value)).length > runTapeEnvelopeForContract(String(contractId)).maxTapeBytes) return null;
   if (!hasOnlyKeys(value, new Set(['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'meta', 'runStart', 'inputLog', 'eventLogHash', 'outcome']))) return null;
@@ -1630,7 +1661,7 @@ function validTapeOutcome(value: unknown): boolean {
 }
 
 function validTapeInput(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null, stored = false): boolean {
-  if (!isRecord(value) || !hasOnlyKeys(value, new Set(['version', 'name', 'contractId', 'seed', 'difficultyPreset', 'stepSeconds', 'start', 'durationTicks', 'entries', 'truncated', 'primarySlot', 'streams']))) return false;
+  if (!isRecord(value) || !hasOnlyKeys(value, new Set(['version', 'name', 'contractId', 'seed', 'difficultyPreset', 'stepSeconds', 'start', 'durationTicks', 'entries', 'truncated', 'primarySlot', 'streams', 'motorActions', 'playbookUses']))) return false;
   if (value.version !== 1 || value.contractId !== contractId || value.seed !== seed || value.difficultyPreset !== difficulty || value.stepSeconds !== 1 / 30) return false;
   if (typeof value.name !== 'string' || !value.name || value.name.length > 64 || !isRecord(value.start)
     || !hasOnlyKeys(value.start, new Set(['x', 'z']))) return false;
@@ -1649,7 +1680,75 @@ function validTapeInput(value: unknown, contractId: unknown, seed: unknown, diff
     if (!validTapeEntries(stream.entries, duration, envelope.maxEntries, stored)) return false;
     slots.add(slot);
   }
+  // F-LSR1-0: the browser recorder's two OPTIONAL input-log keys, each judged by the client's own validators.
+  if (!validTapeMotorActions(value.motorActions, duration, contractId, seed, difficulty)
+    || !validTapePlaybookUses(value.playbookUses, duration, envelope, contractId, seed, difficulty, stored)) return false;
   return true;
+}
+
+// F-LSR1-0 (door-tape-grammar-1, 2026-09-25): since 5823eaad6 (2026-09-04) the recorder writes `motorActions`
+// once a motor was driven. The client judges them in `validateMotorActions`, which is private to RunTape.ts,
+// and every byte of `src/` is engine identity (`ENGINE_SOURCE_INPUTS`, scripts/assay-replay-agent.mjs), so
+// exporting it would move the engine hash and need an era pin. The door reaches that same validator through
+// the exported `validateRunTape`, over a minimal tape that carries nothing else, and adds one bound of its
+// own: like every entry here, a motor action starts no earlier than tick 0. Absent is lawful.
+function validTapeMotorActions(value: unknown, duration: number, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): boolean {
+  if (value === undefined) return true;
+  if (typeof contractId !== 'string' || typeof seed !== 'string' || difficulty === null) return false;
+  const judged = validateRunTape({
+    version: 1, id: 'motor-actions', createdAt: 0, kept: false, contract: contractId, seed, difficulty, simVersion: 1,
+    inputLog: {
+      version: 1, name: 'motor-actions', contractId, seed, difficultyPreset: difficulty, stepSeconds: 1 / 30,
+      start: { x: 0, z: 0 }, durationTicks: duration, entries: [], truncated: null, primarySlot: 0, streams: [], motorActions: value,
+    },
+    eventLogHash: 'fnv1a32:00000000',
+    outcome: { reason: 'death', secured: false, waves: 0, timeAlive: 0, gold: 0 },
+  });
+  return judged !== null && (judged.inputLog.motorActions ?? []).every((action) => action.t >= 0);
+}
+
+// F-LSR1-0 (door-tape-grammar-1, 2026-09-25): since 15dc51b89 (2026-09-05) the browser recorder writes
+// `playbookUses` on EVERY reel (RunTape.ts `snapshot`) and the Lantern replays it, so the door admits it in
+// exactly the shape the client reads back. Absent is lawful. Each use is `{ kind: 'playbook_use', atTick,
+// playbook }`: atTick an integer in [0, durationTicks], never earlier than the use before it; the recording
+// judged by the client's own parser (`validatePlaybook`, the call RunTape.ts `validatePlaybookUses` makes)
+// and ridden on the tape's own contract, seed and difficulty (as RunTape.ts `validateRunTape` requires). The
+// list is capped at the envelope's maxEntries; `maxTapeBytes`, checked first in `validateTape`, bounds it.
+function validTapePlaybookUses(value: unknown, duration: number, envelope: RunTapeEnvelope, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null, stored = false): boolean {
+  if (value === undefined) return true;
+  if (!Array.isArray(value) || value.length > envelope.maxEntries) return false;
+  let prior = 0;
+  for (const use of value) {
+    if (!isRecord(use) || !hasOnlyKeys(use, new Set(['kind', 'atTick', 'playbook'])) || use.kind !== 'playbook_use') return false;
+    const atTick = integerInRange(use.atTick, prior, duration);
+    const parsed = validatePlaybook(stored ? ordersJudgedForShape(use.playbook) : use.playbook, envelope.maxTicks, envelope.maxEntries);
+    if (atTick === null || !parsed.ok || parsed.playbook.contractId !== contractId || parsed.playbook.seed !== seed
+      || parsed.playbook.difficultyPreset !== difficulty) return false;
+    prior = atTick;
+  }
+  return true;
+}
+
+// ADR-005 at read (F-DTG1-2): the orders inside a playbook use's recording are judged for SHAPE only, as a
+// stored entry's are, so a verb retired after acceptance cannot make `validatePlaybook` drop the row;
+// `tapeGrammarRefusal` judges those verbs and retires the row instead. Every other field of the recording
+// is still the client parser's to judge: it gets the recording with each well-shaped order list emptied,
+// or null (refused) when a list is malformed.
+function ordersJudgedForShape(playbook: unknown): unknown {
+  if (!isRecord(playbook) || !Array.isArray(playbook.entries)) return playbook;
+  let shaped = true;
+  const entries = playbook.entries.map((entry) => {
+    if (!isRecord(entry) || !Array.isArray(entry.a)) return entry;
+    return {
+      ...entry,
+      a: entry.a.map((action) => {
+        if (!isRecord(action) || (action.kind !== 'agent_orders' && action.type !== 'agent_orders')) return action;
+        if (!ordersShape(action.orders) || (action.type === 'agent_orders' && jsonByteLength(action.orders) > SEAT_ORDERS_MAX_BYTES)) shaped = false;
+        return { ...action, orders: [] };
+      }),
+    };
+  });
+  return shaped ? { ...playbook, entries } : null;
 }
 
 function validTapeEntries(entries: unknown, duration: number, maxEntries: number, stored = false): boolean {
@@ -1682,6 +1781,9 @@ function validTapeAction(value: unknown, stored = false): boolean {
     return validateStandingOrders(value.orders).ok;
   }
   if (typeof value.type !== 'string') return false;
+  // F-DTG2-2 (door-tape-grammar-3): at the door an action in CLIENT_JUDGED_ACTIONS (place_build, pick_upgrade, set_agent_ability, research_pick, context_action; F-DTG4-1) must also be
+  // one the client can load; at read the shape below still stands and `tapeGrammarRefusal` retires the row.
+  if (!stored && clientRefusesAction(value)) return false;
   const simple = new Set(['weapon_toggle', 'restart', 'debug_spawn', 'debug_xp', 'skip_ceremony', 'research_skip']);
   if (simple.has(value.type)) return hasOnlyKeys(value, new Set(['type']));
   if (value.type === 'place_build') return hasOnlyKeys(value, new Set(['type', 'id', 'position', 'rotationSteps']))
@@ -1696,14 +1798,63 @@ function validTapeAction(value: unknown, stored = false): boolean {
     && (value.choice === 'bank' || value.choice === 'rush');
   if (value.type === 'context_action') {
     if (value.action === 'fund') return hasOnlyKeys(value, new Set(['type', 'action']));
+    // F-DTG1-1 (door-tape-grammar-2): the probe recovery (Game.ts:5727), targetless like `fund`, as the client writes it.
+    if (value.action === 'recover') return hasOnlyKeys(value, new Set(['type', 'action']));
     return (value.action === 'upgrade' || value.action === 'demolish') && hasOnlyKeys(value, new Set(['type', 'action', 'target']))
       && isRecord(value.target) && hasOnlyKeys(value.target, new Set(['id', 'index'])) && token(value.target.id)
       && integerInRange(value.target.index, 0, 10_000) !== null;
   }
+  // F-DTG1-1 (door-tape-grammar-2): every solo dispatch of the Prospector (Game.ts:8256-8262), and a seated agent
+  // rider's orders on the lockstep wire (SeatedLockstepSim.submitOrders), each exactly as the client normalizes it.
+  if (value.type === 'prospector_dispatch') return hasOnlyKeys(value, new Set(['type', 'node'])) && cleanedToken(value.node, 64);
+  if (value.type === 'agent_orders') return validSeatOrders(value, stored);
   if (value.type === 'set_agent_rung') return hasOnlyKeys(value, new Set(['type', 'level', 'granted']))
     && integerInRange(value.level, 0, 3) !== null && typeof value.granted === 'boolean';
   return value.type === 'set_agent_ability' && hasOnlyKeys(value, new Set(['type', 'ability', 'granted']))
     && token(value.ability) && typeof value.granted === 'boolean';
+}
+
+// F-DTG2-2 and F-DTG3-1 (door-tape-grammar-3 and -4, 2026-09-26): the verbs whose door shape was looser than the
+// client's own normalizer (`normalizeLockstepAction`, LockstepClient.ts), so the county stored and ranked reels the
+// Lantern and the assayer cannot load: a `place_build`, `pick_upgrade` or `research_pick` id that trims to nothing,
+// a `set_agent_ability` naming an ability outside the client's own set, and a `context_action` upgrade or
+// demolition whose target names no building the client knows. For these the client's normalizer has the last
+// word: the door refuses what it refuses (its own bounds stay as they were), and at read `tapeGrammarRefusal`
+// retires a row stored before this grammar instead of dropping it.
+const CLIENT_JUDGED_ACTIONS = new Set(['place_build', 'pick_upgrade', 'research_pick', 'set_agent_ability', 'context_action']);
+function clientRefusesAction(action: JsonRecord): boolean {
+  return typeof action.type === 'string' && CLIENT_JUDGED_ACTIONS.has(action.type) && normalizeLockstepAction(action) === null;
+}
+
+// The client's `cleanToken` (LockstepClient.ts) trims, then cuts to `maxLength`. The door takes only a value
+// it would keep exactly as it is, so what the county stores is what the client reads back.
+function cleanedToken(value: unknown, maxLength: number): value is string {
+  return typeof value === 'string' && value.length > 0 && value.length <= maxLength && value.trim() === value;
+}
+
+// A seated agent rider's orders as the lockstep wire carries them (LockstepClient.ts `normalizeAction`):
+// version 1, a submission id of at most 96 characters, the orders within the wire's 3 KiB and, at the door,
+// the standing-order grammar. At read (`stored`) the orders are judged for SHAPE only and
+// `tapeGrammarRefusal` judges their verbs, exactly as for a `kind: 'agent_orders'` entry (ADR-005).
+const SEAT_ORDERS_MAX_BYTES = 3 * 1024;
+function validSeatOrders(value: JsonRecord, stored: boolean): boolean {
+  if (!hasOnlyKeys(value, new Set(['type', 'version', 'orders', 'submissionId'])) || value.version !== 1
+    || !cleanedToken(value.submissionId, 96) || jsonByteLength(value.orders) > SEAT_ORDERS_MAX_BYTES) return false;
+  return stored ? ordersShape(value.orders) : validateStandingOrders(value.orders).ok;
+}
+
+// The shape a stored order list keeps whatever its verbs (as the `stored` arm for `kind: 'agent_orders'`).
+function ordersShape(orders: unknown): boolean {
+  return Array.isArray(orders) && orders.length <= 32 && orders.every((order) => isRecord(order) && typeof order.verb === 'string');
+}
+
+// The client's `jsonBytes` (LockstepClient.ts): the UTF-8 bytes of the JSON, unbounded when it cannot serialize.
+function jsonByteLength(value: unknown): number {
+  try {
+    return new TextEncoder().encode(JSON.stringify(value)).byteLength;
+  } catch {
+    return Number.POSITIVE_INFINITY;
+  }
 }
 
 function tapeMatchesScore(tape: JsonRecord, score: ScoreRow): boolean {
@@ -1775,7 +1926,53 @@ async function readJson(request: Request): Promise<JsonRecord> {
   throw new HttpError(400, 'bad_json', 'JSON not accepted.');
 }
 
-function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Record<string, string> | null {
+// kv-counters-to-ledger-2 (F-KV1-5, 2026-09-25): ONE WRITER PER SURFACE (CLAUDE.md §4.4). Since the L3
+// cutover of 2026-08-23 the county's boards are the droplet's sqlite ledger (nginx routes /api/standings*
+// there: ops/droplet/agenttown.app.nginx.conf), so this Pages copy answers only whoever calls
+// gold-rush-3in.pages.dev directly, and each such call read or wrote the shared free-tier KV: a POST
+// wrote a shadow board, assay index or refusal record that no player reads. With
+// STANDINGS_CANONICAL_ORIGIN bound (the ops evening, docs/ops/ops-evening-2026-09.md Part C step 9),
+// every request to the four handlers is answered 308 to the same path and query on that origin before
+// any store is touched: 308 rather than 301 because it keeps the method and the body, so a POST lands
+// on the ledger as a POST. `no-store` keeps any client from caching the move, so unbinding the variable
+// and redeploying is the whole rollback, and the door's CORS headers ride along so a browser may follow.
+//
+// Unbound, empty, or not a bare https origin (a path, a query, a fragment or credentials), the door is
+// exactly what it was: a value that cannot be a redirect target is ignored (as `_ledger.ts` leaves a
+// door unbound when LEDGER_ORIGIN is not an origin it can use), and the step-9 probe then shows no
+// 308. A request already addressed to the canonical host is served and never moved, because a
+// redirect to itself would loop. The droplet runs this same file (server/ledger/serve.mjs) and sees
+// its requests as http on that host; its env never carries this variable, and this rule would hold
+// if it did.
+function canonicalRedirect(context: StandingsContext): Response | null {
+  const canonical = canonicalOrigin(context.env.STANDINGS_CANONICAL_ORIGIN);
+  if (!canonical) return null;
+  const url = new URL(context.request.url);
+  if (url.host === canonical.host) return null;
+  return new Response(null, {
+    status: 308,
+    headers: {
+      ...(corsHeaders(context.request, context.env) ?? {}),
+      'Cache-Control': 'no-store',
+      Location: `${canonical.origin}${url.pathname}${url.search}`,
+    },
+  });
+}
+
+function canonicalOrigin(value: string | undefined): URL | null {
+  const trimmed = value?.trim();
+  if (!trimmed) return null;
+  let url: URL;
+  try {
+    url = new URL(trimmed);
+  } catch {
+    return null;
+  }
+  const bare = url.pathname === '/' && !url.search && !url.hash && !url.username && !url.password;
+  return url.protocol === 'https:' && bare ? url : null;
+}
+
+function corsHeaders(request: Request, env: LocalhostOriginsEnv & { ALLOWED_CORS_ORIGINS?: ReadonlySet<string> }): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'content-type',
@@ -1784,7 +1981,7 @@ function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Reco
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || extraOrigins?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || env.ALLOWED_CORS_ORIGINS?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || localhostOriginAllowed(origin, env)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;

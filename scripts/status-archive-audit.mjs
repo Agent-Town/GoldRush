@@ -19,7 +19,8 @@
 // a loss, because the pointer to git remains legible.
 //
 // Exit 0 = no cross-session drops. Exit 1 = at least one. Exit 2 = misuse.
-//   --limit N   cap how many STATUS.md commits to walk (default: all)
+//   --limit N   cap how many STATUS.md commits to walk (default: all -- and with no --limit the
+//               run first PRINTS its projected price and its known verdict, F-2673-1, see below)
 //   --all       also list the ordered/self shapes that were excluded, for audit of the exclusion
 //   --quiet     suppress the ADVISORY listings (abridged / ok-excluded). The DROPPED blocks and
 //               the verdict line ALWAYS print -- see the F-2278-1 note below.
@@ -59,7 +60,7 @@
 // chatty one, and that reverse control is arm 7 of the guard.
 
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 
 const PROBE_CHARS = 120;
 const REPO = process.env.GR_REPO ?? "/Users/robin/Claude/Projects/Gold Rush";
@@ -174,13 +175,58 @@ const supersedes = (before, after) => {
 // file on disk, and a restore that is staged-but-uncommitted is already legible to it. Reading HEAD
 // here would also make the instrument untestable, since manufacturing the defect to prove the
 // guard has teeth would require committing it.
+//
+// F-LS1 (ledger-shape-1, 2026-09-25) — THE BOARD IS NO LONGER ONE FILE. `status-rotate-month.mjs`
+// moves closed months into `archive/status/<YYYY-MM>.md` (owner ruling 2026-09-24, item 13a), and
+// every one of those bullets is still ON THE BOARD in the only sense this predicate cares about:
+// the next fire can read its predecessor's handoff without a git command. Reading STATUS.md alone
+// after the rotation would report ~2,900 handoffs PERMANENTLY LOST at rc=1 — the remedy it implies
+// being to copy 14 MB back into the file the owner ordered compacted, which is this script's own
+// twice-named trap (a guard whose remedy is to corrupt a correct file is the guard that is wrong,
+// :294 and F-2088-2 at :303). So the permanence corpus is STATUS.md PLUS the archives, joined.
+//
+// The per-commit arm is untouched and needs no widening: `childBlob.includes(before)` reads a
+// HISTORICAL blob of STATUS.md, and history is immutable — the rotation is a new commit, never a
+// rewrite (CLAUDE.md §7.7). Only the LIVE-BOARD question moved.
+//
+// The corpus is DECLARED on stdout below, always, including the happy path (F-2208-1): a reader
+// asked to trust "0 permanently absent" must be able to see which files that claim covers.
+//
+// ⚠️ THE ARCHIVE LISTING IS INLINED AND NOT IMPORTED FROM `scripts/ledger-corpus.mjs`, AND THAT
+// IS NOT A STYLE CHOICE. Three guards manufacture variants of THIS FILE by copying it alone into
+// a bare `mkdtemp` directory and running it there — `status-archive-arg-guard`,
+// `status-archive-empty-corpus-guard` and `status-archive-abridged-declaration-guard`, whose own
+// headers state the precondition in as many words ("`status-archive-audit.mjs` imports only node
+// builtins ... so the copy survives the trip"). A relative import breaks EVERY copied variant at
+// once, and a variant that cannot LOAD exits non-zero with no output — indistinguishable at a
+// glance from a variant the guard correctly refused. That is F-2672-2, which cost s2672 a fire,
+// and `status-line1.mjs` takes the same restraint for the same reason. The duplication is stated
+// so it is visible: this is `statusArchiveFiles()` from `scripts/ledger-corpus.mjs`. If one
+// changes, change both.
+const archiveFiles = () => {
+  try {
+    return readdirSync(`${REPO}/archive/status`, { withFileTypes: true })
+      .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+      .map((entry) => `archive/status/${entry.name}`)
+      .sort()
+      .reverse();
+  } catch {
+    return []; // no archives yet: lawful, and the board is then exactly what it always was
+  }
+};
+
 let headBlob;
+let headCorpus;
 try {
-  headBlob = readFileSync(`${REPO}/STATUS.md`, "utf8");
-} catch {
-  console.error("STATUS.md unreadable on disk");
+  headCorpus = ["STATUS.md", ...archiveFiles()];
+  headBlob = headCorpus.map((rel) => readFileSync(`${REPO}/${rel}`, "utf8")).join("\n");
+} catch (error) {
+  console.error(`board corpus unreadable on disk (${headCorpus?.join(", ") ?? "STATUS.md"}): ${error.message}`);
   process.exit(2);
 }
+console.log(
+  `board corpus     : STATUS.md${headCorpus.length > 1 ? ` + ${headCorpus.length - 1} archive month(s): ${headCorpus.slice(1).join(", ")}` : " (no rotated months on this tree)"}`,
+);
 
 const drops = [];
 const transient = [];
@@ -189,6 +235,61 @@ const excluded = [];
 const superseded = [];
 let replacements = 0;
 let examined = 0;
+
+// F-2673-1 (filed s2673, cured s2674) — THE UNBOUNDED WALK NOW STATES ITS PRICE AND ITS KNOWN
+// ANSWER BEFORE IT SPENDS EITHER. It used to just grind: bare, `limit` is Infinity, and on the
+// live board that is ~5,857 STATUS.md commits x 2 blob reads of a 20 MB file -- about ten minutes
+// of silence before a verdict that was ALREADY WRITTEN DOWN at :41-50. s2670 paid that cost, was
+// killed at roughly its own finishing time, and reported the tool "cannot run"; s2671 and s2672
+// inherited that as a property of the instrument. Three handoffs lost to a tool that knew both
+// numbers and volunteered neither.
+//
+// 🚫 THE OTHER HALF OF THE GATE -- "or requires an explicit `--unbounded`" -- IS DELIBERATELY NOT
+// TAKEN, AND THE REASON IS MEASURED, NOT AESTHETIC: the bare form is the TEST SUITE'S OWN
+// CONTRACT. `status-archive-empty-corpus-guard` drives the tool bare in eight of its nine arms
+// (`run(TOOL, [], { GR_REPO: ... })`, :173-224, including all three CANNOT VERIFY route arms) and
+// `status-archive-arg-guard` arm 7 does the same at :254. A new required flag would red ten arms
+// across two guards to fix a diagnostic that costs nothing to print -- the F-1460-1 road, where a
+// guard that reds on lawful use gets excused into uselessness. Announcing is strictly additive:
+// no caller's rc changes, and no arm reads these lines.
+//
+// It prints under `--quiet` too. `--quiet` suppresses ADVISORY listings (:411-412); a price tag
+// paid before the answer is not chatter, and the same reasoning already keeps the DROPPED blocks
+// and the CANNOT VERIFY banner loud.
+//
+// ⚠️ THE SAMPLE READ IS DELIBERATELY NOT `blobOf`, and that is not a style choice: `blobOf`
+// increments `blobFailures`, which is the DISCRIMINATOR for the `blobs-unreadable` route at :482.
+// Timing a read through it would let this diagnostic change the refusal ROUTE the walk reports --
+// an instrument's own instrumentation corrupting its verdict. It therefore swallows its failure
+// into a local null (the walk re-reads the same blob a moment later and counts it properly there),
+// and it reports the price as UNKNOWN rather than guessing.
+if (limit === Infinity) {
+  let perReadMs = null;
+  if (commits.length > 0) {
+    try {
+      const t0 = Date.now();
+      git(["show", `${commits[0]}:STATUS.md`]);
+      perReadMs = Date.now() - t0;
+    } catch {
+      perReadMs = null; // see the note above: NOT counted, NOT a route signal
+    }
+  }
+  const projectedMs = perReadMs === null ? null : commits.length * 2 * perReadMs;
+  const human = (ms) => (ms >= 60_000 ? `${(ms / 60_000).toFixed(1)} min` : `${(ms / 1000).toFixed(1)} s`);
+  console.log(`UNBOUNDED WALK (no --limit): every STATUS.md commit is examined before anything prints.`);
+  console.log(
+    `  corpus   : ${commits.length} STATUS.md commit(s); the board is ${(headBlob.length / 1e6).toFixed(1)} MB ` +
+      `across ${headCorpus.length} file(s) (STATUS.md${headCorpus.length > 1 ? ` + ${headCorpus.length - 1} rotated month(s)` : ''})`,
+  );
+  console.log(
+    projectedMs === null
+      ? `  price    : UNKNOWN -- the sample blob read failed, so no projection is offered here`
+      : `  price    : ~${perReadMs} ms per blob read x 2 per commit = ~${human(projectedMs)} before a verdict`,
+  );
+  console.log(`  ANSWER ALREADY KNOWN (live board): this ends rc=1 over ~81 legacy drops predating`);
+  console.log(`             §4's archive law -- measured s2224, analysed at :41-50, known and EXCUSED.`);
+  console.log(`  The REGRESSION question is the bounded one: --limit 40 --quiet (the battery leg).`);
+}
 
 for (const sha of commits) {
   if (examined >= limit) break;
@@ -307,13 +408,21 @@ for (const sha of commits) {
   // `s<N> handoff \(line-1 archive`, which silently assumed every line-1 worth archiving is a
   // HANDOFF line. It is not: a fire that DIES mid-work leaves a LOCK line as its last line-1, and
   // its successor must archive THAT. This script already knows the difference -- it records
-  // `kind` at :221 and prints "destroyed s<N>'s lock line" at :322 -- so the old predicate
+  // `kind` at :322 and prints "destroyed s<N>'s lock line" at :459 -- so the old predicate
   // (was :178 and :235 until s2577, when the F-2577-1 supersession arm landed above both. BOTH
   // members were re-based by RE-GREPPING, and they moved by DIFFERENT amounts -- +43 and +87 --
   // because a second insertion sat between them. `source-pointer-guard` flagged only the FIRST:
   // a range is two pointers and only one of them is guarded, so re-grep both, every time. And
   // writing THIS NOTE moved the second member again each time, 316 -> 320 -> 321 -> 322, since
-  // the note sits above it: re-grep AFTER your own edit, and eye-check the line you land on.)
+  // the note sits above it: re-grep AFTER your own edit, and eye-check the line you land on.
+  // s2674 is the fourth such move and the prediction held EXACTLY: the F-2673-1 preamble landed
+  // above both members, the guard flagged `kind` alone -- 221 -> 274 -- and 322 -> 407 was found
+  // only by re-grepping the print, which is the discipline this note exists to enforce. Writing
+  // this note moved it TWICE more, 403 -> 406 -> 407; only a re-grep after the LAST edit is true.
+  // ledger-shape-1 (2026-09-25) is the FIFTH move and the note earned its keep again: the archive
+  // corpus read landed ABOVE both members, `source-pointer-guard` flagged `kind` alone -- 274 ->
+  // 322 -- and the print moved 407 -> 459 unflagged, because a range is two pointers and
+  // only one of them is guarded. Both were re-based by RE-GREPPING, after this note's own edit.)
   // contradicted the script's own output, demanding a "handoff" bullet for a fire that never
   // wrote one. Measured s1690: s1689 reached FIRE END rc=0 mid-drain, s1690 archived its lock
   // line honestly as `- **s1689 lock line (line-1 archive -- ...)`, and this guard reported it

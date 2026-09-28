@@ -1,0 +1,34 @@
+branch fix/canyon-works-traversal-2 tip 0c128d194 2026-09-26 03:44Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/cw2.json
+scratch store at the store's main 5793a96
+chain base 84ec86ae6
+merged 309b938eb
+null floors regenerated rc=0
+floors moved: 2 e3-canyon-works-01 fnv1a32:86bf5d8b -> fnv1a32:e36cf893 (eventLogHash only) | e3-canyon-works-02 fnv1a32:249819fd -> fnv1a32:bc39b64f (eventLogHash only)
+cure cw2: floors committed 45d5784bd
+desk row F-CW2-1: inserted at line 65
+cure cw2: desk row committed 00dc1e177
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: ca12dc2a4cb327689084adbe0664bc2c680b6a8e8fa452fc806790e84a9cdda1 (pinned 2cf26ba49f0ed0f08bf38791408c625187808ed81d6a3ebc3d00d9e9a148405b)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97714938 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34352207 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (289.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 168 ℹ fail 0 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 03:58Z: e2e/e3-canyon-works-traversal.spec.ts e2e/e3-canyon-works.spec.ts e2e/gt-03-enemy-elevation.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   2 failed   2 skipped   36 passed (3.3m)  04:02Z
+1) [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+2) [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+battery start 04:02Z
+battery: rc=1 ℹ tests 1032 ℹ pass 1025 ℹ fail 2 ℹ skipped 5  04:20Z
+✖ rotation registry stays outside the engine identity corpus (678.893792ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (203.038917ms)
+dirt after battery: 0
+cw2-PREP-DONE
+verdict: clean
+hash at pin time: ca12dc2a4cb327689084adbe0664bc2c680b6a8e8fa452fc806790e84a9cdda1
+pin #65 `ca12dc2a`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/canyon-works-traversal-2.md

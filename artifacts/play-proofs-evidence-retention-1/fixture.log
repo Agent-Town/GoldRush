@@ -1,0 +1,14 @@
+fatal: pathspec 'e2e/native-proofs/e1-drill-yard.spec.ts' did not match any files
+Traceback (most recent call last):
+  File "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/play-proofs-evidence-retention-1/fixture.py", line 19, in <module>
+    if row.get('originalPath'): git(repo,'add','--',row['originalPath'])
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/play-proofs-evidence-retention-1/fixture.py", line 4, in git
+    def git(cwd,*args,**kw): return sp.check_output(['git',*args],cwd=cwd,**kw)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/robin/.pyenv/versions/3.11.13/lib/python3.11/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/robin/.pyenv/versions/3.11.13/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'add', '--', 'e2e/native-proofs/e1-drill-yard.spec.ts']' returned non-zero exit status 128.

@@ -30,8 +30,8 @@
 // bookkeeping and infrastructure merge and gets excused into uselessness within a week
 // (the `cross-engine` label's fate, F-1460-1). This prints a WARN-level list to judge.
 import { execFileSync } from 'node:child_process'
-import { resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+// The sweep runs only when this file is the entry point, decided by real path (F-SF1-2).
+import { isMain } from './is-main.mjs'
 
 const MARKER = 'NOT PLAYER-VISIBLE'
 const cited = (full, text) => {
@@ -320,4 +320,4 @@ const main = () => {
   }
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main()
+if (isMain(import.meta.url)) main()

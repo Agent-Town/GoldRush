@@ -1,0 +1,34 @@
+{
+  "preTaskRevision": "a7ea93c4694252ddbf2e02b9497090976938b1e9",
+  "currentRevision": "a7ea93c4694252ddbf2e02b9497090976938b1e9",
+  "unchangedPaths": [
+    "src",
+    "e2e/e7-playbook-surface.spec.ts",
+    "e2e/m2-01-build-menu.spec.ts",
+    "playwright.config.ts",
+    "package.json",
+    "package-lock.json"
+  ],
+  "diffExitCode": 0,
+  "checks": {
+    "install": 0,
+    "preflightBuild": 0,
+    "typecheck": 0,
+    "finalBuild": 0,
+    "combinedPlaywright": {
+      "exitCode": 1,
+      "passed": 18,
+      "failed": 2,
+      "auditPassed": 2,
+      "buildMenuPassed": 14,
+      "recordReplayPassed": 2
+    },
+    "preTaskSourceControl": {
+      "exitCode": 1,
+      "failed": 2,
+      "assertion": "e2e/e7-playbook-surface.spec.ts:49"
+    }
+  },
+  "server": "http://127.0.0.1:5188",
+  "workers": 1
+}

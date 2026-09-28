@@ -1,0 +1,415 @@
+{
+  "candidate": "2a6ccc4e0",
+  "overall": 1,
+  "total": 10,
+  "passed": 0,
+  "failed": 10,
+  "elapsedSeconds": 971.6,
+  "zeroBrowserErrors": true,
+  "rows": [
+    {
+      "contract": "e6-picnic",
+      "project": "desktop-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "runState=dead at wave 18 / 565.5s sim, 843 kills, 0 gold"
+      },
+      "sim": 565.4666666666449,
+      "wave": 18,
+      "hp": 0,
+      "captures": null,
+      "stakesHeld": 3,
+      "latch": null,
+      "front": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "stake sandwich-east: radius=3; wave=0; works=[{\"id\":\"palisade\",\"x\":-15,\"z\":18,\"distance\":31},{\"id\":\"palisade\",\"x\":-1,\"z\":26,\"distance\":18.788294228055936},{\"id\":\"palisade\",\"x\":15,\"z\":18,\"distance\":1}]; heldByWork=true",
+        "kit=turret+sentry_beacon",
+        "stake placement refused outside target disc: target=-15,19; ghost={\"x\":-10,\"z\":18}",
+        "sentry_beacon did not place at -15.0,19.0 (ghostValid=true)",
+        "WARNING: run still reported paused after three KeyP presses"
+      ]
+    },
+    {
+      "contract": "e6-picnic",
+      "project": "mobile-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "runState=dead at wave 17 / 530.9s sim, 772 kills, 0 gold"
+      },
+      "sim": 530.9333333333135,
+      "wave": 17,
+      "hp": 0,
+      "captures": null,
+      "stakesHeld": 3,
+      "latch": null,
+      "front": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "stake sandwich-center: radius=3; wave=0; works=[{\"id\":\"palisade\",\"x\":-15,\"z\":18,\"distance\":17},{\"id\":\"palisade\",\"x\":-1,\"z\":26,\"distance\":1}]; heldByWork=true",
+        "stake sandwich-east: radius=3; wave=0; works=[{\"id\":\"palisade\",\"x\":-15,\"z\":18,\"distance\":31},{\"id\":\"palisade\",\"x\":-1,\"z\":26,\"distance\":18.788294228055936},{\"id\":\"palisade\",\"x\":15,\"z\":18,\"distance\":1}]; heldByWork=true",
+        "kit=turret+sentry_beacon",
+        "stake placement refused outside target disc: target=-15,19; ghost={\"x\":-10,\"z\":18}",
+        "sentry_beacon did not place at -15.0,19.0 (ghostValid=true)"
+      ]
+    },
+    {
+      "contract": "e6-showroom",
+      "project": "desktop-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "runState=dead at wave 3 / 109.5s sim, 44 kills, 0 gold"
+      },
+      "sim": 109.46666666666874,
+      "wave": 3,
+      "hp": 0,
+      "captures": 0,
+      "stakesHeld": 0,
+      "latch": null,
+      "front": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "strategy=gather-and-extend",
+        "engine secureWave=20 cadenceMult=1",
+        "home=0.0,6.0 circuit=[[-4,2],[4,2],[4,10],[-4,10]]",
+        "showroom capture route end: {\"objective\":{\"declared\":true,\"captures\":0,\"quota\":6,\"complete\":false,\"objectiveAllowsSecure\":false},\"wrangle\":{\"enabled\":true,\"windDownSeconds\":8,\"windDownTicks\":240,\"captureRadius\":2.2,\"exhaustedSpeedMultiplier\":0.2,\"active\":[{\"enemyId\":0,\"variantId\":\"feral_toaster\",\"state\":\"exhausted\",\"remainingTicks\":0,\"resets\":0},{\"enemyId\":1,\"variantId\":\"feral_toaster\",\"state\":\"exhausted\",\"remainingTicks\":0,\"resets\":0},{\"enemyId\":2,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":236,\"resets\":0},{\"enemyId\":3,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":94,\"resets\":1},{\"enemyId\":4,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":94,\"resets\":0},{\"enemyId\":5,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":94,\"resets\":0},{\"enemyId\":6,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":237,\"resets\":2},{\"enemyId\":9,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":99,\"resets\":2},{\"enemyId\":10,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":92,\"resets\":2},{\"enemyId\":11,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":94,\"resets\":0},{\"enemyId\":12,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":114,\"resets\":1},{\"enemyId\":13,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":33,\"resets\":0},{\"enemyId\":14,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":48,\"resets\":0},{\"enemyId\":15,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":107,\"resets\":1},{\"enemyId\":17,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":223,\"resets\":0},{\"enemyId\":18,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":232,\"resets\":1},{\"enemyId\":19,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":196,\"resets\":0},{\"enemyId\":21,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":209,\"resets\":0},{\"enemyId\":22,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":168,\"resets\":0},{\"enemyId\":23,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":182,\"resets\":0}],\"pen\":{\"roster\":[],\"total\":0,\"tickSeconds\":15,\"goldPerMachine\":1,\"incomeGranted\":0}}}",
+        "kit=turret+sentry_beacon+turret+turret"
+      ]
+    },
+    {
+      "contract": "e6-showroom",
+      "project": "mobile-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "runState=dead at wave 3 / 99.7s sim, 42 kills, 0 gold"
+      },
+      "sim": 99.73333333333493,
+      "wave": 3,
+      "hp": 0,
+      "captures": 1,
+      "stakesHeld": 0,
+      "latch": null,
+      "front": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "strategy=gather-and-extend",
+        "engine secureWave=20 cadenceMult=1",
+        "home=0.0,6.0 circuit=[[-4,2],[4,2],[4,10],[-4,10]]",
+        "showroom capture route end: {\"objective\":{\"declared\":true,\"captures\":1,\"quota\":6,\"complete\":false,\"objectiveAllowsSecure\":false},\"wrangle\":{\"enabled\":true,\"windDownSeconds\":8,\"windDownTicks\":240,\"captureRadius\":2.2,\"exhaustedSpeedMultiplier\":0.2,\"active\":[{\"enemyId\":0,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":227,\"resets\":0},{\"enemyId\":1,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":227,\"resets\":0},{\"enemyId\":2,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":223,\"resets\":2},{\"enemyId\":3,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":227,\"resets\":0},{\"enemyId\":4,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":227,\"resets\":0},{\"enemyId\":6,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":227,\"resets\":0},{\"enemyId\":7,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":238,\"resets\":2},{\"enemyId\":8,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":163,\"resets\":0},{\"enemyId\":9,\"variantId\":\"feral_toaster\",\"state\":\"exhausted\",\"remainingTicks\":0,\"resets\":0},{\"enemyId\":11,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":227,\"resets\":0},{\"enemyId\":14,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":167,\"resets\":0},{\"enemyId\":15,\"variantId\":\"lawn_shepherd\",\"state\":\"winding-down\",\"remainingTicks\":167,\"resets\":0},{\"enemyId\":16,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":167,\"resets\":0},{\"enemyId\":17,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":221,\"resets\":2},{\"enemyId\":19,\"variantId\":\"feral_toaster\",\"state\":\"winding-down\",\"remainingTicks\":218,\"resets\":2}],\"pen\":{\"roster\":[{\"variantId\":\"lawn_shepherd\",\"count\":1}],\"total\":1,\"tickSeconds\":15,\"goldPerMachine\":1,\"incomeGranted\":0}}}",
+        "kit=turret+sentry_beacon+turret+turret"
+      ]
+    },
+    {
+      "contract": "e7-dead-band",
+      "project": "desktop-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "runState=dead at wave 18 / 545.6s sim, 804 kills, 0 gold"
+      },
+      "sim": 545.5999999999793,
+      "wave": 18,
+      "hp": 0,
+      "captures": null,
+      "stakesHeld": 0,
+      "latch": {
+        "declared": true,
+        "objective": "refusal",
+        "objectiveMet": true,
+        "uses": 0,
+        "relaysLitByProgram": []
+      },
+      "front": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "home=0.0,-15.0 circuit=[[-4,-19],[4,-19],[4,-11],[-4,-11]]",
+        "Tape Record refused: Recording refused: signal-suppressed.",
+        "Tape latch after refusal: {\"latch\":{\"declared\":true,\"objective\":\"refusal\",\"objectiveMet\":true,\"uses\":0,\"relaysLitByProgram\":[]},\"arsenal\":{\"enabled\":true,\"items\":[\"playbook-slaved-spark-rig\",\"beam-relay-turret\",\"signal-jammer\",\"report-rocket\"],\"fires\":{\"playbookSparkRig\":0,\"beamRelay\":0,\"signalJammer\":0,\"reportRocket\":0},\"relayLinks\":0,\"activeRelayTurrets\":0,\"jammerDeployed\":true,\"playbookSlaved\":false,\"turretSilhouetteHeight\":1.1,\"cureEvents\":[],\"deathEvents\":0}}",
+        "kit=turret+sentry_beacon+turret+turret",
+        "WARNING: run still reported paused after three KeyP presses"
+      ]
+    },
+    {
+      "contract": "e7-dead-band",
+      "project": "mobile-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "runState=dead at wave 14 / 432.7s sim, 567 kills, 0 gold"
+      },
+      "sim": 432.66666666665236,
+      "wave": 14,
+      "hp": 0,
+      "captures": null,
+      "stakesHeld": 0,
+      "latch": {
+        "declared": true,
+        "objective": "refusal",
+        "objectiveMet": true,
+        "uses": 0,
+        "relaysLitByProgram": []
+      },
+      "front": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "home=0.0,-15.0 circuit=[[-4,-19],[4,-19],[4,-11],[-4,-11]]",
+        "Tape Record refused: Recording refused: signal-suppressed.",
+        "Tape latch after refusal: {\"latch\":{\"declared\":true,\"objective\":\"refusal\",\"objectiveMet\":true,\"uses\":0,\"relaysLitByProgram\":[]},\"arsenal\":{\"enabled\":true,\"items\":[\"playbook-slaved-spark-rig\",\"beam-relay-turret\",\"signal-jammer\",\"report-rocket\"],\"fires\":{\"playbookSparkRig\":0,\"beamRelay\":0,\"signalJammer\":0,\"reportRocket\":0},\"relayLinks\":0,\"activeRelayTurrets\":0,\"jammerDeployed\":true,\"playbookSlaved\":false,\"turretSilhouetteHeight\":1.1,\"cureEvents\":[],\"deathEvents\":0}}",
+        "kit=turret+sentry_beacon+turret+turret",
+        "sentry_beacon did not place at -6.9,-16.2 (ghostValid=false)"
+      ]
+    },
+    {
+      "contract": "e7-echo-canyon",
+      "project": "desktop-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "runState=dead at wave 17 / 519.3s sim, 757 kills, 5 gold"
+      },
+      "sim": 519.3333333333142,
+      "wave": 17,
+      "hp": 0,
+      "captures": null,
+      "stakesHeld": 0,
+      "latch": {
+        "declared": true,
+        "objective": "mirror",
+        "objectiveMet": true,
+        "uses": 1,
+        "relaysLitByProgram": []
+      },
+      "front": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "Tape USE wave=2, hero={\"x\":1.0245855651378575,\"z\":-17.936953928591375}, front=null: Native movement and build handed to the agent.",
+        "Tape objective: {\"latch\":{\"declared\":true,\"objective\":\"mirror\",\"objectiveMet\":true,\"uses\":1,\"relaysLitByProgram\":[]},\"mirror\":{\"declared\":true,\"delay\":\"next-wave\",\"recordedUses\":1,\"distinctPlaybooks\":1,\"maxRepeat\":0,\"pending\":[],\"squadsFielded\":1,\"bodiesFielded\":2,\"lastFieldedWave\":3,\"capPerWave\":3,\"hpPerRepeat\":0.1,\"refusals\":{\"cappedSquads\":0}},\"front\":null}",
+        "kit=turret+sentry_beacon+turret+turret",
+        "seam gold-seam-2 (-42.0,8.0) approach budget exhausted; hero={\"x\":-39.90688106674522,\"z\":6.3278216885235}",
+        "could not fund sentry_beacon (cost 55, purse 0)"
+      ]
+    },
+    {
+      "contract": "e7-echo-canyon",
+      "project": "mobile-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "not run"
+      },
+      "sim": 67.73333333333333,
+      "wave": 2,
+      "hp": 100,
+      "captures": null,
+      "stakesHeld": 0,
+      "latch": {
+        "declared": true,
+        "objective": "mirror",
+        "objectiveMet": false,
+        "uses": 0,
+        "relaysLitByProgram": []
+      },
+      "front": null,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "Tape playbook-toggle attempt 4: TimeoutError: locator.click: Timeout 600ms exceeded.",
+        "Tape playbook-toggle attempt 5: TimeoutError: locator.click: Timeout 600ms exceeded.",
+        "Tape playbook-toggle attempt 6: TimeoutError: locator.click: Timeout 600ms exceeded.",
+        "Tape playbook-toggle attempt 7: TimeoutError: locator.click: Timeout 600ms exceeded.",
+        "Tape playbook-toggle attempt 8: TimeoutError: locator.click: Timeout 600ms exceeded."
+      ]
+    },
+    {
+      "contract": "e7-relay-rush",
+      "project": "desktop-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "runState=dead at wave 18 / 549.7s sim, 813 kills, 0 gold"
+      },
+      "sim": 549.7333333333124,
+      "wave": 18,
+      "hp": 0,
+      "captures": null,
+      "stakesHeld": 0,
+      "latch": {
+        "declared": true,
+        "objective": "suspended",
+        "objectiveMet": true,
+        "uses": 0,
+        "relaysLitByProgram": []
+      },
+      "front": {
+        "declared": true,
+        "cadenceSeconds": 90,
+        "crossingSeconds": 20,
+        "halfWidth": 6,
+        "relayTarget": 3,
+        "deadlineFront": 3,
+        "phase": "crossing",
+        "frontsArrived": 6,
+        "frontsCompleted": 5,
+        "centerX": -1.6,
+        "secondsToNextFront": 80.267,
+        "sites": [
+          {
+            "id": "relay-site-r1",
+            "minX": -50,
+            "maxX": -40,
+            "minZ": 36,
+            "maxZ": 46,
+            "lit": true,
+            "litBy": "sentry_beacon",
+            "muted": false
+          },
+          {
+            "id": "relay-site-r2",
+            "minX": -30,
+            "maxX": -20,
+            "minZ": 36,
+            "maxZ": 46,
+            "lit": true,
+            "litBy": "sentry_beacon",
+            "muted": false
+          },
+          {
+            "id": "relay-site-r3",
+            "minX": 20,
+            "maxX": 30,
+            "minZ": 36,
+            "maxZ": 46,
+            "lit": true,
+            "litBy": "sentry_beacon",
+            "muted": false
+          },
+          {
+            "id": "relay-site-r4",
+            "minX": 40,
+            "maxX": 50,
+            "minZ": 36,
+            "maxZ": 46,
+            "lit": false,
+            "litBy": null,
+            "muted": false
+          }
+        ],
+        "litCount": 3,
+        "deadlineResolved": true,
+        "litAtDeadline": 3,
+        "objectiveMet": true,
+        "refusals": {
+          "drones": 0,
+          "playbooks": 1,
+          "relayChains": 0
+        },
+        "mutedWorkSteps": 405
+      },
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "relay service relay-site-r1: {\"declared\":true,\"cadenceSeconds\":90,\"crossingSeconds\":20,\"halfWidth\":6,\"relayTarget\":3,\"deadlineFront\":3,\"phase\":\"waiting\",\"frontsArrived\":0,\"frontsCompleted\":0,\"centerX\":null,\"secondsToNextFront\":4.933,\"sites\":[{\"id\":\"relay-site-r1\",\"minX\":-50,\"maxX\":-40,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"sentry_beacon\",\"muted\":false},{\"id\":\"relay-site-r2\",\"minX\":-30,\"maxX\":-20,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"turret\",\"muted\":false},{\"id\":\"relay-site-r3\",\"minX\":20,\"maxX\":30,\"minZ\":36,\"maxZ\":46,\"lit\":false,\"litBy\":null,\"muted\":false},{\"id\":\"relay-site-r4\",\"minX\":40,\"maxX\":50,\"minZ\":36,\"maxZ\":46,\"lit\":false,\"litBy\":null,\"muted\":false}],\"litCount\":2,\"deadlineResolved\":false,\"litAtDeadline\":null,\"objectiveMet\":false,\"refusals\":{\"drones\":0,\"playbooks\":0,\"relayChains\":0},\"mutedWorkSteps\":0}",
+        "relay service relay-site-r3: {\"declared\":true,\"cadenceSeconds\":90,\"crossingSeconds\":20,\"halfWidth\":6,\"relayTarget\":3,\"deadlineFront\":3,\"phase\":\"waiting\",\"frontsArrived\":1,\"frontsCompleted\":1,\"centerX\":null,\"secondsToNextFront\":37.333,\"sites\":[{\"id\":\"relay-site-r1\",\"minX\":-50,\"maxX\":-40,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"sentry_beacon\",\"muted\":false},{\"id\":\"relay-site-r2\",\"minX\":-30,\"maxX\":-20,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"turret\",\"muted\":false},{\"id\":\"relay-site-r3\",\"minX\":20,\"maxX\":30,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"sentry_beacon\",\"muted\":false},{\"id\":\"relay-site-r4\",\"minX\":40,\"maxX\":50,\"minZ\":36,\"maxZ\":46,\"lit\":false,\"litBy\":null,\"muted\":false}],\"litCount\":3,\"deadlineResolved\":false,\"litAtDeadline\":null,\"objectiveMet\":false,\"refusals\":{\"drones\":0,\"playbooks\":0,\"relayChains\":0},\"mutedWorkSteps\":30}",
+        "Tape USE wave=6, hero={\"x\":-24.254561643950268,\"z\":41.13321053725025}, front={\"declared\":true,\"cadenceSeconds\":90,\"crossingSeconds\":20,\"halfWidth\":6,\"relayTarget\":3,\"deadlineFront\":3,\"phase\":\"crossing\",\"frontsArrived\":2,\"frontsCompleted\":1,\"centerX\":-28,\"secondsToNextFront\":84.667,\"sites\":[{\"id\":\"relay-site-r1\",\"minX\":-50,\"maxX\":-40,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"sentry_beacon\",\"muted\":false},{\"id\":\"relay-site-r2\",\"minX\":-30,\"maxX\":-20,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"turret\",\"muted\":true},{\"id\":\"relay-site-r3\",\"minX\":20,\"maxX\":30,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"sentry_beacon\",\"muted\":false},{\"id\":\"relay-site-r4\",\"minX\":40,\"maxX\":50,\"minZ\":36,\"maxZ\":46,\"lit\":false,\"litBy\":null,\"muted\":false}],\"litCount\":3,\"deadlineResolved\":false,\"litAtDeadline\":null,\"objectiveMet\":false,\"refusals\":{\"drones\":0,\"playbooks\":0,\"relayChains\":0},\"mutedWorkSteps\":49}: Replay refused: interference-muted.",
+        "Tape objective: {\"latch\":{\"declared\":true,\"objective\":\"suspended\",\"objectiveMet\":true,\"uses\":0,\"relaysLitByProgram\":[]},\"mirror\":null,\"front\":{\"declared\":true,\"cadenceSeconds\":90,\"crossingSeconds\":20,\"halfWidth\":6,\"relayTarget\":3,\"deadlineFront\":3,\"phase\":\"crossing\",\"frontsArrived\":2,\"frontsCompleted\":1,\"centerX\":-24.8,\"secondsToNextFront\":84.133,\"sites\":[{\"id\":\"relay-site-r1\",\"minX\":-50,\"maxX\":-40,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"sentry_beacon\",\"muted\":false},{\"id\":\"relay-site-r2\",\"minX\":-30,\"maxX\":-20,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"turret\",\"muted\":true},{\"id\":\"relay-site-r3\",\"minX\":20,\"maxX\":30,\"minZ\":36,\"maxZ\":46,\"lit\":true,\"litBy\":\"sentry_beacon\",\"muted\":false},{\"id\":\"relay-site-r4\",\"minX\":40,\"maxX\":50,\"minZ\":36,\"maxZ\":46,\"lit\":false,\"litBy\":null,\"muted\":false}],\"litCount\":3,\"deadlineResolved\":false,\"litAtDeadline\":null,\"objectiveMet\":false,\"refusals\":{\"drones\":0,\"playbooks\":1,\"relayChains\":0},\"mutedWorkSteps\":53}}",
+        "kit=turret+sentry_beacon+turret+turret"
+      ]
+    },
+    {
+      "contract": "e7-relay-rush",
+      "project": "mobile-chrome",
+      "secure": {
+        "ok": false,
+        "detail": "not run"
+      },
+      "sim": 79.86666666666727,
+      "wave": 2,
+      "hp": 100,
+      "captures": null,
+      "stakesHeld": 0,
+      "latch": {
+        "declared": true,
+        "objective": "suspended",
+        "objectiveMet": false,
+        "uses": 0,
+        "relaysLitByProgram": []
+      },
+      "front": {
+        "declared": true,
+        "cadenceSeconds": 90,
+        "crossingSeconds": 20,
+        "halfWidth": 6,
+        "relayTarget": 3,
+        "deadlineFront": 3,
+        "phase": "waiting",
+        "frontsArrived": 0,
+        "frontsCompleted": 0,
+        "centerX": null,
+        "secondsToNextFront": 10.133,
+        "sites": [
+          {
+            "id": "relay-site-r1",
+            "minX": -50,
+            "maxX": -40,
+            "minZ": 36,
+            "maxZ": 46,
+            "lit": false,
+            "litBy": null,
+            "muted": false
+          },
+          {
+            "id": "relay-site-r2",
+            "minX": -30,
+            "maxX": -20,
+            "minZ": 36,
+            "maxZ": 46,
+            "lit": false,
+            "litBy": null,
+            "muted": false
+          },
+          {
+            "id": "relay-site-r3",
+            "minX": 20,
+            "maxX": 30,
+            "minZ": 36,
+            "maxZ": 46,
+            "lit": false,
+            "litBy": null,
+            "muted": false
+          },
+          {
+            "id": "relay-site-r4",
+            "minX": 40,
+            "maxX": 50,
+            "minZ": 36,
+            "maxZ": 46,
+            "lit": false,
+            "litBy": null,
+            "muted": false
+          }
+        ],
+        "litCount": 0,
+        "deadlineResolved": false,
+        "litAtDeadline": null,
+        "objectiveMet": false,
+        "refusals": {
+          "drones": 0,
+          "playbooks": 0,
+          "relayChains": 0
+        },
+        "mutedWorkSteps": 0
+      },
+      "consoleErrors": [],
+      "pageErrors": [],
+      "notes": [
+        "Tape playbook-toggle attempt 4: TimeoutError: locator.click: Timeout 600ms exceeded.",
+        "Tape playbook-toggle attempt 5: TimeoutError: locator.click: Timeout 600ms exceeded.",
+        "Tape playbook-toggle attempt 6: TimeoutError: locator.click: Timeout 600ms exceeded.",
+        "Tape playbook-toggle attempt 7: TimeoutError: locator.click: Timeout 600ms exceeded.",
+        "Tape playbook-toggle attempt 8: TimeoutError: locator.click: Timeout 600ms exceeded."
+      ]
+    }
+  ]
+}

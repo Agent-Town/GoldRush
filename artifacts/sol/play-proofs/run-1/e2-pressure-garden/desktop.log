@@ -1,0 +1,38 @@
+
+Running 1 test using 1 worker
+
+
+(node:43725) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:520:5 › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow
+[desktop-chrome] › e2e/native-proofs/driver.ts:520:5 › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow
+e2-pressure-garden {"t":99,"wave":3,"hp":0,"gold":120,"hero":{"x":20.02342955093496,"z":26.220109258890517},"builds":0}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:520:5 › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: wave 3, overlay=false, but only 0/3 authored boiler beds operated hot
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      804 |       }
+      805 |
+    > 806 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      807 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      808 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      809 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:806:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-1/e2-pressure-garden/desktop-results/native-proofs-e2-pressure--65725-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-1/e2-pressure-garden/desktop-results/native-proofs-e2-pressure--65725-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:520:5 › e2-pressure-garden plays to its secure wave, banks, reloads and returns to the board @slow 

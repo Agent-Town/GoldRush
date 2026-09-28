@@ -1,0 +1,35 @@
+# Drain review: `kv-counters-to-ledger-1`, the free-tier KV budget stops being one visitor's to exhaust (Opus 5.5 implementer; owner ruling 7 (b) of 2026-09-24)
+
+**Branch** `fix/kv-counters-to-ledger-1` at `e549582d1` · **merge** `647337be2` · engine hash unchanged (`c63def1b`, no pin) · drained attended 2026-09-25 12:24Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `kv1`).
+
+**Verdict: LANDED.**
+
+### What it does
+The owner declined the paid KV plan (2026-09-24, item 7 "(b)"), so the state that must be durable moves to the droplet ledger the accounts already use, and what stays on the edge is batched. A run beacon used to cost up to fifteen KV writes (the dedup key, per-contract counters, maxima, updatedAt) against a free-tier budget of a thousand a day, so one visitor could exhaust the day in about two and a half hours and take co-op rooms, bug reports and prize redemption down with it; the client nonce in the dedup digest made a fresh nonce a fresh beacon. Now: with `LEDGER_PROXY_SECRET` bound, every beacon shape costs zero KV writes and the same rows land in sqlite on the droplet (`POST /api/ledger/telemetry`); unbound (production until the ops evening) the edge path keeps its old shape but a fresh-nonce replay costs one write instead of thirteen, because the digest is the run's eleven fields. The rate limiters (`_ratelimit.ts` and the multiplayer per-address bump) call the ledger's atomic increment (`POST /api/ledger/increment`) with a TTL and fall back to KV only when the ledger is unreachable, saying so in `X-Ledger-Fallback: unconfigured|unreachable`; the connect door's bump moved inside its error path, so a failing store now answers 429 "The wire is busy." instead of throwing (create and inspect got the same fix). Bug reports and prize codes gain ledger routes (`POST` and `GET /api/ledger/bugs`, `POST /api/ledger/prizes/mint`, `POST /api/ledger/prizes/redeem`) with the same field allowlists and body caps; the Pages functions become thin proxies; the 90-day TTL is a per-row `expires_at` swept daily at 02:00 UTC by `ops/droplet/ledger-backup.mjs` before its `VACUUM INTO`, never a `find -delete`. The one-shot migration `scripts/kv-to-ledger-migrate.mjs` is written and not run; only its import logic was tested against an in-memory ledger. The two `wrangler.toml` bindings that would split the rate limits from telemetry are written in the report and not applied. Where the player sees it: nothing changes on screen; after the ops evening a busy day of honest traffic can no longer knock the co-op rooms and the bug office offline.
+
+### Measured
+Writes per beacon on the branch base: first 14, steady 13, secure 11, end after secure 7, legacy worst case 15, fresh-nonce replay 13, render demotion 8 (no dedup). After, ledger bound: 0 on every shape. After, unbound: 14, 12, 10, 6, 15; fresh-nonce replay 1; render 9 (one dedup key) and its replay 1. The measurement script and the before and after JSON are under `artifacts/kv-counters-to-ledger-1/`. Gates at the tip: tsc and build green, named guards 22 of 22, `test:accounts` 241 rows (was 137), `test:mp` 528 (was 466), `test:stats` unchanged at 87, 372, 372 and 26, the rate-limit window test 6 of 6, the backup sweep test 2 of 2.
+
+### Merge classification
+Edge functions, the ledger server, ops and scripts: `functions/api/telemetry.ts`, `_ratelimit.ts`, `_multiplayer.ts`, `_bugs.ts`, `redeem.ts`, a shared `functions/api/_ledger.ts` (new), `server/ledger/serve.mjs` and `storage.mjs` (the routes, the sweep column), `ops/droplet/ledger-backup.mjs` (the daily sweep), `scripts/kv-to-ledger-migrate.mjs` (new, not run), the accounts and multiplayer tests, `artifacts/kv-counters-to-ledger-1/**`. No `src/**`, no `wrangler.toml`, no standings handler, no secret; the engine hash did not move (the corpus is `src/` and the contracts).
+
+### Findings
+- **F-KV1-7 (the owner's, for the ops evening):** the mirror-exposure gate reads the new key classes as UNRECOGNISED and prints prize codes and bug ids; with the switch, bug reports and hashed-IP rows enter the ledger backups and the private archive. Decide before the first nightly mirror after the switch: teach the gate the classes and redact them from the mirror, or exclude those tables from the backup.
+- **F-KV1-3 (the owner's):** render demotions now count once per distinct signature per month; say if that is the count the census wants.
+- **F-KV1-1 (noted):** the Pages-to-ledger proxy the master assumed in `_accounts.ts` did not exist; the shared client and its secret are new and `_accounts.ts` is untouched.
+- **F-KV1-2 (noted):** the beacon carries no seed or anonymous id, so the dedup digest is the run's eleven fields.
+- **F-KV1-4 (open, a slice):** the multiplayer KV fallback keeps its own limiter, which restarts its hour on every write; moving it onto `_ratelimit.ts` changes a census guard outside this firewall.
+- **F-KV1-5 (open, a slice):** the Pages copy of standings, hit directly at pages.dev, still writes KV; that handler was out of scope.
+- **F-KV1-6 (unverified):** behind nginx, Pages may see the droplet as `CF-Connecting-IP`, which would collapse every per-address limit into one; probe on the ops evening.
+- **F-KV1-8 (until the evening):** unbound, a visitor who varies one field still costs 12 to 15 writes per beacon; the budget is fixed only when the secret is bound.
+- **F-KV1-9 (unverified):** a zone WAF or bot challenge could block the Pages call to the droplet; `refusals.ts` already uses that path.
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 140 ℹ fail 0` |
+| the three functions gates | `accounts rc=0 / mp rc=0 / stats rc=0` |
+| full npm run test:node-guards (before the pin) | `rc=0 ℹ tests 1018 ℹ pass 1013 ℹ fail 0 ℹ skipped 5 ℹ tests 82 ℹ pass 82 ℹ fail 0 ℹ skipped 0  12:24Z` |
+| engine hash | `merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)` |

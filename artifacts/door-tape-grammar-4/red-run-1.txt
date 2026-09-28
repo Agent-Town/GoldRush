@@ -1,0 +1,81 @@
+RED 1: the new rows, with scripts/test-standings.mjs byte-identical to the one committed in aff05b4c2 (cmp), run against the door of this slice's base: functions/api/standings.ts written from 0515f4b0d for the run, then restored and checked with cmp. Command: node scripts/test-standings.mjs
+
+contract clock census 42/25/17/0
+recorder reel kv checks (40)
+recorder verbs kv checks (41)
+retired embedded orders kv checks (14)
+client grammar kv checks (23)
+retired client grammar kv checks (24)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the door refuses research ids and building targets the client refuses: [{"ok":true,"stored":true,"rank":1,"decidedBy":"crown"},{"ok":true,"stored":true,"rank":2,"decidedBy":"submittedAt"},{"ok":true,"stored":true,"rank":3,"decidedBy":"submittedAt"},{"ok":true,"stored":true,"rank":4,"decidedBy":"submittedAt"},{"ok":true,"stored":true,"rank":5,"decidedBy":"submittedAt"},{"ok":true,"stored":true,"rank":6,"decidedBy":"submittedAt"}]
++ actual - expected
+
+  [
+    [
++     200,
++     true
+-     400,
+-     'bad_payload'
+    ],
+    [
++     200,
++     true
+-     400,
+-     'bad_payload'
+    ],
+    [
++     200,
++     true
+-     400,
+-     'bad_payload'
+    ],
+    [
++     200,
++     true
+-     400,
+-     'bad_payload'
+    ],
+    [
++     200,
++     true
+-     400,
+-     'bad_payload'
+    ],
+    [
++     200,
++     true
+-     400,
+-     'bad_payload'
+    ]
+  ]
+
+    at equal (file:///Users/robin/Claude/Projects/wt-dtg3/scripts/test-standings.mjs:2122:10)
+    at checkClientJudgedIds (file:///Users/robin/Claude/Projects/wt-dtg3/scripts/test-standings.mjs:740:3)
+    at async file:///Users/robin/Claude/Projects/wt-dtg3/scripts/test-standings.mjs:61:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [
+    [ 200, true ],
+    [ 200, true ],
+    [ 200, true ],
+    [ 200, true ],
+    [ 200, true ],
+    [ 200, true ]
+  ],
+  expected: [
+    [ 400, 'bad_payload' ],
+    [ 400, 'bad_payload' ],
+    [ 400, 'bad_payload' ],
+    [ 400, 'bad_payload' ],
+    [ 400, 'bad_payload' ],
+    [ 400, 'bad_payload' ]
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.4.0
+rc=1

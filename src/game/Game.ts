@@ -91,6 +91,7 @@ import { MotorSocket, type MotorDiagnostics } from '../sim/MotorSocket';
 import { META_PROGRESS_KEY, agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { baronArrivalEdge } from './BaronFort';
+import { LIVE_SEED_CONSTANT, liveSeedRotationId, resolveLiveSeed } from './liveSeed';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import { mechanicsBuildableIds } from '../agent/MechanicsManifest';
 import { buildView, type AgentRegattaSource, type AgentViewSource } from '../agent/View';
@@ -187,6 +188,8 @@ import { E6TileConsumerSystem } from '../systems/E6TileConsumerSystem';
 import { E9ArsenalSystem } from '../systems/E9ArsenalSystem';
 import { E9CanalSystem } from '../systems/E9CanalSystem';
 import { E10FinaleSystem } from '../systems/E10FinaleSystem';
+import { stampCharter } from '../charter/CharterStamp';
+import { getPostCreditsCharter } from '../charter/TheRiver';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
 import { E7PlaybookLatch } from '../systems/E7PlaybookLatch';
@@ -1475,6 +1478,20 @@ export class Game {
     this.resetFrameWindow();
     this.skipNextVisibleFrameSample = true;
   };
+  /**
+   * Closes the solo pick-clock interval AT the visibility transition (UX-4). Required, not belt-and-
+   * braces: requestAnimationFrame stops while a tab is hidden, so `syncUpgradeOverlay` gets no frame
+   * during the gap and the first frame after the return would otherwise charge the whole absence.
+   * Settling on the event closes the visible interval while the document still reads hidden, and
+   * opens the hidden one as non-counting.
+   */
+  private readonly onPickClockVisibilityChange = () => {
+    // Flag first, settle second. `settleUpgradeOfferClock` closes the interval that just ended using
+    // the flag stamped when it OPENED, then opens the next one from this flag - so updating it here
+    // is what makes the new interval non-counting on the way out and counting again on the way back.
+    this.pickClockDocumentHidden = document.visibilityState === 'hidden';
+    this.settleUpgradeOfferClock();
+  };
   private profileElapsed = 0;
   private debugBeaconWaveOverride: number | null = null;
   private stolenTotal = 0;
@@ -1483,7 +1500,24 @@ export class Game {
   private buildingsWrecked = 0;
   private defaultedPicks = 0;
   private upgradeOfferClockKey = '';
-  private upgradeOfferDeadlineMs = 0;
+  // UX-4 (outside review 2026-09-24): the SOLO pick clock was an absolute wall-clock deadline
+  // (`performance.now() + pickSeconds * 1000`), so a player who switched tabs mid-offer came back to
+  // find the game had picked upgrade index 0 for them. A remaining-time budget with an explicit
+  // "was the interval I am closing a counting one?" flag freezes correctly in BOTH directions; an
+  // absolute deadline cannot, because on return the whole hidden gap has already elapsed.
+  private upgradeOfferRemainingMs = 0;
+  private upgradeOfferClockAt = 0;
+  private upgradeOfferClockCounting = false;
+  /**
+   * Hidden-ness as OBSERVED through a `visibilitychange` event, never as asked of the document at an
+   * arbitrary moment. A clock that freezes on whatever `document.visibilityState` happens to say at
+   * boot can be frozen for the life of a page by an embedder or an automation host that reports a
+   * stale 'hidden' - and a pick clock that never drains never files the default pick, which is a
+   * worse defect than the one this fixes. A page that boots hidden cannot have an offer on screen
+   * anyway (requestAnimationFrame is throttled, and a level-up needs a player), and the transition
+   * that brings such a page to the front fires this event, so nothing real is lost by waiting for it.
+   */
+  private pickClockDocumentHidden = false;
   private upgradeOfferDeadlineTick = 0;
   private upgradeExpiryQueued = false;
   private territoryRingPresent = false;
@@ -1540,6 +1574,14 @@ export class Game {
   };
   private securedScoreAt: number | null = null;
   private countyStanding: CountyStandingView | null = null;
+  // F-PP6-2: true only on the run the finale lever opens (THE RIVER pressed onto its lineage root, under nowaves;
+  // `isRiverCeremonyContract`), and the one-shot latch of `completeRiverEnding`, the River's win.
+  private readonly riverCeremony = areWavesDisabled() && isRiverCeremonyContract(selectActiveContract());
+  private riverEndingSettled = false;
+  // river-assay-1 (F-RES1-1): what a REPLAY of a River reel measured at the ceremony's pan, the fields the live pan's
+  // completed score carries. Published as the replay's secure (`publishDiagnostics`, `run`) so the assay reads the
+  // ceremony's outcome where RunManager's secure never fires; nothing is ever written from it.
+  private riverEndingReplayScore: { waves: number; gold: number; timeAlive: number } | null = null;
 
   private runManager?: RunManager;
   private drillYard?: DrillYard;
@@ -1575,7 +1617,13 @@ export class Game {
     boot: GameBoot = {},
   ) {
     this.boot = assayReplayBoot(boot);
-    this.runSeed = this.boot.replay?.tape.seed ?? getDebugSeed() ?? 'gold-rush';
+    // THE LIVE SEED (owner ruling 2026-09-24, "(a)": humans ride the open rotation's seed per contract).
+    // A replay tape's seed and a dev `?seed=` pin still come first; the rules live in src/game/liveSeed.ts.
+    this.runSeed = this.boot.replay?.tape.seed ?? getDebugSeed() ?? resolveLiveSeed(this.activeContract.id);
+    // THE SEAMS FOLLOW THE RUN'S SEED (F-RES1-6, river-assay-1): seeded from `harvestSeedFor(runSeed)`, a pure function of
+    // the seed the reel records, so a replay of any run lays that run's seams (see the function).
+    this.harvestSystem.resetFromSeed(harvestSeedFor(this.runSeed));
+    this.harvestSnapshot = this.harvestSystem.snapshot;
     this.waveSystem = new WaveSystem(
       this.enemies,
       this.primaryActor.group.position,
@@ -1646,6 +1694,7 @@ export class Game {
     this.blastAimReticle.visible = false;
     this.canvas.addEventListener('pointermove', this.onBlastAimPointerMove);
     document.addEventListener('visibilitychange', this.onPerformanceVisibilityChange);
+    document.addEventListener('visibilitychange', this.onPickClockVisibilityChange);
     this.updateActionActorPosition();
     this.buildSystem = new BuildSystem(
       canvas,
@@ -2802,6 +2851,7 @@ export class Game {
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
     this.prospectorDispatchInput.dispose();
     document.removeEventListener('visibilitychange', this.onPerformanceVisibilityChange);
+    document.removeEventListener('visibilitychange', this.onPickClockVisibilityChange);
     this.input.dispose();
     this.cameraZoom.dispose();
     this.playbookSurface?.dispose();
@@ -2928,7 +2978,8 @@ export class Game {
     this.mpTickThisFrame = null;
     this.mpActorIntents = null;
     this.mpActionsThisTick = [];
-    const sampledIntents = this.runTapeReplay ? intentsFromLockstepInput(null) : this.input.readIntents();
+    // RECORD WHAT RAN (F-RVA1-1): the live run moves by the axes its reel records, rounded to 1e-3 (`recordedIntents`).
+    const sampledIntents = this.runTapeReplay ? intentsFromLockstepInput(null) : recordedIntents(this.input.readIntents());
     if (this.mpClient && this.manualLockstepPausedForTest) return false;
     const cancelConsumed =
       this.mpClient || this.playbookLiveRecording() ? this.applyLocalMultiplayerPresentation(sampledIntents) : false;
@@ -3268,6 +3319,7 @@ export class Game {
         this.speakTrailGuide('first-gold');
         if (this.hasBuiltStockpile()) this.audio.play('stockpile-deposit', 0.8);
         this.vfx.floatText(this.lastHarvestGoldPosition(), `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a', 1.7);
+        if (this.riverCeremony) this.completeRiverEnding();
       }
       this.updateBaronRocketVolley();
       this.combat.update(simDelta, this.timeAlive);
@@ -3724,7 +3776,8 @@ export class Game {
       this.deferMultiplayerTransition(() => this.resetRun());
       return true;
     }
-    if (action.type === 'set_pause' && !this.secureClaimChoicePending() && this.state.isPaused !== action.paused) {
+    // Reels count active sim ticks, not wall-clock pauses; old reels also carry pause without resume.
+    if (action.type === 'set_pause' && !this.runTapeReplay && !this.secureClaimChoicePending() && this.state.isPaused !== action.paused) {
       this.togglePlayerPause();
     }
     if (action.type === 'debug_spawn') this.spawnDebugPack();
@@ -3867,7 +3920,7 @@ export class Game {
     const text = getPlaybookText(localStorage, name);
     if (!text) return { ok: false as const, reason: 'NOTHING_RECORDED' };
     const parsed = parsePlaybookText(text);
-    if (!parsed.ok || parsed.playbook.contractId !== this.activeContract.id || parsed.playbook.seed !== this.runSeed
+    if (!parsed.ok || parsed.playbook.contractId !== this.scoredContractId() || parsed.playbook.seed !== this.runSeed
       || parsed.playbook.difficultyPreset !== this.difficultyPreset) {
       return { ok: false as const, reason: parsed.ok ? 'PLAYBOOK_MISMATCH' : parsed.reason };
     }
@@ -4196,7 +4249,9 @@ export class Game {
     this.playbookReplay = null;
     this.playbookRecorder = new PlaybookRecorderSession(
       {
-        contractId: this.activeContract.id,
+        // The reel's contract (F-RES1-4): on the River ceremony a playbook is recorded, replayed and kept under
+        // `e10-river`, so its use can never put a `the-claim` page inside an `e10-river` reel.
+        contractId: this.scoredContractId(),
         seed: this.runSeed,
         difficultyPreset: this.difficultyPreset,
         start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
@@ -4250,8 +4305,9 @@ export class Game {
     const parsed = parsePlaybookText(text);
     if (!parsed.ok) return { ok: false, reason: parsed.reason };
     const playbook = parsed.playbook;
-    // The determinism contract holds on the same tile+seed only (spec law 2).
-    if (playbook.contractId !== this.activeContract.id) return { ok: false, reason: 'contract-mismatch' };
+    // The determinism contract holds on the same tile+seed only (spec law 2). Judged on the reel's contract
+    // (F-RES1-4): the River ceremony refuses a Claim playbook, whose use would spoil its `e10-river` reel.
+    if (playbook.contractId !== this.scoredContractId()) return { ok: false, reason: 'contract-mismatch' };
     if (playbook.seed !== this.runSeed) return { ok: false, reason: 'seed-mismatch' };
     if (playbook.difficultyPreset !== this.difficultyPreset) return { ok: false, reason: 'difficulty-mismatch' };
     const actor = this.ensurePlaybookReplayActor();
@@ -6003,6 +6059,8 @@ export class Game {
             sizeBytes: 0,
           },
         }),
+        // A River replay's secure is the ceremony's pan (river-assay-1): the run never secures through RunManager.
+        ...(this.riverEndingReplayScore ? { secured: true, securedSnapshot: { ...this.riverEndingReplayScore } } : {}),
         ...(this.preserveFell ? { lastRunEndedReason: 'preserve_fell' } : {}),
         ...(this.ventGuttered ? { lastRunEndedReason: 'vent_guttered' } : {}),
       },
@@ -7681,10 +7739,61 @@ export class Game {
       deepestWave: waves,
       baseValue: Math.round(economySummary.baseValue),
       weaponSplit: this.weaponSplit(runStats),
-      contractId: this.activeContract.id,
+      contractId: this.scoredContractId(),
     };
     const scores = this.activeContract.practice?.scores === false ? loadScores() : recordScore(score);
     return { scoreAt, economySummary, runStats, score, scores };
+  }
+
+  /**
+   * THE RIVER'S WIN (F-PP6-2; owner 2026-09-26, verbatim "2 - sure, lets do that", choosing "the pan is the win; the
+   * game writes a completed score at the pan"). The finale lever opens a run with no waves, so the secure path
+   * (`run_secured`, then a secured `run_ended` or `hero_died`), the only writer of a completed score, never fires on
+   * it. This is the ceremony's own completion instead, written through the sinks every secured run uses: the score
+   * (`recordRunScore`: waves 0, the time alive at the pan, the purse the pan filled, secured) and the reel (the
+   * recorder's snapshot with the outcome a standing's reel declares, kept in the tape ring) and the county standing
+   * (`submitCountyStanding`, which attaches that same reel; `RIVER_STANDING_POSTS_ENABLED`, on since river-assay-1 made a
+   * River reel assayable). The door's grammar (`validTapeOutcome`) admits `secured`, `rush` and `death` and nothing
+   * else, so the ceremony rides `secured`.
+   *
+   * THE EVENT is the first gold the player's own pan lands, called from the fixed step: the earliest act that is
+   * certainly a pan (the channel's first swing yields nothing if the player steps off inside one pan tick, 1.5 s
+   * unupgraded), the run-6 driver's own "panned" test (`fund` returns at the start gold plus 5), and never on boot
+   * or on the lever alone.
+   * ONCE (Mistake #7): the latch makes a second pan on this run write nothing, and a completed River already in this
+   * profile's scores makes a reload or a second pull of the lever write nothing more.
+   * A REPLAY of the reel writes nothing either (river-assay-1, F-RES1-1): it measures the same fields the live pan's
+   * score carries, at the same tick, and keeps them for the assay (`riverEndingReplayScore`).
+   */
+  private completeRiverEnding(): void {
+    if (this.riverEndingSettled || this.mpClient) return;
+    this.riverEndingSettled = true;
+    if (this.runTapeReplay) {
+      // `recordRunScore(0, this.timeAlive, true, 0)` below, field for field: waves 0, the purse held, the time alive.
+      this.riverEndingReplayScore = { waves: 0, gold: Math.floor(this.economy.gold), timeAlive: this.timeAlive };
+      return;
+    }
+    if (loadScores().some((entry) => entry.contractId === RIVER_ENDING_CONTRACT_ID && entry.secured === true)) return;
+    const { score } = this.recordRunScore(0, this.timeAlive, true, 0);
+    const reel = this.runTapeRecorder?.snapshot(this.securedReelOutcome(score, 'secured'), this.runTapeEventLog());
+    if (reel && appendRunTape(safeLocalStorage(), reel)) this.lastRunTape = reel;
+    if (RIVER_STANDING_POSTS_ENABLED) void this.submitCountyStanding(score);
+  }
+
+  /** The contract a score, a reel and a standing are written under: the River ceremony scores `e10-river`. */
+  private scoredContractId(): string {
+    return this.riverCeremony ? RIVER_ENDING_CONTRACT_ID : this.activeContract.id;
+  }
+
+  /** The outcome a secured reel declares for `score`; the standing's reel and the River's kept reel share it. */
+  private securedReelOutcome(score: ScoreRecord, reason: RunEndReason): RunTapeOutcome {
+    return {
+      reason,
+      secured: true,
+      waves: Math.max(0, Math.floor(score.deepestWave ?? score.waves)),
+      timeAlive: Math.max(0, score.timeAlive),
+      gold: Math.max(0, Math.floor(score.gold)),
+    };
   }
 
   private startRunTapeReplay(tape: RunTape): void {
@@ -7969,12 +8078,12 @@ export class Game {
     this.lastRunTape = null;
     const suspended = readRunSuspend();
     this.runTapeRecorder = new RunTapeRecorder({
-      contract: this.activeContract.id,
+      contract: this.scoredContractId(),
       seed: this.runSeed,
       difficulty: this.difficultyPreset,
       meta: runTapeRecordingMeta(
         safeLocalStorage(),
-        this.activeContract.id,
+        this.scoredContractId(),
         {
           buildId: __APP_BUILD__,
           viewVersion: engineEra.viewSchema.version,
@@ -8051,10 +8160,12 @@ export class Game {
     const multiplayerState = this.mpClient?.state();
     if (multiplayerState?.connected && !isMultiplayerStandingSubmitter(multiplayerState.roster, multiplayerState.playerId)) return;
     try {
-      const epoch = listEpochs().find((entry) => loadEpoch(entry.id).contracts.some((contract) => contract.id === this.activeContract.id));
+      const contractId = this.scoredContractId();
+      const epoch = listEpochs().find((entry) => loadEpoch(entry.id).contracts.some((contract) => contract.id === contractId));
       if (!epoch) return;
+      // The River ceremony stands on a pressed page by design, and `riverCeremony` already proved it is THE RIVER's own stamp.
       const descriptor = contractDescriptorJson(this.activeContract);
-      if (descriptor !== contractDescriptorJson(loadContract(this.activeContract.id, epoch.id))) return;
+      if (!this.riverCeremony && descriptor !== contractDescriptorJson(loadContract(this.activeContract.id, epoch.id))) return;
       const pinnedSeed = getDebugSeed();
       const roster = [...this.multiplayerStandingRoster.values()];
       const party = multiplayerStandingParty(roster);
@@ -8063,29 +8174,23 @@ export class Game {
       // Invited agents ride live county seeds. Pinned seeds remain the agents-only exam.
       if (mixedAgentRide && pinnedSeed !== null) return;
       // A non-member pinned seed is neither comparable bench data nor live play; the owner may reverse this submission policy.
-      if (pinnedSeed !== null && !(benchSeeds as Record<string, string[]>)[this.activeContract.id]?.includes(pinnedSeed)) return;
-      const seed = pinnedSeed ?? 'gold-rush';
+      if (pinnedSeed !== null && !(benchSeeds as Record<string, string[]>)[contractId]?.includes(pinnedSeed)) return;
+      // The seed this run was RIDDEN on (`runSeed`, resolved once at birth), never a second resolution:
+      // the reel records `runSeed` and the door requires the two to match, so a run that straddles
+      // Monday 00:00 UTC names last week's seed and the door answers `rotation_closed` (transfer-board L3).
+      const seed = pinnedSeed ?? this.runSeed;
       const reason: RunEndReason = this.state.current === 'dead'
         ? this.runManager?.diagnostics.rush ? 'rush' : 'death'
         : 'secured';
       const eventLog = this.runTapeEventLog();
-      const tape = this.runTapeRecorder?.snapshot(
-        {
-          reason,
-          secured: true,
-          waves: Math.max(0, Math.floor(score.deepestWave ?? score.waves)),
-          timeAlive: Math.max(0, score.timeAlive),
-          gold: Math.max(0, Math.floor(score.gold)),
-        },
-        eventLog,
-      );
+      const tape = this.runTapeRecorder?.snapshot(this.securedReelOutcome(score, reason), eventLog);
       const submittedTape = tape ? submittedRunTape(tape) : undefined;
       const [seedHash, inputLogHash] = await Promise.all([
         sha256Hex(seed),
         sha256Hex(JSON.stringify(tape?.inputLog ?? [])),
       ]);
       const body = JSON.stringify({
-        contractId: this.activeContract.id,
+        contractId,
         epochId: epoch.id,
         score: {
           secured: true,
@@ -9019,6 +9124,8 @@ export class Game {
     this.kills = 0;
     this.securedScoreAt = null;
     this.countyStanding = null;
+    this.riverEndingSettled = false;
+    this.riverEndingReplayScore = null;
     this.baronBeatenThisRun = false;
     this.baronCeremony = null;
     this.baronStandardPlanted = false;
@@ -10466,6 +10573,39 @@ export class Game {
     this.blastAimReticleRadius = nextRadius;
   }
 
+  /**
+   * Charges the interval that just ended against the solo pick budget, then opens a new interval.
+   *
+   * The `upgradeOfferClockCounting` flag describes THE INTERVAL BEING CLOSED, never the instant. That
+   * is the whole trick: on `visibilitychange` back to visible, `document.visibilityState` already
+   * reads 'visible', so an instant-based test would charge the entire hidden gap - exactly the bug.
+   * Reading the flag stamped when the interval opened gets both transitions right.
+   */
+  private settleUpgradeOfferClock(): void {
+    const now = performance.now();
+    if (this.upgradeOfferClockCounting) {
+      this.upgradeOfferRemainingMs = Math.max(0, this.upgradeOfferRemainingMs - (now - this.upgradeOfferClockAt));
+    }
+    this.upgradeOfferClockAt = now;
+    this.upgradeOfferClockCounting = this.upgradeOfferClockRunning;
+  }
+
+  /** Opens a fresh interval without charging anything: used when the budget is (re)set. */
+  private stampUpgradeOfferClock(): void {
+    this.upgradeOfferClockAt = performance.now();
+    this.upgradeOfferClockCounting = this.upgradeOfferClockRunning;
+  }
+
+  /**
+   * ⚠️ `isPaused` is defensive, not the live cure. `GameState.transition` clears `paused` on the way
+   * into 'levelup' and `togglePause` refuses outside 'playing' (game/GameState.ts:31,37), so an offer
+   * is UNPAUSABLE today and the hidden-document half is the whole reachable fix. It is here because
+   * the freeze is a property of the clock, not of one state machine's current shape (F-UX4-2).
+   */
+  private get upgradeOfferClockRunning(): boolean {
+    return !this.state.isPaused && !this.pickClockDocumentHidden;
+  }
+
   private syncUpgradeOverlay(): void {
     const offer = this.progression.offer;
     if (this.state.current !== 'levelup' || !offer) {
@@ -10481,15 +10621,18 @@ export class Game {
     const offerKey = `${this.progression.snapshot.pendingLevels}:${offer.map((def) => def.id).join('|')}`;
     if (offerKey !== this.upgradeOfferClockKey) {
       this.upgradeOfferClockKey = offerKey;
-      this.upgradeOfferDeadlineMs = performance.now() + Balance.offers.pickSeconds * 1_000;
+      this.upgradeOfferRemainingMs = Balance.offers.pickSeconds * 1_000;
+      this.stampUpgradeOfferClock();
       this.upgradeOfferDeadlineTick = (offerTick ?? 0) + Math.ceil(Balance.offers.pickSeconds / (this.mpClient?.stepSeconds ?? PLAYBOOK_STEP_SECONDS));
       this.upgradeExpiryQueued = false;
     }
-    // Solo uses wall time; MP and agent-tape replay use their authoritative ticks.
-    // Neither opening settings nor pausing the already-frozen sim stops the applicable clock.
+    // Solo spends a wall-time BUDGET; MP and agent-tape replay keep their authoritative ticks
+    // untouched - the lockstep contract is that every seat counts the same ticks, and a clock one
+    // seat can freeze is not that. So only the solo branch below consults the freeze.
+    if (offerTick === null) this.settleUpgradeOfferClock();
     const secondsRemaining = offerTick !== null
       ? Math.max(0, Math.ceil((this.upgradeOfferDeadlineTick - offerTick) * (this.mpClient?.stepSeconds ?? PLAYBOOK_STEP_SECONDS)))
-      : Math.max(0, Math.ceil((this.upgradeOfferDeadlineMs - performance.now()) / 1_000));
+      : Math.max(0, Math.ceil(this.upgradeOfferRemainingMs / 1_000));
     const multiplayerAuthority = !multiplayerState || multiplayerState.playerId === multiplayerState.roster[0]?.playerId;
     if (secondsRemaining === 0 && !this.upgradeExpiryQueued && multiplayerAuthority) {
       this.upgradeExpiryQueued = true;
@@ -11014,6 +11157,61 @@ function countyAnonId(): string {
   } catch {
     return randomHex(16);
   }
+}
+
+// F-PP6-2: the contract THE RIVER's ending is scored under. The lever plays it as its lineage root, `the-claim`.
+const RIVER_ENDING_CONTRACT_ID = 'e10-river';
+
+// ON since river-assay-1 (the county-board half of the owner's F-PP6-2 ruling, 2026-09-26). It was HELD (attended
+// session, 2026-09-26) while every instrument rejected a River reel, so a posted River row would have ranked while
+// pending and then been rejected on the live board. The assay now verifies one: a replay opens the lever's ceremony
+// world and reads the pan's completed score (F-RES1-1), the seams follow the run's seed (F-RES1-6), and a live run moves
+// by the axes its reel records (F-RVA1-1); `scripts/river-assay.test.mjs` and `e2e/river-ending-score.spec.ts` prove it
+// through the county's own door and worker. Holding the post again is this one line.
+const RIVER_STANDING_POSTS_ENABLED: boolean = true;
+
+/**
+ * THE RIVER CEREMONY (F-PP6-2): `E10FinaleSystem.launchRiver` stamps THE RIVER charter onto its lineage root and boots it
+ * under `nowaves`, so the run is `the-claim` pressed with that page, never `e10-river` itself. The pressed page must be
+ * byte for byte the shipped charter's stamp, so the raw `e10-river` board route, a player's own Press charter and every
+ * ordinary Claim answer false.
+ */
+function isRiverCeremonyContract(contract: ContractManifest): boolean {
+  const river = getPostCreditsCharter();
+  if (contract.name !== river.contract.name) return false;
+  const stamped = stampCharter(river);
+  return stamped.ok && contractDescriptorJson(contract) === stamped.document;
+}
+
+/**
+ * THE SEAMS' SEED (F-RES1-6, river-assay-1, form (b) as ruled by the attended session, 2026-09-27). The harvest's
+ * generator was seeded from the `?seed=` pin alone (`HarvestSystem`'s default, `createRng(getDebugSeed())`, written at
+ * m1-04 when the pin was the only seed there was; no comment gave another reason), so a replay, which knows only the
+ * seed its reel records (`runSeed`), could not tell which layout the run had laid. This derives the layout from that
+ * seed alone, keeping live play exactly as it was:
+ *   - a live seed (a rotation's, or the `gold-rush` constant a contract off the rotation rides) keeps the one layout
+ *     every unpinned run has always laid, the generator's default (`createRng(null)`): the Claim's seams are design and
+ *     do not move with the week;
+ *   - any other seed (a bench or a test pin) seeds the seams itself, exactly as the pin always did.
+ * A replay derives the same answer from the reel's seed, so it lays the run's own seams, pinned or not, before this
+ * slice or after it. Nothing in `liveSeed.ts` changes; its registry is only read.
+ */
+function harvestSeedFor(runSeed: string): string | null {
+  return runSeed === LIVE_SEED_CONSTANT || liveSeedRotationId(runSeed) !== null ? null : runSeed;
+}
+
+/**
+ * RECORD WHAT RAN (F-RVA1-1, river-assay-1; firewall lift by the attended session, 2026-09-27). A reel stores each
+ * tick's movement through `lockstepInputFromIntents`, which rounds both axes to 1e-3, and a replay can only move by what
+ * the reel stores. A live solo run used to move by the raw axes instead: a keyboard diagonal is 0.7071067811865476, a
+ * phone joystick anything at all, so every run that walked other than straight drifted from its own reel (0.001 m after
+ * a 7 m diagonal, measured on a River pan) and its reel's probes, inside the event-log hash, could never be reproduced.
+ * The live run now moves by exactly the rounded axes it records, as multiplayer's lockstep input and the playbook
+ * recorder already did; every other intent passes through untouched.
+ */
+function recordedIntents(intents: Intents): Intents {
+  const { mx, my } = lockstepInputFromIntents(intents);
+  return { ...intents, move: new THREE.Vector2(mx, my) };
 }
 
 function shouldPostCountyStanding(): boolean {

@@ -1,0 +1,57 @@
+`npx playwright test e2e/e7-playbook-surface.spec.ts --grep '"'the tape drawer arms' --project=desktop-chrome --project=mobile-chrome --workers=1"'` independently reproduced **both reds**, **exit 1** ([control log](pre-task-source-control.log)). No existing assertions were changed.
+
+All browser commands used the config-owned dev server at `http://127.0.0.1:5188`, one worker. The task'"'s unchanged-green adjacency requirement is therefore **not met**; the pre-task-source control attributes the reds without hiding them or making an out-of-scope fix.
+
+## Instrument adaptations and scope
+
+The first draft stopped at town naming because the fixture omitted a town name; the fixture now seeds it. A later map launch was cancelled by Playwright's default dismissal of the normal suspended-run abandonment confirmation. The audit now accepts only that expected confirmation and provides the Echo unlock prerequisite for Dead Band. No synthetic DOM clicks, forced hits, or production changes were used to obtain passing hit tests.
+
+Run-16 findings were read in sibling "'`worktrees/lane-c/artifacts/sol/play-proofs/run-16/` because they are absent from lane-a and the root checkout. The newer `clickTape` driver was likewise inspected read-only in lane-c. Nothing in lane-c was modified.
+
+Regenerated adjacent evidence restored after checks: `artifacts/056/desktop-build-menu-icons-blurb.png`, `artifacts/056/desktop-build-menu-palisade.png`, `artifacts/056/mobile-390-build-menu-icons-blurb.png`. No other agent edits were discarded. The task'"'s TOUCH-ONLY firewall takes precedence over the general Obsidian-write convention; this report is the durable handoff, with no out-of-scope vault write.
+
+## Commits
+
+Audit/spec/evidence: "'`'"'''+commit+'''"'` (`fix: audit E7 phone Tape Reel hit targets through plain board launches`). This report is committed separately with the `fix:` prefix; its exact commit is available via `git log -1 -- artifacts/e7-tape-toggle-phone-hit-target-1/report.md` and in the final handoff.
+
+## REMAINING LIST IN ORDER
+
+1. Orchestrator/HUD owner: separately scope the existing epoch-inheritance failure at `e2e/e7-playbook-surface.spec.ts:49`, then restore the all-green adjacent gate. The firewall prohibits fixing that assertion or its unrelated launch/progression path here.
+2. Native-proof owner: original run-16 Echo/Relay phone objectives remain unproved. Any further full ride requires its own task; the present result proves toggle reachability only.
+
+Assigned hit-target audit and report are complete. Conditional production fix was correctly skipped because the mobile hit tests passed.
+
+Evidence directory total, including this report: **TOTAL_BYTES bytes**.
+'"'''
+size=0
+for _ in range(5):
+ text=body.replace('TOTAL_BYTES',str(size)); (root/'report.md').write_text(text)
+ new=sum(p.stat().st_size for p in root.rglob('*') if p.is_file())
+ if new==size: break
+ size=new
+print('Evidence bytes:',size)
+PY
+git add -- artifacts/e7-tape-toggle-phone-hit-target-1/report.md && git commit -m 'fix: report E7 hit-target verdict and pre-existing inheritance gate failures'
+git status --short" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 171ms:
+[sol/open-findings-astra 97903ef7b] fix: report E7 hit-target verdict and pre-existing inheritance gate failures
+ 1 file changed, 70 insertions(+)
+ create mode 100644 artifacts/e7-tape-toggle-phone-hit-target-1/report.md
+
+codex
+READY-FOR-GATES — desktop and phone hit-target audits passed. **Instrument artefact, no production change**; `src/**` unchanged, no F-ID.
+
+Typecheck/build passed. Tests: **18 passed, 2 existing inheritance failures**, reproduced against unchanged pre-task source. Those failures remain for separately scoped work.
+
+[Report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/e7-tape-toggle-phone-hit-target-1/report.md>) — evidence: **646,406 bytes**.
+
+Commits: `6693dfa37`, `97903ef7b`. Working tree clean.
+tokens used
+131,622
+READY-FOR-GATES — desktop and phone hit-target audits passed. **Instrument artefact, no production change**; `src/**` unchanged, no F-ID.
+
+Typecheck/build passed. Tests: **18 passed, 2 existing inheritance failures**, reproduced against unchanged pre-task source. Those failures remain for separately scoped work.
+
+[Report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/e7-tape-toggle-phone-hit-target-1/report.md>) — evidence: **646,406 bytes**.
+
+Commits: `6693dfa37`, `97903ef7b`. Working tree clean.

@@ -1,0 +1,810 @@
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+(node:1418) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 26 tests using 1 worker
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+
+(node:1487) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/26] [desktop-chrome] › e2e/assay-replay-roundtrip.spec.ts:17:1 › fresh browser tapes reproduce with and without a death-screen restart
+[desktop-chrome] › e2e/assay-replay-roundtrip.spec.ts:17:1 › fresh browser tapes reproduce with and without a death-screen restart
+ASSAY_MATRIX {"noRestart":{"tape":{"version":2,"id":"c373f0f5-a9f1-4ce8-9aa7-9c9fc489da35","createdAt":1790454257667,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-live","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":0,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"c373f0f5-a9f1-4ce8-9aa7-9c9fc489da35","contractId":"the-claim","seed":"assay-roundtrip-live","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":209,"entries":[{"t":29,"mx":1,"my":0,"a":[]},{"t":89,"mx":0,"my":-1,"a":[]},{"t":149,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:1aa28ca5","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.966666666666652,"gold":0}},"replay":{"eventLogHash":"fnv1a32:1aa28ca5","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.966667},"securedSnapshot":null,"ticks":209,"wallMs":2065}},"afterRestart":{"tape":{"version":2,"id":"efec56ac-c16d-44cc-9514-fabf0b20a219","createdAt":1790454259401,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-live","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"efec56ac-c16d-44cc-9514-fabf0b20a219","contractId":"the-claim","seed":"assay-roundtrip-live","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":181,"entries":[{"t":0,"mx":0,"my":0,"a":[{"type":"restart"}]},{"t":1,"mx":1,"my":0,"a":[]},{"t":61,"mx":0,"my":-1,"a":[]},{"t":121,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:a251ce02","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.033333333333322,"gold":0}},"replay":{"eventLogHash":"fnv1a32:a251ce02","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.033333},"securedSnapshot":null,"ticks":181,"wallMs":1993}},"curated":{"tape":{"version":2,"id":"e61f7e51-1bcd-4fee-9e53-2985c28b0f08","createdAt":1790454260440,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-curated","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"e61f7e51-1bcd-4fee-9e53-2985c28b0f08","contractId":"the-claim","seed":"assay-roundtrip-curated","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":208,"entries":[{"t":28,"mx":1,"my":0,"a":[]},{"t":88,"mx":0,"my":1,"a":[]},{"t":148,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:4a221a81","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.9333333333333185,"gold":0}},"replay":{"eventLogHash":"fnv1a32:4a221a81","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.933333},"securedSnapshot":null,"ticks":208,"wallMs":2041}},"profileState":{"tape":{"version":2,"id":"7d013b45-47db-44c1-b87e-d09ae745136a","createdAt":1790454262597,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-profile-state","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"7d013b45-47db-44c1-b87e-d09ae745136a","contractId":"the-claim","seed":"assay-roundtrip-profile-state","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":117,"entries":[{"t":27,"mx":0,"my":0,"a":[{"type":"place_build","id":"palisade","position":{"x":3,"z":12},"rotationSteps":0}]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":3.899999999999996,"gold":0}},"replay":{"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":3.9},"securedSnapshot":null,"ticks":117,"wallMs":1887}},"profileStateRepeat":{"tape":{"version":2,"id":"7d013b45-47db-44c1-b87e-d09ae745136a","createdAt":1790454262597,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-profile-state","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"7d013b45-47db-44c1-b87e-d09ae745136a","contractId":"the-claim","seed":"assay-roundtrip-profile-state","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":117,"entries":[{"t":27,"mx":0,"my":0,"a":[{"type":"place_build","id":"palisade","position":{"x":3,"z":12},"rotationSteps":0}]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":3.899999999999996,"gold":0}},"replay":{"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":3.9},"securedSnapshot":null,"ticks":117,"wallMs":1884}}}
+
+[2/26] [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites
+  1) [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:62:44
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[3/26] [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites
+  2) [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   0
+
+    Call Log:
+    - Timeout 60000ms exceeded while waiting on the predicate
+
+      65 |   await expect(canvas).toHaveAttribute('data-contract', tape.contract);
+      66 |   await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready', { timeout: 90_000 });
+    > 67 |   await expect.poll(async () => Number(await canvas.getAttribute('data-rendered-sprites')), { timeout: 60_000 }).toBeGreaterThan(1);
+         |                                                                                                                  ^
+      68 |   expect(requests.some((url) => /terrain[^/]*\.glb/.test(url))).toBe(true);
+      69 |   expect(requests.some((url) => /\/src\/game\/Game\.ts/.test(url))).toBe(false);
+      70 |   expect(await page.evaluate(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__))).toBe(false);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:67:114
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[4/26] [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu
+  3) [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[5/26] [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu
+  4) [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[6/26] [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu
+  5) [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[7/26] [desktop-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game
+  6) [desktop-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        122 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:142:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[8/26] [desktop-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash
+  7) [desktop-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('lantern-show')
+    Expected: visible
+    Timeout: 45000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 45000ms
+      - waiting for getByTestId('lantern-show')
+
+
+      165 |   if (await begin.isVisible()) await begin.click();
+      166 |   const show = page.getByTestId('lantern-show');
+    > 167 |   await expect(show).toBeVisible({ timeout: 45_000 });
+          |                      ^
+      168 |   await expect.poll(() => page.evaluate(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__))).toBe(true);
+      169 |   await page.getByTestId('lantern-speed-4').click();
+      170 |   await expect(show).toHaveAttribute('data-playback', 'complete', { timeout: 90_000 });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:167:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[9/26] [desktop-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation
+  8) [desktop-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        62 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+           - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:177:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[10/26] [desktop-chrome] › e2e/lantern-true-world.spec.ts:184:1 › stationary works keep family identity and Night Shift renders its dark phase
+[11/26] [desktop-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session
+  9) [desktop-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 15
+    Received: 0
+
+      117 |     // THE EVENT-PARITY PROOF — normalized semantic outcomes match exactly.
+      118 |     expect(outcomeP.probes).toEqual(outcomeR.probes);
+    > 119 |     expect(outcomeP.kills).toBe(outcomeR.kills);
+          |                            ^
+      120 |     expect(outcomeP.gold).toBe(outcomeR.gold);
+      121 |     expect(outcomeP.wave).toBe(outcomeR.wave);
+      122 |     expect(outcomeP.economy).toEqual(outcomeR.economy);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/pb02-replay-actor.spec.ts:119:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[12/26] [desktop-chrome] › e2e/pb02-replay-actor.spec.ts:136:3 › PB-02 replay actor › replay is debug-gated and validates its tape
+
+(node:15193) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[13/26] [desktop-chrome] › e2e/trail-guide-plain-boot.spec.ts:127:1 › plain fresh boot teaches the first claim once
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+
+(node:17229) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[14/26] [mobile-chrome] › e2e/assay-replay-roundtrip.spec.ts:17:1 › fresh browser tapes reproduce with and without a death-screen restart
+[mobile-chrome] › e2e/assay-replay-roundtrip.spec.ts:17:1 › fresh browser tapes reproduce with and without a death-screen restart
+ASSAY_MATRIX {"noRestart":{"tape":{"version":2,"id":"d0fb0c61-8648-4a74-9cca-a8fb95062ca5","createdAt":1790454789969,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-live","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":0,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"d0fb0c61-8648-4a74-9cca-a8fb95062ca5","contractId":"the-claim","seed":"assay-roundtrip-live","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":209,"entries":[{"t":29,"mx":1,"my":0,"a":[]},{"t":89,"mx":0,"my":-1,"a":[]},{"t":149,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:1aa28ca5","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.966666666666652,"gold":0}},"replay":{"eventLogHash":"fnv1a32:1aa28ca5","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.966667},"securedSnapshot":null,"ticks":209,"wallMs":2284}},"afterRestart":{"tape":{"version":2,"id":"f2433639-8ff3-4c87-8a46-4885d2282dd8","createdAt":1790454791806,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-live","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"f2433639-8ff3-4c87-8a46-4885d2282dd8","contractId":"the-claim","seed":"assay-roundtrip-live","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":181,"entries":[{"t":0,"mx":0,"my":0,"a":[{"type":"restart"}]},{"t":1,"mx":1,"my":0,"a":[]},{"t":61,"mx":0,"my":-1,"a":[]},{"t":121,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:a251ce02","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":6.033333333333322,"gold":0}},"replay":{"eventLogHash":"fnv1a32:a251ce02","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":6.033333},"securedSnapshot":null,"ticks":181,"wallMs":2274}},"curated":{"tape":{"version":2,"id":"4e511b4b-12ff-4c39-ba7a-31071eeec88b","createdAt":1790454792827,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-curated","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"4e511b4b-12ff-4c39-ba7a-31071eeec88b","contractId":"the-claim","seed":"assay-roundtrip-curated","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":212,"entries":[{"t":32,"mx":1,"my":0,"a":[]},{"t":92,"mx":0,"my":1,"a":[]},{"t":152,"mx":0,"my":0,"a":[]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:aa72b74d","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":7.066666666666651,"gold":0}},"replay":{"eventLogHash":"fnv1a32:aa72b74d","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":7.066667},"securedSnapshot":null,"ticks":212,"wallMs":2201}},"profileState":{"tape":{"version":2,"id":"187ae2e5-d77c-42b6-8f5a-e45341c6a931","createdAt":1790454795357,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-profile-state","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"187ae2e5-d77c-42b6-8f5a-e45341c6a931","contractId":"the-claim","seed":"assay-roundtrip-profile-state","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":117,"entries":[{"t":27,"mx":0,"my":0,"a":[{"type":"place_build","id":"palisade","position":{"x":3,"z":12},"rotationSteps":0}]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":3.899999999999996,"gold":0}},"replay":{"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":3.9},"securedSnapshot":null,"ticks":117,"wallMs":2088}},"profileStateRepeat":{"tape":{"version":2,"id":"187ae2e5-d77c-42b6-8f5a-e45341c6a931","createdAt":1790454795357,"kept":false,"contract":"the-claim","seed":"assay-roundtrip-profile-state","difficulty":"trail","simVersion":1,"meta":{"buildId":"dev","viewVersion":4,"engineHash":"7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551","era":6},"runStart":{"meta":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"research":{"version":1,"epochId":"epoch-1-frontier","metaScienceCursor":0,"progress":{"version":1,"tracks":{"territory":1,"science":0,"hero":0,"agent":0}},"taken":[],"proposalSalt":1,"pinnedTarget":null,"unlocks":{}}},"inputLog":{"version":1,"name":"187ae2e5-d77c-42b6-8f5a-e45341c6a931","contractId":"the-claim","seed":"assay-roundtrip-profile-state","difficultyPreset":"trail","stepSeconds":0.03333333333333333,"start":{"x":0,"z":12},"durationTicks":117,"entries":[{"t":27,"mx":0,"my":0,"a":[{"type":"place_build","id":"palisade","position":{"x":3,"z":12},"rotationSteps":0}]}],"truncated":null,"primarySlot":0,"streams":[],"playbookUses":[]},"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"reason":"death","secured":false,"waves":0,"timeAlive":3.899999999999996,"gold":0}},"replay":{"eventLogHash":"fnv1a32:d6ceecd8","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":3.9},"securedSnapshot":null,"ticks":117,"wallMs":2052}}}
+
+[15/26] [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites
+  10) [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:62:44
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-claim-p-90a57-world-with-snapshot-sprites-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[16/26] [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites
+  11) [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   0
+
+    Call Log:
+    - Timeout 60000ms exceeded while waiting on the predicate
+
+      65 |   await expect(canvas).toHaveAttribute('data-contract', tape.contract);
+      66 |   await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready', { timeout: 90_000 });
+    > 67 |   await expect.poll(async () => Number(await canvas.getAttribute('data-rendered-sprites')), { timeout: 60_000 }).toBeGreaterThan(1);
+         |                                                                                                                  ^
+      68 |   expect(requests.some((url) => /terrain[^/]*\.glb/.test(url))).toBe(true);
+      69 |   expect(requests.some((url) => /\/src\/game\/Game\.ts/.test(url))).toBe(false);
+      70 |   expect(await page.evaluate(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__))).toBe(false);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:67:114
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-signal--23e7f-world-with-snapshot-sprites-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[17/26] [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu
+  12) [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-tactica-1950f-thout-returning-to-the-menu-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[18/26] [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu
+  13) [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-lite-op-0fbd4-thout-returning-to-the-menu-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[19/26] [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu
+  14) [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        123 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:109:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-no-webg-66030-thout-returning-to-the-menu-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[20/26] [mobile-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game
+  15) [mobile-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+    Timeout:  60000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        122 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+            - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:142:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-reel-fr-e0493-percent-of-the-mounted-game-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[21/26] [mobile-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash
+  16) [mobile-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('lantern-show')
+    Expected: visible
+    Timeout: 45000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 45000ms
+      - waiting for getByTestId('lantern-show')
+
+
+      165 |   if (await begin.isVisible()) await begin.click();
+      166 |   const show = page.getByTestId('lantern-show');
+    > 167 |   await expect(show).toBeVisible({ timeout: 45_000 });
+          |                      ^
+      168 |   await expect.poll(() => page.evaluate(() => Boolean(window.__THREE_GAME_DIAGNOSTICS__))).toBe(true);
+      169 |   await page.getByTestId('lantern-speed-4').click();
+      170 |   await expect(show).toHaveAttribute('data-playback', 'complete', { timeout: 90_000 });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:167:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-Game-us-56cc7-eproduces-the-recorded-hash-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[22/26] [mobile-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation
+  17) [mobile-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('lantern-show')
+    Expected: "independent"
+    Received: ""
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 60000ms
+      - waiting for getByTestId('lantern-show')
+        62 × locator resolved to <section role="dialog" aria-modal="true" class="lantern-show" data-playback="complete" data-era-refused="false" data-testid="lantern-show" aria-label="The Lantern Show replay">…</section>
+           - unexpected value "null"
+
+
+      20 |   await page.goto(`/?watch=${encodeURIComponent(tape.id)}&contract=${tape.contract}&epoch=epoch-1-frontier${extra}`);
+      21 |   const show = page.getByTestId('lantern-show');
+    > 22 |   await expect(show).toHaveAttribute('data-boot', 'independent', { timeout: 60_000 });
+         |                      ^
+      23 |   return { tape, errors, requests, show };
+      24 | }
+      25 |
+        at openReel (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:22:22)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/lantern-true-world.spec.ts:177:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/lantern-true-world-a-store-fe9d2-es-replay-storage-isolation-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[23/26] [mobile-chrome] › e2e/lantern-true-world.spec.ts:184:1 › stationary works keep family identity and Night Shift renders its dark phase
+[24/26] [mobile-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session
+  18) [mobile-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 15
+    Received: 0
+
+      117 |     // THE EVENT-PARITY PROOF — normalized semantic outcomes match exactly.
+      118 |     expect(outcomeP.probes).toEqual(outcomeR.probes);
+    > 119 |     expect(outcomeP.kills).toBe(outcomeR.kills);
+          |                            ^
+      120 |     expect(outcomeP.gold).toBe(outcomeR.gold);
+      121 |     expect(outcomeP.wave).toBe(outcomeR.wave);
+      122 |     expect(outcomeP.economy).toEqual(outcomeR.economy);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-rva1-control/e2e/pb02-replay-actor.spec.ts:119:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../control-out/results/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../control-out/results/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../control-out/results/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../control-out/results/pb02-replay-actor-PB-02-re-9d570-oduces-the-recorded-session-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+revision metadata could not be recorded: Error: spawnSync git ENOBUFS
+[25/26] [mobile-chrome] › e2e/pb02-replay-actor.spec.ts:136:3 › PB-02 replay actor › replay is debug-gated and validates its tape
+
+(node:33858) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[26/26] [mobile-chrome] › e2e/trail-guide-plain-boot.spec.ts:127:1 › plain fresh boot teaches the first claim once
+  18 failed
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash 
+    [desktop-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation 
+    [desktop-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › claim plain watch draws its contract world with snapshot sprites 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:60:50 › signal plain watch draws its contract world with snapshot sprites 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › tactical opens the labelled tactical reel without returning to the menu 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › lite opens the labelled tactical reel without returning to the menu 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:100:63 › no-webgl opens the labelled tactical reel without returning to the menu 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:134:1 › reel frame p95 stays within 115 percent of the mounted game 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:155:1 › Game uses the shared agent controller and reproduces the recorded hash 
+    [mobile-chrome] › e2e/lantern-true-world.spec.ts:175:1 › a stored lite preference survives replay storage isolation 
+    [mobile-chrome] › e2e/pb02-replay-actor.spec.ts:78:3 › PB-02 replay actor › event parity — a second actor reproduces the recorded session 
+  8 passed (17.7m)

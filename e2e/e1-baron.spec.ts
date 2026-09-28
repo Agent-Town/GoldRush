@@ -285,6 +285,30 @@ async function expectBaronArtLoaded(page: Page): Promise<void> {
     });
 }
 
+/**
+ * A PREFETCH, not an embodiment. RE-PINNED 2026-09-24 (F-SEF2-5, task e1-spec-truth-1): this helper
+ * used to assert `baronAnimationLoaded: true`, read from `spriteAnimations['char.baron']`, and that key
+ * is written ONLY by a live `SpriteAnimator`. `033f69c61` (2026-09-15, the per-body animator campaign,
+ * committed for retention and never gated) deleted the shared `baronSpriteAnimator` that used to exist
+ * without a body - see `reviews/sprite-animator-runtime-land.md` F-SAR-3 - so with no Baron on the map
+ * the key is ABSENT and the old `?? false` read it as false. Measured on both projects with the Baron
+ * contract booted (artifacts/e1-spec-truth-1/probe.json): `spriteAnimations` holds 7 keys, none of them
+ * `char.baron`; `assets['char.baron']` and `assets['prop.baron_banner']` are both `loaded`.
+ *
+ * So the absence is now asserted as the architecture's own statement, which is stronger than dropping
+ * the field: a prefetch warms sheets and grows no animator, and the sibling `expectBaronArtLoaded`
+ * (used once the Baron is on the map) still requires `baronAnimationLoaded: true`. The pair pins both
+ * halves of the seam.
+ *
+ * WHAT IS STILL NOT PROVABLE HERE, and what would prove it: `prefetchBaronPresentation`
+ * (src/entities/pools.ts) also calls `loadRuntimeSlot(assetSlots.charBaron)`, and NOTHING published
+ * says whether that atlas resolved. `assets[...]` is the sheet-texture status from
+ * `loadGeneratedTexture`; `spriteAnimations[...]` needs a live animator; `spriteStats` counts active
+ * animators; `canvas.dataset.spriteClipGroups` is global ("claim town"), not per slot. One field in
+ * `prefetchBaronPresentation` would close it - awaiting that promise and publishing the warmed slot id
+ * (say `runtimeSlotsWarm: ['char.baron']`) - but that is a `src/**` change and outside this task's
+ * firewall, so it is reported rather than taken.
+ */
 async function expectBaronPresentationPrefetched(page: Page): Promise<void> {
   await expect
     .poll(
@@ -292,7 +316,7 @@ async function expectBaronPresentationPrefetched(page: Page): Promise<void> {
         page.evaluate(() => ({
           baronAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['char.baron'],
           bannerAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['prop.baron_banner'],
-          baronAnimationLoaded: window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.baron']?.loaded ?? false,
+          baronAnimatorPresent: 'char.baron' in (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations ?? {}),
           baronSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.baron'] ?? 0,
           bannerSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['prop.baron_banner'] ?? 0,
           portraitSrc: document.querySelector<HTMLImageElement>('[data-hud-wave-portrait]')?.getAttribute('src') ?? null,
@@ -302,7 +326,7 @@ async function expectBaronPresentationPrefetched(page: Page): Promise<void> {
     .toEqual({
       baronAsset: 'loaded',
       bannerAsset: 'loaded',
-      baronAnimationLoaded: true,
+      baronAnimatorPresent: false,
       baronSprites: 0,
       bannerSprites: 0,
       portraitSrc: null,

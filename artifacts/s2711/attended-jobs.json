@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-27T14:34:18.215Z",
+  "jobs": [
+    {
+      "name": "run9",
+      "pid": 26814,
+      "file": "queue-pp9-after-pp8.sh",
+      "process": "PID  PPID TTY      STAT STARTED\n26814     1 ??       SN   Sun Sep 27 18:57:23 2026",
+      "waitsOnFireDirectory": true
+    },
+    {
+      "name": "run10",
+      "pid": 80971,
+      "file": "queue-pp10-after-pp9.sh",
+      "process": "PID  PPID TTY      STAT STARTED\n80971     1 ??       SN   Sun Sep 27 19:35:23 2026",
+      "waitsOnFireDirectory": true
+    },
+    {
+      "name": "holds1",
+      "pid": 48041,
+      "file": "queue-holds1-after-pp10.sh",
+      "process": "PID  PPID TTY      STAT STARTED\n48041     1 ??       SN   Sun Sep 27 19:44:12 2026",
+      "waitsOnFireDirectory": true
+    }
+  ],
+  "dispatchOwnership": "attended; no fire dispatch"
+}

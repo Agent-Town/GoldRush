@@ -1,0 +1,32 @@
+{
+  "results": [
+    {
+      "source": "before",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "--test-reporter=spec",
+        "--test-name-pattern=a killed campaign",
+        "scripts/gr-sim-campaign.test.mjs"
+      ],
+      "exit": 1,
+      "survivors": [
+        "gr-campaign-resume-fTIrUY"
+      ]
+    },
+    {
+      "source": "after",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "--test-reporter=spec",
+        "--test-name-pattern=a killed campaign",
+        "scripts/gr-sim-campaign.test.mjs"
+      ],
+      "exit": 1,
+      "survivors": []
+    }
+  ],
+  "originalSha256": "33c8b59430343a54e87cd7a06b012cf2591e4cf37004fc6006500aaa2ec30ce9",
+  "restoredSha256": "33c8b59430343a54e87cd7a06b012cf2591e4cf37004fc6006500aaa2ec30ce9"
+}

@@ -1,0 +1,54 @@
+
+===== slice and adjacent suites — rc=0 579.2s =====
+[63/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[64/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[65/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[66/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[67/72] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[68/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[69/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[70/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[71/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[72/72] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  72 passed (9.6m)
+(node:43910) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43973) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43973) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+(node:48854) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:48854) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+
+
+===== plain boot desktop and 390px — rc=0 12.4s =====
+
+Running 2 tests using 1 worker
+
+
+
+
+[1/2] [desktop-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors
+
+
+
+[2/2] [mobile-chrome] › e2e/f-astra-6-plain-boot.spec.ts:6:3 › F-ASTRA-6 plain the-claim boot has no console or page errors
+  2 passed (11.8s)
+(node:53369) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53430) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53430) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:53525) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:53525) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"slice and adjacent suites":0,"plain boot desktop and 390px":0}
+OVERALL rc=0
+transcript -> artifacts/s2695/browser.txt

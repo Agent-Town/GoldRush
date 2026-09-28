@@ -1,0 +1,11 @@
+# F-PP3-3 — Boneyard approaches fail before a verified hitch
+
+2026-09-25. FAIL desktop/phone after two honest attempts, both commands exit 1. Both boots/clean PASS, zero console/page errors. Full tow, wave-12 secure, banking, Book return and reload remain unproved. This is a route/strategy limitation, not proof that the map or tow is impossible.
+
+Desktop, tow first: all three tar nodes harvested. Graded west gate road and delivered the Hauler to its head at (-34.078,-4.083), 44.3 s, 50.677 distance, 4.719 fuel spent. The direct approach to the boiler's southern hitch point (-18,-10) stalled against its west edge at (-20.481,-7.499). No hitch dispatch followed. The run died wave 4 / 124.4 s, 55 kills, 25 gold. The boiler's collision rectangle is 3.895 by 2.621 at scale 0.9 (`assets/pilots/map-rebuild-spike/landmarks/boneyard/boneyard-landmark-pack-contract.json`); its centre is solid, but the 2.5-unit hitch radius in `MotorContract.ts` extends beyond the short sides. This evidence does NOT support the claim that every approach is blocked.
+
+Phone, gate turret first and planned south-side approach: turret placed at (0,-47) at 55.33 s. Fuel harvested, Hauler reached (-7.917,-37.300), 83.1 s, 8.365 distance, 2.462 fuel spent. The Prospector then stopped at (-33.742,-5.082), 1.112 units from the requested road-head point (-34,-4), outside the helper's 0.8-unit walking tolerance. The helper refused dispatch; the revised south-side boiler approach was never reached. This is an explicit driver limit, not a proven road or hitch defect. The continuing economy built four defenses total, but the Prospector died wave 10 / 324.0 s at (-7.742,28.384), 312 kills, 45 gold. Hauler stayed at the gate stake with abundant fuel.
+
+A planned later attempt should accept a safe reachable road-head approach within the objective's 2.5-unit radius, or guide around the obstacle; then walk (-24,-14) to (-18,-14) before the south hitch point. That approach remains UNVERIFIED. Do not credit a successful tow from the existence of driver code. No source, contract, balance or art change. No timing rerun: both runs booted and died in play.
+
+[Desktop row](row-desktop-chrome.json) · [phone row](row-mobile-chrome.json) · [desktop terminal](terminal-desktop-chrome.png) · [phone terminal](terminal-mobile-chrome.png). Two attempts exhausted. Next untouched map: Far Side.

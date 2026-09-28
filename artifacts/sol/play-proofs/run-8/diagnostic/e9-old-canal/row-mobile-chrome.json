@@ -1,0 +1,1940 @@
+{
+  "project": "mobile-chrome",
+  "contract": "e9-old-canal",
+  "name": "The Old Canal",
+  "secureWave": 20,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e9-old-canal secureWave=20"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "runState=dead at wave 18 / 540.7s sim, 778 kills, 4 gold"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "skipped: never secured"
+  },
+  "board": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 18,
+  "simAtEnd": 540.6666666666463,
+  "runStateAtEnd": "dead",
+  "hpAtEnd": 0,
+  "goldAtEnd": 4,
+  "killsAtEnd": 778,
+  "peakHotBoilers": 0,
+  "powerBanksPeak": {},
+  "builds": [
+    {
+      "id": "turret",
+      "at": 37.06666666666658,
+      "wave": 1,
+      "x": 2,
+      "z": -2
+    },
+    {
+      "id": "turret",
+      "at": 102.80000000000175,
+      "wave": 3,
+      "x": 7,
+      "z": -2
+    },
+    {
+      "id": "sentry_beacon",
+      "at": 118.80000000000254,
+      "wave": 3,
+      "x": -2,
+      "z": 1
+    },
+    {
+      "id": "turret",
+      "at": 181.99999999999991,
+      "wave": 6,
+      "x": 12,
+      "z": -2
+    },
+    {
+      "id": "turret",
+      "at": 258.9333333333289,
+      "wave": 8,
+      "x": 2,
+      "z": 5
+    },
+    {
+      "id": "sentry_beacon",
+      "at": 281.46666666666096,
+      "wave": 9,
+      "x": 8,
+      "z": -5
+    },
+    {
+      "id": "sentry_beacon",
+      "at": 311.1999999999926,
+      "wave": 10,
+      "x": 1,
+      "z": 5
+    },
+    {
+      "id": "sentry_beacon",
+      "at": 351.7333333333236,
+      "wave": 11,
+      "x": -1,
+      "z": -6
+    }
+  ],
+  "upgrades": [
+    "double_tap_coil",
+    "spring_heels",
+    "double_tap_coil",
+    "split_spark",
+    "split_spark",
+    "heavy_spark",
+    "tinkers_plating",
+    "tinkers_plating",
+    "tinkers_plating",
+    "heavy_spark",
+    "heavy_spark",
+    "spring_heels",
+    "spring_heels",
+    "double_tap_coil",
+    "long_resonator",
+    "beacon_dynamo",
+    "long_resonator",
+    "wide_ring",
+    "wide_ring",
+    "quick_fuse",
+    "prospectors_luck",
+    "pan_legend",
+    "beacon_dynamo",
+    "quick_fuse",
+    "powder_charge",
+    "powder_charge"
+  ],
+  "samples": [
+    {
+      "t": 10.1,
+      "wave": 0,
+      "hp": 100,
+      "gold": 0,
+      "kills": 0,
+      "x": 7.3,
+      "z": 7.2,
+      "alive": 2,
+      "seams": 2
+    },
+    {
+      "t": 20.5,
+      "wave": 0,
+      "hp": 100,
+      "gold": 25,
+      "kills": 1,
+      "x": 5.7,
+      "z": 15,
+      "alive": 5,
+      "seams": 2
+    },
+    {
+      "t": 31.1,
+      "wave": 1,
+      "hp": 100,
+      "gold": 50,
+      "kills": 6,
+      "x": 7.9,
+      "z": 17.2,
+      "alive": 8,
+      "seams": 1
+    },
+    {
+      "t": 41.3,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 11,
+      "x": -14.7,
+      "z": -17.3,
+      "alive": 6,
+      "seams": 1
+    },
+    {
+      "t": 51.9,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 19,
+      "x": 0.9,
+      "z": 5.6,
+      "alive": 3,
+      "seams": 2
+    },
+    {
+      "t": 62.1,
+      "wave": 2,
+      "hp": 100,
+      "gold": 0,
+      "kills": 23,
+      "x": 15.8,
+      "z": 19.9,
+      "alive": 8,
+      "seams": 2
+    },
+    {
+      "t": 72.1,
+      "wave": 2,
+      "hp": 100,
+      "gold": 15,
+      "kills": 27,
+      "x": -5.4,
+      "z": 16,
+      "alive": 10,
+      "seams": 1
+    },
+    {
+      "t": 82.4,
+      "wave": 2,
+      "hp": 100,
+      "gold": 40,
+      "kills": 35,
+      "x": -5.4,
+      "z": 16,
+      "alive": 7,
+      "seams": 0
+    },
+    {
+      "t": 92.7,
+      "wave": 3,
+      "hp": 100,
+      "gold": 60,
+      "kills": 44,
+      "x": -5.4,
+      "z": 16,
+      "alive": 8,
+      "seams": 1
+    },
+    {
+      "t": 102.8,
+      "wave": 3,
+      "hp": 100,
+      "gold": 0,
+      "kills": 52,
+      "x": 6.6,
+      "z": 0,
+      "alive": 8,
+      "seams": 1
+    },
+    {
+      "t": 113.2,
+      "wave": 3,
+      "hp": 100,
+      "gold": 20,
+      "kills": 62,
+      "x": 0.2,
+      "z": -10.1,
+      "alive": 4,
+      "seams": 1
+    },
+    {
+      "t": 123.2,
+      "wave": 4,
+      "hp": 100,
+      "gold": 0,
+      "kills": 67,
+      "x": 0.2,
+      "z": -10.7,
+      "alive": 11,
+      "seams": 2
+    },
+    {
+      "t": 133.6,
+      "wave": 4,
+      "hp": 92,
+      "gold": 15,
+      "kills": 84,
+      "x": -11.7,
+      "z": 19.4,
+      "alive": 4,
+      "seams": 1
+    },
+    {
+      "t": 145.2,
+      "wave": 4,
+      "hp": 92,
+      "gold": 40,
+      "kills": 91,
+      "x": -11.7,
+      "z": 19.4,
+      "alive": 4,
+      "seams": 1
+    },
+    {
+      "t": 155.6,
+      "wave": 5,
+      "hp": 92,
+      "gold": 65,
+      "kills": 101,
+      "x": -11.7,
+      "z": 19.4,
+      "alive": 7,
+      "seams": 0
+    },
+    {
+      "t": 166.1,
+      "wave": 5,
+      "hp": 92,
+      "gold": 65,
+      "kills": 110,
+      "x": 0.9,
+      "z": -5.8,
+      "alive": 11,
+      "seams": 1
+    },
+    {
+      "t": 176.1,
+      "wave": 5,
+      "hp": 117,
+      "gold": 90,
+      "kills": 119,
+      "x": 0.3,
+      "z": -10.8,
+      "alive": 9,
+      "seams": 2
+    },
+    {
+      "t": 186.7,
+      "wave": 6,
+      "hp": 117,
+      "gold": 0,
+      "kills": 140,
+      "x": -5.6,
+      "z": 16,
+      "alive": 1,
+      "seams": 1
+    },
+    {
+      "t": 198.1,
+      "wave": 6,
+      "hp": 142,
+      "gold": 30,
+      "kills": 151,
+      "x": -5.6,
+      "z": 16,
+      "alive": 7,
+      "seams": 1
+    },
+    {
+      "t": 208.5,
+      "wave": 6,
+      "hp": 142,
+      "gold": 50,
+      "kills": 158,
+      "x": 10.9,
+      "z": 19.9,
+      "alive": 8,
+      "seams": 1
+    },
+    {
+      "t": 218.5,
+      "wave": 7,
+      "hp": 167,
+      "gold": 60,
+      "kills": 173,
+      "x": -1.7,
+      "z": 7.3,
+      "alive": 18,
+      "seams": 1
+    },
+    {
+      "t": 228.7,
+      "wave": 7,
+      "hp": 167,
+      "gold": 80,
+      "kills": 188,
+      "x": 0.2,
+      "z": -9.9,
+      "alive": 11,
+      "seams": 1
+    },
+    {
+      "t": 239.2,
+      "wave": 7,
+      "hp": 167,
+      "gold": 95,
+      "kills": 200,
+      "x": -6.1,
+      "z": 15.1,
+      "alive": 8,
+      "seams": 1
+    },
+    {
+      "t": 251.6,
+      "wave": 8,
+      "hp": 167,
+      "gold": 120,
+      "kills": 225,
+      "x": -6.1,
+      "z": 15.1,
+      "alive": 13,
+      "seams": 0
+    },
+    {
+      "t": 262.1,
+      "wave": 8,
+      "hp": 167,
+      "gold": 0,
+      "kills": 242,
+      "x": -6.3,
+      "z": 15.3,
+      "alive": 5,
+      "seams": 1
+    },
+    {
+      "t": 272.1,
+      "wave": 9,
+      "hp": 167,
+      "gold": 25,
+      "kills": 253,
+      "x": 1.3,
+      "z": 0,
+      "alive": 17,
+      "seams": 1
+    },
+    {
+      "t": 282.4,
+      "wave": 9,
+      "hp": 167,
+      "gold": 0,
+      "kills": 273,
+      "x": 3.9,
+      "z": -7.3,
+      "alive": 15,
+      "seams": 1
+    },
+    {
+      "t": 292.9,
+      "wave": 9,
+      "hp": 167,
+      "gold": 20,
+      "kills": 292,
+      "x": 0.3,
+      "z": -10.3,
+      "alive": 6,
+      "seams": 1
+    },
+    {
+      "t": 302.9,
+      "wave": 10,
+      "hp": 167,
+      "gold": 35,
+      "kills": 299,
+      "x": 11.8,
+      "z": 19.6,
+      "alive": 23,
+      "seams": 1
+    },
+    {
+      "t": 313.3,
+      "wave": 10,
+      "hp": 167,
+      "gold": 0,
+      "kills": 325,
+      "x": 11.7,
+      "z": 18.1,
+      "alive": 18,
+      "seams": 2
+    },
+    {
+      "t": 324.1,
+      "wave": 10,
+      "hp": 167,
+      "gold": 20,
+      "kills": 354,
+      "x": -6.2,
+      "z": 16.1,
+      "alive": 1,
+      "seams": 1
+    },
+    {
+      "t": 335.7,
+      "wave": 11,
+      "hp": 167,
+      "gold": 35,
+      "kills": 369,
+      "x": -6.2,
+      "z": 16.1,
+      "alive": 10,
+      "seams": 1
+    },
+    {
+      "t": 345.9,
+      "wave": 11,
+      "hp": 167,
+      "gold": 45,
+      "kills": 385,
+      "x": -0.1,
+      "z": -10.7,
+      "alive": 19,
+      "seams": 1
+    },
+    {
+      "t": 356,
+      "wave": 11,
+      "hp": 167,
+      "gold": 0,
+      "kills": 401,
+      "x": 4.6,
+      "z": 4.8,
+      "alive": 15,
+      "seams": 2
+    },
+    {
+      "t": 366.8,
+      "wave": 12,
+      "hp": 167,
+      "gold": 0,
+      "kills": 428,
+      "x": 3,
+      "z": 5,
+      "alive": 11,
+      "seams": 2
+    },
+    {
+      "t": 377.6,
+      "wave": 12,
+      "hp": 167,
+      "gold": 0,
+      "kills": 459,
+      "x": -1.7,
+      "z": 0.4,
+      "alive": 9,
+      "seams": 2
+    },
+    {
+      "t": 387.9,
+      "wave": 12,
+      "hp": 167,
+      "gold": 10,
+      "kills": 471,
+      "x": 11.8,
+      "z": 11.4,
+      "alive": 10,
+      "seams": 1
+    },
+    {
+      "t": 398,
+      "wave": 13,
+      "hp": 167,
+      "gold": 1,
+      "kills": 490,
+      "x": 2.6,
+      "z": 6.6,
+      "alive": 12,
+      "seams": 1
+    },
+    {
+      "t": 408.3,
+      "wave": 13,
+      "hp": 167,
+      "gold": 1,
+      "kills": 515,
+      "x": -2,
+      "z": -1.1,
+      "alive": 17,
+      "seams": 2
+    },
+    {
+      "t": 418.8,
+      "wave": 13,
+      "hp": 167,
+      "gold": 1,
+      "kills": 537,
+      "x": -2,
+      "z": -1.2,
+      "alive": 8,
+      "seams": 2
+    },
+    {
+      "t": 429.3,
+      "wave": 14,
+      "hp": 167,
+      "gold": 1,
+      "kills": 561,
+      "x": 6.4,
+      "z": -0.9,
+      "alive": 24,
+      "seams": 2
+    },
+    {
+      "t": 439.5,
+      "wave": 14,
+      "hp": 167,
+      "gold": 11,
+      "kills": 588,
+      "x": 8.7,
+      "z": 15.3,
+      "alive": 10,
+      "seams": 2
+    },
+    {
+      "t": 450,
+      "wave": 14,
+      "hp": 167,
+      "gold": 1,
+      "kills": 603,
+      "x": 9.4,
+      "z": -4,
+      "alive": 8,
+      "seams": 2
+    },
+    {
+      "t": 460.7,
+      "wave": 15,
+      "hp": 167,
+      "gold": 6,
+      "kills": 629,
+      "x": 12.1,
+      "z": 19.6,
+      "alive": 22,
+      "seams": 2
+    },
+    {
+      "t": 471.2,
+      "wave": 15,
+      "hp": 167,
+      "gold": 2,
+      "kills": 654,
+      "x": 4.5,
+      "z": 6.1,
+      "alive": 10,
+      "seams": 2
+    },
+    {
+      "t": 481.5,
+      "wave": 16,
+      "hp": 167,
+      "gold": 2,
+      "kills": 665,
+      "x": 8.2,
+      "z": 8.4,
+      "alive": 29,
+      "seams": 2
+    },
+    {
+      "t": 492.3,
+      "wave": 16,
+      "hp": 167,
+      "gold": 12,
+      "kills": 687,
+      "x": -0.2,
+      "z": 8.3,
+      "alive": 30,
+      "seams": 1
+    },
+    {
+      "t": 502.8,
+      "wave": 16,
+      "hp": 167,
+      "gold": 4,
+      "kills": 711,
+      "x": 1.3,
+      "z": 5.7,
+      "alive": 19,
+      "seams": 2
+    },
+    {
+      "t": 513.5,
+      "wave": 17,
+      "hp": 167,
+      "gold": 4,
+      "kills": 728,
+      "x": 0.6,
+      "z": -3.2,
+      "alive": 31,
+      "seams": 2
+    },
+    {
+      "t": 523.6,
+      "wave": 17,
+      "hp": 135,
+      "gold": 4,
+      "kills": 749,
+      "x": 3.2,
+      "z": -3.8,
+      "alive": 34,
+      "seams": 2
+    },
+    {
+      "t": 534.1,
+      "wave": 17,
+      "hp": 51,
+      "gold": 4,
+      "kills": 765,
+      "x": 7.7,
+      "z": 0.8,
+      "alive": 32,
+      "seams": 2
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-9-redfields",
+    "strategy=gather-and-extend",
+    "engine secureWave=20 cadenceMult=1",
+    "home=2.0,0.0 circuit=[[-2,-4],[6,-4],[6,4],[-2,4]]",
+    "canal decide-segment-b: reached=true, choice=demolish, state={\"declared\":true,\"choices\":[{\"id\":\"decide-segment-a\",\"zoneId\":\"old-canal-segment-a\",\"choice\":\"undecided\"},{\"id\":\"decide-segment-b\",\"zoneId\":\"old-canal-segment-b\",\"choice\":\"demolish\"},{\"id\":\"decide-segment-c\",\"zoneId\":\"old-canal-segment-c\",\"choice\":\"undecided\"}],\"decided\":1,\"total\":3,\"allDecided\":false,\"flow\":[],\"openGround\":[\"decide-segment-b\"],\"decidedThisRun\":[\"decide-segment-b\"],\"decidedBefore\":[],\"refusals\":{\"outOfReach\":0,\"alreadyDecided\":0},\"segments\":[{\"id\":\"decide-segment-a\",\"zoneId\":\"old-canal-segment-a\",\"x\":-30,\"z\":-23,\"minX\":-42,\"maxX\":-18,\"minZ\":-32,\"maxZ\":-14},{\"id\":\"decide-segment-b\",\"zoneId\":\"old-canal-segment-b\",\"x\":2,\"z\":0,\"minX\":-10,\"maxX\":14,\"minZ\":-8,\"maxZ\":8},{\"id\":\"decide-segment-c\",\"zoneId\":\"old-canal-segment-c\",\"x\":32,\"z\":23,\"minX\":20,\"maxX\":44,\"minZ\":14,\"maxZ\":32}]}",
+    "canal decide-segment-a: reached=true, choice=redig, state={\"declared\":true,\"choices\":[{\"id\":\"decide-segment-a\",\"zoneId\":\"old-canal-segment-a\",\"choice\":\"undecided\"},{\"id\":\"decide-segment-b\",\"zoneId\":\"old-canal-segment-b\",\"choice\":\"demolish\"},{\"id\":\"decide-segment-c\",\"zoneId\":\"old-canal-segment-c\",\"choice\":\"undecided\"}],\"decided\":1,\"total\":3,\"allDecided\":false,\"flow\":[],\"openGround\":[\"decide-segment-b\"],\"decidedThisRun\":[\"decide-segment-b\"],\"decidedBefore\":[],\"refusals\":{\"outOfReach\":0,\"alreadyDecided\":0},\"segments\":[{\"id\":\"decide-segment-a\",\"zoneId\":\"old-canal-segment-a\",\"x\":-30,\"z\":-23,\"minX\":-42,\"maxX\":-18,\"minZ\":-32,\"maxZ\":-14},{\"id\":\"decide-segment-b\",\"zoneId\":\"old-canal-segment-b\",\"x\":2,\"z\":0,\"minX\":-10,\"maxX\":14,\"minZ\":-8,\"maxZ\":8},{\"id\":\"decide-segment-c\",\"zoneId\":\"old-canal-segment-c\",\"x\":32,\"z\":23,\"minX\":20,\"maxX\":44,\"minZ\":14,\"maxZ\":32}]}",
+    "canal decide-segment-c: reached=true, choice=redig, state={\"declared\":true,\"choices\":[{\"id\":\"decide-segment-a\",\"zoneId\":\"old-canal-segment-a\",\"choice\":\"redig\"},{\"id\":\"decide-segment-b\",\"zoneId\":\"old-canal-segment-b\",\"choice\":\"demolish\"},{\"id\":\"decide-segment-c\",\"zoneId\":\"old-canal-segment-c\",\"choice\":\"undecided\"}],\"decided\":2,\"total\":3,\"allDecided\":false,\"flow\":[\"decide-segment-a\"],\"openGround\":[\"decide-segment-b\"],\"decidedThisRun\":[\"decide-segment-b\",\"decide-segment-a\"],\"decidedBefore\":[],\"refusals\":{\"outOfReach\":0,\"alreadyDecided\":0},\"segments\":[{\"id\":\"decide-segment-a\",\"zoneId\":\"old-canal-segment-a\",\"x\":-30,\"z\":-23,\"minX\":-42,\"maxX\":-18,\"minZ\":-32,\"maxZ\":-14},{\"id\":\"decide-segment-b\",\"zoneId\":\"old-canal-segment-b\",\"x\":2,\"z\":0,\"minX\":-10,\"maxX\":14,\"minZ\":-8,\"maxZ\":8},{\"id\":\"decide-segment-c\",\"zoneId\":\"old-canal-segment-c\",\"x\":32,\"z\":23,\"minX\":20,\"maxX\":44,\"minZ\":14,\"maxZ\":32}]}",
+    "kit=turret+sentry_beacon+turret+turret",
+    "mended a turret at sim 396s (13/58 HP)",
+    "mended a sentry_beacon at sim 444s (25/70 HP)",
+    "mended a turret at sim 468s (24/58 HP)",
+    "mended a sentry_beacon at sim 495s (25/70 HP)"
+  ],
+  "at": "2026-09-26T17:10:06.566Z",
+  "objective": {
+    "canalChoices": {
+      "declared": true,
+      "choices": [
+        {
+          "id": "decide-segment-a",
+          "zoneId": "old-canal-segment-a",
+          "choice": "redig"
+        },
+        {
+          "id": "decide-segment-b",
+          "zoneId": "old-canal-segment-b",
+          "choice": "demolish"
+        },
+        {
+          "id": "decide-segment-c",
+          "zoneId": "old-canal-segment-c",
+          "choice": "redig"
+        }
+      ],
+      "decided": 3,
+      "total": 3,
+      "allDecided": true,
+      "flow": [
+        "decide-segment-a",
+        "decide-segment-c"
+      ],
+      "openGround": [
+        "decide-segment-b"
+      ],
+      "decidedThisRun": [
+        "decide-segment-b",
+        "decide-segment-a",
+        "decide-segment-c"
+      ],
+      "decidedBefore": [],
+      "refusals": {
+        "outOfReach": 0,
+        "alreadyDecided": 0
+      },
+      "segments": [
+        {
+          "id": "decide-segment-a",
+          "zoneId": "old-canal-segment-a",
+          "x": -30,
+          "z": -23,
+          "minX": -42,
+          "maxX": -18,
+          "minZ": -32,
+          "maxZ": -14
+        },
+        {
+          "id": "decide-segment-b",
+          "zoneId": "old-canal-segment-b",
+          "x": 2,
+          "z": 0,
+          "minX": -10,
+          "maxX": 14,
+          "minZ": -8,
+          "maxZ": 8
+        },
+        {
+          "id": "decide-segment-c",
+          "zoneId": "old-canal-segment-c",
+          "x": 32,
+          "z": 23,
+          "minX": 20,
+          "maxX": 44,
+          "minZ": 14,
+          "maxZ": 32
+        }
+      ]
+    },
+    "preserve": null,
+    "devils": null,
+    "caravan": null,
+    "canal": {
+      "active": false,
+      "stage": 0,
+      "activeGateId": null,
+      "stageProgress": 0,
+      "contested": false,
+      "stagePayoutGold": 0,
+      "gates": [
+        {
+          "id": "canal-stage-c1",
+          "x": -28,
+          "z": 34,
+          "complete": false,
+          "active": false
+        },
+        {
+          "id": "canal-stage-c2",
+          "x": -12,
+          "z": 10,
+          "complete": false,
+          "active": false
+        },
+        {
+          "id": "canal-stage-c3",
+          "x": 4,
+          "z": -24,
+          "complete": false,
+          "active": false
+        }
+      ],
+      "quarry": {
+        "bandId": "ice-quarry-scarp-north-h4",
+        "channelNodeId": null,
+        "progress": 0,
+        "harvested": 0,
+        "total": 4,
+        "payoutGold": 0,
+        "nodes": [
+          {
+            "id": "ice-pack-1",
+            "x": -49.5,
+            "z": 47,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-2",
+            "x": -40.5,
+            "z": 49,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-3",
+            "x": -31.5,
+            "z": 47,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-4",
+            "x": -22.5,
+            "z": 49,
+            "harvested": false
+          }
+        ]
+      },
+      "canal": {
+        "wet": false,
+        "renderOnly": true,
+        "visualY": true,
+        "segments": 5
+      },
+      "dustDevil": {
+        "mode": "wander-lane",
+        "targeting": "none",
+        "phase": "clear",
+        "warning": false,
+        "laneId": "dust-devil-wander",
+        "laneProgress": 0,
+        "position": null,
+        "shoves": 0,
+        "pushedDistance": 0
+      }
+    },
+    "air": null,
+    "probe": {
+      "declared": false,
+      "trigger": null,
+      "zones": [],
+      "recovered": false,
+      "recoveredZoneId": null,
+      "playedFragment": null,
+      "playbackCount": 0,
+      "refusals": {
+        "outOfReach": 0,
+        "alreadyRecovered": 0
+      }
+    },
+    "fuel": null,
+    "vehicle": null,
+    "landYacht": null,
+    "fairground": null,
+    "crowdFlocks": null,
+    "canyonWorks": null,
+    "baron": {
+      "cartVisible": false,
+      "carried": false,
+      "distanceFromBaron": 0,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 0,
+      "volleys": 0,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "",
+      "lastTarget": {
+        "x": 0,
+        "z": 0
+      },
+      "target": {
+        "x": 0,
+        "z": 0
+      },
+      "props": {
+        "state": "off",
+        "source": "placeholder",
+        "launcher": false,
+        "rocket": false,
+        "powderKeg": false,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": null
+    },
+    "boss": {
+      "visible": false,
+      "ratio": 0,
+      "renderedRatio": 1,
+      "litSegments": 7,
+      "segments": 0,
+      "groupId": null,
+      "aliveComponents": 0,
+      "destroyedComponents": 0,
+      "components": []
+    },
+    "medals": {
+      "version": 1,
+      "baronBeaten": false,
+      "rocketCartCaptured": false
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.849737823009491,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.23999999463558197,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.6990388631820679,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "escort": {
+      "enabled": false
+    },
+    "power": {
+      "active": false,
+      "id": "",
+      "tick": 0,
+      "topologyRevision": 0,
+      "allocationRevision": 0,
+      "totalSupplyWatts": 0,
+      "totalDemandWatts": 0,
+      "nodes": [],
+      "wires": [],
+      "components": [],
+      "signature": "",
+      "budgetMs": 0.5,
+      "lastSolveMs": 0,
+      "maxSolveMs": 0,
+      "lastStepMs": 0,
+      "maxStepMs": 0,
+      "overBudget": false,
+      "overBudgetCount": 0,
+      "solveCount": 0,
+      "nodeCount": 0,
+      "wireCount": 0,
+      "intactWireCount": 0,
+      "cutWireCount": 0,
+      "events": [],
+      "render": {
+        "active": false,
+        "renderLayer": 0,
+        "renderSlot": "gameplay",
+        "topologyRevision": -1,
+        "allocationRevision": -1,
+        "rebuildCount": 0,
+        "spans": 0,
+        "poweredSpans": 0,
+        "darkSpans": 0,
+        "intactSpans": 0,
+        "cutSpans": 0,
+        "segments": 0,
+        "poweredSegments": 0,
+        "darkSegments": 0,
+        "drawCalls": 0,
+        "asset": "procedural-catenary"
+      }
+    }
+  },
+  "finalSnapshot": {
+    "canalChoices": {
+      "declared": true,
+      "choices": [
+        {
+          "id": "decide-segment-a",
+          "zoneId": "old-canal-segment-a",
+          "choice": "redig"
+        },
+        {
+          "id": "decide-segment-b",
+          "zoneId": "old-canal-segment-b",
+          "choice": "demolish"
+        },
+        {
+          "id": "decide-segment-c",
+          "zoneId": "old-canal-segment-c",
+          "choice": "redig"
+        }
+      ],
+      "decided": 3,
+      "total": 3,
+      "allDecided": true,
+      "flow": [
+        "decide-segment-a",
+        "decide-segment-c"
+      ],
+      "openGround": [
+        "decide-segment-b"
+      ],
+      "decidedThisRun": [
+        "decide-segment-b",
+        "decide-segment-a",
+        "decide-segment-c"
+      ],
+      "decidedBefore": [],
+      "refusals": {
+        "outOfReach": 0,
+        "alreadyDecided": 0
+      },
+      "segments": [
+        {
+          "id": "decide-segment-a",
+          "zoneId": "old-canal-segment-a",
+          "x": -30,
+          "z": -23,
+          "minX": -42,
+          "maxX": -18,
+          "minZ": -32,
+          "maxZ": -14
+        },
+        {
+          "id": "decide-segment-b",
+          "zoneId": "old-canal-segment-b",
+          "x": 2,
+          "z": 0,
+          "minX": -10,
+          "maxX": 14,
+          "minZ": -8,
+          "maxZ": 8
+        },
+        {
+          "id": "decide-segment-c",
+          "zoneId": "old-canal-segment-c",
+          "x": 32,
+          "z": 23,
+          "minX": 20,
+          "maxX": 44,
+          "minZ": 14,
+          "maxZ": 32
+        }
+      ]
+    },
+    "preserve": null,
+    "devils": null,
+    "caravan": null,
+    "canal": {
+      "active": false,
+      "stage": 0,
+      "activeGateId": null,
+      "stageProgress": 0,
+      "contested": false,
+      "stagePayoutGold": 0,
+      "gates": [
+        {
+          "id": "canal-stage-c1",
+          "x": -28,
+          "z": 34,
+          "complete": false,
+          "active": false
+        },
+        {
+          "id": "canal-stage-c2",
+          "x": -12,
+          "z": 10,
+          "complete": false,
+          "active": false
+        },
+        {
+          "id": "canal-stage-c3",
+          "x": 4,
+          "z": -24,
+          "complete": false,
+          "active": false
+        }
+      ],
+      "quarry": {
+        "bandId": "ice-quarry-scarp-north-h4",
+        "channelNodeId": null,
+        "progress": 0,
+        "harvested": 0,
+        "total": 4,
+        "payoutGold": 0,
+        "nodes": [
+          {
+            "id": "ice-pack-1",
+            "x": -49.5,
+            "z": 47,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-2",
+            "x": -40.5,
+            "z": 49,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-3",
+            "x": -31.5,
+            "z": 47,
+            "harvested": false
+          },
+          {
+            "id": "ice-pack-4",
+            "x": -22.5,
+            "z": 49,
+            "harvested": false
+          }
+        ]
+      },
+      "canal": {
+        "wet": false,
+        "renderOnly": true,
+        "visualY": true,
+        "segments": 5
+      },
+      "dustDevil": {
+        "mode": "wander-lane",
+        "targeting": "none",
+        "phase": "clear",
+        "warning": false,
+        "laneId": "dust-devil-wander",
+        "laneProgress": 0,
+        "position": null,
+        "shoves": 0,
+        "pushedDistance": 0
+      }
+    },
+    "physics": {
+      "active": false,
+      "contractId": "e9-old-canal",
+      "source": "default",
+      "movement": "normal",
+      "feelG": 1,
+      "lobArcDistanceMultiplier": 1,
+      "lobAirTimeMultiplier": 1,
+      "knockbackScale": 1,
+      "orbitalReturn": false,
+      "vacuum": false,
+      "fixedTimestepOnly": true,
+      "filteredMovement": {
+        "x": 0,
+        "y": 0
+      },
+      "adaptedLobs": [
+        {
+          "resumeKey": "orbital:kineticLobber",
+          "range": 15,
+          "airTime": 1.68
+        }
+      ]
+    },
+    "air": null,
+    "probe": {
+      "declared": false,
+      "trigger": null,
+      "zones": [],
+      "recovered": false,
+      "recoveredZoneId": null,
+      "playedFragment": null,
+      "playbackCount": 0,
+      "refusals": {
+        "outOfReach": 0,
+        "alreadyRecovered": 0
+      }
+    },
+    "fuel": null,
+    "vehicle": null,
+    "escort": {
+      "enabled": false
+    },
+    "canyonWorks": null,
+    "fairground": null,
+    "crowdFlocks": null,
+    "power": {
+      "active": false,
+      "id": "",
+      "tick": 0,
+      "topologyRevision": 0,
+      "allocationRevision": 0,
+      "totalSupplyWatts": 0,
+      "totalDemandWatts": 0,
+      "nodes": [],
+      "wires": [],
+      "components": [],
+      "signature": "",
+      "budgetMs": 0.5,
+      "lastSolveMs": 0,
+      "maxSolveMs": 0,
+      "lastStepMs": 0,
+      "maxStepMs": 0,
+      "overBudget": false,
+      "overBudgetCount": 0,
+      "solveCount": 0,
+      "nodeCount": 0,
+      "wireCount": 0,
+      "intactWireCount": 0,
+      "cutWireCount": 0,
+      "events": [],
+      "render": {
+        "active": false,
+        "renderLayer": 0,
+        "renderSlot": "gameplay",
+        "topologyRevision": -1,
+        "allocationRevision": -1,
+        "rebuildCount": 0,
+        "spans": 0,
+        "poweredSpans": 0,
+        "darkSpans": 0,
+        "intactSpans": 0,
+        "cutSpans": 0,
+        "segments": 0,
+        "poweredSegments": 0,
+        "darkSegments": 0,
+        "drawCalls": 0,
+        "asset": "procedural-catenary"
+      }
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.849737823009491,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.23999999463558197,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.6990388631820679,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "objective": {
+      "canalChoices": {
+        "declared": true,
+        "choices": [
+          {
+            "id": "decide-segment-a",
+            "zoneId": "old-canal-segment-a",
+            "choice": "redig"
+          },
+          {
+            "id": "decide-segment-b",
+            "zoneId": "old-canal-segment-b",
+            "choice": "demolish"
+          },
+          {
+            "id": "decide-segment-c",
+            "zoneId": "old-canal-segment-c",
+            "choice": "redig"
+          }
+        ],
+        "decided": 3,
+        "total": 3,
+        "allDecided": true,
+        "flow": [
+          "decide-segment-a",
+          "decide-segment-c"
+        ],
+        "openGround": [
+          "decide-segment-b"
+        ],
+        "decidedThisRun": [
+          "decide-segment-b",
+          "decide-segment-a",
+          "decide-segment-c"
+        ],
+        "decidedBefore": [],
+        "refusals": {
+          "outOfReach": 0,
+          "alreadyDecided": 0
+        },
+        "segments": [
+          {
+            "id": "decide-segment-a",
+            "zoneId": "old-canal-segment-a",
+            "x": -30,
+            "z": -23,
+            "minX": -42,
+            "maxX": -18,
+            "minZ": -32,
+            "maxZ": -14
+          },
+          {
+            "id": "decide-segment-b",
+            "zoneId": "old-canal-segment-b",
+            "x": 2,
+            "z": 0,
+            "minX": -10,
+            "maxX": 14,
+            "minZ": -8,
+            "maxZ": 8
+          },
+          {
+            "id": "decide-segment-c",
+            "zoneId": "old-canal-segment-c",
+            "x": 32,
+            "z": 23,
+            "minX": 20,
+            "maxX": 44,
+            "minZ": 14,
+            "maxZ": 32
+          }
+        ]
+      },
+      "preserve": null,
+      "devils": null,
+      "caravan": null,
+      "canal": {
+        "active": false,
+        "stage": 0,
+        "activeGateId": null,
+        "stageProgress": 0,
+        "contested": false,
+        "stagePayoutGold": 0,
+        "gates": [
+          {
+            "id": "canal-stage-c1",
+            "x": -28,
+            "z": 34,
+            "complete": false,
+            "active": false
+          },
+          {
+            "id": "canal-stage-c2",
+            "x": -12,
+            "z": 10,
+            "complete": false,
+            "active": false
+          },
+          {
+            "id": "canal-stage-c3",
+            "x": 4,
+            "z": -24,
+            "complete": false,
+            "active": false
+          }
+        ],
+        "quarry": {
+          "bandId": "ice-quarry-scarp-north-h4",
+          "channelNodeId": null,
+          "progress": 0,
+          "harvested": 0,
+          "total": 4,
+          "payoutGold": 0,
+          "nodes": [
+            {
+              "id": "ice-pack-1",
+              "x": -49.5,
+              "z": 47,
+              "harvested": false
+            },
+            {
+              "id": "ice-pack-2",
+              "x": -40.5,
+              "z": 49,
+              "harvested": false
+            },
+            {
+              "id": "ice-pack-3",
+              "x": -31.5,
+              "z": 47,
+              "harvested": false
+            },
+            {
+              "id": "ice-pack-4",
+              "x": -22.5,
+              "z": 49,
+              "harvested": false
+            }
+          ]
+        },
+        "canal": {
+          "wet": false,
+          "renderOnly": true,
+          "visualY": true,
+          "segments": 5
+        },
+        "dustDevil": {
+          "mode": "wander-lane",
+          "targeting": "none",
+          "phase": "clear",
+          "warning": false,
+          "laneId": "dust-devil-wander",
+          "laneProgress": 0,
+          "position": null,
+          "shoves": 0,
+          "pushedDistance": 0
+        }
+      },
+      "air": null,
+      "probe": {
+        "declared": false,
+        "trigger": null,
+        "zones": [],
+        "recovered": false,
+        "recoveredZoneId": null,
+        "playedFragment": null,
+        "playbackCount": 0,
+        "refusals": {
+          "outOfReach": 0,
+          "alreadyRecovered": 0
+        }
+      },
+      "fuel": null,
+      "vehicle": null,
+      "landYacht": null,
+      "fairground": null,
+      "crowdFlocks": null,
+      "canyonWorks": null,
+      "baron": {
+        "cartVisible": false,
+        "carried": false,
+        "distanceFromBaron": 0,
+        "telegraphActive": false,
+        "telegraphElapsed": 0,
+        "nextVolleyIn": 0,
+        "volleys": 0,
+        "suppressed": false,
+        "targetKind": null,
+        "lastOwnerId": "",
+        "lastTarget": {
+          "x": 0,
+          "z": 0
+        },
+        "target": {
+          "x": 0,
+          "z": 0
+        },
+        "props": {
+          "state": "off",
+          "source": "placeholder",
+          "launcher": false,
+          "rocket": false,
+          "powderKeg": false,
+          "triangles": {
+            "launcher": 2020,
+            "rocket": 876,
+            "powder_keg": 704
+          }
+        },
+        "manifest": null
+      },
+      "boss": {
+        "visible": false,
+        "ratio": 0,
+        "renderedRatio": 1,
+        "litSegments": 7,
+        "segments": 0,
+        "groupId": null,
+        "aliveComponents": 0,
+        "destroyedComponents": 0,
+        "components": []
+      },
+      "medals": {
+        "version": 1,
+        "baronBeaten": false,
+        "rocketCartCaptured": false
+      },
+      "pressure": {
+        "enabled": false,
+        "multiplayerPosture": "single-player-gated",
+        "coal": 0,
+        "seams": [
+          {
+            "x": -12,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 0.849737823009491,
+            "spriteVisible": false
+          },
+          {
+            "x": -5,
+            "z": 43,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 0.23999999463558197,
+            "spriteVisible": false
+          },
+          {
+            "x": 3,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 0.6990388631820679,
+            "spriteVisible": false
+          }
+        ],
+        "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+        "boilers": [
+          {
+            "index": 0,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 1,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 2,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          }
+        ],
+        "vents": 0,
+        "safeBand": null,
+        "objective": {
+          "active": false,
+          "failed": false,
+          "complete": false,
+          "hotBoilers": 0,
+          "waves": "8-12"
+        }
+      },
+      "escort": {
+        "enabled": false
+      },
+      "power": {
+        "active": false,
+        "id": "",
+        "tick": 0,
+        "topologyRevision": 0,
+        "allocationRevision": 0,
+        "totalSupplyWatts": 0,
+        "totalDemandWatts": 0,
+        "nodes": [],
+        "wires": [],
+        "components": [],
+        "signature": "",
+        "budgetMs": 0.5,
+        "lastSolveMs": 0,
+        "maxSolveMs": 0,
+        "lastStepMs": 0,
+        "maxStepMs": 0,
+        "overBudget": false,
+        "overBudgetCount": 0,
+        "solveCount": 0,
+        "nodeCount": 0,
+        "wireCount": 0,
+        "intactWireCount": 0,
+        "cutWireCount": 0,
+        "events": [],
+        "render": {
+          "active": false,
+          "renderLayer": 0,
+          "renderSlot": "gameplay",
+          "topologyRevision": -1,
+          "allocationRevision": -1,
+          "rebuildCount": 0,
+          "spans": 0,
+          "poweredSpans": 0,
+          "darkSpans": 0,
+          "intactSpans": 0,
+          "cutSpans": 0,
+          "segments": 0,
+          "poweredSegments": 0,
+          "darkSegments": 0,
+          "drawCalls": 0,
+          "asset": "procedural-catenary"
+        }
+      }
+    },
+    "frame": 16440,
+    "sim": 540.6666666666463,
+    "wave": 18,
+    "hudWave": 18,
+    "runState": "dead",
+    "paused": false,
+    "secured": false,
+    "hp": 0,
+    "maxHp": 175,
+    "gold": 4,
+    "hero": {
+      "x": 5.430937826583177,
+      "z": 3.069457171830282
+    },
+    "enemiesAlive": 46,
+    "kills": 778,
+    "pendingLevels": 0,
+    "offer": null,
+    "upgradeOpen": false,
+    "buildMode": false,
+    "ghostValid": false,
+    "ghostPos": {
+      "x": -1,
+      "z": -6
+    },
+    "nodes": [
+      {
+        "id": "gold-seam-1",
+        "anchorIndex": 3,
+        "active": true,
+        "x": -12,
+        "z": 20,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-2",
+        "anchorIndex": 2,
+        "active": true,
+        "x": 0,
+        "z": -11,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-3",
+        "anchorIndex": -1,
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-4",
+        "anchorIndex": -1,
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-5",
+        "anchorIndex": -1,
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      }
+    ],
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 75,
+        "count": 4,
+        "maxCount": 6,
+        "canAfford": false
+      },
+      {
+        "id": "palisade",
+        "cost": 0,
+        "count": 0,
+        "maxCount": 48,
+        "canAfford": true
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "count": 0,
+        "maxCount": 3,
+        "canAfford": false
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "count": 0,
+        "maxCount": 2,
+        "canAfford": false
+      },
+      {
+        "id": "turret",
+        "cost": 170,
+        "count": 4,
+        "maxCount": 4,
+        "canAfford": false
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "count": 0,
+        "maxCount": 1,
+        "canAfford": false
+      }
+    ],
+    "defences": [
+      {
+        "id": "sentry_beacon",
+        "index": 0,
+        "hp": 0,
+        "maxHp": 40,
+        "wrecked": true,
+        "repairCost": 7,
+        "x": -2,
+        "z": 1
+      },
+      {
+        "id": "sentry_beacon",
+        "index": 1,
+        "hp": 0,
+        "maxHp": 64,
+        "wrecked": true,
+        "repairCost": 9,
+        "x": 8,
+        "z": -5
+      },
+      {
+        "id": "sentry_beacon",
+        "index": 2,
+        "hp": 0,
+        "maxHp": 70,
+        "wrecked": true,
+        "repairCost": 12,
+        "x": 1,
+        "z": 5
+      },
+      {
+        "id": "sentry_beacon",
+        "index": 3,
+        "hp": 0,
+        "maxHp": 76,
+        "wrecked": true,
+        "repairCost": 14,
+        "x": -1,
+        "z": -6
+      },
+      {
+        "id": "turret",
+        "index": 0,
+        "hp": 0,
+        "maxHp": 50,
+        "wrecked": true,
+        "repairCost": 13,
+        "x": 2,
+        "z": -2
+      },
+      {
+        "id": "turret",
+        "index": 1,
+        "hp": 0,
+        "maxHp": 50,
+        "wrecked": true,
+        "repairCost": 18,
+        "x": 7,
+        "z": -2
+      },
+      {
+        "id": "turret",
+        "index": 2,
+        "hp": 0,
+        "maxHp": 58,
+        "wrecked": true,
+        "repairCost": 24,
+        "x": 12,
+        "z": -2
+      },
+      {
+        "id": "turret",
+        "index": 3,
+        "hp": 0,
+        "maxHp": 74,
+        "wrecked": true,
+        "repairCost": 32,
+        "x": 2,
+        "z": 5
+      }
+    ],
+    "repairs": 4,
+    "channeling": false
+  }
+}

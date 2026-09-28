@@ -1,0 +1,911 @@
+(node:17671) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 126 tests using 1 worker
+
+
+(node:17738) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/126] [desktop-chrome] › e2e/assay-auto-tape.spec.ts:55:1 › a qualifying run posts its tape without pressing Keep this tape
+  1) [desktop-chrome] › e2e/assay-auto-tape.spec.ts:55:1 › a qualifying run posts its tape without pressing Keep this tape 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 8000ms exceeded while waiting on the predicate
+
+      70 |
+      71 |   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
+    > 72 |   await expect.poll(() => posts.length, { timeout: 8_000 }).toBe(1);
+         |                                                             ^
+      73 |   expect(posts[0]?.tape).toMatchObject({
+      74 |     contract: 'the-claim',
+      75 |     seed,
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/assay-auto-tape.spec.ts:72:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/assay-auto-tape-a-qualifyi-aefb3-out-pressing-Keep-this-tape-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/assay-auto-tape-a-qualifyi-aefb3-out-pressing-Keep-this-tape-desktop-chrome/error-context.md
+
+
+
+(node:18036) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/126] [desktop-chrome] › e2e/assay-auto-tape.spec.ts:82:1 › a non-qualifying run stays local and makes no standings post
+[3/126] [desktop-chrome] › e2e/charter-press-totality.spec.ts:31:1 › every ordered pair of charter mutation arms is total
+[4/126] [desktop-chrome] › e2e/charter-press-totality.spec.ts:49:1 › blank briefing goal fires with a briefing and noops after missing briefing
+[5/126] [desktop-chrome] › e2e/cp02-charter-boot.spec.ts:32:1 › the seeded stream stamped 32 of 200 mutants; booting the first 8
+[6/126] [desktop-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 6 [e1-twin-banks] boots with zero errors (legal:rename)
+[7/126] [desktop-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 10 [e1-baron] boots with zero errors (legal:rename)
+[8/126] [desktop-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 12 [e1-dry-gulch] boots with zero errors (noop)
+[9/126] [desktop-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 25 [the-claim] boots with zero errors (perturb:tileParams.size + legal:rename)
+[10/126] [desktop-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 36 [e1-night-shift] boots with zero errors (noop)
+[11/126] [desktop-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 46 [e1-night-shift] boots with zero errors (perturb:tileParams.prePlacedBuildables[5].relightCost)
+[12/126] [desktop-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 49 [e1-night-shift] boots with zero errors (noop + perturb:tileParams.prePlacedBuildables[1].x)
+[13/126] [desktop-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 52 [e1-drill-yard] boots with zero errors (noop)
+[14/126] [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return
+  2) [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks, Re-pressed"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        60 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      62 |   await page.getByTestId('press-launch-0').click();
+      63 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 64 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText(CHARTER_NAME, { timeout: 30_000 });
+         |                                                            ^
+      65 |   await page.screenshot({ path: path.join(SHOT_DIR, `charter-run-briefing-${testInfo.project.name}.png`) });
+      66 |   await page.getByTestId('contract-briefing-dismiss').click();
+      67 |   await page.waitForTimeout(1_000);
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp03-press-loop.spec.ts:64:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-desktop-chrome/error-context.md
+
+
+[15/126] [desktop-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing
+[16/126] [desktop-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run
+[17/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:38:1 › all 45 Lever choices stamp, round-trip, and produce zero validator rejections
+[18/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam
+  3) [desktop-chrome] › e2e/cp04-lever.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Build Something Big"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        61 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      104 |   await page.getByTestId('lever-press').click();
+      105 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 106 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText('Twin Banks: Build Something Big', { timeout: 30_000 });
+          |                                                            ^
+      107 |   await expect(page.getByTestId('contract-briefing-dismiss')).toBeVisible();
+      108 |   if (testInfo.project.name === 'desktop-chrome') await page.screenshot({ path: path.join(SHOT_DIR, 'stamped-launch.png') });
+      109 |
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:106:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-the-Lever-is-th-42831-es-through-the-charter-seam-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-the-Lever-is-th-42831-es-through-the-charter-seam-desktop-chrome/error-context.md
+
+
+[19/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:118:1 › a plain boot remains inert
+[20/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:133:1 › a locked staged contract clear is observable
+[21/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot the-claim/defend/gentle starts clean
+[22/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot the-claim/explore-quiet/classic starts clean
+[23/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/big-build/busy starts clean
+  4) [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Dry Gulch: Build Something Big"
+    Received: "The Dry Gulch"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Dry Gulch</h2>
+           - unexpected value "The Dry Gulch"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-desktop-chrome/error-context.md
+
+
+[24/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/defend/classic starts clean
+  5) [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Dry Gulch: Defend the Camp"
+    Received: "The Dry Gulch"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Dry Gulch</h2>
+           - unexpected value "The Dry Gulch"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-desktop-chrome/error-context.md
+
+
+[25/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean
+  6) [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Night Shift: Explore Quietly"
+    Received: "Night Shift"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Night Shift</h2>
+           - unexpected value "Night Shift"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-desktop-chrome/error-context.md
+
+
+[26/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/big-build/gentle starts clean
+  7) [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Night Shift: Build Something Big"
+    Received: "Night Shift"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Night Shift</h2>
+           - unexpected value "Night Shift"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-desktop-chrome/error-context.md
+
+
+[27/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/defend/busy starts clean
+  8) [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Defend the Camp"
+    Received: "Twin Banks"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Twin Banks</h2>
+           - unexpected value "Twin Banks"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-desktop-chrome/error-context.md
+
+
+[28/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean
+  9) [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Explore Quietly"
+    Received: "Twin Banks"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Twin Banks</h2>
+           - unexpected value "Twin Banks"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-desktop-chrome/error-context.md
+
+
+[29/126] [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-baron/big-build/classic starts clean
+  10) [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-baron/big-build/classic starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Baron's Claim: Build Something Big"
+    Received: "The Claim-Jumper Baron"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim-Jumper Baron</h2>
+           - unexpected value "The Claim-Jumper Baron"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-desktop-chrome/error-context.md
+
+
+[30/126] [desktop-chrome] › e2e/cp05-river.spec.ts:27:1 › THE RIVER imports, round-trips, re-stamps, and leaves The Claim untouched
+  11) [desktop-chrome] › e2e/cp05-river.spec.ts:27:1 › THE RIVER imports, round-trips, re-stamps, and leaves The Claim untouched 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "a940bc45ce0a575c9581167d13158c237b819e2ad81aad78caecccbfcacc5311"
+    Received: "a258fe821574e3a45b1e6de33368d6d15a447fa5cd335f6777d66cec8224859a"
+
+      55 |
+      56 |   const shippedClaim = contractDescriptorJson(loadContract('the-claim', 'epoch-1-frontier'));
+    > 57 |   expect(createHash('sha256').update(shippedClaim).digest('hex')).toBe(THE_CLAIM_SHA256);
+         |                                                                   ^
+      58 |   test.info().annotations.push({
+      59 |     type: 'round-trip',
+      60 |     description: `THE RIVER import -> stamp -> re-import -> stamp: ${createHash('sha256').update(stamped.document).digest('hex')}`,
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp05-river.spec.ts:57:67
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp05-river-THE-RIVER-impor-cd488--leaves-The-Claim-untouched-desktop-chrome/error-context.md
+
+
+[31/126] [desktop-chrome] › e2e/cp05-river.spec.ts:64:1 › THE RIVER stamps and boots as a real run with zero errors
+[32/126] [desktop-chrome] › e2e/door-epic-submit.spec.ts:27:1 › small and Baron-sized standings bodies both reach the county door
+[desktop-chrome] › e2e/door-epic-submit.spec.ts:27:1 › small and Baron-sized standings bodies both reach the county door
+door-submit fetch options [
+  { keepalive: true, bodyBytes: 139 },
+  { keepalive: undefined, bodyBytes: 463580 }
+]
+
+[33/126] [desktop-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+
+(node:21746) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[34/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+dev rng seeds watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[35/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+dev claim room watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[36/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+live standing inside its week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[37/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:164:1 › a run ridden on last week and submitted after Monday 00:00 UTC is refused, and the player reads why
+[38/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+dev the-claim watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[39/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+dev e1-drill-yard watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[40/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+dev e1-dry-gulch watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[41/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+dev e1-night-shift watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[42/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+dev e1-twin-banks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[43/126] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+dev e1-baron watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[44/126] [desktop-chrome] › e2e/locked-win.spec.ts:65:1 › wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks
+[45/126] [desktop-chrome] › e2e/locked-win.spec.ts:108:1 › leaving at secure follows the full victory ledger flow
+[46/126] [desktop-chrome] › e2e/locked-win.spec.ts:122:1 › The Claim card names wave 10 while Night Shift and Baron keep their tuned secure waves
+[47/126] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[48/126] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[49/126] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[50/126] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[51/126] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[52/126] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[53/126] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[54/126] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[55/126] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[56/126] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[desktop-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[57/126] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[58/126] [desktop-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[59/126] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[60/126] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[61/126] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[62/126] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[63/126] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:24102) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[64/126] [mobile-chrome] › e2e/assay-auto-tape.spec.ts:55:1 › a qualifying run posts its tape without pressing Keep this tape
+  12) [mobile-chrome] › e2e/assay-auto-tape.spec.ts:55:1 › a qualifying run posts its tape without pressing Keep this tape 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 8000ms exceeded while waiting on the predicate
+
+      70 |
+      71 |   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
+    > 72 |   await expect.poll(() => posts.length, { timeout: 8_000 }).toBe(1);
+         |                                                             ^
+      73 |   expect(posts[0]?.tape).toMatchObject({
+      74 |     contract: 'the-claim',
+      75 |     seed,
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/assay-auto-tape.spec.ts:72:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/assay-auto-tape-a-qualifyi-aefb3-out-pressing-Keep-this-tape-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/assay-auto-tape-a-qualifyi-aefb3-out-pressing-Keep-this-tape-mobile-chrome/error-context.md
+
+
+
+(node:24312) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[65/126] [mobile-chrome] › e2e/assay-auto-tape.spec.ts:82:1 › a non-qualifying run stays local and makes no standings post
+[66/126] [mobile-chrome] › e2e/charter-press-totality.spec.ts:31:1 › every ordered pair of charter mutation arms is total
+[67/126] [mobile-chrome] › e2e/charter-press-totality.spec.ts:49:1 › blank briefing goal fires with a briefing and noops after missing briefing
+[68/126] [mobile-chrome] › e2e/cp02-charter-boot.spec.ts:32:1 › the seeded stream stamped 32 of 200 mutants; booting the first 8
+[69/126] [mobile-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 6 [e1-twin-banks] boots with zero errors (legal:rename)
+[70/126] [mobile-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 10 [e1-baron] boots with zero errors (legal:rename)
+[71/126] [mobile-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 12 [e1-dry-gulch] boots with zero errors (noop)
+[72/126] [mobile-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 25 [the-claim] boots with zero errors (perturb:tileParams.size + legal:rename)
+[73/126] [mobile-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 36 [e1-night-shift] boots with zero errors (noop)
+[74/126] [mobile-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 46 [e1-night-shift] boots with zero errors (perturb:tileParams.prePlacedBuildables[5].relightCost)
+[75/126] [mobile-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 49 [e1-night-shift] boots with zero errors (noop + perturb:tileParams.prePlacedBuildables[1].x)
+[76/126] [mobile-chrome] › e2e/cp02-charter-boot.spec.ts:38:3 › stamped mutant 52 [e1-drill-yard] boots with zero errors (noop)
+[77/126] [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return
+  13) [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks, Re-pressed"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        61 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      62 |   await page.getByTestId('press-launch-0').click();
+      63 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 64 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText(CHARTER_NAME, { timeout: 30_000 });
+         |                                                            ^
+      65 |   await page.screenshot({ path: path.join(SHOT_DIR, `charter-run-briefing-${testInfo.project.name}.png`) });
+      66 |   await page.getByTestId('contract-briefing-dismiss').click();
+      67 |   await page.waitForTimeout(1_000);
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp03-press-loop.spec.ts:64:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp03-press-loop-the-Press--fb91e-aunch-a-real-run-and-return-mobile-chrome/error-context.md
+
+
+[78/126] [mobile-chrome] › e2e/cp03-press-loop.spec.ts:99:1 › a plain boot never sees the Press and writes nothing
+[79/126] [mobile-chrome] › e2e/cp03-press-loop.spec.ts:113:1 › a staged charter entry without a Press launch never reaches a run
+[80/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:38:1 › all 45 Lever choices stamp, round-trip, and produce zero validator rejections
+[81/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam
+  14) [mobile-chrome] › e2e/cp04-lever.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Build Something Big"
+    Received: "The Claim"
+    Timeout:  30000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 30000ms
+      - waiting for getByTestId('contract-briefing-name')
+        61 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim</h2>
+           - unexpected value "The Claim"
+
+
+      104 |   await page.getByTestId('lever-press').click();
+      105 |   await page.waitForURL((url) => url.searchParams.get('contract') === 'e1-twin-banks' && !url.searchParams.has('editor'));
+    > 106 |   await expect(page.getByTestId('contract-briefing-name')).toHaveText('Twin Banks: Build Something Big', { timeout: 30_000 });
+          |                                                            ^
+      107 |   await expect(page.getByTestId('contract-briefing-dismiss')).toBeVisible();
+      108 |   if (testInfo.project.name === 'desktop-chrome') await page.screenshot({ path: path.join(SHOT_DIR, 'stamped-launch.png') });
+      109 |
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:106:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-the-Lever-is-th-42831-es-through-the-charter-seam-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-the-Lever-is-th-42831-es-through-the-charter-seam-mobile-chrome/error-context.md
+
+
+[82/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:118:1 › a plain boot remains inert
+[83/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:133:1 › a locked staged contract clear is observable
+[84/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot the-claim/defend/gentle starts clean
+[85/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot the-claim/explore-quiet/classic starts clean
+[86/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/big-build/busy starts clean
+  15) [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Dry Gulch: Build Something Big"
+    Received: "The Dry Gulch"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Dry Gulch</h2>
+           - unexpected value "The Dry Gulch"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--49cf7-big-build-busy-starts-clean-mobile-chrome/error-context.md
+
+
+[87/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/defend/classic starts clean
+  16) [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Dry Gulch: Defend the Camp"
+    Received: "The Dry Gulch"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Dry Gulch</h2>
+           - unexpected value "The Dry Gulch"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--efdb3-defend-classic-starts-clean-mobile-chrome/error-context.md
+
+
+[88/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean
+  17) [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Night Shift: Explore Quietly"
+    Received: "Night Shift"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Night Shift</h2>
+           - unexpected value "Night Shift"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--acc1f-ore-quiet-busy-starts-clean-mobile-chrome/error-context.md
+
+
+[89/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/big-build/gentle starts clean
+  18) [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Night Shift: Build Something Big"
+    Received: "Night Shift"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Night Shift</h2>
+           - unexpected value "Night Shift"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--6fe93-g-build-gentle-starts-clean-mobile-chrome/error-context.md
+
+
+[90/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/defend/busy starts clean
+  19) [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Defend the Camp"
+    Received: "Twin Banks"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Twin Banks</h2>
+           - unexpected value "Twin Banks"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--fd6d4-ks-defend-busy-starts-clean-mobile-chrome/error-context.md
+
+
+[91/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean
+  20) [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "Twin Banks: Explore Quietly"
+    Received: "Twin Banks"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">Twin Banks</h2>
+           - unexpected value "Twin Banks"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--a19f0-e-quiet-gentle-starts-clean-mobile-chrome/error-context.md
+
+
+[92/126] [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-baron/big-build/classic starts clean
+  21) [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-baron/big-build/classic starts clean 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('contract-briefing-name')
+    Expected: "The Baron's Claim: Build Something Big"
+    Received: "The Claim-Jumper Baron"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('contract-briefing-name')
+        13 × locator resolved to <h2 data-testid="contract-briefing-name">The Claim-Jumper Baron</h2>
+           - unexpected value "The Claim-Jumper Baron"
+
+
+      174 |     await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-nine`);
+      175 |     await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    > 176 |     await expect(page.getByTestId('contract-briefing-name')).toHaveText(combination.charter.contract.name);
+          |                                                              ^
+      177 |     expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId)).toBe(combination.land.id);
+      178 |     expect(errors).toEqual({ console: [], page: [] });
+      179 |   });
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp04-lever.spec.ts:176:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp04-lever-seeded-boot-e1--c9d69--build-classic-starts-clean-mobile-chrome/error-context.md
+
+
+[93/126] [mobile-chrome] › e2e/cp05-river.spec.ts:27:1 › THE RIVER imports, round-trips, re-stamps, and leaves The Claim untouched
+  22) [mobile-chrome] › e2e/cp05-river.spec.ts:27:1 › THE RIVER imports, round-trips, re-stamps, and leaves The Claim untouched 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "a940bc45ce0a575c9581167d13158c237b819e2ad81aad78caecccbfcacc5311"
+    Received: "a258fe821574e3a45b1e6de33368d6d15a447fa5cd335f6777d66cec8224859a"
+
+      55 |
+      56 |   const shippedClaim = contractDescriptorJson(loadContract('the-claim', 'epoch-1-frontier'));
+    > 57 |   expect(createHash('sha256').update(shippedClaim).digest('hex')).toBe(THE_CLAIM_SHA256);
+         |                                                                   ^
+      58 |   test.info().annotations.push({
+      59 |     type: 'round-trip',
+      60 |     description: `THE RIVER import -> stamp -> re-import -> stamp: ${createHash('sha256').update(stamped.document).digest('hex')}`,
+        at /Users/robin/Claude/Projects/wt-rvs1/e2e/cp05-river.spec.ts:57:67
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/results-adjacent/cp05-river-THE-RIVER-impor-cd488--leaves-The-Claim-untouched-mobile-chrome/error-context.md
+
+
+[94/126] [mobile-chrome] › e2e/cp05-river.spec.ts:64:1 › THE RIVER stamps and boots as a real run with zero errors
+[95/126] [mobile-chrome] › e2e/door-epic-submit.spec.ts:27:1 › small and Baron-sized standings bodies both reach the county door
+[mobile-chrome] › e2e/door-epic-submit.spec.ts:27:1 › small and Baron-sized standings bodies both reach the county door
+door-submit fetch options [
+  { keepalive: true, bodyBytes: 139 },
+  { keepalive: undefined, bodyBytes: 463580 }
+]
+
+[96/126] [mobile-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+
+(node:27684) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[97/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+dev rng seeds watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[98/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+dev claim room watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[99/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+live standing inside its week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[100/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:164:1 › a run ridden on last week and submitted after Monday 00:00 UTC is refused, and the player reads why
+[101/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+dev the-claim watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[102/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+dev e1-drill-yard watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[103/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+dev e1-dry-gulch watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[104/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+dev e1-night-shift watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[105/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+dev e1-twin-banks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[106/126] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+dev e1-baron watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[107/126] [mobile-chrome] › e2e/locked-win.spec.ts:65:1 › wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks
+[108/126] [mobile-chrome] › e2e/locked-win.spec.ts:108:1 › leaving at secure follows the full victory ledger flow
+[109/126] [mobile-chrome] › e2e/locked-win.spec.ts:122:1 › The Claim card names wave 10 while Night Shift and Baron keep their tuned secure waves
+[110/126] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[111/126] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[112/126] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[113/126] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[114/126] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[115/126] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[116/126] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[117/126] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:75:1 › the profile tape ring keeps the latest ten plus older marked runs
+[118/126] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:90:1 › the keep result stays false when profile storage rejects the write
+[119/126] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+
+[mobile-chrome] › e2e/tape-01-run-tape.spec.ts:102:1 › the recorder deduplicates routed actions and freezes the hash at its input ceiling
+[run-tape] recording truncated: max-ticks at tick 18000
+[120/126] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:123:1 › a resumed recording keeps the engine stamp captured by the original build
+[121/126] [mobile-chrome] › e2e/tape-01-run-tape.spec.ts:140:1 › every ended run writes a keepable tape whose replay reproduces its event hash
+[122/126] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[123/126] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[124/126] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[125/126] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[126/126] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  22 failed
+    [desktop-chrome] › e2e/assay-auto-tape.spec.ts:55:1 › a qualifying run posts its tape without pressing Keep this tape 
+    [desktop-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+    [desktop-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-baron/big-build/classic starts clean 
+    [desktop-chrome] › e2e/cp05-river.spec.ts:27:1 › THE RIVER imports, round-trips, re-stamps, and leaves The Claim untouched 
+    [mobile-chrome] › e2e/assay-auto-tape.spec.ts:55:1 › a qualifying run posts its tape without pressing Keep this tape 
+    [mobile-chrome] › e2e/cp03-press-loop.spec.ts:25:1 › the Press loop: edit, stamp, shelve, launch a real run, and return 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:61:1 › the Lever is three choices and one press, then launches through the charter seam 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+    [mobile-chrome] › e2e/cp04-lever.spec.ts:162:3 › seeded boot e1-baron/big-build/classic starts clean 
+    [mobile-chrome] › e2e/cp05-river.spec.ts:27:1 › THE RIVER imports, round-trips, re-stamps, and leaves The Claim untouched 
+  104 passed (9.4m)

@@ -1,0 +1,19 @@
+branch fix/same-game-audit-verbs-1 tip 26dd076b1 2026-09-25 22:03Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/sga1.json
+scratch store at the store's main 5793a96
+chain base 55e4b93ff
+merged 729d97af0
+desk row F-SGA1-2: inserted at line 57
+cure sga1: desk row committed 8f56cd4f8
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa (pinned 755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+battery start 22:04Z
+battery: rc=1 ℹ tests 1025 ℹ pass 1019 ℹ fail 1 ℹ skipped 5  22:22Z
+✖ contention is advisory, correctly counted, and absent when alone (2399.523791ms)
+dirt after battery: 0
+sga1-PREP-DONE
+verdict: clean
+hash at pin time: 755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa
+review: reviews/same-game-audit-verbs-1.md

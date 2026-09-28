@@ -1,0 +1,105 @@
+{
+  "url": "http://127.0.0.1:5317/?contract=e7-echo-canyon&timescale=4",
+  "sim": 67.73333333333333,
+  "wave": 2,
+  "hp": 100,
+  "gold": 50,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": null,
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": true,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": 1790566450238,
+      "lastWriteMs": 0.2,
+      "sizeBytes": 13199
+    }
+  },
+  "hero": {
+    "x": 1.1487480679815512,
+    "y": 0.06,
+    "z": -15.853484596544419
+  },
+  "defences": [],
+  "hollowCrossing": {
+    "declared": false,
+    "stage": "launch",
+    "routeId": null,
+    "onGlowBridge": false,
+    "radiationDamageDealt": 0
+  },
+  "picnicHold": [],
+  "wrangle": {
+    "enabled": false,
+    "windDownSeconds": 8,
+    "windDownTicks": 240,
+    "captureRadius": 2.2,
+    "exhaustedSpeedMultiplier": 0.2,
+    "active": [],
+    "pen": {
+      "roster": [],
+      "total": 0,
+      "tickSeconds": 15,
+      "goldPerMachine": 1,
+      "incomeGranted": 0
+    }
+  },
+  "interferenceFront": null,
+  "broadcastMirror": {
+    "declared": true,
+    "delay": "next-wave",
+    "recordedUses": 0,
+    "distinctPlaybooks": 0,
+    "maxRepeat": 0,
+    "pending": [],
+    "squadsFielded": 0,
+    "bodiesFielded": 0,
+    "lastFieldedWave": null,
+    "capPerWave": 3,
+    "hpPerRepeat": 0.1,
+    "refusals": {
+      "cappedSquads": 0
+    }
+  },
+  "playbookUse": {
+    "declared": true,
+    "objective": "mirror",
+    "objectiveMet": false,
+    "uses": 0,
+    "relaysLitByProgram": []
+  },
+  "e7Signal": {
+    "enabled": true,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "repairs": 0,
+  "tapeShelf": []
+}

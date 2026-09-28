@@ -1,6 +1,9 @@
 declare const WebSocketPair: typeof import('@cloudflare/workers-types').WebSocketPair;
 
 import { normalizeSelfDeclaredStack, type SelfDeclaredStack } from '../../src/agent/DeclaredStack';
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
+import { fallbackReason, ledgerLink, withLedgerFallback, type LedgerEnv, type LedgerFallback } from './_ledger';
+import { bumpCounter } from './_ratelimit';
 
 type JsonRecord = Record<string, unknown>;
 type WebSocket = import('@cloudflare/workers-types').WebSocket;
@@ -22,9 +25,18 @@ type KVNamespaceLike = {
   list(options?: { prefix?: string; cursor?: string }): Promise<KVListResult>;
 };
 
-type MultiplayerEnv = {
+type MultiplayerEnv = LedgerEnv & LocalhostOriginsEnv & {
   MULTIPLAYER_ROOMS?: DurableObjectNamespaceLike;
   MULTIPLAYER_RATE_LIMITS?: KVNamespaceLike;
+};
+
+type RateBucket = 'create' | 'connect' | 'inspect';
+
+// A request the per-address limiter let through (`refusal: null`), or the answer that refuses it; and
+// in both cases which store did the counting (`fallback: null` = the ledger).
+type Admission = {
+  refusal: Response | null;
+  fallback: LedgerFallback | null;
 };
 
 type MultiplayerContext = {
@@ -105,60 +117,56 @@ export async function createRoom(context: MultiplayerContext): Promise<Response>
     if (request.method !== 'POST') return error(cors, 405, 'method_not_allowed', 'POST only');
     const rooms = requireRooms(env, cors);
     if (rooms instanceof Response) return rooms;
-    const limiter = requireRateLimits(env, cors);
-    if (limiter instanceof Response) return limiter;
-    const allowed = await bumpCounter(limiter, `mp:ratelimit:create:${await clientIpHash(request)}`, MAX_CREATE_REQUESTS_PER_IP);
-    if (!allowed) return error(cors, 429, 'rate_limited', RATE_LIMIT_MESSAGE);
+    const admission = await admit(request, env, cors, 'create', MAX_CREATE_REQUESTS_PER_IP);
+    if (admission.refusal) return admission.refusal;
+    const headers = withLedgerFallback(cors, admission.fallback);
     const body = await readJson(request, SMALL_JSON_BYTES);
 
     for (let attempt = 0; attempt < 3; attempt += 1) {
       const code = randomRoomCode();
       const stub = rooms.get(rooms.idFromName(code));
       const response = await stub.fetch(roomRequest('/create', { code, setup: body.setup }));
-      if (response.status !== 409) return withCors(response, cors);
+      if (response.status !== 409) return withCors(response, headers);
     }
-    return error(cors, 503, 'room_unavailable', ROOM_UNAVAILABLE_MESSAGE);
+    return error(headers, 503, 'room_unavailable', ROOM_UNAVAILABLE_MESSAGE);
   });
 }
 
 export async function connectRoom(context: MultiplayerContext): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   const rooms = requireRooms(context.env, cors);
   if (rooms instanceof Response) return rooms;
-  const limiter = requireRateLimits(context.env, cors);
-  if (limiter instanceof Response) return limiter;
-  const allowed = await bumpCounter(limiter, `mp:ratelimit:connect:${await clientIpHash(context.request)}`, MAX_CONNECT_REQUESTS_PER_IP);
-  if (!allowed) return error(cors, 429, 'rate_limited', RATE_LIMIT_MESSAGE);
+  // kv-counters-to-ledger-1 scope 2: this bump used to sit outside any try/catch, so a KV write that
+  // failed (the shared namespace's 1,000 a day spent) was a THROWN error from a WebSocket door, not a
+  // refused connect. `admit` never throws: a failed count refuses with the rate limit's own words.
+  const admission = await admit(context.request, context.env, cors, 'connect', MAX_CONNECT_REQUESTS_PER_IP);
+  if (admission.refusal) return admission.refusal;
 
   const code = normalizeRoomCode(new URL(context.request.url).searchParams.get('code'));
-  if (!code) return error(cors, 400, 'bad_room_code', 'Room code not accepted.');
+  if (!code) return error(withLedgerFallback(cors, admission.fallback), 400, 'bad_room_code', 'Room code not accepted.');
 
   const stub = rooms.get(rooms.idFromName(code));
   return stub.fetch(context.request);
 }
 
 export async function inspectRoom(context: MultiplayerContext): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'GET') return error(cors, 405, 'method_not_allowed', 'GET only');
   const rooms = requireRooms(context.env, cors);
   if (rooms instanceof Response) return rooms;
-  const limiter = requireRateLimits(context.env, cors);
-  if (limiter instanceof Response) return limiter;
-  const allowed = await bumpCounter(
-    limiter,
-    `mp:ratelimit:inspect:${await clientIpHash(context.request)}`,
-    MAX_INSPECT_REQUESTS_PER_IP,
-  );
-  if (!allowed) return error(cors, 429, 'rate_limited', RATE_LIMIT_MESSAGE);
+  // The same unguarded bump as the connect door had, fixed the same way.
+  const admission = await admit(context.request, context.env, cors, 'inspect', MAX_INSPECT_REQUESTS_PER_IP);
+  if (admission.refusal) return admission.refusal;
+  const headers = withLedgerFallback(cors, admission.fallback);
   const code = normalizeRoomCode(new URL(context.request.url).searchParams.get('code'));
-  if (!code) return error(cors, 400, 'bad_room_code', 'Room code not accepted.');
+  if (!code) return error(headers, 400, 'bad_room_code', 'Room code not accepted.');
   const stub = rooms.get(rooms.idFromName(code));
   const response = await stub.fetch(new Request('https://gold-rush-room.local/inspect'));
-  return withCors(response, cors);
+  return withCors(response, headers);
 }
 
 export class MultiplayerRoom {
@@ -619,7 +627,7 @@ async function route(
   context: MultiplayerContext,
   handler: (value: { request: Request; env: MultiplayerEnv; cors: Record<string, string> }) => Promise<Response>,
 ): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   try {
@@ -630,7 +638,7 @@ async function route(
   }
 }
 
-function corsHeaders(request: Request): Record<string, string> | null {
+function corsHeaders(request: Request, env: LocalhostOriginsEnv): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'authorization, content-type',
@@ -639,7 +647,7 @@ function corsHeaders(request: Request): Record<string, string> | null {
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || localhostOriginAllowed(origin, env)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;
@@ -649,8 +657,54 @@ function requireRooms(env: MultiplayerEnv, cors: Record<string, string>): Durabl
   return env.MULTIPLAYER_ROOMS ?? error(cors, 503, 'multiplayer_not_enabled', ROOM_UNAVAILABLE_MESSAGE);
 }
 
-function requireRateLimits(env: MultiplayerEnv, cors: Record<string, string>): KVNamespaceLike | Response {
-  return env.MULTIPLAYER_RATE_LIMITS ?? error(cors, 503, 'multiplayer_not_enabled', ROOM_UNAVAILABLE_MESSAGE);
+// kv-counters-to-ledger-1 scope 2 (owner ruling 2026-09-24, item 7 "(b)"): the per-address count
+// lives in the droplet ledger, through its atomic counter route, and only falls back to the KV
+// namespace when the ledger is not bound or does not answer, saying which in `X-Ledger-Fallback`.
+//
+// NEVER THROWS. Anything that fails while counting - the ledger AND the fallback store both down, the
+// day's KV writes spent (a KV put then rejects), a hash that will not compute - refuses the request
+// with the rate limit's own status and words. A refusal is what the caller can act on ("try again
+// later"); a thrown error from the connect door was an unhandled exception in front of a WebSocket.
+//
+// kv-counters-to-ledger-2 (F-KV1-4, 2026-09-25): the KV fallback counts on the limiter the other doors
+// share (`_ratelimit.ts`), whose window is the real hour the owner ruled for on 2026-09-19
+// (F-HEAT14-7). This file used to keep a limiter of its own that re-armed `expirationTtl` to a full
+// hour on every accepted write, so a rider who kept knocking never saw the hour end. The limits, the
+// key shape and RATE_TTL_SECONDS are unchanged; the window starts at the first counted request and
+// ends an hour later. scripts/ratelimit-window.test.mjs drives this door under a fixed clock to prove
+// it, and its census counts this file among the limiter's doors. Through the ledger the window was
+// already fixed.
+async function admit(
+  request: Request,
+  env: MultiplayerEnv,
+  cors: Record<string, string>,
+  bucket: RateBucket,
+  limit: number,
+): Promise<Admission> {
+  const ledger = ledgerLink(env);
+  const fallback = fallbackReason(ledger);
+  try {
+    const key = `mp:ratelimit:${bucket}:${await clientIpHash(request)}`;
+    if (ledger) {
+      const reply = await ledger.post('/api/ledger/increment', { key, ttlSeconds: RATE_TTL_SECONDS });
+      if (reply?.ok === true && typeof reply.count === 'number') {
+        return { refusal: reply.count <= limit ? null : rateLimited(cors, null), fallback: null };
+      }
+    }
+    const limiter = env.MULTIPLAYER_RATE_LIMITS;
+    if (!limiter) {
+      // Nothing configured at all is the honest "not saddled yet" it always was; a bound ledger that
+      // is down with no KV behind it is a failed count, and a failed count refuses.
+      return { refusal: ledger ? rateLimited(cors, fallback) : error(cors, 503, 'multiplayer_not_enabled', ROOM_UNAVAILABLE_MESSAGE), fallback };
+    }
+    return { refusal: (await bumpCounter(limiter, key, limit, RATE_TTL_SECONDS)) ? null : rateLimited(cors, fallback), fallback };
+  } catch {
+    return { refusal: rateLimited(cors, fallback), fallback };
+  }
+}
+
+function rateLimited(cors: Record<string, string>, fallback: LedgerFallback | null): Response {
+  return error(withLedgerFallback(cors, fallback), 429, 'rate_limited', RATE_LIMIT_MESSAGE);
 }
 
 function withCors(response: Response, cors: Record<string, string>): Response {
@@ -682,14 +736,6 @@ async function readJson(request: Request, maxBytes: number): Promise<JsonRecord>
   }
   if (!isRecord(value)) throw new HttpError(400, 'bad_json', 'JSON not accepted.');
   return value;
-}
-
-async function bumpCounter(kv: KVNamespaceLike, key: string, limit: number): Promise<boolean> {
-  const current = Number(await kv.get(key));
-  const count = Number.isFinite(current) && current > 0 ? Math.trunc(current) : 0;
-  if (count >= limit) return false;
-  await kv.put(key, String(count + 1), { expirationTtl: RATE_TTL_SECONDS });
-  return true;
 }
 
 async function clientIpHash(request: Request): Promise<string> {

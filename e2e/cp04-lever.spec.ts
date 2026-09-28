@@ -70,6 +70,17 @@ test('the Lever is three choices and one press, then launches through the charte
   await expect(page.getByTestId('press-title')).toHaveText('The Lever');
   await expect(page.getByTestId('press-full-mode')).toBeHidden();
   await expect(page.getByTestId('press-lever-mode')).toBeVisible();
+  // F-CPL1-1 (owner ruling (a), 2026-09-26, F-1179-4): a fresh profile is offered exactly the land it has unlocked,
+  // The Claim, preselected; the five-card count this line used to assert was the defect. The five-card path the rest
+  // of this test needs runs through the preview-only "Open every claim" seam, flipped by its own function, and the
+  // Lever re-read when it is opened again. The cards are rendered when the Lever opens, so their plates load then:
+  // the poll waits for all five before the one-shot image check below.
+  await expect(page.locator('[data-lever-land]')).toHaveCount(1);
+  await expect(page.getByTestId('lever-land-the-claim')).toHaveAttribute('aria-pressed', 'true');
+  expect(await page.evaluate(async () => ((await Function('return import("/src/meta/ContractUnlock.ts")')()) as typeof import('../src/meta/ContractUnlock')).setPreviewUnlockAll(true))).toBe(true);
+  await page.getByTestId('press-mode-full').click();
+  await page.getByTestId('press-mode-lever').click();
+  await expect.poll(() => page.locator('[data-lever-land] img').evaluateAll((images) => images.filter((image) => (image as HTMLImageElement).naturalWidth > 0).length)).toBe(5);
   await expect(page.locator('[data-lever-land]')).toHaveCount(5);
   await expect(page.locator('[data-lever-story]')).toHaveCount(3);
   await expect(page.locator('[data-lever-visitors]')).toHaveCount(3);

@@ -1,0 +1,10 @@
+official computeEngineHash: 642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a
+probe replica (must equal):  642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a EQUAL
+corpus files: 662; inputs: ["scripts/assay-replay-agent.mjs","assets/contracts","assets/crafting-queue/contract.v1.json","assets/crafting-queue/approved","assets/layer-contracts","assets/pilots/map-rebuild-spike","src"]
+in corpus? src/encyclopedia/reader.ts: true
+in corpus? src/game/liveSeed.ts: true
+in corpus? src/encyclopedia/reader.css: false
+in corpus? functions/api/standings.ts: false
+in corpus? scripts/test-stats.mjs: false
+in corpus? e2e/live-seed-rotation.spec.ts: false
+with one trailing newline appended to src/encyclopedia/reader.ts (in memory): fee026e4727efdede0c40cbbfffbd0479c6d0ec754370b59a9d4d5e122d2d99e MOVED

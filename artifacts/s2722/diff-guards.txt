@@ -1,0 +1,126 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T22:13:46.369Z — fixture cleanup diff gates ########
+cwd=/Users/robin/.goldrush/fire-s2722/wt-fixture
+
+===== campaign spec =====
+$ node --test scripts/gr-sim-campaign.test.mjs
+rc=0 26.9s
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+(node:46910) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ FakeStorage threads research into the headless sim without moving the cold hash (6705.148667ms)
+✔ campaign walks E1 legally, persists each leg, and hashes deterministically (5754.827375ms)
+✔ a killed campaign resumes from its last profile checkpoint (5210.279791ms)
+✔ --contract selects exactly one named contract (2390.209ms)
+✔ --contract refuses unknown, unseeded, and locked contracts loudly (6630.065666ms)
+✔ --contract refuses an empty selector instead of falling back (106.05325ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26915.43825
+
+
+===== diff-selected guards =====
+$ node scripts/run-guards.mjs --changed-since fac058b65018292857b3c58c84b2db296d55027f
+rc=1 903.9s
+run-guards: 87 file(s) changed since fac058b65018292857b3c58c84b2db296d55027f
+  base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
+  (no path rule matched -- base gate only)
+
+FAIL  rc=signal:SIGTERM  900s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.386ms
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  3s  test:citations
+FAIL  rc=1  0s  test:gate-callers
+
+--- test:node-guards (rc=signal:SIGTERM) last 20 lines ---
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+WebSocket server error: Port 24678 is already in use
+✔ shipped Fairground crowd consumer loads without a missing dependency declaration (298.290833ms)
+✔ real history has exactly the four former double-state findings and current BACKLOG has none (169.760958ms)
+✔ prose citations are not declarations, only struck declarations close, and duplicate opens stay open (37.627ms)
+✔ regression arm: narrow open vocabulary is byte-identical when explicitly selected (0.367ms)
+✔ wide open vocabulary admits an explicit 🟠 OPEN declaration (0.101917ms)
+✔ 🟢 RULING without a state word is not an open declaration (0.070709ms)
+✔ wide open vocabulary exposes a ✅ plus separate 🔬 OPEN conflict without reddening narrow (33.8815ms)
+✔ wide-open advisory reports skipped rows, hidden open IDs, and narrow closed-only IDs (31.344875ms)
+✔ a conflict SPLIT ACROSS the index and a part file is still caught, with both coordinates (58.347791ms)
+✔ with no tasks/backlog/ at all the corpus line says so and the census is unchanged (30.305917ms)
+✔ fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1 (261.540125ms)
+✔ non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism (262.432833ms)
+✔ the pinned family lists are sorted, deduped and disjoint (0.67025ms)
+✔ the family derivation survives a rebuild (0.554084ms)
+✔ every first-town request belongs to a pinned family (3.606417ms)
+✔ no second map is warmed inside the first town window (1.058042ms)
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.
+
+--- test:gate-callers (rc=1) last 20 lines ---
+  known  artifacts/sol/account-registry-land/closed-gate.test.mjss2642 F-2642-4 (drain sol-account-registry-land, 2026-09-19): NO CALLER, and measured GREEN on the MERGED TREE this drain — not inherited from the runner's report. It arrived under artifacts/** because the task master's own firewall put every deliverable of this slice there (TOUCH ONLY: artifacts/sol/account-registry-land/**), so its location is the master's ruling and not the author's preference. NOT DISMISSED — this is live, security-relevant coverage with PROVEN TEETH, which is what separates it from a green that has never been tested: I re-ran BOTH manufactured mutants at this gate and each reds at rc=1 while the clean run is green (GR_REGISTRY_MUTANT=kv-fallback restores main's old non-atomic KV allocator -> five verify cases fail; GR_REGISTRY_MUTANT=delete-before-readiness moves save deletion ahead of the readiness check -> five delete cases fail on the exact data snapshot). Its subject is the CLOSED readiness gate on functions/api/_accounts.ts: that the door with no ACCOUNT_REGISTRY binding and no ACCOUNT_REGISTRY_SCOPE behaves byte-identically to main, preserving identity, saves, sessions and retry code. That gate is the only thing standing between a landed registry and a live account migration, and it is exactly the sort of invariant a later 'tidy' reopens silently. DELIBERATELY UNROOTED TODAY FOR ONE REASON ONLY, AND IT IS NOT COST: at 2.5 s and 1.0 s these are among the CHEAPEST probes in this baseline — two orders of magnitude under review-account-creation — so the asset-diet (52.3 s) and halo-reextraction (+28%) wall-time precedent does NOT apply and must not be cited here. The obstacle is that artifacts/ is EVIDENCE, the RETENTION LAW's own subject, and rooting a battery leg inside it would make a gate of a directory whose contents are supposed to be a frozen record — while MOVING the files into scripts/ and wiring a caller is gate topology plus a path change, i.e. an implementation change and not a drain's drive-by. RECOMMENDATION, and it is cheap and specific: move both into scripts/ and root them in npm:test:review-fixes, which s2641 measured at 24 pass / 0 fail / 6.0 s and which test:node-guards already chains — these two would add ~3.5 s to a battery that already hosts the account-creation review. Filed as F-2642-4. Until then the proof is re-runnable by hand from its own directory and its transcripts are beside it. [the CLOSED-GATE proof: 1 test, 13 assertions, 2.5 s, rc=0 measured s2642; both mutants red.]
+  known  scripts/review-account-creation.test.mjs  F-SSL-4 (tasks/sprites-split-land.md, 2026-09-14, stage 1 of owner ruling A19 "A19 - that is ok"): NO CALLER, and DELIBERATELY UNROOTED because it is RED against this tree — measured on main 3b3f427a3 with Node 26.4.0, not inherited. rc=1, 302.3 s wall, 0 pass / 0 fail / 1 CANCELLED: its single test "atomic account identities preserve legacy accounts and isolate registration generations on SQLite and real Durable Objects" times out at its own 90,000 ms bound. It stands up a real wrangler Durable Object alongside SqliteStorage and scripts/test-accounts.mjs, so it is also the most expensive probe in this set by two orders of magnitude. It arrived with sol/code-review-20260908, the art half of an Astra campaign whose src half was left on another tree (reviews/drain-review-sprites-roster.md F-SPRDR-4, which measured the same class on scripts/dispose-skeleton.test.mjs 0!==1 and scripts/sprite-clip-fallback.test.mjs 2!==3 — those two were HELD BACK on the branch by this master's item 1; these six were taken because item 1 names them). It also owns its own vite server (it imports createServer from vite), so test:node-guards — which spawns none — is not its host in any case. NOT DISMISSED: the assertions read as real coverage for the src half, and they should be rooted in the SAME land that brings the src they test. Rooting it today would red every drain for a defect in neither the tree nor the guard (F-1460-1: a red board nobody trusts). RECOMMENDATION: root it with the src half, or retire it if that half never lands.
+  known  scripts/review-terminal-views.test.mjs    F-SSL-4 (tasks/sprites-split-land.md, 2026-09-14, stage 1 of owner ruling A19 "A19 - that is ok"): NO CALLER, and DELIBERATELY UNROOTED because it is RED against this tree — measured on main 3b3f427a3 with Node 26.4.0, not inherited. rc=1, <1 s, 0 pass / 1 fail: AssertionError "death: host stays connected before the deadline" in "terminal views wait for every seat relay deadline and survive the secured reset". It type-checks src through the typescript compiler API, so it reads the src half directly. It arrived with sol/code-review-20260908, the art half of an Astra campaign whose src half was left on another tree (reviews/drain-review-sprites-roster.md F-SPRDR-4, which measured the same class on scripts/dispose-skeleton.test.mjs 0!==1 and scripts/sprite-clip-fallback.test.mjs 2!==3 — those two were HELD BACK on the branch by this master's item 1; these six were taken because item 1 names them). It also owns its own vite server (it imports createServer from vite), so test:node-guards — which spawns none — is not its host in any case. NOT DISMISSED: the assertions read as real coverage for the src half, and they should be rooted in the SAME land that brings the src they test. Rooting it today would red every drain for a defect in neither the tree nor the guard (F-1460-1: a red board nobody trusts). RECOMMENDATION: root it with the src half, or retire it if that half never lands.
+  known  server/codex-shim/serve.live.test.mjs     F-2272-1 RULED 2026-09-19 (owner, verbatim: "I agree with all your recommendations on the decisions - good work"; the register: "split the file, root the two pure arms in the battery, owner-gate the live arms"). DELIBERATELY UNROOTED, AND THE REASON IS MONEY RATHER THAN WALL TIME: its three arms ride the owner's Codex subscription. Measured at the s2272 drain, ~16.7k prompt tokens per run (model=gpt-5.6-luna, 16,741 prompt + 19 completion, 10.5 s for the single round trip; the concurrency arm fires three more at 6.0/4.8/6.0 s). Per CLAUDE.md §7.3 anything spending money is an OWNER decision, not a fire's, so this file is behind TWO independent conditions and a battery can never spend by accident: `GR_CODEX_LIVE=1` (nobody asked to spend) on top of `hasCodexAuth()` (no subscription in this shell). MEASURED 2026-09-19 on this tree with NEITHER set: rc=0, 3 tests, 0 pass, 3 SKIPPED with the reason printed on each line, 0.08 s wall and zero tokens - so collecting this file costs nothing anywhere. `npm run test:codex-shim` is the single caller that sets the flag, and it is an owner-run command by design. It is also structurally unfit for a pre-merge battery on a second, independent ground: it depends on a third-party service over the network, so an outage would red every unrelated drain and the gate would be excused into uselessness inside a week (F-1460-1, the cross-engine fate). NOT A COVERAGE HOLE ANY MORE, which is what changed today: the five PURE arms this file was split from - including "browser-origin requests cannot spend subscription quota", the security assertion protecting this very allowance - now live in server/codex-shim/serve.test.mjs and are ROOTED in npm:test:ledger-guards, measured 5 pass / 0 fail / 0.39 s on this tree. What stays unrooted is only what cannot be run for free.
+
+  1 baselined orphan(s) now have a caller — tighten the baseline:
+    + scripts/halo-reextraction-check.mjs
+
+FAIL — 6 gate(s) with no caller and no recorded reason:
+  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-clean/scripts/fixture-teardown.test.mjs
+  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-clean/scripts/subject.test.mjs
+  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-leak/scripts/fixture-teardown.test.mjs
+  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-leak/scripts/subject.test.mjs
+  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-zero/scripts/fixture-teardown.test.mjs
+  artifacts/gr-campaign-fixture-cleanup-1/diagnostic-zero/scripts/subject.test.mjs
+
+  A gate nothing calls is an unread verdict: scripts/citation-title-guard.mjs was RED
+  against the real tree for nine fires while nine fires reported green batteries (F-1252-2).
+  Either give it a caller (run-guards.mjs GUARDS, or a pipeline shell), or record WHY it
+  is deliberately unrooted via --update-baseline and write the reason in.
+
+guards: 3/5 passed -- RED: test:node-guards, test:gate-callers
+guard-stats: appended 5 record(s) to /Users/robin/.goldrush/fire-s2722/wt-fixture/logs/guard-stats.jsonl
+
+
+SUMMARY {"campaign spec":0,"diff-selected guards":1}
+OVERALL rc=1

@@ -1,0 +1,39 @@
+{
+  "candidate": "0be1f8ee2",
+  "policy": {
+    "root": 0,
+    "linkedWorktree": 2,
+    "reason": "The checker requires the live primary board; root recheck CLEAR."
+  },
+  "typecheck": {
+    "rc": 0,
+    "seconds": 7.3
+  },
+  "build": {
+    "rc": 0,
+    "seconds": 44.4
+  },
+  "diffGuards": {
+    "rc": 1,
+    "seconds": 905,
+    "passed": 4,
+    "total": 5,
+    "nodeGuards": {
+      "rc": "signal:SIGTERM",
+      "seconds": 900,
+      "partialOk": 488,
+      "fileFailure": "scripts/evidence-readers.test.mjs: write EPIPE",
+      "finalSummary": false
+    },
+    "powerP95Ms": 0.454
+  },
+  "evidenceBudget": {
+    "rc": 0,
+    "bytes": 646406,
+    "limit": 40000000
+  },
+  "wrapper": {
+    "rc": 1,
+    "postReceiptError": "process.exitCode received the runBattery object; per-job receipts above were already complete. This did not cause the 900-second child timeout."
+  }
+}

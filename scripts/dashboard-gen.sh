@@ -262,7 +262,10 @@ while IFS= read -r line; do
   BLOCKED="$BLOCKED$(printf '%s
     ⏳ blocked %s min (tracked since first sighting)' "$txt" "$(mins_ago "$first")")
 "
-done < <(grep -E 'GATE: ' tasks/BACKLOG.md 2>/dev/null | grep -v '^#' | grep -viE 'CLOSED|GATE: *closed|SHIPPED|superseded|RESOLVED|✅|🟢|~~|RETIRED|AUTHORED|QUEUED|DO NOT QUEUE|non-blocking|no action owed|RULED|CURED|DRAINED|MERGED|LANDED|DISCHARGED|^<br>|^ *<br>')
+# ledger-shape-1 (owner ruling 2026-09-24, item 13a): the ledger is the index PLUS tasks/backlog/**.
+# `cat ... | grep`, never `grep file1 file2`: multi-file grep prefixes every hit with its filename,
+# which the `while read` loop above would carry straight into the panel text and the shasum key.
+done < <(cat tasks/BACKLOG.md tasks/backlog/*.md 2>/dev/null | grep -E 'GATE: ' | grep -v '^#' | grep -viE 'CLOSED|GATE: *closed|SHIPPED|superseded|RESOLVED|✅|🟢|~~|RETIRED|AUTHORED|QUEUED|DO NOT QUEUE|non-blocking|no action owed|RULED|CURED|DRAINED|MERGED|LANDED|DISCHARGED|^<br>|^ *<br>')
 # F-DASH-2: the old pattern matched EVERY ledger row whose prose contains "GATE:" — this week's
 # finding style writes gates into closed rows constantly, so the panel showed ~200 ghosts.
 # Only rows whose gate is still genuinely pending survive the filter above; the OWNER'S DESK
@@ -279,7 +282,9 @@ while IFS= read -r line; do
   if [ -z "${first:-}" ]; then first=$NOW_EPOCH; echo "$h $first" >> "$SEEN"; fi
   OWNERS="$OWNERS$(printf '• %s   ⏳ %s min' "$txt" "$(mins_ago "$first")")
 "
-done < <(grep '^OWNER:' tasks/BACKLOG.md 2>/dev/null)
+# Same corpus, same reason (ledger-shape-1): an `^OWNER:` row is never moved by the split, but the
+# panel must read the whole ledger or a future one filed into a part would never reach the owner.
+done < <(cat tasks/BACKLOG.md tasks/backlog/*.md 2>/dev/null | grep '^OWNER:')
 [ -z "$OWNERS" ] && OWNERS="(nothing waiting on you)"
 OWNERS=$(printf '%s' "$OWNERS" | esc)
 

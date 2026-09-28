@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import terrainContractText from '../../assets/layer-contracts/m1-core.layer-contract.v1.json?raw';
 import { loadGeneratedTexture } from '../assets/generated';
 import { palette } from '../assets/palette';
@@ -691,7 +692,7 @@ export const createBankPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assi
 
 export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assign(
   () => {
-    const mesh = new THREE.Mesh(createExtendedRiverGeometry(), createLivingWaterMaterial(waterMaterialConfig(false)));
+    const mesh = new THREE.Mesh(WATER_MASK ? createMaskedWaterGeometry(WATER_MASK.regions.filter((region) => region.zone !== 'ford')) : createExtendedRiverGeometry(), createLivingWaterMaterial(waterMaterialConfig(false)));
     mesh.userData.visualHalfWidth = visualWaterWidth() / 2;
     mesh.rotation.x = -Math.PI / 2;
     mesh.position.y = WATER_Y;
@@ -703,6 +704,24 @@ export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.ass
 );
 
 export function createFordPlaceholder(range: FordRange = defaultFordRange()): THREE.Mesh {
+  if (WATER_MASK) {
+    const regions = WATER_MASK.regions.filter((region) => region.zone === 'ford' && region.id === range.id);
+    const material = createLivingWaterMaterial(waterMaterialConfig(true, range));
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      // Mask fords can be offset in Z: their local UV span owns the shallow fade.
+      shader.fragmentShader = shader.fragmentShader.replace('vWaterWorld.y, waterFord)', `(vWaterUv.y - 0.5) * ${visualWaterWidth().toFixed(3)}, waterFord)`);
+    };
+    const cacheKey = material.customProgramCacheKey.bind(material);
+    material.customProgramCacheKey = () => `${cacheKey()}-mask-ford`;
+    const mesh = new THREE.Mesh(createMaskedWaterGeometry(regions), material);
+    mesh.rotation.x = -Math.PI / 2;
+    mesh.position.y = WATER_Y + 0.015;
+    mesh.renderOrder = RenderLayers.groundDecals;
+    mesh.receiveShadow = true;
+    return tagPlaceholder(mesh, assetSlots.terrainFord);
+  }
   const mesh = new THREE.Mesh(
     new THREE.PlaneGeometry(range.maxX - range.minX, visualWaterWidth(), 1, 1),
     createLivingWaterMaterial(waterMaterialConfig(true, range)),
@@ -728,9 +747,14 @@ export function createTerrainView(): TerrainView {
   const fords: THREE.Mesh[] = [];
   const fordStones: THREE.InstancedMesh[] = [];
   const gravelBars: THREE.Mesh[] = [];
-  if (ACTIVE_CONTRACT.tileParams.river) {
+  if (WATER_MASK || ACTIVE_CONTRACT.tileParams.river) {
     river = createRiverPlaceholder();
-    for (const range of FORD_RANGES) {
+    const surfaceFords = WATER_MASK ? WATER_MASK.regions.filter((region) => region.zone === 'ford').map((region) => {
+      const minX = region.kind === 'rect' ? region.minX : Math.min(...region.points.map((point) => point.x)) - region.halfWidth;
+      const maxX = region.kind === 'rect' ? region.maxX : Math.max(...region.points.map((point) => point.x)) + region.halfWidth;
+      return { id: region.id, minX, maxX, centerX: (minX + maxX) / 2, halfWidth: (maxX - minX) / 2 };
+    }) : FORD_RANGES;
+    for (const range of surfaceFords) {
       const ford = createFordPlaceholder(range);
       const stones = createFordStones(WATER_Y, range.centerX);
       fords.push(ford);
@@ -1199,6 +1223,93 @@ function createVistaRingGeometry(): THREE.BufferGeometry {
   return geometry;
 }
 
+/** A band is the union of straight capsules, exactly as the simulation mask declares it.
+ * Round outer joins and caps keep the dry plait dry; inner joins meet at their offset intersection.
+ * All regions share one draw and the existing living-water material. No simulation state changes.
+ */
+function createMaskedWaterGeometry(regions: readonly ContractWaterMaskRegion[]): THREE.BufferGeometry {
+  const geometries = regions.map((region) => {
+    const shape = new THREE.Shape();
+    if (region.kind === 'rect') {
+      shape.moveTo(region.minX, region.minZ);
+      shape.lineTo(region.maxX, region.minZ);
+      shape.lineTo(region.maxX, region.maxZ);
+      shape.lineTo(region.minX, region.maxZ);
+      shape.closePath();
+    } else {
+      const radius = region.halfWidth;
+      const points = region.points;
+      const angles = points.slice(1).map((point, index) => Math.atan2(point.z - points[index]!.z, point.x - points[index]!.x));
+      const edge = (index: number, angle: number) => {
+        const point = points[index]!;
+        shape.lineTo(point.x + Math.cos(angle) * radius, point.z + Math.sin(angle) * radius);
+      };
+      const first = points[0]!;
+      shape.moveTo(first.x - Math.sin(angles[0]!) * radius, first.z + Math.cos(angles[0]!) * radius);
+      for (const side of [1, -1]) {
+        for (let step = 1; step < points.length - 1; step += 1) {
+          const index = side === 1 ? step : points.length - 1 - step;
+          const before = angles[index - 1]!;
+          const after = angles[index]!;
+          const turn = Math.atan2(Math.sin(after - before), Math.cos(after - before));
+          const incoming = (side === 1 ? before : after) + side * Math.PI / 2;
+          const outgoing = (side === 1 ? after : before) + side * Math.PI / 2;
+          const point = points[index]!;
+          if (turn * side < 0) {
+            edge(index, incoming);
+            shape.absarc(point.x, point.z, radius, incoming, outgoing, true);
+          } else {
+            const middle = before + turn / 2 + side * Math.PI / 2;
+            const reach = radius / Math.max(0.001, Math.cos(turn / 2));
+            shape.lineTo(point.x + Math.cos(middle) * reach, point.z + Math.sin(middle) * reach);
+          }
+        }
+        const index = side === 1 ? points.length - 1 : 0;
+        const angle = (side === 1 ? angles.at(-1)! : angles[0]!) + side * Math.PI / 2;
+        edge(index, angle);
+        shape.absarc(points[index]!.x, points[index]!.z, radius, angle, angle - Math.PI, true);
+      }
+      shape.closePath();
+    }
+    const geometry = new THREE.ShapeGeometry(shape, 16);
+    const positions = geometry.getAttribute('position');
+    const uv = geometry.getAttribute('uv');
+    for (let i = 0; i < positions.count; i += 1) {
+      const x = positions.getX(i), z = positions.getY(i);
+      let across = 0;
+      if (region.kind === 'rect') {
+        across = (z - region.minZ) / (region.maxZ - region.minZ);
+      } else {
+        let closest = Infinity;
+        for (let j = 1; j < region.points.length; j += 1) {
+          const a = region.points[j - 1]!, b = region.points[j]!;
+          const dx = b.x - a.x, dz = b.z - a.z;
+          const t = THREE.MathUtils.clamp(((x - a.x) * dx + (z - a.z) * dz) / (dx * dx + dz * dz), 0, 1);
+          const distance = Math.hypot(x - a.x - t * dx, z - a.z - t * dz);
+          if (distance < closest) {
+            closest = distance;
+            across = 0.5 + ((z - a.z) * dx - (x - a.x) * dz) / Math.hypot(dx, dz) / (2 * region.halfWidth);
+          }
+        }
+      }
+      positions.setY(i, -z);
+      uv.setXY(i, (x + CLAIM_HALF_X) / CLAIM_WIDTH, across);
+    }
+    // Reflecting the shape into the fallback's XY plane reverses its winding.
+    const index = geometry.getIndex()!;
+    for (let i = 0; i < index.count; i += 3) {
+      const b = index.getX(i + 1);
+      index.setX(i + 1, index.getX(i + 2));
+      index.setX(i + 2, b);
+    }
+    geometry.computeVertexNormals();
+    return geometry;
+  });
+  const geometry = geometries.length ? mergeGeometries(geometries)! : new THREE.BufferGeometry();
+  for (const part of geometries) part.dispose();
+  return geometry;
+}
+
 function createExtendedRiverGeometry(): THREE.BufferGeometry {
   const halfWidth = visualWaterWidth() / 2;
   const axis = vistaAxes().fullAxis;
@@ -1539,7 +1650,7 @@ function waterMaterialConfig(ford: boolean, range: FordRange = defaultFordRange(
     visualHalfWidth: visualWaterWidth() / 2,
     lengthHalf: VISTA_RADIUS,
     fadeStart: riverFadeStart(),
-    fordHalfWidth: range.halfWidth,
+    fordHalfWidth: WATER_MASK && !ford ? -1 : range.halfWidth,
     riverDepth: waterDepth('river'),
     fordDepth: waterDepth('ford'),
     wadeDepth: Balance.terrainSim.wadeDepth,
@@ -1552,6 +1663,9 @@ function waterMaterialConfig(ford: boolean, range: FordRange = defaultFordRange(
 }
 
 function visualWaterWidth(): number {
+  if (WATER_MASK) return Math.max(...WATER_MASK.regions.map((region) => region.kind === 'rect'
+    ? region.maxZ - region.minZ
+    : region.halfWidth * 2));
   return (TILE_WATER?.visualHalfWidth ?? (RIVER_MAX_Z - RIVER_MIN_Z) / 2 + SHALLOWS_WIDTH) * 2;
 }
 

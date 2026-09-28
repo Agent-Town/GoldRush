@@ -1,0 +1,390 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e7-relay-valley&timescale=4",
+  "sim": 552.7999999999789,
+  "wave": 18,
+  "hp": 0,
+  "gold": 5,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "hero": {
+    "x": -48.91524915981293,
+    "y": 5.06,
+    "z": 45.678939729020215
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 46,
+      "maxHp": 46,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -49,
+        "z": 42
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 1,
+      "tier": 1,
+      "hp": 94,
+      "maxHp": 94,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -40,
+        "z": 43
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 2,
+      "tier": 1,
+      "hp": 106,
+      "maxHp": 106,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -45,
+        "z": 45
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 3,
+      "tier": 1,
+      "hp": 118,
+      "maxHp": 118,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -46,
+        "z": 39
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -44,
+        "z": 41
+      }
+    },
+    {
+      "id": "turret",
+      "index": 1,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -44,
+        "z": 37
+      }
+    },
+    {
+      "id": "turret",
+      "index": 2,
+      "tier": 1,
+      "hp": 82,
+      "maxHp": 82,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -42,
+        "z": 36
+      }
+    },
+    {
+      "id": "turret",
+      "index": 3,
+      "tier": 1,
+      "hp": 106,
+      "maxHp": 106,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -50,
+        "z": 43
+      }
+    }
+  ],
+  "e7Signal": {
+    "enabled": true,
+    "graphHash": "fnv1a32:af35b319",
+    "nodes": [
+      {
+        "id": "beacon-0",
+        "x": -49,
+        "z": 42
+      },
+      {
+        "id": "beacon-1",
+        "x": -40,
+        "z": 43
+      },
+      {
+        "id": "beacon-2",
+        "x": -45,
+        "z": 45
+      },
+      {
+        "id": "beacon-3",
+        "x": -46,
+        "z": 39
+      },
+      {
+        "id": "turret-0",
+        "x": -44,
+        "z": 41
+      },
+      {
+        "id": "turret-1",
+        "x": -44,
+        "z": 37
+      },
+      {
+        "id": "turret-2",
+        "x": -42,
+        "z": 36
+      },
+      {
+        "id": "turret-3",
+        "x": -50,
+        "z": 43
+      }
+    ],
+    "links": [
+      {
+        "from": "beacon-0",
+        "to": "beacon-1"
+      },
+      {
+        "from": "beacon-0",
+        "to": "beacon-2"
+      },
+      {
+        "from": "beacon-0",
+        "to": "beacon-3"
+      },
+      {
+        "from": "beacon-0",
+        "to": "turret-0"
+      },
+      {
+        "from": "beacon-0",
+        "to": "turret-1"
+      },
+      {
+        "from": "beacon-0",
+        "to": "turret-2"
+      },
+      {
+        "from": "beacon-0",
+        "to": "turret-3"
+      },
+      {
+        "from": "beacon-1",
+        "to": "beacon-2"
+      },
+      {
+        "from": "beacon-1",
+        "to": "beacon-3"
+      },
+      {
+        "from": "beacon-1",
+        "to": "turret-0"
+      },
+      {
+        "from": "beacon-1",
+        "to": "turret-1"
+      },
+      {
+        "from": "beacon-1",
+        "to": "turret-2"
+      },
+      {
+        "from": "beacon-1",
+        "to": "turret-3"
+      },
+      {
+        "from": "beacon-2",
+        "to": "beacon-3"
+      },
+      {
+        "from": "beacon-2",
+        "to": "turret-0"
+      },
+      {
+        "from": "beacon-2",
+        "to": "turret-1"
+      },
+      {
+        "from": "beacon-2",
+        "to": "turret-2"
+      },
+      {
+        "from": "beacon-2",
+        "to": "turret-3"
+      },
+      {
+        "from": "beacon-3",
+        "to": "turret-0"
+      },
+      {
+        "from": "beacon-3",
+        "to": "turret-1"
+      },
+      {
+        "from": "beacon-3",
+        "to": "turret-2"
+      },
+      {
+        "from": "beacon-3",
+        "to": "turret-3"
+      },
+      {
+        "from": "turret-0",
+        "to": "turret-1"
+      },
+      {
+        "from": "turret-0",
+        "to": "turret-2"
+      },
+      {
+        "from": "turret-0",
+        "to": "turret-3"
+      },
+      {
+        "from": "turret-1",
+        "to": "turret-2"
+      },
+      {
+        "from": "turret-1",
+        "to": "turret-3"
+      },
+      {
+        "from": "turret-2",
+        "to": "turret-3"
+      }
+    ],
+    "linkedCoverage": true,
+    "threatVisibilityBonus": true,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [
+      {
+        "id": "ford-table",
+        "label": "The ford table",
+        "state": "lit",
+        "patched": false
+      },
+      {
+        "id": "lighthouse-keeper",
+        "label": "Lighthouse keeper",
+        "state": "lit",
+        "patched": false
+      }
+    ],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 2,
+    "latestFragment": "First tower up. A wrong number answered, confused and kind. The line stays open."
+  },
+  "playbookUse": {
+    "declared": true,
+    "objective": "relay",
+    "objectiveMet": true,
+    "uses": 1,
+    "relaysLitByProgram": [
+      "relay-site-r1"
+    ]
+  },
+  "air": null,
+  "physics": {
+    "active": false,
+    "contractId": "e7-relay-valley",
+    "source": "default",
+    "movement": "normal",
+    "feelG": 1,
+    "lobArcDistanceMultiplier": 1,
+    "lobAirTimeMultiplier": 1,
+    "knockbackScale": 1,
+    "orbitalReturn": false,
+    "vacuum": false,
+    "fixedTimestepOnly": true,
+    "filteredMovement": {
+      "x": 0,
+      "y": 0
+    },
+    "adaptedLobs": [
+      {
+        "resumeKey": "orbital:kineticLobber",
+        "range": 15,
+        "airTime": 1.68
+      }
+    ]
+  },
+  "atmosphere": null,
+  "squall": null,
+  "preserveVent": null,
+  "repairs": 0
+}

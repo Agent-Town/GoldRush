@@ -1,0 +1,64 @@
+The original full npm command exited 1 with two failing top-level tests: `desk-declaration-guard.test.mjs` rejects the lane because its tracked handoff differs from the live main handoff, and `node-guards-contention.test.mjs` could not observe a quiet host for 300 ms. Neither is a campaign assertion or fixture survivor. The nested sweep reports those same two failing children while correctly passing with **162 owners and zero survivors**. All campaign tests also pass in the full battery. The longest TAP silence was **915.3 s** against the unchanged **2700 s** watchdog.
+
+Because its first leg failed, npm's original `&&` tail did not run. Every original tail leg was then run independently through the permanent battery, preserving its command and its own verdict. Six of seven legs passed: ticker statistics, findings state, blocker panel, ruling propagation, NUL audit, and the final **87/87** review/guard tests. The desk-declaration CLI exited **2** on the same stale linked-worktree handoff. The independent tail battery exits **1**, and the original full command remains RED (`chained-gates.txt`). No board files, test guards, limits or runtime source were changed to bypass these failures.
+
+## Remaining list in order
+
+1. Orchestrator: run the complete Node command against a current authoritative handoff and an exclusive host. The linked-worktree desk refusal and host-contention failure remain gate blockers; their owners are outside this task firewall.
+2. Integrate through the normal drain only after those broader gates are satisfied. No cleanup implementation or focused verification remains owed.
+
+## Commits and custody
+
+Source commit: `a3764d3a3b97b6d6c02e265eeaccdfa1a016f499` (`test: guarantee campaign fixture cleanup and retain child failures`). Evidence commit is the final lane tip; resolve it with `git log -1 --format=%H -- artifacts/gr-campaign-fixture-cleanup-1/report.md`. No main files, other lanes, or runtime source were changed. No server remains from this task; only owned Vite child processes were signaled. Detached control source is restored, and its only tracked difference is the task-prescribed art link.
+
+The task firewall permits only the two test scripts and this evidence directory. Durable handoff knowledge is therefore retained here rather than writing an out-of-scope vault note. The detached arena, art-store alias and local environment link are disk-local fixtures, not commit inputs.
+
+exec
+/bin/zsh -lc "git diff --cached --check -- '*.mjs' '*.cjs' '*.py' '*.sh' '*.md' '*.json'
+git commit -m 'test: record campaign cleanup controls and gate hold'
+git log -2 --format='%h %s'
+git status --short --untracked-files=no
+lsof -nP -iTCP:5317 -sTCP:LISTEN" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ exited 1 in 132ms:
+codex
+**READY-FOR-GATES — with a gate hold.**
+
+Committed `a3764d3a3` (fix) and `fafbe8698` (evidence).
+
+- Cleanup: 162 owners, zero survivors. Identical injected assertion stays red; survivors drop **1 → 0**.
+- Passed: campaign **6/6**, adjacent **34/34**, tail **87/87**, TypeScript/build, four error-free boots. Node **26.4.0**.
+- Corrected clean-base control passed. Historical campaign assertion remains unreproduced.
+- Full Node: **1,033 passed, 5 skipped, 2 failed**—live-board mismatch and host contention.
+
+Remaining: orchestrator reruns the full gate with a current handoff and exclusive host, then integrates.
+
+[Full report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/report.md>)
+tokens used
+314,895
+**READY-FOR-GATES — with a gate hold.**
+
+Committed `a3764d3a3` (fix) and `fafbe8698` (evidence).
+
+- Cleanup: 162 owners, zero survivors. Identical injected assertion stays red; survivors drop **1 → 0**.
+- Passed: campaign **6/6**, adjacent **34/34**, tail **87/87**, TypeScript/build, four error-free boots. Node **26.4.0**.
+- Corrected clean-base control passed. Historical campaign assertion remains unreproduced.
+- Full Node: **1,033 passed, 5 skipped, 2 failed**—live-board mismatch and host contention.
+
+Remaining: orchestrator reruns the full gate with a current handoff and exclusive host, then integrates.
+
+[Full report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/report.md>)
+warning: adding embedded git repository: artifacts/gr-campaign-fixture-cleanup-1/control-arena
+hint: You've added another git repository inside your current repository.
+hint: Clones of the outer repository will not contain the contents of
+hint: the embedded repository and will not know how to obtain it.
+hint: If you meant to add a submodule, use:
+hint:
+hint: 	git submodule add <url> artifacts/gr-campaign-fixture-cleanup-1/control-arena
+hint:
+hint: If you added this path by mistake, you can remove it from the
+hint: index with:
+hint:
+hint: 	git rm --cached artifacts/gr-campaign-fixture-cleanup-1/control-arena
+hint:
+hint: See "git help submodule" for more information.
+hint: Disable this message with "git config set advice.addEmbeddedRepo false"

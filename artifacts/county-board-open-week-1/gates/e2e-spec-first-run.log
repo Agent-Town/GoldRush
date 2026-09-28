@@ -1,0 +1,181 @@
+(node:18262) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+
+(node:18329) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/10] [desktop-chrome] › e2e/county-board-open-week.spec.ts:120:1 › door: a named week and the open alias serve that week alone, and the all-time board keeps its shape
+[2/10] [desktop-chrome] › e2e/county-board-open-week.spec.ts:166:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar
+  1) [desktop-chrome] › e2e/county-board-open-week.spec.ts:166:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+
+    Error: r2026w40
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "bad_rotation"
+    Received: "bad_contract"
+
+      176 |     for (const week of [LATEST.id, 'open']) {
+      177 |       const refused = await door(kv, `contract=e1-drill-yard&epoch=epoch-1-frontier&rotation=${week}`);
+    > 178 |       expect(refused.body.error, week).toBe('bad_rotation');
+          |                                        ^
+      179 |     }
+      180 |     // The strict param arithmetic still refuses a repeat, and the earlier checks keep their precedence.
+      181 |     expect((await door(kv, `${CLAIM}&rotation=${LATEST.id}&rotation=${LATEST.id}`)).body.error).toBe('bad_contract');
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:178:40
+        at atInstant (/Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:111:12)
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:169:3
+
+    Error Context: test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:18390) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/10] [desktop-chrome] › e2e/county-board-open-week.spec.ts:290:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away
+[desktop-chrome] › e2e/county-board-open-week.spec.ts:290:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away
+county board open week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/10] [desktop-chrome] › e2e/county-board-open-week.spec.ts:370:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open
+  2) [desktop-chrome] › e2e/county-board-open-week.spec.ts:370:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "GET https://agenttown.app/api/stats",
+    + ]
+
+      409 |   await expect(page.getByTestId('county-standings-board')).toHaveText('No standings yet; the door is open.');
+      410 |   expect(traffic.methods.filter((method) => method === 'POST')).toHaveLength(1);
+    > 411 |   expect(traffic.live).toEqual([]);
+          |                        ^
+      412 |   expectNoConsoleErrors(watch, 'own standing on the week');
+      413 | });
+      414 |
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:411:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/county-board-open-week-boa-b999f-ding-on-the-board-they-open-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/county-board-open-week-boa-b999f-ding-on-the-board-they-open-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/county-board-open-week-boa-b999f-ding-on-the-board-they-open-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/county-board-open-week-boa-b999f-ding-on-the-board-they-open-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:18596) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/10] [desktop-chrome] › e2e/county-board-open-week.spec.ts:415:1 › board: a contract no week carries keeps the one board it always had
+[desktop-chrome] › e2e/county-board-open-week.spec.ts:415:1 › board: a contract no week carries keeps the one board it always had
+a contract off the weeks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+
+(node:18717) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/10] [mobile-chrome] › e2e/county-board-open-week.spec.ts:120:1 › door: a named week and the open alias serve that week alone, and the all-time board keeps its shape
+[7/10] [mobile-chrome] › e2e/county-board-open-week.spec.ts:166:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar
+  3) [mobile-chrome] › e2e/county-board-open-week.spec.ts:166:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+
+    Error: r2026w40
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "bad_rotation"
+    Received: "bad_contract"
+
+      176 |     for (const week of [LATEST.id, 'open']) {
+      177 |       const refused = await door(kv, `contract=e1-drill-yard&epoch=epoch-1-frontier&rotation=${week}`);
+    > 178 |       expect(refused.body.error, week).toBe('bad_rotation');
+          |                                        ^
+      179 |     }
+      180 |     // The strict param arithmetic still refuses a repeat, and the earlier checks keep their precedence.
+      181 |     expect((await door(kv, `${CLAIM}&rotation=${LATEST.id}&rotation=${LATEST.id}`)).body.error).toBe('bad_contract');
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:178:40
+        at atInstant (/Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:111:12)
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:169:3
+
+    Error Context: test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/county-board-open-week-doo-335bb-ther-read-keeps-its-grammar-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:18774) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[8/10] [mobile-chrome] › e2e/county-board-open-week.spec.ts:290:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away
+[mobile-chrome] › e2e/county-board-open-week.spec.ts:290:1 › board: a rotation contract opens on the live week under its own label, with the all-time board one tap away
+county board open week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[9/10] [mobile-chrome] › e2e/county-board-open-week.spec.ts:370:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open
+  4) [mobile-chrome] › e2e/county-board-open-week.spec.ts:370:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "GET https://agenttown.app/api/stats",
+    + ]
+
+      409 |   await page.goto('/');
+      410 |   await openCountyStandings(page);
+    > 411 |   await expect(page.getByTestId('county-standings-week-live')).toHaveText(liveSeedLabel(claimSeed(open!))!);
+          |                        ^
+      412 |   await expect(page.getByTestId('county-standings-row-1')).toContainText('Robin');
+      413 |   expect(traffic.asks.at(-1)).toBe(`?${CLAIM}&rotation=${open!.id}`);
+      414 |   await shoot(page, `own-standing-${testInfo.project.name}.png`);
+        at /Users/robin/Claude/Projects/wt-cbw1/e2e/county-board-open-week.spec.ts:411:24
+
+    Error: apiRequestContext._wrapApiCall: file data stream has unexpected number of bytes
+
+    Error: End of central directory record signature not found. Either not a zip file, or file is truncated.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/county-board-open-week-boa-b999f-ding-on-the-board-they-open-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/county-board-open-week-boa-b999f-ding-on-the-board-they-open-mobile-chrome/error-context.md
+
+
+
+(node:18948) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[10/10] [mobile-chrome] › e2e/county-board-open-week.spec.ts:415:1 › board: a contract no week carries keeps the one board it always had
+[mobile-chrome] › e2e/county-board-open-week.spec.ts:415:1 › board: a contract no week carries keeps the one board it always had
+a contract off the weeks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  4 failed
+    [desktop-chrome] › e2e/county-board-open-week.spec.ts:166:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+    [desktop-chrome] › e2e/county-board-open-week.spec.ts:370:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open 
+    [mobile-chrome] › e2e/county-board-open-week.spec.ts:166:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+    [mobile-chrome] › e2e/county-board-open-week.spec.ts:370:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open 
+  6 passed (26.1s)

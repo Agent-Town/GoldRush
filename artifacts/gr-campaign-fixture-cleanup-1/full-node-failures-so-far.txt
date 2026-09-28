@@ -1,0 +1,42 @@
+not ok 223 - the live board is green under this guard (baseline is honest)
+  ---
+  duration_ms: 236.338
+  type: 'test'
+  location: '/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/scripts/desk-declaration-guard.test.mjs:163:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    === desk-declaration-guard ===
+    corpus tree       : linked-worktree
+    desk F-IDs        : 2
+    desk slugs        : 1
+    🔺 desk segments  : 3
+    unexamined        : 0
+    with a BACKLOG row: 3
+    undeclared        : 0 (grandfathered 0)
+    
+    desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+      line-1 is NOT the one main carries.
+      Both corpora here are TRACKED, so this tree is frozen at its branch point and
+      the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+      would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+      proven by manufacturing: a real defect on main read byte-identically to a clean
+      board from here).
+      Re-run from the main worktree, or pass --root <main worktree>.
+    
+    
+    2 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/desk-declaration-guard.test.mjs:167:10)
+    Test.runInAsyncScope (node:async_hooks:226:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...

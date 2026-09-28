@@ -1,0 +1,23 @@
+(node:5710) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+(node:5768) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/profile-first-boot.spec.ts:41:1 › cleared-storage boot asks who is prospecting and creates no Robin ghost (5.6s)
+  ✓   2 [desktop-chrome] › e2e/profile-first-boot.spec.ts:72:1 › existing profile state boots straight to the menu (1.1s)
+  ✓   3 [desktop-chrome] › e2e/profile-first-boot.spec.ts:85:1 › pack the ledger downloads human-readable active profile data (1.0s)
+  ✓   4 [desktop-chrome] › e2e/profile-first-boot.spec.ts:106:1 › unpack a ledger previews, imports as a new profile, and suffixes collisions (1.1s)
+  ✓   5 [desktop-chrome] › e2e/profile-first-boot.spec.ts:138:1 › malformed ledgers are rejected warmly and the picker fits at 390px (923ms)
+  ✓   6 [desktop-chrome] › e2e/profile-first-boot.spec.ts:264:1 › blocked profile storage boots without offering an unusable first profile (884ms)
+(node:6921) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 [mobile-chrome] › e2e/profile-first-boot.spec.ts:41:1 › cleared-storage boot asks who is prospecting and creates no Robin ghost (6.2s)
+  ✓   8 [mobile-chrome] › e2e/profile-first-boot.spec.ts:72:1 › existing profile state boots straight to the menu (1.2s)
+  ✓   9 [mobile-chrome] › e2e/profile-first-boot.spec.ts:85:1 › pack the ledger downloads human-readable active profile data (968ms)
+  ✓  10 [mobile-chrome] › e2e/profile-first-boot.spec.ts:106:1 › unpack a ledger previews, imports as a new profile, and suffixes collisions (1.1s)
+  ✓  11 [mobile-chrome] › e2e/profile-first-boot.spec.ts:138:1 › malformed ledgers are rejected warmly and the picker fits at 390px (1.2s)
+  ✓  12 [mobile-chrome] › e2e/profile-first-boot.spec.ts:264:1 › blocked profile storage boots without offering an unusable first profile (1.1s)
+
+  12 passed (23.6s)

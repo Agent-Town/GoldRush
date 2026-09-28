@@ -1,0 +1,62 @@
+{
+  "label": "before-warm-2",
+  "root": "/Users/robin/Claude/Projects/wt-wvc1",
+  "port": 5326,
+  "force": false,
+  "spawnedAt": "2026-09-25T14:47:06.529Z",
+  "pid": 10948,
+  "load1AtStart": 14.93,
+  "load1AtBoot": 14.55,
+  "readyMs": 342,
+  "bootMs": null,
+  "page": {
+    "ok": false,
+    "pageStart": 1790347627013,
+    "pageMs": null,
+    "bootedAt": null,
+    "error": "page.waitForFunction: Timeout 180000ms exceeded.",
+    "navigationsAtBoot": 2,
+    "reloadsBeforeBoot": 1,
+    "reloadsInSettle": 0,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep)",
+      "[boot-guard] chunk: game/Game: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5326/src/game/Game.ts",
+      "pageerror: Failed to fetch dynamically imported module: http://127.0.0.1:5326/src/town/TownTavernPilot.ts"
+    ],
+    "badResponses": [
+      "504 Outdated Optimize Dep /node_modules/.vite/deps/three_examples_jsm_math_ConvexHull__js.js?v=bc5a5c43",
+      "504 Outdated Optimize Dep /node_modules/.vite/deps/lil-gui.js?v=bc5a5c43",
+      "504 Outdated Optimize Dep /node_modules/.vite/deps/three_examples_jsm_loaders_GLTFLoader__js.js?v=bc5a5c43",
+      "504 Outdated Optimize Dep /node_modules/.vite/deps/meshoptimizer.js?v=bc5a5c43"
+    ],
+    "failedRequests": [
+      "net::ERR_ABORTED /node_modules/.vite/deps/three.module-BifoCqb3.js?v=bc5a5c43",
+      "net::ERR_ABORTED /node_modules/.vite/deps/three_examples_jsm_math_ConvexHull__js.js?v=bc5a5c43",
+      "net::ERR_ABORTED /node_modules/.vite/deps/lil-gui.js?v=bc5a5c43",
+      "net::ERR_ABORTED /node_modules/.vite/deps/three_examples_jsm_loaders_GLTFLoader__js.js?v=bc5a5c43",
+      "net::ERR_ABORTED /node_modules/.vite/deps/meshoptimizer.js?v=bc5a5c43"
+    ]
+  },
+  "markers": {
+    "scanFailed": [
+      "+379ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ],
+    "tsconfigError": [
+      "+379ms \u001b[31m[TSCONFIG_ERROR] \u001b[0mFailed to load tsconfig '../tsconfig.json': Tsconfig not found"
+    ],
+    "newDepsOptimized": [],
+    "reoptimizing": [
+      "+113ms 9:47:06 PM [vite] (client) Re-optimizing dependencies because vite config has changed"
+    ],
+    "reloading": [
+      "+1487ms 9:47:08 PM [vite] (client) optimized dependencies changed. reloading"
+    ],
+    "errors": [
+      "+379ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ]
+  },
+  "stop": {
+    "code": 143,
+    "signal": null
+  }
+}

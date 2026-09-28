@@ -1,0 +1,22 @@
+branch test/map-play-proofs-1 tip 3ca8aa4df 2026-09-25 06:33Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/mpp1.json
+scratch store at the store's main 5793a96
+chain base b74e2ba2a
+md-3way reviews/sol-map-art-current-status-20260909.md: 50 keys; no double edits
+reviews/sol-map-art-current-status-20260909.md: md-3way
+merged 0b1cfa4a5
+cure mpp1: report committed 76fbd7c3a
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+e2e start 06:35Z: e2e/playability-secure.spec.ts e2e/m2-01-build-menu.spec.ts e2e/task-025-bandits-dont-swim.spec.ts
+e2e: rc=0   12 skipped   24 passed (1.8m)  06:37Z
+battery start 06:37Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1012 ℹ fail 1 ℹ skipped 5  06:55Z
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (1031450.529584ms)
+dirt after battery: 0
+mpp1-PREP-DONE
+verdict: clean
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+review: reviews/map-play-proofs-1.md

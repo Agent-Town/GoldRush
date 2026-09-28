@@ -1,0 +1,806 @@
+# manufactured defect in functions/api/_cors.ts, restored byte-identical afterwards (sha256 78a8420c0d9f74f25c02a4e980240d8f4137d48af1a3a5ddf1032af07a378972)
+# mutant line: return Boolean(env?.ALLOW_LOCALHOST_ORIGINS) && LOCALHOST_ORIGIN.test(origin);
+cors-probe (mutation m1-any-value): tree 4e97cb1b0, node v26.4.0; eight doors, every CORS entry point, called in process, no port, no live request
+door | entry | env | origin | status error | allow-origin | expected | verdict
+functions/api/_bugs.ts | postBug | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | postBug | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | postBug | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | postBug | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | postBug | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | listBugs | pages production | http://localhost:5188 | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | listBugs | pages production | http://127.0.0.1:5188 | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | listBugs | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | listBugs | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | listBugs | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | pages production | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | getBug | pages production | http://localhost:5188 | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | getBug | pages production | http://127.0.0.1:5188 | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | getBug | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | getBug | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | getBug | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | pages production | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_accounts.ts | requestCode | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | requestCode | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | requestCode | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | requestCode | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | requestCode | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | verifyCode | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | verifyCode | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | verifyCode | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | sessionStatus | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | sessionStatus | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | sessionStatus | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pushSave | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pushSave | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pushSave | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pushSave | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pushSave | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pullSave | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pullSave | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pullSave | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pullSave | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pullSave | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveVersions | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveVersions | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveVersions | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveProfiles | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveProfiles | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveProfiles | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | deleteAccount | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | deleteAccount | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | deleteAccount | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/redeem.ts | onRequest | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/redeem.ts | onRequest | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/redeem.ts | onRequest | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/redeem.ts | onRequest | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/redeem.ts | onRequest | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequest | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequest | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue | pages production | https://agenttown.app | 401 unauthorized | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | pages production | https://www.agenttown.app | 401 unauthorized | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | pages production | https://gold-rush-3in.pages.dev | 401 unauthorized | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | pages production | https://feature-x.gold-rush-3in.pages.dev | 401 unauthorized | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayVerdict | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayVerdict | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayVerdict | pages production | https://agenttown.app | 401 unauthorized | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | pages production | https://www.agenttown.app | 401 unauthorized | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | pages production | https://gold-rush-3in.pages.dev | 401 unauthorized | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | pages production | https://feature-x.gold-rush-3in.pages.dev | 401 unauthorized | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestStandingsReassay | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestStandingsReassay | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestStandingsReassay | pages production | https://agenttown.app | 401 unauthorized | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | pages production | https://www.agenttown.app | 401 unauthorized | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | pages production | https://gold-rush-3in.pages.dev | 401 unauthorized | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | pages production | https://feature-x.gold-rush-3in.pages.dev | 401 unauthorized | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/refusals.ts | onRequest | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/refusals.ts | onRequest | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/refusals.ts | onRequest | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/refusals.ts | onRequest | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/refusals.ts | onRequest | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/telemetry.ts | onRequest | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/telemetry.ts | onRequest | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/telemetry.ts | onRequest | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/telemetry.ts | onRequest | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/telemetry.ts | onRequest | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/stats.ts | onRequest | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/stats.ts | onRequest | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/stats.ts | onRequest | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/stats.ts | onRequest | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/stats.ts | onRequest | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | createRoom | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | createRoom | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | createRoom | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | connectRoom | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | connectRoom | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | connectRoom | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | inspectRoom | pages production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | inspectRoom | pages production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | inspectRoom | pages production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | pages production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | pages production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | pages production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | pages production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | postBug | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | postBug | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | postBug | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | postBug | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | postBug | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | listBugs | droplet production | http://localhost:5188 | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | listBugs | droplet production | http://127.0.0.1:5188 | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | listBugs | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | listBugs | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | listBugs | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | droplet production | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | getBug | droplet production | http://localhost:5188 | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | getBug | droplet production | http://127.0.0.1:5188 | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | getBug | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | getBug | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | getBug | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | droplet production | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_accounts.ts | requestCode | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | requestCode | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | requestCode | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | requestCode | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | requestCode | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | verifyCode | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | verifyCode | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | verifyCode | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | sessionStatus | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | sessionStatus | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | sessionStatus | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pushSave | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pushSave | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pushSave | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pushSave | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pushSave | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pullSave | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pullSave | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pullSave | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pullSave | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pullSave | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveVersions | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveVersions | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveVersions | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveProfiles | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveProfiles | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveProfiles | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | deleteAccount | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | deleteAccount | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | deleteAccount | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/redeem.ts | onRequest | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/redeem.ts | onRequest | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/redeem.ts | onRequest | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/redeem.ts | onRequest | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/redeem.ts | onRequest | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequest | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequest | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue | droplet production | https://agenttown.app | 401 unauthorized | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | droplet production | https://www.agenttown.app | 401 unauthorized | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | droplet production | https://gold-rush-3in.pages.dev | 401 unauthorized | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | droplet production | https://feature-x.gold-rush-3in.pages.dev | 401 unauthorized | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayVerdict | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayVerdict | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayVerdict | droplet production | https://agenttown.app | 401 unauthorized | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | droplet production | https://www.agenttown.app | 401 unauthorized | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | droplet production | https://gold-rush-3in.pages.dev | 401 unauthorized | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | droplet production | https://feature-x.gold-rush-3in.pages.dev | 401 unauthorized | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestStandingsReassay | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestStandingsReassay | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestStandingsReassay | droplet production | https://agenttown.app | 401 unauthorized | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | droplet production | https://www.agenttown.app | 401 unauthorized | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | droplet production | https://gold-rush-3in.pages.dev | 401 unauthorized | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | droplet production | https://feature-x.gold-rush-3in.pages.dev | 401 unauthorized | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/refusals.ts | onRequest | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/refusals.ts | onRequest | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/refusals.ts | onRequest | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/refusals.ts | onRequest | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/refusals.ts | onRequest | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/telemetry.ts | onRequest | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/telemetry.ts | onRequest | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/telemetry.ts | onRequest | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/telemetry.ts | onRequest | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/telemetry.ts | onRequest | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/stats.ts | onRequest | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/stats.ts | onRequest | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/stats.ts | onRequest | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/stats.ts | onRequest | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/stats.ts | onRequest | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | createRoom | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | createRoom | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | createRoom | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | connectRoom | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | connectRoom | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | connectRoom | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | inspectRoom | droplet production | http://localhost:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | inspectRoom | droplet production | http://127.0.0.1:5188 | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | inspectRoom | droplet production | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | droplet production | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | droplet production | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | droplet production | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | droplet production | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | postBug | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_bugs.ts | postBug | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_bugs.ts | postBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | postBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | postBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | listBugs | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_bugs.ts | listBugs | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_bugs.ts | listBugs | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | listBugs | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | listBugs | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | getBug | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_bugs.ts | getBug | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_bugs.ts | getBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | getBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | getBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_accounts.ts | requestCode | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | requestCode | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | requestCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | requestCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | requestCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | verifyCode | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | verifyCode | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | verifyCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | sessionStatus | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | sessionStatus | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | sessionStatus | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pushSave | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | pushSave | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | pushSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pushSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pushSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pullSave | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | pullSave | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | pullSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pullSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pullSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveVersions | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | saveVersions | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | saveVersions | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveProfiles | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | saveProfiles | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | saveProfiles | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | deleteAccount | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | deleteAccount | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | deleteAccount | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/redeem.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/redeem.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/redeem.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/redeem.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/redeem.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/standings.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 503 assay_unavailable | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequestAssayQueue | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 503 assay_unavailable | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/standings.ts | onRequestAssayQueue | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 503 assay_unavailable | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 503 assay_unavailable | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 503 assay_unavailable | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 503 assay_unavailable | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayVerdict | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 503 assay_unavailable | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequestAssayVerdict | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 503 assay_unavailable | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/standings.ts | onRequestAssayVerdict | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 503 assay_unavailable | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 503 assay_unavailable | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 503 assay_unavailable | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 503 assay_unavailable | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestStandingsReassay | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 503 assay_unavailable | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequestStandingsReassay | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 503 assay_unavailable | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/standings.ts | onRequestStandingsReassay | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 503 assay_unavailable | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 503 assay_unavailable | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 503 assay_unavailable | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 503 assay_unavailable | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/refusals.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/refusals.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/refusals.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/refusals.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/refusals.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/telemetry.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/telemetry.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/telemetry.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/telemetry.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/telemetry.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/stats.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/stats.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/stats.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/stats.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/stats.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | createRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_multiplayer.ts | createRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_multiplayer.ts | createRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | connectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_multiplayer.ts | connectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_multiplayer.ts | connectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | inspectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_multiplayer.ts | inspectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_multiplayer.ts | inspectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | development (ALLOW_LOCALHOST_ORIGINS=1) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | postBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_bugs.ts | postBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_bugs.ts | postBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | postBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | postBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | listBugs | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 404 (none) | MISMATCH
+functions/api/_bugs.ts | listBugs | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 404 (none) | MISMATCH
+functions/api/_bugs.ts | listBugs | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | listBugs | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | listBugs | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | getBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 404 (none) | MISMATCH
+functions/api/_bugs.ts | getBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 404 (none) | MISMATCH
+functions/api/_bugs.ts | getBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | getBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | getBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_accounts.ts | requestCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | requestCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | requestCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | requestCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | requestCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | verifyCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | verifyCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | verifyCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | sessionStatus | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | sessionStatus | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | sessionStatus | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pushSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | pushSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | pushSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pushSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pushSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pullSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | pullSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | pullSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pullSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pullSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveVersions | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | saveVersions | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | saveVersions | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveProfiles | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | saveProfiles | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | saveProfiles | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | deleteAccount | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | deleteAccount | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_accounts.ts | deleteAccount | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/redeem.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/redeem.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/redeem.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/redeem.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/redeem.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/standings.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/standings.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 503 assay_unavailable | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/standings.ts | onRequestAssayQueue | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 503 assay_unavailable | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/standings.ts | onRequestAssayQueue | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 503 assay_unavailable | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 503 assay_unavailable | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 503 assay_unavailable | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 503 assay_unavailable | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayVerdict | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 503 assay_unavailable | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/standings.ts | onRequestAssayVerdict | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 503 assay_unavailable | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/standings.ts | onRequestAssayVerdict | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 503 assay_unavailable | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 503 assay_unavailable | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 503 assay_unavailable | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 503 assay_unavailable | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestStandingsReassay | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 503 assay_unavailable | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/standings.ts | onRequestStandingsReassay | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 503 assay_unavailable | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/standings.ts | onRequestStandingsReassay | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 503 assay_unavailable | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 503 assay_unavailable | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 503 assay_unavailable | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 503 assay_unavailable | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/refusals.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/refusals.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/refusals.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/refusals.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/refusals.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/telemetry.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/telemetry.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/telemetry.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/telemetry.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/telemetry.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/stats.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/stats.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/stats.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/stats.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/stats.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | createRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_multiplayer.ts | createRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_multiplayer.ts | createRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | connectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_multiplayer.ts | connectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_multiplayer.ts | connectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | inspectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://localhost:5188 | 204 | http://localhost:5188 | refuse 403 (none) | MISMATCH
+functions/api/_multiplayer.ts | inspectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | refuse 403 (none) | MISMATCH
+functions/api/_multiplayer.ts | inspectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | misspelled development (ALLOW_LOCALHOST_ORIGINS=true) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | postBug | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_bugs.ts | postBug | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_bugs.ts | postBug | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | postBug | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | postBug | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | postBug | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_bugs.ts | listBugs | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_bugs.ts | listBugs | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_bugs.ts | listBugs | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | listBugs | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | listBugs | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | listBugs | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_bugs.ts | getBug | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_bugs.ts | getBug | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_bugs.ts | getBug | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_bugs.ts | getBug | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_bugs.ts | getBug | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_bugs.ts | getBug | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 404 not_found | (none) | refuse 404 (none) | ok
+functions/api/_accounts.ts | requestCode | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | requestCode | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | requestCode | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | requestCode | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | requestCode | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | requestCode | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | verifyCode | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | verifyCode | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | verifyCode | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | verifyCode | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | verifyCode | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | sessionStatus | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | sessionStatus | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | sessionStatus | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | sessionStatus | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | sessionStatus | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pushSave | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | pushSave | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | pushSave | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pushSave | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pushSave | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pushSave | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | pullSave | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | pullSave | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | pullSave | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | pullSave | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | pullSave | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | pullSave | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveVersions | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | saveVersions | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | saveVersions | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveVersions | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveVersions | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | saveProfiles | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | saveProfiles | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | saveProfiles | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | saveProfiles | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | saveProfiles | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_accounts.ts | deleteAccount | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_accounts.ts | deleteAccount | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_accounts.ts | deleteAccount | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_accounts.ts | deleteAccount | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_accounts.ts | deleteAccount | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/redeem.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/redeem.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/redeem.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/redeem.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/redeem.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/redeem.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/standings.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 503 assay_unavailable | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequestAssayQueue | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 503 assay_unavailable | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/standings.ts | onRequestAssayQueue | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 503 assay_unavailable | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 503 assay_unavailable | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 503 assay_unavailable | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 503 assay_unavailable | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayQueue | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestAssayVerdict | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 503 assay_unavailable | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequestAssayVerdict | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 503 assay_unavailable | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/standings.ts | onRequestAssayVerdict | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 503 assay_unavailable | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 503 assay_unavailable | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestAssayVerdict | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 503 assay_unavailable | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 503 assay_unavailable | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestAssayVerdict | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequestStandingsReassay | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 503 assay_unavailable | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequestStandingsReassay | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 503 assay_unavailable | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/standings.ts | onRequestStandingsReassay | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 503 assay_unavailable | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 503 assay_unavailable | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/standings.ts | onRequestStandingsReassay | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 503 assay_unavailable | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 503 assay_unavailable | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/standings.ts | onRequestStandingsReassay | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/refusals.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/refusals.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/refusals.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/refusals.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/refusals.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/refusals.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/telemetry.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/telemetry.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/telemetry.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/telemetry.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/telemetry.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/telemetry.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/stats.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/stats.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/stats.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/stats.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/stats.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/stats.ts | onRequest | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | createRoom | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_multiplayer.ts | createRoom | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_multiplayer.ts | createRoom | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | createRoom | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | createRoom | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | connectRoom | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_multiplayer.ts | connectRoom | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_multiplayer.ts | connectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | connectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | connectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/_multiplayer.ts | inspectRoom | development, sender bound (=1 and RESEND_API_KEY) | http://localhost:5188 | 204 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/_multiplayer.ts | inspectRoom | development, sender bound (=1 and RESEND_API_KEY) | http://127.0.0.1:5188 | 204 | http://127.0.0.1:5188 | admit http://127.0.0.1:5188 | ok
+functions/api/_multiplayer.ts | inspectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://agenttown.app | 204 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://www.agenttown.app | 204 | https://www.agenttown.app | admit https://www.agenttown.app | ok
+functions/api/_multiplayer.ts | inspectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://gold-rush-3in.pages.dev | 204 | https://gold-rush-3in.pages.dev | admit https://gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://feature-x.gold-rush-3in.pages.dev | 204 | https://feature-x.gold-rush-3in.pages.dev | admit https://feature-x.gold-rush-3in.pages.dev | ok
+functions/api/_multiplayer.ts | inspectRoom | development, sender bound (=1 and RESEND_API_KEY) | https://evil.example | 403 cors_forbidden | (none) | refuse 403 (none) | ok
+functions/api/standings.ts | onRequest (308) | pages production, canonical origin bound | http://localhost:5188 | 308 | (none) | refuse 308 (none) | ok
+functions/api/standings.ts | onRequest (308) | pages production, canonical origin bound | https://agenttown.app | 308 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequest (308) | pages production, canonical origin bound | https://evil.example | 308 | (none) | refuse 308 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue (308) | pages production, canonical origin bound | http://localhost:5188 | 308 | (none) | refuse 308 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue (308) | pages production, canonical origin bound | https://agenttown.app | 308 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue (308) | pages production, canonical origin bound | https://evil.example | 308 | (none) | refuse 308 (none) | ok
+functions/api/standings.ts | onRequest (308) | development, canonical origin bound | http://localhost:5188 | 308 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequest (308) | development, canonical origin bound | https://agenttown.app | 308 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequest (308) | development, canonical origin bound | https://evil.example | 308 | (none) | refuse 308 (none) | ok
+functions/api/standings.ts | onRequestAssayQueue (308) | development, canonical origin bound | http://localhost:5188 | 308 | http://localhost:5188 | admit http://localhost:5188 | ok
+functions/api/standings.ts | onRequestAssayQueue (308) | development, canonical origin bound | https://agenttown.app | 308 | https://agenttown.app | admit https://agenttown.app | ok
+functions/api/standings.ts | onRequestAssayQueue (308) | development, canonical origin bound | https://evil.example | 308 | (none) | refuse 308 (none) | ok
+
+SUMMARY by door: rows, mismatches (of which: localhost admitted where the rule refuses / localhost refused where the rule admits / site or stranger rows)
+  functions/api/_bugs.ts: 105 rows, 6 mismatches (6 / 0 / 0)
+  functions/api/_accounts.ts: 280 rows, 16 mismatches (16 / 0 / 0)
+  functions/api/redeem.ts: 35 rows, 2 mismatches (2 / 0 / 0)
+  functions/api/standings.ts: 152 rows, 8 mismatches (8 / 0 / 0)
+  functions/api/refusals.ts: 35 rows, 2 mismatches (2 / 0 / 0)
+  functions/api/telemetry.ts: 35 rows, 2 mismatches (2 / 0 / 0)
+  functions/api/stats.ts: 35 rows, 2 mismatches (2 / 0 / 0)
+  functions/api/_multiplayer.ts: 105 rows, 6 mismatches (6 / 0 / 0)
+SUMMARY by env: rows, mismatches
+  pages production: 154 rows, 0 mismatches
+  droplet production: 154 rows, 0 mismatches
+  development (ALLOW_LOCALHOST_ORIGINS=1): 154 rows, 0 mismatches
+  misspelled development (ALLOW_LOCALHOST_ORIGINS=true): 154 rows, 44 mismatches
+  development, sender bound (=1 and RESEND_API_KEY): 154 rows, 0 mismatches
+  pages production, canonical origin bound: 6 rows, 0 mismatches
+  development, canonical origin bound: 6 rows, 0 mismatches
+TOTAL: 782 rows, 44 mismatches
+VERDICT (mutation m1-any-value): 44 of 782 rows do not match the rule.

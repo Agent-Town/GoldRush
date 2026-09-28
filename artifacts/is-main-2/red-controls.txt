@@ -1,0 +1,22 @@
+== HEAD 63fec6e81 (the branch): 0 tracked file(s) differ from HEAD; load  9.97 50.98 49.28 
+   scripts/ledger-backup-pull.test.mjs rc 1 | ℹ pass 0 ℹ fail 2 | GR_DROPLET_HOST missing from the environment and .env.local
+   scripts/ledger-backup-fill-gaps-guard.test.mjs rc 1 | ℹ pass 1 ℹ fail 7 | GR_DROPLET_HOST missing from the environment and .env.local
+   scripts/ledger-pull-supply-window-guard.test.mjs rc 1 | ℹ pass 1 ℹ fail 5 | GR_DROPLET_HOST missing from the environment and .env.local
+   scripts/ledger-mirror-freshness-guard.test.mjs rc 1 | ℹ pass 24 ℹ fail 1 | 
+   scripts/desk-declaration-guard.test.mjs rc 1 | ℹ pass 27 ℹ fail 1 | REFUSING — this is a linked worktree and its STATUS.md
+   scripts/node-guards-contention.test.mjs rc 1 | ℹ pass 0 ℹ fail 1 | did not stay quiet for 300ms
+   node scripts/desk-declaration-guard.mjs rc 2 | REFUSING — this is a linked worktree and its STATUS
+   node scripts/desk-birth-guard.mjs rc 2 | REFUSING — this is a linked worktree and its STATUS
+   node scripts/desk-carryforward-guard.mjs rc 2 | REFUSING — this is a linked worktree and its STATUS
+== CLEAN MAIN f99bb77f3 bytes (25 files swapped): 25 tracked file(s) differ from HEAD; load  12.83 50.27 49.04 
+   scripts/ledger-backup-pull.test.mjs rc 1 | ℹ pass 0 ℹ fail 2 | GR_DROPLET_HOST missing from the environment and .env.local
+   scripts/ledger-backup-fill-gaps-guard.test.mjs rc 1 | ℹ pass 1 ℹ fail 7 | GR_DROPLET_HOST missing from the environment and .env.local
+   scripts/ledger-pull-supply-window-guard.test.mjs rc 1 | ℹ pass 1 ℹ fail 5 | GR_DROPLET_HOST missing from the environment and .env.local
+   scripts/ledger-mirror-freshness-guard.test.mjs rc 1 | ℹ pass 24 ℹ fail 1 | 
+   scripts/desk-declaration-guard.test.mjs rc 1 | ℹ pass 27 ℹ fail 1 | REFUSING — this is a linked worktree and its STATUS.md
+   scripts/node-guards-contention.test.mjs rc 1 | ℹ pass 0 ℹ fail 1 | did not stay quiet for 300ms
+   node scripts/desk-declaration-guard.mjs rc 2 | REFUSING — this is a linked worktree and its STATUS
+   node scripts/desk-birth-guard.mjs rc 2 | REFUSING — this is a linked worktree and its STATUS
+   node scripts/desk-carryforward-guard.mjs rc 2 | REFUSING — this is a linked worktree and its STATUS
+restored: 0 tracked file(s) differ from HEAD
+main's STATUS.md line 1 equals this branch's: NO; commits on main since the base: 21

@@ -1,0 +1,23 @@
+bugs-cors-probe (after): functions/api/_bugs.ts, called in process, no port, no live request
+env | origin | handler method | status | allow-origin | expected | verdict
+production (sender bound) | http://localhost:5188 | postBug POST | 403 cors_forbidden | (none) | 403 (none) | ok
+production (sender bound) | http://localhost:5188 | postBug OPTIONS | 403 cors_forbidden | (none) | 403 (none) | ok
+production (sender bound) | http://127.0.0.1:5324 | postBug POST | 403 cors_forbidden | (none) | 403 (none) | ok
+production (sender bound) | http://localhost:5188 | listBugs GET | 404 not_found | (none) | 404 (none) | ok
+production (sender bound) | http://localhost:5188 | listBugs OPTIONS | 404 not_found | (none) | 404 (none) | ok
+production (sender bound) | http://localhost:5188 | getBug GET | 404 not_found | (none) | 404 (none) | ok
+production (sender bound) | https://agenttown.app | postBug POST | 201 | https://agenttown.app | 201 https://agenttown.app | ok
+production (sender bound) | https://agenttown.app | postBug OPTIONS | 204 | https://agenttown.app | 204 https://agenttown.app | ok
+production (sender bound) | https://agenttown.app | listBugs GET | 200 | https://agenttown.app | 200 https://agenttown.app | ok
+production (sender bound) | https://www.agenttown.app | postBug POST | 201 | https://www.agenttown.app | 201 https://www.agenttown.app | ok
+production (sender bound) | https://gold-rush-3in.pages.dev | postBug POST | 201 | https://gold-rush-3in.pages.dev | 201 https://gold-rush-3in.pages.dev | ok
+production (sender bound) | https://feature-x.gold-rush-3in.pages.dev | postBug POST | 201 | https://feature-x.gold-rush-3in.pages.dev | 201 https://feature-x.gold-rush-3in.pages.dev | ok
+production (sender bound) | https://evil.example | postBug POST | 403 cors_forbidden | (none) | 403 (none) | ok
+production (sender bound) | (no Origin) | postBug POST | 201 | (none) | 201 (none) | ok
+production (sender bound) | (no Origin) | listBugs GET | 200 | (none) | 200 (none) | ok
+unconfigured (no sender) | http://localhost:5188 | postBug POST | 201 | http://localhost:5188 | 201 http://localhost:5188 | ok
+unconfigured (no sender) | http://localhost:5188 | postBug OPTIONS | 204 | http://localhost:5188 | 204 http://localhost:5188 | ok
+unconfigured (no sender) | http://127.0.0.1:5324 | listBugs GET | 200 | http://127.0.0.1:5324 | 200 http://127.0.0.1:5324 | ok
+unconfigured (no sender) | https://agenttown.app | postBug POST | 201 | https://agenttown.app | 201 https://agenttown.app | ok
+unconfigured (no sender) | https://evil.example | postBug POST | 403 cors_forbidden | (none) | 403 (none) | ok
+VERDICT (after): every row matches the rule. Production refuses localhost with no allow-origin; the site's origins are allowed; the unconfigured arm still admits localhost.

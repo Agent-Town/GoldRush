@@ -1,0 +1,159 @@
+{
+  "contractId": "e10-river",
+  "epochId": "epoch-10-deepsky",
+  "score": {
+    "secured": true,
+    "waves": 0,
+    "timeAlive": 5.133333333333325,
+    "gold": 5,
+    "baseValue": 0
+  },
+  "profileName": "Robin",
+  "anonId": "b71295926c2fb51b8e41dc1124c5f3bb",
+  "difficulty": "trail",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "seedMode": "live",
+  "seedHash": "e2b05d80061df9819fe94cbe62a6793327a3bdf55e9f4fce2e55eecf9d1e7282",
+  "inputLogHash": "bfd34cfb39f7f425d5ff89d75fb302c4759d616443040a02ce5387af7c21fefa",
+  "tape": {
+    "version": 2,
+    "id": "f688b238-89be-48aa-95a7-28f96f0fbdc2",
+    "createdAt": 1790457087994,
+    "kept": false,
+    "contract": "e10-river",
+    "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    "difficulty": "trail",
+    "simVersion": 1,
+    "meta": {
+      "buildId": "dev",
+      "viewVersion": 4,
+      "engineHash": "7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551",
+      "era": 6
+    },
+    "runStart": {
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 40,
+          "science": 999,
+          "hero": 40,
+          "agent": 40
+        }
+      },
+      "research": {
+        "version": 1,
+        "epochId": "epoch-1-frontier",
+        "metaScienceCursor": 999,
+        "progress": {
+          "version": 1,
+          "tracks": {
+            "territory": 40,
+            "science": 999,
+            "hero": 40,
+            "agent": 40
+          }
+        },
+        "taken": [],
+        "proposalSalt": 0,
+        "pinnedTarget": null,
+        "unlocks": {}
+      }
+    },
+    "inputLog": {
+      "version": 1,
+      "name": "f688b238-89be-48aa-95a7-28f96f0fbdc2",
+      "contractId": "e10-river",
+      "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+      "difficultyPreset": "trail",
+      "stepSeconds": 0.03333333333333333,
+      "start": {
+        "x": 0,
+        "z": 12
+      },
+      "durationTicks": 154,
+      "entries": [
+        {
+          "t": 52,
+          "mx": -0.707,
+          "my": -0.707,
+          "a": []
+        },
+        {
+          "t": 57,
+          "mx": 0,
+          "my": -1,
+          "a": []
+        },
+        {
+          "t": 58,
+          "mx": -0.707,
+          "my": -0.707,
+          "a": []
+        },
+        {
+          "t": 68,
+          "mx": -1,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 69,
+          "mx": -0.707,
+          "my": -0.707,
+          "a": []
+        },
+        {
+          "t": 84,
+          "mx": 0,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 85,
+          "mx": -0.707,
+          "my": -0.707,
+          "a": []
+        },
+        {
+          "t": 90,
+          "mx": 0,
+          "my": -1,
+          "a": []
+        },
+        {
+          "t": 91,
+          "mx": -1,
+          "my": 0,
+          "a": []
+        },
+        {
+          "t": 106,
+          "mx": 0,
+          "my": 0,
+          "a": []
+        }
+      ],
+      "truncated": null,
+      "primarySlot": 0,
+      "streams": [],
+      "playbookUses": []
+    },
+    "eventLogHash": "fnv1a32:027f7f02",
+    "outcome": {
+      "reason": "secured",
+      "secured": true,
+      "waves": 0,
+      "timeAlive": 5.133333333333325,
+      "gold": 5
+    }
+  },
+  "door": {
+    "status": 200,
+    "body": {
+      "ok": true,
+      "stored": true,
+      "rank": 1,
+      "decidedBy": "crown"
+    }
+  }
+}

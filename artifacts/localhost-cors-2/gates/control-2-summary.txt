@@ -1,0 +1,9 @@
+2026-09-26T05:11:31Z LOCK HELD (control 2). base 39f88d36f, tip b2d0c3992, load 8.57 15.98 17.09
+2026-09-26T05:13:13Z base (39f88d36f) mp-02-lockstep :687 x2 rc=1 63s ::   2 failed  ::     TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+2026-09-26T05:13:47Z base second-rider rc=1 34s ::   1 failed  ::     TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.
+2026-09-26T05:13:47Z base vite pid 60170 stopped
+2026-09-26T05:15:07Z tip (b2d0c3992) mp-02-lockstep :687 x2 rc=1 54s ::   2 failed  ::     TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+2026-09-26T05:15:39Z tip second-rider rc=1 32s ::   1 failed  ::     TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.
+2026-09-26T05:15:39Z tip vite pid 19764 stopped
+2026-09-26T05:15:41Z control worktree removed
+2026-09-26T05:15:41Z CONTROL 2 DONE. load 9.61 14.45 16.24

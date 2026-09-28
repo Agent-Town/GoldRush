@@ -5,7 +5,7 @@ import { existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-
+import { isMain } from './is-main.mjs';
 const root = path.resolve(import.meta.dirname, '..');
 
 export async function resolveSpec(input) {
@@ -71,7 +71,7 @@ export default {
   }
 }
 
-if (pathToFileURL(process.argv[1]).href === import.meta.url) {
+if (isMain(import.meta.url)) {
   try { process.exitCode = await runShowcase(process.argv[2]); }
   catch (error) { console.error(error.message); process.exitCode = 1; }
 }

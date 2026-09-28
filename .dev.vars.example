@@ -1,0 +1,13 @@
+# Local development variables for `wrangler pages dev` and `wrangler dev` (localhost-cors-2, 2026-09-26).
+# Copy this file to `.dev.vars` in the repo root. `.dev.vars` is gitignored and never committed.
+# Wrangler reads `.dev.vars` from the directory of the config it resolves: the repo root, where wrangler.toml
+# lives, for every `wrangler pages dev public` started there. The vite dev server runs no functions and reads
+# nothing here; the droplet ledger (server/ledger/serve.mjs) forwards an explicit key list without this one.
+#
+# DEVELOPMENT ONLY. ALLOW_LOCALHOST_ORIGINS=1 lets a page on http://localhost or http://127.0.0.1 (any port)
+# past every door's CORS check (functions/api/_cors.ts). Never set it on the Pages project (production or
+# preview) or on the droplet: unset, every door refuses a localhost origin, and that is the production default.
+#
+# Once `.dev.vars` exists, wrangler loads it INSTEAD of `.env` and `.env.local`: those files stop reaching the
+# local functions of this checkout.
+ALLOW_LOCALHOST_ORIGINS=1

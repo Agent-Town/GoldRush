@@ -1,0 +1,30 @@
+# GR_GUARD_NO_ARTIFACT=1 node --test scripts/no-emdash-guard.test.mjs scripts/citation-title-guard.test.mjs  (2026-09-25 18:00 +0700)
+✔ a bare spec:line citation fails the guard (135.384958ms)
+✔ a citation carrying an exact test title passes (144.729291ms)
+✔ a short code span cannot consume the following quoted title (143.442708ms)
+✔ a bare apostrophe cannot consume the following quoted title (148.242791ms)
+✔ an odd same-kind delimiter cannot consume the following quoted title (141.42575ms)
+✔ a test helper string is not harvested as a title (138.63025ms)
+✔ chained describe modifiers remain title declarations (141.933041ms)
+✔ a citation carrying an ELIDED test title passes (142.08ms)
+✔ a quoted title that does not exist in the spec still fails (143.569875ms)
+✔ a grandfathered bare citation passes, and a second copy of it does not (234.898709ms)
+✔ --report never gates (121.32425ms)
+✔ REFUSES when no tracked task markdown exists (denominator 0 docs) (114.526375ms)
+✔ REFUSES when task docs exist but carry zero citations (112.172458ms)
+✔ REFUSES when the baseline it ratchets against is missing (204.4975ms)
+✔ a citation quoting a real NON-TEST source line is carried, not a violation (134.697375ms)
+✔ a quote matching NEITHER a title nor any source line still fails (127.314042ms)
+✔ the verdict names the citations it did NOT gate (124.59025ms)
+✔ --report still never gates, even on a denominator it could not read (124.860125ms)
+scan space: 300 tracked src TS files (292 scanned, 8 skipped)
+✔ visitor copy and contract text fields contain no em dashes (1131.467625ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2618.275583
+rc=0

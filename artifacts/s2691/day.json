@@ -1,0 +1,392 @@
+{
+  "root": "3c35d5bed",
+  "start": "2026-09-25T17:00:00.000Z",
+  "end": "2026-09-26T17:00:00.000Z",
+  "before": "320797e15588544dc1e3499f7cf6c37030ea47e6",
+  "final": "b7602f6b3c5337216c463e0922012a73a0729deb",
+  "mainUpdates": 109,
+  "firstParentCommits": 50,
+  "controlSeptember25": 136,
+  "playerEvents": 13,
+  "events": [
+    {
+      "hash": "a4c006a1a3e40ad3f9295b3586c67f2876d7a357",
+      "stamp": "2026-09-26T02:34:40+07:00",
+      "time": 1790364880000,
+      "subject": "merge a4c006a1a3e40ad3f9295b3586c67f2876d7a357: Fast-forward",
+      "previous": "83284fb701bcbc8932971713233f3c3b28bbfbc6",
+      "playerFiles": [
+        "functions/api/standings.ts"
+      ],
+      "reviews": [
+        "reviews/door-tape-grammar-3.md"
+      ],
+      "introduced": [
+        "a4c006a1a 2026-09-26T02:34:39+07:00 drain: merge main into the dtg3 chain (pass 1)",
+        "4d5373436 2026-09-26T02:34:39+07:00 drain: dtg3 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "8eca6385e 2026-09-26T02:12:32+07:00 drain: merge fix/door-tape-grammar-3 — door-tape-grammar-3 — the county door refuses exactly what the client's normalizer refuses for place_build, pick_upgrade and set_agent_ability (imported, not mirrored; red-first: three reels ranked on the base, 400 at the tip; 467 to 514 door checks, 8 mutations red) and an already-stored row of those shapes is retired at read, never dropped (Opus 5.5 implementer at max effort; F-DTG2-2)",
+        "0515f4b0d 2026-09-26T01:10:27+07:00 fix: door-tape-grammar-3 evidence and report, RED and GREEN, the counts (467 -> 514 per backend), the stored-row verdicts, the gates with every red attributed, five findings",
+        "a3531c91b 2026-09-26T00:25:28+07:00 fix: door-tape-grammar-3, the door refuses the three shapes the client refuses and retires rows stored with them (F-DTG2-2)"
+      ]
+    },
+    {
+      "hash": "10227e38723922f4a67ce6ff0752b1cb641f1fac",
+      "stamp": "2026-09-26T03:32:44+07:00",
+      "time": 1790368364000,
+      "subject": "merge 10227e38723922f4a67ce6ff0752b1cb641f1fac: Fast-forward",
+      "previous": "a93091dbfc043bd269b2389e7d99c96ae40e765a",
+      "playerFiles": [
+        "assets/engine-era.json",
+        "src/game/Game.ts",
+        "src/game/liveSeed.ts",
+        "src/mp/RideTogether.ts",
+        "src/town/TownScene.ts"
+      ],
+      "reviews": [
+        "reviews/live-seed-rotation-1.md"
+      ],
+      "introduced": [
+        "10227e387 2026-09-26T03:31:59+07:00 drain: lsr1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "4e3c9633f 2026-09-26T03:31:58+07:00 era 6, same-era pin: lsr1, measured on the merged tree with the store at 5793a96 (755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa)",
+        "e182a4b8e 2026-09-26T02:59:45+07:00 drain: live-seed-rotation-1 — the owner decision and the ops cadence declared as their own desk rows (F-LSR1-1 the in-game board's partition, F-LSR1-2 the mint a week ahead)",
+        "da13ea750 2026-09-26T02:59:45+07:00 drain: merge feat/live-seed-rotation-1 — live-seed-rotation-1 — the run, its county standing and the co-op room ride the live weekly seed (open week, else the latest opened, else gold-rush; tape and dev pin first; the standing names the seed ridden), the Ride Together card names the week; no door grace per L3 and the owner's Monday rule (Opus 5.5 implementer at max effort; owner 2026-09-23 the seed changes every Monday)",
+        "38c0c03c3 2026-09-26T00:36:30+07:00 feat: the Ride Together card names the open week AND the exact seed the room rides (the implementer's room row asserts the seed; the lobby spec accepts the label)",
+        "621f64ffa 2026-09-25T20:58:46+07:00 feat: live-seed-rotation-1 item 4 by the drain — the Ride Together card names the open week (liveSeedLabel ?? seed), the lobby spec accepts the label or the literal, the resolver test joins the node-guards roster, the report written from the implementer's message",
+        "1682073ab 2026-09-25T20:43:19+07:00 feat: live-seed-rotation-1 evidence, the six seeds a boot resolves and the door's verdicts",
+        "f0fae8706 2026-09-25T20:32:49+07:00 feat: e2e proof, plain boots ride the week's seed and the real door judges it",
+        "0bfbb3202 2026-09-25T18:18:26+07:00 feat: the room-seed comment says what the relay does, not more",
+        "9cd109f64 2026-09-25T17:56:26+07:00 feat: the run, its county standing and the co-op room ride the live seed",
+        "9c05f0c43 2026-09-25T17:56:17+07:00 feat: live seed resolver, humans ride the open rotation's seed per contract"
+      ]
+    },
+    {
+      "hash": "a35756be11e913571371611d3a1fe5d66a7b5f2d",
+      "stamp": "2026-09-26T03:56:52+07:00",
+      "time": 1790369812000,
+      "subject": "merge a35756be11e913571371611d3a1fe5d66a7b5f2d: Fast-forward",
+      "previous": "51fe6eba00e36ef077577bf82a259459cb0c2e20",
+      "playerFiles": [
+        "assets/rotations/rotation-seeds.json",
+        "public/skill.md"
+      ],
+      "reviews": [
+        "reviews/rotation-r2026w40.md"
+      ],
+      "introduced": [
+        "a35756be1 2026-09-26T03:56:51+07:00 drain: rt40 bookkeeping re-applied after the main merge",
+        "c220f7e2b 2026-09-26T03:56:51+07:00 drain: merge main into the rt40 chain (pass 1)",
+        "ab0b39ce1 2026-09-26T03:56:50+07:00 drain: rt40 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "5bce03d88 2026-09-25T22:10:43+07:00 Merge branch 'main' into HEAD",
+        "73553e691 2026-09-25T21:49:46+07:00 rotation: merge rt/r2026w40 — r2026w40 minted a week ahead on the owner-held salt (opens 2026-09-28T00:00Z, six seeds) and the RT-01 cadence moved to the first fire after Wednesday 00:00 UTC, because live-seed-rotation-1 puts humans on the open week and a bundle without it refuses their standings (F-LSR1-2)",
+        "57f8f1662 2026-09-25T21:27:02+07:00 rotation: public/skill.md rotations block refreshed with the whole registry (r2026w37 to r2026w40), the RT-01 step the mint does not do; skillmd-guard green",
+        "7260865f6 2026-09-25T21:20:24+07:00 law: RT-01 mints the coming week on the first fire after Wednesday 00:00 UTC, not Sunday (F-RT40-1: humans ride the live seed from live-seed-rotation-1, and a bundle without the coming week refuses their standings until a deploy lands)",
+        "4975c9f43 2026-09-25T21:19:53+07:00 rotation: r2026w40 minted a week ahead on the owner-held salt (RT-01 form; opens 2026-09-28T00:00Z), so the bundle that ships before Monday already knows the week humans will ride (F-LSR1-2)"
+      ]
+    },
+    {
+      "hash": "c13eda29526f94ac8502c34ac84fa24e1f8851d4",
+      "stamp": "2026-09-26T04:40:30+07:00",
+      "time": 1790372430000,
+      "subject": "merge c13eda29526f94ac8502c34ac84fa24e1f8851d4: Fast-forward",
+      "previous": "903e69d90758f5ec3bd99e9a8415e8b1a49bc4c4",
+      "playerFiles": [
+        "functions/api/standings.ts"
+      ],
+      "reviews": [
+        "reviews/door-tape-grammar-4.md"
+      ],
+      "introduced": [
+        "c13eda295 2026-09-26T04:40:30+07:00 drain: merge main into the dtg4 chain (pass 1)",
+        "ded259f0b 2026-09-26T04:40:29+07:00 drain: dtg4 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "8b754c1a0 2026-09-26T04:19:15+07:00 drain: the gate comment inside validTapeAction names the whole client-judged set (F-DTG4-1; comment only)",
+        "df691d8b1 2026-09-26T04:19:09+07:00 drain: merge fix/door-tape-grammar-4 — door-tape-grammar-4 — research_pick ids and context_action target ids join the client-judged set (the door-versus-client probe's looser rows 6 to 0; red-first, six shapes ranked on the base and refused at the tip; stored rows retired not dropped; 514 to 576 door checks, 14 mutations red) and the validateTape comment describes the door as it is (Opus 5.5 implementer at max effort; F-DTG3-1, F-DTG3-5)",
+        "6e08d452c 2026-09-26T01:42:56+07:00 fix: door-tape-grammar-4 evidence and report, RED and GREEN, the counts (514 -> 576 per backend), the probe 6 -> 0 door-looser rows, the gates with every red attributed, four findings",
+        "a1dd6df15 2026-09-26T01:21:47+07:00 fix: door-tape-grammar-4, the comment above validateTape describes the door as it is now (F-DTG3-5)",
+        "aff05b4c2 2026-09-26T01:21:39+07:00 fix: door-tape-grammar-4, research_pick ids and context_action targets join the client-judged set (F-DTG3-1)"
+      ]
+    },
+    {
+      "hash": "07d1997013083046a844d675c1ac27180be694ab",
+      "stamp": "2026-09-26T07:31:17+07:00",
+      "time": 1790382677000,
+      "subject": "merge 07d1997013083046a844d675c1ac27180be694ab: Fast-forward",
+      "previous": "4b4cad521ab7642eec32a807913b0beb38ceb81e",
+      "playerFiles": [
+        "assets/contracts/epoch-3-voltage/contracts.json",
+        "assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json",
+        "assets/engine-era.json"
+      ],
+      "reviews": [
+        "reviews/canyon-works-traversal-1.md"
+      ],
+      "introduced": [
+        "07d199701 2026-09-26T07:31:16+07:00 drain: cw1 bookkeeping re-applied after the main merge",
+        "b52d0504b 2026-09-26T07:31:16+07:00 drain: merge main into the cw1 chain (pass 1)",
+        "e7f5f5b9d 2026-09-26T07:31:14+07:00 drain: cw1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "4c5807910 2026-09-26T05:48:34+07:00 drain: cw1 re-pinned as #63 `9a995b76` on the merged tree (the live seed's pin #62 landed first; the row and review pin text corrected)",
+        "69c0dd63f 2026-09-26T05:48:33+07:00 drain: merge main into the cw1 chain (main's registry kept: the live seed took pin #62; the ledger rows from both sides kept)",
+        "aa0765af2 2026-09-26T05:43:45+07:00 drain: cw1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "c900bfb37 2026-09-26T05:43:45+07:00 era 6, same-era pin: cw1, measured on the merged tree with the store at 5793a96 (76aedf0c3ab4145f8b14786de9d8a04b706f8475f00a4b43649c1d3d3f459ced)",
+        "4d538baf6 2026-09-25T22:34:28+07:00 drain: canyon-works-traversal-1 — the mask-table mirror republished (creekBlendStart minus 14), the report written from the implementer's message, F-CW1-1 (the t2 wall) and F-CW1-2 (the GLB bank face) declared as desk rows",
+        "752d624e8 2026-09-25T22:34:27+07:00 drain: merge fix/canyon-works-traversal-1 — canyon-works-traversal-1 — the Canyon Works creek bank crosses at every x (creekBlendStart minus 8 to minus 14: peak sim gradient 1.03 to 0.28, six of six pylons and the bridge reachable, floors 83 of 83, channel depth unchanged), a traversal spec on both projects; the second wall F-CW1-1 (the t2 ramp, peak 0.598) keeps the map unwinnable on foot and goes to a contract-only corrective (Opus 5.5 implementer at max effort; from Astra's F-PP2-2)",
+        "2bba21639 2026-09-25T20:55:35+07:00 fix: canyon-works-traversal-1 what moves, the instruments' own logs for the drain",
+        "b416b64cd 2026-09-25T20:54:44+07:00 fix: canyon-works-traversal-1 native acceptance, desktop: same crossing, same t2 stop",
+        "ec8348bba 2026-09-25T19:56:17+07:00 fix: canyon-works-traversal-1 native acceptance, phone: the bank is crossed, the t2 ramp is not",
+        "3ab86f977 2026-09-25T18:21:14+07:00 fix: canyon-works-traversal-1 plain boards on the widened bank, and the float measured",
+        "063243a57 2026-09-25T18:21:04+07:00 fix: canyon-works-traversal-1 slope tables, before and after, from the sim's own code",
+        "e564dffe6 2026-09-25T17:47:04+07:00 fix: e3-canyon-works-traversal spec walks the hero across the widened works bank",
+        "8bb893bfd 2026-09-25T17:39:58+07:00 fix: Canyon Works creek bank blends over 8 m (creekBlendStart -8 -> -14)"
+      ]
+    },
+    {
+      "hash": "3caf7ab6661fc381af6387d2742861973b66373a",
+      "stamp": "2026-09-26T07:55:46+07:00",
+      "time": 1790384146000,
+      "subject": "merge 3caf7ab6661fc381af6387d2742861973b66373a: Fast-forward",
+      "previous": "139a1872a97c550092f77653b1393f6b288a8995",
+      "playerFiles": [
+        "assets/engine-era.json",
+        "functions/api/_bugs.ts",
+        "src/game/ProfileManager.ts"
+      ],
+      "reviews": [
+        "reviews/small-fixes-1.md"
+      ],
+      "introduced": [
+        "3caf7ab66 2026-09-26T07:55:45+07:00 drain: merge main into the sf1 chain (pass 1)",
+        "6251d955d 2026-09-26T07:55:45+07:00 drain: sf1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "d7fedbefd 2026-09-26T07:35:12+07:00 drain: sf1 chain package.json carries ONE test:node-guards roster, the union of both sides (the generic union had left two keys; F-LAND-4 repair)",
+        "6698ad189 2026-09-26T07:33:19+07:00 drain: sf1 re-pinned as #64 `2cf26ba4` on the merged tree (pins #62 and #63 landed first; the row and review pin text corrected)",
+        "cfb45c7d8 2026-09-26T07:33:18+07:00 drain: merge main into the sf1 chain (pass 2)",
+        "e75e5d98c 2026-09-26T07:33:16+07:00 drain: merge main into the sf1 chain (main's registry kept: pins #62 and #63 landed first; other conflicts unioned)",
+        "88173579e 2026-09-26T05:44:02+07:00 drain: sf1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "81ccffb14 2026-09-26T05:44:02+07:00 era 6, same-era pin: sf1, measured on the merged tree with the store at 5793a96 (13e5735c2e784834f640dd99e65d674cf0295c3d0d899c2364da4b60baa42fab)",
+        "0c41cedf6 2026-09-26T01:29:16+07:00 drain: small-fixes-1 — the owner item declared as its own desk row (F-SF1-7: the leaked test fixtures listed, not deleted; the Pages-secret question answered by the API read, F-SF1-8)",
+        "70cf2362f 2026-09-26T01:29:16+07:00 drain: merge fix/small-fixes-1 — small-fixes-1 — the bug office refuses localhost origins in production (6 of 20 probe rows wrong before, 0 after), the signed-in account card links the privacy notice (proved on both projects), thirteen scripts find their own name under a symlinked path through scripts/is-main.mjs, the desk guard removes its fixtures; the engine hash moves by the one privacy-link line (Opus 5.5 implementer at max effort; owner 2026-09-25 spare budget)",
+        "a5f9d8581 2026-09-25T20:13:02+07:00 merge: main into fix/small-fixes-1 (kv-counters-to-ledger-1 landed; the accounts test keeps main's two new imports and adds isMain)",
+        "6ffa9728e 2026-09-25T20:09:37+07:00 fix: small-fixes-1 report, the main tip named in the merge note corrected to dec3196c5 (a mistyped hash in 49eb47c4a)",
+        "49eb47c4a 2026-09-25T20:09:28+07:00 fix: small-fixes-1 report, the one merge conflict against today's main (test-accounts imports) named with its resolution",
+        "0d5ca5240 2026-09-25T20:08:04+07:00 fix: the signed-in card's privacy link browser-checked on both projects, 4 of 4 green; report final (F-SEC2-4)",
+        "2065f5ed5 2026-09-25T19:02:48+07:00 fix: small-fixes-1, flake census of the two changed tests (300/300 and 100/100, 0 survivors)",
+        "c0811954b 2026-09-25T18:52:29+07:00 fix: small-fixes-1, F-SF1-2 measured: eight guards with the other main-module spellings are silent by a symlinked path",
+        "bcc6edb35 2026-09-25T18:49:07+07:00 fix: small-fixes-1, F-SF1-1 measured: six more doors answer a production-shaped localhost preflight with 204 and allow-origin localhost",
+        "99add1b51 2026-09-25T18:48:12+07:00 fix: small-fixes-1 report, the fixture sweep tallied at its own concurrency (one offender, cured on main) and the symlink table on the final tree",
+        "52647c5be 2026-09-25T18:43:00+07:00 fix: small-fixes-1 report, the merge is clean after 5255fd11a; commits table complete to date",
+        "5255fd11a 2026-09-25T18:42:17+07:00 fix: the desk displacement test's cleanup now matches main's identical cure byte for byte, so the merge is clean (F-EO1-5)",
+        "4eebbc0a4 2026-09-25T18:41:49+07:00 fix: small-fixes-1 report, main cured both status-line1 fixture leaks itself while this ran; the one merge conflict named",
+        "208e96ddf 2026-09-25T18:29:29+07:00 fix: small-fixes-1, the sibling leak's cure ready as a verified patch, not applied (F-SF1-3)",
+        "87761f666 2026-09-25T18:27:45+07:00 fix: small-fixes-1 report, four findings closed, the browser check queued behind the drain lock",
+        "d7ef99bb4 2026-09-25T18:25:49+07:00 fix: small-fixes-1 gate evidence, the fixture sweep tallied on the unpinned branch and the batteries banked",
+        "dd2c87433 2026-09-25T18:01:39+07:00 fix: the signed-in account card links the privacy notice, same link and wording as the sign-in form (F-SEC2-4)",
+        "558a5c0e8 2026-09-25T18:00:33+07:00 fix: the bug office admits localhost only while the production mail sender is unbound (F-SEC2-2)",
+        "8a27d37d8 2026-09-25T17:59:36+07:00 fix: the thirteen main-module checks compare real paths, so a symlinked run is not a silent pass (F-LS1-2)",
+        "65fe53a2f 2026-09-25T17:50:42+07:00 fix: the desk displacement guard's test removes its mkdtemp boards (F-EO1-5)"
+      ]
+    },
+    {
+      "hash": "84ec86ae63d0ae6c14925d9639164a9ca8a050bd",
+      "stamp": "2026-09-26T10:21:14+07:00",
+      "time": 1790392874000,
+      "subject": "merge 84ec86ae63d0ae6c14925d9639164a9ca8a050bd: Fast-forward",
+      "previous": "2d9bdef595fe84ec9fc26b1900f5c97777e10d11",
+      "playerFiles": [
+        "functions/api/_multiplayer.ts",
+        "functions/api/_ratelimit.ts",
+        "functions/api/standings.ts"
+      ],
+      "reviews": [
+        "reviews/kv-counters-to-ledger-2.md"
+      ],
+      "introduced": [
+        "84ec86ae6 2026-09-26T10:21:13+07:00 drain: kv2 bookkeeping re-applied after the main merge",
+        "887c0b9df 2026-09-26T10:21:13+07:00 drain: merge main into the kv2 chain (pass 1)",
+        "2957a1b1b 2026-09-26T10:21:11+07:00 drain: kv2 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "44eaac79d 2026-09-25T21:31:31+07:00 drain: kv-counters-to-ledger-2 — the owner decision declared as its own desk row (F-KV2-6: the pages.dev standings surface)",
+        "f68542f50 2026-09-25T21:31:31+07:00 drain: merge fix/kv-counters-to-ledger-2 — kv-counters-to-ledger-2 — the co-op door's KV fallback rides the shared real hour (its own limiter re-armed the hour on every write; census six to seven), the Pages standings copy answers a no-store 308 to STANDINGS_CANONICAL_ORIGIN when set and is byte-identical unset, the shared limiter floors the KV expiry at 60 s (F-KV2-1, drain); nothing bound until the ops evening (Opus 5.5 implementer at max effort; owner ruling 7 (b) of 2026-09-24)",
+        "b9984e055 2026-09-25T20:55:36+07:00 fix: the shared limiter floors the KV expiry at Cloudflare's 60-second minimum (F-KV2-1: the last 59 s of a rider's hour threw and answered 429; red-first row) and its comment counts seven doors (F-KV2-2)",
+        "407a65a39 2026-09-25T20:51:17+07:00 fix: kv-counters-to-ledger-2 evidence, KV writes and the window before and after, the gates, the report",
+        "64d696c0f 2026-09-25T20:09:55+07:00 fix: the ops evening's ledger switch gains step 9, bind STANDINGS_CANONICAL_ORIGIN and probe the 308",
+        "3ecce7bc6 2026-09-25T20:09:42+07:00 fix: the Pages copy of standings answers 308 to the canonical origin once STANDINGS_CANONICAL_ORIGIN is bound",
+        "4abe5075b 2026-09-25T20:07:39+07:00 fix: the co-op door's KV fallback keeps the real hour; the shared limiter's census counts seven doors"
+      ]
+    },
+    {
+      "hash": "725a0a422d22ac346538d1ed41fe066ad1344516",
+      "stamp": "2026-09-26T11:20:37+07:00",
+      "time": 1790396437000,
+      "subject": "merge 725a0a422d22ac346538d1ed41fe066ad1344516: Fast-forward",
+      "previous": "975af92a2e3b2dec6647e502cb951251b051a27c",
+      "playerFiles": [
+        "assets/contracts/epoch-3-voltage/contracts.json",
+        "assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json",
+        "assets/contracts/null-floors.json",
+        "assets/engine-era.json"
+      ],
+      "reviews": [
+        "reviews/canyon-works-traversal-2.md"
+      ],
+      "introduced": [
+        "725a0a422 2026-09-26T11:20:36+07:00 drain: merge main into the cw2 chain (pass 1)",
+        "82e0716f2 2026-09-26T11:20:36+07:00 drain: cw2 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "2fa199453 2026-09-26T11:20:35+07:00 era 6, same-era pin: cw2, measured on the merged tree with the store at 5793a96 (ca12dc2a4cb327689084adbe0664bc2c680b6a8e8fa452fc806790e84a9cdda1)",
+        "00dc1e177 2026-09-26T10:49:10+07:00 drain: canyon-works-traversal-2 — the standing turrets declared as an owner desk row (F-CW2-1)",
+        "45d5784bd 2026-09-26T10:49:10+07:00 drain: null floors re-pinned on the merged tree — the two Canyon Works seeds' eventLogHash moved because the authored arc turrets now stand (F-CW2-1); 81 other floors byte-identical",
+        "309b938eb 2026-09-26T10:44:20+07:00 drain: merge fix/canyon-works-traversal-2 — canyon-works-traversal-2 — the t2 ramp window 18 to 28 becomes 14 to 32 (peak sim gradient 0.598 to 0.333, every seam, gallery, lamp and turret reachable on foot, the cliff untouched), the two authored arc turrets stand for the first time (F-CW2-1, the owner's veto on the desk), gt-03 and one canyon spec step re-baselined with reasons; Astra's acceptance still does not secure the map at load 165 to 230 (F-CW2-3) (Opus 5.5 implementer at max effort; from F-CW1-1)",
+        "0c128d194 2026-09-26T08:48:26+07:00 fix: canyon-works-traversal-2 F-CW2-1: e3-canyon-works' moth step reads the map as it now is (both authored arc turrets stand; the east one is wrecked before the moth)",
+        "d90688164 2026-09-26T08:42:27+07:00 fix: canyon-works-traversal-2 the report: the window, the floors, the gt-03 verdict, the acceptance, F-CW2-1..4",
+        "a6deb3ad0 2026-09-26T08:40:03+07:00 fix: canyon-works-traversal-2 the Canyon Works' authored arc turrets stand only once the ramp is legal (browser control), and seven more canyon guards",
+        "e4568f1ae 2026-09-26T08:35:29+07:00 fix: canyon-works-traversal-2 acceptance attempt 2 on both projects, and the visible t2 face against the sim",
+        "60e3524d5 2026-09-26T08:33:31+07:00 fix: canyon-works-traversal-2 the instruments and their logs: slope tables, floors, guards, the e2e control and treatment, the probes, acceptance attempt 1",
+        "2f2247cd0 2026-09-26T08:28:06+07:00 fix: canyon-works-traversal-2 gt-03's Canyon Works goal-side rows re-baselined: no wall at x -38/38 once the t2 ramp is slope-legal",
+        "8346ff6f2 2026-09-26T08:05:17+07:00 fix: canyon-works-traversal-2 the traversal spec grows a t2 row: bridge to the first gallery target, round the cliff",
+        "10a039c40 2026-09-26T07:56:02+07:00 fix: canyon-works-traversal-2 the t2 ramp runs 14..32 (4 m over 18 m, peak 0.333), the mask-table mirror republished"
+      ]
+    },
+    {
+      "hash": "93034b973d1770bd65285b8b86bf33f48ea537ca",
+      "stamp": "2026-09-26T12:21:48+07:00",
+      "time": 1790400108000,
+      "subject": "merge 93034b973d1770bd65285b8b86bf33f48ea537ca: Fast-forward",
+      "previous": "625f8dda3a6f48defb83a2e2a178ee26d530dc33",
+      "playerFiles": [
+        "assets/engine-era.json"
+      ],
+      "reviews": [
+        "reviews/is-main-2.md"
+      ],
+      "introduced": [
+        "93034b973 2026-09-26T12:21:48+07:00 drain: merge main into the im2 chain (pass 1)",
+        "b1e865688 2026-09-26T12:21:47+07:00 drain: im2 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "27e59383d 2026-09-26T12:21:47+07:00 era 6, same-era pin: im2, measured on the merged tree with the store at 5793a96 (642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a)",
+        "20dc211ea 2026-09-26T11:47:31+07:00 drain: merge fix/is-main-2 — is-main-2 — twenty-three tools decide main-module by real path through scripts/is-main.mjs (19 import it, 4 carry the pinned copy because fixtures or the droplet deploy relocate them), the census names every reader and fails on a new one; the ledger server starts and serves through a symlink where it exited silently before; the engine hash moves because the assay-replay agent's bytes are in the corpus (Opus 5.5 implementer at max effort; F-SF1-2)",
+        "70bba488e 2026-09-26T10:11:48+07:00 fix: is-main-2 report and the locked-gate evidence",
+        "63fec6e81 2026-09-26T09:39:15+07:00 fix: the node-guards runner list is the pre-landing 167 files plus is-main.test.mjs; the later chained segments keep their own files (no double runs)",
+        "6c00b820e 2026-09-26T09:39:15+07:00 fix: package.json test:node-guards restored to its shape (runner, the file list, then the chained scripts) with is-main.test.mjs added; the sf1 chain's roster merge had appended every file after the last command, so the runner ran every test file (15,315 rows, 73 wrong-context fails) (F-LAND-6)",
+        "45d94b971 2026-09-26T09:26:35+07:00 fix: is-main-2 evidence, the measurement before the cure and the proof after it",
+        "78eb160e6 2026-09-26T09:24:14+07:00 fix: is-main.test.mjs covers the twenty-three, censuses every argv[1] reader, runs the named two through a link",
+        "78fd113f5 2026-09-26T09:24:14+07:00 fix: assay-replay-agent carries the pinned isMain copy; the engine hash moves (F-SF1-2, F-IM2-2)",
+        "0f4ecee78 2026-09-26T09:24:14+07:00 fix: withheld-evidence-audit and findings-state-guard carry the pinned isMain copy (F-SF1-2)",
+        "d03703a64 2026-09-26T09:24:14+07:00 fix: eighteen more main-module checks import isMain (F-SF1-2)",
+        "f36a06351 2026-09-26T09:24:14+07:00 fix: ruling-propagation-guard runs its main through a symlinked path (F-SF1-2)",
+        "5cd992fbc 2026-09-26T09:24:13+07:00 fix: the droplet ledger door runs its main through a symlinked path (F-SF1-2)"
+      ]
+    },
+    {
+      "hash": "c5763d86da137e0b898e90389d31b9f975d6b673",
+      "stamp": "2026-09-26T17:57:56+07:00",
+      "time": 1790420276000,
+      "subject": "merge c5763d86da137e0b898e90389d31b9f975d6b673: Fast-forward",
+      "previous": "6cf158c4aa25bb94d9a577e71ee5b33bd32251cc",
+      "playerFiles": [
+        "functions/api/_accounts.ts",
+        "functions/api/_bugs.ts",
+        "functions/api/_cors.ts",
+        "functions/api/_multiplayer.ts",
+        "functions/api/redeem.ts",
+        "functions/api/refusals.ts",
+        "functions/api/standings.ts",
+        "functions/api/stats.ts",
+        "functions/api/telemetry.ts"
+      ],
+      "reviews": [
+        "reviews/localhost-cors-2.md"
+      ],
+      "introduced": [
+        "c5763d86d 2026-09-26T17:57:55+07:00 drain: merge main into the lc2 chain (pass 1)",
+        "78afe945f 2026-09-26T17:57:54+07:00 drain: lc2 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "2e51341ab 2026-09-26T17:31:32+07:00 drain: localhost-cors-2 — the two owner decisions declared as their own desk rows before any deploy (F-LC2-5 a local game against the live county; F-LC2-6 .env.local and local wrangler)",
+        "80854592d 2026-09-26T17:31:31+07:00 drain: merge fix/localhost-cors-2 — localhost-cors-2 — the eight county doors admit a localhost origin only when ALLOW_LOCALHOST_ORIGINS is exactly 1, through one shared helper (probe across all 22 CORS entry points: 134 of 782 rows off the rule before, 0 after; two manufactured defects caught; the local harnesses, six multiplayer specs and assay-season-roll pass the switch to the dev runs they start; F-SEC2-2 effective in production at the deploy, owner's word 'B5 - deploy' 2026-09-26, F-LC2-5; Opus 5.5 implementer at max effort)",
+        "bc2ad19de 2026-09-26T12:19:08+07:00 fix: localhost-cors-2 report, READY-FOR-GATES: 0 of 782 probe rows off the rule (134 before), every gate red attributed on the cut",
+        "a033e60a6 2026-09-26T12:17:23+07:00 fix: localhost-cors-2 gate evidence: the AFTER probe (0 of 782), the two manufactured defects, the locked batch and its controls",
+        "b2d0c3992 2026-09-26T11:21:06+07:00 fix: the development switch is documented: .dev.vars gitignored, .dev.vars.example tracked, the ops runbook says never on Pages",
+        "030b8e540 2026-09-26T11:21:05+07:00 fix: tl-02 asserts the stats door refuses a localhost preflight without the switch and admits it with it (F-LC2-1)",
+        "82f50c0c3 2026-09-26T11:21:05+07:00 fix: the harnesses that start the functions pass the development switch to their own dev runs (F-LC2-2, F-LC2-3, F-LC2-4)",
+        "ec717cb76 2026-09-26T11:21:05+07:00 fix: the eight doors admit a localhost origin only when ALLOW_LOCALHOST_ORIGINS is exactly 1, through one shared helper (F-SF1-1, F-SF1-8)",
+        "4e97cb1b0 2026-09-26T11:08:10+07:00 fix: localhost-cors-2 stopped before any door changed: the master's e2e premise is false (F-LC2-1)",
+        "027dc3a9f 2026-09-26T11:08:03+07:00 fix: localhost-cors-2 probe across all eight doors, BEFORE on the untouched tree: 134 of 782 rows off the rule"
+      ]
+    },
+    {
+      "hash": "387f79cd477291b5dd169398281fe36d0da01d6d",
+      "stamp": "2026-09-26T20:45:35+07:00",
+      "time": 1790430335000,
+      "subject": "merge 387f79cd477291b5dd169398281fe36d0da01d6d: Fast-forward",
+      "previous": "4112c125dc2660ce3d102c7351515832f12d8cc4",
+      "playerFiles": [
+        "site/assets/calculating-house-glass-hall.jpg",
+        "site/assets/heroine-mid-fight.jpg",
+        "site/assets/heroine-with-pan-before-ridge-of-walkers.jpg",
+        "site/assets/share-card.jpg",
+        "site/index.html"
+      ],
+      "reviews": [
+        "reviews/site-vibe-fixes-1.md"
+      ],
+      "introduced": [
+        "387f79cd4 2026-09-26T20:45:34+07:00 drain: merge main into the svf1 chain (pass 1)",
+        "1d5bad3c2 2026-09-26T20:45:34+07:00 drain: svf1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "75e28fdff 2026-09-26T20:24:23+07:00 drain: site-vibe-fixes-1 — the share card's framing declared as the owner's own desk row (F-SVF1-2)",
+        "b79e80acf 2026-09-26T20:24:23+07:00 drain: merge feat/site-vibe-fixes-1 — site-vibe-fixes-1 — the landing page's three illustrations become byte-exact files under site/assets (the page 938,556 -> 17,735 B), a real 1200x630 share card from the heroine-with-pan illustration replaces the HUD-cropped frame (og:image, twitter:image), and the footer's token-chart link goes per the brand book §5 (owner 'sure, do it' 2026-09-26; F-VIBE-2, F-VIBE-3, F-VIBE-5; Opus 5.5 implementer at max effort)",
+        "05d989a65 2026-09-26T20:22:54+07:00 feat: site-vibe-fixes-1 report and evidence",
+        "21fe841e4 2026-09-26T18:04:33+07:00 feat: the token link leaves the landing's footer (F-VIBE-5)",
+        "a7c75b5cd 2026-09-26T18:03:58+07:00 feat: an illustrated share card for the landing (F-VIBE-2)",
+        "16c090887 2026-09-26T18:02:42+07:00 feat: the landing's three illustrations become files (F-VIBE-3)"
+      ]
+    },
+    {
+      "hash": "13be4798c36148b9b2b714f492fd17700f24ad7c",
+      "stamp": "2026-09-26T22:16:23+07:00",
+      "time": 1790435783000,
+      "subject": "merge 13be4798c36148b9b2b714f492fd17700f24ad7c: Fast-forward",
+      "previous": "47d4e591432a333aba3129e7fd281ecb69803eca",
+      "playerFiles": [
+        "assets/engine-era.json",
+        "src/game/Game.ts"
+      ],
+      "reviews": [
+        "reviews/river-ending-score-1.md"
+      ],
+      "introduced": [
+        "13be4798c 2026-09-26T22:16:22+07:00 drain: merge main into the rvs1 chain (pass 1)",
+        "327dbb5e3 2026-09-26T22:16:21+07:00 drain: rvs1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "51afb6d30 2026-09-26T22:16:21+07:00 era 6, same-era pin: rvs1, measured on the merged tree with the store at 5793a96 (29324ba84fc802adf46cd38825f4721686a75f8d62e4d6089f0d6854c8a21b1f)",
+        "384c77642 2026-09-26T21:42:38+07:00 drain: river-ending-score-1 — two owner items as their own desk rows (F-RES1-3 the raw route's stray enemies, F-RES1-5 the silent ending), the assay slice to author (F-RES1-1/-6), the tape bug (F-RES1-7), the harness note (F-RES1-2)",
+        "98c0c0505 2026-09-26T21:42:38+07:00 drain: merge feat/river-ending-score-1 — river-ending-score-1 — the River's quiet pan is the win: the first gold the player's own pan lands on the lever's no-wave Claim writes one completed e10-river score (secured, wave 0, 5 gold, time at the pan) and keeps its reel, once, nothing on boot or on the lever alone; the county post is HELD behind RIVER_STANDING_POSTS_ENABLED until River reels can be assayed (F-RES1-1/-6); a Claim playbook can no longer spoil a River reel (F-RES1-4) (owner 'sure, lets do that' 2026-09-26, F-PP6-2; Opus 5.5 implementer at max effort)",
+        "7cadf417a 2026-09-26T21:02:05+07:00 feat: river-ending-score-1 addendum: the held post, F-RES1-4 and the re-run, with evidence (F-RES1-7 filed)",
+        "6af7bf60b 2026-09-26T20:43:23+07:00 feat: F-RES1-4, playbooks on the River ceremony are judged, recorded and replayed under its reel's contract",
+        "0d1387632 2026-09-26T20:43:23+07:00 feat: hold the River's county standing until its reel can be assayed; the spec asserts zero posts (F-RES1-1, F-RES1-6)",
+        "bea0a4dcb 2026-09-26T20:35:18+07:00 feat: river-ending-score-1 report (the implementer's final text, committed by the attended session after a hook refused the file write)",
+        "c580007a4 2026-09-26T20:31:53+07:00 feat: river-ending-score-1 evidence: spec runs, base controls, assay replays, node-guards and probes (F-PP6-2)",
+        "96eb03f40 2026-09-26T18:34:00+07:00 feat: river-ending-score spec, no ?debug: the pan writes one River score, reel and standing; boots write nothing (F-PP6-2)",
+        "bb1e04ed6 2026-09-26T18:33:33+07:00 feat: the River's quiet pan writes its completed e10-river score, reel and standing (F-PP6-2)"
+      ]
+    },
+    {
+      "hash": "a3371932a10d5147732b79a9fe94d19e1d046594",
+      "stamp": "2026-09-26T22:40:24+07:00",
+      "time": 1790437224000,
+      "subject": "merge a3371932a10d5147732b79a9fe94d19e1d046594: Fast-forward",
+      "previous": "d89d6d84d63c87940f32a3fd1a6290907860d2b7",
+      "playerFiles": [
+        "assets/engine-era.json",
+        "src/charter/PressPanel.ts"
+      ],
+      "reviews": [
+        "reviews/charter-press-locked-lands-1.md"
+      ],
+      "introduced": [
+        "a3371932a 2026-09-26T22:40:23+07:00 drain: merge main into the cpl1 chain (pass 1)",
+        "0a6a3e2b5 2026-09-26T22:40:23+07:00 drain: cpl1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "44e043d16 2026-09-26T22:40:22+07:00 era 6, same-era pin: cpl1, measured on the merged tree with the store at 5793a96 (af0e2d889eb353cef53fc6b4eaa695d4460961d4aea894ee22b544f396041e45)",
+        "aa25c1138 2026-09-26T22:39:51+07:00 drain: merge main into the cpl1 chain before the pin (rvs1's pin #67 carried in; BACKLOG unioned; F-LAND-4 order)",
+        "5936d9e82 2026-09-26T21:07:29+07:00 drain: charter-press-locked-lands-1 — the shelf-launch fork declared as the owner's own desk row (F-CPL1-2)",
+        "f9f4c0d23 2026-09-26T21:07:28+07:00 drain: merge feat/charter-press-locked-lands-1 — charter-press-locked-lands-1 — the Charter Press lever offers only the lands the player has unlocked (a fresh profile: the Claim; a secured Claim: the Claim, the Dry Gulch, Twin Banks) and the press-through opens the land chosen, where before all five cards showed and Twin Banks briefed 'The Claim' (F-1179-4 (a), owner 'a' 2026-09-26; Opus 5.5 implementer at max effort; the cards render when the lever opens, nothing on boot)",
+        "867cd8f6a 2026-09-26T20:23:31+07:00 feat: charter-press-locked-lands-1 report: the base control of the press-panel adjacents is in",
+        "f1e182932 2026-09-26T20:13:48+07:00 feat: charter-press-locked-lands-1 report and evidence (the Lever's offer before and after, controls, battery, hash, tape)",
+        "5dc23a6b6 2026-09-26T18:35:23+07:00 feat: cp04 lever spec asserts the fresh-profile offer; its five-card path runs through the preview seam",
+        "9fb7cd9b6 2026-09-26T18:35:23+07:00 feat: charter press specs prove the Lever offers only unlocked lands and opens the land pressed",
+        "3ed71bbce 2026-09-26T18:12:21+07:00 feat: the Charter Press lever offers only unlocked lands (F-1179-4, owner ruling a)"
+      ]
+    }
+  ]
+}

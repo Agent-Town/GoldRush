@@ -1,0 +1,10 @@
+# Task backlog — closed rows: later
+
+Closed rows split out of `tasks/BACKLOG.md` by `scripts/backlog-split-closed.mjs`
+(owner ruling 2026-09-24, item 13a). NOTHING HERE WAS DELETED — these rows were MOVED, byte
+for byte, and this file is tracked exactly as the index is (CLAUDE.md §4.10b, the Retention
+Law). The COMPLETE work ledger is the index PLUS every file in this directory; read them
+together, and list them with `backlogFiles()` in `scripts/ledger-corpus.mjs`.
+
+  - ✅ **GT-01 flat-height substrate SHIPPED `608a2a5`** (TileHeight.ts API).
+  - ✅ **GT-02 slope movement SHIPPED s136 `c75593e`** (drained lane/perf `99163bd` → hand-graft onto clean main; review `reviews/gt-02.md`). Elevation affects MOVEMENT for the first time on dev-only tile `gt-test-basin` (`?tile=` debug-gated); classic claim byte-identical (flat identity guard). Gate: tsc+build; gt-02-slope spec GREEN both projects (uphill/flat ratio 2.148 desktop / 2.151 mobile; cliff blocks; visualY↔simH; first-claim fingerprint FLAT); adjacent 46/48 single-worker (2 reds = **F-S110-1** m1-03:89 banner race, RE-PROVEN pre-existing on clean main HEAD — not this slice). lane/perf now content-merged (owes reset off main — `git reset` permission-blocked headless s136). ✅ **GT-02b never-wedged SHIPPED s138 `23088bf`** (drain lane/perf, review in commit): cliff slide resolver guarantees a reachable hero always slides along a cliff instead of wedging; Hero.ts + TileHeight.ts; gt-02-slope spec gains `:207 never-wedges` assertion — 16/16 both projects. ✅ **GT-03 enemy-elevation SHIPPED s140 `351b6ab`** (drain lane/perf `31d694c`; review `reviews/gt-03.md`): enemies now consume the terrain-height field — slope slowdown, cliffs block, around-the-ridge routing; flat claim byte-identical (guarded fast-path). **Real 3-way** on Game.ts+vite-env vs the same-fire T3 drain — auto-merge textually clean, tsc-BEFORE-trust verified (F-S137-1), both changesets coexist. Gate: tsc+build; gt-03 spec 6/6 run (2 mobile perf/determinism skipped by design); adjacent **48/48** both projects (gt-02-slope/task-025/task-046/m1-01/m2-01/e1-twin-banks — Enemy.ts+TileHeight overlaps green). lane/perf now 0-ahead.

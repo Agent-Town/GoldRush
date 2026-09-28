@@ -1,0 +1,231 @@
+BATCH D start 2026-09-25T13:48:36Z
+branch 00473a1232ab0c19fdac16327c7738e56ffd9227 control 517822b351286d3e36d47be3ad5c28461cb304e8
+vite dev up on 5325 2026-09-25T13:48:39Z (Content-Type: text/javascript)
+
+== CONTROL relight x5, desktop 2026-09-25T13:48:39Z | load 14.21 23.77 29.66
+(node:60916) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+
+(node:60972) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:61201) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:61367) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:61663) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:61858) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  5 passed (40.9s)
+rc=0
+port 5325 released
+vite dev up on 5323 2026-09-25T13:49:25Z (Content-Type: text/javascript)
+
+== BRANCH relight x5, desktop 2026-09-25T13:49:25Z | load 12.39 21.92 28.67
+(node:62824) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+
+(node:63176) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:703:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:64440) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:703:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:65417) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:703:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:67022) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  4) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:703:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat3/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:75904) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/5] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  5) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      71 | async function gotoGame(page: Page, query: string): Promise<void> {
+      72 |   await page.goto(`/${query}`);
+    > 73 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      74 |   await dismissBriefing(page);
+      75 | }
+      76 |
+        at gotoGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:73:14)
+        at openGame (/Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:67:3)
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:703:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat4/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  5 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+rc=1
+port 5323 released
+
+BATCH D END 2026-09-25T13:52:03Z

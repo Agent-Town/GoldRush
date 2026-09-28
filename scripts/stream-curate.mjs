@@ -3,8 +3,8 @@
 import { execFileSync } from 'node:child_process';
 import { readdirSync, statSync, writeFileSync } from 'node:fs';
 import { basename, dirname, extname, join, relative, resolve } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
-
+import { fileURLToPath } from 'node:url';
+import { isMain } from './is-main.mjs';
 // Rotation policy: 40 minutes (legal range 35–45), duration mix 50/25/15/10,
 // newest five plus two seeded classics, and a 15-second hold for still cards.
 export const TARGET_SECONDS = 40 * 60;
@@ -194,4 +194,4 @@ function main() {
   writeFileSync(join(root, 'assets/stream/loop-manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) main();
+if (isMain(import.meta.url)) main();

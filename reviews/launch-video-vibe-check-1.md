@@ -1,0 +1,37 @@
+# Drain review: `launch-video-vibe-check-1` phase 1, the vibe check and the launch-film treatment (Opus 5.5 implementer at max effort; owner request 2026-09-25)
+
+**Branch** `docs/launch-video-vibe-check-1` at `09bc22dfe` · **merge** `060651b8d` · engine hash unchanged (`c63def1b`, no pin) · drained attended 2026-09-25 14:02Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `vibe`).
+
+**Verdict: LANDED.**
+
+### What it does
+The owner asked for "an Opus 5.5 max task to read the storybook, checkout the main artwork, and the game and do an overall vibe check" with a goal: "collect information it can use to do a launch video for the game in the style of the artwork. It should be fun and thrilling." Phase 1 is that reading and its three documents, all under `docs/marketing/launch-video/`: the vibe check (what Gold Rush is in three sentences, six pillars each with its proving frame, art against game for 17 maps, and the verdict), the treatment "WHAT IS A CLAIM?" (a thesis line, four movements, 12 beats in 94 seconds with a seven-field shot card each, the music brief on the Pan Theme and the E1 loop, the title and end cards, and the phase-2 capture runbook), and the mood board (24 existing frames grouped by beat). The implementer read the storybook whole (742 lines) and the rest of the READ FIRST list, viewed 86 images, and compared plates against in-game frames for the five Frontier maps and twelve more. Its verdict, verbatim: "Gold Rush is thrilling where the light is." The film should lean on the lantern in the dark, because every thrilling thing happens at the edge of a pool of warm light, and the brass deputy at the miner's shoulder is one of the night's lights too. The treatment needs zero new generation (the owner's 2026-09-19 "do not buy" stands): plates move by hand-cut parallax and the score is the existing Pan Theme plus the E1 loop. Phase 2 (the live look, captures on port 5322 under a no-network rule) has NOT started and waits on the attended session's word. Nothing was generated, requested, published or spent. Where the player sees it: nowhere; this is marketing groundwork.
+
+### Measured
+Eight new files, 708 lines of text, no image or binary, no `src/`; the path checker found 234 path mentions and 0 misses and walks exact case (this filesystem accepts wrong-cased paths); the node guards 19 of 19 in the worktree; zero em or en dashes in any file; `~/.goldrush/launch-video/` empty. Engine hash unchanged.
+
+### Merge classification
+All eight files are NEW: `docs/marketing/launch-video/{vibe-check-2026-09-25,treatment,mood-board}.md` and `artifacts/launch-video-vibe-check-1/{report.md,viewing-log.md,check-paths.mjs,check-paths.out.txt,guards.out.txt}`. Nothing on main moved under them.
+
+### For the owner (three questions the treatment cannot answer itself)
+1. Will you ride the Baron for the camera? No honest era-6 replay of the Baron's defeat exists on disk (every secured `e1-baron` tape is era 3 or 5). If not, the film cuts on the Baron's arrival and the Herald prints the ending.
+2. Printed text slips only (the implementer's recommendation), or a spoken read by a human voice you choose?
+3. Should model names show on the county boards in the film? Recommendation: unnamed.
+
+### Findings
+- **F-VIBE-1 (master template):** the master's READ FIRST names `specs/00_product_story.md`, which exists nowhere in this repository or its history; the brief's quotation of it was used instead. Cure: drop the path from the template.
+- **F-VIBE-2, F-VIBE-3, F-VIBE-5 (the public site, firewalled here):** the landing's share card (`og:image`, `twitter:image`) is a HUD-cropped game frame, not illustrated art; its three best illustrations exist only as base64 inside `site/index.html` with no source file in the art store; the footer links a token chart, which the brand book §5 forbids in marketing. Correctives are the owner's call because they change public content.
+- **F-VIBE-4, F-VIBE-6, F-VIBE-7 (canon and brief consistency):** the hero alt text calls the heroine "a prospector" (the agent's word); the brief contradicts itself on prompting "prospector" (canon-rules settles it: never); the brief's Rye and the brand book's Wellfleet disagree on the display face while the game ships no web font and renders Georgia. One-line attended edits once the owner picks.
+- **F-VIBE-8, F-VIBE-9 (evidence gaps):** no campaign board for the Claim or Dry Gulch; the FREED turn and the build menu exist only as staged review frames and the Baron frames carry the debug chip. Phase 2 captures these honestly.
+- **F-VIBE-10 (capture hazard, now a runbook law):** the dev build's API origin is the live county; phase 2 aborts every request to it and serves standings from the e2e fixtures.
+- **F-VIBE-11:** see owner question 1.
+- **F-VIBE-12, F-VIBE-13 (watch items):** the E1 walkers' ponchos and hats sit within canon but near its edge; the Ride Together invitation prints a monospace shell command on a player surface (the film crops above it).
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 137 ℹ fail 0` |
+| full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 1018 ℹ pass 1012 ℹ fail 1 ℹ skipped 5  14:02Z` |
+| engine hash | `merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)` |

@@ -1,3 +1,5 @@
+import { constantTimeEqual } from './_compare';
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
 import { bumpCounter } from './_ratelimit';
 
 export type LedgerListResult = {
@@ -13,6 +15,8 @@ export type LedgerStorage = {
   list(options?: { prefix?: string; cursor?: string }): Promise<LedgerListResult>;
   resolveAccount?(candidate: AccountRecord): Promise<AccountRecord>;
   retireAccount?(emailHash: string, accountId: string): Promise<boolean>;
+  // SEC-1: one atomic count-and-read, where the store can offer one (SqliteStorage does; KV cannot).
+  increment?(key: string, ttlSeconds: number): Promise<number>;
 };
 
 export type AccountRegistryNamespace = {
@@ -20,7 +24,7 @@ export type AccountRegistryNamespace = {
   get(id: unknown): { fetch(request: Request): Promise<Response> };
 };
 
-type AccountsEnv = {
+type AccountsEnv = LocalhostOriginsEnv & {
   ACCOUNTS?: LedgerStorage;
   ACCOUNT_REGISTRY?: AccountRegistryNamespace;
   ACCOUNT_REGISTRY_SCOPE?: string;
@@ -85,6 +89,14 @@ const RATE_TTL_SECONDS = 10 * 60;
 const MAX_VERIFY_ATTEMPTS = 5;
 const MAX_REQUESTS_PER_EMAIL = 5;
 const MAX_REQUESTS_PER_IP = 20;
+// SEC-1: /api/verify had no per-address cap at all, so the per-email budget was the only bound on a
+// guess flood and a caller could work through one email after another from one machine. Hourly, like
+// the other doors this limiter serves, and 60 is the number the owner already ruled for an hour
+// (F-HEAT14-7, _ratelimit.ts). It cannot refuse a real sign-in: a real caller needs at most
+// MAX_VERIFY_ATTEMPTS per code, and MAX_REQUESTS_PER_EMAIL caps how many codes an address can even
+// have issued in a 10 minute window, so 60 is twelve full budgets an hour from a single address.
+const MAX_VERIFIES_PER_IP = 60;
+const VERIFY_RATE_TTL_SECONDS = 60 * 60;
 const MAX_JSON_BYTES = 200 * 1024;
 const SMALL_JSON_BYTES = 8 * 1024;
 const CLOUD_DATA_CODEC_KEY = '$goldRushGzipDataV1';
@@ -115,7 +127,11 @@ export async function requestCode(context: AccountsContext): Promise<Response> {
       JSON.stringify({ hash: codeHash, revokeSessions: body.revokeSessions === true, createdAt: nowIso() }),
       { expirationTtl: CODE_TTL_SECONDS },
     );
-    await env.ACCOUNTS.delete(`attempts:${emailHash}`);
+    // SEC-1: the guess budget is NOT reset here. Deleting `attempts:` on every new code made the
+    // budget free to refill: a caller who had burned five guesses simply asked for another code and
+    // got five more, so the 5-per-TTL bound was really 5 per code request, i.e. 25 per 10 minutes
+    // per email. The counter now expires on its own TTL (CODE_TTL_SECONDS from the first counted
+    // guess) and a successful verify is the only thing that clears it.
 
     if (isDev(env)) {
       return json(cors, { ok: true, code, dev: true });
@@ -141,18 +157,25 @@ export async function verifyCode(context: AccountsContext): Promise<Response> {
     const code = typeof body.code === 'string' && /^\d{6}$/.test(body.code) ? body.code : '';
     if (!email || !code) return error(cors, 401, 'invalid_code', 'Code not accepted.');
 
+    // SEC-1: a per-address hourly cap, mirroring requestCode's, in its own bucket so a guess flood
+    // cannot lock an address out of asking for codes and vice versa.
+    if (!(await bumpCounter(kv, `ratelimit:verify:${clientIp(request)}`, MAX_VERIFIES_PER_IP, VERIFY_RATE_TTL_SECONDS))) {
+      return error(cors, 429, 'rate_limited', 'Try again later.');
+    }
+
     const emailHash = await sha256Hex(email);
     const attemptsKey = `attempts:${emailHash}`;
-    const attempts = numberOrZero(await kv.get(attemptsKey));
-    if (attempts >= MAX_VERIFY_ATTEMPTS) return error(cors, 429, 'too_many_attempts', 'Try again later.');
+    // SEC-1: count FIRST, then compare. The guess is charged to the budget before anything is read
+    // or hashed, and the caller is refused on the number its own count produced, so the two awaits
+    // that used to sit inside the read-then-write window cannot buy an extra evaluation.
+    const attempt = await countAttempt(kv, attemptsKey, CODE_TTL_SECONDS);
+    if (attempt > MAX_VERIFY_ATTEMPTS) return error(cors, 429, 'too_many_attempts', 'Try again later.');
 
     const rawCode = await kv.get(`code:${emailHash}`);
     const expected = parseCode(rawCode);
     const actual = await codeDigest(env, emailHash, code);
     if (!expected || !constantTimeEqual(expected.hash, actual)) {
-      const nextAttempts = attempts + 1;
-      await kv.put(attemptsKey, String(nextAttempts), { expirationTtl: CODE_TTL_SECONDS });
-      return nextAttempts >= MAX_VERIFY_ATTEMPTS
+      return attempt >= MAX_VERIFY_ATTEMPTS
         ? error(cors, 429, 'too_many_attempts', 'Try again later.')
         : error(cors, 401, 'invalid_code', 'Code not accepted.');
     }
@@ -338,7 +361,7 @@ async function route(
   context: AccountsContext,
   handler: (value: { request: Request; env: AccountsEnv; cors: Record<string, string> }) => Promise<Response>,
 ): Promise<Response> {
-  const cors = corsHeaders(context.request, context.env.ALLOWED_CORS_ORIGINS);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   try {
@@ -349,7 +372,25 @@ async function route(
   }
 }
 
-function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Record<string, string> | null {
+// SEC-8 (outside review 2026-09-24): this allowlist admitted `http://localhost:*` and
+// `http://127.0.0.1:*` UNCONDITIONALLY, in production, on the door that mints and accepts sign-in
+// codes and hands back a session token. Anything a browser runs on the player's own machine (a page
+// on a dev server, an extension's injected origin) could therefore talk to the live accounts door
+// with the browser's cookies and read the answers, because the reply carried
+// Access-Control-Allow-Origin for whatever localhost port asked.
+//
+// SEC-8 keyed the dev arm on the PRODUCTION MAIL SENDER being unbound. That holds on the droplet, the
+// accounts door's live home since 2026-08-24, but not on Pages, whose production environment binds no
+// sender (F-SF1-8, measured by variable name 2026-09-25), so a Pages copy read "development" there.
+// localhost-cors-2 (2026-09-26): the arm asks the one shared development switch,
+// `localhostOriginAllowed` (./_cors), which reads ALLOW_LOCALHOST_ORIGINS === '1' and nothing else,
+// never a header, an origin or a host (the droplet forwards the caller's own `Host:`). Unset, as on
+// both live doors, only the three named origins, the droplet's configured extras and a
+// `*.gold-rush-3in.pages.dev` preview are admitted. A developer who has configured nothing gets a CORS
+// refusal from a localhost page; `.dev.vars.example` names the switch, and scripts/test-accounts.mjs
+// passes it to every fixture it starts, the unconfigured arm included, so that arm still measures the
+// honest 503 of a door with no sender and no DEV_AUTH.
+function corsHeaders(request: Request, env: AccountsEnv): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'authorization, content-type',
@@ -358,7 +399,12 @@ function corsHeaders(request: Request, extraOrigins?: ReadonlySet<string>): Reco
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || extraOrigins?.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (
+    ALLOWED_ORIGINS.has(origin) ||
+    env.ALLOWED_CORS_ORIGINS?.has(origin) ||
+    /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) ||
+    localhostOriginAllowed(origin, env)
+  ) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;
@@ -377,6 +423,19 @@ function error(cors: Record<string, string>, status: number, code: string, messa
 
 function requireAccounts(env: AccountsEnv, cors: Record<string, string>): LedgerStorage | Response {
   return env.ACCOUNTS ?? error(cors, 503, 'sign_in_not_enabled', 'sign-in not yet enabled');
+}
+
+// SEC-1: charge one guess to a budget and hand back the number this call produced. The sqlite ledger
+// counts in a single statement (storage.mjs `increment`), which is the door that is live behind nginx
+// today. Cloudflare KV has no atomic increment and its own writes are eventually consistent, so the
+// fallback keeps the read and the write ADJACENT, with no digest or code read between them: a burst
+// on that backend can still share a count, and the nginx `limit_req` on /api/verify plus the per-IP
+// cap above are what bound it there. Flagged in the report, not papered over.
+async function countAttempt(kv: LedgerStorage, key: string, ttlSeconds: number): Promise<number> {
+  if (kv.increment) return kv.increment(key, ttlSeconds);
+  const attempt = numberOrZero(await kv.get(key)) + 1;
+  await kv.put(key, String(attempt), { expirationTtl: ttlSeconds });
+  return attempt;
 }
 
 async function readJson(request: Request, maxBytes: number): Promise<JsonRecord> {
@@ -700,8 +759,26 @@ async function sendEmail(env: AccountsEnv, email: string, code: string): Promise
   return response.ok;
 }
 
+// SEC-10 (outside review 2026-09-24): `DEV_AUTH === '1'` on its own decided whether requestCode
+// returns the login code in the response body, so ONE mis-set production variable hands a working
+// code to anyone who asks for it. Measured on this tree before the fix: env `{ DEV_AUTH: '1',
+// RESEND_API_KEY: <bound> }` answered 200 with `code` and `dev: true` and never sent the mail.
+//
+// The second condition is the ABSENCE of the production mail sender binding, and it is chosen
+// because it is the one marker a REQUEST cannot reach. `RESEND_API_KEY` is an environment binding
+// (Pages project vars; the explicit env `main()` builds in `server/ledger/serve.mjs` for the droplet)
+// and nothing derives it from a header, an origin or a host. The alternative marker, a localhost host
+// or origin, IS reachable by a request: the droplet forwards the caller's own `Host:` header to the
+// ledger (`proxy_set_header Host $host`, ops/droplet/agenttown.app.nginx.conf), and `Origin` is
+// whatever the caller writes, so either could be spoofed into saying "localhost" from the public
+// internet. Production can never satisfy this: the droplet, the accounts door's live home since
+// 2026-08-24, binds the sender, and the Pages production environment binds neither the sender nor
+// DEV_AUTH (F-SF1-8: its one variable is ASSAY_WORKER_SECRET), so a code is never returned there. A
+// dev box that wants dev codes simply leaves the sender unbound, which is what every fixture in this
+// repo already does (scripts/test-accounts.mjs `cleanEnv`, playwright.accounts.config.ts,
+// e2e/ratelimit-429-net).
 function isDev(env: AccountsEnv): boolean {
-  return env.DEV_AUTH === '1';
+  return env.DEV_AUTH === '1' && !env.RESEND_API_KEY;
 }
 
 function clientIp(request: Request): string {
@@ -728,15 +805,6 @@ async function codeDigest(env: AccountsEnv, emailHash: string, code: string): Pr
 async function sha256Hex(value: string): Promise<string> {
   const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
   return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
-}
-
-function constantTimeEqual(left: string, right: string): boolean {
-  let diff = left.length ^ right.length;
-  const length = Math.max(left.length, right.length);
-  for (let index = 0; index < length; index += 1) {
-    diff |= (left.charCodeAt(index) || 0) ^ (right.charCodeAt(index) || 0);
-  }
-  return diff === 0;
 }
 
 function numberOrZero(value: string | null): number {

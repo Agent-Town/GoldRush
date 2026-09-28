@@ -84,7 +84,7 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 // (F-2334-1's `headDetached` is defined locally below, NOT imported. The reason is
 // measured and is recorded at the function itself — see the note above it.)
 
@@ -715,7 +715,24 @@ function main() {
   process.exit(exitCodeFor(buckets, strict, sel.corpus, refused.length));
 }
 
-// NOTE: compare via pathToFileURL, never a `file://${argv[1]}` template. This
+// NOTE: isMain (a verbatim copy, at the foot of this file), never a `file://${argv[1]}` template. This
 // repo's own root contains a space ("Gold Rush"), which import.meta.url encodes
 // as %20 -- the template form silently never matches and the CLI prints nothing.
-if (import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (isMain(import.meta.url)) main();
+
+/**
+ * A VERBATIM COPY of isMain from ./is-main.mjs (F-LS1-2, small-fixes-1), not an import: this file's
+ * guards relocate it (dry-board-bucket-verdict-guard.test.mjs writes a variant of it alone into a
+ * bare temp dir), so it cannot carry a relative import, the constraint recorded above headDetached
+ * (measured again: that suite's 3 reverse-control arms red with the import). scripts/is-main.test.mjs
+ * asserts this copy still matches the original byte for byte; change them together.
+ */
+function isMain(importMetaUrl) {
+  const entry = process.argv[1];
+  if (!entry || !importMetaUrl) return false;
+  try {
+    return fs.realpathSync(entry) === fs.realpathSync(fileURLToPath(importMetaUrl));
+  } catch {
+    return false;
+  }
+}

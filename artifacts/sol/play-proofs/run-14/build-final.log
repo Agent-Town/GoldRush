@@ -1,0 +1,18 @@
+> gold-rush@0.1.0 build
+> tsc && vite build && node scripts/asset-diet.mjs
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+dist/assets/east-hollow-warning-pylon-CtE9zSu3-diet-c2bea0ac.glb                               1,515.94 kB
+dist/assets/west-hollow-warning-pylon-D9zx4okx-diet-c2bea0ac.glb                               1,515.94 kB
+dist/assets/iron-shadow-warning-frame-CQnTJW2a-diet-c2bea0ac.glb                               1,597.21 kB
+dist/assets/dust-devil-warning-mast-egD9x9yl-diet-c2bea0ac.glb                                 1,851.03 kB
+dist/assets/warning-shelf-ruin-DkqDKlKk-diet-c2bea0ac.glb                                      1,890.49 kB
+dist/assets/warning-shelf-ruin-CDc-Dvco-diet-c2bea0ac.js                                           0.10 kB │ gzip:   0.12 kB
+dist/assets/dust-devil-warning-mast-CzMFFrni-diet-c2bea0ac.js                                      0.11 kB │ gzip:   0.12 kB
+dist/assets/east-hollow-warning-pylon-BhLqVAiA-diet-c2bea0ac.js                                    0.11 kB │ gzip:   0.12 kB
+dist/assets/iron-shadow-warning-frame-Cx0ciTQb-diet-c2bea0ac.js                                    0.11 kB │ gzip:   0.12 kB
+dist/assets/west-hollow-warning-pylon-BQJ6GxKG-diet-c2bea0ac.js                                    0.11 kB │ gzip:   0.12 kB
+✓ built in 2.27s
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+(node:35353) ExperimentalWarning: glob is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+[asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png

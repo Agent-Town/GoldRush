@@ -1,0 +1,650 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-28T03:18:28.965Z — s2730 fresh final-driver gate ########
+cwd=/Users/robin/.goldrush/fire-s2730/wt-holds2
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg08XZwIr:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5317 GR_NATIVE_PROOF=1 GR_NATIVE_RUN=s2730-holds2 GR_NATIVE_STRATEGY=fire-s2730
+
+===== own five native specs =====
+$ npx playwright test e2e/native-proofs/e6-picnic.spec.ts e2e/native-proofs/e6-showroom.spec.ts e2e/native-proofs/e7-dead-band.spec.ts e2e/native-proofs/e7-echo-canyon.spec.ts e2e/native-proofs/e7-relay-rush.spec.ts --project=desktop-chrome --project=mobile-chrome --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2730/native-results --workers=1
+rc=1 971.6s
+
+Running 10 tests using 1 worker
+
+e6-picnic {"t":10.4,"wave":0,"hp":100,"gold":0,"kills":0,"x":-2.8,"z":15.6,"alive":2,"seams":2}
+e6-picnic {"t":21.3,"wave":0,"hp":100,"gold":0,"kills":4,"x":-1,"z":28.2,"alive":2,"seams":2}
+e6-picnic {"t":31.3,"wave":1,"hp":100,"gold":0,"kills":6,"x":3.8,"z":9.1,"alive":8,"seams":2}
+e6-picnic {"t":42.3,"wave":1,"hp":100,"gold":30,"kills":14,"x":1.2,"z":7.9,"alive":3,"seams":1}
+e6-picnic {"t":52.4,"wave":1,"hp":100,"gold":35,"kills":17,"x":23.7,"z":-21.2,"alive":5,"seams":1}
+e6-picnic {"t":63.1,"wave":2,"hp":100,"gold":50,"kills":24,"x":-8.7,"z":10.4,"alive":7,"seams":2}
+e6-picnic {"t":73.7,"wave":2,"hp":100,"gold":10,"kills":30,"x":-22,"z":8.5,"alive":7,"seams":2}
+e6-picnic {"t":84,"wave":2,"hp":100,"gold":25,"kills":40,"x":-13.5,"z":16.4,"alive":3,"seams":2}
+e6-picnic {"t":94.4,"wave":3,"hp":100,"gold":30,"kills":44,"x":7.5,"z":-20.2,"alive":8,"seams":1}
+e6-picnic {"t":104.4,"wave":3,"hp":100,"gold":40,"kills":49,"x":23.5,"z":-22.1,"alive":12,"seams":0}
+e6-picnic {"t":114.4,"wave":3,"hp":100,"gold":40,"kills":60,"x":0.5,"z":-0.1,"alive":7,"seams":1}
+e6-picnic {"t":124.8,"wave":4,"hp":100,"gold":65,"kills":69,"x":-0.2,"z":6.9,"alive":9,"seams":2}
+e6-picnic {"t":135.1,"wave":4,"hp":100,"gold":0,"kills":80,"x":-15.7,"z":12.6,"alive":9,"seams":1}
+e6-picnic {"t":145.6,"wave":4,"hp":100,"gold":0,"kills":90,"x":21.1,"z":8.1,"alive":5,"seams":1}
+e6-picnic {"t":155.7,"wave":5,"hp":100,"gold":30,"kills":98,"x":18,"z":4.9,"alive":10,"seams":1}
+e6-picnic {"t":165.9,"wave":5,"hp":100,"gold":30,"kills":108,"x":-21.3,"z":-22.2,"alive":13,"seams":1}
+e6-picnic {"t":176.4,"wave":5,"hp":100,"gold":60,"kills":115,"x":-23.1,"z":-22.2,"alive":13,"seams":1}
+e6-picnic {"t":186.8,"wave":6,"hp":125,"gold":65,"kills":132,"x":-0.1,"z":7,"alive":9,"seams":1}
+e6-picnic {"t":198.1,"wave":6,"hp":125,"gold":90,"kills":152,"x":-0.1,"z":7,"alive":6,"seams":1}
+e6-picnic {"t":208.1,"wave":6,"hp":125,"gold":95,"kills":161,"x":0.2,"z":15.3,"alive":4,"seams":1}
+e6-picnic {"t":218.1,"wave":7,"hp":150,"gold":0,"kills":173,"x":21.6,"z":7,"alive":18,"seams":2}
+e6-picnic {"t":228.7,"wave":7,"hp":144,"gold":25,"kills":189,"x":13.6,"z":14,"alive":10,"seams":1}
+e6-picnic {"t":239.1,"wave":7,"hp":144,"gold":0,"kills":201,"x":-23.6,"z":18.1,"alive":7,"seams":1}
+e6-picnic {"t":249.5,"wave":8,"hp":169,"gold":25,"kills":222,"x":-22.3,"z":8.4,"alive":14,"seams":2}
+e6-picnic {"t":260,"wave":8,"hp":169,"gold":30,"kills":233,"x":14.9,"z":-21.2,"alive":12,"seams":1}
+e6-picnic {"t":270.3,"wave":9,"hp":169,"gold":35,"kills":240,"x":-12.2,"z":12.5,"alive":30,"seams":1}
+e6-picnic {"t":280.4,"wave":9,"hp":162,"gold":0,"kills":261,"x":-8.4,"z":18.6,"alive":25,"seams":2}
+e6-picnic {"t":291.2,"wave":9,"hp":162,"gold":0,"kills":288,"x":-19.5,"z":19.4,"alive":8,"seams":2}
+e6-picnic {"t":301.7,"wave":10,"hp":162,"gold":0,"kills":301,"x":-22.5,"z":15.9,"alive":21,"seams":2}
+e6-picnic {"t":312.1,"wave":10,"hp":162,"gold":0,"kills":322,"x":-10.4,"z":22,"alive":20,"seams":2}
+e6-picnic {"t":322.8,"wave":10,"hp":162,"gold":0,"kills":346,"x":-17.9,"z":22,"alive":7,"seams":2}
+e6-picnic {"t":333.5,"wave":11,"hp":162,"gold":0,"kills":358,"x":-20.6,"z":11.8,"alive":21,"seams":2}
+e6-picnic {"t":343.9,"wave":11,"hp":162,"gold":0,"kills":389,"x":-12.3,"z":17.4,"alive":13,"seams":2}
+e6-picnic {"t":354,"wave":11,"hp":162,"gold":0,"kills":405,"x":-12.3,"z":22.7,"alive":9,"seams":2}
+e6-picnic {"t":364.9,"wave":12,"hp":162,"gold":0,"kills":418,"x":-22.6,"z":22.2,"alive":21,"seams":2}
+e6-picnic {"t":375.3,"wave":12,"hp":155,"gold":0,"kills":447,"x":-21.1,"z":16.8,"alive":19,"seams":2}
+e6-picnic {"t":386,"wave":12,"hp":155,"gold":0,"kills":468,"x":-12.8,"z":17.6,"alive":11,"seams":2}
+e6-picnic {"t":398,"wave":13,"hp":149,"gold":0,"kills":494,"x":-11.9,"z":16.9,"alive":8,"seams":2}
+e6-picnic {"t":408.5,"wave":13,"hp":149,"gold":0,"kills":520,"x":-11.9,"z":17.1,"alive":13,"seams":2}
+e6-picnic {"t":418.9,"wave":13,"hp":149,"gold":0,"kills":537,"x":-17.6,"z":16.8,"alive":9,"seams":2}
+e6-picnic {"t":428.9,"wave":14,"hp":149,"gold":0,"kills":555,"x":-19.1,"z":15.3,"alive":30,"seams":2}
+e6-picnic {"t":439.5,"wave":14,"hp":122,"gold":0,"kills":585,"x":-13.6,"z":20.3,"alive":13,"seams":2}
+e6-picnic {"t":449.6,"wave":14,"hp":122,"gold":0,"kills":598,"x":-9.9,"z":24,"alive":12,"seams":2}
+e6-picnic {"t":460.4,"wave":15,"hp":109,"gold":0,"kills":626,"x":-15.2,"z":18.8,"alive":24,"seams":2}
+e6-picnic {"t":471.2,"wave":15,"hp":109,"gold":0,"kills":652,"x":-19.8,"z":11.4,"alive":12,"seams":2}
+e6-picnic {"t":481.9,"wave":16,"hp":109,"gold":0,"kills":665,"x":-10.3,"z":13.3,"alive":29,"seams":2}
+e6-picnic {"t":492.5,"wave":16,"hp":89,"gold":0,"kills":692,"x":-16.5,"z":14.1,"alive":25,"seams":2}
+e6-picnic {"t":503.7,"wave":16,"hp":63,"gold":0,"kills":718,"x":-7.8,"z":21.7,"alive":13,"seams":2}
+e6-picnic {"t":514,"wave":17,"hp":63,"gold":0,"kills":733,"x":-21.9,"z":21.7,"alive":26,"seams":2}
+e6-picnic {"t":524.4,"wave":17,"hp":42,"gold":0,"kills":759,"x":-16.3,"z":17,"alive":25,"seams":2}
+e6-picnic {"t":535.3,"wave":17,"hp":35,"gold":0,"kills":784,"x":-10.1,"z":21.7,"alive":14,"seams":2}
+e6-picnic {"t":545.5,"wave":18,"hp":35,"gold":0,"kills":801,"x":-16.5,"z":25.5,"alive":23,"seams":2}
+e6-picnic {"t":556.1,"wave":18,"hp":29,"gold":0,"kills":824,"x":-22.1,"z":12.8,"alive":28,"seams":2}
+  ✘   1 [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-picnic plays to its authored terminal, banks, reloads and returns to the board @slow (2.5m)
+e6-showroom {"t":10,"wave":0,"hp":100,"gold":0,"kills":0,"x":-6.4,"z":6.4,"alive":2,"seams":2}
+e6-showroom {"t":20.1,"wave":0,"hp":100,"gold":0,"kills":2,"x":-36.6,"z":5.8,"alive":4,"seams":2}
+e6-showroom {"t":30.1,"wave":1,"hp":100,"gold":0,"kills":6,"x":-5.5,"z":5.8,"alive":8,"seams":2}
+e6-showroom {"t":40.7,"wave":1,"hp":94,"gold":0,"kills":8,"x":35.9,"z":5.8,"alive":9,"seams":2}
+e6-showroom {"t":51.3,"wave":1,"hp":94,"gold":0,"kills":18,"x":13,"z":5.8,"alive":4,"seams":2}
+e6-showroom {"t":61.9,"wave":2,"hp":94,"gold":0,"kills":19,"x":-36.1,"z":5.8,"alive":12,"seams":2}
+e6-showroom {"t":72.5,"wave":2,"hp":76,"gold":0,"kills":24,"x":-0.4,"z":5.8,"alive":13,"seams":2}
+e6-showroom {"t":82.9,"wave":2,"hp":76,"gold":0,"kills":28,"x":36.3,"z":5.8,"alive":14,"seams":2}
+e6-showroom {"t":93.2,"wave":3,"hp":23,"gold":0,"kills":34,"x":-2.1,"z":5.8,"alive":18,"seams":2}
+e6-showroom {"t":103.3,"wave":3,"hp":23,"gold":0,"kills":36,"x":-36.1,"z":5.8,"alive":24,"seams":2}
+  ✘   2 [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-showroom plays to its authored terminal, banks, reloads and returns to the board @slow (32.8s)
+e7-dead-band {"t":10.7,"wave":0,"hp":100,"gold":0,"kills":0,"x":0,"z":12,"alive":2,"seams":2}
+e7-dead-band {"t":20.8,"wave":0,"hp":100,"gold":15,"kills":1,"x":14.3,"z":-5.4,"alive":5,"seams":2}
+e7-dead-band {"t":31.1,"wave":1,"hp":100,"gold":30,"kills":7,"x":33.9,"z":14.2,"alive":7,"seams":1}
+e7-dead-band {"t":41.2,"wave":1,"hp":100,"gold":45,"kills":13,"x":34,"z":36.5,"alive":4,"seams":1}
+e7-dead-band {"t":51.5,"wave":1,"hp":100,"gold":50,"kills":14,"x":0.2,"z":2.7,"alive":8,"seams":2}
+e7-dead-band {"t":61.6,"wave":2,"hp":100,"gold":0,"kills":18,"x":-12.5,"z":-6.3,"alive":13,"seams":2}
+e7-dead-band {"t":71.6,"wave":2,"hp":87,"gold":25,"kills":33,"x":-5.1,"z":-12,"alive":3,"seams":2}
+e7-dead-band {"t":81.6,"wave":2,"hp":87,"gold":5,"kills":40,"x":-1.3,"z":5.6,"alive":1,"seams":1}
+e7-dead-band {"t":92,"wave":3,"hp":87,"gold":10,"kills":42,"x":32.9,"z":37.2,"alive":10,"seams":1}
+e7-dead-band {"t":102.5,"wave":3,"hp":87,"gold":15,"kills":55,"x":14,"z":18.3,"alive":5,"seams":1}
+e7-dead-band {"t":112.8,"wave":3,"hp":87,"gold":35,"kills":57,"x":14,"z":-4.9,"alive":9,"seams":1}
+e7-dead-band {"t":122.8,"wave":4,"hp":87,"gold":45,"kills":68,"x":-13.1,"z":-5.6,"alive":10,"seams":1}
+e7-dead-band {"t":132.9,"wave":4,"hp":87,"gold":70,"kills":79,"x":-0.5,"z":-18.1,"alive":8,"seams":1}
+e7-dead-band {"t":143.3,"wave":4,"hp":87,"gold":5,"kills":89,"x":-12.9,"z":-6.2,"alive":5,"seams":1}
+e7-dead-band {"t":153.7,"wave":5,"hp":87,"gold":5,"kills":92,"x":-34.7,"z":36.1,"alive":16,"seams":1}
+e7-dead-band {"t":165.2,"wave":5,"hp":87,"gold":40,"kills":113,"x":-34.7,"z":36.1,"alive":7,"seams":1}
+e7-dead-band {"t":175.6,"wave":5,"hp":87,"gold":65,"kills":120,"x":-34.7,"z":36.1,"alive":7,"seams":0}
+e7-dead-band {"t":186.1,"wave":6,"hp":112,"gold":65,"kills":126,"x":-25.2,"z":26.6,"alive":15,"seams":1}
+e7-dead-band {"t":196.3,"wave":6,"hp":112,"gold":65,"kills":133,"x":13.6,"z":-6.3,"alive":23,"seams":2}
+e7-dead-band {"t":206.7,"wave":6,"hp":137,"gold":95,"kills":154,"x":7.3,"z":-12.5,"alive":10,"seams":1}
+e7-dead-band {"t":217.1,"wave":7,"hp":162,"gold":0,"kills":168,"x":15.2,"z":8.8,"alive":11,"seams":1}
+e7-dead-band {"t":227.5,"wave":7,"hp":162,"gold":15,"kills":177,"x":34.2,"z":36.7,"alive":21,"seams":2}
+e7-dead-band {"t":237.9,"wave":7,"hp":162,"gold":30,"kills":197,"x":12.2,"z":14.7,"alive":10,"seams":1}
+e7-dead-band {"t":248.3,"wave":8,"hp":162,"gold":35,"kills":205,"x":-7.1,"z":-13.7,"alive":30,"seams":1}
+e7-dead-band {"t":258.9,"wave":8,"hp":156,"gold":20,"kills":236,"x":-14,"z":-6.8,"alive":8,"seams":2}
+e7-dead-band {"t":268.9,"wave":8,"hp":156,"gold":25,"kills":244,"x":-35.1,"z":34.4,"alive":9,"seams":1}
+e7-dead-band {"t":279.7,"wave":9,"hp":149,"gold":45,"kills":261,"x":-23.3,"z":26.3,"alive":24,"seams":1}
+e7-dead-band {"t":289.9,"wave":9,"hp":149,"gold":0,"kills":274,"x":7.4,"z":-17.2,"alive":21,"seams":2}
+e7-dead-band {"t":300.1,"wave":10,"hp":149,"gold":20,"kills":297,"x":13.9,"z":-6.5,"alive":25,"seams":2}
+e7-dead-band {"t":310.1,"wave":10,"hp":149,"gold":30,"kills":306,"x":-29.3,"z":35.6,"alive":34,"seams":1}
+e7-dead-band {"t":320.1,"wave":10,"hp":124,"gold":40,"kills":330,"x":-33.5,"z":37.3,"alive":20,"seams":0}
+e7-dead-band {"t":330.3,"wave":11,"hp":124,"gold":40,"kills":354,"x":-14.3,"z":-0.2,"alive":25,"seams":1}
+e7-dead-band {"t":340.8,"wave":11,"hp":124,"gold":0,"kills":378,"x":-2.1,"z":-7.3,"alive":21,"seams":2}
+e7-dead-band {"t":351.3,"wave":11,"hp":124,"gold":15,"kills":403,"x":11.5,"z":-5.8,"alive":8,"seams":1}
+e7-dead-band {"t":361.9,"wave":12,"hp":124,"gold":45,"kills":416,"x":13.6,"z":-5.8,"alive":23,"seams":0}
+e7-dead-band {"t":372.1,"wave":12,"hp":111,"gold":55,"kills":443,"x":13.6,"z":-5.8,"alive":19,"seams":1}
+e7-dead-band {"t":382.9,"wave":12,"hp":98,"gold":0,"kills":463,"x":-2.3,"z":-19.5,"alive":12,"seams":1}
+e7-dead-band {"t":393.5,"wave":13,"hp":98,"gold":0,"kills":478,"x":-1.8,"z":-10.7,"alive":24,"seams":1}
+e7-dead-band {"t":404.1,"wave":13,"hp":85,"gold":0,"kills":512,"x":3.9,"z":-12.7,"alive":15,"seams":2}
+e7-dead-band {"t":414.1,"wave":13,"hp":85,"gold":0,"kills":530,"x":3.9,"z":-11.7,"alive":10,"seams":2}
+e7-dead-band {"t":424.1,"wave":14,"hp":85,"gold":0,"kills":543,"x":-6.1,"z":-20.1,"alive":23,"seams":2}
+e7-dead-band {"t":435.7,"wave":14,"hp":73,"gold":0,"kills":581,"x":3.2,"z":-18.9,"alive":12,"seams":2}
+e7-dead-band {"t":446.1,"wave":14,"hp":73,"gold":0,"kills":594,"x":4,"z":-14.9,"alive":12,"seams":2}
+e7-dead-band {"t":456.8,"wave":15,"hp":66,"gold":0,"kills":618,"x":-1.4,"z":-13.4,"alive":12,"seams":2}
+e7-dead-band {"t":467.2,"wave":15,"hp":66,"gold":0,"kills":647,"x":0.9,"z":-14.9,"alive":12,"seams":2}
+e7-dead-band {"t":477.5,"wave":15,"hp":66,"gold":0,"kills":661,"x":4.8,"z":-9.4,"alive":11,"seams":2}
+e7-dead-band {"t":487.6,"wave":16,"hp":53,"gold":0,"kills":682,"x":-3.6,"z":-18.8,"alive":12,"seams":2}
+e7-dead-band {"t":498,"wave":16,"hp":41,"gold":0,"kills":713,"x":-3.6,"z":-11.2,"alive":11,"seams":2}
+e7-dead-band {"t":508.8,"wave":16,"hp":41,"gold":0,"kills":728,"x":-5.6,"z":-11.9,"alive":9,"seams":2}
+e7-dead-band {"t":519.2,"wave":17,"hp":21,"gold":0,"kills":753,"x":-3.4,"z":-18.5,"alive":25,"seams":2}
+e7-dead-band {"t":529.6,"wave":17,"hp":9,"gold":0,"kills":777,"x":1.3,"z":-23.1,"alive":14,"seams":2}
+e7-dead-band {"t":540.1,"wave":18,"hp":9,"gold":0,"kills":793,"x":-4.1,"z":-10.6,"alive":31,"seams":2}
+  ✘   3 [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-dead-band plays to its authored terminal, banks, reloads and returns to the board @slow (2.4m)
+e7-echo-canyon {"t":10.4,"wave":0,"hp":100,"gold":0,"kills":1,"x":10.6,"z":1.4,"alive":1,"seams":2}
+e7-echo-canyon {"t":20.9,"wave":0,"hp":100,"gold":25,"kills":5,"x":14.1,"z":-5.1,"alive":1,"seams":2}
+e7-echo-canyon {"t":31.3,"wave":1,"hp":100,"gold":35,"kills":8,"x":40.9,"z":8.1,"alive":6,"seams":1}
+e7-echo-canyon {"t":41.3,"wave":1,"hp":100,"gold":50,"kills":12,"x":14.1,"z":-17.9,"alive":5,"seams":1}
+e7-echo-canyon {"t":51.5,"wave":1,"hp":100,"gold":0,"kills":18,"x":1,"z":-17.9,"alive":4,"seams":2}
+e7-echo-canyon {"t":61.9,"wave":2,"hp":100,"gold":0,"kills":25,"x":1,"z":-17.9,"alive":6,"seams":2}
+e7-echo-canyon {"t":72.1,"wave":2,"hp":100,"gold":0,"kills":33,"x":1,"z":-17.9,"alive":4,"seams":2}
+e7-echo-canyon {"t":82.3,"wave":2,"hp":100,"gold":0,"kills":40,"x":1,"z":-17.9,"alive":2,"seams":2}
+e7-echo-canyon {"t":92.9,"wave":3,"hp":100,"gold":0,"kills":50,"x":-8.4,"z":-8.5,"alive":4,"seams":2}
+e7-echo-canyon {"t":103.5,"wave":3,"hp":100,"gold":30,"kills":59,"x":-13.7,"z":-5.9,"alive":3,"seams":1}
+e7-echo-canyon {"t":114,"wave":3,"hp":100,"gold":30,"kills":66,"x":35.9,"z":11.1,"alive":2,"seams":1}
+e7-echo-canyon {"t":124.3,"wave":4,"hp":100,"gold":40,"kills":71,"x":38.5,"z":6.1,"alive":9,"seams":1}
+e7-echo-canyon {"t":134.9,"wave":4,"hp":100,"gold":55,"kills":84,"x":15,"z":-5.9,"alive":7,"seams":1}
+e7-echo-canyon {"t":145.3,"wave":4,"hp":100,"gold":0,"kills":94,"x":-6,"z":-11.6,"alive":3,"seams":1}
+e7-echo-canyon {"t":155.3,"wave":5,"hp":100,"gold":25,"kills":105,"x":-13.4,"z":-5.9,"alive":5,"seams":1}
+e7-echo-canyon {"t":166,"wave":5,"hp":100,"gold":5,"kills":120,"x":-18.1,"z":-2.6,"alive":3,"seams":1}
+e7-echo-canyon {"t":177.3,"wave":5,"hp":100,"gold":5,"kills":126,"x":-39.9,"z":6.3,"alive":4,"seams":1}
+e7-echo-canyon {"t":187.3,"wave":6,"hp":100,"gold":5,"kills":139,"x":-36.5,"z":2.9,"alive":4,"seams":2}
+e7-echo-canyon {"t":197.9,"wave":6,"hp":100,"gold":10,"kills":144,"x":13.2,"z":-6.3,"alive":16,"seams":2}
+e7-echo-canyon {"t":208.9,"wave":6,"hp":125,"gold":35,"kills":165,"x":13.2,"z":-6.3,"alive":3,"seams":1}
+e7-echo-canyon {"t":220.4,"wave":7,"hp":125,"gold":35,"kills":184,"x":13.2,"z":-6.3,"alive":10,"seams":1}
+e7-echo-canyon {"t":230.7,"wave":7,"hp":125,"gold":35,"kills":201,"x":37.8,"z":10.5,"alive":2,"seams":2}
+e7-echo-canyon {"t":241.1,"wave":8,"hp":125,"gold":65,"kills":205,"x":41.2,"z":8.3,"alive":19,"seams":1}
+e7-echo-canyon {"t":253.3,"wave":8,"hp":125,"gold":65,"kills":227,"x":41.2,"z":8.3,"alive":14,"seams":1}
+e7-echo-canyon {"t":263.9,"wave":8,"hp":150,"gold":65,"kills":245,"x":25.9,"z":-8.1,"alive":5,"seams":2}
+e7-echo-canyon {"t":274.4,"wave":9,"hp":175,"gold":90,"kills":260,"x":14.4,"z":-5.9,"alive":12,"seams":2}
+e7-echo-canyon {"t":285.6,"wave":9,"hp":175,"gold":0,"kills":287,"x":5.1,"z":-16.6,"alive":6,"seams":1}
+e7-echo-canyon {"t":296.8,"wave":9,"hp":175,"gold":0,"kills":298,"x":5.1,"z":-16.6,"alive":6,"seams":2}
+e7-echo-canyon {"t":307.1,"wave":10,"hp":175,"gold":20,"kills":323,"x":-13.9,"z":-5.9,"alive":1,"seams":2}
+e7-echo-canyon {"t":317.6,"wave":10,"hp":175,"gold":30,"kills":341,"x":-13.9,"z":-5.9,"alive":9,"seams":1}
+e7-echo-canyon {"t":328,"wave":10,"hp":175,"gold":30,"kills":352,"x":-13.9,"z":-5.9,"alive":9,"seams":1}
+e7-echo-canyon {"t":338.3,"wave":11,"hp":175,"gold":30,"kills":374,"x":28.3,"z":5.6,"alive":24,"seams":2}
+e7-echo-canyon {"t":348.7,"wave":11,"hp":175,"gold":55,"kills":397,"x":41.5,"z":7.8,"alive":13,"seams":2}
+e7-echo-canyon {"t":360.1,"wave":12,"hp":169,"gold":60,"kills":416,"x":41.5,"z":7.8,"alive":25,"seams":1}
+e7-echo-canyon {"t":371.3,"wave":12,"hp":130,"gold":60,"kills":440,"x":41.5,"z":7.8,"alive":23,"seams":2}
+e7-echo-canyon {"t":381.5,"wave":12,"hp":130,"gold":60,"kills":458,"x":-13.9,"z":-6.6,"alive":17,"seams":2}
+e7-echo-canyon {"t":393.9,"wave":13,"hp":130,"gold":90,"kills":482,"x":-14,"z":-6.6,"alive":22,"seams":1}
+e7-echo-canyon {"t":404,"wave":13,"hp":82,"gold":90,"kills":512,"x":-14,"z":-6.6,"alive":17,"seams":1}
+e7-echo-canyon {"t":414.3,"wave":13,"hp":53,"gold":90,"kills":531,"x":5.3,"z":-5.8,"alive":11,"seams":2}
+e7-echo-canyon {"t":424.4,"wave":14,"hp":53,"gold":115,"kills":550,"x":12.8,"z":-5.8,"alive":18,"seams":2}
+e7-echo-canyon {"t":435.2,"wave":14,"hp":47,"gold":0,"kills":586,"x":2.9,"z":-3.6,"alive":8,"seams":2}
+e7-echo-canyon {"t":446.4,"wave":14,"hp":47,"gold":5,"kills":604,"x":12.9,"z":-5.8,"alive":4,"seams":1}
+e7-echo-canyon {"t":456.8,"wave":15,"hp":47,"gold":5,"kills":624,"x":-9.8,"z":-5.8,"alive":8,"seams":2}
+e7-echo-canyon {"t":467.2,"wave":15,"hp":47,"gold":35,"kills":647,"x":4.5,"z":-18.9,"alive":14,"seams":2}
+e7-echo-canyon {"t":478.8,"wave":15,"hp":41,"gold":10,"kills":668,"x":-13.3,"z":-6.6,"alive":7,"seams":1}
+e7-echo-canyon {"t":491.1,"wave":16,"hp":12,"gold":10,"kills":697,"x":-13.3,"z":-6.6,"alive":20,"seams":2}
+e7-echo-canyon {"t":501.5,"wave":16,"hp":12,"gold":35,"kills":718,"x":13.7,"z":-5.8,"alive":12,"seams":2}
+e7-echo-canyon {"t":512,"wave":17,"hp":12,"gold":0,"kills":736,"x":9.5,"z":-4.3,"alive":25,"seams":2}
+  ✘   4 [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-echo-canyon plays to its authored terminal, banks, reloads and returns to the board @slow (2.3m)
+e7-relay-rush {"t":10.8,"wave":0,"hp":100,"gold":0,"kills":0,"x":-25,"z":41,"alive":2,"seams":2}
+e7-relay-rush {"t":21.2,"wave":0,"hp":100,"gold":25,"kills":5,"x":-25,"z":33,"alive":1,"seams":2}
+e7-relay-rush {"t":31.3,"wave":1,"hp":100,"gold":30,"kills":6,"x":11.6,"z":30.2,"alive":8,"seams":1}
+e7-relay-rush {"t":41.6,"wave":1,"hp":100,"gold":30,"kills":11,"x":44.3,"z":31.8,"alive":6,"seams":1}
+e7-relay-rush {"t":52,"wave":1,"hp":100,"gold":50,"kills":18,"x":24.6,"z":45.9,"alive":4,"seams":2}
+e7-relay-rush {"t":62.3,"wave":2,"hp":100,"gold":50,"kills":21,"x":-23.8,"z":45.3,"alive":10,"seams":2}
+e7-relay-rush {"t":72.5,"wave":2,"hp":100,"gold":0,"kills":28,"x":-44.6,"z":32,"alive":9,"seams":2}
+e7-relay-rush {"t":82.7,"wave":2,"hp":92,"gold":25,"kills":41,"x":-44.7,"z":41,"alive":1,"seams":2}
+e7-relay-rush {"t":92.9,"wave":3,"hp":92,"gold":5,"kills":46,"x":-25.8,"z":33.1,"alive":6,"seams":1}
+e7-relay-rush {"t":103.2,"wave":3,"hp":92,"gold":5,"kills":58,"x":16.8,"z":29.3,"alive":2,"seams":1}
+e7-relay-rush {"t":113.6,"wave":3,"hp":92,"gold":15,"kills":62,"x":35.2,"z":32.3,"alive":4,"seams":1}
+e7-relay-rush {"t":124.3,"wave":4,"hp":84,"gold":15,"kills":70,"x":-24.7,"z":32.3,"alive":8,"seams":1}
+e7-relay-rush {"t":134.7,"wave":4,"hp":84,"gold":35,"kills":87,"x":-2.7,"z":41.8,"alive":2,"seams":2}
+e7-relay-rush {"t":145.5,"wave":4,"hp":84,"gold":0,"kills":92,"x":11.5,"z":43,"alive":3,"seams":2}
+e7-relay-rush {"t":155.9,"wave":5,"hp":84,"gold":0,"kills":103,"x":-24.3,"z":41.1,"alive":5,"seams":2}
+e7-relay-rush {"t":166.1,"wave":5,"hp":84,"gold":0,"kills":118,"x":-24.3,"z":41.1,"alive":3,"seams":2}
+e7-relay-rush {"t":176.4,"wave":5,"hp":84,"gold":0,"kills":124,"x":-24.3,"z":41.1,"alive":4,"seams":2}
+e7-relay-rush {"t":186.7,"wave":6,"hp":109,"gold":0,"kills":136,"x":-27.4,"z":38,"alive":5,"seams":2}
+e7-relay-rush {"t":196.8,"wave":6,"hp":134,"gold":10,"kills":151,"x":-44.5,"z":32.2,"alive":6,"seams":1}
+e7-relay-rush {"t":209.1,"wave":6,"hp":134,"gold":40,"kills":162,"x":-44.5,"z":32.2,"alive":4,"seams":0}
+e7-relay-rush {"t":219.3,"wave":7,"hp":159,"gold":40,"kills":170,"x":4.6,"z":32.2,"alive":22,"seams":1}
+e7-relay-rush {"t":229.3,"wave":7,"hp":153,"gold":60,"kills":185,"x":24.3,"z":32.2,"alive":15,"seams":2}
+e7-relay-rush {"t":239.6,"wave":7,"hp":153,"gold":70,"kills":200,"x":-7.2,"z":38.5,"alive":8,"seams":1}
+e7-relay-rush {"t":249.7,"wave":8,"hp":153,"gold":0,"kills":211,"x":-24.3,"z":32.8,"alive":25,"seams":1}
+e7-relay-rush {"t":260.4,"wave":8,"hp":153,"gold":30,"kills":235,"x":-13.9,"z":29.3,"alive":10,"seams":1}
+e7-relay-rush {"t":270.5,"wave":9,"hp":153,"gold":30,"kills":243,"x":36,"z":29.1,"alive":27,"seams":1}
+e7-relay-rush {"t":280.8,"wave":9,"hp":153,"gold":45,"kills":263,"x":29.7,"z":47.2,"alive":23,"seams":2}
+e7-relay-rush {"t":290.9,"wave":9,"hp":153,"gold":45,"kills":271,"x":-25.4,"z":46.4,"alive":25,"seams":2}
+e7-relay-rush {"t":301.7,"wave":10,"hp":153,"gold":0,"kills":294,"x":5.7,"z":30.3,"alive":28,"seams":2}
+e7-relay-rush {"t":311.7,"wave":10,"hp":146,"gold":15,"kills":316,"x":24,"z":31.5,"alive":25,"seams":2}
+e7-relay-rush {"t":321.7,"wave":10,"hp":146,"gold":35,"kills":336,"x":44.1,"z":32.3,"alive":16,"seams":1}
+e7-relay-rush {"t":332.3,"wave":11,"hp":146,"gold":45,"kills":349,"x":44.1,"z":32.3,"alive":30,"seams":0}
+e7-relay-rush {"t":342.7,"wave":11,"hp":146,"gold":45,"kills":363,"x":-10,"z":32.3,"alive":38,"seams":1}
+e7-relay-rush {"t":352.9,"wave":11,"hp":146,"gold":60,"kills":374,"x":-44.7,"z":32.3,"alive":39,"seams":2}
+e7-relay-rush {"t":363.6,"wave":12,"hp":132,"gold":75,"kills":408,"x":-6.8,"z":32.3,"alive":31,"seams":1}
+e7-relay-rush {"t":374.3,"wave":12,"hp":132,"gold":95,"kills":431,"x":24.6,"z":32.3,"alive":33,"seams":1}
+e7-relay-rush {"t":384.4,"wave":12,"hp":125,"gold":0,"kills":447,"x":-23.6,"z":36.2,"alive":30,"seams":2}
+e7-relay-rush {"t":394.8,"wave":13,"hp":125,"gold":30,"kills":477,"x":-24.4,"z":32.3,"alive":25,"seams":1}
+e7-relay-rush {"t":405.1,"wave":13,"hp":103,"gold":40,"kills":504,"x":24.3,"z":32.3,"alive":24,"seams":0}
+e7-relay-rush {"t":415.9,"wave":13,"hp":103,"gold":40,"kills":524,"x":24.3,"z":32.3,"alive":18,"seams":1}
+e7-relay-rush {"t":426.3,"wave":14,"hp":97,"gold":40,"kills":542,"x":-44,"z":32.3,"alive":24,"seams":2}
+e7-relay-rush {"t":436.5,"wave":14,"hp":89,"gold":75,"kills":572,"x":-44,"z":32.3,"alive":22,"seams":2}
+e7-relay-rush {"t":446.9,"wave":14,"hp":82,"gold":95,"kills":586,"x":-24.5,"z":32.3,"alive":21,"seams":1}
+e7-relay-rush {"t":457.3,"wave":15,"hp":82,"gold":130,"kills":613,"x":-30.3,"z":43,"alive":17,"seams":1}
+e7-relay-rush {"t":467.3,"wave":15,"hp":82,"gold":25,"kills":641,"x":-24.9,"z":33.1,"alive":18,"seams":1}
+e7-relay-rush {"t":477.5,"wave":15,"hp":82,"gold":35,"kills":661,"x":18.3,"z":29.5,"alive":11,"seams":1}
+e7-relay-rush {"t":488.1,"wave":16,"hp":53,"gold":55,"kills":673,"x":41.2,"z":35.5,"alive":39,"seams":2}
+e7-relay-rush {"t":498.1,"wave":16,"hp":26,"gold":55,"kills":688,"x":-11.5,"z":39.7,"alive":36,"seams":2}
+e7-relay-rush {"t":508.1,"wave":16,"hp":26,"gold":0,"kills":712,"x":-25.3,"z":40.5,"alive":25,"seams":2}
+e7-relay-rush {"t":518.9,"wave":17,"hp":18,"gold":0,"kills":746,"x":-19.4,"z":36.6,"alive":32,"seams":2}
+e7-relay-rush {"t":529.5,"wave":17,"hp":18,"gold":0,"kills":773,"x":-19.7,"z":44.9,"alive":18,"seams":2}
+e7-relay-rush {"t":540.4,"wave":18,"hp":18,"gold":0,"kills":788,"x":-31.7,"z":45.2,"alive":36,"seams":2}
+  ✘   5 [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-relay-rush plays to its authored terminal, banks, reloads and returns to the board @slow (2.5m)
+e6-picnic {"t":10.1,"wave":0,"hp":100,"gold":0,"kills":0,"x":0,"z":12,"alive":2,"seams":2}
+e6-picnic {"t":20.1,"wave":0,"hp":94,"gold":0,"kills":4,"x":-4.8,"z":26.2,"alive":2,"seams":2}
+e6-picnic {"t":30.7,"wave":1,"hp":94,"gold":0,"kills":5,"x":12.2,"z":17.2,"alive":9,"seams":2}
+e6-picnic {"t":40.8,"wave":1,"hp":94,"gold":20,"kills":12,"x":0.5,"z":8.2,"alive":5,"seams":2}
+e6-picnic {"t":50.9,"wave":1,"hp":94,"gold":30,"kills":18,"x":24.1,"z":-21.6,"alive":3,"seams":1}
+e6-picnic {"t":61.2,"wave":2,"hp":94,"gold":50,"kills":23,"x":8.3,"z":-5.9,"alive":8,"seams":1}
+e6-picnic {"t":71.2,"wave":2,"hp":94,"gold":0,"kills":27,"x":-21.9,"z":8.2,"alive":9,"seams":2}
+e6-picnic {"t":81.2,"wave":2,"hp":94,"gold":25,"kills":34,"x":-20.1,"z":10,"alive":7,"seams":2}
+e6-picnic {"t":91.5,"wave":3,"hp":94,"gold":30,"kills":44,"x":-15.3,"z":1.9,"alive":8,"seams":1}
+e6-picnic {"t":101.7,"wave":3,"hp":94,"gold":30,"kills":47,"x":23.5,"z":-22.1,"alive":13,"seams":1}
+e6-picnic {"t":111.9,"wave":3,"hp":94,"gold":40,"kills":58,"x":14.1,"z":-12.6,"alive":7,"seams":1}
+e6-picnic {"t":122.1,"wave":4,"hp":94,"gold":55,"kills":66,"x":0.2,"z":6.9,"alive":12,"seams":1}
+e6-picnic {"t":132.8,"wave":4,"hp":94,"gold":0,"kills":78,"x":-22.6,"z":18.9,"alive":9,"seams":1}
+e6-picnic {"t":142.8,"wave":4,"hp":94,"gold":0,"kills":91,"x":15.3,"z":6.3,"alive":3,"seams":1}
+e6-picnic {"t":153.3,"wave":5,"hp":94,"gold":25,"kills":95,"x":21,"z":7.3,"alive":13,"seams":2}
+e6-picnic {"t":163.5,"wave":5,"hp":94,"gold":30,"kills":108,"x":-16.8,"z":-24.3,"alive":11,"seams":1}
+e6-picnic {"t":173.7,"wave":5,"hp":94,"gold":55,"kills":114,"x":-22.9,"z":-21.8,"alive":12,"seams":1}
+e6-picnic {"t":183.9,"wave":6,"hp":119,"gold":65,"kills":128,"x":-0.2,"z":7.3,"alive":13,"seams":1}
+e6-picnic {"t":194.7,"wave":6,"hp":119,"gold":90,"kills":146,"x":-0.2,"z":7.3,"alive":9,"seams":1}
+e6-picnic {"t":204.9,"wave":6,"hp":112,"gold":95,"kills":158,"x":-4.7,"z":15.1,"alive":5,"seams":1}
+e6-picnic {"t":214.9,"wave":7,"hp":137,"gold":5,"kills":172,"x":21.1,"z":8,"alive":7,"seams":2}
+e6-picnic {"t":225.1,"wave":7,"hp":137,"gold":25,"kills":186,"x":3.7,"z":25.5,"alive":10,"seams":1}
+e6-picnic {"t":235.2,"wave":7,"hp":137,"gold":0,"kills":194,"x":-20.9,"z":7.7,"alive":10,"seams":1}
+e6-picnic {"t":245.3,"wave":8,"hp":162,"gold":30,"kills":216,"x":-17.4,"z":4.2,"alive":6,"seams":1}
+e6-picnic {"t":255.3,"wave":8,"hp":162,"gold":35,"kills":230,"x":23.2,"z":-22.4,"alive":11,"seams":1}
+e6-picnic {"t":265.6,"wave":8,"hp":162,"gold":35,"kills":235,"x":-18.4,"z":13,"alive":15,"seams":2}
+e6-picnic {"t":275.7,"wave":9,"hp":162,"gold":0,"kills":253,"x":-13.7,"z":17.6,"alive":17,"seams":2}
+e6-picnic {"t":286.3,"wave":9,"hp":162,"gold":0,"kills":282,"x":-12.2,"z":24.7,"alive":9,"seams":2}
+e6-picnic {"t":296.5,"wave":9,"hp":162,"gold":0,"kills":293,"x":-17.6,"z":16.1,"alive":8,"seams":2}
+e6-picnic {"t":307,"wave":10,"hp":162,"gold":0,"hero":{"x":-18.326867045235183,"z":22.316934705659566},"builds":8}
+e6-picnic {"t":317.1,"wave":10,"hp":162,"gold":0,"kills":335,"x":-18.4,"z":22.3,"alive":12,"seams":2}
+e6-picnic {"t":327.6,"wave":10,"hp":162,"gold":0,"kills":351,"x":-18.8,"z":16.9,"alive":7,"seams":2}
+e6-picnic {"t":338.3,"wave":11,"hp":149,"gold":0,"kills":378,"x":-11.9,"z":26.4,"alive":18,"seams":2}
+e6-picnic {"t":348.7,"wave":11,"hp":149,"gold":0,"kills":397,"x":-17.5,"z":20.4,"alive":11,"seams":2}
+e6-picnic {"t":359,"wave":11,"hp":149,"gold":0,"hero":{"x":-22.825710427525046,"z":16.974099207248987},"builds":8}
+e6-picnic {"t":370.1,"wave":12,"hp":149,"gold":0,"kills":437,"x":-17.9,"z":13.1,"alive":22,"seams":2}
+e6-picnic {"t":380.1,"wave":12,"hp":142,"gold":0,"kills":459,"x":-13.2,"z":16,"alive":13,"seams":2}
+e6-picnic {"t":390.3,"wave":13,"hp":142,"gold":0,"kills":476,"x":-20.8,"z":14.9,"alive":26,"seams":2}
+e6-picnic {"t":400.9,"wave":13,"hp":142,"gold":0,"kills":500,"x":-11.7,"z":20.4,"alive":23,"seams":2}
+e6-picnic {"t":411.6,"wave":13,"hp":136,"gold":0,"kills":526,"x":-12.4,"z":23.2,"alive":10,"seams":2}
+e6-picnic {"t":422.8,"wave":14,"hp":136,"gold":0,"kills":542,"x":-17.8,"z":21,"alive":24,"seams":2}
+e6-picnic {"t":433.1,"wave":14,"hp":136,"gold":0,"kills":569,"x":-9.9,"z":14.2,"alive":21,"seams":2}
+e6-picnic {"t":443.2,"wave":14,"hp":129,"gold":0,"kills":591,"x":-14.2,"z":23.4,"alive":11,"seams":2}
+e6-picnic {"t":454,"wave":15,"hp":129,"gold":0,"kills":609,"x":-24.5,"z":21.9,"alive":21,"seams":2}
+e6-picnic {"t":466,"wave":15,"hp":110,"gold":0,"kills":639,"x":-19.1,"z":14.2,"alive":18,"seams":2}
+e6-picnic {"t":476.3,"wave":15,"hp":110,"gold":0,"kills":661,"x":-21.8,"z":21.9,"alive":9,"seams":2}
+e6-picnic {"t":487.2,"wave":16,"hp":110,"gold":0,"kills":683,"x":-16.4,"z":12.7,"alive":11,"seams":2}
+e6-picnic {"t":497.6,"wave":16,"hp":110,"gold":0,"kills":708,"x":-20.2,"z":11.1,"alive":15,"seams":2}
+e6-picnic {"t":509.5,"wave":16,"hp":91,"gold":0,"kills":727,"x":-10.7,"z":10.3,"alive":11,"seams":2}
+e6-picnic {"t":520.3,"wave":17,"hp":78,"gold":0,"kills":748,"x":-10.7,"z":18.3,"alive":31,"seams":2}
+e6-picnic {"t":530.9,"wave":17,"hp":0,"gold":0,"kills":772,"x":-14.4,"z":22.1,"alive":21,"seams":2}
+  ✘   6 [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-picnic plays to its authored terminal, banks, reloads and returns to the board @slow (2.4m)
+e6-showroom {"t":10.4,"wave":0,"hp":100,"gold":0,"kills":0,"x":-2.8,"z":9.2,"alive":2,"seams":2}
+e6-showroom {"t":21.1,"wave":0,"hp":100,"gold":0,"kills":2,"x":-35.9,"z":5.6,"alive":4,"seams":2}
+e6-showroom {"t":31.3,"wave":1,"hp":100,"gold":0,"kills":7,"x":-21.1,"z":8.4,"alive":7,"seams":2}
+e6-showroom {"t":41.9,"wave":1,"hp":94,"gold":0,"kills":10,"x":29.4,"z":6.1,"alive":7,"seams":2}
+e6-showroom {"t":52.4,"wave":1,"hp":94,"gold":0,"kills":13,"x":29.5,"z":6.1,"alive":9,"seams":2}
+e6-showroom {"t":62.9,"wave":2,"hp":82,"gold":0,"kills":19,"x":-29.5,"z":6.1,"alive":12,"seams":2}
+e6-showroom {"t":72.9,"wave":2,"hp":62,"gold":0,"kills":24,"x":-36.8,"z":6.1,"alive":13,"seams":2}
+e6-showroom {"t":83.1,"wave":2,"hp":35,"gold":0,"kills":30,"x":21.3,"z":6.1,"alive":12,"seams":2}
+e6-showroom {"t":93.5,"wave":3,"hp":35,"gold":0,"kills":33,"x":36.5,"z":6.1,"alive":19,"seams":2}
+  ✘   7 [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-showroom plays to its authored terminal, banks, reloads and returns to the board @slow (33.7s)
+e7-dead-band {"t":10.3,"wave":0,"hp":100,"gold":0,"kills":0,"x":5.6,"z":6.4,"alive":2,"seams":2}
+e7-dead-band {"t":20.9,"wave":0,"hp":100,"gold":25,"kills":3,"x":14.3,"z":-5.5,"alive":3,"seams":2}
+e7-dead-band {"t":30.9,"wave":1,"hp":100,"gold":30,"kills":6,"x":34.1,"z":32.5,"alive":8,"seams":1}
+e7-dead-band {"t":41.7,"wave":1,"hp":87,"gold":50,"kills":14,"x":25.6,"z":28,"alive":3,"seams":1}
+e7-dead-band {"t":51.7,"wave":1,"hp":87,"gold":50,"kills":14,"x":-0.3,"z":-15.7,"alive":8,"seams":2}
+e7-dead-band {"t":62,"wave":2,"hp":87,"gold":0,"kills":21,"x":-10.4,"z":-6.4,"alive":10,"seams":2}
+e7-dead-band {"t":72.1,"wave":2,"hp":81,"gold":25,"kills":33,"x":-7.6,"z":-11.5,"alive":4,"seams":2}
+e7-dead-band {"t":82.5,"wave":2,"hp":81,"gold":5,"kills":40,"x":-2.5,"z":4.9,"alive":2,"seams":1}
+e7-dead-band {"t":92.7,"wave":3,"hp":81,"gold":10,"kills":41,"x":33.2,"z":36.7,"alive":11,"seams":1}
+e7-dead-band {"t":103.3,"wave":3,"hp":62,"gold":15,"kills":53,"x":23.7,"z":27.3,"alive":7,"seams":1}
+e7-dead-band {"t":113.5,"wave":3,"hp":62,"gold":25,"kills":58,"x":14.2,"z":-5.4,"alive":8,"seams":2}
+e7-dead-band {"t":123.7,"wave":4,"hp":62,"gold":45,"kills":70,"x":-8.6,"z":-7.9,"alive":8,"seams":1}
+e7-dead-band {"t":134.1,"wave":4,"hp":62,"gold":70,"kills":81,"x":-6.7,"z":-12.3,"alive":7,"seams":1}
+e7-dead-band {"t":144.5,"wave":4,"hp":62,"gold":5,"kills":92,"x":-14,"z":-6,"alive":3,"seams":1}
+e7-dead-band {"t":154.9,"wave":5,"hp":62,"gold":10,"kills":94,"x":-33.8,"z":36.7,"alive":14,"seams":1}
+e7-dead-band {"t":165.2,"wave":5,"hp":62,"gold":35,"kills":116,"x":-33.8,"z":36.7,"alive":4,"seams":1}
+e7-dead-band {"t":176.1,"wave":5,"hp":62,"gold":65,"kills":122,"x":-33.8,"z":36.7,"alive":6,"seams":0}
+e7-dead-band {"t":186.5,"wave":6,"hp":87,"gold":65,"kills":131,"x":-26.6,"z":30.4,"alive":10,"seams":1}
+e7-dead-band {"t":196.5,"wave":6,"hp":87,"gold":70,"kills":135,"x":13.1,"z":-5.8,"alive":22,"seams":2}
+e7-dead-band {"t":206.5,"wave":6,"hp":112,"gold":95,"kills":152,"x":3.6,"z":-8.9,"alive":12,"seams":1}
+e7-dead-band {"t":216.8,"wave":7,"hp":137,"gold":0,"kills":172,"x":17.9,"z":11.8,"alive":7,"seams":1}
+e7-dead-band {"t":227.1,"wave":7,"hp":137,"gold":15,"kills":181,"x":33.8,"z":36.5,"alive":17,"seams":2}
+e7-dead-band {"t":237.7,"wave":7,"hp":137,"gold":30,"kills":199,"x":7.2,"z":9.9,"alive":7,"seams":1}
+e7-dead-band {"t":248,"wave":8,"hp":137,"gold":35,"kills":209,"x":-9.8,"z":-10.3,"alive":13,"seams":1}
+e7-dead-band {"t":258.3,"wave":8,"hp":137,"gold":60,"kills":236,"x":-17,"z":-3.1,"alive":7,"seams":1}
+e7-dead-band {"t":268.5,"wave":8,"hp":137,"gold":65,"kills":243,"x":-34.1,"z":36.5,"alive":10,"seams":1}
+e7-dead-band {"t":278.7,"wave":9,"hp":124,"gold":95,"kills":265,"x":-34.1,"z":36.5,"alive":19,"seams":1}
+e7-dead-band {"t":289.2,"wave":9,"hp":124,"gold":120,"kills":285,"x":-34.1,"z":36.5,"alive":9,"seams":0}
+e7-dead-band {"t":300,"wave":9,"hp":124,"gold":120,"kills":294,"x":-15,"z":17.4,"alive":11,"seams":1}
+e7-dead-band {"t":310.1,"wave":10,"hp":124,"gold":0,"kills":306,"x":-6.6,"z":-13.5,"alive":34,"seams":2}
+e7-dead-band {"t":320.1,"wave":10,"hp":79,"gold":25,"kills":344,"x":-13.5,"z":-6.7,"alive":6,"seams":1}
+e7-dead-band {"t":330.4,"wave":11,"hp":79,"gold":35,"kills":352,"x":7.3,"z":-16.3,"alive":27,"seams":1}
+e7-dead-band {"t":340.8,"wave":11,"hp":79,"gold":5,"kills":377,"x":13.9,"z":-5.9,"alive":22,"seams":2}
+e7-dead-band {"t":351.5,"wave":11,"hp":66,"gold":20,"kills":400,"x":-19.1,"z":27.1,"alive":11,"seams":1}
+e7-dead-band {"t":361.9,"wave":12,"hp":66,"gold":45,"kills":408,"x":-33.3,"z":37.1,"alive":31,"seams":1}
+e7-dead-band {"t":372.5,"wave":12,"hp":66,"gold":0,"kills":420,"x":-1.1,"z":-7.3,"alive":42,"seams":2}
+e7-dead-band {"t":382.8,"wave":12,"hp":53,"gold":0,"kills":453,"x":-34,"z":36.4,"alive":22,"seams":2}
+e7-dead-band {"t":393.5,"wave":13,"hp":53,"gold":5,"kills":468,"x":14.3,"z":34.2,"alive":34,"seams":1}
+e7-dead-band {"t":403.7,"wave":13,"hp":53,"gold":25,"kills":483,"x":33.8,"z":37.2,"alive":44,"seams":2}
+e7-dead-band {"t":413.7,"wave":13,"hp":2,"gold":35,"kills":515,"x":1.8,"z":7.4,"alive":24,"seams":1}
+e7-dead-band {"t":424.1,"wave":14,"hp":2,"gold":55,"kills":538,"x":-9.6,"z":-9.5,"alive":28,"seams":1}
+  ✘   8 [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-dead-band plays to its authored terminal, banks, reloads and returns to the board @slow (2.0m)
+e7-echo-canyon {"t":10.7,"wave":0,"hp":100,"gold":0,"kills":0,"x":2.8,"z":9.2,"alive":2,"seams":2}
+e7-echo-canyon {"t":20.8,"wave":0,"hp":100,"gold":15,"kills":3,"x":14.1,"z":-5.9,"alive":3,"seams":2}
+e7-echo-canyon {"t":30.9,"wave":1,"hp":100,"gold":30,"kills":9,"x":39.8,"z":8.2,"alive":5,"seams":1}
+e7-echo-canyon {"t":41.3,"wave":1,"hp":100,"gold":50,"kills":15,"x":27.4,"z":-5.9,"alive":2,"seams":1}
+  ✘   9 [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-echo-canyon plays to its authored terminal, banks, reloads and returns to the board @slow (24.1s)
+e7-relay-rush {"t":10.3,"wave":0,"hp":100,"gold":0,"kills":0,"x":-25,"z":37.1,"alive":2,"seams":2}
+e7-relay-rush {"t":20.8,"wave":0,"hp":100,"gold":30,"kills":5,"x":-25,"z":33,"alive":1,"seams":1}
+e7-relay-rush {"t":30.9,"wave":1,"hp":100,"gold":30,"kills":6,"x":14.4,"z":33,"alive":8,"seams":1}
+e7-relay-rush {"t":40.9,"wave":1,"hp":100,"gold":35,"kills":10,"x":44.1,"z":32.3,"alive":7,"seams":2}
+e7-relay-rush {"t":51.6,"wave":1,"hp":100,"gold":50,"kills":17,"x":18.7,"z":46.4,"alive":5,"seams":2}
+e7-relay-rush {"t":61.7,"wave":2,"hp":100,"gold":50,"kills":19,"x":-21.3,"z":44.5,"alive":12,"seams":2}
+  ✘  10 [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-relay-rush plays to its authored terminal, banks, reloads and returns to the board @slow (27.5s)
+
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-picnic plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 18 / 565.5s sim, 843 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1728 |       }
+      1729 |
+    > 1730 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1731 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1732 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1733 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1730:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e6-picnic-e6-f6d9a-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+  2) [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-showroom plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 3 / 109.5s sim, 44 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1728 |       }
+      1729 |
+    > 1730 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1731 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1732 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1733 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1730:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e6-showroom--a2bbb-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+  3) [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-dead-band plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 18 / 545.6s sim, 804 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1728 |       }
+      1729 |
+    > 1730 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1731 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1732 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1733 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1730:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e7-dead-band-9b5fc-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+  4) [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-echo-canyon plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 17 / 519.3s sim, 757 kills, 5 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1728 |       }
+      1729 |
+    > 1730 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1731 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1732 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1733 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1730:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e7-echo-cany-2ea34-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+  5) [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-relay-rush plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 18 / 549.7s sim, 813 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1728 |       }
+      1729 |
+    > 1730 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1731 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1732 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1733 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1730:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e7-relay-rus-c45b5-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+  6) [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-picnic plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 17 / 530.9s sim, 772 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1728 |       }
+      1729 |
+    > 1730 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1731 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1732 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1733 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1730:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e6-picnic-e6-f6d9a-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  7) [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-showroom plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 3 / 99.7s sim, 42 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1728 |       }
+      1729 |
+    > 1730 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1731 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1732 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1733 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1730:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e6-showroom--a2bbb-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  8) [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-dead-band plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 14 / 432.7s sim, 567 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1728 |       }
+      1729 |
+    > 1730 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1731 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1732 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1733 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1730:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e7-dead-band-9b5fc-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  9) [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-echo-canyon plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    TimeoutError: locator.click: Timeout 600ms exceeded.
+    Call log:
+      - waiting for getByTestId('playbook-toggle')
+        - locator resolved to <button type="button" aria-expanded="false" data-testid="playbook-toggle" class="playbook-surface__toggle" aria-controls="playbook-library">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - performing click action
+          - <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="midlife" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-b…></canvas> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - performing click action
+          - <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="midlife" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-b…></canvas> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - performing click action
+        - <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="midlife" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-b…></canvas> intercepts pointer events
+      - retrying click action
+        - waiting 500ms
+
+
+      756 |         await page.getByTestId(`upgrade-card-${preferred}`).click({ timeout: 1000 });
+      757 |       }
+    > 758 |       try { await page.getByTestId(id).click({ timeout: 600 }); return; }
+          |                                        ^
+      759 |       catch (error) {
+      760 |         row.notes.push(`Tape ${id} attempt ${attempt + 1}: ${String(error).split('\n')[0]}`);
+      761 |         if (attempt === 7) throw error;
+        at clickTape (/Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:758:40)
+        at tapeDemonstration (/Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:778:3)
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1417:88
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e7-echo-cany-2ea34-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  10) [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-relay-rush plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    TimeoutError: locator.click: Timeout 600ms exceeded.
+    Call log:
+      - waiting for getByTestId('playbook-toggle')
+        - locator resolved to <button type="button" aria-expanded="false" data-testid="playbook-toggle" class="playbook-surface__toggle" aria-controls="playbook-library">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - performing click action
+          - <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="midlife" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-b…></canvas> intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - performing click action
+          - <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="midlife" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-b…></canvas> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - performing click action
+        - <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="midlife" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-b…></canvas> intercepts pointer events
+      - retrying click action
+        - waiting 500ms
+
+
+      756 |         await page.getByTestId(`upgrade-card-${preferred}`).click({ timeout: 1000 });
+      757 |       }
+    > 758 |       try { await page.getByTestId(id).click({ timeout: 600 }); return; }
+          |                                        ^
+      759 |       catch (error) {
+      760 |         row.notes.push(`Tape ${id} attempt ${attempt + 1}: ${String(error).split('\n')[0]}`);
+      761 |         if (attempt === 7) throw error;
+        at clickTape (/Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:758:40)
+        at tapeDemonstration (/Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:778:3)
+        at /Users/robin/.goldrush/fire-s2730/wt-holds2/e2e/native-proofs/driver.ts:1417:88
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2730/native-results/native-proofs-e7-relay-rus-c45b5-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  10 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-picnic plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-showroom plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-dead-band plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-echo-canyon plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-relay-rush plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-picnic plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e6-showroom plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-dead-band plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-echo-canyon plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1210:5 › e7-relay-rush plays to its authored terminal, banks, reloads and returns to the board @slow 
+(node:72230) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:72288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:72288) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:75128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:75128) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:75352) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:75352) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:77963) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:77963) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:80531) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:80531) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:83157) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:83157) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:86041) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:86041) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:86551) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:86551) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:88567) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:88567) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:89033) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:89033) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"own five native specs":1}
+OVERALL rc=1

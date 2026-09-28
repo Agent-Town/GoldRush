@@ -1,0 +1,954 @@
+{
+  "base": "1ddb5f4537cf2765cfc384605e106bf40679c952",
+  "tip": "0c43f9524443fc86272a530eced87515347aa3d4",
+  "files": [
+    {
+      "path": "artifacts/sol/play-proofs/run-11/base.txt",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/board-entry.ts",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/build-final.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/build-final.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/contracts.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/diff-check.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/diff-check.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/drill-corrected.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/drill-corrected.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/drill-native.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/drill-native.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/drill.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/drill.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/driver-before.sha256",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/board-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/board-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/board-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/board-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/no-bank-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/no-bank-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/initial/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/no-bank-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/no-bank-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/proof.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/refusal-results/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/refusal.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/refusal.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/results/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-drill-yard/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/command-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/command-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/desktop-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/desktop-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/driver/e1-dry-gulch/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/mobile-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/mobile-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-desktop-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-mobile-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/default/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/finding.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/command-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/command-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/desktop-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/desktop-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/mobile-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/mobile-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-desktop-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-mobile-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-dry-gulch/restore-ground/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/command-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/command-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/desktop-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/desktop-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/driver/e1-night-shift/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/mobile-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/mobile-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-desktop-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-mobile-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/default/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/finding.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/command-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/command-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/desktop-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/desktop-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/driver/e1-night-shift/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/mobile-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/mobile-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-desktop-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-mobile-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e1-night-shift/restore-ground/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/command-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/command-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/desktop-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/desktop-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/driver/e2-hill-mine/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/mobile-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/mobile-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/results-desktop-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/results-mobile-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/results-mobile-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/default/results-mobile-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/finding.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/command-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/command-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/desktop-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/desktop-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/driver/e2-hill-mine/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/driver/e2-hill-mine/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/driver/e2-hill-mine/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/driver/e2-hill-mine/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/driver/e2-hill-mine/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/driver/e2-hill-mine/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/mobile-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/mobile-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/results-desktop-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/results-mobile-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/results-mobile-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-hill-mine/restore-ground/results-mobile-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/command-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/command-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/desktop-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/desktop-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/driver/e2-trestle/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/driver/e2-trestle/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/driver/e2-trestle/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/driver/e2-trestle/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/driver/e2-trestle/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/driver/e2-trestle/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/mobile-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/mobile-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/results-desktop-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/results-desktop-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/results-desktop-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/results-mobile-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/results-mobile-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/default/results-mobile-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/finding.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/command-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/command-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/desktop-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/desktop-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/driver/e2-trestle/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/driver/e2-trestle/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/driver/e2-trestle/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/driver/e2-trestle/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/driver/e2-trestle/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/driver/e2-trestle/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/mobile-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/mobile-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/results-desktop-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/results-desktop-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/results-desktop-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/results-mobile-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/results-mobile-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e2-trestle/restore-ground/results-mobile-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/command-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/command-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/desktop-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/desktop-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/driver/e3-moth-season/last-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/driver/e3-moth-season/last-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/driver/e3-moth-season/row-desktop-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/driver/e3-moth-season/row-mobile-chrome.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/driver/e3-moth-season/terminal-desktop-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/driver/e3-moth-season/terminal-mobile-chrome.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/mobile-chrome.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/mobile-chrome.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/results-desktop-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/results-desktop-chrome/native-proofs-e3-moth-seas-3c562-ds-and-returns-to-the-board-desktop-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/results-desktop-chrome/native-proofs-e3-moth-seas-3c562-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/results-mobile-chrome/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/results-mobile-chrome/native-proofs-e3-moth-seas-3c562-ds-and-returns-to-the-board-mobile-chrome/error-context.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/default/results-mobile-chrome/native-proofs-e3-moth-seas-3c562-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/e3-moth-season/finding.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/gate-unset-final.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/gate-unset-final.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/gate-unset.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/gate-unset.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/preflight-build.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/preflight-install.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/preflight.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/record-map.py",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/run-map.py",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/run-note.md",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/server.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/summarize.py",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/tsc-final.exit",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/tsc-final.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/tsc-initial.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/tsc.log",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/unset-final-results/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/unset-results/.last-run.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/verification.json",
+      "classification": "NEW"
+    },
+    {
+      "path": "artifacts/sol/play-proofs/run-11/verify.py",
+      "classification": "NEW"
+    },
+    {
+      "path": "e2e/native-proofs/e1-drill-yard.spec.ts",
+      "classification": "NEW"
+    },
+    {
+      "path": "e2e/native-proofs/e1-dry-gulch.spec.ts",
+      "classification": "NEW"
+    },
+    {
+      "path": "e2e/native-proofs/e1-night-shift.spec.ts",
+      "classification": "NEW"
+    },
+    {
+      "path": "e2e/native-proofs/e2-hill-mine.spec.ts",
+      "classification": "NEW"
+    },
+    {
+      "path": "e2e/native-proofs/e2-trestle.spec.ts",
+      "classification": "NEW"
+    },
+    {
+      "path": "e2e/native-proofs/e3-moth-season.spec.ts",
+      "classification": "NEW"
+    }
+  ]
+}

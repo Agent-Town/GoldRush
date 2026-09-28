@@ -1,0 +1,42 @@
+(node:86089) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:86148) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/second-rider.spec.ts:28:1 › the imported companion joins through town, moves, fights, and survives
+  1) [desktop-chrome] › e2e/second-rider.spec.ts:28:1 › the imported companion joins through town, moves, fights, and survives 
+
+    TimeoutError: page.waitForFunction: Timeout 20000ms exceeded.
+
+      94 |   expect(phrase).toMatch(/^[A-Z]+-[A-Z]+-[0-9A-V]{20}$/);
+      95 |   await page.getByTestId('ride-start').click();
+    > 96 |   await page.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 20_000 });
+         |              ^
+      97 |   return phrase;
+      98 | }
+      99 |
+        at openHostRide (/Users/robin/Claude/Projects/wt-lc2/e2e/second-rider.spec.ts:96:14)
+        at /Users/robin/Claude/Projects/wt-lc2/e2e/second-rider.spec.ts:33:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/second-rider-the-imported--ded88-n-moves-fights-and-survives-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/second-rider-the-imported--ded88-n-moves-fights-and-survives-desktop-chrome/error-context.md
+
+    Error Context: test-results/second-rider-the-imported--ded88-n-moves-fights-and-survives-desktop-chrome/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/second-rider-the-imported--ded88-n-moves-fights-and-survives-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/second-rider-the-imported--ded88-n-moves-fights-and-survives-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chrome] › e2e/second-rider.spec.ts:28:1 › the imported companion joins through town, moves, fights, and survives 

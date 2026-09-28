@@ -1,0 +1,30 @@
+branch fix/release-gate-on-deploy-1 tip 322d338e6 07:50Z
+chain base fbb6efcd7
+merged 459c21394
+F-RGD-1 cure applied
+cure F-RGD-1 committed eef0c3461
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 5793a96): 6a33752598ba8c5ae2c97d217c265394dd17cd9ec3334c2259737265a0e27c21
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1126 files, 97650548 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+hauler in the E1 dist: 0 (want 0)
+first-town payload: 34341349 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (308.0s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 136 ℹ fail 0 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 08:00Z: e2e/e4-roads-and-convoys.spec.ts e2e/m2-01-build-menu.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/agent-view.spec.ts
+e2e: rc=1   2 failed   42 passed (3.6m)  08:04Z
+1) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+2) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+battery start 08:04Z
+battery: rc=1 ℹ tests 958 ℹ pass 950 ℹ fail 3 ℹ skipped 5  08:12Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (192222.022667ms)
+✖ rotation registry stays outside the engine identity corpus (603.360208ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (147.875625ms)
+dirt after battery: 0
+REL1-PREP-DONE
+hash at pin time: 6a33752598ba8c5ae2c97d217c265394dd17cd9ec3334c2259737265a0e27c21
+pin #58
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

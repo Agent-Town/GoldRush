@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
-
+import { isMain } from './is-main.mjs';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const REPORT_PATH = path.join(ROOT, 'docs/bench/terrain-contract-scope.md');
 const TERRAIN_PATH = path.join(ROOT, 'src/world/Terrain.ts');
@@ -121,6 +121,6 @@ function printDiff(before, after) {
   process.stderr.write(`${differences} differing line${differences === 1 ? '' : 's'} in ${path.relative(ROOT, REPORT_PATH)}.\n`);
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   await main();
 }

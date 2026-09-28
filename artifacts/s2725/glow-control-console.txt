@@ -1,0 +1,46 @@
+
+===== control warmup — rc=0 5.9s =====
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.7s)
+
+  1 passed (5.4s)
+(node:60041) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"control warmup":0}
+OVERALL rc=0
+transcript -> artifacts/s2725/glow-control-gates.txt
+
+===== Glow Mesa phone clean-main control — rc=1 74.9s =====
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1455 |
+      1456 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 1457 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+           |                                                          ^
+      1458 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1459 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      1460 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2725/wt-control/e2e/native-proofs/driver.ts:1457:58
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2725/glow-control-results/native-proofs-e6-glow-mesa-b3350-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  1 failed
+    [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-glow-mesa plays to its authored terminal, banks, reloads and returns to the board @slow 
+(node:60210) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:60272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:60272) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"Glow Mesa phone clean-main control":1}
+OVERALL rc=1
+transcript -> artifacts/s2725/glow-control-gates.txt

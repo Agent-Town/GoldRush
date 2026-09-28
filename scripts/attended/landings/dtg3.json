@@ -1,0 +1,12 @@
+{
+  "tag": "dtg3", "branch": "fix/door-tape-grammar-3", "port": 5388,
+  "mergeMessage": "drain: merge fix/door-tape-grammar-3 — door-tape-grammar-3 — the county door refuses exactly what the client's normalizer refuses for place_build, pick_upgrade and set_agent_ability (imported, not mirrored; red-first: three reels ranked on the base, 400 at the tip; 467 to 514 door checks, 8 mutations red) and an already-stored row of those shapes is retired at read, never dropped (Opus 5.5 implementer at max effort; F-DTG2-2)",
+  "hash": "unchanged",
+  "gates": { "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": true, "ledgerBattery": true, "specs": [], "guards": ["scripts/function-cors-allowlist.test.mjs", "scripts/worker-type-coverage.test.mjs"] },
+  "review": { "path": "reviews/door-tape-grammar-3.md", "title": "Drain review: `door-tape-grammar-3`, the door refuses what the client refuses for three verbs (Opus 5.5 implementer at max effort; F-DTG2-2)", "body": "scripts/attended/landings/dtg3-review.md" },
+  "bookkeeping": { "taskFile": "door-tape-grammar-3.md", "rowKey": "DOOR TAPE GRAMMAR 3 LANDED", "rowEmoji": "🔐",
+    "rowText": "`clientRefusesAction` imports the client's `normalizeLockstepAction` at the door: a `place_build` or `pick_upgrade` id that trims to nothing and a `set_agent_ability` outside the client's five are refused 400 (RED first: three such reels ranked on the base); every old bound stays (pinned rows); a stored row of those shapes is RETIRED at read (board 0, retiredCount 1, bytes intact, `?reel=` 200), never dropped. 467 to 514 door checks per backend, 8 mutations red, a 79-row door-versus-client probe moves exactly the 7 targeted rows; `src/` byte-identical, hash unchanged {PIN}; audit unchanged. DEPLOYED. Next: F-DTG3-1 `door-tape-grammar-4` (research_pick and context_action target ids, one line plus rows, same implementer, stacked); F-DTG3-2 (the assay queue serves retired pending rows, a slice); F-DTG3-3 latent.",
+    "statusPhrase": "the county door refuses the three shapes the client refuses and retires rather than drops the rows already stored with them",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh dtg3)" },
+  "deploy": true, "preview": true, "evidenceDir": "artifacts/door-tape-grammar-3"
+}

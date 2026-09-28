@@ -1,0 +1,463 @@
+batch B start 05:04:15Z HEAD 089883a05 branch test/e1-spec-truth-1
+vite pid 53509 up=1 after 2s
+
+########## item1+2 twin-banks x3  05:04:16Z
+
+Running 12 tests using 1 worker
+
+[1/12] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+[2/12] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:138:1 › routes enemies through both west and east fords
+[3/12] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+[4/12] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:138:1 › routes enemies through both west and east fords
+[5/12] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+[6/12] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:138:1 › routes enemies through both west and east fords
+[7/12] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+[8/12] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:138:1 › routes enemies through both west and east fords
+[9/12] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+[10/12] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:138:1 › routes enemies through both west and east fords
+[11/12] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+[12/12] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:138:1 › routes enemies through both west and east fords
+  12 passed (57.0s)
+########## item1+2 twin-banks x3 rc=0  05:05:14Z
+
+########## item3+6 night-shift ramp and lantern x3  05:05:14Z
+(node:55626) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+
+(node:55687) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.22819529411764708,"darkHero":0.059641568627450986,"heroRatio":0.2613619569065369,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   0.2613619569065369
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-e1truth/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:56024) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:56200) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.22819529411764708,"darkHero":0.059641568627450986,"heroRatio":0.2613619569065369,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   0.2613619569065369
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-e1truth/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:56603) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:56779) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.22819529411764708,"darkHero":0.059641568627450986,"heroRatio":0.2613619569065369,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   0.2613619569065369
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-e1truth/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:56985) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/12] [desktop-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:57147) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[7/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  4) [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.9326211764705883,"darkHero":0.9326211764705883,"heroRatio":1,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   1
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-e1truth/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:57366) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[8/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  5) [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.35
+    Received:    0.23454039215686273
+
+      434 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      435 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_SPRITE_LIGHT());
+    > 436 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+          |                                                 ^
+      437 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      438 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+      439 |
+        at /Users/robin/Claude/Projects/wt-e1truth/e2e/e1-night-shift.spec.ts:436:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:57544) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[9/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  6) [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.9326211764705883,"darkHero":0.9326211764705883,"heroRatio":1,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   1
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-e1truth/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:57801) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[10/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  7) [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.35
+    Received:    0.2490737254901961
+
+      434 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      435 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_SPRITE_LIGHT());
+    > 436 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+          |                                                 ^
+      437 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      438 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+      439 |
+        at /Users/robin/Claude/Projects/wt-e1truth/e2e/e1-night-shift.spec.ts:436:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome-repeat1/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome-repeat1/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome-repeat1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome-repeat1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:57935) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  8) [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: {"dayHero":0.9326211764705883,"darkHero":0.9326211764705883,"heroRatio":1,"tintLuminance":0.08175339523899079}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.12175339523899079
+    Received:   1
+
+      387 |   const tintLuminance = 0.2126 * linear(0x44) + 0.7152 * linear(0x51) + 0.0722 * linear(0x6b);
+      388 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+    > 389 |   expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+          |                                                                                      ^
+      390 |   await captureDuskStrip(page, testInfo);
+      391 |   await writeFile(
+      392 |     path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+        at /Users/robin/Claude/Projects/wt-e1truth/e2e/e1-night-shift.spec.ts:389:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:58033) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[12/12] [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  9) [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.35
+    Received:    0.26949960784313726
+
+      434 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      435 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_SPRITE_LIGHT());
+    > 436 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+          |                                                 ^
+      437 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      438 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+      439 |
+        at /Users/robin/Claude/Projects/wt-e1truth/e2e/e1-night-shift.spec.ts:436:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  9 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:284:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:402:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+  3 passed (1.7m)
+########## item3+6 night-shift ramp and lantern x3 rc=1  05:06:58Z
+
+########## item4 night-shift suspend x5  05:06:58Z
+(node:58204) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+
+(node:58259) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/10] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:58345) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/10] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:58486) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/10] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:58625) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/10] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:59711) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/10] [desktop-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:59876) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/10] [mobile-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:60070) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[7/10] [mobile-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:60223) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[8/10] [mobile-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:60383) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[9/10] [mobile-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+
+(node:60579) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[10/10] [mobile-chrome] › e2e/e1-night-shift.spec.ts:508:1 › cold lantern relight costs survive run suspend and continue
+  10 passed (1.1m)
+########## item4 night-shift suspend x5 rc=0  05:08:05Z
+
+########## item5 baron prefetch x3  05:08:05Z
+(node:60789) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:60852) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/6] [desktop-chrome] › e2e/e1-baron.spec.ts:435:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+
+(node:61134) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/6] [desktop-chrome] › e2e/e1-baron.spec.ts:435:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+
+(node:61555) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/6] [desktop-chrome] › e2e/e1-baron.spec.ts:435:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+
+(node:61766) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/6] [mobile-chrome] › e2e/e1-baron.spec.ts:435:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+
+(node:61916) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/6] [mobile-chrome] › e2e/e1-baron.spec.ts:435:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+
+(node:62072) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/6] [mobile-chrome] › e2e/e1-baron.spec.ts:435:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  6 passed (1.4m)
+########## item5 baron prefetch x3 rc=0  05:09:32Z
+
+batch B done 05:09:32Z vite 53509 stopped; anyFailed=1

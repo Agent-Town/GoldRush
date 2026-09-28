@@ -1,0 +1,157 @@
+BATCH C start 2026-09-25T13:42:59Z
+branch dccb15765ab41e322c88fdf79f0047ea8e5d1407 (dirty tracked e2e: 0)
+branch vite pid 99131
+vite dev up on 5323 2026-09-25T13:43:01Z (Content-Type: text/javascript)
+
+== BRANCH night-shift: ramps + lantern post, run 1 of 3, both projects 2026-09-25T13:43:01Z | load 25.33 41.96 36.79
+(node:99241) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+
+(node:99333) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:443:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[2/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:588:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:8234) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:443:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[4/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:588:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  4 passed (35.4s)
+rc=0
+
+== BRANCH night-shift: ramps + lantern post, run 2 of 3, both projects 2026-09-25T13:43:37Z | load 22.38 39.01 35.94
+(node:18479) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+
+(node:18629) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:443:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[2/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:588:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:27107) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:443:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[4/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:588:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  4 passed (31.8s)
+rc=0
+
+== BRANCH night-shift: ramps + lantern post, run 3 of 3, both projects 2026-09-25T13:44:10Z | load 16.81 36.05 34.97
+(node:45923) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+
+(node:46299) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:443:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[2/4] [desktop-chrome] › e2e/e1-night-shift.spec.ts:588:1 › lantern post is Night Shift gated and relights a true-dark light ring
+
+(node:58765) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:443:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+[4/4] [mobile-chrome] › e2e/e1-night-shift.spec.ts:588:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  4 passed (33.0s)
+rc=0
+
+== BRANCH beauty-twin-banks: reed field, run 1 of 3, both projects 2026-09-25T13:44:43Z | load 16.63 33.80 34.19
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:291:1 › the reed field is alive in a still frame
+[2/2] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:291:1 › the reed field is alive in a still frame
+  1 skipped
+  1 passed (7.1s)
+rc=0
+
+== BRANCH beauty-twin-banks: reed field, run 2 of 3, both projects 2026-09-25T13:44:51Z | load 16.02 33.39 34.04
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:291:1 › the reed field is alive in a still frame
+[2/2] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:291:1 › the reed field is alive in a still frame
+  1 skipped
+  1 passed (6.9s)
+rc=0
+
+== BRANCH beauty-twin-banks: reed field, run 3 of 3, both projects 2026-09-25T13:44:58Z | load 16.60 32.95 33.87
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:291:1 › the reed field is alive in a still frame
+[2/2] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:291:1 › the reed field is alive in a still frame
+  1 skipped
+  1 passed (6.9s)
+rc=0
+
+== BRANCH night-shift: cold lantern relight survives suspend, desktop x3 (batch B's one load-shaped non-named red) 2026-09-25T13:45:06Z | load 15.67 32.48 33.71
+(node:73112) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+
+(node:73206) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/3] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+
+(node:80439) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/3] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+
+(node:89005) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/3] [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+
+    Error: expect(received).resolves.toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 2
+
+      748 |   );
+      749 |   await restoredPage.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restored === true);
+    > 750 |   await expect(restoredPage.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave)).resolves.toBe(1);
+          |                                                                                                                   ^
+      751 |   await expect(
+      752 |     restoredPage.evaluate(() => (window.__THREE_GAME_DIAGNOSTICS__?.build as unknown as { lanternPostRotations: number[] }).lanternPostRotations),
+      753 |   ).resolves.toEqual(COLD_LANTERNS.map(({ rotationSteps }) => rotationSteps));
+        at /Users/robin/Claude/Projects/wt-tt2/e2e/e1-night-shift.spec.ts:750:115
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome-repeat2/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:702:1 › cold lantern relight costs survive run suspend and continue 
+  2 passed (29.6s)
+rc=1
+
+== PROBE last-claim board with Return to the Ark, both projects 2026-09-25T13:45:36Z | load 14.99 30.74 33.03
+
+Running 2 tests using 1 worker
+
+[1/2] [desktop-chrome] › artifacts/test-truth-2/probes/last-claim-board.probe.ts:16:1 › probe: where Return to Town lands on a secured Last Claim
+[2/2] [mobile-chrome] › artifacts/test-truth-2/probes/last-claim-board.probe.ts:16:1 › probe: where Return to Town lands on a secured Last Claim
+  2 passed (17.0s)
+rc=0
+port 5323 released
+
+BATCH C END 2026-09-25T13:45:56Z

@@ -1,0 +1,220 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=1194  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 1194 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 346 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          … and 338 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-b  sol/wave-lane-b  ahead=0  behind=774  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/wave-lane-b is 774 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/wave-lane-b
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 301 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          e2e/cp04-lever.spec.ts
+          … and 293 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+lane-c  sol/map-art-campaign-2  ahead=2  behind=4  paths=49  tracked-dirt=0  untracked=0
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/adjacent-shots/056/desktop-build-menu-icons-blurb.png  (BINARY)
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/adjacent-shots/056/desktop-build-menu-palisade.png  (BINARY)
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/adjacent-shots/056/mobile-390-build-menu-icons-blurb.png  (BINARY)
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/adjacent-suites.log  (55 of 55 added lines absent from main)
+      "[WebServer] (node:34147) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being …"
+      "[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)"
+      "[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, wh…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/agent-era6.err  (2 of 2 added lines absent from main)
+      "(node:10285) ExperimentalWarning: localStorage is not available because --localstorage-file was not…"
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/agent-era6.json  (1 of 1 added lines absent from main)
+      "{\"eventLogHash\":\"fnv1a32:a45ba9ac\",\"outcome\":{\"secured\":false,\"waves\":2,\"gold\":0,\"timeAlive\":81.767…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/build.log  (3206 of 3206 added lines absent from main)
+      "> gold-rush@0.1.0 build"
+      "> tsc && vite build && node scripts/asset-diet.mjs"
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/claim-three-pauses.json  (147 of 147 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"8904c33a-99bc-4c29-90fb-2b646713779e\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/claim-three-pauses.run.json  (269 of 269 added lines absent from main)
+      "{"
+      "  \"kind\": \"claim\","
+      "  \"project\": \"desktop\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/engine-hash.txt  (1 of 1 added lines absent from main)
+      "2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/fresh-river-desktop.json  (131 of 131 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"2adaf918-3fba-471a-8f3a-c60f62aabb3b\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/fresh-river-mobile.json  (167 of 167 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"e5d13b22-5aaf-4ef3-bd1b-8171d5100b18\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/null-floors.log  (4 of 4 added lines absent from main)
+      "(node:69974) ExperimentalWarning: localStorage is not available because --localstorage-file was not…"
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+      "eraStamp: pin taken at \"84ec86ae6\", this tree is \"3c35d5bed\" — PROVENANCE ONLY, not a floor differe…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/record-claim.log  (3 of 3 added lines absent from main)
+      "(node:68022) ExperimentalWarning: localStorage is not available because --localstorage-file was not…"
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+      "claim/desktop: reel fnv1a32:8b17af1a seed e1-the-claim-r2026w39-492bfb6017b9 ticks 176 diagonal ent…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/replay-claim.err  (0 of 0 added lines absent from main)
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/replay-claim.json  (1 of 1 added lines absent from main)
+      "{\"eventLogHash\":\"fnv1a32:8b17af1a\",\"outcome\":{\"secured\":false,\"waves\":0,\"gold\":0,\"timeAlive\":5.8666…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/river-assay-tests.log  (13 of 13 added lines absent from main)
+      "(node:71498) ExperimentalWarning: SQLite is an experimental feature and might change at any time"
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+      "✔ the fixture is an honest River reel: the ceremony's completed score, a diagonal walk, no agent or…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/seedrun-progress.json  (69 of 69 added lines absent from main)
+      "{"
+      "  \"reel\": \"artifacts/river-assay-1/human/seedrun-human-reel.json\","
+      "  \"contract\": \"e9-seed-run\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/seedrun-progress.log  (1 of 1 added lines absent from main)
+      "seedrun-human-reel.json: first advance 40757 ms -> {\"showTick\":17967,\"playback\":\"playing\",\"paused\":…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/spec-pause.log  (13 of 13 added lines absent from main)
+      "[WebServer] (node:33979) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being …"
+      "[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)"
+      "[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, wh…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/tsc.log  (0 of 0 added lines absent from main)
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/unchanged-comparison.json  (69 of 69 added lines absent from main)
+      "{"
+      "  \"heat15RowsIdenticalExcludingWallMs\": true,"
+      "  \"heat15Rows\": ["
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/worker-fresh.json  (85 of 85 added lines absent from main)
+      "{"
+      "  \"startedAt\": \"2026-09-26T23:58:37.004Z\","
+      "  \"node\": \"26.4.0\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/worker-fresh.log  (3 of 3 added lines absent from main)
+      "river-desktop: verified (claimed fnv1a32:abebc77c, replayed fnv1a32:abebc77c)"
+      "river-mobile: verified (claimed fnv1a32:2c982352, replayed fnv1a32:2c982352)"
+      "claim-three-pauses: unassayable (claimed fnv1a32:8b17af1a, replayed null; instrument returned no va…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/worker-heat15.json  (60 of 60 added lines absent from main)
+      "{"
+      "  \"startedAt\": \"2026-09-26T23:57:55.929Z\","
+      "  \"node\": \"26.4.0\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/worker-heat15.log  (3 of 3 added lines absent from main)
+      "probe: verified (claimed fnv1a32:b131e18e, replayed fnv1a32:b131e18e)"
+      "r1: verified (claimed fnv1a32:f3a9c00c, replayed fnv1a32:f3a9c00c)"
+      "r2: verified (claimed fnv1a32:b92da1bf, replayed fnv1a32:b92da1bf)"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/worker-old-river.json  (26 of 26 added lines absent from main)
+      "{"
+      "  \"startedAt\": \"2026-09-26T23:56:57.938Z\","
+      "  \"node\": \"26.4.0\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/worker-old-river.log  (1 of 1 added lines absent from main)
+      "old-river: verified (claimed fnv1a32:a8c5af79, replayed fnv1a32:a8c5af79)"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/worker-seedrun.json  (26 of 26 added lines absent from main)
+      "{"
+      "  \"startedAt\": \"2026-09-26T23:59:42.946Z\","
+      "  \"node\": \"26.4.0\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/after/worker-seedrun.log  (1 of 1 added lines absent from main)
+      "seedrun-human: rejected (claimed fnv1a32:c218335c, replayed fnv1a32:0827c33c; eventLogHash mismatch…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/before/agent-era6.err  (2 of 2 added lines absent from main)
+      "(node:44395) ExperimentalWarning: localStorage is not available because --localstorage-file was not…"
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/before/agent-era6.json  (1 of 1 added lines absent from main)
+      "{\"eventLogHash\":\"fnv1a32:a45ba9ac\",\"outcome\":{\"secured\":false,\"waves\":2,\"gold\":0,\"timeAlive\":81.767…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/before/build.log  (3206 of 3206 added lines absent from main)
+      "> gold-rush@0.1.0 build"
+      "> tsc && vite build && node scripts/asset-diet.mjs"
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/before/engine-hash.txt  (1 of 1 added lines absent from main)
+      "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/before/paused-river-progress.json  (39 of 39 added lines absent from main)
+      "{"
+      "  \"reel\": \"artifacts/river-assay-1/human/paused-river-desktop.json\","
+      "  \"contract\": \"e10-river\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/before/paused-river-progress.log  (1 of 1 added lines absent from main)
+      "paused-river-desktop.json: first advance 137 ms -> {\"showTick\":51,\"playback\":\"paused\",\"paused\":true…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/before/worker-heat15.json  (60 of 60 added lines absent from main)
+      "{"
+      "  \"startedAt\": \"2026-09-26T23:55:56.235Z\","
+      "  \"node\": \"26.4.0\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/before/worker-heat15.log  (3 of 3 added lines absent from main)
+      "probe: verified (claimed fnv1a32:b131e18e, replayed fnv1a32:b131e18e)"
+      "r1: verified (claimed fnv1a32:f3a9c00c, replayed fnv1a32:f3a9c00c)"
+      "r2: verified (claimed fnv1a32:b92da1bf, replayed fnv1a32:b92da1bf)"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/instruments/record-reel.mjs  (136 of 136 added lines absent from main)
+      "#!/usr/bin/env node"
+      "// tape-pause-fix-1 evidence instrument adapted from river-assay-1 (not a gate, not an engine input…"
+      "// runs in, with the hero walking DIAGONALLY (two keys held, the case F-RVA1-1 is about), and write…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/instruments/replay-progress.mjs  (80 of 80 added lines absent from main)
+      "#!/usr/bin/env node"
+      "// river-assay-1 evidence instrument (not a gate, not an engine input): WHERE a browser replay stop…"
+      "// exactly as `scripts/assay-replay.mjs` does (the same query and one synchronous `setManualSim(tru…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/report.md  (52 of 52 added lines absent from main)
+      "# Paused run reels replay without freezing — tape-pause-fix-1"
+      "## Choice recorded before the code"
+      "Choose (b): ignore recorded `set_pause` only while `runTapeReplay` is active in the shared action h…"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/spec/pan-desktop-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/spec/pan-mobile-chrome.png  (BINARY)
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/spec/proof-desktop-chrome.json  (27 of 27 added lines absent from main)
+      "{"
+      "  \"pausedAt\": 1.9000000000000026,"
+      "  \"worker\": {"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/spec/proof-mobile-chrome.json  (27 of 27 added lines absent from main)
+      "{"
+      "  \"pausedAt\": 1.8000000000000023,"
+      "  \"worker\": {"
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/spec/reel-desktop-chrome.json  (161 of 161 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"28124359-49d7-44e1-8127-69365cea57cd\","
+    HELD LANE-ONLY  artifacts/tape-pause-fix-1/spec/reel-mobile-chrome.json  (137 of 137 added lines absent from main)
+      "{"
+      "  \"version\": 2,"
+      "  \"id\": \"70e572b5-7c73-4796-b959-fb5dbb3b3d09\","
+    HELD LANE-ONLY  e2e/river-ending-score.spec.ts  (19 of 29 added lines absent from main)
+      "test('a River run paused and resumed mid-run replays to its live hash', async ({ page }, testInfo) …"
+      "  test.setTimeout(180_000);"
+      "  await steer(page, -1, 0, 200);"
+    HELD LANE-ONLY  src/game/Game.ts  (2 of 2 added lines absent from main)
+      "    // Reels count active sim ticks, not wall-clock pauses; old reels also carry pause without resu…"
+      "    if (action.type === 'set_pause' && !this.runTapeReplay && !this.secureClaimChoicePending() && t…"
+  => HOLDS: drain or rule on the held paths first — never auto-reset over them
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=1194  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but art/portraits-e5-e10-generated is 1194 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> art/portraits-e5-e10-generated
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-d) — F-1320-2.
+     📋 run-surface drift: 346 file(s) main has moved that this lane lacks:
+          e2e/account-card-privacy-link.spec.ts
+          e2e/agent-seat.spec.ts
+          e2e/agent-view.spec.ts
+          e2e/assay-season-roll.spec.ts
+          e2e/beauty-twin-banks.spec.ts
+          e2e/charter-press-totality.spec.ts
+          e2e/charter-press.rig.ts
+          e2e/county-board-open-week.spec.ts
+          … and 338 more
+        ⚠️  package.json is among them — this lane's npm GATES may be a strict SUBSET of
+        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.
+
+worktree coverage: reported 4 of 51 registered — 47 NOT reported (1 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported

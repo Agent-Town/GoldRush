@@ -1,0 +1,25 @@
+[12:12:49Z load 5.53] BATCH B start: e2e control arm (base 6cf158c4a + the new spec rows copied in) then treatment arm (branch 5dc23a6b6), both projects, --workers=1
+[12:12:50Z load 5.53] vite pid 69521 up on 5742 from /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cpl1/wt-control
+[12:12:55Z load 7.65] warm boot rc=0 on 5742
+[12:13:44Z load 7.44] probe before rc=0
+[12:19:43Z load 8.64] playwright rc=1  24 failed  18 passed (6.0m)  :: e2e/charter-press-totality.spec.ts e2e/cp04-lever.spec.ts e2e/wd04-postscripts.spec.ts
+[12:20:08Z load 7.87] playwright rc=1  2 failed  :: e2e/cp04-lever-cpl1.spec.ts -g three choices
+[12:20:12Z load 7.72] shelf probe before rc=0
+[12:20:12Z load 7.72] vite pid 69521 stopped (gone)
+[12:20:13Z load 7.75] vite pid 81614 up on 5741 from /Users/robin/Claude/Projects/wt-cpl1
+[12:20:18Z load 8.89] warm boot rc=0 on 5741
+[12:21:06Z load 7.88] probe after rc=0
+[12:30:56Z load 9.12] playwright rc=1  22 failed  136 passed (9.8m)  :: e2e/ap16-7-epoch-levers.spec.ts e2e/charter-press-totality.spec.ts e2e/cp01-charter-roundtrip.spec.ts e2e/cp04-lever.spec.ts e2e/wd04-postscripts.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/cp02-charter-stamp.spec.ts e2e/cp02-charter-boot.spec.ts e2e/cp03-press-loop.spec.ts e2e/cp06-share.spec.ts e2e/press-edit-visibility.spec.ts e2e/ed-01-descriptor-inspector.spec.ts
+[12:31:00Z load 8.71] shelf probe after rc=0
+[12:31:00Z load 8.71] vite pid 81614 stopped (gone)
+[12:31:01Z load 8.71] port 5741 free
+[12:31:01Z load 8.71] port 5742 free
+[12:31:01Z load 8.71] battery start (node-guards, the branch 5dc23a6b6, no server of mine running)
+[12:48:19Z load 6.53] battery rc=1 ℹ tests 1037 ℹ pass 1026 ℹ fail 6 ℹ skipped 5 
+✖ all 162 scripts/*.test.mjs fixture owners remove their temp directories (999933.80275ms)
+✖ dry run prints a bounded plan without contacting the droplet (44.918875ms)
+✖ rotation registry stays outside the engine identity corpus (622.245084ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (117.533292ms)
+✖ the live board is green under this guard (baseline is honest) (188.783542ms)
+✖ today's local backup makes the pull an offline no-op (39.874791ms)
+[12:48:19Z load 6.40] BATCH B DONE

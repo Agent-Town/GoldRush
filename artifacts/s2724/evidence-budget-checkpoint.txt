@@ -1,0 +1,19 @@
+evidence-budget — the evidence bytes this landing adds
+  range    : b8996ddb37dd5bc55a586b108c0e415eb3537e69..HEAD
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 119 changed evidence path(s)
+  added    : 15.0 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 15.0 MB
+  limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+          2.0 MB  A  artifacts/gr-campaign-fixture-cleanup-1/plain-mobile-menu.png
+          1.8 MB  A  artifacts/gr-campaign-fixture-cleanup-1/plain-mobile-run.png
+          1.5 MB  A  artifacts/056/mobile-390-build-menu-icons-blurb.png
+          1.5 MB  A  artifacts/s2724/preexisting-056/mobile-390-build-menu-icons-blurb.png
+          1.2 MB  A  artifacts/gr-campaign-fixture-cleanup-1/plain-desktop-run.png
+          1.1 MB  A  artifacts/056/desktop-build-menu-icons-blurb.png
+          1.1 MB  A  artifacts/s2724/preexisting-056/desktop-build-menu-icons-blurb.png
+          1.1 MB  A  artifacts/056/desktop-build-menu-palisade.png
+      … and 111 more growing path(s)
+  tree     : 9299.5 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 15.0 MB added, inside the 40.0 MB ceiling.

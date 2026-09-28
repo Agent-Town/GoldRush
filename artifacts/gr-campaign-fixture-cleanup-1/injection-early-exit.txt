@@ -1,0 +1,22 @@
+✖ a killed campaign resumes from its last profile checkpoint (19.271958ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114.788667
+
+✖ failing tests:
+
+test at scripts/gr-sim-campaign.test.mjs:77:1
+✖ a killed campaign resumes from its last profile checkpoint (19.271958ms)
+  Error: campaign exited 9 before its first checkpoint: /opt/homebrew/Cellar/node/26.4.0/bin/node: bad option: --campaign-cleanup-invalid-option
+  /opt/homebrew/Cellar/node/26.4.0/bin/node: bad option: --player
+  
+      at ChildProcess.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/control-arena/scripts/gr-sim-campaign.test.mjs:110:34)
+      at Object.onceWrapper (node:events:631:12)
+      at ChildProcess.emit (node:events:521:24)
+      at maybeClose (node:internal/child_process:1125:16)
+      at ChildProcess._handle.onexit (node:internal/child_process:305:5)

@@ -1,0 +1,148 @@
+# Canyon Works slope table (goldrush.cw1.slope-table.v1)
+source: git 90a26053c:assets/contracts/epoch-3-voltage/contracts.json
+active contract: e3-canyon-works (fallbackReason null)
+creek term: creekHeight 0.5 -> railHeight -1 over creekBlendStart -8 .. creekBlendEnd -6 (cellSize 2; simSlope central-difference step 0.5)
+slopeMax (Balance.terrainSim): 0.35; isTraversable = hypot(dx,dz) <= slopeMax
+
+## z -12 .. -2 (step 0.25): simHeight at x=0, then |simSlope| and isTraversable (T/-) per x; Terrain.sample zone at x=0 and x=-24
+      z    h(0)    |s|@0 T  |s|@-24 T   |s|@24 T  |s|@-44 T   |s|@44 T  zone@0 / zone@-24
+ -12.00   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+ -11.75   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+ -11.50   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+ -11.25   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+ -11.00   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+ -10.75   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+ -10.50   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+ -10.25   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+ -10.00   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+  -9.75   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+  -9.50   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+  -9.25   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+  -9.00   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+  -8.75   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+  -8.50   0.500   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  bank / bank
+  -8.25   0.500   0.0645 T   0.0645 T   0.0645 T   0.0645 T   0.0645 T  bank / bank
+  -8.00   0.500   0.2344 T   0.2344 T   0.2344 T   0.2344 T   0.2344 T  bank / bank
+  -7.75   0.435   0.4746 -   0.4746 -   0.4746 -   0.4746 -   0.4746 -  out(x) / out(x)
+  -7.50   0.266   0.7500 -   0.7500 -   0.7500 -   0.7500 -   0.7500 -  out(x) / out(x)
+  -7.25   0.025   0.9609 -   0.9609 -   0.9609 -   0.9609 -   0.9609 -  out(x) / out(x)
+  -7.00  -0.250   1.0313 -   1.0313 -   1.0313 -   1.0313 -   1.0313 -  out(x) / out(x)
+  -6.75  -0.525   0.9609 -   0.9609 -   0.9609 -   0.9609 -   0.9609 -  out(x) / out(x)
+  -6.50  -0.766   0.7500 -   0.7500 -   0.7500 -   0.7500 -   0.7500 -  out(x) / out(x)
+  -6.25  -0.935   0.4746 -   0.4746 -   0.4746 -   0.4746 -   0.4746 -  out(x) / out(x)
+  -6.00  -1.000   0.2344 T   0.2344 T   0.2344 T   0.2344 T   0.2344 T  shallows / shallows
+  -5.75  -1.000   0.0645 T   0.0645 T   0.0645 T   0.0645 T   0.0645 T  shallows / shallows
+  -5.50  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  shallows / shallows
+  -5.25  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  shallows / shallows
+  -5.00  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -4.75  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -4.50  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -4.25  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -4.00  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -3.75  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -3.50  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -3.25  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -3.00  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -2.75  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -2.50  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -2.25  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+  -2.00  -1.000   0.0000 T   0.0000 T   0.0000 T   0.0000 T   0.0000 T  ford / river(x)
+
+## creek band z -12 .. -2 (step 0.01): walls (isTraversable false) and the peak |simSlope| per x
+x=  0: peak |slope| 1.0313 at z -7; margin to slopeMax -0.6813; walls: z -7.87..-6.13 (1.74 m, peak 1.0313 at z -7)
+x=-24: peak |slope| 1.0313 at z -7; margin to slopeMax -0.6813; walls: z -7.87..-6.13 (1.74 m, peak 1.0313 at z -7)
+x= 24: peak |slope| 1.0313 at z -7; margin to slopeMax -0.6813; walls: z -7.87..-6.13 (1.74 m, peak 1.0313 at z -7)
+x=-44: peak |slope| 1.0313 at z -7; margin to slopeMax -0.6813; walls: z -7.87..-6.13 (1.74 m, peak 1.0313 at z -7)
+x= 44: peak |slope| 1.0313 at z -7; margin to slopeMax -0.6813; walls: z -7.87..-6.13 (1.74 m, peak 1.0313 at z -7)
+
+## whole tile z -56 .. 56 (step 0.05): every wall per x
+x=  0: z -7.85..-6.15 (1.7 m, peak 1.0313 at z -7); z 16.8..27.15 (10.35 m, peak 2.2 at z 17.5)
+x=-24: z -7.85..-6.15 (1.7 m, peak 1.0313 at z -7); z 19.8..26.2 (6.4 m, peak 0.598 at z 23)
+x= 24: z -7.85..-6.15 (1.7 m, peak 1.0313 at z -7); z 19.8..26.2 (6.4 m, peak 0.598 at z 23)
+x=-44: z -7.85..-6.15 (1.7 m, peak 1.0313 at z -7); z 19.8..26.2 (6.4 m, peak 0.598 at z 23)
+x= 44: z -7.85..-6.15 (1.7 m, peak 1.0313 at z -7); z 19.8..26.2 (6.4 m, peak 0.598 at z 23)
+
+## reachability on foot: 8-connected flood fill over Terrain.sample(x,z).walkable on a 0.5 m lattice from the hero start (0,-44); a target is reached when a reached lattice point lies within 1.5 m
+lattice 193x225: 35783 walkable points, 18362 reached
+  REACHED     pylon site pylon-west-base (-12,-36)
+  REACHED     pylon site pylon-west-switch (-24,-20)
+  UNREACHABLE pylon site pylon-west-rim (-28,8)
+  REACHED     pylon site pylon-east-base (12,-36)
+  REACHED     pylon site pylon-east-switch (24,-20)
+  UNREACHABLE pylon site pylon-east-rim (28,8)
+  UNREACHABLE seam (harvest anchor) anchor-0 (-34,30)
+  UNREACHABLE seam (harvest anchor) anchor-1 (-22,34)
+  UNREACHABLE seam (harvest anchor) anchor-2 (22,34)
+  UNREACHABLE seam (harvest anchor) anchor-3 (34,30)
+  UNREACHABLE gallery consumer gallery-west (-28,28)
+  UNREACHABLE gallery consumer gallery-east (28,28)
+  UNREACHABLE lamp consumer lamp-west (-32,32)
+  UNREACHABLE lamp consumer lamp-east (32,32)
+  UNREACHABLE pre-placed lantern_post lantern_post-0 (-32,32)
+  UNREACHABLE pre-placed lantern_post lantern_post-1 (32,32)
+  UNREACHABLE pre-placed turret turret-2 (-18,22)
+  UNREACHABLE pre-placed turret turret-3 (18,22)
+  UNREACHABLE bridge (works-bridge ford), north end works-bridge-north (0,6.5)
+
+## visible bank (mounted GLB lattice, read-only) against the sim height, z -16 .. -2 (step 0.5)
+x=0:      z    mesh     sim sim-mesh meshGrade
+       -16.0   0.502   0.500   -0.002    -0.017
+       -15.5   0.494   0.500    0.006    -0.017
+       -15.0   0.485   0.500    0.015    -0.017
+       -14.5   0.477   0.500    0.023    -0.016
+       -14.0   0.469   0.500    0.031    -0.015
+       -13.5   0.462   0.500    0.038    -0.013
+       -13.0   0.456   0.500    0.044    -0.012
+       -12.5   0.451   0.500    0.049    -0.009
+       -12.0   0.447   0.500    0.053    -0.007
+       -11.5   0.444   0.500    0.056    -0.003
+       -11.0   0.444   0.500    0.056     0.001
+       -10.5   0.445   0.500    0.055     0.017
+       -10.0   0.461   0.500    0.039     0.043
+        -9.5   0.487   0.500    0.013     0.083
+        -9.0   0.544   0.500   -0.044     0.085
+        -8.5   0.572   0.500   -0.072     0.029
+        -8.0   0.573   0.500   -0.073    -0.376
+        -7.5   0.196   0.266    0.069    -0.878
+        -7.0  -0.306  -0.250    0.056    -0.912
+        -6.5  -0.715  -0.766   -0.050    -0.716
+        -6.0  -1.021  -1.000    0.021    -0.301
+        -5.5  -1.016  -1.000    0.016     0.010
+        -5.0  -1.011  -1.000    0.011     0.009
+        -4.5  -1.007  -1.000    0.007     0.007
+        -4.0  -1.004  -1.000    0.004     0.006
+        -3.5  -1.001  -1.000    0.001     0.005
+        -3.0  -0.999  -1.000   -0.001     0.003
+        -2.5  -0.998  -1.000   -0.002     0.002
+        -2.0  -0.998  -1.000   -0.003     0.000
+x=-24:      z    mesh     sim sim-mesh meshGrade
+       -16.0   0.501   0.500   -0.001     0.002
+       -15.5   0.503   0.500   -0.003     0.003
+       -15.0   0.504   0.500   -0.004     0.002
+       -14.5   0.505   0.500   -0.005     0.001
+       -14.0   0.505   0.500   -0.005     0.001
+       -13.5   0.506   0.500   -0.006     0.003
+       -13.0   0.509   0.500   -0.009     0.013
+       -12.5   0.518   0.500   -0.018     0.022
+       -12.0   0.530   0.500   -0.030     0.026
+       -11.5   0.544   0.500   -0.044     0.020
+       -11.0   0.550   0.500   -0.050     0.009
+       -10.5   0.553   0.500   -0.053     0.010
+       -10.0   0.560   0.500   -0.060     0.020
+        -9.5   0.573   0.500   -0.073     0.046
+        -9.0   0.606   0.500   -0.106     0.065
+        -8.5   0.638   0.500   -0.138     0.065
+        -8.0   0.670   0.500   -0.171    -0.284
+        -7.5   0.354   0.266   -0.089    -0.749
+        -7.0  -0.078  -0.250   -0.172    -0.957
+        -6.5  -0.603  -0.766   -0.163    -0.922
+        -6.0  -1.000  -1.000    0.000    -0.415
+        -5.5  -1.018  -1.000    0.018    -0.029
+        -5.0  -1.030  -1.000    0.030    -0.019
+        -4.5  -1.036  -1.000    0.036    -0.012
+        -4.0  -1.042  -1.000    0.042    -0.010
+        -3.5  -1.046  -1.000    0.046    -0.007
+        -3.0  -1.049  -1.000    0.049    -0.005
+        -2.5  -1.051  -1.000    0.051    -0.003
+        -2.0  -1.052  -1.000    0.052    -0.000
+

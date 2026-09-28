@@ -1,0 +1,973 @@
+{
+  "project": "mobile-chrome",
+  "contract": "e4-gusher-county",
+  "name": "Gusher County",
+  "secureWave": 12,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e4-gusher-county secureWave=12"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "runState=dead at wave 4 / 134.0s sim, 62 kills, 45 gold"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "skipped: never secured"
+  },
+  "board": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 4,
+  "simAtEnd": 134.00000000000264,
+  "runStateAtEnd": "dead",
+  "hpAtEnd": 0,
+  "goldAtEnd": 45,
+  "killsAtEnd": 62,
+  "peakHotBoilers": 0,
+  "powerBanksPeak": {},
+  "builds": [],
+  "upgrades": [
+    "double_tap_coil",
+    "spring_heels",
+    "double_tap_coil",
+    "split_spark"
+  ],
+  "samples": [
+    {
+      "t": 10.9,
+      "wave": 0,
+      "hp": 100,
+      "gold": 0,
+      "kills": 0,
+      "x": -11.4,
+      "z": -7.7,
+      "alive": 2,
+      "seams": 2
+    },
+    {
+      "t": 21.3,
+      "wave": 0,
+      "hp": 100,
+      "gold": 0,
+      "kills": 2,
+      "x": -7.4,
+      "z": -7.7,
+      "alive": 4,
+      "seams": 2
+    },
+    {
+      "t": 31.7,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 5,
+      "x": -42.4,
+      "z": -38.7,
+      "alive": 9,
+      "seams": 2
+    },
+    {
+      "t": 41.9,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 10,
+      "x": -23.6,
+      "z": -15.1,
+      "alive": 7,
+      "seams": 2
+    },
+    {
+      "t": 52.8,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 14,
+      "x": 11.9,
+      "z": -8.3,
+      "alive": 8,
+      "seams": 2
+    },
+    {
+      "t": 63.3,
+      "wave": 2,
+      "hp": 100,
+      "gold": 0,
+      "kills": 18,
+      "x": 42.9,
+      "z": -36.7,
+      "alive": 13,
+      "seams": 2
+    },
+    {
+      "t": 73.3,
+      "wave": 2,
+      "hp": 100,
+      "gold": 0,
+      "kills": 27,
+      "x": 22.5,
+      "z": -12.5,
+      "alive": 10,
+      "seams": 2
+    },
+    {
+      "t": 84.1,
+      "wave": 2,
+      "hp": 100,
+      "gold": 0,
+      "kills": 32,
+      "x": -0.2,
+      "z": 7.4,
+      "alive": 11,
+      "seams": 2
+    },
+    {
+      "t": 94.4,
+      "wave": 3,
+      "hp": 100,
+      "gold": 0,
+      "kills": 36,
+      "x": -0.2,
+      "z": 45.7,
+      "alive": 16,
+      "seams": 2
+    },
+    {
+      "t": 104.5,
+      "wave": 3,
+      "hp": 78,
+      "gold": 0,
+      "kills": 41,
+      "x": -0.2,
+      "z": -1.3,
+      "alive": 20,
+      "seams": 2
+    },
+    {
+      "t": 114.7,
+      "wave": 3,
+      "hp": 78,
+      "gold": 0,
+      "kills": 45,
+      "x": 37,
+      "z": -36.7,
+      "alive": 22,
+      "seams": 2
+    },
+    {
+      "t": 124.9,
+      "wave": 4,
+      "hp": 78,
+      "gold": 30,
+      "kills": 52,
+      "x": 37,
+      "z": -40.2,
+      "alive": 26,
+      "seams": 1
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-4-motor",
+    "strategy=gather-and-extend",
+    "engine secureWave=12 cadenceMult=1",
+    "home=0.0,-4.0 circuit=[[-4,-8],[4,-8],[4,0],[-4,0]]",
+    "tar -12,-8: reached=true, fuel={\"active\":true,\"tar\":0,\"stored\":12,\"capacity\":24,\"harvestedNodes\":1,\"refinedTar\":3,\"drawn\":0,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":false,\"progress\":0},{\"x\":12,\"z\":-8,\"harvested\":false,\"progress\":0}]}",
+    "tar 0,-8: reached=true, fuel={\"active\":true,\"tar\":0,\"stored\":24,\"capacity\":24,\"harvestedNodes\":2,\"refinedTar\":6,\"drawn\":0,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":false,\"progress\":0}]}",
+    "tar 12,-8: reached=true, fuel={\"active\":true,\"tar\":3,\"stored\":24,\"capacity\":24,\"harvestedNodes\":3,\"refinedTar\":6,\"drawn\":0,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":true,\"progress\":1}]}",
+    "motor stop -12,-8: arrived=true, sim=24.1, vehicle={\"active\":true,\"kind\":\"hauler\",\"state\":\"arrived\",\"x\":-11.435,\"z\":-7.731,\"target\":null,\"speed\":9,\"burnPerSecond\":3,\"distanceTravelled\":2.338,\"onRoad\":true,\"roadDistance\":1.138,\"dispatch\":{\"x\":-11.435,\"z\":-7.731}}, fuel={\"active\":true,\"tar\":3,\"stored\":23.539,\"capacity\":24,\"harvestedNodes\":3,\"refinedTar\":6,\"drawn\":0.461,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":true,\"progress\":1}]}",
+    "motor stop -50,-40: arrived=true, sim=35.7, vehicle={\"active\":true,\"kind\":\"hauler\",\"state\":\"arrived\",\"x\":-49.251,\"z\":-39.893,\"target\":null,\"speed\":9,\"burnPerSecond\":3,\"distanceTravelled\":51.982,\"onRoad\":true,\"roadDistance\":50.782,\"dispatch\":{\"x\":-49.251,\"z\":-39.893}}, fuel={\"active\":true,\"tar\":3,\"stored\":20.892,\"capacity\":24,\"harvestedNodes\":3,\"refinedTar\":6,\"drawn\":3.108,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":true,\"progress\":1}]}",
+    "lease 0 rested open at sim=35.73333333333325",
+    "motor stop -12,-8: arrived=true, sim=47.7, vehicle={\"active\":true,\"kind\":\"hauler\",\"state\":\"arrived\",\"x\":-12.088,\"z\":-8.269,\"target\":null,\"speed\":9,\"burnPerSecond\":3,\"distanceTravelled\":100.779,\"onRoad\":true,\"roadDistance\":99.579,\"dispatch\":{\"x\":-12.088,\"z\":-8.269}}, fuel={\"active\":true,\"tar\":2,\"stored\":21.174,\"capacity\":24,\"harvestedNodes\":3,\"refinedTar\":7,\"drawn\":6.826,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":true,\"progress\":1}]}",
+    "motor stop 12,-8: arrived=true, sim=55.7, vehicle={\"active\":true,\"kind\":\"hauler\",\"state\":\"arrived\",\"x\":11.891,\"z\":-8.269,\"target\":null,\"speed\":9,\"burnPerSecond\":3,\"distanceTravelled\":124.758,\"onRoad\":true,\"roadDistance\":103.158,\"dispatch\":{\"x\":11.891,\"z\":-8.269}}, fuel={\"active\":true,\"tar\":0,\"stored\":22.183,\"capacity\":24,\"harvestedNodes\":3,\"refinedTar\":9,\"drawn\":13.817,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":true,\"progress\":1}]}",
+    "motor stop 48,-38: arrived=true, sim=67.1, vehicle={\"active\":true,\"kind\":\"hauler\",\"state\":\"arrived\",\"x\":47.848,\"z\":-37.862,\"target\":null,\"speed\":9,\"burnPerSecond\":3,\"distanceTravelled\":171.327,\"onRoad\":true,\"roadDistance\":149.727,\"dispatch\":{\"x\":47.848,\"z\":-37.862}}, fuel={\"active\":true,\"tar\":0,\"stored\":19.699,\"capacity\":24,\"harvestedNodes\":3,\"refinedTar\":9,\"drawn\":16.301,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":true,\"progress\":1}]}",
+    "lease 1 rested open at sim=67.06666666666663",
+    "motor stop 12,-8: arrived=true, sim=78.4, vehicle={\"active\":true,\"kind\":\"hauler\",\"state\":\"arrived\",\"x\":12.772,\"z\":-7.95,\"target\":null,\"speed\":9,\"burnPerSecond\":3,\"distanceTravelled\":217.426,\"onRoad\":true,\"roadDistance\":195.826,\"dispatch\":{\"x\":12.772,\"z\":-7.95}}, fuel={\"active\":true,\"tar\":0,\"stored\":16.187,\"capacity\":24,\"harvestedNodes\":3,\"refinedTar\":9,\"drawn\":19.813,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":true,\"progress\":1}]}",
+    "motor stop 0,8: arrived=true, sim=85.3, vehicle={\"active\":true,\"kind\":\"hauler\",\"state\":\"arrived\",\"x\":-0.231,\"z\":7.393,\"target\":null,\"speed\":9,\"burnPerSecond\":3,\"distanceTravelled\":237.537,\"onRoad\":true,\"roadDistance\":199.137,\"dispatch\":{\"x\":-0.231,\"z\":7.393}}, fuel={\"active\":true,\"tar\":0,\"stored\":10.41,\"capacity\":24,\"harvestedNodes\":3,\"refinedTar\":9,\"drawn\":25.59,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":true,\"progress\":1}]}",
+    "motor stop 0,46: arrived=true, sim=94.4, vehicle={\"active\":true,\"kind\":\"hauler\",\"state\":\"arrived\",\"x\":-0.231,\"z\":45.659,\"target\":null,\"speed\":9,\"burnPerSecond\":3,\"distanceTravelled\":275.803,\"onRoad\":true,\"roadDistance\":237.403,\"dispatch\":{\"x\":-0.231,\"z\":45.659}}, fuel={\"active\":true,\"tar\":0,\"stored\":8.369,\"capacity\":24,\"harvestedNodes\":3,\"refinedTar\":9,\"drawn\":27.631,\"nodes\":[{\"x\":-12,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":0,\"z\":-8,\"harvested\":true,\"progress\":1},{\"x\":12,\"z\":-8,\"harvested\":true,\"progress\":1}]}",
+    "lease 2 rested open at sim=94.40000000000133",
+    "kit=turret+sentry_beacon+turret+turret",
+    "could not fund turret (cost 50, purse 0)"
+  ],
+  "at": "2026-09-25T10:15:27.642Z",
+  "objective": {
+    "fuel": {
+      "active": true,
+      "tar": 0,
+      "stored": 8.369,
+      "capacity": 24,
+      "harvestedNodes": 3,
+      "refinedTar": 9,
+      "drawn": 27.631,
+      "nodes": [
+        {
+          "x": -12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 0,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        }
+      ]
+    },
+    "vehicle": {
+      "active": true,
+      "kind": "hauler",
+      "state": "arrived",
+      "x": -0.231,
+      "z": 45.659,
+      "target": null,
+      "speed": 9,
+      "burnPerSecond": 3,
+      "distanceTravelled": 275.803,
+      "onRoad": true,
+      "roadDistance": 237.403,
+      "dispatch": {
+        "x": -0.231,
+        "z": 45.659
+      }
+    },
+    "landYacht": null,
+    "fairground": null,
+    "crowdFlocks": null,
+    "canyonWorks": null,
+    "baron": {
+      "cartVisible": false,
+      "carried": false,
+      "distanceFromBaron": 0,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 0,
+      "volleys": 0,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "",
+      "lastTarget": {
+        "x": 0,
+        "z": 0
+      },
+      "target": {
+        "x": 0,
+        "z": 0
+      },
+      "props": {
+        "state": "off",
+        "source": "placeholder",
+        "launcher": false,
+        "rocket": false,
+        "powderKeg": false,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": null
+    },
+    "boss": {
+      "visible": false,
+      "ratio": 0,
+      "renderedRatio": 1,
+      "litSegments": 7,
+      "segments": 0,
+      "groupId": null,
+      "aliveComponents": 0,
+      "destroyedComponents": 0,
+      "components": []
+    },
+    "medals": {
+      "version": 1,
+      "baronBeaten": false,
+      "rocketCartCaptured": false
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.7799999713897705,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.7799999713897705,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.7799999713897705,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "escort": {
+      "enabled": false
+    },
+    "power": {
+      "active": false,
+      "id": "",
+      "tick": 0,
+      "topologyRevision": 0,
+      "allocationRevision": 0,
+      "totalSupplyWatts": 0,
+      "totalDemandWatts": 0,
+      "nodes": [],
+      "wires": [],
+      "components": [],
+      "signature": "",
+      "budgetMs": 0.5,
+      "lastSolveMs": 0,
+      "maxSolveMs": 0,
+      "lastStepMs": 0,
+      "maxStepMs": 0,
+      "overBudget": false,
+      "overBudgetCount": 0,
+      "solveCount": 0,
+      "nodeCount": 0,
+      "wireCount": 0,
+      "intactWireCount": 0,
+      "cutWireCount": 0,
+      "events": [],
+      "render": {
+        "active": false,
+        "renderLayer": 0,
+        "renderSlot": "gameplay",
+        "topologyRevision": -1,
+        "allocationRevision": -1,
+        "rebuildCount": 0,
+        "spans": 0,
+        "poweredSpans": 0,
+        "darkSpans": 0,
+        "intactSpans": 0,
+        "cutSpans": 0,
+        "segments": 0,
+        "poweredSegments": 0,
+        "darkSegments": 0,
+        "drawCalls": 0,
+        "asset": "procedural-catenary"
+      }
+    }
+  },
+  "finalSnapshot": {
+    "fuel": {
+      "active": true,
+      "tar": 0,
+      "stored": 8.369,
+      "capacity": 24,
+      "harvestedNodes": 3,
+      "refinedTar": 9,
+      "drawn": 27.631,
+      "nodes": [
+        {
+          "x": -12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 0,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        },
+        {
+          "x": 12,
+          "z": -8,
+          "harvested": true,
+          "progress": 1
+        }
+      ]
+    },
+    "vehicle": {
+      "active": true,
+      "kind": "hauler",
+      "state": "arrived",
+      "x": -0.231,
+      "z": 45.659,
+      "target": null,
+      "speed": 9,
+      "burnPerSecond": 3,
+      "distanceTravelled": 275.803,
+      "onRoad": true,
+      "roadDistance": 237.403,
+      "dispatch": {
+        "x": -0.231,
+        "z": 45.659
+      }
+    },
+    "escort": {
+      "enabled": false
+    },
+    "canyonWorks": null,
+    "fairground": null,
+    "crowdFlocks": null,
+    "power": {
+      "active": false,
+      "id": "",
+      "tick": 0,
+      "topologyRevision": 0,
+      "allocationRevision": 0,
+      "totalSupplyWatts": 0,
+      "totalDemandWatts": 0,
+      "nodes": [],
+      "wires": [],
+      "components": [],
+      "signature": "",
+      "budgetMs": 0.5,
+      "lastSolveMs": 0,
+      "maxSolveMs": 0,
+      "lastStepMs": 0,
+      "maxStepMs": 0,
+      "overBudget": false,
+      "overBudgetCount": 0,
+      "solveCount": 0,
+      "nodeCount": 0,
+      "wireCount": 0,
+      "intactWireCount": 0,
+      "cutWireCount": 0,
+      "events": [],
+      "render": {
+        "active": false,
+        "renderLayer": 0,
+        "renderSlot": "gameplay",
+        "topologyRevision": -1,
+        "allocationRevision": -1,
+        "rebuildCount": 0,
+        "spans": 0,
+        "poweredSpans": 0,
+        "darkSpans": 0,
+        "intactSpans": 0,
+        "cutSpans": 0,
+        "segments": 0,
+        "poweredSegments": 0,
+        "darkSegments": 0,
+        "drawCalls": 0,
+        "asset": "procedural-catenary"
+      }
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.7799999713897705,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.7799999713897705,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 0.7799999713897705,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "objective": {
+      "fuel": {
+        "active": true,
+        "tar": 0,
+        "stored": 8.369,
+        "capacity": 24,
+        "harvestedNodes": 3,
+        "refinedTar": 9,
+        "drawn": 27.631,
+        "nodes": [
+          {
+            "x": -12,
+            "z": -8,
+            "harvested": true,
+            "progress": 1
+          },
+          {
+            "x": 0,
+            "z": -8,
+            "harvested": true,
+            "progress": 1
+          },
+          {
+            "x": 12,
+            "z": -8,
+            "harvested": true,
+            "progress": 1
+          }
+        ]
+      },
+      "vehicle": {
+        "active": true,
+        "kind": "hauler",
+        "state": "arrived",
+        "x": -0.231,
+        "z": 45.659,
+        "target": null,
+        "speed": 9,
+        "burnPerSecond": 3,
+        "distanceTravelled": 275.803,
+        "onRoad": true,
+        "roadDistance": 237.403,
+        "dispatch": {
+          "x": -0.231,
+          "z": 45.659
+        }
+      },
+      "landYacht": null,
+      "fairground": null,
+      "crowdFlocks": null,
+      "canyonWorks": null,
+      "baron": {
+        "cartVisible": false,
+        "carried": false,
+        "distanceFromBaron": 0,
+        "telegraphActive": false,
+        "telegraphElapsed": 0,
+        "nextVolleyIn": 0,
+        "volleys": 0,
+        "suppressed": false,
+        "targetKind": null,
+        "lastOwnerId": "",
+        "lastTarget": {
+          "x": 0,
+          "z": 0
+        },
+        "target": {
+          "x": 0,
+          "z": 0
+        },
+        "props": {
+          "state": "off",
+          "source": "placeholder",
+          "launcher": false,
+          "rocket": false,
+          "powderKeg": false,
+          "triangles": {
+            "launcher": 2020,
+            "rocket": 876,
+            "powder_keg": 704
+          }
+        },
+        "manifest": null
+      },
+      "boss": {
+        "visible": false,
+        "ratio": 0,
+        "renderedRatio": 1,
+        "litSegments": 7,
+        "segments": 0,
+        "groupId": null,
+        "aliveComponents": 0,
+        "destroyedComponents": 0,
+        "components": []
+      },
+      "medals": {
+        "version": 1,
+        "baronBeaten": false,
+        "rocketCartCaptured": false
+      },
+      "pressure": {
+        "enabled": false,
+        "multiplayerPosture": "single-player-gated",
+        "coal": 0,
+        "seams": [
+          {
+            "x": -12,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 0.7799999713897705,
+            "spriteVisible": false
+          },
+          {
+            "x": -5,
+            "z": 43,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 0.7799999713897705,
+            "spriteVisible": false
+          },
+          {
+            "x": 3,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 0.7799999713897705,
+            "spriteVisible": false
+          }
+        ],
+        "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+        "boilers": [
+          {
+            "index": 0,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 1,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 2,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          }
+        ],
+        "vents": 0,
+        "safeBand": null,
+        "objective": {
+          "active": false,
+          "failed": false,
+          "complete": false,
+          "hotBoilers": 0,
+          "waves": "8-12"
+        }
+      },
+      "escort": {
+        "enabled": false
+      },
+      "power": {
+        "active": false,
+        "id": "",
+        "tick": 0,
+        "topologyRevision": 0,
+        "allocationRevision": 0,
+        "totalSupplyWatts": 0,
+        "totalDemandWatts": 0,
+        "nodes": [],
+        "wires": [],
+        "components": [],
+        "signature": "",
+        "budgetMs": 0.5,
+        "lastSolveMs": 0,
+        "maxSolveMs": 0,
+        "lastStepMs": 0,
+        "maxStepMs": 0,
+        "overBudget": false,
+        "overBudgetCount": 0,
+        "solveCount": 0,
+        "nodeCount": 0,
+        "wireCount": 0,
+        "intactWireCount": 0,
+        "cutWireCount": 0,
+        "events": [],
+        "render": {
+          "active": false,
+          "renderLayer": 0,
+          "renderSlot": "gameplay",
+          "topologyRevision": -1,
+          "allocationRevision": -1,
+          "rebuildCount": 0,
+          "spans": 0,
+          "poweredSpans": 0,
+          "darkSpans": 0,
+          "intactSpans": 0,
+          "cutSpans": 0,
+          "segments": 0,
+          "poweredSegments": 0,
+          "darkSegments": 0,
+          "drawCalls": 0,
+          "asset": "procedural-catenary"
+        }
+      }
+    },
+    "frame": 3922,
+    "sim": 134.00000000000264,
+    "wave": 4,
+    "hudWave": 4,
+    "runState": "dead",
+    "paused": false,
+    "secured": false,
+    "hp": 0,
+    "maxHp": 100,
+    "gold": 45,
+    "hero": {
+      "x": 51.364650333473314,
+      "z": -30.157215910346018
+    },
+    "enemiesAlive": 26,
+    "kills": 62,
+    "pendingLevels": 0,
+    "offer": null,
+    "upgradeOpen": false,
+    "buildMode": false,
+    "ghostValid": false,
+    "ghostPos": {
+      "x": 0,
+      "z": 0
+    },
+    "nodes": [
+      {
+        "id": "gold-seam-1",
+        "active": true,
+        "x": 52,
+        "z": -30,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-2",
+        "active": false,
+        "x": 36.8,
+        "z": -40.8,
+        "respawnIn": 11.066666666666862,
+        "respawnScheduled": true
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-7",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-8",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      }
+    ],
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "count": 0,
+        "maxCount": 6,
+        "canAfford": true
+      },
+      {
+        "id": "palisade",
+        "cost": 0,
+        "count": 0,
+        "maxCount": 48,
+        "canAfford": true
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "count": 0,
+        "maxCount": 3,
+        "canAfford": true
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "count": 0,
+        "maxCount": 2,
+        "canAfford": false
+      },
+      {
+        "id": "turret",
+        "cost": 50,
+        "count": 0,
+        "maxCount": 4,
+        "canAfford": false
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "count": 0,
+        "maxCount": 1,
+        "canAfford": false
+      }
+    ],
+    "defences": [],
+    "repairs": 0,
+    "channeling": true
+  }
+}

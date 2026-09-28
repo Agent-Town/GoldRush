@@ -1,0 +1,146 @@
+Merge made by the 'ort' strategy.
+ STATUS.md                                          |    3 +-
+ artifacts/s2709/blob-sizes.txt                     |  170 +
+ artifacts/s2709/browser-gates.txt                  |  103 +
+ artifacts/s2709/build-gates.txt                    | 5393 ++++++++++++++++++++
+ artifacts/s2709/candidate-final-status.txt         |    3 +
+ artifacts/s2709/classification.json                |  419 ++
+ artifacts/s2709/dry-board-final.txt                |   40 +
+ artifacts/s2709/dry-board.txt                      |   40 +
+ artifacts/s2709/duties.json                        |   27 +
+ artifacts/s2709/engine-initial.json                |    5 +
+ .../s2709/evidence-budget-source-complete.json     |  516 ++
+ artifacts/s2709/evidence-budget-source.json        |  303 ++
+ artifacts/s2709/final-state.json                   |   16 +
+ artifacts/s2709/gate-processes-ended.txt           |    2 +
+ artifacts/s2709/gate-verdict.json                  |   23 +
+ .../plain-desktop-chrome-e1-dry-gulch.json         |   12 +
+ .../plain-desktop-chrome-e1-twin-banks.json        |   12 +
+ .../plain-desktop-chrome-the-claim.json            |   12 +
+ .../open-findings/plain-desktop-chrome-town.json   |   12 +
+ .../plain-mobile-chrome-e1-dry-gulch.json          |   12 +
+ .../plain-mobile-chrome-e1-twin-banks.json         |   12 +
+ .../plain-mobile-chrome-the-claim.json             |   12 +
+ .../open-findings/plain-mobile-chrome-town.json    |   12 +
+ artifacts/s2709/health.txt                         |   16 +
+ artifacts/s2709/lanes.txt                          |  374 ++
+ artifacts/s2709/ledger-final-result.json           |    9 +
+ artifacts/s2709/ledger-final.txt                   | 1579 ++++++
+ artifacts/s2709/ledger-freshness-corrected.txt     |   11 +
+ artifacts/s2709/ledger-freshness.txt               |   18 +
+ artifacts/s2709/native-evidence-audit.json         |  496 ++
+ artifacts/s2709/node-partial.tap                   | 4699 +++++++++++++++++
+ artifacts/s2709/npm-ci.txt                         |    2 +
+ artifacts/s2709/payload-stderr.txt                 |    0
+ artifacts/s2709/payload.json                       |  637 +++
+ .../desktop-chrome-e1-dry-gulch.png                |  Bin 0 -> 1628565 bytes
+ .../desktop-chrome-e1-twin-banks.png               |  Bin 0 -> 1221161 bytes
+ .../plain-boot-shots/desktop-chrome-the-claim.png  |  Bin 0 -> 1182157 bytes
+ .../s2709/plain-boot-shots/desktop-chrome-town.png |  Bin 0 -> 1523769 bytes
+ .../mobile-chrome-e1-dry-gulch.png                 |  Bin 0 -> 2521377 bytes
+ .../mobile-chrome-e1-twin-banks.png                |  Bin 0 -> 1965611 bytes
+ .../plain-boot-shots/mobile-chrome-the-claim.png   |  Bin 0 -> 1926348 bytes
+ .../s2709/plain-boot-shots/mobile-chrome-town.png  |  Bin 0 -> 2159499 bytes
+ artifacts/s2709/plain-boots.json                   |  106 +
+ artifacts/s2709/policy.txt                         |    1 +
+ artifacts/s2709/post-browser-status.txt            |    9 +
+ artifacts/s2709/predecessor.txt                    |    1 +
+ artifacts/s2709/regatta-gates.txt                  |  128 +
+ artifacts/s2709/regatta-verification.json          |  128 +
+ .../e5-regatta/bank-cell-desktop-chrome.jpg        |  Bin 0 -> 2081 bytes
+ .../e5-regatta/bank-cell-desktop-chrome.json       |    5 +
+ .../e5-regatta/bank-cell-mobile-chrome.jpg         |  Bin 0 -> 5967 bytes
+ .../e5-regatta/bank-cell-mobile-chrome.json        |    5 +
+ .../e5-regatta/board-desktop-chrome.jpg            |  Bin 0 -> 161767 bytes
+ .../e5-regatta/board-mobile-chrome.jpg             |  Bin 0 -> 335401 bytes
+ .../e5-regatta/objective-desktop-chrome.json       |  832 +++
+ .../e5-regatta/objective-mobile-chrome.json        |  832 +++
+ .../e5-regatta/row-desktop-chrome.json             | 1034 ++++
+ .../e5-regatta/row-mobile-chrome.json              | 1037 ++++
+ .../e5-regatta/terminal-desktop-chrome.jpg         |  Bin 0 -> 95904 bytes
+ .../e5-regatta/terminal-mobile-chrome.jpg          |  Bin 0 -> 192979 bytes
+ artifacts/s2709/report.md                          |   39 +
+ artifacts/s2709/resume-node-jobs.json              |    8 +
+ artifacts/s2709/scope-audit.json                   |   11 +
+ artifacts/s2709/session.json                       |   10 +
+ artifacts/s2709/status-archive.txt                 |    2 +
+ artifacts/s2709/vite-process.json                  |    1 +
+ artifacts/s2709/vite-stop.json                     |    1 +
+ artifacts/s2709/vite.txt                           |    9 +
+ artifacts/s2709/workspace.md                       |   16 +
+ docs/HANDOVER-2026-09-06-attended.md               |    2 +
+ reviews/sol-play-proofs-8.md                       |   44 +
+ tasks/BACKLOG.md                                   |    3 +-
+ tasks/goals.json                                   |   10 +
+ tasks/sol-play-proofs-holds-1.md                   |   30 +
+ 74 files changed, 19302 insertions(+), 2 deletions(-)
+ create mode 100644 artifacts/s2709/blob-sizes.txt
+ create mode 100644 artifacts/s2709/browser-gates.txt
+ create mode 100644 artifacts/s2709/build-gates.txt
+ create mode 100644 artifacts/s2709/candidate-final-status.txt
+ create mode 100644 artifacts/s2709/classification.json
+ create mode 100644 artifacts/s2709/dry-board-final.txt
+ create mode 100644 artifacts/s2709/dry-board.txt
+ create mode 100644 artifacts/s2709/duties.json
+ create mode 100644 artifacts/s2709/engine-initial.json
+ create mode 100644 artifacts/s2709/evidence-budget-source-complete.json
+ create mode 100644 artifacts/s2709/evidence-budget-source.json
+ create mode 100644 artifacts/s2709/final-state.json
+ create mode 100644 artifacts/s2709/gate-processes-ended.txt
+ create mode 100644 artifacts/s2709/gate-verdict.json
+ create mode 100644 artifacts/s2709/generated/artifacts/sol/open-findings/plain-desktop-chrome-e1-dry-gulch.json
+ create mode 100644 artifacts/s2709/generated/artifacts/sol/open-findings/plain-desktop-chrome-e1-twin-banks.json
+ create mode 100644 artifacts/s2709/generated/artifacts/sol/open-findings/plain-desktop-chrome-the-claim.json
+ create mode 100644 artifacts/s2709/generated/artifacts/sol/open-findings/plain-desktop-chrome-town.json
+ create mode 100644 artifacts/s2709/generated/artifacts/sol/open-findings/plain-mobile-chrome-e1-dry-gulch.json
+ create mode 100644 artifacts/s2709/generated/artifacts/sol/open-findings/plain-mobile-chrome-e1-twin-banks.json
+ create mode 100644 artifacts/s2709/generated/artifacts/sol/open-findings/plain-mobile-chrome-the-claim.json
+ create mode 100644 artifacts/s2709/generated/artifacts/sol/open-findings/plain-mobile-chrome-town.json
+ create mode 100644 artifacts/s2709/health.txt
+ create mode 100644 artifacts/s2709/lanes.txt
+ create mode 100644 artifacts/s2709/ledger-final-result.json
+ create mode 100644 artifacts/s2709/ledger-final.txt
+ create mode 100644 artifacts/s2709/ledger-freshness-corrected.txt
+ create mode 100644 artifacts/s2709/ledger-freshness.txt
+ create mode 100644 artifacts/s2709/native-evidence-audit.json
+ create mode 100644 artifacts/s2709/node-partial.tap
+ create mode 100644 artifacts/s2709/npm-ci.txt
+ create mode 100644 artifacts/s2709/payload-stderr.txt
+ create mode 100644 artifacts/s2709/payload.json
+ create mode 100644 artifacts/s2709/plain-boot-shots/desktop-chrome-e1-dry-gulch.png
+ create mode 100644 artifacts/s2709/plain-boot-shots/desktop-chrome-e1-twin-banks.png
+ create mode 100644 artifacts/s2709/plain-boot-shots/desktop-chrome-the-claim.png
+ create mode 100644 artifacts/s2709/plain-boot-shots/desktop-chrome-town.png
+ create mode 100644 artifacts/s2709/plain-boot-shots/mobile-chrome-e1-dry-gulch.png
+ create mode 100644 artifacts/s2709/plain-boot-shots/mobile-chrome-e1-twin-banks.png
+ create mode 100644 artifacts/s2709/plain-boot-shots/mobile-chrome-the-claim.png
+ create mode 100644 artifacts/s2709/plain-boot-shots/mobile-chrome-town.png
+ create mode 100644 artifacts/s2709/plain-boots.json
+ create mode 100644 artifacts/s2709/policy.txt
+ create mode 100644 artifacts/s2709/post-browser-status.txt
+ create mode 100644 artifacts/s2709/predecessor.txt
+ create mode 100644 artifacts/s2709/regatta-gates.txt
+ create mode 100644 artifacts/s2709/regatta-verification.json
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/bank-cell-desktop-chrome.jpg
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/bank-cell-desktop-chrome.json
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/bank-cell-mobile-chrome.jpg
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/bank-cell-mobile-chrome.json
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/board-desktop-chrome.jpg
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/board-mobile-chrome.jpg
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/objective-desktop-chrome.json
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/objective-mobile-chrome.json
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/row-desktop-chrome.json
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/row-mobile-chrome.json
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/terminal-desktop-chrome.jpg
+ create mode 100644 artifacts/s2709/regatta-verification/e5-regatta/terminal-mobile-chrome.jpg
+ create mode 100644 artifacts/s2709/report.md
+ create mode 100644 artifacts/s2709/resume-node-jobs.json
+ create mode 100644 artifacts/s2709/scope-audit.json
+ create mode 100644 artifacts/s2709/session.json
+ create mode 100644 artifacts/s2709/status-archive.txt
+ create mode 100644 artifacts/s2709/vite-process.json
+ create mode 100644 artifacts/s2709/vite-stop.json
+ create mode 100644 artifacts/s2709/vite.txt
+ create mode 100644 artifacts/s2709/workspace.md
+ create mode 100644 reviews/sol-play-proofs-8.md
+ create mode 100644 tasks/sol-play-proofs-holds-1.md

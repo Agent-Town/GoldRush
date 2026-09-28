@@ -1,0 +1,110 @@
+."
+   }
+  },
+  "source": "scripts/evidence-budget-baseline.json"
+ }
+}
+
+
+exec
+/bin/zsh -lc "python3 - <<'PY'
+import subprocess,json,re
+from pathlib import Path
+r=Path('artifacts/sol/play-proofs/run-14');p=r/'run-note.md';base=(r/'base.txt').read_text().strip()
+for _ in range(4):
+ subprocess.run(['python3',str(r/'verify.py')],check=True,stdout=subprocess.DEVNULL)
+ subprocess.run(['git','add','--',str(r)],check=True)
+ tree=subprocess.check_output(['git','write-tree'],text=True).strip()
+ d=json.loads(subprocess.check_output(['node','scripts/evidence-budget.mjs',base,tree,'--limit','25000000','--json'],text=True))
+ s=p.read_text();new=re.sub(r'Added evidence: \\*\\*["'^*]+ bytes'"\\*\\*',f\"Added evidence: **{d['added']:,} bytes**\",s)
+ if s==new:break
+ p.write_text(new)
+else:raise RuntimeError('size did not stabilize')
+print({k:d[k] for k in ['added','files','limit','over']})
+assert 'PENDING' not in p.read_text()
+PY
+ git diff --cached --check
+ git commit -m 'test: measure Ember hold and close the 42-map play-proof campaign'" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c
+ succeeded in 1397ms:
+{'added': 1615430, 'files': 61, 'limit': 25000000, 'over': False}
+[sol/map-art-campaign-2 4cada1369] test: measure Ember hold and close the 42-map play-proof campaign
+ 27 files changed, 4162 insertions(+), 2 deletions(-)
+ create mode 100644 artifacts/sol/play-proofs/run-14/adjacent.exit
+ create mode 100644 artifacts/sol/play-proofs/run-14/adjacent.log
+ create mode 100644 artifacts/sol/play-proofs/run-14/build-final.exit
+ create mode 100644 artifacts/sol/play-proofs/run-14/build-final.log
+ create mode 100644 artifacts/sol/play-proofs/run-14/checks.json
+ create mode 100644 artifacts/sol/play-proofs/run-14/checks.py
+ create mode 100644 artifacts/sol/play-proofs/run-14/driver-equivalence.json
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/default/command-tail.log
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/default/command.exit
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/default/command.json
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/default/objective-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/default/objective-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/default/row-desktop-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/default/row-mobile-chrome.json
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/default/terminal-desktop-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/default/terminal-mobile-chrome.jpg
+ create mode 100644 artifacts/sol/play-proofs/run-14/e10-ember-shore/finding.md
+ create mode 100644 artifacts/sol/play-proofs/run-14/gate-unset.exit
+ create mode 100644 artifacts/sol/play-proofs/run-14/gate-unset.log
+ create mode 100644 artifacts/sol/play-proofs/run-14/measurements.json
+ create mode 100644 artifacts/sol/play-proofs/run-14/run-note.md
+ create mode 100644 artifacts/sol/play-proofs/run-14/tsc-final.exit
+ create mode 100644 artifacts/sol/play-proofs/run-14/tsc-final.log
+ create mode 100644 artifacts/sol/play-proofs/run-14/verification.json
+ create mode 100644 e2e/native-proofs/e10-ember-shore.spec.ts
+
+exec
+/bin/zsh -lc "python3 - <<'PY'
+from pathlib import Path
+import subprocess,json
+r=Path('artifacts/sol/play-proofs/run-14');base=(r/'base.txt').read_text().strip()
+s=subprocess.check_output(['node','scripts/evidence-budget.mjs',base,'HEAD','--limit','25000000','--json'],text=True)
+(Path.home()/'.goldrush/play-proofs/run-14/evidence-budget-final.json').write_text(s)
+d=json.loads(s);print({k:d[k] for k in ['tip','added','files','limit','over']});assert f\"{d['added']:,} bytes\" in (r/'run-note.md').read_text()
+PY
+ git status --short
+ git log -4 --oneline" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c
+ succeeded in 284ms:
+{'tip': 'HEAD', 'added': 1615430, 'files': 61, 'limit': 25000000, 'over': False}
+4cada1369 test: measure Ember hold and close the 42-map play-proof campaign
+04d422aa5 test: measure Archive World missing light-hold route
+0f1854373 test: measure Mare air-consumer and orbital movement hold
+da1672950 test: measure Relay Valley native objective hold on both screens
+
+codex
+READY-FOR-GATES — all four maps measured on both screens:
+
+- Relay Valley: HELD, wave 17; no playbook use.
+- Mare Claim: HELD, wave 2; driver misses air diagnostics/refill.
+- Archive World: HELD, wave 20; no light holds.
+- Ember Shore: HELD, wave 3; no stokes.
+
+No proven map defects or F-IDs. Follow-up owner: QA/native driver. No balance changes.
+
+Checks passed: typecheck, build, 8 default skips, 2 adjacent tests. All rides had zero browser errors. Evidence: **1,615,430 bytes**.
+
+Campaign closed: **42/42 measured — 7 proved both screens, 3 one screen, 2 partial, 29 held, 1 corrected historical defect.**
+
+[Complete report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-14/run-note.md>)
+
+Commits: `da1672950`, `0f1854373`, `04d422aa5`, `4cada1369`. Working tree clean.
+tokens used
+165,294
+READY-FOR-GATES — all four maps measured on both screens:
+
+- Relay Valley: HELD, wave 17; no playbook use.
+- Mare Claim: HELD, wave 2; driver misses air diagnostics/refill.
+- Archive World: HELD, wave 20; no light holds.
+- Ember Shore: HELD, wave 3; no stokes.
+
+No proven map defects or F-IDs. Follow-up owner: QA/native driver. No balance changes.
+
+Checks passed: typecheck, build, 8 default skips, 2 adjacent tests. All rides had zero browser errors. Evidence: **1,615,430 bytes**.
+
+Campaign closed: **42/42 measured — 7 proved both screens, 3 one screen, 2 partial, 29 held, 1 corrected historical defect.**
+
+[Complete report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-14/run-note.md>)
+
+Commits: `da1672950`, `0f1854373`, `04d422aa5`, `4cada1369`. Working tree clean.

@@ -1,0 +1,62 @@
+
+Running 1 test using 1 worker
+
+
+(node:97686) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:506:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+[desktop-chrome] › e2e/native-proofs/driver.ts:506:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+e1-baron {"t":41,"wave":1,"hp":100,"gold":0,"hero":{"x":2.967331100328626,"z":9.2485336508809},"builds":1}
+
+e1-baron {"t":74,"wave":2,"hp":100,"gold":25,"hero":{"x":-13.285878447985226,"z":-8.926650939181975},"builds":1}
+
+e1-baron {"t":109,"wave":4,"hp":100,"gold":0,"hero":{"x":7.9732586682581035,"z":10.91203718112522},"builds":2}
+
+e1-baron {"t":169,"wave":6,"hp":125,"gold":0,"hero":{"x":-2.9571721593769316,"z":16.70854436770045},"builds":3}
+
+e1-baron {"t":189,"wave":7,"hp":175,"gold":0,"hero":{"x":6.225062022328327,"z":17.858000095714875},"builds":4}
+
+e1-baron {"t":231,"wave":8,"hp":167,"gold":0,"hero":{"x":-4.093320164412287,"z":12.125059385877254},"builds":5}
+
+e1-baron {"t":309,"wave":11,"hp":67,"gold":0,"hero":{"x":10.551688689108738,"z":8.992453730442927},"builds":6}
+
+e1-baron {"t":396,"wave":15,"hp":59,"gold":1,"hero":{"x":1.8488026560346882,"z":18.946522267231995},"builds":7}
+
+e1-baron {"t":422,"wave":16,"hp":0,"gold":26,"hero":{"x":24.998642405120734,"z":6.162721207348723},"builds":7}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:506:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 16 / 421.7s sim, 589 kills, 26 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      747 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+      748 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+    > 749 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+          |                                                                ^
+      750 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      751 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+      752 |     });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:749:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-1/e1-baron/desktop-play-1-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-1/e1-baron/desktop-play-1-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-1/e1-baron/desktop-play-1-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/play-proofs/run-1/e1-baron/desktop-play-1-results/native-proofs-e1-baron-e1--14733-ds-and-returns-to-the-board-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:506:5 › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow 

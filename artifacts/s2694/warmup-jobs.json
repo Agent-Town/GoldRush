@@ -1,0 +1,14 @@
+[
+  [
+    "warm dev",
+    "npx",
+    "playwright",
+    "test",
+    "e2e/m2-01-build-menu.spec.ts",
+    "--project=desktop-chrome",
+    "-g",
+    "six ready icons",
+    "--workers=1",
+    "--reporter=line"
+  ]
+]

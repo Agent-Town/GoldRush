@@ -1,0 +1,86 @@
+diff --git a/e2e/native-proofs/driver.ts b/e2e/native-proofs/driver.ts
+index 239f615b5..bb92c709a 100644
+--- a/e2e/native-proofs/driver.ts
++++ b/e2e/native-proofs/driver.ts
+@@ -52,6 +52,7 @@ type Row = {
+   notes: string[];
+   objective?: unknown;
+   finalSnapshot?: Snapshot;
++  peakHotBoilers: number;
+   at: string;
+ };
+ 
+@@ -141,6 +142,7 @@ type Snapshot = {
+   repairs: number;
+   channeling: boolean;
+   objective: unknown;
++  pressure: ThreeGameDiagnostics['pressure'];
+ };
+ 
+ async function read(page: Page): Promise<Snapshot | null> {
+@@ -149,6 +151,7 @@ async function read(page: Page): Promise<Snapshot | null> {
+       const d = window.__THREE_GAME_DIAGNOSTICS__;
+       if (!d) return null;
+       return {
++        pressure: d.pressure,
+         objective: { baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure },
+         frame: d.frame ?? 0,
+         sim: d.timeAlive ?? 0,
+@@ -231,6 +234,7 @@ const UPGRADE_PRIORITY = [
+ async function takeUpgrades(page: Page, row: Row): Promise<void> {
+   for (let guard = 0; guard < 6; guard += 1) {
+     const now = await read(page);
++    if (now) row.peakHotBoilers = Math.max(row.peakHotBoilers, now.pressure?.objective.hotBoilers ?? 0);
+     if (!now || !now.upgradeOpen) return;
+     const offer = now.offer ?? [];
+     let index = 0;
+@@ -480,6 +484,12 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
+ type KitPiece = { id: string; dx: number; dz: number };
+ 
+ function kitFor(contract: ContractManifest): KitPiece[] {
++  if (contract.id === 'e2-pressure-garden') return [
++    { id: 'boiler_house', dx: 0, dz: 0 },
++    { id: 'boiler_house', dx: 12, dz: 0 },
++    { id: 'boiler_house', dx: 24, dz: 0 },
++    { id: 'turret', dx: -6, dz: 1 },
++  ];
+   if (contract.id === 'e1-baron' && HOLD_GROUND) return [
+     { id: 'turret', dx: 0, dz: -2 },
+     { id: 'sluice', dx: 4, dz: -5 },
+@@ -535,6 +545,7 @@ export function nativeProof(id: string) {
+         hpAtEnd: 0,
+         goldAtEnd: 0,
+         killsAtEnd: 0,
++        peakHotBoilers: 0,
+         builds: [],
+         upgrades: [],
+         samples: [],
+@@ -574,6 +585,18 @@ export function nativeProof(id: string) {
+         const fords = crossingsFor(contract);
+         const unreachable = new Set<string>();
+ 
++        if (contract.id === 'e2-pressure-garden') {
++          // Coal is on the high terrace. Walk outside the central manifold first.
++          await walkTo(page, row, -32, 12, 1.2);
++          await walkTo(page, row, -32, 26, 1.2);
++          await walkTo(page, row, -24, 39, 1.2);
++          for (const seam of opened?.pressure.seams ?? []) {
++            const reached = await walkTo(page, row, seam.x, seam.z, 1);
++            if (reached) await page.waitForTimeout(350);
++            const coal = (await read(page))?.pressure;
++            row.notes.push(`coal ${seam.x},${seam.z}: reached=${reached}, stored=${coal?.coal}`);
++          }
++        }
+         const kit = kitFor(contract);
+         row.notes.push(`kit=${kit.map((piece) => piece.id).join('+')}`);
+         let kitIndex = 0;
+@@ -671,6 +694,9 @@ export function nativeProof(id: string) {
+                 `never secured: peak wave ${row.peakWave} of ${secureWave} after ${row.simAtEnd.toFixed(1)}s sim (runState=${row.runStateAtEnd || 'unknown'}, ${row.builds.length} buildings, ${row.killsAtEnd} kills)`,
+             );
+ 
++        if (contract.id === 'e2-pressure-garden' && row.peakHotBoilers < 3) {
++          row.secures = fail(`wave ${row.peakWave}, overlay=${sawOverlay}, but only ${row.peakHotBoilers}/3 authored boiler beds operated hot`);
++        }
+         await page.screenshot({ path: path.join(ARTIFACT_ROOT, `terminal-${testInfo.project.name}.png`) });
+ 
+         if (sawOverlay) {

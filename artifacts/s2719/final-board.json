@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-09-27T19:36:46.335Z",
+  "head": "ff5d991265fe7a5cea24b9bfacab9fdf3a415fe0",
+  "queues": {
+    "art": [],
+    "lane-a": [
+      "gr-campaign-fixture-cleanup-1.md"
+    ],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "main": []
+  },
+  "running": [],
+  "pendingOrders": [],
+  "run10DoneMovePresent": true,
+  "run10Goal": {
+    "id": "sol-play-proofs-10",
+    "title": "Play-proofs run 10 (run 14 on disk): Relay Valley, the Mare Claim, the Archive World, the Ember Shore, then the complete 42-map campaign table with hold classes and the closing recommendation for the owner",
+    "status": "queued",
+    "taskFile": "sol-play-proofs-10.md",
+    "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'continue the play test'); dispatched attended after the F-2717-1 lift",
+    "authoredAt": "2026-09-27",
+    "authoredBy": "attended (Fable), the campaign's close, 2026-09-27",
+    "queuedAt": "2026-09-27",
+    "liftedBlock": {
+      "finding": "F-2717-1",
+      "blockClass": "gate-side",
+      "blockedReason": "F-2717-1: run-9 evidence landed but post-landing full Node failed fixture cleanup. Lift after the same-spec clean-base control attributes the red or the corrective lands with green full Node; record the verdict and re-register this leaf. Dispatch remains attended-owned; re-arm the queue job if its gate already refused.",
+      "liftedAt": "2026-09-27T18:33Z",
+      "liftedBy": "attended (Fable)",
+      "verdict": "the same spec (scripts/gr-sim-campaign.test.mjs) alone passes 6/6 three times on the landed tree (29.9, 29.9, 30.8 s, Node 26.4.0) and 6/6 on the clean base 1d34e71fc (19.0 s, detached control worktree, assets/pilots link re-pointed absolutely per F-ATT-9); the sweep red is intermittent under the 1017 s fixture sweep, the child assertion unretained; the cleanup-and-retain corrective gr-campaign-fixture-cleanup-1 goes to Astra on lane-a"
+    }
+  },
+  "laneCommits": [
+    "4cada1369 test: measure Ember hold and close the 42-map play-proof campaign",
+    "04d422aa5 test: measure Archive World missing light-hold route",
+    "0f1854373 test: measure Mare air-consumer and orbital movement hold",
+    "da1672950 test: measure Relay Valley native objective hold on both screens"
+  ],
+  "newFailed": []
+}

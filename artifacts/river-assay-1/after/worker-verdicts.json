@@ -1,0 +1,388 @@
+{
+  "startedAt": "2026-09-26T18:53:13.484Z",
+  "node": "26.4.0",
+  "workerExit": 0,
+  "workerStderr": "",
+  "rows": [
+    {
+      "label": "report-desktop-3f5a03c5",
+      "file": "artifacts/river-assay-1/reels/report-desktop-3f5a03c5.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:3f5a03c5",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.833333333333326,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:9b896265",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:3f5a03c5, replayed fnv1a32:9b896265",
+      "wallMs": 2527
+    },
+    {
+      "label": "report-phone-647005f9",
+      "file": "artifacts/river-assay-1/reels/report-phone-647005f9.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:647005f9",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.799999999999993,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:b350adce",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:647005f9, replayed fnv1a32:b350adce",
+      "wallMs": 2563
+    },
+    {
+      "label": "run7-desktop-a1a3a3f5",
+      "file": "artifacts/river-assay-1/reels/run7-desktop-a1a3a3f5.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:a1a3a3f5",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.966666666666659,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:b1fdf4e8",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:a1a3a3f5, replayed fnv1a32:b1fdf4e8",
+      "wallMs": 2619
+    },
+    {
+      "label": "run7-phone-b9509309",
+      "file": "artifacts/river-assay-1/reels/run7-phone-b9509309.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:b9509309",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 4.799999999999993,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:a8c8b9fa",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:b9509309, replayed fnv1a32:a8c8b9fa",
+      "wallMs": 2687
+    },
+    {
+      "label": "heat15-probe-b131e18e",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/probe/submission.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:b131e18e",
+      "score": {
+        "secured": true,
+        "waves": 10,
+        "timeAlive": 300,
+        "gold": 335,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:b131e18e",
+      "reason": null,
+      "wallMs": 9289
+    },
+    {
+      "label": "heat15-r1-f3a9c00c",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/rides/r1/submission.json",
+      "contract": "e5-regatta",
+      "claimedHash": "fnv1a32:f3a9c00c",
+      "score": {
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:f3a9c00c",
+      "reason": null,
+      "wallMs": 4256
+    },
+    {
+      "label": "heat15-r2-b92da1bf",
+      "file": "artifacts/gauntlet-heat15-cd24d12d/rides/r2/submission.json",
+      "contract": "e5-regatta",
+      "claimedHash": "fnv1a32:b92da1bf",
+      "score": {
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:b92da1bf",
+      "reason": null,
+      "wallMs": 6874
+    },
+    {
+      "label": "heat14-era6-idle-a45ba9ac",
+      "file": "artifacts/gauntlet-heat14-e3949bfa/rides/the-claim/work/probe-idle-tape.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:a45ba9ac",
+      "score": {
+        "secured": false,
+        "waves": 2,
+        "timeAlive": 81.767,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:5a139ec0",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:a45ba9ac, replayed fnv1a32:5a139ec0",
+      "wallMs": 4442
+    },
+    {
+      "label": "fresh-river-desktop",
+      "file": "artifacts/river-assay-1/after/fresh-river-desktop.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:98c7c8bc",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 7.533333333333316,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:98c7c8bc",
+      "reason": null,
+      "wallMs": 2716
+    },
+    {
+      "label": "fresh-river-mobile",
+      "file": "artifacts/river-assay-1/after/fresh-river-mobile.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:4be51475",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 7.3999999999999835,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:4be51475",
+      "reason": null,
+      "wallMs": 2708
+    },
+    {
+      "label": "fresh-claim-desktop",
+      "file": "artifacts/river-assay-1/after/fresh-claim-desktop.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:fa46aaf2",
+      "score": {
+        "secured": false,
+        "waves": 0,
+        "timeAlive": 4.033333333333329,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "unassayable",
+      "replayedHash": null,
+      "reason": "instrument returned no valid securedSnapshot",
+      "wallMs": 13441
+    },
+    {
+      "label": "fresh-claim-mobile",
+      "file": "artifacts/river-assay-1/after/fresh-claim-mobile.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:f8c3032c",
+      "score": {
+        "secured": false,
+        "waves": 0,
+        "timeAlive": 4.166666666666662,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "unassayable",
+      "replayedHash": null,
+      "reason": "instrument returned no valid securedSnapshot",
+      "wallMs": 13598
+    },
+    {
+      "label": "tampered-gold",
+      "file": "artifacts/river-assay-1/after/tampered-gold.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:98c7c8bc",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 7.533333333333316,
+        "gold": 50,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:98c7c8bc",
+      "reason": "outcome mismatch: gold",
+      "wallMs": 2687
+    },
+    {
+      "label": "tampered-time",
+      "file": "artifacts/river-assay-1/after/tampered-time.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:98c7c8bc",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 7.366666666666649,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:98c7c8bc",
+      "reason": "outcome mismatch: timeAlive",
+      "wallMs": 2715
+    },
+    {
+      "label": "tampered-pantick",
+      "file": "artifacts/river-assay-1/after/tampered-pantick.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:98c7c8bc",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 7.366666666666649,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:8c73ccf4",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:98c7c8bc, replayed fnv1a32:8c73ccf4",
+      "wallMs": 2733
+    },
+    {
+      "label": "precure-river-desktop",
+      "file": "artifacts/river-assay-1/precure/fresh-river-desktop.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:7deb7e49",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 7.266666666666651,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:a8642f5a",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:7deb7e49, replayed fnv1a32:a8642f5a",
+      "wallMs": 2749
+    },
+    {
+      "label": "precure-claim-desktop",
+      "file": "artifacts/river-assay-1/precure/fresh-claim-desktop.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:856f8a54",
+      "score": {
+        "secured": false,
+        "waves": 0,
+        "timeAlive": 4.199999999999995,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "rejected",
+      "replayedHash": "fnv1a32:08cd5ab9",
+      "reason": "eventLogHash mismatch: claimed fnv1a32:856f8a54, replayed fnv1a32:08cd5ab9",
+      "wallMs": 2468
+    },
+    {
+      "label": "same-laws-human-a6c04f80",
+      "file": "artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-hud/same-laws-harvest-parity-m-6a30d-rider-rate-tick-per-command-desktop-chrome/same-laws-tape.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:a6c04f80",
+      "score": {
+        "secured": false,
+        "waves": 0,
+        "timeAlive": 20.033333333333488,
+        "gold": 10,
+        "baseValue": 0
+      },
+      "verdict": "unassayable",
+      "replayedHash": null,
+      "reason": "instrument returned no valid securedSnapshot",
+      "wallMs": 15367
+    }
+  ],
+  "retries": [
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "ef05b32d-c567-4642-80e7-f8d1ed993e43",
+        "rowId": "00000000000000000000000000000010:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 1,
+      "delayMs": 2000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "ef05b32d-c567-4642-80e7-f8d1ed993e43",
+        "rowId": "00000000000000000000000000000010:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 2,
+      "delayMs": 4000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "c135537b-91ff-4b7d-9ca8-38cc6cbd7af6",
+        "rowId": "00000000000000000000000000000011:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 1,
+      "delayMs": 2000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "c135537b-91ff-4b7d-9ca8-38cc6cbd7af6",
+        "rowId": "00000000000000000000000000000011:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 2,
+      "delayMs": 4000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "7f36dccb-e83e-4c37-ad3c-b4da7198a8e1",
+        "rowId": "00000000000000000000000000000017:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 1,
+      "delayMs": 2000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "7f36dccb-e83e-4c37-ad3c-b4da7198a8e1",
+        "rowId": "00000000000000000000000000000017:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 2,
+      "delayMs": 4000,
+      "error": "instrument returned no valid securedSnapshot"
+    }
+  ]
+}

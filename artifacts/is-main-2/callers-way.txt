@@ -1,0 +1,44 @@
+callers-way: 78eb160e6 0 modified tool file(s) in the tree; node v26.4.0; 2026-09-26T02:24:43Z
+npm run --silent test:ruling-propagation | rc 0 | 1600 B | 1s | load 12.15 | package.json test:ruling-propagation
+      >       unread: superseded  jumper-8way-wiring  [note_s_att_20260824]
+      >       unread: superseded  ap-orders-adapter-wiring  [note]
+      > PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+npm run --silent test:findings-state | rc 0 | 814 B | 0s | load 12.15 | package.json test:findings-state
+      > double-state      : 0
+      > wide-open advisory : 375 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+      > findings-state-guard: PASS
+npm run --silent test:blocker-panel | rc 0 | 722 B | 0s | load 12.15 | package.json test:blocker-panel
+      > census closed     : 591
+      > closed-on-panel   : 0
+      > blocker-panel-closed-guard: PASS
+node scripts/desk-state-audit.mjs | rc 0 | 206 B | 0s | load 12.15 | fires and attended (default corpus)
+      > F-2299-1	finding	OPEN-DESK-ONLY	79, 1650
+      > 
+      > CLOSED=0 · OPEN=0 · BOTH=0 · OPEN-DESK-ONLY=2 · UNRECORDED=1
+node scripts/evidence-budget.mjs f99bb77f3 HEAD | rc 0 | 557 B | 1s | load 12.15 | drain skill SKILL.md:31 (<base> HEAD)
+      >   limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+      >   tree     : 8953.1 MB tracked under artifacts/ (no ceiling banked yet)
+      >   PASS — 0.0 MB added, inside the 40.0 MB ceiling.
+node scripts/evidence-offload.mjs --plan --limit 5 | rc 0 | 1092 B | 2s | load 15.66 | its usage line (--plan, read-only)
+      >       157.6 MB    105 file(s) keep   1 ·    3 citation(s) in   1 review(s)  artifacts/needs-cells-art-batch
+      >       104.3 MB    873 file(s) keep   0 ·    3 citation(s) in   3 review(s)  artifacts/gauntlet-heat13-569a41f9
+      >     … and 515 more subtree(s): 986.8 MB across 8003 file(s) (the long tail)
+node scripts/gate-battery.mjs --label is-main-2-probe --transcript /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/gate-battery-probe.txt [["node version","node","--version"]] | rc 0 | 263 B | 0s | load 15.66 | drain skill SKILL.md:32 (a one-job battery, transcript in scratch)
+      > SUMMARY {"node version":0}
+      > OVERALL rc=0
+      > transcript -> ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/gate-battery-probe.txt
+node scripts/terrain-contract-scope.mjs --check | rc 0 | 90 B | 2s | load 15.66 | terrain-contract-scope.test.mjs:12 (--check)
+      > docs/bench/terrain-contract-scope.md is current: 14 accepted, 22 rejected by bench ground.
+node scripts/e7-playbook-digest.mjs --all --sub-wave | rc 0 | 1458 B | 7s | load 14.73 | e2e/e7-playbook-rows.spec.ts:169 (--all --sub-wave)
+      > (node:65736) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+      > (Use `node --trace-warnings ...` to show where the warning was created)
+      > {"e7-relay-valley":{"objective":"relay","objectiveMet":true,"uses":1,"repeats":0,"programRuns":1,"programSuspensions":0,"relaysLitByProgram":["relay-site-r1"],"refusals":{"suppressed":0,"muted
+node scripts/e4-motor-ride.mjs --contract e4-dust-flats --seed e4-dust-flats-01 | rc 0 | 619 B | 5s | load 14.11 | its usage line (no --log/--tape, so nothing written)
+      > {"contract":"e4-dust-flats","seed":"e4-dust-flats-01","policy":"floor","variant":"rig","views":16,"outcome":{"secured":false,"waves":3,"timeMs":99000,"gold":20,"kills":48,"calls":15,"defaulted
+node scripts/assay-replay-agent.mjs scripts/fixtures/assay/rob-the-claim-reel.json | rc 1 | 233 B | 2s | load 14.11 | perf-survey/sim.mjs:26 (a reel path)
+      > (node:65979) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+      > (Use `node --trace-warnings ...` to show where the warning was created)
+      > assay replay failed: legacy tape v1 is unverifiable
+node scripts/test-ticker-stats.mjs | rc 0 | 125 B | 0s | load 14.11 | package.json test:node-guards leg (imports ticker-stats)
+      > ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+done 2026-09-26T02:25:03Z

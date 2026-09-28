@@ -80,6 +80,10 @@ export class ComplaintDeskPanel {
           </section>
           <p class="complaint-desk__diagnostics" data-testid="complaint-diagnostics"></p>
           <p class="complaint-desk__bounty" data-testid="complaint-bounty">${BUG_OFFICE_COPY.bounty}</p>
+          <!-- SEC-7 (outside review 2026-09-24): this form is the most personal thing the game
+               collects (typed text, an optional name, a photograph of the screen) and it carried no
+               notice at all. One line, beside the button that sends it. -->
+          <p class="complaint-desk__notice"><a href="${import.meta.env.BASE_URL}privacy.html" target="_blank" rel="noopener" data-testid="complaint-privacy-link">What the Office keeps, and for how long</a></p>
           <div class="complaint-desk__prize">
             <label>
               <span>Hand the clerk a prize stub</span>

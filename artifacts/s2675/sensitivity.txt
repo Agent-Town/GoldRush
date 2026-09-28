@@ -1,0 +1,23 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-24T19:20:16.068Z — s2675 SENSITIVITY CONTROL — is the new assertion sensitive where the old was vacuous? ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate
+
+===== vacuity probe both projects =====
+$ npx playwright test e2e/_s2675-vacuity-probe.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1
+rc=0 4.0s
+
+Running 2 tests using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/_s2675-vacuity-probe.spec.ts:17:1 › a fresh ?contract= with no staged launch shows the menu, and only `start-menu` can see it (924ms)
+  ✓  2 [mobile-chrome] › e2e/_s2675-vacuity-probe.spec.ts:17:1 › a fresh ?contract= with no staged launch shows the menu, and only `start-menu` can see it (1.1s)
+
+  2 passed (3.6s)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+
+SUMMARY {"vacuity probe both projects":0}
+OVERALL rc=0

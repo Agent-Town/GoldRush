@@ -1,0 +1,21 @@
+branch sol/map-art-campaign-2 tip c4b01dc73 2026-09-26 16:20Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/srp1.json
+scratch store at the store's main 5793a96
+chain base 14315b6bd
+merged 23f1976fe
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: af0e2d889eb353cef53fc6b4eaa695d4460961d4aea894ee22b544f396041e45 (pinned af0e2d889eb353cef53fc6b4eaa695d4460961d4aea894ee22b544f396041e45)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+ledger battery start 16:21Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+e2e start 16:24Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   24 passed (1.8m)  16:26Z
+battery start 16:26Z
+battery: rc=1 ℹ tests 1037 ℹ pass 1031 ℹ fail 1 ℹ skipped 5  16:44Z
+✖ contention is advisory, correctly counted, and absent when alone (3071.353209ms)
+dirt after battery: 0
+srp1-PREP-DONE
+verdict: clean
+hash at pin time: af0e2d889eb353cef53fc6b4eaa695d4460961d4aea894ee22b544f396041e45
+review: reviews/sol-river-proof-1.md

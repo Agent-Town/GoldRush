@@ -23,27 +23,35 @@
  *      and it is the line the pre-cure code got wrong;
  *   5. a counter written before the window start was stored (a bare count) keeps its count, so the
  *      deploy that lands this cure cannot hand a flood a free window;
- *   6. the census: this limiter is shared, and every door that shares it still passes its own TTL.
+ *   6. the census: this limiter is shared, and every door that shares it still passes its own TTL
+ *      (seven doors since kv-counters-to-ledger-2 added the co-op door, F-KV1-4);
+ *   7. the co-op door's KV fallback keeps the real hour, driven through the door itself: a connect at
+ *      minute 59 does not extend its window, the count restarts at the hour, and a rider who filled
+ *      the limit is let back in at the hour. All three were red on the door's own pre-change limiter.
  *
- * The door's numbers are DERIVED from `functions/api/standings.ts` rather than transcribed here: a
- * pin that copies the number it guards goes green against a tree where the number moved.
+ * The door's numbers are DERIVED from `functions/api/standings.ts` (and the co-op rows' from
+ * `functions/api/_multiplayer.ts`) rather than transcribed here: a pin that copies the number it
+ * guards goes green against a tree where the number moved.
  */
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
+import { createServer as createViteServer } from 'vite';
 
 import { bumpCounter } from '../functions/api/_ratelimit.ts';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DOOR_SOURCE = readFileSync(new URL('../functions/api/standings.ts', import.meta.url), 'utf8');
+const COOP_FILE = 'functions/api/_multiplayer.ts';
+const COOP_SOURCE = readFileSync(new URL(`../${COOP_FILE}`, import.meta.url), 'utf8');
 const HEAT14_BOARD_CONTRACTS = 37; // heat14-note.md §5: the ride count that met the cap.
 
-/** Read a numeric `const NAME = <int or int * int>;` out of the door, so the pin follows the door. */
-function doorConstant(name) {
-  const match = new RegExp(String.raw`^const ${name} = ([0-9 _*]+);`, 'm').exec(DOOR_SOURCE);
-  assert.ok(match, `${name} not found in functions/api/standings.ts -- the pin lost its subject`);
+/** Read a numeric `const NAME = <int or int * int>;` out of a door, so the pin follows the door. */
+function doorConstant(name, source = DOOR_SOURCE, file = 'functions/api/standings.ts') {
+  const match = new RegExp(String.raw`^const ${name} = ([0-9 _*]+);`, 'm').exec(source);
+  assert.ok(match, `${name} not found in ${file} -- the pin lost its subject`);
   const value = match[1].split('*').map((part) => Number(part.trim().replace(/_/g, ''))).reduce((a, b) => a * b, 1);
   assert.ok(Number.isFinite(value) && value > 0, `${name} did not parse as a positive number: ${match[1]}`);
   return value;
@@ -97,6 +105,41 @@ async function legacyBumpCounter(kv, key, limit, ttlSeconds) {
   if (count >= limit) return false;
   await kv.put(key, String(count + 1), { expirationTtl: ttlSeconds });
   return true;
+}
+
+/**
+ * kv-counters-to-ledger-2 (F-KV1-4): THE CO-OP DOOR, DRIVEN THROUGH THE DOOR ITSELF. Its KV fallback
+ * kept a limiter of its own that re-armed `expirationTtl` to a full hour on every accepted write (the
+ * shape the ruling above retired for the six doors) until this slice moved it onto the shared one. A
+ * row on `_ratelimit.ts` alone would be green on the tree that still had the defect, so these rows call
+ * `connectRoom` as the Pages runtime would (vite's SSR transform of the TypeScript, its WebSocket
+ * server off), with a room stub behind it and no ledger bound, so every count lands on the KV fallback.
+ */
+const ADMITTED = 426; // the room stub's answer: the connect got past the limiter and reached the room
+const REFUSED = 429;
+let coopDoors = null;
+
+async function coopDoor() {
+  if (!coopDoors) {
+    const vite = await createViteServer({ root: ROOT, configFile: false, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null, ws: false } });
+    try {
+      coopDoors = await vite.ssrLoadModule(`/${COOP_FILE}`);
+    } finally {
+      await vite.close();
+    }
+  }
+  return coopDoors;
+}
+
+// The door is loaded BEFORE a row enters its fixed clock (vite is not run with Date.now frozen).
+async function coopConnect(door, kv) {
+  const { connectRoom } = door;
+  const rooms = { idFromName: (name) => name, get: () => ({ fetch: async () => new Response(null, { status: ADMITTED }) }) };
+  const request = new Request(`http://localhost/api/multiplayer/connect?code=${'A'.repeat(24)}`, {
+    headers: { Origin: 'https://agenttown.app', 'CF-Connecting-IP': '198.51.100.7' },
+  });
+  const response = await connectRoom({ request, env: { MULTIPLAYER_ROOMS: rooms, MULTIPLAYER_RATE_LIMITS: kv } });
+  return response.status;
 }
 
 test('the rider cap is 60 and the sixty-first submission inside one hour is refused', async () => {
@@ -183,14 +226,68 @@ test('a counter written before the window start was stored keeps its count', asy
   });
 });
 
+test('the co-op door (KV fallback): a connect admitted at minute 59 does not extend its window', async () => {
+  const ttl = doorConstant('RATE_TTL_SECONDS', COOP_SOURCE, COOP_FILE);
+  const start = Date.UTC(2026, 8, 25, 9, 0, 0);
+  const door = await coopDoor();
+  const kv = makeKv();
+  await withClock(start, async (clock) => {
+    assert.equal(await coopConnect(door, kv), ADMITTED, 'the first connect of the hour reaches the room');
+    clock.advance(59 * 60_000);
+    assert.equal(await coopConnect(door, kv), ADMITTED, 'a connect at minute 59, inside the limit, reaches the room');
+    const armed = kv.puts.at(-1).ttl;
+    assert.ok(armed <= ttl - 59 * 60,
+      `the write at minute 59 must arm the REMAINDER of the hour (at most ${ttl - 59 * 60} s), not a fresh hour: it armed ${armed} s`);
+    assert.equal(kv.puts.at(-1).value, `2:${start}`, 'and the window it records still starts at the first connect');
+  });
+});
+
+test('the co-op door (KV fallback): the count restarts at the hour measured from the first connect', async () => {
+  const ttl = doorConstant('RATE_TTL_SECONDS', COOP_SOURCE, COOP_FILE);
+  const start = Date.UTC(2026, 8, 25, 9, 0, 0);
+  const door = await coopDoor();
+  const kv = makeKv();
+  await withClock(start, async (clock) => {
+    assert.equal(await coopConnect(door, kv), ADMITTED);
+    clock.advance(59 * 60_000);
+    assert.equal(await coopConnect(door, kv), ADMITTED);
+    clock.advance(start + ttl * 1000 - clock.now()); // the hour, measured from the FIRST connect
+    assert.equal(await coopConnect(door, kv), ADMITTED, 'at the hour the rider reaches the room');
+    assert.equal(kv.puts.at(-1).value, `1:${clock.now()}`,
+      'and is counted as the FIRST connect of a new window: a limiter that re-armed the hour at minute 59 carries the count on');
+  });
+});
+
+test('the co-op door (KV fallback): a rider who filled the limit is let back in at the hour, not an hour after the last connect', async () => {
+  const ttl = doorConstant('RATE_TTL_SECONDS', COOP_SOURCE, COOP_FILE);
+  const limit = doorConstant('MAX_CONNECT_REQUESTS_PER_IP', COOP_SOURCE, COOP_FILE);
+  const start = Date.UTC(2026, 8, 25, 9, 0, 0);
+  const door = await coopDoor();
+  const kv = makeKv();
+  await withClock(start, async (clock) => {
+    for (let ride = 1; ride <= limit; ride += 1) {
+      assert.equal(await coopConnect(door, kv), ADMITTED, `connect ${ride} of ${limit} reaches the room`);
+      clock.advance(60_000); // one a minute: the limit is spent inside the first half hour
+    }
+    assert.equal(await coopConnect(door, kv), REFUSED, `connect ${limit + 1} inside the hour is refused`);
+    clock.advance(start + ttl * 1000 - clock.now());
+    assert.equal(await coopConnect(door, kv), ADMITTED,
+      'at the hour from the first connect the rider is admitted again; a limiter that re-arms on every accepted write keeps them out until an hour after the LAST one');
+  });
+});
+
 test('every door that shares this limiter still passes its own ttl', () => {
   const callers = execFileSync('git', ['grep', '-l', '-e', "from './_ratelimit'", '--', 'functions'], { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean);
-  // The register and the review both rest on "six doors": standings, accounts, telemetry, redeem,
-  // bugs, refusals. If that census moves, the blast radius of a change here moved with it.
+  // The census of the doors that share this limiter. F-HEAT14-7's register and review counted six:
+  // standings, accounts, telemetry, redeem, bugs, refusals. SEVEN since kv-counters-to-ledger-2
+  // (F-KV1-4, 2026-09-25): multiplayer, whose KV fallback moved onto this limiter on purpose, so the
+  // co-op door's hour is the ruled real hour too. If this census moves, the blast radius of a change
+  // here moved with it.
   assert.deepEqual(callers.sort(), [
     'functions/api/_accounts.ts',
     'functions/api/_bugs.ts',
+    'functions/api/_multiplayer.ts',
     'functions/api/redeem.ts',
     'functions/api/refusals.ts',
     'functions/api/standings.ts',
@@ -203,4 +300,22 @@ test('every door that shares this limiter still passes its own ttl', () => {
         `${caller}: every bumpCounter call must still pass its own RATE_TTL_SECONDS (the window is per door)`);
     }
   }
+});
+
+test('the TTL handed to KV never drops below Cloudflare\'s 60-second minimum near the end of the hour (F-KV2-1)', async () => {
+  // KV refuses `expirationTtl` under 60 s with a 400, which would turn every accepted write in the last
+  // 59 s of a rider's hour into a thrown error and a 429 at the door. The floor keeps the key alive at
+  // most 59 s past the hour; the stored window START still rolls the count on the next read.
+  const start = Date.UTC(2026, 8, 25, 14, 0, 0);
+  await withClock(start, async (clock) => {
+    const kv = makeKv();
+    assert.equal(await bumpCounter(kv, 'k', 60, 3600), true, 'the first write opens the window');
+    clock.advance(3599.5 * 1000);
+    assert.equal(await bumpCounter(kv, 'k', 60, 3600), true, 'a write half a second before the hour ends is accepted');
+    const last = kv.puts[kv.puts.length - 1];
+    assert.ok(last.ttl >= 60, `expirationTtl must be at least 60 s, got ${last.ttl}`);
+    clock.advance(60 * 1000);
+    assert.equal(await bumpCounter(kv, 'k', 60, 3600), true, 'past the hour the window has rolled');
+    assert.equal(kv.raw('k').split(':')[0], '1', 'the count restarted at 1 after the roll');
+  });
 });

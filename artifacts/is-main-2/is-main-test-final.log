@@ -1,0 +1,21 @@
+census: 387 tracked tool files under scripts/ server/ ops/; 23 read process.argv[1]: 7 isMain (the helper and 6 pinned copies), 7 realpath on both sides, 4 name matches, 5 owed (F-IM2-1)
+✔ 1 CONTROL VALIDITY: the old comparison runs by the real path and is silent by a symlinked one (57.762958ms)
+✔ 2 CURE: isMain runs main() by the real path and by the symlinked one (62.789291ms)
+✔ 3 NO ARGV: the unguarded old line throws on import; isMain answers "not main" (59.231709ms)
+✔ 4 A REAL GUARD: source-pointer-guard through a symlinked path still reds a rotted pointer (121.126333ms)
+✔ 5 A REAL IMPORT: dry-board-probe.mjs imports under node -e and does not run (33.550584ms)
+✔ 6 UNIT EDGES: missing, nonexistent and symlinked argv[1]; a URL that is not a file (0.397625ms)
+✔ 7 COVERAGE: eleven import isMain, two carry a byte-identical copy, none keeps the swept spelling (16.8345ms)
+✔ 8 THE TWENTY-THREE: nineteen import isMain, four carry the pinned copy, the two that threw now import (65.310416ms)
+✔ 9 CENSUS: every reader of process.argv[1] in tool code is isMain, a pinned copy, or a named census entry (30.676083ms)
+✔ 10 SPELLINGS: every spelling the census forbids is true by the real path and false by a symlinked one (0.941958ms)
+✔ 11a THE PRODUCTION DOOR: server/ledger/serve.mjs runs main through a symlinked path; its pre-cure line did not (346.932417ms)
+✔ 11b A NAMED GUARD: ruling-propagation-guard reds a stale refusal by both spellings; its pre-cure line was silent (126.620042ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 970.639375

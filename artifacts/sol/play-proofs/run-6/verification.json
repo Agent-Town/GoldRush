@@ -1,0 +1,211 @@
+{
+  "scope": "PASS",
+  "statusCells": [
+    "The Old Canal (e9-old-canal)",
+    "The Last Claim (e10-last-claim)",
+    "The River (e10-river)"
+  ],
+  "rowCount": 8,
+  "rows": [
+    {
+      "contract": "e2-incline",
+      "project": "desktop-chrome",
+      "peakWave": 14,
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 14 / 591.3s sim, 87 HP, 5 buildings"
+      },
+      "banks": {
+        "ok": true,
+        "detail": "a NEW secured row for e2-incline: waves=14 gold=3 timeAlive=591 kills=340 (42 new row(s) since pre-play, retained after Return to Town)"
+      },
+      "board": {
+        "ok": true,
+        "detail": "the Book is on screen straight off the run ledger"
+      },
+      "reload": {
+        "ok": true,
+        "detail": "score retained across reload (7397 bytes) and the Book reopened on foot"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e2-incline",
+      "project": "mobile-chrome",
+      "peakWave": 14,
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 14 / 583.9s sim, 66 HP, 4 buildings"
+      },
+      "banks": {
+        "ok": true,
+        "detail": "a NEW secured row for e2-incline: waves=14 gold=118 timeAlive=584 kills=333 (42 new row(s) since pre-play, retained after Return to Town)"
+      },
+      "board": {
+        "ok": true,
+        "detail": "the Book is on screen straight off the run ledger"
+      },
+      "reload": {
+        "ok": true,
+        "detail": "score retained across reload (7399 bytes) and the Book reopened on foot"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e9-old-canal",
+      "project": "desktop-chrome",
+      "peakWave": 19,
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 19 / 571.6s sim, 847 kills, 1 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e9-old-canal",
+      "project": "mobile-chrome",
+      "peakWave": 18,
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 18 / 540.4s sim, 782 kills, 15 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e10-last-claim",
+      "project": "desktop-chrome",
+      "peakWave": 8,
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 8 / 240.1s sim, 150 HP, 3 buildings"
+      },
+      "banks": {
+        "ok": true,
+        "detail": "a NEW secured row for e10-last-claim: waves=8 gold=75 timeAlive=240 kills=188 (42 new row(s) since pre-play, retained after Return to Town)"
+      },
+      "board": {
+        "ok": true,
+        "detail": "the Book is on screen after the finale Return to the Ark button"
+      },
+      "reload": {
+        "ok": true,
+        "detail": "score retained across reload (7396 bytes) and the Book reopened on foot"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e10-last-claim",
+      "project": "mobile-chrome",
+      "peakWave": 8,
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 8 / 240.1s sim, 150 HP, 3 buildings"
+      },
+      "banks": {
+        "ok": true,
+        "detail": "a NEW secured row for e10-last-claim: waves=8 gold=95 timeAlive=240 kills=201 (42 new row(s) since pre-play, retained after Return to Town)"
+      },
+      "board": {
+        "ok": true,
+        "detail": "the Book is on screen after the finale Return to the Ark button"
+      },
+      "reload": {
+        "ok": true,
+        "detail": "score retained across reload (7396 bytes) and the Book reopened on foot"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e10-river",
+      "project": "desktop-chrome",
+      "peakWave": 0,
+      "secures": {
+        "ok": true,
+        "detail": "authored no-wave pan: gold 0 -> 30, wave 0, zero enemies through 35.1s; no Claim Secured overlay"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "no new secured/completed score for e10-river after the authored pan; no terminal bank action. Score rows before=42, after pan=42; active lineage=the-claim"
+      },
+      "board": {
+        "ok": true,
+        "detail": "Book reached through ordinary pause Back to Town exit; this suspends, not banks, the River"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "score storage byte-identical=true (7396 bytes), Book reopened; no completed River score exists to prove persistence"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e10-river",
+      "project": "mobile-chrome",
+      "peakWave": 0,
+      "secures": {
+        "ok": true,
+        "detail": "authored no-wave pan: gold 0 -> 30, wave 0, zero enemies through 35.0s; no Claim Secured overlay"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "no new secured/completed score for e10-river after the authored pan; no terminal bank action. Score rows before=42, after pan=42; active lineage=the-claim"
+      },
+      "board": {
+        "ok": true,
+        "detail": "Book reached through ordinary pause Back to Town exit; this suspends, not banks, the River"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "score storage byte-identical=true (7396 bytes), Book reopened; no completed River score exists to prove persistence"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    }
+  ]
+}

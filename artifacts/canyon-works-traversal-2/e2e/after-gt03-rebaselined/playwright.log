@@ -1,0 +1,78 @@
+
+Running 8 tests using 1 worker
+
+  ✘  1 [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics (17.5s)
+  ✓  2 [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge (17.0s)
+  ✓  3 [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:247:1 › seeded basin diagnostics include hash-identical enemy positions (27.4s)
+  ✓  4 [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:261:1 › basin stress stays in frame envelope while the flat claim remains neutral (11.1s)
+  ✘  5 [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics (14.9s)
+  ✓  6 [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:155:1 › cliff blocks enemies and local routing sends them around the ridge (23.8s)
+  -  7 [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:247:1 › seeded basin diagnostics include hash-identical enemy positions
+  -  8 [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:261:1 › basin stress stays in frame envelope while the flat claim remains neutral
+
+
+  1) [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.98
+    Received:    0.138
+
+      145 |
+      146 |   expect(report.uphillVsFlatSpeed).toBeLessThan(0.85);
+    > 147 |   expect(report.downhillVsFlatSpeed).toBeGreaterThanOrEqual(0.98);
+          |                                      ^
+      148 |   expect(uphill.terrain?.grounded).toBe(true);
+      149 |   expect(uphill.terrain?.traversable).toBe(true);
+      150 |   expect(uphill.terrain?.speedMul ?? 1).toBeLessThan(1);
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/gt-03-enemy-elevation.spec.ts:147:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-gt03-rebaselined/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-gt03-rebaselined/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-gt03-rebaselined/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-gt03-rebaselined/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 0.85
+    Received:   2.443
+
+      144 |   await writeFile(path.join(ARTIFACT_DIR, `slope-report-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
+      145 |
+    > 146 |   expect(report.uphillVsFlatSpeed).toBeLessThan(0.85);
+          |                                    ^
+      147 |   expect(report.downhillVsFlatSpeed).toBeGreaterThanOrEqual(0.98);
+      148 |   expect(uphill.terrain?.grounded).toBe(true);
+      149 |   expect(uphill.terrain?.traversable).toBe(true);
+        at /Users/robin/Claude/Projects/wt-cw2/e2e/gt-03-enemy-elevation.spec.ts:146:36
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-gt03-rebaselined/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-gt03-rebaselined/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-gt03-rebaselined/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/cw2/pw/after-gt03-rebaselined/gt-03-enemy-elevation-enem-9eac4-rounded-terrain-diagnostics-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+    [mobile-chrome] › e2e/gt-03-enemy-elevation.spec.ts:125:1 › enemies slow on slopes and expose grounded terrain diagnostics 
+  2 skipped
+  4 passed (3.5m)

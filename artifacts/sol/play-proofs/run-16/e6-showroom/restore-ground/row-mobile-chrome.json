@@ -1,0 +1,83 @@
+{
+  "project": "mobile-chrome",
+  "contract": "e6-showroom",
+  "name": "The Showroom",
+  "secureWave": 20,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e6-showroom secureWave=20"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "the page stopped answering"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "skipped: never secured"
+  },
+  "board": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 0,
+  "simAtEnd": 0,
+  "runStateAtEnd": "",
+  "hpAtEnd": 0,
+  "goldAtEnd": 0,
+  "killsAtEnd": 0,
+  "peakHotBoilers": 0,
+  "powerBanksPeak": {},
+  "builds": [],
+  "upgrades": [
+    "double_tap_coil",
+    "spring_heels",
+    "double_tap_coil",
+    "split_spark",
+    "double_tap_coil"
+  ],
+  "samples": [
+    {
+      "t": 10.3,
+      "wave": 0,
+      "hp": 100,
+      "gold": 0,
+      "kills": 1,
+      "x": -23,
+      "z": 5.8,
+      "alive": 1,
+      "seams": 2
+    },
+    {
+      "t": 123.1,
+      "wave": 4,
+      "hp": 0,
+      "gold": 2,
+      "kills": 60,
+      "x": 20,
+      "z": 5.8,
+      "alive": 16,
+      "seams": 2
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-6-atomic",
+    "strategy=restore-ground",
+    "engine secureWave=20 cadenceMult=1",
+    "home=0.0,6.0 circuit=[[-4,2],[4,2],[4,10],[-4,10]]",
+    "showroom capture route end: {}",
+    "kit=turret+sentry_beacon+turret+turret"
+  ],
+  "at": "2026-09-28T02:23:58.117Z",
+  "rawEvidence": "/Users/robin/.goldrush/play-proofs/run-16/restore-ground/e6-showroom/row-mobile-chrome.json",
+  "sampleCount": 12
+}

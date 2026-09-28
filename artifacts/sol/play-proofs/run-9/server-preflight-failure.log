@@ -1,0 +1,14 @@
+Error: F-1457-1: nothing is answering at http://127.0.0.1:5303.
+  probe: http://127.0.0.1:5303/@vite/client: fetch failed
+  GR_CAPTURE_EXTERNAL_SERVER=1 tells playwright NOT to start a server, so one must already be
+  listening. Start it first, or unset the flag and let the config start its own.
+
+   at ../scripts/external-server-guard.mjs:121
+
+  119 |   const { verdict, detail } = await classifyWithGrace(baseURL);
+  120 |   if (verdict === 'dev') return;
+> 121 |   throw new Error(messageFor(verdict, detail, baseURL));
+      |         ^
+  122 | }
+  123 |
+    at globalSetup (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/scripts/external-server-guard.mjs:121:9)

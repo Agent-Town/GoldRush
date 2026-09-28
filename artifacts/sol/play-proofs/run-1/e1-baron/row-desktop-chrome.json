@@ -1,0 +1,293 @@
+{
+  "project": "desktop-chrome",
+  "contract": "e1-baron",
+  "name": "The Claim-Jumper Baron",
+  "secureWave": 20,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e1-baron secureWave=20"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "runState=dead at wave 16 / 421.7s sim, 589 kills, 26 gold"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "skipped: never secured"
+  },
+  "board": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 16,
+  "simAtEnd": 421.73333333331965,
+  "runStateAtEnd": "dead",
+  "hpAtEnd": 0,
+  "goldAtEnd": 26,
+  "killsAtEnd": 589,
+  "builds": [
+    {
+      "id": "turret",
+      "at": 40.666666666666565,
+      "wave": 1,
+      "x": 3,
+      "z": 7
+    },
+    {
+      "id": "turret",
+      "at": 109.06666666666872,
+      "wave": 4,
+      "x": 8,
+      "z": 9
+    },
+    {
+      "id": "turret",
+      "at": 169.06666666666732,
+      "wave": 6,
+      "x": -3,
+      "z": 15
+    },
+    {
+      "id": "sentry_beacon",
+      "at": 189.33333333333283,
+      "wave": 7,
+      "x": 6,
+      "z": 16
+    },
+    {
+      "id": "sentry_beacon",
+      "at": 230.93333333333047,
+      "wave": 8,
+      "x": -4,
+      "z": 10
+    },
+    {
+      "id": "sentry_beacon",
+      "at": 309.0666666666594,
+      "wave": 11,
+      "x": 11,
+      "z": 7
+    },
+    {
+      "id": "sentry_beacon",
+      "at": 395.5999999999878,
+      "wave": 15,
+      "x": 2,
+      "z": 17
+    }
+  ],
+  "upgrades": [
+    "double_tap_coil",
+    "spring_heels",
+    "split_spark",
+    "split_spark",
+    "heavy_spark",
+    "tinkers_plating",
+    "tinkers_plating",
+    "tinkers_plating",
+    "heavy_spark",
+    "heavy_spark",
+    "spring_heels",
+    "quick_fuse",
+    "double_tap_coil",
+    "double_tap_coil",
+    "powder_charge",
+    "long_resonator",
+    "long_resonator",
+    "quick_fuse",
+    "wide_ring",
+    "prospectors_luck"
+  ],
+  "samples": [
+    {
+      "t": 40.8,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 11,
+      "x": 3,
+      "z": 9.2,
+      "alive": 6,
+      "seams": 2
+    },
+    {
+      "t": 73.6,
+      "wave": 2,
+      "hp": 100,
+      "gold": 25,
+      "kills": 34,
+      "x": -13.3,
+      "z": -8.9,
+      "alive": 3,
+      "seams": 2
+    },
+    {
+      "t": 109.2,
+      "wave": 4,
+      "hp": 100,
+      "gold": 0,
+      "kills": 63,
+      "x": 8,
+      "z": 10.9,
+      "alive": 5,
+      "seams": 1
+    },
+    {
+      "t": 169.3,
+      "wave": 6,
+      "hp": 125,
+      "gold": 0,
+      "kills": 131,
+      "x": -3,
+      "z": 16.7,
+      "alive": 7,
+      "seams": 1
+    },
+    {
+      "t": 189.5,
+      "wave": 7,
+      "hp": 175,
+      "gold": 0,
+      "kills": 154,
+      "x": 6.2,
+      "z": 17.9,
+      "alive": 5,
+      "seams": 1
+    },
+    {
+      "t": 231.1,
+      "wave": 8,
+      "hp": 167,
+      "gold": 0,
+      "kills": 210,
+      "x": -4.1,
+      "z": 12.1,
+      "alive": 12,
+      "seams": 2
+    },
+    {
+      "t": 309.2,
+      "wave": 11,
+      "hp": 67,
+      "gold": 0,
+      "kills": 358,
+      "x": 10.6,
+      "z": 9,
+      "alive": 10,
+      "seams": 2
+    },
+    {
+      "t": 395.7,
+      "wave": 15,
+      "hp": 59,
+      "gold": 1,
+      "kills": 530,
+      "x": 1.8,
+      "z": 18.9,
+      "alive": 32,
+      "seams": 2
+    },
+    {
+      "t": 421.7,
+      "wave": 16,
+      "hp": 0,
+      "gold": 26,
+      "kills": 589,
+      "x": 25,
+      "z": 6.2,
+      "alive": 32,
+      "seams": 1
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-1-frontier",
+    "engine secureWave=20 cadenceMult=1.15",
+    "home=3.0,11.0 circuit=[[-1,7],[7,7],[7,15],[-1,15]]",
+    "kit=turret+sentry_beacon+turret+turret",
+    "crossing at the ford x=0 (6.7 -> -6.4)",
+    "crossing at the ford x=0 (-5.9 -> 9.0)",
+    "crossing at the ford x=0 (9.2 -> -6.4)",
+    "crossing at the ford x=0 (-7.8 -> 14.0)",
+    "could not stand at -1.0,14.0 for sentry_beacon; building from -11.4,-8.9",
+    "sentry_beacon did not place at -1.0,12.0 (ghostValid=false)",
+    "crossing at the ford x=0 (-6.7 -> 6.5)",
+    "crossing at the ford x=0 (10.9 -> -6.4)",
+    "crossing at the ford x=0 (-5.7 -> 6.5)",
+    "crossing at the ford x=0 (7.2 -> -6.4)",
+    "crossing at the ford x=0 (-6.0 -> 11.8)",
+    "crossing at the ford x=0 (12.1 -> -6.4)",
+    "seam gold-seam-2 (-1.5,-6.4) unreachable on foot",
+    "crossing at the ford x=0 (-6.7 -> 6.7)",
+    "could not fund sentry_beacon (cost 75, purse 1)"
+  ],
+  "at": "2026-09-25T07:21:52.540Z",
+  "objective": {
+    "baron": {
+      "cartVisible": false,
+      "carried": false,
+      "distanceFromBaron": 0,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 0,
+      "volleys": 0,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "",
+      "lastTarget": {
+        "x": 0,
+        "z": 0
+      },
+      "target": {
+        "x": 0,
+        "z": 0
+      },
+      "props": {
+        "state": "ready",
+        "source": "glb",
+        "launcher": true,
+        "rocket": true,
+        "powderKeg": true,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": {
+        "count": 3,
+        "damage": 18,
+        "radius": 2.35,
+        "cadenceSeconds": 8,
+        "telegraphSeconds": 1.2,
+        "airTime": 1.1,
+        "spreadRadius": 0.9
+      }
+    },
+    "boss": {
+      "visible": false,
+      "ratio": 0,
+      "renderedRatio": 1,
+      "litSegments": 7,
+      "segments": 0,
+      "groupId": null,
+      "aliveComponents": 0,
+      "destroyedComponents": 0,
+      "components": []
+    },
+    "medals": {
+      "version": 1,
+      "baronBeaten": false,
+      "rocketCartCaptured": false
+    }
+  }
+}

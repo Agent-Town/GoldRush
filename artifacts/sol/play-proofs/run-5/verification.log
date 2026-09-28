@@ -1,0 +1,115 @@
+{
+  "scope": "PASS",
+  "statusCells": [
+    "The Dome Basin (e9-dome-basin)",
+    "The Seed Run (e9-seed-run)",
+    "Devil\u2019s Alley (e9-devils-alley)"
+  ],
+  "rowCount": 8,
+  "rows": [
+    {
+      "contract": "e2-incline",
+      "project": "desktop-chrome",
+      "peakWave": 14,
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 14 / 577.5s sim, 143 HP, 4 buildings"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e2-incline",
+      "project": "mobile-chrome",
+      "peakWave": 14,
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 14 / 577.5s sim, 63 HP, 5 buildings"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e9-devils-alley",
+      "project": "desktop-chrome",
+      "peakWave": 20,
+      "secures": {
+        "ok": false,
+        "detail": "Claim Secured at wave 20 / 600.1s sim, 147 HP, 8 buildings; yard crossing or three anchor-bay builds incomplete (west-anchor-bay,center-anchor-bay)"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e9-devils-alley",
+      "project": "mobile-chrome",
+      "peakWave": 20,
+      "secures": {
+        "ok": true,
+        "detail": "Claim Secured at wave 20 / 600.1s sim, 85 HP, 8 buildings"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e9-dome-basin",
+      "project": "desktop-chrome",
+      "peakWave": 15,
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 15 / 478.3s sim, 644 kills, 8 gold"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e9-dome-basin",
+      "project": "mobile-chrome",
+      "peakWave": 13,
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 13 / 411.1s sim, 509 kills, 4 gold"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e9-seed-run",
+      "project": "desktop-chrome",
+      "peakWave": 13,
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 13 / 399.9s sim, 468 kills, 50 gold"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    {
+      "contract": "e9-seed-run",
+      "project": "mobile-chrome",
+      "peakWave": 14,
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 14 / 423.2s sim, 538 kills, 15 gold"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    }
+  ]
+}

@@ -1,0 +1,4110 @@
+TAP version 13
+# Subtest: VACUUM INTO backup restores byte-identical ledger rows
+ok 1 - VACUUM INTO backup restores byte-identical ledger rows
+  ---
+  duration_ms: 5.952458
+  type: 'test'
+  ...
+# Subtest: rotation deletes only dated ledger backups older than 14 days
+ok 2 - rotation deletes only dated ledger backups older than 14 days
+  ---
+  duration_ms: 1.623209
+  type: 'test'
+  ...
+# (node:58424) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids
+ok 3 - agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids
+  ---
+  duration_ms: 6083.239875
+  type: 'test'
+  ...
+# Subtest: agent consent keeps the ruled pan and build rungs plus shipped repair rung
+ok 4 - agent consent keeps the ruled pan and build rungs plus shipped repair rung
+  ---
+  duration_ms: 0.812333
+  type: 'test'
+  ...
+# Subtest: tool surface keeps auto-pan and place-building at their ruled rungs
+ok 5 - tool surface keeps auto-pan and place-building at their ruled rungs
+  ---
+  duration_ms: 0.103
+  type: 'test'
+  ...
+# Subtest: standing orders keep harvest at rung 2 and build at rung 3
+ok 6 - standing orders keep harvest at rung 2 and build at rung 3
+  ---
+  duration_ms: 0.142625
+  type: 'test'
+  ...
+# (node:59880) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: a wire act crosses into the sim and changes it
+ok 7 - a wire act crosses into the sim and changes it
+  ---
+  duration_ms: 2126.9445
+  type: 'test'
+  ...
+# Subtest: agent_orders validates the standing-order grammar and wire bounds
+ok 8 - agent_orders validates the standing-order grammar and wire bounds
+  ---
+  duration_ms: 70.653208
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: two independently booted sims agree tick for tick
+ok 9 - two independently booted sims agree tick for tick
+  ---
+  duration_ms: 2019.37075
+  type: 'test'
+  ...
+# Subtest: the seat carries BUILD and refuses to stretch for the rest
+ok 10 - the seat carries BUILD and refuses to stretch for the rest
+  ---
+  duration_ms: 42.433625
+  type: 'test'
+  ...
+# Subtest: the seat carries the facing, and refuses a facing the county does not keep
+ok 11 - the seat carries the facing, and refuses a facing the county does not keep
+  ---
+  duration_ms: 42.206584
+  type: 'test'
+  ...
+# Subtest: the throttle ceiling is the relay rate limit, not a taste
+ok 12 - the throttle ceiling is the relay rate limit, not a taste
+  ---
+  duration_ms: 1808.5265
+  type: 'test'
+  ...
+# Generation provenance: 8 cases passed; no real CLI or image generation.
+# Factory prompts: 72 cast/direction cases passed; complete walking cycles and companion hover retained.
+# Subtest: scripts/anim-pass-gen.test.mjs
+ok 5 - scripts/anim-pass-gen.test.mjs
+  ---
+  duration_ms: 1993.644042
+  type: 'test'
+  ...
+# Graft: row and single-cell sources validated; invalid/dry calls preserve target; all seven neighboring cells preserved.
+# Subtest: scripts/anim-pass-graft.test.mjs
+ok 6 - scripts/anim-pass-graft.test.mjs
+  ---
+  duration_ms: 899.027916
+  type: 'test'
+  ...
+# Factory grid: inspection matches extraction; duplicate proof/head crops pass divisible, remainder-bearing and historical cached grids.
+# Subtest: scripts/anim-pass-grid.test.mjs
+ok 7 - scripts/anim-pass-grid.test.mjs
+  ---
+  duration_ms: 483.050791
+  type: 'test'
+  ...
+# Montage default spacing, exact zero-gap cells and invalid-input preservation pass.
+# Subtest: scripts/anim-pass-montage.test.mjs
+ok 8 - scripts/anim-pass-montage.test.mjs
+  ---
+  duration_ms: 290.219625
+  type: 'test'
+  ...
+# Subtest: rob's v1 live reel is retained but reported as unverifiable legacy
+ok 17 - rob's v1 live reel is retained but reported as unverifiable legacy
+  ---
+  duration_ms: 212.867291
+  type: 'test'
+  ...
+# Subtest: the browser arm of the assay instrument reports the purse held, not lifetime panning
+ok 18 - the browser arm of the assay instrument reports the purse held, not lifetime panning
+  ---
+  duration_ms: 0.218125
+  type: 'test'
+  ...
+# Subtest: the round-2 corpus hash remains byte-for-byte pinned
+ok 19 - the round-2 corpus hash remains byte-for-byte pinned
+  ---
+  duration_ms: 1.729292
+  type: 'test'
+  ...
+# Subtest: pre-era engine-stamped agent tapes are retired: the assayer refuses their plans
+ok 20 - pre-era engine-stamped agent tapes are retired: the assayer refuses their plans
+  ---
+  duration_ms: 1858.671209
+  type: 'test'
+  ...
+# Subtest: the hill-mine libm divergence tape is retired, and the tape it was measured from is kept
+ok 21 - the hill-mine libm divergence tape is retired, and the tape it was measured from is kept
+  ---
+  duration_ms: 1924.762959
+  type: 'test'
+  ...
+# Subtest: a securing door tape carries its start, its boundary answer, and replays to its own hash
+ok 22 - a securing door tape carries its start, its boundary answer, and replays to its own hash
+  ---
+  duration_ms: 27460.298
+  type: 'test'
+  ...
+# Subtest: an overtime replay returns the immutable secure-event snapshot and the later final outcome
+ok 23 - an overtime replay returns the immutable secure-event snapshot and the later final outcome
+  ---
+  duration_ms: 40715.8955
+  type: 'test'
+  ...
+# Subtest: the Regatta reel that finished the race replays with its mechanic complete
+ok 24 - the Regatta reel that finished the race replays with its mechanic complete
+  ---
+  duration_ms: 7044.120791
+  type: 'test'
+  ...
+# (node:60113) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the mechanic table answers false before the race is finished and null where no mechanic is declared
+ok 25 - the mechanic table answers false before the race is finished and null where no mechanic is declared
+  ---
+  duration_ms: 2044.489542
+  type: 'test'
+  ...
+# Subtest: a verified standing the rider has already beaten is kept, not deleted
+ok 26 - a verified standing the rider has already beaten is kept, not deleted
+  ---
+  duration_ms: 7.385792
+  type: 'test'
+  ...
+# Subtest: the published board still shows exactly one standing per rider
+ok 27 - the published board still shows exactly one standing per rider
+  ---
+  duration_ms: 2.158917
+  type: 'test'
+  ...
+# Subtest: an identical score does not delete the newcomer either
+ok 28 - an identical score does not delete the newcomer either
+  ---
+  duration_ms: 1.492708
+  type: 'test'
+  ...
+# Subtest: an incumbent that can never rank cannot delete a current-era standing
+ok 29 - an incumbent that can never rank cannot delete a current-era standing
+  ---
+  duration_ms: 1.789959
+  type: 'test'
+  ...
+# Subtest: a stored row missing from the assay index is re-queueable without losing its submittedAt
+ok 30 - a stored row missing from the assay index is re-queueable without losing its submittedAt
+  ---
+  duration_ms: 0.848875
+  type: 'test'
+  ...
+# Subtest: the stored-unassayed sweep restores every row a concurrent burst cost the index
+ok 31 - the stored-unassayed sweep restores every row a concurrent burst cost the index
+  ---
+  duration_ms: 1.714167
+  type: 'test'
+  ...
+# Subtest: once keeps completed mismatches rejected and retries instrument failures before unassayable
+ok 32 - once keeps completed mismatches rejected and retries instrument failures before unassayable
+  ---
+  duration_ms: 513.664375
+  type: 'test'
+  ...
+# Subtest: a verified payload carries the replay's mechanic, and nothing else does
+ok 33 - a verified payload carries the replay's mechanic, and nothing else does
+  ---
+  duration_ms: 227.145666
+  type: 'test'
+  ...
+# Subtest: a malformed mechanic is an instrument failure, retried and then unassayable, never posted
+ok 34 - a malformed mechanic is an instrument failure, retried and then unassayable, never posted
+  ---
+  duration_ms: 236.73
+  type: 'test'
+  ...
+# Subtest: engine lineage wins over build id, with build id retained for legacy tapes
+ok 35 - engine lineage wins over build id, with build id retained for legacy tapes
+  ---
+  duration_ms: 132.159583
+  type: 'test'
+  ...
+# Subtest: an earlier pin in the current era remains assayable
+ok 36 - an earlier pin in the current era remains assayable
+  ---
+  duration_ms: 191.5315
+  type: 'test'
+  ...
+# Subtest: the worker environment law refuses every Node version except the exact canonical one
+ok 37 - the worker environment law refuses every Node version except the exact canonical one
+  ---
+  duration_ms: 0.31125
+  type: 'test'
+  ...
+# Subtest: engine hash ignores a doc-only commit and moves on a Balance edit in a scratch worktree
+ok 38 - engine hash ignores a doc-only commit and moves on a Balance edit in a scratch worktree
+  ---
+  duration_ms: 130.8115
+  type: 'test'
+  ...
+# Subtest: a posted unassayable reason names files, never paths; the operator log keeps both
+ok 39 - a posted unassayable reason names files, never paths; the operator log keeps both
+  ---
+  duration_ms: 232.28225
+  type: 'test'
+  ...
+# Subtest: dry-run prints the verdict without posting it
+ok 40 - dry-run prints the verdict without posting it
+  ---
+  duration_ms: 131.855667
+  type: 'test'
+  ...
+# Subtest: shutdown during replay leaves the row pending
+ok 41 - shutdown during replay leaves the row pending
+  ---
+  duration_ms: 145.133917
+  type: 'test'
+  ...
+# Subtest: API failures back off before polling again
+ok 42 - API failures back off before polling again
+  ---
+  duration_ms: 196.716667
+  type: 'test'
+  ...
+# Subtest: a row flipped back to pending is assayed again from a clean attempt budget
+ok 43 - a row flipped back to pending is assayed again from a clean attempt budget
+  ---
+  duration_ms: 265.860625
+  type: 'test'
+  ...
+# Subtest: a missing dist/ is refused, not cleared
+ok 44 - a missing dist/ is refused, not cleared
+  ---
+  duration_ms: 31.343625
+  type: 'test'
+  ...
+# Subtest: CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture
+ok 45 - CONTROL: the same fixture with one benign dist file passes — it is the emptiness, not the fixture
+  ---
+  duration_ms: 30.713917
+  type: 'test'
+  ...
+# Subtest: an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+ok 46 - an empty later-asset blacklist is refused — the leak check would otherwise pass vacuously
+  ---
+  duration_ms: 63.899
+  type: 'test'
+  ...
+# Subtest: the success line reports the denominator, so a vacuous clearance would be legible
+ok 47 - the success line reports the denominator, so a vacuous clearance would be legible
+  ---
+  duration_ms: 32.631
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a later-epoch manifest id in dist still fails
+ok 48 - POSITIVE CONTROL: a later-epoch manifest id in dist still fails
+  ---
+  duration_ms: 29.581958
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails
+ok 49 - POSITIVE CONTROL: a leaked later-epoch plate asset in dist still fails
+  ---
+  duration_ms: 30.186459
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation
+ok 50 - POSITIVE CONTROL: the GR_RELEASE=e1 precondition still refuses a bare invocation
+  ---
+  duration_ms: 29.975583
+  type: 'test'
+  ...
+# Subtest: an E1 asset whose content hash reads like an era tag is NOT a leak
+ok 51 - an E1 asset whose content hash reads like an era tag is NOT a leak
+  ---
+  duration_ms: 31.511166
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a genuine later-era asset in dist still fails
+ok 52 - POSITIVE CONTROL: a genuine later-era asset in dist still fails
+  ---
+  duration_ms: 30.759792
+  type: 'test'
+  ...
+# Subtest: POSITIVE CONTROL: a later-era tag ENDING the module name still fails (the `$` anchor)
+ok 53 - POSITIVE CONTROL: a later-era tag ENDING the module name still fails (the `$` anchor)
+  ---
+  duration_ms: 30.937708
+  type: 'test'
+  ...
+# Subtest: two named additions account for a two-test tally delta
+ok 54 - two named additions account for a two-test tally delta
+  ---
+  duration_ms: 169.610875
+  type: 'test'
+  ...
+# Subtest: identical manifests have an empty diff
+ok 55 - identical manifests have an empty diff
+  ---
+  duration_ms: 75.819
+  type: 'test'
+  ...
+# Subtest: a file-level collection failure leaves an unaccounted tally residue
+ok 56 - a file-level collection failure leaves an unaccounted tally residue
+  ---
+  duration_ms: 123.961458
+  type: 'test'
+  ...
+# Subtest: a status flip is visible when the tally is unchanged
+ok 57 - a status flip is visible when the tally is unchanged
+  ---
+  duration_ms: 121.311875
+  type: 'test'
+  ...
+# Subtest: stdin and --from-log emit the same deterministic manifest
+ok 58 - stdin and --from-log emit the same deterministic manifest
+  ---
+  duration_ms: 263.94075
+  type: 'test'
+  ...
+# Subtest: rotation registry stays outside the engine identity corpus
+ok 59 - rotation registry stays outside the engine identity corpus
+  ---
+  duration_ms: 64.485167
+  type: 'test'
+  ...
+# Subtest: contract ids are globally unique across the ten epoch bundles
+ok 60 - contract ids are globally unique across the ten epoch bundles
+  ---
+  duration_ms: 0.146834
+  type: 'test'
+  ...
+# Subtest: bench seed sets cover Frontier and contain only valid known-contract seeds
+ok 61 - bench seed sets cover Frontier and contain only valid known-contract seeds
+  ---
+  duration_ms: 0.169209
+  type: 'test'
+  ...
+# Subtest: rotation mint is deterministic, week-sensitive, and requires a salt
+ok 62 - rotation mint is deterministic, week-sensitive, and requires a salt
+  ---
+  duration_ms: 123.568833
+  type: 'test'
+  ...
+# Subtest: reds on a real ledger with a subject-led closed finding on the panel, greens on the live root
+ok 63 - reds on a real ledger with a subject-led closed finding on the panel, greens on the live root
+  ---
+  duration_ms: 590.968083
+  type: 'test'
+  ...
+# Subtest: a cited id does not borrow the subject id closure on the old real ledger
+ok 64 - a cited id does not borrow the subject id closure on the old real ledger
+  ---
+  duration_ms: 123.576209
+  type: 'test'
+  ...
+# Subtest: a closure APPENDED below the panel row does not clear the panel — which is the whole defect
+ok 65 - a closure APPENDED below the panel row does not clear the panel — which is the whole defect
+  ---
+  duration_ms: 44.910292
+  type: 'test'
+  ...
+# Subtest: striking the ORIGINAL line clears the panel — the fix the guard prescribes actually works
+ok 66 - striking the ORIGINAL line clears the panel — the fix the guard prescribes actually works
+  ---
+  duration_ms: 39.28325
+  type: 'test'
+  ...
+# Subtest: an open finding on the panel is left alone
+ok 67 - an open finding on the panel is left alone
+  ---
+  duration_ms: 44.280125
+  type: 'test'
+  ...
+# Subtest: REFUSES rather than passes when the panel moves out from under it
+ok 68 - REFUSES rather than passes when the panel moves out from under it
+  ---
+  duration_ms: 32.970208
+  type: 'test'
+  ...
+# Subtest: the wide closure vocabulary is opt-in and does not leak into the default census
+ok 69 - the wide closure vocabulary is opt-in and does not leak into the default census
+  ---
+  duration_ms: 0.373167
+  type: 'test'
+  ...
+# (node:72522) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the board is not empty
+ok 70 - the board is not empty
+  ---
+  duration_ms: 0.347958
+  type: 'test'
+  ...
+# Subtest: every board contract either has seams or declares a harvest-free objective
+ok 71 - every board contract either has seams or declares a harvest-free objective
+  ---
+  duration_ms: 0.22925
+  type: 'test'
+  ...
+# Subtest: the harvest-free declaration is ratcheted, and only seamless maps carry it
+ok 72 - the harvest-free declaration is ratcheted, and only seamless maps carry it
+  ---
+  duration_ms: 0.127583
+  type: 'test'
+  ...
+# Subtest: the door still reads the declaration, in the shape the same-game audit can lift
+ok 73 - the door still reads the declaration, in the shape the same-game audit can lift
+  ---
+  duration_ms: 0.261459
+  type: 'test'
+  ...
+# Subtest: the harvest-free exemption does not open the agent-play door
+ok 74 - the harvest-free exemption does not open the agent-play door
+  ---
+  duration_ms: 0.06325
+  type: 'test'
+  ...
+# Subtest: e8-mare-claim: the standing's gold is the purse held at the secure tick
+ok 75 - e8-mare-claim: the standing's gold is the purse held at the secure tick # SKIP retired in era 6: era 6 "the Re-surveyed Claims" (maps-campaign-land-era6, 2026-09-14): this heat-13 reel rode era 5 and no longer installs on the re-surveyed map; the purse-at-secure property is re-measured on era-6 reels when heat 14 rides (F-MAPL-4)
+  ---
+  duration_ms: 0.332833
+  type: 'test'
+  ...
+# Subtest: e3-moth-season: the standing's gold is the purse held at the secure tick
+ok 76 - e3-moth-season: the standing's gold is the purse held at the secure tick # SKIP retired in era 6: era 6 "the Re-surveyed Claims" (maps-campaign-land-era6, 2026-09-14): this heat-13 reel rode era 5 and no longer installs on the re-surveyed map; the purse-at-secure property is re-measured on era-6 reels when heat 14 rides (F-MAPL-4)
+  ---
+  duration_ms: 0.056875
+  type: 'test'
+  ...
+# Subtest: e7-relay-rush: the standing's gold is the purse held at the secure tick
+ok 77 - e7-relay-rush: the standing's gold is the purse held at the secure tick # SKIP retired in era 6: era 6 "the Re-surveyed Claims" (maps-campaign-land-era6, 2026-09-14): this heat-13 reel rode era 5 and no longer installs on the re-surveyed map; the purse-at-secure property is re-measured on era-6 reels when heat 14 rides (F-MAPL-4)
+  ---
+  duration_ms: 0.044917
+  type: 'test'
+  ...
+# Subtest: the browser door submits the purse held at the secure tick, not the run's lifetime panning
+ok 78 - the browser door submits the purse held at the secure tick, not the run's lifetime panning
+  ---
+  duration_ms: 27339.852583
+  type: 'test'
+  ...
+# Subtest: campaign harness URL binds Terrain to its selected contract
+ok 79 - campaign harness URL binds Terrain to its selected contract
+  ---
+  duration_ms: 2982.517583
+  type: 'test'
+  ...
+# (node:75807) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: Canyon Works alone publishes its live connection objective
+ok 80 - Canyon Works alone publishes its live connection objective
+  ---
+  duration_ms: 2107.224875
+  type: 'test'
+  ...
+# Subtest: every destructured ssrLoadModule symbol is exported by its source module
+ok 81 - every destructured ssrLoadModule symbol is exported by its source module
+  ---
+  duration_ms: 2.691
+  type: 'test'
+  ...
+# Subtest: contract direction files exist under assets/processed
+ok 82 - contract direction files exist under assets/processed
+  ---
+  duration_ms: 1.064791
+  type: 'test'
+  ...
+# Subtest: contract direction aliases do not overwrite explicit directions
+ok 83 - contract direction aliases do not overwrite explicit directions
+  ---
+  duration_ms: 0.153542
+  type: 'test'
+  ...
+# Subtest: a bare spec:line citation fails the guard
+ok 84 - a bare spec:line citation fails the guard
+  ---
+  duration_ms: 155.049125
+  type: 'test'
+  ...
+# Subtest: a citation carrying an exact test title passes
+ok 85 - a citation carrying an exact test title passes
+  ---
+  duration_ms: 137.539042
+  type: 'test'
+  ...
+# Subtest: a short code span cannot consume the following quoted title
+ok 86 - a short code span cannot consume the following quoted title
+  ---
+  duration_ms: 138.004334
+  type: 'test'
+  ...
+# Subtest: a bare apostrophe cannot consume the following quoted title
+ok 87 - a bare apostrophe cannot consume the following quoted title
+  ---
+  duration_ms: 150.112125
+  type: 'test'
+  ...
+# Subtest: an odd same-kind delimiter cannot consume the following quoted title
+ok 88 - an odd same-kind delimiter cannot consume the following quoted title
+  ---
+  duration_ms: 146.055667
+  type: 'test'
+  ...
+# Subtest: a test helper string is not harvested as a title
+ok 89 - a test helper string is not harvested as a title
+  ---
+  duration_ms: 157.922291
+  type: 'test'
+  ...
+# Subtest: chained describe modifiers remain title declarations
+ok 90 - chained describe modifiers remain title declarations
+  ---
+  duration_ms: 140.944333
+  type: 'test'
+  ...
+# Subtest: a citation carrying an ELIDED test title passes
+ok 91 - a citation carrying an ELIDED test title passes
+  ---
+  duration_ms: 140.113125
+  type: 'test'
+  ...
+# Subtest: a quoted title that does not exist in the spec still fails
+ok 92 - a quoted title that does not exist in the spec still fails
+  ---
+  duration_ms: 140.566583
+  type: 'test'
+  ...
+# Subtest: a grandfathered bare citation passes, and a second copy of it does not
+ok 93 - a grandfathered bare citation passes, and a second copy of it does not
+  ---
+  duration_ms: 249.958541
+  type: 'test'
+  ...
+# Subtest: --report never gates
+ok 94 - --report never gates
+  ---
+  duration_ms: 144.493916
+  type: 'test'
+  ...
+# Subtest: REFUSES when no tracked task markdown exists (denominator 0 docs)
+ok 95 - REFUSES when no tracked task markdown exists (denominator 0 docs)
+  ---
+  duration_ms: 127.395209
+  type: 'test'
+  ...
+# Subtest: REFUSES when task docs exist but carry zero citations
+ok 96 - REFUSES when task docs exist but carry zero citations
+  ---
+  duration_ms: 126.308959
+  type: 'test'
+  ...
+# Subtest: REFUSES when the baseline it ratchets against is missing
+ok 97 - REFUSES when the baseline it ratchets against is missing
+  ---
+  duration_ms: 200.667167
+  type: 'test'
+  ...
+# Subtest: a citation quoting a real NON-TEST source line is carried, not a violation
+ok 98 - a citation quoting a real NON-TEST source line is carried, not a violation
+  ---
+  duration_ms: 135.734333
+  type: 'test'
+  ...
+# Subtest: a quote matching NEITHER a title nor any source line still fails
+ok 99 - a quote matching NEITHER a title nor any source line still fails
+  ---
+  duration_ms: 133.675583
+  type: 'test'
+  ...
+# Subtest: the verdict names the citations it did NOT gate
+ok 100 - the verdict names the citations it did NOT gate
+  ---
+  duration_ms: 134.723792
+  type: 'test'
+  ...
+# Subtest: --report still never gates, even on a denominator it could not read
+ok 101 - --report still never gates, even on a denominator it could not read
+  ---
+  duration_ms: 140.46375
+  type: 'test'
+  ...
+# Subtest: Claim Boat candidate preserves its pinned source, export and clear authored pad contract
+ok 102 - Claim Boat candidate preserves its pinned source, export and clear authored pad contract
+  ---
+  duration_ms: 110.845958
+  type: 'test'
+  ...
+# Subtest: Flotilla exports match three authored hull identities with compliant textures and clear pads
+ok 103 - Flotilla exports match three authored hull identities with compliant textures and clear pads
+  ---
+  duration_ms: 97.08
+  type: 'test'
+  ...
+# Subtest: boat follows its owner and reset, projects only a loaded deck, and disposes late loads
+ok 104 - boat follows its owner and reset, projects only a loaded deck, and disposes late loads
+  ---
+  duration_ms: 1.390833
+  type: 'test'
+  ...
+# Subtest: rendered deck equipment leaves every combat origin and owner position unchanged
+ok 105 - rendered deck equipment leaves every combat origin and owner position unchanged
+  ---
+  duration_ms: 1.074083
+  type: 'test'
+  ...
+# Subtest: three Flotilla bodies follow movement, loss and reset without changing the hull owner
+ok 106 - three Flotilla bodies follow movement, loss and reset without changing the hull owner
+  ---
+  duration_ms: 11.068
+  type: 'test'
+  ...
+# (node:80226) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Regatta publishes exact terminal seconds, including the finish row, and resets them
+ok 107 - Regatta publishes exact terminal seconds, including the finish row, and resets them
+  ---
+  duration_ms: 312.812084
+  type: 'test'
+  ...
+# Subtest: the shared shore query samples all 16 headings, reads the walkable port, and changes no state
+ok 108 - the shared shore query samples all 16 headings, reads the walkable port, and changes no state
+  ---
+  duration_ms: 0.900209
+  type: 'test'
+  ...
+# Subtest: live Regatta shore agrees with stepAshore; Deepwater has a positive shore geometry control
+ok 109 - live Regatta shore agrees with stepAshore; Deepwater has a positive shore geometry control
+  ---
+  duration_ms: 2744.358291
+  type: 'test'
+  ...
+# Subtest: the claimed-spec -> owning-config map is DERIVED, not tabulated
+ok 110 - the claimed-spec -> owning-config map is DERIVED, not tabulated
+  ---
+  duration_ms: 3.954458
+  type: 'test'
+  ...
+# Subtest: derivation REFUSES rather than silently measuring nothing if the array is renamed
+ok 111 - derivation REFUSES rather than silently measuring nothing if the array is renamed
+  ---
+  duration_ms: 0.753459
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a claimed spec whose owning config has NO npm caller is named
+ok 112 - MANUFACTURED: a claimed spec whose owning config has NO npm caller is named
+  ---
+  duration_ms: 1.036833
+  type: 'test'
+  ...
+# Subtest: a runnerless harness WARNS and never changes the exit code
+ok 113 - a runnerless harness WARNS and never changes the exit code
+  ---
+  duration_ms: 31.12625
+  type: 'test'
+  ...
+# Subtest: NO package.json is not the same as no caller — a synthetic root must stay silent
+ok 114 - NO package.json is not the same as no caller — a synthetic root must stay silent
+  ---
+  duration_ms: 29.941084
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard
+ok 115 - MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard
+  ---
+  duration_ms: 32.690833
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a))
+ok 116 - MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a))
+  ---
+  duration_ms: 32.79825
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard
+ok 117 - MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard
+  ---
+  duration_ms: 29.479167
+  type: 'test'
+  ...
+# Subtest: a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c))
+ok 118 - a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c))
+  ---
+  duration_ms: 31.807
+  type: 'test'
+  ...
+# Subtest: naming the owning CONFIG clears the master
+ok 119 - naming the owning CONFIG clears the master
+  ---
+  duration_ms: 30.472125
+  type: 'test'
+  ...
+# Subtest: naming the npm ALIAS clears the master
+ok 120 - naming the npm ALIAS clears the master
+  ---
+  duration_ms: 29.004083
+  type: 'test'
+  ...
+# Subtest: the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op)
+ok 121 - the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op)
+  ---
+  duration_ms: 217.176041
+  type: 'test'
+  ...
+# Subtest: the live board has no LIVE offender
+ok 122 - the live board has no LIVE offender
+  ---
+  duration_ms: 107.518291
+  type: 'test'
+  ...
+# Subtest: every grandfathered file is still a real offender (no stale excuses)
+ok 123 - every grandfathered file is still a real offender (no stale excuses)
+  ---
+  duration_ms: 106.577625
+  type: 'test'
+  ...
+# Subtest: the guard sets process.exitCode and never force-exits (F-2098-1)
+ok 124 - the guard sets process.exitCode and never force-exits (F-2098-1)
+  ---
+  duration_ms: 0.33675
+  type: 'test'
+  ...
+# (node:80368) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the agent view publishes declared pressure-contract coal seams only
+ok 125 - the agent view publishes declared pressure-contract coal seams only
+  ---
+  duration_ms: 7738.076833
+  type: 'test'
+  ...
+# collection-guard corpus: 3 subject(s) derived from collection-guards-cwd-invariance.test.mjs's own directory
+# Subtest: the collection-guard subject set is derived and non-empty
+ok 126 - the collection-guard subject set is derived and non-empty
+  ---
+  duration_ms: 0.398542
+  type: 'test'
+  ...
+# Subtest: lane-usable-untracked-files-guard.test.mjs is cwd-invariant from os.tmpdir()
+ok 127 - lane-usable-untracked-files-guard.test.mjs is cwd-invariant from os.tmpdir()
+  ---
+  duration_ms: 1814.267875
+  type: 'test'
+  ...
+# Subtest: lane-usable-untracked-files-guard.test.mjs is cwd-invariant from a repo subdirectory
+ok 128 - lane-usable-untracked-files-guard.test.mjs is cwd-invariant from a repo subdirectory
+  ---
+  duration_ms: 1762.099666
+  type: 'test'
+  ...
+# Subtest: town-spec-collection.test.mjs is cwd-invariant from os.tmpdir()
+ok 129 - town-spec-collection.test.mjs is cwd-invariant from os.tmpdir()
+  ---
+  duration_ms: 754.592875
+  type: 'test'
+  ...
+# Subtest: town-spec-collection.test.mjs is cwd-invariant from a repo subdirectory
+ok 130 - town-spec-collection.test.mjs is cwd-invariant from a repo subdirectory
+  ---
+  duration_ms: 589.79025
+  type: 'test'
+  ...
+# Subtest: whole-suite-collection.test.mjs is cwd-invariant from os.tmpdir()
+ok 131 - whole-suite-collection.test.mjs is cwd-invariant from os.tmpdir()
+  ---
+  duration_ms: 6889.248458
+  type: 'test'
+  ...
+# Subtest: whole-suite-collection.test.mjs is cwd-invariant from a repo subdirectory
+ok 132 - whole-suite-collection.test.mjs is cwd-invariant from a repo subdirectory
+  ---
+  duration_ms: 2154.293083
+  type: 'test'
+  ...
+# (node:89934) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: E2 default railcar group secures only when its last component dies
+ok 133 - E2 default railcar group secures only when its last component dies
+  ---
+  duration_ms: 0.386834
+  type: 'test'
+  ...
+# Subtest: E2 default railcar group rejects a wrong group id
+ok 134 - E2 default railcar group rejects a wrong group id
+  ---
+  duration_ms: 0.057083
+  type: 'test'
+  ...
+# Subtest: E3 variant uses the component-boss group suffix, not railcar
+ok 135 - E3 variant uses the component-boss group suffix, not railcar
+  ---
+  duration_ms: 0.047334
+  type: 'test'
+  ...
+# Subtest: E1 plain Baron accepts no group id and rejects a defined one
+ok 136 - E1 plain Baron accepts no group id and rejects a defined one
+  ---
+  duration_ms: 0.048333
+  type: 'test'
+  ...
+# Subtest: E6 Homemaker secures on its CORE only, never on the authored VAC+RACK group
+ok 137 - E6 Homemaker secures on its CORE only, never on the authored VAC+RACK group
+  ---
+  duration_ms: 0.075125
+  type: 'test'
+  ...
+# Subtest: elite kind must match even when the component group is fully down
+ok 138 - elite kind must match even when the component group is fully down
+  ---
+  duration_ms: 0.039959
+  type: 'test'
+  ...
+# Subtest: console error watching stays in one literal-prefix source
+ok 139 - console error watching stays in one literal-prefix source
+  ---
+  duration_ms: 5.057
+  type: 'test'
+  ...
+# (node:90453) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: both engines take the purse from twist.economy.bankCap, and Economy stays the one writer
+ok 140 - both engines take the purse from twist.economy.bankCap, and Economy stays the one writer
+  ---
+  duration_ms: 2046.878584
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: a contract without the twist opens at exactly Balance.economy.bankCap
+ok 141 - a contract without the twist opens at exactly Balance.economy.bankCap
+  ---
+  duration_ms: 1797.054584
+  type: 'test'
+  ...
+# Subtest: the published purse cannot drift from the authored one
+ok 142 - the published purse cannot drift from the authored one
+  ---
+  duration_ms: 463.616042
+  type: 'test'
+  ...
+# Subtest: the door refuses a purse that is not a positive whole number of gold
+ok 143 - the door refuses a purse that is not a positive whole number of gold
+  ---
+  duration_ms: 193.640708
+  type: 'test'
+  ...
+# Subtest: the browser applies the same field through the same Economy call
+ok 144 - the browser applies the same field through the same Economy call
+  ---
+  duration_ms: 0.827084
+  type: 'test'
+  ...
+# (node:90507) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: both engines price beacons from twist.economy.beaconLadder, through one function
+ok 145 - both engines price beacons from twist.economy.beaconLadder, through one function
+  ---
+  duration_ms: 2030.718042
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: a contract without the twist is charged exactly Balance.beacon, in both engines and on the card
+ok 146 - a contract without the twist is charged exactly Balance.beacon, in both engines and on the card
+  ---
+  duration_ms: 1822.726167
+  type: 'test'
+  ...
+# Subtest: the published ladder cannot drift from the authored one, or from the card a human reads
+ok 147 - the published ladder cannot drift from the authored one, or from the card a human reads
+  ---
+  duration_ms: 460.6095
+  type: 'test'
+  ...
+# Subtest: the door refuses a ladder that is not 1..maxCount non-decreasing whole multiples of 5
+ok 148 - the door refuses a ladder that is not 1..maxCount non-decreasing whole multiples of 5
+  ---
+  duration_ms: 200.114292
+  type: 'test'
+  ...
+# Subtest: the browser applies the same field through the same one call
+ok 149 - the browser applies the same field through the same one call
+  ---
+  duration_ms: 0.893959
+  type: 'test'
+  ...
+# (node:90541) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: one reader serves both engines, and the sim opens the run at the authored ceiling
+ok 150 - one reader serves both engines, and the sim opens the run at the authored ceiling
+  ---
+  duration_ms: 2096.103334
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the grit does not ratchet as upgrades land, and upgrades still raise the ceiling
+ok 151 - the grit does not ratchet as upgrades land, and upgrades still raise the ceiling
+  ---
+  duration_ms: 1808.759083
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: a contract without the twist opens at exactly Balance.hero.maxHp and publishes no rule
+ok 152 - a contract without the twist opens at exactly Balance.hero.maxHp and publishes no rule
+  ---
+  duration_ms: 1900.094209
+  type: 'test'
+  ...
+# Subtest: the published grit cannot drift from the authored one
+ok 153 - the published grit cannot drift from the authored one
+  ---
+  duration_ms: 476.244208
+  type: 'test'
+  ...
+# Subtest: the door refuses a grit that is not a positive whole number of hit points
+ok 154 - the door refuses a grit that is not a positive whole number of hit points
+  ---
+  duration_ms: 198.248125
+  type: 'test'
+  ...
+# Subtest: both engines apply the same field through the same reader
+ok 155 - both engines apply the same field through the same reader
+  ---
+  duration_ms: 0.918458
+  type: 'test'
+  ...
+# (node:92110) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: all selected contracts own run mechanics without replacing campaign or research provenance
+ok 156 - all selected contracts own run mechanics without replacing campaign or research provenance
+  ---
+  duration_ms: 226.896125
+  type: 'test'
+  ...
+# Subtest: fire shell SKIPS the cross-engine guard, with a reason a reader can act on
+ok 157 - fire shell SKIPS the cross-engine guard, with a reason a reader can act on
+  ---
+  duration_ms: 0.399417
+  type: 'test'
+  ...
+# Subtest: lane and attended shells RUN the cross-engine guard
+ok 158 - lane and attended shells RUN the cross-engine guard
+  ---
+  duration_ms: 0.331833
+  type: 'test'
+  ...
+# Subtest: a missing second interpreter still outranks the shell question
+ok 159 - a missing second interpreter still outranks the shell question
+  ---
+  duration_ms: 0.086959
+  type: 'test'
+  ...
+# Subtest: player menu follows free live deck capacity, loss and reset while retaining land prices
+ok 160 - player menu follows free live deck capacity, loss and reset while retaining land prices
+  ---
+  duration_ms: 73.615167
+  type: 'test'
+  ...
+# Subtest: boat and Flotilla movement carries only aboard riders and keeps pad/building ownership through loss and reset
+ok 161 - boat and Flotilla movement carries only aboard riders and keeps pad/building ownership through loss and reset
+  ---
+  duration_ms: 72.696958
+  type: 'test'
+  ...
+# (node:92117) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: headless public BOAT_BUILD and REANCHOR orders use the same rider and hull owners
+ok 162 - headless public BOAT_BUILD and REANCHOR orders use the same rider and hull owners
+  ---
+  duration_ms: 2597.930709
+  type: 'test'
+  ...
+# Subtest: closing a formation stops at living hull boundaries, including a swept crossing
+ok 163 - closing a formation stops at living hull boundaries, including a swept crossing
+  ---
+  duration_ms: 5.647916
+  type: 'test'
+  ...
+# (node:92149) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# {"seed":"e5-regatta-01","outcome":{"secured":true,"waves":12,"timeMs":272000,"gold":0,"kills":23,"calls":282,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:a43cf9ba"},"passed":[{"gate":"start-beacon","at":3},{"gate":"northwest-checkpoint","at":51},{"gate":"midcourse-checkpoint","at":87},{"gate":"northeast-checkpoint","at":123},{"gate":"finish-beacon","at":169},{"gate":"claim-boat","at":280}],"fastWaterSpeed":2.4749999999999996,"openWaterSpeed":2.448333333333333}
+# {"seed":"e5-regatta-02","outcome":{"secured":true,"waves":12,"timeMs":272000,"gold":0,"kills":23,"calls":282,"defaultedPicks":0,"defaultedSecure":0,"eventLogHash":"fnv1a32:0c861e63"},"passed":[{"gate":"start-beacon","at":3},{"gate":"northwest-checkpoint","at":51},{"gate":"midcourse-checkpoint","at":87},{"gate":"northeast-checkpoint","at":123},{"gate":"finish-beacon","at":169},{"gate":"claim-boat","at":280}],"fastWaterSpeed":2.4749999999999996,"openWaterSpeed":2.448333333333333}
+# Subtest: Regatta measures the rider, applies fast water to that body, and secures reproducibly
+ok 164 - Regatta measures the rider, applies fast water to that body, and secures reproducibly
+  ---
+  duration_ms: 28688.487
+  type: 'test'
+  ...
+# Subtest: deploy fails closed: payload over the budget
+ok 165 - deploy fails closed: payload over the budget
+  ---
+  duration_ms: 1298.078166
+  type: 'test'
+  ...
+# Subtest: deploy fails closed: payload exactly ON the budget (the comparison is less-than)
+ok 166 - deploy fails closed: payload exactly ON the budget (the comparison is less-than)
+  ---
+  duration_ms: 656.126458
+  type: 'test'
+  ...
+# Subtest: deploy fails closed: a declared family the build does not emit
+ok 167 - deploy fails closed: a declared family the build does not emit
+  ---
+  duration_ms: 565.131042
+  type: 'test'
+  ...
+# Subtest: deploy fails closed: the probe tripwire over its ceiling
+ok 168 - deploy fails closed: the probe tripwire over its ceiling
+  ---
+  duration_ms: 693.735583
+  type: 'test'
+  ...
+# Subtest: the deploy survives a broken tripwire and says so: the probe exits nonzero
+ok 169 - the deploy survives a broken tripwire and says so: the probe exits nonzero
+  ---
+  duration_ms: 546.7895
+  type: 'test'
+  ...
+# Subtest: the deploy survives a broken tripwire and says so: the probe measures nothing
+ok 170 - the deploy survives a broken tripwire and says so: the probe measures nothing
+  ---
+  duration_ms: 476.870042
+  type: 'test'
+  ...
+# Subtest: the deploy survives a broken tripwire and says so: the per-file report is unreadable
+ok 171 - the deploy survives a broken tripwire and says so: the per-file report is unreadable
+  ---
+  duration_ms: 546.253167
+  type: 'test'
+  ...
+# Subtest: the deploy survives a broken tripwire and says so: mobile never reported
+ok 172 - the deploy survives a broken tripwire and says so: mobile never reported
+  ---
+  duration_ms: 520.479375
+  type: 'test'
+  ...
+# Subtest: the deploy survives a broken tripwire and says so: the same project reported twice
+ok 173 - the deploy survives a broken tripwire and says so: the same project reported twice
+  ---
+  duration_ms: 521.549875
+  type: 'test'
+  ...
+# Subtest: the verdict block names which number gates and which only trips
+ok 174 - the verdict block names which number gates and which only trips
+  ---
+  duration_ms: 584.328542
+  type: 'test'
+  ...
+# Subtest: the budget and the ceiling in the block are the constants deploy.sh holds
+ok 175 - the budget and the ceiling in the block are the constants deploy.sh holds
+  ---
+  duration_ms: 0.436042
+  type: 'test'
+  ...
+# Subtest: --allow-over-budget waives both numbers at once, and says which failed
+ok 176 - --allow-over-budget waives both numbers at once, and says which failed
+  ---
+  duration_ms: 558.606333
+  type: 'test'
+  ...
+# Subtest: under-budget dry run passes; an existing owner verdict is reported without interpreting it
+ok 177 - under-budget dry run passes; an existing owner verdict is reported without interpreting it
+  ---
+  duration_ms: 548.943959
+  type: 'test'
+  ...
+# Subtest: allowance reaches the publisher; strict still governs deploy errors
+ok 178 - allowance reaches the publisher; strict still governs deploy errors
+  ---
+  duration_ms: 1025.405541
+  type: 'test'
+  ...
+# Subtest: build failure prints a verdict and preserves strict=false
+ok 179 - build failure prints a verdict and preserves strict=false
+  ---
+  duration_ms: 334.806084
+  type: 'test'
+  ...
+# Subtest: build failure prints a verdict and preserves strict=true
+ok 180 - build failure prints a verdict and preserves strict=true
+  ---
+  duration_ms: 360.870792
+  type: 'test'
+  ...
+# Subtest: lock refusal prints the release verdict before any build
+ok 181 - lock refusal prints the release verdict before any build
+  ---
+  duration_ms: 162.061
+  type: 'test'
+  ...
+# Subtest: deploy.sh falls back to the probe only when the payload script is genuinely absent
+ok 182 - deploy.sh falls back to the probe only when the payload script is genuinely absent
+  ---
+  duration_ms: 1067.36025
+  type: 'test'
+  ...
+# Subtest: the fallback is unreachable in this repo: the payload script and its declaration are here
+ok 183 - the fallback is unreachable in this repo: the payload script and its declaration are here
+  ---
+  duration_ms: 0.130917
+  type: 'test'
+  ...
+# Subtest: the payload table is deterministic: three runs, byte-identical
+ok 184 - the payload table is deterministic: three runs, byte-identical
+  ---
+  duration_ms: 670.391917
+  type: 'test'
+  ...
+# Subtest: the declared set is non-empty, sorted, disjoint, and every row carries its reason
+ok 185 - the declared set is non-empty, sorted, disjoint, and every row carries its reason
+  ---
+  duration_ms: 0.288042
+  type: 'test'
+  ...
+# Subtest: the declaration cannot drift from the town's own sources
+ok 186 - the declaration cannot drift from the town's own sources
+  ---
+  duration_ms: 0.913875
+  type: 'test'
+  ...
+# Subtest: the cross-check bites: a cast member dropped from the declaration is named
+ok 187 - the cross-check bites: a cast member dropped from the declaration is named
+  ---
+  duration_ms: 0.488209
+  type: 'test'
+  ...
+# Subtest: the cross-check bites: re-declaring a deferred hero clip group is refused
+ok 188 - the cross-check bites: re-declaring a deferred hero clip group is refused
+  ---
+  duration_ms: 0.588958
+  type: 'test'
+  ...
+# Subtest: a corpus family the declaration does not name is reported, never counted
+ok 189 - a corpus family the declaration does not name is reported, never counted
+  ---
+  duration_ms: 622.39125
+  type: 'test'
+  ...
+# Subtest: the family derivation is a verbatim copy of the request-family guard's
+ok 190 - the family derivation is a verbatim copy of the request-family guard's
+  ---
+  duration_ms: 0.246708
+  type: 'test'
+  ...
+# Subtest: the payload computed here is the payload the block prints
+ok 191 - the payload computed here is the payload the block prints
+  ---
+  duration_ms: 586.45075
+  type: 'test'
+  ...
+# Subtest: the release assertion the deploy runs is present and deploy.sh calls it (F-RGD-2)
+ok 192 - the release assertion the deploy runs is present and deploy.sh calls it (F-RGD-2)
+  ---
+  duration_ms: 0.126458
+  type: 'test'
+  ...
+# mirror closure: ledger 2213 files; assay 2910 files; engine 662 files; total 3174
+# Subtest: droplet mirror ships the runtime closure and deletes only unprotected spillover
+ok 193 - droplet mirror ships the runtime closure and deletes only unprotected spillover
+  ---
+  duration_ms: 1225.953917
+  type: 'test'
+  ...
+# Saturated-key deshadow removes connected dark key paint; preserves neutral/blue/black edges, enclosed purple and warm boots; default unchanged.
+# Subtest: scripts/deshadow-key.test.mjs
+ok 40 - scripts/deshadow-key.test.mjs
+  ---
+  duration_ms: 371.028833
+  type: 'test'
+  ...
+# Subtest: the SELECTOR admits an owner ACT and refuses a gate that merely says the word
+ok 195 - the SELECTOR admits an owner ACT and refuses a gate that merely says the word
+  ---
+  duration_ms: 1.0175
+  type: 'test'
+  ...
+# Subtest: a NEGATED owner gate is a disclaimer and must NOT flag (F-1551-4)
+ok 196 - a NEGATED owner gate is a disclaimer and must NOT flag (F-1551-4)
+  ---
+  duration_ms: 0.230708
+  type: 'test'
+  ...
+# Subtest: negation handling does not disarm the guard — every positive still flags
+ok 197 - negation handling does not disarm the guard — every positive still flags
+  ---
+  duration_ms: 0.062292
+  type: 'test'
+  ...
+# Subtest: a negation is scoped to its own sentence, so a mixed gate keeps its owner half
+ok 198 - a negation is scoped to its own sentence, so a mixed gate keeps its owner half
+  ---
+  duration_ms: 0.053291
+  type: 'test'
+  ...
+# Subtest: the selector reads the other real owner-gate phrasings on the board
+ok 199 - the selector reads the other real owner-gate phrasings on the board
+  ---
+  duration_ms: 0.067084
+  type: 'test'
+  ...
+# Subtest: and refuses the fire-actionable phrasings that sit beside them
+ok 200 - and refuses the fire-actionable phrasings that sit beside them
+  ---
+  duration_ms: 0.061084
+  type: 'test'
+  ...
+# Subtest: a row is keyed by the id it INTRODUCES, not one its prose cites
+ok 201 - a row is keyed by the id it INTRODUCES, not one its prose cites
+  ---
+  duration_ms: 0.13625
+  type: 'test'
+  ...
+# Subtest: gateOf takes the LAST gate clause, since row prose quotes earlier ones
+ok 202 - gateOf takes the LAST gate clause, since row prose quotes earlier ones
+  ---
+  duration_ms: 0.049792
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED DEFECT — an owner-gated row filed with no desk mention is named
+ok 203 - MANUFACTURED DEFECT — an owner-gated row filed with no desk mention is named
+  ---
+  duration_ms: 0.559209
+  type: 'test'
+  ...
+# Subtest: THE REAL s1540->s1541 EVENT: both undesked owner rows are caught, the six others are not
+ok 204 - THE REAL s1540->s1541 EVENT: both undesked owner rows are caught, the six others are not
+  ---
+  duration_ms: 0.20575
+  type: 'test'
+  ...
+# Subtest: ...and once they are ON the desk, the same window passes
+ok 205 - ...and once they are ON the desk, the same window passes
+  ---
+  duration_ms: 0.096916
+  type: 'test'
+  ...
+# Subtest: the desk is the LAST desk word, so an upstream PROSE mention does not satisfy it
+ok 206 - the desk is the LAST desk word, so an upstream PROSE mention does not satisfy it
+  ---
+  duration_ms: 0.0865
+  type: 'test'
+  ...
+# Subtest: DESK-NOT-OWED excuses an id, and is scoped so it cannot cover an unrelated one
+ok 207 - DESK-NOT-OWED excuses an id, and is scoped so it cannot cover an unrelated one
+  ---
+  duration_ms: 0.11525
+  type: 'test'
+  ...
+# Subtest: SKIPS mid-fire on an ACTIVE lock, so drain batteries are unaffected
+ok 208 - SKIPS mid-fire on an ACTIVE lock, so drain batteries are unaffected
+  ---
+  duration_ms: 0.047958
+  type: 'test'
+  ...
+# Subtest: REFUSES rather than greening when line-1 carries no desk at all
+ok 209 - REFUSES rather than greening when line-1 carries no desk at all
+  ---
+  duration_ms: 0.039416
+  type: 'test'
+  ...
+# Subtest: the backtick header is readable here too — the three desk parsers stay in step
+ok 210 - the backtick header is readable here too — the three desk parsers stay in step
+  ---
+  duration_ms: 0.061958
+  type: 'test'
+  ...
+# Subtest: addedRows reads the ledger glyphs and ignores diff noise
+ok 211 - addedRows reads the ledger glyphs and ignores diff noise
+  ---
+  duration_ms: 0.09425
+  type: 'test'
+  ...
+# Subtest: a desk item WITH a declaring row passes
+ok 212 - a desk item WITH a declaring row passes
+  ---
+  duration_ms: 54.27175
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id
+ok 213 - MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id
+  ---
+  duration_ms: 42.312083
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared
+ok 214 - MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared
+  ---
+  duration_ms: 42.98675
+  type: 'test'
+  ...
+# Subtest: a row whose id sits past the 90-char subject zone does NOT declare it
+ok 215 - a row whose id sits past the 90-char subject zone does NOT declare it
+  ---
+  duration_ms: 41.448916
+  type: 'test'
+  ...
+# Subtest: the leading GLYPH is irrelevant — F-1334-1 refuted marker equality
+ok 216 - the leading GLYPH is irrelevant — F-1334-1 refuted marker equality
+  ---
+  duration_ms: 214.727792
+  type: 'test'
+  ...
+# Subtest: the markdown list bullet is stripped: bulleted and unbulleted rows read alike
+ok 217 - the markdown list bullet is stripped: bulleted and unbulleted rows read alike
+  ---
+  duration_ms: 106.884916
+  type: 'test'
+  ...
+# Subtest: GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk"
+ok 218 - GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk"
+  ---
+  duration_ms: 46.266166
+  type: 'test'
+  ...
+# Subtest: REFUSES (exit 2) rather than greening when there is no OWNER DESK segment
+ok 219 - REFUSES (exit 2) rather than greening when there is no OWNER DESK segment
+  ---
+  duration_ms: 30.374084
+  type: 'test'
+  ...
+# Subtest: REFUSES (exit 2) when the desk segment holds zero keyed items
+ok 220 - REFUSES (exit 2) when the desk segment holds zero keyed items
+  ---
+  duration_ms: 32.5575
+  type: 'test'
+  ...
+# Subtest: REFUSES (exit 2) when BACKLOG.md is missing
+ok 221 - REFUSES (exit 2) when BACKLOG.md is missing
+  ---
+  duration_ms: 28.504458
+  type: 'test'
+  ...
+# Subtest: the entrypoint actually RUNS — a space in the repo path must not no-op it
+ok 222 - the entrypoint actually RUNS — a space in the repo path must not no-op it
+  ---
+  duration_ms: 41.583958
+  type: 'test'
+  ...
+# Subtest: the live board is green under this guard (baseline is honest)
+ok 223 - the live board is green under this guard (baseline is honest)
+  ---
+  duration_ms: 54.4415
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard
+ok 224 - MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard
+  ---
+  duration_ms: 29.335
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item
+ok 225 - MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item
+  ---
+  duration_ms: 43.291625
+  type: 'test'
+  ...
+# Subtest: all five desk spellings are read — the majority form was invisible
+ok 226 - all five desk spellings are read — the majority form was invisible
+  ---
+  duration_ms: 250.244833
+  type: 'test'
+  ...
+# Subtest: an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time
+ok 227 - an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time
+  ---
+  duration_ms: 41.380125
+  type: 'test'
+  ...
+# Subtest: a lock line that MENTIONS the desk in prose is still a lock, not a desk
+ok 228 - a lock line that MENTIONS the desk in prose is still a lock, not a desk
+  ---
+  duration_ms: 43.53025
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail
+ok 229 - MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail
+  ---
+  duration_ms: 41.831125
+  type: 'test'
+  ...
+# Subtest: a handoff whose desk header has no F-IDs after it REFUSES (exit 2)
+ok 230 - a handoff whose desk header has no F-IDs after it REFUSES (exit 2)
+  ---
+  duration_ms: 30.305875
+  type: 'test'
+  ...
+# Subtest: a SLUG-keyed desk item WITH a declaring row passes
+ok 231 - a SLUG-keyed desk item WITH a declaring row passes
+  ---
+  duration_ms: 53.876042
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug
+ok 232 - MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug
+  ---
+  duration_ms: 42.464375
+  type: 'test'
+  ...
+# Subtest: the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared
+ok 233 - the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared
+  ---
+  duration_ms: 41.854084
+  type: 'test'
+  ...
+# Subtest: F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap)
+ok 234 - F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap)
+  ---
+  duration_ms: 55.418583
+  type: 'test'
+  ...
+# Subtest: F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item
+ok 235 - F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item
+  ---
+  duration_ms: 54.9615
+  type: 'test'
+  ...
+# Subtest: a desk of ONLY slug items does not trip the zero-keyed-items refusal
+ok 236 - a desk of ONLY slug items does not trip the zero-keyed-items refusal
+  ---
+  duration_ms: 55.50775
+  type: 'test'
+  ...
+# Subtest: the grandfather list may only SHRINK — never grows past the s1334 baseline
+ok 237 - the grandfather list may only SHRINK — never grows past the s1334 baseline
+  ---
+  duration_ms: 0.2625
+  type: 'test'
+  ...
+# Subtest: every grandfathered id is still on the desk — the list must not rot
+ok 238 - every grandfathered id is still on the desk — the list must not rot
+  ---
+  duration_ms: 8.384333
+  type: 'test'
+  ...
+# Subtest: MANUFACTURED: with the list EMPTY the guard is strict — no id is excused
+ok 239 - MANUFACTURED: with the list EMPTY the guard is strict — no id is excused
+  ---
+  duration_ms: 43.828083
+  type: 'test'
+  ...
+# Cutout despill passed: default interior preservation; explicit all-palette repair; alpha/size, brass/teal, idempotence and invalid combinations
+# Subtest: scripts/despill-cutout.test.mjs
+ok 43 - scripts/despill-cutout.test.mjs
+  ---
+  duration_ms: 385.033334
+  type: 'test'
+  ...
+# (node:739) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: derived door matches the fixed admission baseline
+ok 241 - derived door matches the fixed admission baseline
+  ---
+  duration_ms: 2491.626833
+  type: 'test'
+  ...
+# Subtest: drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live
+ok 242 - drain path REFUSES a terminal-closed leaf (F-1248-1) — and clears the same fixture when live
+  ---
+  duration_ms: 107.930291
+  type: 'test'
+  ...
+# Subtest: every TERMINAL_CLOSED word is refused on the drain path, and no other word is
+ok 243 - every TERMINAL_CLOSED word is refused on the drain path, and no other word is
+  ---
+  duration_ms: 532.652458
+  type: 'test'
+  ...
+# Subtest: an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1)
+ok 244 - an owner BLOCK still outranks everything and still names the owner (unchanged by F-1248-1)
+  ---
+  duration_ms: 55.751958
+  type: 'test'
+  ...
+# Subtest: --queue keeps its own wording and its own reason line
+ok 245 - --queue keeps its own wording and its own reason line
+  ---
+  duration_ms: 52.771667
+  type: 'test'
+  ...
+# Subtest: F-1311-2: --queue refuses a fresh bare citation and names the repair
+ok 246 - F-1311-2: --queue refuses a fresh bare citation and names the repair
+  ---
+  duration_ms: 147.896
+  type: 'test'
+  ...
+# Subtest: F-1311-2: --queue accepts the same citation with its test title
+ok 247 - F-1311-2: --queue accepts the same citation with its test title
+  ---
+  duration_ms: 156.4745
+  type: 'test'
+  ...
+# Subtest: F-1311-2: --queue respects the grandfathered baseline
+ok 248 - F-1311-2: --queue respects the grandfathered baseline
+  ---
+  duration_ms: 145.514125
+  type: 'test'
+  ...
+# Subtest: F-1311-2: the drain arm remains unchanged for a fresh bare citation
+ok 249 - F-1311-2: the drain arm remains unchanged for a fresh bare citation
+  ---
+  duration_ms: 51.666834
+  type: 'test'
+  ...
+# Subtest: a closed leaf whose reason sits under a session-stamped key is still explained
+ok 250 - a closed leaf whose reason sits under a session-stamped key is still explained
+  ---
+  duration_ms: 103.073959
+  type: 'test'
+  ...
+# Subtest: F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not
+ok 251 - F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not
+  ---
+  duration_ms: 160.41575
+  type: 'test'
+  ...
+# Subtest: F-1249-1: a stale blockedReason is never printed as the CLOSURE cause
+ok 252 - F-1249-1: a stale blockedReason is never printed as the CLOSURE cause
+  ---
+  duration_ms: 109.761625
+  type: 'test'
+  ...
+# Subtest: F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists
+ok 253 - F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists
+  ---
+  duration_ms: 158.264542
+  type: 'test'
+  ...
+# Subtest: --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone
+ok 254 - --all reports terminal-closed leaves but its exit code still tracks BLOCKED alone
+  ---
+  duration_ms: 106.043125
+  type: 'test'
+  ...
+# Subtest: F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR)
+ok 255 - F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR)
+  ---
+  duration_ms: 155.151084
+  type: 'test'
+  ...
+# Subtest: F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor
+ok 256 - F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor
+  ---
+  duration_ms: 103.573458
+  type: 'test'
+  ...
+# Subtest: F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced)
+ok 257 - F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced)
+  ---
+  duration_ms: 52.987125
+  type: 'test'
+  ...
+# Subtest: F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named
+ok 258 - F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named
+  ---
+  duration_ms: 103.424334
+  type: 'test'
+  ...
+# Subtest: a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it
+ok 259 - a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it
+  ---
+  duration_ms: 102.275792
+  type: 'test'
+  ...
+# Subtest: --queue REFUSES a master a runner already holds (F-1322-1) — and clears it once the slot frees
+ok 260 - --queue REFUSES a master a runner already holds (F-1322-1) — and clears it once the slot frees
+  ---
+  duration_ms: 215.421
+  type: 'test'
+  ...
+# Subtest: the live-run match is the runner's exact shape, not a name suffix
+ok 261 - the live-run match is the runner's exact shape, not a name suffix
+  ---
+  duration_ms: 206.336042
+  type: 'test'
+  ...
+# Subtest: an UNDRAINED done-move WARNS but never refuses — s1320's lawful §7.5 re-dispatch must pass
+ok 262 - an UNDRAINED done-move WARNS but never refuses — s1320's lawful §7.5 re-dispatch must pass
+  ---
+  duration_ms: 443.994125
+  type: 'test'
+  ...
+# Subtest: F-2097-1: an UNREGISTERED master is still refused when a runner holds it
+ok 263 - F-2097-1: an UNREGISTERED master is still refused when a runner holds it
+  ---
+  duration_ms: 155.648709
+  type: 'test'
+  ...
+# Subtest: the DRAIN path is untouched by both arms — a done-move is what a drain is FOR
+ok 264 - the DRAIN path is untouched by both arms — a done-move is what a drain is FOR
+  ---
+  duration_ms: 52.981833
+  type: 'test'
+  ...
+# (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+#   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+# Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+# WebSocket server error: Port 24678 is already in use
+# (node:4913) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# PASS: authored Archive bindings and cadence accepted; malformed references, duplicates and clocks rejected; omitted cadence uses scheduler defaults; production bundle unchanged
+# Subtest: scripts/e10-archive-contract.test.mjs
+ok 46 - scripts/e10-archive-contract.test.mjs
+  ---
+  duration_ms: 838.025125
+  type: 'test'
+  ...
+# (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+#   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+# Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+# WebSocket server error: Port 24678 is already in use
+# (node:4968) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# PASS: ordered full holds, interruptions, retry, saved progress, replay and configuration checks
+# Subtest: scripts/e10-archive-hold.test.mjs
+ok 47 - scripts/e10-archive-hold.test.mjs
+  ---
+  duration_ms: 563.600292
+  type: 'test'
+  ...
+# (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+#   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+# Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+# WebSocket server error: Port 24678 is already in use
+# (node:5005) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# PASS: committed-only archive pages, ordered saved state, reachable chapter, authored lore text
+# Subtest: scripts/e10-archive-ledger.test.mjs
+ok 48 - scripts/e10-archive-ledger.test.mjs
+  ---
+  duration_ms: 550.547291
+  type: 'test'
+  ...
+# (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+#   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+# Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+# WebSocket server error: Port 24678 is already in use
+# (node:5012) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Legal fixture beacon placements: [{"siteId":"west-wing-light","x":-30,"z":-9},{"siteId":"east-wing-light","x":26,"z":-9},{"siteId":"warning-shelf-light","x":-3,"z":38}]
+# PASS: headless fixed-step clock, authored-site power input, hold and published objective state
+# Subtest: scripts/e10-archive-wiring.test.mjs
+ok 49 - scripts/e10-archive-wiring.test.mjs
+  ---
+  duration_ms: 1826.072084
+  type: 'test'
+  ...
+# (node:5034) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# {"authored":{"stakeId":"last-warm-vent","position":{"x":3,"z":-10},"initialWarmth":100,"decayPerSecond":4,"goldCost":15,"warmthRestore":40,"radius":4,"squallsRequired":1},"sink":"stoke_last_warm_vent"}
+# {"gutteredAtSeconds":25,"decayPerSecond":4}
+# {"calmShare":0.25,"squallShare":0.5}
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# {"engine":"HeadlessContractSim","endReason":"vent_guttered","waves":3,"hash":"fnv1a32:81bb5eb3"}
+# {"stokes":0,"refusals":{"undeclared":0,"guttered":0,"out-of-reach":0,"insufficient-gold":0,"already-warm":1}}
+# Subtest: the corpus is not empty
+ok 269 - the corpus is not empty
+  ---
+  duration_ms: 0.425291
+  type: 'test'
+  ...
+# Subtest: the Ember Shore declares a whole preserve and the consumer arms on it
+ok 270 - the Ember Shore declares a whole preserve and the consumer arms on it
+  ---
+  duration_ms: 0.486167
+  type: 'test'
+  ...
+# Subtest: warmth falls only while the squall blows
+ok 271 - warmth falls only while the squall blows
+  ---
+  duration_ms: 0.7655
+  type: 'test'
+  ...
+# Subtest: an unstoked vent gutters inside one squall, and latches once
+ok 272 - an unstoked vent gutters inside one squall, and latches once
+  ---
+  duration_ms: 0.370667
+  type: 'test'
+  ...
+# Subtest: a stoked vent survives the squall that would have taken it
+ok 273 - a stoked vent survives the squall that would have taken it
+  ---
+  duration_ms: 0.280166
+  type: 'test'
+  ...
+# Subtest: the stoke is refused out of reach, refused when the purse is short, and never over-fills
+ok 274 - the stoke is refused out of reach, refused when the purse is short, and never over-fills
+  ---
+  duration_ms: 0.306334
+  type: 'test'
+  ...
+# Subtest: the secure latch needs BOTH conditions, and each is proven alone
+ok 275 - the secure latch needs BOTH conditions, and each is proven alone
+  ---
+  duration_ms: 1.971125
+  type: 'test'
+  ...
+# Subtest: a half-declared preserve arms nothing (F-1471-1)
+ok 276 - a half-declared preserve arms nothing (F-1471-1)
+  ---
+  duration_ms: 0.725708
+  type: 'test'
+  ...
+# Subtest: the E10S-2 mote pressure is APPLIED: a quarter of the field in the calm, half of it in the squall
+ok 277 - the E10S-2 mote pressure is APPLIED: a quarter of the field in the calm, half of it in the squall
+  ---
+  duration_ms: 0.345291
+  type: 'test'
+  ...
+# Subtest: reset relights the vent exactly as a new run finds it
+ok 278 - reset relights the vent exactly as a new run finds it
+  ---
+  duration_ms: 0.175542
+  type: 'test'
+  ...
+# Subtest: the headless engine runs the vent, publishes it, and ends the run on it
+ok 279 - the headless engine runs the vent, publishes it, and ends the run on it
+  ---
+  duration_ms: 926.51875
+  type: 'test'
+  ...
+# Subtest: the headless STOKE verb is reachable, spends the run purse, and refuses honestly
+ok 280 - the headless STOKE verb is reachable, spends the run purse, and refuses honestly
+  ---
+  duration_ms: 908.742458
+  type: 'test'
+  ...
+# Subtest: no other board contract grows a vent
+ok 281 - no other board contract grows a vent
+  ---
+  duration_ms: 4.543917
+  type: 'test'
+  ...
+# Subtest: the browser engine runs the same consumer at the same point in its order
+ok 282 - the browser engine runs the same consumer at the same point in its order
+  ---
+  duration_ms: 1.041458
+  type: 'test'
+  ...
+# Subtest: the consumer reaches no render code (F-A8-7)
+ok 283 - the consumer reaches no render code (F-A8-7)
+  ---
+  duration_ms: 0.202208
+  type: 'test'
+  ...
+# Subtest: the mechanics manifest publishes the vent rule with the numbers the engine enforces
+ok 284 - the mechanics manifest publishes the vent rule with the numbers the engine enforces
+  ---
+  duration_ms: 0.125542
+  type: 'test'
+  ...
+# Subtest: the engine dependency says LANDED and names the slice that landed it (F-E10S2-1)
+ok 285 - the engine dependency says LANDED and names the slice that landed it (F-E10S2-1)
+  ---
+  duration_ms: 0.772583
+  type: 'test'
+  ...
+# (node:5129) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# {"extract":{"secured":false,"waves":4,"timeMs":128667,"gold":60,"kills":66,"calls":1,"defaultedPicks":3,"defaultedSecure":0,"eventLogHash":"fnv1a32:9b133c8d","endReason":"preserve_fell"},"defend":{"secured":true,"waves":8,"timeMs":240033,"gold":10,"kills":200,"calls":2,"defaultedPicks":6,"defaultedSecure":0,"eventLogHash":"fnv1a32:3eec9b2b"}}
+# Subtest: the Last Claim flips extraction into a preserve objective
+ok 286 - the Last Claim flips extraction into a preserve objective
+  ---
+  duration_ms: 12222.036416
+  type: 'test'
+  ...
+# (node:6636) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# {"phaseTable":[{"from":null,"to":"calm","tick":0,"atSeconds":0,"cycle":0},{"from":"calm","to":"telegraph","tick":1801,"atSeconds":60.033,"cycle":0},{"from":"telegraph","to":"squall","tick":2041,"atSeconds":68.033,"cycle":0},{"from":"squall","to":"recover","tick":2791,"atSeconds":93.033,"cycle":0},{"from":"recover","to":"calm","tick":3031,"atSeconds":101.033,"cycle":1},{"from":"calm","to":"telegraph","tick":4831,"atSeconds":161.033,"cycle":1},{"from":"telegraph","to":"squall","tick":5071,"atSeconds":169.033,"cycle":1},{"from":"squall","to":"recover","tick":5821,"atSeconds":194.033,"cycle":1},{"from":"recover","to":"calm","tick":6061,"atSeconds":202.033,"cycle":2}],"cadence":{"calmSeconds":60,"telegraphSeconds":8,"squallSeconds":25,"recoverSeconds":8,"cycleSeconds":101}}
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# {"engine":"HeadlessContractSim","tick":2100,"phase":"squall","transitions":[{"from":null,"to":"calm","tick":0,"atSeconds":0,"cycle":0},{"from":"calm","to":"telegraph","tick":1801,"atSeconds":60.033,"cycle":0},{"from":"telegraph","to":"squall","tick":2041,"atSeconds":68.033,"cycle":0}]}
+# Subtest: the corpus is not empty
+ok 287 - the corpus is not empty
+  ---
+  duration_ms: 0.41475
+  type: 'test'
+  ...
+# Subtest: the Ember Shore declares a whole cadence and the scheduler arms on it
+ok 288 - the Ember Shore declares a whole cadence and the scheduler arms on it
+  ---
+  duration_ms: 0.439083
+  type: 'test'
+  ...
+# Subtest: the phase machine changes phase at fixed ticks
+ok 289 - the phase machine changes phase at fixed ticks
+  ---
+  duration_ms: 0.72425
+  type: 'test'
+  ...
+# Subtest: the published phase agrees with the log at every sampled instant
+ok 290 - the published phase agrees with the log at every sampled instant
+  ---
+  duration_ms: 0.475792
+  type: 'test'
+  ...
+# Subtest: two runs of the same cadence are byte-identical
+ok 291 - two runs of the same cadence are byte-identical
+  ---
+  duration_ms: 0.232333
+  type: 'test'
+  ...
+# Subtest: a broken or absent cadence arms nothing
+ok 292 - a broken or absent cadence arms nothing
+  ---
+  duration_ms: 0.470083
+  type: 'test'
+  ...
+# Subtest: reset restores the run-start clock
+ok 293 - reset restores the run-start clock
+  ---
+  duration_ms: 0.143959
+  type: 'test'
+  ...
+# Subtest: the headless engine publishes the squall on the view, and only there
+ok 294 - the headless engine publishes the squall on the view, and only there
+  ---
+  duration_ms: 705.970417
+  type: 'test'
+  ...
+# Subtest: only the two contracts that declare a squall grow one
+ok 295 - only the two contracts that declare a squall grow one
+  ---
+  duration_ms: 0.147875
+  type: 'test'
+  ...
+# Subtest: the browser engine ticks the same scheduler at the same point in its order
+ok 296 - the browser engine ticks the same scheduler at the same point in its order
+  ---
+  duration_ms: 0.835458
+  type: 'test'
+  ...
+# Subtest: the scheduler reaches no render code (F-A8-7)
+ok 297 - the scheduler reaches no render code (F-A8-7)
+  ---
+  duration_ms: 0.202083
+  type: 'test'
+  ...
+# Subtest: the mechanics manifest publishes the squall rule, and says what it does not do
+ok 298 - the mechanics manifest publishes the squall rule, and says what it does not do
+  ---
+  duration_ms: 0.3755
+  type: 'test'
+  ...
+# Subtest: published mask tables exactly track authored contract data
+ok 299 - published mask tables exactly track authored contract data
+  ---
+  duration_ms: 8.804042
+  type: 'test'
+  ...
+# Subtest: published Moth Season mask stays inside bounds and agrees with authored water
+ok 300 - published Moth Season mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.423625
+  type: 'test'
+  ...
+# Subtest: e2-trestle mask stays inside bounds and agrees with authored water
+ok 301 - e2-trestle mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.230375
+  type: 'test'
+  ...
+# Subtest: e2-pressure-garden mask stays inside bounds and agrees with authored water
+ok 302 - e2-pressure-garden mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.203708
+  type: 'test'
+  ...
+# Subtest: e2-incline mask stays inside bounds and agrees with authored water
+ok 303 - e2-incline mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.180917
+  type: 'test'
+  ...
+# Subtest: e3-canyon-works mask stays inside bounds and agrees with authored water
+ok 304 - e3-canyon-works mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.202375
+  type: 'test'
+  ...
+# Subtest: e3-blackout-ridge mask stays inside bounds and agrees with authored water
+ok 305 - e3-blackout-ridge mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.196
+  type: 'test'
+  ...
+# Subtest: e3-moth-season mask stays inside bounds and agrees with authored water
+ok 306 - e3-moth-season mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.251875
+  type: 'test'
+  ...
+# Subtest: e3-fairground mask stays inside bounds and agrees with authored water
+ok 307 - e3-fairground mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.23725
+  type: 'test'
+  ...
+# Subtest: e4-dust-flats mask stays inside bounds and agrees with authored water
+ok 308 - e4-dust-flats mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.283208
+  type: 'test'
+  ...
+# Subtest: e4-long-road mask stays inside bounds and agrees with authored water
+ok 309 - e4-long-road mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.241291
+  type: 'test'
+  ...
+# Subtest: e4-gusher-county mask stays inside bounds and agrees with authored water
+ok 310 - e4-gusher-county mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.246125
+  type: 'test'
+  ...
+# Subtest: e4-boneyard mask stays inside bounds and agrees with authored water
+ok 311 - e4-boneyard mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.474834
+  type: 'test'
+  ...
+# Subtest: e5-regatta mask stays inside bounds and agrees with authored water
+ok 312 - e5-regatta mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.216125
+  type: 'test'
+  ...
+# Subtest: e5-stillwater mask stays inside bounds and agrees with authored water
+ok 313 - e5-stillwater mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.1945
+  type: 'test'
+  ...
+# Subtest: e5-flotilla mask stays inside bounds and agrees with authored water
+ok 314 - e5-flotilla mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.213958
+  type: 'test'
+  ...
+# Subtest: e6-glow-mesa mask stays inside bounds and agrees with authored water
+ok 315 - e6-glow-mesa mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.179458
+  type: 'test'
+  ...
+# Subtest: e6-showroom mask stays inside bounds and agrees with authored water
+ok 316 - e6-showroom mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.164958
+  type: 'test'
+  ...
+# Subtest: e6-half-life-hollow mask stays inside bounds and agrees with authored water
+ok 317 - e6-half-life-hollow mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.193709
+  type: 'test'
+  ...
+# Subtest: e6-picnic mask stays inside bounds and agrees with authored water
+ok 318 - e6-picnic mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.165792
+  type: 'test'
+  ...
+# Subtest: e7-relay-valley mask stays inside bounds and agrees with authored water
+ok 319 - e7-relay-valley mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.203291
+  type: 'test'
+  ...
+# Subtest: e7-echo-canyon mask stays inside bounds and agrees with authored water
+ok 320 - e7-echo-canyon mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.238416
+  type: 'test'
+  ...
+# Subtest: e7-dead-band mask stays inside bounds and agrees with authored water
+ok 321 - e7-dead-band mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.185959
+  type: 'test'
+  ...
+# Subtest: e7-relay-rush mask stays inside bounds and agrees with authored water
+ok 322 - e7-relay-rush mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.13475
+  type: 'test'
+  ...
+# Subtest: e8-mare-claim mask stays inside bounds and agrees with authored water
+ok 323 - e8-mare-claim mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.194042
+  type: 'test'
+  ...
+# Subtest: e9-dome-basin mask stays inside bounds and agrees with authored water
+ok 324 - e9-dome-basin mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.198334
+  type: 'test'
+  ...
+# Subtest: e9-seed-run mask stays inside bounds and agrees with authored water
+ok 325 - e9-seed-run mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.19175
+  type: 'test'
+  ...
+# Subtest: e9-devils-alley mask stays inside bounds and agrees with authored water
+ok 326 - e9-devils-alley mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.486666
+  type: 'test'
+  ...
+# Subtest: e9-old-canal mask stays inside bounds and agrees with authored water
+ok 327 - e9-old-canal mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.173833
+  type: 'test'
+  ...
+# Subtest: e10-ember-shore mask stays inside bounds and agrees with authored water
+ok 328 - e10-ember-shore mask stays inside bounds and agrees with authored water
+  ---
+  duration_ms: 0.187875
+  type: 'test'
+  ...
+# (node:6718) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: each Motor map composes its own errand, and a door without the twist composes none
+ok 329 - each Motor map composes its own errand, and a door without the twist composes none
+  ---
+  duration_ms: 2185.883334
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the mechanic fires: tar fuels the Hauler, GRADE builds the corridor, HAUL rides it 2.5x faster on 0.4x fuel, and the haul latch opens the secure wave
+ok 330 - the mechanic fires: tar fuels the Hauler, GRADE builds the corridor, HAUL rides it 2.5x faster on 0.4x fuel, and the haul latch opens the secure wave
+  ---
+  duration_ms: 2329.042292
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the storm slows the Hauler by the authored multiplier and every outlaw with it
+ok 331 - the storm slows the Hauler by the authored multiplier and every outlaw with it
+  ---
+  duration_ms: 2077.990917
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the Long Road's town gains only the ground its lead Hauler gains, and latches at the far stop
+ok 332 - the Long Road's town gains only the ground its lead Hauler gains, and latches at the far stop
+  ---
+  duration_ms: 1924.708542
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: Gusher County washes out one lease per storm, refuses a delivery through it, and takes it when it reopens
+ok 333 - Gusher County washes out one lease per storm, refuses a delivery through it, and takes it when it reopens
+  ---
+  duration_ms: 2369.261208
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the Boneyard hitches its hulk where it lies and delivers it at the gate end of the road
+ok 334 - the Boneyard hitches its hulk where it lies and delivers it at the gate end of the road
+  ---
+  duration_ms: 2253.882167
+  type: 'test'
+  ...
+# Subtest: the contract schema fails closed: unknown motor fields, two errands, an errand naming no corridor, a tow with no such hulk
+ok 335 - the contract schema fails closed: unknown motor fields, two errands, an errand naming no corridor, a tow with no such hulk
+  ---
+  duration_ms: 1841.41375
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: e4-dust-flats: idle cannot secure and pins its hash; the floor lands the errand and pins its own
+ok 336 - e4-dust-flats: idle cannot secure and pins its hash; the floor lands the errand and pins its own
+  ---
+  duration_ms: 8419.672625
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: e4-long-road: idle cannot secure and pins its hash; the floor lands the errand and pins its own
+ok 337 - e4-long-road: idle cannot secure and pins its hash; the floor lands the errand and pins its own
+  ---
+  duration_ms: 10340.440334
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: e4-gusher-county: idle cannot secure and pins its hash; the floor lands the errand and pins its own
+ok 338 - e4-gusher-county: idle cannot secure and pins its hash; the floor lands the errand and pins its own
+  ---
+  duration_ms: 13388.229791
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: e4-boneyard: idle cannot secure and pins its hash; the floor lands the errand and pins its own
+ok 339 - e4-boneyard: idle cannot secure and pins its hash; the floor lands the errand and pins its own
+  ---
+  duration_ms: 10304.371125
+  type: 'test'
+  ...
+# Subtest: Stillwater carries one corsair at 8 seconds on a 32 second cycle without disabling scheduled waves
+ok 340 - Stillwater carries one corsair at 8 seconds on a 32 second cycle without disabling scheduled waves
+  ---
+  duration_ms: 301.505459
+  type: 'test'
+  ...
+# Subtest: ordinary Stillwater riders lose by wave 3 while the reference ride secures at wave 12
+ok 341 - ordinary Stillwater riders lose by wave 3 while the reference ride secures at wave 12
+  ---
+  duration_ms: 39724.473041
+  type: 'test'
+  ...
+# Subtest: the other E5 idle rides retain their measured deterministic pins
+ok 342 - the other E5 idle rides retain their measured deterministic pins
+  ---
+  duration_ms: 24954.641875
+  type: 'test'
+  ...
+# (node:19686) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the Relay Valley: a program lights a relay, and that is what opens its secure
+ok 343 - the Relay Valley: a program lights a relay, and that is what opens its secure
+  ---
+  duration_ms: 5085.841042
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: Echo Canyon: a use is recorded, the next wave fields the mirror, and a repeat is counted
+ok 344 - Echo Canyon: a use is recorded, the next wave fields the mirror, and a repeat is counted
+  ---
+  duration_ms: 3576.296583
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the Dead Band: the verb is refused signal-suppressed, and the refusal is the objective
+ok 345 - the Dead Band: the verb is refused signal-suppressed, and the refusal is the objective
+  ---
+  duration_ms: 3234.113083
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: Relay Rush: the interference front suspends a running program and restores it
+ok 346 - Relay Rush: the interference front suspends a running program and restores it
+  ---
+  duration_ms: 3264.041125
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the era scope is the Signal bundle: no other contract grows a row, a latch or a refusal
+ok 347 - the era scope is the Signal bundle: no other contract grows a row, a latch or a refusal
+  ---
+  duration_ms: 1898.464834
+  type: 'test'
+  ...
+# Subtest: HUMAN PARITY: browser player and rider use the shared Signal latch and the human tape records the use
+ok 348 - HUMAN PARITY: browser player and rider use the shared Signal latch and the human tape records the use
+  ---
+  duration_ms: 0.832833
+  type: 'test'
+  ...
+# (node:21294) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the body that breathes is the hero, on every Orbital map and on the view
+ok 349 - the body that breathes is the hero, on every Orbital map and on the view
+  ---
+  duration_ms: 2162.831958
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: both consumers read twist.atmosphere.suitSeconds and harmPerSecond, and the view publishes them
+ok 350 - both consumers read twist.atmosphere.suitSeconds and harmPerSecond, and the view publishes them
+  ---
+  duration_ms: 1868.507333
+  type: 'test'
+  ...
+# Subtest: the consumer RETURNS its harm and never applies it, one whole second at a time
+ok 351 - the consumer RETURNS its harm and never applies it, one whole second at a time
+  ---
+  duration_ms: 46.784542
+  type: 'test'
+  ...
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: a hero left in vacuum loses hit points through CombatSystem, and one kept in air does not
+ok 352 - a hero left in vacuum loses hit points through CombatSystem, and one kept in air does not
+  ---
+  duration_ms: 3278.890083
+  type: 'test'
+  ...
+# Subtest: a contract that authors no suit numbers keeps the pre-directive behaviour exactly
+ok 353 - a contract that authors no suit numbers keeps the pre-directive behaviour exactly
+  ---
+  duration_ms: 218.741125
+  type: 'test'
+  ...
+# Subtest: no rectangle is both a crossing and a shelter, and Low Orbit names its cabin
+ok 354 - no rectangle is both a crossing and a shelter, and Low Orbit names its cabin
+  ---
+  duration_ms: 218.718291
+  type: 'test'
+  ...
+# Subtest: the door refuses a suit number, a harm number or a pressurised list that would print a lie
+ok 355 - the door refuses a suit number, a harm number or a pressurised list that would print a lie
+  ---
+  duration_ms: 197.88075
+  type: 'test'
+  ...
+# Subtest: the manifest publishes air_suit_human on every Orbital map, and it is the row that says damages
+ok 356 - the manifest publishes air_suit_human on every Orbital map, and it is the row that says damages
+  ---
+  duration_ms: 477.880667
+  type: 'test'
+  ...
+# Subtest: the dial is on the HUD a plain boot draws, and it is contract-scoped
+ok 357 - the dial is on the HUD a plain boot draws, and it is contract-scoped
+  ---
+  duration_ms: 0.701708
+  type: 'test'
+  ...
+# Subtest: E8 save state preserves exact continuation and rejects malformed state atomically
+ok 358 - E8 save state preserves exact continuation and rejects malformed state atomically
+  ---
+  duration_ms: 322.833917
+  type: 'test'
+  ...
+# (node:21525) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the gate and the window come from twist.atmosphere, and the view publishes both
+ok 359 - the gate and the window come from twist.atmosphere, and the view publishes both
+  ---
+  duration_ms: 2194.107417
+  type: 'test'
+  ...
+# Subtest: a contract that authors no crossing gate keeps the pre-ruling wall and gets no window
+ok 360 - a contract that authors no crossing gate keeps the pre-ruling wall and gets no window
+  ---
+  duration_ms: 222.648708
+  type: 'test'
+  ...
+# Subtest: the window credits at most one crossing per window, and holds the rest without paying them
+ok 361 - the window credits at most one crossing per window, and holds the rest without paying them
+  ---
+  duration_ms: 213.437208
+  type: 'test'
+  ...
+# Subtest: the authored latch is strictly stricter: every zone still has to be stood in on air
+ok 362 - the authored latch is strictly stricter: every zone still has to be stood in on air
+  ---
+  duration_ms: 206.25625
+  type: 'test'
+  ...
+# Subtest: the published gate cannot drift from the authored one
+ok 363 - the published gate cannot drift from the authored one
+  ---
+  duration_ms: 475.481625
+  type: 'test'
+  ...
+# Subtest: the door refuses a crossing gate that no map could pay
+ok 364 - the door refuses a crossing gate that no map could pay
+  ---
+  duration_ms: 196.048167
+  type: 'test'
+  ...
+# Subtest: one law, one definition: both consumers enforce the window from the same file
+ok 365 - one law, one definition: both consumers enforce the window from the same file
+  ---
+  duration_ms: 0.339125
+  type: 'test'
+  ...
+# (node:22861) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: passive and explicit headless harvest credit each paid tick once
+ok 366 - passive and explicit headless harvest credit each paid tick once
+  ---
+  duration_ms: 2328.037959
+  type: 'test'
+  ...
+# (node:22914) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# {"closedAtWave":22,"gatedAtWave":22,"open":{"secured":true,"waves":20,"timeMs":600000,"gold":5,"kills":351,"calls":2,"defaultedPicks":16,"defaultedSecure":0,"eventLogHash":"fnv1a32:0494de18"}}
+# Subtest: one contract, one gravity profile, and the three seams the browser reads it at
+ok 367 - one contract, one gravity profile, and the three seams the browser reads it at
+  ---
+  duration_ms: 32.063917
+  type: 'test'
+  ...
+# Subtest: air is the wall: the suit drains outside, refills inside, and a breathless pan buys nothing
+ok 368 - air is the wall: the suit drains outside, refills inside, and a breathless pan buys nothing
+  ---
+  duration_ms: 0.788084
+  type: 'test'
+  ...
+# Subtest: the ride the audit measured, now carrying its air — and the un-composed hash it replaces
+ok 369 - the ride the audit measured, now carrying its air — and the un-composed hash it replaces
+  ---
+  duration_ms: 1544.6245
+  type: 'test'
+  ...
+# Subtest: the gravity-scaled lob: 2.4x reach and hang, and OUT_OF_RANGE the moment the profile is gone
+ok 370 - the gravity-scaled lob: 2.4x reach and hang, and OUT_OF_RANGE the moment the profile is gone
+  ---
+  duration_ms: 21.189459
+  type: 'test'
+  ...
+# Subtest: the secure turns on the regolith run: same seed, same orders, two latches
+ok 371 - the secure turns on the regolith run: same seed, same orders, two latches
+  ---
+  duration_ms: 26961.928792
+  type: 'test'
+  ...
+# Subtest: party air has per-actor suits, one shared window, and deterministic peer state
+ok 372 - party air has per-actor suits, one shared window, and deterministic peer state
+  ---
+  duration_ms: 307.838542
+  type: 'test'
+  ...
+# Subtest: authored dome footprints govern breathing and breaches in both consumers
+ok 373 - authored dome footprints govern breathing and breaches in both consumers
+  ---
+  duration_ms: 314.332042
+  type: 'test'
+  ...
+# (node:26009) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the gate and the window come from twist.atmosphere, and the view publishes both
+ok 374 - the gate and the window come from twist.atmosphere, and the view publishes both
+  ---
+  duration_ms: 2090.324167
+  type: 'test'
+  ...
+# Subtest: a contract that authors no atmosphere twist keeps the default gate and gets no window
+ok 375 - a contract that authors no atmosphere twist keeps the default gate and gets no window
+  ---
+  duration_ms: 210.492583
+  type: 'test'
+  ...
+# Subtest: the window credits at most one ground per window, and holds the rest without paying them
+ok 376 - the window credits at most one ground per window, and holds the rest without paying them
+  ---
+  duration_ms: 197.679125
+  type: 'test'
+  ...
+# Subtest: the published gate cannot drift from the authored one
+ok 377 - the published gate cannot drift from the authored one
+  ---
+  duration_ms: 453.410125
+  type: 'test'
+  ...
+# Subtest: the door refuses a regolith gate that is not a reachable whole number of grounds
+ok 378 - the door refuses a regolith gate that is not a reachable whole number of grounds
+  ---
+  duration_ms: 198.417583
+  type: 'test'
+  ...
+# Subtest: one reader, and the browser composes survival and objectives through the same resolver
+ok 379 - one reader, and the browser composes survival and objectives through the same resolver
+  ---
+  duration_ms: 0.966542
+  type: 'test'
+  ...
+# (node:26047) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# {"closedAtWave":22,"open":{"secured":true,"waves":20,"timeMs":600000,"gold":0,"kills":172,"calls":33,"defaultedPicks":11,"defaultedSecure":0,"eventLogHash":"fnv1a32:83d1cf7e"}}
+# Subtest: the gravity half was already composed: all three publish the profile the browser holds
+ok 380 - the gravity half was already composed: all three publish the profile the browser holds
+  ---
+  duration_ms: 55.953625
+  type: 'test'
+  ...
+# Subtest: the air wall arms on each map own declaration, and on nothing else
+ok 381 - the air wall arms on each map own declaration, and on nothing else
+  ---
+  duration_ms: 0.18825
+  type: 'test'
+  ...
+# Subtest: air is the wall: the suit drains outside a shelter, refills inside one, and only a wall map breaches
+ok 382 - air is the wall: the suit drains outside a shelter, refills inside one, and only a wall map breaches
+  ---
+  duration_ms: 0.97875
+  type: 'test'
+  ...
+# Subtest: the crossing is made on air, or it is not made: a breathless entry counts and credits nothing
+ok 383 - the crossing is made on air, or it is not made: a breathless entry counts and credits nothing
+  ---
+  duration_ms: 0.224542
+  type: 'test'
+  ...
+# Subtest: the crossing window credits at most one entry per window, and holds the rest
+ok 384 - the crossing window credits at most one entry per window, and holds the rest
+  ---
+  duration_ms: 0.305125
+  type: 'test'
+  ...
+# Subtest: low orbit crosses its two outboard decks, and the returning-lob seam is untouched
+ok 385 - low orbit crosses its two outboard decks, and the returning-lob seam is untouched
+  ---
+  duration_ms: 0.799584
+  type: 'test'
+  ...
+# Subtest: the eclipse removes an air route mid-run, and the secure needs a ground worked after it
+ok 386 - the eclipse removes an air route mid-run, and the secure needs a ground worked after it
+  ---
+  duration_ms: 0.481375
+  type: 'test'
+  ...
+# Subtest: the ride the audit measured, now carrying its air, and the un-composed hash it replaces
+ok 387 - the ride the audit measured, now carrying its air, and the un-composed hash it replaces
+  ---
+  duration_ms: 4319.2975
+  type: 'test'
+  ...
+# Subtest: the Mare Claim is the control: byte-identical with the siblings composed and with them gone
+ok 388 - the Mare Claim is the control: byte-identical with the siblings composed and with them gone
+  ---
+  duration_ms: 1337.674875
+  type: 'test'
+  ...
+# Subtest: the secure turns on the crossing: same seed, same orders, two latches
+ok 389 - the secure turns on the crossing: same seed, same orders, two latches
+  ---
+  duration_ms: 19744.2915
+  type: 'test'
+  ...
+# (node:29075) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# THREE.WARNING: Multiple instances of Three.js being imported.
+# [gold-rush] performance tier {
+#   tier: 'full',
+#   override: 'auto',
+#   source: 'auto',
+#   reason: 'desktop-class defaults',
+#   gpuRenderer: 'unknown',
+#   deviceMemory: null,
+#   userAgent: 'Node.js/26',
+#   config: {
+#     maxDpr: 2,
+#     shadowsQuality: 'soft',
+#     shadowMapSize: 1536,
+#     fogNear: 42,
+#     fogFar: 88,
+#     postEnabled: true,
+#     postPaperGrainOpacity: 0.008,
+#     detailDensity: 1,
+#     detailMobileDensity: 0.42,
+#     terrainSegments: 64,
+#     terrainMobileSegments: 40,
+#     vistaSegments: 12,
+#     vistaMobileSegments: 7,
+#     waterQuality: 1,
+#     waterMobileQuality: 0.55,
+#     terrainMesh: false,
+#     terrainSplat: false,
+#     terrainMeshVertexStep: 1,
+#     floatTextPool: 12,
+#     combatVfxPuffs: 32,
+#     combatVfxTicks: 48,
+#     combatVfxRings: 8,
+#     freedWalkerCap: 10,
+#     enemyBarCap: 60
+#   },
+#   runtimeVerdict: 0
+# }
+# Subtest: the-claim: released movement settles after speed multiplier 1
+ok 390 - the-claim: released movement settles after speed multiplier 1
+  ---
+  duration_ms: 27.939834
+  type: 'test'
+  ...
+# Subtest: the-claim: released movement settles after speed multiplier 1.12
+ok 391 - the-claim: released movement settles after speed multiplier 1.12
+  ---
+  duration_ms: 10.8905
+  type: 'test'
+  ...
+# Subtest: e8-mare-claim: released movement settles after speed multiplier 1
+ok 392 - e8-mare-claim: released movement settles after speed multiplier 1
+  ---
+  duration_ms: 12.31425
+  type: 'test'
+  ...
+# Subtest: e8-mare-claim: released movement settles after speed multiplier 1.12
+ok 393 - e8-mare-claim: released movement settles after speed multiplier 1.12
+  ---
+  duration_ms: 10.237125
+  type: 'test'
+  ...
+# Subtest: e8-eclipse: released movement settles after speed multiplier 1
+ok 394 - e8-eclipse: released movement settles after speed multiplier 1
+  ---
+  duration_ms: 10.39425
+  type: 'test'
+  ...
+# Subtest: e8-eclipse: released movement settles after speed multiplier 1.12
+ok 395 - e8-eclipse: released movement settles after speed multiplier 1.12
+  ---
+  duration_ms: 12.273625
+  type: 'test'
+  ...
+# Subtest: e8-far-side: released movement settles after speed multiplier 1
+ok 396 - e8-far-side: released movement settles after speed multiplier 1
+  ---
+  duration_ms: 7.977167
+  type: 'test'
+  ...
+# Subtest: e8-far-side: released movement settles after speed multiplier 1.12
+ok 397 - e8-far-side: released movement settles after speed multiplier 1.12
+  ---
+  duration_ms: 9.333583
+  type: 'test'
+  ...
+# Subtest: e8-low-orbit: released movement settles after speed multiplier 1
+ok 398 - e8-low-orbit: released movement settles after speed multiplier 1
+  ---
+  duration_ms: 10.906125
+  type: 'test'
+  ...
+# Subtest: e8-low-orbit: released movement settles after speed multiplier 1.12
+ok 399 - e8-low-orbit: released movement settles after speed multiplier 1.12
+  ---
+  duration_ms: 9.681333
+  type: 'test'
+  ...
+# (node:29114) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: early boss banks reached waves, not the configured wave12 target
+ok 400 - early boss banks reached waves, not the configured wave12 target
+  ---
+  duration_ms: 0.5405
+  type: 'test'
+  ...
+# Subtest: later banking banks reached waves, not the configured wave12 target
+ok 401 - later banking banks reached waves, not the configured wave12 target
+  ---
+  duration_ms: 0.065709
+  type: 'test'
+  ...
+# Subtest: missing live wave banks reached waves, not the configured wave12 target
+ok 402 - missing live wave banks reached waves, not the configured wave12 target
+  ---
+  duration_ms: 0.041791
+  type: 'test'
+  ...
+# Subtest: storm counter uses secured wave banks reached waves, not the configured wave12 target
+ok 403 - storm counter uses secured wave banks reached waves, not the configured wave12 target
+  ---
+  duration_ms: 0.0395
+  type: 'test'
+  ...

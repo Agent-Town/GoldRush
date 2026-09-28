@@ -1,0 +1,26 @@
+✖ campaign walks E1 legally, persists each leg, and hashes deterministically (2106.495708ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2198.878625
+
+✖ failing tests:
+
+test at scripts/gr-sim-campaign.test.mjs:63:1
+✖ campaign walks E1 legally, persists each leg, and hashes deterministically (2106.495708ms)
+  AssertionError [ERR_ASSERTION]: CONTROLLED_SECOND_HELPER
+      at runCampaign (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/control-arena/scripts/gr-sim-campaign.test.mjs:186:36)
+      at async TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/artifacts/gr-campaign-fixture-cleanup-1/control-arena/scripts/gr-sim-campaign.test.mjs:65:18)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: undefined,
+    operator: 'fail',
+    diff: 'simple'
+  }

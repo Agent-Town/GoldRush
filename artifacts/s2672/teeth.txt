@@ -1,0 +1,45 @@
+CONTROL (scratch copy, unmutated): pass 25, fail 0, rc 0
+
+M1 — the destination moves back INSIDE the public repo
+  why it matters : owner ruling 15 mechanised: a mirror under the repo root is one `git add -f` from a public origin
+  predicted arm(s): 22
+  reddened arm(s) : 22,24   (pass 23, fail 2)
+  verdict         : PREDICTION NARROWER THAN THE MUTATION — recorded as measured, not widened after the fact
+    arm 22: AssertionError [ERR_ASSERTION]: the default mirror destination must be OUTSIDE /private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s2672-teeth-LWaSys/, got
+    arm 24: AssertionError [ERR_ASSERTION]: the default run must name the real destination
+  explained       : arm 24 reds too, and the reason is the mutation's own shape rather than a flaky arm: with the destination anchored to the SCRIPT'S OWN LOCATION, "the default" stops being ONE value — the relocated copy in the fixture resolves <fixture>/artifacts/ledger-backups while the test imports the scratch root's. A homedir anchor has one value everywhere, which is the property the re-home bought.
+
+M2 — the freshness guard keeps its OWN copy of the destination again
+  why it matters : the divergence s2671 banked: the pull follows the re-home, the guard audits the abandoned path
+  predicted arm(s): 23,24
+  reddened arm(s) : 1,2,3,7,8,9,16,17,19,20,23,24   (pass 13, fail 12)
+  verdict         : PREDICTION NARROWER THAN THE MUTATION — recorded as measured, not widened after the fact
+    arm 1: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /WHOLE AND CURRENT/. Input:
+    arm 3: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /DAYS BEHIND/. Input:
+    arm 7: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /corpus\s+: read \(2 entries, 2 dated\)/. Input:
+    arm 9: AssertionError [ERR_ASSERTION]: it must still see the FIXTURE gap, not the repo
+    arm 23: AssertionError [ERR_ASSERTION]: the freshness guard must measure the destination in force
+    arm 16: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /MISSING COVERAGE DAY\(S\): 31/. Input:
+    arm 19: AssertionError [ERR_ASSERTION]: the span must say where its left edge came from
+    arm 2: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /MISSING COVERAGE DAY\(S\): 1/. Input:
+    arm 8: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /corpus\s+: read \(4 entries, 1 dated\)/. Input:
+    arm 24: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /from LEDGER_BACKUP_DEST — NOT the default/. Input:
+    arm 17: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /CANNOT VERIFY WHOLENESS/. Input:
+    arm 20: AssertionError [ERR_ASSERTION]: the window widened to the oldest file, not to the anchor
+  explained       : twelve arms, not two, and the excess is the finding: once the guard stops honouring the shared destination it can no longer be AIMED AT A FIXTURE AT ALL, so every corpus-driven arm (1,2,3,7,8,9,16,17,19,20) loses its subject as well. The divergence is not a narrow reporting defect — it detaches the tool from the directory in force.
+
+M3 — the provenance stops riding with the path
+  why it matters : an env-narrowed corpus that prints like the default is F-2220-1 rebuilt in a new place
+  predicted arm(s): 24
+  reddened arm(s) : 24   (pass 24, fail 1)
+  verdict         : AS PREDICTED
+    arm 24: AssertionError [ERR_ASSERTION]: The input did not match the regular expression /from LEDGER_BACKUP_DEST — NOT the default/. Input:
+
+M4 — a RELATIVE override is resolved against cwd instead of refused
+  why it matters : the over-general fix: it passes every other arm and restores a cwd-aimable corpus
+  predicted arm(s): 25
+  reddened arm(s) : 25   (pass 24, fail 1)
+  verdict         : AS PREDICTED
+    arm 25: AssertionError [ERR_ASSERTION]: Missing expected exception.
+
+RESTORED: pass 25, fail 0, rc 0

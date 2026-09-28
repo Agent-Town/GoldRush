@@ -1,0 +1,47 @@
+{
+  "commandExit": 0,
+  "pass": true,
+  "protocol": "Same terminal wave, fresh bank, Book return, byte-identical plain score reload, zero console/page errors; unchanged specs and default gameplay strategy.",
+  "comparisons": [
+    {
+      "contract": "e5-flotilla",
+      "run12": {
+        "peakWave": 12,
+        "secures": true,
+        "banks": true,
+        "board": true,
+        "reload": true,
+        "clean": true
+      },
+      "run18": {
+        "peakWave": 12,
+        "secures": true,
+        "banks": true,
+        "board": true,
+        "reload": true,
+        "clean": true
+      },
+      "pass": true
+    },
+    {
+      "contract": "e5-regatta",
+      "run12": {
+        "peakWave": 12,
+        "secures": true,
+        "banks": true,
+        "board": true,
+        "reload": true,
+        "clean": true
+      },
+      "run18": {
+        "peakWave": 12,
+        "secures": true,
+        "banks": true,
+        "board": true,
+        "reload": true,
+        "clean": true
+      },
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "project": "desktop-chrome",
+  "contract": "e1-baron",
+  "name": "The Claim-Jumper Baron",
+  "secureWave": 20,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e1-baron secureWave=20"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "board": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 1,
+  "simAtEnd": 38.66666666666657,
+  "runStateAtEnd": "playing",
+  "hpAtEnd": 100,
+  "goldAtEnd": 0,
+  "killsAtEnd": 11,
+  "builds": [
+    {
+      "id": "turret",
+      "at": 38.53333333333324,
+      "wave": 1,
+      "x": 3,
+      "z": 8
+    }
+  ],
+  "upgrades": [
+    "double_tap_coil",
+    "spring_heels",
+    "double_tap_coil"
+  ],
+  "samples": [
+    {
+      "t": 38.7,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 11,
+      "x": 3.2,
+      "z": 9.7,
+      "alive": 5,
+      "seams": 1
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-1-frontier",
+    "engine secureWave=20 cadenceMult=1.15",
+    "home=3.0,11.0 circuit=[[-1,7],[7,7],[7,15],[-1,15]]",
+    "kit=turret+sentry_beacon+turret+turret",
+    "crossing at the ford x=0 (6.7 -> -6.4)",
+    "crossing at the ford x=0 (-5.7 -> 9.0)",
+    "crossing at the ford x=0 (9.7 -> -6.4)",
+    "crossing at the ford x=0 (-7.1 -> 14.0)"
+  ],
+  "at": "2026-09-25T07:20:39.870Z",
+  "objective": {
+    "baron": {
+      "cartVisible": false,
+      "carried": false,
+      "distanceFromBaron": 0,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 0,
+      "volleys": 0,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "",
+      "lastTarget": {
+        "x": 0,
+        "z": 0
+      },
+      "target": {
+        "x": 0,
+        "z": 0
+      },
+      "props": {
+        "state": "ready",
+        "source": "glb",
+        "launcher": true,
+        "rocket": true,
+        "powderKeg": true,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": {
+        "count": 3,
+        "damage": 18,
+        "radius": 2.35,
+        "cadenceSeconds": 8,
+        "telegraphSeconds": 1.2,
+        "airTime": 1.1,
+        "spreadRadius": 0.9
+      }
+    },
+    "boss": {
+      "visible": false,
+      "ratio": 0,
+      "renderedRatio": 1,
+      "litSegments": 7,
+      "segments": 0,
+      "groupId": null,
+      "aliveComponents": 0,
+      "destroyedComponents": 0,
+      "components": []
+    },
+    "medals": {
+      "version": 1,
+      "baronBeaten": false,
+      "rocketCartCaptured": false
+    }
+  }
+}

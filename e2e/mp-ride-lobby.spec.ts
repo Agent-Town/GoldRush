@@ -42,7 +42,8 @@ test('host sees the contract and riders update before start', async ({ page }, t
 
   await expect(page.getByTestId('ride-contract')).toContainText('the-claim');
   await expect(page.getByTestId('ride-contract')).toContainText('trail');
-  await expect(page.getByTestId('ride-contract')).toContainText('gold-rush');
+  // live-seed-rotation-1: the card names the open week ("Week 39 claim") when the registry has one, else the literal.
+  await expect(page.getByTestId('ride-contract')).toContainText(/Week \d+ claim|gold-rush/);
   await expect(page.getByTestId('ride-roster')).toContainText('Riders (2)');
   await expect(page.getByTestId('ride-roster')).toContainText('Robin · Dawn Claim · browser');
   await expect(page.getByTestId('ride-roster')).toContainText('Claude · Calculating House · headless');

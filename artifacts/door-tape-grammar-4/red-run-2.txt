@@ -1,0 +1,34 @@
+RED 2: the same tree as RED 1, with only the order of the two new check calls swapped for this one run (checkRetiredClientJudgedIds first), then restored and verified with cmp. Command: node scripts/test-standings.mjs
+
+contract clock census 42/25/17/0
+recorder reel kv checks (40)
+recorder verbs kv checks (41)
+retired embedded orders kv checks (14)
+client grammar kv checks (23)
+retired client grammar kv checks (24)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: a stored row with a research_pick id of whitespace only is RETIRED and COUNTED, not dropped and not ranked
++ actual - expected
+
+  [
++   1,
+    0,
+-   1
+  ]
+
+    at equal (file:///Users/robin/Claude/Projects/wt-dtg3/scripts/test-standings.mjs:2122:10)
+    at checkRetiredClientJudgedIds (file:///Users/robin/Claude/Projects/wt-dtg3/scripts/test-standings.mjs:783:5)
+    at async file:///Users/robin/Claude/Projects/wt-dtg3/scripts/test-standings.mjs:61:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ 1, 0 ],
+  expected: [ 0, 1 ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.4.0
+rc=1

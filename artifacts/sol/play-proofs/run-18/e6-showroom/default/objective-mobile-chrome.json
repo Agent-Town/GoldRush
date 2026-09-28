@@ -1,0 +1,261 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e6-showroom&timescale=4",
+  "sim": 127.86666666666966,
+  "wave": 4,
+  "hp": 0,
+  "gold": 9,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "hero": {
+    "x": 29.784775221240746,
+    "y": 0.8799999928474427,
+    "z": 6.343873255514929
+  },
+  "defences": [],
+  "vehicle": null,
+  "fuel": null,
+  "deepwater": null,
+  "showroom": {
+    "declared": true,
+    "captures": 5,
+    "quota": 6,
+    "complete": false,
+    "objectiveAllowsSecure": false
+  },
+  "wrangle": {
+    "enabled": true,
+    "windDownSeconds": 8,
+    "windDownTicks": 240,
+    "captureRadius": 2.2,
+    "exhaustedSpeedMultiplier": 0.2,
+    "active": [
+      {
+        "enemyId": 0,
+        "variantId": "feral_toaster",
+        "state": "exhausted",
+        "remainingTicks": 0,
+        "resets": 0
+      },
+      {
+        "enemyId": 1,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 138,
+        "resets": 0
+      },
+      {
+        "enemyId": 2,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 177,
+        "resets": 0
+      },
+      {
+        "enemyId": 3,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 235,
+        "resets": 1
+      },
+      {
+        "enemyId": 4,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 124,
+        "resets": 0
+      },
+      {
+        "enemyId": 7,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 16,
+        "resets": 0
+      },
+      {
+        "enemyId": 10,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 181,
+        "resets": 0
+      },
+      {
+        "enemyId": 11,
+        "variantId": "feral_toaster",
+        "state": "exhausted",
+        "remainingTicks": 0,
+        "resets": 0
+      },
+      {
+        "enemyId": 12,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 109,
+        "resets": 3
+      },
+      {
+        "enemyId": 14,
+        "variantId": "lawn_shepherd",
+        "state": "exhausted",
+        "remainingTicks": 0,
+        "resets": 0
+      },
+      {
+        "enemyId": 15,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 89,
+        "resets": 3
+      },
+      {
+        "enemyId": 16,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 181,
+        "resets": 0
+      },
+      {
+        "enemyId": 17,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 16,
+        "resets": 0
+      },
+      {
+        "enemyId": 18,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 181,
+        "resets": 0
+      },
+      {
+        "enemyId": 19,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 72,
+        "resets": 1
+      },
+      {
+        "enemyId": 20,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 71,
+        "resets": 0
+      },
+      {
+        "enemyId": 21,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 30,
+        "resets": 0
+      },
+      {
+        "enemyId": 22,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 91,
+        "resets": 1
+      },
+      {
+        "enemyId": 23,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 58,
+        "resets": 0
+      },
+      {
+        "enemyId": 25,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 181,
+        "resets": 0
+      }
+    ],
+    "pen": {
+      "roster": [
+        {
+          "variantId": "feral_toaster",
+          "count": 3
+        },
+        {
+          "variantId": "lawn_shepherd",
+          "count": 2
+        }
+      ],
+      "total": 5,
+      "tickSeconds": 15,
+      "goldPerMachine": 1,
+      "incomeGranted": 9
+    }
+  },
+  "e7Signal": {
+    "enabled": false,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "playbookUse": null,
+  "air": null,
+  "physics": {
+    "active": false,
+    "contractId": "e6-showroom",
+    "source": "default",
+    "movement": "normal",
+    "feelG": 1,
+    "lobArcDistanceMultiplier": 1,
+    "lobAirTimeMultiplier": 1,
+    "knockbackScale": 1,
+    "orbitalReturn": false,
+    "vacuum": false,
+    "fixedTimestepOnly": true,
+    "filteredMovement": {
+      "x": 0,
+      "y": 0
+    },
+    "adaptedLobs": [
+      {
+        "resumeKey": "orbital:kineticLobber",
+        "range": 15,
+        "airTime": 1.68
+      }
+    ]
+  },
+  "atmosphere": null,
+  "squall": null,
+  "preserveVent": null,
+  "repairs": 0
+}

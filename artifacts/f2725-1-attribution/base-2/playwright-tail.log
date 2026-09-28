@@ -1,0 +1,40 @@
+
+e6-glow-mesa {"t":168,"wave":5,"hp":60,"gold":71,"kills":99,"x":6.7,"z":-18,"alive":23,"seams":2}
+
+e6-glow-mesa {"t":178.9,"wave":5,"hp":60,"gold":1,"kills":115,"x":23.7,"z":-13.2,"alive":15,"seams":2}
+
+e6-glow-mesa {"t":189.3,"wave":6,"hp":79,"gold":16,"kills":128,"x":26.3,"z":9.1,"alive":23,"seams":2}
+
+e6-glow-mesa {"t":199.9,"wave":6,"hp":79,"gold":35,"kills":138,"x":-3.1,"z":31.3,"alive":21,"seams":1}
+
+e6-glow-mesa {"t":210.9,"wave":7,"hp":104,"gold":55,"kills":145,"x":-13.3,"z":33.7,"alive":34,"seams":0}
+
+e6-glow-mesa {"t":221.3,"wave":7,"hp":122,"gold":60,"kills":161,"x":3.1,"z":37.5,"alive":32,"seams":1}
+
+e6-glow-mesa {"t":231.9,"wave":7,"hp":122,"gold":85,"kills":180,"x":12.5,"z":28.1,"alive":22,"seams":1}
+
+e6-glow-mesa {"t":242.5,"wave":8,"hp":122,"gold":95,"kills":188,"x":7.6,"z":14.2,"alive":36,"seams":1}
+
+  1) [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-glow-mesa plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: banks: no new secured row since pre-play for e6-glow-mesa at >= wave 12 (41 new row(s): [{"kills":40,"gold":400,"timeAlive":600,"at":41,"waves":30,"secured":true,"contractId":"e10-last-claim","profileName":"Robin","baseValue":0,"weaponSplit":{"spark":0,"blast":0}},{"kills":40,"gold":400,"timeAlive":600,"at":40,"waves":30,"secured":true,"contractId":"e10-archive-world","profileName":"Robin","baseValue":0,"weaponSplit":{"spark":0,"blast":0}}])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1455 |
+      1456 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 1457 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+           |                                                          ^
+      1458 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1459 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      1460 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/.goldrush/control/wt-1ff7054fe/e2e/native-proofs/driver.ts:1457:58
+
+    Error Context: ../../../../../private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/attr/base-2/results/native-proofs-e6-glow-mesa-b3350-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-glow-mesa plays to its authored terminal, banks, reloads and returns to the board @slow 

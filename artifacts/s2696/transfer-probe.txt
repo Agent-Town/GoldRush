@@ -1,0 +1,67 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T03:23:48.610Z — s2696 deploy transfer probe on free port ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+env+ GR_PREVIEW_PORT=62736 GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1 CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0kbxJEm:/Users/robin/.foundry/bin
+
+===== warm preview =====
+$ npx playwright test --config playwright.preview.config.ts e2e/asset-diet.spec.ts --project=desktop-chrome --grep the first town fetches no per-cell script module --output artifacts/s2696/transfer-warm-results --workers=1
+rc=0 7.7s
+
+Running 1 test using 1 worker
+
+[asset-diet] desktop-chrome townScripts: 42 cellModules: 0 cellImages: 172
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  1 [desktop-chrome] › e2e/asset-diet.spec.ts:321:1 › the first town fetches no per-cell script module and stays in double figures of scripts (6.3s)
+
+  1 passed (7.3s)
+[WebServer] (node:65081) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:65121) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+(node:65021) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65124) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+===== both viewports transfer probe =====
+$ npx playwright test --config playwright.preview.config.ts e2e/asset-diet.spec.ts --project=desktop-chrome --project=mobile-chrome --grep town cue-window budget through player entry$ --output artifacts/s2696/transfer-results --workers=1
+rc=0 26.9s
+
+Running 2 tests using 1 worker
+
+[asset-diet] desktop-chrome townResponses: 15180965 bytes
+[asset-diet] desktop-chrome settledTownResponses: 25781287 bytes settleCapHit: false
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  1 [desktop-chrome] › e2e/asset-diet.spec.ts:278:1 › town cue-window budget through player entry (12.4s)
+[asset-diet] mobile-chrome townResponses: 15180965 bytes
+[asset-diet] mobile-chrome settledTownResponses: 25781287 bytes settleCapHit: false
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  2 [mobile-chrome] › e2e/asset-diet.spec.ts:278:1 › town cue-window budget through player entry (12.6s)
+
+  2 passed (26.5s)
+[WebServer] (node:65375) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:65413) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+(node:65318) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65415) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65415) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:65551) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:65551) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"warm preview":0,"both viewports transfer probe":0}
+OVERALL rc=0

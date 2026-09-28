@@ -1,0 +1,30 @@
+branch feat/live-seed-rotation-1 tip 38c0c03c3 2026-09-25 19:59Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/lsr1.json
+scratch store at the store's main 5793a96
+chain base a93091dbf
+merged da13ea750
+desk row F-LSR1-1: inserted at line 54
+desk row F-LSR1-2: inserted at line 54
+cure lsr1: desk rows committed e182a4b8e
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97710283 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34351639 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (291.2s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 145 ℹ fail 0 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 20:10Z: e2e/live-seed-rotation.spec.ts e2e/mp-ride-lobby.spec.ts e2e/agent-view.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   60 passed (4.5m)  20:14Z
+battery start 20:14Z
+battery: rc=1 ℹ tests 1025 ℹ pass 1018 ℹ fail 2 ℹ skipped 5  20:31Z
+✖ rotation registry stays outside the engine identity corpus (636.322958ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (161.899375ms)
+dirt after battery: 0
+lsr1-PREP-DONE
+verdict: clean
+hash at pin time: 755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa
+pin #62 `755400f8`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/live-seed-rotation-1.md

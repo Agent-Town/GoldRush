@@ -1,0 +1,37 @@
+{
+  "tag": "sgs1",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5399,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-ground-strategy-1 — Astra's run 8: the Old Canal deaths diagnosed first (all eight defenses wrecked by wave 18, the default driver never repairs a wreck and its eight-piece cap then stops all spending), then ONE opt-in strategy, GR_NATIVE_STRATEGY=restore-ground (restore purchased defenses instead of abandoning wrecks): Old Canal PHONE gameplay PASS for the first time (wave 20, banked, Book, byte-identical reload), desktop HELD at wave 19 / 599.7 s; Incline with the flag unset PASS both projects (the default driver unchanged, proven by normalized syntax equivalence); Twin Banks not run under the both-projects gate; no balance changes (owner 'Yes, let it run please' 2026-09-26; Astra on lane-c)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/sol-ground-strategy-1.md",
+    "title": "Drain review: `sol-ground-strategy-1`, Astra's restore-ground strategy wins Old Canal on the phone and dies 0.3 s short on desktop",
+    "body": "scripts/attended/landings/sgs1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-ground-strategy-1.md",
+    "rowKey": "SOL GROUND STRATEGY 1 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra's run 8 (`artifacts/sol/play-proofs/run-8/`), diagnosis committed before the strategy: on Old Canal the default driver has all eight defenses wrecked by wave 18 and dies at 18 on both screens (3 to 4 gold, 1 to 4 repairs, 0/8 standing) because it never repairs a wreck and its eight-piece cap then blocks every further spend. ONE opt-in strategy, `GR_NATIVE_STRATEGY=restore-ground` (every 8 sim seconds restore the lowest-HP purchased defense, wrecks below 80 % included, from within the 1.4 repair radius): Old Canal PHONE gameplay PASS, the first held ground map the driver has won (wave 20, 600.1 s, 120.6 HP, 9 repairs, banked, Book, byte-identical reload); desktop HELD at wave 19 / 599.733 s with 33 gold and 11 repairs, 0/7 standing (the lowest-HP pick keeps restoring a freshly destroyed beacon ahead of a turret, F-SGS1-1). Incline with the flag unset PASS both projects (wave 14 as in run 6; the driver's normalized TypeScript identical to the pre-task driver with the flag specialized false). Twin Banks NOT RUN (the both-projects gate). Env-unset native battery 44 skipped, exit 0; tsc, build rc 0; six new native rows, zero console/page errors. Astra's recommendation: keep it opt-in; only Old Canal phone is newly demonstrated to unlock; the desktop near-miss wants a strategy refinement, not a balance change. Engine hash unchanged. F-SGS1-2: the phone bank-cell screenshot was not captured (the row's evidence is the reload and the Book). `reviews/sol-ground-strategy-1.md`.",
+    "statusPhrase": "Astra's restore-ground strategy wins Old Canal on the phone for the first time and dies 0.3 s short on desktop",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh sgs1, queued behind cbw1; Astra on lane-c, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-8"
+}

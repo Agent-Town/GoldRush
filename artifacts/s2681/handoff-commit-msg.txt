@@ -1,0 +1,16 @@
+s2681: handoff, lock CLEARED — ghost line retired, F-2681-1 filed, RUN 2 left to the attended landing
+
+Ledger battery green BEFORE this commit (BATTERY_RC=0,
+artifacts/s2681/ledger-guards-final.txt). The earlier locked run SKIPped the
+desk guards by design, so they were re-run against this very handoff line:
+desk-declaration-guard and desk-birth-guard both rc=0, and the battery now
+shows PASS rather than SKIP.
+
+Duties: LB-01 verified by ls-remote (archive/ledger-backups = a936e71);
+GZ-01 re-swept, 0 candidates of 488 cited; TK-01 verified by file; FM-01
+pushed; RT-01 not due. CODEX-WALL stands, nothing queued or refilled.
+
+HM-06 RUN 2 is READY-FOR-GATES but left untouched: the attended session was
+writing scripts/attended/landings/hm06.json two minutes earlier.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

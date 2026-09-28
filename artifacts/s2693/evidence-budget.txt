@@ -1,0 +1,19 @@
+evidence-budget — the evidence bytes this landing adds
+  range    : 49a0479a0cf0b5d0de0d5ca1f1b06c7809242239..HEAD
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 47 changed evidence path(s)
+  added    : 7.4 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 7.4 MB
+  limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+          1.8 MB  A  artifacts/tape-pause-fix-1/spec/pan-mobile-chrome.png
+          1.5 MB  A  artifacts/tape-pause-fix-1/adjacent-shots/056/mobile-390-build-menu-icons-blurb.png
+          1.1 MB  A  artifacts/tape-pause-fix-1/spec/pan-desktop-chrome.png
+          1.1 MB  A  artifacts/tape-pause-fix-1/adjacent-shots/056/desktop-build-menu-icons-blurb.png
+          1.1 MB  A  artifacts/tape-pause-fix-1/adjacent-shots/056/desktop-build-menu-palisade.png
+          0.4 MB  A  artifacts/tape-pause-fix-1/after/build.log
+          0.4 MB  A  artifacts/tape-pause-fix-1/before/build.log
+          0.0 MB  A  artifacts/tape-pause-fix-1/report.md
+      … and 37 more growing path(s)
+  tree     : 9170.0 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 7.4 MB added, inside the 40.0 MB ceiling.

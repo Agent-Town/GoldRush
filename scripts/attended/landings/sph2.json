@@ -1,0 +1,41 @@
+{
+  "tag": "sph2",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5407,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-play-proofs-holds-2 — Astra's run 16: the driver holds the Picnic stakes, captures the Showroom machines, records and uses the Tape Reel (refusal, mirror, relay sites); every objective now works, every map still held on survival or on the phone Tape toggle; equivalence on Flotilla and Regatta PASS; the s2730 fire's native re-ride (0/10, Showroom captures 0/6 and 1/6 against the source's 6/6) recorded as an unattributed fire-shell measurement, landed attended per the native-ride rule; no src change, no balance change",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/e7-playbook-surface.spec.ts"
+    ],
+    "guards": [],
+    "allowedE2E": [
+      "e7-playbook-surface\\.spec\\.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward"
+    ]
+  },
+  "review": {
+    "path": "reviews/sol-play-proofs-holds-2-landing.md",
+    "title": "Drain review (attended landing): `sol-play-proofs-holds-2`, the objectives work and the holds moved to survival and to a phone tap; the fire's native re-ride recorded, not reproduced",
+    "body": "scripts/attended/landings/sph2-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-play-proofs-holds-2.md",
+    "rowKey": "SOL PLAY PROOFS HOLDS 2 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra's run 16 (`artifacts/sol/play-proofs/run-16/`, 359,232 tokens, evidence 2,691,128 B, 14 lane commits, tip `6b891fabd`): the driver now holds the Picnic stakes inside their authored radius (all three held, hero died), exits the Showroom house by its doorway and confirms exhausted captures (6/6 reported on both screens in run 16, hero died; the post-death capture loop fixed, not re-ridden), records and uses the Tape Reel (Dead Band refusal latch proved both screens, deaths at waves 19 and 12; Echo Canyon mirror proved on desktop; Relay Rush 3/3 sites and the muted use proved on desktop); on the phone the driver's tap on the visible Tape toggle was swallowed by the canvas, audited by `e7-tape-toggle-phone-hit-target-1`. Flotilla/Regatta equivalence PASS; no F-PPH2 IDs; no `src/**`. The s2730 fire's own native re-ride of the candidate failed 10/10 with Showroom captures 0/6 desktop and 1/6 phone against the source's 6/6: unattributed, recorded as a fire-shell measurement (the F-2725-1 class), the landing done attended per the native-ride rule; Showroom's capture claim stands as run 16's measurement with the fire's non-reproduction beside it. Campaign audit after run 16: 8 proved both screens, 3 one screen, 2 partial, 28 held, 1 historical corrected",
+    "statusPhrase": "holds-2 landed attended: the driver's objectives work (stakes, captures, Tape Reel), the holds moved to survival and to a phone tap under audit; the fire's native re-ride recorded beside the source's measurements",
+    "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh sph2; Astra on lane-c, the ChatGPT subscription; the fires' native re-rides of this class are attributed by paired attended trials, 13z-91)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-16"
+}

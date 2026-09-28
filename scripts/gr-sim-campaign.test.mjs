@@ -59,34 +59,42 @@ test('FakeStorage threads research into the headless sim without moving the cold
   }
 });
 
-test('campaign walks E1 legally, persists each leg, and hashes deterministically', async () => {
-  const first = await runCampaign();
-  const second = await runCampaign();
-  try {
-    assert.deepEqual(first.artifact.legs.map(({ contractId }) => contractId), [
-      'the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron',
-    ]);
-    assert.equal(first.artifact.legs[2].outcome.waves, 25);
-    assert.equal(first.artifact.campaignHash, second.artifact.campaignHash);
-    assert.equal(first.artifact.campaignHash, 'fnv1a32:4f363fd5');
-    for (let index = 1; index < first.artifact.legs.length; index += 1) {
-      assert.equal(first.artifact.legs[index].startStateHash, first.artifact.legs[index - 1].stateHash);
-    }
-    assert.equal(first.files.filter((name) => /^\d\d-/.test(name)).length, 5);
-  } finally {
-    await rm(first.dir, { recursive: true });
-    await rm(second.dir, { recursive: true });
+test('campaign walks E1 legally, persists each leg, and hashes deterministically', async (t) => {
+  const first = await runCampaign(t);
+  const second = await runCampaign(t);
+  assert.deepEqual(first.artifact.legs.map(({ contractId }) => contractId), [
+    'the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron',
+  ]);
+  assert.equal(first.artifact.legs[2].outcome.waves, 25);
+  assert.equal(first.artifact.campaignHash, second.artifact.campaignHash);
+  assert.equal(first.artifact.campaignHash, 'fnv1a32:4f363fd5');
+  for (let index = 1; index < first.artifact.legs.length; index += 1) {
+    assert.equal(first.artifact.legs[index].startStateHash, first.artifact.legs[index - 1].stateHash);
   }
+  assert.equal(first.files.filter((name) => /^\d\d-/.test(name)).length, 5);
 });
 
-test('a killed campaign resumes from its last profile checkpoint', async () => {
+test('a killed campaign resumes from its last profile checkpoint', async (t) => {
   const dir = await mkdtemp(join(tmpdir(), 'gr-campaign-resume-'));
+  let child;
+  let closed;
+  t.after(async () => {
+    // Reap the writer before removing its checkpoint directory, including on failure.
+    if (child) {
+      if (child.exitCode === null && child.signalCode === null) child.kill('SIGTERM');
+      await closed;
+    }
+    await rm(dir, { recursive: true });
+  });
   const checkpoint = join(dir, 'checkpoint.json');
-  const child = spawn(process.execPath, [
+  child = spawn(process.execPath, [
     'scripts/gr-sim-campaign.mjs', '--player', PLAYER, '--test-fixture', '--output', join(dir, 'first'),
     '--checkpoint', checkpoint,
   ], { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, NODE_ENV: 'test' } });
+  closed = new Promise((resolve) => child.once('close', resolve));
   let buffer = '';
+  let stderr = '';
+  child.stderr.on('data', (chunk) => { stderr += chunk; });
   await new Promise((resolve, reject) => {
     let gotCheckpoint = false;
     child.stdout.on('data', (chunk) => {
@@ -99,10 +107,10 @@ test('a killed campaign resumes from its last profile checkpoint', async () => {
     });
     child.on('error', reject);
     child.once('close', (code) => {
-      if (!gotCheckpoint) reject(new Error(`campaign exited ${code} before its first checkpoint: ${buffer}`));
+      if (!gotCheckpoint) reject(new Error(`campaign exited ${code} before its first checkpoint: ${buffer}${stderr}`));
     });
   });
-  await new Promise((resolve) => child.once('close', resolve));
+  await closed;
 
   const saved = JSON.parse(await readFile(checkpoint, 'utf8'));
   assert.equal(saved.campaign.legs.length, 1);
@@ -122,20 +130,15 @@ test('a killed campaign resumes from its last profile checkpoint', async () => {
   assert.equal(messages[0].startStateHash, saved.campaign.legs[0].stateHash);
   const { readdir } = await import('node:fs/promises');
   assert.equal((await readdir(join(dir, 'resumed'))).filter((name) => /^\d\d-/.test(name)).length, 5);
-  await rm(dir, { recursive: true });
 });
 
-test('--contract selects exactly one named contract', async () => {
-  const run = await runContract('the-claim');
-  try {
-    assert.equal(run.status, 0, run.stderr);
-    assert.deepEqual(JSON.parse(await readFile(join(run.output, 'campaign.json'), 'utf8')).legs.map(({ contractId }) => contractId), ['the-claim']);
-  } finally {
-    await rm(run.dir, { recursive: true });
-  }
+test('--contract selects exactly one named contract', async (t) => {
+  const run = await runContract(t, 'the-claim');
+  assert.equal(run.status, 0, run.stderr);
+  assert.deepEqual(JSON.parse(await readFile(join(run.output, 'campaign.json'), 'utf8')).legs.map(({ contractId }) => contractId), ['the-claim']);
 });
 
-test('--contract refuses unknown, unseeded, and locked contracts loudly', async () => {
+test('--contract refuses unknown, unseeded, and locked contracts loudly', async (t) => {
   // THE "UNSEEDED" ARM IS DERIVED, NOT HARDCODED (2026-08-21). It named `e5-stillwater` until
   // that contract was seeded by its admission, at which point this test kept failing but for the
   // WRONG REASON — the harness got past the seed check and tripped the LOCK check instead, so the
@@ -164,28 +167,21 @@ test('--contract refuses unknown, unseeded, and locked contracts loudly', async 
     ['e3-canyon-works', 'Contract "e3-canyon-works" is locked: The Voltage Age awaits: raise the Dynamo Hall.'],
   ];
   for (const [contractId, message] of cases) {
-    const run = await runContract(contractId);
-    try {
-      assert.notEqual(run.status, 0);
-      assert.match(run.stderr, new RegExp(`${escapeRegExp(message)}(?:\\n|$)`));
-    } finally {
-      await rm(run.dir, { recursive: true });
-    }
-  }
-});
-
-test('--contract refuses an empty selector instead of falling back', async () => {
-  const run = await runContract('');
-  try {
+    const run = await runContract(t, contractId);
     assert.notEqual(run.status, 0);
-    assert.match(run.stderr, /--contract requires an id\./);
-  } finally {
-    await rm(run.dir, { recursive: true });
+    assert.match(run.stderr, new RegExp(`${escapeRegExp(message)}(?:\\n|$)`));
   }
 });
 
-async function runCampaign() {
+test('--contract refuses an empty selector instead of falling back', async (t) => {
+  const run = await runContract(t, '');
+  assert.notEqual(run.status, 0);
+  assert.match(run.stderr, /--contract requires an id\./);
+});
+
+async function runCampaign(t) {
   const dir = await mkdtemp(join(tmpdir(), 'gr-campaign-'));
+  t.after(() => rm(dir, { recursive: true }));
   const output = join(dir, 'out');
   const run = spawnSync(process.execPath, [
     'scripts/gr-sim-campaign.mjs', '--player', PLAYER, '--test-fixture', '--output', output,
@@ -200,8 +196,9 @@ async function runCampaign() {
   };
 }
 
-async function runContract(contractId) {
+async function runContract(t, contractId) {
   const dir = await mkdtemp(join(tmpdir(), 'gr-campaign-contract-'));
+  t.after(() => rm(dir, { recursive: true }));
   const output = join(dir, 'out');
   const run = spawnSync(process.execPath, [
     'scripts/gr-sim-campaign.mjs', '--player', PLAYER, '--test-fixture', '--contract', contractId, '--output', output,

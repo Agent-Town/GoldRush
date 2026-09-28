@@ -1,0 +1,87 @@
+(node:55633) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+
+(node:55695) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/2] [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults
+  1) [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      240 |
+      241 | async function forceDeath(page: Page): Promise<void> {
+    > 242 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+          |              ^
+      243 |   await page.evaluate(() => {
+      244 |     window.__GR_TEST__?.setBalance('enemy.contactDamage', 999);
+      245 |     for (let pack = 0; pack < 6; pack += 1) window.__GR_TEST__?.spawnPack(5, 0.4);
+        at forceDeath (/Users/robin/Claude/Projects/wt-ux1/e2e/m3-06-demo-profiles.spec.ts:242:14)
+        at /Users/robin/Claude/Projects/wt-ux1/e2e/m3-06-demo-profiles.spec.ts:65:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:56440) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/2] [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults
+  2) [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 3
+
+      Object {
+        "difficultyPreset": "trail",
+    -   "hintsSeen": Array [],
+    +   "hintsSeen": Array [
+    +     "story:first-boot",
+    +   ],
+        "name": "Robin",
+      }
+
+      57 |   const state = await readJson<ProfileState>(page, PROFILE_KEY);
+      58 |   expect(state.activeId).toBe('robin');
+    > 59 |   expect(state.profiles[0]).toMatchObject({ name: 'Robin', difficultyPreset: 'trail', hintsSeen: [] });
+         |                             ^
+      60 |   expect(await readJson<unknown[]>(page, profileDataKey('robin', SCOREBOARD_KEY))).toHaveLength(1);
+      61 |   expect(await page.evaluate(() => window.__GR_PROFILE__?.markHintSeen('first-run'))).toBe(true);
+      62 |   expect((await readJson<ProfileState>(page, PROFILE_KEY)).profiles[0]?.hintsSeen).toContain('first-run');
+        at /Users/robin/Claude/Projects/wt-ux1/e2e/m3-06-demo-profiles.spec.ts:59:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+    [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 

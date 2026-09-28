@@ -1,0 +1,60 @@
+
+===== warmup — rc=0 8.6s =====
+
+Running 1 test using 1 worker
+
+
+
+[1/1] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+  1 passed (7.0s)
+(node:20311) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+===== adjacent and plain boots — rc=0 224.9s =====
+[28/42] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs
+[29/42] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth
+[30/42] [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget
+[31/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[32/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[33/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[34/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[35/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[36/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[37/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[38/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[39/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[40/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[41/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[42/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  42 passed (3.7m)
+(node:20427) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20493) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20493) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:33071) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:33071) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+===== native opt-in skips — rc=0 0.8s =====
+
+Running 8 tests using 1 worker
+
+[1/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-archive-world plays to its authored terminal, banks, reloads and returns to the board @slow
+[2/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-ember-shore plays to its authored terminal, banks, reloads and returns to the board @slow
+[3/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow
+[4/8] [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e8-mare-claim plays to its authored terminal, banks, reloads and returns to the board @slow
+[5/8] [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-archive-world plays to its authored terminal, banks, reloads and returns to the board @slow
+[6/8] [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e10-ember-shore plays to its authored terminal, banks, reloads and returns to the board @slow
+[7/8] [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow
+[8/8] [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e8-mare-claim plays to its authored terminal, banks, reloads and returns to the board @slow
+  8 skipped
+(node:53593) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup":0,"adjacent and plain boots":0,"native opt-in skips":0}
+OVERALL rc=0
+transcript -> artifacts/s2719/browser-gates.txt

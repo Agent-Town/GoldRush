@@ -1,0 +1,24 @@
+branch test/test-truth-2 tip 392c66192 2026-09-25 17:59Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/tt2.json
+scratch store at the store's main 5793a96
+chain base 96d45ad6f
+merged 5209d4d03
+cure tt2: report committed 3a9ca1dfc
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+e2e start 18:01Z: e2e/e1-night-shift.spec.ts e2e/e1-twin-banks.spec.ts e2e/beauty-twin-banks.spec.ts e2e/playability-secure.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   14 skipped   62 passed (5.8m)  18:07Z
+battery start 18:07Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1012 ℹ fail 1 ℹ skipped 5  18:27Z
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (1120526.345125ms)
+dirt after battery: 0
+tt2-PREP-DONE
+battery reds: ✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (1120526.345125ms)
+verdict — needs hands
+RESUME-PREP 18:28Z: fixture owners remove their temp directories = the sweep failed on "scripts/node-guards-contention.test.mjs child failed", the load shape (another battery on the host), not fixture survivors; the branch is tests and docs, no src
+verdict: clean
+RESUME 2026-09-25 18:51Z: chain 3a9ca1dfc, merge 5209d4d03, continuing at the pin
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+review: reviews/test-truth-2.md

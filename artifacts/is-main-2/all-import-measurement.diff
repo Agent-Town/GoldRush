@@ -1,0 +1,496 @@
+diff --git a/scripts/assay-replay-agent.mjs b/scripts/assay-replay-agent.mjs
+index 604877ea7..63f267c6e 100644
+--- a/scripts/assay-replay-agent.mjs
++++ b/scripts/assay-replay-agent.mjs
+@@ -30,7 +30,7 @@ import { readFile, readdir } from 'node:fs/promises';
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ import { createServer } from 'vite';
+-
++import { isMain } from './is-main.mjs';
+ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+ export const CANONICAL_ASSAY_NODE_VERSION = '26.4.0';
+ export const ENGINE_SOURCE_INPUTS = [
+@@ -119,7 +119,7 @@ export async function replayAgentTape(rawTape) {
+   }
+ }
+ 
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
++if (isMain(import.meta.url)) {
+   const inputPath = process.argv[2];
+   if (!inputPath) {
+     process.stderr.write('Usage: node scripts/assay-replay-agent.mjs <reel.json>\n');
+diff --git a/scripts/blocker-panel-closed-guard.mjs b/scripts/blocker-panel-closed-guard.mjs
+index 4832e33af..736c3f376 100644
+--- a/scripts/blocker-panel-closed-guard.mjs
++++ b/scripts/blocker-panel-closed-guard.mjs
+@@ -44,7 +44,7 @@ import { fileURLToPath } from 'node:url';
+ import { scan, FINDING } from './findings-state-guard.mjs';
+ import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
+ import { subjectLedClosure } from './desk-state-audit.mjs';
+-
++import { isMain } from './is-main.mjs';
+ function arg(flag) {
+   const i = process.argv.indexOf(flag);
+   return i === -1 ? null : process.argv[i + 1];
+@@ -234,6 +234,6 @@ function main() {
+   console.log('blocker-panel-closed-guard: PASS');
+ }
+ 
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
++if (isMain(import.meta.url)) {
+   main();
+ }
+diff --git a/scripts/desk-state-audit.mjs b/scripts/desk-state-audit.mjs
+index efbdc56d5..a7448bc69 100644
+--- a/scripts/desk-state-audit.mjs
++++ b/scripts/desk-state-audit.mjs
+@@ -25,7 +25,7 @@
+  */
+ import fs from 'node:fs';
+ import path from 'node:path';
+-import { fileURLToPath } from 'node:url';
++import { isMain } from './is-main.mjs';
+ import { deskItems, deskTail, isLockLine } from './desk-carryforward-guard.mjs';
+ import { scan } from './findings-state-guard.mjs';
+ 
+@@ -261,4 +261,4 @@ function main() {
+   }
+ }
+ 
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
++if (isMain(import.meta.url)) main();
+diff --git a/scripts/e4-motor-ride.mjs b/scripts/e4-motor-ride.mjs
+index 653495c71..8c3fad4cc 100644
+--- a/scripts/e4-motor-ride.mjs
++++ b/scripts/e4-motor-ride.mjs
+@@ -17,7 +17,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ import { motorFloorOrders } from './e4-motor-floor.mjs';
+-
++import { isMain } from './is-main.mjs';
+ const ROOT = fileURLToPath(new URL('..', import.meta.url));
+ 
+ export function parseRideArgs(argv) {
+@@ -84,7 +84,7 @@ export function rideMotorContract(options) {
+   });
+ }
+ 
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
++if (isMain(import.meta.url)) {
+   const options = parseRideArgs(process.argv.slice(2));
+   if (options.tape) mkdirSync(path.dirname(path.resolve(ROOT, options.tape)), { recursive: true });
+   const ride = await rideMotorContract({ ...options, tape: options.tape ? path.resolve(ROOT, options.tape) : null });
+diff --git a/scripts/e7-playbook-digest.mjs b/scripts/e7-playbook-digest.mjs
+index 6d093ff3d..1c386b536 100644
+--- a/scripts/e7-playbook-digest.mjs
++++ b/scripts/e7-playbook-digest.mjs
+@@ -6,8 +6,8 @@
+ // seed, one order stream, two runtimes).
+ //
+ // Usage: node scripts/e7-playbook-digest.mjs [--all | <contract>]
+-import path from 'node:path';
+-import { fileURLToPath } from 'node:url';
++// The digest runs only when this file is the entry point, decided by real path (F-SF1-2).
++import { isMain } from './is-main.mjs';
+ import { createServer } from 'vite';
+ 
+ const RELAY_R1_PAD = { x: -45, z: 40 };
+@@ -110,10 +110,10 @@ export function playbookDigest(sim, script, turns = 40) {
+   };
+ }
+ 
+-// Compared as RESOLVED PATHS, never as a `file://${argv[1]}` string: this repo's own checkout path
+-// contains a space, which `import.meta.url` percent-encodes and `process.argv[1]` does not, so the
+-// string form silently never matches and the script prints nothing at all.
+-if (fileURLToPath(import.meta.url) === path.resolve(process.argv[1] ?? '')) {
++// isMain compares REAL paths: never a `file://${argv[1]}` string (this repo's checkout path contains
++// a space, which `import.meta.url` percent-encodes) and never a resolved path, which a symlinked run
++// defeats; either form silently never matches and the script prints nothing at all (F-SF1-2).
++if (isMain(import.meta.url)) {
+   const requested = process.argv.includes('--all')
+     ? Object.keys(E7_PLAYBOOK_SCRIPTS)
+     : process.argv.slice(2).filter((argument) => !argument.startsWith('--'));
+diff --git a/scripts/evidence-budget.mjs b/scripts/evidence-budget.mjs
+index cacd55360..38d20c27e 100644
+--- a/scripts/evidence-budget.mjs
++++ b/scripts/evidence-budget.mjs
+@@ -31,7 +31,7 @@ import { execFileSync } from 'node:child_process';
+ import { readFileSync } from 'node:fs';
+ import { dirname, resolve } from 'node:path';
+ import { fileURLToPath } from 'node:url';
+-
++import { isMain } from './is-main.mjs';
+ const HERE = dirname(fileURLToPath(import.meta.url));
+ export const DEFAULT_ROOT = resolve(HERE, '..');
+ export const BASELINE_PATH = 'scripts/evidence-budget-baseline.json';
+@@ -196,4 +196,4 @@ function main() {
+   }
+ }
+ 
+-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
++if (isMain(import.meta.url)) main();
+diff --git a/scripts/evidence-offload.mjs b/scripts/evidence-offload.mjs
+index bff3e58bd..e42a628f8 100644
+--- a/scripts/evidence-offload.mjs
++++ b/scripts/evidence-offload.mjs
+@@ -44,7 +44,7 @@ import { fileURLToPath } from 'node:url';
+ 
+ import { isEvidenceCitation } from './review-evidence-audit.mjs';
+ import { ARCHIVE_INDEX_PATH, deriveMustStay, mustStayPredicate, readArchiveIndex, subtreeRootOf } from './evidence-readers.mjs';
+-
++import { isMain } from './is-main.mjs';
+ const HERE = dirname(fileURLToPath(import.meta.url));
+ export const DEFAULT_ROOT = resolve(HERE, '..');
+ // One implementation of the word: the path and the reader live in `evidence-readers.mjs`, because
+@@ -466,4 +466,4 @@ async function main() {
+   }
+ }
+ 
+-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();
++if (isMain(import.meta.url)) await main();
+diff --git a/scripts/evidence-readers.mjs b/scripts/evidence-readers.mjs
+index 6c96b97b6..6ed90ed09 100644
+--- a/scripts/evidence-readers.mjs
++++ b/scripts/evidence-readers.mjs
+@@ -29,7 +29,7 @@ import { readFileSync } from 'node:fs';
+ import { createRequire } from 'node:module';
+ import { dirname, resolve } from 'node:path';
+ import { fileURLToPath } from 'node:url';
+-
++import { isMain } from './is-main.mjs';
+ const HERE = dirname(fileURLToPath(import.meta.url));
+ export const DEFAULT_ROOT = resolve(HERE, '..');
+ 
+@@ -515,4 +515,4 @@ function main() {
+   }
+ }
+ 
+-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
++if (isMain(import.meta.url)) main();
+diff --git a/scripts/findings-state-guard.mjs b/scripts/findings-state-guard.mjs
+index 93c5e72c3..b7654c2af 100644
+--- a/scripts/findings-state-guard.mjs
++++ b/scripts/findings-state-guard.mjs
+@@ -25,7 +25,7 @@ import fs from 'node:fs';
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
+-
++import { isMain } from './is-main.mjs';
+ function arg(flag) {
+   const i = process.argv.indexOf(flag);
+   return i === -1 ? null : process.argv[i + 1];
+@@ -211,6 +211,6 @@ function main() {
+ }
+ 
+ // Run only when invoked directly; importing this module must have no side effects.
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
++if (isMain(import.meta.url)) {
+   main();
+ }
+diff --git a/scripts/frontier-registry.mjs b/scripts/frontier-registry.mjs
+index cf6aeeb56..9b6b2f086 100644
+--- a/scripts/frontier-registry.mjs
++++ b/scripts/frontier-registry.mjs
+@@ -3,7 +3,7 @@
+ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+-
++import { isMain } from './is-main.mjs';
+ const ROOT = fileURLToPath(new URL('..', import.meta.url));
+ const DEFAULT_ARTIFACT = path.join(ROOT, 'assets/contracts/frontier-registry.json');
+ const ERAS = [
+@@ -119,7 +119,7 @@ function parseArgs(argv) {
+   return options;
+ }
+ 
+-if (process.argv[1] === fileURLToPath(import.meta.url)) {
++if (isMain(import.meta.url)) {
+   const options = parseArgs(process.argv.slice(2));
+   const boardExport = JSON.parse(readFileSync(options.input, 'utf8'));
+   const previous = existsSync(options.output) ? JSON.parse(readFileSync(options.output, 'utf8')) : null;
+diff --git a/scripts/gate-battery.mjs b/scripts/gate-battery.mjs
+index 39f092c3f..4aafeddb5 100644
+--- a/scripts/gate-battery.mjs
++++ b/scripts/gate-battery.mjs
+@@ -69,7 +69,7 @@ import { spawnSync } from 'node:child_process';
+ import { appendFileSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+ import { fileURLToPath } from 'node:url';
+ import path from 'node:path';
+-
++import { isMain } from './is-main.mjs';
+ // (3) fileURLToPath — NOT URL.pathname, which would percent-encode "Gold Rush".
+ export const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+ 
+@@ -237,7 +237,7 @@ function repeatedFlag(name) {
+ const VALUE_FLAGS = new Set(['--transcript', '--label', '--cwd', '--env']);
+ 
+ // Run only when invoked directly, so the guard can import the helpers.
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
++if (isMain(import.meta.url)) {
+   const spec = process.argv.slice(2).filter((a, i, all) => {
+     if (VALUE_FLAGS.has(a)) return false;
+     return !VALUE_FLAGS.has(all[i - 1]);
+diff --git a/scripts/gazette-backfill-sweep.mjs b/scripts/gazette-backfill-sweep.mjs
+index 0f4be7cf2..60a13e19b 100644
+--- a/scripts/gazette-backfill-sweep.mjs
++++ b/scripts/gazette-backfill-sweep.mjs
+@@ -30,8 +30,8 @@
+ // bookkeeping and infrastructure merge and gets excused into uselessness within a week
+ // (the `cross-engine` label's fate, F-1460-1). This prints a WARN-level list to judge.
+ import { execFileSync } from 'node:child_process'
+-import { resolve } from 'node:path'
+-import { fileURLToPath } from 'node:url'
++// The sweep runs only when this file is the entry point, decided by real path (F-SF1-2).
++import { isMain } from './is-main.mjs'
+ 
+ const MARKER = 'NOT PLAYER-VISIBLE'
+ const cited = (full, text) => {
+@@ -320,4 +320,4 @@ const main = () => {
+   }
+ }
+ 
+-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main()
++if (isMain(import.meta.url)) main()
+diff --git a/scripts/review-evidence-audit.mjs b/scripts/review-evidence-audit.mjs
+index e56c3e9c4..0d0f02ae0 100644
+--- a/scripts/review-evidence-audit.mjs
++++ b/scripts/review-evidence-audit.mjs
+@@ -31,7 +31,7 @@ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ 
+ import { ARCHIVE_INDEX_PATH, archiveEntryFor, readArchiveIndex } from './evidence-readers.mjs';
+-
++import { isMain } from './is-main.mjs';
+ const DEFAULT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+ const BACKTICKED = /`([^`\n]*)`/g;
+ 
+@@ -211,4 +211,4 @@ function main() {
+   }
+ }
+ 
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
++if (isMain(import.meta.url)) main();
+diff --git a/scripts/row-quote-currency.mjs b/scripts/row-quote-currency.mjs
+index 68843d4ba..27d012b41 100644
+--- a/scripts/row-quote-currency.mjs
++++ b/scripts/row-quote-currency.mjs
+@@ -52,7 +52,7 @@ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ import { scan } from './findings-state-guard.mjs';
+ import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
+-
++import { isMain } from './is-main.mjs';
+ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+ 
+ // A path token as the ledger writes them: inside backticks, optionally :NN or :NN-NN.
+@@ -449,4 +449,4 @@ function main() {
+   console.log('rotted) or the text it says is MISSING and ought to be added (gone => still LIVE).');
+ }
+ 
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) main();
++if (isMain(import.meta.url)) main();
+diff --git a/scripts/ruling-propagation-guard.mjs b/scripts/ruling-propagation-guard.mjs
+index 3239220b5..728a2ca16 100644
+--- a/scripts/ruling-propagation-guard.mjs
++++ b/scripts/ruling-propagation-guard.mjs
+@@ -32,7 +32,7 @@ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ import { FINDING } from './findings-state-guard.mjs';
+ import { BACKLOG_INDEX, backlogParts, corpusDeclaration as ledgerCorpus } from './ledger-corpus.mjs';
+-
++import { isMain } from './is-main.mjs';
+ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+ const REPORT = process.argv.includes('--report');
+ 
+@@ -215,11 +215,11 @@ function main() {
+   return REPORT ? 0 : 1;
+ }
+ 
+-// NOTE: the usual `import.meta.url === \`file://${process.argv[1]}\`` idiom is WRONG in this repo —
+-// the checkout path contains a space ("Gold Rush"), which import.meta.url percent-encodes to %20
+-// while process.argv[1] does not. The comparison silently fails and main() never runs, so the guard
+-// prints nothing and exits 0: a green that means "executed nothing", the worst kind. Compare
+-// resolved paths instead.
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
++// NOTE: never a `file://${process.argv[1]}` template (the checkout path contains a space, which
++// import.meta.url percent-encodes to %20) and never a resolved-path comparison either: node realpaths
++// the entry point, so under a symlinked path both are false, main() never runs, and the guard prints
++// nothing and exits 0: a green that means "executed nothing", the worst kind. isMain compares REAL
++// paths on both sides (./is-main.mjs; F-SF1-2, is-main-2).
++if (isMain(import.meta.url)) {
+   process.exit(main());
+ }
+diff --git a/scripts/second-rider.mjs b/scripts/second-rider.mjs
+index 9d66c5a68..4d8adff2f 100644
+--- a/scripts/second-rider.mjs
++++ b/scripts/second-rider.mjs
+@@ -1,8 +1,8 @@
+ import { mkdir } from 'node:fs/promises';
+ import path from 'node:path';
+-import { fileURLToPath, pathToFileURL } from 'node:url';
++import { fileURLToPath } from 'node:url';
+ import { chromium } from 'playwright';
+-
++import { isMain } from './is-main.mjs';
+ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+ const DEFAULT_URL = 'https://gold-rush-3in.pages.dev';
+ const DEFAULT_NAME = 'The Second Rider';
+@@ -312,7 +312,7 @@ async function main() {
+   });
+ }
+ 
+-if (process.argv[1] && pathToFileURL(path.resolve(process.argv[1])).href === import.meta.url) {
++if (isMain(import.meta.url)) {
+   main().catch((error) => {
+     console.error(error instanceof Error ? error.message : String(error));
+     process.exitCode = 1;
+diff --git a/scripts/spawn-bound-census.mjs b/scripts/spawn-bound-census.mjs
+index 848d147ec..7b08fc476 100644
+--- a/scripts/spawn-bound-census.mjs
++++ b/scripts/spawn-bound-census.mjs
+@@ -51,7 +51,7 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+-
++import { isMain } from './is-main.mjs';
+ const HERE = path.dirname(fileURLToPath(import.meta.url));
+ const ROOT = path.resolve(HERE, '..');
+ const DIR = path.join(ROOT, 'scripts');
+@@ -348,4 +348,4 @@ function main() {
+   process.exit(0);
+ }
+ 
+-if (path.resolve(process.argv[1] || '') === fileURLToPath(import.meta.url)) main();
++if (isMain(import.meta.url)) main();
+diff --git a/scripts/stream-director.mjs b/scripts/stream-director.mjs
+index 2f4f4fe64..5580a63e8 100644
+--- a/scripts/stream-director.mjs
++++ b/scripts/stream-director.mjs
+@@ -1,6 +1,6 @@
+ #!/usr/bin/env node
+ import { createHash, randomUUID } from 'node:crypto';
+-import { pathToFileURL } from 'node:url';
++import { isMain } from './is-main.mjs';
+ import { resolveSpec, runShowcase } from './stream-showcase.mjs';
+ import { consumeNextShowcase, readShowcaseQueue, showcaseQueueStatus } from './stream-showcase-queue.mjs';
+ 
+@@ -136,4 +136,4 @@ async function main(args) {
+ }
+ 
+ try { process.loadEnvFile?.('.env.local'); } catch {}
+-if (pathToFileURL(process.argv[1]).href === import.meta.url) await main(process.argv.slice(2));
++if (isMain(import.meta.url)) await main(process.argv.slice(2));
+diff --git a/scripts/stream-showcase.mjs b/scripts/stream-showcase.mjs
+index 4654d204d..f5e9dd44f 100644
+--- a/scripts/stream-showcase.mjs
++++ b/scripts/stream-showcase.mjs
+@@ -5,7 +5,7 @@ import { existsSync } from 'node:fs';
+ import { tmpdir } from 'node:os';
+ import path from 'node:path';
+ import { pathToFileURL } from 'node:url';
+-
++import { isMain } from './is-main.mjs';
+ const root = path.resolve(import.meta.dirname, '..');
+ 
+ export async function resolveSpec(input) {
+@@ -71,7 +71,7 @@ export default {
+   }
+ }
+ 
+-if (pathToFileURL(process.argv[1]).href === import.meta.url) {
++if (isMain(import.meta.url)) {
+   try { process.exitCode = await runShowcase(process.argv[2]); }
+   catch (error) { console.error(error.message); process.exitCode = 1; }
+ }
+diff --git a/scripts/terrain-contract-scope.mjs b/scripts/terrain-contract-scope.mjs
+index 15ee57577..c816ef567 100644
+--- a/scripts/terrain-contract-scope.mjs
++++ b/scripts/terrain-contract-scope.mjs
+@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
+ import path from 'node:path';
+ import { fileURLToPath } from 'node:url';
+ import { createServer } from 'vite';
+-
++import { isMain } from './is-main.mjs';
+ const ROOT = fileURLToPath(new URL('..', import.meta.url));
+ const REPORT_PATH = path.join(ROOT, 'docs/bench/terrain-contract-scope.md');
+ const TERRAIN_PATH = path.join(ROOT, 'src/world/Terrain.ts');
+@@ -121,6 +121,6 @@ function printDiff(before, after) {
+   process.stderr.write(`${differences} differing line${differences === 1 ? '' : 's'} in ${path.relative(ROOT, REPORT_PATH)}.\n`);
+ }
+ 
+-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
++if (isMain(import.meta.url)) {
+   await main();
+ }
+diff --git a/scripts/ticker-stats.mjs b/scripts/ticker-stats.mjs
+index cd05336c6..13adcec55 100644
+--- a/scripts/ticker-stats.mjs
++++ b/scripts/ticker-stats.mjs
+@@ -1,7 +1,7 @@
+ #!/usr/bin/env node
+ 
+ import { readFile } from 'node:fs/promises';
+-import { pathToFileURL } from 'node:url';
++import { isMain } from './is-main.mjs';
+ 
+ const QUIET_LINE = 'the wire is quiet.';
+ const EMPTY_LINE = 'the office opens with the first assay.';
+@@ -190,4 +190,4 @@ async function main() {
+   console.log(parsed.help ? help() : await draftTickerStats(parsed));
+ }
+ 
+-if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) await main();
++if (isMain(import.meta.url)) await main();
+diff --git a/scripts/withheld-evidence-audit.mjs b/scripts/withheld-evidence-audit.mjs
+index fb1a954c7..a5890dcae 100644
+--- a/scripts/withheld-evidence-audit.mjs
++++ b/scripts/withheld-evidence-audit.mjs
+@@ -88,7 +88,7 @@ import { readdirSync, readFileSync, existsSync } from 'node:fs';
+ import { fileURLToPath } from 'node:url';
+ import { spawnSync } from 'node:child_process';
+ import path from 'node:path';
+-
++import { isMain } from './is-main.mjs';
+ // Anchored to this file, never to process.cwd(): the corpus is a fixed tree in
+ // this repo, and a cwd-relative root silently narrows to nothing from a
+ // subdirectory while still printing a clean verdict (F-2220-1).
+@@ -316,6 +316,6 @@ function main(argv) {
+   return exitCodeFor(result, strict);
+ }
+ 
+-if (path.resolve(process.argv[1] ?? '') === fileURLToPath(import.meta.url)) {
++if (isMain(import.meta.url)) {
+   process.exit(main(process.argv.slice(2)));
+ }
+diff --git a/server/ledger/serve.mjs b/server/ledger/serve.mjs
+index a92976e0c..9144b9b70 100644
+--- a/server/ledger/serve.mjs
++++ b/server/ledger/serve.mjs
+@@ -2,10 +2,10 @@
+ 
+ import { createServer as createHttpServer } from 'node:http';
+ import path from 'node:path';
+-import { fileURLToPath, pathToFileURL } from 'node:url';
++import { fileURLToPath } from 'node:url';
+ import { createServer as createViteServer } from 'vite';
+ import { SqliteStorage } from './storage.mjs';
+-
++import { isMain } from '../../scripts/is-main.mjs';
+ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+ let runtimePromise;
+ 
+@@ -167,7 +167,7 @@ async function main() {
+   process.once('SIGTERM', close);
+ }
+ 
+-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
++if (isMain(import.meta.url)) {
+   main().catch((error) => {
+     console.error(error instanceof Error ? error.message : String(error));
+     process.exitCode = 1;

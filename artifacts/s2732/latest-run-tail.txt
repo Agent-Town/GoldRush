@@ -1,0 +1,24 @@
+ for project in ['desktop-chrome','mobile-chrome']:
+  rides=[m for m in rows if m['contract']==cid and m['project']==project]
+  check(cid+'/'+project+' ride limit',1<=len(rides)<=2)
+  images=list((root/cid).rglob(f'*{project}.jpg'))
+  check(cid+'/'+project+' image budget',len(images)<=3)
+paths=subprocess.check_output(['git','diff','--name-only',base],text=True).splitlines()
+allowed={'e2e/native-proofs/driver.ts',*[f'e2e/native-proofs/{cid}.spec.ts' for cid in ['e8-mare-claim','e7-relay-valley','e10-archive-world','e10-ember-shore']],'artifacts/sol/play-proofs/run-16/run-note.md'}
+check('firewall',all(p in allowed or p.startswith('artifacts/sol/play-proofs/run-17/') for p in paths))
+check('equivalence',json.loads((root/'driver-equivalence.json').read_text())['pass'])
+check('required checks',all(c['exit']==0 for c in json.loads((root/'checks.json').read_text())))
+result={'pass':all(c['pass'] for c in checks),'rides':len(rows),'checks':checks}
+(root/'verification.json').write_text(json.dumps(result,indent=2)+'\\n');print(json.dumps(result));raise SystemExit(0 if result['pass'] else 1)
+PY
+ tail -8 /Users/robin/.goldrush/play-proofs/run-17/restore-ground/e8-mare-claim/command.log" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c
+ succeeded in 0ms:
+e8-mare-claim {"t":91.3,"wave":3,"hp":100,"gold":50,"kills":38,"x":-0.1,"z":-2.2,"alive":14,"seams":2}
+
+e8-mare-claim {"t":101.5,"wave":3,"hp":100,"gold":0,"kills":51,"x":-18.8,"z":17,"alive":8,"seams":2}
+
+e8-mare-claim {"t":111.7,"wave":3,"hp":100,"gold":10,"kills":59,"x":-22,"z":25.7,"alive":6,"seams":2}
+
+e8-mare-claim {"t":121.9,"wave":4,"hp":100,"gold":25,"kills":65,"x":-4.5,"z":3.7,"alive":13,"seams":2}
+
+

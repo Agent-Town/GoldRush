@@ -1,0 +1,94 @@
+{
+  "results": [
+    {
+      "name": "first-helper",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "--test-reporter=spec",
+        "--test-name-pattern=campaign walks",
+        "scripts/gr-sim-campaign.test.mjs"
+      ],
+      "exit": 1,
+      "survivors": []
+    },
+    {
+      "name": "second-helper",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "--test-reporter=spec",
+        "--test-name-pattern=campaign walks",
+        "scripts/gr-sim-campaign.test.mjs"
+      ],
+      "exit": 1,
+      "survivors": []
+    },
+    {
+      "name": "resume-assertion",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "--test-reporter=spec",
+        "--test-name-pattern=a killed campaign",
+        "scripts/gr-sim-campaign.test.mjs"
+      ],
+      "exit": 1,
+      "survivors": []
+    },
+    {
+      "name": "live-child",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "--test-reporter=spec",
+        "--test-name-pattern=a killed campaign",
+        "scripts/gr-sim-campaign.test.mjs"
+      ],
+      "exit": 1,
+      "survivors": []
+    },
+    {
+      "name": "startup",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "--test-reporter=spec",
+        "--test-name-pattern=a killed campaign",
+        "scripts/gr-sim-campaign.test.mjs"
+      ],
+      "exit": 1,
+      "survivors": []
+    },
+    {
+      "name": "early-exit",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "--test-reporter=spec",
+        "--test-name-pattern=a killed campaign",
+        "scripts/gr-sim-campaign.test.mjs"
+      ],
+      "exit": 1,
+      "survivors": []
+    },
+    {
+      "name": "contract-helper",
+      "command": [
+        "/opt/homebrew/bin/node",
+        "--test",
+        "--test-reporter=spec",
+        "--test-name-pattern=--contract selects",
+        "scripts/gr-sim-campaign.test.mjs"
+      ],
+      "exit": 1,
+      "survivors": []
+    }
+  ],
+  "restoration": {
+    "scratchBefore": "33c8b59430343a54e87cd7a06b012cf2591e4cf37004fc6006500aaa2ec30ce9",
+    "scratchAfter": "33c8b59430343a54e87cd7a06b012cf2591e4cf37004fc6006500aaa2ec30ce9",
+    "candidateBefore": "e365379e35ad87ed9e2d4e7ea7ae5320756071af18964d8d4222c0b76134cf52",
+    "candidateAfter": "e365379e35ad87ed9e2d4e7ea7ae5320756071af18964d8d4222c0b76134cf52"
+  }
+}

@@ -1,0 +1,330 @@
+{
+  "project": "mobile-chrome",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "live": {
+    "instanceClasses": 6,
+    "contactShadows": 74,
+    "totalInstances": 102,
+    "seededInstances": 102,
+    "densityTier": "mobile-reduced",
+    "seed": 1959784941,
+    "classes": [
+      {
+        "id": "rocks",
+        "instances": 18,
+        "visibleInstances": 18,
+        "drawCalls": 1
+      },
+      {
+        "id": "stumps",
+        "instances": 7,
+        "visibleInstances": 7,
+        "drawCalls": 1
+      },
+      {
+        "id": "dry_grass",
+        "instances": 44,
+        "visibleInstances": 44,
+        "drawCalls": 1
+      },
+      {
+        "id": "wagon_ruts",
+        "instances": 10,
+        "visibleInstances": 10,
+        "drawCalls": 1
+      },
+      {
+        "id": "claim_posts",
+        "instances": 5,
+        "visibleInstances": 5,
+        "drawCalls": 1
+      },
+      {
+        "id": "cactus",
+        "instances": 0,
+        "visibleInstances": 0,
+        "drawCalls": 1
+      },
+      {
+        "id": "reeds",
+        "instances": 18,
+        "visibleInstances": 18,
+        "drawCalls": 1
+      }
+    ],
+    "exclusions": {
+      "buildPadRadius": 4.8,
+      "routingLaneRadius": 4.2,
+      "harvestAnchorRadius": 2.4,
+      "buildingClearRadius": 2.4
+    },
+    "probes": {
+      "buildPad": {
+        "x": 0,
+        "z": 9,
+        "clearRadius": 4.8,
+        "nearest": 6.064612782146324,
+        "clear": true
+      },
+      "ford": {
+        "x": 0,
+        "z": 0,
+        "clearRadius": 6.25,
+        "nearest": 7.3562782434785445,
+        "clear": true
+      },
+      "routingLane": {
+        "x": 0,
+        "z": -14,
+        "clearRadius": 4.2,
+        "nearest": 9.219282082089729,
+        "clear": true
+      },
+      "building": {
+        "x": 0,
+        "z": 9,
+        "clearRadius": 2.4,
+        "nearest": 6.064612782146324,
+        "clear": true
+      }
+    },
+    "signature": "30.18,26.76|-29.96,-3.30|29.76,-19.99|30.81,-2.01|-30.87,-11.65|30.83,27.64|30.21,-5.82|29.10,-12.68|5.04,5.63|-30.20,-13.35|29.31,16.99|30.35,4.66"
+  },
+  "census": [
+    {
+      "id": "rocks",
+      "card": "driftwood",
+      "sways": false,
+      "instances": 18,
+      "batched": true
+    },
+    {
+      "id": "stumps",
+      "card": "willow",
+      "sways": false,
+      "instances": 7,
+      "batched": true
+    },
+    {
+      "id": "dry_grass",
+      "card": "reeds",
+      "sways": false,
+      "instances": 44,
+      "batched": true
+    },
+    {
+      "id": "wagon_ruts",
+      "card": "driftwood",
+      "sways": false,
+      "instances": 10,
+      "batched": false
+    },
+    {
+      "id": "claim_posts",
+      "card": "willow",
+      "sways": false,
+      "instances": 5,
+      "batched": true
+    },
+    {
+      "id": "cactus",
+      "card": null,
+      "sways": false,
+      "instances": 0,
+      "batched": true
+    },
+    {
+      "id": "reeds",
+      "card": "reeds",
+      "sways": true,
+      "instances": 18,
+      "batched": false
+    }
+  ],
+  "swayingTotal": 18,
+  "poses": {
+    "run-camera": {
+      "pose": {
+        "x": 0,
+        "z": 12
+      },
+      "swayingInView": 2,
+      "swayingInOldRegion": 0,
+      "projected": [
+        {
+          "x": -4.550073121674359,
+          "y": 0.31320325107614844,
+          "z": -5.981770975049585,
+          "scale": 1.20094127564691,
+          "zone": "bank",
+          "box": {
+            "x0": 55.3675860365625,
+            "x1": 101.52505141371121,
+            "y0": 113.82472300299345,
+            "y1": 150.327664662722
+          },
+          "control": {
+            "x0": 120.2641568343071,
+            "x1": 164.70739073244084,
+            "y0": 113.82472300299345,
+            "y1": 150.327664662722
+          },
+          "inView": true,
+          "inRegion": false
+        },
+        {
+          "x": 5.695889656431973,
+          "y": 0.2946977715817082,
+          "z": -5.469789553899318,
+          "scale": 1.363332691141404,
+          "zone": "bank",
+          "box": {
+            "x0": 315.3506242322619,
+            "x1": 369.1716014759204,
+            "y0": 117.55397348806703,
+            "y1": 158.60874229671637
+          },
+          "control": {
+            "x0": 378.99430519167686,
+            "x1": 434.7975533014378,
+            "y0": 117.55397348806703,
+            "y1": 158.60874229671637
+          },
+          "inView": true,
+          "inRegion": false
+        }
+      ],
+      "results": {
+        "gap600": {
+          "oldRegion": 0,
+          "anywhere": 15743,
+          "inReed": 1566,
+          "reedArea": 29914,
+          "reedDensity": 0.05235,
+          "inControl": 0,
+          "controlArea": 16058,
+          "controlDensity": 0
+        },
+        "gap1200": {
+          "oldRegion": 533634,
+          "anywhere": 577687,
+          "inReed": 2379,
+          "reedArea": 29914,
+          "reedDensity": 0.07953,
+          "inControl": 3167,
+          "controlArea": 16058,
+          "controlDensity": 0.19722
+        }
+      }
+    },
+    "plait": {
+      "pose": {
+        "x": 0,
+        "z": 0
+      },
+      "swayingInView": 1,
+      "swayingInOldRegion": 1,
+      "projected": [
+        {
+          "x": -4.550073121674359,
+          "y": 0.31320325107614844,
+          "z": -5.981770975049585,
+          "scale": 1.20094127564691,
+          "zone": "bank",
+          "box": {
+            "x0": 125.78687569557252,
+            "x1": 171.71941744098177,
+            "y0": 418.8308167301104,
+            "y1": 454.5305002968131
+          },
+          "control": {
+            "x0": 222.43772809659686,
+            "x1": 268.5320809235602,
+            "y0": 429.95717561458645,
+            "y1": 465.5227429573212
+          },
+          "inView": true,
+          "inRegion": true
+        }
+      ],
+      "results": {
+        "gap600": {
+          "oldRegion": 202042,
+          "anywhere": 605819,
+          "inReed": 5907,
+          "reedArea": 12573,
+          "reedDensity": 0.46982,
+          "inControl": 5183,
+          "controlArea": 12672,
+          "controlDensity": 0.40901
+        },
+        "gap1200": {
+          "oldRegion": 1204528,
+          "anywhere": 2224027,
+          "inReed": 12014,
+          "reedArea": 12573,
+          "reedDensity": 0.95554,
+          "inControl": 12649,
+          "controlArea": 12672,
+          "controlDensity": 0.99818
+        }
+      }
+    },
+    "south-stake": {
+      "pose": {
+        "x": 0,
+        "z": -12
+      },
+      "swayingInView": 1,
+      "swayingInOldRegion": 1,
+      "projected": [
+        {
+          "x": -4.550073121674359,
+          "y": 0.31320325107614844,
+          "z": -5.981770975049585,
+          "scale": 1.20094127564691,
+          "zone": "bank",
+          "box": {
+            "x0": -24.969137331198382,
+            "x1": 50.01756561434202,
+            "y0": 687.3191917287513,
+            "y1": 718.2804932568692
+          },
+          "control": {
+            "x0": 77.39099063146823,
+            "x1": 148.17705676416983,
+            "y0": 687.3191917287513,
+            "y1": 718.2804932568692
+          },
+          "inView": true,
+          "inRegion": true
+        }
+      ],
+      "results": {
+        "gap600": {
+          "oldRegion": 2869,
+          "anywhere": 2869,
+          "inReed": 659,
+          "reedArea": 11868,
+          "reedDensity": 0.05553,
+          "inControl": 0,
+          "controlArea": 16856,
+          "controlDensity": 0
+        },
+        "gap1200": {
+          "oldRegion": 19321,
+          "anywhere": 19321,
+          "inReed": 1218,
+          "reedArea": 11868,
+          "reedDensity": 0.10263,
+          "inControl": 10009,
+          "controlArea": 16856,
+          "controlDensity": 0.59379
+        }
+      }
+    }
+  }
+}

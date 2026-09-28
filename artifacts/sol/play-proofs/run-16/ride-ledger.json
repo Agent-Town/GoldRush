@@ -1,0 +1,104 @@
+{
+  "rule": "One default and at most one survival-only restore per project/map; no extra ride for a missing objective. Collection failure started zero rides.",
+  "rides": [
+    {
+      "contract": "e6-picnic",
+      "project": "desktop-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e6-picnic",
+      "project": "mobile-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e6-picnic",
+      "project": "desktop-chrome",
+      "strategy": "restore-ground"
+    },
+    {
+      "contract": "e6-picnic",
+      "project": "mobile-chrome",
+      "strategy": "restore-ground"
+    },
+    {
+      "contract": "e6-showroom",
+      "project": "desktop-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e6-showroom",
+      "project": "mobile-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e6-showroom",
+      "project": "desktop-chrome",
+      "strategy": "restore-ground"
+    },
+    {
+      "contract": "e6-showroom",
+      "project": "mobile-chrome",
+      "strategy": "restore-ground"
+    },
+    {
+      "contract": "e7-dead-band",
+      "project": "desktop-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e7-dead-band",
+      "project": "mobile-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e7-dead-band",
+      "project": "desktop-chrome",
+      "strategy": "restore-ground"
+    },
+    {
+      "contract": "e7-dead-band",
+      "project": "mobile-chrome",
+      "strategy": "restore-ground"
+    },
+    {
+      "contract": "e7-echo-canyon",
+      "project": "desktop-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e7-echo-canyon",
+      "project": "mobile-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e7-echo-canyon",
+      "project": "desktop-chrome",
+      "strategy": "restore-ground"
+    },
+    {
+      "contract": "e7-relay-rush",
+      "project": "desktop-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e7-relay-rush",
+      "project": "mobile-chrome",
+      "strategy": "default"
+    },
+    {
+      "contract": "e7-relay-rush",
+      "project": "desktop-chrome",
+      "strategy": "restore-ground"
+    }
+  ],
+  "count": 18,
+  "restoreQualification": {
+    "e6-picnic": "All three stakes held through both default deaths.",
+    "e6-showroom": "Both defaults captured six before death; restore terminal captures then lost to post-death confirms.",
+    "e7-dead-band": "Both defaults met refusal latch before death.",
+    "e7-echo-canyon": "Desktop only: mirror fielded before death. Phone never got to Record.",
+    "e7-relay-rush": "Desktop only: 3/3 deadline and one muted use before death. Phone aborted before Record."
+  },
+  "HalfLifeHollowRides": 0
+}

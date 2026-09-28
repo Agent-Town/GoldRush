@@ -1,0 +1,16 @@
+{
+  "tag": "example-test-only",
+  "branch": "test/some-spec-repins",
+  "port": 5362,
+  "mergeMessage": "drain: merge test/some-spec-repins — <slice> — which tests were re-pinned to what measured truth, and the reds that stay by ruling",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": false, "ledgerBattery": false,
+    "guards": ["scripts/suite-red-inventory.test.mjs", "scripts/red-inventory-lookup.test.mjs"],
+    "specs": ["e2e/<the-repinned>.spec.ts", "e2e/task-025-bandits-dont-swim.spec.ts", "e2e/m2-01-build-menu.spec.ts"],
+    "allowedE2E": ["e2e/<ruled-red>\\.spec\\.ts:64:[0-9]+"]
+  },
+  "review": { "path": "reviews/<slice>.md", "title": "Drain review: `<slice>`, the tests re-pinned to measured truth (implementer; the finding)", "body": "scripts/attended/landings/<slice>-review.md" },
+  "bookkeeping": { "taskFile": "<slice>.md", "rowKey": "<SLICE> LANDED", "rowEmoji": "🧪", "rowText": "The re-pins, the control numbers, the reds that stay and why. No hash move, no pin, no deploy.", "statusPhrase": "which tests now measure the game the player has" },
+  "deploy": false, "preview": false, "evidenceDir": "artifacts/<slice>"
+}

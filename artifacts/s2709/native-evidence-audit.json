@@ -1,0 +1,496 @@
+{
+  "tip": "e3375fbd10dbde323eb38e9d4ceec1d07aab0385",
+  "verifiedAt": "2026-09-27T12:44:18.104Z",
+  "rides": [
+    {
+      "contract": "e4-long-road",
+      "strategy": "default",
+      "project": "desktop-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 14,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e4-long-road secureWave=12"
+        },
+        "secures": {
+          "ok": false,
+          "detail": "runState=dead at wave 4 / 148.5s sim, 65 kills, 15 gold"
+        },
+        "banks": {
+          "ok": false,
+          "detail": "skipped: never secured"
+        },
+        "board": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "reload": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e4-long-road",
+      "strategy": "default",
+      "project": "mobile-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 15,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e4-long-road secureWave=12"
+        },
+        "secures": {
+          "ok": false,
+          "detail": "runState=dead at wave 5 / 156.4s sim, 84 kills, 35 gold"
+        },
+        "banks": {
+          "ok": false,
+          "detail": "skipped: never secured"
+        },
+        "board": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "reload": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e5-deepwater-claim",
+      "strategy": "default",
+      "project": "desktop-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 190,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e5-deepwater-claim secureWave=12"
+        },
+        "secures": {
+          "ok": false,
+          "detail": "never secured: peak wave 100 of 12 after 2406.3s sim (runState=playing, 0 buildings, 0 kills)"
+        },
+        "banks": {
+          "ok": false,
+          "detail": "skipped: never secured"
+        },
+        "board": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "reload": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e5-deepwater-claim",
+      "strategy": "default",
+      "project": "mobile-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 191,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e5-deepwater-claim secureWave=12"
+        },
+        "secures": {
+          "ok": false,
+          "detail": "never secured: peak wave 100 of 12 after 2406.1s sim (runState=playing, 0 buildings, 0 kills)"
+        },
+        "banks": {
+          "ok": false,
+          "detail": "skipped: never secured"
+        },
+        "board": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "reload": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e5-flotilla",
+      "strategy": "default",
+      "project": "desktop-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 24,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e5-flotilla secureWave=12"
+        },
+        "secures": {
+          "ok": true,
+          "detail": "Claim Secured at wave 12 / 272.1s sim, 100 HP, 0 buildings"
+        },
+        "banks": {
+          "ok": true,
+          "detail": "a NEW secured row for e5-flotilla: waves=12 gold=0 timeAlive=272 kills=33 (41 new row(s) since pre-play, retained after Return to Town)"
+        },
+        "board": {
+          "ok": true,
+          "detail": "the Book is on screen straight off the run ledger"
+        },
+        "reload": {
+          "ok": true,
+          "detail": "score retained across reload (7223 bytes) and the Book reopened on foot"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e5-flotilla",
+      "strategy": "default",
+      "project": "mobile-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 23,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e5-flotilla secureWave=12"
+        },
+        "secures": {
+          "ok": true,
+          "detail": "Claim Secured at wave 12 / 272.1s sim, 100 HP, 0 buildings"
+        },
+        "banks": {
+          "ok": true,
+          "detail": "a NEW secured row for e5-flotilla: waves=12 gold=0 timeAlive=272 kills=33 (41 new row(s) since pre-play, retained after Return to Town)"
+        },
+        "board": {
+          "ok": true,
+          "detail": "the Book is on screen straight off the run ledger"
+        },
+        "reload": {
+          "ok": true,
+          "detail": "score retained across reload (7223 bytes) and the Book reopened on foot"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e5-regatta",
+      "strategy": "default",
+      "project": "desktop-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 24,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e5-regatta secureWave=12"
+        },
+        "secures": {
+          "ok": true,
+          "detail": "Claim Secured at wave 12 / 272.1s sim, 100 HP, 0 buildings"
+        },
+        "banks": {
+          "ok": true,
+          "detail": "a NEW secured row for e5-regatta: waves=12 gold=0 timeAlive=272 kills=28 (41 new row(s) since pre-play, retained after Return to Town)"
+        },
+        "board": {
+          "ok": true,
+          "detail": "the Book is on screen straight off the run ledger"
+        },
+        "reload": {
+          "ok": true,
+          "detail": "score retained across reload (7223 bytes) and the Book reopened on foot"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e5-regatta",
+      "strategy": "default",
+      "project": "mobile-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 24,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e5-regatta secureWave=12"
+        },
+        "secures": {
+          "ok": true,
+          "detail": "Claim Secured at wave 12 / 272.1s sim, 100 HP, 0 buildings"
+        },
+        "banks": {
+          "ok": true,
+          "detail": "a NEW secured row for e5-regatta: waves=12 gold=0 timeAlive=272 kills=28 (41 new row(s) since pre-play, retained after Return to Town)"
+        },
+        "board": {
+          "ok": true,
+          "detail": "the Book is on screen straight off the run ledger"
+        },
+        "reload": {
+          "ok": true,
+          "detail": "score retained across reload (7223 bytes) and the Book reopened on foot"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e5-stillwater",
+      "strategy": "default",
+      "project": "desktop-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 29,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e5-stillwater secureWave=12"
+        },
+        "secures": {
+          "ok": true,
+          "detail": "Claim Secured at wave 12 / 360.1s sim, 159 HP, 0 buildings"
+        },
+        "banks": {
+          "ok": true,
+          "detail": "a NEW secured row for e5-stillwater: waves=12 gold=0 timeAlive=360 kills=394 (41 new row(s) since pre-play, retained after Return to Town)"
+        },
+        "board": {
+          "ok": true,
+          "detail": "the Book is on screen straight off the run ledger"
+        },
+        "reload": {
+          "ok": true,
+          "detail": "score retained across reload (7226 bytes) and the Book reopened on foot"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e5-stillwater",
+      "strategy": "default",
+      "project": "mobile-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 29,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e5-stillwater secureWave=12"
+        },
+        "secures": {
+          "ok": true,
+          "detail": "Claim Secured at wave 12 / 360.1s sim, 151 HP, 0 buildings"
+        },
+        "banks": {
+          "ok": true,
+          "detail": "a NEW secured row for e5-stillwater: waves=12 gold=0 timeAlive=360 kills=393 (41 new row(s) since pre-play, retained after Return to Town)"
+        },
+        "board": {
+          "ok": true,
+          "detail": "the Book is on screen straight off the run ledger"
+        },
+        "reload": {
+          "ok": true,
+          "detail": "score retained across reload (7226 bytes) and the Book reopened on foot"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e6-glow-mesa",
+      "strategy": "default",
+      "project": "desktop-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 17,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e6-glow-mesa secureWave=12"
+        },
+        "secures": {
+          "ok": false,
+          "detail": "runState=dead at wave 6 / 183.6s sim, 123 kills, 1 gold"
+        },
+        "banks": {
+          "ok": false,
+          "detail": "skipped: never secured"
+        },
+        "board": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "reload": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e6-glow-mesa",
+      "strategy": "default",
+      "project": "mobile-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 18,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e6-glow-mesa secureWave=12"
+        },
+        "secures": {
+          "ok": false,
+          "detail": "runState=dead at wave 6 / 187.5s sim, 110 kills, 37 gold"
+        },
+        "banks": {
+          "ok": false,
+          "detail": "skipped: never secured"
+        },
+        "board": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "reload": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e6-glow-mesa",
+      "strategy": "restore-ground",
+      "project": "desktop-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 25,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e6-glow-mesa secureWave=12"
+        },
+        "secures": {
+          "ok": true,
+          "detail": "Claim Secured at wave 8 / 263.1s sim, 51 HP, 4 buildings"
+        },
+        "banks": {
+          "ok": false,
+          "detail": "no new secured row since pre-play for e6-glow-mesa at >= wave 12 (41 new row(s): [{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":41,\"waves\":30,\"secured\":true,\"contractId\":\"e10-last-claim\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}},{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":40,\"waves\":30,\"secured\":true,\"contractId\":\"e10-archive-world\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}}])"
+        },
+        "board": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "reload": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    },
+    {
+      "contract": "e6-glow-mesa",
+      "strategy": "restore-ground",
+      "project": "mobile-chrome",
+      "rawEquivalent": true,
+      "rawSamples": 27,
+      "consoleErrors": 0,
+      "pageErrors": 0,
+      "checks": {
+        "boots": {
+          "ok": true,
+          "detail": "activeId=e6-glow-mesa secureWave=12"
+        },
+        "secures": {
+          "ok": true,
+          "detail": "Claim Secured at wave 9 / 288.7s sim, 9 HP, 5 buildings"
+        },
+        "banks": {
+          "ok": false,
+          "detail": "no new secured row since pre-play for e6-glow-mesa at >= wave 12 (41 new row(s): [{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":41,\"waves\":30,\"secured\":true,\"contractId\":\"e10-last-claim\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}},{\"kills\":40,\"gold\":400,\"timeAlive\":600,\"at\":40,\"waves\":30,\"secured\":true,\"contractId\":\"e10-archive-world\",\"profileName\":\"Robin\",\"baseValue\":0,\"weaponSplit\":{\"spark\":0,\"blast\":0}}])"
+        },
+        "board": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "reload": {
+          "ok": false,
+          "detail": "skipped: never banked"
+        },
+        "clean": {
+          "ok": true,
+          "detail": "0 console, 0 page"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+
+> gold-rush@0.1.0 dev
+> vite --host 127.0.0.1 --port 5303 --strictPort
+
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+  VITE v8.3.0  ready in 96 ms
+
+  ➜  Local:   http://127.0.0.1:5303/

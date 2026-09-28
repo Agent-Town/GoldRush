@@ -1,0 +1,40 @@
+{
+  "tag": "tdi1",
+  "branch": "sol/open-findings-astra",
+  "port": 5412,
+  "mergeMessage": "drain: merge sol/open-findings-astra — e7-tape-drawer-inheritance-1 — a Signal-Era profile keeps its Tape Reel on earlier maps again: the mount reads the campaign's epoch in the contract branch of the boot's epoch selection, explicit epoch previews keep the previewed map's state; the inheritance test green on both projects without a change to it; closes F-SPH2-2 (red on main since 7c2744e5a); engine-pinned",
+  "hash": "pin",
+  "pinCause": "e7-tape-drawer-inheritance-1: one exported helper in src/meta/ContractFamilies.ts returns the campaign epoch's order for a ?contract= boot when it is the higher, the Tape Reel mount at src/game/Game.ts:1925 uses it; activeEpochId()'s map-content semantics unchanged; no gameplay or sim change",
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/e7-playbook-surface.spec.ts",
+      "e2e/e7-tape-toggle-phone-hit-target.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/e7-tape-drawer-inheritance-1.md",
+    "title": "Drain review: `e7-tape-drawer-inheritance-1`, a Signal-Era profile keeps its Tape Reel on earlier maps again; F-SPH2-2 closed",
+    "body": "scripts/attended/landings/tdi1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "e7-tape-drawer-inheritance-1.md",
+    "rowKey": "E7 TAPE DRAWER INHERITANCE 1 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra on lane-a, two attempts (`0d7949951`, `fdfef8530` + `5670f2134`; 234,073 tokens): the Tape Reel mounts when the booted map's epoch OR, on a `?contract=` boot only, the profile's campaign epoch is 7 or higher (one exported helper in `src/meta/ContractFamilies.ts`, used at `src/game/Game.ts:1925`); explicit `?epoch=` previews keep the previewed map's own state, so `e2e/e7-playbook-surface.spec.ts` (\"the tape drawer arms at the Signal Era and remains inherited afterward\") goes 1 → 0 on both projects without a change to it; plain-boot probes 2/2 (a fresh E6 profile has no drawer, an E7 profile keeps it on E1 and E6 maps), adjacent 26/26, zero console/page errors; the first attempt's 577 MB of traces moved to `~/.goldrush/evidence/e7-tape-drawer-inheritance-1/` (RETENTION: moved), 1.2 MB kept. Closes F-SPH2-2 (red on main since `7c2744e5a`, 2026-09-12, found by the sph2 landing's gate and the lane-a audit's control). Landed attended and pinned (the fires' wrapper cap F-2737-1)",
+    "statusPhrase": "a Signal-Era player keeps the Tape Reel on earlier maps again, previews keep their own state; the inheritance test is green on both projects",
+    "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh tdi1; Astra on lane-a, the ChatGPT subscription)"
+  },
+  "deploy": true,
+  "preview": false,
+  "evidenceDir": "artifacts/e7-tape-drawer-inheritance-1"
+}

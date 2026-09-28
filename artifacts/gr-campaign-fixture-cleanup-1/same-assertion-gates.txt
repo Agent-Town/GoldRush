@@ -1,0 +1,41 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T20:40:31.382Z ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+
+===== identical assertion before and after =====
+$ python3 artifacts/gr-campaign-fixture-cleanup-1/verify-before-after.py
+rc=0 0.3s
+[
+  {
+    "source": "before",
+    "command": [
+      "/opt/homebrew/bin/node",
+      "--test",
+      "--test-reporter=spec",
+      "--test-name-pattern=a killed campaign",
+      "scripts/gr-sim-campaign.test.mjs"
+    ],
+    "exit": 1,
+    "survivors": [
+      "gr-campaign-resume-fTIrUY"
+    ]
+  },
+  {
+    "source": "after",
+    "command": [
+      "/opt/homebrew/bin/node",
+      "--test",
+      "--test-reporter=spec",
+      "--test-name-pattern=a killed campaign",
+      "scripts/gr-sim-campaign.test.mjs"
+    ],
+    "exit": 1,
+    "survivors": []
+  }
+]
+
+
+SUMMARY {"identical assertion before and after":0}
+OVERALL rc=0
