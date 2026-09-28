@@ -23,3 +23,7 @@ WHY no landing: the attended Tape audit landing owns the serial landing lock (ho
 4. Daily backups September 29 and rotation September 30. Keep the existing three Owner's Desk items; the audio questions remain with their attended author.
 
 The closing ledger battery runs after these evidence and ledger writes. Its result is recorded before the lock-clearing commit, which is this fire's final main write. Normal origin backup follows.
+
+## Final handoff
+
+At 2026-09-28T07:15Z, closing ledger **1263/1263, zero fail/skip, kit 83/83, npm rc 0**, **375.438 s**, Node v26.4.0, checkpoint e24b4d382. Skillmd 19/19 and bounded archive audit rc 0. Tape holder 83021 is still live and no LAND-tap1-DONE receipt exists; audio firewall still names the nonexistent path. Private corpus 36/36 and health 200/200/200 were re-verified in this fire. Exact predecessor and three-item Owner's Desk confirmed. No product drain, dispatch or deploy. Commits before clearance: 61dee2b7f lock, 9fadfd0fc preserved bookkeeping, e24b4d382 evidence/ledger receipt. This clearing commit is the final main write, followed by origin backup and read-only verification.
