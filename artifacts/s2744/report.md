@@ -21,4 +21,6 @@ WHY no product drain: the board has one real done-move, audio-harshness-1, and i
 2. Attended ahr1 owner gates, pins and lands audio-harshness-1, deploys if cleared, and records the final main receipt. Source measurements and proposed owner listen are not a completion claim.
 3. September 29 private coverage after 02:10 UTC; September 30 week-41 mint. The four inherited Owner's Desk items remain verbatim.
 
-Closing ledger battery follows. Its receipt will be recorded before the lock-clearing commit, this fire's last main write.
+## Final handoff
+
+At 2026-09-28T13:18Z, the complete literal npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **206.428 s**, Node v26.4.0, checkpoint 174fd99ab. All chained checks completed. The exact predecessor and four-item Owner's Desk were reverified. No fire product landing, source edit, dispatch, pin or deploy. Music-toggle LAND-amt1-DONE and final main 1035 pass / five skips / zero failures plus 87/87 are verified; harshness remains queued and attended-owned, with no ahr1 gate receipt. Origin remains 0979de763 under F-2742-1; no unchanged rejected push or history repair. Commits before clearance: 22fccf383 and 174fd99ab. This lock-clearing commit is the final write to main; only read-only verification and the external vault digest follow.
