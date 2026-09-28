@@ -1,0 +1,35 @@
+
+e6-picnic {"t":477.7,"wave":15,"hp":136,"gold":40,"kills":659,"x":-12.4,"z":23.8,"alive":13,"seams":2}
+
+e6-picnic {"t":487.7,"wave":16,"hp":136,"gold":40,"kills":681,"x":-12.9,"z":18.2,"alive":13,"seams":2}
+
+e6-picnic {"t":498.1,"wave":16,"hp":97,"gold":40,"kills":706,"x":-18.9,"z":22,"alive":18,"seams":2}
+
+e6-picnic {"t":508.5,"wave":16,"hp":91,"gold":50,"kills":722,"x":-0.2,"z":7.5,"alive":15,"seams":2}
+
+e6-picnic {"t":520.1,"wave":17,"hp":10,"gold":75,"kills":744,"x":21.6,"z":8.4,"alive":35,"seams":0}
+
+  2) [mobile-chrome] › e2e/native-proofs/driver.ts:1189:5 › e6-picnic plays to its authored terminal, banks, reloads and returns to the board @slow
+
+    Error: secures: runState=dead at wave 17 / 520.9s sim, 745 kills, 75 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1707 |       }
+      1708 |
+    > 1709 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1710 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1711 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1712 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1709:64
+
+    Error Context: ../../../../../.goldrush/play-proofs/run-16/restore-ground/e6-picnic/results/native-proofs-e6-picnic-e6-f6d9a-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1189:5 › e6-picnic plays to its authored terminal, banks, reloads and returns to the board @slow
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1189:5 › e6-picnic plays to its authored terminal, banks, reloads and returns to the board @slow

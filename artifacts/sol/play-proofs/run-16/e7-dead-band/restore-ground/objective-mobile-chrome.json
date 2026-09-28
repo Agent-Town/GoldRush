@@ -1,0 +1,204 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e7-dead-band&timescale=4",
+  "sim": 431.8666666666524,
+  "wave": 14,
+  "hp": 0,
+  "gold": 40,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "hero": {
+    "x": 3.8627560906391887,
+    "y": 0.06275620917993813,
+    "z": -6.3139438686909095
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -5,
+        "z": -14
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 1,
+      "tier": 1,
+      "hp": 76,
+      "maxHp": 76,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 7,
+        "z": -20
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 2,
+      "tier": 1,
+      "hp": 82,
+      "maxHp": 82,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -1,
+        "z": -9
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 0,
+        "z": -18
+      }
+    },
+    {
+      "id": "turret",
+      "index": 1,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 4,
+        "z": -18
+      }
+    },
+    {
+      "id": "turret",
+      "index": 2,
+      "tier": 1,
+      "hp": 58,
+      "maxHp": 58,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -4,
+        "z": -12
+      }
+    },
+    {
+      "id": "turret",
+      "index": 3,
+      "tier": 1,
+      "hp": 82,
+      "maxHp": 82,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -7,
+        "z": -15
+      }
+    }
+  ],
+  "hollowCrossing": {
+    "declared": false,
+    "stage": "launch",
+    "routeId": null,
+    "onGlowBridge": false,
+    "radiationDamageDealt": 0
+  },
+  "picnicHold": [],
+  "wrangle": {
+    "enabled": false,
+    "windDownSeconds": 8,
+    "windDownTicks": 240,
+    "captureRadius": 2.2,
+    "exhaustedSpeedMultiplier": 0.2,
+    "active": [],
+    "pen": {
+      "roster": [],
+      "total": 0,
+      "tickSeconds": 15,
+      "goldPerMachine": 1,
+      "incomeGranted": 0
+    }
+  },
+  "interferenceFront": null,
+  "broadcastMirror": null,
+  "playbookUse": {
+    "declared": true,
+    "objective": "refusal",
+    "objectiveMet": true,
+    "uses": 0,
+    "relaysLitByProgram": []
+  },
+  "e7Signal": {
+    "enabled": true,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": true,
+    "dronesSuppressed": true,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "repairs": 0,
+  "tapeShelf": []
+}
