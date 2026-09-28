@@ -817,9 +817,9 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
 async function captureShowroom(page: Page, row: Row): Promise<void> {
   const state = await page.evaluate(() => {
     const d = window.__THREE_GAME_DIAGNOSTICS__;
-    return d ? { objective: d.showroomCaptureObjective, build: d.build.mode, exhausted: d.wrangle.active.filter(m => m.state === 'exhausted') } : null;
+    return d ? { runState: d.runState, hp: d.hp, objective: d.showroomCaptureObjective, build: d.build.mode, exhausted: d.wrangle.active.filter(m => m.state === 'exhausted') } : null;
   });
-  if (!state || state.build || state.objective?.complete || !state.exhausted.length) return;
+  if (!state || state.runState === 'dead' || state.hp <= 0 || state.build || state.objective?.complete || !state.exhausted.length) return;
   await page.keyboard.press('Space');
   const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.showroomCaptureObjective);
   if (after && after.captures !== state.objective?.captures) row.notes.push(`capture ${after.captures}/${after.quota}: ${JSON.stringify(state.exhausted)}`);
@@ -855,6 +855,8 @@ async function showroomCaptures(page: Page, row: Row, deadline: number): Promise
     if (!now || now.runState === 'dead' || now.secured || objective?.complete) break;
     await walkTo(page, row, side * 37, 6, 1.2, 90);
     for (let tick = 0; tick < 12; tick++) {
+      const state = await read(page);
+      if (!state || state.runState === 'dead' || state.secured) break;
       await takeUpgrades(page, row);
       await captureShowroom(page, row);
       await page.waitForTimeout(150);
