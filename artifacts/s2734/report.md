@@ -23,3 +23,7 @@ WHY no landing: the attended Holds-3 landing still owns `~/.goldrush/land.lock` 
 4. Next daily backups September 29; rotation mint September 30. Existing three Owner's Desk items remain unchanged.
 
 The closing ledger battery runs after these evidence and handoff writes, before the final lock-clearing commit. Its result will be appended before clearance. The clearing commit is the last write to main, followed by origin backup and read-only verification.
+
+## Final handoff
+
+At 2026-09-28T06:23Z, closing ledger **1263/1263 + kit 83/83, rc 0**, all chained checks green, **364.103 s**, Node **v26.4.0**, checkpoint **34e644f3455955c5787a651537d9d04ed682a0f3**. Skillmd **19/19**, bounded archive audit rc 0, health **200/200/200**, private corpus **36/36** and private remote heads match. Holds-3 is merged but its live attended holder still owns the final main verification; no completed wrapper receipt. Tape remains the single open drain. Exact predecessor and three-item Owner's Desk verified. Commits before clearance: lock 6d0261646, generated bookkeeping 45a8cdc7d, evidence checkpoint 34e644f34. The clearing commit is this fire's last write to main; origin backup and read-only verification follow.
