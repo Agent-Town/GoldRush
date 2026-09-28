@@ -90,7 +90,7 @@ All 42 contracts appear once. Only Long Road, Deepwater and Glow Mesa rows move 
 | The Showroom (e6-showroom) | HELD — default captures 6/6 both; deaths 5/13; restore terminal capture lost to driver confirms | 16 | [Finding](../run-16/e6-showroom/finding.md) |
 | The Dead Band (e7-dead-band) | HELD — refusal latch met all rides; survival deaths 19/12 default, 17/14 restore | 16 | [Finding](../run-16/e7-dead-band/finding.md) |
 | Echo Canyon (e7-echo-canyon) | HELD — desktop mirror 1 squad/2 bodies, deaths 16/17; phone Tape toggle timeout before Record | 16 | [Finding](../run-16/e7-echo-canyon/finding.md) |
-| Relay Rush (e7-relay-rush) | HELD — objective never engaged; deaths 18/19; deadline 1/3, no muted use | 13 | [Finding](../run-13/e7-relay-rush/finding.md) |
+| Relay Rush (e7-relay-rush) | HELD — desktop deadline 3/3 and muted use 1, deaths 16/18; phone Tape toggle blocked | 16 | [Finding](../run-16/e7-relay-rush/finding.md) |
 | Relay Valley (e7-relay-valley) | HELD — objective never engaged; playbook uses 0, deaths 17/17 | 14 | [Finding](../run-14/e7-relay-valley/finding.md) |
 | The Mare Claim (e8-mare-claim) | HELD — orbital movement / driver instrumentation; wrong air read, 1/4 mining, deaths 2/2 | 14 | [Finding](../run-14/e8-mare-claim/finding.md) |
 | The Archive World (e10-archive-world) | HELD — objective never engaged; 0 light holds, deaths 20/20 | 14 | [Finding](../run-14/e10-archive-world/finding.md) |

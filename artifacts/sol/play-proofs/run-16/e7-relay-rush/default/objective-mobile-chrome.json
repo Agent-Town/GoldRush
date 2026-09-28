@@ -1,0 +1,154 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e7-relay-rush&timescale=4",
+  "sim": 76.66666666666711,
+  "wave": 2,
+  "hp": 77.6,
+  "gold": 50,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": null,
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": true,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": 1790564227128,
+      "lastWriteMs": 0.3,
+      "sizeBytes": 19273
+    }
+  },
+  "hero": {
+    "x": -23.938090897482653,
+    "y": 5.06,
+    "z": 45.332299407972236
+  },
+  "defences": [],
+  "hollowCrossing": {
+    "declared": false,
+    "stage": "launch",
+    "routeId": null,
+    "onGlowBridge": false,
+    "radiationDamageDealt": 0
+  },
+  "picnicHold": [],
+  "wrangle": {
+    "enabled": false,
+    "windDownSeconds": 8,
+    "windDownTicks": 240,
+    "captureRadius": 2.2,
+    "exhaustedSpeedMultiplier": 0.2,
+    "active": [],
+    "pen": {
+      "roster": [],
+      "total": 0,
+      "tickSeconds": 15,
+      "goldPerMachine": 1,
+      "incomeGranted": 0
+    }
+  },
+  "interferenceFront": {
+    "declared": true,
+    "cadenceSeconds": 90,
+    "crossingSeconds": 20,
+    "halfWidth": 6,
+    "relayTarget": 3,
+    "deadlineFront": 3,
+    "phase": "waiting",
+    "frontsArrived": 0,
+    "frontsCompleted": 0,
+    "centerX": null,
+    "secondsToNextFront": 13.333,
+    "sites": [
+      {
+        "id": "relay-site-r1",
+        "minX": -50,
+        "maxX": -40,
+        "minZ": 36,
+        "maxZ": 46,
+        "lit": false,
+        "litBy": null,
+        "muted": false
+      },
+      {
+        "id": "relay-site-r2",
+        "minX": -30,
+        "maxX": -20,
+        "minZ": 36,
+        "maxZ": 46,
+        "lit": false,
+        "litBy": null,
+        "muted": false
+      },
+      {
+        "id": "relay-site-r3",
+        "minX": 20,
+        "maxX": 30,
+        "minZ": 36,
+        "maxZ": 46,
+        "lit": false,
+        "litBy": null,
+        "muted": false
+      },
+      {
+        "id": "relay-site-r4",
+        "minX": 40,
+        "maxX": 50,
+        "minZ": 36,
+        "maxZ": 46,
+        "lit": false,
+        "litBy": null,
+        "muted": false
+      }
+    ],
+    "litCount": 0,
+    "deadlineResolved": false,
+    "litAtDeadline": null,
+    "objectiveMet": false,
+    "refusals": {
+      "drones": 0,
+      "playbooks": 0,
+      "relayChains": 0
+    },
+    "mutedWorkSteps": 0
+  },
+  "broadcastMirror": null,
+  "playbookUse": {
+    "declared": true,
+    "objective": "suspended",
+    "objectiveMet": false,
+    "uses": 0,
+    "relaysLitByProgram": []
+  },
+  "e7Signal": {
+    "enabled": true,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "repairs": 0,
+  "tapeShelf": []
+}

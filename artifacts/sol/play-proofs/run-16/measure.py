@@ -17,7 +17,7 @@ for file in sorted(root.glob('*/**/row-*.json')):
     f=r.get('finalSnapshot') or {}
     standing=sum(b['hp']>0 and not b['wrecked'] for b in f.get('defences',[]))
     rows.append({'contract':r['contract'],'project':r['project'],'strategy':file.parent.name,
-      'terminalCaptured':bool(f),'lastObservation':r['samples'][-1] if r['samples'] else None,
+      'snapshotCaptured':bool(f),'terminalCaptured':bool(f) and (f.get('secured') or f.get('runState')=='dead'),'runState':r['runStateAtEnd'],'lastObservation':r['samples'][-1] if r['samples'] else None,
       'wave':r['peakWave'] if f else None,'sim':r['simAtEnd'] if f else None,'hp':r['hpAtEnd'] if f else None,'gold':r['goldAtEnd'] if f else None,
       'repairs':f.get('repairs'),'standing':standing if f else None,'pieces':len(f.get('defences',[])) if f else None,
       'secure':r['secures']['ok'],'bank':r['banks']['ok'],'book':r['board']['ok'],'reload':r['reload']['ok'],

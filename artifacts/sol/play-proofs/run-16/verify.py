@@ -47,13 +47,13 @@ for id in ids:
                 if id=='e6-showroom': assert o['showroomCaptureObjective']['complete']
                 if id.startswith('e7-'): assert o['playbookUse']['objectiveMet']
                 if id=='e7-relay-rush': assert o['interferenceFront']['objectiveMet']
-            rows.append({'contract':id,'project':project,'strategy':file.parent.name,'terminalCaptured':bool(snapshot),'secure':r['secures']['ok']})
+            rows.append({'contract':id,'project':project,'strategy':file.parent.name,'snapshotCaptured':bool(snapshot),'secure':r['secures']['ok']})
     assert (root/id/'finding.md').exists() or (root/id/'proof.md').exists()
 allowed={'e2e/native-proofs/driver.ts',*[f'e2e/native-proofs/{id}.spec.ts' for id in ids], 'artifacts/sol/play-proofs/run-15/run-note.md'}
 changed=subprocess.check_output(['git','diff','--name-only',base],text=True).splitlines()
 assert all(p in allowed or p.startswith('artifacts/sol/play-proofs/run-16/') for p in changed),changed
 isolation=json.loads((root/'driver-isolation.json').read_text());assert isolation['strippedByteIdentical']
 equivalence=json.loads((root/'driver-equivalence.json').read_text());assert equivalence['pass']
-report={'pass':True,'rides':rows,'rideCount':len(rows),'scope':changed,'zeroBrowserErrors':True,'missingTerminals':['e6-showroom/restore-ground/desktop-chrome','e6-showroom/restore-ground/mobile-chrome','e7-echo-canyon/default/mobile-chrome'],'limitations':'Showroom restore terminals were dismissed by capture confirms; Echo phone timed out clicking Tape Reel. Their row zeros are uninitialized, not terminal counters. Final Showroom guard and Echo phone fix not re-ridden.'}
+report={'pass':True,'rides':rows,'rideCount':len(rows),'scope':changed,'zeroBrowserErrors':True,'missingSnapshots':['e6-showroom/restore-ground/desktop-chrome','e6-showroom/restore-ground/mobile-chrome','e7-echo-canyon/default/mobile-chrome'],'nonterminalSnapshots':['e7-relay-rush/default/mobile-chrome'],'limitations':'Showroom restore terminals were dismissed by capture confirms; Echo phone timed out clicking Tape Reel. Their row zeros are uninitialized, not terminal counters. Final Showroom guard and Echo phone fix not re-ridden.'}
 (root/'verification.json').write_text(json.dumps(report,indent=2)+'\n')
-print(json.dumps({'pass':True,'rideCount':len(rows),'missingTerminals':report['missingTerminals']}))
+print(json.dumps({'pass':True,'rideCount':len(rows),'missingSnapshots':report['missingSnapshots']}))
