@@ -6951,12 +6951,16 @@
             {
               "id": "audio-harshness-1",
               "title": "The sound stops being spiky: one-shots normalized to the LEDGER's -14 LUFS, the manifest re-balanced by simulation, a high-shelf and distance attenuation for building shots, ramped gains, faded and seam-free (crossfaded) music loops, before/after renders for the owner's listen; no limiter (none needed), no music content change (owner Q2/Q3)",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "audio-harshness-1.md",
               "lane": "lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md ranks 2 to 4); the queue copy is HELD until audio-music-toggle-1 has landed on main",
               "authoredAt": "2026-09-28",
               "authoredBy": "attended (Fable), from the Opus 5.5 audio review, 2026-09-28",
-              "queuedAt": "2026-09-28"
+              "queuedAt": "2026-09-28",
+              "mergeHash": "a214c82d7d91a1f128efa39c7a4b482dc550791b",
+              "mergedAt": "2026-09-28",
+              "review": "reviews/audio-harshness-1.md",
+              "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh ahr1; Astra on lane-b, the ChatGPT subscription; owner absent, reversible, inside the commissioned review's ranked recommendations)"
             },
             {
               "id": "sol-play-proofs-holds-4",
