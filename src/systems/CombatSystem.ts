@@ -10,7 +10,7 @@ import { isCombatDamageDisabled } from '../core/DebugParams';
 import { Balance } from '../game/Balance';
 import type { AgentCollectXpOptions, AgentCollectXpResult } from '../agent/ToolSurface';
 import * as Terrain from '../world/Terrain';
-import type { SoundSystem } from '../audio/SoundSystem';
+import { buildingShotGain, type SoundSystem } from '../audio/SoundSystem';
 import { TargetingSystem, type BuildingTarget } from './TargetingSystem';
 import type { CombatVfx } from './CombatVfx';
 import { FreedWalkerVfx } from './FreedWalkerVfx';
@@ -664,7 +664,11 @@ export class CombatSystem {
         this.recordShot('bolt', ownerId);
         this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint, ownerId);
         handle.onFire?.(this.currentAt);
-        this.audio.playShot('bolt', ownerId);
+        const buildingShot = ownerId === 'beacons' || ownerId === 'turrets' || ownerId === 'lens_turrets';
+        const listener = this.primaryActor.group.position;
+        this.audio.playShot('bolt', ownerId, buildingShot
+          ? buildingShotGain(Math.hypot(this.scratchOrigin.x - listener.x, this.scratchOrigin.z - listener.z))
+          : 1);
       }
     }
     if (fired) handle.onVolleyFired?.(this.currentAt);
