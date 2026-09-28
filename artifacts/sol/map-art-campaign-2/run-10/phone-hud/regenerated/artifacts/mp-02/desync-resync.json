@@ -1,0 +1,178 @@
+{
+  "alice": {
+    "active": true,
+    "connected": true,
+    "partySize": 2,
+    "started": true,
+    "code": "F544AF0AF05EE648C5A569EB",
+    "playerId": "p2",
+    "roster": [
+      {
+        "playerId": "p1",
+        "name": "Bob",
+        "town": "River Bend",
+        "client": "browser"
+      },
+      {
+        "playerId": "p2",
+        "name": "Alice",
+        "town": "Dawn Claim",
+        "client": "browser"
+      }
+    ],
+    "tick": 113,
+    "buffered": 2,
+    "latencyMs": 100,
+    "tickRate": 35.3,
+    "hashes": [
+      {
+        "tick": 0,
+        "hash": "fnv1a32:58c46e1f"
+      },
+      {
+        "tick": 30,
+        "hash": "fnv1a32:c457ef65"
+      },
+      {
+        "tick": 60,
+        "hash": "fnv1a32:64196a88"
+      },
+      {
+        "tick": 90,
+        "hash": "fnv1a32:6938049d"
+      }
+    ],
+    "desyncs": 1,
+    "resyncs": 1,
+    "lastResyncTick": 60,
+    "reconnecting": false,
+    "reconnects": 0,
+    "lastReconnectTick": null,
+    "lastReconnectReplayTicks": null,
+    "heldPlayerIds": [],
+    "paused": false,
+    "error": null,
+    "setup": {
+      "contractId": "the-claim",
+      "seed": "mp-02-lockstep",
+      "difficultyPreset": "trail",
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "research": {
+        "version": 1,
+        "epochId": "epoch-1-frontier",
+        "metaScienceCursor": 0,
+        "progress": {
+          "version": 1,
+          "tracks": {
+            "territory": 0,
+            "science": 0,
+            "hero": 0,
+            "agent": 0
+          }
+        },
+        "taken": [],
+        "proposalSalt": 0,
+        "pinnedTarget": null,
+        "unlocks": {
+          "rocketCartCaptured": false
+        }
+      }
+    }
+  },
+  "bob": {
+    "active": true,
+    "connected": true,
+    "partySize": 2,
+    "started": true,
+    "code": "F544AF0AF05EE648C5A569EB",
+    "playerId": "p1",
+    "roster": [
+      {
+        "playerId": "p1",
+        "name": "Bob",
+        "town": "River Bend",
+        "client": "browser"
+      },
+      {
+        "playerId": "p2",
+        "name": "Alice",
+        "town": "Dawn Claim",
+        "client": "browser"
+      }
+    ],
+    "tick": 113,
+    "buffered": 3,
+    "latencyMs": 100,
+    "tickRate": 35.3,
+    "hashes": [
+      {
+        "tick": 0,
+        "hash": "fnv1a32:58c46e1f"
+      },
+      {
+        "tick": 30,
+        "hash": "fnv1a32:c457ef65"
+      },
+      {
+        "tick": 60,
+        "hash": "fnv1a32:64196a88:injected"
+      },
+      {
+        "tick": 90,
+        "hash": "fnv1a32:6938049d"
+      }
+    ],
+    "desyncs": 1,
+    "resyncs": 1,
+    "lastResyncTick": 60,
+    "reconnecting": false,
+    "reconnects": 0,
+    "lastReconnectTick": null,
+    "lastReconnectReplayTicks": null,
+    "heldPlayerIds": [],
+    "paused": false,
+    "error": null,
+    "setup": {
+      "contractId": "the-claim",
+      "seed": "mp-02-lockstep",
+      "difficultyPreset": "trail",
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "research": {
+        "version": 1,
+        "epochId": "epoch-1-frontier",
+        "metaScienceCursor": 0,
+        "progress": {
+          "version": 1,
+          "tracks": {
+            "territory": 0,
+            "science": 0,
+            "hero": 0,
+            "agent": 0
+          }
+        },
+        "taken": [],
+        "proposalSalt": 0,
+        "pinnedTarget": null,
+        "unlocks": {
+          "rocketCartCaptured": false
+        }
+      }
+    }
+  }
+}

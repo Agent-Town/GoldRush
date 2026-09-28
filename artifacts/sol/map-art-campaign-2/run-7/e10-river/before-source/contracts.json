@@ -1,0 +1,761 @@
+{
+  "version": 1,
+  "epochId": "epoch-10-deepsky",
+  "contracts": [
+    {
+      "id": "e10-ember-shore",
+      "name": "The Ember Shore",
+      "description": "Keep the last warm vent alight through the Static squalls and secure the shore.",
+      "tileParams": {
+        "tileId": "e10-ember-shore",
+        "biome": "deepsky-ember-shore",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "last-warm-vent-site",
+            "bank": "south",
+            "minX": -2,
+            "maxX": 8,
+            "minZ": -16,
+            "maxZ": -4
+          },
+          {
+            "id": "cooled-titan-machine-mount",
+            "bank": "north",
+            "minX": 14,
+            "maxX": 38,
+            "minZ": 22,
+            "maxZ": 46
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "last-warm-vent",
+            "x": 3,
+            "z": -10,
+            "heroStart": true
+          }
+        ],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [
+          {
+            "x": -6,
+            "z": -24
+          },
+          {
+            "x": -20,
+            "z": -34
+          },
+          {
+            "x": -38,
+            "z": -22
+          },
+          {
+            "x": -54,
+            "z": -12
+          }
+        ],
+        "engineDependencies": [
+          {
+            "dep": "ember-shore-preserve-consumers",
+            "status": "landed",
+            "landedBy": "E10S-3",
+            "description": "BOTH CONSUMERS LANDED AND THE CLAIM IS EARNED: the squall phase machine in both engines (E10S-2, src/systems/E10SquallScheduler.ts, now.squall) and the warmth meter, STOKE action, gutter terminal, doubled mote pressure and secure latch in both engines (E10S-3, src/systems/E10PreserveSystem.ts, now.emberShore.preserve); E10S-4 added the harvestAnchors, the bench seeds, two losing null-floor rows and the public-verb prover, so the map is admitted. F-E10S4-2 CURED 2026-09-07: twist.emberShore is OUT of DECLARED_INERT_PATHS and the validator now ACCEPTS removing this row, measured rather than assumed (artifacts/engine-correctives-batch/probe-inert-retire.mjs run with the row deleted: 42 contracts load and parseContractDescriptor returns ok=true with no reasons). THE ROW SURVIVES FOR A NEW, SMALLER REASON: scripts/e10-preserve-consumer.test.mjs:455 pins it as a landed row naming its slice, and that guard sat outside the curing task's firewall. Retiring it is now one ledger line plus that guard's own retirement."
+          }
+        ],
+        "heightfield": {
+          "id": "ember-shore-cooling-veins",
+          "mode": "visual"
+        },
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "secureWave": 12,
+        "enemyRoster": [
+          {
+            "id": "static_mote",
+            "label": "Static Mote",
+            "waveMin": 1,
+            "visualScale": 0.25,
+            "art": "placeholder"
+          },
+          {
+            "id": "unraveled_machine",
+            "label": "Unraveled Memory",
+            "waveMin": 4,
+            "art": "char.e6.feral_toaster"
+          }
+        ],
+        "emberShore": {
+          "preserve": {
+            "stakeId": "last-warm-vent",
+            "initialWarmth": 100,
+            "squallDecayPerSecond": 4,
+            "stoke": {
+              "action": "STOKE",
+              "goldCost": 15,
+              "warmthRestore": 40,
+              "radius": 4
+            },
+            "secureRequires": {
+              "ventAlight": true,
+              "fullSquallsSurvived": 1
+            }
+          },
+          "squall": {
+            "calmSeconds": 60,
+            "telegraphSeconds": 8,
+            "squallSeconds": 25,
+            "recoverSeconds": 8,
+            "motePressure": {
+              "scalesWith": "squall-proximity",
+              "squallMultiplier": 2
+            }
+          }
+        }
+      },
+      "boardRow": {
+        "name": "The Ember Shore",
+        "ledgerBlurb": "Cooling lava-vein bands divide the last warm vent from a cooled titan.",
+        "tags": [
+          "deepsky",
+          "ember-world",
+          "preserve"
+        ],
+        "unlock": "default"
+      },
+      "briefing": {
+        "goals": [
+          "Keep the last warm vent alight through at least one full squall.",
+          "Survive through wave 12 with warmth remaining to secure the shore.",
+          "Pan gold and return to the vent to stoke it before its warmth runs out."
+        ],
+        "rules": [
+          "During a squall, the vent loses 4 warmth each second. If it reaches zero, the claim is lost.",
+          "Within 4 paces of the vent, Stoke spends 15 gold to restore 40 warmth.",
+          "The shore has no river or water source; gather gold from the seams along the western approach."
+        ],
+        "geographyLine": "Cooling lava-vein bands divide the dry shore between the last warm vent and a cooled titan machine older than the Combine."
+      }
+    },
+    {
+      "id": "e10-archive-world",
+      "name": "The Archive World",
+      "description": "Hold beacon light through Static squalls to restore the archive one wing at a time. Bank a secured run to keep its restored wings and rescued pages.",
+      "tileParams": {
+        "tileId": "e10-archive-world",
+        "biome": "deepsky-archive-world",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "archive-entry",
+            "bank": "south",
+            "minX": -42,
+            "maxX": 42,
+            "minZ": -54,
+            "maxZ": -38
+          },
+          {
+            "id": "west-stacks-wing",
+            "bank": "north",
+            "minX": -50,
+            "maxX": -6,
+            "minZ": -30,
+            "maxZ": 18
+          },
+          {
+            "id": "east-stacks-wing",
+            "bank": "north",
+            "minX": 6,
+            "maxX": 50,
+            "minZ": -30,
+            "maxZ": 18
+          },
+          {
+            "id": "warning-shelf-wing",
+            "bank": "north",
+            "minX": -26,
+            "maxX": 26,
+            "minZ": 26,
+            "maxZ": 54
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "west-wing-light",
+            "x": -28,
+            "z": -6,
+            "heroStart": false
+          },
+          {
+            "id": "east-wing-light",
+            "x": 28,
+            "z": -6,
+            "heroStart": false
+          },
+          {
+            "id": "warning-shelf-light",
+            "x": 0,
+            "z": 40,
+            "heroStart": false
+          },
+          {
+            "id": "archive-entry",
+            "x": 0,
+            "z": -52,
+            "heroStart": true
+          }
+        ],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [
+          {
+            "x": -30,
+            "z": -50
+          },
+          {
+            "x": -18,
+            "z": -42
+          },
+          {
+            "x": 18,
+            "z": -42
+          },
+          {
+            "x": 30,
+            "z": -50
+          }
+        ],
+        "heightfield": {
+          "id": "archive-world-uninked-ruins",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Hold light through Static squalls to re-ink one archive wing at a time; every rescued page unlocks real lore.",
+          "teachingIntent": "Show what losing would mean, never say it."
+        },
+        "archiveWingZones": [
+          {
+            "id": "west-stacks-wing",
+            "order": 1,
+            "minX": -50,
+            "maxX": -6,
+            "minZ": -30,
+            "maxZ": 18
+          },
+          {
+            "id": "east-stacks-wing",
+            "order": 2,
+            "minX": 6,
+            "maxX": 50,
+            "minZ": -30,
+            "maxZ": 18
+          },
+          {
+            "id": "warning-shelf-wing",
+            "order": 3,
+            "minX": -26,
+            "maxX": 26,
+            "minZ": 26,
+            "maxZ": 54
+          }
+        ],
+        "emptyShelfZone": {
+          "id": "ours-unless-shelf",
+          "description": "An empty deep-stack shelf bears the pictogram meaning ours, unless.",
+          "minX": -8,
+          "maxX": 8,
+          "minZ": 42,
+          "maxZ": 50
+        },
+        "lightHoldSites": [
+          {
+            "id": "west-wing-light",
+            "x": -28,
+            "z": -6,
+            "radius": 4
+          },
+          {
+            "id": "east-wing-light",
+            "x": 28,
+            "z": -6,
+            "radius": 4
+          },
+          {
+            "id": "warning-shelf-light",
+            "x": 0,
+            "z": 40,
+            "radius": 4
+          }
+        ],
+        "engineDependencies": [
+          {
+            "dep": "archive-world-consumers",
+            "status": "landed",
+            "landedBy": "sol-map-art-archive-restoration",
+            "description": "Ordered beacon holds, secure gating, banked wing persistence and ratified ledger pages are implemented in this branch. Native play and final art acceptance remain in the map readiness ledger."
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "secureWave": 12,
+        "enemyRoster": [
+          {
+            "id": "static_mote",
+            "label": "Static Mote",
+            "waveMin": 1,
+            "visualScale": 0.25,
+            "art": "placeholder"
+          },
+          {
+            "id": "unraveled_machine",
+            "label": "Unraveled Memory",
+            "waveMin": 4,
+            "art": "char.e6.feral_toaster"
+          }
+        ],
+        "archiveWorld": {
+          "squall": {
+            "calmSeconds": 60,
+            "telegraphSeconds": 8,
+            "squallSeconds": 25,
+            "recoverSeconds": 8
+          },
+          "lightHold": [
+            {
+              "wingId": "west-stacks-wing",
+              "siteId": "west-wing-light"
+            },
+            {
+              "wingId": "east-stacks-wing",
+              "siteId": "east-wing-light"
+            },
+            {
+              "wingId": "warning-shelf-wing",
+              "siteId": "warning-shelf-light"
+            }
+          ]
+        }
+      },
+      "boardRow": {
+        "name": "The Archive World",
+        "ledgerBlurb": "Two ruined stack wings lead from the archive entry to a deep warning shelf.",
+        "tags": [
+          "deepsky",
+          "archive",
+          "preserve"
+        ],
+        "unlock": "secured:e10-ember-shore"
+      },
+      "briefing": {
+        "goals": [
+          "Pan the entry hall seams and build a beacon at the west light stake.",
+          "Keep the next wing beacon powered through a whole warning and Static squall.",
+          "Restore a wing, survive twelve waves, then bank to keep the rescued pages."
+        ],
+        "rules": [
+          "Wings restore in order: west stacks, east stacks, then the warning shelf.",
+          "An interrupted light hold must begin again with the next warning.",
+          "Lost runs keep no new restoration. Fully restored archives still require a fresh light hold."
+        ],
+        "geographyLine": "Two ruined stack wings lead from the archive entry to a deep warning shelf left empty for us, unless."
+      }
+    },
+    {
+      "id": "e10-last-claim",
+      "name": "The Last Claim",
+      "description": "Ark-deck variant: reuses the existing ark-plaza-e10 deck class and its ten lineage stations; no new terrain sculpt. Engine dependency: ordered deck-loss progression, Quiet desaturation and mix-duck rings, era-weapon gating, and the three-preserves finale are not yet implemented. Teaching intent: everything, one final time, in order.",
+      "tileParams": {
+        "tileId": "ark-plaza-e10",
+        "biome": "deepsky-ark-deck",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "off"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "stern-to-bow-run",
+            "bank": "north",
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -54,
+            "maxZ": 54
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "last-lantern",
+            "x": -10,
+            "z": 50,
+            "heroStart": true
+          },
+          {
+            "id": "pan-theme-song",
+            "x": 0,
+            "z": 50,
+            "heroStart": true
+          },
+          {
+            "id": "last-portrait",
+            "x": 10,
+            "z": 50,
+            "heroStart": true
+          }
+        ],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [
+          {
+            "x": -12,
+            "z": -36
+          },
+          {
+            "x": 12,
+            "z": -12
+          },
+          {
+            "x": -12,
+            "z": 12
+          },
+          {
+            "x": 12,
+            "z": 36
+          }
+        ],
+        "heightfield": {
+          "id": "ark-plaza-e10",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Cross ten era-decks from stern to bow while the Static consumes the ship behind you, then out-live the Quiet by preserving one light, one song, and one portrait.",
+          "teachingIntent": "Everything, one final time, in order."
+        },
+        "eraDeckZones": [
+          {
+            "id": "e1-memory-deck",
+            "era": 1,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -54,
+            "maxZ": -44
+          },
+          {
+            "id": "e2-memory-deck",
+            "era": 2,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -44,
+            "maxZ": -34
+          },
+          {
+            "id": "e3-memory-deck",
+            "era": 3,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -34,
+            "maxZ": -24
+          },
+          {
+            "id": "e4-memory-deck",
+            "era": 4,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -24,
+            "maxZ": -14
+          },
+          {
+            "id": "e5-memory-deck",
+            "era": 5,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -14,
+            "maxZ": -4
+          },
+          {
+            "id": "e6-memory-deck",
+            "era": 6,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -4,
+            "maxZ": 6
+          },
+          {
+            "id": "e7-memory-deck",
+            "era": 7,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": 6,
+            "maxZ": 16
+          },
+          {
+            "id": "e8-memory-deck",
+            "era": 8,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": 16,
+            "maxZ": 26
+          },
+          {
+            "id": "e9-memory-deck",
+            "era": 9,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": 26,
+            "maxZ": 36
+          },
+          {
+            "id": "e10-memory-deck",
+            "era": 10,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": 36,
+            "maxZ": 46
+          }
+        ],
+        "preserveSites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "x": -10,
+            "z": 50,
+            "radius": 3
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "x": 0,
+            "z": 50,
+            "radius": 3
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "x": 10,
+            "z": 50,
+            "radius": 3
+          }
+        ],
+        "engineDependencies": [
+          {
+            "dep": "last-claim-finale-metadata-consumer",
+            "status": "missing",
+            "description": "The warm vent objective is live; the remaining finale objective metadata still needs its broader consumer."
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "south",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "preserve": {
+          "work": "warm_vent",
+          "hp": 360,
+          "position": {
+            "x": 0,
+            "z": 50
+          }
+        },
+        "secureWave": 8,
+        "enemyRoster": [
+          {
+            "id": "static_mote",
+            "label": "Static Mote",
+            "waveMin": 1,
+            "visualScale": 0.25,
+            "contactDamageScale": 0.35,
+            "art": "placeholder"
+          },
+          {
+            "id": "unraveled_machine",
+            "label": "Unraveled Machine",
+            "waveMin": 2,
+            "hpScale": 0.8,
+            "wrecker": true,
+            "contactDamageScale": 0.35,
+            "buildingDamageScale": 0.45,
+            "art": "placeholder"
+          }
+        ]
+      },
+      "boardRow": {
+        "name": "The Last Claim",
+        "ledgerBlurb": "Ten lineage decks run stern to bow and end at three small preserves.",
+        "tags": [
+          "deepsky",
+          "ark",
+          "finale"
+        ],
+        "unlock": "secured:e10-archive-world"
+      },
+      "briefing": {
+        "goals": [
+          "Keep the last warm vent alight through wave 8."
+        ],
+        "rules": [
+          "The Ark carries ten lineage stations from stern to bow.",
+          "The Quiet drains color and song around the three preserves.",
+          "The Quiet is not damaged; the three preserves make it recede."
+        ],
+        "geographyLine": "The Ark itself is the finale: ten lineage decks in a stern-to-bow run ending at three preserves."
+      }
+    },
+    {
+      "id": "e10-river",
+      "name": "The River",
+      "description": "Post-credits-only through the Charter Press river lever. Reuses frontier-river-claim at dawn with no new sculpt; return to the first verb with no enemies, no waves, and one pan.",
+      "tileParams": {
+        "tileId": "frontier-river-claim",
+        "biome": "river-claim",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "off"
+        },
+        "river": true,
+        "ford": true,
+        "fords": [
+          {
+            "id": "center-ford",
+            "x": 0,
+            "halfWidth": 3
+          }
+        ],
+        "buildZones": [],
+        "stakeMarkers": [],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "frontier-river-claim",
+          "mode": "visual"
+        },
+        "water": {
+          "id": "frontier-river-depth",
+          "visualHalfWidth": 6.25,
+          "depths": {
+            "river": 1.25,
+            "ford": 0.35,
+            "shallows": 0.2,
+            "springPond": 0.2
+          },
+          "speedMul": {
+            "river": 0.55,
+            "ford": 0.85,
+            "shallows": 0.8,
+            "springPond": 0.8
+          },
+          "heroCanWadeDeep": true
+        },
+        "objectiveMetadata": {
+          "description": "Pan the dawn river while the credits names surface as gold flecks, then let the river keep going.",
+          "teachingIntent": "The first verb is enough."
+        },
+        "riverBand": {
+          "id": "credits-river",
+          "minX": -64,
+          "maxX": 64,
+          "minZ": -5,
+          "maxZ": 5
+        },
+        "creditsRiverZone": {
+          "id": "credits-gold-flecks",
+          "description": "Credits names surface here as gold flecks, one by one.",
+          "minX": -54,
+          "maxX": 54,
+          "minZ": -5,
+          "maxZ": 5
+        },
+        "engineDependencies": [
+          {
+            "dep": "credits-river-consumer",
+            "status": "missing",
+            "description": "Needs the declared credits-river band, gold-fleck zone, and objective consumers."
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "clockTicks": 18000,
+        "harvestFreeObjective": {
+          "description": "The ending, not a contract: dawn, one river, one center ford, one pan, no enemies and no waves. The River is door-exempt by design and never mines a seam."
+        }
+      },
+      "boardRow": {
+        "name": "The River",
+        "ledgerBlurb": "At dawn, with no enemies and no waves, the first river waits for one pan.",
+        "tags": [
+          "deepsky",
+          "river",
+          "post-credits"
+        ],
+        "unlock": "secured:e10-last-claim"
+      },
+      "briefing": {
+        "goals": [
+          "Pan the river."
+        ],
+        "rules": [
+          "There are no enemies and no waves.",
+          "The first claim returns with one river and one center ford.",
+          "With the waves quiet, the river keeps going."
+        ],
+        "geographyLine": "The first claim returns at dawn: one river, one center ford, and one pan."
+      }
+    }
+  ]
+}

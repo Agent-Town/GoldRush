@@ -67,6 +67,7 @@
 
 .claim-ledger__views,
 .county-standings__contracts,
+.county-standings__weeks,
 .county-standings__parties,
 .county-standings__seasons {
   display: flex;
@@ -74,6 +75,7 @@
   overflow-x: auto;
 }
 
+.county-standings__weeks,
 .county-standings__parties,
 .county-standings__seasons {
   margin-top: 12px;
@@ -104,6 +106,7 @@
 
 .claim-ledger__views button,
 .county-standings__contracts button,
+.county-standings__weeks button,
 .county-standings__parties button,
 .county-standings__seasons button {
   flex: 0 0 auto;
@@ -119,6 +122,7 @@
 
 .claim-ledger__views button[aria-pressed='true'],
 .county-standings__contracts button[aria-pressed='true'],
+.county-standings__weeks button[aria-pressed='true'],
 .county-standings__parties button[aria-pressed='true'],
 .county-standings__seasons button[aria-pressed='true'] {
   border-color: #5b8a8a;
@@ -126,6 +130,7 @@
   color: #fff8e8;
 }
 
+.county-standings__weeks-hint,
 .county-standings__parties-hint,
 .county-standings__seasons-hint,
 .county-standings__message {
@@ -1053,12 +1058,14 @@
 
   /* Four party chips do not fit a 390px row; wrapping keeps every posse size one tap away
      instead of hiding sizes 3 and 4 behind a horizontal scroll the board does not advertise. */
+  .county-standings__weeks,
   .county-standings__parties,
   .county-standings__seasons {
     flex-wrap: wrap;
     overflow-x: visible;
   }
 
+  .county-standings__weeks button,
   .county-standings__parties button,
   .county-standings__seasons button {
     padding: 7px 9px;

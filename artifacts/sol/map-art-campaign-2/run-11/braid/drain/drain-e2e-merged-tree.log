@@ -1,0 +1,274 @@
+(node:93861) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 70 tests using 1 worker
+
+
+(node:94263) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/70] [desktop-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+[desktop-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[2/70] [desktop-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture
+[3/70] [desktop-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[desktop-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/70] [desktop-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+[desktop-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/70] [desktop-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[desktop-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/70] [desktop-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[desktop-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+Regatta schema 4 watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[7/70] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:99:1 › twin banks beauty board: boot, braid run camera, ford, plait, overview
+[8/70] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:191:1 › the beauty pass pays its frame budget, measured against its own build
+[9/70] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame
+  1) [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+
+    Error: the reed sway should move pixels on the dry bank between two frames
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 60
+    Received:   0
+
+      247 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+      248 |   await writeFile(path.join(ARTIFACT_DIR, 'reed-motion.json'), `${JSON.stringify({ stage: STAGE, movedPixels: moved }, null, 2)}\n`);
+    > 249 |   expect(moved, 'the reed sway should move pixels on the dry bank between two frames').toBeGreaterThan(60);
+          |                                                                                        ^
+      250 |   expectClean(errors);
+      251 | });
+      252 |
+        at /Users/robin/.goldrush/land/wt-hm06/e2e/beauty-twin-banks.spec.ts:249:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/beauty-twin-banks-the-reed-field-is-alive-in-a-still-frame-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[10/70] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:253:1 › twin banks beauty board: west ford under pressure
+[11/70] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget
+[12/70] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[13/70] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:109:1 › builds sluices and stockpiles on both banks against one gold pool
+[14/70] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+[15/70] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:167:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[16/70] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+[17/70] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords
+
+(node:7158) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[18/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[19/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[20/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[21/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[22/70] [desktop-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[23/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[24/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[25/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[26/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[27/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[28/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[29/70] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[30/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[31/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[32/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[33/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[34/70] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[35/70] [desktop-chrome] › e2e/twin-banks-never-wedged.spec.ts:11:1 › Twin Banks enemy packs reach the claim from both banks, crossings, and the right spawn pocket
+
+(node:15372) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[36/70] [mobile-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+[mobile-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[37/70] [mobile-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture
+[38/70] [mobile-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[mobile-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[39/70] [mobile-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+[mobile-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[40/70] [mobile-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[mobile-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[41/70] [mobile-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[mobile-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+Regatta schema 4 watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[42/70] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:99:1 › twin banks beauty board: boot, braid run camera, ford, plait, overview
+[43/70] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:191:1 › the beauty pass pays its frame budget, measured against its own build
+[44/70] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame
+[45/70] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:253:1 › twin banks beauty board: west ford under pressure
+[46/70] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget
+[47/70] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[48/70] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:109:1 › builds sluices and stockpiles on both banks against one gold pool
+[49/70] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+[50/70] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:167:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[51/70] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable
+  2) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ──
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.07178324562509593,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      227 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      228 |   const second = await determinismSnapshot(page);
+    > 229 |   expect(second).toEqual(first);
+          |                  ^
+      230 |   expectClean(errors);
+      231 | });
+      232 |
+        at /Users/robin/.goldrush/land/wt-hm06/e2e/e1-twin-banks.spec.ts:229:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[52/70] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:312:1 › riparian scatter keeps its counts and clears both build banks and fords
+
+(node:16359) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[53/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[54/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[55/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[56/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[57/70] [mobile-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[58/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[59/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[60/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[61/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[62/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[63/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[64/70] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[65/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[66/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[67/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[68/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[69/70] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[70/70] [mobile-chrome] › e2e/twin-banks-never-wedged.spec.ts:11:1 › Twin Banks enemy packs reach the claim from both banks, crossings, and the right spawn pocket
+  2 failed
+    [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:219:1 › the reed field is alive in a still frame 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:224:1 › seeded Twin Banks diagnostics are stable ───
+  2 skipped
+  66 passed (5.6m)

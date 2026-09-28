@@ -1,0 +1,178 @@
+{
+  "source": "run-6/e6-picnic/visual-metrics.json",
+  "stationComparisons": [
+    {
+      "width": 1280,
+      "focus": "six-vein-control-pylon",
+      "station": "entry",
+      "run6": {
+        "bodyPixels": 4200,
+        "bodyMedian": 0.3966564705882353,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "run9": {
+        "bodyPixels": 4337,
+        "bodyMedian": 0.3958235294117647,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "hudChangePercentagePoints": 0.0
+    },
+    {
+      "width": 1280,
+      "focus": "six-vein-control-pylon",
+      "station": 5,
+      "run6": {
+        "bodyPixels": 7706,
+        "bodyMedian": 0.38322431372549015,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "run9": {
+        "bodyPixels": 7967,
+        "bodyMedian": 0.3795858823529411,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "hudChangePercentagePoints": 0.0
+    },
+    {
+      "width": 1280,
+      "focus": "center-picnic-blanket",
+      "station": 8,
+      "run6": {
+        "bodyPixels": 27926,
+        "bodyMedian": 0.16403058823529412,
+        "persistentHudCoveragePercent": 0.021485354150254245
+      },
+      "run9": {
+        "bodyPixels": 28164,
+        "bodyMedian": 0.5858078431372549,
+        "persistentHudCoveragePercent": 0.0568101121999716
+      },
+      "hudChangePercentagePoints": 0.03532475804971735
+    },
+    {
+      "width": 1280,
+      "focus": "west-picnic-blanket",
+      "station": 8,
+      "run6": {
+        "bodyPixels": 27625,
+        "bodyMedian": 0.16459686274509805,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "run9": {
+        "bodyPixels": 30264,
+        "bodyMedian": 0.5928172549019608,
+        "persistentHudCoveragePercent": 0.009912767644726407
+      },
+      "hudChangePercentagePoints": 0.009912767644726407
+    },
+    {
+      "width": 390,
+      "focus": "six-vein-control-pylon",
+      "station": "entry",
+      "run6": {
+        "bodyPixels": 4734,
+        "bodyMedian": 0.3966564705882353,
+        "persistentHudCoveragePercent": 21.419518377693283
+      },
+      "run9": {
+        "bodyPixels": 4838,
+        "bodyMedian": 0.39411176470588233,
+        "persistentHudCoveragePercent": 47.87102108309219
+      },
+      "hudChangePercentagePoints": 26.451502705398905
+    },
+    {
+      "width": 390,
+      "focus": "six-vein-control-pylon",
+      "station": 5,
+      "run6": {
+        "bodyPixels": 8616,
+        "bodyMedian": 0.38153647058823525,
+        "persistentHudCoveragePercent": 0.0
+      },
+      "run9": {
+        "bodyPixels": 8810,
+        "bodyMedian": 0.3795858823529411,
+        "persistentHudCoveragePercent": 0.011350737797956867
+      },
+      "hudChangePercentagePoints": 0.011350737797956867
+    },
+    {
+      "width": 390,
+      "focus": "center-picnic-blanket",
+      "station": 8,
+      "run6": {
+        "bodyPixels": 31148,
+        "bodyMedian": 0.16793176470588234,
+        "persistentHudCoveragePercent": 0.08026197508668294
+      },
+      "run9": {
+        "bodyPixels": 31438,
+        "bodyMedian": 0.5830031372549019,
+        "persistentHudCoveragePercent": 0.05407468668490362
+      },
+      "hudChangePercentagePoints": -0.02618728840177932
+    },
+    {
+      "width": 390,
+      "focus": "west-picnic-blanket",
+      "station": 8,
+      "run6": {
+        "bodyPixels": 30771,
+        "bodyMedian": 0.16740156862745098,
+        "persistentHudCoveragePercent": 0.016249065678723473
+      },
+      "run9": {
+        "bodyPixels": 33689,
+        "bodyMedian": 0.5902799999999999,
+        "persistentHudCoveragePercent": 0.01187331176348363
+      },
+      "hudChangePercentagePoints": -0.004375753915239844
+    }
+  ],
+  "ground": [
+    {
+      "width": 1280,
+      "box": [
+        440,
+        300,
+        850,
+        380
+      ],
+      "run6": {
+        "median": 0.32521411764705876,
+        "rms": 0.04392803862626964,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.33302117647058826,
+        "rms": 0.024615452178120528,
+        "darkShareBelow01": 0.0
+      },
+      "rmsChangePercent": -43.96414466044448,
+      "medianChangePercent": 2.400590380274381
+    },
+    {
+      "width": 390,
+      "box": [
+        20,
+        285,
+        145,
+        390
+      ],
+      "run6": {
+        "median": 0.342001568627451,
+        "rms": 0.04718834388079093,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.3422486274509804,
+        "rms": 0.03323748356978541,
+        "darkShareBelow01": 0.0
+      },
+      "rmsChangePercent": -29.564208369441257,
+      "medianChangePercent": 0.0722390907506254
+    }
+  ],
+  "shade": "Already mounted by run 7; no run-6 mounted shade metric exists. Supplemental station is explicitly paired against current base, not credited as a new mounting."
+}

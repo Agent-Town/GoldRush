@@ -1,0 +1,86 @@
+
+Running 1 test using 1 worker
+
+
+(node:25660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:508:5 › e1-twin-banks plays to its secure wave, banks, reloads and returns to the board @slow
+[desktop-chrome] › e2e/native-proofs/driver.ts:508:5 › e1-twin-banks plays to its secure wave, banks, reloads and returns to the board @slow
+e1-twin-banks {"t":43,"wave":1,"hp":68,"gold":0,"hero":{"x":0.1019018786060668,"z":-13.955564180005364},"builds":1}
+
+e1-twin-banks {"t":65,"wave":2,"hp":68,"gold":0,"hero":{"x":-4.794505769605805,"z":-8.888924676126734},"builds":2}
+
+e1-twin-banks {"t":125,"wave":4,"hp":68,"gold":0,"hero":{"x":4.737598333490224,"z":-12.309035466918916},"builds":3}
+
+e1-twin-banks {"t":184,"wave":6,"hp":93,"gold":0,"hero":{"x":-5.941800219303552,"z":-6.6520979502488125},"builds":4}
+
+e1-twin-banks {"t":223,"wave":7,"hp":135,"gold":0,"hero":{"x":-6.4317731866840155,"z":-11.312238481703847},"builds":5}
+
+e1-twin-banks {"t":254,"wave":8,"hp":135,"gold":0,"hero":{"x":6.713952253531783,"z":-15.105596116130085},"builds":6}
+
+e1-twin-banks {"t":301,"wave":10,"hp":135,"gold":5,"hero":{"x":-1.1453728513658792,"z":-5.493098543194389},"builds":7}
+
+e1-twin-banks {"t":390,"wave":13,"hp":63,"gold":0,"hero":{"x":-2.4501380534380313,"z":-16.081724337736606},"builds":8}
+
+e1-twin-banks {"t":402,"wave":13,"hp":63,"gold":0,"hero":{"x":-3.7474381563080947,"z":-8.782423718216293},"builds":8}
+
+e1-twin-banks {"t":412,"wave":13,"hp":63,"gold":0,"hero":{"x":-3.747438156308092,"z":-12.018490470879806},"builds":8}
+
+e1-twin-banks {"t":423,"wave":14,"hp":63,"gold":0,"hero":{"x":3.1756541221960672,"z":-10.400872397117096},"builds":8}
+
+e1-twin-banks {"t":434,"wave":14,"hp":63,"gold":0,"hero":{"x":-2.3057183187613806,"z":-6.650258702902988},"builds":8}
+
+e1-twin-banks {"t":445,"wave":14,"hp":63,"gold":0,"hero":{"x":-5.755570140333015,"z":-11.18811044417394},"builds":8}
+
+e1-twin-banks {"t":456,"wave":15,"hp":63,"gold":0,"hero":{"x":-2.679183217764551,"z":-14.641691967451901},"builds":8}
+
+e1-twin-banks {"t":466,"wave":15,"hp":63,"gold":0,"hero":{"x":7.900218118414211,"z":-11.678290541829748},"builds":8}
+
+e1-twin-banks {"t":477,"wave":15,"hp":63,"gold":0,"hero":{"x":4.1149964291335035,"z":-6.765771839609466},"builds":8}
+
+e1-twin-banks {"t":487,"wave":16,"hp":63,"gold":0,"hero":{"x":-5.832865959292116,"z":-5.919046245990643},"builds":8}
+
+e1-twin-banks {"t":498,"wave":16,"hp":63,"gold":0,"hero":{"x":4.353855301149449,"z":-9.016564317897164},"builds":8}
+
+e1-twin-banks {"t":508,"wave":16,"hp":55,"gold":0,"hero":{"x":0.05520637015194428,"z":-9.015190579731195},"builds":8}
+
+e1-twin-banks {"t":519,"wave":17,"hp":47,"gold":0,"hero":{"x":-0.7729652028865626,"z":-13.23796669835399},"builds":8}
+
+e1-twin-banks {"t":529,"wave":17,"hp":31,"gold":0,"hero":{"x":-5.19686387534885,"z":-7.533973747112642},"builds":8}
+
+e1-twin-banks {"t":539,"wave":17,"hp":31,"gold":0,"hero":{"x":-5.175738130377154,"z":-7.555099505014066},"builds":8}
+
+e1-twin-banks {"t":558,"wave":18,"hp":31,"gold":1,"hero":{"x":-1.13016379878778,"z":-18.905341419392823},"builds":8}
+
+e1-twin-banks {"t":569,"wave":18,"hp":15,"gold":1,"hero":{"x":-7.883675905656815,"z":-13.295080698553392},"builds":8}
+
+e1-twin-banks {"t":579,"wave":19,"hp":7,"gold":1,"hero":{"x":2.963250948856441,"z":-13.822021417895083},"builds":8}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:508:5 › e1-twin-banks plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 19 / 582.9s sim, 888 kills, 1 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      756 |       }
+      757 |
+    > 758 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      759 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      760 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      761 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:758:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-1/e1-twin-banks/desktop-results/native-proofs-e1-twin-bank-203d5-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-1/e1-twin-banks/desktop-results/native-proofs-e1-twin-bank-203d5-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:508:5 › e1-twin-banks plays to its secure wave, banks, reloads and returns to the board @slow 

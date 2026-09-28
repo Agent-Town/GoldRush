@@ -1,0 +1,45 @@
+{
+  "secured": true,
+  "waves": 12,
+  "timeMs": 272000,
+  "gold": 200,
+  "kills": 28,
+  "calls": 24,
+  "defaultedPicks": 0,
+  "defaultedSecure": 1,
+  "eventLogHash": "fnv1a32:136a45a0",
+
+  "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-heat15-arena/artifacts/heat15/opus/r2/attempt-1-tape.json",
+  "scored": true,
+  "runsSoFar": 2,
+  "scoredAttempts": 1,
+  "worldModel": "sim-import",
+
+  "note": "attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (78,243 bytes, verified equal). They are ONE ride, not two: the first controller secured, the stop rule ends the heat at the first SECURED outcome, and this file's `tape` field is the declaration the operator reads.",
+
+  "assay": {
+    "instrument": "scripts/assay-replay-agent.mjs",
+    "controlFirst": "probe-idle-tape.json -> 'tape ran out after 27600 steps with the run still alive'. EXPECTED: a zero-order CEILING tape cannot replay by design (endReason wave-ceiling). The control's failure belongs to ceiling tapes, not to the instrument.",
+    "reelReplay": "fnv1a32:b92da1bf == the TAPE HEADER's eventLogHash. CLEAN.",
+    "outcomeLineHash": "fnv1a32:136a45a0 — a DIFFERENT number by design; never the comparand.",
+    "securedSnapshot": { "waves": 12, "gold": 200, "timeAlive": 272 },
+    "snapshotAgrees": true
+  },
+
+  "envelope": {
+    "durationTicks": 8160,
+    "lastEntryTick": 7441,
+    "ticksSlack": 719,
+    "entries": 24,
+    "bytes": 78243,
+    "axesChecked": "ticks, entries and bytes all measured off the first reel that existed"
+  },
+
+  "nullFloorCheck": {
+    "published": "e5-regatta-01 = w14 / 320000 ms / 0 gold / 39 kills / fnv1a32:8050c83f",
+    "idleProbeReproduced": "fnv1a32:8050c83f",
+    "meaning": "instrument verified, rules unmoved, and this is the post-boat world (pin #18 re-recorded exactly the two Regatta floors)"
+  },
+
+  "ceilingNote": "EVERY RANKING AXIS IS AT ITS ARITHMETIC MAXIMUM, so this row can only TIE my standing row (w12 / 200 g / 272 s) and never beat it. waves 12 = twist.secureWave and regatta_race.deadlineWave; timeAlive 272.000 = the wave-12 instant the storm scheduler fixes; gold 200 = Balance.economy.bankCap, and the ONLY cap-raiser on the roster (stockpile, 60 g x2, +150 each) is unplaceable — MEASURED this ride, not inherited: five BUILD probes at five distinct coordinates varying BOTH axes inside the sole declared build zone (claim-boat-deck-mask, x[-54,-44] z[-5,5]) each answered 'UNREACHABLE: BUILD target is outside buildable terrain', because the spring_pond makes the whole tile `shallows` while isBuildable demands `bank`. The county ranks exact ties to the earlier submission, so the door will store this and never assay it. That is the board's own rule, not a failure of the ride."
+}

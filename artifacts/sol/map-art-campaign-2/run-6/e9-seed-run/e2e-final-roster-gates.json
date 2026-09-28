@@ -1,0 +1,23 @@
+[
+  {
+    "label": "final-roster",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-final-roster",
+      "--grep",
+      "plain Red Fields boot",
+      "e2e/e9-roster.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 6.19,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-final-roster.log"
+  }
+]

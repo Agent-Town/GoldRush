@@ -1,0 +1,15 @@
+# Shared hauler — verification refinements
+
+The first plain capture overlapped a local source edit and was rejected after a Vite reload removed diagnostics mid-wait. A later capture met a transient `route.fetch` socket reset; that incomplete batch was rejected. Final capture routing retries connection resets twice, and complete final batches replace partial receipts. Neither error is counted as a clean capture.
+
+The first default build rejected the new standalone model directory because it matched no asset-diet family. The body moved into `map-rebuild-spike/landmarks/motor-hauler/`, the existing shared-Meshopt authored-body family, and the required builds then passed. No release manifest, assertion or build script changed.
+
+GLTF encodes the authored 0.18 emission into RGB and leaves the loader intensity at its default 1. The body owner re-expresses the same energy as intensity 0.18 and the original color; zero-emission materials explicitly report zero. Geometry/brightness is not increased by this normalization.
+
+Long Road's existing `convoy-lead-hauler-start` landmark occupies the vehicle spawn and completely occludes both the original and replacement bodies. An attempted diagnostic `driveVehicle` probe addressed the legacy Vehicle rather than the Motor socket authority: published vehicle position/distance/fuel drawn stayed unchanged. Its images and receipt were rejected and retained only in `_raw/run-8/motor-rejected-drive`; no movement claim is made. The final third Long Road station instead explicitly hides only that landmark for isolated visual inspection. Ordinary entry and ordinary 5 m views keep it visible and record the unresolved occlusion. No map placement or production visibility change.
+
+The supplementary static E1-dist request probe initially expected zero errors. It correctly found `/version.json` missing because `scripts/deploy.sh:109` writes that metadata after the build. The final receipt explicitly records this one expected 404 and proves only that the ordinary E1 Claim never requests the Motor body. It is not evidence of an error-free deployment; the four requested Motor map captures use the normal server and require zero errors.
+
+The final scoped corpus guard caught missing landmark-family metadata after the asset-diet directory move. The recipe now writes the canonical pack contract, shared source-ledger row and five required node extras. All GLB JSON except those new extras and the entire binary chunk are byte-identical to the captured/performance-tested asset; registration-proof.json establishes why those measurements remain applicable. No guard, manifest or runtime behavior was changed.
+
+The broader contract-reference spec sweep exposed a real candidate regression at terrain3d-registry.spec.ts:335: the new body added one GLB request in `terrain2d`, where the existing assertion requires zero. The final Vehicle loader keeps its original body for `terrain2d` and LITE, following the existing 3D-asset eligibility rule. The normal 3D body/materials are unchanged. The initial failing batch is retained; final targeted request/registry and performance receipts establish the correction.

@@ -19,6 +19,10 @@ export type AgentTapeReplayResult = {
   eventLogHash: string;
   outcome: { secured: boolean; waves: number; gold: number; timeAlive: number };
   securedSnapshot?: { waves: number; gold: number; timeAlive: number };
+  // THE MECHANIC THE MAP IS ABOUT (F-HEAT15-4, owner ruling 2026-09-22 (a)). Absent on every
+  // contract that declares no signature mechanic, which is every map but the Regatta today; the
+  // declaration itself lives in ONE table, `HeadlessContractSim.MECHANIC_OUTCOMES`.
+  mechanic?: { id: string; complete: boolean };
   ticks: number;
   engine: 'headless-contract-sim';
 };
@@ -190,6 +194,10 @@ export class AgentTapeReplaySession {
     if (unreached.length) throw new Error(`the run ended before tick ${unreached[0]} of the order stream`);
     const outcome = this.sim.outcome();
     const securedSnapshot = this.sim.bankedSecuredSnapshot;
+    // Read at the END of the replay, off the sim's own terminal state — no clock, no randomness,
+    // no second source — so two replays of one reel report the same mechanic or the reel was
+    // never deterministic to begin with (F-HEAT15-4).
+    const mechanic = this.sim.mechanicOutcome();
     return {
       eventLogHash: agentOrdersEventLogHash(this.sim.standingOrdersSnapshot()),
       outcome: {
@@ -199,6 +207,7 @@ export class AgentTapeReplaySession {
         timeAlive: outcome.timeMs / 1000,
       },
       ...(securedSnapshot ? { securedSnapshot } : {}),
+      ...(mechanic ? { mechanic } : {}),
       ticks: this.steps,
       engine: 'headless-contract-sim',
     };

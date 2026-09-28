@@ -1,0 +1,69 @@
+{
+  "reel": "artifacts/river-assay-1/human/seedrun-human-reel.json",
+  "contract": "e9-seed-run",
+  "durationTicks": 18000,
+  "recordedPauses": [
+    {
+      "t": 273,
+      "paused": true
+    },
+    {
+      "t": 319,
+      "paused": true
+    },
+    {
+      "t": 3563,
+      "paused": true
+    },
+    {
+      "t": 6536,
+      "paused": true
+    },
+    {
+      "t": 6590,
+      "paused": true
+    },
+    {
+      "t": 7820,
+      "paused": true
+    },
+    {
+      "t": 14517,
+      "paused": true
+    }
+  ],
+  "errors": [],
+  "query": "debug=&assayReplay=&replay=310f77d0-c2c8-402a-9b2d-af432448d813&contract=e9-seed-run&seed=gold-rush&difficulty=trail",
+  "atBoot": {
+    "showTick": 0,
+    "playback": "playing",
+    "paused": false,
+    "timeAlive": 0,
+    "hash": "",
+    "status": "0:00 / 10:00 · wave 0",
+    "wave": 0,
+    "enemies": 0
+  },
+  "firstAdvanceMs": 40757,
+  "afterFirst": {
+    "showTick": 17967,
+    "playback": "playing",
+    "paused": false,
+    "timeAlive": 119.16666666666246,
+    "hash": "",
+    "status": "9:58 / 10:00 · wave 3",
+    "wave": 3,
+    "enemies": 19
+  },
+  "secondAdvanceMs": 61.19999980926514,
+  "afterSecond": {
+    "showTick": 18000,
+    "playback": "complete",
+    "paused": true,
+    "timeAlive": 119.66666666666244,
+    "hash": "fnv1a32:8f831e36",
+    "status": "Reel ended · replay differed",
+    "wave": 3,
+    "enemies": 20
+  }
+}

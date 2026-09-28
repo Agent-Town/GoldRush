@@ -1,0 +1,42 @@
+{
+  "storeBase": "0535aa5ffca2f422b0d15b378044d00b9e47771a",
+  "base": "cd99e25b0",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "41d69cddae88de79dffb6e75e424280058d3637ffac15fde7dcf27e0d85652b2",
+      "baseSha256": "7bc1252a794281ffd59ce7f76ad472c7c8d50f2bab26a0accb70b8d5dad925a3"
+    },
+    "assets/pilots/map-rebuild-spike/far-side-terrain-contract.json": {
+      "candidateSha256": "07200d7d22a18bada814e90754a100a6b7323d417d680ea36d0d74be3a604693",
+      "baseSha256": "5ea9e66370a8e79b588244912c9215cf4a0f1660fa33e4b5379c6bd7ce228a4c"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/far-side/far-side-landmark-pack-contract.json": {
+      "candidateSha256": "1482078b6927a49b35ecbcdd21932b59ff745f5a21b950bcb1597df99774a861",
+      "baseSha256": "f7f468beeae1a0f3f7d0fd0f43687e1b732738bf41e856eb724e3a6c5131c62c"
+    }
+  },
+  "pattern": "plain Orbital-era boot",
+  "specs": [
+    "e2e/e8-roster.spec.ts"
+  ],
+  "candidateEngine": "37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146",
+  "baseEngine": "36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e8-far-side-base-orbital-roster/test-results",
+    "--grep",
+    "plain Orbital-era boot",
+    "e2e/e8-roster.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e8-far-side-base-orbital-roster/tests.log"
+}

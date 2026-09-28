@@ -1,0 +1,462 @@
+(node:61307) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 58 tests using 1 worker
+
+
+(node:61372) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/58] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+
+[desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+(node:61452) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:61502) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+assay replay failed: malformed tape
+  1) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+
+    Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json
+    (node:61502) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    assay replay failed: malformed tape
+
+
+      78 |     const tapePath = `${ARTIFACTS}/${map.id}-floor.tape.json`;
+      79 |     const tape = JSON.parse(await readFile(tapePath, 'utf8'));
+    > 80 |     const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', tapePath], { encoding: 'utf8', timeout: 150_000 }).trim().split('\n').at(-1)!);
+         |                             ^
+      81 |     expect(tape.contract).toBe(map.id);
+      82 |     // THE HASH CLAIM, in the half that holds: the reel this slice recorded replays to its claimed
+      83 |     // hash in a second Node engine (`assay-replay-agent.mjs`, a separate process and module graph).
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fid2-land/e2e/e4-roads-and-convoys.spec.ts:80:29
+
+    Error Context: test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:61517) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/58] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:123:1 › every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake
+[3/58] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar
+[4/58] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+[desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+E4_PLAIN_BOOT_ASSAY_SLIP {"eventLogHash":"fnv1a32:5561cbaa","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":5.933333},"securedSnapshot":null,"ticks":178,"wallMs":2371}
+
+[5/58] [desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-dust-flats is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-dust-flats is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[6/58] [desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-long-road is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-long-road is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[7/58] [desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-gusher-county is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-gusher-county is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[8/58] [desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-boneyard is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[desktop-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-boneyard is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[9/58] [desktop-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+[10/58] [desktop-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[11/58] [desktop-chrome] › e2e/landmark-brightness.spec.ts:182:1 › reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)
+[12/58] [desktop-chrome] › e2e/landmark-brightness.spec.ts:315:1 › closed/open mesh census across the landmark packs (F-ASTRA-9)
+[13/58] [desktop-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[14/58] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[15/58] [desktop-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[16/58] [desktop-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[17/58] [desktop-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[18/58] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[19/58] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[20/58] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[21/58] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[22/58] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[23/58] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[24/58] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[25/58] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[26/58] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[27/58] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[28/58] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[29/58] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:64074) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[30/58] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+
+[mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+(node:64154) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:64217) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+assay replay failed: malformed tape
+  2) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+
+    Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json
+    (node:64217) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    assay replay failed: malformed tape
+
+
+      78 |     const tapePath = `${ARTIFACTS}/${map.id}-floor.tape.json`;
+      79 |     const tape = JSON.parse(await readFile(tapePath, 'utf8'));
+    > 80 |     const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', tapePath], { encoding: 'utf8', timeout: 150_000 }).trim().split('\n').at(-1)!);
+         |                             ^
+      81 |     expect(tape.contract).toBe(map.id);
+      82 |     // THE HASH CLAIM, in the half that holds: the reel this slice recorded replays to its claimed
+      83 |     // hash in a second Node engine (`assay-replay-agent.mjs`, a separate process and module graph).
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-fid2-land/e2e/e4-roads-and-convoys.spec.ts:80:29
+
+    Error Context: test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:64250) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[31/58] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:123:1 › every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake
+[32/58] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar
+[33/58] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+[mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+E4_PLAIN_BOOT_ASSAY_SLIP {"eventLogHash":"fnv1a32:2e60140c","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":5.866667},"securedSnapshot":null,"ticks":176,"wallMs":2331}
+
+[34/58] [mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-dust-flats is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-dust-flats is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[35/58] [mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-long-road is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-long-road is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[36/58] [mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-gusher-county is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-gusher-county is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[37/58] [mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-boneyard is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[mobile-chrome] › e2e/er01-e4-census.spec.ts:13:3 › e4-boneyard is admitted while its signature engine dependency is missing, and declares only consumed vocabulary
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[38/58] [mobile-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+[39/58] [mobile-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[40/58] [mobile-chrome] › e2e/landmark-brightness.spec.ts:182:1 › reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)
+[41/58] [mobile-chrome] › e2e/landmark-brightness.spec.ts:315:1 › closed/open mesh census across the landmark packs (F-ASTRA-9)
+[42/58] [mobile-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[43/58] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[44/58] [mobile-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[45/58] [mobile-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[46/58] [mobile-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[47/58] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[48/58] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[49/58] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[50/58] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[51/58] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[52/58] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[53/58] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[54/58] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[55/58] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[56/58] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[57/58] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[58/58] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  2 failed
+    [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+    [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+  4 skipped
+  52 passed (4.4m)

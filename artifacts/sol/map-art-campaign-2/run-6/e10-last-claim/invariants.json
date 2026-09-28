@@ -1,0 +1,43 @@
+{
+  "newDedicatedPack": true,
+  "activeAdditionalMounts": [
+    "preserve-last-lantern",
+    "preserve-pan-theme-song",
+    "preserve-last-portrait",
+    "central-orrery",
+    "stern-memory-arch"
+  ],
+  "maskTruthExactCanonical": true,
+  "mountsAndStationsMirrored": true,
+  "fullSquareGameplayFloorRetained": true,
+  "noNewCollisionOrWalkSurface": true,
+  "preserveSitesUnchanged": "monuments offset 3 m behind sites, on original radius boundary",
+  "unchangedCodeAndGameplay": [
+    "src/game",
+    "src/sim",
+    "assets/contracts",
+    "src/world/Terrain.ts",
+    "src/world/LandmarkCollision.ts",
+    "assets/engine-era.json"
+  ],
+  "allExistingStoreAssetsUnchangedExceptAdditiveSourceLedger": true,
+  "rasters": {
+    "last-claim-terrain-atlas.png": {
+      "source": "assets/raw/archive-world-floor-material-v1.png",
+      "sha256": "621a457ee276de08c7563686a0d9e76371413fe1dd03ffa174a9747a8a07d101",
+      "byteIdentical": true
+    },
+    "last-claim-panorama-atlas.png": {
+      "source": "assets/pilots/map-rebuild-spike/archive-world-panorama-atlas.png",
+      "sha256": "e6902a845b8324062b92ab7744521c5c5a4b579cc5547943552c278d3979fd65",
+      "byteIdentical": true
+    },
+    "landmarks/last-claim/last-claim-landmarks-atlas.png": {
+      "source": "assets/pilots/map-rebuild-spike/landmarks/archive-world/archive-world-landmarks-atlas.png",
+      "sha256": "3ebb2607b09b3af5e8b64ecb803616b172bec8866ac4b0fbd8250731cc94b8ad",
+      "byteIdentical": true
+    }
+  },
+  "newPackBudgetProof": "asset-budgets.json",
+  "heightProof": "height-proof.json"
+}

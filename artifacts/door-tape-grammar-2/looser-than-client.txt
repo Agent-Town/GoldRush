@@ -1,0 +1,4 @@
+place_build id is whitespace only                    door accepts | client refuses
+pick_upgrade id is whitespace only                   door accepts | client refuses
+set_agent_ability names an unknown ability           door accepts | client refuses
+set_agent_ability names a known ability (control)    door accepts | client accepts

@@ -1,0 +1,79 @@
+{
+  "project": "mobile-chrome",
+  "query": "contract=the-claim&seed=same-laws-harvest-parity",
+  "seam": {
+    "id": "gold-seam-1",
+    "position": {
+      "x": -9,
+      "z": 6.7
+    },
+    "before": 30,
+    "afterPlayer": 20,
+    "riderBefore": 30,
+    "afterRider": 20
+  },
+  "player": {
+    "issuedAt": 0.03333333333333333,
+    "input": "touch tap-hold + confirm",
+    "ticks": [
+      {
+        "at": 1.9000000000000026,
+        "rel": 1.867,
+        "amount": 5,
+        "cumulative": 5
+      },
+      {
+        "at": 1.933333333333336,
+        "rel": 1.9,
+        "amount": 5,
+        "cumulative": 10
+      }
+    ]
+  },
+  "rider": {
+    "issuedAt": 0.03333333333333333,
+    "input": "HARVEST x2 via __GR_AGENT__.submitOrders",
+    "ticks": [
+      {
+        "at": 1.9000000000000026,
+        "rel": 1.867,
+        "amount": 5,
+        "cumulative": 5
+      },
+      {
+        "at": 1.933333333333336,
+        "rel": 1.9,
+        "amount": 5,
+        "cumulative": 10
+      }
+    ]
+  },
+  "table": "| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |\n|---|---|---|---|---|\n| 1 | 1.867 | 1.867 | 5 | 5 / 5 |\n| 2 | 1.900 | 1.900 | 5 | 10 / 10 |",
+  "tape": {
+    "inputKind": "prospector_dispatch",
+    "dispatches": [
+      {
+        "type": "prospector_dispatch",
+        "node": "gold-seam-1"
+      },
+      {
+        "type": "prospector_dispatch",
+        "node": "gold-seam-1"
+      }
+    ],
+    "eventLogHash": "fnv1a32:a6c04f80",
+    "durationTicks": 601
+  },
+  "assay": {
+    "eventLogHash": "fnv1a32:a6c04f80",
+    "outcome": {
+      "secured": false,
+      "waves": 0,
+      "gold": 10,
+      "timeAlive": 20.033333
+    },
+    "securedSnapshot": null,
+    "ticks": 601,
+    "wallMs": 2643
+  }
+}

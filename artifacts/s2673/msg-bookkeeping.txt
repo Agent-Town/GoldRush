@@ -1,0 +1,17 @@
+s2673: bookkeeping — commit the attended session's F-2299-1 desk update, §2A before anything else
+
+Not my words and not reverted (fire.md §2A, the ATTENDED-COEXISTENCE LAW): an attended
+session wrote these four files in one pass at 23:25:04 local, three minutes into this
+fire and after its own git snapshot, so they arrived as dirt I found rather than dirt I
+made. Committing is the only lawful handling — it makes the measurement durable before
+any later writer (including my own lock line) can displace it.
+
+What it says: the web UI's log-out-of-all-devices button does NOT revoke long-lived
+`setup-token` tokens — measured, two minted before the button still authenticate after
+it — so revoking the August token is an Anthropic support request, not a self-service
+click. The evening ops no longer wait on it: that token reaches inference only, never
+the box or the edge.
+
+Scope: 4 files, +4/-3, desk item count unchanged at 3.
+
+Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>

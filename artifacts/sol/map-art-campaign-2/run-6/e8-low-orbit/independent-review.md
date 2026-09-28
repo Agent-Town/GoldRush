@@ -1,0 +1,9 @@
+# Independent Low Orbit visual review
+
+Fresh screenshot-critique agent, no project history, reviewed full before/after desktop and phone frozen views, 3× inspection crops and the concept plate.
+
+The reviewer found a coherent machine silhouette and substantially better desktop readability, including removal of the conspicuous black rectangle. It also found low overall plate fidelity: streaked stone/wood-like material, uniform yellow brass, competing hoops, weak joints/contact, sparse orbital scale, smooth ground, and major phone HUD obstruction. It explicitly cautioned that unobstructed inspection crops overstate phone entry readability.
+
+Response: the final source deepens and darkens the central recovery recess, uses cylindrical housing UVs and adds explicit service-ring couplings. The full phone entry remains an independent acceptance surface; its HUD coverage is reported, not dismissed by a clean inspection frame. Large suspended architecture and field depth remain held by the contract/layout/camera boundary. Fine material fidelity remains below the plate and is not claimed accepted.
+
+Refresh against final captures: reviewer confirmed the dark opening now reads as a hollow machine, and the square couplings clarify support attachments. The housing's new streak direction reads more like corrugated metal, while texture stretching, yellow hoops, weak contact and smooth ground remain visible limitations. Phone panels still cover the central opening; ordinary story dialogue adds further obstruction. The reviewer noted differing character poses in paired frames, so no character-relative scale conclusion is drawn from these captures. Bounds and footprint claims come from source/GLB invariants instead. Overall reference fidelity remains low; this is IMPROVED / HELD, not visual acceptance.

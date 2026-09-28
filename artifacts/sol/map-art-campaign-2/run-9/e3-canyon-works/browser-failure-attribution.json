@@ -1,0 +1,285 @@
+{
+  "candidate": {
+    "passed": 75,
+    "skipped": 7,
+    "failed": 14
+  },
+  "exactBase": "84992f3bf69f04cb7815744442b81b50958775c7",
+  "exactStoreBase": "d76ee141dcac825aa29cf4e5d4a868fe845fb1c8",
+  "exactBaseEngine": "72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2",
+  "restoredCandidateEngine": "c01ea77a83fe3183df84df0b627f3f5ab252047ad3f1afb7d3b840e31879e56e",
+  "allFailuresReproduceOnBase": true,
+  "rendererCountDeltaExplainedByArt": 2268,
+  "comparisons": [
+    {
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/cw-02-escort.spec.ts",
+        "testLine": 61,
+        "title": "board-selected Canyon escort delivers one capacitor crate through a repaired brown-out",
+        "expected": "39",
+        "received": "40"
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/cw-02-escort.spec.ts",
+        "testLine": 61,
+        "title": "board-selected Canyon escort delivers one capacitor crate through a repaired brown-out",
+        "expected": "39",
+        "received": "40"
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/er01-e3-census.spec.ts",
+        "testLine": 16,
+        "title": "e3-canyon-works census support is explicit and deterministic",
+        "expected": "ArrayContaining [{\"data\": {\"byWave\": 6, \"completionLatch\": \"one-way-at-or-before-deadline\", \"consumerRole\": \"gallery\", \"failureLatch\": \"one-way-after-deadline\", \"missedDeadline\": \"run-unsecurable\", \"poweredState\": \"powered\", \"required\": 2}, \"id\": \"connect_objective\", \"source\": \"Game.syncCanyonConnectObjective\"}, {\"data\": {\"darkWave\": 8, \"duskWave\": 4, \"nightDepth\": 1, \"phases\": [\"full\", \"dusk\", \"dark\"], \"progression\": \"clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)\", \"returnsToFull\": false}, \"id\": \"darkness_cycle\", \"source\": \"Game.nightShiftLightingState\"}]",
+        "received": "[{\"data\": {\"escortCount\": 0, \"hpScale\": 1}, \"id\": \"baron\", \"source\": \"twist.baron\"}, {\"data\": {\"banks\": [\"north\", \"south\"], \"count\": 5}, \"id\": \"build_zones\", \"source\": \"tileParams.buildZones\"}, {\"data\": {\"byWave\": 8, \"completionLatch\": \"one-way-at-or-before-deadline\", \"consumerRole\": \"gallery\", \"failureLatch\": \"one-way-after-deadline\", \"missedDeadline\": \"run-unsecurable\", \"poweredState\": \"powered\", \"required\": 2}, \"id\": \"connect_objective\", \"source\": \"Game.syncCanyonConnectObjective\"}, {\"data\": {\"bankCap\": 360, \"defaultBankCap\": 200, \"rule\": \"income-above-the-purse-is-refused\"}, \"id\": \"contract_bank_cap\", \"source\": \"twist.economy.bankCap\"}, {\"data\": {\"defaultTotal\": 330, \"ladder\": [{\"cost\": 25, \"defaultCost\": 25, \"rung\": 1}, {\"cost\": 30, \"defaultCost\": 35, \"rung\": 2}, {\"cost\": 35, \"defaultCost\": 45, \"rung\": 3}, {\"cost\": 45, \"defaultCost\": 55, \"rung\": 4}, {\"cost\": 50, \"defaultCost\": 75, \"rung\": 5}, {\"cost\": 55, \"defaultCost\": 95, \"rung\": 6}], \"rule\": \"authored-prices-replace-the-default-curve-on-this-claim; buildables[].costs carries the same prices\", \"total\": 240}, \"id\": \"contract_beacon_ladder\", \"source\": \"twist.economy.beaconLadder\"}, {\"data\": {\"darkWave\": 8, \"duskWave\": 4, \"nightDepth\": 1, \"phases\": [\"full\", \"dusk\", \"dark\"], \"progression\": \"clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)\", \"returnsToFull\": false}, \"id\": \"darkness_cycle\", \"source\": \"Game.nightShiftLightingState\"}, {\"data\": {\"arriveRadius\": 0.5, \"body\": \"hero\", \"pilots\": {\"headless\": \"the rider pilots the run's only hero\", \"roomSeat\": \"a headless roster seat pilots its own hero\", \"soloBrowser\": \"a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS\"}, \"refusals\": [\"HERO_NOT_YOURS\", \"UNREACHABLE_TERRAIN\", \"UNREACHABLE_APPROACH\", \"HERO_UNAVAILABLE\", \"NOT_ABOARD\", \"UNREACHABLE_WATER\"], \"verb\": \"MOVE_HERO\"}, \"id\": \"hero_orders\", \"source\": \"StandingOrders.MOVE_HERO\"}, {\"data\": {}, \"id\": \"river\", \"source\": \"tileParams.river\"}, {\"data\": {\"count\": 1, \"ids\": [\"works-bridge\"]}, \"id\": \"water_crossings\", \"source\": \"tileParams.ford\"}]"
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/er01-e3-census.spec.ts",
+        "testLine": 16,
+        "title": "e3-canyon-works census support is explicit and deterministic",
+        "expected": "ArrayContaining [{\"data\": {\"byWave\": 6, \"completionLatch\": \"one-way-at-or-before-deadline\", \"consumerRole\": \"gallery\", \"failureLatch\": \"one-way-after-deadline\", \"missedDeadline\": \"run-unsecurable\", \"poweredState\": \"powered\", \"required\": 2}, \"id\": \"connect_objective\", \"source\": \"Game.syncCanyonConnectObjective\"}, {\"data\": {\"darkWave\": 8, \"duskWave\": 4, \"nightDepth\": 1, \"phases\": [\"full\", \"dusk\", \"dark\"], \"progression\": \"clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)\", \"returnsToFull\": false}, \"id\": \"darkness_cycle\", \"source\": \"Game.nightShiftLightingState\"}]",
+        "received": "[{\"data\": {\"escortCount\": 0, \"hpScale\": 1}, \"id\": \"baron\", \"source\": \"twist.baron\"}, {\"data\": {\"banks\": [\"north\", \"south\"], \"count\": 5}, \"id\": \"build_zones\", \"source\": \"tileParams.buildZones\"}, {\"data\": {\"byWave\": 8, \"completionLatch\": \"one-way-at-or-before-deadline\", \"consumerRole\": \"gallery\", \"failureLatch\": \"one-way-after-deadline\", \"missedDeadline\": \"run-unsecurable\", \"poweredState\": \"powered\", \"required\": 2}, \"id\": \"connect_objective\", \"source\": \"Game.syncCanyonConnectObjective\"}, {\"data\": {\"bankCap\": 360, \"defaultBankCap\": 200, \"rule\": \"income-above-the-purse-is-refused\"}, \"id\": \"contract_bank_cap\", \"source\": \"twist.economy.bankCap\"}, {\"data\": {\"defaultTotal\": 330, \"ladder\": [{\"cost\": 25, \"defaultCost\": 25, \"rung\": 1}, {\"cost\": 30, \"defaultCost\": 35, \"rung\": 2}, {\"cost\": 35, \"defaultCost\": 45, \"rung\": 3}, {\"cost\": 45, \"defaultCost\": 55, \"rung\": 4}, {\"cost\": 50, \"defaultCost\": 75, \"rung\": 5}, {\"cost\": 55, \"defaultCost\": 95, \"rung\": 6}], \"rule\": \"authored-prices-replace-the-default-curve-on-this-claim; buildables[].costs carries the same prices\", \"total\": 240}, \"id\": \"contract_beacon_ladder\", \"source\": \"twist.economy.beaconLadder\"}, {\"data\": {\"darkWave\": 8, \"duskWave\": 4, \"nightDepth\": 1, \"phases\": [\"full\", \"dusk\", \"dark\"], \"progression\": \"clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)\", \"returnsToFull\": false}, \"id\": \"darkness_cycle\", \"source\": \"Game.nightShiftLightingState\"}, {\"data\": {\"arriveRadius\": 0.5, \"body\": \"hero\", \"pilots\": {\"headless\": \"the rider pilots the run's only hero\", \"roomSeat\": \"a headless roster seat pilots its own hero\", \"soloBrowser\": \"a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS\"}, \"refusals\": [\"HERO_NOT_YOURS\", \"UNREACHABLE_TERRAIN\", \"UNREACHABLE_APPROACH\", \"HERO_UNAVAILABLE\", \"NOT_ABOARD\", \"UNREACHABLE_WATER\"], \"verb\": \"MOVE_HERO\"}, \"id\": \"hero_orders\", \"source\": \"StandingOrders.MOVE_HERO\"}, {\"data\": {}, \"id\": \"river\", \"source\": \"tileParams.river\"}, {\"data\": {\"count\": 1, \"ids\": [\"works-bridge\"]}, \"id\": \"water_crossings\", \"source\": \"tileParams.ford\"}]"
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/gt-03-enemy-elevation.spec.ts",
+        "testLine": 125,
+        "title": "enemies slow on slopes and expose grounded terrain diagnostics",
+        "expected": "< 0.85",
+        "received": "4.833"
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/gt-03-enemy-elevation.spec.ts",
+        "testLine": 125,
+        "title": "enemies slow on slopes and expose grounded terrain diagnostics",
+        "expected": "< 0.85",
+        "received": "1.884"
+      },
+      "verdict": "same slope-speed predicate fails on both; wall-clock-polled ratios differ, so no numeric match is claimed; test uses unrelated gt-test-basin tile"
+    },
+    {
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 196,
+        "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+        "expected": "32768",
+        "received": "51200"
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 196,
+        "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+        "expected": "32768",
+        "received": "51200"
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 272,
+        "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+        "expected": "\"painted-underlay-alpha-rim\"",
+        "received": "\"opaque-sculpt-edge\""
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 272,
+        "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+        "expected": "\"painted-underlay-alpha-rim\"",
+        "received": "\"opaque-sculpt-edge\""
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 345,
+        "title": "all fifteen contracts stay painted in LITE and on invalid terrain bytes",
+        "expected": "\"failed\"",
+        "received": "\"lite\""
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 345,
+        "title": "all fifteen contracts stay painted in LITE and on invalid terrain bytes",
+        "expected": "\"failed\"",
+        "received": "\"lite\""
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/wire-crawler-3d.spec.ts",
+        "testLine": 115,
+        "title": "mounts the Crawler GLB, flips all three damage morphs, and disposes on kill",
+        "rendererMetric": "coldBaseline.triangles",
+        "received": 148946,
+        "expectedBand": "149624, 149630"
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/wire-crawler-3d.spec.ts",
+        "testLine": 115,
+        "title": "mounts the Crawler GLB, flips all three damage morphs, and disposes on kill",
+        "rendererMetric": "coldBaseline.triangles",
+        "received": 146678,
+        "expectedBand": "149624, 149630"
+      },
+      "verdict": "same stale count band fails on both; observed +2268 equals authored model and panorama delta"
+    },
+    {
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/cw-02-escort.spec.ts",
+        "testLine": 61,
+        "title": "board-selected Canyon escort delivers one capacitor crate through a repaired brown-out",
+        "expected": "39",
+        "received": "40"
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/cw-02-escort.spec.ts",
+        "testLine": 61,
+        "title": "board-selected Canyon escort delivers one capacitor crate through a repaired brown-out",
+        "expected": "39",
+        "received": "40"
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/er01-e3-census.spec.ts",
+        "testLine": 16,
+        "title": "e3-canyon-works census support is explicit and deterministic",
+        "expected": "ArrayContaining [{\"data\": {\"byWave\": 6, \"completionLatch\": \"one-way-at-or-before-deadline\", \"consumerRole\": \"gallery\", \"failureLatch\": \"one-way-after-deadline\", \"missedDeadline\": \"run-unsecurable\", \"poweredState\": \"powered\", \"required\": 2}, \"id\": \"connect_objective\", \"source\": \"Game.syncCanyonConnectObjective\"}, {\"data\": {\"darkWave\": 8, \"duskWave\": 4, \"nightDepth\": 1, \"phases\": [\"full\", \"dusk\", \"dark\"], \"progression\": \"clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)\", \"returnsToFull\": false}, \"id\": \"darkness_cycle\", \"source\": \"Game.nightShiftLightingState\"}]",
+        "received": "[{\"data\": {\"escortCount\": 0, \"hpScale\": 1}, \"id\": \"baron\", \"source\": \"twist.baron\"}, {\"data\": {\"banks\": [\"north\", \"south\"], \"count\": 5}, \"id\": \"build_zones\", \"source\": \"tileParams.buildZones\"}, {\"data\": {\"byWave\": 8, \"completionLatch\": \"one-way-at-or-before-deadline\", \"consumerRole\": \"gallery\", \"failureLatch\": \"one-way-after-deadline\", \"missedDeadline\": \"run-unsecurable\", \"poweredState\": \"powered\", \"required\": 2}, \"id\": \"connect_objective\", \"source\": \"Game.syncCanyonConnectObjective\"}, {\"data\": {\"bankCap\": 360, \"defaultBankCap\": 200, \"rule\": \"income-above-the-purse-is-refused\"}, \"id\": \"contract_bank_cap\", \"source\": \"twist.economy.bankCap\"}, {\"data\": {\"defaultTotal\": 330, \"ladder\": [{\"cost\": 25, \"defaultCost\": 25, \"rung\": 1}, {\"cost\": 30, \"defaultCost\": 35, \"rung\": 2}, {\"cost\": 35, \"defaultCost\": 45, \"rung\": 3}, {\"cost\": 45, \"defaultCost\": 55, \"rung\": 4}, {\"cost\": 50, \"defaultCost\": 75, \"rung\": 5}, {\"cost\": 55, \"defaultCost\": 95, \"rung\": 6}], \"rule\": \"authored-prices-replace-the-default-curve-on-this-claim; buildables[].costs carries the same prices\", \"total\": 240}, \"id\": \"contract_beacon_ladder\", \"source\": \"twist.economy.beaconLadder\"}, {\"data\": {\"darkWave\": 8, \"duskWave\": 4, \"nightDepth\": 1, \"phases\": [\"full\", \"dusk\", \"dark\"], \"progression\": \"clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)\", \"returnsToFull\": false}, \"id\": \"darkness_cycle\", \"source\": \"Game.nightShiftLightingState\"}, {\"data\": {\"arriveRadius\": 0.5, \"body\": \"hero\", \"pilots\": {\"headless\": \"the rider pilots the run's only hero\", \"roomSeat\": \"a headless roster seat pilots its own hero\", \"soloBrowser\": \"a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS\"}, \"refusals\": [\"HERO_NOT_YOURS\", \"UNREACHABLE_TERRAIN\", \"UNREACHABLE_APPROACH\", \"HERO_UNAVAILABLE\", \"NOT_ABOARD\", \"UNREACHABLE_WATER\"], \"verb\": \"MOVE_HERO\"}, \"id\": \"hero_orders\", \"source\": \"StandingOrders.MOVE_HERO\"}, {\"data\": {}, \"id\": \"river\", \"source\": \"tileParams.river\"}, {\"data\": {\"count\": 1, \"ids\": [\"works-bridge\"]}, \"id\": \"water_crossings\", \"source\": \"tileParams.ford\"}]"
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/er01-e3-census.spec.ts",
+        "testLine": 16,
+        "title": "e3-canyon-works census support is explicit and deterministic",
+        "expected": "ArrayContaining [{\"data\": {\"byWave\": 6, \"completionLatch\": \"one-way-at-or-before-deadline\", \"consumerRole\": \"gallery\", \"failureLatch\": \"one-way-after-deadline\", \"missedDeadline\": \"run-unsecurable\", \"poweredState\": \"powered\", \"required\": 2}, \"id\": \"connect_objective\", \"source\": \"Game.syncCanyonConnectObjective\"}, {\"data\": {\"darkWave\": 8, \"duskWave\": 4, \"nightDepth\": 1, \"phases\": [\"full\", \"dusk\", \"dark\"], \"progression\": \"clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)\", \"returnsToFull\": false}, \"id\": \"darkness_cycle\", \"source\": \"Game.nightShiftLightingState\"}]",
+        "received": "[{\"data\": {\"escortCount\": 0, \"hpScale\": 1}, \"id\": \"baron\", \"source\": \"twist.baron\"}, {\"data\": {\"banks\": [\"north\", \"south\"], \"count\": 5}, \"id\": \"build_zones\", \"source\": \"tileParams.buildZones\"}, {\"data\": {\"byWave\": 8, \"completionLatch\": \"one-way-at-or-before-deadline\", \"consumerRole\": \"gallery\", \"failureLatch\": \"one-way-after-deadline\", \"missedDeadline\": \"run-unsecurable\", \"poweredState\": \"powered\", \"required\": 2}, \"id\": \"connect_objective\", \"source\": \"Game.syncCanyonConnectObjective\"}, {\"data\": {\"bankCap\": 360, \"defaultBankCap\": 200, \"rule\": \"income-above-the-purse-is-refused\"}, \"id\": \"contract_bank_cap\", \"source\": \"twist.economy.bankCap\"}, {\"data\": {\"defaultTotal\": 330, \"ladder\": [{\"cost\": 25, \"defaultCost\": 25, \"rung\": 1}, {\"cost\": 30, \"defaultCost\": 35, \"rung\": 2}, {\"cost\": 35, \"defaultCost\": 45, \"rung\": 3}, {\"cost\": 45, \"defaultCost\": 55, \"rung\": 4}, {\"cost\": 50, \"defaultCost\": 75, \"rung\": 5}, {\"cost\": 55, \"defaultCost\": 95, \"rung\": 6}], \"rule\": \"authored-prices-replace-the-default-curve-on-this-claim; buildables[].costs carries the same prices\", \"total\": 240}, \"id\": \"contract_beacon_ladder\", \"source\": \"twist.economy.beaconLadder\"}, {\"data\": {\"darkWave\": 8, \"duskWave\": 4, \"nightDepth\": 1, \"phases\": [\"full\", \"dusk\", \"dark\"], \"progression\": \"clamp((wave-duskWave)/max(1,darkWave-duskWave),0,1)\", \"returnsToFull\": false}, \"id\": \"darkness_cycle\", \"source\": \"Game.nightShiftLightingState\"}, {\"data\": {\"arriveRadius\": 0.5, \"body\": \"hero\", \"pilots\": {\"headless\": \"the rider pilots the run's only hero\", \"roomSeat\": \"a headless roster seat pilots its own hero\", \"soloBrowser\": \"a human pilots the hero; MOVE_HERO refuses HERO_NOT_YOURS\"}, \"refusals\": [\"HERO_NOT_YOURS\", \"UNREACHABLE_TERRAIN\", \"UNREACHABLE_APPROACH\", \"HERO_UNAVAILABLE\", \"NOT_ABOARD\", \"UNREACHABLE_WATER\"], \"verb\": \"MOVE_HERO\"}, \"id\": \"hero_orders\", \"source\": \"StandingOrders.MOVE_HERO\"}, {\"data\": {}, \"id\": \"river\", \"source\": \"tileParams.river\"}, {\"data\": {\"count\": 1, \"ids\": [\"works-bridge\"]}, \"id\": \"water_crossings\", \"source\": \"tileParams.ford\"}]"
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/gt-03-enemy-elevation.spec.ts",
+        "testLine": 125,
+        "title": "enemies slow on slopes and expose grounded terrain diagnostics",
+        "expected": "< 0.85",
+        "received": "3.432"
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/gt-03-enemy-elevation.spec.ts",
+        "testLine": 125,
+        "title": "enemies slow on slopes and expose grounded terrain diagnostics",
+        "expected": "< 0.85",
+        "received": "6.234"
+      },
+      "verdict": "same slope-speed predicate fails on both; wall-clock-polled ratios differ, so no numeric match is claimed; test uses unrelated gt-test-basin tile"
+    },
+    {
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 196,
+        "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+        "expected": "32768",
+        "received": "51200"
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 196,
+        "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+        "expected": "32768",
+        "received": "51200"
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 272,
+        "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+        "expected": "\"painted-underlay-alpha-rim\"",
+        "received": "\"opaque-sculpt-edge\""
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 272,
+        "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+        "expected": "\"painted-underlay-alpha-rim\"",
+        "received": "\"opaque-sculpt-edge\""
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 345,
+        "title": "all fifteen contracts stay painted in LITE and on invalid terrain bytes",
+        "expected": "\"failed\"",
+        "received": "\"lite\""
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 345,
+        "title": "all fifteen contracts stay painted in LITE and on invalid terrain bytes",
+        "expected": "\"failed\"",
+        "received": "\"lite\""
+      },
+      "verdict": "exact project and expected/received assertion fingerprint"
+    },
+    {
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/wire-crawler-3d.spec.ts",
+        "testLine": 115,
+        "title": "mounts the Crawler GLB, flips all three damage morphs, and disposes on kill",
+        "rendererMetric": "coldBaseline.triangles",
+        "received": 146948,
+        "expectedBand": "146038, 146044"
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/wire-crawler-3d.spec.ts",
+        "testLine": 115,
+        "title": "mounts the Crawler GLB, flips all three damage morphs, and disposes on kill",
+        "rendererMetric": "coldBaseline.triangles",
+        "received": 144680,
+        "expectedBand": "146038, 146044"
+      },
+      "verdict": "same stale count band fails on both; observed +2268 equals authored model and panorama delta"
+    }
+  ]
+}

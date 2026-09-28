@@ -1,0 +1,4204 @@
+[
+  {
+    "width": 1280,
+    "arm": "before",
+    "entry": {
+      "mountId": "isotope-cooling-rack",
+      "reason": "Additional declared landmark"
+    },
+    "declared": true,
+    "errors": [],
+    "frames": {
+      "rest": {
+        "t": 6390.199999809265,
+        "elapsed": null,
+        "pixels": 5390,
+        "buffer": [
+          1280,
+          800
+        ],
+        "pixelSpace": "viewport pixels at DPR 1",
+        "position": [
+          0,
+          27.25959167687874,
+          -13.7
+        ],
+        "quaternion": [
+          -0.4221690698335882,
+          0,
+          0,
+          0.9065171131731837
+        ],
+        "focus": [
+          0,
+          1.06,
+          -32
+        ],
+        "hero": {
+          "x": 0,
+          "y": 1.06,
+          "z": -32
+        },
+        "timeAlive": 3.1999999999999984
+      }
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "12",
+      "assetPrefetchTotal": "16",
+      "assetPrefetchProgress": "12/16",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "24000000",
+      "assetPrefetchBytes": "25137160",
+      "assetPrefetchTownState": "partial",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "30",
+      "assetLoadingTotal": "30",
+      "assetLoadingProgress": "30/30",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "1.6",
+      "cssAspect": "1.6",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e6-glow-mesa",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "glow-mesa-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "2496",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "1739",
+      "heroSheet": "midlife",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "off",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotHiddenRelief": "3",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+      "terrain3dPilotContinuation": "panorama-owned-continuation",
+      "terrain3dPilotHorizonApron": "none",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "5",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207}]}",
+      "terrain3dPilotLandmarks": "5",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+    }
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "entry": {
+      "mountId": "isotope-cooling-rack",
+      "reason": "Additional declared landmark"
+    },
+    "declared": true,
+    "errors": [],
+    "frames": {
+      "peak": {
+        "t": 5449.199999809265,
+        "elapsed": 1.1077999999999997,
+        "pixels": 0,
+        "buffer": [
+          1280,
+          800
+        ],
+        "pixelSpace": "viewport pixels at DPR 1",
+        "position": [
+          -56,
+          27.1338943362236,
+          68.3
+        ],
+        "quaternion": [
+          -0.4221726101949351,
+          0,
+          0,
+          0.9065154644026738
+        ],
+        "focus": [
+          -56,
+          0.9338943362236023,
+          50
+        ],
+        "hero": {
+          "x": 0,
+          "y": 1.06,
+          "z": -32
+        },
+        "timeAlive": 3.166666666666665
+      },
+      "return": {
+        "t": 8343.89999961853,
+        "elapsed": null,
+        "pixels": 5389,
+        "buffer": [
+          1280,
+          800
+        ],
+        "pixelSpace": "viewport pixels at DPR 1",
+        "position": [
+          0,
+          27.259999999999998,
+          -13.7
+        ],
+        "quaternion": [
+          -0.42217261019493507,
+          0,
+          0,
+          0.9065154644026738
+        ],
+        "focus": [
+          0,
+          1.06,
+          -32
+        ],
+        "hero": {
+          "x": 0,
+          "y": 1.06,
+          "z": -32
+        },
+        "timeAlive": 6.066666666666655
+      }
+    },
+    "triggered": true,
+    "census": {
+      "method": "Unique-magenta depth-tested body at recorded live camera poses; fixed viewport-sized target; final frozen scene; at least 50 ms between samples.",
+      "samples": [
+        {
+          "t": 4360.099999904633,
+          "presentationSeconds": 0.058800000000000185,
+          "elapsed": 0.0075,
+          "checked": true,
+          "position": [
+            -0.01914795918367347,
+            27.25995688096245,
+            -13.67196191690962
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -0.01914795918367347,
+            1.0599568809624498,
+            -31.97196191690962
+          ],
+          "seconds": 0,
+          "pixels": 5342
+        },
+        {
+          "t": 4410.199999809265,
+          "presentationSeconds": 0.15040000000000053,
+          "elapsed": 0.09910000000000037,
+          "checked": true,
+          "position": [
+            -3.049341462530634,
+            27.253133228049762,
+            -9.234892858437288
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -3.049341462530634,
+            1.0531332280497623,
+            -27.53489285843729
+          ],
+          "seconds": 0.05009999990463257,
+          "pixels": 0
+        },
+        {
+          "t": 4467,
+          "presentationSeconds": 0.20880000000000018,
+          "elapsed": 0.1575,
+          "checked": true,
+          "position": [
+            -7.22925,
+            27.243720546966866,
+            -3.1143125000000005
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -7.22925,
+            1.0437205469668658,
+            -21.4143125
+          ],
+          "seconds": 0.10690000009536743,
+          "pixels": 0
+        },
+        {
+          "t": 4524.699999809265,
+          "presentationSeconds": 0.2664000000000006,
+          "elapsed": 0.21510000000000037,
+          "checked": true,
+          "position": [
+            -12.61360377110208,
+            27.231595591497012,
+            4.769919807685188
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -12.61360377110208,
+            1.0315955914970125,
+            -13.530080192314813
+          ],
+          "seconds": 0.16459999990463256,
+          "pixels": 0
+        },
+        {
+          "t": 4583.699999809265,
+          "presentationSeconds": 0.32570000000000077,
+          "elapsed": 0.27440000000000053,
+          "checked": true,
+          "position": [
+            -19.069087744000065,
+            27.217058572007723,
+            14.222592768000098
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -19.069087744000065,
+            1.0170585720077232,
+            -4.077407231999903
+          ],
+          "seconds": 0.22359999990463256,
+          "pixels": 0
+        },
+        {
+          "t": 4641,
+          "presentationSeconds": 0.3832000000000008,
+          "elapsed": 0.3319000000000006,
+          "checked": true,
+          "position": [
+            -25.829936241959256,
+            27.20183390615903,
+            24.12240664001177
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -25.829936241959256,
+            1.0018339061590302,
+            5.822406640011771
+          ],
+          "seconds": 0.2809000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 4692.39999961853,
+          "presentationSeconds": 0.43380000000000024,
+          "elapsed": 0.3825,
+          "checked": true,
+          "position": [
+            -31.888790816326534,
+            27.188190051197864,
+            32.99430083819243
+          ],
+          "quaternion": [
+            -0.422172610194935,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -31.888790816326534,
+            0.9881900511978652,
+            14.694300838192426
+          ],
+          "seconds": 0.33229999971389773,
+          "pixels": 0
+        },
+        {
+          "t": 4750,
+          "presentationSeconds": 0.4921000000000005,
+          "elapsed": 0.44080000000000025,
+          "checked": true,
+          "position": [
+            -38.65155483689799,
+            27.172961071808984,
+            42.89691958260063
+          ],
+          "quaternion": [
+            -0.422172610194935,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -38.65155483689799,
+            0.9729610718089847,
+            24.596919582600627
+          ],
+          "seconds": 0.3899000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 4808.199999809265,
+          "presentationSeconds": 0.550500000000001,
+          "elapsed": 0.49920000000000087,
+          "checked": true,
+          "position": [
+            -44.81949796310212,
+            27.15907156177211,
+            51.9285505888281
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -44.81949796310212,
+            0.959071561772109,
+            33.628550588828105
+          ],
+          "seconds": 0.44809999990463256,
+          "pixels": 0
+        },
+        {
+          "t": 4858.799999713898,
+          "presentationSeconds": 0.600500000000001,
+          "elapsed": 0.5492000000000009,
+          "checked": true,
+          "position": [
+            -49.32297682024497,
+            27.14893023694027,
+            58.52293034393013
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -49.32297682024497,
+            0.9489302369402702,
+            40.22293034393013
+          ],
+          "seconds": 0.49869999980926516,
+          "pixels": 0
+        },
+        {
+          "t": 4917.099999904633,
+          "presentationSeconds": 0.6591000000000006,
+          "elapsed": 0.6078000000000005,
+          "checked": true,
+          "position": [
+            -53.3413536156735,
+            27.13988130706364,
+            64.40698208009334
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -53.3413536156735,
+            0.9398813070636418,
+            46.106982080093346
+          ],
+          "seconds": 0.557,
+          "pixels": 0
+        },
+        {
+          "t": 4974.89999961853,
+          "presentationSeconds": 0.7168000000000003,
+          "elapsed": 0.6655000000000002,
+          "checked": true,
+          "position": [
+            -55.605322816326535,
+            27.134783104584756,
+            67.72207983819243
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -55.605322816326535,
+            0.9347831045847548,
+            49.42207983819243
+          ],
+          "seconds": 0.6147999997138978,
+          "pixels": 0
+        },
+        {
+          "t": 5033.199999809265,
+          "presentationSeconds": 0.7754000000000005,
+          "elapsed": 0.7241000000000004,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 0.6730999999046325,
+          "pixels": 0
+        },
+        {
+          "t": 5091.89999961853,
+          "presentationSeconds": 0.8337000000000006,
+          "elapsed": 0.7824000000000004,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 0.7317999997138978,
+          "pixels": 0
+        },
+        {
+          "t": 5150,
+          "presentationSeconds": 0.8922000000000005,
+          "elapsed": 0.8409000000000004,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 0.7899000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 5200,
+          "presentationSeconds": 0.9421000000000002,
+          "elapsed": 0.8908,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 0.8399000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 5258.299999713898,
+          "presentationSeconds": 0.9996000000000002,
+          "elapsed": 0.9483,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 0.8981999998092651,
+          "pixels": 0
+        },
+        {
+          "t": 5317,
+          "presentationSeconds": 1.0591000000000004,
+          "elapsed": 1.0077999999999998,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 0.9569000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 5375.099999904633,
+          "presentationSeconds": 1.1171000000000002,
+          "elapsed": 1.0657999999999996,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.015,
+          "pixels": 0
+        },
+        {
+          "t": 5451.199999809265,
+          "presentationSeconds": 1.1670000000000007,
+          "elapsed": 1.1157000000000001,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.0910999999046325,
+          "pixels": 0
+        },
+        {
+          "t": 5508.89999961853,
+          "presentationSeconds": 1.2507000000000004,
+          "elapsed": 1.1993999999999998,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.1487999997138978,
+          "pixels": 0
+        },
+        {
+          "t": 5558.89999961853,
+          "presentationSeconds": 1.3004000000000002,
+          "elapsed": 1.2490999999999997,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.1987999997138976,
+          "pixels": 0
+        },
+        {
+          "t": 5616.299999713898,
+          "presentationSeconds": 1.3582000000000003,
+          "elapsed": 1.3068999999999997,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.2561999998092652,
+          "pixels": 0
+        },
+        {
+          "t": 5666.5,
+          "presentationSeconds": 1.4084,
+          "elapsed": 1.3570999999999995,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.3064000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 5716.799999713898,
+          "presentationSeconds": 1.4587000000000003,
+          "elapsed": 1.4073999999999998,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.356699999809265,
+          "pixels": 0
+        },
+        {
+          "t": 5775.599999904633,
+          "presentationSeconds": 1.5174000000000003,
+          "elapsed": 1.4660999999999997,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.4155,
+          "pixels": 0
+        },
+        {
+          "t": 5825.599999904633,
+          "presentationSeconds": 1.5670000000000004,
+          "elapsed": 1.5156999999999998,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.4655,
+          "pixels": 0
+        },
+        {
+          "t": 5883.39999961853,
+          "presentationSeconds": 1.6254000000000004,
+          "elapsed": 1.5740999999999998,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.5232999997138976,
+          "pixels": 0
+        },
+        {
+          "t": 5933.5,
+          "presentationSeconds": 1.6755000000000007,
+          "elapsed": 1.6242,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.5734000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 5992.299999713898,
+          "presentationSeconds": 1.7337999999999998,
+          "elapsed": 1.6824999999999992,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.6321999998092651,
+          "pixels": 0
+        },
+        {
+          "t": 6049.099999904633,
+          "presentationSeconds": 1.7912000000000001,
+          "elapsed": 1.7398999999999996,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.689,
+          "pixels": 0
+        },
+        {
+          "t": 6100.199999809265,
+          "presentationSeconds": 1.8422999999999996,
+          "elapsed": 1.790999999999999,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 1.7400999999046325,
+          "pixels": 0
+        },
+        {
+          "t": 6158.39999961853,
+          "presentationSeconds": 1.9000000000000001,
+          "elapsed": 1.8486999999999996,
+          "checked": true,
+          "position": [
+            -55.22456385404083,
+            27.135640530686146,
+            67.16453992913121
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -55.22456385404083,
+            0.935640530686145,
+            48.86453992913121
+          ],
+          "seconds": 1.7982999997138978,
+          "pixels": 0
+        },
+        {
+          "t": 6208.39999961853,
+          "presentationSeconds": 1.9503999999999997,
+          "elapsed": 1.8990999999999991,
+          "checked": true,
+          "position": [
+            -52.950658537469444,
+            27.14076110817384,
+            63.8348928584374
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -52.950658537469444,
+            0.94076110817384,
+            45.5348928584374
+          ],
+          "seconds": 1.8482999997138978,
+          "pixels": 0
+        },
+        {
+          "t": 6259,
+          "presentationSeconds": 2.0003999999999995,
+          "elapsed": 1.9490999999999992,
+          "checked": true,
+          "position": [
+            -49.46033086400007,
+            27.14862093117491,
+            58.724055908000096
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -49.46033086400007,
+            0.9486209311749111,
+            40.4240559080001
+          ],
+          "seconds": 1.8989000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 6316.699999809265,
+          "presentationSeconds": 2.0587,
+          "elapsed": 2.007399999999999,
+          "checked": true,
+          "position": [
+            -44.16514717518376,
+            27.16054508570877,
+            50.970394077947645
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -44.16514717518376,
+            0.9605450857087706,
+            32.67039407794765
+          ],
+          "seconds": 1.9565999999046326,
+          "pixels": 0
+        },
+        {
+          "t": 6375.099999904633,
+          "presentationSeconds": 2.1170000000000004,
+          "elapsed": 2.0656999999999996,
+          "checked": true,
+          "position": [
+            -37.92038298546943,
+            27.17460758808861,
+            41.82627508586596
+          ],
+          "quaternion": [
+            -0.422172610194935,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -37.92038298546943,
+            0.97460758808861,
+            23.526275085865954
+          ],
+          "seconds": 2.015,
+          "pixels": 0
+        },
+        {
+          "t": 6425.699999809265,
+          "presentationSeconds": 2.1670000000000003,
+          "elapsed": 2.1156999999999995,
+          "checked": true,
+          "position": [
+            -32.10282331200006,
+            27.18770807423471,
+            33.30770556400009
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -32.10282331200006,
+            0.9877080742347111,
+            15.00770556400009
+          ],
+          "seconds": 2.0655999999046326,
+          "pixels": 0
+        },
+        {
+          "t": 6483.299999713898,
+          "presentationSeconds": 2.2253999999999996,
+          "elapsed": 2.174099999999999,
+          "checked": true,
+          "position": [
+            -25.112570619102186,
+            27.203449332374042,
+            23.071978406542488
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -25.112570619102186,
+            1.0034493323740439,
+            4.7719784065424875
+          ],
+          "seconds": 2.123199999809265,
+          "pixels": 0
+        },
+        {
+          "t": 6540.89999961853,
+          "presentationSeconds": 2.2828999999999997,
+          "elapsed": 2.231599999999999,
+          "checked": true,
+          "position": [
+            -18.38541665175523,
+            27.218598121952226,
+            13.22150295435587
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -18.38541665175523,
+            1.0185981219522282,
+            -5.078497045644131
+          ],
+          "seconds": 2.180799999713898,
+          "pixels": 0
+        },
+        {
+          "t": 6592.39999961853,
+          "presentationSeconds": 2.3336,
+          "elapsed": 2.2822999999999993,
+          "checked": true,
+          "position": [
+            -12.880142128000063,
+            27.230995377275253,
+            5.160208116000096
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -12.880142128000063,
+            1.0309953772752538,
+            -13.139791883999905
+          ],
+          "seconds": 2.2322999997138977,
+          "pixels": 0
+        },
+        {
+          "t": 6650,
+          "presentationSeconds": 2.3921,
+          "elapsed": 2.3407999999999993,
+          "checked": true,
+          "position": [
+            -7.372083367183728,
+            27.243398902385113,
+            -2.9051636409095387
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -7.372083367183728,
+            1.0433989023851136,
+            -21.20516364090954
+          ],
+          "seconds": 2.2899000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 6707.799999713898,
+          "presentationSeconds": 2.4499000000000004,
+          "elapsed": 2.3985999999999996,
+          "checked": true,
+          "position": [
+            -3.1848056346122737,
+            27.252828178061577,
+            -9.036534606460599
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -3.1848056346122737,
+            1.0528281780615787,
+            -27.3365346064606
+          ],
+          "seconds": 2.347699999809265,
+          "pixels": 0
+        },
+        {
+          "t": 6758.89999961853,
+          "presentationSeconds": 2.5004000000000004,
+          "elapsed": 2.4490999999999996,
+          "checked": true,
+          "position": [
+            -0.8452173946122574,
+            27.258096666061018,
+            -12.46236024360348
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -0.8452173946122574,
+            1.0580966660610192,
+            -30.76236024360348
+          ],
+          "seconds": 2.398799999713898,
+          "pixels": 3268
+        },
+        {
+          "t": 6816.699999809265,
+          "presentationSeconds": 2.5588,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.4565999999046326,
+          "pixels": 5389
+        },
+        {
+          "t": 6866.699999809265,
+          "presentationSeconds": 2.6088,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.5065999999046324,
+          "pixels": 5389
+        },
+        {
+          "t": 6916.799999713898,
+          "presentationSeconds": 2.6588,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.556699999809265,
+          "pixels": 5389
+        },
+        {
+          "t": 6975,
+          "presentationSeconds": 2.7171000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.6149000000953673,
+          "pixels": 5389
+        },
+        {
+          "t": 7032.699999809265,
+          "presentationSeconds": 2.774700000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.6725999999046324,
+          "pixels": 5389
+        },
+        {
+          "t": 7090.199999809265,
+          "presentationSeconds": 2.832200000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.7300999999046325,
+          "pixels": 5389
+        },
+        {
+          "t": 7141.5,
+          "presentationSeconds": 2.883500000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.7814000000953674,
+          "pixels": 5389
+        },
+        {
+          "t": 7201,
+          "presentationSeconds": 2.9424000000000006,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.8409000000953673,
+          "pixels": 5389
+        },
+        {
+          "t": 7259.099999904633,
+          "presentationSeconds": 3.000400000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.899,
+          "pixels": 5389
+        },
+        {
+          "t": 7316.299999713898,
+          "presentationSeconds": 3.0582000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.956199999809265,
+          "pixels": 5389
+        },
+        {
+          "t": 7373.39999961853,
+          "presentationSeconds": 3.115500000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.013299999713898,
+          "pixels": 5389
+        },
+        {
+          "t": 7424.699999809265,
+          "presentationSeconds": 3.1663,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.0645999999046327,
+          "pixels": 5389
+        },
+        {
+          "t": 7475.5,
+          "presentationSeconds": 3.2173,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.1154000000953674,
+          "pixels": 5389
+        },
+        {
+          "t": 7533.39999961853,
+          "presentationSeconds": 3.275500000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.1732999997138975,
+          "pixels": 5389
+        },
+        {
+          "t": 7590.099999904633,
+          "presentationSeconds": 3.3322000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.23,
+          "pixels": 5389
+        },
+        {
+          "t": 7641.5,
+          "presentationSeconds": 3.383200000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.2814000000953674,
+          "pixels": 5389
+        },
+        {
+          "t": 7692.699999809265,
+          "presentationSeconds": 3.434000000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.3325999999046325,
+          "pixels": 5389
+        },
+        {
+          "t": 7749.599999904633,
+          "presentationSeconds": 3.491500000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.3895,
+          "pixels": 5389
+        },
+        {
+          "t": 7808.699999809265,
+          "presentationSeconds": 3.5507000000000013,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.4485999999046326,
+          "pixels": 5389
+        },
+        {
+          "t": 7859.199999809265,
+          "presentationSeconds": 3.6007000000000016,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.4990999999046326,
+          "pixels": 5389
+        },
+        {
+          "t": 7911.099999904633,
+          "presentationSeconds": 3.6494000000000013,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.551,
+          "pixels": 5389
+        },
+        {
+          "t": 7967,
+          "presentationSeconds": 3.7090000000000014,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.6069000000953673,
+          "pixels": 5389
+        },
+        {
+          "t": 8025.099999904633,
+          "presentationSeconds": 3.7663000000000006,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.665,
+          "pixels": 5389
+        },
+        {
+          "t": 8075.099999904633,
+          "presentationSeconds": 3.8170000000000015,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.715,
+          "pixels": 5389
+        },
+        {
+          "t": 8126.099999904633,
+          "presentationSeconds": 3.867400000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.766,
+          "pixels": 5389
+        },
+        {
+          "t": 8181.89999961853,
+          "presentationSeconds": 3.9238,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.821799999713898,
+          "pixels": 5389
+        },
+        {
+          "t": 8231.89999961853,
+          "presentationSeconds": 3.9739000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.8717999997138977,
+          "pixels": 5389
+        },
+        {
+          "t": 8282.89999961853,
+          "presentationSeconds": 4.024800000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.922799999713898,
+          "pixels": 5389
+        },
+        {
+          "t": 8345.5,
+          "presentationSeconds": 4.065800000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.9854000000953675,
+          "pixels": 5389
+        }
+      ]
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "12",
+      "assetPrefetchTotal": "16",
+      "assetPrefetchProgress": "12/16",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "24000000",
+      "assetPrefetchBytes": "25137160",
+      "assetPrefetchTownState": "partial",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "30",
+      "assetLoadingTotal": "30",
+      "assetLoadingProgress": "30/30",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "1.6",
+      "cssAspect": "1.6",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e6-glow-mesa",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "glow-mesa-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "2496",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "1739",
+      "heroSheet": "midlife",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "off",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotHiddenRelief": "3",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+      "terrain3dPilotContinuation": "panorama-owned-continuation",
+      "terrain3dPilotHorizonApron": "none",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "5",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207}]}",
+      "terrain3dPilotLandmarks": "5",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+    },
+    "targeted": false
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "entry": {
+      "mountId": "isotope-cooling-rack",
+      "reason": "Additional declared landmark"
+    },
+    "declared": true,
+    "errors": [],
+    "frames": {
+      "rest": {
+        "t": 5059.800000190735,
+        "elapsed": null,
+        "pixels": 0,
+        "buffer": [
+          390,
+          844
+        ],
+        "pixelSpace": "viewport pixels at DPR 1",
+        "position": [
+          0,
+          27.259174442575002,
+          -13.7
+        ],
+        "quaternion": [
+          -0.4221654521333253,
+          0,
+          0,
+          0.9065187979435755
+        ],
+        "focus": [
+          0,
+          1.06,
+          -32
+        ],
+        "hero": {
+          "x": 0,
+          "y": 1.06,
+          "z": -32
+        },
+        "timeAlive": 2.7666666666666666
+      }
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "4",
+      "assetPrefetchTotal": "16",
+      "assetPrefetchProgress": "4/16",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "12000000",
+      "assetPrefetchBytes": "13099832",
+      "assetPrefetchTownState": "partial",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "30",
+      "assetLoadingTotal": "30",
+      "assetLoadingProgress": "30/30",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "0.46208530805687204",
+      "cssAspect": "0.46208530805687204",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e6-glow-mesa",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "glow-mesa-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "2496",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "1739",
+      "heroSheet": "midlife",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "off",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotHiddenRelief": "3",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+      "terrain3dPilotContinuation": "panorama-owned-continuation",
+      "terrain3dPilotHorizonApron": "none",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "5",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207}]}",
+      "terrain3dPilotLandmarks": "5",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+    }
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "entry": {
+      "mountId": "isotope-cooling-rack",
+      "reason": "Additional declared landmark"
+    },
+    "declared": true,
+    "errors": [],
+    "frames": {
+      "peak": {
+        "t": 5930,
+        "elapsed": 1.7014999999999996,
+        "pixels": 35096,
+        "buffer": [
+          390,
+          844
+        ],
+        "pixelSpace": "viewport pixels at DPR 1",
+        "position": [
+          28,
+          27.145197522640228,
+          -40.7
+        ],
+        "quaternion": [
+          -0.4221726101949351,
+          0,
+          0,
+          0.9065154644026738
+        ],
+        "focus": [
+          28,
+          0.9451975226402283,
+          -59
+        ],
+        "hero": {
+          "x": 0,
+          "y": 1.06,
+          "z": -32
+        },
+        "timeAlive": 3.8333333333333295
+      },
+      "return": {
+        "t": 8202.89999961853,
+        "elapsed": null,
+        "pixels": 0,
+        "buffer": [
+          390,
+          844
+        ],
+        "pixelSpace": "viewport pixels at DPR 1",
+        "position": [
+          0,
+          27.259999999999998,
+          -13.7
+        ],
+        "quaternion": [
+          -0.42217261019493507,
+          0,
+          0,
+          0.9065154644026738
+        ],
+        "focus": [
+          0,
+          1.06,
+          -32
+        ],
+        "hero": {
+          "x": 0,
+          "y": 1.06,
+          "z": -32
+        },
+        "timeAlive": 6.1666666666666545
+      }
+    },
+    "triggered": true,
+    "census": {
+      "method": "Unique-magenta depth-tested body at recorded live camera poses; fixed viewport-sized target; final frozen scene; at least 50 ms between samples.",
+      "samples": [
+        {
+          "t": 4191.799999713898,
+          "presentationSeconds": 0.059800000000000186,
+          "elapsed": 0.009899999999999637,
+          "checked": true,
+          "position": [
+            -0.03328659624489553,
+            27.25992504235153,
+            -13.651258912641403
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -0.03328659624489553,
+            1.05992504235153,
+            -31.951258912641403
+          ],
+          "seconds": 0,
+          "pixels": 0
+        },
+        {
+          "t": 4242.699999809265,
+          "presentationSeconds": 0.14220000000000074,
+          "elapsed": 0.09230000000000019,
+          "checked": true,
+          "position": [
+            -2.664138459755113,
+            27.254000661627504,
+            -9.798940112501441
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -2.664138459755113,
+            1.0540006616275064,
+            -28.09894011250144
+          ],
+          "seconds": 0.05090000009536743,
+          "pixels": 0
+        },
+        {
+          "t": 4292.799999713898,
+          "presentationSeconds": 0.19180000000000016,
+          "elapsed": 0.1418999999999996,
+          "checked": true,
+          "position": [
+            -5.9706603888979295,
+            27.246554748365618,
+            -4.957247287685174
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -5.9706603888979295,
+            1.0465547483656177,
+            -23.257247287685175
+          ],
+          "seconds": 0.101,
+          "pixels": 0
+        },
+        {
+          "t": 4344.299999713898,
+          "presentationSeconds": 0.24310000000000034,
+          "elapsed": 0.1931999999999998,
+          "checked": true,
+          "position": [
+            -10.442815487999978,
+            27.236483961092702,
+            1.5912655359999697
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -10.442815487999978,
+            1.0364839610927021,
+            -16.70873446400003
+          ],
+          "seconds": 0.1525,
+          "pixels": 0
+        },
+        {
+          "t": 4400.5,
+          "presentationSeconds": 0.2999000000000005,
+          "elapsed": 0.24999999999999997,
+          "checked": true,
+          "position": [
+            -16.3265306122449,
+            27.223234500356735,
+            10.206705539358602
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -16.3265306122449,
+            1.0232345003567354,
+            -8.093294460641399
+          ],
+          "seconds": 0.2087000002861023,
+          "pixels": 0
+        },
+        {
+          "t": 4452.299999713898,
+          "presentationSeconds": 0.3513000000000001,
+          "elapsed": 0.30139999999999956,
+          "checked": true,
+          "position": [
+            -22.20548285910199,
+            27.20999576508174,
+            18.815171329399345
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -22.20548285910199,
+            1.0099957650817415,
+            0.5151713293993438
+          ],
+          "seconds": 0.2605,
+          "pixels": 0
+        },
+        {
+          "t": 4508.89999961853,
+          "presentationSeconds": 0.40840000000000054,
+          "elapsed": 0.3585,
+          "checked": true,
+          "position": [
+            -29.019799469387753,
+            27.194650695093838,
+            28.79327779446064
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -29.019799469387753,
+            0.9946506950938376,
+            10.493277794460639
+          ],
+          "seconds": 0.31709999990463256,
+          "pixels": 0
+        },
+        {
+          "t": 4560.199999809265,
+          "presentationSeconds": 0.4598000000000002,
+          "elapsed": 0.40989999999999965,
+          "checked": true,
+          "position": [
+            -35.11782145338771,
+            27.18091863955785,
+            37.722524271032015
+          ],
+          "quaternion": [
+            -0.422172610194935,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -35.11782145338771,
+            0.9809186395578486,
+            19.42252427103201
+          ],
+          "seconds": 0.36840000009536744,
+          "pixels": 0
+        },
+        {
+          "t": 4618.599999904633,
+          "presentationSeconds": 0.5167000000000007,
+          "elapsed": 0.46680000000000016,
+          "checked": true,
+          "position": [
+            -41.495701671183696,
+            27.166556374944427,
+            47.06156316137613
+          ],
+          "quaternion": [
+            -0.422172610194935,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -41.495701671183696,
+            0.9665563749444287,
+            28.761563161376124
+          ],
+          "seconds": 0.4268000001907349,
+          "pixels": 0
+        },
+        {
+          "t": 4677.89999961853,
+          "presentationSeconds": 0.5768000000000002,
+          "elapsed": 0.5268999999999995,
+          "checked": true,
+          "position": [
+            -47.420378903183625,
+            27.15321467217653,
+            55.736983393947455
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -47.420378903183625,
+            0.9532146721765311,
+            37.43698339394746
+          ],
+          "seconds": 0.4860999999046326,
+          "pixels": 0
+        },
+        {
+          "t": 4735.199999809265,
+          "presentationSeconds": 0.6345000000000002,
+          "elapsed": 0.5845999999999995,
+          "checked": true,
+          "position": [
+            -51.93592890253058,
+            27.14304616449826,
+            62.349038750134056
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -51.93592890253058,
+            0.9430461644982604,
+            44.04903875013406
+          ],
+          "seconds": 0.5434000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 4792.699999809265,
+          "presentationSeconds": 0.6920000000000002,
+          "elapsed": 0.6420999999999994,
+          "checked": true,
+          "position": [
+            -54.91398335967346,
+            27.136339922818255,
+            66.70976134809327
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -54.91398335967346,
+            0.9363399228182557,
+            48.40976134809327
+          ],
+          "seconds": 0.6009000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 4843,
+          "presentationSeconds": 0.7424000000000006,
+          "elapsed": 0.6924999999999999,
+          "checked": true,
+          "position": [
+            -55.98085204081633,
+            27.13393745526115,
+            68.27196191690962
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -55.98085204081633,
+            0.9339374552611527,
+            49.97196191690962
+          ],
+          "seconds": 0.6512000002861023,
+          "pixels": 0
+        },
+        {
+          "t": 4900.799999713898,
+          "presentationSeconds": 0.8003000000000002,
+          "elapsed": 0.7503999999999995,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 0.709,
+          "pixels": 0
+        },
+        {
+          "t": 4959.199999809265,
+          "presentationSeconds": 0.8584999999999999,
+          "elapsed": 0.8085999999999992,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 0.7674000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 5011.199999809265,
+          "presentationSeconds": 0.9101000000000004,
+          "elapsed": 0.8601999999999996,
+          "checked": true,
+          "position": [
+            -56,
+            27.1338943362236,
+            68.3
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -56,
+            0.9338943362236023,
+            50
+          ],
+          "seconds": 0.8194000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 5067.5,
+          "presentationSeconds": 0.9667000000000007,
+          "elapsed": 0.9168,
+          "checked": true,
+          "position": [
+            -55.857170432000004,
+            27.13391355561923,
+            68.114661632
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -55.857170432000004,
+            0.9339135556192322,
+            49.814661631999996
+          ],
+          "seconds": 0.8757000002861023,
+          "pixels": 0
+        },
+        {
+          "t": 5118.599999904633,
+          "presentationSeconds": 1.0174999999999998,
+          "elapsed": 0.9675999999999992,
+          "checked": true,
+          "position": [
+            -53.80114340048985,
+            27.13419021820036,
+            65.44672179349277
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -53.80114340048985,
+            0.9341902182003605,
+            47.14672179349277
+          ],
+          "seconds": 0.9268000001907348,
+          "pixels": 0
+        },
+        {
+          "t": 5168.699999809265,
+          "presentationSeconds": 1.0682000000000005,
+          "elapsed": 1.0182999999999998,
+          "checked": true,
+          "position": [
+            -49.61353191200003,
+            27.13475371050149,
+            60.01279736200003
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -49.61353191200003,
+            0.9347537105014891,
+            41.71279736200003
+          ],
+          "seconds": 0.9769000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 5218.699999809265,
+          "presentationSeconds": 1.1182000000000005,
+          "elapsed": 1.0682999999999998,
+          "checked": true,
+          "position": [
+            -43.76780954465309,
+            27.135540321092655,
+            52.427276671037944
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -43.76780954465309,
+            0.9355403210926554,
+            34.12727667103795
+          ],
+          "seconds": 1.0269000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 5268.699999809265,
+          "presentationSeconds": 1.1682000000000001,
+          "elapsed": 1.1182999999999994,
+          "checked": true,
+          "position": [
+            -36.587148401796014,
+            27.136506563372325,
+            43.10951399756864
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -36.587148401796014,
+            0.9365065633723261,
+            24.809513997568644
+          ],
+          "seconds": 1.0769000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 5319.199999809265,
+          "presentationSeconds": 1.2184,
+          "elapsed": 1.1684999999999992,
+          "checked": true,
+          "position": [
+            -28.404852224489947,
+            27.137607587408137,
+            32.49201062463577
+          ],
+          "quaternion": [
+            -0.422172610194935,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -28.404852224489947,
+            0.9376075874081372,
+            14.192010624635763
+          ],
+          "seconds": 1.1274000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 5376.299999713898,
+          "presentationSeconds": 1.2757999999999996,
+          "elapsed": 1.2258999999999989,
+          "checked": true,
+          "position": [
+            -18.331144071347154,
+            27.13896312313625,
+            19.420175044962374
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -18.331144071347154,
+            0.9389631231362522,
+            1.120175044962373
+          ],
+          "seconds": 1.1845,
+          "pixels": 0
+        },
+        {
+          "t": 5426.599999904633,
+          "presentationSeconds": 1.3259999999999996,
+          "elapsed": 1.276099999999999,
+          "checked": true,
+          "position": [
+            -9.310708366204288,
+            27.14017692868785,
+            7.715085856146043
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            -9.310708366204288,
+            0.9401769286878524,
+            -10.584914143853958
+          ],
+          "seconds": 1.2348000001907349,
+          "pixels": 0
+        },
+        {
+          "t": 5486.099999904633,
+          "presentationSeconds": 1.3851,
+          "elapsed": 1.3351999999999993,
+          "checked": true,
+          "position": [
+            1.0330758164896565,
+            27.14156880631726,
+            -5.707205523778239
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            1.0330758164896565,
+            0.9415688063172611,
+            -24.00720552377824
+          ],
+          "seconds": 1.2943000001907348,
+          "pixels": 0
+        },
+        {
+          "t": 5546.5,
+          "presentationSeconds": 1.4431,
+          "elapsed": 1.3931999999999993,
+          "checked": true,
+          "position": [
+            10.337717436081533,
+            27.142820855112095,
+            -17.7810857206296
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            10.337717436081533,
+            0.9428208551120962,
+            -36.0810857206296
+          ],
+          "seconds": 1.3547000002861023,
+          "pixels": 0
+        },
+        {
+          "t": 5602,
+          "presentationSeconds": 1.5014,
+          "elapsed": 1.4514999999999993,
+          "checked": true,
+          "position": [
+            18.262806510204,
+            27.143887268911776,
+            -28.06483225728851
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            18.262806510204,
+            0.9438872689117769,
+            -46.36483225728851
+          ],
+          "seconds": 1.4102000002861024,
+          "pixels": 1585
+        },
+        {
+          "t": 5660.699999809265,
+          "presentationSeconds": 1.5601,
+          "elapsed": 1.5101999999999993,
+          "checked": true,
+          "position": [
+            24.20746553077545,
+            27.14468719259145,
+            -35.77873503398243
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            24.20746553077545,
+            0.944687192591453,
+            -54.078735033982426
+          ],
+          "seconds": 1.4689000000953674,
+          "pixels": 24421
+        },
+        {
+          "t": 5719.39999961853,
+          "presentationSeconds": 1.6184000000000003,
+          "elapsed": 1.5684999999999996,
+          "checked": true,
+          "position": [
+            27.505008999999987,
+            27.14513091578847,
+            -40.05769024999998
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            27.505008999999987,
+            0.9451309157884717,
+            -58.357690249999976
+          ],
+          "seconds": 1.5275999999046326,
+          "pixels": 34248
+        },
+        {
+          "t": 5776,
+          "presentationSeconds": 1.6754000000000002,
+          "elapsed": 1.6254999999999995,
+          "checked": true,
+          "position": [
+            28,
+            27.145197522640228,
+            -40.7
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            28,
+            0.9451975226402283,
+            -59
+          ],
+          "seconds": 1.5842000002861023,
+          "pixels": 35096
+        },
+        {
+          "t": 5827.299999713898,
+          "presentationSeconds": 1.7268,
+          "elapsed": 1.6768999999999992,
+          "checked": true,
+          "position": [
+            28,
+            27.145197522640228,
+            -40.7
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            28,
+            0.9451975226402283,
+            -59
+          ],
+          "seconds": 1.6355,
+          "pixels": 35096
+        },
+        {
+          "t": 5931.199999809265,
+          "presentationSeconds": 1.7599000000000002,
+          "elapsed": 1.7099999999999995,
+          "checked": true,
+          "position": [
+            28,
+            27.145197522640228,
+            -40.7
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            28,
+            0.9451975226402283,
+            -59
+          ],
+          "seconds": 1.7394000000953673,
+          "pixels": 35096
+        },
+        {
+          "t": 5985.699999809265,
+          "presentationSeconds": 1.8603000000000012,
+          "elapsed": 1.8104000000000005,
+          "checked": true,
+          "position": [
+            27.981641936979592,
+            27.14527279232288,
+            -40.68229758208746
+          ],
+          "quaternion": [
+            -0.422172610194935,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            27.981641936979592,
+            0.9452727923228808,
+            -58.98229758208746
+          ],
+          "seconds": 1.7939000000953675,
+          "pixels": 35078
+        },
+        {
+          "t": 6044.199999809265,
+          "presentationSeconds": 1.9186000000000012,
+          "elapsed": 1.8687000000000005,
+          "checked": true,
+          "position": [
+            27.24384786987754,
+            27.148297813275903,
+            -39.970853303096206
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            27.24384786987754,
+            0.9482978132759042,
+            -58.2708533030962
+          ],
+          "seconds": 1.8524000000953675,
+          "pixels": 34125
+        },
+        {
+          "t": 6102.099999904633,
+          "presentationSeconds": 1.9769000000000003,
+          "elapsed": 1.9269999999999996,
+          "checked": true,
+          "position": [
+            25.56945844897961,
+            27.155162958046763,
+            -38.35626350437319
+          ],
+          "quaternion": [
+            -0.422172610194935,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            25.56945844897961,
+            0.9551629580467641,
+            -56.65626350437319
+          ],
+          "seconds": 1.9103000001907349,
+          "pixels": 32167
+        },
+        {
+          "t": 6152.199999809265,
+          "presentationSeconds": 2.0271000000000012,
+          "elapsed": 1.9772000000000003,
+          "checked": true,
+          "position": [
+            23.52558688130611,
+            27.163543012310125,
+            -36.38538734983089
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            23.52558688130611,
+            0.9635430123101254,
+            -54.68538734983089
+          ],
+          "seconds": 1.9604000000953674,
+          "pixels": 21770
+        },
+        {
+          "t": 6209.799999713898,
+          "presentationSeconds": 2.0845000000000007,
+          "elapsed": 2.0345999999999997,
+          "checked": true,
+          "position": [
+            20.673093834448995,
+            27.17523848618265,
+            -33.63476905464725
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            20.673093834448995,
+            0.9752384861826512,
+            -51.93476905464725
+          ],
+          "seconds": 2.018,
+          "pixels": 9044
+        },
+        {
+          "t": 6269.199999809265,
+          "presentationSeconds": 2.1439,
+          "elapsed": 2.093999999999999,
+          "checked": true,
+          "position": [
+            17.331328000000063,
+            27.188940021773757,
+            -30.41235200000006
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            17.331328000000063,
+            0.9889400217737577,
+            -48.71235200000006
+          ],
+          "seconds": 2.0774000000953676,
+          "pixels": 0
+        },
+        {
+          "t": 6327.5,
+          "presentationSeconds": 2.2022000000000004,
+          "elapsed": 2.1522999999999994,
+          "checked": true,
+          "position": [
+            13.862001986449014,
+            27.203164565385343,
+            -27.06693048693298
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            13.862001986449014,
+            1.003164565385342,
+            -45.36693048693298
+          ],
+          "seconds": 2.135700000286102,
+          "pixels": 0
+        },
+        {
+          "t": 6377.699999809265,
+          "presentationSeconds": 2.2520000000000002,
+          "elapsed": 2.2020999999999993,
+          "checked": true,
+          "position": [
+            10.897089103836777,
+            27.21532097053105,
+            -24.20790735012832
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            10.897089103836777,
+            1.0153209705310486,
+            -42.50790735012832
+          ],
+          "seconds": 2.1859000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 6434.299999713898,
+          "presentationSeconds": 2.309100000000001,
+          "elapsed": 2.2592,
+          "checked": true,
+          "position": [
+            7.660599296000008,
+            27.228590865098525,
+            -21.08700646400001
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            7.660599296000008,
+            1.0285908650985243,
+            -39.38700646400001
+          ],
+          "seconds": 2.2425,
+          "pixels": 0
+        },
+        {
+          "t": 6484.699999809265,
+          "presentationSeconds": 2.359600000000001,
+          "elapsed": 2.3097,
+          "checked": true,
+          "position": [
+            5.082980109877555,
+            27.239159331821984,
+            -18.601445105953356
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            5.082980109877555,
+            1.0391593318219863,
+            -36.90144510595336
+          ],
+          "seconds": 2.2929000000953677,
+          "pixels": 0
+        },
+        {
+          "t": 6535.699999809265,
+          "presentationSeconds": 2.410600000000001,
+          "elapsed": 2.3607,
+          "checked": true,
+          "position": [
+            2.8851704559999973,
+            27.248170545858784,
+            -16.482128653999997
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            2.8851704559999973,
+            1.0481705458587849,
+            -34.782128654
+          ],
+          "seconds": 2.3439000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 6592.299999713898,
+          "presentationSeconds": 2.4671000000000007,
+          "elapsed": 2.4172,
+          "checked": true,
+          "position": [
+            1.0826070935510232,
+            27.255561215130466,
+            -14.743942554495629
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            1.0826070935510232,
+            1.0555612151304672,
+            -33.04394255449563
+          ],
+          "seconds": 2.4005,
+          "pixels": 0
+        },
+        {
+          "t": 6644.199999809265,
+          "presentationSeconds": 2.5186000000000006,
+          "elapsed": 2.4686999999999997,
+          "checked": true,
+          "position": [
+            0.1629404413061235,
+            27.25933192977414,
+            -13.857121139830905
+          ],
+          "quaternion": [
+            -0.4221726101949351,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0.1629404413061235,
+            1.0593319297741415,
+            -32.157121139830906
+          ],
+          "seconds": 2.4524000000953676,
+          "pixels": 0
+        },
+        {
+          "t": 6702,
+          "presentationSeconds": 2.5769,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.5102000002861025,
+          "pixels": 0
+        },
+        {
+          "t": 6752.199999809265,
+          "presentationSeconds": 2.626600000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.5604000000953673,
+          "pixels": 0
+        },
+        {
+          "t": 6809,
+          "presentationSeconds": 2.6838000000000015,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.6172000002861022,
+          "pixels": 0
+        },
+        {
+          "t": 6859.099999904633,
+          "presentationSeconds": 2.7339000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.667300000190735,
+          "pixels": 0
+        },
+        {
+          "t": 6910.39999961853,
+          "presentationSeconds": 2.784700000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.7185999999046326,
+          "pixels": 0
+        },
+        {
+          "t": 6968.599999904633,
+          "presentationSeconds": 2.843400000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.7768000001907347,
+          "pixels": 0
+        },
+        {
+          "t": 7027.199999809265,
+          "presentationSeconds": 2.9021000000000012,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.8354000000953676,
+          "pixels": 0
+        },
+        {
+          "t": 7085.299999713898,
+          "presentationSeconds": 2.959800000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.8935,
+          "pixels": 0
+        },
+        {
+          "t": 7135.5,
+          "presentationSeconds": 3.010300000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 2.9437000002861025,
+          "pixels": 0
+        },
+        {
+          "t": 7192.5,
+          "presentationSeconds": 3.0674,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.0007000002861024,
+          "pixels": 0
+        },
+        {
+          "t": 7243.5,
+          "presentationSeconds": 3.118100000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.051700000286102,
+          "pixels": 0
+        },
+        {
+          "t": 7293.799999713898,
+          "presentationSeconds": 3.1685000000000008,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.102,
+          "pixels": 0
+        },
+        {
+          "t": 7352.199999809265,
+          "presentationSeconds": 3.226500000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.1604000000953674,
+          "pixels": 0
+        },
+        {
+          "t": 7410.599999904633,
+          "presentationSeconds": 3.285200000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.218800000190735,
+          "pixels": 0
+        },
+        {
+          "t": 7468.699999809265,
+          "presentationSeconds": 3.343500000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.2769000000953676,
+          "pixels": 0
+        },
+        {
+          "t": 7518.89999961853,
+          "presentationSeconds": 3.3936000000000015,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.3270999999046325,
+          "pixels": 0
+        },
+        {
+          "t": 7577.699999809265,
+          "presentationSeconds": 3.451900000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.3859000000953676,
+          "pixels": 0
+        },
+        {
+          "t": 7635,
+          "presentationSeconds": 3.5097000000000014,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.4432000002861023,
+          "pixels": 0
+        },
+        {
+          "t": 7693.699999809265,
+          "presentationSeconds": 3.5685000000000016,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.5019000000953673,
+          "pixels": 0
+        },
+        {
+          "t": 7743.799999713898,
+          "presentationSeconds": 3.617900000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.552,
+          "pixels": 0
+        },
+        {
+          "t": 7802.5,
+          "presentationSeconds": 3.677300000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.6107000002861023,
+          "pixels": 0
+        },
+        {
+          "t": 7860.599999904633,
+          "presentationSeconds": 3.735300000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.668800000190735,
+          "pixels": 0
+        },
+        {
+          "t": 7911.199999809265,
+          "presentationSeconds": 3.7852000000000015,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.7194000000953675,
+          "pixels": 0
+        },
+        {
+          "t": 7968.699999809265,
+          "presentationSeconds": 3.843600000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.7769000000953676,
+          "pixels": 0
+        },
+        {
+          "t": 8025.799999713898,
+          "presentationSeconds": 3.900500000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.834,
+          "pixels": 0
+        },
+        {
+          "t": 8076.299999713898,
+          "presentationSeconds": 3.9511000000000025,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.8845,
+          "pixels": 0
+        },
+        {
+          "t": 8127.099999904633,
+          "presentationSeconds": 4.001900000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.935300000190735,
+          "pixels": 0
+        },
+        {
+          "t": 8177.299999713898,
+          "presentationSeconds": 4.051800000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            27.259999999999998,
+            -13.7
+          ],
+          "quaternion": [
+            -0.42217261019493507,
+            0,
+            0,
+            0.9065154644026738
+          ],
+          "focus": [
+            0,
+            1.06,
+            -32
+          ],
+          "seconds": 3.9855,
+          "pixels": 0
+        }
+      ]
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "4",
+      "assetPrefetchTotal": "16",
+      "assetPrefetchProgress": "4/16",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "12000000",
+      "assetPrefetchBytes": "13099832",
+      "assetPrefetchTownState": "partial",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "30",
+      "assetLoadingTotal": "30",
+      "assetLoadingProgress": "30/30",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "0.46208530805687204",
+      "cssAspect": "0.46208530805687204",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e6-glow-mesa",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "glow-mesa-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "2496",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "1739",
+      "heroSheet": "midlife",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "off",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotHiddenRelief": "3",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|SpringPonds",
+      "terrain3dPilotContinuation": "panorama-owned-continuation",
+      "terrain3dPilotHorizonApron": "none",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "5",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207}]}",
+      "terrain3dPilotLandmarks": "5",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+    },
+    "targeted": true
+  }
+]

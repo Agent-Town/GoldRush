@@ -1,0 +1,44 @@
+{
+  "tag": "rva1",
+  "branch": "feat/river-assay-1",
+  "port": 5403,
+  "mergeMessage": "drain: merge feat/river-assay-1 — river-assay-1 — a River reel replays in its ceremony world and verifies to its completed score (fresh diagonal-walk River reels VERIFIED by the county's own worker and ranked first; tampers of gold, time and pan tick rejected); the harvest seams follow the run's seed with live seeds keeping the constant layout (form b, no live layout moves); a live solo run moves by the rounded axes its reel records (F-RVA1-1, the general fix: no diagonal-movement reel could verify before); the headless arm refuses e10-river; RIVER_STANDING_POSTS_ENABLED flipped on (one standing POST at the pan, stored pending, verified); every existing verified reel and 83 null floors unchanged (owner '2 - sure, lets do that' 2026-09-26, F-PP6-2's county-board half; Opus 5.5 implementer at max effort, the last one)",
+  "hash": "pin",
+  "pinCause": "river-assay-1: a River reel replays in its ceremony world and verifies to its completed score; the harvest seams follow the run's seed (live seeds keep the constant layout); a live solo run moves by the rounded axes its reel records (F-RVA1-1); the headless arm refuses e10-river. No contract, collision, floor or table moved (3 of 662 inputs differ: scripts/assay-replay-agent.mjs, src/game/Game.ts, src/main.ts; seven existing replays byte-identical; null floors 83 of 83).",
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/charter-press-totality.spec.ts",
+      "e2e/live-seed-rotation.spec.ts",
+      "e2e/river-ending-score.spec.ts"
+    ],
+    "guards": [
+      "scripts/river-assay.test.mjs"
+    ]
+  },
+  "cure": "scripts/attended/landings/rva1-cure.sh",
+  "review": {
+    "path": "reviews/river-assay-1.md",
+    "title": "Drain review: `river-assay-1`, the assay verifies a River reel, the axes drift that kept diagonal reels from verifying is fixed, the River's county post is on (Opus 5.5 implementer at max effort; F-RES1-1, F-RES1-6, F-RVA1-1)",
+    "body": "scripts/attended/landings/rva1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "river-assay-1.md",
+    "rowKey": "RIVER ASSAY 1 LANDED",
+    "rowEmoji": "🔬",
+    "rowText": "The assay replays an `e10-river` reel in the ceremony world (the lever's stamped no-wave Claim, `scripts/assay-replay.mjs` and the watch path in `src/main.ts`), reads the ceremony's completed score as the verdict's outcome (`timeAlive` at a 1e-6 tolerance against the microsecond print), and the headless arm refuses `e10-river` by name (the worker's `isAgentTape` already sends River reels to the browser arm). Fresh diagonal-walk River reels VERIFY through the county's own worker and rank first on the Claim Ledger (`eef28ae4` desktop, `10904fbe` phone; the spec's `ef71da37`/`027f7f02` through the real door handlers); tampers rejected (gold, timeAlive, pan tick). The harvest seams follow the run's seed with live seeds keeping the constant layout (form (b), attended ruling: no live layout moves; the literal form moved every unpinned Claim's seams and reddened onboarding). F-RVA1-1 fixed in its general form: a live solo run moves by the rounded axes its reel records (`recordedIntents`); before, ANY browser reel with a diagonal tick (joysticks included) could never verify, since the reel's birth on 2026-07-31. `RIVER_STANDING_POSTS_ENABLED = true` in its own final commit: one standing POST at the pan carrying the reel, stored pending, verified by the worker; still one after a second pan, a reload, a re-pull. Unchanged: heat-15 probe, r1 and r2 VERIFIED byte-identical; the era-6 agent tape and the heat-15 probe identical through the headless arm; seven replays byte-identical base against final; null floors 83 of 83. The four pre-fix River reels stay rejected (their raw axes were never recorded). Spec 6/6 both projects; adjacents 54/54; `river-assay.test.mjs` 3/3 (spliced after the runner); the worker's tests 21/21; test:stats rc 0; node-guards 1028 of 1040 with every red attributed on a base control. Engine hash PINNED {PIN}. F-RVA1-6 (new, pre-existing, every contract): a pause press is recorded as `set_pause paused:true` and the resume never, so a replay stops at the pause and ANY paused human standing is unassayable today (the seed-run human standing of 2026-08-20 stops at tick 274 on base and tip); a paused River run would rank while pending then drop, like every other contract; the corrective `tape-pause-fix-1` is authored for Astra and queues behind this landing. F-RVA1-2/-3 noted; F-RES1-7 still open. Deployed (the droplet's assay worker restarts with the new instrument). `reviews/river-assay-1.md`.",
+    "statusPhrase": "the county's assay verifies a River reel and any diagonal-walk reel at last; the River's standing posts at the pan",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh rva1; the last Opus 5.5 implementer)"
+  },
+  "deploy": true,
+  "preview": false,
+  "evidenceDir": "artifacts/river-assay-1"
+}

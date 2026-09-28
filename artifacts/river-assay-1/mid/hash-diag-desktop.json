@@ -1,0 +1,314 @@
+{
+ "project": "desktop",
+ "errors": [],
+ "live": {
+  "seams": [
+   {
+    "id": "gold-seam-1",
+    "x": -9,
+    "z": 6.7
+   },
+   {
+    "id": "gold-seam-2",
+    "x": -1.5,
+    "z": -6.4
+   }
+  ],
+  "live-at-pan": {
+   "log": {
+    "probes": [
+     {
+      "t": 0,
+      "x": 0,
+      "z": 12
+     },
+     {
+      "t": 30,
+      "x": 0,
+      "z": 12
+     },
+     {
+      "t": 60,
+      "x": -2.114,
+      "z": 9.886
+     },
+     {
+      "t": 90,
+      "x": -6.822,
+      "z": 6.768
+     },
+     {
+      "t": 120,
+      "x": -8.151,
+      "z": 6.767
+     }
+    ],
+    "kills": 0,
+    "gold": 5,
+    "wave": 0,
+    "economy": {
+     "panned": 5,
+     "sluiced": 0,
+     "granted": 0,
+     "stolen": 0,
+     "reclaimed": 0,
+     "pannedByProspector": 0,
+     "sluicedByProspector": 0,
+     "reclaimedByProspector": 0,
+     "spent": 0,
+     "baseValue": 0,
+     "buildingsBuilt": 0,
+     "beaconsBuilt": 0,
+     "repairSpent": 0,
+     "repairs": 0
+    }
+   },
+   "timeAlive": 4.799999999999993,
+   "simTick": 144,
+   "events": [
+    {
+     "id": "00506596-e0bc-4ec3-b8b2-ed15eb6f6270",
+     "at": 0,
+     "type": "palisade_kit_granted",
+     "amount": 8
+    },
+    {
+     "id": "9d9cd19e-8af8-4708-8d41-c8920aa04fe3",
+     "at": 4.799999999999993,
+     "type": "gold_panned",
+     "nodeId": "gold-seam-1",
+     "amount": 5
+    }
+   ]
+  }
+ },
+ "replay": {
+  "replay-at-pan": {
+   "log": {
+    "probes": [
+     {
+      "t": 0,
+      "x": 0,
+      "z": 12
+     },
+     {
+      "t": 30,
+      "x": 0,
+      "z": 12
+     },
+     {
+      "t": 60,
+      "x": -2.113,
+      "z": 9.887
+     },
+     {
+      "t": 90,
+      "x": -6.821,
+      "z": 6.769
+     },
+     {
+      "t": 120,
+      "x": -8.15,
+      "z": 6.768
+     }
+    ],
+    "kills": 0,
+    "gold": 5,
+    "wave": 0,
+    "economy": {
+     "panned": 5,
+     "sluiced": 0,
+     "granted": 0,
+     "stolen": 0,
+     "reclaimed": 0,
+     "pannedByProspector": 0,
+     "sluicedByProspector": 0,
+     "reclaimedByProspector": 0,
+     "spent": 0,
+     "baseValue": 0,
+     "buildingsBuilt": 0,
+     "beaconsBuilt": 0,
+     "repairSpent": 0,
+     "repairs": 0
+    }
+   },
+   "timeAlive": 4.799999999999993,
+   "simTick": 144,
+   "sessionTick": 144,
+   "events": [
+    {
+     "id": "4329ef42-b07a-44ef-a93b-396913b512e1",
+     "at": 0,
+     "type": "palisade_kit_granted",
+     "amount": 8
+    },
+    {
+     "id": "506786b3-c1f5-413b-85f4-33941f01aa50",
+     "at": 4.799999999999993,
+     "type": "gold_panned",
+     "nodeId": "gold-seam-1",
+     "amount": 5
+    }
+   ]
+  },
+  "replay-end": {
+   "log": {
+    "probes": [
+     {
+      "t": 0,
+      "x": 0,
+      "z": 12
+     },
+     {
+      "t": 30,
+      "x": 0,
+      "z": 12
+     },
+     {
+      "t": 60,
+      "x": -2.113,
+      "z": 9.887
+     },
+     {
+      "t": 90,
+      "x": -6.821,
+      "z": 6.769
+     },
+     {
+      "t": 120,
+      "x": -8.15,
+      "z": 6.768
+     }
+    ],
+    "kills": 0,
+    "gold": 5,
+    "wave": 0,
+    "economy": {
+     "panned": 5,
+     "sluiced": 0,
+     "granted": 0,
+     "stolen": 0,
+     "reclaimed": 0,
+     "pannedByProspector": 0,
+     "sluicedByProspector": 0,
+     "reclaimedByProspector": 0,
+     "spent": 0,
+     "baseValue": 0,
+     "buildingsBuilt": 0,
+     "beaconsBuilt": 0,
+     "repairSpent": 0,
+     "repairs": 0
+    }
+   },
+   "hash": "fnv1a32:012985a8",
+   "timeAlive": 4.799999999999993,
+   "simTick": 144,
+   "events": [
+    {
+     "id": "4329ef42-b07a-44ef-a93b-396913b512e1",
+     "at": 0,
+     "type": "palisade_kit_granted",
+     "amount": 8
+    },
+    {
+     "id": "506786b3-c1f5-413b-85f4-33941f01aa50",
+     "at": 4.799999999999993,
+     "type": "gold_panned",
+     "nodeId": "gold-seam-1",
+     "amount": 5
+    }
+   ]
+  },
+  "statusHash": "fnv1a32:012985a8"
+ },
+ "reel": {
+  "version": 2,
+  "id": "5ae2ffed-d6db-4ac4-a641-443956741189",
+  "createdAt": 1790448046851,
+  "kept": false,
+  "contract": "e10-river",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+   "buildId": "dev",
+   "viewVersion": 4,
+   "engineHash": "7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551",
+   "era": 6
+  },
+  "runStart": {
+   "meta": {
+    "version": 1,
+    "tracks": {
+     "territory": 40,
+     "science": 999,
+     "hero": 40,
+     "agent": 40
+    }
+   },
+   "research": {
+    "version": 1,
+    "epochId": "epoch-1-frontier",
+    "metaScienceCursor": 999,
+    "progress": {
+     "version": 1,
+     "tracks": {
+      "territory": 40,
+      "science": 999,
+      "hero": 40,
+      "agent": 40
+     }
+    },
+    "taken": [],
+    "proposalSalt": 0,
+    "pinnedTarget": null,
+    "unlocks": {}
+   }
+  },
+  "inputLog": {
+   "version": 1,
+   "name": "5ae2ffed-d6db-4ac4-a641-443956741189",
+   "contractId": "e10-river",
+   "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+   "difficultyPreset": "trail",
+   "stepSeconds": 0.03333333333333333,
+   "start": {
+    "x": 0,
+    "z": 12
+   },
+   "durationTicks": 144,
+   "entries": [
+    {
+     "t": 44,
+     "mx": -0.707,
+     "my": -0.707,
+     "a": []
+    },
+    {
+     "t": 81,
+     "mx": -1,
+     "my": 0,
+     "a": []
+    },
+    {
+     "t": 96,
+     "mx": 0,
+     "my": 0,
+     "a": []
+    }
+   ],
+   "truncated": null,
+   "primarySlot": 0,
+   "streams": [],
+   "playbookUses": []
+  },
+  "eventLogHash": "fnv1a32:0f3366d8",
+  "outcome": {
+   "reason": "secured",
+   "secured": true,
+   "waves": 0,
+   "timeAlive": 4.799999999999993,
+   "gold": 5
+  }
+ }
+}

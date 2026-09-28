@@ -1,0 +1,26 @@
+[
+  {
+    "label": "route-census",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e10-river-route-census",
+      "e2e/ceremony-framework.spec.ts",
+      "e2e/e10-static-boss.spec.ts",
+      "e2e/preview-unlock-all.spec.ts",
+      "e2e/er01-e10-census.spec.ts",
+      "--grep",
+      "T10 THE CHARTER PRESS|recession hands|one control on the board|e10-river census"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 45.38,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-river-route-census.log"
+  }
+]

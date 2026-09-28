@@ -1,0 +1,203 @@
+(node:41515) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 18 tests using 1 worker
+
+
+(node:41572) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:41572) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/18] [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "fogFar": 42,
+    -   "fogNear": 18,
+    +   "fogFar": 58,
+    +   "fogNear": 34,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      337 |     darkness: 1,
+      338 |   });
+    > 339 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({
+          |                                                                                             ^
+      340 |     fogNear: 18,
+      341 |     fogFar: 42,
+      342 |   });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:339:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+
+
+(node:41847) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:41847) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[2/18] [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[3/18] [desktop-chrome] › e2e/e1-night-shift.spec.ts:413:1 › lantern coverage is necessary for threat visibility
+[4/18] [desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+[5/18] [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      169 |
+      170 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 171 |   await page.waitForFunction(
+          |              ^
+      172 |     ([key, wanted]) => {
+      173 |       const raw = localStorage.getItem(key);
+      174 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:171:14)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:480:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/error-context.md
+
+
+
+(node:43569) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:43569) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[6/18] [desktop-chrome] › e2e/e1-night-shift.spec.ts:520:1 › pre-placed lanterns leave the full player build cap available
+[7/18] [desktop-chrome] › e2e/e1-night-shift.spec.ts:555:1 › render dimming does not stop turret acquisition or damage
+[8/18] [desktop-chrome] › e2e/e1-night-shift.spec.ts:582:1 › wave 25 secures the claim through the dawn victory path
+[9/18] [desktop-chrome] › e2e/e1-night-shift.spec.ts:611:1 › seeded Night Shift diagnostics and dark render budget are stable
+
+(node:44568) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:44568) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[10/18] [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  3) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "fogFar": 42,
+    -   "fogNear": 18,
+    +   "fogFar": 58,
+    +   "fogNear": 34,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      337 |     darkness: 1,
+      338 |   });
+    > 339 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({
+          |                                                                                             ^
+      340 |     fogNear: 18,
+      341 |     fogFar: 42,
+      342 |   });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:339:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+
+
+(node:44703) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:44703) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[11/18] [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  4) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.06045960784313726
+
+      403 |   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+      404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+    > 405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+          |                                                    ^
+      406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      408 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:405:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+
+
+(node:44914) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:44914) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[12/18] [mobile-chrome] › e2e/e1-night-shift.spec.ts:413:1 › lantern coverage is necessary for threat visibility
+[13/18] [mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+[14/18] [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+  5) [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      169 |
+      170 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 171 |   await page.waitForFunction(
+          |              ^
+      172 |     ([key, wanted]) => {
+      173 |       const raw = localStorage.getItem(key);
+      174 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:171:14)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:480:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/own-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/error-context.md
+
+
+
+(node:45610) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:45610) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[15/18] [mobile-chrome] › e2e/e1-night-shift.spec.ts:520:1 › pre-placed lanterns leave the full player build cap available
+[16/18] [mobile-chrome] › e2e/e1-night-shift.spec.ts:555:1 › render dimming does not stop turret acquisition or damage
+[17/18] [mobile-chrome] › e2e/e1-night-shift.spec.ts:582:1 › wave 25 secures the claim through the dawn victory path
+[18/18] [mobile-chrome] › e2e/e1-night-shift.spec.ts:611:1 › seeded Night Shift diagnostics and dark render budget are stable
+  5 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 
+  13 passed (3.3m)

@@ -111,6 +111,7 @@ export class RegattaRaceSystem {
       this.passed.push({ id: gate.id, passedAt: at });
       this.nextGateIndex += 1;
     } else {
+      this.passed.push({ id: gate.id, passedAt: at });
       this.finishedAt = at;
     }
   }

@@ -1,0 +1,32 @@
+[
+  {
+    "label": "own-and-pack",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e2-pressure-garden-own-and-pack",
+      "e2e/board-upcoming-surveys.spec.ts",
+      "e2e/e2-incline.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/e2-pressure-garden.spec.ts",
+      "e2e/map-census.spec.ts",
+      "e2e/terrain3d-registry.spec.ts",
+      "e2e/board-gating-and-profiles.spec.ts",
+      "e2e/072-era-activation.spec.ts",
+      "e2e/er01-e2-census.spec.ts",
+      "e2e/contract-briefings.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 1168.86,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e2-pressure-garden-own-and-pack.log"
+  }
+]

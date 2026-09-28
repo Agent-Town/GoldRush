@@ -1,0 +1,40 @@
+[
+  {
+    "label": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 9.01,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-tsc.log"
+  },
+  {
+    "label": "default-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 26.21,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-default-build.log"
+  },
+  {
+    "label": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {
+      "GR_RELEASE": "full"
+    },
+    "exit": 0,
+    "seconds": 22.17,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-full-build.log"
+  }
+]

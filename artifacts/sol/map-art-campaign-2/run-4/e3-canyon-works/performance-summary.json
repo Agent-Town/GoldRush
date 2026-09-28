@@ -1,0 +1,109 @@
+{
+  "method": "Four fresh boots per arm and viewport, alternating order, 180 retained rAF intervals per boot. Full-tier frozen diagnostic with ordinary HUD. Gaps over 35% expose separate timing modes; unmatched modes require review, never automatic acceptance.",
+  "rows": [
+    {
+      "width": 1280,
+      "before": {
+        "p95": [
+          9.600000000000364,
+          9.699999999999818,
+          9.799999999999272,
+          9.900000000000546
+        ],
+        "median": 9.749999999999545,
+        "modes": [
+          [
+            9.600000000000364,
+            9.699999999999818,
+            9.799999999999272,
+            9.900000000000546
+          ]
+        ],
+        "calls": [
+          72
+        ],
+        "triangles": [
+          146646
+        ]
+      },
+      "after": {
+        "p95": [
+          9.699999999999818,
+          9.699999999999818,
+          9.899999999999636,
+          9.900000000000546
+        ],
+        "median": 9.799999999999727,
+        "modes": [
+          [
+            9.699999999999818,
+            9.699999999999818,
+            9.899999999999636,
+            9.900000000000546
+          ]
+        ],
+        "calls": [
+          72
+        ],
+        "triangles": [
+          146646
+        ]
+      },
+      "pooledMedianChangePercent": 0.5128205128223984,
+      "singleMode": true,
+      "within15Percent": true
+    },
+    {
+      "width": 390,
+      "before": {
+        "p95": [
+          9.799999999999727,
+          9.800000000000182,
+          9.899999999999636,
+          9.899999999999636
+        ],
+        "median": 9.849999999999909,
+        "modes": [
+          [
+            9.799999999999727,
+            9.800000000000182,
+            9.899999999999636,
+            9.899999999999636
+          ]
+        ],
+        "calls": [
+          54
+        ],
+        "triangles": [
+          144644
+        ]
+      },
+      "after": {
+        "p95": [
+          9.699999999999818,
+          9.700000000000728,
+          9.800000000000182,
+          9.900000000000546
+        ],
+        "median": 9.750000000000455,
+        "modes": [
+          [
+            9.699999999999818,
+            9.700000000000728,
+            9.800000000000182,
+            9.900000000000546
+          ]
+        ],
+        "calls": [
+          54
+        ],
+        "triangles": [
+          144644
+        ]
+      },
+      "pooledMedianChangePercent": -1.0152284263904132,
+      "singleMode": true,
+      "within15Percent": true
+    }
+  ]
+}

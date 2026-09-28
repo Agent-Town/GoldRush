@@ -1,0 +1,28 @@
+[
+  {
+    "label": "own-and-shared",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e9-seed-run-own-and-shared",
+      "e2e/e9-seed-run-caravan.spec.ts",
+      "e2e/seam-visual-follows-sculpt.spec.ts",
+      "e2e/board-gating-and-profiles.spec.ts",
+      "e2e/e9-roster.spec.ts",
+      "e2e/ss-10-e9-beats.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 401.62,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e9-seed-run-own-and-shared.log"
+  }
+]

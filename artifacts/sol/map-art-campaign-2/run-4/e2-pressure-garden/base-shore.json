@@ -1,0 +1,46 @@
+{
+  "storeBase": "3673f34",
+  "base": "45607635ac06140e69b4388d7b7f83d5f4e3197d",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "6bfb15cddfe5b256d2b6b1a8eea152d269f5261b99923a54cbe6b46147b6f8ed",
+      "baseSha256": "7e2837b0476fe65284ae28426710cc5c4bd3b190ae0722521750eab52a732442"
+    },
+    "src/world/Water.ts": {
+      "candidateSha256": "f6ad3b9e528a0e04c4f8408f81530d32569cf850abd0bbac1115ed2544929b30",
+      "baseSha256": "b904210c93103a31ed1a4fc6000080d786f981eeb74d32bcdfb1f14c71b77685"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/pressure-garden/pressure-garden-landmark-pack-contract.json": {
+      "candidateSha256": "ce4283c379668646be572729fde9c0f60d0491ecb17523642c1cb2be0d0413d9",
+      "baseSha256": "74a57f51996c7024b8825235a13b655ab9bef037db67d29fdab14581fcce0386"
+    },
+    "assets/pilots/map-rebuild-spike/pressure-garden-terrain-contract.json": {
+      "candidateSha256": "7faf0c24c5ff51ed04b8c6df5eb41d751123711b39c5894a8ac7b87165f74ab6",
+      "baseSha256": "671e6e98887d45846190aafe6ad80c04e059e2aa8ec308c58ad810f8d42f024a"
+    }
+  },
+  "pattern": "live water shores",
+  "specs": [
+    "e2e/shore-truth.spec.ts"
+  ],
+  "candidateEngine": "6df23d2f3b41389eb2fa89d042c96a4f593a21c7482f8c0343026f2c82137d9b",
+  "baseEngine": "c8229bd4e2e1bd7d351255ba1460f640c8a67bc9f01c4c335ca17c27517d50a3",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-4/e2-pressure-garden-base-shore/test-results",
+    "--grep",
+    "live water shores",
+    "e2e/shore-truth.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "6df23d2f3b41389eb2fa89d042c96a4f593a21c7482f8c0343026f2c82137d9b",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-4/e2-pressure-garden-base-shore/tests.log"
+}

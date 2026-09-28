@@ -1,0 +1,85 @@
+{
+  "startedAt": "2026-09-26T23:58:37.004Z",
+  "node": "26.4.0",
+  "workerExit": 0,
+  "workerStderr": "",
+  "rows": [
+    {
+      "label": "river-desktop",
+      "file": "artifacts/tape-pause-fix-1/after/fresh-river-desktop.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:abebc77c",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 5.066666666666658,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:abebc77c",
+      "reason": null,
+      "wallMs": 4800
+    },
+    {
+      "label": "river-mobile",
+      "file": "artifacts/tape-pause-fix-1/after/fresh-river-mobile.json",
+      "contract": "e10-river",
+      "claimedHash": "fnv1a32:2c982352",
+      "score": {
+        "secured": true,
+        "waves": 0,
+        "timeAlive": 5.266666666666658,
+        "gold": 5,
+        "baseValue": 0
+      },
+      "verdict": "verified",
+      "replayedHash": "fnv1a32:2c982352",
+      "reason": null,
+      "wallMs": 4157
+    },
+    {
+      "label": "claim-three-pauses",
+      "file": "artifacts/tape-pause-fix-1/after/claim-three-pauses.json",
+      "contract": "the-claim",
+      "claimedHash": "fnv1a32:8b17af1a",
+      "score": {
+        "secured": false,
+        "waves": 0,
+        "timeAlive": 5.866666666666656,
+        "gold": 0,
+        "baseValue": 0
+      },
+      "verdict": "unassayable",
+      "replayedHash": null,
+      "reason": "instrument returned no valid securedSnapshot",
+      "wallMs": 17845
+    }
+  ],
+  "retries": [
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "8904c33a-99bc-4c29-90fb-2b646713779e",
+        "rowId": "00000000000000000000000000000002:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 1,
+      "delayMs": 2000,
+      "error": "instrument returned no valid securedSnapshot"
+    },
+    {
+      "event": "instrument_retry",
+      "locator": {
+        "epochId": "local-dry-run",
+        "contractId": "the-claim",
+        "tapeId": "8904c33a-99bc-4c29-90fb-2b646713779e",
+        "rowId": "00000000000000000000000000000002:1:1:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "attempt": 2,
+      "delayMs": 4000,
+      "error": "instrument returned no valid securedSnapshot"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+cured run 17:28Z: chain 3f5bc0456, merge 3f5bc0456, branch tip bb25bfdfb; the pre-cure gates (release suite 6 failed / 24 passed, e2e 2 failed / 106 passed, battery 950/4) are in ux1-gates-precure.txt
+cure F-UX1-6 committed 960cbb249
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 5793a96): f64ee547206cde3dfe8aca56ad3249aaae121f16036b00a1480668d425cf78be
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1126 files, 97656941 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34345450 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (301.3s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+release suite (own config): rc=0   30 passed (2.2m) 
+warm-up (profile-first-boot desktop, cold compile, verdict not counted):   1 failed   5 passed (37.4s) 
+e2e start 17:39Z: e2e/entry-params.spec.ts e2e/profile-first-boot.spec.ts e2e/menu-safe-params.spec.ts e2e/044-start-screen.spec.ts e2e/m1-06-level-up-choices.spec.ts e2e/m2-01-build-menu.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/agent-view.spec.ts
+e2e: rc=1   2 failed   106 passed (6.1m)  17:45Z
+1) [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+2) [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+battery start 17:45Z
+battery: rc=1 ℹ tests 959 ℹ pass 950 ℹ fail 4 ℹ skipped 5  17:53Z
+✖ all 153 scripts/*.test.mjs fixture owners remove their temp directories (180700.582916ms)
+✖ current census pins persistent union, entry coverage and unchanged desktop boxes (2.315125ms)
+✖ rotation registry stays outside the engine identity corpus (564.927417ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (166.461792ms)
+dirt after battery: 0
+UX1-CURE-PREP-DONE
+battery reds — needs hands:
+✖ current census pins persistent union, entry coverage and unchanged desktop boxes (2.315125ms)

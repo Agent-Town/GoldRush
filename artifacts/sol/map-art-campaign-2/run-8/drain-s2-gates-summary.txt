@@ -1,0 +1,42 @@
+slice 2: lane ec786009689270ebe6f5954f0d8ec1a9ce8afa91 store 75bdd35936c531da53094eaee94503b71ea1ea7f maps: the Ember Shore 11:55Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> 75bdd35 (art(store): Ember Shore — continuous native basalt scenery)
+store main pushed: 75bdd35
+scratch store: detached at 75bdd35, clean
+chain base 9f5e87d40 merging lane ec7860096 (lane tip ec7860096) 11:55Z
+merged 4472bb0b5
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 75bdd35): ac5caf75c8186240ed5c5e56ec5ea55c8b8769fa9db2324fb21726efdb34c200
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=1
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34274870 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+cure F-FID1-8: scripts/deploy.sh sources/**.png include committed 82c226185; mirror test alone rc=0; law-pointer rc=0
+deploy contract (after the cure): rc=0 deploy contract PASS (production alias current/stale/500/retry/late-promotion/whitespace-sleeps/no-url; strict 0/2/3/4/7; default failures r
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (354.1s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 97 ℹ fail 0 
+e2e start 12:04Z: e2e/e10-ember-shore-preserve.spec.ts e2e/e10-ember-shore-squall.spec.ts e2e/ss-11-e10-beats.spec.ts e2e/er01-e10-census.spec.ts e2e/terrain3d-registry.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts 
+e2e: rc=1   8 failed   5 skipped   83 passed (23.8m)  12:27Z
+1) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+2) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmar
+3) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama read
+4) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+5) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+6) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmark
+7) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:272:1 › rim and horizon probes keep the terrain meeting gradual and every panorama reada
+8) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:345:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes 
+battery start 12:27Z
+battery: rc=1 ℹ tests 947 ℹ pass 938 ℹ fail 4 ℹ skipped 5  12:36Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (226797.518417ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (731.127167ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (180.572583ms)
+✖ the live board is green under this guard (baseline is honest) (327.928458ms)
+dirt after battery: 0
+FID1-S2-PREP-DONE
+known-red overrides: e2e e2e/er01-e10-census\.spec\.ts:120:3|e2e/terrain3d-registry\.spec\.ts:196:1|e2e/terrain3d-registry\.spec\.ts:272:1|e2e/terrain3d-registry\.spec\.ts:328:1|e2e/terrain3d-registry\.spec\.ts:345:1 battery ^$
+hash at pin time: ac5caf75c8186240ed5c5e56ec5ea55c8b8769fa9db2324fb21726efdb34c200
+pin #35
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

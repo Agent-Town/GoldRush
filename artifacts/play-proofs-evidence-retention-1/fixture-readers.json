@@ -1,0 +1,4630 @@
+{
+  "scanSpace": [
+    "scripts/**/*.mjs",
+    "e2e/**/*.ts",
+    "src/**",
+    "vite.config.ts",
+    "package.json",
+    ".claude/skills/*/SKILL.md"
+  ],
+  "selfExcluded": [
+    "scripts/evidence-readers.mjs",
+    "scripts/evidence-readers.test.mjs",
+    "scripts/evidence-offload.mjs",
+    "scripts/evidence-offload.test.mjs",
+    "scripts/evidence-archive-buckets.test.mjs",
+    "scripts/evidence-budget.test.mjs"
+  ],
+  "readForms": [
+    "import",
+    "dynamic-import",
+    "readFileSync",
+    "readFile",
+    "existsSync",
+    "readdirSync",
+    "statSync",
+    "createReadStream",
+    "realpathSync",
+    "new URL",
+    "execFileSync('node')",
+    "page.goto",
+    "sharp"
+  ],
+  "writeForms": [
+    "writeFileSync",
+    "mkdirSync",
+    "cpSync",
+    "createWriteStream",
+    "toFile",
+    "rmSync",
+    "screenshot path",
+    "outDir",
+    "--transcript"
+  ],
+  "hits": 574,
+  "patterns": [
+    {
+      "pattern": "artifacts/044",
+      "from": [
+        "e2e/044-start-screen.spec.ts:7 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/045",
+      "from": [
+        "e2e/045-megaproject.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/048",
+      "from": [
+        "e2e/task-048-funnel-formation-spread.spec.ts:25 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/050",
+      "from": [
+        "e2e/050-audio-mix-and-access.spec.ts:5 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/052",
+      "from": [
+        "e2e/052-download-diet.rig.ts:68 (unclassified-in-a-test)",
+        "e2e/052-download-diet.rig.ts:70 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/052/*-network.json"
+      ],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/053",
+      "from": [
+        "e2e/task-053-weapon-cycling-audit.spec.ts:24 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/053/weapon-cycling-audit.json"
+      ],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/054",
+      "from": [
+        "e2e/054-baron-epic.spec.ts:34 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/055",
+      "from": [
+        "e2e/055-baron-kill-stop.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/056",
+      "from": [
+        "e2e/m2-01-build-menu.spec.ts:27 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/057",
+      "from": [
+        "e2e/057-baron-rocket-cart.spec.ts:19 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/058",
+      "from": [
+        "e2e/058-device-tiers.spec.ts:19 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 3
+    },
+    {
+      "pattern": "artifacts/060",
+      "from": [
+        "e2e/research-chart.spec.ts:8 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/061",
+      "from": [
+        "e2e/061-first-claim-onboarding.spec.ts:14 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/062",
+      "from": [
+        "e2e/story-loop.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/063",
+      "from": [
+        "e2e/en-02-e1-coverage.spec.ts:124 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/064",
+      "from": [
+        "e2e/064-river-continues.spec.ts:13 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/065",
+      "from": [
+        "e2e/065-shots-follow-terrain.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/066",
+      "from": [
+        "e2e/066-walk8-engine.spec.ts:29 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/072-era-activation",
+      "from": [
+        "e2e/072-era-activation.spec.ts:19 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/074",
+      "from": [
+        "e2e/en-02-e1-coverage.spec.ts:130 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/a",
+      "from": [
+        "scripts/review-evidence-scan-space-guard.test.mjs:123 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/ac-02",
+      "from": [
+        "e2e/accounts-sync.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/accounts-worker",
+      "from": [
+        "scripts/lane-usable-dirt-parse.test.mjs:23 (unclassified-in-a-test)",
+        "scripts/lane-usable-dirt-parse.test.mjs:25 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/accounts-worker/test-accounts.json",
+        "artifacts/accounts-worker/test-accounts.json"
+      ],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/advance-stream-cache-reuse-*.md",
+      "from": [
+        "e2e/advance-stream-cache-reuse.spec.ts:63 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/advance-stream-cache-reuse-headers-*.md",
+      "from": [
+        "e2e/advance-stream-cache-reuse.spec.ts:74 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/advance-stream-walkthrough-*.md",
+      "from": [
+        "e2e/advance-stream-walkthrough.spec.ts:101 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/agent-rung-clarity",
+      "from": [
+        "e2e/m4-09-agent-rung-clarity.spec.ts:54 (mkdirSync)",
+        "e2e/m4-09-agent-rung-clarity.spec.ts:55 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/agent-rung-clarity/*.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/agent-seat",
+      "from": [
+        "e2e/agent-seat.spec.ts:28 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/assay-e2e-20260822",
+      "from": [
+        "scripts/assay-replay.test.mjs:54 (readFileSync)",
+        "scripts/assay-worker.test.mjs:171 (readFileSync)",
+        "scripts/test-standings.mjs:1789 (readFileSync)"
+      ],
+      "promotedFrom": [
+        "artifacts/assay-e2e-20260822/round2/tape-secure-verb.json",
+        "artifacts/assay-e2e-20260822/round2/tape-secure-verb.json",
+        "artifacts/assay-e2e-20260822/round2/tape-run1.json"
+      ],
+      "matches": 34
+    },
+    {
+      "pattern": "artifacts/assay-ledger",
+      "from": [
+        "e2e/assay-ledger.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/assay-ledger-page",
+      "from": [
+        "e2e/assay-ledger-page.spec.ts:76 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/assay-season-roll",
+      "from": [
+        "e2e/assay-season-roll.spec.ts:18 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/asset-diet",
+      "from": [
+        "e2e/asset-diet.spec.ts:31 (unclassified-in-a-test)",
+        "scripts/deploy-budget.test.mjs:71 (unclassified-in-a-test)",
+        "scripts/first-town-request-families.test.mjs:245 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/atrisk.log",
+      "from": [
+        "scripts/census-bucket-ownership-guard.test.mjs:69 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/audio-integration",
+      "from": [
+        "e2e/audio-integration.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/baron-presence",
+      "from": [
+        "e2e/e1-baron.spec.ts:32 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 26
+    },
+    {
+      "pattern": "artifacts/baron-props",
+      "from": [
+        "e2e/lane-baron-props-detail.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/baron-props/after"
+      ],
+      "matches": 9
+    },
+    {
+      "pattern": "artifacts/beauty-atmos",
+      "from": [
+        "e2e/beauty-atmos.rig.ts:15 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 32
+    },
+    {
+      "pattern": "artifacts/beauty-baron",
+      "from": [
+        "e2e/beauty-baron.spec.ts:25 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 22
+    },
+    {
+      "pattern": "artifacts/beauty-dry-gulch",
+      "from": [
+        "e2e/beauty-dry-gulch.rig.ts:40 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 13
+    },
+    {
+      "pattern": "artifacts/beauty-far-ground",
+      "from": [
+        "e2e/beauty-far-ground.spec.ts:114 (readFileSync)"
+      ],
+      "promotedFrom": [
+        "artifacts/beauty-far-ground/band-baseline.json"
+      ],
+      "matches": 16
+    },
+    {
+      "pattern": "artifacts/beauty-town",
+      "from": [
+        "e2e/beauty-town.rig.ts:15 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 66
+    },
+    {
+      "pattern": "artifacts/beauty-twin-banks",
+      "from": [
+        "e2e/beauty-twin-banks.spec.ts:17 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 45
+    },
+    {
+      "pattern": "artifacts/blackout-ridge",
+      "from": [
+        "e2e/e3-blackout-ridge.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/blast-relief",
+      "from": [
+        "e2e/blast-relief-height.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/board-era-chapters",
+      "from": [
+        "e2e/board-era-chapters.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/board-full-picture",
+      "from": [
+        "e2e/town-t3-board.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/board-gating",
+      "from": [
+        "e2e/board-gating-and-profiles.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/board-tape-gold",
+      "from": [
+        "scripts/board-tape-gold.test.mjs:69 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/board-tape-gold/current-grammar"
+      ],
+      "matches": 24
+    },
+    {
+      "pattern": "artifacts/board-upcoming",
+      "from": [
+        "e2e/board-upcoming-surveys.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/browser-door-held-gold",
+      "from": [
+        "scripts/board-tape-gold.test.mjs:131 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/bt-02b-stockpile-tiers",
+      "from": [
+        "e2e/bt-01-tiers.spec.ts:356 (mkdirSync)",
+        "e2e/bt-01-tiers.spec.ts:357 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/bt-02b-stockpile-tiers/*-tier-3.png"
+      ],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/bug-office-desk",
+      "from": [
+        "e2e/bug-office-desk.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/canyon-works",
+      "from": [
+        "e2e/e3-canyon-works.spec.ts:7 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/cast-metrology",
+      "from": [
+        "e2e/cast-motion-wiring.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/ceremony-framework",
+      "from": [
+        "e2e/ceremony-framework.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/claude-debut-20260831",
+      "from": [
+        "scripts/engine-era-guard.test.mjs:93 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/claude-debut-20260831/claude-opus-ride/attempt-2.tape.json"
+      ],
+      "matches": 37
+    },
+    {
+      "pattern": "artifacts/claude-debut-20260901",
+      "from": [
+        "e2e/agent-reels.spec.ts:14 (unclassified-in-a-test)",
+        "e2e/true-reel-harness.spec.ts:9 (unclassified-in-a-test)",
+        "scripts/engine-era-guard.test.mjs:94 (unclassified-in-a-test)",
+        "scripts/engine-era-guard.test.mjs:95 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json",
+        "artifacts/claude-debut-20260901/claude-opus-hillmine/t09-verify.json",
+        "artifacts/claude-debut-20260901/claude-fable-baron/attempt-2-tape.json",
+        "artifacts/claude-debut-20260901/claude-opus-baron/attempt-3-tape.json"
+      ],
+      "matches": 66
+    },
+    {
+      "pattern": "artifacts/cold-anchor-rule",
+      "from": [
+        "e2e/cold-anchor-rule.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/correctives-0707",
+      "from": [
+        "e2e/combat-readability.spec.ts:23 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/cosmetic-grants",
+      "from": [
+        "e2e/cosmetic-grants.spec.ts:16 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/county-board-open-week-1",
+      "from": [
+        "e2e/county-board-open-week.spec.ts:221 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 55
+    },
+    {
+      "pattern": "artifacts/county-standings",
+      "from": [
+        "e2e/lb-01-county-standings.spec.ts:34 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/cw-02-escort",
+      "from": [
+        "e2e/cw-02-escort.spec.ts:7 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/drill-yard-affordances",
+      "from": [
+        "e2e/drill-yard.spec.ts:22 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/drill-yard-props",
+      "from": [
+        "e2e/drill-yard-station-art.spec.ts:32 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 9
+    },
+    {
+      "pattern": "artifacts/dry-gulch-relief",
+      "from": [
+        "e2e/map-beauty-dry-gulch.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/e1-dry-gulch",
+      "from": [
+        "e2e/e1-dry-gulch.spec.ts:10 (unclassified-in-a-test)",
+        "e2e/map-beauty-dry-gulch.spec.ts:41 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e1-perf-pass",
+      "from": [
+        "e2e/e1-perf-pass.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/e1-twin-banks",
+      "from": [
+        "e2e/e1-twin-banks.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e10-research-tree",
+      "from": [
+        "e2e/e10-research-tree.spec.ts:21 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e10s-2-squall",
+      "from": [
+        "e2e/e10-ember-shore-squall.spec.ts:59 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/e10s-2-squall/shots/*-*.png"
+      ],
+      "matches": 13
+    },
+    {
+      "pattern": "artifacts/e2-arsenal",
+      "from": [
+        "e2e/e2-arsenal.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/e2-clarity-and-wreckers",
+      "from": [
+        "e2e/e2-clarity-and-wreckers.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e2-enemies",
+      "from": [
+        "e2e/e2-enemies.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/e2-escort-mode",
+      "from": [
+        "e2e/e2-escort-mode.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/e2-hill-mine",
+      "from": [
+        "e2e/e2-hill-mine.spec.ts:11 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/e2-pressure",
+      "from": [
+        "e2e/e2-pressure-economy.spec.ts:5 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/e2-pressure-garden",
+      "from": [
+        "e2e/e2-pressure-garden.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/e2-pressure-in-run",
+      "from": [
+        "e2e/e2-pressure-in-run.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e2-rail",
+      "from": [
+        "e2e/e2-rail-entity.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/e2-t2-dynamo-ceremony",
+      "from": [
+        "e2e/e2-t2-dynamo-ceremony.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e2-trestle",
+      "from": [
+        "e2e/e2-trestle.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/e3-07",
+      "from": [
+        "e2e/e3-07-dam-surge.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/e3-crawler-boss",
+      "from": [
+        "e2e/e3-crawler-boss.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 6
+    },
+    {
+      "pattern": "artifacts/e3-day-night",
+      "from": [
+        "e2e/e3-day-night.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 16
+    },
+    {
+      "pattern": "artifacts/e3-fairground",
+      "from": [
+        "e2e/e3-fairground.spec.ts:5 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 33
+    },
+    {
+      "pattern": "artifacts/e3-fairground-flocks",
+      "from": [
+        "e2e/e3-fairground-flocks.spec.ts:18 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e3-moth-season",
+      "from": [
+        "e2e/e3-moth-season.spec.ts:14 (unclassified-in-a-test)",
+        "e2e/e3-moth-season.spec.ts:105 (unclassified-in-a-test)",
+        "e2e/e3-moth-season.spec.ts:106 (screenshot path)",
+        "e2e/e3-moth-season.spec.ts:158 (unclassified-in-a-test)",
+        "e2e/e3-moth-season.spec.ts:159 (screenshot path)",
+        "e2e/e3-moth-season.spec.ts:172 (screenshot path)",
+        "e2e/e3-moth-season.spec.ts:262 (unclassified-in-a-test)",
+        "e2e/e3-moth-season.spec.ts:264 (unclassified-in-a-test)",
+        "scripts/moth-season-pressure.test.mjs:140 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/e3-moth-season/e3-moth-season-floor.tape.json",
+        "artifacts/e3-moth-season/*-decoy-tithe.png",
+        "artifacts/e3-moth-season/*-corridor-cut.png",
+        "artifacts/e3-moth-season/*-corridor-relit.png",
+        "artifacts/e3-moth-season/both-engines-*.json"
+      ],
+      "matches": 23
+    },
+    {
+      "pattern": "artifacts/e3-moth-swarm",
+      "from": [
+        "e2e/e3-moth-swarm.spec.ts:34 (unclassified-in-a-test)",
+        "e2e/e3-moth-swarm.spec.ts:35 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/e3-moth-swarm/*-lantern-dimmed.png"
+      ],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/e3-power-graph",
+      "from": [
+        "e2e/e3-power-graph.spec.ts:4 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e3-power-prototype",
+      "from": [
+        "e2e/e3-power-prototype.spec.ts:13 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e3-tram",
+      "from": [
+        "e2e/e3-tram.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e3-wire-spans",
+      "from": [
+        "e2e/e3-wire-spans.spec.ts:4 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e4-convoy-weather",
+      "from": [
+        "e2e/e4-convoy-weather.spec.ts:5 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/e4-dust-flats",
+      "from": [
+        "e2e/e4-dust-flats.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e4-landyacht-boss",
+      "from": [
+        "e2e/e4-landyacht-boss.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/e4-orbit-road",
+      "from": [
+        "e2e/e4-orbit-road.spec.ts:5 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/e4-research-tree",
+      "from": [
+        "e2e/e4-research-tree.spec.ts:10 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e4-roads-and-convoys",
+      "from": [
+        "e2e/e4-roads-and-convoys.spec.ts:25 (unclassified-in-a-test)",
+        "e2e/true-reel-harness.spec.ts:7 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json"
+      ],
+      "matches": 27
+    },
+    {
+      "pattern": "artifacts/e4-vehicles-fuel",
+      "from": [
+        "e2e/e4-vehicles-fuel.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e5-deepwater-claim",
+      "from": [
+        "e2e/e5-deepwater-claim.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/e5-regatta-boat",
+      "from": [
+        "e2e/e5-regatta-boat.spec.ts:58 (new URL)",
+        "e2e/e5-regatta-boat.spec.ts:192 (screenshot path)",
+        "e2e/e5-regatta-boat.spec.ts:259 (screenshot path)",
+        "scripts/regatta-boat-steer.test.mjs:62 (new URL)",
+        "scripts/regatta-boat-steer.test.mjs:63 (new URL)"
+      ],
+      "promotedFrom": [
+        "artifacts/e5-regatta-boat/boat-tape.json",
+        "artifacts/e5-regatta-boat/plain-boot-sailing-*.png",
+        "artifacts/e5-regatta-boat/rider-tape-*.png",
+        "artifacts/e5-regatta-boat/boat-tape.json"
+      ],
+      "matches": 17
+    },
+    {
+      "pattern": "artifacts/e5-regatta-boat-02",
+      "from": [
+        "e2e/e5-regatta-boat.spec.ts:449 (mkdirSync)",
+        "e2e/e5-regatta-boat.spec.ts:451 (writeFileSync)",
+        "e2e/e5-regatta-boat.spec.ts:459 (screenshot path)",
+        "scripts/regatta-boat-steer.test.mjs:65 (new URL)"
+      ],
+      "promotedFrom": [
+        "artifacts/e5-regatta-boat-02/plain-boot-course-*.json",
+        "artifacts/e5-regatta-boat-02/plain-boot-race-won-*.png"
+      ],
+      "matches": 23
+    },
+    {
+      "pattern": "artifacts/e5-regatta-boat-03",
+      "from": [
+        "scripts/regatta-boat-steer.test.mjs:67 (new URL)",
+        "scripts/regatta-boat-steer.test.mjs:68 (new URL)"
+      ],
+      "promotedFrom": [
+        "artifacts/e5-regatta-boat-03/view-tape.json"
+      ],
+      "matches": 30
+    },
+    {
+      "pattern": "artifacts/e5-research-tree",
+      "from": [
+        "e2e/e5-research-tree.spec.ts:10 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e5-stillwater",
+      "from": [
+        "e2e/e5-stillwater-noise.spec.ts:192 (unclassified-in-a-test)",
+        "e2e/e5-stillwater-noise.spec.ts:219 (unclassified-in-a-test)",
+        "e2e/e5-stillwater-noise.spec.ts:260 (unclassified-in-a-test)",
+        "scripts/e5-stillwater-front-crew.test.mjs:49 (unclassified-in-a-test)",
+        "scripts/e5-stillwater-front-crew.test.mjs:54 (unclassified-in-a-test)",
+        "scripts/e5-stillwater-front-crew.test.mjs:57 (unclassified-in-a-test)",
+        "scripts/e5-stillwater-front-crew.test.mjs:61 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/e5-stillwater/prover.mjs",
+        "artifacts/e5-stillwater/prover.mjs",
+        "artifacts/e5-stillwater/prover.mjs",
+        "artifacts/e5-stillwater/prover.mjs",
+        "artifacts/e5-stillwater/prover.mjs",
+        "artifacts/e5-stillwater/prover.mjs",
+        "artifacts/e5-stillwater/prover.mjs"
+      ],
+      "matches": 81
+    },
+    {
+      "pattern": "artifacts/e5-stillwater-front-crew-2",
+      "from": [
+        "e2e/e5-stillwater-noise.spec.ts:305 (unclassified-in-a-test)",
+        "e2e/e5-stillwater-noise.spec.ts:306 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/e5-stillwater-front-crew-2/*-first-front.png"
+      ],
+      "matches": 3
+    },
+    {
+      "pattern": "artifacts/e5-water-spike",
+      "from": [
+        "e2e/e5-water-spike.spec.ts:5 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 6
+    },
+    {
+      "pattern": "artifacts/e6-picnic",
+      "from": [
+        "e2e/e6-picnic-opening.spec.ts:381 (screenshot path)",
+        "e2e/e6-picnic-opening.spec.ts:454 (screenshot path)",
+        "e2e/e6-picnic-opening.spec.ts:541 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/e6-picnic/shots/card-*.png",
+        "artifacts/e6-picnic/shots/unbuilt-*.png",
+        "artifacts/e6-picnic/shots/opening-*.png"
+      ],
+      "matches": 45
+    },
+    {
+      "pattern": "artifacts/e6-research-tree",
+      "from": [
+        "e2e/e6-research-tree.spec.ts:17 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e7-playbook-rows",
+      "from": [
+        "e2e/e7-playbook-rows.spec.ts:23 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 11
+    },
+    {
+      "pattern": "artifacts/e7-playbook-spike",
+      "from": [
+        "e2e/e7-playbook-spike.spec.ts:12 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e7-research-tree",
+      "from": [
+        "e2e/e7-research-tree.spec.ts:18 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e8-mare-claim-physics",
+      "from": [
+        "e2e/e8-mare-claim-physics-parity.spec.ts:65 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/e8-mare-claim-physics/report.md."
+      ],
+      "matches": 14
+    },
+    {
+      "pattern": "artifacts/e8-research-tree",
+      "from": [
+        "e2e/e8-research-tree.spec.ts:19 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e9-devils-alley",
+      "from": [
+        "e2e/e9-devils-alley-relocation.spec.ts:52 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/e9-devils-alley/shots/*-*.png"
+      ],
+      "matches": 19
+    },
+    {
+      "pattern": "artifacts/e9-old-canal",
+      "from": [
+        "e2e/e9-old-canal-choices.spec.ts:103 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/e9-old-canal/shots/*-*.png"
+      ],
+      "matches": 27
+    },
+    {
+      "pattern": "artifacts/e9-research-tree",
+      "from": [
+        "e2e/e9-research-tree.spec.ts:20 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/e9-seed-run",
+      "from": [
+        "e2e/e9-seed-run-caravan.spec.ts:142 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/e9-seed-run/shots/*-*.png"
+      ],
+      "matches": 44
+    },
+    {
+      "pattern": "artifacts/ed-01",
+      "from": [
+        "e2e/ed-01-descriptor-inspector.spec.ts:12 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/ed-02-authored-grid",
+      "from": [
+        "e2e/ed-02-authored-grid-substrate.spec.ts:14 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/ed-02-terrain-brush",
+      "from": [
+        "e2e/ed-02-terrain-brush.spec.ts:13 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/eh2-fixture",
+      "from": [
+        "e2e/true-reel-harness.spec.ts:6 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/eh2-fixture/tape.json"
+      ],
+      "matches": 3
+    },
+    {
+      "pattern": "artifacts/eh3-fixture",
+      "from": [
+        "e2e/agent-reels.spec.ts:11 (unclassified-in-a-test)",
+        "e2e/agent-reels.spec.ts:20 (unclassified-in-a-test)",
+        "e2e/lantern-true-world.spec.ts:8 (unclassified-in-a-test)",
+        "e2e/reel-deep-links.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/eh3-fixture/tape.json",
+        "artifacts/eh3-fixture/tape.json",
+        "artifacts/eh3-fixture/tape.json",
+        "artifacts/eh3-fixture/tape.json"
+      ],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/eight-winds-enemies",
+      "from": [
+        "e2e/eight-winds-enemies.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/eight-winds-hero",
+      "from": [
+        "e2e/eight-winds-hero.spec.ts:22 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/en-01",
+      "from": [
+        "e2e/en-01-claim-ledger.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/en-02",
+      "from": [
+        "e2e/en-02-e1-coverage.spec.ts:21 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/en-03",
+      "from": [
+        "e2e/en-03-epoch-pages.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/enemy-gap-flow",
+      "from": [
+        "e2e/enemy-gap-flow.spec.ts:5 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/era-lights",
+      "from": [
+        "e2e/beauty-town.spec.ts:248 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/f1148-1-trajectory",
+      "from": [
+        "e2e/f1148-1-trajectory-probe.spec.ts:12 (unclassified-in-a-test)",
+        "scripts/probe-s1152b-confirmbuild-cause.mjs:18 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 41
+    },
+    {
+      "pattern": "artifacts/f1158-ghostvalid-poll",
+      "from": [
+        "e2e/f1158-ghostvalid-poll-probe.spec.ts:12 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/f1297-2-plain-boot-tape-button",
+      "from": [
+        "e2e/f1297-2-plain-boot-tape-button.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/f1314-3-stockpile-tier-voice",
+      "from": [
+        "e2e/bt-01-tiers.spec.ts:400 (mkdirSync)",
+        "e2e/bt-01-tiers.spec.ts:401 (screenshot path)",
+        "e2e/bt-01-tiers.spec.ts:410 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/f1314-3-stockpile-tier-voice/*-float.png",
+        "artifacts/f1314-3-stockpile-tier-voice/*-menu.png"
+      ],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/f1318-1-float-fit-class-wide",
+      "from": [
+        "e2e/vfx-float-legibility.spec.ts:48 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/f1318-1-float-fit-class-wide/*.png"
+      ],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/f1319-3-terrain-seed-per-sample-url-parse",
+      "from": [
+        "e2e/terrain-seed-cache.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/f1450-4",
+      "from": [
+        "scripts/halo-reextraction-check.mjs:293 (execFileSync('node'))",
+        "scripts/halo-reextraction-check.mjs:379 (execFileSync('node'))"
+      ],
+      "promotedFrom": [
+        "artifacts/f1450-4/halo-class-sweep.mjs",
+        "artifacts/f1450-4/halo-loaded-check.mjs"
+      ],
+      "matches": 11
+    },
+    {
+      "pattern": "artifacts/f1467-alpha-recipe-ab",
+      "from": [
+        "e2e/f1467-alpha-recipe-ab.rig.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/f1467-alpha-recipe-ab/arms"
+      ],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/f1486-1",
+      "from": [
+        "scripts/rounded-scale-halo-cure.mjs:227 (writeFileSync)"
+      ],
+      "promotedFrom": [
+        "artifacts/f1486-1/cure-applied.json"
+      ],
+      "matches": 3
+    },
+    {
+      "pattern": "artifacts/f2135-canyon-census",
+      "from": [
+        "scripts/f2135-canyon-census-player.test.mjs:9 (unclassified-in-a-test)",
+        "scripts/f2135-canyon-census-player.test.mjs:57 (unclassified-in-a-test)",
+        "scripts/f2135-canyon-census-player.test.mjs:69 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/f2135-canyon-census/census.json",
+        "artifacts/f2135-canyon-census/census.json",
+        "artifacts/f2135-canyon-census/scratch/run-1.json"
+      ],
+      "matches": 11
+    },
+    {
+      "pattern": "artifacts/fevered-tell",
+      "from": [
+        "e2e/fevered-tell.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/first-town-audio-deferred",
+      "from": [
+        "e2e/first-town-audio-deferred.spec.ts:30 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 19
+    },
+    {
+      "pattern": "artifacts/fix-dry-gulch-frozen-waves",
+      "from": [
+        "e2e/fix-dry-gulch-frozen-waves.spec.ts:61 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 3
+    },
+    {
+      "pattern": "artifacts/fix-e2-railcar-read",
+      "from": [
+        "e2e/fix-e2-railcar-read.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 6
+    },
+    {
+      "pattern": "artifacts/fix-hillmine-rail-render",
+      "from": [
+        "e2e/terrain3d-registry.spec.ts:265 (unclassified-in-a-test)",
+        "e2e/terrain3d-registry.spec.ts:266 (unclassified-in-a-test)",
+        "e2e/terrain3d-registry.spec.ts:267 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/fix-hillmine-rail-render/*-after.png",
+        "artifacts/fix-hillmine-rail-render/*-rail-heights.json"
+      ],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/fix-terrain3d-seams",
+      "from": [
+        "e2e/terrain3d-registry.spec.ts:275 (unclassified-in-a-test)",
+        "e2e/terrain3d-registry.spec.ts:311 (unclassified-in-a-test)",
+        "e2e/terrain3d-registry.spec.ts:324 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/fix-terrain3d-seams/after-edge-*.png",
+        "artifacts/fix-terrain3d-seams/probes-*.json"
+      ],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/fort-solidity",
+      "from": [
+        "e2e/fort-landmark-collision.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/fresh-build-toast",
+      "from": [
+        "e2e/fresh-build-toast.spec.ts:4 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/fresh-scene-render-state",
+      "from": [
+        "e2e/fresh-scene-render-state.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/gate-battery-transcript.txt",
+      "from": [
+        "scripts/gate-battery.mjs:291 (--transcript)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/gauntlet-heat11-20260903",
+      "from": [
+        "e2e/lantern-true-world.spec.ts:9 (unclassified-in-a-test)",
+        "scripts/relay-rush-reel.test.mjs:67 (unclassified-in-a-test)",
+        "scripts/run-tape-envelope-budget.test.mjs:38 (unclassified-in-a-test)",
+        "scripts/test-standings.mjs:1491 (readFileSync)"
+      ],
+      "promotedFrom": [
+        "artifacts/gauntlet-heat11-20260903/rides/e7-relay-rush/opus/work/attempt-1-tape.json",
+        "artifacts/gauntlet-heat11-20260903/rides/e7-relay-rush/opus/work/attempt-1-tape.json",
+        "artifacts/gauntlet-heat11-20260903/rides/e7-relay-valley/opus/work/tune-1.json",
+        "artifacts/gauntlet-heat11-20260903/rides/*/opus/submission.json"
+      ],
+      "matches": 1203
+    },
+    {
+      "pattern": "artifacts/gauntlet-heat12-20260905",
+      "from": [
+        "scripts/relay-rush-reel.test.mjs:69 (unclassified-in-a-test)",
+        "scripts/run-tape-envelope-budget.test.mjs:37 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/gauntlet-heat12-20260905/rides/e7-relay-rush/submission.json",
+        "artifacts/gauntlet-heat12-20260905/rides/e9-dome-basin.attempt-1/work/tune-3-tape.json"
+      ],
+      "matches": 686
+    },
+    {
+      "pattern": "artifacts/gauntlet-heat15-cd24d12d",
+      "from": [
+        "scripts/assay-replay.test.mjs:237 (readFileSync)"
+      ],
+      "promotedFrom": [
+        "artifacts/gauntlet-heat15-cd24d12d/rides/r2/submission.json"
+      ],
+      "matches": 120
+    },
+    {
+      "pattern": "artifacts/gauntlet-heat2-20260824",
+      "from": [
+        "e2e/agent-reels.spec.ts:21 (unclassified-in-a-test)",
+        "e2e/agent-reels.spec.ts:22 (unclassified-in-a-test)",
+        "e2e/agent-reels.spec.ts:23 (unclassified-in-a-test)",
+        "e2e/agent-reels.spec.ts:24 (unclassified-in-a-test)",
+        "e2e/agent-reels.spec.ts:25 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/gauntlet-heat2-20260824/codex-luna/e1-dry-gulch-e1-dry-gulch-01-attempt-1.tape.json",
+        "artifacts/gauntlet-heat2-20260824/codex-luna/e1-twin-banks-e1-twin-banks-01-attempt-1.tape.json",
+        "artifacts/gauntlet-heat2-20260824/codex-luna/e1-night-shift-e1-night-shift-01-attempt-3.tape.json",
+        "artifacts/gauntlet-heat2-20260824/codex-luna/e2-hill-mine-e2-hill-mine-01-attempt-1.tape.json",
+        "artifacts/gauntlet-heat2-20260824/codex-luna/e1-baron-e1-baron-01-attempt-1.tape.json"
+      ],
+      "matches": 96
+    },
+    {
+      "pattern": "artifacts/gauntlet-heat5-20260824",
+      "from": [
+        "scripts/assay-replay.test.mjs:110 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/gauntlet-heat5-20260824/e2-hill-mine/winning-tape.json"
+      ],
+      "matches": 154
+    },
+    {
+      "pattern": "artifacts/gauntlet-heat5b-20260825",
+      "from": [
+        "scripts/assay-replay.test.mjs:78 (unclassified-in-a-test)",
+        "scripts/assay-replay.test.mjs:82 (readFileSync)"
+      ],
+      "promotedFrom": [
+        "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/winning-tape.json",
+        "artifacts/gauntlet-heat5b-20260825/e2-hill-mine/winning-tape.json"
+      ],
+      "matches": 68
+    },
+    {
+      "pattern": "artifacts/gauntlet-heat6-20260825",
+      "from": [
+        "scripts/test-standings.mjs:1508 (readFileSync)"
+      ],
+      "promotedFrom": [
+        "artifacts/gauntlet-heat6-20260825/e1-baron/run-*-tape.json"
+      ],
+      "matches": 108
+    },
+    {
+      "pattern": "artifacts/gauntlet-heat6-guests-r2-20260825",
+      "from": [
+        "e2e/agent-reels.spec.ts:13 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/gauntlet-heat6-guests-r2-20260825/openclaw/hill-mine/attempt-3.tape.json"
+      ],
+      "matches": 338
+    },
+    {
+      "pattern": "artifacts/gauntlet-heat7-20260830",
+      "from": [
+        "e2e/agent-reels.spec.ts:12 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/gauntlet-heat7-20260830/baron/run-1-tape.json"
+      ],
+      "matches": 25
+    },
+    {
+      "pattern": "artifacts/gazette-welcome",
+      "from": [
+        "e2e/gazette-welcome.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/gg-04-gazette-controls",
+      "from": [
+        "e2e/gazette-first-issue.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/gone.txt",
+      "from": [
+        "scripts/withheld-evidence-audit-guard.test.mjs:73 (unclassified-in-a-test)",
+        "scripts/withheld-evidence-audit-guard.test.mjs:197 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/gt-02",
+      "from": [
+        "e2e/gt-02-slope.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/gt-02b",
+      "from": [
+        "e2e/gt-02-slope.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/gt-03",
+      "from": [
+        "e2e/gt-03-enemy-elevation.spec.ts:38 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 6
+    },
+    {
+      "pattern": "artifacts/gt-04",
+      "from": [
+        "e2e/gt-04-sightlines.spec.ts:14 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/gt-05",
+      "from": [
+        "e2e/gt-05-water-depth.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 6
+    },
+    {
+      "pattern": "artifacts/gz-02",
+      "from": [
+        "e2e/gz-02-news-page.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/gz-h1-newsie",
+      "from": [
+        "e2e/gz-h1-newsie.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/herald-class-map",
+      "from": [
+        "e2e/gazette-art-wiring.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/here.txt",
+      "from": [
+        "scripts/withheld-evidence-audit-guard.test.mjs:72 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/hero-move-verb",
+      "from": [
+        "scripts/hero-move-verb.test.mjs:244 (new URL)",
+        "scripts/hero-move-verb.test.mjs:251 (new URL)"
+      ],
+      "promotedFrom": [
+        "artifacts/hero-move-verb/kite-01.tape.json",
+        "artifacts/hero-move-verb/kite-01.replay.json"
+      ],
+      "matches": 55
+    },
+    {
+      "pattern": "artifacts/hero-poses",
+      "from": [
+        "e2e/hero-pose-library.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/hill-mine-relief",
+      "from": [
+        "e2e/e2-hill-mine.spec.ts:12 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/indented-not-emitted.txt",
+      "from": [
+        "scripts/withheld-evidence-audit-guard.test.mjs:87 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/kept.txt",
+      "from": [
+        "scripts/withheld-evidence-audit-guard.test.mjs:61 (unclassified-in-a-test)",
+        "scripts/withheld-evidence-audit-guard.test.mjs:71 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/landmark-brightness",
+      "from": [
+        "e2e/landmark-brightness.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/landmark-lighting-calibration",
+      "from": [
+        "e2e/landmark-brightness.spec.ts:134 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 112
+    },
+    {
+      "pattern": "artifacts/lane-c-activations",
+      "from": [
+        "e2e/lane-c-activations-assay-office.spec.ts:21 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/lane-gold-quantization",
+      "from": [
+        "e2e/lane-gold-quantization.spec.ts:45 (mkdirSync)",
+        "e2e/lane-gold-quantization.spec.ts:46 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/lane-gold-quantization/after-*.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/lane-landmark-collision",
+      "from": [
+        "e2e/landmark-collision.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 3
+    },
+    {
+      "pattern": "artifacts/lane-only.txt",
+      "from": [
+        "scripts/withheld-evidence-audit-guard.test.mjs:259 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/lane-roster-wiring-e7-01",
+      "from": [
+        "e2e/e7-roster.spec.ts:11 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/lane-roster-wiring-e8-01",
+      "from": [
+        "e2e/e8-roster.spec.ts:12 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/lane-roster-wiring-e9-01",
+      "from": [
+        "e2e/e9-roster.spec.ts:12 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/lantern-true-world-2",
+      "from": [
+        "e2e/lantern-true-world.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 75
+    },
+    {
+      "pattern": "artifacts/ledger-backups",
+      "from": [
+        "scripts/ledger-mirror-freshness-guard.test.mjs:289 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/ledger-era-chapters",
+      "from": [
+        "e2e/ledger-era-chapters.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/live",
+      "from": [
+        "scripts/review-evidence-scan-space-guard.test.mjs:138 (unclassified-in-a-test)",
+        "scripts/review-evidence-scan-space-guard.test.mjs:139 (unclassified-in-a-test)",
+        "scripts/review-evidence-scan-space-guard.test.mjs:140 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/live/report.txt",
+        "artifacts/live/report.txt"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/live-seed-rotation-1",
+      "from": [
+        "e2e/live-seed-rotation.spec.ts:33 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 21
+    },
+    {
+      "pattern": "artifacts/local.log",
+      "from": [
+        "scripts/census-bucket-ownership-guard.test.mjs:69 (unclassified-in-a-test)",
+        "scripts/census-bucket-ownership-guard.test.mjs:82 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/locked-win",
+      "from": [
+        "e2e/locked-win.spec.ts:11 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/m3-05b-run-ledger",
+      "from": [
+        "e2e/m3-05b-run-ledger.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/m4-07",
+      "from": [
+        "e2e/m4-06-embodiment.spec.ts:53 (mkdirSync)",
+        "e2e/m4-06-embodiment.spec.ts:54 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/m4-07/*-*.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/m4-07-panel",
+      "from": [
+        "e2e/m4-07-prospector-panel.spec.ts:42 (mkdirSync)",
+        "e2e/m4-07-prospector-panel.spec.ts:43 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/m4-07-panel/*.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/m4-08-attribution",
+      "from": [
+        "e2e/m4-08-agent-attribution.spec.ts:76 (mkdirSync)",
+        "e2e/m4-08-agent-attribution.spec.ts:77 (screenshot path)",
+        "e2e/m4-08-agent-attribution.spec.ts:78 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/m4-08-attribution/*.png",
+        "artifacts/m4-08-attribution/*.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/m4-10",
+      "from": [
+        "e2e/m4-10-agent-actions-integrity.spec.ts:50 (mkdirSync)",
+        "e2e/m4-10-agent-actions-integrity.spec.ts:51 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/m4-10/*-*.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/m4-re-land",
+      "from": [
+        "e2e/m4-06-embodiment.spec.ts:48 (mkdirSync)",
+        "e2e/m4-06-embodiment.spec.ts:49 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/m4-re-land/*-*.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/map-census",
+      "from": [
+        "e2e/map-census.spec.ts:22 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/map-census/table.md"
+      ],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/meta-presence",
+      "from": [
+        "e2e/meta-presence.spec.ts:8 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/mill-horizon-copy",
+      "from": [
+        "e2e/release-build.spec.ts:150 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/mp-02",
+      "from": [
+        "e2e/mp-02-lockstep.spec.ts:20 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/mp-03",
+      "from": [
+        "e2e/mp-02-lockstep.spec.ts:21 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/mp-04",
+      "from": [
+        "e2e/mp-02-lockstep.spec.ts:22 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/mp-quad",
+      "from": [
+        "e2e/mp-02-lockstep.spec.ts:23 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/mp-ride-lobby",
+      "from": [
+        "e2e/mp-ride-lobby.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/multiplayer-relay",
+      "from": [
+        "scripts/lane-usable-dirt-parse.test.mjs:26 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/multiplayer-relay/test-multiplayer.json"
+      ],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/night-bite",
+      "from": [
+        "e2e/e1-night-shift.spec.ts:21 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/night-doctrine",
+      "from": [
+        "e2e/night-light-doctrine.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/night-dusk",
+      "from": [
+        "e2e/e1-night-shift.spec.ts:23 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/night-lanterns",
+      "from": [
+        "e2e/e1-night-shift.spec.ts:22 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/night-shift-river",
+      "from": [
+        "e2e/w1-02-living-water.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/night3d-perf",
+      "from": [
+        "e2e/night3d-perf.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/open-maps-acceptance-e1-e4",
+      "from": [
+        "e2e/playability-secure.spec.ts:63 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 12
+    },
+    {
+      "pattern": "artifacts/party-pot-anchor",
+      "from": [
+        "e2e/mp-06-party-overview.spec.ts:14 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/pb02",
+      "from": [
+        "e2e/pb02-replay-actor.spec.ts:114 (unclassified-in-a-test)",
+        "e2e/pb02-replay-actor.spec.ts:115 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/pb02/*-replay.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/perf-05",
+      "from": [
+        "e2e/perf-05-startup.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/perf-e1-r2",
+      "from": [
+        "e2e/perf-r2-census.rig.ts:15 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 20
+    },
+    {
+      "pattern": "artifacts/perf-survey",
+      "from": [
+        "scripts/perf-survey/memory.mjs:54 (new URL)"
+      ],
+      "promotedFrom": [
+        "artifacts/perf-survey/town-memory.png"
+      ],
+      "matches": 826
+    },
+    {
+      "pattern": "artifacts/playability-smoke",
+      "from": [
+        "e2e/playability-smoke.spec.ts:71 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 177
+    },
+    {
+      "pattern": "artifacts/prefetch-bounded-warming",
+      "from": [
+        "e2e/advance-stream.spec.ts:121 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/prefetch-bounded-warming/settings-*.png"
+      ],
+      "matches": 65
+    },
+    {
+      "pattern": "artifacts/preview-unlock-all",
+      "from": [
+        "e2e/preview-unlock-all.spec.ts:36 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 10
+    },
+    {
+      "pattern": "artifacts/probe",
+      "from": [
+        "scripts/modified-tracked-evidence-census-guard.test.mjs:56 (unclassified-in-a-test)",
+        "scripts/modified-tracked-evidence-census-guard.test.mjs:269 (unclassified-in-a-test)",
+        "scripts/modified-tracked-evidence-census-guard.test.mjs:322 (unclassified-in-a-test)",
+        "scripts/modified-tracked-evidence-census-guard.test.mjs:322 (unclassified-in-a-test)",
+        "scripts/modified-tracked-evidence-census-guard.test.mjs:405 (unclassified-in-a-test)",
+        "scripts/modified-tracked-evidence-census-guard.test.mjs:411 (unclassified-in-a-test)",
+        "scripts/modified-tracked-evidence-census-guard.test.mjs:412 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:183 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:192 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:219 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:230 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:267 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:301 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:332 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:351 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:375 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:393 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:420 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:452 (unclassified-in-a-test)",
+        "scripts/untracked-evidence-durability-guard.test.mjs:477 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/probe/second.log",
+        "artifacts/probe/evidence.log",
+        "artifacts/probe/evidence.log",
+        "artifacts/probe/second.log",
+        "artifacts/probe/third.log",
+        "artifacts/probe/third.log",
+        "artifacts/probe/evidence.log",
+        "artifacts/probe/a.log",
+        "artifacts/probe/a.log",
+        "artifacts/probe/orphan.bin",
+        "artifacts/probe/orphan.bin",
+        "artifacts/probe/big.bin",
+        "artifacts/probe/claim.bin",
+        "artifacts/probe/live.bin",
+        "artifacts/probe/untracked-risk.bin",
+        "artifacts/probe/lost.bin",
+        "artifacts/probe/theirs.bin",
+        "artifacts/probe/j.bin",
+        "artifacts/probe/lost.bin",
+        "artifacts/probe/theirs.bin"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/process-e2-building-art",
+      "from": [
+        "e2e/process-e2-building-art.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/profile-first-boot",
+      "from": [
+        "e2e/profile-first-boot.spec.ts:11 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/prospector-presence",
+      "from": [
+        "e2e/m4-06-embodiment.spec.ts:58 (mkdirSync)",
+        "e2e/m4-06-embodiment.spec.ts:59 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/prospector-presence/*-*.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/railcar-reference-art",
+      "from": [
+        "e2e/fix-e2-railcar-read.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/raise-at-site",
+      "from": [
+        "e2e/072-era-activation.spec.ts:20 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/research-impact-law",
+      "from": [
+        "e2e/research-impact-law.spec.ts:10 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/research-inheritance",
+      "from": [
+        "e2e/research-inheritance.spec.ts:14 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/rider-parity-grammar",
+      "from": [
+        "scripts/relay-rush-reel.test.mjs:75 (unclassified-in-a-test)",
+        "scripts/rider-parity-retirement.test.mjs:39 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/rider-parity-grammar/retirement-ledger.json",
+        "artifacts/rider-parity-grammar/retirement-ledger.json"
+      ],
+      "matches": 24
+    },
+    {
+      "pattern": "artifacts/river-assay-1",
+      "from": [
+        "e2e/river-ending-score.spec.ts:68 (unclassified-in-a-test)",
+        "scripts/river-assay.test.mjs:37 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/river-assay-1/spec",
+        "artifacts/river-assay-1/fixtures/river-reel-desktop.json"
+      ],
+      "matches": 348
+    },
+    {
+      "pattern": "artifacts/run",
+      "from": [
+        "scripts/review-evidence-scan-space-guard.test.mjs:90 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/run/report.md"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/run-cast-scale-up",
+      "from": [
+        "e2e/run-cast-scale-up.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/run-gait-stride",
+      "from": [
+        "e2e/run-gait-stride.spec.ts:6 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 3
+    },
+    {
+      "pattern": "artifacts/run-scene-animation-refresh",
+      "from": [
+        "e2e/run-scene-animation-refresh.spec.ts:26 (mkdirSync)",
+        "e2e/run-scene-animation-refresh.spec.ts:28 (unclassified-in-a-test)",
+        "e2e/run-scene-animation-refresh.spec.ts:64 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/run-suspend",
+      "from": [
+        "e2e/run-suspend.spec.ts:8 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/run3d-assay-bench",
+      "from": [
+        "e2e/run3d-assay-bench.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/run3d-boiler-house",
+      "from": [
+        "e2e/run3d-boiler-house.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/run3d-gold-seam",
+      "from": [
+        "e2e/run3d-gold-seam.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/run3d-interaction",
+      "from": [
+        "e2e/run3d-interaction.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/run3d-lantern-post",
+      "from": [
+        "e2e/run3d-lantern-post.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/run3d-palisade",
+      "from": [
+        "e2e/run3d-palisade.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/run3d-rail-elements",
+      "from": [
+        "e2e/run3d-rail-elements.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 9
+    },
+    {
+      "pattern": "artifacts/run3d-sentry-beacon",
+      "from": [
+        "e2e/run3d-sentry-beacon.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/run3d-sluice",
+      "from": [
+        "e2e/run3d-sluice.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/run3d-stockpile",
+      "from": [
+        "e2e/run3d-stockpile.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/run3d-turret",
+      "from": [
+        "e2e/run3d-turret.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/s1146-drain-gate.txt",
+      "from": [
+        "scripts/tmp-s1146-gate.mjs:51 (writeFileSync)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/same-laws-harvest-parity",
+      "from": [
+        "e2e/same-laws-harvest-parity.spec.ts:15 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 3
+    },
+    {
+      "pattern": "artifacts/save-slots",
+      "from": [
+        "e2e/save-slots.spec.ts:9 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/save-visibility",
+      "from": [
+        "e2e/run-suspend.spec.ts:9 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/sci-02",
+      "from": [
+        "e2e/sci-02-families-mastery.spec.ts:8 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/sci-ceiling",
+      "from": [
+        "e2e/sci-01-research-loop.spec.ts:9 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/sci-copy",
+      "from": [
+        "e2e/sci-01-research-loop.spec.ts:8 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/seam-anim-mp",
+      "from": [
+        "e2e/mp-02-lockstep.spec.ts:24 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 9
+    },
+    {
+      "pattern": "artifacts/shared-atlas-dedupe",
+      "from": [
+        "e2e/shared-atlas-dedupe.spec.ts:6 (unclassified-in-a-test)",
+        "e2e/shared-atlas-dedupe.spec.ts:55 (unclassified-in-a-test)",
+        "e2e/shared-atlas-dedupe.spec.ts:55 (import)",
+        "e2e/shared-atlas-dedupe.spec.ts:96 (unclassified-in-a-test)",
+        "e2e/shared-atlas-dedupe.spec.ts:96 (import)",
+        "e2e/shared-atlas-dedupe.spec.ts:100 (unclassified-in-a-test)",
+        "e2e/shared-atlas-dedupe.spec.ts:100 (import)"
+      ],
+      "promotedFrom": [
+        "artifacts/shared-atlas-dedupe/browser-harness.ts",
+        "artifacts/shared-atlas-dedupe/browser-harness",
+        "artifacts/shared-atlas-dedupe/browser-harness.ts",
+        "artifacts/shared-atlas-dedupe/browser-harness",
+        "artifacts/shared-atlas-dedupe/browser-harness.ts",
+        "artifacts/shared-atlas-dedupe/browser-harness"
+      ],
+      "matches": 68
+    },
+    {
+      "pattern": "artifacts/shore-truth",
+      "from": [
+        "e2e/shore-truth.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/small-fixes-1",
+      "from": [
+        "e2e/account-card-privacy-link.spec.ts:16 (outDir)"
+      ],
+      "promotedFrom": [
+        "artifacts/small-fixes-1/shots"
+      ],
+      "matches": 41
+    },
+    {
+      "pattern": "artifacts/sol/map-art-campaign-2/run-6/*/capture-config.json",
+      "from": [
+        "scripts/phone-hud-entry-census.mjs:66 (readFileSync)"
+      ],
+      "promotedFrom": [],
+      "matches": 16
+    },
+    {
+      "pattern": "artifacts/sol/map-art-campaign-2/run-8/phone-hud/after.json",
+      "from": [
+        "scripts/phone-hud-entry-census.test.mjs:41 (readFileSync)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/sol/map-art-campaign-2/run-8/phone-hud/before.json",
+      "from": [
+        "scripts/phone-hud-entry-census.test.mjs:40 (readFileSync)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/sol/mp-balance-harness",
+      "from": [
+        "e2e/mp-balance-harness.spec.ts:3 (import)"
+      ],
+      "promotedFrom": [
+        "artifacts/sol/mp-balance-harness/first-report.json"
+      ],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/sol/mp-snapshot-completeness",
+      "from": [
+        "e2e/restore-validation.spec.ts:20 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/sol/open-findings",
+      "from": [
+        "e2e/f-astra-6-plain-boot.spec.ts:35 (unclassified-in-a-test)",
+        "e2e/f-astra-6-transparency.rig.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 61
+    },
+    {
+      "pattern": "artifacts/sol/play-proofs",
+      "from": [
+        "e2e/native-proofs/driver.ts:913 (unclassified-in-a-test)",
+        "e2e/native-proofs/e1-drill-yard.spec.ts:6 (import)",
+        "e2e/native-proofs/e1-drill-yard.spec.ts:10 (unclassified-in-a-test)",
+        "e2e/native-proofs/e1-dry-gulch.spec.ts:5 (import)",
+        "e2e/native-proofs/e1-dry-gulch.spec.ts:14 (unclassified-in-a-test)",
+        "e2e/native-proofs/e1-night-shift.spec.ts:5 (import)",
+        "e2e/native-proofs/e1-night-shift.spec.ts:14 (unclassified-in-a-test)",
+        "e2e/native-proofs/e1-twin-banks.spec.ts:37 (unclassified-in-a-test)",
+        "e2e/native-proofs/e1-twin-banks.spec.ts:50 (unclassified-in-a-test)",
+        "e2e/native-proofs/e10-river-ending.spec.ts:26 (unclassified-in-a-test)",
+        "e2e/native-proofs/e2-hill-mine.spec.ts:5 (import)",
+        "e2e/native-proofs/e2-hill-mine.spec.ts:14 (unclassified-in-a-test)",
+        "e2e/native-proofs/e2-incline.spec.ts:12 (unclassified-in-a-test)",
+        "e2e/native-proofs/e2-trestle.spec.ts:5 (import)",
+        "e2e/native-proofs/e2-trestle.spec.ts:14 (unclassified-in-a-test)",
+        "e2e/native-proofs/e3-moth-season.spec.ts:5 (import)",
+        "e2e/native-proofs/e3-moth-season.spec.ts:14 (unclassified-in-a-test)",
+        "e2e/native-proofs/e9-old-canal.spec.ts:31 (unclassified-in-a-test)",
+        "e2e/native-proofs/e9-old-canal.spec.ts:44 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/sol/play-proofs/run-*",
+        "artifacts/sol/play-proofs/run-11/board-entry",
+        "artifacts/sol/play-proofs/run-11/e1-drill-yard",
+        "artifacts/sol/play-proofs/run-11/board-entry",
+        "artifacts/sol/play-proofs/run-*/*",
+        "artifacts/sol/play-proofs/run-11/board-entry",
+        "artifacts/sol/play-proofs/run-*/*",
+        "artifacts/sol/play-proofs/run-*/e1-twin-banks",
+        "artifacts/sol/play-proofs/run-*/e1-twin-banks",
+        "artifacts/sol/play-proofs/run-7/e10-river",
+        "artifacts/sol/play-proofs/run-11/board-entry",
+        "artifacts/sol/play-proofs/run-*/*",
+        "artifacts/sol/play-proofs/run-*/e2-incline",
+        "artifacts/sol/play-proofs/run-11/board-entry",
+        "artifacts/sol/play-proofs/run-*/*",
+        "artifacts/sol/play-proofs/run-11/board-entry",
+        "artifacts/sol/play-proofs/run-*/*",
+        "artifacts/sol/play-proofs/run-*/e9-old-canal",
+        "artifacts/sol/play-proofs/run-*/e9-old-canal"
+      ],
+      "matches": 793
+    },
+    {
+      "pattern": "artifacts/sol/wave-lane-b",
+      "from": [
+        "e2e/agent-view.spec.ts:751 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/sol/wave-lane-b/regatta-view-parity/view-*.png"
+      ],
+      "matches": 58
+    },
+    {
+      "pattern": "artifacts/ss-01",
+      "from": [
+        "e2e/ss-01-beats.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/ss-02",
+      "from": [
+        "e2e/ss-02-beats.spec.ts:11 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/stamp-site-read",
+      "from": [
+        "e2e/e2-stamp-mill.spec.ts:11 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/stream-capture",
+      "from": [
+        "scripts/stream-curate.mjs:43 (outDir)",
+        "scripts/stream-curate.test.mjs:39 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 3
+    },
+    {
+      "pattern": "artifacts/survive-copy",
+      "from": [
+        "e2e/contract-briefings.spec.ts:36 (unclassified-in-a-test)",
+        "e2e/pause-goal-progress.spec.ts:5 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 12
+    },
+    {
+      "pattern": "artifacts/t1",
+      "from": [
+        "scripts/attended-land.test.mjs:26 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/tape-pause-fix-1",
+      "from": [
+        "e2e/river-ending-score.spec.ts:582 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/tape-pause-fix-1/spec"
+      ],
+      "matches": 47
+    },
+    {
+      "pattern": "artifacts/task-027-payout.png",
+      "from": [
+        "e2e/task-027-victory-must-matter.spec.ts:89 (screenshot path)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/terrain-seamless",
+      "from": [
+        "e2e/terrain-seamless.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/terrain3d-claim-pilot",
+      "from": [
+        "e2e/terrain3d-claim-pilot.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/terrain3d-default",
+      "from": [
+        "e2e/terrain3d-default.spec.ts:163 (unclassified-in-a-test)",
+        "e2e/terrain3d-default.spec.ts:164 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/terrain3d-default/p95-*.json"
+      ],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/terrain3d-registry",
+      "from": [
+        "e2e/terrain3d-registry.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 6
+    },
+    {
+      "pattern": "artifacts/territory-kit",
+      "from": [
+        "e2e/task-046-territory-ring-pacing.spec.ts:11 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/tile-identity",
+      "from": [
+        "e2e/tile-identity-pass.spec.ts:12 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/tl-01",
+      "from": [
+        "e2e/tl-01-run-telemetry.spec.ts:16 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/tl-02",
+      "from": [
+        "e2e/tl-02-public-stats.spec.ts:18 (unclassified-in-a-test)",
+        "e2e/tl-03-assay-office-site.spec.ts:20 (unclassified-in-a-test)",
+        "e2e/tl-03-assay-office-site.spec.ts:21 (unclassified-in-a-test)",
+        "e2e/tl-03b-ledger-stats-window.spec.ts:83 (readFile)"
+      ],
+      "promotedFrom": [
+        "artifacts/tl-02/desktop-chrome-populated-response.json",
+        "artifacts/tl-02/desktop-chrome-empty-response.json",
+        "artifacts/tl-02/desktop-chrome-populated-response.json"
+      ],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/tl-03",
+      "from": [
+        "e2e/tl-03-assay-office-site.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/tl-03b",
+      "from": [
+        "e2e/tl-03b-ledger-stats-window.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/town-blender-v3",
+      "from": [
+        "e2e/town-tavern-blender.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 12
+    },
+    {
+      "pattern": "artifacts/town-cast-rulings-a13-a17",
+      "from": [
+        "e2e/town-t5-townsfolk.spec.ts:25 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/town-colliders",
+      "from": [
+        "e2e/never-trap.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/town-era-switch",
+      "from": [
+        "e2e/town-era-switch.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 6
+    },
+    {
+      "pattern": "artifacts/town-fresh-boot",
+      "from": [
+        "e2e/town-fresh-boot-textures.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/town-scale-zoom",
+      "from": [
+        "e2e/town-scale-zoom.spec.ts:27 (unclassified-in-a-test)",
+        "e2e/town-scale-zoom.spec.ts:28 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/town-scale-zoom/town-after-1440x900.png"
+      ],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/town-t1",
+      "from": [
+        "e2e/town-t1-square.spec.ts:5 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/town-t2",
+      "from": [
+        "e2e/town-t2-naming.spec.ts:7 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/town-t4",
+      "from": [
+        "e2e/town-t4-growth.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/town-t5",
+      "from": [
+        "e2e/town-t5-townsfolk.spec.ts:18 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/town-t6",
+      "from": [
+        "e2e/town-t6-surfaces.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/town-zoom",
+      "from": [
+        "e2e/cast-motion-wiring.spec.ts:10 (unclassified-in-a-test)",
+        "e2e/town-inhabitant-zoom.spec.ts:12 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/town3d-assay-office",
+      "from": [
+        "e2e/town-assay-office-blender.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 8
+    },
+    {
+      "pattern": "artifacts/town3d-chapel",
+      "from": [
+        "e2e/town-chapel-blender.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/town3d-claim-office",
+      "from": [
+        "e2e/town-claim-office-blender.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/town3d-dynamo-hall",
+      "from": [
+        "e2e/town-dynamo-hall-blender.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 17
+    },
+    {
+      "pattern": "artifacts/town3d-general-store",
+      "from": [
+        "e2e/town-general-store-blender.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 8
+    },
+    {
+      "pattern": "artifacts/town3d-plaza-props",
+      "from": [
+        "e2e/town-plaza-props-blender.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/town3d-schoolhouse",
+      "from": [
+        "e2e/town-schoolhouse-blender.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 7
+    },
+    {
+      "pattern": "artifacts/town3d-stamp-mill",
+      "from": [
+        "e2e/town-stamp-mill-blender.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 16
+    },
+    {
+      "pattern": "artifacts/tr-01",
+      "from": [
+        "e2e/tr-01-continuous-ground.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/tr-02",
+      "from": [
+        "e2e/tr-02-splat-ground.spec.ts:10 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/trail-guide-beat-priority",
+      "from": [
+        "e2e/trail-guide-beat-priority.spec.ts:88 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/trail-guide-beat-priority/*-storm.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/trail-guide-plain-boot",
+      "from": [
+        "e2e/trail-guide-plain-boot.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/ts-01",
+      "from": [
+        "e2e/ts-01-plaza-ground.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/ts-02b-facades",
+      "from": [
+        "e2e/town-ts-02b-facades.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/ts-03-prop-ring",
+      "from": [
+        "e2e/town-ts-03-prop-ring.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 4
+    },
+    {
+      "pattern": "artifacts/ts-04-living-pass",
+      "from": [
+        "e2e/ts-04-living-pass.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/ui-era-dressing",
+      "from": [
+        "e2e/ui-era-dressing.spec.ts:162 (unclassified-in-a-test)",
+        "e2e/ui-era-dressing.spec.ts:163 (screenshot path)"
+      ],
+      "promotedFrom": [
+        "artifacts/ui-era-dressing/*-*.png"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/ux-entry-robustness-1",
+      "from": [
+        "e2e/entry-params.spec.ts:19 (outDir)"
+      ],
+      "promotedFrom": [],
+      "matches": 58
+    },
+    {
+      "pattern": "artifacts/vfx-layering",
+      "from": [
+        "e2e/vfx-layering.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/w1-05",
+      "from": [
+        "e2e/w1-05-building-shells.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/wardrobe-preview",
+      "from": [
+        "e2e/tailor-wagon.spec.ts:13 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/wire-crawler-3d",
+      "from": [
+        "e2e/wire-crawler-3d.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 13
+    },
+    {
+      "pattern": "artifacts/wire-e2-enemy-walk4",
+      "from": [
+        "e2e/wire-e2-enemy-walk4.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 1
+    },
+    {
+      "pattern": "artifacts/wire-era-anchor-emitters",
+      "from": [
+        "e2e/wire-era-anchor-emitters.spec.ts:9 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/wire-landmark-mounts",
+      "from": [
+        "e2e/terrain3d-registry.spec.ts:8 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 2
+    },
+    {
+      "pattern": "artifacts/wire-railcar-3d",
+      "from": [
+        "e2e/wire-railcar-3d.spec.ts:6 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 13
+    },
+    {
+      "pattern": "artifacts/wire-town-plate",
+      "from": [
+        "e2e/town-plate-blender.spec.ts:7 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 5
+    },
+    {
+      "pattern": "artifacts/world-info-notes",
+      "from": [
+        "e2e/world-info-notes.spec.ts:17 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/x",
+      "from": [
+        "scripts/review-evidence-audit.test.mjs:33 (unclassified-in-a-test)",
+        "scripts/review-evidence-audit.test.mjs:33 (unclassified-in-a-test)",
+        "scripts/review-evidence-audit.test.mjs:39 (unclassified-in-a-test)",
+        "scripts/review-evidence-audit.test.mjs:39 (unclassified-in-a-test)",
+        "scripts/review-evidence-audit.test.mjs:48 (unclassified-in-a-test)",
+        "scripts/review-evidence-audit.test.mjs:54 (unclassified-in-a-test)",
+        "scripts/review-evidence-audit.test.mjs:60 (unclassified-in-a-test)",
+        "scripts/review-evidence-audit.test.mjs:60 (unclassified-in-a-test)",
+        "scripts/review-evidence-audit.test.mjs:69 (unclassified-in-a-test)",
+        "scripts/review-evidence-crash-exit-guard.test.mjs:66 (unclassified-in-a-test)",
+        "scripts/review-evidence-crash-exit-guard.test.mjs:89 (unclassified-in-a-test)",
+        "scripts/review-evidence-crash-exit-guard.test.mjs:99 (unclassified-in-a-test)",
+        "scripts/review-evidence-crash-exit-guard.test.mjs:99 (unclassified-in-a-test)",
+        "scripts/review-evidence-crash-exit-guard.test.mjs:100 (unclassified-in-a-test)",
+        "scripts/review-evidence-crash-exit-guard.test.mjs:101 (unclassified-in-a-test)",
+        "scripts/review-evidence-crash-exit-guard.test.mjs:108 (unclassified-in-a-test)",
+        "scripts/review-evidence-crash-exit-guard.test.mjs:109 (unclassified-in-a-test)",
+        "scripts/review-evidence-scan-space-guard.test.mjs:59 (unclassified-in-a-test)",
+        "scripts/review-evidence-scan-space-guard.test.mjs:60 (unclassified-in-a-test)",
+        "scripts/review-evidence-scan-space-guard.test.mjs:74 (unclassified-in-a-test)",
+        "scripts/review-evidence-scan-space-guard.test.mjs:75 (unclassified-in-a-test)",
+        "scripts/review-evidence-scan-space-guard.test.mjs:153 (unclassified-in-a-test)",
+        "scripts/review-evidence-scan-space-guard.test.mjs:154 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [
+        "artifacts/x/report.txt",
+        "artifacts/x/report.txt",
+        "artifacts/x/run-01.txt",
+        "artifacts/x/run.log",
+        "artifacts/x/run-{01..12}.log",
+        "artifacts/x/report.md",
+        "artifacts/x/report.md",
+        "artifacts/x/run.log",
+        "artifacts/x/report.txt",
+        "artifacts/x/report.txt",
+        "artifacts/x/keep.txt",
+        "artifacts/x/log.txt",
+        "artifacts/x/log.txt",
+        "artifacts/x/log.txt",
+        "artifacts/x/report.txt",
+        "artifacts/x/report.txt",
+        "artifacts/x/report.txt",
+        "artifacts/x/report.txt",
+        "artifacts/x/report.txt",
+        "artifacts/x/report.txt",
+        "artifacts/x/report.txt",
+        "artifacts/x/report.txt"
+      ],
+      "matches": 0
+    },
+    {
+      "pattern": "artifacts/x.txt",
+      "from": [
+        "scripts/withheld-evidence-audit-guard.test.mjs:234 (unclassified-in-a-test)",
+        "scripts/withheld-evidence-audit-guard.test.mjs:297 (unclassified-in-a-test)"
+      ],
+      "promotedFrom": [],
+      "matches": 0
+    }
+  ],
+  "unresolved": [
+    {
+      "file": "e2e/044-start-screen.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/044",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/045-megaproject.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/045",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/050-audio-mix-and-access.spec.ts",
+      "line": 5,
+      "pattern": "artifacts/050",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/054-baron-epic.spec.ts",
+      "line": 34,
+      "pattern": "artifacts/054",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/061-first-claim-onboarding.spec.ts",
+      "line": 14,
+      "pattern": "artifacts/061",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/072-era-activation.spec.ts",
+      "line": 20,
+      "pattern": "artifacts/raise-at-site",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/accounts-sync.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/ac-02",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/assay-ledger-page.spec.ts",
+      "line": 76,
+      "pattern": "artifacts/assay-ledger-page",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/assay-ledger.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/assay-ledger",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/assay-season-roll.spec.ts",
+      "line": 18,
+      "pattern": "artifacts/assay-season-roll",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/audio-integration.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/audio-integration",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/beauty-town.spec.ts",
+      "line": 248,
+      "pattern": "artifacts/era-lights",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/board-era-chapters.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/board-era-chapters",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/board-upcoming-surveys.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/board-upcoming",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/bug-office-desk.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/bug-office-desk",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/cast-motion-wiring.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/cast-metrology",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/cast-motion-wiring.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/town-zoom",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/cold-anchor-rule.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/cold-anchor-rule",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/combat-readability.spec.ts",
+      "line": 23,
+      "pattern": "artifacts/correctives-0707",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/cosmetic-grants.spec.ts",
+      "line": 16,
+      "pattern": "artifacts/cosmetic-grants",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/cw-02-escort.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/cw-02-escort",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/drill-yard.spec.ts",
+      "line": 22,
+      "pattern": "artifacts/drill-yard-affordances",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/e1-dry-gulch.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/e1-dry-gulch",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/e1-twin-banks.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/e1-twin-banks",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/e10-research-tree.spec.ts",
+      "line": 21,
+      "pattern": "artifacts/e10-research-tree",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e2-clarity-and-wreckers.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/e2-clarity-and-wreckers",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e2-hill-mine.spec.ts",
+      "line": 12,
+      "pattern": "artifacts/hill-mine-relief",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/e2-pressure-in-run.spec.ts",
+      "line": 5,
+      "pattern": "artifacts/e2-pressure-in-run",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/e2-stamp-mill.spec.ts",
+      "line": 11,
+      "pattern": "artifacts/stamp-site-read",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/e2-t2-dynamo-ceremony.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/e2-t2-dynamo-ceremony",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/e3-blackout-ridge.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/blackout-ridge",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e3-fairground-flocks.spec.ts",
+      "line": 18,
+      "pattern": "artifacts/e3-fairground-flocks",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e3-power-graph.spec.ts",
+      "line": 4,
+      "pattern": "artifacts/e3-power-graph",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e3-power-prototype.spec.ts",
+      "line": 13,
+      "pattern": "artifacts/e3-power-prototype",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e3-tram.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/e3-tram",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e3-wire-spans.spec.ts",
+      "line": 4,
+      "pattern": "artifacts/e3-wire-spans",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e4-dust-flats.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/e4-dust-flats",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e4-research-tree.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/e4-research-tree",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e4-vehicles-fuel.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/e4-vehicles-fuel",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e5-research-tree.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/e5-research-tree",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e6-research-tree.spec.ts",
+      "line": 17,
+      "pattern": "artifacts/e6-research-tree",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e7-playbook-spike.spec.ts",
+      "line": 12,
+      "pattern": "artifacts/e7-playbook-spike",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/e7-research-tree.spec.ts",
+      "line": 18,
+      "pattern": "artifacts/e7-research-tree",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e8-mare-claim-physics-parity.spec.ts",
+      "line": 65,
+      "pattern": "artifacts/e8-mare-claim-physics/report.md.",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/e8-research-tree.spec.ts",
+      "line": 19,
+      "pattern": "artifacts/e8-research-tree",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/e9-research-tree.spec.ts",
+      "line": 20,
+      "pattern": "artifacts/e9-research-tree",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/ed-02-terrain-brush.spec.ts",
+      "line": 13,
+      "pattern": "artifacts/ed-02-terrain-brush",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/eight-winds-enemies.spec.ts",
+      "line": 5,
+      "pattern": "artifacts/eight-winds-enemies",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/eight-winds-hero.spec.ts",
+      "line": 22,
+      "pattern": "artifacts/eight-winds-hero",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/en-01-claim-ledger.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/en-01",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/en-02-e1-coverage.spec.ts",
+      "line": 21,
+      "pattern": "artifacts/en-02",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/en-02-e1-coverage.spec.ts",
+      "line": 124,
+      "pattern": "artifacts/063",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/en-02-e1-coverage.spec.ts",
+      "line": 130,
+      "pattern": "artifacts/074",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/en-03-epoch-pages.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/en-03",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/f1297-2-plain-boot-tape-button.spec.ts",
+      "line": 5,
+      "pattern": "artifacts/f1297-2-plain-boot-tape-button",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/f1467-alpha-recipe-ab.rig.ts",
+      "line": 5,
+      "pattern": "artifacts/f1467-alpha-recipe-ab/arms",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/fresh-build-toast.spec.ts",
+      "line": 4,
+      "pattern": "artifacts/fresh-build-toast",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/fresh-scene-render-state.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/fresh-scene-render-state",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/gazette-art-wiring.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/herald-class-map",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/gazette-first-issue.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/gg-04-gazette-controls",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/gazette-welcome.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/gazette-welcome",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/gz-02-news-page.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/gz-02",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/gz-h1-newsie.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/gz-h1-newsie",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/lane-c-activations-assay-office.spec.ts",
+      "line": 21,
+      "pattern": "artifacts/lane-c-activations",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/lane-gold-quantization.spec.ts",
+      "line": 45,
+      "pattern": "artifacts/lane-gold-quantization",
+      "form": "mkdirSync"
+    },
+    {
+      "file": "e2e/lane-gold-quantization.spec.ts",
+      "line": 46,
+      "pattern": "artifacts/lane-gold-quantization/after-*.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/lb-01-county-standings.spec.ts",
+      "line": 34,
+      "pattern": "artifacts/county-standings",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/ledger-era-chapters.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/ledger-era-chapters",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/locked-win.spec.ts",
+      "line": 11,
+      "pattern": "artifacts/locked-win",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/m2-01-build-menu.spec.ts",
+      "line": 27,
+      "pattern": "artifacts/056",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/m3-05b-run-ledger.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/m3-05b-run-ledger",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/m4-06-embodiment.spec.ts",
+      "line": 48,
+      "pattern": "artifacts/m4-re-land",
+      "form": "mkdirSync"
+    },
+    {
+      "file": "e2e/m4-06-embodiment.spec.ts",
+      "line": 49,
+      "pattern": "artifacts/m4-re-land/*-*.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/m4-06-embodiment.spec.ts",
+      "line": 53,
+      "pattern": "artifacts/m4-07",
+      "form": "mkdirSync"
+    },
+    {
+      "file": "e2e/m4-06-embodiment.spec.ts",
+      "line": 54,
+      "pattern": "artifacts/m4-07/*-*.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/m4-06-embodiment.spec.ts",
+      "line": 58,
+      "pattern": "artifacts/prospector-presence",
+      "form": "mkdirSync"
+    },
+    {
+      "file": "e2e/m4-06-embodiment.spec.ts",
+      "line": 59,
+      "pattern": "artifacts/prospector-presence/*-*.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/m4-07-prospector-panel.spec.ts",
+      "line": 42,
+      "pattern": "artifacts/m4-07-panel",
+      "form": "mkdirSync"
+    },
+    {
+      "file": "e2e/m4-07-prospector-panel.spec.ts",
+      "line": 43,
+      "pattern": "artifacts/m4-07-panel/*.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/m4-08-agent-attribution.spec.ts",
+      "line": 76,
+      "pattern": "artifacts/m4-08-attribution",
+      "form": "mkdirSync"
+    },
+    {
+      "file": "e2e/m4-08-agent-attribution.spec.ts",
+      "line": 77,
+      "pattern": "artifacts/m4-08-attribution/*.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/m4-08-agent-attribution.spec.ts",
+      "line": 78,
+      "pattern": "artifacts/m4-08-attribution/*.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/m4-09-agent-rung-clarity.spec.ts",
+      "line": 54,
+      "pattern": "artifacts/agent-rung-clarity",
+      "form": "mkdirSync"
+    },
+    {
+      "file": "e2e/m4-09-agent-rung-clarity.spec.ts",
+      "line": 55,
+      "pattern": "artifacts/agent-rung-clarity/*.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/m4-10-agent-actions-integrity.spec.ts",
+      "line": 50,
+      "pattern": "artifacts/m4-10",
+      "form": "mkdirSync"
+    },
+    {
+      "file": "e2e/m4-10-agent-actions-integrity.spec.ts",
+      "line": 51,
+      "pattern": "artifacts/m4-10/*-*.png",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/map-beauty-dry-gulch.spec.ts",
+      "line": 41,
+      "pattern": "artifacts/e1-dry-gulch",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/meta-presence.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/meta-presence",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/mp-02-lockstep.spec.ts",
+      "line": 23,
+      "pattern": "artifacts/mp-quad",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/mp-ride-lobby.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/mp-ride-lobby",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/native-proofs/e1-drill-yard.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/sol/play-proofs/run-11/board-entry",
+      "form": "import"
+    },
+    {
+      "file": "e2e/native-proofs/e1-drill-yard.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/sol/play-proofs/run-11/e1-drill-yard",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/native-proofs/e1-dry-gulch.spec.ts",
+      "line": 5,
+      "pattern": "artifacts/sol/play-proofs/run-11/board-entry",
+      "form": "import"
+    },
+    {
+      "file": "e2e/native-proofs/e1-night-shift.spec.ts",
+      "line": 5,
+      "pattern": "artifacts/sol/play-proofs/run-11/board-entry",
+      "form": "import"
+    },
+    {
+      "file": "e2e/native-proofs/e2-hill-mine.spec.ts",
+      "line": 5,
+      "pattern": "artifacts/sol/play-proofs/run-11/board-entry",
+      "form": "import"
+    },
+    {
+      "file": "e2e/native-proofs/e2-trestle.spec.ts",
+      "line": 5,
+      "pattern": "artifacts/sol/play-proofs/run-11/board-entry",
+      "form": "import"
+    },
+    {
+      "file": "e2e/native-proofs/e3-moth-season.spec.ts",
+      "line": 5,
+      "pattern": "artifacts/sol/play-proofs/run-11/board-entry",
+      "form": "import"
+    },
+    {
+      "file": "e2e/never-trap.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/town-colliders",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/night-light-doctrine.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/night-doctrine",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/pb02-replay-actor.spec.ts",
+      "line": 114,
+      "pattern": "artifacts/pb02",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/pb02-replay-actor.spec.ts",
+      "line": 115,
+      "pattern": "artifacts/pb02/*-replay.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/profile-first-boot.spec.ts",
+      "line": 11,
+      "pattern": "artifacts/profile-first-boot",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/release-build.spec.ts",
+      "line": 150,
+      "pattern": "artifacts/mill-horizon-copy",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/research-chart.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/060",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/research-impact-law.spec.ts",
+      "line": 10,
+      "pattern": "artifacts/research-impact-law",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/research-inheritance.spec.ts",
+      "line": 14,
+      "pattern": "artifacts/research-inheritance",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/run-suspend.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/run-suspend",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/run-suspend.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/save-visibility",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/run3d-interaction.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/run3d-interaction",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/save-slots.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/save-slots",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/sci-01-research-loop.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/sci-copy",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/sci-01-research-loop.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/sci-ceiling",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/sci-02-families-mastery.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/sci-02",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/shared-atlas-dedupe.spec.ts",
+      "line": 55,
+      "pattern": "artifacts/shared-atlas-dedupe/browser-harness",
+      "form": "import"
+    },
+    {
+      "file": "e2e/shared-atlas-dedupe.spec.ts",
+      "line": 96,
+      "pattern": "artifacts/shared-atlas-dedupe/browser-harness",
+      "form": "import"
+    },
+    {
+      "file": "e2e/shared-atlas-dedupe.spec.ts",
+      "line": 100,
+      "pattern": "artifacts/shared-atlas-dedupe/browser-harness",
+      "form": "import"
+    },
+    {
+      "file": "e2e/ss-01-beats.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/ss-01",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/story-loop.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/062",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/tailor-wagon.spec.ts",
+      "line": 13,
+      "pattern": "artifacts/wardrobe-preview",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/task-046-territory-ring-pacing.spec.ts",
+      "line": 11,
+      "pattern": "artifacts/territory-kit",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/terrain3d-registry.spec.ts",
+      "line": 311,
+      "pattern": "artifacts/fix-terrain3d-seams/after-edge-*.png",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/tl-03-assay-office-site.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/tl-03",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/tl-03b-ledger-stats-window.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/tl-03b",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/town-fresh-boot-textures.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/town-fresh-boot",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/town-inhabitant-zoom.spec.ts",
+      "line": 12,
+      "pattern": "artifacts/town-zoom",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/town-plaza-props-blender.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/town3d-plaza-props",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/town-t2-naming.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/town-t2",
+      "form": "outDir"
+    },
+    {
+      "file": "e2e/town-t3-board.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/board-full-picture",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/town-t4-growth.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/town-t4",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/town-t5-townsfolk.spec.ts",
+      "line": 18,
+      "pattern": "artifacts/town-t5",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/town-t6-surfaces.spec.ts",
+      "line": 6,
+      "pattern": "artifacts/town-t6",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/town-ts-02b-facades.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/ts-02b-facades",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/trail-guide-beat-priority.spec.ts",
+      "line": 88,
+      "pattern": "artifacts/trail-guide-beat-priority/*-storm.png",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/trail-guide-plain-boot.spec.ts",
+      "line": 7,
+      "pattern": "artifacts/trail-guide-plain-boot",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/ts-01-plaza-ground.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/ts-01",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/ui-era-dressing.spec.ts",
+      "line": 162,
+      "pattern": "artifacts/ui-era-dressing",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/ui-era-dressing.spec.ts",
+      "line": 163,
+      "pattern": "artifacts/ui-era-dressing/*-*.png",
+      "form": "screenshot path"
+    },
+    {
+      "file": "e2e/vfx-layering.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/vfx-layering",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/w1-02-living-water.spec.ts",
+      "line": 8,
+      "pattern": "artifacts/night-shift-river",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/w1-05-building-shells.spec.ts",
+      "line": 9,
+      "pattern": "artifacts/w1-05",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "e2e/world-info-notes.spec.ts",
+      "line": 17,
+      "pattern": "artifacts/world-info-notes",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/attended-land.test.mjs",
+      "line": 26,
+      "pattern": "artifacts/t1",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/census-bucket-ownership-guard.test.mjs",
+      "line": 69,
+      "pattern": "artifacts/atrisk.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/census-bucket-ownership-guard.test.mjs",
+      "line": 69,
+      "pattern": "artifacts/local.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/census-bucket-ownership-guard.test.mjs",
+      "line": 82,
+      "pattern": "artifacts/local.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/f2135-canyon-census-player.test.mjs",
+      "line": 69,
+      "pattern": "artifacts/f2135-canyon-census/scratch/run-1.json",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/ledger-mirror-freshness-guard.test.mjs",
+      "line": 289,
+      "pattern": "artifacts/ledger-backups",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/modified-tracked-evidence-census-guard.test.mjs",
+      "line": 56,
+      "pattern": "artifacts/probe/second.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/modified-tracked-evidence-census-guard.test.mjs",
+      "line": 269,
+      "pattern": "artifacts/probe/evidence.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/modified-tracked-evidence-census-guard.test.mjs",
+      "line": 322,
+      "pattern": "artifacts/probe/evidence.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/modified-tracked-evidence-census-guard.test.mjs",
+      "line": 322,
+      "pattern": "artifacts/probe/second.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/modified-tracked-evidence-census-guard.test.mjs",
+      "line": 405,
+      "pattern": "artifacts/probe/third.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/modified-tracked-evidence-census-guard.test.mjs",
+      "line": 411,
+      "pattern": "artifacts/probe/third.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/modified-tracked-evidence-census-guard.test.mjs",
+      "line": 412,
+      "pattern": "artifacts/probe/evidence.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/perf-survey/memory.mjs",
+      "line": 54,
+      "pattern": "artifacts/perf-survey/town-memory.png",
+      "form": "new URL"
+    },
+    {
+      "file": "scripts/review-evidence-audit.test.mjs",
+      "line": 33,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-audit.test.mjs",
+      "line": 33,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-audit.test.mjs",
+      "line": 39,
+      "pattern": "artifacts/x/run-01.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-audit.test.mjs",
+      "line": 39,
+      "pattern": "artifacts/x",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-audit.test.mjs",
+      "line": 48,
+      "pattern": "artifacts/x/run.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-audit.test.mjs",
+      "line": 54,
+      "pattern": "artifacts/x/run-{01..12}.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-audit.test.mjs",
+      "line": 60,
+      "pattern": "artifacts/x/report.md",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-audit.test.mjs",
+      "line": 60,
+      "pattern": "artifacts/x/report.md",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-audit.test.mjs",
+      "line": 69,
+      "pattern": "artifacts/x/run.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-crash-exit-guard.test.mjs",
+      "line": 66,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-crash-exit-guard.test.mjs",
+      "line": 89,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-crash-exit-guard.test.mjs",
+      "line": 99,
+      "pattern": "artifacts/x/keep.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-crash-exit-guard.test.mjs",
+      "line": 99,
+      "pattern": "artifacts/x/log.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-crash-exit-guard.test.mjs",
+      "line": 100,
+      "pattern": "artifacts/x/log.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-crash-exit-guard.test.mjs",
+      "line": 101,
+      "pattern": "artifacts/x/log.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-crash-exit-guard.test.mjs",
+      "line": 108,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-crash-exit-guard.test.mjs",
+      "line": 109,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 59,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 60,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 74,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 75,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 90,
+      "pattern": "artifacts/run/report.md",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 123,
+      "pattern": "artifacts/a",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 138,
+      "pattern": "artifacts/live/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 139,
+      "pattern": "artifacts/live",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 140,
+      "pattern": "artifacts/live/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 153,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/review-evidence-scan-space-guard.test.mjs",
+      "line": 154,
+      "pattern": "artifacts/x/report.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 183,
+      "pattern": "artifacts/probe/a.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 192,
+      "pattern": "artifacts/probe/a.log",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 219,
+      "pattern": "artifacts/probe/orphan.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 230,
+      "pattern": "artifacts/probe/orphan.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 267,
+      "pattern": "artifacts/probe/big.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 301,
+      "pattern": "artifacts/probe/claim.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 332,
+      "pattern": "artifacts/probe/live.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 351,
+      "pattern": "artifacts/probe/untracked-risk.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 375,
+      "pattern": "artifacts/probe/lost.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 393,
+      "pattern": "artifacts/probe/theirs.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 420,
+      "pattern": "artifacts/probe/j.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 452,
+      "pattern": "artifacts/probe/lost.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/untracked-evidence-durability-guard.test.mjs",
+      "line": 477,
+      "pattern": "artifacts/probe/theirs.bin",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/withheld-evidence-audit-guard.test.mjs",
+      "line": 61,
+      "pattern": "artifacts/kept.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/withheld-evidence-audit-guard.test.mjs",
+      "line": 71,
+      "pattern": "artifacts/kept.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/withheld-evidence-audit-guard.test.mjs",
+      "line": 72,
+      "pattern": "artifacts/here.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/withheld-evidence-audit-guard.test.mjs",
+      "line": 73,
+      "pattern": "artifacts/gone.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/withheld-evidence-audit-guard.test.mjs",
+      "line": 87,
+      "pattern": "artifacts/indented-not-emitted.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/withheld-evidence-audit-guard.test.mjs",
+      "line": 197,
+      "pattern": "artifacts/gone.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/withheld-evidence-audit-guard.test.mjs",
+      "line": 234,
+      "pattern": "artifacts/x.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/withheld-evidence-audit-guard.test.mjs",
+      "line": 259,
+      "pattern": "artifacts/lane-only.txt",
+      "form": "unclassified-in-a-test"
+    },
+    {
+      "file": "scripts/withheld-evidence-audit-guard.test.mjs",
+      "line": 297,
+      "pattern": "artifacts/x.txt",
+      "form": "unclassified-in-a-test"
+    }
+  ],
+  "artifactsTracked": 28956,
+  "mustStayFiles": 7303,
+  "movableFiles": 21653,
+  "mapOnlySubtrees": [],
+  "scanOnlySubtrees": [
+    "artifacts/044",
+    "artifacts/045",
+    "artifacts/048",
+    "artifacts/050",
+    "artifacts/052",
+    "artifacts/053",
+    "artifacts/054",
+    "artifacts/055",
+    "artifacts/056",
+    "artifacts/057",
+    "artifacts/058",
+    "artifacts/060",
+    "artifacts/061",
+    "artifacts/062",
+    "artifacts/063",
+    "artifacts/064",
+    "artifacts/065",
+    "artifacts/066",
+    "artifacts/072-era-activation",
+    "artifacts/074",
+    "artifacts/a",
+    "artifacts/ac-02",
+    "artifacts/accounts-worker",
+    "artifacts/advance-stream-cache-reuse-*.md",
+    "artifacts/advance-stream-cache-reuse-headers-*.md",
+    "artifacts/advance-stream-walkthrough-*.md",
+    "artifacts/agent-rung-clarity",
+    "artifacts/agent-seat",
+    "artifacts/assay-ledger",
+    "artifacts/assay-ledger-page",
+    "artifacts/assay-season-roll",
+    "artifacts/atrisk.log",
+    "artifacts/audio-integration",
+    "artifacts/baron-presence",
+    "artifacts/baron-props",
+    "artifacts/beauty-atmos",
+    "artifacts/beauty-baron",
+    "artifacts/beauty-dry-gulch",
+    "artifacts/beauty-town",
+    "artifacts/beauty-twin-banks",
+    "artifacts/blackout-ridge",
+    "artifacts/blast-relief",
+    "artifacts/board-era-chapters",
+    "artifacts/board-full-picture",
+    "artifacts/board-gating",
+    "artifacts/board-upcoming",
+    "artifacts/bt-02b-stockpile-tiers",
+    "artifacts/bug-office-desk",
+    "artifacts/canyon-works",
+    "artifacts/cast-metrology",
+    "artifacts/ceremony-framework",
+    "artifacts/cold-anchor-rule",
+    "artifacts/correctives-0707",
+    "artifacts/cosmetic-grants",
+    "artifacts/county-board-open-week-1",
+    "artifacts/county-standings",
+    "artifacts/cw-02-escort",
+    "artifacts/drill-yard-affordances",
+    "artifacts/drill-yard-props",
+    "artifacts/dry-gulch-relief",
+    "artifacts/e1-dry-gulch",
+    "artifacts/e1-perf-pass",
+    "artifacts/e1-twin-banks",
+    "artifacts/e10-research-tree",
+    "artifacts/e10s-2-squall",
+    "artifacts/e2-arsenal",
+    "artifacts/e2-clarity-and-wreckers",
+    "artifacts/e2-enemies",
+    "artifacts/e2-escort-mode",
+    "artifacts/e2-hill-mine",
+    "artifacts/e2-pressure",
+    "artifacts/e2-pressure-garden",
+    "artifacts/e2-pressure-in-run",
+    "artifacts/e2-rail",
+    "artifacts/e2-t2-dynamo-ceremony",
+    "artifacts/e2-trestle",
+    "artifacts/e3-07",
+    "artifacts/e3-crawler-boss",
+    "artifacts/e3-day-night",
+    "artifacts/e3-fairground",
+    "artifacts/e3-fairground-flocks",
+    "artifacts/e3-moth-swarm",
+    "artifacts/e3-power-graph",
+    "artifacts/e3-power-prototype",
+    "artifacts/e3-tram",
+    "artifacts/e3-wire-spans",
+    "artifacts/e4-convoy-weather",
+    "artifacts/e4-dust-flats",
+    "artifacts/e4-landyacht-boss",
+    "artifacts/e4-orbit-road",
+    "artifacts/e4-research-tree",
+    "artifacts/e4-roads-and-convoys",
+    "artifacts/e4-vehicles-fuel",
+    "artifacts/e5-deepwater-claim",
+    "artifacts/e5-research-tree",
+    "artifacts/e5-stillwater-front-crew-2",
+    "artifacts/e5-water-spike",
+    "artifacts/e6-picnic",
+    "artifacts/e6-research-tree",
+    "artifacts/e7-playbook-rows",
+    "artifacts/e7-playbook-spike",
+    "artifacts/e7-research-tree",
+    "artifacts/e8-mare-claim-physics",
+    "artifacts/e8-research-tree",
+    "artifacts/e9-devils-alley",
+    "artifacts/e9-old-canal",
+    "artifacts/e9-research-tree",
+    "artifacts/e9-seed-run",
+    "artifacts/ed-01",
+    "artifacts/ed-02-authored-grid",
+    "artifacts/ed-02-terrain-brush",
+    "artifacts/eh2-fixture",
+    "artifacts/eh3-fixture",
+    "artifacts/eight-winds-enemies",
+    "artifacts/eight-winds-hero",
+    "artifacts/en-01",
+    "artifacts/en-02",
+    "artifacts/en-03",
+    "artifacts/enemy-gap-flow",
+    "artifacts/era-lights",
+    "artifacts/f1148-1-trajectory",
+    "artifacts/f1158-ghostvalid-poll",
+    "artifacts/f1297-2-plain-boot-tape-button",
+    "artifacts/f1314-3-stockpile-tier-voice",
+    "artifacts/f1318-1-float-fit-class-wide",
+    "artifacts/f1319-3-terrain-seed-per-sample-url-parse",
+    "artifacts/f1467-alpha-recipe-ab",
+    "artifacts/f1486-1",
+    "artifacts/fevered-tell",
+    "artifacts/first-town-audio-deferred",
+    "artifacts/fix-dry-gulch-frozen-waves",
+    "artifacts/fix-e2-railcar-read",
+    "artifacts/fix-hillmine-rail-render",
+    "artifacts/fix-terrain3d-seams",
+    "artifacts/fort-solidity",
+    "artifacts/fresh-build-toast",
+    "artifacts/fresh-scene-render-state",
+    "artifacts/gate-battery-transcript.txt",
+    "artifacts/gazette-welcome",
+    "artifacts/gg-04-gazette-controls",
+    "artifacts/gone.txt",
+    "artifacts/gt-02",
+    "artifacts/gt-02b",
+    "artifacts/gt-03",
+    "artifacts/gt-04",
+    "artifacts/gt-05",
+    "artifacts/gz-02",
+    "artifacts/gz-h1-newsie",
+    "artifacts/herald-class-map",
+    "artifacts/here.txt",
+    "artifacts/hero-poses",
+    "artifacts/hill-mine-relief",
+    "artifacts/indented-not-emitted.txt",
+    "artifacts/kept.txt",
+    "artifacts/landmark-brightness",
+    "artifacts/landmark-lighting-calibration",
+    "artifacts/lane-c-activations",
+    "artifacts/lane-gold-quantization",
+    "artifacts/lane-landmark-collision",
+    "artifacts/lane-only.txt",
+    "artifacts/lane-roster-wiring-e7-01",
+    "artifacts/lane-roster-wiring-e8-01",
+    "artifacts/lane-roster-wiring-e9-01",
+    "artifacts/lantern-true-world-2",
+    "artifacts/ledger-era-chapters",
+    "artifacts/live",
+    "artifacts/live-seed-rotation-1",
+    "artifacts/local.log",
+    "artifacts/locked-win",
+    "artifacts/m3-05b-run-ledger",
+    "artifacts/m4-07",
+    "artifacts/m4-07-panel",
+    "artifacts/m4-08-attribution",
+    "artifacts/m4-10",
+    "artifacts/m4-re-land",
+    "artifacts/map-census",
+    "artifacts/meta-presence",
+    "artifacts/mill-horizon-copy",
+    "artifacts/mp-02",
+    "artifacts/mp-03",
+    "artifacts/mp-04",
+    "artifacts/mp-quad",
+    "artifacts/mp-ride-lobby",
+    "artifacts/multiplayer-relay",
+    "artifacts/night-bite",
+    "artifacts/night-doctrine",
+    "artifacts/night-dusk",
+    "artifacts/night-lanterns",
+    "artifacts/night-shift-river",
+    "artifacts/night3d-perf",
+    "artifacts/open-maps-acceptance-e1-e4",
+    "artifacts/party-pot-anchor",
+    "artifacts/pb02",
+    "artifacts/perf-05",
+    "artifacts/perf-e1-r2",
+    "artifacts/perf-survey",
+    "artifacts/playability-smoke",
+    "artifacts/prefetch-bounded-warming",
+    "artifacts/preview-unlock-all",
+    "artifacts/probe",
+    "artifacts/process-e2-building-art",
+    "artifacts/profile-first-boot",
+    "artifacts/prospector-presence",
+    "artifacts/railcar-reference-art",
+    "artifacts/raise-at-site",
+    "artifacts/research-impact-law",
+    "artifacts/research-inheritance",
+    "artifacts/river-assay-1",
+    "artifacts/run",
+    "artifacts/run-cast-scale-up",
+    "artifacts/run-gait-stride",
+    "artifacts/run-scene-animation-refresh",
+    "artifacts/run-suspend",
+    "artifacts/run3d-assay-bench",
+    "artifacts/run3d-boiler-house",
+    "artifacts/run3d-gold-seam",
+    "artifacts/run3d-interaction",
+    "artifacts/run3d-lantern-post",
+    "artifacts/run3d-palisade",
+    "artifacts/run3d-rail-elements",
+    "artifacts/run3d-sentry-beacon",
+    "artifacts/run3d-sluice",
+    "artifacts/run3d-stockpile",
+    "artifacts/run3d-turret",
+    "artifacts/s1146-drain-gate.txt",
+    "artifacts/same-laws-harvest-parity",
+    "artifacts/save-slots",
+    "artifacts/save-visibility",
+    "artifacts/sci-02",
+    "artifacts/sci-ceiling",
+    "artifacts/sci-copy",
+    "artifacts/seam-anim-mp",
+    "artifacts/shore-truth",
+    "artifacts/small-fixes-1",
+    "artifacts/sol/map-art-campaign-2",
+    "artifacts/sol/mp-snapshot-completeness",
+    "artifacts/sol/open-findings",
+    "artifacts/sol/play-proofs",
+    "artifacts/sol/wave-lane-b",
+    "artifacts/ss-01",
+    "artifacts/ss-02",
+    "artifacts/stamp-site-read",
+    "artifacts/stream-capture",
+    "artifacts/survive-copy",
+    "artifacts/t1",
+    "artifacts/tape-pause-fix-1",
+    "artifacts/task-027-payout.png",
+    "artifacts/terrain-seamless",
+    "artifacts/terrain3d-claim-pilot",
+    "artifacts/terrain3d-default",
+    "artifacts/terrain3d-registry",
+    "artifacts/territory-kit",
+    "artifacts/tile-identity",
+    "artifacts/tl-01",
+    "artifacts/tl-02",
+    "artifacts/tl-03",
+    "artifacts/tl-03b",
+    "artifacts/town-blender-v3",
+    "artifacts/town-cast-rulings-a13-a17",
+    "artifacts/town-colliders",
+    "artifacts/town-era-switch",
+    "artifacts/town-fresh-boot",
+    "artifacts/town-scale-zoom",
+    "artifacts/town-t1",
+    "artifacts/town-t2",
+    "artifacts/town-t4",
+    "artifacts/town-t5",
+    "artifacts/town-t6",
+    "artifacts/town-zoom",
+    "artifacts/town3d-assay-office",
+    "artifacts/town3d-chapel",
+    "artifacts/town3d-claim-office",
+    "artifacts/town3d-dynamo-hall",
+    "artifacts/town3d-general-store",
+    "artifacts/town3d-plaza-props",
+    "artifacts/town3d-schoolhouse",
+    "artifacts/town3d-stamp-mill",
+    "artifacts/tr-01",
+    "artifacts/tr-02",
+    "artifacts/trail-guide-beat-priority",
+    "artifacts/trail-guide-plain-boot",
+    "artifacts/ts-01",
+    "artifacts/ts-02b-facades",
+    "artifacts/ts-03-prop-ring",
+    "artifacts/ts-04-living-pass",
+    "artifacts/ui-era-dressing",
+    "artifacts/ux-entry-robustness-1",
+    "artifacts/vfx-layering",
+    "artifacts/w1-05",
+    "artifacts/wardrobe-preview",
+    "artifacts/wire-crawler-3d",
+    "artifacts/wire-e2-enemy-walk4",
+    "artifacts/wire-era-anchor-emitters",
+    "artifacts/wire-landmark-mounts",
+    "artifacts/wire-railcar-3d",
+    "artifacts/wire-town-plate",
+    "artifacts/world-info-notes",
+    "artifacts/x",
+    "artifacts/x.txt"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "tag": "example-code-slice",
+  "branch": "fix/some-src-slice",
+  "port": 5361,
+  "mergeMessage": "drain: merge fix/some-src-slice — <slice> — what it does in one sentence (Opus implementer on the Anthropic subscription; the finding or ruling it answers)",
+  "hash": "pin",
+  "pinCause": "<slice> (who, on what ruling): what moved in src and why nothing in the sim, contracts, collision, floors or tables moved.",
+  "gates": {
+    "releaseBuild": true, "payload": true, "halo": true, "nullFloors": true, "releaseSuite": true, "functions": false, "ledgerBattery": false,
+    "specs": ["e2e/<the-slice>.spec.ts", "e2e/profile-first-boot.spec.ts", "e2e/m2-01-build-menu.spec.ts", "e2e/task-025-bandits-dont-swim.spec.ts", "e2e/agent-view.spec.ts"],
+    "warmup": ["/", "/?contract=the-claim"],
+    "allowedE2E": ["e2e/menu-safe-params\\.spec\\.ts:5:[0-9]+"]
+  },
+  "review": { "path": "reviews/<slice>.md", "title": "Drain review: `<slice>`, one line of what it does (implementer; the finding)", "body": "scripts/attended/landings/<slice>-review.md" },
+  "bookkeeping": {
+    "taskFile": "<slice>.md", "rowKey": "<SLICE> LANDED", "rowEmoji": "🚪",
+    "rowText": "What landed, the numbers, the drain cures, the findings left open and for whom. Same-era pin {PIN}.",
+    "statusPhrase": "what the player sees now, in a dozen words; pin {PIN}",
+    "drainedBy": "attended (scripts/attended/land.sh)"
+  },
+  "deploy": true, "preview": true, "evidenceDir": "artifacts/<slice>"
+}

@@ -1,0 +1,15 @@
+PASS(REFUSES-HOLDS): queue file stayed queued and held-path.txt was logged
+PASS(DISPATCHES-HOLDS-BUT-FULLY-ABSORBED): BOTH-MOVED path with zero residue dispatched and was logged
+PASS(REFUSES-HOLDS-WITH-REAL-RESIDUE): queue file stayed queued for unseen additions and mixed add/delete residue
+PASS(REFUSES-ON-RESIDUE-PROBE-FAILURE): inner probe failure kept the queue file queued
+PASS(DISPATCHES-AHEAD-BUT-ABSORBED): safe squash-dupe shape dispatched
+PASS(DISPATCHES-USABLE): clean ahead=0 lane dispatched
+PASS(DISPATCHES-DIRTY-RC2): DIRTY shares rc=2 but is not HOLDS
+PASS(DISPATCHES-PROBE-FAIL-OPEN): missing probe dispatched
+PASS(HONOURS-DECLARED-BUILD-ON-PREDECESSOR): a full declaration dispatched over a real HOLDS lane
+PASS(REFUSES-PARTIAL-DECLARATION): an undeclared second held path still refused
+PASS(HONOURS-SUPERSET-DECLARATION): declaring a path main already absorbed did not block dispatch
+PASS(REFUSES-DECLARATION-WITHOUT-OPT-IN): a path list alone is not an opt-in
+PASS(REFUSES-OPT-IN-WITHOUT-DECLARED-PATHS): the token alone is not a blank cheque
+PASS(RETRIES-THEN-NAMES-FAIL-OPEN): no-verdict probe was retried once, conceded in the log, and still dispatched
+PASS(RETRY-RECOVERS-REAL-HOLDS): a transient blip over a HOLDS lane was retried and then REFUSED

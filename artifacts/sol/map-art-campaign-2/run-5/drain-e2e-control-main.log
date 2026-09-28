@@ -1,0 +1,147 @@
+
+Running 6 tests using 1 worker
+
+[1/6] [desktop-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road
+  1) [desktop-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road 
+
+    Error: expect(received).toMatchObject(expected)
+
+    Matcher error: received value must be a non-null object
+
+    Received has value: undefined
+
+      44 |   });
+      45 |   const dust = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.dustFlats);
+    > 46 |   expect(dust).toMatchObject({
+         |                ^
+      47 |     enabled: true,
+      48 |     ringRoad: { radius: 24 },
+      49 |     weather: { contractId: 'e4-dust-flats', phase: 'storm', cycle: 0 },
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-preview-pub/e2e/e4-dust-flats.spec.ts:46:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[2/6] [desktop-chrome] › e2e/e4-dust-flats.spec.ts:75:1 › publishes a mask table that matches the real Dust Flats contract
+[3/6] [desktop-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run
+  2) [desktop-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      108 |   await page.keyboard.up('KeyS');
+      109 |   await page.keyboard.press('Space');
+    > 110 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.dustFlats?.roads.segments ?? 0)).toBe(1);
+          |                                                                                                                   ^
+      111 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vehicle?.target)).toEqual({ x: 0, z: 72 });
+      112 |   expect(errors).toEqual([]);
+      113 | });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-preview-pub/e2e/e4-dust-flats.spec.ts:110:115
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[4/6] [mobile-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road
+  3) [mobile-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road 
+
+    Error: expect(received).toMatchObject(expected)
+
+    Matcher error: received value must be a non-null object
+
+    Received has value: undefined
+
+      44 |   });
+      45 |   const dust = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.dustFlats);
+    > 46 |   expect(dust).toMatchObject({
+         |                ^
+      47 |     enabled: true,
+      48 |     ringRoad: { radius: 24 },
+      49 |     weather: { contractId: 'e4-dust-flats', phase: 'storm', cycle: 0 },
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-preview-pub/e2e/e4-dust-flats.spec.ts:46:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-dust-flats-fires-the-au-75229-a-convoy-off-the-ORBIT-road-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[5/6] [mobile-chrome] › e2e/e4-dust-flats.spec.ts:75:1 › publishes a mask table that matches the real Dust Flats contract
+[6/6] [mobile-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run
+  4) [mobile-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      108 |   await page.keyboard.up('KeyS');
+      109 |   await page.keyboard.press('Space');
+    > 110 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.dustFlats?.roads.segments ?? 0)).toBe(1);
+          |                                                                                                                   ^
+      111 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vehicle?.target)).toEqual({ x: 0, z: 72 });
+      112 |   expect(errors).toEqual([]);
+      113 | });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-preview-pub/e2e/e4-dust-flats.spec.ts:110:115
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-dust-flats-offers-road--3fb8b-r-in-a-normal-Motor-era-run-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  4 failed
+    [desktop-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road 
+    [desktop-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run 
+    [mobile-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road 
+    [mobile-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run 
+  2 passed (49.4s)

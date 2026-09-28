@@ -1,0 +1,147 @@
+{
+  "version": 2,
+  "id": "8904c33a-99bc-4c29-90fb-2b646713779e",
+  "createdAt": 1790467045140,
+  "kept": false,
+  "contract": "the-claim",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "dev",
+    "viewVersion": 4,
+    "engineHash": "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0",
+    "era": 6
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 999,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 40,
+          "science": 999,
+          "hero": 40,
+          "agent": 40
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "8904c33a-99bc-4c29-90fb-2b646713779e",
+    "contractId": "the-claim",
+    "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 176,
+    "entries": [
+      {
+        "t": 47,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 53,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 54,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "type": "set_pause",
+            "paused": true
+          }
+        ]
+      },
+      {
+        "t": 63,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 69,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "type": "set_pause",
+            "paused": true
+          }
+        ]
+      },
+      {
+        "t": 79,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 85,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "type": "set_pause",
+            "paused": true
+          }
+        ]
+      },
+      {
+        "t": 94,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 136,
+        "mx": 0.707,
+        "my": 0.707,
+        "a": []
+      },
+      {
+        "t": 163,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": [],
+    "playbookUses": []
+  },
+  "eventLogHash": "fnv1a32:8b17af1a",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 0,
+    "timeAlive": 5.866666666666656,
+    "gold": 0
+  }
+}

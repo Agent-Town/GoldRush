@@ -1,0 +1,21 @@
+{
+  "terrainPositionCoordinatesByteEquivalent": true,
+  "triangleSurfacesExact": true,
+  "heightAndMaskTruthUnchanged": true,
+  "landmarkGeometryBoundsAndMountsUnchanged": true,
+  "mirroredMountsAndStations": true,
+  "unchangedAuthorities": [
+    "src/game",
+    "src/sim",
+    "assets/contracts",
+    "src/world/Terrain.ts",
+    "src/world/LandmarkCollision.ts",
+    "src/systems",
+    "e2e",
+    "assets/engine-era.json"
+  ],
+  "onlyNamedRenderFunctionChanged": true,
+  "singleLineRegistryEntries": 36,
+  "perimeter": "32 bays; centerline at max(abs(x),abs(z)) = 64.6 m, outside all playable points; no colliders",
+  "nativeSources": "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/provenance.json"
+}

@@ -49,7 +49,11 @@ const REPO = path.dirname(path.dirname(TOOL));
 
 const G = (root) => (...a) =>
   execFileSync('git', ['-C', root, '-c', 'user.email=a@b', '-c', 'user.name=c', ...a], { encoding: 'utf8' });
-const mk = (tag) => fs.mkdtempSync(path.join(os.tmpdir(), `s2337-${tag}-`));
+// Every fixture this file makes is removed when its tests end (F-SF1-6, 2026-09-25: 12 leaked dirs per run, 8,834 on disk;
+// the template-literal prefix hid it from scripts/fixture-teardown.test.mjs until the sweep learned to read one).
+const FIXTURES = [];
+test.after(() => { for (const d of FIXTURES) fs.rmSync(d, { recursive: true, force: true }); });
+const mk = (tag) => { const d = fs.mkdtempSync(path.join(os.tmpdir(), `s2337-${tag}-`)); FIXTURES.push(d); return d; };
 
 const run = (tool, args = [], env = {}) => {
   const r = spawnSync(process.execPath, [tool, ...args], {

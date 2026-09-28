@@ -1,0 +1,238 @@
+(node:76100) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:76164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/6] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing
+
+(node:76164) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[2/6] [desktop-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction
+  1) [desktop-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ───
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "deputy-hello"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:76971) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:76971) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[3/6] [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick
+  2) [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "first-loss"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:77283) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/6] [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing
+  3) [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing 
+
+    TypeError: Cannot read properties of undefined (reading 'lastPulseAt')
+
+      244 |   const wave1 = records.filter((record) => record.wave === 1);
+      245 |   const wave12 = records.filter((record) => record.wave === 12);
+    > 246 |   expect(wave1[1].lastPulseAt - wave1[0].lastPulseAt).toBeCloseTo(0.5, 4);
+          |                   ^
+      247 |   expect(wave12[1].lastPulseAt - wave12[0].lastPulseAt).toBeGreaterThanOrEqual(2);
+      248 |   expect(errors.consoleErrors).toEqual([]);
+      249 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts:246:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:77682) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:77682) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[5/6] [mobile-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction
+  4) [mobile-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ────
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "deputy-hello"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:78859) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:78859) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[6/6] [mobile-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick
+  5) [mobile-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "first-loss"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  5 failed
+    [desktop-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ────
+    [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+    [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing 
+    [mobile-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ─────
+    [mobile-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+  1 passed (1.7m)

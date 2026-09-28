@@ -1,0 +1,61 @@
+(node:41997) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 30 tests using 1 worker
+
+
+(node:42056) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/30] [desktop-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+[2/30] [desktop-chrome] › e2e/e10-river-boot-guard.spec.ts:12:1 › raw E10 River door opens as The River without errors
+[3/30] [desktop-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+[4/30] [desktop-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[5/30] [desktop-chrome] › e2e/landmark-brightness.spec.ts:182:1 › reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)
+[6/30] [desktop-chrome] › e2e/landmark-brightness.spec.ts:315:1 › closed/open mesh census across the landmark packs (F-ASTRA-9)
+
+(node:42056) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[7/30] [desktop-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[8/30] [desktop-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[9/30] [desktop-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[10/30] [desktop-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[11/30] [desktop-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[12/30] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:176:1 › the board data still says 16 of 42 contracts unlock by default
+[13/30] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+[desktop-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+preview-unlock-all watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[14/30] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+[desktop-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+preview-unlock-all-fresh watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[15/30] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:264:1 › the E1 release build carries no such control
+
+(node:43536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[16/30] [mobile-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+[17/30] [mobile-chrome] › e2e/e10-river-boot-guard.spec.ts:12:1 › raw E10 River door opens as The River without errors
+[18/30] [mobile-chrome] › e2e/landmark-brightness.spec.ts:57:1 › The Claim keeps daylight landmarks opaque, lit, and under the frame budget
+[19/30] [mobile-chrome] › e2e/landmark-brightness.spec.ts:96:1 › Night Shift keeps ground light pools without mutating landmark materials
+[20/30] [mobile-chrome] › e2e/landmark-brightness.spec.ts:182:1 › reference rig: terrain, landmark and hero sprite measured together (F-ASTRA-9 calibration)
+[21/30] [mobile-chrome] › e2e/landmark-brightness.spec.ts:315:1 › closed/open mesh census across the landmark packs (F-ASTRA-9)
+
+(node:43536) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[22/30] [mobile-chrome] › e2e/landmark-collision.spec.ts:52:1 › authored footprints stop the hero on The Claim and a county map while an unfootprinted mount stays walkable
+[23/30] [mobile-chrome] › e2e/landmark-collision.spec.ts:68:1 › enemy blocker routing is deterministic and goes around a county landmark
+[24/30] [mobile-chrome] › e2e/landmark-collision.spec.ts:121:1 › Town chapel and Pan Monument are solid and default 3D renders exactly one monument
+[25/30] [mobile-chrome] › e2e/landmark-collision.spec.ts:144:1 › a failed 3D prop load keeps the legacy Pan Monument visible and solid
+[26/30] [mobile-chrome] › e2e/landmark-collision.spec.ts:157:1 › later-era modeled plaza props use their authored Town footprints
+[27/30] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:176:1 › the board data still says 16 of 42 contracts unlock by default
+[28/30] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+[mobile-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+preview-unlock-all watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[29/30] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+[mobile-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+preview-unlock-all-fresh watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[30/30] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:264:1 › the E1 release build carries no such control
+  6 skipped
+  24 passed (1.9m)

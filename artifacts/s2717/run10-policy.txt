@@ -1,0 +1,18 @@
+
+  ⛔ BLOCKED — DO NOT DRAIN: tasks/sol-play-proofs-10.md
+
+  goal leaf       : sol-play-proofs-10  (tasks/goals.json, status="blocked")
+  reason          : F-2717-1: run-9 evidence landed but post-landing full Node failed fixture cleanup. Lift after the same-spec clean-base control attributes the red or the corrective lands with green full Node; record the verdict and re-register this leaf. Dispatch remains attended-owned; re-arm the queue job if its gate already refused.
+
+  BACKLOG context:
+    tasks/BACKLOG.md:59  🎯 **SOL PLAY PROOFS HOLDS 1 — `sol-play-proofs-holds-1` AUTHORED 2026-09-27, queue copy HELD until `sol-play-proofs-10` lands (Astra on lane-c):** ru
+    tasks/BACKLOG.md:60  🎯 **SOL PLAY PROOFS 10 — `sol-play-proofs-10` AUTHORED 2026-09-27, run-9 evidence LANDED as `5838a071a`, but dispatch is now gate-side BLOCKED by F-2
+
+  blockClass=gate-side — a FIRE-RECORDED readiness hold, NOT an owner debt. No
+  owner word exists that would lift this one, so carrying it to the desk parks it
+  forever. It still refuses the drain (rc=1): lift it by SATISFYING the condition
+  printed above and re-registering the leaf IN THE SAME COMMIT — not by merging
+  first, and not by a green battery that answers a narrower question than the hold.
+
+
+EXIT 1

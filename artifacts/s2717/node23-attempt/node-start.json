@@ -1,0 +1,18 @@
+{
+  "startedAt": "2026-09-27T17:28:43.706Z",
+  "head": "bd91c31f55485b1ce5d6145550a8151634b2f1f7",
+  "cwd": "/Users/robin/Claude/Projects/Gold Rush",
+  "nodeVersion": "v23.11.1",
+  "args": [
+    "scripts/gate-battery.mjs",
+    "--label",
+    "s2717 play-proofs-9 full Node on main",
+    "--transcript",
+    "artifacts/s2717/full-node-main.txt",
+    "--env",
+    "CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires",
+    "--env",
+    "GR_GUARD_NO_ARTIFACT=1",
+    "[[\"full Node on main\",\"npm\",\"run\",\"test:node-guards\"]]"
+  ]
+}

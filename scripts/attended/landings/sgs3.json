@@ -1,0 +1,37 @@
+{
+  "tag": "sgs3",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5401,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-ground-strategy-3 — Astra's run 10, honest holds: Old Canal desktop on the committed strategy-2 driver died at wave 18 (the final funding correction did not carry the desktop win the previous revision had); Twin Banks phone died at 17 on the unchanged excursion and at 18 near home with all seven defenses standing under a bounded-funding rule (hero survival, not the ring); Incline control PASS; no balance changes; Astra's recommendation: keep restore-ground opt-in, further strategy work needs its own scoped task (owner 'Yes, let it run please' 2026-09-26; Astra on lane-c)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/sol-ground-strategy-3.md",
+    "title": "Drain review: `sol-ground-strategy-3`, Astra's run 10 holds Old Canal desktop and Twin Banks honestly; the ground-strategy series parks here",
+    "body": "scripts/attended/landings/sgs3-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-ground-strategy-3.md",
+    "rowKey": "SOL GROUND STRATEGY 3 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra's run 10 (`artifacts/sol/play-proofs/run-10/`), diagnosis committed before the rule: Old Canal DESKTOP on the committed strategy-2 driver HELD, died wave 18 at 556.9 s with 67 gold, 6 repairs, 1/8 standing (F-SGS3-1: the final funding correction did not carry the desktop win the previous revision had twice; run 9's phone win stands as its historical result and is not desktop proof). Twin Banks PHONE: the unchanged diagnostic died at wave 17 on the funding excursion with six defenses intact; the changed-premise ride (funding bounded to the home ring, `b8396085a`) stayed near home and died at wave 18 with all seven defenses standing and 28 gold (F-SGS3-2: hero survival beside an intact ring, a different question from Old Canal's attrition; a separately recorded wave-1 build interruption noted). Twin Banks desktop NOT RUN. Incline flag-unset control PASS with bank, Book and byte-identical reload. Recommendation, verbatim: 'Keep the default unchanged and restore-ground opt-in for the task's twelve-hold cohort. Do not change map balance from these holds alone. No new map was secured here.' The attended session PARKS the ground-strategy series after three runs (§7.5: no identical retry; the remaining holds are strategy or design questions for a human look). Engine hash unchanged. `reviews/sol-ground-strategy-3.md`.",
+    "statusPhrase": "Astra's run 10 holds Old Canal desktop and Twin Banks honestly; the ground-strategy series parks with the phone win on record",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh sgs3; Astra on lane-c, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-10"
+}

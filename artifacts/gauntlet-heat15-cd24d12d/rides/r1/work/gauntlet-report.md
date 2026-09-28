@@ -1,0 +1,232 @@
+# Heat 15 — `e5-regatta` / `e5-regatta-01` — claude-opus-5, generation 134
+
+Engine hash `52a84bc2…` (era 6, pin #30, build `cd24d12d2`) · view schema 3 · worldModel `sim-import`.
+
+## Pre-ride reading (four minutes, and it produced the whole plan)
+
+1. **`assets/contracts/null-floors.json` first** — `e5-regatta-01` publishes
+   `w14 / 320000 ms / 0 gold / 39 kills / fnv1a32:8050c83f`. The idle probe reproduced it
+   **to the hash**: instrument verified, rules unmoved, and — per era pin #18, which says
+   "exactly the two Regatta null floors re-recorded with the cause (A14)" — that floor was
+   re-recorded *on the boat tree*, so it is the current floor and not a stale one.
+2. **Era pins grepped for the contract id** — four hits, all four named in the charter
+   (#17 boat-01, #18 boat-02, #21 boat-03, #29 f-rb2-2-gangway-reach).
+3. **The contract JSON** gave the course, the hull physics and the clamp inputs.
+4. **The source** gave the two things that decide the map: the freeze and the forfeit.
+
+### The contract, as measured from source
+
+| Fact | Value | Where |
+|---|---|---|
+| Secure | `wave >= 12` **AND** `regatta.finished` | `HeadlessContractSim.ts:1536` |
+| Course freeze | `advance()` returns early at `wave >= secureWave` | `RegattaRaceSystem.ts:102` |
+| Wave 12 lands | **t = 272.000** (storm clock, wave N at 8 + 24(N−1)) | confirmed by the floor's w14 @ 320 s |
+| Forfeit | `racer === null` after any gate → terminal | `RegattaRaceSystem.ts:104` |
+| Racer | hull point **only while a body is aboard** | `regattaRacer`, `RegattaRaceSystem.ts:41` |
+| Hull clamp | `[-49.75, 49.75]²` (sailable union `[-64,64]²` inset by `CLAIM_BOAT_HULL_RADIUS` 14.25) | `boatWaterFor`, `DeepwaterClaimTile.ts:297` |
+| Gangway reach | **6.4** = `deck maxX 4.4 + plank 2`, from the ANCHOR, same every direction | `ClaimBoat.ts:50` (F-RB2-2) |
+| Boarding | a **crossing**: `heroOnDeck` must read `false`, then `true` | `ClaimBoat.board`, `:204` |
+
+**The anti-forfeit invariant I rode on.** `stepAshore` requires `!navigable(point)` — a point
+*outside* the clamp box. So **every `MOVE_HERO` point inside `[-49, 49]²` is navigable, therefore
+never a step ashore, therefore cannot forfeit.** All seven of my waypoints were inside that box and
+the controller asserted it before emitting (`ctrl-v1.mjs`, `SAFE_LIMIT`). The forfeit was made
+structurally unreachable rather than merely avoided.
+
+**The landmark trap I dodged.** `assets/pilots/map-rebuild-spike/landmark-collision-contract.json`
+map `regatta` blocks all three buoy anchors (radius 0.772, padded to 1.352 by `hero.radius + 0.08`)
+and both line rigs (rect 4.428 × 1.4 at (±49, 0), padded to x ±2.794 / z ±1.28). `MOVE_HERO` checks
+`walkable(pos)` *before* the helm sees it, so a buoy **centre** refuses `UNREACHABLE_TERRAIN`. The
+gates are radius 6, so every waypoint was aimed 4–5 units off centre and clear of the pad. Zero
+ground refusals resulted.
+
+---
+
+## Outcome
+
+**SECURED.** `{"secured":true,"waves":12,"timeMs":272000,"gold":0,"kills":21,"calls":4,`
+`"defaultedPicks":0,"defaultedSecure":1,"eventLogHash":"fnv1a32:d7eb1903"}`
+
+- waves **12** · timeAlive **272.000 s** · gold **0** · calls **4**
+- **2 sim runs** (one idle probe, one controller ride) · **1 scored attempt**
+- Tape put forward: **`attempt-1-tape.json`** — a **byte-identical copy of `tune-1-tape.json`**
+  (6,028 bytes both, verified). They are **one ride under two filenames**: the first controller
+  ride secured, so the stop rule ended the heat there and I promoted it by name in
+  `gauntlet-outcome.json`'s `tape` field.
+- Envelope, computed from `runTapeEnvelopeForContract` (never the charter's summary):
+  ceiling `maxTicks 18,002 / maxEntries 3,601 / maxTapeBytes 1,938,784`; reel
+  `durationTicks 8,160 / lastEntryTick 3,841 / 4 entries / 6,028 bytes`. **All three axes clear**
+  (bytes at 0.31 % of ceiling).
+- Receipt: the local assay reproduces the **tape header's** `fnv1a32:f3a9c00c` (not the stdout
+  outcome line's `d7eb1903`, a different number by design), with
+  `securedSnapshot {waves:12, gold:0, timeAlive:272}` — so the declared gold agrees with what the
+  door's `score_mismatch` rule compares. Control-tested first: the zero-order idle probe fails the
+  replay by design ("tape ran out with the run still alive"), a known limit for ceiling tapes.
+
+**On the board, stated plainly:** my standing row on this contract is w12 / **200 g** / 272 s. This
+run banks **0 gold** on the same waves and the same time, so by the board's own ordering it is the
+worse row and will be stored and never assayed. That is the rule working, not a surprise — and the
+0 gold is a **margin I left behind, not a ceiling** (see Winnability). The secure and the race
+evidence are the deliverable.
+
+## What the map asked
+
+It asked for its era's signature mechanic — **E5 storms schedule the waves** — and the storm is the
+*clock* rather than the adversary, which is the same shape my notebook remembers. The storm
+scheduler replaces the ordinary wave clock, so the whole timetable is computable from view 0 (wave N
+at 8 + 24(N−1)), and that arithmetic is the entire deadline: `RegattaRaceSystem.advance` returns
+early at `wave >= 12`, so **the course freezes forever at t = 272** and the race is a
+distance-over-time budget denominated in storm cycles. The *adversarial* half stayed inert exactly as
+before: `stormMovementMultiplier 0.72` is published and never reaches the hull — `ClaimBoat.steer`
+takes `dt` and a fast-water boolean and no weather term at all, so a storm cannot slow the boat. The
+one authored current, `fastWaterMultiplier 1.5` over z ∈ [34, 54], is real but was worth almost
+nothing on my racing line (~7.5 units of the 233 travelled), because the two northern gates sit at
+z = 38, on the band's southern *edge*, and cutting their corners southward keeps the hull out of the
+current. The fields that carried it were `now.regatta.boat.{x,z,heading,speed,aboard}`,
+`now.regatta.{nextBuoy,buoysPassed,state,finished,forfeited}`, plus `now.timers.runSeconds`,
+`now.seams`, `now.pendingOffer` and `now.pendingSecure`. The orders were **`MOVE_HERO` and nothing
+else** — seven of them, plus one `PICK_UPGRADE` and one blank line. **There is no Regatta verb: the
+helm is `MOVE_HERO` while aboard**, which is exactly what ADR-005 intended.
+
+**Does it still play the way my notebook remembers? No — and the change is the whole heat.**
+Generation 116 rode this seed in era 6 and secured it by **walking the hero from mark to mark**; its
+report says the racer was the hero and the boat's mooring was a piece of scenery that handed it the
+first and last gate for free. Every clause of that is now dead: `regattaRacer` answers the hull's
+point *only* while a body is aboard and **null otherwise**, so a swimming hero scores nothing and the
+idle run passes nothing (`buoysPassed: []` across all 15 idle views, confirmed). What survived is the
+geometry — the five beacons, the two anchors, the 128-unit pond, the wave-12 secure at 272.000 s —
+and the landmark blockers generation 116 paid a run to find are still exactly where it left them.
+**Its first minute, this time:** the hero booted at (−49, 0), *inside* the deck and inside the
+start-line rig's footprint, and by t = 8 the idle probe shows it depenetrated to (−49, −1.3) and
+still `aboard: false` — a hero that merely boots on the deck has boarded nothing. My own first
+minute stepped off the deck's east rail to (−42, −6), turned back onto it toward (−47, +6), boarded
+on the crossing at **t = 2.73**, and was rounding the first checkpoint by t = 27.77.
+
+### The race, as it happened
+
+- **Boarding.** Yes. I boarded at **run second 2.73**. The hero position at the crossing is
+  **not published** — views bracket it at t = 0 (hero (−49, 0), `aboard: false`) and t = 8.03
+  (`aboard: true`) — so the second itself is read off `buoysPassed[0].atSeconds` (gate 1 can only
+  fall once a body is aboard, and the hull moors *on* that gate, so the two instants are one), and
+  the crossing point is **computed, not observed**: the deck's east rail at x = −44.6 on the straight
+  leg from (−42, −6) to (−47, +6), i.e. ≈ **(−44.6, +0.2)**.
+- **Buoys, in the order they recorded, with the second each fell** (verbatim from
+  `now.regatta.buoysPassed`):
+
+  | # | id | `atSeconds` |
+  |---|---|---|
+  | 1 | `start-beacon` | **2.73** |
+  | 2 | `northwest-checkpoint` | **27.77** |
+  | 3 | `midcourse-checkpoint` | **44.70** |
+  | 4 | `northeast-checkpoint` | **64.13** |
+  | 5 | `finish-beacon` | **88.07** |
+
+  The sixth and final gate — the start stake `claim-boat` at (−49, 0), which `nextBuoy` named after
+  the fifth beacon fell — **never appears in `buoysPassed` and its second is never published**
+  (see the last bullet). `now.regatta.state` at the terminal view read **`"finished"`**, with
+  `finished: true`, `forfeited: false`, `nextBuoy: null`.
+- **Refusals: none, of any kind.** Across all 15 views every order record reads `pending`, `active`
+  or `done`; there is not one `failed` record, and the status channel never answered `NOT_ABOARD`,
+  `UNREACHABLE_WATER`, `UNREACHABLE_TERRAIN` or `UNREACHABLE_APPROACH`. All seven `MOVE_HERO`
+  waypoints landed first try. (Nothing to quote, and no hero/boat/point triple to give, because the
+  two boat refusals were never provoked — by construction, per the invariant above.)
+- **Forfeited: no.** `forfeited: false` at every view and `forfeitedAt` never set. No `MOVE_HERO`
+  point I issued was ever a candidate: each one sat inside the clamp box and was therefore
+  `navigable`, which fails `stepAshore`'s second clause outright. For the record, the nearest my
+  hull came to the shore-rim was its own start, x = −49 against a clamp wall at −49.75 — 0.75 units
+  — where a point at, say, (−55, 0) *would* have been a legal step ashore at 6.0 of the 6.4 gangway
+  reach. I never named one.
+
+- **What `now.regatta` did not tell me, and I had to infer, measure or guess.** Four things, and the
+  first two cost me real ground:
+  1. **The finish second is withheld.** `RegattaRaceSystem` stores `finishedAt` and `forfeitedAt`,
+     and `AgentRegattaSource.race` publishes neither — `readRegatta` (`View.ts:783`) drops both and
+     hands the rider `state` instead. So the five checkpoints each carry an exact `atSeconds` and the
+     *decisive* gate carries none. I could only **bound** it between views (t = 248.03, hull at
+     (−28.36, −0.06), `finished: false`; t = 272.00, `finished: true`) and **compute** it from the
+     published speed: 14.64 units to the disc edge at x = −43, at 1.65 u/s ⇒ **finish ≈ t 257 (±1)**.
+     A rider cannot report when it won.
+  2. **The boarding instant is unpublished.** There is no `aboard` transition record, no "boarded at"
+     second, and `boat.aboard` is a bare boolean. On this map the start beacon happens to coincide
+     with the mooring, so I could recover the instant from gate 1's timestamp — on a course whose
+     start gate sat anywhere else, that coincidence would not exist and the instant would be
+     unrecoverable from the view.
+  3. **The gangway reach is not in the view.** `gangwayReach` is published on the `regatta_boat`
+     *mechanics rule* (the charter says so) but nothing in `now.regatta` tells a rider how close to
+     the rim is too close, nor where the hull's clamp box is. I derived the clamp
+     (`[-49.75, 49.75]²`) by reading `boatWaterFor` and `CLAIM_BOAT_HULL_RADIUS` out of the engine.
+     A rider working from the view alone cannot compute the one boundary that forfeits its run.
+  4. **The landmark blockers are not in the view.** The three buoy anchors and both line rigs are
+     `MOVE_HERO`-refusing ground published in a pilot asset, not in `now` or `stablePrefix`. Aiming
+     at the coordinate the view gives you as `nextBuoy` refuses.
+
+## Winnability
+
+Secured — and the margin was **wide on the hull and self-inflicted on the clock and the purse**: the
+hero took **no damage at all** (100/100 at every one of 15 views, `alive` pinned at 3), the five
+beacons fell in **88.07 s** of a 272 s deadline, and no order was ever refused — but the race did not
+finish until **≈ t 257**, because my controller read `now.regatta.race` (a sub-object that does not
+exist in the published view) so `buoysPassed` read as empty at every view, and it therefore re-sent
+the chain from gate 2 each time and **sailed the whole course a second lap**, coming home only on the
+chain's last waypoint with ~15 s of margin instead of ~127 s. That also cost the entire gold axis:
+the finish gate *is* the start stake, so the hull carries the hero back onto the seam field, and the
+120 s of post-race time I had designed for panning the 200-gold cap (three seams live all run, 4–8
+units from where the hull parks) never arrived. **The 0 gold is a margin, not a ceiling** — the fix
+is one line (`const race = now.regatta`), and on this seed it is worth ~200 points on an identical
+secure.
+
+## Lessons for my notebook
+
+- **A published view can FLATTEN and RENAME the internal type the engines are compiled against, and
+  reading the type is not reading the view.** `AgentRegattaSource` nests `boat` + `race` and names
+  the fields `nextGate` / `gatesPassed[].passedAt`; `readRegatta` (`View.ts:783`) publishes them
+  **flat** as `nextBuoy` / `buoysPassed[].atSeconds`, adds `state`, and **drops `finishedAt` and
+  `forfeitedAt`**. I wrote `now.regatta.race ?? {}` from the source type, got `{}` at every view,
+  and silently sailed the course twice. My compact logger survived only because it happened to carry
+  a `?? r` fallback — so my *log* was right while my *controller* was blind, which is the worst
+  possible pairing. **Dump the raw contract-scoped object from view 0 and branch only on keys you
+  have SEEN in that dump.** Sixth generation to lose ground to one field name (68 `reached`/
+  `credited`, 72 `runSeconds`, 76 `maxCount`, 87 `crowdFlocks`, 110 the second ordinal, 134 this) —
+  and the first where the wrong name came from the engine's own type declaration.
+- **A guard that reads `{}` fails OPEN on a race and fails CLOSED on a ladder, and open is worse.**
+  `passed = ([] ).length = 0` made `Math.max(1, 0) = 1`, so the chain always restarted at gate 2 —
+  a plausible, well-formed, correct-looking array that re-ran a finished objective. Generation 76's
+  `n < undefined` fails closed and disables a feature; this fails open and **repeats** one. When a
+  phase index is derived from a view field, assert the field EXISTS (not just its value) before
+  trusting the index.
+- **Make the terminal failure structurally unreachable rather than carefully avoided.** The forfeit
+  here is one step with no racer and it is terminal for the claim. Instead of steering away from the
+  rim I read `stepAshore`'s conjunction, found the one clause I could satisfy unconditionally
+  (`!navigable(point)`), and asserted every emitted waypoint inside the clamp box. Zero forfeits,
+  zero boat refusals, and the second-lap bug — which re-issued waypoints for 150 seconds I had never
+  planned — **could not** have forfeited the run. A bug inside an invariant is a slow run; a bug
+  outside one is a dead run.
+- **When a gate's radius is 6, never aim at its centre.** All three buoy anchors and both line rigs
+  are `MOVE_HERO`-refusing landmark ground, and `walkable(pos)` is checked *before* the helm sees the
+  point. Aiming 4–5 units off-centre toward the NEXT gate both clears the pad and leaves the hull
+  already pointed onward when the order completes. Seven waypoints, zero refusals. (Generation 116
+  paid a whole run to find these blockers; inheriting the *finding* and not just the coordinates is
+  what made this a first-ride secure.)
+- **Boarding is a crossing, and the idle floor proves it in one probe.** `ClaimBoat.board` needs
+  `heroOnDeck` to read `false` and then `true`; the hero boots *on* the deck, so `aboard` is false
+  forever until it steps off and back. The idle probe showed `aboard: false` and `buoysPassed: []`
+  at all 15 views — which is simultaneously the proof of the rule and the proof that the F-RB1-1
+  free-start-beacon bug is dead. Run both legs at a z that clears the start rig's ±1.28 band and the
+  walk costs ~2.7 s.
+- **An active `MOVE_HERO` owns every tick, so on this map the economy and the helm are mutually
+  exclusive.** `{heroMovement}` is truthy and the first actionable order owns the tick, so a
+  `HARVEST` tail placed after the waypoint chain can never run while the hull is under way. The
+  contract's own shape is the answer: the finish gate IS the start stake, so the course *returns you
+  to the seams* — race first, then drop every `MOVE_HERO` and pan. I designed that and the
+  second-lap bug ate the window.
+- **`null-floors.json` first, then grep the era pins for the contract id — twelfth heat running, and
+  this time the pin prose told me the floor was trustworthy.** Pin #18 says the two Regatta floors
+  were *re-recorded* on the boat tree, so reproducing `fnv1a32:8050c83f` proved both that my
+  instrument works and that I was measuring the post-boat world. Four minutes, and it sent the whole
+  reading budget to the freeze and the forfeit.
+- **Obey the stop rule even when the securing tape is ugly.** The first controller ride secured with
+  a bug in it. It is lawful, deterministic, assay-clean and worse than my own standing row — and
+  riding again for a tidier reel would have been chasing a score the board cannot award me (exact
+  tie → earlier submission). I stopped, promoted by name, and spent the remaining budget on the
+  envelope, a control-tested assay and this report. **The gold I left behind is not a reason to break
+  the rule; it is the finding, and it is named to the line.**

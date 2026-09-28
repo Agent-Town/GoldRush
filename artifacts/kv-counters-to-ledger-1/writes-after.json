@@ -1,0 +1,480 @@
+{
+  "revision": "HEAD",
+  "commit": "5a699f5b6",
+  "ledgerClientPresent": true,
+  "telemetry": {
+    "unconfigured": [
+      {
+        "scenario": "first run beacon ever (end, unsecured)",
+        "kvWritesThisBeacon": 14,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:a1ceb3dc7b127ea22d04f67b50908245",
+          "telemetry:dedup:2026-09:9f9df620dd7b50343d34f46449244cd3547d4a3df2b28255cca7730a988f02bf",
+          "telemetry:runs:total",
+          "telemetry:runs:day:2026-09-25",
+          "telemetry:contract:e1-dry-gulch",
+          "telemetry:tier:BALANCED",
+          "telemetry:device:desktop",
+          "telemetry:frameP95:16-25",
+          "telemetry:device:desktop:frameP95:16-25",
+          "telemetry:duration:5-10m",
+          "telemetry:waves:10-19",
+          "telemetry:waves:max",
+          "telemetry:continuation:unsecured",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": "unconfigured",
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "next distinct run within the minute (end, unsecured)",
+        "kvWritesThisBeacon": 12,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:cdd7d717470134c78ea853e0b26db3e2",
+          "telemetry:dedup:2026-09:ffb75761d8daac89eaa28f7ba0f07d9b04992acb9724e21d6ed6f7504dde1416",
+          "telemetry:runs:total",
+          "telemetry:runs:day:2026-09-25",
+          "telemetry:contract:e1-dry-gulch",
+          "telemetry:tier:BALANCED",
+          "telemetry:device:desktop",
+          "telemetry:frameP95:16-25",
+          "telemetry:device:desktop:frameP95:16-25",
+          "telemetry:duration:5-10m",
+          "telemetry:waves:10-19",
+          "telemetry:continuation:unsecured"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": "unconfigured",
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "secure beacon",
+        "kvWritesThisBeacon": 10,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:8a41be1b9384df10fe153ecb37c4ccce",
+          "telemetry:dedup:2026-09:4c2d5157046237d2422008db09568fb9e29a8cf30812a5a576d163ab7bdfb29e",
+          "telemetry:runs:total",
+          "telemetry:runs:day:2026-09-25",
+          "telemetry:contract:e1-dry-gulch",
+          "telemetry:tier:BALANCED",
+          "telemetry:device:desktop",
+          "telemetry:frameP95:16-25",
+          "telemetry:device:desktop:frameP95:16-25",
+          "telemetry:secured-at:5-9"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": "unconfigured",
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "end beacon after a secure",
+        "kvWritesThisBeacon": 6,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:5aa23fc6904a74c72a2a2a9067fc55d7",
+          "telemetry:dedup:2026-09:755487dd728d6c7304af1aa5ff2b025c8ee1e6001cbc3f6697529621839d5e33",
+          "telemetry:duration:5-10m",
+          "telemetry:waves:10-19",
+          "telemetry:waves:max",
+          "telemetry:continuation:continued"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": "unconfigured",
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "legacy client, secured, deepest wave record (the worst case)",
+        "kvWritesThisBeacon": 15,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:440a628a0c975ea32d4db42ca94acebc",
+          "telemetry:dedup:2026-09:2dfcf0369863df2659c9d4f0b8cb9244ff148295e3f11a457facdb812fb49441",
+          "telemetry:runs:total",
+          "telemetry:runs:day:2026-09-25",
+          "telemetry:contract:e1-dry-gulch",
+          "telemetry:tier:BALANCED",
+          "telemetry:device:desktop",
+          "telemetry:frameP95:16-25",
+          "telemetry:device:desktop:frameP95:16-25",
+          "telemetry:duration:10-20m",
+          "telemetry:waves:40plus",
+          "telemetry:waves:max",
+          "telemetry:continuation:continued",
+          "telemetry:secured-at:5-9",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": "unconfigured",
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "same run replayed with the SAME nonce",
+        "kvWritesThisBeacon": 1,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:67c29aecb747836784e2af72a780064f"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": "unconfigured",
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": true
+          }
+        }
+      },
+      {
+        "scenario": "same run replayed with a FRESH nonce (the flood shape)",
+        "kvWritesThisBeacon": 1,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:fec52565aa0cf18f57d7cf5b3ac72850"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": "unconfigured",
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": true
+          }
+        }
+      },
+      {
+        "scenario": "render demotion, first",
+        "kvWritesThisBeacon": 9,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:ddbea5471056690e5b1dcfe0c39ffca2",
+          "telemetry:dedup:2026-09:6fb4022625333602647b6516fc3ac9a1c10f4d2c90ecfca8864eaf668caa06cb",
+          "telemetry:render-demotion:latest:the-claim",
+          "telemetry:render-demotion:total",
+          "telemetry:render-demotion:day:2026-09-25",
+          "telemetry:render-demotion:reason:webgl-context-lost",
+          "telemetry:render-demotion:contract:the-claim",
+          "telemetry:render-demotion:tier:LITE",
+          "telemetry:updatedAt"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": "unconfigured",
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "render demotion, identical replay",
+        "kvWritesThisBeacon": 1,
+        "kvKeysWrittenThisBeacon": [
+          "telemetry:ratelimit:d861b7e91033ebc1c1e8e7af39290101"
+        ],
+        "response": {
+          "status": 200,
+          "fallback": "unconfigured",
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": true
+          }
+        }
+      }
+    ],
+    "ledger": [
+      {
+        "scenario": "first run beacon ever (end, unsecured)",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "ledgerWritesThisBeacon": 14,
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "next distinct run within the minute (end, unsecured)",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "ledgerWritesThisBeacon": 13,
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "secure beacon",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "ledgerWritesThisBeacon": 10,
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "end beacon after a secure",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "ledgerWritesThisBeacon": 6,
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "legacy client, secured, deepest wave record (the worst case)",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "ledgerWritesThisBeacon": 15,
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "same run replayed with the SAME nonce",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "ledgerWritesThisBeacon": 1,
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": true
+          }
+        }
+      },
+      {
+        "scenario": "same run replayed with a FRESH nonce (the flood shape)",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "ledgerWritesThisBeacon": 1,
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": true
+          }
+        }
+      },
+      {
+        "scenario": "render demotion, first",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "ledgerWritesThisBeacon": 9,
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": false
+          }
+        }
+      },
+      {
+        "scenario": "render demotion, identical replay",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "ledgerWritesThisBeacon": 1,
+        "response": {
+          "status": 200,
+          "fallback": null,
+          "body": {
+            "ok": true,
+            "stored": true,
+            "duplicate": true
+          }
+        }
+      }
+    ],
+    "ledgerDown": [
+      {
+        "scenario": "first run beacon ever (end, unsecured)",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "response": {
+          "status": 200,
+          "fallback": "unreachable",
+          "body": {
+            "ok": true,
+            "stored": false
+          }
+        }
+      },
+      {
+        "scenario": "next distinct run within the minute (end, unsecured)",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "response": {
+          "status": 200,
+          "fallback": "unreachable",
+          "body": {
+            "ok": true,
+            "stored": false
+          }
+        }
+      },
+      {
+        "scenario": "secure beacon",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "response": {
+          "status": 200,
+          "fallback": "unreachable",
+          "body": {
+            "ok": true,
+            "stored": false
+          }
+        }
+      },
+      {
+        "scenario": "end beacon after a secure",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "response": {
+          "status": 200,
+          "fallback": "unreachable",
+          "body": {
+            "ok": true,
+            "stored": false
+          }
+        }
+      },
+      {
+        "scenario": "legacy client, secured, deepest wave record (the worst case)",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "response": {
+          "status": 200,
+          "fallback": "unreachable",
+          "body": {
+            "ok": true,
+            "stored": false
+          }
+        }
+      },
+      {
+        "scenario": "same run replayed with the SAME nonce",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "response": {
+          "status": 200,
+          "fallback": "unreachable",
+          "body": {
+            "ok": true,
+            "stored": false
+          }
+        }
+      },
+      {
+        "scenario": "same run replayed with a FRESH nonce (the flood shape)",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "response": {
+          "status": 200,
+          "fallback": "unreachable",
+          "body": {
+            "ok": true,
+            "stored": false
+          }
+        }
+      },
+      {
+        "scenario": "render demotion, first",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "response": {
+          "status": 200,
+          "fallback": "unreachable",
+          "body": {
+            "ok": true,
+            "stored": false
+          }
+        }
+      },
+      {
+        "scenario": "render demotion, identical replay",
+        "kvWritesThisBeacon": 0,
+        "kvKeysWrittenThisBeacon": [],
+        "response": {
+          "status": 200,
+          "fallback": "unreachable",
+          "body": {
+            "ok": true,
+            "stored": false
+          }
+        }
+      }
+    ]
+  },
+  "connectWithFailingKv": {
+    "outcome": "answered",
+    "status": 429,
+    "body": {
+      "ok": false,
+      "error": "rate_limited",
+      "message": "The wire is busy. Try again later."
+    },
+    "fallback": "unconfigured",
+    "roomCalls": 0
+  }
+}

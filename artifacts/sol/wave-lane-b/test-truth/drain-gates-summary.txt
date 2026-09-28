@@ -1,0 +1,29 @@
+branch tip 0d34e4b6d runner(lane-b): sol-test-truth-registry-census.md 16:47Z
+scratch store: detached at adf6bd1 = store main, clean
+chain base 38fc2639a merging sol/wave-lane-b 0d34e4b6d
+merged b4fba5274
+single-line law: n/a (no pilot tables)
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at adf6bd1): df53e4483e0f1f173a1ab0fb02c1938e8f5201d482220e26315b5928c87686db
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34284536 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (296.0s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 81 ℹ fail 0 
+e2e start 16:55Z: e2e/terrain3d-registry.spec.ts e2e/er01-e10-census.spec.ts e2e/map-census.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   5 failed   1 skipped   140 passed (20.3m)  17:15Z
+1) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:195:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmar
+2) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:271:1 › rim and horizon probes keep the terrain meeting gradual and every panorama read
+3) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:393:1 › disposing while the peer GLB is delayed releases each decoded model immediately
+4) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:195:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmark
+5) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:271:1 › rim and horizon probes keep the terrain meeting gradual and every panorama reada
+battery start 17:15Z
+battery: rc=0 ℹ tests 955 ℹ pass 950 ℹ fail 0 ℹ skipped 5 ℹ tests 48 ℹ pass 48 ℹ fail 0 ℹ skipped 0  17:32Z
+dirt after battery: 0
+TTRC-PREP-DONE
+known-red overrides: e2e e2e/terrain3d-registry\.spec\.ts:196:1|e2e/terrain3d-registry\.spec\.ts:274:1 battery ^$
+known-red overrides: e2e e2e/terrain3d-registry\.spec\.ts:195:1|e2e/terrain3d-registry\.spec\.ts:271:1|e2e/terrain3d-registry\.spec\.ts:393:1 battery ^$
+hash at pin time: 24b70411d2849f7a8bb5454decdfffd3bae4e4ba6878bd81f6b3edcceb7a5e6b
+pin #39
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

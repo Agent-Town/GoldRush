@@ -1,0 +1,6 @@
+import fs from 'node:fs';import {execFileSync} from 'node:child_process';
+import {runBattery} from "file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gate-battery.mjs";
+const out="/Users/robin/Claude/Projects/Gold Rush/artifacts/s2726";
+fs.writeFileSync(out+'/ledger-start.json',JSON.stringify({at:new Date().toISOString(),pid:process.pid,runtime:process.version,binary:process.execPath,head:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim()},null,2));
+const r=runBattery([['final ledger','npm','run','test:ledger-guards']],{cwd:"/Users/robin/Claude/Projects/Gold Rush",transcript:out+'/ledger-final.txt',label:'s2726 final ledger after finding and goal registration',env:{PATH:'/opt/homebrew/bin:'+process.env.PATH}});
+fs.writeFileSync(out+'/ledger-result.json',JSON.stringify(r,null,2)+'\n');process.exit(r.overall);

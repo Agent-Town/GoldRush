@@ -1,0 +1,30 @@
+{
+  "rawId": "e10-river",
+  "rawTileId": "frontier-river-claim",
+  "rawDimensions": {
+    "width": 128,
+    "height": 128
+  },
+  "rawTerrainMeshDeclaration": {
+    "terrainMesh": "off"
+  },
+  "rawDescription": "Post-credits-only through the Charter Press river lever. Reuses frontier-river-claim at dawn with no new sculpt; return to the first verb with no enemies, no waves, and one pan.",
+  "claimSculptBounds": {
+    "min": [
+      -32.0,
+      -32.0,
+      -0.51
+    ],
+    "max": [
+      32.0,
+      32.0,
+      2.2383
+    ]
+  },
+  "claimSculptTileId": "frontier-river-claim",
+  "claimLandmarkCount": 5,
+  "rawCollisionRegistryCount": 0,
+  "claimCollisionRegistryCount": 3,
+  "cause": "Raw e10-river has no REGISTRY entry. The absent entry, 128 m descriptor, explicit no-new-sculpt route and zero collider mounts are retained. The finale stamps the existing 64 m Claim charter. Matching tileId alone does not permit aliasing.",
+  "heldOwner": "Contract/charter and E10FinaleSystem owners via Claude choose the canonical route; UI/camera owners choose quiet finale framing."
+}

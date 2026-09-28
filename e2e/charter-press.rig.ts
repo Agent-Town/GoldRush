@@ -1,5 +1,7 @@
+import type { Page } from '@playwright/test';
 import type { ContractManifest } from '../src/meta/ContractFamilies';
 import { importContract, type Charter } from '../src/charter/CharterSchema';
+import { PROFILE_KEY, SCOREBOARD_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 
 // Seeded fuzz rig shared by the CP-02 stamp spec and boot spec. Everything is
 // deterministic from CHARTER_FUZZ_SEED — no Math.random anywhere — so both
@@ -153,4 +155,28 @@ function setLeaf(leaf: NumericLeaf, value: number): void {
 
 function roundish(value: number, reference: number): number {
   return Number.isInteger(reference) ? Math.round(value) : Math.round(value * 100) / 100;
+}
+
+// charter-press-locked-lands-1 (F-1179-4, owner ruling (a) 2026-09-26). A PROFILE FIXTURE, not a flag: the save
+// a player leaves after securing The Claim once (The Claim's secureWave is 10, so its row reads 10 waves). Through
+// the real unlock rules it earns exactly two more Lever lands, Twin Banks (`firstSecuredClaim`) and The Dry Gulch
+// (`wave10OnClaim`); Night Shift (`science≥3`) and the Baron (`science-complete+2-secured`) stay locked. Seeded
+// once per tab, before the page's first script, and never again: the Press stages its launch in sessionStorage,
+// and the press-through navigation must find that launch untouched.
+const SECURED_CLAIM_SEEDED_KEY = 'gr.charter-press-rig.secured-claim.v1';
+
+export async function seedSecuredClaimProfile(page: Page): Promise<void> {
+  await page.addInitScript(({ profileKey, scoresKey, seededKey }) => {
+    if (sessionStorage.getItem(seededKey)) return;
+    const profile: ProfileState = {
+      version: 2,
+      activeId: 'robin',
+      profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+    };
+    localStorage.setItem(profileKey, JSON.stringify(profile));
+    localStorage.setItem(scoresKey, JSON.stringify([
+      { waves: 10, kills: 0, gold: 0, timeAlive: 300, at: 1, secured: true, secureWave: 10, contractId: 'the-claim', profileName: 'Robin' },
+    ]));
+    sessionStorage.setItem(seededKey, '1');
+  }, { profileKey: PROFILE_KEY, scoresKey: profileDataKey('robin', SCOREBOARD_KEY), seededKey: SECURED_CLAIM_SEEDED_KEY });
 }

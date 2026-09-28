@@ -1,0 +1,26 @@
+import { expect, test } from '@playwright/test';
+import { readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { nativeProof } from './driver';
+import { boardEntry } from '../../artifacts/sol/play-proofs/run-11/board-entry';
+test.skip(process.env.GR_NATIVE_PROOF !== '1', 'full native objective run — set GR_NATIVE_PROOF=1');
+test.use({ trace: 'off' });
+const id = 'e2-hill-mine';
+const epoch = 'epoch-2-steamworks';
+test.beforeEach(async ({ page }) => { await boardEntry(page, id, epoch); });
+nativeProof(id, 11);
+test.afterEach(async ({ page }, info) => {
+  if (info.status !== 'passed') return;
+  const root = path.resolve(`artifacts/sol/play-proofs/run-${process.env.GR_NATIVE_RUN ?? 11}/${id}`);
+  const row = JSON.parse(await readFile(path.join(root, `row-${info.project.name}.json`), 'utf8'));
+  row.authoredObjective = { ok: Boolean(row.objective.escort.enabled && row.objective.escort.arrived >= row.objective.escort.required && !row.objective.escort.objectiveLost), detail: 'contract objective beyond wave survival' };
+  await writeFile(path.join(root, `row-${info.project.name}.json`), JSON.stringify(row, null, 2) + '\n');
+  expect(row.authoredObjective.ok, row.authoredObjective.detail).toBe(true);
+  await page.getByTestId(`contract-chapter-tab-${epoch}`).click();
+  const cell = page.getByTestId(`contract-best-${id}`);
+  await cell.scrollIntoViewIfNeeded();
+  await expect(cell).toContainText('Secured');
+  await cell.screenshot({ path: path.join(root, `bank-cell-${info.project.name}.png`) });
+  await page.screenshot({ path: path.join(root, `bank-book-${info.project.name}.png`) });
+  await writeFile(path.join(root, `bank-cell-${info.project.name}.json`), JSON.stringify({ text: await cell.innerText(), url: page.url(), originalContext: true, wave: row.peakWave }, null, 2) + '\n');
+});

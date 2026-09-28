@@ -1,0 +1,33 @@
+{
+  "unchangedBytes": {
+    "river-terrain.glb": "6eb8b636cb9dc5cd972d09b353899f162e052d9417c861c8dc38986cd6410b0f",
+    "river-terrain.blend": "435d2c807069c78ff1e6068bdb8eb83390ec8e1302a623a289bc664e5088c6b1",
+    "river-terrain-contract.json": "5d01f268996fdd4047355cf9b5907aaa1ea38311cf54f7f2ee2899190cf625fc",
+    "river-terrain-atlas.png": "430cfa931f506a02611e997a23669976e103e56371c3563aff55f3dd121e38f8",
+    "river-panorama.glb": "62b24dadfa8072de564fda9b562ff27ae20209aa9818ac0ce471d9840a8239c5",
+    "river-panorama.blend": "448d9b54ac6b69d566874652fe165b6476421166e76f5da9cc4628f59c62a1e4",
+    "river-panorama-contract.json": "c4a01920cf7700da9aace5759dc68380de4a150123102db6fe8077603884c524",
+    "river-panorama-atlas.png": "8e87399729c5aaca4ae52d016d0eb99f5b42c5bc0aed461dc8e6623d48914706",
+    "river-fallback-height-grid.json": "b76677ff2210ee98a434a24b3d425e405dfe0aaa9a15148a420cf2d3170b52d2",
+    "landmark-collision-contract.json": "929c325001a04c8f098885cc5973fb43e6de89b51781a48ba62d4cdd18c6d4fa",
+    "landmarks/river/river-landmarks-atlas.png": "bb1cf6fb8d1d1f5606421ce937f2dc048f55859ae7caf2dd602b78cb2246e301"
+  },
+  "terrainHeightsMasksWaterTablesExact": true,
+  "allOriginalBodyTriangleSurfacesRetained": true,
+  "mountsStationsBudgetsCollisionUnchanged": true,
+  "otherPackLedgerEntriesExact": true,
+  "onlyRiverPaintChanged": true,
+  "singleLineRegistryEntries": 36,
+  "protectedAuthorities": [
+    "src/game",
+    "src/sim",
+    "assets/contracts",
+    "src/world/Terrain.ts",
+    "src/world/Water.ts",
+    "src/world/LandmarkCollision.ts",
+    "src/systems",
+    "src/entities",
+    "e2e",
+    "assets/engine-era.json"
+  ]
+}

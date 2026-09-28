@@ -1,0 +1,43 @@
+{
+  "tag": "tpf1",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5404,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — tape-pause-fix-1 — a paused run's reel replays and verifies: the replay ignores recorded set_pause actions while a run-tape replay is active (a wall-clock pause has no simulation event to reproduce), recorder and multiplayer unchanged, so old and new reels both replay; fresh one-pause River reels VERIFIED by the county's worker on both screens, the pre-fix paused River reel VERIFIED, the seed-run human standing of 2026-08-20 now replays past tick 274 to the end (still rejected for its pre-axes-fix diagonal ticks), heat-15 reels and the era-6 agent tape unchanged (F-RVA1-6, every contract; the first Astra task under the owner's 'use Astra now instead of Opus' ruling of 2026-09-26)",
+  "hash": "pin",
+  "pinCause": "tape-pause-fix-1 (Astra, gpt-6-astra on the ChatGPT subscription; F-RVA1-6): src/game/Game.ts ignores recorded set_pause actions during a run-tape replay only; no recorder, sim rule, contract, floor or table moved; heat-15 reels and the era-6 agent tape replay byte-identical.",
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/river-ending-score.spec.ts",
+      "e2e/live-seed-rotation.spec.ts"
+    ],
+    "guards": [
+      "scripts/river-assay.test.mjs"
+    ]
+  },
+  "cure": "scripts/attended/landings/tpf1-cure.sh",
+  "review": {
+    "path": "reviews/tape-pause-fix-1.md",
+    "title": "Drain review: `tape-pause-fix-1`, a paused run's reel replays and verifies (Astra on lane-c; F-RVA1-6)",
+    "body": "scripts/attended/landings/tpf1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "tape-pause-fix-1.md",
+    "rowKey": "TAPE PAUSE FIX 1 LANDED",
+    "rowEmoji": "🩹",
+    "rowText": "Choice (b), written before the code: the replay ignores recorded `set_pause` actions while `runTapeReplay` is active (tape ticks count active simulation time; a wall-clock pause has no simulation event), in `src/game/Game.ts` only; the recorder and multiplayer unchanged, so old tapes keep their pause actions and still replay. Proven with the county's unchanged worker (`--once --dry-run`, Node 26.4.0, a local queue): fresh one-pause River reels VERIFIED on desktop (`abebc77c`) and 390 px phone (`2c982352`); the pre-fix paused River reel `a8c5af79` VERIFIED; a three-pause Claim reel reproduces its hash at tick 176 (a death reel, unassayable by design); the seed-run human standing of 2026-08-20 replays PAST tick 274 to 18,000 and is REJECTED on its hash (its diagonal ticks predate the F-RVA1-1 fix, as predicted); heat-15 probe, r1 and r2 VERIFIED identical before and after; the era-6 agent tape identical through the headless arm. One spec row in `e2e/river-ending-score.spec.ts` (pause and resume mid-run, the reel replays to the live hash, the worker verifies). Engine hash PINNED {PIN}. F-RVA1-6 CLOSED: from this deploy a human who pauses can still have the standing verified. The first task run by Astra under the owner's 2026-09-26 ruling. `reviews/tape-pause-fix-1.md`.",
+    "statusPhrase": "a paused run's reel replays and verifies; the county's assay no longer drops a human who paused",
+    "drainedBy": "attended 2026-09-27 (scripts/attended/land.sh tpf1; Astra on lane-c)"
+  },
+  "deploy": true,
+  "preview": false,
+  "evidenceDir": "artifacts/tape-pause-fix-1"
+}

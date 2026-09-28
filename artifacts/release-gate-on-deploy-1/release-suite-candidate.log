@@ -1,0 +1,263 @@
+(node:22627) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 30 tests using 1 worker
+
+
+(node:22685) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/30] [desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+[desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › the-claim boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › the-claim boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-drill-yard boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-drill-yard boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-dry-gulch boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-dry-gulch boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-night-shift boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-night-shift boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-twin-banks boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-twin-banks boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[7/30] [desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-baron boots through the E1 release door
+[desktop-chrome] › e2e/release-build.spec.ts:103:3 › e1-baron boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[8/30] [desktop-chrome] › e2e/release-build.spec.ts:113:1 › the schoolhouse ledger opens clean on a progressed frontier save
+[desktop-chrome] › e2e/release-build.spec.ts:113:1 › the schoolhouse ledger opens clean on a progressed frontier save
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[9/30] [desktop-chrome] › e2e/release-build.spec.ts:131:1 › the in-run Stamp Mill site explains the release horizon without funding controls
+[desktop-chrome] › e2e/release-build.spec.ts:131:1 › the in-run Stamp Mill site explains the release horizon without funding controls
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[10/30] [desktop-chrome] › e2e/release-build.spec.ts:156:1 › debug and era query seams are inert
+[desktop-chrome] › e2e/release-build.spec.ts:156:1 › debug and era query seams are inert
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[11/30] [desktop-chrome] › e2e/release-build.spec.ts:179:1 › an imported later ledger heals to the frontier and plays
+[desktop-chrome] › e2e/release-build.spec.ts:179:1 › an imported later ledger heals to the frontier and plays
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[12/30] [desktop-chrome] › e2e/release-build.spec.ts:214:1 › later contract URLs and modes decline to the Claim
+[desktop-chrome] › e2e/release-build.spec.ts:214:1 › later contract URLs and modes decline to the Claim
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[13/30] [desktop-chrome] › e2e/release-build.spec.ts:224:1 › a forged locked launch declines to the Claim
+[desktop-chrome] › e2e/release-build.spec.ts:224:1 › a forged locked launch declines to the Claim
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[14/30] [desktop-chrome] › e2e/release-build.spec.ts:233:1 › a legitimate suspend resumes its unlocked contract
+[desktop-chrome] › e2e/release-build.spec.ts:233:1 › a legitimate suspend resumes its unlocked contract
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[15/30] [desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+[desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75
+  throw new Error(`[release-build] ${message}`);
+        ^
+
+Error: [release-build] later era assets emitted: char-jumper-e4-codex-v1-r0c0-CBWHXFMD-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r0c1-mVdGaF7x-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r1c0-_a9QDw9U-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r1c1-Dz-4tC9U-diet-c2bea0ac.png
+    at fail (file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75:9)
+    at file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:55:27
+
+Node.js v26.4.0
+  1) [desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets 
+
+    Error: expect(received).not.toThrow()
+
+    Error name:    "Error"
+    Error message: "Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs
+    file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75
+      throw new Error(`[release-build] ${message}`);
+            ^·
+    Error: [release-build] later era assets emitted: char-jumper-e4-codex-v1-r0c0-CBWHXFMD-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r0c1-mVdGaF7x-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r1c0-_a9QDw9U-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r1c1-Dz-4tC9U-diet-c2bea0ac.png
+        at fail (file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75:9)
+        at file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:55:27·
+    Node.js v26.4.0
+    "
+
+          at fail (file:/Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75:9)
+          at file:/Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:55:27
+          Node.js v26.4.0
+          at file:/Users/robin/Claude/Projects/wt-rel1/e2e/release-build.spec.ts:245:16
+          at Object.<anonymous> (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:11428:9)
+          at invokeMatcher (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:12925:20)
+          at invoke (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:12904:109)
+          at _Zone.run (../Gold Rush/node_modules/playwright-core/lib/coreBundle.js:8572:40)
+          at callMatcherAsStep (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:12905:64)
+          at Object.toThrow (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:12867:23)
+          at file:/Users/robin/Claude/Projects/wt-rel1/e2e/release-build.spec.ts:248:11
+          at ../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1662:15
+          at ../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1154:17
+          at TimeoutManager.withRunnable (../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:426:9)
+          at TestInfoImpl._runWithTimeout (../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1152:34)
+          at ../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1660:22
+          at WorkerMain._runTest (../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1633:5)
+          at WorkerMain.runTestGroup (../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1528:9)
+          at process.<anonymous> (../Gold Rush/node_modules/playwright/lib/common/index.js:1991:25)
+
+      246 |     cwd: process.cwd(),
+      247 |     env: { ...process.env, GR_RELEASE: 'e1' },
+    > 248 |   })).not.toThrow();
+          |           ^
+      249 | });
+      250 |
+      251 | async function seedProfile(
+        at /Users/robin/Claude/Projects/wt-rel1/e2e/release-build.spec.ts:248:11
+
+    Error Context: test-results/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:24259) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[16/30] [mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+[mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[17/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › the-claim boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › the-claim boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[18/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-drill-yard boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-drill-yard boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[19/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-dry-gulch boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-dry-gulch boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[20/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-night-shift boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-night-shift boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[21/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-twin-banks boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-twin-banks boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[22/30] [mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-baron boots through the E1 release door
+[mobile-chrome] › e2e/release-build.spec.ts:103:3 › e1-baron boots through the E1 release door
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[23/30] [mobile-chrome] › e2e/release-build.spec.ts:113:1 › the schoolhouse ledger opens clean on a progressed frontier save
+[mobile-chrome] › e2e/release-build.spec.ts:113:1 › the schoolhouse ledger opens clean on a progressed frontier save
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[24/30] [mobile-chrome] › e2e/release-build.spec.ts:131:1 › the in-run Stamp Mill site explains the release horizon without funding controls
+[mobile-chrome] › e2e/release-build.spec.ts:131:1 › the in-run Stamp Mill site explains the release horizon without funding controls
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[25/30] [mobile-chrome] › e2e/release-build.spec.ts:156:1 › debug and era query seams are inert
+[mobile-chrome] › e2e/release-build.spec.ts:156:1 › debug and era query seams are inert
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[26/30] [mobile-chrome] › e2e/release-build.spec.ts:179:1 › an imported later ledger heals to the frontier and plays
+[mobile-chrome] › e2e/release-build.spec.ts:179:1 › an imported later ledger heals to the frontier and plays
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[27/30] [mobile-chrome] › e2e/release-build.spec.ts:214:1 › later contract URLs and modes decline to the Claim
+[mobile-chrome] › e2e/release-build.spec.ts:214:1 › later contract URLs and modes decline to the Claim
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[28/30] [mobile-chrome] › e2e/release-build.spec.ts:224:1 › a forged locked launch declines to the Claim
+[mobile-chrome] › e2e/release-build.spec.ts:224:1 › a forged locked launch declines to the Claim
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[29/30] [mobile-chrome] › e2e/release-build.spec.ts:233:1 › a legitimate suspend resumes its unlocked contract
+[mobile-chrome] › e2e/release-build.spec.ts:233:1 › a legitimate suspend resumes its unlocked contract
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[30/30] [mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+[mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75
+  throw new Error(`[release-build] ${message}`);
+        ^
+
+Error: [release-build] later era assets emitted: char-jumper-e4-codex-v1-r0c0-CBWHXFMD-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r0c1-mVdGaF7x-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r1c0-_a9QDw9U-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r1c1-Dz-4tC9U-diet-c2bea0ac.png
+    at fail (file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75:9)
+    at file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:55:27
+
+Node.js v26.4.0
+  2) [mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets 
+
+    Error: expect(received).not.toThrow()
+
+    Error name:    "Error"
+    Error message: "Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs
+    file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75
+      throw new Error(`[release-build] ${message}`);
+            ^·
+    Error: [release-build] later era assets emitted: char-jumper-e4-codex-v1-r0c0-CBWHXFMD-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r0c1-mVdGaF7x-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r1c0-_a9QDw9U-diet-c2bea0ac.png, char-jumper-e4-codex-v1-r1c1-Dz-4tC9U-diet-c2bea0ac.png
+        at fail (file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75:9)
+        at file:///Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:55:27·
+    Node.js v26.4.0
+    "
+
+          at fail (file:/Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:75:9)
+          at file:/Users/robin/Claude/Projects/wt-rel1/scripts/assert-release-build.mjs:55:27
+          Node.js v26.4.0
+          at file:/Users/robin/Claude/Projects/wt-rel1/e2e/release-build.spec.ts:245:16
+          at Object.<anonymous> (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:11428:9)
+          at invokeMatcher (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:12925:20)
+          at invoke (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:12904:109)
+          at _Zone.run (../Gold Rush/node_modules/playwright-core/lib/coreBundle.js:8572:40)
+          at callMatcherAsStep (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:12905:64)
+          at Object.toThrow (../Gold Rush/node_modules/playwright/lib/matchers/expect.js:12867:23)
+          at file:/Users/robin/Claude/Projects/wt-rel1/e2e/release-build.spec.ts:248:11
+          at ../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1662:15
+          at ../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1154:17
+          at TimeoutManager.withRunnable (../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:426:9)
+          at TestInfoImpl._runWithTimeout (../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1152:34)
+          at ../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1660:22
+          at WorkerMain._runTest (../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1633:5)
+          at WorkerMain.runTestGroup (../Gold Rush/node_modules/playwright/lib/worker/workerProcessEntry.js:1528:9)
+          at process.<anonymous> (../Gold Rush/node_modules/playwright/lib/common/index.js:1991:25)
+
+      246 |     cwd: process.cwd(),
+      247 |     env: { ...process.env, GR_RELEASE: 'e1' },
+    > 248 |   })).not.toThrow();
+          |           ^
+      249 | });
+      250 |
+      251 | async function seedProfile(
+        at /Users/robin/Claude/Projects/wt-rel1/e2e/release-build.spec.ts:248:11
+
+    Error Context: test-results/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets 
+    [mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets 
+  28 passed (2.0m)

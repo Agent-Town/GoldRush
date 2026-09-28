@@ -1,0 +1,17 @@
+{
+  "contractChanges": [
+    {
+      "path": "pilots/map-rebuild-spike/long-road-terrain-contract.json",
+      "onlyAcceptanceStationsChanged": true
+    },
+    {
+      "path": "pilots/map-rebuild-spike/landmarks/long-road/long-road-landmark-pack-contract.json",
+      "onlyAcceptanceStationsChanged": true
+    }
+  ],
+  "mirroredStationsIdentical": true,
+  "terrainLandmarksAtlasesFootprintsMountsCollisionUnchanged": true,
+  "panoramaChange": "97 inner-ring XY vertices gain 0.51 m underlap; heights, UVs, topology, atlas, outer scenery and rendered triangle count unchanged. Saved source re-exports exactly. See panorama-verification.json.",
+  "discardedTrial": "Outer X extension did not resolve the apron edge; all trial files preserved under _raw/run-5/e4-long-road-apron-trial; not shipped.",
+  "storeDiff": " .../long-road-landmark-pack-contract.json          |  60 ++++++++++++++++++---\n .../long-road-panorama-contract.json               |  19 +++++--\n pilots/map-rebuild-spike/long-road-panorama.blend  | Bin 1568478 -> 1568486 bytes\n pilots/map-rebuild-spike/long-road-panorama.glb    | Bin 1551280 -> 1551280 bytes\n .../long-road-terrain-contract.json                |  30 ++++++++++-\n 5 files changed, 98 insertions(+), 11 deletions(-)\n"
+}

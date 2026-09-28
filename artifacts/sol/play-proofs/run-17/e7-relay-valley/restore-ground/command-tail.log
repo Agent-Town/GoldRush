@@ -1,0 +1,35 @@
+e7-relay-valley {"t":519.1,"wave":17,"hp":135,"gold":35,"kills":740,"x":-18.3,"z":-1.7,"alive":38,"seams":1}
+
+e7-relay-valley {"t":529.3,"wave":17,"hp":129,"gold":40,"kills":755,"x":-8.7,"z":38,"alive":36,"seams":2}
+
+e7-relay-valley {"t":539.7,"wave":17,"hp":129,"gold":40,"kills":768,"x":-49.7,"z":41,"alive":36,"seams":2}
+
+e7-relay-valley {"t":549.7,"wave":18,"hp":70,"gold":40,"kills":798,"x":-50.5,"z":41.8,"alive":46,"seams":2}
+
+e7-relay-valley {"t":560,"wave":18,"hp":4,"gold":40,"kills":838,"x":-46.7,"z":38,"alive":18,"seams":2}
+
+e7-relay-valley {"t":570.4,"wave":19,"hp":4,"gold":40,"kills":861,"x":-43.1,"z":41.8,"alive":28,"seams":2}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:1301:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow
+
+    Error: secures: runState=dead at wave 19 / 575.7s sim, 870 kills, 40 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1819 |       }
+      1820 |
+    > 1821 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1822 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1823 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1824 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1821:64
+
+    Error Context: ../../../../../.goldrush/play-proofs/run-17/restore-ground/e7-relay-valley/results/native-proofs-e7-relay-val-58d90-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1301:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow

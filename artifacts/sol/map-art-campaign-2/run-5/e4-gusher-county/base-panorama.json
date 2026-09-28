@@ -1,0 +1,82 @@
+{
+  "storeBase": "0f6ef32c9ebb7652c6796b8ccda622a282e8ffca",
+  "base": "c258a41dfe75e9500ce23d00f18b030a937c25a3",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "2c708dfbf46dbc3cb5ddde1ae7697101de6025a750539de72ea4c3383d246bb5",
+      "baseSha256": "4de9d8bb7c6f06f012d63271b763e66c0c7b244fbc1d781501b0a2e8195ca625"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/county-camp-rig.glb": {
+      "candidateSha256": "2f8da9045adf7f0698656004de29f3ab60a9bf7e45a75d4d236616a383744245",
+      "baseSha256": "998410b6380e4a002e1007737dc94f885bf6a89d743ea546a796959522137482"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-01.glb": {
+      "candidateSha256": "916cfb5af0041472c448245507995e44f2ed71966fd18a63b2cce452188ac286",
+      "baseSha256": "d2851e2169608b4d5022d4c10095764117704887a42a6748103ed4313b7bab75"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-02.glb": {
+      "candidateSha256": "dd40856dc193de08160d34c2eb8f50ad982f84b2da4c015974858296949442d6",
+      "baseSha256": "932e5d908c67a97d3cd0869b96d914de310496d3a0b83f3ec9bdb59d433fd686"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-03.glb": {
+      "candidateSha256": "6f5030bfa92a5f30c42b0a804fd5b046db3f35084097029c6f328766b0be5262",
+      "baseSha256": "353fb6c8a3c10f235526b7f006fc929b1b724f9ea2f2d030aa2519216a42c403"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-04.glb": {
+      "candidateSha256": "c864fda9761c3e930a6fac2db4170b0f44a1532eaf4425658fee2fb28bd71d43",
+      "baseSha256": "11ebb82fcf6200143181fef8ac444d0096bc0d0df4ca952e0bddd155bf82ed1d"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-05.glb": {
+      "candidateSha256": "61e966ec242f1fa7416e68b06651333cc815b46dc066e751dcff47616e9a5952",
+      "baseSha256": "e6c26bf73f26c47553bbd951a0a8ae809451b05ee3677fb9f8461a5852f1c413"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-06.glb": {
+      "candidateSha256": "cc775c09277376d5bbb022d0d839816ff35d130888da8aab5235cbf9316112a8",
+      "baseSha256": "866d540dd21b0ce0ee48f8775615e09d1d8937b9d327bc5f7b448c75749e3758"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-07.glb": {
+      "candidateSha256": "914eb5fdf38f4e81aa9bde2ba8ff110305e666ef797ba56389537bf6007ed191",
+      "baseSha256": "2a4777446179cb704f3ff7e79e734a1b43488e2803268b91b4af717193c9c57e"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/derrick-08.glb": {
+      "candidateSha256": "4131b96844c84efa4b5d8ff6f2b844c602bedff0c20bcf413bdb9ec20d60cd85",
+      "baseSha256": "571142d5722904672457a5e4ef8ae1a0e819161c91fdd76181f1c9c1e1d344fb"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/gusher-county-landmark-pack-contract.json": {
+      "candidateSha256": "e0bdf034c3882e51dde46a77ae7b4811df10815d50e94e3291321efbb9f29e9b",
+      "baseSha256": "50d1b9b8e86cf91fe731ea7bd38a3b6b5fa292b1adaef9f4b472db821d496216"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/gusher-county-landmarks.blend": {
+      "candidateSha256": "e2808a578f926fd1ba3b588dbdf01cc383996078e8c5b38da9d28f409295192f",
+      "baseSha256": "1ff30919eb62a4c8e51cd12b5ea456c266c6f0231b8d35f55ec932ad8b354899"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/gusher-county/outhouse-geyser.glb": {
+      "candidateSha256": "b4478cc3703f13d0b3ba1d7bd389372b23216d0e0e1079733ae9abfad7030af1",
+      "baseSha256": "fee4a3d08b58b56ce6f0eb89a2fe39d3e56ed87733c3d2aef24f8c331d347a5b"
+    }
+  },
+  "pattern": "e4-gusher-county keeps",
+  "specs": [
+    "e2e/panorama-framing.spec.ts"
+  ],
+  "candidateEngine": "9d44375b0eee22f43e73e7fac436867e449c45f67c8ab9ef8bb3e93ccda91cc2",
+  "baseEngine": "d9771424552e194e198257098a5c4e235d0101c5c9f063adf030d42fcd2ef0eb",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-5/e4-gusher-county-base-panorama/test-results",
+    "--grep",
+    "e4-gusher-county keeps",
+    "e2e/panorama-framing.spec.ts"
+  ],
+  "exit": 0,
+  "restoredEngine": "9d44375b0eee22f43e73e7fac436867e449c45f67c8ab9ef8bb3e93ccda91cc2",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-5/e4-gusher-county-base-panorama/tests.log"
+}

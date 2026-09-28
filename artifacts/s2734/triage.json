@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-09-28T06:14Z",
+  "main": "45a8cdc7ddb6d74a0a334dfccf178a5465052c5d",
+  "landingHolder": "34630 2026-09-28T05:40Z /bin/bash scripts/attended/land.sh scripts/attended/landings/sph3.json\n",
+  "landingGates": "branch sol/map-art-campaign-2 tip 404583963 2026-09-28 05:40Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/sph3.json\nscratch store at the store's main 5793a96\nchain base e136a6b9b\nmerged ee16b7954\nlaw-pointer (pre): rc=0, no re-base needed\nengine hash merged: 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)\ntsc/build/e1: 0 / 0 / 0\nlaw-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?\nguards: ℹ pass 137 ℹ fail 0 \nledger battery start 05:41Z\nledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 \ne2e start 05:44Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts\ne2e: rc=0   24 passed (1.9m)  05:46Z\nbattery start 05:46Z\nbattery: rc=0 ℹ tests 1040 ℹ pass 1035 ℹ fail 0 ℹ skipped 5 ℹ tests 87 ℹ pass 87 ℹ fail 0 ℹ skipped 0  06:05Z\ndirt after battery: 0\nsph3-PREP-DONE\nverdict: clean\nhash at pin time: 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d\nreview: reviews/sol-play-proofs-holds-3-landing.md\nbookkeeping: leaf merged, row, STATUS phrase (ee16b7954)\nmain now 57955aa6b\n   e136a6b9b..57955aa6b  main -> main\npost-ff: law rc=0 | desk ℹ pass 57 ℹ fail 0 \nno deploy (config)\n",
+  "landingRun": "held 2026-09-28T05:40Z (unnamed); touch loop pid 34623\nfire hold on 05:40Z; landing sph3\nland-queue: admitted at load { 5.48 10.35 12.69 } 05:40Z\nrelease requested; tasks/.fire.lock gone\nfire hold released at the verdict (verdict: clean) 06:06Z\n",
+  "running": [
+    "lane-b--20260928-130649-audio-music-toggle-1.md",
+    "lane-b.pid"
+  ],
+  "queues": {
+    "art": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "main": []
+  },
+  "pending": [],
+  "runner": "  PID  PPID TTY      STAT STARTED\n25494     1 ??       SN   Sun Sep 20 13:55:15 2026    \n34630 34609 ??       SN   Mon Sep 28 12:40:08 2026    \n34642 34630 ??       SN   Mon Sep 28 12:40:08 2026    \n71467 34642 ??       SN   Mon Sep 28 13:06:29 2026    \n"
+}

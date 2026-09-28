@@ -1,0 +1,93 @@
+{
+ "label": "tip",
+ "project": "mobile",
+ "startedAt": "2026-09-26T13:55:52.211Z",
+ "requests": [],
+ "console": [],
+ "pageErrors": [],
+ "notes": [],
+ "boot": {
+  "sim": 0.9999999999999999,
+  "gold": 0,
+  "paused": false,
+  "hero": {
+   "x": 0,
+   "z": 12
+  },
+  "contract": "the-claim",
+  "name": "The River",
+  "seams": [
+   {
+    "x": -9,
+    "z": 6.7
+   },
+   {
+    "x": -1.5,
+    "z": -6.4
+   }
+  ]
+ },
+ "recordStart": {
+  "ok": true
+ },
+ "recordStop": {
+  "ok": true,
+  "name": "river-round",
+  "hash": "fnv1a32:e6aa3de4",
+  "text": "{\"contractId\":\"e10-river\",\"difficultyPreset\":\"trail\",\"durationTicks\":22,\"entries\":[{\"a\":[],\"mx\":-1,\"my\":0,\"t\":0},{\"a\":[],\"mx\":0,\"my\":0,\"t\":13}],\"name\":\"river-round\",\"seed\":\"e1-the-claim-r2026w39-492bfb6017b9\",\"start\":{\"x\":0,\"z\":12},\"stepSeconds\":0.03333333333333333,\"truncated\":null,\"version\":1}",
+  "entries": 2,
+  "durationTicks": 22,
+  "truncated": null,
+  "saved": true,
+  "saveReason": null
+ },
+ "riverPlaybook": {
+  "contractId": "e10-river",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "durationTicks": 22,
+  "entries": 2
+ },
+ "claimReplay": {
+  "ok": false,
+  "reason": "contract-mismatch"
+ },
+ "riverReplay": {
+  "ok": true
+ },
+ "riverStop": {
+  "ok": true
+ },
+ "panned": {
+  "sim": 5.466666666666657,
+  "gold": 5,
+  "paused": false,
+  "hero": {
+   "x": -8.07607019036624,
+   "z": 6.782583873036
+  },
+  "contract": "the-claim",
+  "name": "The River",
+  "seams": [
+   {
+    "x": -9,
+    "z": 6.7
+   },
+   {
+    "x": -1.5,
+    "z": -6.4
+   }
+  ]
+ },
+ "riverScores": 1,
+ "reel": {
+  "contract": "e10-river",
+  "playbookUses": [
+   {
+    "atTick": 69,
+    "name": "river-round",
+    "contractId": "e10-river"
+   }
+  ],
+  "validateRunTape": "null (refused)"
+ }
+}

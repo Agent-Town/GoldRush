@@ -1,0 +1,5 @@
+{
+  "verdict": "IMPROVED: phone derrick then cooling rack fit one window; desktop rack HELD.",
+  "reason": "entryLandmarks keeps mesa-starstone-derrick first and adds isotope-cooling-rack. The phone tour preserves the 0.7 s entry/return eases and uses the old 1.1 s hold for 0.2 s first hold, 0.7 s transit and 0.2 s second hold. The phone bodies are visible about 0.45\u20130.55 s and 0.58\u20130.68 s; this trades dwell time for two views. Desktop rack already has body pixels, so it is skipped; its zero peak count is at the derrick stop, not a claimed rack glance. Cropping, desktop rack HUD coverage, full mesa grouping and active node-ring presentation remain HELD.",
+  "tests": "Own unchanged Atomic story suite PASS 10/10. Scoped guards PASS (see guards-gates.json); normal/replay/multiplayer camera poses match the baseline for 1,200 frames, and the old single-target route matches for 540 frames. The two-stop timing and visibility-case proof passes."
+}

@@ -106,6 +106,40 @@ note "building…"
 # builds go to PREVIEW branch deployments only (wrangler pages deploy --branch=...), never here.
 # Override GR_RELEASE explicitly only on the owner's word.
 if ! GR_RELEASE="${GR_RELEASE:-e1}" CF_PAGES_COMMIT_SHA="$BUILD_ID" npm run build >> "$LOG" 2>&1; then note "ABORT: build failed — never deploy a red build"; finish build_failed 3; fi
+# THE RELEASE DOOR NOW RUNS ON THE DEPLOY PATH (F-PERFC-1, on the owner's desk since 2026-09-07;
+# confirmed by the outside review of 2026-09-24 as BUILD-1). The line above runs `npm run build`,
+# which does NOT call scripts/assert-release-build.mjs — only `npm run build:release` does, and its
+# one non-test caller was the preview alias script. So for every deploy since the assertion was
+# written, the one instrument that proves "later-era content is ABSENT, not hidden"
+# (specs/release-e1/README.md, THE FRONTIER IS PHYSICAL) ran everywhere EXCEPT on the path that
+# publishes to players. F-CELL-5's own comment above says it in as many words: "The deploy never
+# caught it because scripts/deploy.sh runs `npm run build`, which does not call that assertion."
+# It aborts exactly like a red build, because a leaked later-era asset IS a red build.
+#
+# TWO CONDITIONS, BOTH LOAD-BEARING, NEITHER A HEDGE:
+#   1. `${GR_RELEASE:-e1}` = e1. The block above documents GR_RELEASE as an owner-word override for
+#      a full build; the assertion only describes an E1 bundle (it refuses outright unless
+#      GR_RELEASE=e1) and would abort a deliberate full deploy on the very assets it was told to
+#      ship. The gate follows the build's own variant, and the default is e1, so the normal
+#      production deploy always asserts.
+#   2. The script is on disk. scripts/test-deploy-contract.sh:7 copies THIS FILE ALONE into a
+#      throwaway tree with stub npm/wrangler, and scripts/deploy-budget.test.mjs copies it plus the
+#      payload script; neither copies the assertion, so an unguarded `node` call would turn all
+#      their cases into instrument failures. This is the same absent-script door the payload gate
+#      documents at :208-:213, for the same one caller. ⚠️ UNLIKE the payload gate, nothing yet
+#      asserts this file is present in the real repo: deploy-budget.test.mjs pins
+#      first-town-payload.mjs and its declaration that way, and the equivalent row for
+#      assert-release-build.mjs LANDED the day this shipped (F-RGD-2, 2026-09-24: the presence row in
+#      deploy-budget.test.mjs pins this file and the call below).
+RELEASE_ASSERT="$ROOT/scripts/assert-release-build.mjs"
+if [ "${GR_RELEASE:-e1}" = e1 ] && [ -f "$RELEASE_ASSERT" ]; then
+  if ! GR_RELEASE=e1 node "$RELEASE_ASSERT" >> "$LOG" 2>&1; then note "ABORT: release assertion failed — later-era content in the E1 bundle; see $LOG"; finish build_failed 3; fi
+  note "release assertion: E1-only bundle confirmed"
+elif [ ! -f "$RELEASE_ASSERT" ]; then
+  note "RELEASE NOT ASSERTED: $RELEASE_ASSERT is absent; this run cannot prove the bundle is E1-only"
+else
+  note "RELEASE NOT ASSERTED: GR_RELEASE=${GR_RELEASE:-e1} is not e1, so this build is not an E1 bundle"
+fi
 printf '{"build":"%s","builtAt":"%s"}\n' "$BUILD_ID" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > dist/version.json
 
 BUDGET_OVER=0
@@ -384,6 +418,21 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--include=/assets/pilots/map-rebuild-spike/reconcile-late/*.json"
         "--include=/assets/pilots/map-rebuild-spike/reconcile-late/*.mjs"
         "--include=/assets/pilots/map-rebuild-spike/landmarks/***"
+        # sol-map-art-fidelity-1 slice 1 (2026-09-22, F-FID1-5): Astra's fidelity maps keep a provenance.json beside
+        # their Blender and PNG sources under sources/<map>/; the engine hash walks map-rebuild-spike recursively for
+        # .json/.mjs/.ts (assay-replay-agent.mjs), so those files sit inside the pin's corpus and the droplet's assayer
+        # must see them. deploy-mirror-allowlist.test.mjs:97 measured provenance.json missing on the merged tree; the
+        # image and .blend sources stay unshipped, as they do at the top level.
+        "--include=/assets/pilots/map-rebuild-spike/sources/"
+        "--include=/assets/pilots/map-rebuild-spike/sources/**/"
+        "--include=/assets/pilots/map-rebuild-spike/sources/**.json"
+        "--include=/assets/pilots/map-rebuild-spike/sources/**.mjs"
+        "--include=/assets/pilots/map-rebuild-spike/sources/**.ts"
+        # sol-map-art-fidelity-1 slice 2 (2026-09-22, F-FID1-8): the Ember Shore's code imports its native mineral texture
+        # from sources/<map>/ (an ES import, so vite bundles it and the runtime closure the mirror is measured against
+        # contains it); deploy-mirror-allowlist.test.mjs:97 measured the PNG missing. Imported textures ship; .blend
+        # inputs and unreferenced images still do not.
+        "--include=/assets/pilots/map-rebuild-spike/sources/**.png"
         "--include=/assets/pilots/*-3d/*.e*.glb"
         "--include=/assets/pilots/railcar-3d/railcar.glb"
         "--include=/assets/pilots/claim-boat-3d/claim-boat.glb"
@@ -428,7 +477,7 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--filter=-s *"
       )
       # MIRROR_FILTERS_END
-      if rsync -az --delete --timeout=60 "${MIRROR_FILTERS[@]}" ./ ${GR_DROPLET_HOST}:/opt/goldrush/ 2>/dev/null \
+      if rsync -az --copy-unsafe-links --delete --timeout=60 "${MIRROR_FILTERS[@]}" ./ ${GR_DROPLET_HOST}:/opt/goldrush/ 2>/dev/null \
         && ssh -o BatchMode=yes ${GR_DROPLET_HOST} "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
         note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
         # F-DISK-0902: the first allowlisted sync measured 1,456 MB including protected node_modules;

@@ -1,0 +1,92 @@
+{
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-boneyard-own-rerun-2.log",
+  "counts": {
+    "passed": 55,
+    "skipped": 5,
+    "failed": 6
+  },
+  "failures": [
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/e4-roads-and-convoys.spec.ts",
+      "testLine": 69,
+      "title": "every Motor reel replays to its claimed hash in Node and Chromium",
+      "fingerprint": [
+        "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+        "assay replay failed: malformed tape"
+      ],
+      "assertionLocations": [
+        "e2e/e4-roads-and-convoys.spec.ts:80:29"
+      ]
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 195,
+      "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "fingerprint": [
+        "Error: expect(received).toBe(expected) // Object.is equality",
+        "Expected: \"river\"",
+        "Received: \"bank\""
+      ],
+      "assertionLocations": [
+        "e2e/terrain3d-registry.spec.ts:235:34"
+      ]
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 271,
+      "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "fingerprint": [
+        "Error: expect(received).toBeGreaterThan(expected)",
+        "Expected: > 8",
+        "Received:   2.333196128620933"
+      ],
+      "assertionLocations": [
+        "e2e/terrain3d-registry.spec.ts:303:27"
+      ]
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/e4-roads-and-convoys.spec.ts",
+      "testLine": 69,
+      "title": "every Motor reel replays to its claimed hash in Node and Chromium",
+      "fingerprint": [
+        "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+        "assay replay failed: malformed tape"
+      ],
+      "assertionLocations": [
+        "e2e/e4-roads-and-convoys.spec.ts:80:29"
+      ]
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 195,
+      "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "fingerprint": [
+        "Error: expect(received).toBe(expected) // Object.is equality",
+        "Expected: \"river\"",
+        "Received: \"bank\""
+      ],
+      "assertionLocations": [
+        "e2e/terrain3d-registry.spec.ts:235:34"
+      ]
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 271,
+      "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "fingerprint": [
+        "Error: expect(received).toBeGreaterThan(expected)",
+        "Expected: > 8",
+        "Received:   1.7422826926000288"
+      ],
+      "assertionLocations": [
+        "e2e/terrain3d-registry.spec.ts:303:27"
+      ]
+    }
+  ]
+}

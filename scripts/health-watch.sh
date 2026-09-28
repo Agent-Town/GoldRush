@@ -49,7 +49,7 @@ runner_staleness_note() {
   printf ' ⚠️  STALE — pid %s predates %s commit(s) to lane-runner-v3.sh; they are INERT until restart (scripts/start-lane-runner.sh)' \
     "$pid" "$n"
 }
-fire_proc()    { pgrep -f "claude -p # Gold Rush FIRE" >/dev/null 2>&1; }
+fire_proc()    { [ -d tasks/.fire.lock ]               >/dev/null 2>&1; }
 
 queued_count()  { ls tasks/queue/main tasks/queue/lane-* tasks/queue/art 2>/dev/null | grep -c '\.md$'; }
 running_count() { ls tasks/running/ 2>/dev/null | grep -c -- '--'; }

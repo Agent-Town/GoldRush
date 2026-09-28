@@ -1,0 +1,152 @@
+
+Running 2 tests using 1 worker
+
+
+(node:98994) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/2] [desktop-chrome] › e2e/er01-e10-census.spec.ts:124:3 › e10-archive-world census cites the existing Deep Sky debt
+
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:124:3 › e10-archive-world census cites the existing Deep Sky debt
+(node:98994) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  1) [desktop-chrome] › e2e/er01-e10-census.spec.ts:124:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toThrow(expected)
+
+    Expected pattern: /AP-07 supports only .*received e10-archive-world/
+
+    Received function did not throw
+
+      173 |           expect(sim.currentTurn().view.now.wave).toBe(0);
+      174 |         } else {
+    > 175 |           expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
+          |                                                                                    ^
+      176 |             new RegExp(`AP-07 supports only .*received ${contract.id}`),
+      177 |           );
+      178 |         }
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/er01-e10-census.spec.ts:175:84
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:99116) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2/2] [mobile-chrome] › e2e/er01-e10-census.spec.ts:124:3 › e10-archive-world census cites the existing Deep Sky debt
+
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:124:3 › e10-archive-world census cites the existing Deep Sky debt
+(node:99116) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+  2) [mobile-chrome] › e2e/er01-e10-census.spec.ts:124:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toThrow(expected)
+
+    Expected pattern: /AP-07 supports only .*received e10-archive-world/
+
+    Received function did not throw
+
+      173 |           expect(sim.currentTurn().view.now.wave).toBe(0);
+      174 |         } else {
+    > 175 |           expect(() => new HeadlessContractSim({ contractId: contract.id, seed })).toThrow(
+          |                                                                                    ^
+      176 |             new RegExp(`AP-07 supports only .*received ${contract.id}`),
+      177 |           );
+      178 |         }
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/er01-e10-census.spec.ts:175:84
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/er01-e10-census.spec.ts:124:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [mobile-chrome] › e2e/er01-e10-census.spec.ts:124:3 › e10-archive-world census cites the existing Deep Sky debt 

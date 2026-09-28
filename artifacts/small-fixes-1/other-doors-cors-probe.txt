@@ -1,0 +1,23 @@
+other-doors-cors-probe: OPTIONS preflight, production-shaped env (sender bound), in process, no port
+door | handler | origin | status | allow-origin
+functions/api/redeem.ts | onRequest | http://localhost:5188 | 204 | http://localhost:5188
+functions/api/redeem.ts | onRequest | https://agenttown.app | 204 | https://agenttown.app
+functions/api/redeem.ts | onRequest | https://evil.example | 403 | (none)
+functions/api/standings.ts | onRequest | http://localhost:5188 | 204 | http://localhost:5188
+functions/api/standings.ts | onRequest | https://agenttown.app | 204 | https://agenttown.app
+functions/api/standings.ts | onRequest | https://evil.example | 403 | (none)
+functions/api/refusals.ts | onRequest | http://localhost:5188 | 204 | http://localhost:5188
+functions/api/refusals.ts | onRequest | https://agenttown.app | 204 | https://agenttown.app
+functions/api/refusals.ts | onRequest | https://evil.example | 403 | (none)
+functions/api/telemetry.ts | onRequest | http://localhost:5188 | 204 | http://localhost:5188
+functions/api/telemetry.ts | onRequest | https://agenttown.app | 204 | https://agenttown.app
+functions/api/telemetry.ts | onRequest | https://evil.example | 403 | (none)
+functions/api/stats.ts | onRequest | http://localhost:5188 | 204 | http://localhost:5188
+functions/api/stats.ts | onRequest | https://agenttown.app | 204 | https://agenttown.app
+functions/api/stats.ts | onRequest | https://evil.example | 403 | (none)
+functions/api/_multiplayer.ts | createRoom | http://localhost:5188 | 204 | http://localhost:5188
+functions/api/_multiplayer.ts | createRoom | https://agenttown.app | 204 | https://agenttown.app
+functions/api/_multiplayer.ts | createRoom | https://evil.example | 403 | (none)
+functions/api/_bugs.ts | postBug | http://localhost:5188 | 403 | (none)
+functions/api/_bugs.ts | postBug | https://agenttown.app | 204 | https://agenttown.app
+functions/api/_bugs.ts | postBug | https://evil.example | 403 | (none)

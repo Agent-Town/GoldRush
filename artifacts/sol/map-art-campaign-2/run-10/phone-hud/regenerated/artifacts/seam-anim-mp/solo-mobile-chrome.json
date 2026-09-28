@@ -1,0 +1,134 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "mp": null,
+  "actors": [
+    {
+      "slot": 0,
+      "playerId": "local",
+      "name": "Rider",
+      "town": null,
+      "local": true,
+      "hp": 100,
+      "maxHp": 100,
+      "weapon": "rig",
+      "position": {
+        "x": -22,
+        "y": 0.527412042617798,
+        "z": -6.8
+      },
+      "speed": 0,
+      "visible": true
+    }
+  ],
+  "harvest": {
+    "activeNodes": [
+      {
+        "id": "gold-seam-1",
+        "active": true,
+        "anchorIndex": 0,
+        "position": {
+          "x": -22,
+          "z": -6.8
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "anchorIndex": 4,
+        "position": {
+          "x": 18,
+          "z": -7
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      }
+    ],
+    "channeling": true,
+    "channelNodeId": "gold-seam-1",
+    "progress": 0.48888888888888865,
+    "channels": [
+      {
+        "actorId": "0",
+        "channelNodeId": "gold-seam-1",
+        "progress": 0.48888888888888865,
+        "channeling": true
+      }
+    ],
+    "lastGoldGain": 0,
+    "lastGoldPosition": null
+  },
+  "heroAnimation": {
+    "clip": "pan",
+    "frame": 2,
+    "frameKey": "char-hero-sheet-work8-south-clean-v7-r0c2.png",
+    "frameCount": 8,
+    "fps": 8,
+    "loaded": true,
+    "fadeActive": false,
+    "fadeMsRemaining": 0,
+    "fadeWindow": 0,
+    "direction": "s",
+    "mirrored": false
+  },
+  "frameMs": {
+    "last": 216.69999999999982,
+    "avg": 18.10434782608696,
+    "p95": 17.800000000000182,
+    "sampleCount": 23
+  }
+}

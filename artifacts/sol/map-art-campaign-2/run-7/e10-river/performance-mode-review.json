@@ -1,0 +1,58 @@
+{
+  "decision": "ACCEPT observed four-run rendering-cost budget; no causal speedup claim",
+  "automaticSingleModeFlagsRemainFalse": true,
+  "method": "Retain all four fresh-browser runs per arm and viewport. Baseline has fast and 16 ms timing modes; candidate only has the fast mode. Compare fast-mode medians and, more conservatively, every candidate run against the fastest baseline run. Use lowest baseline draw count against highest candidate count. These observed ratios are below 15%; unmatched slow baseline samples do not establish an improvement.",
+  "limitations": "Four runs per arm are bounded local observations; they do not establish device-wide performance or guarantee the absence of rare slower candidate modes.",
+  "rows": [
+    {
+      "width": 1280,
+      "beforeFastModeP95": [
+        9.800000000000182,
+        10.399999999999636
+      ],
+      "afterP95": [
+        8.900000000000546,
+        9.200000000000728,
+        9.5,
+        9.600000000000364
+      ],
+      "matchedFastMedianChangePercent": -7.4257425742529914,
+      "candidateMaximumVsFastestBaselinePercent": -2.040816326528716,
+      "drawsBeforeFloor": 79,
+      "drawsAfterMaximum": 83,
+      "drawChangePercent": 5.063291139240511,
+      "within15PercentForEveryObservedCandidateRun": true,
+      "beforeSlowerModeWithoutCandidateCounterpart": [
+        [
+          16,
+          16.600000000000364
+        ]
+      ]
+    },
+    {
+      "width": 390,
+      "beforeFastModeP95": [
+        9.900000000000546,
+        10.100000000000364,
+        10.199999999999818
+      ],
+      "afterP95": [
+        9.800000000000182,
+        9.899999999999636,
+        9.899999999999636,
+        10
+      ],
+      "matchedFastMedianChangePercent": -1.9801980198091096,
+      "candidateMaximumVsFastestBaselinePercent": 1.0101010100954433,
+      "drawsBeforeFloor": 58,
+      "drawsAfterMaximum": 62,
+      "drawChangePercent": 6.896551724137923,
+      "within15PercentForEveryObservedCandidateRun": true,
+      "beforeSlowerModeWithoutCandidateCounterpart": [
+        [
+          16.600000000000364
+        ]
+      ]
+    }
+  ]
+}

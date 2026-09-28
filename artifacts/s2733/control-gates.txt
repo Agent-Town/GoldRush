@@ -1,0 +1,127 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-28T05:26:13.460Z — s2733 warmup ########
+cwd=/Users/robin/.goldrush/s2733/wt-control
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0jy2d5v:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5413
+
+===== warmup =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --grep enemy crossing the river reaches the hero through the ford only --workers=1
+rc=0 7.5s
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (5.7s)
+
+  1 passed (6.5s)
+(node:33814) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-28T05:26:20.986Z — s2733 clean-main same-spec attribution ########
+cwd=/Users/robin/.goldrush/s2733/wt-control
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0jy2d5v:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5413
+
+===== inheritance clean-main control =====
+$ npx playwright test e2e/e7-playbook-surface.spec.ts --grep the tape drawer arms --project=desktop-chrome --project=mobile-chrome --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2733/control-results --workers=1
+rc=1 61.4s
+
+Running 2 tests using 1 worker
+
+  ✘  1 [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward (28.5s)
+  ✘  2 [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward (23.3s)
+
+
+  1) [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('playbook-toggle')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('playbook-toggle')
+
+
+      47 |
+      48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');
+    > 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+         |                                                     ^
+      50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+      51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      52 | });
+        at /Users/robin/.goldrush/s2733/wt-control/e2e/e7-playbook-surface.spec.ts:49:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../Claude/Projects/Gold Rush/artifacts/s2733/control-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2733/control-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../Claude/Projects/Gold Rush/artifacts/s2733/control-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace "../../../Claude/Projects/Gold Rush/artifacts/s2733/control-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/trace.zip"
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('playbook-toggle')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('playbook-toggle')
+
+
+      47 |
+      48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');
+    > 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+         |                                                     ^
+      50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+      51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      52 | });
+        at /Users/robin/.goldrush/s2733/wt-control/e2e/e7-playbook-surface.spec.ts:49:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../Claude/Projects/Gold Rush/artifacts/s2733/control-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2733/control-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../Claude/Projects/Gold Rush/artifacts/s2733/control-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace "../../../Claude/Projects/Gold Rush/artifacts/s2733/control-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/trace.zip"
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+    [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+(node:34025) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:34105) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:34105) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:34725) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:34725) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"inheritance clean-main control":1}
+OVERALL rc=1

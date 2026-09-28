@@ -1,0 +1,59 @@
+{
+  "storeBase": "8ea5370ba1dfd4bc85276380875fdb87f17f7bf7",
+  "base": "823b06b1dce4b861be2fccf646245fc4cc864588",
+  "paths": {
+    "src/world/LandmarkCollision.ts": {
+      "candidateSha256": "3650bd8c00e22a8cb458a22ff258b7561482565b4fe9cc47fdd5916a4a51a9e5",
+      "baseSha256": "52ff39655ddf3babc8d47d5eef67847ddb9187dba4e4664729991c3b5d65ed07"
+    },
+    "assets/pilots/map-rebuild-spike/dead-band-terrain-contract.json": {
+      "candidateSha256": "71924d406d5a36817e89660ada1f0a43093d089751bd8a748a9f8e4b07303b09",
+      "baseSha256": "3e9d2d5058f9181c1f2a150d8f309721203d56fed0b241f1948f918c76cc2680"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dead-band/dead-band-landmark-pack-contract.json": {
+      "candidateSha256": "6beddd199dd657c040e94ece2f6a60893eef2e1de363214c8bcfc62b57bed24c",
+      "baseSha256": "22151c597a48ced06c37aef0879ee3006ca275f92bc464cb2599d242709009e9"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/picnic/picnic-landmark-pack-contract.json": {
+      "candidateSha256": "356f294c50b6d9c310851db96a9da1364136d9951c5b7fdf8ff866b26da9c0de",
+      "baseSha256": "72672d62a8afb36c50efe1ee91883f90f3bab592674f0d6675efc7859eebf8ae"
+    },
+    "assets/pilots/map-rebuild-spike/picnic-terrain-contract.json": {
+      "candidateSha256": "57b9f2210f162f6a969acdd5d1aae84379f37ad5f8010a5bb62d3695f251683d",
+      "baseSha256": "762f36f5edb01aca94eedded1e2d3b84a4607b6decfe0e0e24180b68a5d1d6ae"
+    }
+  },
+  "pattern": "T6 THE CALCULATING HOUSE|a playbook refuses under the wall|plain Signal-era boot|S3 silences|HUMAN PARITY: a plain-boot player",
+  "specs": [
+    "e2e/ceremony-framework.spec.ts",
+    "e2e/e7-relay-rush-front.spec.ts",
+    "e2e/e7-roster.spec.ts",
+    "e2e/e7-signal-systems.spec.ts",
+    "e2e/e7-playbook-rows.spec.ts"
+  ],
+  "candidateEngine": "f00319a05cf5f5d6bea92a824e5377188e98c44da7238d8db2d659e32e4f9f13",
+  "baseEngine": "4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-base-signal-gates/test-results",
+    "--grep",
+    "T6 THE CALCULATING HOUSE|a playbook refuses under the wall|plain Signal-era boot|S3 silences|HUMAN PARITY: a plain-boot player",
+    "e2e/ceremony-framework.spec.ts",
+    "e2e/e7-relay-rush-front.spec.ts",
+    "e2e/e7-roster.spec.ts",
+    "e2e/e7-signal-systems.spec.ts",
+    "e2e/e7-playbook-rows.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {},
+  "restoredEngine": "f00319a05cf5f5d6bea92a824e5377188e98c44da7238d8db2d659e32e4f9f13",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-base-signal-gates/tests.log"
+}

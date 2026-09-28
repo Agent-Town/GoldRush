@@ -1,0 +1,24 @@
+[
+  {
+    "label": "story-profile",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e8-low-orbit-story-profile",
+      "--grep",
+      "other three Orbital maps|E8 contract rows|E8 placeholders|plain Orbital-era boot",
+      "e2e/ss-09-e8-beats.spec.ts",
+      "e2e/e8-roster.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 108.48,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e8-low-orbit-story-profile.log"
+  }
+]

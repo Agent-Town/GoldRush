@@ -1,0 +1,53 @@
+{
+  "storeBase": "f3078c4001d86b8f177a1f1727464c32bdc166bb",
+  "base": "70f67c0ae47714a8db14f877940d6a98b4aeb900",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "d475809ba978447f920fabd5fb5cdb207e390cf8d4d7a96239f9adea685699e4",
+      "baseSha256": "ff705dffde5933ab4d7da9c96eb070f6a02ef611c302a483a426c7677ada80f5"
+    },
+    "assets/pilots/map-rebuild-spike/ember-shore-panorama-contract.json": {
+      "candidateSha256": "62ff20444775c2369d2d3fb7fbd2e3c964383d9e2e359549a3437fc01a2c417e",
+      "baseSha256": "7db2c5ed1cf81ab22a42e0c17c8222494577e0568d3380b0efdf234eee5aebae"
+    },
+    "assets/pilots/map-rebuild-spike/ember-shore-panorama.blend": {
+      "candidateSha256": "3984ad10dccfd9abcb563d521a34257831de51b0de9eddc5fd3e842a3e2116e1",
+      "baseSha256": "ed1a198c64c051091dd03137b5b5d5d83c2d31e9eea562f099e8bf17b3a1ab12"
+    },
+    "assets/pilots/map-rebuild-spike/ember-shore-panorama.glb": {
+      "candidateSha256": "f3c5183095cf35c071c331f22bf6898cc933f2095d4dffc403d8bc689fe214e2",
+      "baseSha256": "20e9b61acfdc33045350b5db40e450132e2692b4dfa313ddbbb5ab30bf7c62fa"
+    }
+  },
+  "pattern": "all sixteen contracts mount|rim and horizon probes|all fifteen contracts stay painted",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "ac5caf75c8186240ed5c5e56ec5ea55c8b8769fa9db2324fb21726efdb34c200",
+  "baseEngine": "c72f302925f627b0a783f8d44bd132ed1fa61ae737379454a746e1033e1adfeb",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-8/e10-ember-shore-base-registry-final/test-results",
+    "--grep",
+    "all sixteen contracts mount|rim and horizon probes|all fifteen contracts stay painted",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/fidelity_ember_panorama.py": "cb4724c34cd276b87f9b6c90463b706456870c6e8c26ee78ddb4acb6b121c64f",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/engraved-basalt.png": "1853936504d98b5c48f9b412301f0934225a02711bd645caf1610ad7c81261b5",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/panorama-input-contract.json": "7db2c5ed1cf81ab22a42e0c17c8222494577e0568d3380b0efdf234eee5aebae",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/panorama-input.blend": "ed1a198c64c051091dd03137b5b5d5d83c2d31e9eea562f099e8bf17b3a1ab12",
+    "assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/provenance.json": "818660bb0a0f8af63ae89ed7f06c2f5d8a2410d66a1ef9b9f78ec45ee30eb5db"
+  },
+  "restoredEngine": "ac5caf75c8186240ed5c5e56ec5ea55c8b8769fa9db2324fb21726efdb34c200",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/e10-ember-shore-base-registry-final/tests.log"
+}

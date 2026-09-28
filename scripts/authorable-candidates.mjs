@@ -39,7 +39,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 
 /** Legacy prose spellings a refusal has historically been written under. */
 export const PROSE_KEYS = ['blockedReason', 'authorNotes', 'note', 'reason', 'stopNote', 'drainNotes'];
@@ -353,4 +353,22 @@ function main() {
   if (process.argv.includes('--strict') && counts.unpriced) process.exitCode = 1;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();
+if (isMain(import.meta.url)) main();
+
+/**
+ * A VERBATIM COPY of isMain from ./is-main.mjs (F-LS1-2, small-fixes-1), not an import, because a
+ * guard fixture relocates this file ALONE: authorable-single-read-guard.test.mjs writes it into a
+ * bare scratch scripts/ dir, where any relative import dies ERR_MODULE_NOT_FOUND (measured: 5 of
+ * that suite's 9 arms red with the import). The constraint and this route are the ones recorded in
+ * dry-board-probe.mjs above headDetached. scripts/is-main.test.mjs asserts this copy still matches
+ * the original byte for byte; change them together.
+ */
+function isMain(importMetaUrl) {
+  const entry = process.argv[1];
+  if (!entry || !importMetaUrl) return false;
+  try {
+    return fs.realpathSync(entry) === fs.realpathSync(fileURLToPath(importMetaUrl));
+  } catch {
+    return false;
+  }
+}

@@ -1,0 +1,555 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+      "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/node_modules/.bin/playwright",
+      "test",
+      "e2e/m2-05b-overwhelm-valves.spec.ts:223",
+      "e2e/ss-01-beats.spec.ts:169",
+      "e2e/ss-01-beats.spec.ts:187",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line,json"
+    ],
+    "configFile": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/playwright.config.ts",
+    "rootDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/scripts/external-server-guard.mjs",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+      "dirty": true,
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-chrome",
+        "name": "desktop-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "mobile-chrome",
+        "name": "mobile-chrome",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "revision": "b95e2c4f0fb3e4cc08563ae8999b0f6935e1830e",
+          "dirty": true,
+          "actualWorkers": 1
+        },
+        "id": "desktop-webkit",
+        "name": "desktop-webkit",
+        "testDir": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e",
+        "testIgnore": [
+          "**/*.rig.ts",
+          "**/release-build.spec.ts",
+          "**/release-base-path.spec.ts",
+          "**/accounts-sync.spec.ts"
+        ],
+        "testMatch": [
+          "/058-device-tiers\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "m2-05b-overwhelm-valves.spec.ts",
+      "file": "m2-05b-overwhelm-valves.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "lullFloor12 only clamps post-wave-12 pulse spacing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7522,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:55:32.511Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ef0003139813dc75b400-d955cf3aad94d6340737",
+          "file": "m2-05b-overwhelm-valves.spec.ts",
+          "line": 223,
+          "column": 1
+        },
+        {
+          "title": "lullFloor12 only clamps post-wave-12 pulse spacing",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9697,
+                  "error": {
+                    "message": "TypeError: Cannot read properties of undefined (reading 'lastPulseAt')",
+                    "stack": "TypeError: Cannot read properties of undefined (reading 'lastPulseAt')\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts:246:19",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts",
+                      "column": 19,
+                      "line": 246
+                    },
+                    "snippet": "  244 |   const wave1 = records.filter((record) => record.wave === 1);\n  245 |   const wave12 = records.filter((record) => record.wave === 12);\n> 246 |   expect(wave1[1].lastPulseAt - wave1[0].lastPulseAt).toBeCloseTo(0.5, 4);\n      |                   ^\n  247 |   expect(wave12[1].lastPulseAt - wave12[0].lastPulseAt).toBeGreaterThanOrEqual(2);\n  248 |   expect(errors.consoleErrors).toEqual([]);\n  249 |   expect(errors.pageErrors).toEqual([]);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts",
+                        "column": 19,
+                        "line": 246
+                      },
+                      "message": "TypeError: Cannot read properties of undefined (reading 'lastPulseAt')\n\n  244 |   const wave1 = records.filter((record) => record.wave === 1);\n  245 |   const wave12 = records.filter((record) => record.wave === 12);\n> 246 |   expect(wave1[1].lastPulseAt - wave1[0].lastPulseAt).toBeCloseTo(0.5, 4);\n      |                   ^\n  247 |   expect(wave12[1].lastPulseAt - wave12[0].lastPulseAt).toBeGreaterThanOrEqual(2);\n  248 |   expect(errors.consoleErrors).toEqual([]);\n  249 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts:246:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:56:18.358Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts",
+                    "column": 19,
+                    "line": 246
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ef0003139813dc75b400-b8f08cca77ee6cce38cf",
+          "file": "m2-05b-overwhelm-valves.spec.ts",
+          "line": 223,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "ss-01-beats.spec.ts",
+      "file": "ss-01-beats.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "pointer glow clears on first interaction",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 15393,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"deputy-hello\"\u001b[39m\nReceived: \u001b[31m\"first-boot\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"deputy-hello\"\u001b[39m\nReceived: \u001b[31m\"first-boot\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                      "column": 22,
+                      "line": 88
+                    },
+                    "snippet": "  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                        "column": 22,
+                        "line": 88
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"deputy-hello\"\u001b[39m\nReceived: \u001b[31m\"first-boot\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:55:40.300Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-desktop-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-desktop-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                    "column": 22,
+                    "line": 88
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f3894bdb427f98f50e5f-1a7dc43567adafe39958",
+          "file": "ss-01-beats.spec.ts",
+          "line": 169,
+          "column": 1
+        },
+        {
+          "title": "story card waits until wave banner clears when both fire same tick",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "desktop-chrome",
+              "projectName": "desktop-chrome",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16691,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"first-\u001b[7mloss\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"first-\u001b[7mboot\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"first-\u001b[7mloss\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"first-\u001b[7mboot\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                      "column": 22,
+                      "line": 88
+                    },
+                    "snippet": "  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                        "column": 22,
+                        "line": 88
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"first-\u001b[7mloss\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"first-\u001b[7mboot\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:55:58.378Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                    "column": 22,
+                    "line": 88
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f3894bdb427f98f50e5f-1713d806650edf27a34b",
+          "file": "ss-01-beats.spec.ts",
+          "line": 187,
+          "column": 1
+        },
+        {
+          "title": "pointer glow clears on first interaction",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 16473,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"deputy-hello\"\u001b[39m\nReceived: \u001b[31m\"first-boot\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"deputy-hello\"\u001b[39m\nReceived: \u001b[31m\"first-boot\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                      "column": 22,
+                      "line": 88
+                    },
+                    "snippet": "  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                        "column": 22,
+                        "line": 88
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"deputy-hello\"\u001b[39m\nReceived: \u001b[31m\"first-boot\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:56:31.100Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                    "column": 22,
+                    "line": 88
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f3894bdb427f98f50e5f-732aa1d71cb0450a536b",
+          "file": "ss-01-beats.spec.ts",
+          "line": 169,
+          "column": 1
+        },
+        {
+          "title": "story card waits until wave banner clears when both fire same tick",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "mobile-chrome",
+              "projectName": "mobile-chrome",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 17970,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"first-\u001b[7mloss\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"first-\u001b[7mboot\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"first-\u001b[7mloss\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"first-\u001b[7mboot\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3",
+                    "location": {
+                      "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                      "column": 22,
+                      "line": 88
+                    },
+                    "snippet": "  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                        "column": 22,
+                        "line": 88
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('story-beat-card')\nExpected: \u001b[32m\"first-\u001b[7mloss\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"first-\u001b[7mboot\u001b[27m\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('story-beat-card')\u001b[22m\n\u001b[2m    14 × locator resolved to <article role=\"status\" data-art-key=\"\" aria-live=\"polite\" data-ceremony-step=\"\" data-beat-id=\"first-boot\" data-speaker=\"tavernkeeper\" data-testid=\"story-beat-card\" class=\"story-beat-card story-beat-card--visible\">…</article>\u001b[22m\n\u001b[2m       - unexpected value \"first-boot\"\u001b[22m\n\n\n  86 |   await expect(card).toBeVisible({ timeout: 8_000 });\n  87 |   await expect(card).toHaveClass(/story-beat-card--visible/);\n> 88 |   await expect(card).toHaveAttribute('data-beat-id', id);\n     |                      ^\n  89 |   await expect(card).toHaveAttribute('data-speaker', speaker);\n  90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));\n  91 | }\n    at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-22T11:56:50.733Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-mobile-chrome/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-mobile-chrome/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-mobile-chrome/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts",
+                    "column": 22,
+                    "line": 88
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f3894bdb427f98f50e5f-4793f82fa70bc00e11bf",
+          "file": "ss-01-beats.spec.ts",
+          "line": 187,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-22T11:55:32.111Z",
+    "duration": 99976.624,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,57 @@
+
+Running 6 tests using 1 worker
+
+
+(node:61660) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/6] [desktop-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget
+[2/6] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[3/6] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+
+(node:71440) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/6] [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget
+  1) [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget 
+
+    Error: {"label":"east-junction","x":27,"z":0,"screen":{"x":2085.8093029806128,"y":1080.746892810654,"z":0.9933937054527912,"inView":false}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      403 |     const endImage = PNG.sync.read(await page.screenshot());
+      404 |     for (const probe of projected) {
+    > 405 |       expect(probe.screen.inView, JSON.stringify(probe)).toBe(true);
+          |                                                          ^
+      406 |       const centerX = Math.round((probe.screen.x * endImage.width) / viewport.width);
+      407 |       const centerY = Math.round((probe.screen.y * endImage.height) / viewport.height);
+      408 |       const rgb: [number, number, number] = [0, 0, 0];
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/beauty-twin-banks.spec.ts:405:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-brai-11039-ontract-or-the-frame-budget-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/beauty-twin-banks-the-brai-11039-ontract-or-the-frame-budget-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/beauty-twin-banks-the-brai-11039-ontract-or-the-frame-budget-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/beauty-twin-banks-the-brai-11039-ontract-or-the-frame-budget-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:90640) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[5/6] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+[6/6] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:144:1 › routes enemies through both west and east fords
+  1 failed
+    [mobile-chrome] › e2e/beauty-twin-banks.spec.ts:295:1 › the braid renders living water without touching the sculpt contract or the frame budget 
+  5 passed (1.7m)

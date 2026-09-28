@@ -1,0 +1,38 @@
+slice 1: lane ebb60fb9ca2518dcec2cd8e33310b6ab74e7decc store d8938178a7464c637a79bca81d5f788bc8ad954d maps: the Glow Mesa, the Dead Band, the Far Side, Half-Life Hollow, Relay Rush (entry framing) 17:32Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> d893817 (art(store): Half-Life Hollow — declare the countdown gate entry landmark)
+store main pushed: d893817
+scratch store: detached at d893817, clean
+chain fast-forwarded to main 38fc2639a
+chain base 38fc2639a merging lane ebb60fb9c (lane tip ebb60fb9c) 17:32Z
+CONFLICT (content): Merge conflict in reviews/sol-map-art-current-status-20260909.md
+md-3way reviews/sol-map-art-current-status-20260909.md: 50 keys; both changed The Glow Mesa (e6-glow-mesa): composed (ours' prefix/suffix around theirs' cell); both changed The Dead Band (e7-dead-band): composed (ours' prefix/suffix around theirs' cell); both changed Relay Rush (e7-relay-rush): composed (ours' prefix/suffix around theirs' cell)
+merged eaeb38a98
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at d893817): dcb4de59ae7dff13e11432fb748139356683407cd27efdde2ea8536dbc277f9f
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34314914 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (295.3s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 17:39Z: e2e/ss-07-e6-beats.spec.ts e2e/e6-tile-consumers.spec.ts e2e/e6-half-life-hollow-crossing.spec.ts e2e/e7-dead-band-suppression.spec.ts e2e/e7-relay-rush-front.spec.ts e2e/e8-far-side-probe.spec.ts e2e/er01-e6-census.spec.ts e2e/er01-e7-census.spec.ts e2e/er01-e8-census.spec.ts e2e/agent-view.spec.ts e2e/e5-regatta-boat.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   3 failed   4 skipped   117 passed (9.9m)  17:49Z
+1) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+2) [mobile-chrome] › e2e/e5-regatta-boat.spec.ts:122:1 › a human boards the Claim-Boat on the keys and sails her, in a plain boot 
+3) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+battery start 17:49Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  17:56Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (172914.206542ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (488.031625ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (116.89825ms)
+dirt after battery: 0
+SEF-PREP-DONE
+known-red overrides: e2e e2e/er01-e8-census\.spec\.ts:75:3 battery ^$
+known-red overrides: e2e e2e/er01-e8-census\.spec\.ts:75:3|e2e/e5-regatta-boat\.spec\.ts:122:1 battery ^$
+hash at pin time: dcb4de59ae7dff13e11432fb748139356683407cd27efdde2ea8536dbc277f9f
+pin #39
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

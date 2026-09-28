@@ -1,0 +1,66 @@
+{
+  "scope": "PASS",
+  "statusCells": [
+    "The Far Side (e8-far-side)",
+    "Low Orbit (e8-low-orbit)",
+    "The Eclipse (e8-eclipse)"
+  ],
+  "rows": [
+    {
+      "contract": "e2-incline",
+      "project": "desktop-chrome",
+      "wave": 14,
+      "secures": true
+    },
+    {
+      "contract": "e2-incline",
+      "project": "mobile-chrome",
+      "wave": 17,
+      "secures": true
+    },
+    {
+      "contract": "e8-eclipse",
+      "project": "desktop-chrome",
+      "wave": 16,
+      "secures": false
+    },
+    {
+      "contract": "e8-eclipse",
+      "project": "mobile-chrome",
+      "wave": 13,
+      "secures": false
+    },
+    {
+      "contract": "e8-far-side",
+      "project": "desktop-chrome",
+      "wave": 12,
+      "secures": false
+    },
+    {
+      "contract": "e8-far-side",
+      "project": "mobile-chrome",
+      "wave": 17,
+      "secures": false
+    },
+    {
+      "contract": "e8-low-orbit",
+      "project": "desktop-chrome",
+      "wave": 13,
+      "secures": false
+    },
+    {
+      "contract": "e8-low-orbit",
+      "project": "mobile-chrome",
+      "wave": 14,
+      "secures": false
+    },
+    {
+      "contract": "the-claim",
+      "project": "desktop-chrome",
+      "wave": 10,
+      "secures": true
+    }
+  ],
+  "rowCount": 9,
+  "errors": 0
+}

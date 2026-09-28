@@ -1,0 +1,745 @@
+(node:50620) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 56 tests using 1 worker
+
+[1/56] [desktop-chrome] › e2e/e8-far-side-probe.spec.ts:34:1 › the Far Side probe is a place, and its playback fires once
+[2/56] [desktop-chrome] › e2e/e8-far-side-probe.spec.ts:88:1 › PLAIN BOOT — a player reaches the Far Side and the probe is live for them
+[3/56] [desktop-chrome] › e2e/e8-far-side-probe.spec.ts:127:1 › the objective latch arms only when a crater exists to stand in
+[4/56] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:35:1 › the contract wires the low-orbit consumer with its declared geography
+[5/56] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:50:1 › a lob that hits nothing returns once after 12s, then is gone
+[6/56] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:111:1 › a lob that hits something is spent, and never returns
+[7/56] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:143:1 › handholds are a soft constraint: off-route thrust halves, and is never a wall
+[8/56] [desktop-chrome] › e2e/e8-low-orbit-momentum.spec.ts:184:1 › the debris bands slow the suit and chip it
+
+(node:50815) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[9/56] [desktop-chrome] › e2e/e8-physics.spec.ts:29:1 › contract gravity flags select Eclipse low-g and Low Orbit free-fall profiles
+[10/56] [desktop-chrome] › e2e/e8-physics.spec.ts:72:1 › fixed-tick filtering keeps deterministic floaty and free-fall drift after thrust ends
+[11/56] [desktop-chrome] › e2e/e8-physics.spec.ts:118:1 › lob reach and airtime follow each contract while vacuum arsenal classes stay light-law clean
+[12/56] [desktop-chrome] › e2e/e9-canal-stages.spec.ts:18:1 › 1. C1-C3 hold in order, contest under attack, persist, pay, and wet the canal at C3
+[13/56] [desktop-chrome] › e2e/e9-canal-stages.spec.ts:60:1 › 2. the north-scarp ice band uses harvest dwell and restores its Economy receipt
+[14/56] [desktop-chrome] › e2e/e9-canal-stages.spec.ts:90:1 › 3. the dust devil telegraphs, follows its authored lane, and shoves without chasing or damage
+  1) [desktop-chrome] › e2e/e9-canal-stages.spec.ts:90:1 › 3. the dust devil telegraphs, follows its authored lane, and shoves without chasing or damage 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+        "laneId": "dust-devil-wander",
+        "mode": "wander-lane",
+    -   "phase": "telegraph",
+    +   "phase": "storm",
+        "targeting": "none",
+    -   "warning": true,
+    +   "warning": false,
+      }
+
+      109 |   });
+      110 |
+    > 111 |   expect(result.warning).toMatchObject({ phase: 'telegraph', warning: true, mode: 'wander-lane', targeting: 'none', laneId: 'dust-devil-wander' });
+          |                          ^
+      112 |   expect(result.storm.phase).toBe('storm');
+      113 |   expect(result.shoved.shoves).toBeGreaterThan(0);
+      114 |   expect(result.shoved.pushedDistance).toBeGreaterThan(0);
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/e2e/e9-canal-stages.spec.ts:111:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e9-canal-stages-3-the-dust-5775c-s-without-chasing-or-damage-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e9-canal-stages-3-the-dust-5775c-s-without-chasing-or-damage-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e9-canal-stages-3-the-dust-5775c-s-without-chasing-or-damage-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e9-canal-stages-3-the-dust-5775c-s-without-chasing-or-damage-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[15/56] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+  2) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 4
+
+      Array [
+    -   ObjectContaining {
+    +   Object {
+          "dep": "atmosphere-wall-consumer",
+    -     "status": "missing",
+    +     "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission.",
+    +     "landedBy": "map-art-repairs F48/F49",
+    +     "status": "landed",
+        },
+      ]
+
+      106 |       // which is also why two contracts can be socketed concurrently without fighting here.
+      107 |       const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0;
+    > 108 |       expect(contract.tileParams.engineDependencies).toEqual([
+          |                                                      ^
+      109 |         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
+      110 |       ]);
+      111 |       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/e2e/er01-e8-census.spec.ts:108:54
+
+    Error Context: test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[16/56] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[17/56] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[18/56] [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[19/56] [desktop-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-dome-basin census rejects the unsocketed Red Fields mechanic
+[desktop-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-dome-basin census rejects the unsocketed Red Fields mechanic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[20/56] [desktop-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-seed-run census rejects the unsocketed Red Fields mechanic
+[desktop-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-seed-run census rejects the unsocketed Red Fields mechanic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[21/56] [desktop-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-devils-alley census rejects the unsocketed Red Fields mechanic
+[desktop-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-devils-alley census rejects the unsocketed Red Fields mechanic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[22/56] [desktop-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-old-canal census rejects the unsocketed Red Fields mechanic
+[desktop-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-old-canal census rejects the unsocketed Red Fields mechanic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[23/56] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:149:1 › SS-10 table is attributed, presentational, and uses the shipped trigger vocabulary
+[24/56] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:159:1 › every SS-10 artKey names a plate that is actually on disk
+[25/56] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[26/56] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[27/56] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:217:1 › every Old Digger act reaches one beat, and only its own
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:217:1 › every Old Digger act reaches one beat, and only its own
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[28/56] [desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:250:1 › epoch-2-steamworks cannot load Red Fields beats
+[desktop-chrome] › e2e/ss-10-e9-beats.spec.ts:250:1 › epoch-2-steamworks cannot load Red Fields beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[29/56] [mobile-chrome] › e2e/e8-far-side-probe.spec.ts:34:1 › the Far Side probe is a place, and its playback fires once
+[30/56] [mobile-chrome] › e2e/e8-far-side-probe.spec.ts:88:1 › PLAIN BOOT — a player reaches the Far Side and the probe is live for them
+[31/56] [mobile-chrome] › e2e/e8-far-side-probe.spec.ts:127:1 › the objective latch arms only when a crater exists to stand in
+[32/56] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:35:1 › the contract wires the low-orbit consumer with its declared geography
+[33/56] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:50:1 › a lob that hits nothing returns once after 12s, then is gone
+[34/56] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:111:1 › a lob that hits something is spent, and never returns
+[35/56] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:143:1 › handholds are a soft constraint: off-route thrust halves, and is never a wall
+[36/56] [mobile-chrome] › e2e/e8-low-orbit-momentum.spec.ts:184:1 › the debris bands slow the suit and chip it
+
+(node:64071) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[37/56] [mobile-chrome] › e2e/e8-physics.spec.ts:29:1 › contract gravity flags select Eclipse low-g and Low Orbit free-fall profiles
+[38/56] [mobile-chrome] › e2e/e8-physics.spec.ts:72:1 › fixed-tick filtering keeps deterministic floaty and free-fall drift after thrust ends
+[39/56] [mobile-chrome] › e2e/e8-physics.spec.ts:118:1 › lob reach and airtime follow each contract while vacuum arsenal classes stay light-law clean
+[40/56] [mobile-chrome] › e2e/e9-canal-stages.spec.ts:18:1 › 1. C1-C3 hold in order, contest under attack, persist, pay, and wet the canal at C3
+[41/56] [mobile-chrome] › e2e/e9-canal-stages.spec.ts:60:1 › 2. the north-scarp ice band uses harvest dwell and restores its Economy receipt
+[42/56] [mobile-chrome] › e2e/e9-canal-stages.spec.ts:90:1 › 3. the dust devil telegraphs, follows its authored lane, and shoves without chasing or damage
+[43/56] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state
+  3) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 4
+
+      Array [
+    -   ObjectContaining {
+    +   Object {
+          "dep": "atmosphere-wall-consumer",
+    -     "status": "missing",
+    +     "description": "Browser and headless engines compose the atmosphere and suit consumer: outside air drains the suit, breathing domes refill it, empty suits take damage through CombatSystem, and four distinct mining grounds across four air windows gate securing. Native desktop09 and mobile07 complete mining, wave20 secure, banking and reload; evidence is recorded in reviews/sol-map-art-repairs-20260908.md. This records the landed gameplay consumer, not full concept-art acceptance or release admission.",
+    +     "landedBy": "map-art-repairs F48/F49",
+    +     "status": "landed",
+        },
+      ]
+
+      106 |       // which is also why two contracts can be socketed concurrently without fighting here.
+      107 |       const admitted = (contract.tileParams.harvestAnchors?.length ?? 0) > 0;
+    > 108 |       expect(contract.tileParams.engineDependencies).toEqual([
+          |                                                      ^
+      109 |         expect.objectContaining({ dep: EXPECTED_DEPENDENCY[contract.id], status: 'missing' }),
+      110 |       ]);
+      111 |       const seeds = [`${contract.id}-01`, `${contract.id}-02`];
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/e2e/er01-e8-census.spec.ts:108:54
+
+    Error Context: test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e8-census-e8-mare-cla-350c9-bital-contract-s-door-state-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[44/56] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-far-side census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[45/56] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-low-orbit census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[46/56] [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-eclipse census pins the Orbital contract's door state
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[47/56] [mobile-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-dome-basin census rejects the unsocketed Red Fields mechanic
+[mobile-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-dome-basin census rejects the unsocketed Red Fields mechanic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[48/56] [mobile-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-seed-run census rejects the unsocketed Red Fields mechanic
+[mobile-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-seed-run census rejects the unsocketed Red Fields mechanic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[49/56] [mobile-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-devils-alley census rejects the unsocketed Red Fields mechanic
+[mobile-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-devils-alley census rejects the unsocketed Red Fields mechanic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[50/56] [mobile-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-old-canal census rejects the unsocketed Red Fields mechanic
+[mobile-chrome] › e2e/er01-e9-census.spec.ts:67:3 › e9-old-canal census rejects the unsocketed Red Fields mechanic
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[51/56] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:149:1 › SS-10 table is attributed, presentational, and uses the shipped trigger vocabulary
+[52/56] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:159:1 › every SS-10 artKey names a plate that is actually on disk
+[53/56] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:166:1 › a player-selected Red Fields town presents the arrival, the water ledger and the cast before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[54/56] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:202:1 › The Claim cannot load Red Fields beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[55/56] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:217:1 › every Old Digger act reaches one beat, and only its own
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:217:1 › every Old Digger act reaches one beat, and only its own
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[56/56] [mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:250:1 › epoch-2-steamworks cannot load Red Fields beats
+[mobile-chrome] › e2e/ss-10-e9-beats.spec.ts:250:1 › epoch-2-steamworks cannot load Red Fields beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  3 failed
+    [desktop-chrome] › e2e/e9-canal-stages.spec.ts:90:1 › 3. the dust devil telegraphs, follows its authored lane, and shoves without chasing or damage 
+    [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+    [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+  53 passed (6.3m)

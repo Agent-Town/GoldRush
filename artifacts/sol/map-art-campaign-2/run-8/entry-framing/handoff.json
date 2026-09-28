@@ -1,0 +1,338 @@
+{
+  "status": "READY-FOR-GATES with seven exact-base browser failures held",
+  "task": "sol-entry-framing",
+  "date": "2026-09-22",
+  "codeBranch": "sol/map-art-campaign-2",
+  "codeBase": "ba330ec92f4bbd644f540184f5e9c88da133275e",
+  "codeHeadAtMapCompletion": "9ffbffb38373c9b85258c9cd3a0185d28b74e21a",
+  "storeBranch": "astra/entry-framing",
+  "storeHead": "d8938178a7464c637a79bca81d5f788bc8ad954d",
+  "storeRemoteVerified": {
+    "command": "git -C ../GoldRush-assets ls-remote origin refs/heads/astra/entry-framing",
+    "remote": "origin",
+    "ref": "refs/heads/astra/entry-framing",
+    "verifiedHead": "d8938178a7464c637a79bca81d5f788bc8ad954d",
+    "matchesLocal": true
+  },
+  "engineBefore": "b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c",
+  "engineAfter": "a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1",
+  "maps": [
+    {
+      "id": "e6-glow-mesa",
+      "entryLandmark": {
+        "mountId": "mesa-starstone-derrick",
+        "reason": "The plate anchors its raised cap with the tall starstone derrick and its working compound; the derrick is the mounted silhouette that identifies that cap."
+      },
+      "measuredLandmark": "mesa-starstone-derrick",
+      "selectionReason": "The plate anchors its raised cap with the tall starstone derrick and its working compound; the derrick is the mounted silhouette that identifies that cap.",
+      "result": "framed by glance",
+      "codeCommit": "a36f6ad6870929cd4b4bc8a090df38926aef08dd",
+      "engineBefore": "b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c",
+      "engineAfter": "b13e44ed083d03e30fee4cf9d6e3702ff8b6e167ddb88f20a7d24eae36cd7427",
+      "storeCommit": "4e9720b0788ebd6bccb6f2bd1f3945dbd855a50c",
+      "storeBranch": "astra/entry-framing",
+      "finalMeasurementEngine": "b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288",
+      "refinementOwner": "e8-far-side",
+      "measurements": [
+        {
+          "width": 1280,
+          "mountId": "mesa-starstone-derrick",
+          "triggered": true,
+          "restPixels": 0,
+          "peakPixels": 37168,
+          "returnPixels": 0,
+          "observedVisibleSecondsLower": 1.416,
+          "observedVisibleSecondsUpper": 1.525,
+          "observationSeconds": 3.979,
+          "durationCensored": false,
+          "consoleErrors": 0
+        },
+        {
+          "width": 390,
+          "mountId": "mesa-starstone-derrick",
+          "triggered": true,
+          "restPixels": 0,
+          "peakPixels": 41400,
+          "returnPixels": 0,
+          "observedVisibleSecondsLower": 1.359,
+          "observedVisibleSecondsUpper": 1.468,
+          "observationSeconds": 3.962,
+          "durationCensored": false,
+          "consoleErrors": 0
+        }
+      ],
+      "review": "e6-glow-mesa/review.md"
+    },
+    {
+      "id": "e7-dead-band",
+      "entryLandmark": null,
+      "measuredLandmark": "iron-shadow-warning-frame",
+      "selectionReason": "The plate leads into its silent corridor through paired empty warning frames; the mounted iron-shadow frame gives that entrance its recognizable silhouette.",
+      "result": "already framed; undeclared/no glance",
+      "codeCommit": "e680325d552193ff42717df36464f0dff3ba1c3d",
+      "engineBefore": "b13e44ed083d03e30fee4cf9d6e3702ff8b6e167ddb88f20a7d24eae36cd7427",
+      "engineAfter": "084df9fa71eef1eb63753addda63d7ee7b34a049e8394acfea11db36d284ae37",
+      "storeCommit": "4e9720b0788ebd6bccb6f2bd1f3945dbd855a50c",
+      "storeChanged": false,
+      "declaration": null,
+      "measurements": [
+        {
+          "width": 1280,
+          "mountId": "iron-shadow-warning-frame",
+          "triggered": false,
+          "restPixels": 6714,
+          "peakPixels": 6718,
+          "returnPixels": 6718,
+          "observedVisibleSecondsLower": 3.97,
+          "observedVisibleSecondsUpper": 3.97,
+          "observationSeconds": 3.97,
+          "durationCensored": true,
+          "consoleErrors": 0
+        },
+        {
+          "width": 390,
+          "mountId": "iron-shadow-warning-frame",
+          "triggered": false,
+          "restPixels": 7570,
+          "peakPixels": 7570,
+          "returnPixels": 7570,
+          "observedVisibleSecondsLower": 3.986,
+          "observedVisibleSecondsUpper": 3.986,
+          "observationSeconds": 3.986,
+          "durationCensored": true,
+          "consoleErrors": 0
+        }
+      ],
+      "review": "e7-dead-band/review.md"
+    },
+    {
+      "id": "e8-far-side",
+      "entryLandmark": {
+        "mountId": "earthrise-listening-array",
+        "reason": "The isolated horizon dish establishes the far side of the empty basin opposite the landing compound; the retained Earthrise array is that mounted horizon landmark."
+      },
+      "measuredLandmark": "earthrise-listening-array",
+      "selectionReason": "The isolated horizon dish establishes the far side of the empty basin opposite the landing compound; the retained Earthrise array is that mounted horizon landmark.",
+      "result": "framed by glance",
+      "codeCommit": "29e4e8ec9345a1c4c1651f0cef868be2a8c40c98",
+      "engineBefore": "084df9fa71eef1eb63753addda63d7ee7b34a049e8394acfea11db36d284ae37",
+      "engineAfter": "b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288",
+      "storeCommit": "2d1000357f06e44b42b7288ef8682b1919a66e05",
+      "storeBranch": "astra/entry-framing",
+      "declaration": "earthrise-listening-array",
+      "sharedRefinement": "Fixed offset during already-eased entry; ordinary lag unchanged. Glow Mesa captures refreshed.",
+      "measurements": [
+        {
+          "width": 1280,
+          "mountId": "earthrise-listening-array",
+          "triggered": true,
+          "restPixels": 0,
+          "peakPixels": 26144,
+          "returnPixels": 0,
+          "observedVisibleSecondsLower": 1.377,
+          "observedVisibleSecondsUpper": 1.49,
+          "observationSeconds": 3.983,
+          "durationCensored": false,
+          "consoleErrors": 0
+        },
+        {
+          "width": 390,
+          "mountId": "earthrise-listening-array",
+          "triggered": true,
+          "restPixels": 0,
+          "peakPixels": 28996,
+          "returnPixels": 0,
+          "observedVisibleSecondsLower": 1.375,
+          "observedVisibleSecondsUpper": 1.491,
+          "observationSeconds": 3.958,
+          "durationCensored": false,
+          "consoleErrors": 0
+        }
+      ],
+      "review": "e8-far-side/review.md"
+    },
+    {
+      "id": "e6-half-life-hollow",
+      "entryLandmark": {
+        "mountId": "south-countdown-gate",
+        "reason": "The large clockwork gate fills the plate foreground and marks the timed crossing into the hollow; the south countdown gate is that entrance landmark."
+      },
+      "measuredLandmark": "south-countdown-gate",
+      "selectionReason": "The large clockwork gate fills the plate foreground and marks the timed crossing into the hollow; the south countdown gate is that entrance landmark.",
+      "result": "framed by glance",
+      "codeCommit": "366168294edc07088e467d31433d8132ac1bf598",
+      "engineBefore": "b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288",
+      "engineAfter": "a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1",
+      "storeCommit": "d8938178a7464c637a79bca81d5f788bc8ad954d",
+      "storeBranch": "astra/entry-framing",
+      "declaration": "south-countdown-gate",
+      "measurements": [
+        {
+          "width": 1280,
+          "mountId": "south-countdown-gate",
+          "triggered": true,
+          "restPixels": 0,
+          "peakPixels": 26671,
+          "returnPixels": 0,
+          "observedVisibleSecondsLower": 1.7,
+          "observedVisibleSecondsUpper": 1.816,
+          "observationSeconds": 3.968,
+          "durationCensored": false,
+          "consoleErrors": 0
+        },
+        {
+          "width": 390,
+          "mountId": "south-countdown-gate",
+          "triggered": true,
+          "restPixels": 0,
+          "peakPixels": 29787,
+          "returnPixels": 0,
+          "observedVisibleSecondsLower": 1.684,
+          "observedVisibleSecondsUpper": 1.791,
+          "observationSeconds": 3.966,
+          "durationCensored": false,
+          "consoleErrors": 0
+        }
+      ],
+      "review": "e6-half-life-hollow/review.md"
+    },
+    {
+      "id": "e7-relay-rush",
+      "entryLandmark": null,
+      "measuredLandmark": "rush-relay-r2-frame",
+      "selectionReason": "The plate leads along a relay route from its nearest beacon shelf; the R2 frame marks the actual starting shelf and introduces that route without implying an active relay.",
+      "result": "already framed; undeclared/no glance",
+      "codeCommit": "9ffbffb38373c9b85258c9cd3a0185d28b74e21a",
+      "engineBefore": "a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1",
+      "engineAfter": "a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1",
+      "storeCommit": "d8938178a7464c637a79bca81d5f788bc8ad954d",
+      "storeChanged": false,
+      "declaration": null,
+      "measurements": [
+        {
+          "width": 1280,
+          "mountId": "rush-relay-r2-frame",
+          "triggered": false,
+          "restPixels": 21662,
+          "peakPixels": 21676,
+          "returnPixels": 21675,
+          "observedVisibleSecondsLower": 3.965,
+          "observedVisibleSecondsUpper": 3.965,
+          "observationSeconds": 3.965,
+          "durationCensored": true,
+          "consoleErrors": 0
+        },
+        {
+          "width": 390,
+          "mountId": "rush-relay-r2-frame",
+          "triggered": false,
+          "restPixels": 24145,
+          "peakPixels": 24126,
+          "returnPixels": 24124,
+          "observedVisibleSecondsLower": 3.957,
+          "observedVisibleSecondsUpper": 3.957,
+          "observationSeconds": 3.957,
+          "durationCensored": true,
+          "consoleErrors": 0
+        }
+      ],
+      "review": "e7-relay-rush/review.md"
+    }
+  ],
+  "unreachableMaps": [],
+  "remaining": [],
+  "authoredWindowSeconds": 2.5,
+  "easeInSeconds": 0.7,
+  "holdSeconds": 1.1,
+  "easeOutSeconds": 0.7,
+  "builds": "e6-half-life-hollow/build-gates.json",
+  "e1PayloadBytes": 34309830,
+  "scopedGuards": {
+    "passed": 61,
+    "namedPassed": 3,
+    "receipt": "e6-half-life-hollow/guards-gates.json"
+  },
+  "finalSharedTests": {
+    "passed": 28,
+    "skipped": 4,
+    "failed": 0,
+    "replayPassed": 2,
+    "agentViewPassed": 10,
+    "receipt": "final/e2e-shared-replay-view.json"
+  },
+  "plainBoots": {
+    "passed": 10,
+    "consoleOrPageErrors": 0,
+    "testOrEntryHandles": 0,
+    "receipt": "plain-boots.json",
+    "contactSheet": "plain-entry-contact-sheet.png"
+  },
+  "parity": {
+    "nowSnapshots": 30,
+    "nowBytes": 109496,
+    "nowByteIdentical": true,
+    "nowSha256": "2ea4e54c362a2fc91bc67d15c169783498164cd0ab8a64e5acd8c093f2b7293e",
+    "sameGameAuditEqualExceptSourceLineCitations": true,
+    "sameGameAuditExactBytes": false,
+    "cameraPoseProof": "rig-proof.json",
+    "finalNowSnapshots": 30,
+    "finalNowBytes": 109496,
+    "finalNowByteIdentical": true,
+    "finalNowSha256": "2ea4e54c362a2fc91bc67d15c169783498164cd0ab8a64e5acd8c093f2b7293e",
+    "finalEngine": "a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1",
+    "finalSameGameAuditEqualExceptSourceLineCitations": true,
+    "finalSameGameAuditExactBytes": false,
+    "auditCommand": "node scripts/same-game-audit.mjs --json"
+  },
+  "camera": "rig-proof.json",
+  "visibility": "visibility-proof.json",
+  "manifest": "manifest-proof.json",
+  "scope": "scope-proof.json",
+  "existingFailureCases": [
+    {
+      "file": "e2e/e7-roster.spec.ts",
+      "testLine": 164,
+      "assertionLine": 175,
+      "projects": [
+        "desktop-chrome",
+        "mobile-chrome"
+      ],
+      "failure": "e7Arsenal.enabled expected true, received false",
+      "proof": "e7-dead-band/e2e-exact-base.json"
+    },
+    {
+      "file": "e2e/e7-signal-systems.spec.ts",
+      "testLine": 104,
+      "assertionLine": 138,
+      "projects": [
+        "desktop-chrome",
+        "mobile-chrome"
+      ],
+      "failure": "activateEpoch(epoch-8-orbital) expected true, received false",
+      "proof": "e7-dead-band/e2e-exact-base.json"
+    },
+    {
+      "file": "e2e/e7-playbook-rows.spec.ts",
+      "testLine": 218,
+      "assertionLine": 249,
+      "projects": [
+        "mobile-chrome"
+      ],
+      "failure": "Save Tape record button hidden; timeout",
+      "proof": "e7-dead-band/e2e-exact-base.json"
+    },
+    {
+      "file": "e2e/e8-roster.spec.ts",
+      "testLine": 172,
+      "assertionLine": 183,
+      "projects": [
+        "desktop-chrome",
+        "mobile-chrome"
+      ],
+      "failure": "e8Arsenal.available expected true, received false",
+      "proof": "e8-far-side/exact-base-attribution.json"
+    }
+  ],
+  "pinsChanged": false,
+  "holds": "Full art, terrain/continuation seams, wider vistas, runtime crossing/relay presentation and HUD overlap remain in each map review."
+}

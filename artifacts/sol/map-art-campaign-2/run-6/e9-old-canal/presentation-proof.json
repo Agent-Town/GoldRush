@@ -1,0 +1,59 @@
+{
+  "geometry": [
+    {
+      "id": "CanalDerelictBand-decide-segment-a",
+      "triangles": 552,
+      "minAboveGround": 0.014999980449676542,
+      "maxAboveGround": 0.39500003242492676,
+      "opacity": 1,
+      "transparent": false
+    },
+    {
+      "id": "CanalDerelictBand-decide-segment-b",
+      "triangles": 552,
+      "minAboveGround": 0.014999984264373545,
+      "maxAboveGround": 0.3950000262260436,
+      "opacity": 1,
+      "transparent": false
+    },
+    {
+      "id": "CanalDerelictBand-decide-segment-c",
+      "triangles": 552,
+      "minAboveGround": 0.014999980449676542,
+      "maxAboveGround": 0.3950000324249272,
+      "opacity": 1,
+      "transparent": false
+    }
+  ],
+  "state": {
+    "wetBands": [
+      "decide-segment-a"
+    ],
+    "filledBands": [
+      "decide-segment-b"
+    ],
+    "derelictBands": [
+      "decide-segment-c"
+    ],
+    "posts": [
+      {
+        "id": "decide-segment-a",
+        "state": "redig"
+      },
+      {
+        "id": "decide-segment-b",
+        "state": "demolish"
+      },
+      {
+        "id": "decide-segment-c",
+        "state": "undecided"
+      }
+    ]
+  },
+  "inputUnchanged": true,
+  "resampleIdempotent": true,
+  "terrainShiftMeters": 3,
+  "allFinalResourcesDisposed": 18,
+  "groupCleared": true,
+  "childCountBeforeDispose": 12
+}

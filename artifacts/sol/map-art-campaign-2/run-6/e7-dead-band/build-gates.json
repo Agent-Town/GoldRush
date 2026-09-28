@@ -1,0 +1,40 @@
+[
+  {
+    "label": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 8.31,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e7-dead-band-tsc.log"
+  },
+  {
+    "label": "default-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 22.47,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e7-dead-band-default-build.log"
+  },
+  {
+    "label": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {
+      "GR_RELEASE": "full"
+    },
+    "exit": 0,
+    "seconds": 18.98,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e7-dead-band-full-build.log"
+  }
+]

@@ -1,0 +1,27 @@
+branch tip abd21e46f fix: F-FC2-5 evidence — the cradle at the rim, measured, probed and boarded 07:52Z
+scratch store: detached at aee63ba = store main, clean
+chain base 2f9aa6160 merging fix/f-fc2-5-cradle-to-rim abd21e46f
+merged a6e52e9b0
+single-line law: n/a (no pilot tables)
+engine hash merged (scratch store at aee63ba): 88c4256efeb97d64c205919e785173b9c7375fd4553c92bbe26de6a37d197ea4
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34272945 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (297.6s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 64 ℹ fail 0 
+e2e start 08:00Z: e2e/e8-far-side-probe.spec.ts e2e/er01-e8-census.spec.ts e2e/landmark-collision.spec.ts e2e/fort-landmark-collision.spec.ts e2e/e8-remaining-maps-parity.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   2 failed   56 passed (5.0m)  08:05Z
+1) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+2) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+battery start 08:05Z
+battery: rc=1 ℹ tests 947 ℹ pass 939 ℹ fail 3 ℹ skipped 5  08:13Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (213318.174833ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (523.01325ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (288.499416ms)
+dirt after battery: 0
+FC25-PREP-DONE
+hash at pin time: 88c4256efeb97d64c205919e785173b9c7375fd4553c92bbe26de6a37d197ea4
+pin #33
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

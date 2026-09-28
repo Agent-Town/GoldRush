@@ -1,0 +1,20 @@
+
+Running 8 tests using 1 worker
+
+
+(node:21892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/8] [desktop-chrome] › e2e/e7-relay-rush-front.spec.ts:60:1 › the front keeps its schedule, mutes only what it covers, and never damages it
+[2/8] [desktop-chrome] › e2e/e7-relay-rush-front.spec.ts:147:1 › a playbook refuses under the wall and works the moment it passes
+[3/8] [desktop-chrome] › e2e/e7-relay-rush-front.spec.ts:227:1 › a plain boot fields the front and its objective without ?debug
+[4/8] [desktop-chrome] › e2e/e7-relay-rush-front.spec.ts:269:1 › the deadline latch arms only on a front that can be discharged
+
+(node:22469) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[5/8] [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:60:1 › the front keeps its schedule, mutes only what it covers, and never damages it
+[6/8] [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:147:1 › a playbook refuses under the wall and works the moment it passes
+[7/8] [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:227:1 › a plain boot fields the front and its objective without ?debug
+[8/8] [mobile-chrome] › e2e/e7-relay-rush-front.spec.ts:269:1 › the deadline latch arms only on a front that can be discharged
+  8 passed (44.3s)

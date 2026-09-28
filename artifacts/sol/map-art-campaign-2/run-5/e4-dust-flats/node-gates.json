@@ -1,0 +1,17 @@
+{
+  "renderGuards": {
+    "exit": 0,
+    "passed": 34,
+    "command": "node --test scripts/glb-contract-guard.test.mjs scripts/terrain-height-sampler.test.mjs scripts/landmark-walk-surfaces.test.mjs scripts/open-sea-water.test.mjs scripts/shared-atlas-plugin.test.mjs"
+  },
+  "namedGuards": {
+    "exit": 0,
+    "passed": 3,
+    "command": "GR_GUARD_NO_ARTIFACT=1 node scripts/run-guards.mjs --only test:task-guards,test:citations,test:gate-callers"
+  },
+  "changedSince": {
+    "status": "HELD for drain",
+    "base": "19421c655",
+    "reason": "Current scripts/run-guards.mjs:107-113 includes test:node-guards in the unconditional GATE_GUARDS used by --changed-since. Task explicitly reserves the full battery for the drain; this is the same verified selector conflict as run 4. Scoped gates are not claimed as changed-since green."
+  }
+}

@@ -1,0 +1,541 @@
+{
+  "project": "desktop-chrome",
+  "contract": "e2-pressure-garden",
+  "name": "The Pressure Garden",
+  "secureWave": 12,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e2-pressure-garden secureWave=12"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "wave 3, overlay=false, but only 0/3 authored boiler beds operated hot"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "skipped: never secured"
+  },
+  "board": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 3,
+  "simAtEnd": 99.46666666666825,
+  "runStateAtEnd": "dead",
+  "hpAtEnd": 0,
+  "goldAtEnd": 120,
+  "killsAtEnd": 36,
+  "peakHotBoilers": 0,
+  "builds": [],
+  "upgrades": [
+    "double_tap_coil",
+    "spring_heels",
+    "double_tap_coil"
+  ],
+  "samples": [
+    {
+      "t": 99.5,
+      "wave": 3,
+      "hp": 0,
+      "gold": 120,
+      "kills": 36,
+      "x": 20,
+      "z": 26.2,
+      "alive": 22,
+      "seams": 1
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-2-steamworks",
+    "strategy=gather-and-extend",
+    "engine secureWave=12 cadenceMult=1",
+    "home=-12.0,12.0 circuit=[[-16,9],[-8,9],[-8,14],[-16,14]]",
+    "coal -12,39: reached=true, stored=4",
+    "coal -5,43: reached=true, stored=8",
+    "coal 3,39: reached=true, stored=12",
+    "seam gold-seam-2 (18.0,27.0) unreachable on foot",
+    "boiler commissioning snapshot={\"pressure\":{\"enabled\":true,\"multiplayerPosture\":\"single-player-gated\",\"coal\":12,\"seams\":[{\"x\":-12,\"z\":39,\"harvested\":true,\"progress\":1,\"marked\":false,\"visualY\":2.7192164134979246,\"groundY\":2.399216413497925,\"spriteVisible\":false},{\"x\":-5,\"z\":43,\"harvested\":true,\"progress\":1,\"marked\":false,\"visualY\":2.722531862258911,\"groundY\":2.402531862258911,\"spriteVisible\":false},{\"x\":3,\"z\":39,\"harvested\":true,\"progress\":1,\"marked\":false,\"visualY\":2.721559829711914,\"groundY\":2.401559829711914,\"spriteVisible\":false}],\"seamSource\":\"PressureSystem.DEFAULT_COAL_SEAMS\",\"boilers\":[{\"index\":0,\"active\":false,\"position\":{\"x\":0,\"z\":0},\"hot\":false,\"cooling\":false},{\"index\":1,\"active\":false,\"position\":{\"x\":0,\"z\":0},\"hot\":false,\"cooling\":false},{\"index\":2,\"active\":false,\"position\":{\"x\":0,\"z\":0},\"hot\":false,\"cooling\":false}],\"vents\":0,\"safeBand\":null,\"objective\":{\"active\":false,\"failed\":false,\"complete\":false,\"hotBoilers\":0,\"waves\":\"8-12\"}},\"objective\":{\"baron\":{\"cartVisible\":false,\"carried\":false,\"distanceFromBaron\":0,\"telegraphActive\":false,\"telegraphElapsed\":0,\"nextVolleyIn\":0,\"volleys\":0,\"suppressed\":false,\"targetKind\":null,\"lastOwnerId\":\"\",\"lastTarget\":{\"x\":0,\"z\":0},\"target\":{\"x\":0,\"z\":0},\"props\":{\"state\":\"off\",\"source\":\"placeholder\",\"launcher\":false,\"rocket\":false,\"powderKeg\":false,\"triangles\":{\"launcher\":2020,\"rocket\":876,\"powder_keg\":704}},\"manifest\":null},\"boss\":{\"visible\":false,\"ratio\":0,\"renderedRatio\":1,\"litSegments\":7,\"segments\":0,\"groupId\":null,\"aliveComponents\":0,\"destroyedComponents\":0,\"components\":[]},\"medals\":{\"version\":1,\"baronBeaten\":false,\"rocketCartCaptured\":false},\"pressure\":{\"enabled\":true,\"multiplayerPosture\":\"single-player-gated\",\"coal\":12,\"seams\":[{\"x\":-12,\"z\":39,\"harvested\":true,\"progress\":1,\"marked\":false,\"visualY\":2.7192164134979246,\"groundY\":2.399216413497925,\"spriteVisible\":false},{\"x\":-5,\"z\":43,\"harvested\":true,\"progress\":1,\"marked\":false,\"visualY\":2.722531862258911,\"groundY\":2.402531862258911,\"spriteVisible\":false},{\"x\":3,\"z\":39,\"harvested\":true,\"progress\":1,\"marked\":false,\"visualY\":2.721559829711914,\"groundY\":2.401559829711914,\"spriteVisible\":false}],\"seamSource\":\"PressureSystem.DEFAULT_COAL_SEAMS\",\"boilers\":[{\"index\":0,\"active\":false,\"position\":{\"x\":0,\"z\":0},\"hot\":false,\"cooling\":false},{\"index\":1,\"active\":false,\"position\":{\"x\":0,\"z\":0},\"hot\":false,\"cooling\":false},{\"index\":2,\"active\":false,\"position\":{\"x\":0,\"z\":0},\"hot\":false,\"cooling\":false}],\"vents\":0,\"safeBand\":null,\"objective\":{\"active\":false,\"failed\":false,\"complete\":false,\"hotBoilers\":0,\"waves\":\"8-12\"}}},\"frame\":2860,\"sim\":99.46666666666825,\"wave\":3,\"hudWave\":3,\"runState\":\"dead\",\"paused\":false,\"secured\":false,\"hp\":0,\"maxHp\":100,\"gold\":120,\"hero\":{\"x\":20.02342955093496,\"z\":26.220109258890517},\"enemiesAlive\":22,\"kills\":36,\"pendingLevels\":0,\"offer\":null,\"upgradeOpen\":false,\"buildMode\":false,\"ghostValid\":false,\"ghostPos\":{\"x\":0,\"z\":0},\"nodes\":[{\"id\":\"gold-seam-1\",\"active\":false,\"x\":30,\"z\":24,\"respawnIn\":16.79999999999984,\"respawnScheduled\":true},{\"id\":\"gold-seam-2\",\"active\":true,\"x\":18,\"z\":27,\"respawnIn\":0,\"respawnScheduled\":false},{\"id\":\"gold-seam-3\",\"active\":false,\"x\":0,\"z\":0,\"respawnIn\":0,\"respawnScheduled\":false},{\"id\":\"gold-seam-4\",\"active\":false,\"x\":0,\"z\":0,\"respawnIn\":0,\"respawnScheduled\":false},{\"id\":\"gold-seam-5\",\"active\":false,\"x\":0,\"z\":0,\"respawnIn\":0,\"respawnScheduled\":false},{\"id\":\"gold-seam-6\",\"active\":false,\"x\":0,\"z\":0,\"respawnIn\":0,\"respawnScheduled\":false}],\"buildables\":[{\"id\":\"sentry_beacon\",\"cost\":25,\"count\":0,\"maxCount\":6,\"canAfford\":true},{\"id\":\"palisade\",\"cost\":0,\"count\":0,\"maxCount\":48,\"canAfford\":true},{\"id\":\"sluice\",\"cost\":40,\"count\":0,\"maxCount\":3,\"canAfford\":true},{\"id\":\"stockpile\",\"cost\":60,\"count\":0,\"maxCount\":2,\"canAfford\":true},{\"id\":\"boiler_house\",\"cost\":70,\"count\":0,\"maxCount\":3,\"canAfford\":true},{\"id\":\"turret\",\"cost\":50,\"count\":0,\"maxCount\":4,\"canAfford\":true},{\"id\":\"assay_office\",\"cost\":80,\"count\":0,\"maxCount\":1,\"canAfford\":true}],\"defences\":[],\"repairs\":0,\"channeling\":false}",
+    "kit=boiler_house+boiler_house+boiler_house+turret"
+  ],
+  "at": "2026-09-25T07:37:34.802Z",
+  "objective": {
+    "baron": {
+      "cartVisible": false,
+      "carried": false,
+      "distanceFromBaron": 0,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 0,
+      "volleys": 0,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "",
+      "lastTarget": {
+        "x": 0,
+        "z": 0
+      },
+      "target": {
+        "x": 0,
+        "z": 0
+      },
+      "props": {
+        "state": "off",
+        "source": "placeholder",
+        "launcher": false,
+        "rocket": false,
+        "powderKeg": false,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": null
+    },
+    "boss": {
+      "visible": false,
+      "ratio": 0,
+      "renderedRatio": 1,
+      "litSegments": 7,
+      "segments": 0,
+      "groupId": null,
+      "aliveComponents": 0,
+      "destroyedComponents": 0,
+      "components": []
+    },
+    "medals": {
+      "version": 1,
+      "baronBeaten": false,
+      "rocketCartCaptured": false
+    },
+    "pressure": {
+      "enabled": true,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 12,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": true,
+          "progress": 1,
+          "marked": false,
+          "visualY": 2.7192164134979246,
+          "groundY": 2.399216413497925,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": true,
+          "progress": 1,
+          "marked": false,
+          "visualY": 2.722531862258911,
+          "groundY": 2.402531862258911,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": true,
+          "progress": 1,
+          "marked": false,
+          "visualY": 2.721559829711914,
+          "groundY": 2.401559829711914,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    }
+  },
+  "finalSnapshot": {
+    "pressure": {
+      "enabled": true,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 12,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": true,
+          "progress": 1,
+          "marked": false,
+          "visualY": 2.7192164134979246,
+          "groundY": 2.399216413497925,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": true,
+          "progress": 1,
+          "marked": false,
+          "visualY": 2.722531862258911,
+          "groundY": 2.402531862258911,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": true,
+          "progress": 1,
+          "marked": false,
+          "visualY": 2.721559829711914,
+          "groundY": 2.401559829711914,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "objective": {
+      "baron": {
+        "cartVisible": false,
+        "carried": false,
+        "distanceFromBaron": 0,
+        "telegraphActive": false,
+        "telegraphElapsed": 0,
+        "nextVolleyIn": 0,
+        "volleys": 0,
+        "suppressed": false,
+        "targetKind": null,
+        "lastOwnerId": "",
+        "lastTarget": {
+          "x": 0,
+          "z": 0
+        },
+        "target": {
+          "x": 0,
+          "z": 0
+        },
+        "props": {
+          "state": "off",
+          "source": "placeholder",
+          "launcher": false,
+          "rocket": false,
+          "powderKeg": false,
+          "triangles": {
+            "launcher": 2020,
+            "rocket": 876,
+            "powder_keg": 704
+          }
+        },
+        "manifest": null
+      },
+      "boss": {
+        "visible": false,
+        "ratio": 0,
+        "renderedRatio": 1,
+        "litSegments": 7,
+        "segments": 0,
+        "groupId": null,
+        "aliveComponents": 0,
+        "destroyedComponents": 0,
+        "components": []
+      },
+      "medals": {
+        "version": 1,
+        "baronBeaten": false,
+        "rocketCartCaptured": false
+      },
+      "pressure": {
+        "enabled": true,
+        "multiplayerPosture": "single-player-gated",
+        "coal": 12,
+        "seams": [
+          {
+            "x": -12,
+            "z": 39,
+            "harvested": true,
+            "progress": 1,
+            "marked": false,
+            "visualY": 2.7192164134979246,
+            "groundY": 2.399216413497925,
+            "spriteVisible": false
+          },
+          {
+            "x": -5,
+            "z": 43,
+            "harvested": true,
+            "progress": 1,
+            "marked": false,
+            "visualY": 2.722531862258911,
+            "groundY": 2.402531862258911,
+            "spriteVisible": false
+          },
+          {
+            "x": 3,
+            "z": 39,
+            "harvested": true,
+            "progress": 1,
+            "marked": false,
+            "visualY": 2.721559829711914,
+            "groundY": 2.401559829711914,
+            "spriteVisible": false
+          }
+        ],
+        "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+        "boilers": [
+          {
+            "index": 0,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 1,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 2,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          }
+        ],
+        "vents": 0,
+        "safeBand": null,
+        "objective": {
+          "active": false,
+          "failed": false,
+          "complete": false,
+          "hotBoilers": 0,
+          "waves": "8-12"
+        }
+      }
+    },
+    "frame": 2885,
+    "sim": 99.46666666666825,
+    "wave": 3,
+    "hudWave": 3,
+    "runState": "dead",
+    "paused": false,
+    "secured": false,
+    "hp": 0,
+    "maxHp": 100,
+    "gold": 120,
+    "hero": {
+      "x": 20.02342955093496,
+      "z": 26.220109258890517
+    },
+    "enemiesAlive": 22,
+    "kills": 36,
+    "pendingLevels": 0,
+    "offer": null,
+    "upgradeOpen": false,
+    "buildMode": false,
+    "ghostValid": false,
+    "ghostPos": {
+      "x": 0,
+      "z": 0
+    },
+    "nodes": [
+      {
+        "id": "gold-seam-1",
+        "active": false,
+        "x": 30,
+        "z": 24,
+        "respawnIn": 16.79999999999984,
+        "respawnScheduled": true
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "x": 18,
+        "z": 27,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      }
+    ],
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "count": 0,
+        "maxCount": 6,
+        "canAfford": true
+      },
+      {
+        "id": "palisade",
+        "cost": 0,
+        "count": 0,
+        "maxCount": 48,
+        "canAfford": true
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "count": 0,
+        "maxCount": 3,
+        "canAfford": true
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "count": 0,
+        "maxCount": 2,
+        "canAfford": true
+      },
+      {
+        "id": "boiler_house",
+        "cost": 70,
+        "count": 0,
+        "maxCount": 3,
+        "canAfford": true
+      },
+      {
+        "id": "turret",
+        "cost": 50,
+        "count": 0,
+        "maxCount": 4,
+        "canAfford": true
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "count": 0,
+        "maxCount": 1,
+        "canAfford": true
+      }
+    ],
+    "defences": [],
+    "repairs": 0,
+    "channeling": false
+  }
+}

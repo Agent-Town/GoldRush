@@ -1,0 +1,51 @@
+(node:2059) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+
+(node:2124) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/2] [desktop-chrome] › e2e/account-card-privacy-link.spec.ts:28:1 › signed-out account card carries the reference privacy link
+  1) [desktop-chrome] › e2e/account-card-privacy-link.spec.ts:28:1 › signed-out account card carries the reference privacy link 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('account-card').getByTestId('account-email-form')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('account-card').getByTestId('account-email-form')
+
+
+      34 |
+      35 |   const card = page.getByTestId('account-card');
+    > 36 |   await expect(card.getByTestId('account-email-form')).toBeVisible();
+         |                                                        ^
+      37 |   const link = card.getByTestId('account-privacy-link');
+      38 |   await expect(link).toHaveCount(1);
+      39 |   await expect(link).toHaveText(LINK_TEXT);
+        at /Users/robin/Claude/Projects/wt-sf1/e2e/account-card-privacy-link.spec.ts:36:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/account-card-privacy-link--85c75--the-reference-privacy-link-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/account-card-privacy-link--85c75--the-reference-privacy-link-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/account-card-privacy-link--85c75--the-reference-privacy-link-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/account-card-privacy-link--85c75--the-reference-privacy-link-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[2/2] [desktop-chrome] › e2e/account-card-privacy-link.spec.ts:47:1 › signed-in account card links the privacy notice with the same link and wording (F-SEC2-4)
+  1 failed
+    [desktop-chrome] › e2e/account-card-privacy-link.spec.ts:28:1 › signed-out account card carries the reference privacy link 
+  1 did not run

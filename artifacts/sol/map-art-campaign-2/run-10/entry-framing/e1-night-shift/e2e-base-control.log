@@ -1,0 +1,198 @@
+(node:48041) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:48100) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:48100) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/6] [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  1) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      58 | async function gotoGame(page: Page, query: string): Promise<void> {
+      59 |   await page.goto(`/${query}`);
+    > 60 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      61 |   await dismissBriefing(page);
+      62 | }
+      63 |
+        at gotoGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:60:14)
+        at openGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:54:3)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:272:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+
+
+(node:49456) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:49456) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[2/6] [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      58 | async function gotoGame(page: Page, query: string): Promise<void> {
+      59 |   await page.goto(`/${query}`);
+    > 60 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      61 |   await dismissBriefing(page);
+      62 | }
+      63 |
+        at gotoGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:60:14)
+        at openGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:54:3)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:373:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-desktop-chrome/error-context.md
+
+
+
+(node:50282) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:50282) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[3/6] [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+  3) [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      58 | async function gotoGame(page: Page, query: string): Promise<void> {
+      59 |   await page.goto(`/${query}`);
+    > 60 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      61 |   await dismissBriefing(page);
+      62 | }
+      63 |
+        at gotoGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:60:14)
+        at openGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:54:3)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:479:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-desktop-chrome/error-context.md
+
+
+
+(node:50888) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:50888) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[4/6] [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  4) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      58 | async function gotoGame(page: Page, query: string): Promise<void> {
+      59 |   await page.goto(`/${query}`);
+    > 60 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      61 |   await dismissBriefing(page);
+      62 | }
+      63 |
+        at gotoGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:60:14)
+        at openGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:54:3)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:272:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+
+
+(node:51186) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:51186) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[5/6] [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  5) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      58 | async function gotoGame(page: Page, query: string): Promise<void> {
+      59 |   await page.goto(`/${query}`);
+    > 60 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      61 |   await dismissBriefing(page);
+      62 | }
+      63 |
+        at gotoGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:60:14)
+        at openGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:54:3)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:373:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+
+
+(node:52544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:52544) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[6/6] [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+  6) [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 30000ms exceeded.
+
+      58 | async function gotoGame(page: Page, query: string): Promise<void> {
+      59 |   await page.goto(`/${query}`);
+    > 60 |   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+         |              ^
+      61 |   await dismissBriefing(page);
+      62 | }
+      63 |
+        at gotoGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:60:14)
+        at openGame (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:54:3)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e1-night-shift.spec.ts:479:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-night-shift/base-control-results/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/error-context.md
+
+
+  6 failed
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 

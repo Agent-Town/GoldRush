@@ -1,0 +1,40 @@
+slice 13: lane 7cc23fb59a0870594dabeb21060e0617d69926d6 store 60c635c2e48eedc288ffcf34c685e862f959057d maps: the Dome Basin 19:45Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> 60c635c (art(store): e9-dome-basin — masonry and supported lock hardware)
+store main pushed: 60c635c
+scratch store: detached at 60c635c, clean
+chain fast-forwarded to main f969e9fe4
+chain base f969e9fe4 merging lane 7cc23fb59 (lane tip 7cc23fb59) 19:45Z
+merged ce288f378
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 60c635c): 9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34318148 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (318.0s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 19:52Z: e2e/er01-e9-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/ss-10-e9-beats.spec.ts 
+warm-up: first boot rc=0, second rc=0 (the gate below starts on a warmed server; optimizer lines in the vite log: 1)
+e2e: rc=0   4 skipped   58 passed (5.9m)  19:59Z
+battery start 19:59Z
+battery: rc=1 ℹ tests 955 ℹ pass 946 ℹ fail 4 ℹ skipped 5  20:07Z
+    actual: [ 'CONTENDED — 3 concurrent batteries', 'CONTENDED — 3 concurrent batteries' ],
+    expected: [ 'CONTENDED — 2 concurrent batteries', 'CONTENDED — 2 concurrent batteries' ],
+  +   'CONTENDED — 3 concurrent batteries'
+  +   'CONTENDED — 3 concurrent batteries',
+  -   'CONTENDED — 2 concurrent batteries'
+  -   'CONTENDED — 2 concurrent batteries',
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (190841.6065ms)
+✖ contention is advisory, correctly counted, and absent when alone (3414.873667ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (549.182416ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (206.434333ms)
+dirt after battery: 0
+FID2-S13-PREP-DONE
+known-red overrides: e2e ^$ battery ^$
+hash at pin time: 9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1
+pin #53
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

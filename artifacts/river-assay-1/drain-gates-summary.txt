@@ -1,0 +1,30 @@
+branch feat/river-assay-1 tip 072fe8828 2026-09-26 22:56Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/rva1.json
+scratch store at the store's main 5793a96
+chain base 66598bff8
+merged 712db42e2
+cure rva1: F-RVA1-6 row committed 40f9fd4fd
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0 (pinned 7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1128 files, 97725187 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34350664 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (289.0s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 140 ℹ fail 0 
+ledger battery start 23:03Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 23:08Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/charter-press-totality.spec.ts e2e/live-seed-rotation.spec.ts e2e/river-ending-score.spec.ts
+e2e: rc=0   60 passed (5.9m)  23:14Z
+battery start 23:14Z
+battery: rc=1 ℹ tests 1040 ℹ pass 1033 ℹ fail 2 ℹ skipped 5  23:31Z
+✖ rotation registry stays outside the engine identity corpus (509.931ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (121.48825ms)
+dirt after battery: 0
+rva1-PREP-DONE
+verdict: clean
+hash at pin time: f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0
+pin #70 `f6084527`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/river-assay-1.md

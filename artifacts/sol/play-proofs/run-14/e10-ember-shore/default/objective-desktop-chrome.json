@@ -1,0 +1,199 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e10-ember-shore&timescale=4",
+  "sim": 92.93333333333459,
+  "wave": 3,
+  "hp": 92,
+  "gold": 15,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "vent_guttered",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "hero": {
+    "x": -53.73403128557831,
+    "y": 0.007294734435529082,
+    "z": -12.255374679360154
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -1,
+        "z": -10
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 0,
+        "z": -12
+      }
+    }
+  ],
+  "e7Signal": {
+    "enabled": false,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "playbookUse": null,
+  "air": null,
+  "physics": {
+    "active": false,
+    "contractId": "e10-ember-shore",
+    "source": "default",
+    "movement": "normal",
+    "feelG": 1,
+    "lobArcDistanceMultiplier": 1,
+    "lobAirTimeMultiplier": 1,
+    "knockbackScale": 1,
+    "orbitalReturn": false,
+    "vacuum": false,
+    "fixedTimestepOnly": true,
+    "filteredMovement": {
+      "x": 0,
+      "y": 0
+    },
+    "adaptedLobs": [
+      {
+        "resumeKey": "orbital:kineticLobber",
+        "range": 15,
+        "airTime": 1.68
+      }
+    ]
+  },
+  "atmosphere": null,
+  "squall": {
+    "declared": true,
+    "calmSeconds": 60,
+    "telegraphSeconds": 8,
+    "squallSeconds": 25,
+    "recoverSeconds": 8,
+    "cycleSeconds": 101,
+    "phase": "squall",
+    "phaseProgress": 0.9973333333333835,
+    "cycle": 0,
+    "tick": 697,
+    "elapsedSeconds": 92.933,
+    "secondsToNextPhase": 0.067,
+    "secondsToNextSquall": 0,
+    "squallsStarted": 1,
+    "squallsCompleted": 0,
+    "motePressureMultiplier": 2,
+    "blowing": true,
+    "transitions": [
+      {
+        "from": null,
+        "to": "calm",
+        "tick": 0,
+        "atSeconds": 0,
+        "cycle": 0
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 451,
+        "atSeconds": 60.133,
+        "cycle": 0
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 510,
+        "atSeconds": 68,
+        "cycle": 0
+      }
+    ]
+  },
+  "preserveVent": {
+    "declared": true,
+    "stakeId": "last-warm-vent",
+    "position": {
+      "x": 3,
+      "z": -10
+    },
+    "warmth": 0,
+    "maxWarmth": 100,
+    "alight": false,
+    "guttered": true,
+    "gutteredAtSeconds": 92.933,
+    "decayPerSecond": 4,
+    "decaying": false,
+    "warmthLost": 100,
+    "warmthRestored": 0,
+    "stoke": {
+      "action": "STOKE",
+      "goldCost": 15,
+      "warmthRestore": 40,
+      "radius": 4,
+      "uses": 0,
+      "refusals": {
+        "undeclared": 0,
+        "guttered": 0,
+        "out-of-reach": 0,
+        "insufficient-gold": 0,
+        "already-warm": 0
+      },
+      "lastRefusal": null
+    },
+    "squallsSurvived": 0,
+    "squallsRequired": 1,
+    "motePressure": {
+      "multiplier": 2,
+      "active": false,
+      "pressShare": 0
+    },
+    "objectiveMet": false
+  },
+  "repairs": 0
+}

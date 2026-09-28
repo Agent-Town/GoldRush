@@ -1,0 +1,1084 @@
+[
+  {
+    "width": 1280,
+    "navigation": {
+      "spawn": {
+        "x": 0,
+        "y": 5.06,
+        "z": 12
+      },
+      "spawnWalkable": true,
+      "own": [
+        {
+          "id": "picnic:mesa-civilian-shade",
+          "x": 0,
+          "z": 40,
+          "halfX": 3.398517355802405,
+          "halfZ": 2.3625249667113355
+        }
+      ],
+      "blockers": [
+        {
+          "id": "glow-mesa:mesa-starstone-derrick",
+          "x": -56,
+          "z": 50,
+          "halfX": 2.121872342279753,
+          "halfZ": 1.5621128212501838
+        },
+        {
+          "id": "glow-mesa:six-vein-control-pylon",
+          "x": 0,
+          "z": -7,
+          "halfX": 1.512,
+          "halfZ": 1.224
+        },
+        {
+          "id": "glow-mesa:isotope-cooling-rack",
+          "x": 28,
+          "z": -59,
+          "halfX": 2.6346796963518235,
+          "halfZ": 1.740537893449532
+        },
+        {
+          "id": "picnic:mesa-civilian-shade",
+          "x": 0,
+          "z": 40,
+          "halfX": 3.398517355802405,
+          "halfZ": 2.3625249667113355
+        }
+      ],
+      "targets": [
+        {
+          "kind": "stake",
+          "id": "sandwich-west",
+          "x": -16,
+          "z": 18,
+          "reachable": true
+        },
+        {
+          "kind": "stake",
+          "id": "sandwich-center",
+          "x": 0,
+          "z": 26,
+          "reachable": true
+        },
+        {
+          "kind": "stake",
+          "id": "sandwich-east",
+          "x": 16,
+          "z": 18,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "0",
+          "x": -22,
+          "z": 8,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "1",
+          "x": 0,
+          "z": 8,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "2",
+          "x": 22,
+          "z": 8,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "3",
+          "x": -24,
+          "z": -22,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "4",
+          "x": 24,
+          "z": -22,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "mesa-starstone-derrick",
+          "x": -56,
+          "z": 53,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "six-vein-control-pylon",
+          "x": 0,
+          "z": -2,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "isotope-cooling-rack",
+          "x": 28,
+          "z": -54,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "west-herd-glow-gate",
+          "x": -56,
+          "z": 21,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "east-herd-glow-gate",
+          "x": 56,
+          "z": 21,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "picnic-staging-gate",
+          "x": 0,
+          "z": -49,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "west-picnic-blanket",
+          "x": -16,
+          "z": 26,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "center-picnic-blanket",
+          "x": 0,
+          "z": 34,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "east-picnic-blanket",
+          "x": 16,
+          "z": 26,
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "base-staging",
+          "center": {
+            "x": 0,
+            "z": -33
+          },
+          "approach": {
+            "x": 0,
+            "z": -33
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "mesa-meadow",
+          "center": {
+            "x": 0,
+            "z": 20
+          },
+          "approach": {
+            "x": 0,
+            "z": 20
+          },
+          "reachable": true
+        }
+      ],
+      "reachableCells": 63565,
+      "step": 0.5
+    },
+    "probes": [
+      {
+        "id": "picnic:mesa-civilian-shade",
+        "overlappingBlockerGroup": [
+          "picnic:mesa-civilian-shade"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "picnic:mesa-civilian-shade",
+            "start": {
+              "x": -4.578517355802405,
+              "z": 40
+            },
+            "hero": {
+              "x": -4.06367068768591,
+              "y": 5.059439869240208,
+              "z": 40
+            },
+            "boundaryDistance": 0.08515333188350516,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "picnic:mesa-civilian-shade",
+            "start": {
+              "x": 4.578517355802405,
+              "z": 40
+            },
+            "hero": {
+              "x": 4.06367068768591,
+              "y": 5.076028834368731,
+              "z": 40
+            },
+            "boundaryDistance": 0.08515333188350516,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "picnic:mesa-civilian-shade",
+            "start": {
+              "x": 0,
+              "z": 36.45747503328867
+            },
+            "hero": {
+              "x": 0,
+              "y": 5.06,
+              "z": 36.97232170140517
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "picnic:mesa-civilian-shade",
+            "start": {
+              "x": 0,
+              "z": 43.54252496671133
+            },
+            "hero": {
+              "x": 0,
+              "y": 5.071345456811152,
+              "z": 43.02767829859483
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 14.988970332038038,
+          "y": 5.06,
+          "z": 37.04999999999996
+        }
+      }
+    ],
+    "cycles": [
+      {
+        "cycle": 0,
+        "bodies": [
+          {
+            "id": "mesa-civilian-shade",
+            "position": [
+              0,
+              5.01143741607666,
+              40
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -4.720311429904571,
+                "y": 5.01143741607666,
+                "z": 36.718494070480176
+              },
+              "max": {
+                "x": 4.720311429904571,
+                "y": 9.399587631225586,
+                "z": 43.281505929519824
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e6-picnic",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "glow-mesa-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "2496",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1739",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207},{\"id\":\"picnic-staging-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1,\"topY\":6.49},{\"id\":\"west-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"center-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.25},{\"id\":\"east-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"mesa-civilian-shade\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.011,\"topY\":9.4}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16},{\"id\":\"picnic-staging-gate\",\"x\":0,\"y\":1,\"z\":-54},{\"id\":\"west-picnic-blanket\",\"x\":-16,\"y\":5,\"z\":18},{\"id\":\"center-picnic-blanket\",\"x\":0,\"y\":5,\"z\":26},{\"id\":\"east-picnic-blanket\",\"x\":16,\"y\":5,\"z\":18},{\"id\":\"mesa-civilian-shade\",\"x\":0,\"y\":5.01143741607666,\"z\":40}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"picnic-staging-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"center-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"mesa-civilian-shade\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 1,
+        "bodies": [
+          {
+            "id": "mesa-civilian-shade",
+            "position": [
+              0,
+              5.01143741607666,
+              40
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -4.720311429904571,
+                "y": 5.01143741607666,
+                "z": 36.718494070480176
+              },
+              "max": {
+                "x": 4.720311429904571,
+                "y": 9.399587631225586,
+                "z": 43.281505929519824
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e6-picnic",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "glow-mesa-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "2496",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1739",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207},{\"id\":\"picnic-staging-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1,\"topY\":6.49},{\"id\":\"west-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"center-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.25},{\"id\":\"east-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"mesa-civilian-shade\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.011,\"topY\":9.4}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16},{\"id\":\"picnic-staging-gate\",\"x\":0,\"y\":1,\"z\":-54},{\"id\":\"west-picnic-blanket\",\"x\":-16,\"y\":5,\"z\":18},{\"id\":\"center-picnic-blanket\",\"x\":0,\"y\":5,\"z\":26},{\"id\":\"east-picnic-blanket\",\"x\":16,\"y\":5,\"z\":18},{\"id\":\"mesa-civilian-shade\",\"x\":0,\"y\":5.01143741607666,\"z\":40}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"picnic-staging-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"center-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"mesa-civilian-shade\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 2,
+        "bodies": [
+          {
+            "id": "mesa-civilian-shade",
+            "position": [
+              0,
+              5.01143741607666,
+              40
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -4.720311429904571,
+                "y": 5.01143741607666,
+                "z": 36.718494070480176
+              },
+              "max": {
+                "x": 4.720311429904571,
+                "y": 9.399587631225586,
+                "z": 43.281505929519824
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e6-picnic",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "glow-mesa-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "2496",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1739",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207},{\"id\":\"picnic-staging-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1,\"topY\":6.49},{\"id\":\"west-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"center-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.25},{\"id\":\"east-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"mesa-civilian-shade\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.011,\"topY\":9.4}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16},{\"id\":\"picnic-staging-gate\",\"x\":0,\"y\":1,\"z\":-54},{\"id\":\"west-picnic-blanket\",\"x\":-16,\"y\":5,\"z\":18},{\"id\":\"center-picnic-blanket\",\"x\":0,\"y\":5,\"z\":26},{\"id\":\"east-picnic-blanket\",\"x\":16,\"y\":5,\"z\":18},{\"id\":\"mesa-civilian-shade\",\"x\":0,\"y\":5.01143741607666,\"z\":40}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"picnic-staging-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"center-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"mesa-civilian-shade\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "navigation": {
+      "spawn": {
+        "x": 0,
+        "y": 5.06,
+        "z": 12
+      },
+      "spawnWalkable": true,
+      "own": [
+        {
+          "id": "picnic:mesa-civilian-shade",
+          "x": 0,
+          "z": 40,
+          "halfX": 3.398517355802405,
+          "halfZ": 2.3625249667113355
+        }
+      ],
+      "blockers": [
+        {
+          "id": "glow-mesa:mesa-starstone-derrick",
+          "x": -56,
+          "z": 50,
+          "halfX": 2.121872342279753,
+          "halfZ": 1.5621128212501838
+        },
+        {
+          "id": "glow-mesa:six-vein-control-pylon",
+          "x": 0,
+          "z": -7,
+          "halfX": 1.512,
+          "halfZ": 1.224
+        },
+        {
+          "id": "glow-mesa:isotope-cooling-rack",
+          "x": 28,
+          "z": -59,
+          "halfX": 2.6346796963518235,
+          "halfZ": 1.740537893449532
+        },
+        {
+          "id": "picnic:mesa-civilian-shade",
+          "x": 0,
+          "z": 40,
+          "halfX": 3.398517355802405,
+          "halfZ": 2.3625249667113355
+        }
+      ],
+      "targets": [
+        {
+          "kind": "stake",
+          "id": "sandwich-west",
+          "x": -16,
+          "z": 18,
+          "reachable": true
+        },
+        {
+          "kind": "stake",
+          "id": "sandwich-center",
+          "x": 0,
+          "z": 26,
+          "reachable": true
+        },
+        {
+          "kind": "stake",
+          "id": "sandwich-east",
+          "x": 16,
+          "z": 18,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "0",
+          "x": -22,
+          "z": 8,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "1",
+          "x": 0,
+          "z": 8,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "2",
+          "x": 22,
+          "z": 8,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "3",
+          "x": -24,
+          "z": -22,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "4",
+          "x": 24,
+          "z": -22,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "mesa-starstone-derrick",
+          "x": -56,
+          "z": 53,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "six-vein-control-pylon",
+          "x": 0,
+          "z": -2,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "isotope-cooling-rack",
+          "x": 28,
+          "z": -54,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "west-herd-glow-gate",
+          "x": -56,
+          "z": 21,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "east-herd-glow-gate",
+          "x": 56,
+          "z": 21,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "picnic-staging-gate",
+          "x": 0,
+          "z": -49,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "west-picnic-blanket",
+          "x": -16,
+          "z": 26,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "center-picnic-blanket",
+          "x": 0,
+          "z": 34,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "east-picnic-blanket",
+          "x": 16,
+          "z": 26,
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "base-staging",
+          "center": {
+            "x": 0,
+            "z": -33
+          },
+          "approach": {
+            "x": 0,
+            "z": -33
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "mesa-meadow",
+          "center": {
+            "x": 0,
+            "z": 20
+          },
+          "approach": {
+            "x": 0,
+            "z": 20
+          },
+          "reachable": true
+        }
+      ],
+      "reachableCells": 63565,
+      "step": 0.5
+    },
+    "probes": [
+      {
+        "id": "picnic:mesa-civilian-shade",
+        "overlappingBlockerGroup": [
+          "picnic:mesa-civilian-shade"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "picnic:mesa-civilian-shade",
+            "start": {
+              "x": -4.578517355802405,
+              "z": 40
+            },
+            "hero": {
+              "x": -4.06367068768591,
+              "y": 5.059439869240208,
+              "z": 40
+            },
+            "boundaryDistance": 0.08515333188350516,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "picnic:mesa-civilian-shade",
+            "start": {
+              "x": 4.578517355802405,
+              "z": 40
+            },
+            "hero": {
+              "x": 4.06367068768591,
+              "y": 5.076028834368731,
+              "z": 40
+            },
+            "boundaryDistance": 0.08515333188350516,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "picnic:mesa-civilian-shade",
+            "start": {
+              "x": 0,
+              "z": 36.45747503328867
+            },
+            "hero": {
+              "x": 0,
+              "y": 5.06,
+              "z": 36.97232170140517
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "picnic:mesa-civilian-shade",
+            "start": {
+              "x": 0,
+              "z": 43.54252496671133
+            },
+            "hero": {
+              "x": 0,
+              "y": 5.071345456811152,
+              "z": 43.02767829859483
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 14.988970332038038,
+          "y": 5.06,
+          "z": 37.04999999999996
+        }
+      }
+    ],
+    "cycles": [
+      {
+        "cycle": 0,
+        "bodies": [
+          {
+            "id": "mesa-civilian-shade",
+            "position": [
+              0,
+              5.01143741607666,
+              40
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -4.720311429904571,
+                "y": 5.01143741607666,
+                "z": 36.718494070480176
+              },
+              "max": {
+                "x": 4.720311429904571,
+                "y": 9.399587631225586,
+                "z": 43.281505929519824
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e6-picnic",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "glow-mesa-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "2496",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1739",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207},{\"id\":\"picnic-staging-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1,\"topY\":6.49},{\"id\":\"west-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"center-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.25},{\"id\":\"east-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"mesa-civilian-shade\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.011,\"topY\":9.4}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16},{\"id\":\"picnic-staging-gate\",\"x\":0,\"y\":1,\"z\":-54},{\"id\":\"west-picnic-blanket\",\"x\":-16,\"y\":5,\"z\":18},{\"id\":\"center-picnic-blanket\",\"x\":0,\"y\":5,\"z\":26},{\"id\":\"east-picnic-blanket\",\"x\":16,\"y\":5,\"z\":18},{\"id\":\"mesa-civilian-shade\",\"x\":0,\"y\":5.01143741607666,\"z\":40}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"picnic-staging-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"center-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"mesa-civilian-shade\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 1,
+        "bodies": [
+          {
+            "id": "mesa-civilian-shade",
+            "position": [
+              0,
+              5.01143741607666,
+              40
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -4.720311429904571,
+                "y": 5.01143741607666,
+                "z": 36.718494070480176
+              },
+              "max": {
+                "x": 4.720311429904571,
+                "y": 9.399587631225586,
+                "z": 43.281505929519824
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e6-picnic",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "glow-mesa-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "2496",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1739",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207},{\"id\":\"picnic-staging-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1,\"topY\":6.49},{\"id\":\"west-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"center-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.25},{\"id\":\"east-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"mesa-civilian-shade\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.011,\"topY\":9.4}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16},{\"id\":\"picnic-staging-gate\",\"x\":0,\"y\":1,\"z\":-54},{\"id\":\"west-picnic-blanket\",\"x\":-16,\"y\":5,\"z\":18},{\"id\":\"center-picnic-blanket\",\"x\":0,\"y\":5,\"z\":26},{\"id\":\"east-picnic-blanket\",\"x\":16,\"y\":5,\"z\":18},{\"id\":\"mesa-civilian-shade\",\"x\":0,\"y\":5.01143741607666,\"z\":40}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"picnic-staging-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"center-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"mesa-civilian-shade\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 2,
+        "bodies": [
+          {
+            "id": "mesa-civilian-shade",
+            "position": [
+              0,
+              5.01143741607666,
+              40
+            ],
+            "rotation": [
+              0,
+              3.1416,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -4.720311429904571,
+                "y": 5.01143741607666,
+                "z": 36.718494070480176
+              },
+              "max": {
+                "x": 4.720311429904571,
+                "y": 9.399587631225586,
+                "z": 43.281505929519824
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e6-picnic",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "glow-mesa-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "2496",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "1739",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"mesa-starstone-derrick\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.934,\"topY\":10.134},{\"id\":\"six-vein-control-pylon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1.052,\"topY\":9.017},{\"id\":\"isotope-cooling-rack\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.945,\"topY\":5.745},{\"id\":\"west-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.965,\"topY\":6.215},{\"id\":\"east-herd-glow-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.957,\"topY\":6.207},{\"id\":\"picnic-staging-gate\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":1,\"topY\":6.49},{\"id\":\"west-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"center-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":7.25},{\"id\":\"east-picnic-blanket\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":6.64},{\"id\":\"mesa-civilian-shade\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.011,\"topY\":9.4}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"mesa-starstone-derrick\",\"x\":-56,\"y\":0.9338943362236023,\"z\":50},{\"id\":\"six-vein-control-pylon\",\"x\":0,\"y\":1.0518817901611328,\"z\":-7},{\"id\":\"isotope-cooling-rack\",\"x\":28,\"y\":0.9451975226402283,\"z\":-59},{\"id\":\"west-herd-glow-gate\",\"x\":-56,\"y\":0.9647424817085266,\"z\":16},{\"id\":\"east-herd-glow-gate\",\"x\":56,\"y\":0.9569284915924072,\"z\":16},{\"id\":\"picnic-staging-gate\",\"x\":0,\"y\":1,\"z\":-54},{\"id\":\"west-picnic-blanket\",\"x\":-16,\"y\":5,\"z\":18},{\"id\":\"center-picnic-blanket\",\"x\":0,\"y\":5,\"z\":26},{\"id\":\"east-picnic-blanket\",\"x\":16,\"y\":5,\"z\":18},{\"id\":\"mesa-civilian-shade\",\"x\":0,\"y\":5.01143741607666,\"z\":40}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"mesa-starstone-derrick\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"six-vein-control-pylon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"isotope-cooling-rack\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-herd-glow-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"picnic-staging-gate\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"west-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"center-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-picnic-blanket\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"mesa-civilian-shade\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      }
+    ],
+    "errors": []
+  }
+]

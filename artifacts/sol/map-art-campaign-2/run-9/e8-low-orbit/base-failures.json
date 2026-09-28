@@ -1,0 +1,65 @@
+{
+  "storeBase": "70b78b433ff926b3552fc3d201970d101edf4906",
+  "base": "aef5f1297ecdcde580bfcad7420df7e613ac9c13",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/claw-carcass-rig.glb": {
+      "candidateSha256": "fd6e49fcc3d79a6dc1e233e7cfa2479d419caf66fafd58a158d751109e8985fd",
+      "baseSha256": "8d6dbf8259826812b01e01cc135ce42cda78554db52cab79d3cd7716edd198ae"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/east-scaffold-handhold-frame.glb": {
+      "candidateSha256": "cc2178190953399bc35b34a1cef5ee589099e27c97bf8b6966e65c3cb537efa4",
+      "baseSha256": "e4527406284d527b104c9d2442a10b09ae52b9d3b3c11ef284c6e453c76d4833"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/low-orbit-landmark-pack-contract.json": {
+      "candidateSha256": "1de69c978cc1bf12ffba904789f2bb994d1f02d86f0cd8cf5a9d04f561498158",
+      "baseSha256": "4bcd9acb3ca614e92b347f96724be63180286cf83f84f932c36d96fb5046e32f"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/low-orbit-landmarks-atlas.png": {
+      "candidateSha256": "13761f2d577be9ce03cdd44029ba3f6ad1ba465d3747bbe5b4511724feafde53",
+      "baseSha256": "3925bfe4b272c41d114e03247ea08a8a88c8b43bb819000466d46701837157cd"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/low-orbit-landmarks.blend": {
+      "candidateSha256": "051ca68bb06022a90cc1f490b2ad81f8ed944107a018ce67d61a6174928b08f7",
+      "baseSha256": "ba3425a1bbe1ce389102b1a2c0094ecafe0008c042a6bdb7fefd31b011c789e3"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/north-debris-catcher.glb": {
+      "candidateSha256": "31587e29d7aae65dd016b182a85e6c3c9e1b2e7e2e62998875e850b46f99c698",
+      "baseSha256": "b28f13a149e1a4783738893c2f4d989626de69619968efd315528f519bc5b3d2"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/south-return-beacon.glb": {
+      "candidateSha256": "754cb6ee9941d2b37193b08b1e95ab265e39e44fb3041b1565fc7c1ba57b5974",
+      "baseSha256": "06d02201ad02e7825e2d94a8735be3488ae155bb5cf62330f0fe16efe8e717e2"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/low-orbit/west-scaffold-handhold-frame.glb": {
+      "candidateSha256": "98013efb3f2e7b737047cba5a019ade2e0b234e3b7ea222dfca4419a92b9860f",
+      "baseSha256": "696bfbfaf62982ad83c05823b3ddf79075fba4f0beb136851b598970bab5c9a9"
+    }
+  },
+  "pattern": "plain\\ Orbital\\-era\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+  "specs": [
+    "e2e/e8-roster.spec.ts"
+  ],
+  "candidateEngine": "984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5",
+  "baseEngine": "b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e8-low-orbit-base-failures/test-results",
+    "--grep",
+    "plain\\ Orbital\\-era\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+    "e2e/e8-roster.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e8-low-orbit-fidelity-2/landmark-input-contract.json": "4bcd9acb3ca614e92b347f96724be63180286cf83f84f932c36d96fb5046e32f"
+  },
+  "restoredEngine": "984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e8-low-orbit-base-failures/tests.log"
+}

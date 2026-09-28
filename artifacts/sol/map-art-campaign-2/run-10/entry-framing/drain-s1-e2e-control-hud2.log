@@ -1,0 +1,701 @@
+(node:26004) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 94 tests using 1 worker
+
+
+(node:26074) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/94] [desktop-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+[desktop-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[2/94] [desktop-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture
+[3/94] [desktop-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[desktop-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/94] [desktop-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+[desktop-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/94] [desktop-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[desktop-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/94] [desktop-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[desktop-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+Regatta schema 4 watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[7/94] [desktop-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[8/94] [desktop-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[9/94] [desktop-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[10/94] [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  1) [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-baron.spec.ts:302:6)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:27426) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/94] [desktop-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[12/94] [desktop-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[13/94] [desktop-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[14/94] [desktop-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[15/94] [desktop-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[16/94] [desktop-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[17/94] [desktop-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[18/94] [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  2) [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "fogFar": 42,
+    -   "fogNear": 18,
+    +   "fogFar": 58,
+    +   "fogNear": 34,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      337 |     darkness: 1,
+      338 |   });
+    > 339 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({
+          |                                                                                             ^
+      340 |     fogNear: 18,
+      341 |     fogFar: 42,
+      342 |   });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-night-shift.spec.ts:339:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:29459) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[19/94] [desktop-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+[20/94] [desktop-chrome] › e2e/e1-night-shift.spec.ts:413:1 › lantern coverage is necessary for threat visibility
+[21/94] [desktop-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+[22/94] [desktop-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+[23/94] [desktop-chrome] › e2e/e1-night-shift.spec.ts:520:1 › pre-placed lanterns leave the full player build cap available
+[24/94] [desktop-chrome] › e2e/e1-night-shift.spec.ts:555:1 › render dimming does not stop turret acquisition or damage
+[25/94] [desktop-chrome] › e2e/e1-night-shift.spec.ts:582:1 › wave 25 secures the claim through the dawn victory path
+[26/94] [desktop-chrome] › e2e/e1-night-shift.spec.ts:611:1 › seeded Night Shift diagnostics and dark render budget are stable
+[27/94] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+  3) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "bank"
+
+      94 |   expect(snapshot.water?.fordPresent).toBe(true);
+      95 |   expect(snapshot.water?.fordStones).toBe(14);
+    > 96 |   expect(snapshot.samples.center?.zone).toBe('river');
+         |                                         ^
+      97 |   expect(snapshot.samples.westFord?.zone).toBe('ford');
+      98 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');
+      99 |   await shot(page, testInfo, 'both-bank-base');
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:96:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[28/94] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+  4) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      46 |   await teleport(page, x, z + 2);
+      47 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
+    > 48 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      49 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+      50 | }
+      51 |
+        at placeBuildableAt (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:48:110)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:110:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[29/94] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+  5) [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      226 |       timeout: 15_000,
+      227 |     })
+    > 228 |     .toBe(true);
+          |      ^
+      229 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);
+      230 |   expect(track?.deepSamples).toBe(0);
+      231 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);
+        at assertFordRoute (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:228:6)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:127:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[30/94] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:135:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[31/94] [desktop-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable
+
+(node:31995) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32/94] [desktop-chrome] › e2e/e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems
+[desktop-chrome] › e2e/e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[33/94] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[34/94] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[35/94] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[36/94] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[37/94] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[38/94] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[39/94] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[40/94] [desktop-chrome] › e2e/mobile-overlay-input.spec.ts:92:1 › town overlays leave the world interactive outside their visible cards
+[41/94] [desktop-chrome] › e2e/mobile-overlay-input.spec.ts:131:1 › run overlays only own the viewport while their modal is open
+[42/94] [desktop-chrome] › e2e/polish-03-mobile-hud.spec.ts:197:1 › mobile HUD controls fit, tap, and avoid overlap at 390px and 430px
+[43/94] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[44/94] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[45/94] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[46/94] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[47/94] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:34269) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[48/94] [mobile-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+[mobile-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[49/94] [mobile-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture
+[50/94] [mobile-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[mobile-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[51/94] [mobile-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+[mobile-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[52/94] [mobile-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[mobile-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[53/94] [mobile-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[mobile-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+Regatta schema 4 watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[54/94] [mobile-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[55/94] [mobile-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[56/94] [mobile-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[57/94] [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  6) [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-baron.spec.ts:302:6)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:35873) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[58/94] [mobile-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[59/94] [mobile-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[60/94] [mobile-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[61/94] [mobile-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[62/94] [mobile-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[63/94] [mobile-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[64/94] [mobile-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[65/94] [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  7) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "fogFar": 42,
+    -   "fogNear": 18,
+    +   "fogFar": 58,
+    +   "fogNear": 34,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      337 |     darkness: 1,
+      338 |   });
+    > 339 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({
+          |                                                                                             ^
+      340 |     fogNear: 18,
+      341 |     fogFar: 42,
+      342 |   });
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-night-shift.spec.ts:339:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:37030) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[66/94] [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  8) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.060742745098039216
+
+      403 |   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+      404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+    > 405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+          |                                                    ^
+      406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      408 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-night-shift.spec.ts:405:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:38069) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[67/94] [mobile-chrome] › e2e/e1-night-shift.spec.ts:413:1 › lantern coverage is necessary for threat visibility
+[68/94] [mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+[69/94] [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+[70/94] [mobile-chrome] › e2e/e1-night-shift.spec.ts:520:1 › pre-placed lanterns leave the full player build cap available
+[71/94] [mobile-chrome] › e2e/e1-night-shift.spec.ts:555:1 › render dimming does not stop turret acquisition or damage
+[72/94] [mobile-chrome] › e2e/e1-night-shift.spec.ts:582:1 › wave 25 secures the claim through the dawn victory path
+[73/94] [mobile-chrome] › e2e/e1-night-shift.spec.ts:611:1 › seeded Night Shift diagnostics and dark render budget are stable
+[74/94] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+  9) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "bank"
+
+      94 |   expect(snapshot.water?.fordPresent).toBe(true);
+      95 |   expect(snapshot.water?.fordStones).toBe(14);
+    > 96 |   expect(snapshot.samples.center?.zone).toBe('river');
+         |                                         ^
+      97 |   expect(snapshot.samples.westFord?.zone).toBe('ford');
+      98 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');
+      99 |   await shot(page, testInfo, 'both-bank-base');
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:96:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[75/94] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+  10) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      46 |   await teleport(page, x, z + 2);
+      47 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
+    > 48 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      49 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+      50 | }
+      51 |
+        at placeBuildableAt (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:48:110)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:110:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[76/94] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+  11) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      226 |       timeout: 15_000,
+      227 |     })
+    > 228 |     .toBe(true);
+          |      ^
+      229 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);
+      230 |   expect(track?.deepSamples).toBe(0);
+      231 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);
+        at assertFordRoute (/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:228:6)
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:127:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[77/94] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:135:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[78/94] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable
+  12) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable ─
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -68,11 +68,11 @@
+            "remaining": 30,
+          },
+        ],
+        "hero": Object {
+          "x": 0,
+    -     "y": 0.07178324562509593,
+    +     "y": 0.3672938919067383,
+          "z": -12,
+        },
+        "samples": Array [
+          Object {
+            "speedMul": 0.85,
+
+      195 |   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
+      196 |   const second = await determinismSnapshot(page);
+    > 197 |   expect(second).toEqual(first);
+          |                  ^
+      198 |   expectClean(errors);
+      199 | });
+      200 |
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-control/e2e/e1-twin-banks.spec.ts:197:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e1-twin-banks-seeded-Twin-Banks-diagnostics-are-stable-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:40145) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[79/94] [mobile-chrome] › e2e/e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems
+[mobile-chrome] › e2e/e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[80/94] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[81/94] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[82/94] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[83/94] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[84/94] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[85/94] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[86/94] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[87/94] [mobile-chrome] › e2e/mobile-overlay-input.spec.ts:92:1 › town overlays leave the world interactive outside their visible cards
+[88/94] [mobile-chrome] › e2e/mobile-overlay-input.spec.ts:131:1 › run overlays only own the viewport while their modal is open
+[89/94] [mobile-chrome] › e2e/polish-03-mobile-hud.spec.ts:197:1 › mobile HUD controls fit, tap, and avoid overlap at 390px and 430px
+[90/94] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[91/94] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[92/94] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[93/94] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[94/94] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  12 failed
+    [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+    [desktop-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+    [desktop-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+    [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable ───
+  1 skipped
+  81 passed (12.4m)

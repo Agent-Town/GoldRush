@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "node",
+      "scripts/map-landmark-loading-check.mjs"
+    ],
+    "environment": {
+      "PROBE_BASE": "http://127.0.0.1:5303"
+    },
+    "exit": 0,
+    "seconds": 24.41,
+    "log": "artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/probes-loading.log"
+  },
+  {
+    "command": [
+      "node",
+      "scripts/map-landmark-repeat-check.mjs"
+    ],
+    "environment": {
+      "PROBE_BASE": "http://127.0.0.1:5303"
+    },
+    "exit": 0,
+    "seconds": 6.8,
+    "log": "artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/probes-repeat.log"
+  }
+]

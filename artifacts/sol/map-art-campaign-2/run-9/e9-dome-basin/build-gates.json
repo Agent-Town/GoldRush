@@ -1,0 +1,40 @@
+[
+  {
+    "label": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 5.92,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e9-dome-basin-tsc-rerun-3.log"
+  },
+  {
+    "label": "default-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 19.96,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e9-dome-basin-default-build-rerun-3.log"
+  },
+  {
+    "label": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {
+      "GR_RELEASE": "full"
+    },
+    "exit": 0,
+    "seconds": 19.88,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e9-dome-basin-full-build-rerun-3.log"
+  }
+]

@@ -1,0 +1,69 @@
+[
+  {
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-9/gates.py",
+      "e2-pressure-garden",
+      "build"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "scripts/deploy-mirror-allowlist.test.mjs"
+    ],
+    "exit": 1,
+    "disposition": "Original lane missing filters already on main: 11 base omissions plus three candidate files. Exact main deploy script passes unchanged assertion in isolated tree; see ../mirror-prerequisite-proof.json."
+  },
+  {
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "--background",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "artifacts/sol/map-art-campaign-2/run-9/e2-pressure-garden/verify-panorama-source.py"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-9/e2-pressure-garden/verify-invariants.py"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-9/gates.py",
+      "e2-pressure-garden",
+      "e2e",
+      "final-packaging",
+      "e2e/e2-pressure-garden.spec.ts",
+      "e2e/er01-e2-census.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-9/gates.py",
+      "e2-pressure-garden",
+      "probes"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "node",
+      "artifacts/sol/map-art-campaign-2/run-9/e2-pressure-garden/native-texture-disposal-proof.mjs"
+    ],
+    "exit": 0
+  }
+]

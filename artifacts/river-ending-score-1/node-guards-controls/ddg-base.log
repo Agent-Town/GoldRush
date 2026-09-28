@@ -1,0 +1,76 @@
+✔ a desk item WITH a declaring row passes (59.714125ms)
+✔ MANUFACTURED: a desk item with NO row anywhere exits 1 and names the id (47.52875ms)
+✔ MANUFACTURED: the F-1328-3 shape — MENTIONED inside another finding row is NOT declared (45.350375ms)
+✔ a row whose id sits past the 90-char subject zone does NOT declare it (45.329333ms)
+✔ the leading GLYPH is irrelevant — F-1334-1 refuted marker equality (239.062416ms)
+✔ the markdown list bullet is stripped: bulleted and unbulleted rows read alike (117.857042ms)
+✔ GROUND TRUTH — the real s1529 backtick header must NOT read as "no desk" (44.778792ms)
+✔ REFUSES (exit 2) rather than greening when there is no OWNER DESK segment (31.812958ms)
+✔ REFUSES (exit 2) when the desk segment holds zero keyed items (32.522333ms)
+✔ REFUSES (exit 2) when BACKLOG.md is missing (31.130791ms)
+✔ the entrypoint actually RUNS — a space in the repo path must not no-op it (46.537083ms)
+✖ the live board is green under this guard (baseline is honest) (126.551125ms)
+✔ MANUFACTURED F-1471-3: an ARCHIVED desk never satisfies the guard (31.3915ms)
+✔ MANUFACTURED F-1471-3: an archived desk must not MASK an undeclared LIVE item (45.835292ms)
+✔ all five desk spellings are read — the majority form was invisible (233.335708ms)
+✔ an ACTIVE lock line SKIPs (exit 0) — the desk is written at handoff time (47.195042ms)
+✔ a lock line that MENTIONS the desk in prose is still a lock, not a desk (44.857042ms)
+✔ MANUFACTURED: a prose mention upstream loses to the REAL desk in the tail (45.405584ms)
+✔ a handoff whose desk header has no F-IDs after it REFUSES (exit 2) (31.595875ms)
+✔ a SLUG-keyed desk item WITH a declaring row passes (60.386666ms)
+✔ MANUFACTURED F-1534-2: a SLUG desk item with NO row exits 1 and names the slug (45.873042ms)
+✔ the F-1328-3 shape on the SLUG axis: a slug CITED in another row is not declared (45.645167ms)
+✔ F-1535-1: a backtick in an item's PROSE is not a desk item (the flat-scan trap) (58.867417ms)
+✔ F-1535-1: an item keyed by an F-ID that also cites its slug is ONE F-keyed item (60.844584ms)
+✔ a desk of ONLY slug items does not trip the zero-keyed-items refusal (58.406166ms)
+✔ the grandfather list may only SHRINK — never grows past the s1334 baseline (0.2665ms)
+✔ every grandfathered id is still on the desk — the list must not rot (8.876958ms)
+✔ MANUFACTURED: with the list EMPTY the guard is strict — no id is excused (46.818792ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 27
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1780.375375
+
+✖ failing tests:
+
+test at scripts/desk-declaration-guard.test.mjs:163:1
+✖ the live board is green under this guard (baseline is honest) (126.551125ms)
+  AssertionError [ERR_ASSERTION]: === desk-declaration-guard ===
+  corpus tree       : linked-worktree
+  desk F-IDs        : 2
+  desk slugs        : 1
+  🔺 desk segments  : 3
+  unexamined        : 0
+  with a BACKLOG row: 3
+  undeclared        : 0 (grandfathered 0)
+  
+  desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+    line-1 is NOT the one main carries.
+    Both corpora here are TRACKED, so this tree is frozen at its branch point and
+    the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+    would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+    proven by manufacturing: a real defect on main read byte-identically to a clean
+    board from here).
+    Re-run from the main worktree, or pass --root <main worktree>.
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush-history-local/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/rvs1/control-base/scripts/desk-declaration-guard.test.mjs:167:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

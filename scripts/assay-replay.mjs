@@ -10,6 +10,40 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const inputPath = process.argv[2];
 const port = Number(process.env.GR_ASSAY_REPLAY_PORT ?? 5234);
 
+// THE RIVER REPLAYS IN ITS CEREMONY (river-assay-1, F-RES1-1 cause 1). A reel scored `e10-river` (`Game.ts`
+// RIVER_ENDING_CONTRACT_ID) was played on the finale lever's run, never on the raw River the Book names: THE RIVER
+// charter pressed onto its lineage root, under the charter's run policy. So it is replayed in that world, staged the
+// way `E10FinaleSystem.launchRiver` stages the run, with the game's own calls: the same stamp and the same two
+// session entries (`stageCharterLaunch`), the lineage root as `?contract=`, `?seed=` only for a fixed seed policy,
+// `?nowaves` for the no-wave run policy. `gr.contract.launch.v1` is module-private in `src/meta/ContractFamilies.ts`
+// (PLAYER_CONTRACT_LAUNCH_KEY); `e2e/river-ending-score.spec.ts` and `e2e/cp04-lever.spec.ts` stage the same literal.
+const RIVER_ENDING_CONTRACT_ID = 'e10-river';
+const PLAYER_CONTRACT_LAUNCH_KEY = 'gr.contract.launch.v1';
+
+async function riverCeremony(server, tape) {
+  if (tape.contract !== RIVER_ENDING_CONTRACT_ID) return null;
+  const [{ getPostCreditsCharter }, { stampCharter }, { charterLineageRootId }, { CHARTER_LAUNCH_KEY }] = await Promise.all([
+    server.ssrLoadModule('/src/charter/TheRiver.ts'),
+    server.ssrLoadModule('/src/charter/CharterStamp.ts'),
+    server.ssrLoadModule('/src/charter/CharterSchema.ts'),
+    server.ssrLoadModule('/src/meta/ContractFamilies.ts'),
+  ]);
+  const charter = getPostCreditsCharter();
+  const stamped = stampCharter(charter);
+  if (!stamped.ok) throw new Error(`THE RIVER no longer stamps: ${stamped.reasons.map((reason) => reason.code).join(', ')}`);
+  const templateId = charterLineageRootId(charter);
+  const search = { contract: templateId };
+  if (charter.envelope.seedPolicy.mode === 'fixed') search.seed = charter.envelope.seedPolicy.seed;
+  return {
+    search,
+    nowaves: charter.envelope.runPolicy?.waves === 'none',
+    session: [
+      [PLAYER_CONTRACT_LAUNCH_KEY, templateId],
+      [CHARTER_LAUNCH_KEY, JSON.stringify({ templateId, document: stamped.document })],
+    ],
+  };
+}
+
 if (!inputPath) {
   process.stderr.write('Usage: node scripts/assay-replay.mjs <reel.json>\n');
   process.exit(1);
@@ -53,16 +87,23 @@ try {
     if (message.type() === 'error') errors.push(`console: ${message.text()}`);
   });
   page.on('pageerror', (error) => errors.push(`page: ${error.message}`));
-  await page.addInitScript((reel) => sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel)), tape);
+  const ceremony = await riverCeremony(vite, tape);
+  await page.addInitScript(({ reel, session }) => {
+    sessionStorage.setItem('gr.assay-replay.v1', JSON.stringify(reel));
+    for (const [key, value] of session) sessionStorage.setItem(key, value);
+  }, { reel: tape, session: ceremony?.session ?? [] });
 
-  const query = new URLSearchParams({
-    debug: '',
-    assayReplay: '',
-    replay: tape.id,
-    contract: tape.contract,
-    seed: tape.seed,
-    difficulty: tape.difficulty,
-  });
+  const query = new URLSearchParams(ceremony
+    ? { debug: '', assayReplay: '', replay: tape.id, ...ceremony.search, difficulty: tape.difficulty }
+    : {
+        debug: '',
+        assayReplay: '',
+        replay: tape.id,
+        contract: tape.contract,
+        seed: tape.seed,
+        difficulty: tape.difficulty,
+      });
+  if (ceremony?.nowaves) query.set('nowaves', '');
   const startedAt = performance.now();
   await page.goto(`http://127.0.0.1:${port}/?${query}`, { waitUntil: 'load', timeout: 60_000 });
   // Slow-box headroom (the DO worker droplet cold-transforms the whole game on its first replay):
@@ -81,13 +122,24 @@ try {
   );
   if (errors.length) throw new Error(errors.join('\n'));
 
-  const replay = await page.evaluate(() => {
+  // F-H154-1 (attended drain, 2026-09-22): the browser arm reports the map's signature mechanic exactly
+  // as the headless arm does (`HeadlessContractSim.MECHANIC_OUTCOMES`, one row today) — a human's
+  // browser-recorded Regatta reel would otherwise verify with no finish and rank below every agent
+  // finish. Hand mirror of the engine's table; `scripts/skillmd-guard.test.mjs` pins it equal.
+  const MECHANIC_BROWSER_CONTRACTS = new Set(['e5-regatta']);
+  const replay = await page.evaluate((mechanicContracts) => {
     const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
     const show = document.querySelector('[data-testid="lantern-show"]');
     const status = document.querySelector('[data-testid="lantern-playback-status"]');
     if (!diagnostics || !show || !status) throw new Error('replay diagnostics unavailable');
+    const mechanic = mechanicContracts.includes(diagnostics.contract?.activeId) && diagnostics.regatta
+      ? { id: 'regatta-race', complete: diagnostics.regatta.race?.finished === true }
+      : null;
     return {
       eventLogHash: status.getAttribute('data-hash'),
+      // `run.secured` and `run.securedSnapshot` are RunManager's secure, or, for a River reel, the ceremony's pan: the
+      // River never secures through RunManager, and its replay publishes the score the pan wrote there instead
+      // (`Game.completeRiverEnding`, river-assay-1, F-RES1-1 cause 2).
       outcome: {
         secured: diagnostics.run.secured,
         waves: Math.floor(diagnostics.wave),
@@ -98,12 +150,17 @@ try {
         // `round(economy.gold)`). Reading `economy.summary.panned` here verified the OTHER
         // quantity, so a browser reel and an agent reel could never be assayed by one meaning.
         gold: Math.floor(diagnostics.economy.gold),
+        // Printed to the microsecond, as it always has been (e2e/assay-replay-roundtrip.spec.ts pins it). A browser
+        // reel declares the raw float its run accumulated, so the worker does not compare the two exactly: it compares
+        // them at a stated tolerance (`scripts/assay-worker.mjs`, TIME_ALIVE_TOLERANCE_SECONDS; river-assay-1,
+        // F-RES1-1 cause 3). The secure snapshot below stays the raw float the county applies over a verified row.
         timeAlive: Math.round(diagnostics.timeAlive * 1_000_000) / 1_000_000,
       },
       securedSnapshot: diagnostics.run.securedSnapshot,
+      ...(mechanic ? { mechanic } : {}),
       ticks: Number(show.getAttribute('data-tick')),
     };
-  });
+  }, [...MECHANIC_BROWSER_CONTRACTS]);
   process.stdout.write(`${JSON.stringify({ ...replay, wallMs: Math.round(performance.now() - startedAt) })}\n`);
 } catch (error) {
   process.stderr.write(`assay replay failed: ${error instanceof Error ? error.message : String(error)}\n`);

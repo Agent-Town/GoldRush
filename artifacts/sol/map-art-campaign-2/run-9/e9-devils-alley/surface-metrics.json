@@ -1,0 +1,47 @@
+{
+  "method": "Ratio of singular values of per-triangle surface-to-UV Jacobian; 1 is isotropic. Area weighted, collapses reported separately. This tests UV distortion, not visual material fidelity.",
+  "rows": [
+    {
+      "arm": "before",
+      "id": "west-wind-anchor",
+      "areaWeightedMedianUvAnisotropy": 1.9229860040049227,
+      "areaWeightedP95UvAnisotropy": 31.15154902432012,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "before",
+      "id": "center-wind-anchor",
+      "areaWeightedMedianUvAnisotropy": 1.9493601786691346,
+      "areaWeightedP95UvAnisotropy": 33.531416659017424,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "before",
+      "id": "east-wind-anchor",
+      "areaWeightedMedianUvAnisotropy": 1.9493800689021887,
+      "areaWeightedP95UvAnisotropy": 49.9289863368561,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "id": "west-wind-anchor",
+      "areaWeightedMedianUvAnisotropy": 1.0000017443575564,
+      "areaWeightedP95UvAnisotropy": 1.4393721595144633,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "id": "center-wind-anchor",
+      "areaWeightedMedianUvAnisotropy": 1.0000054580977116,
+      "areaWeightedP95UvAnisotropy": 1.4393723694873106,
+      "collapsedUvAreaSharePercent": 0.0
+    },
+    {
+      "arm": "after",
+      "id": "east-wind-anchor",
+      "areaWeightedMedianUvAnisotropy": 1.0072435648767446,
+      "areaWeightedP95UvAnisotropy": 1.4393742157975904,
+      "collapsedUvAreaSharePercent": 0.0
+    }
+  ]
+}

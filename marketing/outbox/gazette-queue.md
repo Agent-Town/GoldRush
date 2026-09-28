@@ -1,3 +1,68 @@
+## The county says what it keeps about a rider
+The site now carries a plain notice of what the Office writes down and for how
+long. A rider reaches it from the sign-in form and from the complaints desk, and
+the door it is served through was tightened at the same time.
+merge `0bfb168ea` · page `public/privacy.html` · review `reviews/sec-headers-and-data-hygiene-1.md`
+
+## A link from outside no longer stakes a claim in your name
+Arrive from a tracking or share link and you land at the start menu, named by
+nobody, instead of finding a nameless prospector already staked for you. If the
+ground fails to load or the display is refused, a card says so in plain words.
+Turn away mid-run and the held keys let go rather than walking on without you.
+merge `3f5bc0456` · cure `960cbb249` · review `reviews/ux-entry-robustness-1.md`
+
+## The week's six claims are back on the board
+The September 21 window opened with no seeds standing, so for three days the
+county had nothing to post. Six claims are staked for it now — the Claim, Dry
+Gulch, Twin Banks, Night Shift, Hill Mine and the Baron — running to September
+28, with the closed weeks kept as public history.
+merge `b541ac711` · registry `assets/rotations/rotation-seeds.json` · page `public/skill.md`
+
+## ROUNDUP — ground, framing, the phone and the door
+The Old Canal, the Seed Run and Devil's Alley carry the ground they were
+surveyed with. The plain entry turns to the landmark each map declares before a
+rider takes a step, on Night Shift, Twin Banks, the Baron and the Trestle, with
+the cooling rack at the Glow Mesa and the charting station at Relay Rush. Twin
+Banks shows its riparian scatter, the Trestle its rail joins and buffer stops,
+and Relay Rush signs which relay is live. On a 390 px phone the HUD stops
+covering what a rider needs on those same four maps. At the sign-in door guesses
+are counted before the compare, verify carries an hourly cap per address, and
+asking for a fresh code no longer refills the allowance.
+merge `26e4a5a9c`, `9f842f2a0`, `f3e95539c`, `00e4e98c1`, `d8705dc6e`, `78934b5b7` · reviews `reviews/sol-entry-framing-2.md`, `reviews/sol-map-art-fidelity-2.md`, `reviews/sol-code-presentation-1.md`, `reviews/sol-phone-hud-entry-2.md`, `reviews/sec-signin-hardening-1.md`
+ROUNDUP-CLASS — 2026-W39's three standalone slots are spent by the three items above, so the week's remaining six player-visible landings batch here.
+
+NOT PLAYER-VISIBLE — s2676 (2026-09-25) judged the twelve remaining 2026-W39 candidates by READING each diff (F-2612-1), never its subject line. Eleven are engine-era PIN APPENDS whose registry parses to `"era": 6` on BOTH sides, so only the identity hash rotates and no era bumped: `aa4ccf975` (#60), `1b977e055` (#59), `3079d5db0` (#58), `23e50fc53` (#57), `3a9628385` (#56), `55db53d86` (#55), `eed03c91d` (#54), `208863d39` (#53), `3edb6efd1` (#52), `37a7141c8` (#51), `36aa9fa6c` (#50) — checked field by field against each parent, not read off the `cause` prose. The twelfth, `459c21394`, is a PACKAGING correction: the era-4 hauler body stops riding along in the era-1 download through a lazy asset glob the release plugin already narrows, so the bundle is smaller and nothing a rider meets is drawn differently. Judged and dismissed, not skipped; each stays available to re-judge.
+
+## ROUNDUP — the Dust Flats, the Long Road and Gusher County come clear
+Stand at the entry of the Dust Flats, the Long Road or Gusher County: the desert
+carries the wheel cuts and paint it was surveyed with, the tall cabin at Gusher
+stops hiding what is behind it, and the charting posts no longer cover the phone.
+merge `74083ce0d` · review `reviews/sol-map-art-corrections-3.md` · ROUNDUP-CLASS: 2026-W38's three standalone slots are spent (3 standalone, 17 batched)
+
+NOT PLAYER-VISIBLE — `8fb118452` appends same-era pin #22 to `assets/engine-era.json`; read the diff and `"era": 6` is unchanged on both sides, only the engine hash rotates, so no era bumped and nothing a rider meets moved.
+
+NOT PLAYER-VISIBLE — s2666 merged a lock line, one BACKLOG finding (F-2666-1) and an annotation retiring the F-2569-2 row’s gate: ledger and law bookkeeping only, no `src/`, no assets, no rendered surface. The sweep offered `0` candidates (examined `5658` first-parent commits, player-path `411`, cited `411`), and my own paths sit outside its scan space by construction.
+
+## ROUNDUP — three more maps corrected, and a seam in the Canyon closed
+Walk the Pressure Garden, the Incline or the Canyon Works and the ground reads
+as worked land again. Where the Canyon Works once showed daylight through a gap
+in its own rim, the rim is whole.
+merge `d409d0728` · drain `4be40ccb2` · review `reviews/sol-map-art-corrections-2.md` · ROUNDUP-CLASS: the 2026-W38 headline budget (3 standalone) is spent
+
+## ROUNDUP — a rider can watch the boat race, and hears why it cannot board
+The door now tells a rider where the boat sits, which buoy is next and which are
+already passed. Step for the water from dry land and the refusal comes back by
+name: NOT_ABOARD, or UNREACHABLE_WATER.
+merge `53f9b9436` · review `reviews/e5-regatta-boat-03.md` · ROUNDUP-CLASS: the 2026-W38 headline budget (3 standalone) is spent
+
+NOT PLAYER-VISIBLE — the three bookkeeping commits of that same day, each judged by READING it rather than by its subject line (F-2612-1). `78e5c109b` appends engine-era pin #21, whose own `cause` field says "same era" and adds "no sim table, contract data or null floor moved", with the era value unmoved. `04d88f868` is the A3 shrink re-pointing cited commit ids at the rewritten history: sampled in `assets/contracts/null-floors.json`, the ONLY change is `eraStamp` `24dad56f0` -> `05232a3a0`, a citation hash, while every floor value holds. `2ad3ab1ee` turns four art directories into relative symlinks at `../../GoldRush-assets/*` for the public-repo split — the same bytes, reached by a different path, and nothing a rider can see.
+
+**NOT PLAYER-VISIBLE** — s2664 merged an instrument cure, its guard and two findings rows: the worktree registry ledger now declares in-flight trees on every run rather than as a baseline delta, and does so in a fixed number of git calls instead of one per tree. No src, assets, public, functions or site path moved, and the single real drain on the board was left to the attended session already holding it.
+
+**NOT PLAYER-VISIBLE** — s2663 merged a lock line, one findings row and a re-banked worktree registry; no player path moved. Candidates 0, path-tested against the sweep's own PLAYER_PREFIXES read from the tool rather than transcribed, with both controls asserted first; the full sweep was started and then deliberately stopped mid-run so a live attended drain's gates would not be measured under my contention.
+
+NOT PLAYER-VISIBLE — s2662 merged law, ledger and bookkeeping only: two owed finding rows, a re-banked worktree-registry baseline, one new finding with its law clause, and a lock line. No file under the scan space (src/ assets/ public/ functions/ site/ index.html) was touched, established by path-testing every unjudged first-parent commit since the swap boundary against PLAYER_PREFIXES imported from the sweep itself, with the predicate controlled both ways first: 0 of 11 commits touch it.
+
 ## ROUNDUP — four maps corrected, and the Last Claim judged in Astra’s own words
 Ride Night Shift, Twin Banks, the Baron or the Trestle and the ground reads as
 itself again: the river parted from the scorched bank, the clearings quieted,
@@ -3025,3 +3090,54 @@ NOT PLAYER-VISIBLE — `7c6ecd500810caf1a9e7255a8aea0df35b8cb695` (s2540): six c
 NOT PLAYER-VISIBLE (s2553, 2026-09-08): `7b8c6a7114077ac81f14fc42f41d3db86618a745` and ancestry-only `c0d43efe387bba5dcb861036969e1626d3208df7` change test evidence destinations and preserve lane history. No player-facing behavior or engine-era change; no headline slot used.
 
 NOT PLAYER-VISIBLE (s2556, 2026-09-08): `905023e4e574a97f88904bf54cd998697e086d2b` escapes four regex alternation pipes in the asset ledger table. Documentation formatting only; no art, player text, runtime or engine-era change.
+
+## ROUNDUP — The Twin Banks river runs in its two channels, and the spring shows as a pool
+At Twin Banks the water now sits where the ground is actually wet: two channels with dry, walkable ground braided between them, the two fords still the only way across, and the spring at the head of the river reads as a pool instead of nothing at all.
+merge `1920cfbbe` · review `reviews/hm-06-twin-banks-braid-water.md`
+ROUNDUP-CLASS — 2026-W39; batched because the week's three standalone headlines are already spent. Owner approval still governs publication.
+
+NOT PLAYER-VISIBLE (s2687, 2026-09-25) — `961f07fe2` appends engine-era pin #61 and rotates the identity hash. Judged by READING the diff against its parent, not its subject line (F-2612-1, the method of the s2676 note above): the sole file is `assets/engine-era.json`, the registry parses to `"era": 6` on both sides, and only `engineHash`, `pinnedAt`, `cause` and an empty `aliases` move — no era bumped. The water change this pin records is reported as news in the Twin Banks roundup entry; the pin itself draws nothing.
+
+
+## ROUNDUP — a crossing in the Canyon, weekly claims and a privacy link
+The Canyon Works' creek bank can now be crossed on foot, reaching all six pylons
+and the bridge. The higher ramp still blocks the route to completing the map.
+New runs and Ride Together rooms use the open week's seed, and the room card
+names that week. The six claims for week 40 are ready ahead of their September
+28 opening. Signed-in riders can reach the privacy notice from their account card.
+merge `752d624e8`, `da13ea750`, `73553e691`, `70cf2362f` · reviews `reviews/canyon-works-traversal-1.md`, `reviews/live-seed-rotation-1.md`, `reviews/rotation-r2026w40.md`, `reviews/small-fixes-1.md`
+ROUNDUP-CLASS — 2026-W39; s2690 closes the four GZ-01 omissions named by s2689. The week's three standalone slots are already spent. Owner approval still governs publication.
+
+## ROUNDUP — Walk the upper Canyon, choose an open land, keep the River's score
+The Canyon Works' upper ramp can now be walked and its two authored arc turrets stand;
+this completes the creek crossing reported in the preceding roundup, without claiming a secured run.
+The Charter Press offers only unlocked lands and opens the chosen land. The River's first
+successful quiet pan writes one completed score in the Book, with no duplicate on another pan or reload.
+The county retires reels carrying the sampled invalid orders, and co-op's fallback connection
+allowance resets after a real hour. Production county doors refuse localhost browser origins.
+The front page gains an illustrated share card, moves its three illustrations into separate files,
+and removes the token-chart footer link.
+merge `8eca6385e`, `df691d8b1`, `f68542f50`, `309b938eb`, `80854592d`, `b79e80acf`, `98c0c0505`, `f9f4c0d23`, `27e59383d` · reviews `reviews/door-tape-grammar-3.md`, `reviews/door-tape-grammar-4.md`, `reviews/kv-counters-to-ledger-2.md`, `reviews/canyon-works-traversal-2.md`, `reviews/localhost-cors-2.md`, `reviews/site-vibe-fixes-1.md`, `reviews/river-ending-score-1.md`, `reviews/charter-press-locked-lands-1.md`, `reviews/is-main-2.md`
+ROUNDUP-CLASS — 2026-W39; s2691 closes the remaining September 26 landing omissions in one item. Pin 66 records an assay-tool entry-point repair in era 6, with no new player mechanic. River county posting was held at this landing; its September 27 assay is separate news. The Pages standings redirect still needs its ops setting. Stale cached HTML still affected the live image URLs at day end (F-SVF1-10); working live previews are not claimed. Owner approval still governs publication.
+
+## ROUNDUP — the River's quiet pan can earn a county standing
+The River's first successful quiet pan now sends one standing to the county.
+Its reel is checked before the result is verified on the Claim Ledger. Fresh
+runs with diagonal movement can also verify: the reel follows the same steps
+as the rider, on keyboard and phone.
+merge `712db42e2` · pin `9ce6ecba9` · review `reviews/river-assay-1.md`
+ROUNDUP-CLASS — 2026-W39; s2692 closes the River assay's GZ-01 omission. The week's three standalone slots are spent. Pin 70 remains in era 6. At this landing, paused human reels still stop during replay (F-RVA1-6); the attended `tape-pause-fix-1` drain is pending. Old reels with the original diagonal drift remain rejected. Draft only; publication stays owner-only.
+
+## ROUNDUP — paused runs can replay to the end
+A recorded pause no longer stops a replay forever. Fresh paused River reels
+verify on desktop and phone, and old reels carrying the same pause can play
+past it. Historical reels with the earlier movement drift remain rejected.
+merge `28272092e` · pin `52cac1459` · review `reviews/tape-pause-fix-1.md`
+ROUNDUP-CLASS — 2026-W39; s2696. Pin 71 remains in era 6. Production build 198fae78 verified, assayer synchronized. Draft only; publication stays owner-only.
+
+## ROUNDUP — County Standings opens on the week's claims
+County Standings now opens on the week a live run rides, so a player's weekly
+standing appears in the game. All time is one tap away. The public board's
+rotation parameter is also documented for riders reading the door instructions.
+merge `40c1ee15b`, `2d4802c04` · pin `e7fafe2a5` · review `reviews/county-board-open-week-1.md`
+ROUNDUP-CLASS — 2026-W39; s2723 backfills the September 27 landing. Pin 69 remains in era 6. Draft only; publication stays owner-only.

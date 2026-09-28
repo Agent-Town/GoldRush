@@ -1,0 +1,82 @@
+// Scratch differential probe (not committed as code): for every action type the door's `validTapeAction`
+// knows, one action is injected into a reel written by the REAL browser recorder, and three judges rule on
+// the same tape: the door at POST (`validateTape`, stored false), the door at read (stored true), and the
+// client (`validateRunTape`). Nothing leaves the machine. Run from a worktree root with Node 26.
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const root = process.cwd();
+const { createServer } = await import(pathToFileURL(path.join(root, 'node_modules/vite/dist/node/index.js')).href);
+const engineEra = JSON.parse(readFileSync(path.join(root, 'assets/engine-era.json'), 'utf8'));
+const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null } });
+try {
+  const { validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
+  const { RunTapeRecorder, submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { intentsFromLockstepInput } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
+  const move = (mx, my) => intentsFromLockstepInput({ mx, my, actions: [] });
+  const start = { x: 0.25, z: 12.5 };
+  const progress = { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } };
+  const recorder = new RunTapeRecorder({
+    contract: 'the-claim', seed: 'gold-rush', difficulty: 'trail',
+    meta: { buildId: 'dev', viewVersion: engineEra.viewSchema.version, engineHash: engineEra.engineHash, era: engineEra.era },
+    start,
+    runStart: { meta: progress, research: { version: 1, epochId: 'epoch-1-frontier', metaScienceCursor: 0, progress, taken: [], proposalSalt: 0, pinnedTarget: null, unlocks: {} } },
+  });
+  recorder.record(move(1, 0), start);
+  recorder.record(move(0, 1), start);
+  recorder.record(move(0, 0), start);
+  const base = submittedRunTape(recorder.snapshot({ reason: 'secured', secured: true, waves: 10, timeAlive: 120, gold: 40 },
+    { ...recorder.eventLog(), kills: 0, gold: 40, wave: 10, economy: {} }));
+  const judge = (action) => {
+    const tape = structuredClone(base);
+    tape.inputLog.entries[0].a.push(action);
+    return {
+      door: validateTape(tape, 'the-claim', 'gold-rush', 'trail') ? 'accepts' : 'refuses',
+      read: validateTape(tape, 'the-claim', 'gold-rush', 'trail', true) ? 'accepts' : 'refuses',
+      client: validateRunTape(tape) ? 'accepts' : 'refuses',
+    };
+  };
+  const ids = [['a real id', 'sluice'], ['whitespace only', '   '], ['a tab and a newline', '\t\n'], ['edge whitespace', ' sluice '], ['empty', ''],
+    ['64 characters', 'x'.repeat(64)], ['65 characters', 'x'.repeat(65)], ['65 raw, 64 after trim', ` ${'x'.repeat(64)}`], ['not a string', 2]];
+  const cases = [];
+  const add = (label, action) => cases.push([label, action]);
+  const position = { x: 2, z: 10 };
+  for (const [label, id] of ids) add(`place_build id ${label}`, { type: 'place_build', id, position, rotationSteps: 1 });
+  add('place_build id not a building (control for the client: place_build takes any token)', { type: 'place_build', id: 'nonsense', position, rotationSteps: 1 });
+  add('place_build position unquantized', { type: 'place_build', id: 'sluice', position: { x: 2.00049, z: 10 }, rotationSteps: 1 });
+  add('place_build rotationSteps 4', { type: 'place_build', id: 'sluice', position, rotationSteps: 4 });
+  for (const [label, id] of ids) add(`pick_upgrade id ${label}`, { type: 'pick_upgrade', id });
+  add('pick_upgrade with defaulted true', { type: 'pick_upgrade', id: 'sluice', defaulted: true });
+  for (const [label, id] of ids) add(`research_pick id ${label}`, { type: 'research_pick', id });
+  for (const [label, ability] of [['auto_pan', 'auto_pan'], ['auto_collect', 'auto_collect'], ['auto_repair', 'auto_repair'], ['light_duty', 'light_duty'],
+    ['place_building', 'place_building'], ['fly (unknown)', 'fly'], ['edge whitespace auto_pan', ' auto_pan '], ['AUTO_PAN (case)', 'AUTO_PAN'],
+    ['whitespace only', '   '], ['empty', ''], ['65 characters', 'x'.repeat(65)], ['not a string', 2]]) {
+    add(`set_agent_ability ${label}`, { type: 'set_agent_ability', ability, granted: true });
+  }
+  add('set_agent_ability granted not a boolean', { type: 'set_agent_ability', ability: 'auto_pan', granted: 'yes' });
+  for (const level of [0, 3, 4, -1, 1.5]) add(`set_agent_rung level ${level}`, { type: 'set_agent_rung', level, granted: true });
+  for (const [label, id] of [['sluice', 'sluice'], ['palisade', 'palisade'], ['whitespace only', '   '], ['edge whitespace', ' sluice '], ['not a building', 'nonsense']]) {
+    add(`context_action upgrade target id ${label}`, { type: 'context_action', action: 'upgrade', target: { id, index: 0 } });
+    add(`context_action demolish target id ${label}`, { type: 'context_action', action: 'demolish', target: { id, index: 0 } });
+  }
+  for (const index of [255, 256, 10_000, 10_001, -1]) add(`context_action upgrade target index ${index}`, { type: 'context_action', action: 'upgrade', target: { id: 'sluice', index } });
+  add('context_action fund', { type: 'context_action', action: 'fund' });
+  add('context_action recover', { type: 'context_action', action: 'recover' });
+  for (const [label, node] of [['gold-seam-2', 'gold-seam-2'], ['whitespace only', '   '], ['edge whitespace', ' gold-seam-2 '], ['65 characters', 'n'.repeat(65)]]) {
+    add(`prospector_dispatch node ${label}`, { type: 'prospector_dispatch', node });
+  }
+  for (const type of ['weapon_toggle', 'restart', 'debug_spawn', 'debug_xp', 'skip_ceremony', 'research_skip']) add(`${type}`, { type });
+  add('set_pause true', { type: 'set_pause', paused: true });
+  add('death_action done', { type: 'death_action', choice: 'done' });
+  add('secure_choice bank', { type: 'secure_choice', choice: 'bank' });
+  const rows = cases.map(([label, action]) => ({ label, ...judge(action) }));
+  const width = Math.max(...rows.map(({ label }) => label.length));
+  const verdictOf = ({ door, client }) => (door === client ? 'equal' : door === 'accepts' ? 'LOOSER' : 'tighter');
+  console.log(`${'action on the tape'.padEnd(width)}  door     read     client   door vs client`);
+  for (const row of rows) console.log(`${row.label.padEnd(width)}  ${row.door.padEnd(8)} ${row.read.padEnd(8)} ${row.client.padEnd(8)} ${verdictOf(row)}`);
+  const count = (verdict) => rows.filter((row) => verdictOf(row) === verdict).length;
+  console.log(`rows ${rows.length}: LOOSER ${count('LOOSER')}, tighter ${count('tighter')}, equal ${count('equal')}`);
+} finally {
+  await vite.close();
+}

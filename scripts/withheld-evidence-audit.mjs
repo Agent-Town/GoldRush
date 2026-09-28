@@ -84,7 +84,7 @@
  *   node scripts/withheld-evidence-audit.mjs [--list] [--strict] [--json]
  */
 
-import { readdirSync, readFileSync, existsSync } from 'node:fs';
+import fs, { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
@@ -316,6 +316,24 @@ function main(argv) {
   return exitCodeFor(result, strict);
 }
 
-if (path.resolve(process.argv[1] ?? '') === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   process.exit(main(process.argv.slice(2)));
+}
+
+/**
+ * A VERBATIM COPY of isMain from ./is-main.mjs (F-SF1-2, is-main-2), not an import: a guard fixture
+ * relocates this file ALONE. withheld-evidence-audit-guard.test.mjs copies it by itself into a
+ * fixture repository's scripts/ and writes a variant of it alone as variant.mjs, where a relative
+ * import of is-main.mjs dies ERR_MODULE_NOT_FOUND (measured with the import applied).
+ * scripts/is-main.test.mjs asserts this copy still matches the original byte for byte; change them
+ * together.
+ */
+function isMain(importMetaUrl) {
+  const entry = process.argv[1];
+  if (!entry || !importMetaUrl) return false;
+  try {
+    return fs.realpathSync(entry) === fs.realpathSync(fileURLToPath(importMetaUrl));
+  } catch {
+    return false;
+  }
 }

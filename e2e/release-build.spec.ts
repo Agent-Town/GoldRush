@@ -323,10 +323,29 @@ async function teleportToBuilding(page: Page, buildingId: string): Promise<void>
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)).toBe(buildingId);
 }
 
+// THE SEAM MOVED, NOT THE HARVEST (F-SEF2-3, root-caused 2026-09-24).
+//
+// This approach used to end at (-2.5, -6.4) and the first poll below went red for both projects.
+// The cause is a STALE COORDINATE, not the release build and not the channeling flag. Dry Gulch
+// carried no `harvestAnchors` of its own until commit 7c2744e5a (2026-09-12, Astra's map-art
+// inventory and repair campaign, committed for retention and not gated), so its seams came from
+// `DEFAULT_NODE_ANCHORS` (src/world/Terrain.ts:163-170) and the third one sat at x=-1.5: from
+// (-2.5, -6.4) that is 1.0 away, inside `Balance.goldSeam.channelRange` 1.6. That commit authored
+// the contract's own six anchors, IDENTICAL to the defaults in count and order except the third,
+// which moved to x=-5.5. The old standing spot is 3.0 from it, so the hero was parked outside
+// channel range and `harvest.channeling` could never turn true; it had walked PAST the seam,
+// because the approach was authored to reach a seam that used to lie further east. The commit did
+// not touch this file.
+//
+// The hero now stops at (-4.5, -6.4), 1.0 from the seam where it actually is (1.12 at the helper's
+// 0.12 arrival tolerance, still inside 1.6), which is the waypoint this walk already stood on and
+// proved standable. The second leg's (-9, 6.7) seam is the second anchor, unmoved by that commit,
+// so it is unchanged. Nothing about the assertions moved: a red here still means the harvest is
+// broken, and re-deriving these numbers against the contract's live anchors is the only lawful
+// repair if they move again.
 async function harvestSluiceBudget(page: Page): Promise<void> {
   await moveHeroTo(page, -4.5, 12);
   await moveHeroTo(page, -4.5, -6.4);
-  await moveHeroTo(page, -2.5, -6.4);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);
   await moveHeroTo(page, -4.5, -6.4);

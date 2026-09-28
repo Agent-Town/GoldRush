@@ -1,0 +1,22 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-own",
+      "e2e/e9-seed-run-caravan.spec.ts",
+      "e2e/seam-visual-follows-sculpt.spec.ts"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 80.95,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-own.log"
+  }
+]

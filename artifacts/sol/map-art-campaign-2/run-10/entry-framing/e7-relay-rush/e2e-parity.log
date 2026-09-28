@@ -1,0 +1,269 @@
+(node:30791) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 14 tests using 1 worker
+
+
+(node:30862) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:30862) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/14] [desktop-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+[desktop-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[2/14] [desktop-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture
+  1) [desktop-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 3
+
+    @@ -668,10 +668,11 @@
+            Object {
+              "data": Object {
+                "darkWave": 10,
+                "dawnWave": 25,
+                "duskWave": 5,
+    +           "entryLandmark": "This map leads with the lampworks_yard landmark.",
+              },
+              "id": "darkness_cycle",
+              "source": "twist.lightRamp",
+            },
+            Object {
+    @@ -875,10 +876,11 @@
+              "source": "tileParams.river",
+            },
+            Object {
+              "data": Object {
+                "count": 2,
+    +           "entryLandmark": "This map leads with the south_bank_homestead landmark.",
+                "ids": Array [
+                  "east-ford",
+                  "west-ford",
+                ],
+              },
+    @@ -1000,10 +1002,11 @@
+            ],
+          },
+          "rules": Array [
+            Object {
+              "data": Object {
+    +           "entryLandmark": "This map leads with the seized_headframe landmark.",
+                "escortCount": 8,
+                "hpScale": 240,
+              },
+              "id": "baron",
+              "source": "twist.baron",
+
+      443 |
+      444 |   expect(ids).toEqual(['the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+    > 445 |   expect(manifests).toEqual(fixtures);
+          |                     ^
+      446 |   expect(JSON.stringify(manifests)).toBe(JSON.stringify(fixtures));
+      447 |   for (const id of ids) expect(JSON.stringify(deriveMechanicsManifest(id))).toBe(JSON.stringify(deriveMechanicsManifest(id)));
+      448 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/agent-view.spec.ts:445:21
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/parity-results/agent-view-all-six-E1-mech-d216a-h-their-byte-stable-fixture-desktop-chrome/error-context.md
+
+
+
+(node:30949) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:30949) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[3/14] [desktop-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[desktop-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/14] [desktop-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+[desktop-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/14] [desktop-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[desktop-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/14] [desktop-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[desktop-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+Regatta schema 4 watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[7/14] [desktop-chrome] › e2e/e5-regatta-boat.spec.ts:196:1 › a rider steers the same boat to the same place: the tape replays to the headless hash
+[desktop-chrome] › e2e/e5-regatta-boat.spec.ts:196:1 › a rider steers the same boat to the same place: the tape replays to the headless hash
+e5-regatta rider tape watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+
+(node:31452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:31452) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[8/14] [mobile-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+[mobile-chrome] › e2e/agent-view.spec.ts:428:1 › the zero-error rider suppresses only the known transient
+mutation control watchErrors suppressed 1 known GLTFLoader blob error(s)
+
+[9/14] [mobile-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture
+  2) [mobile-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 0
+    + Received  + 3
+
+    @@ -668,10 +668,11 @@
+            Object {
+              "data": Object {
+                "darkWave": 10,
+                "dawnWave": 25,
+                "duskWave": 5,
+    +           "entryLandmark": "This map leads with the lampworks_yard landmark.",
+              },
+              "id": "darkness_cycle",
+              "source": "twist.lightRamp",
+            },
+            Object {
+    @@ -875,10 +876,11 @@
+              "source": "tileParams.river",
+            },
+            Object {
+              "data": Object {
+                "count": 2,
+    +           "entryLandmark": "This map leads with the south_bank_homestead landmark.",
+                "ids": Array [
+                  "east-ford",
+                  "west-ford",
+                ],
+              },
+    @@ -1000,10 +1002,11 @@
+            ],
+          },
+          "rules": Array [
+            Object {
+              "data": Object {
+    +           "entryLandmark": "This map leads with the seized_headframe landmark.",
+                "escortCount": 8,
+                "hpScale": 240,
+              },
+              "id": "baron",
+              "source": "twist.baron",
+
+      443 |
+      444 |   expect(ids).toEqual(['the-claim', 'e1-drill-yard', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+    > 445 |   expect(manifests).toEqual(fixtures);
+          |                     ^
+      446 |   expect(JSON.stringify(manifests)).toBe(JSON.stringify(fixtures));
+      447 |   for (const id of ids) expect(JSON.stringify(deriveMechanicsManifest(id))).toBe(JSON.stringify(deriveMechanicsManifest(id)));
+      448 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/agent-view.spec.ts:445:21
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/parity-results/agent-view-all-six-E1-mech-d216a-h-their-byte-stable-fixture-mobile-chrome/error-context.md
+
+
+
+(node:31548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:31548) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[10/14] [mobile-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+[mobile-chrome] › e2e/agent-view.spec.ts:472:1 › the derived manifest rides THE VIEW and every E1 briefing speaks it
+manifest view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[11/14] [mobile-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+[mobile-chrome] › e2e/agent-view.spec.ts:536:1 › THE VIEW publishes the Prospector and hero as different bodies
+prospector view watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[12/14] [mobile-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+[mobile-chrome] › e2e/agent-view.spec.ts:566:1 › the seeded rider view stays cache-shaped and grows one honest wave at a time
+seeded rider watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[13/14] [mobile-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[mobile-chrome] › e2e/agent-view.spec.ts:728:1 › Regatta schema 4 matches the headless diagnostics byte for byte on boot
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+Regatta schema 4 watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[14/14] [mobile-chrome] › e2e/e5-regatta-boat.spec.ts:196:1 › a rider steers the same boat to the same place: the tape replays to the headless hash
+[mobile-chrome] › e2e/e5-regatta-boat.spec.ts:196:1 › a rider steers the same boat to the same place: the tape replays to the headless hash
+e5-regatta rider tape watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  2 failed
+    [desktop-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture 
+    [mobile-chrome] › e2e/agent-view.spec.ts:439:1 › all six E1 mechanics manifests match their byte-stable fixture 
+  12 passed (1.2m)

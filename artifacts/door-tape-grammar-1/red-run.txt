@@ -1,0 +1,35 @@
+contract clock census 42/25/17/0
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the door accepts the recorder's reels (with a playbook use and motor actions, and plain): [{"ok":false,"error":"bad_payload","message":"Standing not accepted."},{"ok":false,"error":"bad_payload","message":"Standing not accepted."}]
++ actual - expected
+
+  [
+    [
++     400,
++     'bad_payload'
+-     200,
+-     true
+    ],
+    [
++     400,
++     'bad_payload'
+-     200,
+-     true
+    ]
+  ]
+
+    at equal (file:///Users/robin/Claude/Projects/wt-dtg1/scripts/test-standings.mjs:1730:10)
+    at checkRecorderReel (file:///Users/robin/Claude/Projects/wt-dtg1/scripts/test-standings.mjs:381:3)
+    at async file:///Users/robin/Claude/Projects/wt-dtg1/scripts/test-standings.mjs:53:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: [ [ 400, 'bad_payload' ], [ 400, 'bad_payload' ] ],
+  expected: [ [ 200, true ], [ 200, true ] ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.4.0

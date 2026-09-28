@@ -1,0 +1,167 @@
+{
+  "version": 2,
+  "id": "6a9594f7-5437-44a9-83b3-b85b6ef90bf6",
+  "createdAt": 1790475447703,
+  "kept": false,
+  "contract": "e10-river",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "dev",
+    "viewVersion": 4,
+    "engineHash": "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0",
+    "era": 6
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 999,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 40,
+          "science": 999,
+          "hero": 40,
+          "agent": 40
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "6a9594f7-5437-44a9-83b3-b85b6ef90bf6",
+    "contractId": "e10-river",
+    "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 177,
+    "entries": [
+      {
+        "t": 66,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 73,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 74,
+        "mx": 0,
+        "my": 0,
+        "a": [
+          {
+            "type": "set_pause",
+            "paused": true
+          }
+        ]
+      },
+      {
+        "t": 78,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 83,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 84,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 98,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 99,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 102,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 103,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 117,
+        "mx": 0,
+        "my": -1,
+        "a": []
+      },
+      {
+        "t": 118,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 121,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 122,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 129,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": [],
+    "playbookUses": []
+  },
+  "eventLogHash": "fnv1a32:00832e01",
+  "outcome": {
+    "reason": "secured",
+    "secured": true,
+    "waves": 0,
+    "timeAlive": 5.899999999999989,
+    "gold": 5
+  }
+}

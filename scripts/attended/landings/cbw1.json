@@ -1,0 +1,45 @@
+{
+  "tag": "cbw1",
+  "branch": "feat/county-board-open-week-1",
+  "port": 5398,
+  "mergeMessage": "drain: merge feat/county-board-open-week-1 — county-board-open-week-1 — the public board GET serves the open week's partition (?rotation=<id>|open; unknown, unopened or non-carrying weeks 400 bad_rotation; the unfiltered board byte-identical) and the in-game County Standings opens a rotation contract on the week a live run rides ('Week 39 claim', All time one tap away), so a human's weekly standing is visible in the game for the first time (F-LSR1-1; owner '3 - ok, lets do that' 2026-09-26; Opus 5.5 implementer at max effort)",
+  "hash": "pin",
+  "pinCause": "county-board-open-week-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-LSR1-1, owner 2026-09-26): the county board reader (src/encyclopedia/reader.ts) shows the open week's partition and src/game/liveSeed.ts gains one export (liveSeedRotationId); no sim, contract, floor or table changed; the door half alone leaves the hash unchanged; an existing era-6 tape replays identical on base and branch; null floors 83 of 83.",
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": true,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/live-seed-rotation.spec.ts",
+      "e2e/tl-02-public-stats.spec.ts",
+      "e2e/county-board-open-week.spec.ts"
+    ],
+    "guards": [
+      "scripts/function-cors-allowlist.test.mjs",
+      "scripts/worker-type-coverage.test.mjs"
+    ]
+  },
+  "cure": "scripts/attended/landings/cbw1-cure.sh",
+  "review": {
+    "path": "reviews/county-board-open-week-1.md",
+    "title": "Drain review: `county-board-open-week-1`, the in-game county board reads the open week (Opus 5.5 implementer at max effort; F-LSR1-1)",
+    "body": "scripts/attended/landings/cbw1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "county-board-open-week-1.md",
+    "rowKey": "COUNTY BOARD OPEN WEEK 1 LANDED",
+    "rowEmoji": "🗓️",
+    "rowText": "Door shape (a): the public board GET accepts `?rotation=<id>` or `?rotation=open` (resolved through `currentOrLatestRotation`) inside the strict parameter arithmetic and serves that week's rows with party sizes, difficulty, `heldOutFor` and the three counts unchanged; a week unknown, not yet open or not carrying the contract answers 400 `bad_rotation`; the unfiltered board is byte-identical (15 requests through both doors on one ledger and one clock: 8 identical, 7 changed, each one the old door refused). In the game, County Standings opens a rotation contract on the week a live run rides, labelled from `liveSeedLabel` ('Week 39 claim'), with 'All time' one tap away; a secured live run posted to the in-process door (rank 1, `rotationId` r2026w39) and the player's own row showed on the board they opened. Boot writes nothing. Spec `e2e/county-board-open-week.spec.ts` 10/10 both projects; live-seed-rotation, tl-02, task-025, m2-01 52/52; `test:stats` rc 0 with 13 new checks; three planted defects (the door ignoring the week, admitting an unopened week, the reader never naming the week) each caught by the right test and restored byte for byte; the door half alone hash-neutral. `e2e/assay-season-roll.spec.ts` opens the all-time board before its constant-seed assertion under a named lift (F-CBW1-1). Engine hash PINNED {PIN} (the reader's bytes and one `liveSeed.ts` export). Reds attributed on a clean base: 12 board reds and 6 agent-reels rows are pre-existing stale fixtures (F-LC2-13 among them), node-guards 6 (the two pre-pin registry rows, the linked-worktree desk guard, the missing `.env.local` rows). F-CBW1-4 (the public door document names `?rotation=`) by the cure; F-CBW1-7 (a week view in the Field Book) and F-CBW1-6 (regenerate the same-game audit) DEFERRED. Deployed. `reviews/county-board-open-week-1.md`.",
+    "statusPhrase": "the in-game county board shows the open week's standings, with all time one tap away",
+    "drainedBy": "attended 2026-09-26 (scripts/attended/land.sh cbw1, after srp1)"
+  },
+  "deploy": true,
+  "preview": false,
+  "evidenceDir": "artifacts/county-board-open-week-1"
+}

@@ -1,0 +1,251 @@
+
+Running 8 tests using 1 worker
+
+
+(node:4731) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/8] [desktop-chrome] › e2e/er01-e10-census.spec.ts:121:3 › e10-archive-world census cites the existing Deep Sky debt
+  1) [desktop-chrome] › e2e/er01-e10-census.spec.ts:121:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 4
+
+      Array [
+    -   ObjectContaining {
+    +   Object {
+          "dep": "archive-world-consumers",
+    -     "status": "missing",
+    +     "description": "Ordered beacon holds, secure gating, banked wing persistence and ratified ledger pages are implemented in this branch. Native play and final art acceptance remain in the map readiness ledger.",
+    +     "landedBy": "sol-map-art-archive-restoration",
+    +     "status": "landed",
+        },
+      ]
+
+      150 |       const expectedStatus = EXPECTED_DEPENDENCY_STATUS[contract.id] ?? 'missing';
+      151 |       if (expectedDependency === undefined) expect(dependency).toBeUndefined();
+    > 152 |       else expect(dependency).toEqual([expect.objectContaining({ dep: expectedDependency, status: expectedStatus })]);
+          |                               ^
+      153 |
+      154 |       vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+      155 |       const { deriveMechanicsManifest } = await vite.ssrLoadModule('/src/agent/MechanicsManifest.ts');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/er01-e10-census.spec.ts:152:31
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:4789) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2/8] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water
+  2) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "bank"
+
+      236 |     const water = await page.evaluate((probes) => probes.map(({ x, z }) => ({ x, z, ...window.__GR_TEST__!.terrainSample(x, z) })), contract.water);
+      237 |     for (const [index, expected] of contract.water.entries()) {
+    > 238 |       expect(water[index]?.zone).toBe(expected.zone);
+          |                                  ^
+      239 |       if (expected.source) expect(water[index]?.waterSource).toBe(expected.source);
+      240 |     }
+      241 |     const heights = await page.evaluate((probes) => probes.map(([x, z]) => window.__GR_TEST__!.terrainVisualY(x, z)), contract.heightProbes ?? [[-15, 14], [24, 25], [-13, -10], [18, 11], [0, 12]]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/terrain3d-registry.spec.ts:238:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:9495) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[3/8] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:274:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable
+  3) [desktop-chrome] › e2e/terrain3d-registry.spec.ts:274:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 8
+    Received:   2.3364246465052285
+
+      306 |     const mean = horizonValues.reduce((sum, value) => sum + value, 0) / horizonValues.length;
+      307 |     const horizonStdDev = Math.sqrt(horizonValues.reduce((sum, value) => sum + (value - mean) ** 2, 0) / horizonValues.length);
+    > 308 |     expect(horizonStdDev).toBeGreaterThan(8);
+          |                           ^
+      309 |
+      310 |     if (contract.id === 'the-claim') {
+      311 |       await page.evaluate(() => window.__GR_TEST__!.teleport(31.5, 0));
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/terrain3d-registry.spec.ts:308:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:22913) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/8] [desktop-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+
+(node:36228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[5/8] [mobile-chrome] › e2e/er01-e10-census.spec.ts:121:3 › e10-archive-world census cites the existing Deep Sky debt
+  4) [mobile-chrome] › e2e/er01-e10-census.spec.ts:121:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 4
+
+      Array [
+    -   ObjectContaining {
+    +   Object {
+          "dep": "archive-world-consumers",
+    -     "status": "missing",
+    +     "description": "Ordered beacon holds, secure gating, banked wing persistence and ratified ledger pages are implemented in this branch. Native play and final art acceptance remain in the map readiness ledger.",
+    +     "landedBy": "sol-map-art-archive-restoration",
+    +     "status": "landed",
+        },
+      ]
+
+      150 |       // requiring the entry and the id, and now checks the status the map actually carries.
+      151 |       const expectedStatus = EXPECTED_DEPENDENCY_STATUS[contract.id] ?? 'missing';
+    > 152 |       if (expectedDependency === undefined) expect(dependency).toBeUndefined();
+          |                               ^
+      153 |       else expect(dependency).toEqual([expect.objectContaining({ dep: expectedDependency, status: expectedStatus })]);
+      154 |
+      155 |       vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/er01-e10-census.spec.ts:152:31
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:36493) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/8] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water
+  5) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "bank"
+
+      236 |     const water = await page.evaluate((probes) => probes.map(({ x, z }) => ({ x, z, ...window.__GR_TEST__!.terrainSample(x, z) })), contract.water);
+      237 |     for (const [index, expected] of contract.water.entries()) {
+    > 238 |       expect(water[index]?.zone).toBe(expected.zone);
+          |                                  ^
+      239 |       if (expected.source) expect(water[index]?.waterSource).toBe(expected.source);
+      240 |     }
+      241 |     const heights = await page.evaluate((probes) => probes.map(([x, z]) => window.__GR_TEST__!.terrainVisualY(x, z)), contract.heightProbes ?? [[-15, 14], [24, 25], [-13, -10], [18, 11], [0, 12]]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/terrain3d-registry.spec.ts:238:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-all-six-91b86-ndmarks-with-matching-water-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:45115) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[7/8] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:274:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable
+  6) [mobile-chrome] › e2e/terrain3d-registry.spec.ts:274:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 8
+    Received:   1.7375971491483546
+
+      306 |     const mean = horizonValues.reduce((sum, value) => sum + value, 0) / horizonValues.length;
+      307 |     const horizonStdDev = Math.sqrt(horizonValues.reduce((sum, value) => sum + (value - mean) ** 2, 0) / horizonValues.length);
+    > 308 |     expect(horizonStdDev).toBeGreaterThan(8);
+          |                           ^
+      309 |
+      310 |     if (contract.id === 'the-claim') {
+      311 |       await page.evaluate(() => window.__GR_TEST__!.teleport(31.5, 0));
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/terrain3d-registry.spec.ts:308:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/terrain3d-registry-rim-and-03240-and-every-panorama-readable-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:60833) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[8/8] [mobile-chrome] › e2e/terrain3d-registry.spec.ts:350:1 › all fifteen contracts stay painted in LITE and on invalid terrain bytes
+  6 failed
+    [desktop-chrome] › e2e/er01-e10-census.spec.ts:121:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+    [desktop-chrome] › e2e/terrain3d-registry.spec.ts:274:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+    [mobile-chrome] › e2e/er01-e10-census.spec.ts:121:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:196:1 › all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water 
+    [mobile-chrome] › e2e/terrain3d-registry.spec.ts:274:1 › rim and horizon probes keep the terrain meeting gradual and every panorama readable 
+  2 passed (3.7m)

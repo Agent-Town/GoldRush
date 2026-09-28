@@ -1,0 +1,203 @@
+{
+  "ground": [
+    {
+      "width": 1280,
+      "box": [
+        930,
+        380,
+        1130,
+        560
+      ],
+      "run4": {
+        "median": 0.2044854901960784,
+        "rms": 0.023283846761130114,
+        "darkShareBelow01": 0.0024444444444444444
+      },
+      "run9Base": {
+        "median": 0.2044854901960784,
+        "rms": 0.02324487255713491,
+        "darkShareBelow01": 0.0025
+      },
+      "run9": {
+        "median": 0.2044854901960784,
+        "rms": 0.023283846761130114,
+        "darkShareBelow01": 0.0024444444444444444
+      }
+    },
+    {
+      "width": 390,
+      "box": [
+        285,
+        385,
+        375,
+        515
+      ],
+      "run4": {
+        "median": 0.20812392156862747,
+        "rms": 0.031247921843787725,
+        "darkShareBelow01": 0.0
+      },
+      "run9Base": {
+        "median": 0.2080878431372549,
+        "rms": 0.031242906213507518,
+        "darkShareBelow01": 0.0
+      },
+      "run9": {
+        "median": 0.20812392156862747,
+        "rms": 0.03321705063118395,
+        "darkShareBelow01": 0.0
+      }
+    }
+  ],
+  "bodies": [
+    {
+      "width": 1280,
+      "focus": "garden-pressure-manifold",
+      "station": "new5",
+      "run4Median": 0.18892313725490198,
+      "run9Median": 0.18920627450980396,
+      "run4Hud": 0.0,
+      "run9Hud": 0.008570449091532397
+    },
+    {
+      "width": 1280,
+      "focus": "water-band-pump-station",
+      "station": "new13",
+      "run4Median": 0.22321254901960785,
+      "run9Median": 0.22366666666666665,
+      "run4Hud": 0.21357600520011144,
+      "run9Hud": 0.2505144493155587
+    },
+    {
+      "width": 1280,
+      "focus": "coal-seam-service-winch",
+      "station": "new5",
+      "run4Median": 0.1900760784313725,
+      "run9Median": 0.19012705882352943,
+      "run4Hud": 0.1604945610176544,
+      "run9Hud": 0.23896951681529405
+    },
+    {
+      "width": 1280,
+      "focus": "west-terrace-pipe-header",
+      "station": "new9",
+      "run4Median": 0.20180470588235294,
+      "run9Median": 0.20140235294117645,
+      "run4Hud": 0.07942811755361398,
+      "run9Hud": 0.1383976626172536
+    },
+    {
+      "width": 1280,
+      "focus": "east-terrace-pipe-header",
+      "station": "new9",
+      "run4Median": 0.16514196078431373,
+      "run9Median": 0.16430823529411764,
+      "run4Hud": 0.32540675844806005,
+      "run9Hud": 0.6665858683795903
+    },
+    {
+      "width": 390,
+      "focus": "garden-pressure-manifold",
+      "station": "new5",
+      "run4Median": 0.19035921568627448,
+      "run9Median": 0.19119294117647057,
+      "run4Hud": 0.007874015748031496,
+      "run9Hud": 0.06157161548526129
+    },
+    {
+      "width": 390,
+      "focus": "water-band-pump-station",
+      "station": "new13",
+      "run4Median": 0.22321019607843137,
+      "run9Median": 0.22476784313725487,
+      "run4Hud": 44.77624355348528,
+      "run9Hud": 44.87954234147128
+    },
+    {
+      "width": 390,
+      "focus": "coal-seam-service-winch",
+      "station": "new5",
+      "run4Median": 0.19293176470588236,
+      "run9Median": 0.19286039215686274,
+      "run4Hud": 0.3304727892969458,
+      "run9Hud": 0.31408679265036904
+    },
+    {
+      "width": 390,
+      "focus": "west-terrace-pipe-header",
+      "station": "new9",
+      "run4Median": 0.20152156862745096,
+      "run9Median": 0.20160352941176468,
+      "run4Hud": 0.11373329542223486,
+      "run9Hud": 0.12548800892359174
+    },
+    {
+      "width": 390,
+      "focus": "east-terrace-pipe-header",
+      "station": "new9",
+      "run4Median": 0.16849725490196077,
+      "run9Median": 0.16827607843137257,
+      "run4Hud": 31.967304893069084,
+      "run9Hud": 31.146461876028525
+    }
+  ],
+  "water": [
+    {
+      "width": 1280,
+      "deepBox": [
+        300,
+        224,
+        600,
+        278
+      ],
+      "marginBox": [
+        300,
+        175,
+        600,
+        196
+      ],
+      "before": {
+        "median": 0.21519529411764704,
+        "rms": 0.01978904069823967,
+        "marginMedian": 0.3338556862745098,
+        "deepMarginContrast": 0.11866039215686275
+      },
+      "after": {
+        "median": 0.3065129411764706,
+        "rms": 0.015370672013825151,
+        "marginMedian": 0.3265992156862745,
+        "deepMarginContrast": 0.02008627450980388
+      },
+      "contrastReductionPercent": 83.07246913253844
+    },
+    {
+      "width": 390,
+      "deepBox": [
+        20,
+        235,
+        200,
+        265
+      ],
+      "marginBox": [
+        20,
+        192,
+        200,
+        209
+      ],
+      "before": {
+        "median": 0.19615372549019605,
+        "rms": 0.02065760111585249,
+        "marginMedian": 0.31564784313725486,
+        "deepMarginContrast": 0.1194941176470588
+      },
+      "after": {
+        "median": 0.29277725490196077,
+        "rms": 0.018044598964899784,
+        "marginMedian": 0.30784078431372547,
+        "deepMarginContrast": 0.015063529411764698
+      },
+      "contrastReductionPercent": 87.39391552623806
+    }
+  ],
+  "method": "Same run-4 region coordinates and body stations; water boxes compare centre-block to near-margin luminance, not a water-depth measurement. Camera settle and dynamic mask edges create subpixel noise; all normal-HUD captures retained."
+}

@@ -1,0 +1,80 @@
+{
+ "secured": true,
+ "waves": 12,
+ "timeMs": 272000,
+ "gold": 0,
+ "kills": 21,
+ "calls": 4,
+ "defaultedPicks": 0,
+ "defaultedSecure": 1,
+ "eventLogHash": "fnv1a32:d7eb1903",
+ "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-heat15-arena/artifacts/heat15/opus/r1/attempt-1-tape.json",
+ "scored": true,
+ "runsSoFar": 2,
+ "scoredAttempts": 1,
+ "worldModel": "sim-import",
+ "note": "ONE RIDE UNDER TWO FILENAMES: attempt-1-tape.json is a byte-identical copy of tune-1-tape.json, the first controller ride, which secured. Promoted by name per the brief.",
+ "contract": "e5-regatta",
+ "seed": "e5-regatta-01",
+ "difficulty": "trail (gr-sim default; no --difficulty passed)",
+ "envelope": {
+  "maxTicks": 18002,
+  "maxEntries": 3601,
+  "maxTapeBytes": 1938784,
+  "durationTicks": 8160,
+  "lastEntryTick": 3841,
+  "entries": 4,
+  "bytes": 6028,
+  "verdict": "all three axes clear"
+ },
+ "assay": {
+  "replayEventLogHash": "fnv1a32:f3a9c00c",
+  "tapeHeaderHash": "fnv1a32:f3a9c00c",
+  "match": true,
+  "securedSnapshot": {
+   "waves": 12,
+   "gold": 0,
+   "timeAlive": 272
+  },
+  "declaredGoldAgrees": true,
+  "controlTest": "zero-order idle probe fails replay by design (ceiling tape: \"tape ran out with the run still alive\") - known instrument limit, not a reel defect"
+ },
+ "race": {
+  "boardedAtSeconds": 2.73,
+  "buoys": [
+   [
+    "start-beacon",
+    2.73
+   ],
+   [
+    "northwest-checkpoint",
+    27.77
+   ],
+   [
+    "midcourse-checkpoint",
+    44.7
+   ],
+   [
+    "northeast-checkpoint",
+    64.13
+   ],
+   [
+    "finish-beacon",
+    88.07
+   ]
+  ],
+  "finishSecondComputed": 257,
+  "finishSecondPublished": null,
+  "state": "finished",
+  "forfeited": false,
+  "refusals": "none"
+ },
+ "idleFloorReproduced": {
+  "waves": 14,
+  "timeMs": 320000,
+  "gold": 0,
+  "kills": 39,
+  "eventLogHash": "fnv1a32:8050c83f",
+  "matchesNullFloorsJson": true
+ }
+}

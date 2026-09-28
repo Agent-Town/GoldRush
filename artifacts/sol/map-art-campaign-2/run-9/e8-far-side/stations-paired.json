@@ -1,0 +1,3074 @@
+[
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "far-side-landing-frame",
+    "station": "entry",
+    "hero": {
+      "x": 0,
+      "y": 0.06,
+      "z": -36
+    },
+    "bounds": {
+      "min": [
+        -3.1830568313598633,
+        0,
+        -42.34999990463257
+      ],
+      "max": [
+        3.1830568313598633,
+        6.990000247955322,
+        -37.65000009536743
+      ],
+      "corners": [
+        {
+          "x": 547.7702318550383,
+          "y": 342.9758933976562,
+          "z": 0.9964351629604499,
+          "inView": true
+        },
+        {
+          "x": 539.301019875885,
+          "y": 451.5477834791551,
+          "z": 0.9959239750777846,
+          "inView": true
+        },
+        {
+          "x": 531.6511229652174,
+          "y": 179.88928848701414,
+          "z": 0.9954622397222405,
+          "inView": true
+        },
+        {
+          "x": 519.7722284401818,
+          "y": 291.6366837006051,
+          "z": 0.9947452489377846,
+          "inView": true
+        },
+        {
+          "x": 732.2297681449617,
+          "y": 342.9758933976562,
+          "z": 0.9964351629604499,
+          "inView": true
+        },
+        {
+          "x": 740.698980124115,
+          "y": 451.5477834791551,
+          "z": 0.9959239750777846,
+          "inView": true
+        },
+        {
+          "x": 748.3488770347827,
+          "y": 179.88928848701414,
+          "z": 0.9954622397222405,
+          "inView": true
+        },
+        {
+          "x": 760.2277715598182,
+          "y": 291.6366837006051,
+          "z": 0.9947452489377846,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "far-side-landing-frame",
+    "station": "3",
+    "hero": {
+      "x": 0,
+      "y": 0.06,
+      "z": -37
+    },
+    "bounds": {
+      "min": [
+        -3.1830568313598633,
+        0,
+        -42.34999990463257
+      ],
+      "max": [
+        3.1830568313598633,
+        6.990000247955322,
+        -37.65000009536743
+      ],
+      "corners": [
+        {
+          "x": 546.0939281822439,
+          "y": 364.52317008217545,
+          "z": 0.9963339839927596,
+          "inView": true
+        },
+        {
+          "x": 537.2987703733834,
+          "y": 477.2664140775701,
+          "z": 0.9958031225490876,
+          "inView": true
+        },
+        {
+          "x": 529.3311897899064,
+          "y": 201.7814594924457,
+          "z": 0.995322212322911,
+          "inView": true
+        },
+        {
+          "x": 516.9081187388836,
+          "y": 318.640642808282,
+          "z": 0.9945723759269861,
+          "inView": true
+        },
+        {
+          "x": 733.9060718177561,
+          "y": 364.52317008217545,
+          "z": 0.9963339839927596,
+          "inView": true
+        },
+        {
+          "x": 742.7012296266166,
+          "y": 477.2664140775701,
+          "z": 0.9958031225490876,
+          "inView": true
+        },
+        {
+          "x": 750.6688102100936,
+          "y": 201.7814594924457,
+          "z": 0.995322212322911,
+          "inView": true
+        },
+        {
+          "x": 763.0918812611164,
+          "y": 318.640642808282,
+          "z": 0.9945723759269861,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "before",
+    "focus": "earthrise-listening-array",
+    "station": "3",
+    "hero": {
+      "x": 0,
+      "y": 2.9504237747192383,
+      "z": 59
+    },
+    "bounds": {
+      "min": [
+        -4.099999904632568,
+        4.5356597900390625,
+        54.10000002384186
+      ],
+      "max": [
+        4.099999904632568,
+        11.795660018920898,
+        57.89999997615814
+      ],
+      "corners": [
+        {
+          "x": 512.8899966828121,
+          "y": 340.55036214500365,
+          "z": 0.9960456847211063,
+          "inView": true
+        },
+        {
+          "x": 502.9804611581639,
+          "y": 433.52654146311505,
+          "z": 0.9955813283671548,
+          "inView": true
+        },
+        {
+          "x": 487.58587959061185,
+          "y": 156.07141307885314,
+          "z": 0.9948599452357726,
+          "inView": true
+        },
+        {
+          "x": 473.1135900134303,
+          "y": 251.79713557162557,
+          "z": 0.9941817802900318,
+          "inView": true
+        },
+        {
+          "x": 767.1100033171878,
+          "y": 340.55036214500365,
+          "z": 0.9960456847211063,
+          "inView": true
+        },
+        {
+          "x": 777.019538841836,
+          "y": 433.52654146311505,
+          "z": 0.9955813283671548,
+          "inView": true
+        },
+        {
+          "x": 792.4141204093881,
+          "y": 156.07141307885314,
+          "z": 0.9948599452357726,
+          "inView": true
+        },
+        {
+          "x": 806.8864099865697,
+          "y": 251.79713557162557,
+          "z": 0.9941817802900318,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "far-side-landing-frame",
+    "station": "entry",
+    "hero": {
+      "x": 0,
+      "y": 0.06,
+      "z": -36
+    },
+    "bounds": {
+      "min": [
+        -3.1830568313598633,
+        0,
+        -42.34999990463257
+      ],
+      "max": [
+        3.1830568313598633,
+        6.990000247955322,
+        -37.65000009536743
+      ],
+      "corners": [
+        {
+          "x": 547.7702318550383,
+          "y": 342.9758933976562,
+          "z": 0.9964351629604499,
+          "inView": true
+        },
+        {
+          "x": 539.301019875885,
+          "y": 451.5477834791551,
+          "z": 0.9959239750777846,
+          "inView": true
+        },
+        {
+          "x": 531.6511229652174,
+          "y": 179.88928848701414,
+          "z": 0.9954622397222405,
+          "inView": true
+        },
+        {
+          "x": 519.7722284401818,
+          "y": 291.6366837006051,
+          "z": 0.9947452489377846,
+          "inView": true
+        },
+        {
+          "x": 732.2297681449617,
+          "y": 342.9758933976562,
+          "z": 0.9964351629604499,
+          "inView": true
+        },
+        {
+          "x": 740.698980124115,
+          "y": 451.5477834791551,
+          "z": 0.9959239750777846,
+          "inView": true
+        },
+        {
+          "x": 748.3488770347827,
+          "y": 179.88928848701414,
+          "z": 0.9954622397222405,
+          "inView": true
+        },
+        {
+          "x": 760.2277715598182,
+          "y": 291.6366837006051,
+          "z": 0.9947452489377846,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 0,
+        "doubleSided": 1,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "far-side-landing-frame",
+    "station": "3",
+    "hero": {
+      "x": 0,
+      "y": 0.06,
+      "z": -37
+    },
+    "bounds": {
+      "min": [
+        -3.1830568313598633,
+        0,
+        -42.34999990463257
+      ],
+      "max": [
+        3.1830568313598633,
+        6.990000247955322,
+        -37.65000009536743
+      ],
+      "corners": [
+        {
+          "x": 546.0939561098528,
+          "y": 364.5231982599513,
+          "z": 0.9963339856784249,
+          "inView": true
+        },
+        {
+          "x": 537.2987997029314,
+          "y": 477.2663765282237,
+          "z": 0.9958031243193716,
+          "inView": true
+        },
+        {
+          "x": 529.3312344944152,
+          "y": 201.7814940840943,
+          "z": 0.9953222150212025,
+          "inView": true
+        },
+        {
+          "x": 516.9081681903917,
+          "y": 318.64058324729314,
+          "z": 0.9945723789117988,
+          "inView": true
+        },
+        {
+          "x": 733.9060438901472,
+          "y": 364.5231982599513,
+          "z": 0.9963339856784249,
+          "inView": true
+        },
+        {
+          "x": 742.7012002970685,
+          "y": 477.2663765282237,
+          "z": 0.9958031243193716,
+          "inView": true
+        },
+        {
+          "x": 750.6687655055848,
+          "y": 201.7814940840943,
+          "z": 0.9953222150212025,
+          "inView": true
+        },
+        {
+          "x": 763.0918318096082,
+          "y": 318.64058324729314,
+          "z": 0.9945723789117988,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 0,
+        "doubleSided": 1,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "focus": "earthrise-listening-array",
+    "station": "3",
+    "hero": {
+      "x": 0,
+      "y": 2.9504237747192383,
+      "z": 59
+    },
+    "bounds": {
+      "min": [
+        -4.099999904632568,
+        4.5356597900390625,
+        54.10000002384186
+      ],
+      "max": [
+        4.099999904632568,
+        11.795660018920898,
+        57.89999997615814
+      ],
+      "corners": [
+        {
+          "x": 512.8895962151153,
+          "y": 340.55016246463316,
+          "z": 0.996045665955371,
+          "inView": true
+        },
+        {
+          "x": 502.98003890529833,
+          "y": 433.5269041655048,
+          "z": 0.9955813085805764,
+          "inView": true
+        },
+        {
+          "x": 487.5852190317876,
+          "y": 156.0710374749279,
+          "z": 0.9948599142822847,
+          "inView": true
+        },
+        {
+          "x": 473.1128619762393,
+          "y": 251.79756751367347,
+          "z": 0.9941817461745384,
+          "inView": true
+        },
+        {
+          "x": 767.1104037848846,
+          "y": 340.55016246463316,
+          "z": 0.996045665955371,
+          "inView": true
+        },
+        {
+          "x": 777.0199610947018,
+          "y": 433.5269041655048,
+          "z": 0.9955813085805764,
+          "inView": true
+        },
+        {
+          "x": 792.4147809682124,
+          "y": 156.0710374749279,
+          "z": 0.9948599142822847,
+          "inView": true
+        },
+        {
+          "x": 806.8871380237607,
+          "y": 251.79756751367347,
+          "z": 0.9941817461745384,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 0,
+        "doubleSided": 1,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "far-side-landing-frame",
+    "station": "entry",
+    "hero": {
+      "x": 0,
+      "y": 0.06,
+      "z": -36
+    },
+    "bounds": {
+      "min": [
+        -3.1830568313598633,
+        0,
+        -42.34999990463257
+      ],
+      "max": [
+        3.1830568313598633,
+        6.990000247955322,
+        -37.65000009536743
+      ],
+      "corners": [
+        {
+          "x": 97.6975946070655,
+          "y": 361.8395675345273,
+          "z": 0.9964351629604499,
+          "inView": true
+        },
+        {
+          "x": 88.76257596905863,
+          "y": 476.38291157050867,
+          "z": 0.9959239750777846,
+          "inView": true
+        },
+        {
+          "x": 80.69193472830429,
+          "y": 189.78319935379994,
+          "z": 0.9954622397222405,
+          "inView": true
+        },
+        {
+          "x": 68.15970100439185,
+          "y": 307.6767013041384,
+          "z": 0.9947452489377846,
+          "inView": true
+        },
+        {
+          "x": 292.3024053929345,
+          "y": 361.8395675345273,
+          "z": 0.9964351629604499,
+          "inView": true
+        },
+        {
+          "x": 301.2374240309414,
+          "y": 476.38291157050867,
+          "z": 0.9959239750777846,
+          "inView": true
+        },
+        {
+          "x": 309.3080652716957,
+          "y": 189.78319935379994,
+          "z": 0.9954622397222405,
+          "inView": true
+        },
+        {
+          "x": 321.8402989956082,
+          "y": 307.6767013041384,
+          "z": 0.9947452489377846,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "far-side-landing-frame",
+    "station": "3",
+    "hero": {
+      "x": 0,
+      "y": 0.06,
+      "z": -37
+    },
+    "bounds": {
+      "min": [
+        -3.1830568313598633,
+        0,
+        -42.34999990463257
+      ],
+      "max": [
+        3.1830568313598633,
+        6.990000247955322,
+        -37.65000009536743
+      ],
+      "corners": [
+        {
+          "x": 95.92935415548322,
+          "y": 384.57220668777575,
+          "z": 0.9963339988634169,
+          "inView": true
+        },
+        {
+          "x": 86.6504757152434,
+          "y": 503.5157173787955,
+          "z": 0.9958031381662495,
+          "inView": true
+        },
+        {
+          "x": 78.24482129428995,
+          "y": 212.87976171222778,
+          "z": 0.9953222361267635,
+          "inView": true
+        },
+        {
+          "x": 65.13852551615916,
+          "y": 336.1653238307083,
+          "z": 0.9945724022584929,
+          "inView": true
+        },
+        {
+          "x": 294.0706458445168,
+          "y": 384.57220668777575,
+          "z": 0.9963339988634169,
+          "inView": true
+        },
+        {
+          "x": 303.34952428475657,
+          "y": 503.5157173787955,
+          "z": 0.9958031381662495,
+          "inView": true
+        },
+        {
+          "x": 311.75517870571,
+          "y": 212.87976171222778,
+          "z": 0.9953222361267635,
+          "inView": true
+        },
+        {
+          "x": 324.8614744838409,
+          "y": 336.1653238307083,
+          "z": 0.9945724022584929,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "focus": "earthrise-listening-array",
+    "station": "3",
+    "hero": {
+      "x": 0,
+      "y": 2.9504237747192383,
+      "z": 59
+    },
+    "bounds": {
+      "min": [
+        -4.099999904632568,
+        4.5356597900390625,
+        54.10000002384186
+      ],
+      "max": [
+        4.099999904632568,
+        11.795660018920898,
+        57.89999997615814
+      ],
+      "corners": [
+        {
+          "x": 60.86245366337857,
+          "y": 359.26243825169826,
+          "z": 0.9960440638321577,
+          "inView": true
+        },
+        {
+          "x": 50.405910713990544,
+          "y": 457.4035596894345,
+          "z": 0.9955796194013165,
+          "inView": true
+        },
+        {
+          "x": 34.14290144453364,
+          "y": 164.62114230640782,
+          "z": 0.9948572712867932,
+          "inView": true
+        },
+        {
+          "x": 18.86848877512151,
+          "y": 265.68538843676964,
+          "z": 0.9941788333046591,
+          "inView": true
+        },
+        {
+          "x": 329.1375463366214,
+          "y": 359.26243825169826,
+          "z": 0.9960440638321577,
+          "inView": true
+        },
+        {
+          "x": 339.5940892860095,
+          "y": 457.4035596894345,
+          "z": 0.9955796194013165,
+          "inView": true
+        },
+        {
+          "x": 355.85709855546634,
+          "y": 164.62114230640782,
+          "z": 0.9948572712867932,
+          "inView": true
+        },
+        {
+          "x": 371.13151122487847,
+          "y": 265.68538843676964,
+          "z": 0.9941788333046591,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "far-side-landing-frame",
+    "station": "entry",
+    "hero": {
+      "x": 0,
+      "y": 0.06,
+      "z": -36
+    },
+    "bounds": {
+      "min": [
+        -3.1830568313598633,
+        0,
+        -42.34999990463257
+      ],
+      "max": [
+        3.1830568313598633,
+        6.990000247955322,
+        -37.65000009536743
+      ],
+      "corners": [
+        {
+          "x": 97.6975946070655,
+          "y": 361.8395675345273,
+          "z": 0.9964351629604499,
+          "inView": true
+        },
+        {
+          "x": 88.76257596905863,
+          "y": 476.38291157050867,
+          "z": 0.9959239750777846,
+          "inView": true
+        },
+        {
+          "x": 80.69193472830429,
+          "y": 189.78319935379994,
+          "z": 0.9954622397222405,
+          "inView": true
+        },
+        {
+          "x": 68.15970100439185,
+          "y": 307.6767013041384,
+          "z": 0.9947452489377846,
+          "inView": true
+        },
+        {
+          "x": 292.3024053929345,
+          "y": 361.8395675345273,
+          "z": 0.9964351629604499,
+          "inView": true
+        },
+        {
+          "x": 301.2374240309414,
+          "y": 476.38291157050867,
+          "z": 0.9959239750777846,
+          "inView": true
+        },
+        {
+          "x": 309.3080652716957,
+          "y": 189.78319935379994,
+          "z": 0.9954622397222405,
+          "inView": true
+        },
+        {
+          "x": 321.8402989956082,
+          "y": 307.6767013041384,
+          "z": 0.9947452489377846,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 0,
+        "doubleSided": 1,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "far-side-landing-frame",
+    "station": "3",
+    "hero": {
+      "x": 0,
+      "y": 0.06,
+      "z": -37
+    },
+    "bounds": {
+      "min": [
+        -3.1830568313598633,
+        0,
+        -42.34999990463257
+      ],
+      "max": [
+        3.1830568313598633,
+        6.990000247955322,
+        -37.65000009536743
+      ],
+      "corners": [
+        {
+          "x": 95.92935415548322,
+          "y": 384.57220668777575,
+          "z": 0.9963339988634169,
+          "inView": true
+        },
+        {
+          "x": 86.6504757152434,
+          "y": 503.5157173787955,
+          "z": 0.9958031381662495,
+          "inView": true
+        },
+        {
+          "x": 78.24482129428995,
+          "y": 212.87976171222778,
+          "z": 0.9953222361267635,
+          "inView": true
+        },
+        {
+          "x": 65.13852551615916,
+          "y": 336.1653238307083,
+          "z": 0.9945724022584929,
+          "inView": true
+        },
+        {
+          "x": 294.0706458445168,
+          "y": 384.57220668777575,
+          "z": 0.9963339988634169,
+          "inView": true
+        },
+        {
+          "x": 303.34952428475657,
+          "y": 503.5157173787955,
+          "z": 0.9958031381662495,
+          "inView": true
+        },
+        {
+          "x": 311.75517870571,
+          "y": 212.87976171222778,
+          "z": 0.9953222361267635,
+          "inView": true
+        },
+        {
+          "x": 324.8614744838409,
+          "y": 336.1653238307083,
+          "z": 0.9945724022584929,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 0,
+        "doubleSided": 1,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "focus": "earthrise-listening-array",
+    "station": "3",
+    "hero": {
+      "x": 0,
+      "y": 2.9504237747192383,
+      "z": 59
+    },
+    "bounds": {
+      "min": [
+        -4.099999904632568,
+        4.5356597900390625,
+        54.10000002384186
+      ],
+      "max": [
+        4.099999904632568,
+        11.795660018920898,
+        57.89999997615814
+      ],
+      "corners": [
+        {
+          "x": 60.86690714997769,
+          "y": 359.26465834101936,
+          "z": 0.9960442616410378,
+          "inView": true
+        },
+        {
+          "x": 50.41060595143476,
+          "y": 457.3995245374423,
+          "z": 0.995579827947955,
+          "inView": true
+        },
+        {
+          "x": 34.15024912459924,
+          "y": 164.62531262549544,
+          "z": 0.9948575976460022,
+          "inView": true
+        },
+        {
+          "x": 18.876586433304972,
+          "y": 265.68057340474945,
+          "z": 0.9941791929753709,
+          "inView": true
+        },
+        {
+          "x": 329.1330928500223,
+          "y": 359.26465834101936,
+          "z": 0.9960442616410378,
+          "inView": true
+        },
+        {
+          "x": 339.5893940485653,
+          "y": 457.3995245374423,
+          "z": 0.995579827947955,
+          "inView": true
+        },
+        {
+          "x": 355.84975087540073,
+          "y": 164.62531262549544,
+          "z": 0.9948575976460022,
+          "inView": true
+        },
+        {
+          "x": 371.12341356669504,
+          "y": 265.68057340474945,
+          "z": 0.9941791929753709,
+          "inView": true
+        }
+      ]
+    },
+    "materials": [
+      {
+        "id": "earthrise-listening-array",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "lava-tube-survey-gantry",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "regolith-core-yard",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-rim-debris-catcher",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-side-landing-frame",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 0,
+        "doubleSided": 1,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "probe-recovery-cradle",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "west-comms-shadow-marker",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "east-suit-cache-rack",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      },
+      {
+        "id": "far-horizon-listening-post",
+        "total": 1,
+        "transparent": 0,
+        "depthWriteDisabled": 0,
+        "emissiveIntensity": [
+          0.45,
+          0.45
+        ],
+        "authoredEmissive": [
+          3,
+          3
+        ],
+        "frontSided": 1,
+        "doubleSided": 0,
+        "roughness": 0.92,
+        "metalness": 0
+      }
+    ],
+    "errors": []
+  }
+]

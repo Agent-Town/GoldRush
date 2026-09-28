@@ -1,0 +1,35 @@
+
+e4-long-road {"t":52.1,"wave":1,"hp":100,"gold":0,"kills":6,"x":11.9,"z":-8.2,"alive":16,"seams":2}
+
+e4-long-road {"t":62.5,"wave":2,"hp":100,"gold":0,"kills":6,"x":63.7,"z":-0.2,"alive":25,"seams":2}
+
+e4-long-road {"t":73.1,"wave":2,"hp":100,"gold":0,"kills":6,"x":122.7,"z":-0.2,"alive":31,"seams":2}
+
+e4-long-road {"t":83.6,"wave":2,"hp":100,"gold":0,"kills":6,"x":178.4,"z":-0.2,"alive":36,"seams":2}
+
+e4-long-road {"t":93.7,"wave":3,"hp":84,"gold":0,"kills":8,"x":167.7,"z":7.7,"alive":44,"seams":2}
+
+  2) [mobile-chrome] › e2e/native-proofs/driver.ts:1327:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow
+
+    Error: secures: runState=dead at wave 3 / 101.7s sim, 14 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1845 |       }
+      1846 |
+    > 1847 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1848 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1849 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1850 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1847:64
+
+    Error Context: ../../../../../.goldrush/play-proofs/run-18/default/e4-long-road/results/native-proofs-e4-long-road-06d3b-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1327:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1327:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow

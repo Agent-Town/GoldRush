@@ -1,0 +1,8 @@
+[
+  [
+    "Node command chained tail",
+    "sh",
+    "-c",
+    "node scripts/test-ticker-stats.mjs && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:desk-declaration && node scripts/nul-audit.mjs && npm run test:review-fixes scripts/node-guards-watchdog.test.mjs scripts/ratelimit-window.test.mjs scripts/landing-rotation-derivation.test.mjs scripts/world-dispatch-boss-trigger-guard.test.mjs scripts/landmark-collision.test.mjs scripts/site-security-headers.test.mjs scripts/status-rotate-month.test.mjs scripts/backlog-split-closed.test.mjs scripts/attended-land.test.mjs"
+  ]
+]

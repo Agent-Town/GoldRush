@@ -1,0 +1,25 @@
+[
+  {
+    "label": "entry-story",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-dome-basin-entry-story",
+      "--grep",
+      "Old Digger renovation act|debug era door arms E9|era parameter is inert|board refuses the Seed Run",
+      "e2e/story-signal-emitters.spec.ts",
+      "e2e/tour-era-seed.spec.ts",
+      "e2e/e9-seed-run-caravan.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 111.9,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-dome-basin-entry-story.log"
+  }
+]

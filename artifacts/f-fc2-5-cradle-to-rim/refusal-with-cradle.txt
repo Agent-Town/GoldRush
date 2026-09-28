@@ -1,0 +1,61 @@
+== blockers for e8-far-side ==
+  mare-claim:earthrise-listening-array at (0, 56) half 2.952 x 1.368
+  mare-claim:lava-tube-survey-gantry at (-42, 28) half 2.558 x 2.075
+  mare-claim:regolith-core-yard at (22, 18) half 2.710 x 2.017
+  mare-claim:west-rim-debris-catcher at (-56, 20) half 2.053 x 1.785
+  mare-claim:east-rim-debris-catcher at (56, 20) half 2.053 x 1.785
+  far-side:probe-recovery-cradle at (0, 45) half 2.520 x 1.800
+  far-side:west-comms-shadow-marker at (-42, 24) half 1.080 x 1.080
+  far-side:east-suit-cache-rack at (42, -24) half 2.705 x 1.691
+  far-side:far-horizon-listening-post at (0, 56) half 1.512 x 1.512
+== Terrain.sample().walkable along x=0, z=36..58 ==
+  36:W 36.5:W 37:W 37.5:W 38:W 38.5:W 39:W 39.5:W 40:W 40.5:W 41:W 41.5:W 42:W 42.5:W 43:. 43.5:. 44:. 44.5:. 45:. 45.5:. 46:. 46.5:. 47:. 47.5:W 48:W 48.5:W 49:W 49.5:W 50:W 50.5:W 51:W 51.5:W 52:W 52.5:W 53:W 53.5:W 54:. 54.5:. 55:. 55.5:. 56:. 56.5:. 57:. 57.5:. 58:.
+  zone centre (0,45) walkable = false
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+== decision 0: submit ok=true hero=(0.00, -36.00) ==
+  hero after step = (0.00, -36.00)
+  orders: [{"id":"orders-1-1","order":{"verb":"CONTEXT_ACTION","action":"recover"},"status":"failed","reason":"REJECTED: probe-out-of-reach."},{"id":"orders-1-2","order":{"verb":"MOVE_HERO","pos":{"x":0,"z":45}},"status":"pending"}]
+  log: [{"seq":1,"at":0,"type":"orders_replaced","orders":[{"id":"orders-1-1","order":{"verb":"CONTEXT_ACTION","action":"recover"},"status":"pending"},{"id":"orders-1-2","order":{"verb":"MOVE_HERO","pos":{"x":0,"z":45}},"status":"pending"}]},{"seq":2,"at":0.03333333333333333,"type":"order_status","orderId":"orders-1-1","status":"active"},{"seq":3,"at":0.03333333333333333,"type":"order_status","orderId":"orders-1-1","status":"failed","reason":"REJECTED: probe-out-of-reach."},{"seq":4,"at":0.03333333333333333,"type":"surprise","surprise":"order_failure","orderId":"orders-1-1","reason":"REJECTED: probe-out-of-reach."}]
+== decision 1: submit ok=true hero=(0.00, -36.00) ==
+  hero after step = (0.00, -36.00)
+  orders: [{"id":"orders-2-1","order":{"verb":"CONTEXT_ACTION","action":"recover"},"status":"failed","reason":"REJECTED: probe-out-of-reach."},{"id":"orders-2-2","order":{"verb":"MOVE_HERO","pos":{"x":0,"z":45}},"status":"failed","reason":"UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain."}]
+  log: [{"seq":4,"at":0.03333333333333333,"type":"surprise","surprise":"order_failure","orderId":"orders-1-1","reason":"REJECTED: probe-out-of-reach."},{"seq":5,"at":0.03333333333333333,"type":"orders_replaced","orders":[{"id":"orders-2-1","order":{"verb":"CONTEXT_ACTION","action":"recover"},"status":"pending"},{"id":"orders-2-2","order":{"verb":"MOVE_HERO","pos":{"x":0,"z":45}},"status":"pending"}]},{"seq":6,"at":0.06666666666666667,"type":"order_status","orderId":"orders-2-1","status":"active"},{"seq":7,"at":0.06666666666666667,"type":"order_status","orderId":"orders-2-1","status":"failed","reason":"REJECTED: probe-out-of-reach."},{"seq":8,"at":0.1,"type":"order_status","orderId":"orders-2-2","status":"failed","reason":"UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain."},{"seq":9,"at":0.1,"type":"surprise","surprise":"order_failure","orderId":"orders-2-2","reason":"UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain."}]
+== decision 2: submit ok=true hero=(0.00, -36.00) ==
+  hero after step = (0.00, -36.00)
+  orders: [{"id":"orders-3-1","order":{"verb":"CONTEXT_ACTION","action":"recover"},"status":"failed","reason":"REJECTED: probe-out-of-reach."},{"id":"orders-3-2","order":{"verb":"MOVE_HERO","pos":{"x":0,"z":45}},"status":"failed","reason":"UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain."}]
+  log: [{"seq":8,"at":0.1,"type":"order_status","orderId":"orders-2-2","status":"failed","reason":"UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain."},{"seq":9,"at":0.1,"type":"surprise","surprise":"order_failure","orderId":"orders-2-2","reason":"UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain."},{"seq":10,"at":0.1,"type":"orders_replaced","orders":[{"id":"orders-3-1","order":{"verb":"CONTEXT_ACTION","action":"recover"},"status":"pending"},{"id":"orders-3-2","order":{"verb":"MOVE_HERO","pos":{"x":0,"z":45}},"status":"pending"}]},{"seq":11,"at":0.13333333333333333,"type":"order_status","orderId":"orders-3-1","status":"active"},{"seq":12,"at":0.13333333333333333,"type":"order_status","orderId":"orders-3-1","status":"failed","reason":"REJECTED: probe-out-of-reach."},{"seq":13,"at":0.16666666666666666,"type":"order_status","orderId":"orders-3-2","status":"failed","reason":"UNREACHABLE_TERRAIN: MOVE_HERO target is outside walkable terrain."}]

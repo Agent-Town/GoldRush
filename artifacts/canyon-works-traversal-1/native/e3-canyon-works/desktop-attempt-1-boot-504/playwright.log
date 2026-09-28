@@ -1,0 +1,36 @@
+(node:16279) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+
+(node:16361) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:575:5 › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:575:5 › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: boots: no game frame within 60000ms: page.waitForFunction: Timeout 60000ms exceeded.
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      642 |           row.boots = fail(`no game frame within ${BOOT_TIMEOUT_MS}ms: ${String((error as Error).message).split('\n')[0]}`);
+      643 |         }
+    > 644 |         expect(row.boots.ok, `boots: ${row.boots.detail}`).toBe(true);
+          |                                                            ^
+      645 |
+      646 |         await page.getByTestId('contract-briefing-dismiss').click({ timeout: 10_000 }).catch(() => undefined);
+      647 |         await expect(page.getByTestId('contract-briefing')).toBeHidden({ timeout: 10_000 });
+        at /Users/robin/Claude/Projects/wt-cw1/e2e/native-proofs/driver.ts:644:60
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/native-proofs-e3-canyon-wo-932b8-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/native-proofs-e3-canyon-wo-932b8-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:575:5 › e3-canyon-works plays to its secure wave, banks, reloads and returns to the board @slow 

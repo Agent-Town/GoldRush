@@ -1,0 +1,30 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e4-long-road-own",
+      "e2e/_s2080-f1742-1-boot-probe.spec.ts",
+      "e2e/board-gating-and-profiles.spec.ts",
+      "e2e/e4-roads-and-convoys.spec.ts",
+      "e2e/rider-parity-grammar.spec.ts",
+      "e2e/playability-secure.spec.ts",
+      "e2e/terrain3d-registry.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/ss-05-e4-beats.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 985.25,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-long-road-own.log"
+  }
+]

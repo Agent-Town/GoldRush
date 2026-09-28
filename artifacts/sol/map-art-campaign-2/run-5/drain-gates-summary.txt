@@ -1,0 +1,29 @@
+store on 'astra/corrections-3', dirty 0
+store: astra/corrections-3 fast-forwarded onto main (b959768)
+store main pushed: b959768
+base main 1b7a68ca7 branch d00459be2 10:42Z
+merged 74083ce0d (amended message: run 3, the owner's run-3 word; was b222caefc, same tree, same parents)
+single-line law: nothing to flatten
+engine hash merged (store on main b959768): 491f2a917b0e360fcaa1e0eda3ee5eb7ba840cc1cd9bf852e3d574d34350725d
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34255826 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (295.6s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 95 ℹ fail 0 
+e2e start 10:49Z: e2e/e4-dust-flats.spec.ts  e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/fort-landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   4 failed   4 skipped   42 passed (5.1m)  10:54Z
+1) [desktop-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road 
+2) [desktop-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run 
+3) [mobile-chrome] › e2e/e4-dust-flats.spec.ts:31:1 › fires the authored storm and peels a convoy off the ORBIT road 
+4) [mobile-chrome] › e2e/e4-dust-flats.spec.ts:97:1 › offers road grading and the hauler in a normal Motor-era run 
+battery start 10:54Z
+battery: rc=1 ℹ tests 940 ℹ pass 932 ℹ fail 3 ℹ skipped 5  11:02Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (178086.321125ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (532.124417ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (419.91175ms)
+dirt after battery: 0
+CORR3-PREP-DONE
+pin #22
+era: ℹ pass 9 ℹ fail 0 

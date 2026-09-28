@@ -1,0 +1,28 @@
+# Canyon Works — run 4 correction
+
+IMPROVED / HELD; full entry fidelity remains unaccepted. The correction closes an actual panorama gap, quiets repeated ground, and lifts machinery paint without changing the playable terrain or power state.
+
+| Original defect | Bounded result |
+| --- | --- |
+| Canyon depth absent at plain entry | IMPROVED shelf value follows the existing 0.5–6 m surface and the apron no longer exposes background. HELD — the entry looks toward the outer border, away from the gorge; contract/layout/camera owner via Claude. Tall enclosing cliffs and layered panorama composition remain campaign art work. |
+| Connected pylon hierarchy absent | HELD — relay nodes start offline and become live through player-built beacons (`Game.ts` syncContractPowerGrid / contractPowerDefinition). No false live pylons or connections are painted in. Contract/layout/camera owner via Claude; actual connect behavior is tested separately. |
+| Dark upper band meets hard ground edge | FIXED exposed-background seam: original apron starts at half-extents 49×57, terrain at 48×56, leaving 1 m. Only 97 apron-ring vertices now overlap by 0.08 m at existing terrain height minus 0.025 m. No added triangles. Fixed seam strips: bright pixels above luminance 0.5 fall 734→0 desktop / 110→0 phone. IMPROVED upper-band median +85.11% / +113.00%. HELD remaining straight textured-floor/backdrop composition — campaign panorama art owner. |
+| Diagonal ground repetition | IMPROVED fixed-region RMS 0.02248→0.01317 (-41.42%) desktop and 0.02129→0.01430 (-32.83%) phone. Repetition remains visible at lower contrast; it is not described as eliminated. |
+| Low-contrast machinery | IMPROVED tracked timber/iron/stone recipe, not hand-painted atlas pixels. Dynamo body median at 3 m 0.10232→0.13842 (+35.28%) desktop and 0.10484→0.13998 (+33.51%) phone; whole-body emission remains 0.45, below 0.6. Other bodies also rise in the full metrics. HELD construction/silhouette/contact fidelity — campaign landmark art owner. |
+| Stronger portrait HUD occlusion | FIXED primary-body inspection framing only: 3 m replaces 14 m comparison, phone HUD 57.27%→0.002%, bbox x37.3–352.7/y221.4–507.2. Switchback houses use 4 m and other bodies 5 m; all five final stations are below 0.26% phone coverage. HELD entry dynamo 27.305% persistent coverage — UI/camera owner via Claude. |
+
+[Desktop board](board-1280.png) · [Phone board](board-390.png) · [All body/ground metrics](visual-metrics.json) · [Seam](seam-metrics.json) · [Apron](apron-metrics.json) · [Independent review](independent-visual-review.md).
+
+The before atlas recipe reproduces the shipped PNG byte-for-byte (`5819f8ee…`). The changed tracked recipe independently reproduces the candidate (`9fe85750…`); every body embeds the same atlas. Atlas-only now reads game inputs from the game checkout after the art-store split. All five landmark geometries/UVs/bounds and the entire playable terrain stay unchanged. All five source bodies and the repaired panorama re-export byte-identically to their GLBs. Panorama topology, UVs, vertex colors, atlas, outer bounds and triangle count remain unchanged; only the identified inner ring moves. Both contracts carry identical inspection stations. [Invariants](invariants.json) · [Landmark source proof](source-verification.json) · [Panorama source proof](panorama-verification.json) · [Budgets](asset-budgets.json).
+
+Plain captures use 1280×800 and 390×844, ordinary HUD, game time 10 seconds, no debug/test hook and zero errors. Frozen diagnostics and masks are labelled separately. Temporary dialogue is excluded only from the persistent mask; the normal boards retain it. Sub-0.5% edge/sway differences are not meaningful obstruction. An intermediate plain capture was invalidated by a metadata write triggering Vite reload; the stable rerun passed all four arms, and the failed instrument log is retained under raw. A station is not a camera or HUD change and does not cure the ordinary entry.
+
+Four fresh timing runs per arm and viewport share one mode: p95 medians 9.75→9.80 ms desktop (+0.51%) and 9.85→9.75 ms phone (-1.02%). Draws stay 72/54 and entry triangles 146646/144644. [Full samples and mode comparison](performance-summary.json).
+
+TypeScript/default/full builds and 34 render plus three named guards pass. Own Canyon/connect/crawler batch: 12 pass, two escort failures at `cw-02-escort.spec.ts:128` (expected rim HP 39, actual 40). Both reproduce on exact code `500c950f0` and store `213e677`; candidate bytes and engine hash were restored exactly. The core Canyon and all crawler cases pass both projects. This escort fixture/simulation issue is HELD for the gameplay/QA owner via Claude, never claimed green or patched through the art firewall. [Exact-base receipt](base-escort.json).
+
+Shared brightness/collision: 16 pass + four skips. Visual map census: 2/2. Headless census: two failures at `er01-e3-census.spec.ts:61` (connect deadline expected6/actual8), both reproduced on exact base and handed to gameplay/QA; candidate restored exactly. Loading/repeat: 8/8 + 2/2. No assertions were edited. [Consolidated checks](verification-summary.md) · [Exact-base census receipt](base-census.json).
+
+Changed-since remains HELD for the drain because its selector launches the explicitly excluded full node battery. The named guards are not a claimed changed-since pass. Engine pin remains untouched.
+
+Engine `adead14c0ca88daba465162c0156d527159596f6b9b4ccb85e1732ba14c182bf` → `8544c803bfa47d4fd29da04b33ac01ed7f37d2fd6af2ba70c5738abc8d32ab35`. Art store `068c0dbdbe99f474e099b5eff69da13b0f55851f` is pushed to `astra/corrections-2`. Final status: READY-FOR-GATES with the explicitly attributed baseline fixture failures above.

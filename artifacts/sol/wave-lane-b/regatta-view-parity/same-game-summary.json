@@ -1,0 +1,47 @@
+{
+  "controls": {
+    "equal": 15,
+    "agent-only": 0,
+    "human-only-richer": 0
+  },
+  "regattaMoveHero": [
+    {
+      "contract": "e5-regatta",
+      "surface": "verb",
+      "humans-get": "the player walks the hero with the movement keys or the touch stick",
+      "agents-get": "MOVE_HERO walks the hero to a point through the same Intents.move seam",
+      "direction": "equal",
+      "evidence": "src/game/Game.ts:3371 \u00b7 src/sim/HeadlessContractSim.ts:846 \u00b7 src/agent/StandingOrders.ts:48"
+    }
+  ],
+  "regattaRelevantControls": [
+    {
+      "verb": "BOAT_BUILD",
+      "body": "world",
+      "agent-reaches": "occupies a named Claim-Boat pad with a named building",
+      "human-control": "the confirm key (or the prompt button) while the hero stands at an unoccupied Claim-Boat pad, placing the current build selection",
+      "verdict": "equal",
+      "evidence": "src/game/Game.ts:8592 \u00b7 src/ui/BuildingContextPrompt.ts:138 \u00b7 src/agent/StandingOrders.ts:101",
+      "note": "ADR-005 stage 4 gave the HUMAN the control rather than cutting the verb (clause 2). Both are zero-resource and both name a pad; the rider names it by id, the human by standing at it. Proved in a plain boot with no `?debug`: e2e/rider-parity-grammar.spec.ts."
+    },
+    {
+      "verb": "MOVE_HERO",
+      "body": "hero",
+      "agent-reaches": "walks the hero to a point down the same Intents.move seam a human's keys drive",
+      "human-control": "WASD, the arrow keys, or the touch stick",
+      "verdict": "equal",
+      "evidence": "src/core/InputController.ts:6 \u00b7 src/agent/StandingOrders.ts:48",
+      "note": "The ruling's first half, already shipped: the rider steers the rider's body, and only its own (the solo browser door refuses with HERO_NOT_YOURS)."
+    },
+    {
+      "verb": "REANCHOR",
+      "body": "world",
+      "agent-reaches": "moves the Claim Boat to a known non-current anchor, or nudges a Flotilla hull",
+      "human-control": "the anchor list in the same deck prompt \u2014 one button per anchor the boat is not at, with the upgrade key bound to the first",
+      "verdict": "equal",
+      "evidence": "src/game/Game.ts:8607 \u00b7 src/ui/BuildingContextPrompt.ts:259 \u00b7 src/agent/StandingOrders.ts:102",
+      "note": "ADR-005 stage 4. Same routing as the retired `?debug` lever, Flotilla hulls included, and the same A2 noise beat on a boat that actually got under way. Proved in a plain boot with no `?debug`: e2e/rider-parity-grammar.spec.ts."
+    }
+  ],
+  "note": "The existing audit measures verbs and controls, not view fields. Its overall legacy tape-action gaps are unchanged; this slice adds no verb."
+}

@@ -1,0 +1,29 @@
+# Drain review: `sol-play-proofs-6`, the last three maps and the campaign close (Astra, lane-c)
+
+**Branch** `sol/map-art-campaign-2` at `fd912b81a` · **merge** `eb0abfa6e` · engine hash unchanged (`2cf26ba4`, no pin) · drained attended 2026-09-26 02:59Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `pp6`).
+
+**Verdict: LANDED.**
+
+### What it does
+Run 6 of the play-proofs campaign (Astra on the owner's ChatGPT subscription, lane-c; owner 2026-09-25: "Can you do play proofs using Astra for these maps?") takes the last three untouched maps and closes the campaign. **Last Claim: PROVED on both projects** (the vent at wave 8 in 240.07 s with 331 and 338 of 360 HP, banked, the actual finale's Book return, byte-identical reload, clean). **River: PARTIAL by design gap, not by play** (F-PP6-2): the authored ending works exactly as written, the lever and the quiet no-wave pan for 30 gold with no enemies through 35 s and the Book returns, but the game writes no completed score for that ending, so the campaign's bank and persistence cells cannot pass; the owner decides between an ending-specific acceptance and a separately authorized completion record. **Old Canal: HELD** (F-PP6-1): all three authored choices work, eight and seven builds, deaths at waves 19 and 18, no secured bank. Every row booted clean. **The campaign table** (in the run note, one row per map) counts 20 measured contracts (the task said 26; the run-1 list had 19 targets plus the Claim control): PROVED both projects Incline and Last Claim; PROVED one project the Claim (desktop control) and Devil's Alley (phone); PARTIAL Blackout Ridge and River; DEFECT Canyon Works (corrected in two slices today, its acceptance still pressure-bound); HELD twelve: Baron, Twin Banks, Pressure Garden, Fairground, Dust Flats, Gusher County, Boneyard, Far Side, Low Orbit, Eclipse, Dome Basin, Seed Run, Old Canal. Astra's paragraph for the owner is quoted whole in the desk row below and in the run note. Where the player sees it: the status doc's second column for the three E10 and E9 rows; the campaign's verdicts are the factory's honest map of what the shared driver can and cannot do.
+
+### Measured
+Eight final rows, all clean; tsc and build exit 0 in the lane; `--list` 3,484 tests in 472 files; the scope verifier PASS (only allowed paths, exactly three second-column edits, the earlier E10 instruments preserved). Four gated specs changed or added (`driver.ts`, `e10-last-claim`, `e10-river`, `e9-old-canal`); no `src/`; the engine hash did not move.
+
+### Merge classification
+LANE-TOUCHED: `e2e/native-proofs/driver.ts`, the three new gated specs, `artifacts/sol/play-proofs/run-6/**`, three cells of `reviews/sol-map-art-current-status-20260909.md` (row-keyed three-way merge; the earlier E10 instrument text preserved by the verifier).
+
+### Findings
+- **The campaign close (owner desk row F-PP-CAMPAIGN):** Astra's recommendation, verbatim in the row: end the broad sweep; improve one ground survival and repair strategy and test it on a held ground map; build a separate orbital driver; then targeted human playtests for the remaining strategy limits; keep Canyon Works with its corrective owner; resolve the River's ending-versus-score acceptance separately; change no map balance from these holds alone.
+- **F-PP6-2 (owner desk row):** the River's authored ending writes no completed score.
+- **F-PP6-1 (hold):** Old Canal, survival at waves 18 to 19 with every choice working.
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 137 ℹ fail 0` |
+| e2e both projects, --workers=1 | `rc=0   2 skipped   30 passed (2.5m)  02:37Z` |
+| full npm run test:node-guards (before the pin) | `rc=0 ℹ tests 1090 ℹ pass 1085 ℹ fail 0 ℹ skipped 5 ℹ tests 82 ℹ pass 82 ℹ fail 0 ℹ skipped 0  02:59Z` |
+| engine hash | `merged: 2cf26ba49f0ed0f08bf38791408c625187808ed81d6a3ebc3d00d9e9a148405b (pinned 2cf26ba49f0ed0f08bf38791408c625187808ed81d6a3ebc3d00d9e9a148405b)` |

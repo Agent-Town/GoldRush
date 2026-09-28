@@ -17,6 +17,12 @@ const SECRET = 'assay-worker-test-secret';
 const KEY = 'standings:s2:epoch-1-frontier:the-claim';
 const ARCHIVE_KEY = 'standings:epoch-1-frontier:the-claim';
 const ASSAY_INDEX_KEY = 'assay-queue-index';
+// kv-counters-to-ledger-2 (checkCanonicalOrigin): the origin the Pages copy is bound to, the origin it
+// answers on, and every store method a handler can reach. Declared up here because the checks run at
+// module top level, below.
+const CANONICAL_ORIGIN = 'https://agenttown.app';
+const PAGES_ORIGIN = 'https://gold-rush-3in.pages.dev';
+const STORE_METHODS = new Set(['get', 'put', 'delete', 'list', 'increment', 'recordRefusal', 'readRefusals']);
 let checks = 0;
 let backend = 'kv';
 let sqliteId = 0;
@@ -29,8 +35,15 @@ const serversByStorage = new WeakMap();
 const vite = await createServer({ root: process.cwd(), appType: 'custom', logLevel: 'silent', server: { middlewareMode: true } });
 try {
   const { MAX_JSON_BYTES, compareScores, onRequest, validateTape } = await vite.ssrLoadModule('/functions/api/standings.ts');
-  const { submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
-  const { CONTRACT_BUNDLES, MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
+  const { RunTapeRecorder, submittedRunTape, validateRunTape } = await vite.ssrLoadModule('/src/game/RunTape.ts');
+  const { CONTRACT_BUNDLES, MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS, maxRunTapeTicksForContract, parsePlaybookText, runTapeEnvelopeForContract } = await vite.ssrLoadModule('/src/playbook/PlaybookFormat.ts');
+  // The browser's own recorder, playbook shelf and intent seam: the door is judged against a reel a browser writes.
+  const { PlaybookRecorderSession } = await vite.ssrLoadModule('/src/playbook/PlaybookSession.ts');
+  const { intentsFromLockstepInput, lockstepInputFromIntents, normalizeLockstepAction } = await vite.ssrLoadModule('/src/mp/LockstepClient.ts');
+  const { validateStandingOrders } = await vite.ssrLoadModule('/src/agent/StandingOrders.ts');
+  const { buildableDefs } = await vite.ssrLoadModule('/src/game/buildables.ts');
+  const buildableIds = buildableDefs.map(({ id }) => id);
+  const recorderKit = { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape, normalizeLockstepAction, validateStandingOrders, buildableIds };
   const { onRequest: onRequestAssayQueue } = await vite.ssrLoadModule('/functions/api/standings/assay-queue.ts');
   const { onRequest: onRequestAssayVerdict } = await vite.ssrLoadModule('/functions/api/standings/assay-verdict.ts');
   const { onRequest: onRequestReassay } = await vite.ssrLoadModule('/functions/api/standings/reassay.ts');
@@ -46,6 +59,13 @@ try {
     checks = 0;
     await checkDoorEnvelopes(onRequest, validateTape, validateRunTape, submittedRunTape, maxRunTapeTicksForContract, runTapeEnvelopeForContract, CONTRACT_BUNDLES, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_INTENTS, MAX_JSON_BYTES);
     checkTapeBuildMetadata(validateTape);
+    await checkRecorderReel(onRequest, validateTape, validateRunTape, runTapeEnvelopeForContract, recorderKit);
+    await checkRecorderVerbs(onRequest, validateTape, validateRunTape, recorderKit);
+    await checkRetiredEmbeddedOrders(onRequest, validateTape, recorderKit);
+    await checkClientGrammar(onRequest, validateTape, validateRunTape, recorderKit);
+    await checkRetiredClientGrammar(onRequest, validateTape, validateRunTape, recorderKit);
+    await checkClientJudgedIds(onRequest, validateTape, validateRunTape, recorderKit);
+    await checkRetiredClientJudgedIds(onRequest, validateTape, validateRunTape, recorderKit);
     await checkEngineHashReel(onRequest);
     await checkReplayableBoard(onRequest);
     await checkLineageReassay(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
@@ -53,6 +73,7 @@ try {
     await checkAssayIndexRace(onRequest, onRequestAssayQueue);
     await checkPosts(onRequest, onRequestAssayQueue, onRequestAssayVerdict, MAX_JSON_BYTES);
     await checkPreserveRanking(onRequest, compareScores);
+    await checkMechanicRanking(onRequest, compareScores, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
     await checkBankedBaronTapes(onRequest, onRequestAssayQueue, onRequestAssayVerdict, validateTape, validateRunTape);
     await checkBankedHeat11Tapes(onRequest, validateTape, validateRunTape);
     await checkVerdicts(onRequest, onRequestAssayQueue, onRequestAssayVerdict);
@@ -66,6 +87,7 @@ try {
     await checkRotationBoard(onRequest);
     await checkAssayStrips(onRequest);
     await checkRefusals(onRequest, onRequestRefusals);
+    await checkCanonicalOrigin(onRequest, onRequestAssayQueue, onRequestAssayVerdict, onRequestReassay);
     console.log(`standings assay ${backend} checks passed (${checks})`);
   }
 } finally {
@@ -73,6 +95,102 @@ try {
   sqliteStores.forEach((store) => store.close());
   await rm(sqliteRoot, { recursive: true, force: true });
   await vite.close();
+}
+
+// kv-counters-to-ledger-2 (F-KV1-5): since the L3 cutover of 2026-08-23 production /api/standings* is the
+// droplet's sqlite ledger, so this Pages copy only answers callers of gold-rush-3in.pages.dev, and each
+// POST there wrote the shared free-tier KV. Bound to the canonical origin, all four handlers answer 308
+// to the same path and query and make no store call at all; unbound (every other row in this file),
+// nothing moved. Every call here goes STRAIGHT to the handler and never through fetch: a fetch follows
+// a 308, and this suite must never reach the live site.
+async function checkCanonicalOrigin(onRequest, queueRoute, verdictRoute, reassayRoute) {
+  const bound = { STANDINGS_CANONICAL_ORIGIN: CANONICAL_ORIGIN };
+  const submission = post('e'.repeat(32), 10, tape('canonical-origin', 10));
+  const locator = { epochId: 'epoch-1-frontier', contractId: 'the-claim', tapeId: 'canonical-origin', rowId: 'moved' };
+  const doors = [
+    ['the board POST', onRequest, 'POST', '/api/standings', submission, undefined],
+    ['the board GET', onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, undefined],
+    ['the assay queue', queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, SECRET],
+    ['the assay queue without the assayer key', queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, undefined],
+    ['the assay verdict', verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(locator, 'verified'), SECRET],
+    ['the re-assay verb', reassayRoute, 'POST', '/api/standings/reassay', { epochId: 'epoch-1-frontier', contractId: 'the-claim', reason: 'moved' }, SECRET],
+    // The ops-evening probe's own shape (Part C step 9): a bare POST, no body and no content type. Unbound it
+    // is refused 415 and still writes a refusal record; bound it is moved and costs nothing.
+    ['the step-9 probe (a bare POST)', onRequest, 'POST', '/api/standings', undefined, undefined],
+  ];
+  for (const [name, route, method, url, body, key] of doors) {
+    const kv = makeKv();
+    const store = countedStore(kv);
+    const answer = await directCall(route, method, `${PAGES_ORIGIN}${url}`, body, store.kv, bound, key);
+    equal(answer.status, 308, `${name}: bound to the canonical origin, the Pages copy answers 308`);
+    equal(answer.location, `${CANONICAL_ORIGIN}${url}`, `${name}: to the same path and query on the canonical origin`);
+    equal(store.calls, [], `${name}: and makes no store call at all`);
+    equal(kv.ops, { reads: 0, writes: 0 }, `${name}: the file's own meter agrees, no read and no write`);
+  }
+
+  // The move is never cached (unbinding is the whole rollback) and carries the door's CORS answer.
+  const fromGame = await directCall(onRequest, 'POST', `${PAGES_ORIGIN}/api/standings`, submission, makeKv(), bound, undefined, { Origin: CANONICAL_ORIGIN });
+  equal([fromGame.status, fromGame.cacheControl, fromGame.allowOrigin], [308, 'no-store', CANONICAL_ORIGIN], 'the 308 is no-store and names the allowed origin');
+  const slashed = await directCall(onRequest, 'POST', `${PAGES_ORIGIN}/api/standings`, submission, makeKv(), { STANDINGS_CANONICAL_ORIGIN: `${CANONICAL_ORIGIN}/` });
+  equal(slashed.location, `${CANONICAL_ORIGIN}/api/standings`, 'a trailing slash on the bound origin is still a bare origin');
+
+  // Unbound, empty, blank or not a bare https origin: the answer and every store call are exactly what an
+  // environment without the variable gets. The accepted POST is the widest write path the door has.
+  const reference = await submitThrough(onRequest, submission, {});
+  equal(reference.status, 200, 'unbound, the Pages copy still accepts the submission (the comparison below means something)');
+  for (const value of ['', '   ', 'agenttown.app', 'http://agenttown.app', 'https://agenttown.app/api', 'https://agenttown.app?board=1']) {
+    equal(await submitThrough(onRequest, submission, { STANDINGS_CANONICAL_ORIGIN: value }), reference,
+      `STANDINGS_CANONICAL_ORIGIN=${JSON.stringify(value)} is not a redirect target, so the door is byte-identical to unbound`);
+  }
+
+  // A request already addressed to the canonical host is the canonical copy: served, never moved, because
+  // a redirect to itself would loop. The droplet sees its own requests as http on that host.
+  for (const origin of [CANONICAL_ORIGIN, 'http://agenttown.app']) {
+    const store = countedStore(makeKv());
+    const served = await directCall(onRequest, 'POST', `${origin}/api/standings`, submission, store.kv, bound);
+    equal([served.status, served.location], [200, null], `${origin}: a request on the canonical host is served, not moved`);
+    ok(store.calls.length > 0, `${origin}: and reaches its store`);
+  }
+}
+
+// One accepted-POST answer and the exact sequence of store calls behind it, on a fresh store.
+async function submitThrough(onRequest, submission, extraEnv) {
+  const store = countedStore(makeKv());
+  const answer = await directCall(onRequest, 'POST', `${PAGES_ORIGIN}/api/standings`, submission, store.kv, extraEnv);
+  return { status: answer.status, location: answer.location, text: answer.text, calls: store.calls };
+}
+
+async function directCall(route, method, url, body, kv, extraEnv = {}, key = undefined, extraHeaders = {}) {
+  const headers = new Headers({ ...(body === undefined ? {} : { 'content-type': 'application/json' }), ...extraHeaders });
+  if (key !== undefined) headers.set('x-assay-key', key);
+  const response = await route({
+    request: new Request(url, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) }),
+    env: { TELEMETRY: kv, ASSAY_WORKER_SECRET: SECRET, ...extraEnv },
+  });
+  return {
+    status: response.status,
+    location: response.headers.get('location'),
+    cacheControl: response.headers.get('cache-control'),
+    allowOrigin: response.headers.get('access-control-allow-origin'),
+    text: await response.text(),
+  };
+}
+
+// Every call a handler makes on its store, by method, so "touches no store" is a count of zero across
+// every method a handler can reach, not only the two that makeKv's own meter counts.
+function countedStore(kv) {
+  const calls = [];
+  const counted = new Proxy(kv, {
+    get(target, property, receiver) {
+      const value = Reflect.get(target, property, receiver);
+      if (typeof value !== 'function' || !STORE_METHODS.has(property)) return value;
+      return (...args) => {
+        calls.push(property);
+        return value.apply(target, args);
+      };
+    },
+  });
+  return { kv: counted, calls };
 }
 
 async function checkRefusals(onRequest, onRequestRefusals) {
@@ -174,6 +292,142 @@ async function checkPreserveRanking(onRequest, compareScores) {
   equal((await call(onRequest, 'POST', '/api/standings', invalid, makeKv())).status, 400, 'preserve hp fraction is bounded at the score boundary');
 }
 
+/**
+ * THE MECHANIC BEATS THE WALK (F-HEAT15-4, owner ruling 2026-09-22, verbatim "F-HEAT15-4: yes" on
+ * option (a): "a reel that finished the race supersedes one that did not").
+ *
+ * THE DEFECT THIS MEASURES IS A REAL BOARD, not a hypothetical: heat 15 rode `e5-regatta` three
+ * times by SAILING the Claim-Boat, two reels were assayed and VERIFIED, and rank 1 stayed the
+ * heat-14 row won by walking the hero through the water, because ride 2 tied it on waves, gold and
+ * time and `compareScores` fell through to `submittedAt` (`reviews/heat-15-regatta.md`).
+ *
+ * Six checks, in the master's order: (a) the finish outranks a row with MORE waves and no finish,
+ * (b) two finished rows fall through the old ladder unchanged, (c) every other contract compares
+ * byte-identically with and without the field, (d) only a surviving `verified` stores it, (e) a
+ * malformed one is refused at the door, (f) a rider cannot declare it.
+ */
+async function checkMechanicRanking(onRequest, compareScores, queueRoute, verdictRoute, reassayRoute) {
+  const contractId = 'e5-regatta';
+  const epochId = 'epoch-5-deepwater';
+  const key = `standings:s2:${epochId}:${contractId}`;
+  const FINISHED = { id: 'regatta-race', complete: true };
+  const verifiedRow = (index, profileName, waves, gold, timeAlive, submittedAt, mechanic) => {
+    const row = storedRowFor(index, contractId, epochId);
+    row.profileName = profileName;
+    row.waves = row.tape.outcome.waves = waves;
+    row.gold = row.tape.outcome.gold = gold;
+    row.timeAlive = row.tape.outcome.timeAlive = timeAlive;
+    row.submittedAt = submittedAt;
+    row.assay = 'verified';
+    row.assayedAt = submittedAt + 1;
+    row.assayHash = 'fnv1a32:1234abcd';
+    if (mechanic) row.mechanic = mechanic;
+    return row;
+  };
+
+  // (a) THE RULING ITSELF, and deliberately harder than the live case: the walked row is AHEAD on
+  // waves, was submitted first, and still loses to the reel that finished the race.
+  const kv = makeKv();
+  const walked = verifiedRow(1, 'walked the water', 14, 400, 250, 1_000);
+  const sailed = verifiedRow(2, 'sailed the course', 12, 200, 272, 2_000, FINISHED);
+  await kv.put(key, JSON.stringify([walked, sailed]));
+  const board = await call(onRequest, 'GET', `/api/standings?contract=${contractId}&epoch=${epochId}`, undefined, kv);
+  equal(board.status, 200, 'the Regatta board reads');
+  equal(board.body.board.map((row) => row.profileName), ['sailed the course', 'walked the water'],
+    'a finished race outranks a row with more waves, more gold and an earlier date');
+  equal(board.body.board[0].mechanic, FINISHED, 'the board publishes the mechanic it ranked on');
+  equal(board.body.board[1].mechanic, undefined, 'a row the county never verified under the rule carries none');
+
+  // (b) TWO FINISHED ROWS FALL THROUGH THE OLD LADDER, unchanged: waves, then gold, then time
+  // (faster first for a secured row), then the earlier submission.
+  const finished = { secured: true, baseValue: 1, mechanic: FINISHED };
+  equal([
+    { ...finished, profileName: 'fewer waves', waves: 11, gold: 900, timeAlive: 100, submittedAt: 1 },
+    { ...finished, profileName: 'more waves', waves: 12, gold: 1, timeAlive: 300, submittedAt: 9 },
+  ].sort((a, b) => compareScores(a, b, contractId)).map((row) => row.profileName), ['more waves', 'fewer waves'],
+    'two finished rows still rank on waves first');
+  equal([
+    { ...finished, profileName: 'less gold', waves: 12, gold: 100, timeAlive: 100, submittedAt: 1 },
+    { ...finished, profileName: 'more gold', waves: 12, gold: 200, timeAlive: 300, submittedAt: 9 },
+  ].sort((a, b) => compareScores(a, b, contractId)).map((row) => row.profileName), ['more gold', 'less gold'],
+    'then on gold');
+  equal([
+    { ...finished, profileName: 'slower', waves: 12, gold: 200, timeAlive: 300, submittedAt: 1 },
+    { ...finished, profileName: 'faster', waves: 12, gold: 200, timeAlive: 272, submittedAt: 9 },
+  ].sort((a, b) => compareScores(a, b, contractId)).map((row) => row.profileName), ['faster', 'slower'],
+    'then on time, faster securing first');
+  equal([
+    { ...finished, profileName: 'later', waves: 12, gold: 200, timeAlive: 272, submittedAt: 9 },
+    { ...finished, profileName: 'earlier', waves: 12, gold: 200, timeAlive: 272, submittedAt: 1 },
+  ].sort((a, b) => compareScores(a, b, contractId)).map((row) => row.profileName), ['earlier', 'later'],
+    'and an exact tie between two finished rows still goes to the earlier submission');
+
+  // (c) EVERY OTHER CONTRACT IS BYTE-IDENTICAL with and without the field. The comparator's return
+  // VALUE is compared, not just the order, so a clause that merely happened to agree would fail.
+  const pairs = [
+    [{ secured: true, waves: 12, gold: 200, timeAlive: 272, baseValue: 1, submittedAt: 1 }, { secured: true, waves: 14, gold: 100, timeAlive: 250, baseValue: 1, submittedAt: 2 }],
+    [{ secured: true, waves: 12, gold: 200, timeAlive: 272, baseValue: 1, submittedAt: 1 }, { secured: true, waves: 12, gold: 200, timeAlive: 272, baseValue: 1, submittedAt: 2 }],
+    [{ secured: false, waves: 3, gold: 0, timeAlive: 40, baseValue: 1, submittedAt: 1 }, { secured: true, waves: 1, gold: 0, timeAlive: 10, baseValue: 1, submittedAt: 2 }],
+  ];
+  for (const other of ['the-claim', 'e1-baron', 'e10-last-claim', undefined]) {
+    for (const [left, right] of pairs) {
+      equal(compareScores({ ...left, mechanic: FINISHED }, right, other), compareScores(left, right, other),
+        `${other ?? 'no contract'} ranks identically with the field present on the left`);
+      equal(compareScores(left, { ...right, mechanic: FINISHED }, other), compareScores(left, right, other),
+        `${other ?? 'no contract'} ranks identically with the field present on the right`);
+    }
+  }
+
+  // (d) ONLY A SURVIVING `verified` STORES IT — and this is also the re-assay evidence: a standing
+  // that was verified before the rule existed GAINS the flag when the lineage sweep re-queues it
+  // through the same worker path, and LOSES it again the moment a replay stops agreeing.
+  const live = makeKv();
+  const submission = post('9'.repeat(32), 12, tape('regatta-reel', 12, 'fnv1a32:1234abcd', contractId), contractId, epochId);
+  equal((await call(onRequest, 'POST', '/api/standings', submission, live)).status, 200, 'a Regatta reel is accepted');
+  const queued = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, live, SECRET);
+  const locator = queued.body.queue.find((row) => row.locator.tapeId === 'regatta-reel').locator;
+  const mechanicVerdict = verdict(locator, 'verified', undefined, 'fnv1a32:1234abcd', { waves: 12, timeAlive: 120, gold: 40 });
+  mechanicVerdict.mechanic = FINISHED;
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', mechanicVerdict, live, SECRET)).status, 200, 'a verified verdict carrying a mechanic is accepted');
+  equal(JSON.parse(await live.get(key))[0].mechanic, FINISHED, 'a verified Regatta row stores the mechanic');
+
+  equal((await workerCall(reassayRoute, 'POST', '/api/standings/reassay', { epochId, contractId, reason: 'composition moved' }, live, SECRET)).body.requeued, 1, 'the sweep re-queues the verified row');
+  const requeued = JSON.parse(await live.get(key))[0];
+  equal(requeued.assay, 'pending', 're-queued row is pending again');
+  equal(requeued.mechanic, undefined, 'and gives the flag back with the snapshot, to be re-earned by the replay');
+  const second = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, live, SECRET);
+  const reLocator = second.body.queue.find((row) => row.locator.tapeId === 'regatta-reel').locator;
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', verdict(reLocator, 'rejected', 'replay diverged', 'fnv1a32:1234abcd'), live, SECRET)).status, 200, 'the re-assay may reject');
+  equal(JSON.parse(await live.get(key))[0].mechanic, undefined, 'a rejected verdict stores no mechanic');
+
+  // (e) A MALFORMED MECHANIC IS REFUSED exactly as a malformed securedSnapshot is, and it may
+  // never ride a verdict that is not a verification.
+  const refused = makeKv();
+  await call(onRequest, 'POST', '/api/standings', post('a'.repeat(32), 12, tape('refuse-me', 12, 'fnv1a32:1234abcd', contractId), contractId, epochId), refused);
+  const refusedQueue = await workerCall(queueRoute, 'GET', '/api/standings/assay-queue?limit=5', undefined, refused, SECRET);
+  const refusedLocator = refusedQueue.body.queue.find((row) => row.locator.tapeId === 'refuse-me').locator;
+  for (const bad of [{ id: '', complete: true }, { id: 'regatta-race' }, { id: 'regatta-race', complete: 'yes' }, { id: 'regatta-race', complete: true, extra: 1 }, 'regatta-race', null, { id: 'x'.repeat(65), complete: true }]) {
+    const payload = verdict(refusedLocator, 'verified', undefined, 'fnv1a32:1234abcd', { waves: 12, timeAlive: 120, gold: 40 });
+    payload.mechanic = bad;
+    equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', payload, refused, SECRET)).status, 400, `malformed mechanic refused: ${JSON.stringify(bad)}`);
+  }
+  const onRejection = verdict(refusedLocator, 'rejected', 'replay diverged', 'fnv1a32:1234abcd');
+  onRejection.mechanic = FINISHED;
+  equal((await workerCall(verdictRoute, 'POST', '/api/standings/assay-verdict', onRejection, refused, SECRET)).status, 400, 'a rejected verdict may not carry a mechanic at all');
+  equal(JSON.parse(await refused.get(key))[0].assay, 'pending', 'and none of those refusals moved the row');
+
+  // (f) A RIDER CANNOT DECLARE IT. Both shapes are refused before storage: on the payload
+  // (`POST_KEYS`) and inside the score (`SCORE_KEYS`, unchanged by this ruling).
+  const rider = makeKv();
+  const claimed = post('d'.repeat(32), 12, tape('rider-claim', 12, 'fnv1a32:1234abcd', contractId), contractId, epochId);
+  claimed.mechanic = FINISHED;
+  equal((await call(onRequest, 'POST', '/api/standings', claimed, rider)).status, 400, 'a POST carrying a mechanic is refused');
+  const inScore = post('e'.repeat(32), 12, tape('rider-score', 12, 'fnv1a32:1234abcd', contractId), contractId, epochId);
+  inScore.score.mechanic = FINISHED;
+  equal((await call(onRequest, 'POST', '/api/standings', inScore, rider)).status, 400, 'a mechanic inside the score is refused');
+  ok(!(await rider.get(key)), 'and neither refusal wrote a board');
+}
+
 async function checkAssayStrips(onRequest) {
   const kv = makeKv();
   const verified = storedRowFor(10, 'the-claim', 'epoch-1-frontier');
@@ -216,6 +470,436 @@ function checkTapeBuildMetadata(validateTape) {
   equal(validateTape(legacyV2, 'the-claim', 'gold-rush', 'trail')?.meta, undefined, 'v2 tapes without build metadata remain valid');
   equal(validateTape(stampedV2, 'the-claim', 'gold-rush', 'trail')?.meta, stampedV2.meta, 'v2 engine metadata is accepted and preserved');
   equal(validateTape(badEngineHash, 'the-claim', 'gold-rush', 'trail'), null, 'malformed engine metadata is rejected');
+}
+
+// F-LSR1-0 (door-tape-grammar-1, 2026-09-25). The browser recorder writes `inputLog.playbookUses` on
+// EVERY reel since 15dc51b89 (2026-09-05) and `inputLog.motorActions` once a motor was driven since
+// 5823eaad6 (2026-09-04); the door's grammar knew neither key, so it refused every browser standing
+// that carried a reel as `bad_payload`. These rows build the reel with the REAL recorder, the way
+// Game.ts does at the standing, never with a hand-typed fixture, so the door is judged against what a
+// browser actually sends.
+async function checkRecorderReel(onRequest, validateTape, validateRunTape, runTapeEnvelopeForContract, kit) {
+  const before = checks;
+  const kv = makeKv();
+  const full = recorderReel(kit, '1dd7'.repeat(8), { playbook: true, motor: true });
+  const plain = recorderReel(kit, '0dd7'.repeat(8), { playbook: false, motor: false });
+  equal([full.runTape.inputLog.playbookUses.length, full.runTape.inputLog.motorActions?.length], [1, 2],
+    'the full reel carries one recorded playbook use and two motor actions');
+  equal([plain.runTape.inputLog.playbookUses, Object.hasOwn(plain.runTape.inputLog, 'motorActions')], [[], false],
+    'the plain reel carries the empty playbookUses list every browser reel carries, and no motor actions');
+  ok(full.body.tape && plain.body.tape, 'both reels fit the byte envelope, so both bodies carry their tape (submittedRunTape)');
+  const answers = [];
+  for (const { body } of [full, plain]) answers.push(await call(onRequest, 'POST', '/api/standings', body, kv));
+  equal(answers.map(({ status, body }) => [status, body.stored ?? body.error]), [[200, true], [200, true]],
+    `the door accepts the recorder's reels (with a playbook use and motor actions, and plain): ${JSON.stringify(answers.map(({ body }) => body))}`);
+  const stored = JSON.parse(await kv.get(KEY));
+  for (const { runTape } of [full, plain]) {
+    equal(stored.find((row) => row.tape?.id === runTape.id)?.tape.inputLog, runTape.inputLog,
+      `the county stores reel ${runTape.id} with its input log exactly as the recorder wrote it`);
+  }
+  // Where the player sees it: Return to Town after securing, the standing lands on the county board.
+  const board = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
+  equal(board.body.board.map(({ profileName }) => profileName), ['Recorder Reel', 'Recorder Reel'], 'both recorder standings are ranked on the county board');
+
+  // THE ROUND TRIP: the reel read back the way the browser reads it (`?reel=`) must satisfy the client's
+  // own validator with both keys intact, because the Lantern replays them (Game.ts:7823, :7827).
+  const watched = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${full.runTape.id}`, undefined, kv);
+  equal(watched.status, 200, `the stored reel is on the shelf: ${JSON.stringify(watched.body).slice(0, 160)}`);
+  const replayable = validateRunTape(watched.body.reel);
+  ok(replayable, 'the client validateRunTape accepts the reel read back through ?reel=');
+  equal(replayable?.inputLog.playbookUses, full.runTape.inputLog.playbookUses, 'the playbook use survives the round trip with its recording');
+  equal(replayable?.inputLog.motorActions, full.runTape.inputLog.motorActions, 'the motor actions survive the round trip with their points');
+
+  // NOTHING LOOSENED. Every mutation re-hashes the input log, so each refusal belongs to the grammar alone.
+  const refusalKv = makeKv();
+  const refused = async (label, source, mutate, atTheDoor = false) => {
+    const candidate = structuredClone(source.body);
+    mutate(candidate.tape.inputLog);
+    candidate.inputLogHash = createHash('sha256').update(JSON.stringify(candidate.tape.inputLog)).digest('hex');
+    equal(validateTape(candidate.tape, 'the-claim', 'gold-rush', 'trail'), null, `the tape grammar refuses ${label}`);
+    if (!atTheDoor) return;
+    const answer = await call(onRequest, 'POST', '/api/standings', candidate, refusalKv);
+    equal([answer.status, answer.body.error], [400, 'bad_payload'], `the door refuses ${label} as bad_payload`);
+  };
+  const legacy = { body: post('2dd7'.repeat(8), 10, tapeV2('legacy-twelve-keys', 10)) };
+  equal((await call(onRequest, 'POST', '/api/standings', legacy.body, refusalKv)).status, 200, 'control: the twelve-key tape is accepted as it always was');
+  await refused('a twelve-key tape with an unknown thirteenth key', legacy, (log) => { log.probes = []; }, true);
+  await refused('a recorder reel with an unknown fifteenth key', full, (log) => { log.probes = []; }, true);
+  await refused('a playbook use with a bad kind', full, (log) => { log.playbookUses[0].kind = 'playbook_used'; }, true);
+  await refused('a playbook use whose atTick is past the duration', full, (log) => { log.playbookUses[0].atTick = log.durationTicks + 1; }, true);
+  await refused('a playbook use carrying a malformed playbook', full, (log) => { delete log.playbookUses[0].playbook.version; }, true);
+  await refused('a playbook use with a negative atTick', full, (log) => { log.playbookUses[0].atTick = -1; });
+  await refused('playbook uses whose atTicks run backwards', full, (log) => { log.playbookUses = [{ ...log.playbookUses[0], atTick: 4 }, { ...log.playbookUses[0], atTick: 3 }]; });
+  await refused('a playbook use with an unknown key', full, (log) => { log.playbookUses[0].note = 'x'; });
+  await refused('a playbook recorded on another seed', full, (log) => { log.playbookUses[0].playbook.seed = 'another-seed'; });
+  await refused('a playbook whose entry names an action no grammar knows', full, (log) => { log.playbookUses[0].playbook.entries[0].a.push({ type: 'teleport' }); });
+  await refused('playbookUses that is not a list', full, (log) => { log.playbookUses = { 0: log.playbookUses[0] }; });
+  await refused('a motor action before tick 0', full, (log) => { log.motorActions[0].t = -1; });
+  await refused('a motor action of an unknown kind', full, (log) => { log.motorActions[0].kind = 'motor_fly'; });
+  await refused('a motor action at the duration', full, (log) => { log.motorActions[1].t = log.durationTicks; });
+  await refused('a motor action off the map', full, (log) => { log.motorActions[0].point.x = 300; });
+  await refused('motor actions running backwards', full, (log) => { log.motorActions.reverse(); });
+  await refused('motorActions that is not a list', full, (log) => { log.motorActions = {}; });
+  // Both lists are capped at the envelope's maxEntries; the byte envelope is checked first, so each
+  // capped tape is measured to fit it and the refusal is the count's alone.
+  const envelope = runTapeEnvelopeForContract('the-claim');
+  for (const field of ['playbookUses', 'motorActions']) {
+    const capped = structuredClone(full.body.tape);
+    capped.inputLog[field] = Array.from({ length: envelope.maxEntries }, () => structuredClone(full.body.tape.inputLog[field][0]));
+    ok(validateTape(capped, 'the-claim', 'gold-rush', 'trail'), `the grammar admits ${envelope.maxEntries} ${field}, the envelope's maxEntries`);
+    capped.inputLog[field].push(structuredClone(full.body.tape.inputLog[field][0]));
+    ok(Buffer.byteLength(JSON.stringify(capped)) <= envelope.maxTapeBytes, `${envelope.maxEntries + 1} ${field} still fit the byte envelope`);
+    equal(validateTape(capped, 'the-claim', 'gold-rush', 'trail'), null, `the grammar refuses ${envelope.maxEntries + 1} ${field}`);
+  }
+  console.log(`recorder reel ${backend} checks (${checks - before})`);
+}
+
+// F-DTG1-1 (door-tape-grammar-2, 2026-09-25). After grammar-1 the door still refused three action verbs the
+// browser recorder writes: `prospector_dispatch` on every solo dispatch (Game.ts:8256-8262), `context_action`
+// `recover` (Game.ts:5727), and a seated agent rider's `agent_orders`, recorded in its slot's stream
+// (Game.ts:7975-7986) in the shape `SeatedLockstepSim.submitOrders` builds. The reels are the REAL recorder's,
+// as in `checkRecorderReel`, and the real handler judges them.
+async function checkRecorderVerbs(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  const kv = makeKv();
+  const seatOrders = kit.normalizeLockstepAction({
+    type: 'agent_orders', version: 1, submissionId: 'seat-1',
+    orders: kit.validateStandingOrders([{ verb: 'HARVEST', seam: 'gold-seam-2' }, { verb: 'SET_WEAPON', weapon: 'blast' }]).orders,
+  });
+  const reels = [
+    ['a solo prospector dispatch', recorderReel(kit, '3dd7'.repeat(8), { dispatch: 'gold-seam-2' }), { type: 'prospector_dispatch', node: 'gold-seam-2' }],
+    ['a probe recovery', recorderReel(kit, '4dd7'.repeat(8), { recover: true }), { type: 'context_action', action: 'recover' }],
+    ["a seated agent rider's orders", recorderReel(kit, '5dd7'.repeat(8), { seatOrders }), seatOrders],
+  ];
+  const actionsOf = (log) => [...log.entries, ...log.streams.flatMap((stream) => stream.entries)].flatMap((entry) => entry.a);
+  equal(reels.map(([, { runTape }, verb]) => actionsOf(runTape.inputLog).filter((action) => JSON.stringify(action) === JSON.stringify(verb)).length), [1, 1, 1],
+    'each reel carries its verb exactly once (a solo dispatch reaches the recorder twice and is kept once)');
+  equal(reels.map(([, , verb]) => kit.normalizeLockstepAction(verb)), reels.map(([, , verb]) => verb),
+    "each verb is already in the client normalizer's own shape, which is the shape the recorder writes");
+  ok(reels.every(([, { body }]) => body.tape), 'every reel fits the byte envelope, so every body carries its tape');
+  const answers = [];
+  for (const [, { body }] of reels) answers.push(await call(onRequest, 'POST', '/api/standings', body, kv));
+  equal(answers.map(({ status, body }) => [status, body.stored ?? body.error]), [[200, true], [200, true], [200, true]],
+    `the door accepts the recorder's reels with a dispatch, a recovery and a seated rider's orders: ${JSON.stringify(answers.map(({ body }) => body))}`);
+  const stored = JSON.parse(await kv.get(KEY));
+  for (const [label, { runTape }] of reels) {
+    equal(stored.find((row) => row.tape?.id === runTape.id)?.tape.inputLog, runTape.inputLog, `the county stores the reel with ${label} exactly as the recorder wrote it`);
+    const watched = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${runTape.id}`, undefined, kv);
+    const replayable = validateRunTape(watched.body.reel);
+    ok(replayable, `the reel with ${label} reads back through ?reel= and satisfies the client's validateRunTape`);
+    equal([replayable?.inputLog.entries, replayable?.inputLog.streams], [runTape.inputLog.entries, runTape.inputLog.streams],
+      `the reel with ${label} keeps its actions intact through the round trip`);
+  }
+  const solo = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier', undefined, kv);
+  const posse = await call(onRequest, 'GET', '/api/standings?contract=the-claim&epoch=epoch-1-frontier&party=2', undefined, kv);
+  equal([solo.body.board.length, posse.body.board.length], [2, 1], 'the two solo reels rank on the solo board and the ridden one on the two-rider board');
+
+  // NOTHING LOOSENED. Every mutation re-hashes the input log, so each refusal belongs to the grammar alone.
+  const refusalKv = makeKv();
+  const [dispatchReel, recoverReel, seatReel] = reels.map(([, reel]) => reel);
+  const verbIn = (log, type) => actionsOf(log).find((action) => action.type === type && (type !== 'context_action' || action.action === 'recover'));
+  const refused = async (label, reel, type, mutate, { atTheDoor = false, stored: atRead = false } = {}) => {
+    const candidate = structuredClone(reel.body);
+    mutate(verbIn(candidate.tape.inputLog, type));
+    candidate.inputLogHash = createHash('sha256').update(JSON.stringify(candidate.tape.inputLog)).digest('hex');
+    equal(validateTape(candidate.tape, 'the-claim', 'gold-rush', 'trail', atRead), null, `the tape grammar${atRead ? ' at read' : ''} refuses ${label}`);
+    if (!atTheDoor) return;
+    const answer = await call(onRequest, 'POST', '/api/standings', candidate, refusalKv);
+    equal([answer.status, answer.body.error], [400, 'bad_payload'], `the door refuses ${label} as bad_payload`);
+  };
+  await refused('a verb no grammar knows', dispatchReel, 'prospector_dispatch', (action) => { action.type = 'prospector_recall'; }, { atTheDoor: true });
+  await refused('a dispatch with an unknown key', dispatchReel, 'prospector_dispatch', (action) => { action.target = { id: 'sluice', index: 0 }; }, { atTheDoor: true });
+  await refused('a recovery with an unknown key', recoverReel, 'context_action', (action) => { action.target = { id: 'sluice', index: 0 }; }, { atTheDoor: true });
+  await refused("a seated rider's orders naming a retired verb", seatReel, 'agent_orders', (action) => { action.orders = [{ verb: 'HOLD', pos: { x: 0, z: 30 } }]; }, { atTheDoor: true });
+  await refused('a dispatch with an empty node', dispatchReel, 'prospector_dispatch', (action) => { action.node = ''; });
+  await refused('a dispatch with a 65-character node', dispatchReel, 'prospector_dispatch', (action) => { action.node = 'n'.repeat(65); });
+  await refused('a dispatch whose node carries edge whitespace', dispatchReel, 'prospector_dispatch', (action) => { action.node = ' gold-seam-2 '; });
+  await refused('a dispatch whose node is only whitespace', dispatchReel, 'prospector_dispatch', (action) => { action.node = '   '; });
+  await refused('a dispatch whose node is not a string', dispatchReel, 'prospector_dispatch', (action) => { action.node = 2; });
+  await refused('a targetless context action other than fund or recover', recoverReel, 'context_action', (action) => { action.action = 'recall'; });
+  await refused("a seated rider's orders with an unknown key", seatReel, 'agent_orders', (action) => { action.note = 'x'; });
+  await refused("a seated rider's orders on wire version 2", seatReel, 'agent_orders', (action) => { action.version = 2; });
+  await refused("a seated rider's orders with an empty submission id", seatReel, 'agent_orders', (action) => { action.submissionId = ''; });
+  await refused("a seated rider's orders with a 97-character submission id", seatReel, 'agent_orders', (action) => { action.submissionId = 's'.repeat(97); });
+  await refused("a seated rider's orders whose submission id carries edge whitespace", seatReel, 'agent_orders', (action) => { action.submissionId = ' seat-1 '; });
+  const heavy = Array.from({ length: 32 }, () => ({ verb: 'HARVEST', seam: 's'.repeat(80) }));
+  ok(kit.validateStandingOrders(heavy).ok && Buffer.byteLength(JSON.stringify(heavy)) > 3 * 1024, 'the heavy orders are grammatical and over the 3 KiB wire limit, so the bytes alone decide');
+  await refused("a seated rider's orders over the 3 KiB wire limit", seatReel, 'agent_orders', (action) => { action.orders = heavy; });
+  await refused("a seated rider's 33 orders", seatReel, 'agent_orders', (action) => { action.orders = Array.from({ length: 33 }, () => ({ verb: 'SET_WEAPON', weapon: 'rig' })); });
+  await refused("a seated rider's orders that are not a list", seatReel, 'agent_orders', (action) => { action.orders = {}; });
+  // At read a seated rider's orders are judged for SHAPE only (ADR-005), as a stored `kind` entry's are, so a verb
+  // retired after acceptance leaves the row readable and `tapeGrammarRefusal` retires it; the shape stays required.
+  const heldSeat = structuredClone(seatReel.body.tape);
+  verbIn(heldSeat.inputLog, 'agent_orders').orders = [{ verb: 'HOLD', pos: { x: 0, z: 30 } }];
+  ok(validateTape(heldSeat, 'the-claim', 'gold-rush', 'trail', true), "at read the grammar keeps a seated rider's orders that name a since-retired verb");
+  await refused("a seated rider's orders that are not a list", seatReel, 'agent_orders', (action) => { action.orders = {}; }, { stored: true });
+  await refused("a seated rider's orders holding a non-order", seatReel, 'agent_orders', (action) => { action.orders = [1]; }, { stored: true });
+  await refused("a seated rider's orders over the 3 KiB wire limit", seatReel, 'agent_orders', (action) => { action.orders = heavy; }, { stored: true });
+  console.log(`recorder verbs ${backend} checks (${checks - before})`);
+}
+
+// F-DTG1-2 (door-tape-grammar-2, ADR-005). A verb retired AFTER a row was accepted must RETIRE the row
+// (unranked, counted, its stored bytes untouched), never drop it (F-RPG-21). These rows manufacture the case
+// for orders a reel carries OUTSIDE its primary entries: inside a recording the rider handed the agent
+// (`playbookUses`, in both order forms) and in a seated rider's stream. Each row is stored clean first (it
+// ranks), then with its orders naming HOLD, which ADR-005 retired on 2026-09-07.
+async function checkRetiredEmbeddedOrders(onRequest, validateTape, kit) {
+  const before = checks;
+  const current = kit.validateStandingOrders([{ verb: 'SET_WEAPON', weapon: 'rig' }]).orders;
+  const held = [{ verb: 'HOLD', pos: { x: 0, z: 30 } }];
+  const seatOrders = kit.normalizeLockstepAction({ type: 'agent_orders', version: 1, submissionId: 'seat-1', orders: current });
+  const cases = [
+    ['a playbook use whose recording carries agent orders', recorderReel(kit, '6dd7'.repeat(8), { playbook: true }), '',
+      (log, orders) => { log.playbookUses[0].playbook.entries[2].a.push({ kind: 'agent_orders', orders }); }],
+    ["a playbook use whose recording carries a seated rider's orders", recorderReel(kit, '7dd7'.repeat(8), { playbook: true }), '',
+      (log, orders) => { log.playbookUses[0].playbook.entries[1].a.push({ ...seatOrders, orders }); }],
+    ["a seated rider's stream", recorderReel(kit, '8dd7'.repeat(8), { seatOrders }), '&party=2',
+      (log, orders) => { log.streams[0].entries[0].a[0].orders = orders; }],
+  ];
+  for (const [label, reel, party, inject] of cases) {
+    const kv = makeKv();
+    const board = `/api/standings?contract=the-claim&epoch=epoch-1-frontier${party}`;
+    const clean = structuredClone(reel.body.tape);
+    inject(clean.inputLog, current);
+    ok(validateTape(clean, 'the-claim', 'gold-rush', 'trail'), `control: the door's grammar accepts ${label} while its orders are current`);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, clean)]));
+    const ranked = await call(onRequest, 'GET', board, undefined, kv);
+    equal([ranked.body.board.length, ranked.body.retiredCount], [1, 0], `control: a stored row with ${label} ranks while its orders are current`);
+    const retired = structuredClone(reel.body.tape);
+    inject(retired.inputLog, held);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, retired)]));
+    const storedBytes = await kv.get(KEY);
+    const read = await call(onRequest, 'GET', board, undefined, kv);
+    equal([read.body.board.length, read.body.retiredCount], [0, 1], `a stored row with ${label} naming a since-retired verb is RETIRED and COUNTED, not dropped`);
+    equal(await kv.get(KEY), storedBytes, `reading the retired row with ${label} leaves it byte-identical`);
+  }
+  // The SHAPE is still required at read: a recording whose order list is malformed is refused, never emptied.
+  const malformed = structuredClone(cases[0][1].body.tape);
+  cases[0][3](malformed.inputLog, {});
+  equal(validateTape(malformed, 'the-claim', 'gold-rush', 'trail', true), null, 'at read a recording whose agent orders are not a list is refused');
+  const heavy = structuredClone(cases[1][1].body.tape);
+  cases[1][3](heavy.inputLog, Array.from({ length: 32 }, () => ({ verb: 'HARVEST', seam: 's'.repeat(80) })));
+  equal(validateTape(heavy, 'the-claim', 'gold-rush', 'trail', true), null, "at read a recording whose seated rider's orders are over the 3 KiB wire limit is refused");
+  console.log(`retired embedded orders ${backend} checks (${checks - before})`);
+}
+
+// F-DTG2-2 (door-tape-grammar-3, 2026-09-26). In three places the door accepted what the client refuses: a
+// `place_build` id of whitespace only, a `pick_upgrade` id of whitespace only, and a `set_agent_ability` naming an
+// ability the client does not know. The county stored and ranked such a reel, yet the Lantern and the assayer judge
+// a reel with `validateRunTape` and cannot load it. The CONTROLS are the real recorder's. The three SHAPES are made
+// by hand from them, because the recorder refuses each: both of its paths run the client's own normalizer
+// (RunTape.ts `recordAction`, and LockstepClient.ts `lockstepActionsFromSample` for a tick's action list).
+async function checkClientGrammar(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  const verbs = [
+    ['place_build', 'a place_build id of whitespace only', recorderReel(kit, '9dd7'.repeat(8)), (action) => { action.id = '   '; }],
+    ['pick_upgrade', 'a pick_upgrade id of whitespace only', recorderReel(kit, 'add7'.repeat(8), { upgrade: 'heavy_spark' }), (action) => { action.id = '   '; }],
+    ['set_agent_ability', 'a set_agent_ability naming an ability the client does not know', recorderReel(kit, 'bdd7'.repeat(8), { ability: 'auto_pan' }),
+      (action) => { action.ability = 'fly'; }],
+  ];
+  equal(verbs.map(([type, , { runTape }]) => reelActions(runTape.inputLog).filter((action) => action.type === type).length), [1, 1, 1],
+    'each control reel carries its verb once, as the recorder wrote it');
+  const shaped = verbs.map(([type, label, { body }, mutate]) => {
+    const candidate = structuredClone(body);
+    mutate(reelVerb(candidate.tape.inputLog, type));
+    candidate.inputLogHash = createHash('sha256').update(JSON.stringify(candidate.tape.inputLog)).digest('hex');
+    return { label, body: candidate, action: reelVerb(candidate.tape.inputLog, type) };
+  });
+  equal(shaped.map(({ action }) => kit.normalizeLockstepAction(action)), [null, null, null], "the client's own normalizer refuses each of the three shapes");
+  equal(recorderReel(kit, 'cdd7'.repeat(8), { offered: shaped.map(({ action }) => action) }).runTape.inputLog.entries, recorderReel(kit, 'cdd7'.repeat(8)).runTape.inputLog.entries,
+    'the recorder refuses each shape down both of its paths and leaves no trace of it, so the three shapes are made by hand');
+  const kv = makeKv();
+  const accepted = [];
+  for (const [, , { body }] of verbs) accepted.push(await call(onRequest, 'POST', '/api/standings', body, kv));
+  equal(accepted.map(({ status, body }) => [status, body.stored ?? body.error]), [[200, true], [200, true], [200, true]],
+    `control: the door accepts the recorder's reels with a real building id, a real upgrade id and a known ability: ${JSON.stringify(accepted.map(({ body }) => body))}`);
+  for (const [type, , { runTape }] of verbs) {
+    const watched = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${runTape.id}`, undefined, kv);
+    const replayable = validateRunTape(watched.body.reel);
+    equal(replayable ? reelVerb(replayable.inputLog, type) : null, reelVerb(runTape.inputLog, type),
+      `control: the reel with its ${type} reads back through ?reel= and the client loads it with the verb intact`);
+  }
+  const refusalKv = makeKv();
+  const answers = [];
+  for (const { body } of shaped) answers.push(await call(onRequest, 'POST', '/api/standings', body, refusalKv));
+  equal(answers.map(({ status, body }) => [status, body.stored ?? body.error]), [[400, 'bad_payload'], [400, 'bad_payload'], [400, 'bad_payload']],
+    `the door refuses a place_build id and a pick_upgrade id of whitespace only and an ability the client does not know: ${JSON.stringify(answers.map(({ body }) => body))}`);
+  for (const { label, body } of shaped) {
+    equal(validateTape(body.tape, 'the-claim', 'gold-rush', 'trail'), null, `the tape grammar refuses ${label}`);
+    equal(validateRunTape(body.tape), null, `the client refuses ${label}, so neither the Lantern nor the assayer could load it`);
+  }
+  // The rule is the client's, not one value: an id that trims to nothing, or an ability outside the client's own
+  // set, is refused; and NOTHING ELSE TIGHTENED: every neighbour the client keeps, the door still accepts.
+  const judged = (type, mutate) => {
+    const candidate = structuredClone(verbs.find(([verb]) => verb === type)[2].body.tape);
+    mutate(reelVerb(candidate.inputLog, type));
+    return [validateTape(candidate, 'the-claim', 'gold-rush', 'trail') !== null, validateRunTape(candidate) !== null];
+  };
+  equal(judged('place_build', (action) => { action.id = '\t\n'; }), [false, false], 'a place_build id of a tab and a newline is refused by the door, as by the client');
+  equal(judged('pick_upgrade', (action) => { action.id = '\t\n'; }), [false, false], 'a pick_upgrade id of a tab and a newline is refused by the door, as by the client');
+  equal(judged('set_agent_ability', (action) => { action.ability = 'AUTO_PAN'; }), [false, false], 'an ability in the wrong case is refused by the door, as by the client');
+  equal(judged('set_agent_ability', (action) => { action.ability = '   '; }), [false, false], 'an ability of whitespace only is refused by the door, as by the client');
+  equal(judged('place_build', (action) => { action.id = ' sluice '; }), [true, true], 'a place_build id with edge whitespace is still accepted (the client trims it)');
+  equal(judged('place_build', (action) => { action.id = 'nonsense'; }), [true, true], "a place_build naming no building is still accepted (the client's place_build takes any id)");
+  equal(judged('pick_upgrade', (action) => { action.id = ' heavy_spark '; }), [true, true], 'a pick_upgrade id with edge whitespace is still accepted (the client trims it)');
+  equal(judged('set_agent_ability', (action) => { action.ability = ' auto_pan '; }), [true, true], 'a known ability with edge whitespace is still accepted (the client trims it)');
+  const abilities = ['auto_collect', 'auto_repair', 'auto_pan', 'light_duty', 'place_building'];
+  equal(abilities.map((ability) => judged('set_agent_ability', (action) => { action.ability = ability; })), abilities.map(() => [true, true]),
+    "each of the client's five abilities is accepted by the door and the client (LockstepClient.ts normalizeAction)");
+  console.log(`client grammar ${backend} checks (${checks - before})`);
+}
+
+// F-DTG2-2, the rows stored BEFORE this grammar. At read (`stored`) the old shape still stands, so such a row stays
+// readable, and `tapeGrammarRefusal` RETIRES it: unranked, counted in `retiredCount`, its stored bytes untouched,
+// its reel still on the shelf. It is never dropped (F-RPG-21). Each row is stored clean first (it ranks), then with
+// the shape; the fourth case puts the shape in a second rider's stream, by hand on both sides.
+async function checkRetiredClientGrammar(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  const seatOrders = kit.normalizeLockstepAction({
+    type: 'agent_orders', version: 1, submissionId: 'seat-1', orders: kit.validateStandingOrders([{ verb: 'SET_WEAPON', weapon: 'rig' }]).orders,
+  });
+  const ability = (name) => ({ type: 'set_agent_ability', ability: name, granted: true });
+  const cases = [
+    ['a place_build id of whitespace only', recorderReel(kit, 'ddd7'.repeat(8)), '', (log) => { reelVerb(log, 'place_build').id = '   '; }],
+    ['a pick_upgrade id of whitespace only', recorderReel(kit, 'edd7'.repeat(8), { upgrade: 'heavy_spark' }), '', (log) => { reelVerb(log, 'pick_upgrade').id = '   '; }],
+    ['a set_agent_ability naming an ability the client does not know', recorderReel(kit, 'fdd7'.repeat(8), { ability: 'auto_pan' }), '',
+      (log) => { reelVerb(log, 'set_agent_ability').ability = 'fly'; }],
+    ["a second rider's set_agent_ability naming an ability the client does not know", recorderReel(kit, 'dad7'.repeat(8), { seatOrders }), '&party=2',
+      (log) => { log.streams[0].entries[0].a.push(ability('fly')); }, (log) => { log.streams[0].entries[0].a.push(ability('auto_pan')); }],
+  ];
+  for (const [label, reel, party, shape, control = () => {}] of cases) {
+    const kv = makeKv();
+    const board = `/api/standings?contract=the-claim&epoch=epoch-1-frontier${party}`;
+    const clean = structuredClone(reel.body.tape);
+    control(clean.inputLog);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, clean)]));
+    const ranked = await call(onRequest, 'GET', board, undefined, kv);
+    equal([ranked.body.board.length, ranked.body.retiredCount], [1, 0], `control: the clean stored row ranks, before ${label}`);
+    const retired = structuredClone(reel.body.tape);
+    shape(retired.inputLog);
+    ok(validateTape(retired, 'the-claim', 'gold-rush', 'trail', true) && !validateRunTape(retired), `at read the grammar keeps a stored reel with ${label}, which the client cannot load`);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, retired)]));
+    const storedBytes = await kv.get(KEY);
+    const read = await call(onRequest, 'GET', board, undefined, kv);
+    equal([read.body.board.length, read.body.retiredCount], [0, 1], `a stored row with ${label} is RETIRED and COUNTED, not dropped and not ranked`);
+    equal(await kv.get(KEY), storedBytes, `reading the retired row with ${label} leaves it byte-identical`);
+    const shelf = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${retired.id}`, undefined, kv);
+    equal([shelf.status, shelf.body.reel], [200, retired], `the reel with ${label} stays on the shelf exactly as stored`);
+    const slip = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=${retired.id}`, undefined, kv);
+    equal([slip.body.assay, slip.body.ranked], ['pending', false], `the assay slip of the reel with ${label} says it is not ranked`);
+  }
+  console.log(`retired client grammar ${backend} checks (${checks - before})`);
+}
+
+// F-DTG3-1 (door-tape-grammar-4, 2026-09-26). The last two verbs the door judged looser than the client: a
+// `research_pick` id that trims to nothing, and a `context_action` upgrade or demolition whose target, trimmed, names
+// no building the client knows (`normalizeBuildingRef`, then `isBuildableId`). These are the six door-looser rows the
+// grammar-3 probe measured. The CONTROLS are the real recorder's; each SHAPE is made by hand from its own recorder
+// reel, because the recorder refuses every one of them (both of its paths run the client's own normalizer). A function,
+// not a const: the checks run from the top of this file, before a module-level const below them is initialized.
+function clientJudgedIdShapes() {
+  return [
+    ['a research_pick id of whitespace only', 'research_pick', { research: 'assay_grading' }, (action) => { action.id = '   '; }],
+    ['a research_pick id of a tab and a newline', 'research_pick', { research: 'assay_grading' }, (action) => { action.id = '\t\n'; }],
+    ['an upgrade whose target id is whitespace only', 'context_action', { context: { action: 'upgrade', target: { id: 'sluice', index: 0 } } }, (action) => { action.target.id = '   '; }],
+    ['a demolition whose target id is whitespace only', 'context_action', { context: { action: 'demolish', target: { id: 'sluice', index: 0 } } }, (action) => { action.target.id = '   '; }],
+    ['an upgrade whose target names no building', 'context_action', { context: { action: 'upgrade', target: { id: 'sluice', index: 0 } } }, (action) => { action.target.id = 'nonsense'; }],
+    ['a demolition whose target names no building', 'context_action', { context: { action: 'demolish', target: { id: 'sluice', index: 0 } } }, (action) => { action.target.id = 'nonsense'; }],
+  ];
+}
+
+async function checkClientJudgedIds(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  const controls = [
+    ['research_pick', recorderReel(kit, '1ee7'.repeat(8), { research: 'assay_grading' })],
+    ['context_action', recorderReel(kit, '2ee7'.repeat(8), { context: { action: 'upgrade', target: { id: 'sluice', index: 0 } } })],
+    ['context_action', recorderReel(kit, '3ee7'.repeat(8), { context: { action: 'demolish', target: { id: 'sluice', index: 0 } } })],
+  ];
+  equal(controls.map(([type, { runTape }]) => reelActions(runTape.inputLog).filter((action) => action.type === type).length), [1, 1, 1],
+    'each control reel carries its verb once, as the recorder wrote it (a research pick, an upgrade and a demolition of the sluice it placed)');
+  const shaped = clientJudgedIdShapes().map(([label, type, options, mutate], index) => {
+    const body = structuredClone(recorderReel(kit, `${index + 4}ee7`.repeat(8), options).body);
+    mutate(reelVerb(body.tape.inputLog, type));
+    body.inputLogHash = createHash('sha256').update(JSON.stringify(body.tape.inputLog)).digest('hex');
+    return { label, body, action: reelVerb(body.tape.inputLog, type) };
+  });
+  equal(shaped.map(({ action }) => kit.normalizeLockstepAction(action)), shaped.map(() => null), "the client's own normalizer refuses each of the six shapes");
+  equal(recorderReel(kit, 'aee7'.repeat(8), { offered: shaped.map(({ action }) => action) }).runTape.inputLog.entries, recorderReel(kit, 'aee7'.repeat(8)).runTape.inputLog.entries,
+    'the recorder refuses each shape down both of its paths and leaves no trace of it, so the six shapes are made by hand');
+  const kv = makeKv();
+  const accepted = [];
+  for (const [, { body }] of controls) accepted.push(await call(onRequest, 'POST', '/api/standings', body, kv));
+  equal(accepted.map(({ status, body }) => [status, body.stored ?? body.error]), [[200, true], [200, true], [200, true]],
+    `control: the door accepts the recorder's reels with a real research node, an upgrade and a demolition of a real building: ${JSON.stringify(accepted.map(({ body }) => body))}`);
+  for (const [type, { runTape }] of controls) {
+    const watched = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${runTape.id}`, undefined, kv);
+    const replayable = validateRunTape(watched.body.reel);
+    equal(replayable ? reelVerb(replayable.inputLog, type) : null, reelVerb(runTape.inputLog, type),
+      `control: the reel with its ${type} reads back through ?reel= and the client loads it with the verb intact`);
+  }
+  const refusalKv = makeKv();
+  const answers = [];
+  for (const { body } of shaped) answers.push(await call(onRequest, 'POST', '/api/standings', body, refusalKv));
+  equal(answers.map(({ status, body }) => [status, body.stored ?? body.error]), shaped.map(() => [400, 'bad_payload']),
+    `the door refuses research ids and building targets the client refuses: ${JSON.stringify(answers.map(({ body }) => body))}`);
+  for (const { label, body } of shaped) {
+    equal(validateTape(body.tape, 'the-claim', 'gold-rush', 'trail'), null, `the tape grammar refuses ${label}`);
+    equal(validateRunTape(body.tape), null, `the client refuses ${label}, so neither the Lantern nor the assayer could load it`);
+  }
+  // NOTHING ELSE TIGHTENED: every neighbour the client keeps, the door still accepts.
+  const judged = (control, mutate) => {
+    const candidate = structuredClone(control[1].body.tape);
+    mutate(reelVerb(candidate.inputLog, control[0]));
+    return [validateTape(candidate, 'the-claim', 'gold-rush', 'trail') !== null, validateRunTape(candidate) !== null];
+  };
+  const [researchControl, upgradeControl, demolishControl] = controls;
+  equal(judged(researchControl, (action) => { action.id = ' assay_grading '; }), [true, true], 'a research_pick id with edge whitespace is still accepted (the client trims it)');
+  equal(judged(researchControl, (action) => { action.id = 'no-such-node'; }), [true, true], "a research_pick naming no research node is still accepted (the client's research_pick takes any id)");
+  equal(judged(upgradeControl, (action) => { action.target.id = ' sluice '; }), [true, true], 'an upgrade target id with edge whitespace is still accepted (the client trims it)');
+  equal(judged(upgradeControl, (action) => { action.target.index = 256; }), [true, true], 'an upgrade target index of 256 is still accepted (the client clamps it; the door bounds it at 10000)');
+  const buildings = kit.buildableIds;
+  equal([buildings.length > 0, buildings.flatMap((id) => [upgradeControl, demolishControl].map((control) => judged(control, (action) => { action.target.id = id; })))],
+    [true, buildings.flatMap(() => [[true, true], [true, true]])], "every building the client knows (buildables.ts buildableDefs) is accepted as an upgrade and a demolition target");
+  equal(['fund', 'recover'].map((name) => judged(upgradeControl, (action) => { action.action = name; delete action.target; })), [[true, true], [true, true]],
+    'the targetless context actions (fund, recover) are still accepted now that every context action meets the client');
+  console.log(`client judged ids ${backend} checks (${checks - before})`);
+}
+
+// F-DTG3-1, the rows stored BEFORE this grammar: each of the six shapes, manufactured as the door would have stored
+// it, is RETIRED at read (unranked, counted in `retiredCount`, its bytes untouched, its reel still on the shelf) and
+// never dropped (F-RPG-21), exactly as the grammar-3 shapes are. Each row is stored clean first (it ranks).
+async function checkRetiredClientJudgedIds(onRequest, validateTape, validateRunTape, kit) {
+  const before = checks;
+  for (const [label, type, options, mutate] of clientJudgedIdShapes()) {
+    const reel = recorderReel(kit, 'bee7'.repeat(8), options);
+    const kv = makeKv();
+    const board = '/api/standings?contract=the-claim&epoch=epoch-1-frontier';
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, reel.body.tape)]));
+    const ranked = await call(onRequest, 'GET', board, undefined, kv);
+    equal([ranked.body.board.length, ranked.body.retiredCount], [1, 0], `control: the clean stored row ranks, before ${label}`);
+    const retired = structuredClone(reel.body.tape);
+    mutate(reelVerb(retired.inputLog, type));
+    ok(validateTape(retired, 'the-claim', 'gold-rush', 'trail', true) && !validateRunTape(retired), `at read the grammar keeps a stored reel with ${label}, which the client cannot load`);
+    await kv.put(KEY, JSON.stringify([storedRowOf(reel.body, retired)]));
+    const storedBytes = await kv.get(KEY);
+    const read = await call(onRequest, 'GET', board, undefined, kv);
+    equal([read.body.board.length, read.body.retiredCount], [0, 1], `a stored row with ${label} is RETIRED and COUNTED, not dropped and not ranked`);
+    equal(await kv.get(KEY), storedBytes, `reading the retired row with ${label} leaves it byte-identical`);
+    const shelf = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&reel=${retired.id}`, undefined, kv);
+    equal([shelf.status, shelf.body.reel], [200, retired], `the reel with ${label} stays on the shelf exactly as stored`);
+    const slip = await call(onRequest, 'GET', `/api/standings?contract=the-claim&epoch=epoch-1-frontier&verdict=${retired.id}`, undefined, kv);
+    equal([slip.body.assay, slip.body.ranked], ['pending', false], `the assay slip of the reel with ${label} says it is not ranked`);
+  }
+  console.log(`retired client judged ids ${backend} checks (${checks - before})`);
+}
+
+// Every action a reel carries (primary entries and every stream), and the first of one type.
+function reelActions(log) {
+  return [...log.entries, ...log.streams.flatMap((stream) => stream.entries)].flatMap((entry) => entry.a);
+}
+
+function reelVerb(log, type) {
+  return reelActions(log).find((action) => action.type === type);
 }
 
 async function checkEngineHashReel(onRequest) {
@@ -1319,6 +2003,96 @@ function currentEraTape(runTape) {
     version: 2,
     meta,
     runStart: { meta: progress, research: { version: 1, progress, taken: [], proposalSalt: 0, pinnedTarget: null } },
+  };
+}
+
+// A reel written by the browser's own recorder and submitted the way Game.ts submits a secured standing
+// (Game.ts 8104-8143): `snapshot(outcome, eventLog)`, then `submittedRunTape`, then the body around it.
+// The playbook is recorded and read back off the shelf exactly as a named playbook is before its use
+// (`PlaybookRecorderSession.finish`, then `parsePlaybookText`, Game.ts:3900-3907).
+function recorderReel(kit, anonId, { playbook = false, motor = false, dispatch = null, recover = false, seatOrders = null, upgrade = null, ability = null, research = null, context = null, offered = [] } = {}) {
+  const { RunTapeRecorder, PlaybookRecorderSession, parsePlaybookText, intentsFromLockstepInput, lockstepInputFromIntents, submittedRunTape } = kit;
+  const [contract, seed, difficulty] = ['the-claim', 'gold-rush', 'trail'];
+  const start = { x: 0.25, z: 12.5 };
+  const progress = { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } };
+  const recorder = new RunTapeRecorder({
+    contract, seed, difficulty,
+    meta: { buildId: 'dev', viewVersion: engineEra.viewSchema.version, engineHash: engineEra.engineHash, era: engineEra.era },
+    start,
+    runStart: { meta: progress, research: { version: 1, epochId: 'epoch-1-frontier', metaScienceCursor: 0, progress, taken: [], proposalSalt: 0, pinnedTarget: null, unlocks: {} } },
+  });
+  const move = (mx, my) => intentsFromLockstepInput({ mx, my, actions: [] });
+  const shelf = new PlaybookRecorderSession({ contractId: contract, seed, difficultyPreset: difficulty, start }, null);
+  shelf.recordTick(lockstepInputFromIntents(move(0, -1)), start);
+  shelf.recordTick(lockstepInputFromIntents(move(1, 0), { queuedActions: [{ type: 'place_build', id: 'palisade', position: { x: 1, z: 9 }, rotationSteps: 0 }] }), start);
+  shelf.recordTick(lockstepInputFromIntents(move(0, 0)), start);
+  const shelved = parsePlaybookText(shelf.finish('Assay Patrol').text);
+  if (!shelved.ok) throw new Error(`the shelf playbook did not parse: ${shelved.reason}`);
+  recorder.record(move(1, 0), start);
+  recorder.record(move(1, 0), { x: 0.5, z: 12.5 });
+  recorder.recordAction({ type: 'place_build', id: 'sluice', position: { x: 2, z: 10 }, rotationSteps: 1 });
+  // A solo dispatch reaches the recorder twice, as in Game.ts: `recordRunTapeAction` (:8261) and the tick's
+  // own action list (:2982-2984, :7969-7974). The recorder keeps one (RunTape.ts `record`, the routed dedupe).
+  const dispatched = dispatch ? [{ type: 'prospector_dispatch', node: dispatch }] : [];
+  dispatched.forEach((action) => recorder.recordAction(action));
+  recorder.record(move(0, 1), { x: 0.75, z: 12.5 }, dispatched);
+  if (motor) recorder.recordMotorAction('motor_grade', { x: 3.14159, z: 7.5 });
+  if (playbook) recorder.recordPlaybookUse(shelved.playbook);
+  if (recover) recorder.recordAction({ type: 'context_action', action: 'recover' });
+  // A solo level-up pick reaches the recorder through `recordRunTapeAction` (Game.ts:8810). An agent ability
+  // toggle reaches a tape only from a multiplayer ride's action list (Game.ts:8750-8751, then :7969-7974).
+  // `offered` actions go down BOTH recorder paths, which shows what the recorder itself refuses to write.
+  if (upgrade) recorder.recordAction({ type: 'pick_upgrade', id: upgrade });
+  // A building upgrade or demolition reaches the recorder through `recordRunTapeAction` (Game.ts:10102, :10111). A
+  // research pick reaches a tape only from a multiplayer ride's action list (Game.ts:10285, then :7969-7974).
+  if (context) recorder.recordAction({ type: 'context_action', ...context });
+  offered.forEach((action) => recorder.recordAction(action));
+  recorder.record(move(0, 0), { x: 0.75, z: 12.75 }, [
+    ...(ability ? [{ type: 'set_agent_ability', ability, granted: true }] : []),
+    ...(research ? [{ type: 'research_pick', id: research }] : []),
+    ...offered,
+  ]);
+  // A seated agent rider's orders arrive among its own slot's actions and land in that slot's stream
+  // (Game.ts:7975-7986), in the shape `SeatedLockstepSim.submitOrders` builds.
+  if (seatOrders) recorder.recordAdditional(1, move(0, 0), { x: 1, z: 13 }, [seatOrders]);
+  recorder.record(move(-0.5, 0.25), { x: 0.75, z: 12.75 });
+  if (motor) recorder.recordMotorAction('motor_haul', { x: 4, z: 8 });
+  recorder.record(move(0, 0), { x: 0.625, z: 12.875 });
+  const runTape = recorder.snapshot(
+    { reason: 'secured', secured: true, waves: 10, timeAlive: 120, gold: 40 },
+    { ...recorder.eventLog(), kills: 3, gold: 40, wave: 10, economy: { banked: 40 } },
+  );
+  const submittedTape = submittedRunTape(runTape);
+  const sha256 = (text) => createHash('sha256').update(text).digest('hex');
+  return {
+    runTape,
+    body: {
+      contractId: contract,
+      epochId: 'epoch-1-frontier',
+      score: { secured: true, waves: 10, timeAlive: 120, gold: 40, baseValue: 60 },
+      profileName: 'Recorder Reel',
+      anonId,
+      difficulty,
+      seed,
+      seedMode: 'live',
+      seedHash: sha256(seed),
+      inputLogHash: sha256(JSON.stringify(runTape.inputLog)),
+      // A ride with a seated agent rider is a posse (DeclaredStack.ts `multiplayerStandingParty`).
+      ...(seatOrders ? { party: { riderCount: 2, riders: [{ name: 'Recorder Reel' }, { name: 'Order Rider', stack: {} }] } } : {}),
+      ...(submittedTape ? { tape: submittedTape } : {}),
+    },
+  };
+}
+
+// The row as the door stores a body with this tape (submitScore's candidate): a declared stack is stamped
+// `declaredBy: 'self'`.
+function storedRowOf(body, tape) {
+  return {
+    ...body.score, profileName: body.profileName, anonId: body.anonId, difficulty: body.difficulty, seed: body.seed,
+    seedMode: body.seedMode, seedHash: body.seedHash, inputLogHash: createHash('sha256').update(JSON.stringify(tape.inputLog)).digest('hex'),
+    submittedAt: 1,
+    ...(body.party ? { party: { ...body.party, riders: body.party.riders.map((rider) => (rider.stack ? { ...rider, stack: { declaredBy: 'self', ...rider.stack } } : rider)) } } : {}),
+    tape, assay: 'pending',
   };
 }
 

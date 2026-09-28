@@ -1,0 +1,3312 @@
+[
+  {
+    "width": 1280,
+    "arm": "before",
+    "entry": {
+      "mountId": "lampworks_yard",
+      "reason": "The plate's foreground working yard and lamp rig establish the night work beside the lantern route; this is the declared yard mount at (8,18)."
+    },
+    "declared": true,
+    "errors": [],
+    "frames": {
+      "rest": {
+        "t": 4048.699999809265,
+        "elapsed": null,
+        "pixels": 121499,
+        "position": [
+          0,
+          26.77528933004345,
+          30.3
+        ],
+        "quaternion": [
+          -0.4221635713973425,
+          0,
+          0,
+          0.906519673799218
+        ],
+        "focus": [
+          0,
+          0.5763317918777466,
+          12
+        ],
+        "hero": {
+          "x": 0,
+          "y": 0.5763317918777466,
+          "z": 12
+        },
+        "timeAlive": 2.3000000000000016
+      }
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "14",
+      "assetPrefetchTotal": "19",
+      "assetPrefetchProgress": "14/19",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "2",
+      "assetPrefetchTarget": "e1-twin-banks",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "24000000",
+      "assetPrefetchBytes": "27261812",
+      "assetPrefetchTownState": "ready",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "30",
+      "assetLoadingTotal": "30",
+      "assetLoadingProgress": "30/30",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "1.6",
+      "cssAspect": "1.6",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e1-night-shift",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "night-shift-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "1920",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "1351",
+      "heroSheet": "young",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "world-shader",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotSculptWater": "living-water-quad",
+      "terrain3dPilotSculptWaterHalfWidth": "6.250",
+      "terrain3dPilotSculptWaterSimHalfWidth": "6.250",
+      "terrain3dPilotSculptWaterY": "-0.0421",
+      "terrain3dPilotSculptWaterGlints": "0",
+      "terrain3dPilotSculptWaterDeepest": "0.428",
+      "terrain3dPilotSculptWaterFords": "center-ford@0",
+      "terrain3dPilotHiddenRelief": "6",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+      "terrain3dPilotContinuation": "sculpt-edge-continuation",
+      "terrain3dPilotHorizonApron": "plain",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "5",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"seven_lantern_terraces\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.477,\"topY\":1.906},{\"id\":\"lampworks_yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.622,\"topY\":6.422},{\"id\":\"dark_rock_shoulders\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.384,\"topY\":6.676},{\"id\":\"central_ford\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.183,\"topY\":0.178},{\"id\":\"night_work_road\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.352,\"topY\":3.021}]}",
+      "terrain3dPilotLandmarks": "5",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0}]"
+    }
+  },
+  {
+    "width": 1280,
+    "arm": "after",
+    "entry": {
+      "mountId": "lampworks_yard",
+      "reason": "The plate's foreground working yard and lamp rig establish the night work beside the lantern route; this is the declared yard mount at (8,18)."
+    },
+    "declared": true,
+    "errors": [],
+    "frames": {
+      "peak": {
+        "t": 4357.900000095367,
+        "elapsed": null,
+        "pixels": 80054,
+        "position": [
+          0,
+          26.776322547578992,
+          30.3
+        ],
+        "quaternion": [
+          -0.4221725300431385,
+          0,
+          0,
+          0.9065155017301003
+        ],
+        "focus": [
+          0,
+          0.5763317918777466,
+          12
+        ],
+        "hero": {
+          "x": 0,
+          "y": 0.5763317918777466,
+          "z": 12
+        },
+        "timeAlive": 2.999999999999999
+      },
+      "return": {
+        "t": 6082.599999904633,
+        "elapsed": null,
+        "pixels": 80199,
+        "position": [
+          0,
+          26.776331791784045,
+          30.3
+        ],
+        "quaternion": [
+          -0.42217261019412267,
+          0,
+          0,
+          0.9065154644030521
+        ],
+        "focus": [
+          0,
+          0.5763317918777466,
+          12
+        ],
+        "hero": {
+          "x": 0,
+          "y": 0.5763317918777466,
+          "z": 12
+        },
+        "timeAlive": 4.733333333333326
+      }
+    },
+    "triggered": false,
+    "census": {
+      "method": "Depth-tested opaque landmark body at recorded live camera poses; final frozen scene; at least 50 ms between samples.",
+      "samples": [
+        {
+          "t": 3168.699999809265,
+          "presentationSeconds": 0.11670000000000026,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.743777201063004,
+            30.3
+          ],
+          "quaternion": [
+            -0.42189011916302027,
+            0,
+            0,
+            0.9066469695270661
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0,
+          "pixels": 79857
+        },
+        {
+          "t": 3221.9000000953674,
+          "presentationSeconds": 0.20810000000000034,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.75863143035772,
+            30.3
+          ],
+          "quaternion": [
+            -0.4220190730838972,
+            0,
+            0,
+            0.9065869522298499
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.05320000028610229,
+          "pixels": 80010
+        },
+        {
+          "t": 3273.4000000953674,
+          "presentationSeconds": 0.2584000000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.763674269017823,
+            30.3
+          ],
+          "quaternion": [
+            -0.42206282968808667,
+            0,
+            0,
+            0.9065665821083884
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.1047000002861023,
+          "pixels": 79841
+        },
+        {
+          "t": 3323.4000000953674,
+          "presentationSeconds": 0.3084,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.76726228043431,
+            30.3
+          ],
+          "quaternion": [
+            -0.42209395607516353,
+            0,
+            0,
+            0.9065520901993542
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.15470000028610228,
+          "pixels": 79685
+        },
+        {
+          "t": 3380.4000000953674,
+          "presentationSeconds": 0.36660000000000026,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77017892336714,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221192541569938,
+            0,
+            0,
+            0.906540310890775
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.2117000002861023,
+          "pixels": 79718
+        },
+        {
+          "t": 3439.199999809265,
+          "presentationSeconds": 0.4250000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.772163171800862,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221364628230248,
+            0,
+            0,
+            0.9065322976900851
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.2705,
+          "pixels": 79807
+        },
+        {
+          "t": 3497.4000000953674,
+          "presentationSeconds": 0.4833000000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.773505633297102,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221481045365586,
+            0,
+            0,
+            0.9065268765106697
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.3287000002861023,
+          "pixels": 79888
+        },
+        {
+          "t": 3555.199999809265,
+          "presentationSeconds": 0.5417000000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.774417045710262,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221560077836168,
+            0,
+            0,
+            0.9065231961137007
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.3865,
+          "pixels": 79830
+        },
+        {
+          "t": 3605.5,
+          "presentationSeconds": 0.5917000000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.774959816296942,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221607142086822,
+            0,
+            0,
+            0.9065210043781751
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.43680000019073484,
+          "pixels": 80479
+        },
+        {
+          "t": 3664.0999999046326,
+          "presentationSeconds": 0.6500000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77540164701239,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221645452784984,
+            0,
+            0,
+            0.906519220264964
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.49540000009536744,
+          "pixels": 80010
+        },
+        {
+          "t": 3722.199999809265,
+          "presentationSeconds": 0.7083000000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.775701190661042,
+            30.3
+          ],
+          "quaternion": [
+            -0.42216714254333165,
+            0,
+            0,
+            0.9065180107183741
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.5535,
+          "pixels": 80130
+        },
+        {
+          "t": 3780.5999999046326,
+          "presentationSeconds": 0.7667000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.775904554258748,
+            30.3
+          ],
+          "quaternion": [
+            -0.42216890583388356,
+            0,
+            0,
+            0.906517189548561
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.6119000000953674,
+          "pixels": 80435
+        },
+        {
+          "t": 3830.5999999046326,
+          "presentationSeconds": 0.8166000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776025458592546,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221699541421603,
+            0,
+            0,
+            0.9065167013462059
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.6619000000953674,
+          "pixels": 80322
+        },
+        {
+          "t": 3888.4000000953674,
+          "presentationSeconds": 0.8750000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776124248504974,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221708107013199,
+            0,
+            0,
+            0.9065163024412691
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.7197000002861023,
+          "pixels": 80312
+        },
+        {
+          "t": 3938.5,
+          "presentationSeconds": 0.9250000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77618308055285,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217132080331143,
+            0,
+            0,
+            0.9065160648831257
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.7698000001907349,
+          "pixels": 80473
+        },
+        {
+          "t": 3997.199999809265,
+          "presentationSeconds": 0.9833000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77623097151534,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217173603975316,
+            0,
+            0,
+            0.9065158715042893
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.8285,
+          "pixels": 79977
+        },
+        {
+          "t": 4055.300000190735,
+          "presentationSeconds": 1.0418000000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776263530758285,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221720183426412,
+            0,
+            0,
+            0.906515740033509
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.8866000003814697,
+          "pixels": 80153
+        },
+        {
+          "t": 4105.300000190735,
+          "presentationSeconds": 1.0916000000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77628281538989,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221721855486218,
+            0,
+            0,
+            0.9065156621642563
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.9366000003814697,
+          "pixels": 80177
+        },
+        {
+          "t": 4163.199999809265,
+          "presentationSeconds": 1.1496000000000004,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776298521292635,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221723217253779,
+            0,
+            0,
+            0.9065155987455505
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.9945,
+          "pixels": 80031
+        },
+        {
+          "t": 4213.400000095367,
+          "presentationSeconds": 1.1999000000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776308000092975,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221724039104958,
+            0,
+            0,
+            0.9065155604712106
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.0447000002861022,
+          "pixels": 80169
+        },
+        {
+          "t": 4263.800000190735,
+          "presentationSeconds": 1.2500000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77631475568027,
+            30.3
+          ],
+          "quaternion": [
+            -0.422172462484207,
+            0,
+            0,
+            0.9065155331929071
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.0951000003814697,
+          "pixels": 80040
+        },
+        {
+          "t": 4321.699999809265,
+          "presentationSeconds": 1.308300000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776320242013576,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217251005295126,
+            0,
+            0,
+            0.9065155110397123
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.153,
+          "pixels": 80265
+        },
+        {
+          "t": 4376,
+          "presentationSeconds": 1.3500000000000008,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776323045202318,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217253435773433,
+            0,
+            0,
+            0.9065154997207537
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.2073000001907348,
+          "pixels": 80123
+        },
+        {
+          "t": 4427.900000095367,
+          "presentationSeconds": 1.408300000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776325861979757,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217255878033344,
+            0,
+            0,
+            0.9065154883469261
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.2592000002861023,
+          "pixels": 80130
+        },
+        {
+          "t": 4478,
+          "presentationSeconds": 1.4583000000000013,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776327542920168,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221725733547648,
+            0,
+            0,
+            0.9065154815594798
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.309300000190735,
+          "pixels": 80269
+        },
+        {
+          "t": 4530.400000095367,
+          "presentationSeconds": 1.5166000000000008,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776328911253536,
+            30.3
+          ],
+          "quaternion": [
+            -0.422172585218766,
+            0,
+            0,
+            0.9065154760343057
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.3617000002861024,
+          "pixels": 80312
+        },
+        {
+          "t": 4588.599999904633,
+          "presentationSeconds": 1.5750000000000017,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776329840230655,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221725932733712,
+            0,
+            0,
+            0.9065154722832021
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.4199000000953674,
+          "pixels": 79899
+        },
+        {
+          "t": 4638.599999904633,
+          "presentationSeconds": 1.625000000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776330393461496,
+            30.3
+          ],
+          "quaternion": [
+            -0.422172598070105,
+            0,
+            0,
+            0.9065154700493189
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.4699000000953675,
+          "pixels": 80238
+        },
+        {
+          "t": 4688.599999904633,
+          "presentationSeconds": 1.6749000000000018,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776330789200486,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726015013208,
+            0,
+            0,
+            0.9065154684513701
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.5199000000953675,
+          "pixels": 80050
+        },
+        {
+          "t": 4746.900000095367,
+          "presentationSeconds": 1.7333000000000027,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331112555482,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726043049385,
+            0,
+            0,
+            0.9065154671456995
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.5782000002861023,
+          "pixels": 79805
+        },
+        {
+          "t": 4797.199999809265,
+          "presentationSeconds": 1.783300000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633130512207,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726059745681,
+            0,
+            0,
+            0.9065154663681376
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.6285,
+          "pixels": 79763
+        },
+        {
+          "t": 4855.099999904633,
+          "presentationSeconds": 1.841800000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633146231647,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726073375066,
+            0,
+            0,
+            0.9065154657334047
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.6864000000953674,
+          "pixels": 79715
+        },
+        {
+          "t": 4913.300000190735,
+          "presentationSeconds": 1.9000000000000026,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633156829931,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217260825642033,
+            0,
+            0,
+            0.906515465305458
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.7446000003814697,
+          "pixels": 79869
+        },
+        {
+          "t": 4972.300000190735,
+          "presentationSeconds": 1.9584000000000024,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331640401473,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217260888157515,
+            0,
+            0,
+            0.9065154650143177
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.8036000003814698,
+          "pixels": 79932
+        },
+        {
+          "t": 5030.400000095367,
+          "presentationSeconds": 2.016600000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331689114368,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217260930393535,
+            0,
+            0,
+            0.9065154648176207
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.8617000002861024,
+          "pixels": 79804
+        },
+        {
+          "t": 5088.400000095367,
+          "presentationSeconds": 2.0750000000000024,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331722254692,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726095912753,
+            0,
+            0,
+            0.9065154646838037
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.9197000002861022,
+          "pixels": 79708
+        },
+        {
+          "t": 5146.800000190735,
+          "presentationSeconds": 2.1334000000000017,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331744707544,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726097859505,
+            0,
+            0,
+            0.9065154645931417
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.9781000003814697,
+          "pixels": 79879
+        },
+        {
+          "t": 5205.400000095367,
+          "presentationSeconds": 2.1916000000000015,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331759876896,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217260991747496,
+            0,
+            0,
+            0.9065154645318896
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.0367000002861024,
+          "pixels": 79885
+        },
+        {
+          "t": 5263.699999809265,
+          "presentationSeconds": 2.2500000000000018,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.7763317701969,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261000695355,
+            0,
+            0,
+            0.9065154644902186
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.095,
+          "pixels": 80103
+        },
+        {
+          "t": 5321.800000190735,
+          "presentationSeconds": 2.308300000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331777178996,
+            30.3
+          ],
+          "quaternion": [
+            -0.422172610067491,
+            0,
+            0,
+            0.9065154644620258
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.1531000003814698,
+          "pixels": 79856
+        },
+        {
+          "t": 5371.900000095367,
+          "presentationSeconds": 2.358300000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633178134563,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101036174,
+            0,
+            0,
+            0.9065154644452014
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.203200000286102,
+          "pixels": 79788
+        },
+        {
+          "t": 5430.5,
+          "presentationSeconds": 2.416700000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331784742148,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261013306656,
+            0,
+            0,
+            0.9065154644314866
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.261800000190735,
+          "pixels": 79882
+        },
+        {
+          "t": 5488.5,
+          "presentationSeconds": 2.474900000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633178703687,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101529628,
+            0,
+            0,
+            0.9065154644222208
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.319800000190735,
+          "pixels": 79802
+        },
+        {
+          "t": 5546.900000095367,
+          "presentationSeconds": 2.5333000000000014,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633178859801,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101664985,
+            0,
+            0,
+            0.906515464415917
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.3782000002861023,
+          "pixels": 79992
+        },
+        {
+          "t": 5597.599999904633,
+          "presentationSeconds": 2.5833000000000013,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633178952771,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101745593,
+            0,
+            0,
+            0.906515464412163
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.4289000000953673,
+          "pixels": 79866
+        },
+        {
+          "t": 5655.099999904633,
+          "presentationSeconds": 2.641700000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331790285575,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261018113034,
+            0,
+            0,
+            0.9065154644091028
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.4864000000953674,
+          "pixels": 79866
+        },
+        {
+          "t": 5705.300000190735,
+          "presentationSeconds": 2.6916000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331790736148,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101850371,
+            0,
+            0,
+            0.9065154644072834
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.53660000038147,
+          "pixels": 79906
+        },
+        {
+          "t": 5764,
+          "presentationSeconds": 2.750000000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331791104305,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261018822905,
+            0,
+            0,
+            0.9065154644057968
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.595300000190735,
+          "pixels": 80408
+        },
+        {
+          "t": 5822,
+          "presentationSeconds": 2.808300000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331791353382,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101903887,
+            0,
+            0,
+            0.906515464404791
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.6533000001907348,
+          "pixels": 80064
+        },
+        {
+          "t": 5879.699999809265,
+          "presentationSeconds": 2.8663000000000007,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633179152154,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101918467,
+            0,
+            0,
+            0.9065154644041121
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.711,
+          "pixels": 80299
+        },
+        {
+          "t": 5930.5,
+          "presentationSeconds": 2.9167,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331791623193,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261019272806,
+            0,
+            0,
+            0.9065154644037017
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.761800000190735,
+          "pixels": 80236
+        },
+        {
+          "t": 5988.5,
+          "presentationSeconds": 2.9749,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331791705054,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101934378,
+            0,
+            0,
+            0.906515464403371
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.819800000190735,
+          "pixels": 79744
+        },
+        {
+          "t": 6046.800000190735,
+          "presentationSeconds": 3.0333,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331791760747,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101939207,
+            0,
+            0,
+            0.9065154644031462
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.87810000038147,
+          "pixels": 79810
+        },
+        {
+          "t": 6097.599999904633,
+          "presentationSeconds": 3.0748999999999995,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633179178909,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101941666,
+            0,
+            0,
+            0.9065154644030317
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.9289000000953673,
+          "pixels": 79767
+        },
+        {
+          "t": 6152.900000095367,
+          "presentationSeconds": 3.1332999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633179181768,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101944143,
+            0,
+            0,
+            0.9065154644029164
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.984200000286102,
+          "pixels": 79786
+        },
+        {
+          "t": 6211.5,
+          "presentationSeconds": 3.191699999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331791837052,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101945823,
+            0,
+            0,
+            0.906515464402838
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 3.0428000001907347,
+          "pixels": 79994
+        },
+        {
+          "t": 6263.800000190735,
+          "presentationSeconds": 3.249999999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331791850158,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261019469593,
+            0,
+            0,
+            0.9065154644027852
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 3.09510000038147,
+          "pixels": 79642
+        }
+      ]
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "14",
+      "assetPrefetchTotal": "19",
+      "assetPrefetchProgress": "14/19",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "2",
+      "assetPrefetchTarget": "e1-twin-banks",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "24000000",
+      "assetPrefetchBytes": "27261812",
+      "assetPrefetchTownState": "ready",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "30",
+      "assetLoadingTotal": "30",
+      "assetLoadingProgress": "30/30",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "1.6",
+      "cssAspect": "1.6",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e1-night-shift",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "night-shift-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "1920",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "1351",
+      "heroSheet": "young",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "world-shader",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotSculptWater": "living-water-quad",
+      "terrain3dPilotSculptWaterHalfWidth": "6.250",
+      "terrain3dPilotSculptWaterSimHalfWidth": "6.250",
+      "terrain3dPilotSculptWaterY": "-0.0421",
+      "terrain3dPilotSculptWaterGlints": "0",
+      "terrain3dPilotSculptWaterDeepest": "0.428",
+      "terrain3dPilotSculptWaterFords": "center-ford@0",
+      "terrain3dPilotHiddenRelief": "6",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+      "terrain3dPilotContinuation": "sculpt-edge-continuation",
+      "terrain3dPilotHorizonApron": "plain",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "5",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"seven_lantern_terraces\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.477,\"topY\":1.906},{\"id\":\"lampworks_yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.622,\"topY\":6.422},{\"id\":\"dark_rock_shoulders\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.384,\"topY\":6.676},{\"id\":\"central_ford\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.183,\"topY\":0.178},{\"id\":\"night_work_road\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.352,\"topY\":3.021}]}",
+      "terrain3dPilotLandmarks": "5",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0}]"
+    }
+  },
+  {
+    "width": 390,
+    "arm": "before",
+    "entry": {
+      "mountId": "lampworks_yard",
+      "reason": "The plate's foreground working yard and lamp rig establish the night work beside the lantern route; this is the declared yard mount at (8,18)."
+    },
+    "declared": true,
+    "errors": [],
+    "frames": {
+      "rest": {
+        "t": 3551.2999997138977,
+        "elapsed": null,
+        "pixels": 14963,
+        "position": [
+          0,
+          26.774957069599992,
+          30.3
+        ],
+        "quaternion": [
+          -0.422160690392084,
+          0,
+          0,
+          0.9065210154694039
+        ],
+        "focus": [
+          0,
+          0.5763317918777466,
+          12
+        ],
+        "hero": {
+          "x": 0,
+          "y": 0.5763317918777466,
+          "z": 12
+        },
+        "timeAlive": 2.1666666666666687
+      }
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "6",
+      "assetPrefetchTotal": "12",
+      "assetPrefetchProgress": "6/12",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "12000000",
+      "assetPrefetchBytes": "14087836",
+      "assetPrefetchTownState": "partial",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "30",
+      "assetLoadingTotal": "30",
+      "assetLoadingProgress": "30/30",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "0.46208530805687204",
+      "cssAspect": "0.46208530805687204",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e1-night-shift",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "night-shift-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "1920",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "1351",
+      "heroSheet": "young",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "world-shader",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotSculptWater": "living-water-quad",
+      "terrain3dPilotSculptWaterHalfWidth": "6.250",
+      "terrain3dPilotSculptWaterSimHalfWidth": "6.250",
+      "terrain3dPilotSculptWaterY": "-0.0421",
+      "terrain3dPilotSculptWaterGlints": "0",
+      "terrain3dPilotSculptWaterDeepest": "0.428",
+      "terrain3dPilotSculptWaterFords": "center-ford@0",
+      "terrain3dPilotHiddenRelief": "6",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+      "terrain3dPilotContinuation": "sculpt-edge-continuation",
+      "terrain3dPilotHorizonApron": "plain",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "5",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"seven_lantern_terraces\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.477,\"topY\":1.906},{\"id\":\"lampworks_yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.622,\"topY\":6.422},{\"id\":\"dark_rock_shoulders\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.384,\"topY\":6.676},{\"id\":\"central_ford\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.183,\"topY\":0.178},{\"id\":\"night_work_road\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.352,\"topY\":3.021}]}",
+      "terrain3dPilotLandmarks": "5",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0}]"
+    }
+  },
+  {
+    "width": 390,
+    "arm": "after",
+    "entry": {
+      "mountId": "lampworks_yard",
+      "reason": "The plate's foreground working yard and lamp rig establish the night work beside the lantern route; this is the declared yard mount at (8,18)."
+    },
+    "declared": true,
+    "errors": [],
+    "frames": {
+      "peak": {
+        "t": 4196.599999904633,
+        "elapsed": null,
+        "pixels": 9345,
+        "position": [
+          0,
+          26.77631381043364,
+          30.3
+        ],
+        "quaternion": [
+          -0.42217245428853245,
+          0,
+          0,
+          0.9065155370097068
+        ],
+        "focus": [
+          0,
+          0.5763317918777466,
+          12
+        ],
+        "hero": {
+          "x": 0,
+          "y": 0.5763317918777466,
+          "z": 12
+        },
+        "timeAlive": 2.8999999999999995
+      },
+      "return": {
+        "t": 5787.5,
+        "elapsed": null,
+        "pixels": 9348,
+        "position": [
+          0,
+          26.776331791434473,
+          30.3
+        ],
+        "quaternion": [
+          -0.42217261019109176,
+          0,
+          0,
+          0.9065154644044637
+        ],
+        "focus": [
+          0,
+          0.5763317918777466,
+          12
+        ],
+        "hero": {
+          "x": 0,
+          "y": 0.5763317918777466,
+          "z": 12
+        },
+        "timeAlive": 4.499999999999994
+      }
+    },
+    "triggered": false,
+    "census": {
+      "method": "Depth-tested opaque landmark body at recorded live camera poses; final frozen scene; at least 50 ms between samples.",
+      "samples": [
+        {
+          "t": 3041.199999809265,
+          "presentationSeconds": 0.09169999999999982,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.72547984555318,
+            30.3
+          ],
+          "quaternion": [
+            -0.42173114282504637,
+            0,
+            0,
+            0.9067209290467935
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0,
+          "pixels": 9292
+        },
+        {
+          "t": 3099.7999997138977,
+          "presentationSeconds": 0.19209999999999994,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.750293061377757,
+            30.3
+          ],
+          "quaternion": [
+            -0.4219466970416248,
+            0,
+            0,
+            0.9066206399898821
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.05859999990463257,
+          "pixels": 9301
+        },
+        {
+          "t": 3157.199999809265,
+          "presentationSeconds": 0.2505,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.75869033333662,
+            30.3
+          ],
+          "quaternion": [
+            -0.42201958424743574,
+            0,
+            0,
+            0.9065867142814423
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.116,
+          "pixels": 9342
+        },
+        {
+          "t": 3208,
+          "presentationSeconds": 0.30040000000000006,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.763682704554242,
+            30.3
+          ],
+          "quaternion": [
+            -0.4220629028738215,
+            0,
+            0,
+            0.9065665480358975
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.16680000019073488,
+          "pixels": 9314
+        },
+        {
+          "t": 3265.3999996185303,
+          "presentationSeconds": 0.3587999999999997,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.76776192901132,
+            30.3
+          ],
+          "quaternion": [
+            -0.42209829013801287,
+            0,
+            0,
+            0.9065500722312948
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.22419999980926514,
+          "pixels": 9333
+        },
+        {
+          "t": 3323.699999809265,
+          "presentationSeconds": 0.41709999999999986,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.770521765771225,
+            30.3
+          ],
+          "quaternion": [
+            -0.42212222762656654,
+            0,
+            0,
+            0.9065389263256075
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.2825,
+          "pixels": 9339
+        },
+        {
+          "t": 3374.199999809265,
+          "presentationSeconds": 0.4671999999999998,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.772171500709334,
+            30.3
+          ],
+          "quaternion": [
+            -0.42213653505302773,
+            0,
+            0,
+            0.9065322640554079
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.333,
+          "pixels": 9306
+        },
+        {
+          "t": 3432,
+          "presentationSeconds": 0.5255,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.773511279965714,
+            30.3
+          ],
+          "quaternion": [
+            -0.42214815350234647,
+            0,
+            0,
+            0.9065268537084599
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.39080000019073485,
+          "pixels": 9283
+        },
+        {
+          "t": 3482.0999999046326,
+          "presentationSeconds": 0.5755,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.774310806780925,
+            30.3
+          ],
+          "quaternion": [
+            -0.42215508655892586,
+            0,
+            0,
+            0.9065236251154329
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.44090000009536745,
+          "pixels": 9298
+        },
+        {
+          "t": 3532.199999809265,
+          "presentationSeconds": 0.6254000000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.7748827270564,
+            30.3
+          ],
+          "quaternion": [
+            -0.42216004576694566,
+            0,
+            0,
+            0.9065213156666809
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.491,
+          "pixels": 9285
+        },
+        {
+          "t": 3590.0999999046326,
+          "presentationSeconds": 0.6837,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.775349383573985,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221640921118761,
+            0,
+            0,
+            0.9065194313037948
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.5489000000953674,
+          "pixels": 9298
+        },
+        {
+          "t": 3640.2999997138977,
+          "presentationSeconds": 0.7336,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.775627396127664,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221665026937921,
+            0,
+            0,
+            0.9065183086972334
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.5990999999046326,
+          "pixels": 9311
+        },
+        {
+          "t": 3690.3999996185303,
+          "presentationSeconds": 0.7837999999999999,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.775827742781484,
+            30.3
+          ],
+          "quaternion": [
+            -0.42216823983207435,
+            0,
+            0,
+            0.9065174997081346
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.6491999998092651,
+          "pixels": 9290
+        },
+        {
+          "t": 3740.5,
+          "presentationSeconds": 0.8338,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77597062491821,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221694787042833,
+            0,
+            0,
+            0.9065169227601622
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.6993000001907349,
+          "pixels": 9279
+        },
+        {
+          "t": 3798.2999997138977,
+          "presentationSeconds": 0.8918,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776086444843028,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221704829247,
+            0,
+            0,
+            0.9065164550889993
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.7570999999046326,
+          "pixels": 9304
+        },
+        {
+          "t": 3848.5,
+          "presentationSeconds": 0.9422000000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77615646121779,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221710900011315,
+            0,
+            0,
+            0.9065161723693937
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.8073000001907349,
+          "pixels": 9319
+        },
+        {
+          "t": 3898.7999997138977,
+          "presentationSeconds": 0.9921000000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776206078188988,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221715202034078,
+            0,
+            0,
+            0.9065159720209808
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.8575999999046325,
+          "pixels": 9298
+        },
+        {
+          "t": 3948.8999996185303,
+          "presentationSeconds": 1.0422000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77624177411543,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217182970307526,
+            0,
+            0,
+            0.9065158278845206
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.9076999998092652,
+          "pixels": 9336
+        },
+        {
+          "t": 4007.3999996185303,
+          "presentationSeconds": 1.100500000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776270763415884,
+            30.3
+          ],
+          "quaternion": [
+            -0.422172081052886,
+            0,
+            0,
+            0.906515710828817
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 0.9661999998092652,
+          "pixels": 9316
+        },
+        {
+          "t": 4065.199999809265,
+          "presentationSeconds": 1.1588000000000005,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776290417008372,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221722514578517,
+            0,
+            0,
+            0.9065156314697548
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.024,
+          "pixels": 9337
+        },
+        {
+          "t": 4115.299999713898,
+          "presentationSeconds": 1.2087000000000012,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776302125717518,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221723529772365,
+            0,
+            0,
+            0.9065155841912833
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.0740999999046326,
+          "pixels": 9292
+        },
+        {
+          "t": 4173.799999713898,
+          "presentationSeconds": 1.267100000000001,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77631169280511,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221724359278261,
+            0,
+            0,
+            0.9065155455604528
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.1325999999046326,
+          "pixels": 9326
+        },
+        {
+          "t": 4232,
+          "presentationSeconds": 1.3254000000000012,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776318165506055,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221724920487868,
+            0,
+            0,
+            0.906515519424415
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.1908000001907348,
+          "pixels": 9309
+        },
+        {
+          "t": 4282.199999809265,
+          "presentationSeconds": 1.3755000000000008,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776322034662762,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217252559594703,
+            0,
+            0,
+            0.9065155038011977
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.241,
+          "pixels": 9319
+        },
+        {
+          "t": 4340.799999713898,
+          "presentationSeconds": 1.4338000000000013,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77632517687414,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221725528401911,
+            0,
+            0,
+            0.9065154911133048
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.2995999999046326,
+          "pixels": 9306
+        },
+        {
+          "t": 4398.199999809265,
+          "presentationSeconds": 1.4916000000000018,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776327292194473,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217257118087204,
+            0,
+            0,
+            0.9065154825718815
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.357,
+          "pixels": 9359
+        },
+        {
+          "t": 4448.599999904633,
+          "presentationSeconds": 1.5421000000000018,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776328578443113,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217258233316574,
+            0,
+            0,
+            0.9065154773781563
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.4074000000953675,
+          "pixels": 9377
+        },
+        {
+          "t": 4498.599999904633,
+          "presentationSeconds": 1.5921000000000018,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776329489351216,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217259023110537,
+            0,
+            0,
+            0.9065154737000133
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.4574000000953675,
+          "pixels": 9352
+        },
+        {
+          "t": 4548.799999713898,
+          "presentationSeconds": 1.6421000000000021,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776330142045392,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217259589022627,
+            0,
+            0,
+            0.9065154710645085
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.5075999999046326,
+          "pixels": 9314
+        },
+        {
+          "t": 4607.099999904633,
+          "presentationSeconds": 1.7004000000000026,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776330673357037,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726004969117,
+            0,
+            0,
+            0.9065154689191328
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.5659000000953673,
+          "pixels": 9303
+        },
+        {
+          "t": 4664.89999961853,
+          "presentationSeconds": 1.7584000000000028,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331032047057,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726036068982,
+            0,
+            0,
+            0.9065154674707833
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.6236999998092652,
+          "pixels": 9308
+        },
+        {
+          "t": 4723.39999961853,
+          "presentationSeconds": 1.8171000000000026,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633127811463,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217260574040283,
+            0,
+            0,
+            0.9065154664771906
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.6821999998092652,
+          "pixels": 9306
+        },
+        {
+          "t": 4773.799999713898,
+          "presentationSeconds": 1.8671000000000029,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633142375039,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726070031232,
+            0,
+            0,
+            0.9065154658891301
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.7325999999046326,
+          "pixels": 9284
+        },
+        {
+          "t": 4831.39999961853,
+          "presentationSeconds": 1.9248000000000027,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331541301737,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217260802234063,
+            0,
+            0,
+            0.906515465414471
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.790199999809265,
+          "pixels": 9301
+        },
+        {
+          "t": 4882,
+          "presentationSeconds": 1.9755000000000027,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633161316811,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726086454509,
+            0,
+            0,
+            0.9065154651242828
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.8408000001907348,
+          "pixels": 9317
+        },
+        {
+          "t": 4940.599999904633,
+          "presentationSeconds": 2.033800000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331670719724,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726091444465,
+            0,
+            0,
+            0.906515464891896
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.8994000000953675,
+          "pixels": 9311
+        },
+        {
+          "t": 4998.5,
+          "presentationSeconds": 2.092100000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331709737423,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726094827456,
+            0,
+            0,
+            0.9065154647343472
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 1.9573000001907348,
+          "pixels": 9381
+        },
+        {
+          "t": 5048.599999904633,
+          "presentationSeconds": 2.142100000000003,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331733021635,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726096846291,
+            0,
+            0,
+            0.906515464640328
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.0074000000953673,
+          "pixels": 9340
+        },
+        {
+          "t": 5107.39999961853,
+          "presentationSeconds": 2.200500000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331752002235,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217260984919847,
+            0,
+            0,
+            0.9065154645636866
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.0661999998092653,
+          "pixels": 9334
+        },
+        {
+          "t": 5165.39999961853,
+          "presentationSeconds": 2.2588000000000026,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633176484374,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217260996053946,
+            0,
+            0,
+            0.906515464511834
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.124199999809265,
+          "pixels": 9354
+        },
+        {
+          "t": 5223.599999904633,
+          "presentationSeconds": 2.3171000000000026,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331773549764,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726100360242,
+            0,
+            0,
+            0.9065154644766801
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.1824000000953676,
+          "pixels": 9334
+        },
+        {
+          "t": 5273.799999713898,
+          "presentationSeconds": 2.3671000000000024,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331778745174,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261008107043,
+            0,
+            0,
+            0.9065154644557015
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.2325999999046324,
+          "pixels": 9351
+        },
+        {
+          "t": 5332,
+          "presentationSeconds": 2.4254000000000024,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633178297438,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261011773943,
+            0,
+            0,
+            0.9065154644386246
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.290800000190735,
+          "pixels": 9324
+        },
+        {
+          "t": 5390.299999713898,
+          "presentationSeconds": 2.483800000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331785845638,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101426343,
+            0,
+            0,
+            0.9065154644270308
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.3490999999046327,
+          "pixels": 9356
+        },
+        {
+          "t": 5440.599999904633,
+          "presentationSeconds": 2.5338000000000016,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331787555552,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261015746005,
+            0,
+            0,
+            0.9065154644201262
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.3994000000953672,
+          "pixels": 9332
+        },
+        {
+          "t": 5498.5,
+          "presentationSeconds": 2.592100000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633178894747,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261016952845,
+            0,
+            0,
+            0.9065154644145059
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.457300000190735,
+          "pixels": 9363
+        },
+        {
+          "t": 5548.699999809265,
+          "presentationSeconds": 2.6421000000000023,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331789778112,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101767304,
+            0,
+            0,
+            0.9065154644111519
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.5075,
+          "pixels": 9333
+        },
+        {
+          "t": 5607.299999713898,
+          "presentationSeconds": 2.700500000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331790455227,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101826013,
+            0,
+            0,
+            0.9065154644084178
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.566099999904633,
+          "pixels": 9330
+        },
+        {
+          "t": 5665.199999809265,
+          "presentationSeconds": 2.758800000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633179091334,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101865733,
+            0,
+            0,
+            0.9065154644065679
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.624,
+          "pixels": 9363
+        },
+        {
+          "t": 5715.299999713898,
+          "presentationSeconds": 2.8087000000000026,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331791186255,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101889396,
+            0,
+            0,
+            0.906515464405466
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.6740999999046324,
+          "pixels": 9325
+        },
+        {
+          "t": 5773.699999809265,
+          "presentationSeconds": 2.867100000000002,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.776331791409255,
+            30.3
+          ],
+          "quaternion": [
+            -0.4221726101908731,
+            0,
+            0,
+            0.9065154644045655
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.7325,
+          "pixels": 9320
+        },
+        {
+          "t": 5831.699999809265,
+          "presentationSeconds": 2.9255000000000013,
+          "elapsed": null,
+          "checked": true,
+          "position": [
+            0,
+            26.77633179156034,
+            30.3
+          ],
+          "quaternion": [
+            -0.42217261019218305,
+            0,
+            0,
+            0.9065154644039555
+          ],
+          "focus": [
+            0,
+            0.5763317918777466,
+            12
+          ],
+          "seconds": 2.7905,
+          "pixels": 9399
+        }
+      ]
+    },
+    "dataset": {
+      "assetPrefetchScene": "run",
+      "assetPrefetchState": "allowance",
+      "assetPrefetchReady": "6",
+      "assetPrefetchTotal": "12",
+      "assetPrefetchProgress": "6/12",
+      "assetPrefetchFailed": "0",
+      "assetPrefetchPriority": "1",
+      "assetPrefetchTarget": "town",
+      "assetPrefetchSaveData": "false",
+      "assetPrefetchEnabled": "true",
+      "assetPrefetchAllowance": "12000000",
+      "assetPrefetchBytes": "14087836",
+      "assetPrefetchTownState": "partial",
+      "spriteClipGroups": "claim town",
+      "railcar3dState": "off",
+      "railcar3dSource": "billboard",
+      "railcar3dMounted": "false",
+      "railcar3dDamageStates": "{\"wheels\":\"intact\",\"boiler\":\"intact\",\"cabin\":\"intact\"}",
+      "bossBarVisible": "false",
+      "bossBarSemantic": "none",
+      "bossBarRemaining": "0",
+      "bossBarDepleted": "0",
+      "bossBarRemainingColor": "#6bb36b",
+      "bossBarDepletedColor": "#a0522d",
+      "bossBarComponent": "shared",
+      "bossBarAnchor": "none",
+      "bossBarOrientation": "none",
+      "bossBarPosition": "none",
+      "crawler3dState": "off",
+      "crawler3dSource": "placeholder",
+      "crawler3dMounted": "false",
+      "crawler3dDamageStates": "{\"drain_mast\":\"intact\",\"tracks\":\"intact\",\"capacitor_bank\":\"intact\"}",
+      "dredgeQueen3dState": "off",
+      "dredgeQueen3dSource": "placeholder",
+      "dredgeQueen3dMounted": "false",
+      "dredgeQueen3dPresentation": "hidden",
+      "dredgeQueen3dDamageStates": "{\"claw\":\"intact\",\"paddle_port\":\"intact\",\"paddle_starboard\":\"intact\",\"hold\":\"intact\"}",
+      "salvageClaw3dState": "off",
+      "salvageClaw3dSource": "placeholder",
+      "salvageClaw3dMounted": "false",
+      "salvageClaw3dPresentation": "hidden",
+      "homemaker3dState": "off",
+      "homemaker3dSource": "placeholder",
+      "homemaker3dMounted": "false",
+      "homemaker3dPresentation": "hidden",
+      "homemaker3dDamageStates": "{\"vac\":\"intact\",\"rack\":\"intact\",\"core\":\"intact\"}",
+      "oldDigger3dState": "off",
+      "oldDigger3dSource": "placeholder",
+      "oldDigger3dMounted": "false",
+      "oldDigger3dPresentation": "hidden",
+      "assetLoadingLabel": "the claim",
+      "assetLoadingReady": "30",
+      "assetLoadingTotal": "30",
+      "assetLoadingProgress": "30/30",
+      "assetLoadingState": "ready",
+      "engine": "three.js r184",
+      "terrain3dPilotState": "ready",
+      "terrain3dPilotRenderSource": "glb",
+      "run3dPilotState": "ready",
+      "nightPoolSurfaceSources": "0",
+      "nightPoolSurfaceMaxRadius": "0",
+      "cameraAspect": "0.46208530805687204",
+      "cssAspect": "0.46208530805687204",
+      "prospectorSkin": "stock",
+      "prospectorSheet": "stock",
+      "run3dPilotMeshes": "0",
+      "run3dPilotTriangles": "0",
+      "terrain3dPilotContract": "e1-night-shift",
+      "terrain3dPilotTerrainLoadState": "mounted",
+      "terrain3dPilotPanoramaLoadState": "mounted",
+      "terrain3dPilotLandmarkLoadState": "mounted",
+      "terrain3dPilotHeightSource": "baked-grid",
+      "terrain3dPilotMeshes": "1",
+      "terrain3dPilotTriangles": "32768",
+      "terrain3dPilotMaterials": "1",
+      "terrain3dPilotVertices": "16641",
+      "terrain3dPilotPanorama": "night-shift-panorama",
+      "terrain3dPilotPanoramaMeshes": "1",
+      "terrain3dPilotPanoramaTriangles": "1920",
+      "terrain3dPilotPanoramaMaterials": "1",
+      "terrain3dPilotPanoramaVertices": "1351",
+      "heroSheet": "young",
+      "heroSkin": "stock",
+      "heroSkinSheet": "stock",
+      "terrain3dPilotNightPools": "world-shader",
+      "terrain3dPilotNightPoolSources": "0",
+      "terrain3dPilotSpringPonds": "0",
+      "terrain3dPilotSpringPondWaterRadii": "[]",
+      "terrain3dPilotChannelWater": "0",
+      "terrain3dPilotFordWater": "0",
+      "terrain3dPilotChannelWaterHalfWidths": "[]",
+      "terrain3dPilotSculptWater": "living-water-quad",
+      "terrain3dPilotSculptWaterHalfWidth": "6.250",
+      "terrain3dPilotSculptWaterSimHalfWidth": "6.250",
+      "terrain3dPilotSculptWaterY": "-0.0421",
+      "terrain3dPilotSculptWaterGlints": "0",
+      "terrain3dPilotSculptWaterDeepest": "0.428",
+      "terrain3dPilotSculptWaterFords": "center-ford@0",
+      "terrain3dPilotHiddenRelief": "6",
+      "terrain3dPilotHiddenGroundLayers": "TerrainVistaRing|TerrainReliefMesh|terrain.river|terrain.ford|FordSteppingStones|SpringPonds",
+      "terrain3dPilotContinuation": "sculpt-edge-continuation",
+      "terrain3dPilotHorizonApron": "plain",
+      "terrain3dPilotFarGroundProbe": "off",
+      "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+      "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+      "terrain3dPilotPanoramaFog": "excluded",
+      "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+      "terrain3dPilotLandmarkExpected": "5",
+      "terrain3dPilotWalkSurfaces": "0",
+      "terrain3dPilotLandmarkEmissive": "3",
+      "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":5,\"closed\":5,\"open\":0,\"culled\":5,\"doubleSided\":0},\"mounts\":[{\"id\":\"seven_lantern_terraces\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.477,\"topY\":1.906},{\"id\":\"lampworks_yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.622,\"topY\":6.422},{\"id\":\"dark_rock_shoulders\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.384,\"topY\":6.676},{\"id\":\"central_ford\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.183,\"topY\":0.178},{\"id\":\"night_work_road\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.352,\"topY\":3.021}]}",
+      "terrain3dPilotLandmarks": "5",
+      "terrain3dPilotLandmarkSkipped": "0",
+      "terrain3dPilotLandmarkDiagnostics": "",
+      "terrain3dPilotLandmarkMounts": "[{\"id\":\"seven_lantern_terraces\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"lampworks_yard\",\"x\":8,\"y\":0.6566582322120667,\"z\":18},{\"id\":\"dark_rock_shoulders\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"central_ford\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0},{\"id\":\"night_work_road\",\"x\":0,\"y\":-0.10067999362945557,\"z\":0}]",
+      "terrain3dPilotLandmarkMaterials": "[{\"id\":\"seven_lantern_terraces\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"lampworks_yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"dark_rock_shoulders\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"central_ford\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0},{\"id\":\"night_work_road\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[1,1],\"authoredEmissive\":[],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.9,\"metalness\":0}]"
+    }
+  }
+]

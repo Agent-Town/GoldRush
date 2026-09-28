@@ -1,0 +1,57 @@
+{
+  "storeBase": "9e33801ab1a2f2349fce6929f576a81a6611a7e2",
+  "base": "94d2f12723900b14973345563403ec4a0191001a",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/dead-band/dead-band-landmark-pack-contract.json": {
+      "candidateSha256": "8b1c96d19e8f89a6f567237f5268d078ae1ef30683049cd423d92b8e3d0014d1",
+      "baseSha256": "6beddd199dd657c040e94ece2f6a60893eef2e1de363214c8bcfc62b57bed24c"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dead-band/dead-band-landmarks.blend": {
+      "candidateSha256": "4611f6c75c0e8e102e77fdfb9c1af62700d4da89d4e831b9c2022fda68fbd48f",
+      "baseSha256": "c3e95a973cfdc4c951716403773137bf6fc373233d0a16e8120e535f47beb7dc"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dead-band/iron-shadow-warning-frame.glb": {
+      "candidateSha256": "c22c7bdc3f29f155617df7da394935c29b1670eed9155d65650a8eb912de9eda",
+      "baseSha256": "306aaf65231ce1da69a5c27c5dd57c81e8312bdc9f0742092536e5c335481f94"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dead-band/north-silence-gate.glb": {
+      "candidateSha256": "e5f0e7d5a24aab782c87d1b4f91d526fb6c276fa4d731bac014c188fb620bc64",
+      "baseSha256": "b92eec113c392515270b6aed8266ee78bc2133172badb0b8be9dd8575c32d17d"
+    }
+  },
+  "pattern": "HUMAN\\ PARITY:\\ a\\ plain\\-boot\\ player\\ records\\ and\\ delegates\\ a\\ patrol\\ through\\ the\\ shared\\ latch|S3\\ silences\\ wait\\ for\\ midpoint,\\ darken\\ in\\ canon\\ order,\\ and\\ arm\\ the\\ last\\ beat\\ exactly\\ once|T10\\ THE\\ CHARTER\\ PRESS:\\ the\\ E10\\ science\\ ceiling\\ opens\\ the\\ existing\\ River\\ finale\\ and\\ idle\\ opens\\ nothing|T6\\ THE\\ CALCULATING\\ HOUSE:\\ mounting\\ the\\ plate\\ arms\\ E7\\ exactly\\ once\\ and\\ the\\ era\\ survives\\ reload|all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|plain\\ Signal\\-era\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+  "specs": [
+    "e2e/ceremony-framework.spec.ts",
+    "e2e/e7-playbook-rows.spec.ts",
+    "e2e/e7-roster.spec.ts",
+    "e2e/e7-signal-systems.spec.ts",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "6655ba7569775a529216d58cf8f288556ca9fc19cfd7bbeae41dbeb9a99adf33",
+  "baseEngine": "e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e7-dead-band-base-failures/test-results",
+    "--grep",
+    "HUMAN\\ PARITY:\\ a\\ plain\\-boot\\ player\\ records\\ and\\ delegates\\ a\\ patrol\\ through\\ the\\ shared\\ latch|S3\\ silences\\ wait\\ for\\ midpoint,\\ darken\\ in\\ canon\\ order,\\ and\\ arm\\ the\\ last\\ beat\\ exactly\\ once|T10\\ THE\\ CHARTER\\ PRESS:\\ the\\ E10\\ science\\ ceiling\\ opens\\ the\\ existing\\ River\\ finale\\ and\\ idle\\ opens\\ nothing|T6\\ THE\\ CALCULATING\\ HOUSE:\\ mounting\\ the\\ plate\\ arms\\ E7\\ exactly\\ once\\ and\\ the\\ era\\ survives\\ reload|all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|plain\\ Signal\\-era\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+    "e2e/ceremony-framework.spec.ts",
+    "e2e/e7-playbook-rows.spec.ts",
+    "e2e/e7-roster.spec.ts",
+    "e2e/e7-signal-systems.spec.ts",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e7-dead-band-fidelity-2/landmark-input-contract.json": "6beddd199dd657c040e94ece2f6a60893eef2e1de363214c8bcfc62b57bed24c"
+  },
+  "restoredEngine": "6655ba7569775a529216d58cf8f288556ca9fc19cfd7bbeae41dbeb9a99adf33",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e7-dead-band-base-failures/tests.log"
+}

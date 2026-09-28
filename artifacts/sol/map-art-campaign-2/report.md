@@ -355,3 +355,660 @@ Engine `011419f4873aebb9a8d9d6580844dbf02d116813898fdcc98579cfbf39a88ebe` → `e
 Declared bridge 7 m, boiler 3 m and stock 8 m stations fit both views. Persistent phone HUD: bridge **11.55%**, boiler **<0.03%**, stock **23.01%**. The wide approach at 9 m remains side-cropped with **12.98%** phone coverage; farther views worsen it. The phone entry bridge and stock are wholly offscreen. Those holds belong to the camera/UI owner via Claude; visible shared-rail joins and bare ends belong to the rail-presentation owner. [Every clause, inspected boards, metrics and evidence](run-3/e2-trestle/review.md).
 
 Four runs per actual source/GLB arm and width: frozen p95 8.60→9.00 ms desktop / 9.00→9.05 phone; live crossing pooled 8.80→9.10 / 9.40→9.10, comparable fast 8.80→9.00 / 8.90→9.10. Unmatched slow samples are retained, not compared as a shared mode. Draw and triangle ranges are unchanged. TypeScript/default/full builds and 34 render guards pass. Browser closeout is recorded in the linked review. Engine `e993b9ec062d5d02e2b503c2edf42ab8bf600c9074381e01d8634a4758b03d7b` → `9582fb444b805f2a16b85b3720834fd7d12091e8cf48a96a6862c45b1afcad80`; pin untouched.
+
+## Fourth run — 2026-09-21 (task sol-map-art-corrections-2)
+
+Execution began 2026-09-20 local; the run-4 date label follows the dispatch. Capped at three maps: Pressure Garden, Incline, Canyon Works. Code base `45607635ac06140e69b4388d7b7f83d5f4e3197d`, store base `3673f34`; both clean after install/default build. The setup node_modules symlink was replaced by npm install. Store symlinks resolve. No ahead work or initial evidence was discarded. The saved patch required adapting its final hunk to the drained single-line E2 table; both store hunks passed with strip level 2. The cited history-local Pressure Garden capture folder was absent, so every board was recaptured. Full node battery and engine pin remain drain-owned.
+
+### Pressure Garden correction — 2026-09-21 run 4
+
+2026-09-21 run 4: IMPROVED / HELD: worked-ground RMS -46.73% desktop / -43.72% phone; manifold body median +21.64% / +21.36%, emission capped at 0.45; short river flow lines improve surface direction. The declared 5 m manifold station fits phone with 0.008% persistent HUD coverage versus 44.90% at 14 m. HELD: plain-entry manifold offscreen on phone, pump 44.78% / east header 31.97% phone HUD; boiler/terrace vista remains contract/layout/camera/UI-owned. [Every clause, boards, independent review and checks](run-4/e2-pressure-garden/review.md).
+
+Four actual-source timing runs per arm: p95 9.20→9.25 ms desktop / 9.05→9.05 phone; draws unchanged 90/58. TypeScript/default/full builds, own spec, focused census and shared render checks pass. Shoreline and atlas-census failures reproduce on exact base. The named changed-since command expands to the forbidden full battery; its scope conflict is recorded for the drain, with 34 render and three named guards green.
+
+Engine `c8229bd4e2e1bd7d351255ba1460f640c8a67bc9f01c4c335ca17c27517d50a3` → `6df23d2f3b41389eb2fa89d042c96a4f593a21c7482f8c0343026f2c82137d9b`. Store `9fa06cc8e2e0f38ea8502b594f0c5aa6e1679157` pushed. Gameplay, camera, HUD, footprints and all geometry/atlas bytes are unchanged.
+
+### Incline correction — 2026-09-21 run 4
+
+**IMPROVED / HELD.** Rail-bed and yard RMS falls 37.86% desktop / 33.85% phone. Two return cables and eight wheels complete existing service-bin details within original bounds (+392 triangles); primary body median +56.2% / +50.4%, emission 0.375. The 5 m station fits the phone with 0.27% persistent HUD versus 38.70% at 14 m. All five individual stations are below 0.34%; the full composition can still overlap adjacent bodies. Cliff/lift/cart entry vista and absent phone rail remain contract/layout/camera holds. [Every clause, boards, independent review and proof](run-4/e2-incline/review.md).
+
+Four runs per arm: p95 9.00→8.85 ms desktop / 9.15→9.15 phone, draws unchanged 76/58. Builds, 10 own/census checks, shared brightness/collision (16 pass, four skips), loading/repeat, 34 render guards and three named guards pass. Atlas, terrain, panorama, mounts/collision and original body geometry/UVs stay unchanged; all five saved bodies re-export exactly. Changed-since/full-battery conflict remains drain-owned.
+
+Engine `6df23d2f3b41389eb2fa89d042c96a4f593a21c7482f8c0343026f2c82137d9b` → `adead14c0ca88daba465162c0156d527159596f6b9b4ccb85e1732ba14c182bf`. Store `213e6776f85bc729d39fc09e120b12a781b1d697` pushed.
+
+### Canyon Works correction — 2026-09-21 run 4
+
+**IMPROVED / HELD.** FIXED the exposed-background seam: a 1 m panorama gap closes through 97 render-only inner-ring vertices, no extra triangles; seam bright pixels 734/110 → 0/0. Ground RMS falls 41.42% desktop / 32.83% phone; dynamo body median rises 35.28% / 33.51% at unchanged emission 0.45. Tracked atlas recipe reproduces both base and candidate exactly. All landmark geometry, UVs, mounts/collision and terrain geometry remain unchanged. Saved landmark and panorama sources re-export exactly.
+
+FIXED primary-body inspection framing at 3 m: phone HUD 57.27% → 0.002%. Other declared stations stay below 0.26%. HELD phone entry 27.305% and canyon vista (UI/camera/layout); a connected live pylon chain requires built beacons. Straight apron composition and machine construction remain campaign art gaps. [Every clause, boards, independent review and proof](run-4/e3-canyon-works/review.md).
+
+Four runs per arm/viewport: p95 9.75→9.80 ms desktop / 9.85→9.75 phone, draws unchanged 72/54. Builds, 12 core Canyon/crawler checks, two visual-census checks, shared brightness/collision (16 pass, four skips), loading/repeat, 34 render guards and three named guards pass. Escort expected HP39/actual40 and headless census deadline6/actual8 each fail on both projects and reproduce on exact base code+store; no assertions changed. Changed-since/full-battery conflict stays drain-owned. Engine `adead14c0ca88daba465162c0156d527159596f6b9b4ccb85e1732ba14c182bf` → `8544c803bfa47d4fd29da04b33ac01ed7f37d2fd6af2ba70c5738abc8d32ab35`. Store `068c0dbdbe99f474e099b5eff69da13b0f55851f` pushed.
+
+### Capped stop — 2026-09-21 run 4
+
+Three maps completed in order; no fourth map started. All remain improved/held for full concept fidelity. The Last Claim remains unaccepted in my judgment: the fallback does not communicate the plate's circular deck, central orrery, ornate rim or three preserve stations; portrait has no architectural context. Its sculpt-pack correction is still on the remaining list. [Ordered continuation, HUD handoff, engine pairs and gate exceptions](run-4/handoff.md).
+
+
+## Fifth run — 2026-09-20 (task sol-map-art-corrections-3)
+
+Capped at three maps, in order: Dust Flats, Long Road, Gusher County. Code base `19421c655efc2cf830f92d76bb7c3637e3a6861b`; store base `068c0dbdbe99f474e099b5eff69da13b0f55851f`. No ahead commits or unowned work; only permitted `logs/guard-stats.jsonl`. No evidence discarded. Install and initial build passed; both required store symlink probes resolve. Store work is isolated on `astra/corrections-3`; engine pins and full node battery remain drain-owned. [Preflight](run-5/preflight.json).
+
+The Last Claim verdict remains mine and remains UNACCEPTED: the plain fallback lacks the circular deck, orrery, ornate rim and preserve-station architecture; the phone has no architectural context. This run does not revisit its art.
+
+Three bounded correction passes completed in order; full concept acceptance remains held where each receipt says so. No fourth map started.
+
+### Dust Flats correction — 2026-09-20 run 5
+
+**IMPROVED / HELD.** Ground RMS -79.89% desktop / -73.89% phone, no new geometry/draws; road paint follows the existing 24 m ring and four corridors. The declared 5 m charting-post station reduces phone persistent HUD 31.57% → 0.006% (desktop 0%). Entry landmark context and central-derrick concept remain held for camera/layout and art owners; no full concept acceptance. [Every clause, final boards and gate attribution](run-5/e4-dust-flats/review.md).
+
+Builds, final plain captures, shared lighting/collision, loading/repeat and scoped guards pass. Six own failures reproduce on exact base; the initial story flake passes its final 2/2 retry. Atlas-census base failure and changed-since/full-battery scope conflict remain attributed. Four-run p95 9.30→9.25 / 9.50→9.20 ms; draws 77/52 unchanged. Engine `fd5fb81fed8b9a783e33d43b7fce6068b74179c9c7c815bb774d830a0f01d2c9` → `f314eba93a1f7304139063ecef8cad5ab46806bce335058cefa4abcfb1ef00f3`. Store `d316da20c98b0f8bce1022bfdf9b3a25e212933a`.
+
+### Long Road correction — 2026-09-20 run 5
+
+**IMPROVED / HELD.** Ground RMS -85.41% desktop / -54.02% phone; apron RMS -61.72%. Same road truth, quieter ground, 97-vertex panorama join underlap with no extra triangles. Wagon 5 m inspection station reduces phone HUD 27.35% → 0.011%; west stop 0.016%. Entry wagon still 12.369%, with horizon/stop vista and remaining body art held. [Every clause, boards and evidence](run-5/e4-long-road/review.md).
+
+Builds, four Long Road checks, shared lighting/collision, loading/repeat and scoped guards pass. Four-run p95 8.80→8.85 / 9.00→8.90 ms; draws 59/49 unchanged. Changed-since/full-battery remains drain-owned. Engine `f314eba93a1f7304139063ecef8cad5ab46806bce335058cefa4abcfb1ef00f3` → `d9771424552e194e198257098a5c4e235d0101c5c9f063adf030d42fcd2ef0eb`. Store `0f6ef32c9ebb7652c6796b8ccda622a282e8ffca` pushed.
+
+### Gusher County correction — 2026-09-20 run 5
+
+**IMPROVED / HELD.** Actor occlusion falls 100% → 2.00% desktop / 2.27% phone. The tall cabin narrows within unchanged overall bounds, heights and footprint (126 vertices); rust-sheet UVs reuse existing iron paint, reducing camp red-body share 57.6% → 0%. Ground RMS -44.27% / -38.98%. Camp 5 m station reduces phone HUD 60.135% → 0.010%; phone entry still crops and has 19.097% persistent coverage. Oil-channel/lease vista and connected pipe art remain held. [Every clause and final boards](run-5/e4-gusher-county/review.md).
+
+Builds, final scoped checks, shared lighting/collision, loading/repeat and guards pass across the final receipts. Our initial ground-detail regression passed on exact base and was corrected to satisfy the unchanged panorama matrix. Final own batch 9 pass / one navigation failure; isolated errand retry 2/2. Four-run p95 9.35→9.25 / 8.80→8.75 ms; draws 73/54 unchanged. Engine `d9771424552e194e198257098a5c4e235d0101c5c9f063adf030d42fcd2ef0eb` → `491f2a917b0e360fcaa1e0eda3ee5eb7ba840cc1cd9bf852e3d574d34350725d`. Store `b9597680a8c6eff78526b0c2af2cdc3f05b86f85` pushed.
+
+### Capped stop — 2026-09-20 run 5
+
+Three maps completed and committed in order: Dust Flats, Long Road, Gusher County. Boneyard was not started. The Last Claim remains UNACCEPTED in my judgment: its retained plain-entry evidence lacks the circular deck, orrery, ornate rim and preserve-station architecture, and portrait supplies no architectural context. Its sculpt-pack correction remains on the continuation list. [Ordered remaining work, HUD handoff, engine pairs and gate exceptions](run-5/handoff.md).
+
+
+## Sixth run — 2026-09-21 (task sol-map-art-corrections-4)
+
+The full remaining list is authorized in order, beginning with the Boneyard. Preflight passed: code d00459be2c130d6dbd029339640dbc44baa2a5f2, store b9597680a8c6eff78526b0c2af2cdc3f05b86f85, no ahead commits or unowned edits; permitted guard log only, no evidence discarded. Required art symlinks resolve, npm install and default build pass. Store branch `astra/corrections-4` starts at main. [Preflight](run-6/preflight.json).
+
+### The Boneyard correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Ground RMS -53.93% desktop / -48.91% phone; pressure-engine sleeper replaces the cabin, 1,842/3,000 triangles within unchanged bounds and footprint. Declared boiler 5 m station reduces phone HUD 45.00%→0%; sleeper 8 m reduces original 14 m coverage 39.76%→0.80%. Entry yard context, richer burial/metal and shared vehicle art remain held. [Every clause, final boards, critique and gates](run-6/e4-boneyard/review.md).
+
+Builds, scoped guards, map census, shared brightness/collision and loading/repeat pass. Motor batch 24 pass / two malformed-tape failures reproduced on exact base; no assertion changed. Four-run p95 9.80→9.90 / 9.95→9.80 ms, draws 62/49 unchanged. Engine `491f2a917b0e360fcaa1e0eda3ee5eb7ba840cc1cd9bf852e3d574d34350725d` → `c8da6e7c043bb2f42b5fd2f94d17d83387d7a29abca9adffab1d15994ce5681e`.
+
+Boneyard store commit `dfac96930cee55742fde0f99c19ba4b70c9ddc05` pushed on `astra/corrections-4`.
+
+### The Glow Mesa correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Ground RMS −41.49% desktop / −39.21% phone; whole-body emission 3.0→0.45 with lit diffuse paint. Pylon 5 m station phone HUD 8.90%→0%; derrick 3 m 0.090%. Entry rack remains cropped and 95.31% HUD-covered on desktop, entirely offscreen on phone. Mesa composition, facility grouping and daytime node-ring visibility remain held for their named owners. [Every clause and evidence](run-6/e6-glow-mesa/review.md).
+
+Builds, scoped guards, selected Glow Mesa/Pressure Garden census, shared brightness/collision and loading/repeat pass. Own batch 39 pass / one story-arrival timeout; unchanged retry 2/2. Four-run p95 9.75→8.90 / 9.70→9.60 ms, draws 68/48 unchanged. Engine `c8da6e7c043bb2f42b5fd2f94d17d83387d7a29abca9adffab1d15994ce5681e` → `68d976b06be1045f935047e482b765d91d61b045b45c87d77d677715b4e528e4`. Store `a368aba78a3f65bb93e46a9a624c617fb2d90b18` pushed.
+
+### Half-Life Hollow correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Ground RMS −40.00% desktop / −40.30% phone; median +48.17% / +73.04%. Gate 5 m station phone HUD 66.27%→0.17%. Ordinary entry still shows the unchanged ochre slab and no gate; crossing presentation is held for the Game owner, full ravine composition for layout/camera. [Every clause and evidence](run-6/e6-half-life-hollow/review.md).
+
+Builds, scoped guards, own 20 checks, selected Hollow/Glow Mesa census, shared brightness/collision and loading/repeat pass. Four-run p95 9.55→9.50 / 9.60→9.60 ms, draws 73/52 unchanged. Engine `68d976b06be1045f935047e482b765d91d61b045b45c87d77d677715b4e528e4` → `d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f`. Store `850ae868ef5688c79f20f98f1bbda515065efa4b` pushed.
+
+### The Picnic correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Four previously unselected nonblocking bodies mount (three blankets and staging gate), 5→9 bodies, +1,452 authored triangles. Original Glow Mesa collision-backed bodies remain; shade is held for the active collision alias. Ground RMS −45.92% desktop / −43.46% phone; emission 3.0→0.45. Pylon 5 m phone HUD 0%, entry 21.42%; blankets still outside phone entry, west desktop blanket 34.71% HUD-covered and cropped. Gathering and entry grouping remain held. [Every clause and evidence](run-6/e6-picnic/review.md).
+
+Builds, scoped guards, own 20 checks, selected Picnic/Glow Mesa census, shared checks, loading/repeat and dedicated six mount/dispose cycles pass. Four-run p95 9.70→10.00 / 10.00→9.75 ms, draws 87→90 / 53→54, within 15%. Engine `d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f` → `338b9a112823ee64444dc9d7cc4525dea0e2bc84474174c6af583ea8ce9545ad`. Store `13038c4f2324f0fec063663db72ccde43238301a` pushed.
+
+### The Dead Band correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Two authored nonblocking frames mount, 5→7 bodies, +336 triangles; warning frame appears at entry. Ground RMS −45.64% desktop / −40.92% phone; radio entry median 0.115→0.210 at emission 0.45. Radio 2 m phone HUD 51.46%→0.52%; warning 3 m 0.026%, north gate 3 m 3.51% with side crop. Paired-terrace vista, held solid mounts and entry HUD remain with named owners. [Every clause and evidence](run-6/e7-dead-band/review.md).
+
+Builds, scoped guards, visual census, shared checks, loading/repeat and six mount/dispose cycles pass. Own batch 39 pass / five failures, all reproduced on exact base: era enable/activation on both projects and mobile Save Tape visibility. Four-run p95 9.55→9.65 / 9.65→9.60 ms, draws 77→78 / 55→56, within 15%. Engine `338b9a112823ee64444dc9d7cc4525dea0e2bc84474174c6af583ea8ce9545ad` → `c4de03c756e538abb6c3787d9a1e4b80cc03b62cc3de095eaa2fedb8df814ab4`. Store `d852b15ac75bb588ab3c45912f0d704abe90261a` pushed.
+
+### Relay Rush correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Four relay frames mount, 5→9 bodies, +1,264 authored triangles. Ground RMS −51.24% desktop / −49.40% phone. R2 entry phone HUD 2.91%; west dish 3 m 76.11%→6.60%; charting station 2 m 0.60%. Equal-height route, peripheral entry crop/HUD and full vista remain held. Low frame platform covers 6.5% of the player sprite at the feet. [Every clause and evidence](run-6/e7-relay-rush/review.md).
+
+Builds, scoped guards, own 16 checks, six Signal row checks, visual census, shared checks, loading/repeat and six mount/dispose cycles pass. Four-run p95 10.10→10.05 / 10.00→9.95 ms, draws 68→70 / 51→52, within 15%. Engine `c4de03c756e538abb6c3787d9a1e4b80cc03b62cc3de095eaa2fedb8df814ab4` → `36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc`. Store `0535aa5ffca2f422b0d15b378044d00b9e47771a` pushed.
+
+### The Far Side correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Landing frame mounts, 5→6 bodies, +600 triangles. Inherited rail stripe contrast 36.09%→1.56%; fine-ground high-pass RMS 0.00159→0.00661 / 0.00128→0.00647. Frame entry phone HUD 10.385%, 3 m 5.768%; array 3 m 37.22%→10.75%. Circular vista, equipment compound and solid variant mounts remain held for named owners. [Every clause and evidence](run-6/e8-far-side/review.md).
+
+Builds, scoped guards, Far Side parity/census, shared checks and loading/repeat pass. Own batch 22 pass / two ordinary Mare Claim arsenal failures reproduced on exact base. Four-run p95 9.70→9.75 / 9.60→9.70 ms, draws 62→63 / 49→50, within 15%. Engine `36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc` → `37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146`. Store `d134d7607cda6b995a9421c5727fbd11f9a69230` pushed.
+
+### Low Orbit correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Recovery housing and braced ring, 2,360→2,972/3,000 triangles; chamfered base area −29.29%. Body dark share 81.17→7.74% / 80.85→7.83%. Ground median 0.076→0.255 / 0.085→0.256; RMS −59.55% / +66.79%. Declared 3 m phone HUD 54.376→0.998%, entry remains 47.291%. Suspended composition, debris depth, material fidelity and entry UI remain held. [Every clause and evidence](run-6/e8-low-orbit/review.md).
+
+Builds, scoped guards, own momentum/physics, movement, parity/census, shared checks and loading/repeat pass. Two ordinary Mare Claim arsenal failures reproduce on exact base. Four-run p95 9.80→9.50 / 9.90→10.10 ms, draws 77/55 unchanged. Engine `37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146` → `d7cad8f8bd1ebb800b36fff3531b8726760b5430fcb516cd39d32a71bb420bcf`. Store `2a1c3e11ec470fb3761cb9e462d39b025b61f24f` pushed.
+
+### The Dome Basin correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Dry mineral route and geared lock wheel, 452→1,580/3,000 triangles. Ground RMS −49.33% / −39.41%; 5 m body median 0.054→0.327 / 0.067→0.325. Low-surface material mismatch fixed. Declared 5 m phone HUD 48.008→0%, silhouette fits; ordinary phone lock remains offscreen. Wet state, monumental chamber, terraced settlement, rail joins and entry composition remain held. [Every clause and evidence](run-6/e9-dome-basin/review.md).
+
+Builds, scoped guards, final canal stages, census, shared checks and loading/repeat pass. Six arsenal/profile failures reproduce on exact base. Four-run p95 8.90→8.90 / 9.85→9.45 ms; draws 88/53 unchanged. Engine `d7cad8f8bd1ebb800b36fff3531b8726760b5430fcb516cd39d32a71bb420bcf` → `8e71546045562c64ef70c60d2616e0a2cc1cee965709dc89d691ca13d57164dc`. Store `4613a6ff288eb6e984dbdd44e7e861ee1627da73` pushed.
+
+### The Seed Run correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Enclosed curved seed vault, 800→2,148/3,000 triangles; base area −29.29%. Four dry route segments and three green zones gain continuous pigment. Ground RMS −59.39% / −62.50%; entry body median 0.094→0.254 / 0.097→0.254. Declared 3 m phone HUD 53.759→0%, full bbox fits; ordinary phone entry coverage increases 16.057→23.326%. Convoy, irrigation, distant settlement, materials and ordinary entry remain held. [Every clause and evidence](run-6/e9-seed-run/review.md).
+
+Builds, scoped guards, final own caravan/seam 15 pass / one intentional skip, census, shared checks and loading/repeat pass. Two ordinary-roster failures reproduce on exact base; an earlier seam failure also reproduces on base, while final candidate passes. Four-run p95 10.20→10.05 / 9.95→10.00 ms, draws 126/72 unchanged. Engine `8e71546045562c64ef70c60d2616e0a2cc1cee965709dc89d691ca13d57164dc` → `ba67e6db9a2d8b34e23fcb1bacdc4e00a8ce72e84c347d9d6bbf3f9975a5a66f`. Store `3c023c883f3d30179fbaef26a22629e31efe7df5` pushed.
+
+### Devil's Alley correction — 2026-09-21 run 6
+
+**IMPROVED / HELD.** Three braced coil anchors, west/center/east 1,848/2,192/2,536 triangles under 3,000 each; base area −29.29%. Entry body median 0.084→0.254; ground RMS −40.50% / −20.91%. Declared 3 m phone HUD 7.071→0.004%, full bbox fits; ordinary phone 5.175→5.880% remains held. Functional 8 m rings retained; storm layout, fine materials and entry UI remain held. Later-state sweep is shown separately. [Every clause and evidence](run-6/e9-devils-alley/review.md).
+
+Builds, scoped guards, own relocation/story 16/16, census, shared checks and loading/repeat pass. Two roster failures reproduce on exact base. Four-run p95 9.70→9.75 / 9.60→9.85 ms; draws 88/58 unchanged. Engine `ba67e6db9a2d8b34e23fcb1bacdc4e00a8ce72e84c347d9d6bbf3f9975a5a66f` → `6b6c1185f0c23a0a2235502e69238db177900147ab630e66db1120c9cb30ada2`. Store `57a399b81a9d2911364c0770e10a6a5c6eb414c6` pushed.
+
+### The Old Canal correction — 2026-09-22 run 6
+
+**IMPROVED / HELD.** Undecided translucent slabs replaced by broken low masonry, 552 triangles per band, 0.015–0.395 m above sampled ground. Three supported hand-winches, 1,444/1,456/1,468 triangles within 3,000 each. Dry pigment exposes six inherited route segments. Ground RMS −69.99% / −25.61%; entry body median 0.095→0.186 / 0.102→0.190. Declared 5 m phone HUD 24.030→0.111%; 3 m rejected for decision-panel overlap (6.316%). Ordinary phone coverage 15.861% remains held. Depth, contact shadows, continuous wet vista and full architecture remain held. [Every clause and evidence](run-6/e9-old-canal/review.md).
+
+Builds, scoped guards, own choices/persistence 8/8, relevant story 6/6, census, shared checks and loading/repeat pass. Presentation proof covers three-state visibility, idempotent substrate resampling and 18 resource disposals. Two roster failures reproduce on exact base. Four-run p95 9.85→9.30 / 9.60→9.35 ms; draws 91→90 / 59→59. Engine `6b6c1185f0c23a0a2235502e69238db177900147ab630e66db1120c9cb30ada2` → `c2018fcb58b57688525b2afe23a8fd99dd20e3ce481894e58f9017db628333c7`. Store `ce3a6a5ad3b8d9f44c4adece0d6c8b424735b5e4` pushed.
+
+### The Last Claim correction — 2026-09-22 run 6
+
+**IMPROVED / HELD, Astra's own verdict.** Missing sculpt mount fixed with a dedicated terrain (32,768/60,000), panorama (1,024/4,000) and five monuments (528–1,328/3,000 each). Lantern visible at phone entry: body median 0.460, emission 0.45, HUD 0.134%; declared 5 m 0.058%. Ground RMS +133.58%/+109.50%, an explicit increase from replacing dust with paving. Existing square gameplay floor and three sites retained; circular boundary, ornate rim, heart/grayscale, legacy Ark deck and full entry composition remain held. [Every clause and evidence](run-6/e10-last-claim/review.md).
+
+Builds/scoped guards, shared checks, loading/repeat, six pack cycles and exact Blender reexports pass. Own batch 30 pass/four exact-base failures. Census still expects painted; its recorded failure is handed to the drain. Height grid matches at vertices; off-grid mean 0.00488 m, p95 0.02661 m, max 0.21973 m. Final four-run p95 17.25→9.90 / 17.45→9.90 ms, draws 81→84 / 55→56; different timing modes are retained and no causal speedup claimed. Conservative eight-run envelope stays within 15%. Engine `c2018fcb58b57688525b2afe23a8fd99dd20e3ce481894e58f9017db628333c7` → `2a898e9e9e87ddd72c9dea598df97363c9e179592ef33e69a54871da21c1efd3`. Store `97d29c730796c9b5ddfae1f44073c44e1eced3e0` pushed.
+
+### 2026-09-22 — Ember Shore (fourteenth map in run 6)
+
+IMPROVED / HELD. Rebuilt the cooled recovery machine at 2,356/3,000 triangles, same envelope and collider, and added one basalt pigment/grain treatment to the existing sculpt/continuation. Ground median 0.053→0.337 / 0.061→0.321; RMS +480.73%/+115.90% reflects visible detail replacing near-black pixels. Body median 0.123→0.231 both, emission 0.45. Five declared 5 m stations fit with HUD ≤0.199%; actual entry altar 0.069% desktop / 0.791% phone. Giant buried titan, fractured shelves/branching channels, southeast rectangular tone join, contact/light pools and normal story/UI overlap remain held by the named owners.
+
+Own 12, story 14, census 2, registry simulation parity 2 pass; registry mount assertion has two exact-base failures (The Claim 51,200 vs stale 32,768). Shared 16 pass/4 skips, builds/scoped guards, loading/repeat, six cycles and all-five-source proof pass. Quiet four-per-arm p95 10.10→10.00 / 10.00→10.10 ms; draws 72/54 unchanged. Engine `2a898e9e9e87ddd72c9dea598df97363c9e179592ef33e69a54871da21c1efd3` → `0df7afdfb61520a896c158f0208e401731a733f465ab77a8fc4232bc495c65ba`; pin untouched. Store `caf34490756564bd8dfb1693070e479147590c58` pushed. [Complete clause record](run-6/e10-ember-shore/review.md). Next: Archive World, then River render half.
+
+### 2026-09-22 — Archive World (fifteenth map in run 6)
+
+IMPROVED / HELD. Open library gate 1,128→888/3,000 triangles, exact envelope/mount, desktop entry body pixels −31.83%. Ground RMS −55.44%/−50.11%; upper-edge median 0.071→0.226 / 0.074→0.225, decorative continuation 5,120 triangles and zero boundary-height gap. Earned-only pool control 0.247→0.395 median. Entry HUD 22.764%/15.794%; declared 10 m gate bbox fits but phone HUD 68.719% remains explicitly unaccepted. Stack inspections at 3 m reduce phone coverage to 8.122/7.349/13.604%, marker 0.007%. Full layered vista, restoration-state edges, structural contact, book detail and camera/UI composition remain held.
+
+Own board/profile 2, story 14, registry simulation parity 2, Archive state/contract node 4 pass; four census/registry mount failures reproduce at exact base. Shared16/4 skips, builds/scoped, loading/repeat, six cycles and all-five-source proof pass. Four-per-arm p95 9.35→9.50 / 9.50→9.80 ms; draws72→73/51→52. Engine `0df7afdfb61520a896c158f0208e401731a733f465ab77a8fc4232bc495c65ba` → `9ab63072bf545c545e192f2a6d4623ccceb60235662638adb6f3c27736648cf5`; pin untouched. Store `8ea5370ba1dfd4bc85276380875fdb87f17f7bf7` pushed. [Complete clause record](run-6/e10-archive-world/review.md). Remaining: River render half.
+
+### 2026-09-22 — River (sixteenth and final map in run 6)
+
+IMPROVED / HELD. Material-only treatment of the raw painted route: bank RMS −21.09%/−9.12%; short broken water highlights avoid the ford. Three materials/six cleanup cycles preserve geometry, properties, uniforms and callbacks; zero new triangles. Raw 128 m fallback and actual finale’s 64 m Claim charter remain distinct, real lever verified on both viewports. Canonical route, rocky shoreline/ford, one-pan composition and ordinary HUD remain held by contract/finale/art/UI owners. Zero raw landmarks makes landmark-specific HUD coverage not applicable. The first ruled ripple candidate was rejected; final independent review confirms that narrow defect resolved. [Complete clause record](run-6/e10-river/review.md).
+
+Builds/scoped guards and 18 own/story checks pass; final boot/finale four pass, charter/board/debt census six pass. Two secured-claim failures reproduce at exact base. Broad map census is an unavailable-contract exemption, not behavioral proof. Four-run performance shows desktop fast 10.10→9.90 ms / slow16.65→16.30 ms; phone fast9.90→9.95 ms. Pooled desktop +17.91% reflects different mode populations, with every candidate mode within15% of its corresponding baseline. Draws79/58 and triangles81,448/69,440 unchanged. Engine `9ab63072bf545c545e192f2a6d4623ccceb60235662638adb6f3c27736648cf5` → `4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21`; pin untouched. Store unchanged at pushed `8ea5370ba1dfd4bc85276380875fdb87f17f7bf7`.
+
+All 16 requested maps now have per-map corrections and explicit holds. Remaining list: **none**. [Ordered completion, HUD handoff and all hash pairs](run-6/handoff.md). Full concept acceptance is still withheld; full node gates and engine pin remain drain-owned. Ember/Archive objective text is restored to its prior column, with these art verdicts in the visual column.
+
+
+## Run 7 — 2026-09-22: variant solids and parent-plus-variant collision
+
+IMPLEMENTATION COMPLETE; READY-FOR-GATES WITH HOLDS. Owner-authorized F-CORR4-2 follow-on. Baseline code `823b06b1dce4b861be2fccf646245fc4cc864588`, store `8ea5370ba1dfd4bc85276380875fdb87f17f7bf7`; install and default build pass. Cleanliness: only `?? logs/guard-stats.jsonl` (permitted factory churn), no evidence discarded. Store clean before branching to `astra/f-corr4-2`; required raw plate and terrain resolve. Parent transforms, registry numbers, gameplay contracts, heights and masks remain frozen. The existing renderer already composes variant mounts from the mirrored terrain contract.
+
+Remaining in order: none.
+
+Run-7 preflight correction: the task says Eclipse has no own registry entry, but this base contains four Eclipse records. The resolver therefore names only the four authorized unions; the alias-only control tests and full unaffected-map snapshot pass.
+
+Run-7 floor verdict: 81/83 unchanged; only Picnic moved. Seed 01: timeMs 97967→97367, kills 35→24, eventLogHash fnv1a32:6dc50c46→fnv1a32:a887b86b. Seed 02: 98533→100200, kills 32→25, hash fnv1a32:774ca441→fnv1a32:547712da. The shade at (0,40) is the only new Picnic blocker. Pins left untouched for the drain.
+
+Run-7 parity qualification: all four maps retain exactly their base rows (32 equal, 10 agent-lacks), independently reproduced from base code 823b06b1d in an isolated scratch extraction. The requested all-EQUAL result cannot be claimed; the missing tape/control verbs belong to the parity owner and are outside this firewall. See run-7/same-game-comparison.json.
+
+Run-7 verification qualification: an initial browser batch was interrupted after an in-root scratch extraction triggered a Vite full reload (06:27:51). Its Picnic palisade and E6 boot failures are not accepted results. The scratch tree moved outside the watched root; the complete stable rerun finished at 45 passed / 6 exact-base terrain-registry failures / 1 skipped. The Picnic palisade and E6 boot failures vanished. Initial paired frames also exposed stale-module baseline capture: the frozen renderer referred to a different Terrain module instance and the variant raw matcher missed `?import&raw`. Final captures use unchanged live renderer bytes plus the frozen collision/variant data, assert before/after body counts, and confirm identical hero ground height; all invalid attempts remain in local raw evidence.
+
+### Run 7 — The Picnic
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 1 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **9→10 bodies**, **+216 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 10.20→10.25 ms (+0.49%), draws [90]→[90]; 390px p95 9.90→10.10 ms (+2.02%), draws [54]→[54]. Engine `4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21` → `da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232`; store `187e555ea982f12fe7f988184c6574a6298dcaa9`. [Boards, probes, bounds and gates](run-7/e6-picnic/review.md).
+
+### Run 7 — post-commit test caller check
+
+The newly tracked collision union test passes all six assertions but is not yet listed in the permanent node battery. The required named-guard batch is therefore 2/3 after the first commit; its earlier pre-commit pass omitted the untracked file. A one-line package.json roster addition requires a task-firewall exception, requested from the owner. [Attribution and exact proposed fix](run-7/gate-caller-attribution.md).
+
+### Run 7 — The Dead Band
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 3 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **7→10 bodies**, **+3792 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 10.00→10.00 ms (+0.00%), draws [78]→[78]; 390px p95 10.00→10.05 ms (+0.50%), draws [56, 57]→[56]. Engine `da49237c406cfbb90e634443440aaaddeb0d4185afa98e99e9e5f6cf0848d232` → `f00319a05cf5f5d6bea92a824e5377188e98c44da7238d8db2d659e32e4f9f13`; store `3c25d72a9de66c5fbaa633be41df390a8d79d245`. [Boards, probes, bounds and gates](run-7/e7-dead-band/review.md).
+
+### Run 7 — integration boundary
+
+Land the completed `sol/map-art-campaign-2` code branch together with all four map selections from store branch `astra/f-corr4-2`. The shared resolver in the first code commit enables the four unions at once; integrating that commit without the corresponding store selections would temporarily leave the later maps’ new blockers invisible. Per-map commits preserve review and evidence boundaries; the final code/store heads are the integration unit. Engine-era and null-floor pin updates remain drain-owned.
+
+### Run 7 — Relay Rush
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 1 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **9→10 bodies**, **+552 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 9.75→9.20 ms (-5.64%), draws [70]→[70]; 390px p95 9.80→9.60 ms (-2.04%), draws [52]→[52]. Engine `f00319a05cf5f5d6bea92a824e5377188e98c44da7238d8db2d659e32e4f9f13` → `39f21aea8a827ba58c52363c354420aa5cc19ea55ba1b2751ea264e04b6f6d2b`; store `0787a539f6ee70886bc4867909fd70c0de4a3ba7`. [Boards, probes, bounds and gates](run-7/e7-relay-rush/review.md).
+
+### Run 7 — resolver compatibility check
+
+Final review caught an inherited-property regression in the array-valued alias table: `constructor`, `__proto__`, and `toString` threw instead of returning the original empty list. A one-line array check restores the baseline behavior. The extended unit test was red before and green after the fix; all 43 registered-map/alias results are byte-identical across it. [Reproduction](run-7/prototype-compatibility-before-fix.json) · [Corrected result](run-7/prototype-compatibility-after-fix.json) · [Red test](run-7/prototype-test-red.log) · [Green test](run-7/prototype-test-green.log). The final Far Side gates include fresh builds, movement proofs, captures, timing and focused collision/recovery/parity regressions on this corrected source.
+
+### Run 7 — The Far Side
+
+**FIXED variant solidity / HELD prior composition and baseline parity debt.** All 4 registered variant solids mount beside the five unchanged parent bodies and the already selected nonblocking dressing: **6→10 bodies**, **+1396 authored triangles**. No geometry, atlas, source transform, height, mask, gameplay contract or registry number changed. The renderer already composes these mirrored mount tables, so no renderer code change was necessary.
+
+1280px p95 9.40→9.70 ms (+3.19%), draws [63]→[63]; 390px p95 9.45→9.75 ms (+3.17%), draws [50]→[50]. Engine `39f21aea8a827ba58c52363c354420aa5cc19ea55ba1b2751ea264e04b6f6d2b` → `3ece8e8fac9f610d43579194a9d83b81f36f81a7ffdd5105fcf6c4ec191112a9`; store `300caacfa15ad6be5e6bf41be80b0c5a331c443c`. [Boards, probes, bounds and gates](run-7/e8-far-side/review.md).
+
+### Run 7 — completed handoff
+
+All four maps are implemented: **nine existing solids selected, 5,956 additional mounted triangles, ten total bodies per map**. Parent blockers and models remain. Across both viewports: **54 published destinations per viewport reachable**, **72 face probes**, **18 embedded-hero escapes**, **24 mount/dispose cycles** with zero retained scene children. Ordinary before/after boots have zero errors. Final-source focused browser checks **26/26** and scoped node guards **40/40** pass. All four maps pass the four-run, 15% timing budget. Final E1 payload is **34,271,491 B**, **+96 B** of compiled resolver code, no E1 pack additions.
+
+This is not an all-green handoff. The new union test still needs its permanent package roster entry; the task firewall excludes package.json, permission was requested, and the prepared patch passes `git apply --check`. Named guards remain **2/3**. Full browser batches are Picnic **45/6/1**, Dead Band **97/14/1**, Relay Rush **97/34/1**, Far Side **61/10/1** (pass/fail/skip); base reproductions and their exact scope are in each map’s attribution. Static same-game rows remain **32 equal / 10 agent-lacks** on the exact base and candidate. Only Picnic’s two null floors move, as detailed above; the drain owns pins. Far Side’s remote northern-rim hero occlusion is visible in both arms and remains outside this footprint task.
+
+[Machine-readable handoff, all solids/positions, full engine hash pairs and samples](run-7/handoff.json). Store branch `astra/f-corr4-2` is pushed through `300caacfa15ad6be5e6bf41be80b0c5a331c443c`. Land the complete code and store heads together. **Remaining maps in order: none.**
+
+## Eighth campaign section — 2026-09-22: the raw River pack (run 7)
+
+**FIXED missing pack / IMPROVED shoreline and wet stones / HELD full concept.** The raw `e10-river` now owns a 128 m grid preserving the captured visual heights, a separate dawn panorama and five nonblocking bodies. Terrain **32,768/60,000**, panorama **1,024/4,000**, four shore groups **2,240/3,000 each**, ford stones **1,600/2,000**: **44,352 authored triangles, 132 stones, zero collision mounts**. Raster bytes are reused; executable recipe, saved sources, exact reexports and provenance are supplied in the art store.
+
+Maximum vertex error **5.9125e-8 m**; off-grid mean/p95/max **0.004881/0.026606/0.219734 m**. All stones intersect the sampled surface and keep a **2.2 m** clear center strip. Both banks and the ford pass actual movement at 1280/390; six total mount/dispose cycles preserve original water and restore callbacks. The actual finale lever still opens the separate **64 m `the-claim`** route at both widths. Gameplay bytes differ only by the owner-authorized description; no render flag was required.
+
+Four fresh browsers per arm give matching fast-mode p95 medians **10.10→9.35 ms desktop / 10.10→9.90 ms phone**, draws **79→83 (+5.06%) / 58→62 (+6.90%)**. Every candidate sample is within 15% even against the fastest baseline; bimodal baseline samples remain in the raw data and no causal speedup is claimed. TypeScript/default/full/E1 builds, 34 scoped guards and 3 named guards pass; requested E2E batch **24 pass / 6 intentional skips / 0 failures**, final River boot **2/2**, shared loading **8/8** and repeat **2/2**. E1 payload **34,272,559 B**.
+
+The dark straight water, rectangular ford, weak wet contact, distant dawn framing, outer continuation joins, one-pan composition and ordinary HUD remain held by the named water/art/camera/contract/finale/UI owners. Phone shore groups extend outside the viewport; tiny surviving ford mask fragments do not establish full-body HUD clearance. Prior campaign and gameplay parity debt is unchanged.
+
+Store **`d5e25522490ae7342e497ce58f51239040a41eb3`** is pushed on **`astra/f-corr4-18`**; land with this code branch. Engine **`52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5` → `6abbafbebf86f1af6cd5496a7d6eb530337e3ff66b16d18aaef691fd9d22d3f5`**, pin left for the drain. **READY-FOR-GATES**, no remaining implementation in F-CORR4-18. [Every original clause, boards, heights, timing modes, source proofs and checks](run-7/e10-river/review.md).
+
+## Fidelity run 8 — 2026-09-22: The Last Claim
+
+**IMPROVED / HELD; full concept unaccepted.** Native engraved bronze with radial material coordinates replaces cobbles; three local pools/contact collars, a native star vista and a 32-bay perimeter with 2.5 m side fascia improve the memorial setting. Panorama **1,024→3,584/4,000 triangles**, one extra draw. The square floor, every terrain triangle, heights/masks, monument bounds/mounts and collision/gameplay authorities are unchanged. Recognizable repeated motifs, finer rim ornament and full lighting hierarchy remain art-owned; the square/circular conflict, Ark integration, grayscale/heart, orrery platform and normal HUD remain with their named owners.
+
+Against this map's own run-6 after numbers, ground RMS **0.055721→0.048920 desktop (−12.21%) / 0.052200→0.048123 phone (−7.81%)**; median **0.292783→0.299691 / 0.310607→0.420976**. The independent review confirms improved rim depth and lantern contact, while warning that lower RMS does not hide recognizable repeated motifs. Lantern median remains about **0.460**, whole-body emission **0.45**; phone entry HUD **0.135%** versus run-6 **0.134%**, 5 m **0.012%** versus **0.058%**.
+
+Four runs per arm/viewport: p95 median **9.10→9.05 ms / 9.15→9.00 ms**, draws **84→85 / 56→57**; one timing mode, both within 15%. Normal before/after boots share seed, HUD and 10.033 s entry state, zero errors. TypeScript/default/full/E1 builds, **34+3** scoped guards, final story **14/14**, census **2/2**, shared **16 pass/4 opt-in skips**, loading **8/8**, repeat **2/2**, six map mount/dispose cycles, seven saved-source reexports and production E1 exclusion **2/2** pass. E1 payload **34,274,360 B**. Four own failures reproduce on exact base (finale banking handoff and stale Archive seed expectation, each both projects); the extra release asset-name guard also reproduces four E4 jumper sprite filenames on exact base. Two initial unmatched story failures disappear on the final isolated 14-case run; their failed attempts are retained. No assertions changed.
+
+Engine **88c4256efeb97d64c205919e785173b9c7375fd4553c92bbe26de6a37d197ea4 → c72f302925f627b0a783f8d44bd132ed1fa61ae737379454a746e1033e1adfeb**; pin untouched. Store **f3078c4001d86b8f177a1f1727464c32bdc166bb**, branch **astra/fidelity-1**. [Every held clause, boards, metrics, source proofs and attribution](run-8/e10-last-claim/review.md). **READY-FOR-GATES** for this map.
+
+## Fidelity run 8 — 2026-09-22: The Ember Shore
+
+**IMPROVED / HELD; full concept unaccepted.** Native mineral detail, shared terrain/continuation/panorama-ground pigment and exact edge-normal continuity reduce the broad southeast tone step. Vertical signed difference **−0.008616→−0.000967 (88.78% smaller magnitude)**; texture-inclusive absolute contrast increases. Against run-6 after values, ground median **0.336815→0.369592 / 0.321129→0.349130**, RMS **+21.40%/+19.95%**, no sampled near-black pixels. Fractured shelves, rectangular fissure termini, painted branches, warm contact and full vista remain art-owned. New rock candidates were rejected and removed. Terrain, mask, bodies, collision and gameplay bytes are unchanged; panorama retains **3,072/4,000 triangles** and every original position.
+
+Four runs per arm/width: p95 **9.10→9.10 ms / 9.05→8.90 ms**, draws **72→73 / 54→55**, within 15%. Altar median **0.342/0.342**, emission **0.45**, phone entry/5 m HUD **0.768%/0.191%** versus run-6 **0.791%/0.199%**. Builds, **34+3** scoped guards, own preserve/squall **12**, story **14**, final census **2**, shared **16 pass/4 skips**, loading **8**, repeat **2**, six disposal cycles and exact source reexport pass. E1 payload **34,274,870 B**; native texture excluded. The full registry has **six exact-base failures**, all reproduced by fingerprint; no assertion changed.
+
+Engine **c72f302925f627b0a783f8d44bd132ed1fa61ae737379454a746e1033e1adfeb → ac5caf75c8186240ed5c5e56ec5ea55c8b8769fa9db2324fb21726efdb34c200**. Store **75bdd35936c531da53094eaee94503b71ea1ea7f**, branch **astra/fidelity-1**. [Every clause, boards, invariants and attribution](run-8/e10-ember-shore/review.md). **READY-FOR-GATES** for this map.
+
+## Ninth campaign section — 2026-09-22: phone entry HUD (run 8)
+
+**READY-FOR-GATES: requested-mask census PASS / browser and offscreen-body acceptance HELD.** The before census was committed as `11ec9b7b1` before any cure; `b95e2c4f0` adds its caller through the existing node-guard runner. The runtime cure changes only the 390–430px, ≥701px-high query in `src/ui/theme.css`: compact vitals/gold/Pause rail; XP and era resources below; small weapon, portrait/Prospector, Tape Reel and Exchange surfaces; Build 40px inward; a narrower world-note column. All numbers and testids keep their sources, visible touch controls remain ≥44px, and joystick/action anchors do not move. Desktop panel boxes and painted unions are unchanged.
+
+| Map | Phone union before → after | Reduction | Phone entry-body coverage before → after |
+|---|---:|---:|---|
+| Low Orbit | 24.24% → 13.41% | 44.70% | Claw rig 46.89% → 7.66% |
+| Seed Run | 21.45% → 12.12% | 43.49% | Vault 23.18% → 2.12% |
+| Archive World | 24.05% → 14.56% | 39.45% | Gate 15.32% → 7.27% |
+| Dead Band | 24.50% → 14.23% | 41.93% | Radio 3.75% → 9.59%; warning frame 22.81% → 0% |
+| Relay Rush | 24.50% → 13.82% | 43.60% | Relay frame 2.74% → 0.44%; charting station/west dishes OFFSCREEN in both arms |
+| Glow Mesa | 19.19% → 11.28% | 41.23% | Cooling rack OFFSCREEN in both arms |
+
+All visible phone bodies meet the 10% ceiling under the exact run-6 persistent mask; the Dead Band radio's overlap rises within that limit. **OFFSCREEN is null, never 0% or a visible-body pass.** The inherited mask excludes the prompt-stack parent's backing, so this is a consistent campaign-mask result, not complete real-paint occlusion clearance. Unretouched plain frames retain that backing and transient story cards. Desktop body occlusion, composition/art and camera holds remain. All twelve final plain boots have zero console/page errors.
+
+TypeScript/default/full/E1 builds and **61 scoped node guards pass**. Same-game audit output is byte-identical (378,541 B). E1 first-town payload **34,272,945 → 34,277,296 B (+4,351 B)**, under 52,000,000 B. Full Build and mobile-HUD specs pass both Chrome projects; the final touch/text-fit diagnostic passes 390 and 430px, including large values and touch-opened Build/Prospector/Exchange.
+
+The broad HUD batch is **342 pass / 44 fail / 120 skip**; five required mobile campaign suites **19 / 1 / 0**; supplemental HUD suites **97 / 3 / 0**; explicit multiplayer HUD case **1 / 0 / 1**. Final rechecks are **24 / 6 / 2**. Across the initial 48 failures, **43 fail with original CSS too, 2 HUD regressions were corrected and pass, 3 pass without a claimed causal fix**. Forty-two of the 43 reproduced cases reach the same assertion line; one desktop world-note control fails later. The six final recheck failures have failing original-CSS controls. Existing tests/assertions are unchanged. E1 release browser checks are **26 pass / 4 fail**: harvesting fails at the same assertion on both projects with the cure CSS removed, and the asset audit fails on both. Final named task/citation/gate-caller checks are **3/3 PASS**. The extra asset audit reports the same four E4-named jumper PNGs present in the pre-edit E1 build; asset repair remains outside this slice.
+
+Concurrent lane-c store writes caused Vite full-page reloads during the first batch; final captures and controls disable HMR on the sole port 5312. Before controls substitute only the exact committed pre-cure stylesheet. No shared-store path was written or committed by this task. Engine `821660ba0a1990094b583d82fdb6d8d3d1b8a1b290b2ff99dc125d43f71b7541` → `3d49e0a2b9ab6ccf63ccd1db5db8a8bb339492db7285e36fe3813bee9a6e42a5`; observed shared-store head `aee63ba07d388a14ba4c48a0ef3fe9ecee42965a` → `75bdd35936c531da53094eaee94503b71ea1ea7f`. This hash drift includes concurrent art inventory changes; CSS is excluded from the engine source inventory. The drain owns pins.
+
+[Complete handoff and remaining owners](run-8/phone-hud/review.md) · [Per-panel census, denominators, and all six before/after boards](run-8/phone-hud/census.md) · [Failure attribution](run-8/phone-hud/failure-attribution.md) · [Exact hash/store pair](run-8/phone-hud/engine-pair.json). **Remaining implementation in this slice: none.** Full acceptance still depends on the named baseline-test, offscreen framing and measurement holds.
+
+## Fidelity run 8 — 2026-09-22: The Archive World
+
+**IMPROVED / HELD; full concept unaccepted.** Native large masonry preserves run-6 quieting: ground median **0.241220→0.301716 / 0.229188→0.285762**, RMS **−0.30%/−2.65%**, no near-black sampled pixels. Four colonnaded perimeter ruins add eight arched openings/24 piers and **864 triangles**, panorama **3,936/4,000**, wholly outside the unchanged playable square. Original terrain and five body assets, mounts, masks, collision and simulation bytes remain exact. Independent review holds library-specific identity, distant layered skyline, finer contact/ornament and ordinary entry/portrait framing.
+
+Earned floor/facade flags cycle exactly none→west→all→none without changing source state. Same-region warm-light control **0.313748→0.507973**, versus run-6 **0.246562→0.394525**. Whole-body emission **0.45**, scenery ambient **0.18**; 24 native samplers disposed across six cycles. Phone gate entry/10 m HUD remains **15.837%/68.733%**, versus **15.794%/68.719%**. This is retained camera/UI debt, not a framing success.
+
+Four-run p95 **9.90→9.95 ms / 9.95→9.80 ms**, draws **73→75 / 52→54**, within 15%. Builds, **34+3** scoped guards, four Archive state/contract checks, shared **16 pass/4 skips**, loading **8**, repeat **2**, source replay and lifecycle checks pass. Full own batch **35 pass/8 exact-base fail/1 skip**, all failures reproduced by fingerprint. E1 payload **34,278,241 B**, new image excluded. No assertions or pin changes.
+
+Engine **ac5caf75c8186240ed5c5e56ec5ea55c8b8769fa9db2324fb21726efdb34c200 → 872cfc6474c7bdcba83290f87685a14c6882749c12b5564bbe1a355a0d45a6ff**. Store **f5f617c48f33ee6f4577c4a60fade8faf7b08e8d**, branch **astra/fidelity-1**. [Every clause, boards, state proof and attribution](run-8/e10-archive-world/review.md). **READY-FOR-GATES** for this map.
+
+
+## 2026-09-22 — run 8 fidelity: River
+
+IMPROVED / HELD: 132→304 grounded stones, every original body triangle preserved, banks 3,000/3,000 and ford 2,000/2,000. Water RMS versus run 6 −30.59% desktop / −31.40% phone. Ground-only control remains pixel-identical; fixed phone region includes new rock edges and RMS worsens to 0.069623, disclosed. Draws 83/62 unchanged; p95 9.05→9.05 / 9.00→9.10 ms. Full bank relief, continuous gravel, local water contact, natural ford appearance and quiet-return framing remain held. Source/height/water-table/collision invariants and actual traversal/finale-route proofs pass. Four E10 failures match the exact base; all remaining scoped checks pass with recorded skips. [Every clause and evidence](run-8/e10-river/review.md). Store `a54dcc4ab31cb59e673f831b0b99161b38b62799`; engine `872cfc6474c7bdcba83290f87685a14c6882749c12b5564bbe1a355a0d45a6ff` → `db5803bef10a13daa735eab2d860a2d8608dba2104d0a00571d85fb98570aad7`. READY-FOR-GATES.
+
+
+## Fidelity run 8 — 2026-09-22: Shared Motor hauler
+
+**FIXED 2D/LITE request compatibility / IMPROVED shared body / HELD full art and entries.** The original 216-triangle box body becomes an authored cab, brass grille/lamps, steps and empty plank bed, **1,520/2,400 triangles**, five materials, no raster textures. Original occupied bounds and every movement/fuel/path/reset/arrival method remain exact. Emission **0.18**, production Meshopt body **40,608 B**. The original body remains for 2D/LITE and on load failure; late completions and all resources dispose safely.
+
+All four Motor ground crops are pixel-identical to before; Boneyard RMS **0.032785/0.032934** retains its run-6 correction, the other three retain run 5. Body 5 m medians **0.201–0.203 desktop / 0.251–0.254 phone**, versus old **0.240835**: material proportions change, not a universal brightness increase. Boneyard desktop entry HUD **16.913→16.414%**, Dust **14.655→13.507%**, Gusher **0%**. Ordinary phone entries remain offscreen or covered by dialogue; Long Road's existing spawn landmark hides the body completely at entry and 5 m. Only an explicitly isolated view hides that occluder. Fine roof/tire detail stays vehicle-art-owned; entry framing/overlap stays camera/UI/map/contract-owned.
+
+Final four-run pairs per arm/width: Boneyard p95 **8.85→9.05 / 8.90→8.95 ms**, draws **62→69 / 49→51**; Dust **8.95→9.10 / 9.05→9.00**, **77→84 / 52→52**; Long Road **9.80→9.90 / 9.60→9.55**, **59→61 / 49→51**; Gusher **9.70→9.75 / 9.55→9.65**, **73→80 / 54→54**. One mode in each comparison; largest p95 increase **2.26%**, draw increase **11.29%**, all within 15%.
+
+Requested builds and **34+3** scoped guards pass; E1 first-town payload **34,279,452 B** unchanged. The shared body is emitted in E1 but not requested by ordinary Claim boots. All normal map captures have zero console/page errors; the supplementary pre-deploy E1-dist probe separately records its expected missing version metadata 404. Shared checks **16 pass/4 opt-in skips**, census **8**, loading **8**, repeat **2**, source reexport, six actual disposal cycles and compressed-body/2D/LITE probes pass. The final selected replay has **4 pass/22 exact-base failures**, every remaining fingerprint matched by project and assertion; the new 2D request regression was fixed, and the initial story failure cleared. No test assertions or pin changed.
+
+Store **adf6bd1a22582459e64c2ddc1a37b1bd707ffa14**, pushed on **astra/fidelity-1**. Engine **db5803bef10a13daa735eab2d860a2d8608dba2104d0a00571d85fb98570aad7 → b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c**. [Every clause, four-map boards, final metrics and exact failure attribution](run-8/motor-hauler/review.md). **READY-FOR-GATES**. Remaining ordered task list: **none**; full concept and gameplay/entry holds remain explicit.
+
+
+## 2026-09-22 — run 8: entry, Dead Band
+
+**Already framed:** `iron-shadow-warning-frame` has **6,714 desktop / 7,570 phone** body pixels at rest and remains visible throughout the separate ~4 s sample. Applying the task's already-framed exception, it declares nothing and adds no manifest sentence. No camera glance runs. The ridge vista and HUD/art limitations stay HELD. Own suppression/census **12/12**, final builds and **61+3** guards pass; E1 payload **34,309,364 B**. All five broader Signal failures reproduce on the exact preceding map base. The shared lookup is corrected to bind runtime map IDs rather than variant authoring IDs; all 42 manifests preserve every other field. [Evidence and attribution](run-8/entry-framing/e7-dead-band/review.md).
+
+Engine `b13e44ed083d03e30fee4cf9d6e3702ff8b6e167ddb88f20a7d24eae36cd7427` → `084df9fa71eef1eb63753addda63d7ee7b34a049e8394acfea11db36d284ae37`. Store unchanged at `4e9720b`; no empty store commit. READY-FOR-GATES with the five explicitly attributed baseline failures.
+
+
+## 2026-09-22 — run 8: entry, Glow Mesa
+
+**Fixed offscreen entry:** `mesa-starstone-derrick` names the raised cap's identifying derrick/working compound. Final corrected ease measures **0→37,168→0 desktop / 0→41,400→0 phone** body pixels; in-frame duration **1.416–1.525 / 1.359–1.468 s** inside a 2.5 s authored window. The rig visits the actual mount at the unchanged offset, then returns to the live hero. All normal tracking and replay poses retain their original path; final long-pan correction removes duplicate lag during the authored ease. The earlier captures are preserved. Full mesa/grouping/node-ring/model/HUD composition remains HELD. [Boards, measurements and checks](run-8/entry-framing/e6-glow-mesa/review.md).
+
+Own checks pass after correcting the manifest sentence to extend an existing rule, shared/replay/view **28 pass / four opt-in skips**, loading **8/8**, repeat **2/2**, builds and **61+3** guards pass. Headless `now` snapshots match byte-for-byte; audit semantics match. Initial engine `b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c` → `b13e44ed083d03e30fee4cf9d6e3702ff8b6e167ddb88f20a7d24eae36cd7427`; final shared ease refinement is in the Far Side commit below. Store `4e9720b0788ebd6bccb6f2bd1f3945dbd855a50c`. Pin drain-owned.
+
+
+## 2026-09-22 — run 8: entry, Far Side
+
+**Fixed offscreen entry:** `earthrise-listening-array` represents the plate's isolated horizon dish opposite the landing compound. **0→26,144→0 desktop / 0→28,996→0 phone** body pixels; visible **1.377–1.490 / 1.375–1.491 s**. The existing camera reaches the z 56 mount from the z −36 entry without changing FOV, offset, zoom or hero start. During the authored ease, removing duplicate tracking lag prevents a mid-pan flip; all normal/replay poses remain exact, 600 long-pan proof frames retain the fixed orientation. Glow Mesa's final captures were refreshed. Full plate/model/vista and phone HUD composition remain HELD.
+
+Builds, **61+3** guards, focused parity/census **6/6**, loading **8/8**, repeat **2/2** pass. Own **22 pass / two failures**; both arsenal availability mismatches reproduce on the exact preceding engine, candidate restored exactly. E1 payload **34,309,624 B**. [Boards, proofs and attribution](run-8/entry-framing/e8-far-side/review.md).
+
+Engine `084df9fa71eef1eb63753addda63d7ee7b34a049e8394acfea11db36d284ae37` → `b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288`. Store `2d1000357f06e44b42b7288ef8682b1919a66e05`. Pin drain-owned. READY-FOR-GATES with two attributed baseline failures.
+
+
+## 2026-09-22 — run 8: entry, Half-Life Hollow
+
+**Fixed offscreen entry:** `south-countdown-gate` names the plate's foreground clock gate at the timed crossing. **0→26,671→0 desktop / 0→29,787→0 phone** body pixels; visible **1.700–1.816 / 1.684–1.791 s** inside the 2.5 s authored window. Reachable with the original offset/FOV/zoom and hero start. The simple frame, terrain/continuation seam, ochre/teal crossing slabs, ravine and HUD composition remain HELD. Only the two mirrored metadata declarations change.
+
+Builds, **61+3** guards and own crossing/roster/census **20/20** pass; E1 payload **34,309,830 B**. [Boards, counts and invariants](run-8/entry-framing/e6-half-life-hollow/review.md). Engine `b3a86513d6b6511e4fa3049104211051d4cddac7fdda6c314a52144cdb98a288` → `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1`. Store `d8938178a7464c637a79bca81d5f788bc8ad954d`. Pin drain-owned. READY-FOR-GATES.
+
+
+## 2026-09-22 — run 8: entry, Relay Rush
+
+**Already framed:** the plate's nearest relay shelf is represented by `rush-relay-r2-frame` at the actual start. Rest/mid/return body pixels **21,662→21,676→21,675 desktop / 24,145→24,126→24,124 phone**; visible throughout **≥3.965 / ≥3.957 s**. No declaration, manifest sentence or camera glance, following the explicit already-framed exception. The minor pixel changes are ordinary settling, not improvement. The wider terraces, charting station, west dish, active relay art and HUD remain HELD. Prior solidity and art are unchanged.
+
+Own front/census **16/16** and visual census **2/2** pass. Builds and **61+3** guards from the identical final Hollow engine apply unchanged; E1 payload **34,309,830 B**. [Boards, counts and invariants](run-8/entry-framing/e7-relay-rush/review.md). Engine `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1` → same hash; store unchanged `d8938178a7464c637a79bca81d5f788bc8ad954d`. No empty art commit. READY-FOR-GATES, with final shared closeout to follow.
+
+
+## 2026-09-22 — run 8: entry framing closeout
+
+**READY-FOR-GATES:** all five maps completed, three declared camera glances and two already-framed exceptions. **No unreachable or remaining maps.** Final shared **28 pass / four opt-in skips**, exact Regatta replay **2/2**, agent-view **10/10**, ten uninstrumented boots **zero errors**. Thirty final `now` snapshots, **109,496 bytes**, are byte-identical; the audit is unchanged except source-line citations. Builds and **61+3** guards pass, E1 payload **34,309,830 B**. Seven broader Signal/Orbital failures reproduce on exact preceding map bases and remain held. Full art/vista/crossing/relay/HUD acceptance remains separate.
+
+Store `d8938178a7464c637a79bca81d5f788bc8ad954d` is pushed and read back on `astra/entry-framing`; land it with `sol/map-art-campaign-2`. Final engine `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1`; pins untouched. [All measurements, boards, per-map commits, full hash pairs and failure attribution](run-8/entry-framing/handoff.md). Remaining list: **none**.
+
+
+## 2026-09-23 — run 9 E1/E2 fidelity: Pressure Garden
+
+**IMPROVED / HELD:** engraved gravel and shorter irregular current marks suppress the river's dark rectangular blocks: centre/margin contrast **0.11866→0.02009 desktop / 0.11949→0.01506 phone**, −83.1% / −87.4%. Seventy-eight grounded stones add 1,560 scenery triangles, panorama **2,112→3,672/4,000**; the ±6 m ford stays clear (closest vertex |x|=8.329 m). Run-4 desktop ground RMS remains **0.02328385**; phone **0.03124792→0.03321705**, +6.30% from the added silhouette, explicitly not a reduced-noise claim. Terrain/landmarks/atlas, collision, height, masks, mounts and stations stay unchanged. Whole-body emission remains 0.45.
+
+HELD art: straight/slab-like shoreline reading, weak wet contact and greener/darker water with limited reflection. Parallel geography and prior boiler/terrace/HUD composition remain with their existing owners. Fresh independent review confirms the bounded improvement without new readability regression. [Verbatim clauses, full numbers and boards](run-9/e2-pressure-garden/review.md).
+
+Final builds pass, **26 browser passes / four skips**, loading **8/8**, repeat **2/2**, six disposal cycles, **34+3** guards. The broad batch is **162 pass / six skips / six failures**; all six registry failures reproduce on exact base. The lane also predates mirror fixes already on main (`214a54568`, `82c226185`): its original gate stays red, while the exact canonical main script passes the unchanged assertion in an isolated tree. [Main prerequisite proof](run-9/mirror-prerequisite-proof.json). p95 **9.50→9.30 / 8.85→9.20 ms**, draws **90/58** unchanged. E1 payload **34,311,865 B**, +2,035 B versus the preceding engine; no E1 art assets change.
+
+Engine `a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1` → `e300ac0f43d653be8b76c3f65610264ad5c2db023a9dd15a115a275cad6ea6f7`. Store `25fed85ea017ff54abd78d5e4186dddf1dea6efc` pushed/read back on `astra/fidelity-2`; pin drain-owned. **READY-FOR-GATES** with attributed baseline failures and main prerequisite.
+
+Scope audit: Night Shift, Twin Banks, Baron and Trestle are skipped because their latest reviews hold no clauses for this permitted art owner. [Exact owner audit](run-9/run-note.md). Remaining list in this leg: **e2-incline**.
+
+
+## 2026-09-23 — run 9 E1/E2 fidelity: Incline and leg closeout
+
+**IMPROVED / HELD:** spoked sheave/hub, explicit cable returns and wound drum clarify the cable house; the old buried dark winch is removed as a whole component. Timber roof, exhaust neck and a boarded platform/fascia replace the thin red-roof/sheet reading. Body **2,028→2,136/3,000 triangles**, fascia **0.24→0.48 m**; original bounds, mount, collision footprint and inspection station remain exact, as do four sibling GLBs and every atlas pixel. Body median versus run 4 **0.134155→0.164056 desktop / 0.137296→0.166027 phone**, emission **0.375** unchanged. Ground median stays unchanged; RMS rises **0.034% / 0.846%**, no further noise reduction claimed.
+
+Phone primary persistent HUD **0.270133%→0.246094%**; desktop **0.008406%→0.058934%** rise explicitly reported, together with all sibling comparisons. Ordinary phone dialogue still hides the upper mechanism. HELD art: similar brown materials, exposed pale base strips and weak platform contact. HELD existing owners: entry/offscreen terminal, track connection, cliffs and UI. Independent final critique prefers the cleared mechanism with no visible new geometry/depth-ordering defect. [Verbatim clauses, numbers, boards and critique](run-9/e2-incline/review.md).
+
+Final own/pack browser **62 pass / six skips / six failures**; every failure matches its exact preceding code/store/engine by project and assertion fingerprint. Loading **8/8**, repeat **2/2**, builds, source re-export and **34+3** scoped guards pass. All final normal/station/performance captures have zero console/page errors. The lane's original mirror check remains red; the exact current-main deploy script passes the unchanged assertion. Integration must retain already-landed main fixes `214a54568` and `82c226185`. Paired p95 **9.65→9.60 / 9.80→9.55 ms**, single mode, unchanged **76/58** draws. E1 payload **34,311,866 B**, +1 B versus Pressure Garden, +2,036 B across the leg, no E1 art changes.
+
+Engine `e300ac0f43d653be8b76c3f65610264ad5c2db023a9dd15a115a275cad6ea6f7` → `72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2`. Store `d76ee141dcac825aa29cf4e5d4a868fe845fb1c8`, pushed/read back on `astra/fidelity-2`; pin drain-owned. **READY-FOR-GATES.** Night Shift, Twin Banks, Baron and Trestle are scope-skipped; remaining list in this E1/E2 leg: **none**. [Durable handoff and complete commit/hash chain](run-9/handoff.md).
+
+
+## 2026-09-23 — run 9 E3 fidelity: Canyon Works
+
+**IMPROVED / HELD:** the former slab and wheel motifs become a supported dynamo drum/rotor, framed hall, seamed metal roof, ceramic terminals and masonry/boarded foundation. Body **1,768→2,552/3,000 triangles**; exact original bounds, mount, collision footprint and 3 m station. Four sibling bodies and the landmark atlas remain unchanged. Body median versus run 4 **+2.55% desktop / +2.88% phone**, whole-body emission **0.45**. The phone station rises **0.002018%→0.009873%**, explicitly disclosed; entry remains **26.622%** covered.
+
+Fourteen layered buttresses and fourteen irregular talus pieces give the blank panorama apron depth. The original apron receives unchanged terrain paint and world depth while preserving every triangle position, including the seam-closing ring. Panorama **2,496→3,980/4,000 triangles**; all new rock vertices outside the playable rectangle. Prior bright-seam result remains **0/0**; strongest row step across those strips falls **75.84% / 83.19%**. Fixed playable-ground RMS stays effectively equal to run 4, pixel-identical between fresh arms. Terrain, height, masks, routes, spawns, collision, stations and atlas pixels remain exact.
+
+Independent final review prefers the candidate. **HELD art:** fine engraving, uniform framing, weak contact shading, sparse/ angular cliff detail and four unchanged sibling bodies. **HELD existing owners:** gorge orientation/route hierarchy, true powered-grid composition and entry/HUD. [Verbatim clauses, all numbers and boards](run-9/e3-canyon-works/review.md).
+
+Final TypeScript/default/full/E1 builds, **34+3** scoped guards, loading **8/8**, repeat **2/2**, source/recipe reproduction and authority invariants pass. Own/pack browser **75 pass / 7 skips / 14 failures**; all fourteen reproduce on exact code/store/engine base. Ten assertion fingerprints are exact; two unrelated slope tests have variable observed ratios; two stale Crawler count bands differ by exactly the authored **+2,268 triangles**. The shared Pressure Garden caller regression passes **2/2**. All final plain/station/performance captures have zero errors. [Case attribution](run-9/e3-canyon-works/browser-failure-attribution.json).
+
+Paired p95 **9.50→9.75 / 9.65→9.65 ms**, single mode, draws **72→74 / 54→56**. Raw runtime GLBs add **15,677,584 B**, mainly the three-atlas panorama (**836,136→16,459,928 B**); this E3 download cost is explicit. E1 payload **34,311,999 B**, **+133 B versus the recorded preceding E2 leg**, no E1 art changes.
+
+The original lane mirror gate fails on **15 base / 18 candidate** paths; the exact current-main filters pass the unchanged assertion. Retain main fixes **214a54568 / 82c226185** at integration. [Bound prerequisite](run-9/e3-canyon-works/mirror-prerequisite-proof.json). Engine **72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2 → c01ea77a83fe3183df84df0b627f3f5ab252047ad3f1afb7d3b840e31879e56e**; pin unchanged. Store **b04141647762fd25aed02a86ac5ee00a627f8d14** on `astra/fidelity-2`. **READY-FOR-GATES**, bounded IMPROVED / HELD. [Integration handoff](run-9/e3-canyon-works/handoff.md).
+
+Remaining list in this E3 leg: **none**. Future epoch legs, in order and outside this task: **e4-dust-flats, e4-long-road, e4-gusher-county, e4-boneyard, e6-glow-mesa, e6-half-life-hollow, e6-picnic, e7-dead-band, e7-relay-rush, e8-far-side, e8-low-orbit, e9-dome-basin, e9-seed-run, e9-devils-alley, e9-old-canal**. No other map is changed in this leg.
+
+## 2026-09-23 — run 9 E4 fidelity: Dust Flats
+
+**IMPROVED / HELD — READY-FOR-GATES.** Existing reserve and watchtower now read as three connected tanks and an open lattice lookout. Exact original bounds, atlas pixels, mount/collision/station declarations and three siblings retained. Reserve **2,380→2,224/3,000** triangles; tower **628→826/3,000**. Tank silhouette is **24.65% less solid** at unchanged bounds. Fixed-region RMS **0.0165662/0.0206802** preserves run-5 **0.0165664/0.0206796**, fresh A/B identical. Emission **0.45**. Declared post station HUD **0.021512%/0.027662%**, versus run-5 **0%/0.005586%**: rises disclosed; post geometry/HUD/station unchanged.
+
+HELD missing outer-claim derrick mounts (art/contract coordination), full entry/camera vista, dark roof/cabin and stronger contact. Independent review prefers the bodies but withholds full fidelity. [Every verbatim art clause, boards and metrics](run-9/e4-dust-flats/review.md).
+
+Builds, **34+3** guards, source/recipe reproduction, loading **8/8** and repeat **2/2** pass. Browser **85 pass / 5 skips / 20 base-red tests**: 16 exact fingerprints, two variable Claim-horizon samples and two opposite immediate E5 toggle phases, all explicitly distinguished. Zero errors in final captures. Four runs per arm: p95 **9.85→9.65 / 9.65→9.60 ms**, draws **84/52** unchanged, within 15%. E1 payload not applicable, no E1 art change.
+
+Engine `0a23a5425e7b47bb1e7bf7cef05dacb2b3b68c103cc9337459d2bc6cc32823b0` → `7811cb664727d4e4e9da87f09ae49a92f429af42d000a50d495f36aa5e250443`; pin unchanged. Store `b1e2c12a979e6b598860bfb5273142ed7b05d2f3`, pushed/read back. Remaining E4 maps in order: **e4-long-road, e4-gusher-county, e4-boneyard**.
+
+
+## 2026-09-23 — run 9 E4: Long Road
+
+IMPROVED / HELD. Open service canopy and elevated water tank replace the west shed; articulated static convoy replaces the covered hull. Exact bounds, original atlas, mounts, collision and stations retained. Apron boundary luminance difference 0.020655→0.002105 (−89.81%); RMS 0.011795→0.012285, reported separately. Ground fixed boxes remain unchanged. Phone stop HUD rises 0.001500 percentage points; entry ownership and UI limits remain held. Builds, 34+3 scoped guards, loading/repeat and source/recipe proof pass. Browser 57 pass / 17 optional skips / 10 exact-base-red cases (8 exact fingerprints, 2 horizon-value variations). p95 9.45→9.60 / 9.90→9.90 ms; draws61/51 unchanged. E1 payload N/A. Engine `7811cb664727d4e4e9da87f09ae49a92f429af42d000a50d495f36aa5e250443` → `8a51dec200e748ad42ea24d3ffd8f53525dfc7f34edba41b260107179b9f809c`; store `e33b81277c9058ae8e8a18c595c975703d4887a7` pushed/read back. [Full clauses and evidence](run-9/e4-long-road/review.md).
+
+
+## 2026-09-23 — run 9 E4: Gusher County
+
+IMPROVED / HELD. All eight existing derrick bodies gain coherent lattice, local connected pipe dressing, gauges, bolted collars and exposed flywheels. 2108–2252/3000 triangles; exact envelopes/mounts and atlas pixels. Camp/outhouse, actor visibility, zero red paint and ground remain unchanged. Small declared HUD-mask increases are fully reported. Builds, scoped34+3 guards, loading8/8, repeat2/2 and source proofs pass. Browser64 pass /6 optional skips /6 exact-base-red cases (4 exact fingerprints,2 horizon-value variations). Entry p95 9.75→9.70 /9.70→9.80 ms; lease station9.05→8.95 /8.90→8.90, unchanged draws and within15%. Full field network, weathering and entry/UI held. E1 payload N/A. Engine `8a51dec200e748ad42ea24d3ffd8f53525dfc7f34edba41b260107179b9f809c` → `e5acca191da821a5e1bf2ad225fef65ce93a11bd32d0610213465b7b23680bd7`; store `8ef0a035c47622425dada043aca1145e88aaca80` pushed/read back. [Full clauses/evidence](run-9/e4-gusher-county/review.md).
+
+
+## 2026-09-23 — run 9 E4: Boneyard and leg closeout
+
+IMPROVED / HELD. Same-box ground RMS versus run 6 falls **25.12% desktop /17.96% phone**. The sleeper has clearer pressure-engine detail and partial wheel burial, **1842→2926/3000 triangles**; two small wrecks become distinct salvage silhouettes, **512→1370 /512→1250**. Exact bounds, collision, mounts and stations remain unchanged; nine sibling GLBs and original atlas pixels remain exact. A matte non-emissive earth material replaces two rejected atlas-colored mound treatments. Full ground/metal fidelity, smooth terrain contact, small-wreck readability and entry/UI remain held. Every small HUD increase is reported against its own earlier figure; the historical sleeper phone reduction is not credited to this pass. [Full quoted clauses, numbers and final independent review](run-9/e4-boneyard/review.md).
+
+TypeScript/default/full builds, **34+3** scoped guards, source/recipe proofs, loading **8/8** and repeat **2/2** pass. Browser **55 pass /5 optional skips /6 failures reproduced on exact baseline**, four exact fingerprints and two variable Claim-horizon values. Candidate restored exactly. Entry p95 **9.70→9.70 /9.85→9.90 ms**, draws69/51 unchanged; sleeper-view **10.05→9.90 /9.80→10.00 ms**, draws64→65/45→46, all within15% and one timing mode. Four ordinary boots,24 stations and32 timing runs have zero console/page errors. Runtime GLBs add **159,892 B**. E1 payload N/A.
+
+Engine `e5acca191da821a5e1bf2ad225fef65ce93a11bd32d0610213465b7b23680bd7` → `49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731`; store `e62dbf97cc8ba3c9d8c98e338b84f37d807a67a3`, pushed/read back on `astra/fidelity-2`. Pin unchanged. **READY-FOR-GATES.** All four E4 maps have separate game/store commits; remaining list in this E4 leg: **none**. [Leg handoff](run-9/e4-handoff.md).
+
+
+## 2026-09-23 — run 9 E6: Glow Mesa skip and Half-Life Hollow
+
+**Glow Mesa SKIPPED:** its latest run-6 review has no art-owned HELD clause or independent critique. Existing contract/layout/camera/Atomic/UI holds remain; no asset change.
+
+**Half-Life Hollow IMPROVED / HELD:** architectural clock arch, **508→1,956/3,000 triangles**, exact envelope and passage, original atlas and four sibling bodies preserved. Own run-6 station luminance **0.25196→0.29684 /0.25280→0.29195**. HUD **0.004768%→0.026709% desktop** (small rise reported) and **0.165746%→0.065006% phone**. Full material/contact/lighting and existing camera/layout/UI holds remain. [Verbatim clause, boards and independent critique](run-9/e6-half-life-hollow/review.md).
+
+Builds, scoped34+3 guards, loading8/8, repeat2/2 and source/recipe proofs pass. Complete browser51 pass/5 skip/4 failures reproduced on exact base; three exact fingerprints and one variable desktop horizon value. Corrected attribution excludes the new source-input JSON; rejected first receipt retained. Entry p95 **9.25→9.30 /9.55→9.65 ms**; gate view **8.65→9.20 /9.60→9.45**, unchanged draws, all within15%, zero capture errors. Runtime GLB **+92,996 B**; E1 delta N/A.
+
+Engine `49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731` → `083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6`; store `92db3dc4f87789f976b7c310b7adb7372f8c5c30` pushed on `astra/fidelity-2`. Pin untouched. Remaining E6 list in order: **e6-picnic**.
+
+
+## 2026-09-23 — run 9 E6: The Picnic and leg completion
+
+“The existing large cross-shaped ground shadow and primitive prop forms remain visible in the board; no full art-fidelity claim.” **FIXED** painted cross marks; **IMPROVED / HELD** props. Native-generated ground pigment and cloth atlas, cups/dishes/baskets/food and sagging canvas with retained bench/atom. Own run-6 RMS **−43.96% desktop /−29.56% phone**, center median **0.16403→0.58581 /0.16793→0.58300**; emission 0.45. Every body ≤3,000; all bounds, mounts, collision and station authority exact. Small desktop HUD rises and inherited entry/UI holds are explicit. Full ground/material/contact fidelity remains held. [Verbatim clause, boards, independent critique and all numbers](run-9/e6-picnic/review.md).
+
+Builds, 34+3 scoped guards,mirror,loading 8/8,repeat 2/2 and dedicated six-cycle mount/dispose pass. Browser **51 pass /5 skips /4 failures**, all reproduced on exact base (2 exact fingerprints). Entry p95 **10.10→10.20 /10.00→10.05ms**; grouping **9.70→10.05 /9.75→9.95ms**; all within 15%. Raw runtime **+11,804,162B**; E1 payload not applicable.
+
+Engine `083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6` → `e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32`; store `9e33801ab1a2f2349fce6929f576a81a6611a7e2` pushed and read back. Pin untouched. **Remaining E6 list: none. READY-FOR-GATES.** Glow Mesa skipped, Hollow and Picnic completed. Later epochs are separate tasks. [E6 handoff](run-9/e6-handoff.md).
+
+
+## 2026-09-23 — run 9 E7: Dead Band and Relay Rush disposition
+
+**Dead Band IMPROVED / HELD.** “These simple braced frames do not yet equal the plate's layered antenna architecture.” Layered pylons, socket feet, collars and truss headers now replace the flat frames: **156→1,464 / 180→1,548 of 3,000 triangles**. At the unchanged 3 m stations, own run-6 luminance **0.10425→0.18928 / 0.10956→0.19237** (warning) and **0.13721→0.16715 / 0.12962→0.16715** (north), emission 0.45. Both changed bodies stay below their run-6 station HUD figures; all ground metrics and source bounds remain exact. Full architecture/material/weathering, buried north footing, yard composition and existing entry/UI holds remain; no full-fidelity acceptance. The mixed yard/solidity clause is quoted and assigned in the [complete review](run-9/e7-dead-band/review.md).
+
+**Relay Rush SKIPPED:** no art-owned HELD clause or independent critique in the required runs; no asset change. [Exact review selection](run-9/e7-scope-selection.json).
+
+TypeScript/default/full builds, **34+3** scoped guards, source/recipe proofs, loading **8/8**, repeat **2/2**, and six map-specific mount/dispose cycles pass. Browser batch **103 pass / 5 skip / 12 fail**: **11 reproduce on exact base** (nine exact fingerprints, two variable horizon values); the remaining mobile Charter Press failure passes on base and restored candidate **2/2**. Earlier diagnostic-control and probe mistakes are retained and explained. Entry p95 **8.90→8.90 / 9.80→9.45 ms**; north **9.00→9.65 / 9.30→9.45 ms**, all single-mode and within15%, draws unchanged. All 4 plain,20 station,32 timing captures have zero console/page errors. Raw GLBs **+183,916 B**; E1 delta N/A.
+
+Engine `e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32` → `6655ba7569775a529216d58cf8f288556ca9fc19cfd7bbeae41dbeb9a99adf33`; store `892b7f6f993cfb79dcee9c96d82c32efe32ea20f` pushed and read back. Pin untouched. **READY-FOR-GATES. Remaining E7 list: none.** Later legs in campaign order: e8-far-side, e8-low-orbit, e9-dome-basin, e9-seed-run, e9-devils-alley, e9-old-canal; not authorized by this leg. [E7 handoff](run-9/e7-handoff.md).
+
+
+## 2026-09-24 — run 9 E8: Far Side
+
+**IMPROVED / HELD.** Pressure vessel **600→2,966/3,000 triangles**, native metal atlas, exact source bounds and gameplay authority. Own run-6 station luminance **0.29577→0.34839 /0.29660→0.34811**, emission0.45; ground/stripe correction retained. Declared desktop HUD **+0.024096pp** is reported; phone **5.768185→0.011646%** includes prior UI gains, not claimed for art. Full surface/mechanism/contact and compound/layout/UI remain held. [Verbatim clauses, boards and independent critique](run-9/e8-far-side/review.md).
+
+Builds,34+3 scoped guards,mirror,source/recipe,loading8/8,repeat2/2 and six mount/dispose cycles pass. Broad browser48pass/4skip/2exact-base failures; final affected22pass/4skip; parity6/6. p95 **9.35→9.35 /9.35→9.70ms**, unchanged63/50 draws, within15%, zero capture errors. Raw runtime **+3,330,124B**; E1 N/A. Engine `6655ba7569775a529216d58cf8f288556ca9fc19cfd7bbeae41dbeb9a99adf33` → `b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df`; store `70b78b433ff926b3552fc3d201970d101edf4906` pushed/read back. Pin untouched. Remaining E8 list: **e8-low-orbit**.
+
+
+## 2026-09-24 — run 9 E8: Low Orbit and leg close
+
+**IMPROVED / HELD.** Integrated recovery housing, attached rim, pointed pressure towers, visible jaws, teal controls and native metal surfaces; **2,972→2,964/3,000** triangles. Own run-6 station median **0.319293→0.403809 /0.319482→0.403760**, dark-body share **7.737→0% /7.833→0%**, emission **0.45**. Station HUD **0.002498→0% /0.997591→0.019548%**, below earlier ceilings. Eight-sided visual base keeps **29.2893%** corner-area reduction but is **1.535%** smaller in plan area; exact full-body bounds and collision remain unchanged. Ground values are exact, with no improvement claimed. Fine material/contact/claw identity, smooth ground, full orbital composition and phone UI remain held. [Every quoted clause, boards and evidence](run-9/e8-low-orbit/review.md).
+
+TypeScript/default/full builds, **34+3** scoped guards, mirror, source/recipe reproduction, loading **8/8**, repeat **2/2**, six mount/dispose cycles and parity/census **6/6** pass. Browser **58 pass /4 skip /2 failures**, both reproduced by exact fingerprint on the engine-verified base. Four runs per arm/viewport: p95 **9.55→9.55 /9.80→9.60 ms**, unchanged **77/55** draws, within **15%**, zero capture errors. Runtime GLBs **+3,195,408 B**; E1 **N/A**.
+
+Engine `b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df` → `984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5`; store `4a2976f52ae92d17da23d883d0bf5756e75c9f74` pushed and remotely verified on **astra/fidelity-2**. Pin untouched. **READY-FOR-GATES. Remaining E8 list: none.** Later maps, outside this task, in order: **e9-dome-basin → e9-seed-run → e9-devils-alley → e9-old-canal**. [E8 handoff](run-9/e8-handoff.md).
+
+
+## 2026-09-24 — run 9 E9: Dome Basin
+
+**IMPROVED / HELD.** Native masonry/metal atlas and bounded bearing/footing detail; 1,580→2,308/3,000 triangles. UV distortion median/p95 3.75/38.52→1.00/1.08 with no collapsed faces. Own run-6 5 m luminance 0.327/0.325→0.466/0.460; ground retained within 0.004% RMS. Station HUD rises 0→0.021%/0.067% explicitly reported. Independent critique retains actual ground contact, coarse courses, dense joins, railway integration and full canal scale. [Every quoted clause and evidence](run-9/e9-dome-basin/review.md).
+
+Final builds,34+3 guards,mirror,census4/4,loading8/8,repeat2/2,six disposal cycles pass. Browser50pass/4skip/4exact-base failures. Four-run p95 9.65→9.55 /9.30→9.45ms; calls94/53 unchanged; zero capture errors. E1 N/A. Engine `984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5` → `9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1`; store `60c635c2e48eedc288ffcf34c685e862f959057d` pushed/read back. **READY-FOR-GATES. Remaining E9 in order: e9-seed-run, e9-devils-alley, e9-old-canal.**
+
+## 2026-09-24 — run 9 E9: Seed Run
+
+**IMPROVED / HELD.** Attached door hardware, framed windows, native surfaces; 2,148→2,828/3,000 triangles. UV distortion 1.82/15.05→1.00/1.24, collapsed area 0.797→0%; own run-6 station body median 0.259/0.259→0.443/0.442. Quieter tapered ruts retain all 110 centers and four rings. Declared HUD remains 0% both. Weak contact, shallow panels, material hierarchy and repeated route spacing remain held. [Verbatim clauses and evidence](run-9/e9-seed-run/review.md).
+
+Builds, 34+3 guards, mirror, census4, loading8, repeat2 and six mount cycles pass. Browser49pass/5skip/2 exact-base roster reds. Performance −1.01%/+0.51%, calls126/72 unchanged, zero capture errors. E1 N/A. Engine `9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1` → `bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb`; store `0c64c9355000a0304978c31c81fdb70439f0730f` pushed/read back. **READY-FOR-GATES. Remaining E9: e9-devils-alley, e9-old-canal.**
+
+## 2026-09-24 — run 9 E9: Devil’s Alley
+
+**IMPROVED / HELD.** Three native-surfaced wind anchors gain connected fittings, 2,284/2,628/2,972 of 3,000 triangles. Own run-6 upper median 0.193/0.192→0.353/0.352; dark share 12.91/9.65→0%; UV p95 31–50→1.44. Safety rings and all gameplay geometry remain exact. Full scale, coil hierarchy, contact, texture crispness and landscape/VFX remain held. Raw phone station HUD 0.0041→0.0081% reported. [Every clause and evidence](run-9/e9-devils-alley/review.md).
+
+Builds,34+3 guards,mirror,census4,loading8,repeat2,six disposal cycles pass. Browser36pass/4skip/2 exact-base roster failures. Four-run performance +1.55%/−0.52%, calls88/58 unchanged; zero capture errors. E1 N/A. Engine `bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb` → `fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa`; store `03ccce800126faf8f347b51e9a9e751b20b80d19` pushed/read back. **READY-FOR-GATES. Remaining E9: e9-old-canal.**
+
+## 2026-09-24 — run 9 E9: Old Canal and leg closeout
+
+**IMPROVED / HELD.** Connected upper wheel drives, native materials, low coursed masonry and sharper inherited canal edges. A/B/C 1,444/1,456/1,468→2,156/2,168/2,180 triangles; bands 552→2,184 within their old low envelope. Bed paint transition 0.80→0.25 m; six route segments and three choice bands exact. Own run-6 station median 0.190/0.190→0.384/0.386; HUD 0.062/0.111→0.037/0.066%. Full depth/walls, fine material/joint/contact fidelity and straight terrain boundary remain held. [Verbatim clauses and evidence](run-9/e9-old-canal/review.md).
+
+Builds, 34+3 guards, mirror, census 4, loading 8, repeat 2, six mount cycles pass. Browser 40 pass /4 skips /2 exact-base roster reds. Presentation proof preserves choices, low envelope, +3 m substrate resampling and 18-resource disposal; shared shader proof leaves Dome/Seed strings/uniforms/cache keys exact. Four-run p95 unchanged 9.80/9.75 ms; calls 90/59 unchanged; zero capture errors. E1 N/A. Engine `fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa` → `d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959`; store `c092e3de241f34163e903279bf071fe1f4fa6d56` pushed/read back. **READY-FOR-GATES. Remaining E9 task maps: none.** Full concept fidelity remains held, not silently accepted. [Complete E9 handoff](run-9/e9-handoff.md).
+
+
+## 2026-09-24 — run 10: entry — e1-night-shift
+
+2026-09-24 run 10: entry — DECLARED / HELD: already partly visible, so no glance. 1280 lampworks_yard: 77,509→77,506→77,505 px; 390 lampworks_yard: 9,127→9,128→9,128 px. lampworks_yard has nonzero body pixels at both widths. The unchanged zero-pixel trigger cannot cure partial cropping or HUD coverage; no improvement is credited to the live count variation. The phone yard and full lantern procession remain held. E1 34,322,816 B (+4,270 B). [Boards, timing and gates](run-10/entry-framing/e1-night-shift/review.md).
+
+Engine `d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959` → `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e1-twin-banks
+
+2026-09-24 run 10: entry — IMPROVED: phone homestead revealed; desktop already visible. 1280 south_bank_homestead: 44,748→44,746→44,746 px; 390 south_bank_homestead: 0→49,902→0 px. The phone-only 2.5-second glance reveals south_bank_homestead and returns to the unchanged rider. Desktop correctly skips the already-visible house. Both braids, both banks, the other rig and HUD clearance remain separate holds; the single homestead does not establish full plate fidelity. E1 34,329,072 B (+6,256 B). [Boards, timing and gates](run-10/entry-framing/e1-twin-banks/review.md).
+
+Engine `9c2ee0ea822710505d86a59da361d42c2362729ef5feeded0ce7bff33100e47b` → `97855ed9d083ec03a2057dfc9f33b0618f6c8cb28fcfac99952fa1e2e6000a97`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e1-baron
+
+2026-09-24 run 10: entry — IMPROVED: phone headframe revealed; desktop already partly visible. 1280 seized_headframe: 24,267→24,265→24,264 px; 390 seized_headframe: 0→22,185→0 px. The phone glance frames seized_headframe for about 1.9 seconds and returns to the rider. Desktop skips its already-visible body. The 55.21 m fort, second cart, broad occupied valley, desktop headframe crop and remaining HUD overlap are HELD outside this bounded reveal. E1 34,333,649 B (+4,577 B). [Boards, timing and gates](run-10/entry-framing/e1-baron/review.md).
+
+Engine `97855ed9d083ec03a2057dfc9f33b0618f6c8cb28fcfac99952fa1e2e6000a97` → `3791c3f04a2941cd2b03a1b34883ef4ddee1c09d7d5e57630ef58416db65113b`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e2-trestle
+
+2026-09-24 run 10: entry — IMPROVED: phone bridge body revealed; desktop already partly visible. 1280 trestle-crossing: 8,161→8,155→8,148 px; 390 trestle-crossing: 0→52,732→0 px. The bridge span is the declared trestle-crossing body. Phone gains a 2.5-second glance and returns to the rider; desktop skips the existing visible fragment. Full span composition, gorge vista, rail stock and HUD clearance remain separate holds under the unchanged offset, zoom and zero-pixel rule. [Boards, timing and gates](run-10/entry-framing/e2-trestle/review.md).
+
+Engine `3791c3f04a2941cd2b03a1b34883ef4ddee1c09d7d5e57630ef58416db65113b` → `2b0d52300abd6a7558c4d4a818e8bc61f0f3ffbde92984685d8f77a8aa653de4`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e6-glow-mesa
+
+2026-09-24 run 10: entry — IMPROVED: phone derrick then cooling rack fit one window; desktop rack HELD. 1280 mesa-starstone-derrick: 0→37,168→0 px; 390 mesa-starstone-derrick: 0→41,400→0 px; 1280 isotope-cooling-rack: 5,390→0→5,389 px; 390 isotope-cooling-rack: 0→35,096→0 px. entryLandmarks keeps mesa-starstone-derrick first and adds isotope-cooling-rack. The phone tour preserves the 0.7 s entry/return eases and uses the old 1.1 s hold for 0.2 s first hold, 0.7 s transit and 0.2 s second hold. The phone bodies are visible about 0.45–0.55 s and 0.58–0.68 s; this trades dwell time for two views. Desktop rack already has body pixels, so it is skipped; its zero peak count is at the derrick stop, not a claimed rack glance. Cropping, desktop rack HUD coverage, full mesa grouping and active node-ring presentation remain HELD. [Boards, timing and gates](run-10/entry-framing/e6-glow-mesa/review.md).
+
+Engine `2b0d52300abd6a7558c4d4a818e8bc61f0f3ffbde92984685d8f77a8aa653de4` → `13fb20763655460af233764b4bb4ad960b2a1e758c3476473bd353e5b4203aa1`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — e7-relay-rush
+
+2026-09-24 run 10: entry — Phone charting station and west dishes REVEALED; desktop west dishes REVEALED; desktop charting station HELD. 1280 dead-gap-charting-station: 8,548→0→8,549 px; 390 dead-gap-charting-station: 0→21,955→0 px; 1280 west-ridge-dish-cluster: 0→22,216→0 px; 390 west-ridge-dish-cluster: 0→24,726→0 px. The charting station and west dish cluster are the two inherited Relay Valley bodies named by the run-6 hold. At 390, both are zero-body at rest and the ordered list reaches each inside the unchanged 2.5 s window. At 1280, 8,548 charting-station pixels already exist at the cropped left edge, so the unchanged zero-body rule skips it; only the west dishes are targeted. The charting-station body disappears during that desktop glance and returns afterward. Persistent HUD and broad plateau composition remain held. The list uses the former hold for two 0.2 s stops with a 0.7 s transit; it does not extend the tour or move the spawn. [Boards, timing and gates](run-10/entry-framing/e7-relay-rush/review.md).
+
+Engine `13fb20763655460af233764b4bb4ad960b2a1e758c3476473bd353e5b4203aa1` → `dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b`. No pin move.
+
+
+## 2026-09-24 — run 10: entry — closing gates
+
+All six maps are implemented and measured; remaining list is EMPTY. READY-FOR-GATES with full browser/release acceptance HELD. Camera/sim boundaries, 12 plain boots with zero errors, scoped guards, all standard build variants and the two-project boat replay proof pass. The final standard E1 payload is 34,340,806 B (below 52,000,000 B).
+
+Agent-view passes 10/12: the protected fixture lacks the three required E1 landmark sentences (an introduced fixture mismatch). Release checks also remain held: the unchanged suite passes 26/30, with the motor-hauler GLB leak and the Dry Gulch harvest-channeling failures reproduced with pre-task source. Night Shift, Twin Banks and Baron retain the precisely attributed own-suite holds. No assertion, fixture, sim, HUD, GLB or engine pin was changed to clear them.
+
+[Complete handoff: all body counts, duration bounds, reasons, visual holds, test attribution, per-map payload deltas, engine hash pairs and store commits](run-10/entry-framing/run-note.md).
+
+## Phone entry HUD extension — 2026-09-24, run 10
+
+**CENSUS PASS; browser/release acceptance HELD. READY-FOR-GATES.** The four E1/E2 entry bodies omitted by run 8 now join the same census and guard. The before census was committed as `0aaa67564` before any cure. Only the 390px tall-phone CSS changes: Night Shift and Twin Banks compact the centred confirmation target from 76px to 60px; Twin Banks removes joystick backing/glow without moving its bounds, knob or input; Baron places the intact status rail below the visible top-edge fort. Trestle remains camera-owned because its bridge has zero on-screen phone pixels.
+
+| Map | Phone entry coverage before → after | Desktop before → after | Phone / desktop painted union |
+|---|---:|---:|---:|
+| Night Shift rig | 13.09% → 8.03% | 15.09% → 15.09% | 11.28% / 13.92%, unchanged |
+| Twin Banks river | 22.84% → 6.16% | 75.00% → 75.00% | 11.28% / 13.92%, unchanged |
+| Baron fort | 68.14% → 0% | 19.71% → 19.71% | 11.28% / 13.92%, unchanged |
+| Trestle bridge | OFFSCREEN → OFFSCREEN | 58.68% → 58.68% | 13.31% / 15.15%, unchanged |
+
+All twelve original six-map union values remain exactly equal to run 8; every desktop panel box and every original six-map panel box is unchanged. All 40 before/after plain boots record zero console/page errors. The census guard passes 3/3. The selector, threshold and inherited mask limits are unchanged: the painted-union backdrop excludes lower-stacked touch controls and the selector excludes the prompt-stack parent backing; the body-specific persistent masks retain touch controls and establish the measured improvement. Live body-mask sampling varies slightly and is not represented as a CSS change on the original six maps.
+
+TypeScript/default/full/E1 builds pass. E1 first-town payload **34,318,546 → 34,319,307 B (+761 B)**, below 52,000,000. Family delta: CSS +543 B; terrain bundle +218 B while the shared store advanced. The same-game audit is byte-identical before/after/final. Scoped guards pass 25/25 and named task/citation/caller guards pass 3/3. All six new-map 390/430px touch/high-value diagnostics pass, including Pause, Build and Prospector access.
+
+[Exact census and all four boards](run-10/phone-hud/census.md) · [Run note and remaining list](run-10/phone-hud/review.md). Build menu passes 14/14. The 69-file HUD run is 532 passed / 50 failed / 114 existing skips; four own-map mobile specs are 19 passed / 7 failed. Of 56 unique failed cases, 49 reproduce at the same assertion with pre-cure CSS and the other seven pass candidate reruns. E1 release is 26 passed / 4 failed: Dry Gulch harvest channeling and the motor-hauler asset guard fail with and without the new CSS (desktop first hits a briefing timeout, then reproduces harvest on candidate recheck). Assertions are unchanged. [Exact failure attribution](run-10/phone-hud/failure-attribution.md). No persistent candidate-only HUD regression was identified; these gates are still held.
+
+Preflight engine/store `14d5fe939541356c466b5025d72599f5e9885bb63c71f3c4207adec717d24d59` / `c092e3de241f34163e903279bf071fe1f4fa6d56` → final `6eeb451c4cc8cab46792e89dd2b690566e8621285dca6fa084fb78b2b4c2bcc2` / `5793a967da46e8f00c0ba16f92f17dc10d36558d`. Store advance belongs to the concurrent lane; no store/camera/sim/e2e source was edited here. Trestle, Glow Mesa and Relay Rush offscreen bodies remain camera holds. Integrating the separate camera task requires a fresh combined-tree census; the UI-source hash alone does not certify that merge.
+
+
+## 2026-09-24 — run 10: code — three presentation owners
+
+**READY-FOR-GATES; all three code clauses implemented, full browser/release acceptance HELD on reproduced baseline failures.**
+
+| Map and original held clause | Delivered result | Frame p95 desktop / phone |
+| --- | --- | --- |
+| Twin Banks — “Sparse prop cards lack riparian density” / “generic scatter cards remain scatter-owner scope” | 248/102 existing cards become reeds, willow and driftwood from existing atlas cells. Six draws unchanged; roots embed 0.025 m; build zones and fords retain a 1 m exclusion. | 9.95→9.65 / 9.95→9.70 ms |
+| Trestle — “Intersecting/abruptly ending rails dominate” / “HELD for shared route joins/ends” | One shared five-sleeper junction, four frogs with 0.17 m flangeways, four buffer stops; two draws, unchanged routes/stations. | 9.90→10.00 / 9.90→10.05 ms |
+| Relay Rush — “static frames do not claim a relay is active” / “Relay Rush's active signal” | Four existing frame materials follow lit/muted/suppressed state. Active lamp pulses at 0.75 Hz; inactive/muted/suppressed lamps are dark. Zero added objects/lights/draws/view fields. | 9.95→9.95 / 9.85→10.00 ms |
+
+All 41 other scatter captures are byte-identical. All 38 supported full headless view captures are byte-identical; four unsupported contracts are explicitly excluded from the sim claim but included in the 42-map mesh census. Hill Mine, Incline and Canyon Works gain the same rail finishing rule; Eclipse, Mare Claim and Dome Basin remain byte-identical. All route descriptors and stations are unchanged. Paired 1280/390 entry/station boards and 84 zero-error captured boots are retained. Largest p95 increase is 1.53%, within 15%; draw calls also pass. Remaining camera/HUD/full-concept/objective holds are preserved.
+
+TypeScript, default/full/E1 builds, 3 new unit checks, all 6 added browser cases, and 29 scoped Node checks pass. First-town E1 payload is **34,341,349→34,341,349 B (+0 B)**, under 52,000,000 B. Entire E1 dist output adds **316,650 B** outside that declaration: reused atlas WebP 307,650 B and JavaScript 9,000 B. No store bytes change. Same-game audit counts/content are unchanged except source-line citations shifting by the two added Game lines.
+
+Required development-browser run: 47 passed/7 failed; final frozen-source four-suite rerun: 24 passed/6 failed, with the other 24 build-menu/bandit cases green in the full run. The six persistent Twin Banks failures reproduce at the same assertions on saved source. The first mobile seeded-height mismatch clears on final rerun. E1 release: 26 passed/4 failed; both harvest-channeling and both motor-hauler asset-boundary failures reproduce on the baseline build. Named task/citation/caller guards: 2/3 pass; the unchanged e1-spec-truth-1 citation failure reproduces on main. No assertion or fixture was weakened. Independent read-only review findings were fixed and the follow-up found no remaining concrete issue.
+
+Engine `dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b` → `0b017ed5230a0b8c2e46d756004388034a3dc58bca94848b2708a33d35d4dce7`. Store `5793a967da46e8f00c0ba16f92f17dc10d36558d` unchanged; no pin move. Requested implementation remaining list is **EMPTY**; gate-owner work is ordered in the handoff.
+
+[Complete handoff, per-map engine hash pairs and remaining gate work](run-10/code-presentation/run-note.md) · [Twin Banks](run-10/code-presentation/e1-twin-banks/review.md) · [Trestle and every rail map](run-10/code-presentation/e2-trestle/review.md) · [Relay Rush](run-10/code-presentation/e7-relay-rush/review.md) · [Failure attribution](run-10/code-presentation/failure-attribution.md).
+
+## 2026-09-25 run 11: braid - firewall stop
+
+Twin Banks HM-06 is BLOCKED before implementation. Pre-flight install and build pass; the normal GLB path already renders two ribbons, while the fallback retains the band. The mask-driven source-box pool and production-mask ownership require the shared pilot constructor, outside the permitted Twin Banks water entry. No runtime, test or store bytes changed. [Finding, evidence and remaining list](run-11/braid/e1-twin-banks/report.md).
+
+
+## 2026-09-25 run 11: Twin Banks braid, HM-06 run 2
+
+**IMPLEMENTED; READY-FOR-GATES.** The lifted shared-constructor firewall allows production-mask authority, a region-driven source pool within the existing confluence draw, and mask-shaped fallback water. The existing two mounted ribbons are reused. No sculpt, collision, simulation or contract change. Implementation **96fc2b9ce**.
+
+Measured delivered beds -0.452156/-0.315686 m; dry plait +0.259180 m and bar anchors +0.711866/+0.658148 m. Store branch `astra/hm-06-braid` is pushed, unchanged at `5793a967da46e8f00c0ba16f92f17dc10d36558d`. Mask geometry 14,336/14,336; hero probes 8/8; focused braid/routing 6/6; legacy construction captures 10/10 byte-identical. Draws 95→95 desktop /65→65 phone; p95 medians 9.0→8.7 /9.2→9.2 ms. Floors 83/83 match. First-town payload 34,346,281→34,349,803 B (+3,522 B), below 52,000,000 B. Both builds and release 30/30 pass.
+
+The broad dev battery is 52 pass/2 skip/2 red: existing reed motion and a hero-height boot race, both controlled against pre-task source. The drain owns floor re-record/check and the same-era pin; the lane does not change `engine-era.json`. Full paired-bank entry remains camera/HUD-owned; a river-station diagnostic is not called a plain-entry fix. [Every board, command, guard limitation, and remaining item](run-11/braid/e1-twin-banks/report.md).
+
+Canonical Node 26.4.0 battery: 1,009 pass / 5 skip / 4 expected pin/status failures / 0 cancelled; same-game audit and separately run landmark-collision rows pass. The four reds are enumerated in the run-2 report; no pin/status edit was made outside the firewall.
+
+## 2026-09-25 — native play proofs, run 1
+
+Task sol-play-proofs-1, lane-c, Astra. No production/contract/balance or existing-test changes. Pre-flight: no ahead commits and only untracked evidence/log churn; synced lane to main, removed permitted regenerated artifact directories and `logs/guard-stats.jsonl`. Install/build passed; npm-only lockfile metadata churn restored, clean status verified. Own Vite port 5303, one worker, desktop then phone.
+
+- **Baron: FAIL desktop/phone, F-PP1-1.** Desktop died wave 16; phone wave 23, boss at 62.3% HP. Boot/clean pass both, zero errors; terminal/bank/reload unproved. Two attempted strategies do not prove impossibility. [Finding, exact positions and rows](../play-proofs/run-1/e1-baron/finding.md).
+
+- **Twin Banks: FAIL desktop/phone, F-PP1-2.** Desktop died wave 19 / 582.9s, phone wave 18 / 554.1s. Both boot/clean pass, zero errors. [Two attempts and remaining driver limitations](../play-proofs/run-1/e1-twin-banks/finding.md).
+
+- **Pressure Garden: FAIL desktop/phone, F-PP1-3.** Authored route reaches all three coal seams. Desktop died wave 3; phone built two turrets and three boilers, reached two hot boilers, died wave 11. No full secure. [Rows and route findings](../play-proofs/run-1/e2-pressure-garden/finding.md).
+
+- **The Incline: PASS desktop/phone.** Both deliver the cart at 180/180 HP, defeat the railcar and secure at wave 14; all six cells pass, byte-identical score on reload, zero errors. F-PP1-4 resolved: the actual Book launch selects escort mode. Holding four turrets after wave 8 succeeds where extra funding trips failed. [Proof and boards](../play-proofs/run-1/e2-incline/proof.md).
+
+- **Blackout Ridge: PARTIAL desktop/phone, F-PP1-5.** Both wave-12 secure/bank/Book/reload journeys pass with zero errors. The full card goal remains red: phone builds both banks and records eight repairs, but both banks finish wrecked and no current storage is observed. [Exact readings and boundaries](../play-proofs/run-1/e3-blackout-ridge/finding.md).
+
+The new banking check compares to pre-play scores, correcting census instrument finding F-MPP1-1: secure already writes the score before Return to Town. New specs are gated by GR_NATIVE_PROOF. See [run note](../play-proofs/run-1/run-note.md) for final checks, commits and continuation order.
+
+Final verification: build/TypeScript PASS; default collection PASS; gate-unset browser invocation 10 skipped; bounded existing secure-wave briefing check 2/2 PASS. All ten final rows have zero console/page errors. Only Incline passes all six cells on both projects; unresolved full-objective assertions remain red when enabled. Scope check confirms five second-column-only edits and allowed paths. Owned Vite stopped; five-map batch closed, next untouched map Canyon Works.
+
+## 2026-09-25 — Native play proofs, run 2
+
+- Blackout Ridge: PARTIAL desktop/phone; wave 12, bank/Book/reload/clean PASS, authored current storage FAIL, 0 Wh both banks. Two repair strategies, 15/12 repairs. [F-PP2-1](../play-proofs/run-2/e3-blackout-ridge/finding.md).
+- Canyon Works: FAIL desktop/phone; bridge and opposite flank routes stop near z=-7.88, CONNECT 0/2 misses wave 8, zero gold/builds. Full-width slope rejection confirmed by static calculation; no runtime fix within scope. [F-PP2-2](../play-proofs/run-2/e3-canyon-works/finding.md).
+- Fairground: FAIL desktop/phone; six-wall opening loses the wheel at wave 2, early-beacon opening at wave 1. Phone gets one flock across; wheel first-hit stop is irreversible. Both clean, no bank/reload proof. [F-PP2-3](../play-proofs/run-2/e3-fairground/finding.md).
+- Gates: final TypeScript/build PASS; native gate unset gives 14 skipped. Shared-driver Incline regression PASS desktop wave 17 / phone wave 14, full-health cart delivery, bank/Book/reload and zero errors. Scope check confirms only the three objective-evidence cells changed. No new full map proof this batch. [Ordered continuation and commands](../play-proofs/run-2/run-note.md).
+
+## 2026-09-25 — Native play proofs, run 3
+
+- Dust Flats: FAIL desktop/phone. Haul-first reaches railhead at 43.9 s but dies wave 2; defense-first builds two defenses but dies wave 4 before dispatch. Zero console/page errors. Strategy limits, not impossibility. [F-PP3-1](../play-proofs/run-3/e4-dust-flats/finding.md).
+- Gusher County: FAIL desktop/phone. Desktop stops after two deliveries on a missed north dispatch, dies wave 14; phone verifies all three deliveries using 27.631 fuel, then dies wave 4 funding its first defense. Zero errors. [F-PP3-2](../play-proofs/run-3/e4-gusher-county/finding.md).
+- Boneyard: FAIL desktop/phone. Desktop approach stalls at the boiler west edge; phone stops 1.112 units from the road head, outside driver tolerance, and never reaches the hitch. Deaths at waves 4/10; phone builds four defenses. Zero errors. Route limits, no impossibility claim. [F-PP3-3](../play-proofs/run-3/e4-boneyard/finding.md).
+- Gates: TypeScript/build PASS; native gate unset gives 20 skipped; Incline regression PASS desktop/phone at wave 14 with 180/180 HP carts, bank/Book/reload and zero errors. Existing secure-wave briefing check 2/2 PASS. Scope verification confirms exactly three second-column-only status edits and allowed files. No new full proof; next untouched map Far Side. [Ordered continuation, commands and commits](../play-proofs/run-3/run-note.md).
+
+## 2026-09-25 — Native play proofs, run 4
+
+- Driver control: Claim PASS desktop with the unchanged driver, wave 10 / 300.07 s, 143 HP, six buildings, bank/Book/plain reload and zero console/page errors. The control permits the ordered E8 continuation; earlier holds remain strategy findings. [Run note](../play-proofs/run-4/run-note.md).
+- Far Side: FAIL desktop/phone. Desktop coasts out of seam reach (zero gold, death wave 12); corrected phone gathers and proves four air-supported crossings plus one probe playback, but dies wave 17 with four landing-yard defenses. Northern build and full terminal unproved. [F-PP4-1](../play-proofs/run-4/e8-far-side/finding.md).
+- Low Orbit: FAIL desktop/phone, death waves 13/14. Both earn four air-supported entries; phone builds on all three decks. Zero suit harm and console/page errors; wave-20 bank/reload unproved. [F-PP4-2](../play-proofs/run-4/e8-low-orbit/finding.md).
+- Eclipse: FAIL desktop/phone, death waves 16/13, three of four grounds each. Phone proves dome/rim builds and post-shadow harvest, then spends air waiting on a needless velocity arrival threshold (45 suit harm). The final helper accepts actual position; its E8 result remains unproved after the two-attempt cap. [F-PP4-3](../play-proofs/run-4/e8-eclipse/finding.md).
+- Closing gates: TypeScript/build PASS; opt-in gate unset gives 28 skipped; final-driver Incline PASS desktop/phone (waves 14/17, carts 180/180 HP, bank/Book/reload, zero errors); adjacent secure-wave briefing check 2/2 PASS. Nine rows clean. Three second-column-only status edits and allowed paths verified against actual reset base e6336dd0c. No new full proof; next untouched map Dome Basin. [Commands, limits, commits and ordered continuation](../play-proofs/run-4/run-note.md).
+
+## 2026-09-25 — Native play proofs run 5
+
+- Dome Basin: FAIL desktop/phone, waves 15/13. Quarry 4/4, gates 3/3 and all five named building grounds complete; eight builds each, zero errors. Corrected the circuit clamping to the wrong zone; phone still fails survival. No map defect established. [F-PP5-1](../play-proofs/run-5/e9-dome-basin/finding.md).
+- Seed Run: FAIL desktop/phone, death waves 13/14. Caravan arrives with 236.4/234.8 guard; three/four late defenses cannot carry these attempts to wave 20. Zero errors; no banking or planting-persistence proof. [F-PP5-2](../play-proofs/run-5/e9-seed-run/finding.md).
+- Devil's Alley: PASS phone, PARTIAL desktop. Both wave 20, bank, Book, byte-identical reload and zero errors. Desktop missed the east-bay build; phone confirms all three bays after native build-confirmation retries. Two attempts exhausted; desktop full goal remains red. [F-PP5-3](../play-proofs/run-5/e9-devils-alley/finding.md).
+- Closing gates: TypeScript/build PASS; collection 3,452 tests, gate unset 34 skipped; final-driver Incline PASS desktop/phone at wave 14 with carts 180/180 HP; bounded adjacent check 2/2 PASS. Eight final rows clean. Three second-column status cells and allowed paths verified. No new full desktop/phone map acceptance; next untouched Old Canal. [Commands, commits and remaining order](../play-proofs/run-5/run-note.md).
+
+## 2026-09-26 — Native play proofs run 6 and campaign close
+
+- Old Canal: FAIL desktop/phone, all three choices complete, eight/seven builds, deaths wave 19/18. Central demolish opens the defense ground; both outer re-digs register. No map defect established, zero errors. [F-PP6-1](../play-proofs/run-6/e9-old-canal/finding.md).
+- Initial required Incline regression: PASS both projects, wave 14, cart 180/180, all six cells, zero errors.
+- Last Claim: PASS desktop/phone, wave 8, vent alive, banked, actual finale Return to the Ark reaches Book, score byte-identical after reload, zero errors. Prior census text preserved. [Proof](../play-proofs/run-6/e10-last-claim/proof.md).
+- Final shared-driver Incline regression: PASS both projects at wave 14, all six cells and full-health carts, zero errors.
+- River: PARTIAL desktop/phone. Real earned finale lever, no-wave pan 0→30 gold and clean Book return; no completed River score or terminal bank action, so bank/persistence remain FAIL. Raw wave-20 census text preserved and explicitly distinguished. This is an ending-acceptance mismatch, not survival impossibility. [F-PP6-2](../play-proofs/run-6/e10-river/finding.md).
+- Closing gates: TypeScript/build PASS; collection 3,484 tests / 472 files; actual env-unset native run 40 skipped; final-driver Incline and bounded adjacent check each 2/2 PASS. Eight final rows clean, three objective-only status edits verified, prior E10 instrument text preserved. Owned Vite stopped. [Campaign table, exact commands, commits and ordered follow-ups](../play-proofs/run-6/run-note.md).
+- Campaign inventory reconciles to 20 unique measured contracts (19 original targets plus the Claim control), not the task's stated 26: 2 PROVED both, 2 PROVED one, 2 PARTIAL, 13 HELD, 1 historical DEFECT. The run note links every row and explains the overlapping prior tally. Recommendation: finish the broad sweep, strengthen ground survival/repair and orbital movement separately, use targeted human playtests, and resolve River's ending-specific acceptance before treating it as a scored contract.

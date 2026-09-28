@@ -1,0 +1,77 @@
+{
+  "contractChanges": [
+    {
+      "path": "incline-terrain-contract.json",
+      "mountsCollisionBoundsOriginalFieldsUnchanged": true
+    },
+    {
+      "path": "landmarks/incline/incline-landmark-pack-contract.json",
+      "upperOriginalTriangles": 1636,
+      "upperNewTriangles": 2028,
+      "mountsCollisionBoundsOriginalFieldsUnchanged": true
+    }
+  ],
+  "mirroredStationsIdentical": true,
+  "unchangedGeometrySourcesAndAtlases": [
+    {
+      "path": "incline-terrain.glb",
+      "sha256": "d9581d57c6ccde8ca983a82dc86aba2ea2b873620191ec7139f041a033d40025",
+      "bytes": 7778576
+    },
+    {
+      "path": "incline-panorama.glb",
+      "sha256": "9c06e4dd401a71231aae7aa0268b41d695113142bfef1536c114ae3e1f783f7b",
+      "bytes": 662016
+    },
+    {
+      "path": "incline-terrain.blend",
+      "sha256": "7cf590860fd11915beba3529400fb4253b10c8fa69ec1919b49df7e860573548",
+      "bytes": 7854930
+    },
+    {
+      "path": "incline-panorama.blend",
+      "sha256": "830f15dc88bab7d8346601d15c383a504f2e21c42ce823a023fe6778f228ecba",
+      "bytes": 540772
+    },
+    {
+      "path": "incline-terrain-atlas.png",
+      "sha256": "0c79ece2e2dca5d6f6490d5c17534d4878b7728a0b9c80e9d31268af89249c54",
+      "bytes": 7047693
+    },
+    {
+      "path": "incline-panorama-atlas.png",
+      "sha256": "295363ab10395a9f34ba794c1f4db0ffd0958b59d30a973c59647b9df8ab55ef",
+      "bytes": 442355
+    },
+    {
+      "path": "landmarks/incline/incline-landmarks-atlas.png",
+      "sha256": "185f7420a26ec753c2f25042e94f875fff003b27e84419ff1aac863625e1c91b",
+      "bytes": 1434935
+    },
+    {
+      "path": "landmarks/incline/lower-yard-engine-crane.glb",
+      "sha256": "0de1b5381a817da9402d0dece2c0ac14ea845ac0825468676526e8f22742f013",
+      "bytes": 1635756
+    },
+    {
+      "path": "landmarks/incline/west-line-brake-tower.glb",
+      "sha256": "f5c5c604c852c41db9aa929f2bc8537ec1c49c64adc3b3d85546218e5d60510f",
+      "bytes": 1506524
+    },
+    {
+      "path": "landmarks/incline/east-line-brake-tower.glb",
+      "sha256": "2dbb7711db8d2997e44f439ae6f0edfd08a5f3c307ac4c7dccd6ae595120946c",
+      "bytes": 1507368
+    },
+    {
+      "path": "landmarks/incline/ford-service-pump.glb",
+      "sha256": "9efe77e3ddeeebe59c5d8ca55da515d425a6ca3bc39465048547c29788bad510",
+      "bytes": 1615092
+    }
+  ],
+  "boundsVerification": "Recipe asserts all eight Blender bounding-box corners equal pinned input; +392 triangles fit original bounds.",
+  "embeddedAtlasUnchanged": {
+    "bytes": 1434935,
+    "sha256": "185f7420a26ec753c2f25042e94f875fff003b27e84419ff1aac863625e1c91b"
+  }
+}

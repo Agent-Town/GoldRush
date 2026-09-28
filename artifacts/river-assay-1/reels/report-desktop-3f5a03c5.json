@@ -1,0 +1,90 @@
+{
+  "version": 2,
+  "id": "8486c824-c55e-436f-9040-4f9ac1751e3a",
+  "createdAt": 1790426933967,
+  "kept": false,
+  "contract": "e10-river",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "dev",
+    "viewVersion": 4,
+    "engineHash": "642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a",
+    "era": 6
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 999,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 40,
+          "science": 999,
+          "hero": 40,
+          "agent": 40
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "8486c824-c55e-436f-9040-4f9ac1751e3a",
+    "contractId": "e10-river",
+    "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 145,
+    "entries": [
+      {
+        "t": 45,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 83,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 97,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": [],
+    "playbookUses": []
+  },
+  "eventLogHash": "fnv1a32:3f5a03c5",
+  "outcome": {
+    "reason": "secured",
+    "secured": true,
+    "waves": 0,
+    "timeAlive": 4.833333333333326,
+    "gold": 5
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/own-results",
+      "e2e/e8-far-side-probe.spec.ts",
+      "e2e/e8-roster.spec.ts",
+      "e2e/ss-09-e8-beats.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 351.17,
+    "log": "artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/e2e-own.log"
+  }
+]

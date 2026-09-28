@@ -1,0 +1,25 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/own-results",
+      "e2e/e7-dead-band-suppression.spec.ts",
+      "e2e/e7-roster.spec.ts",
+      "e2e/e7-playbook-rows.spec.ts",
+      "e2e/e7-signal-systems.spec.ts",
+      "e2e/er01-e7-census.spec.ts",
+      "e2e/ss-08-e7-beats.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 492.63,
+    "log": "artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/e2e-own.log"
+  }
+]

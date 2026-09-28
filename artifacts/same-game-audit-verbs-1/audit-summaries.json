@@ -1,0 +1,75 @@
+{
+  "schema": "same-game-audit-verbs-1.audit-summaries.v1",
+  "command": "node scripts/same-game-audit.mjs --json",
+  "corners": {
+    "base 3b12c4236 (neither)": {
+      "summary": {
+        "agent-exceeds": 0,
+        "agent-lacks": 595,
+        "equal": 1252,
+        "not-offered": 0
+      },
+      "rows": 1847,
+      "agentOrdersRows": 42,
+      "dispatchRows": {
+        "agent-lacks": 42
+      }
+    },
+    "c4f783860 (live class-8 citations; rows byte-identical to the base)": {
+      "summary": {
+        "agent-exceeds": 0,
+        "agent-lacks": 595,
+        "equal": 1252,
+        "not-offered": 0
+      },
+      "rows": 1847,
+      "agentOrdersRows": 42,
+      "dispatchRows": {
+        "agent-lacks": 42
+      }
+    },
+    "342b64251 (exemption only)": {
+      "summary": {
+        "agent-exceeds": 0,
+        "agent-lacks": 553,
+        "equal": 1252,
+        "not-offered": 0
+      },
+      "rows": 1805,
+      "agentOrdersRows": 0,
+      "dispatchRows": {
+        "agent-lacks": 42
+      }
+    },
+    "control: 42b607688 tree with tapeNotAControl emptied for one run (pairing only)": {
+      "summary": {
+        "agent-exceeds": 0,
+        "agent-lacks": 557,
+        "equal": 1290,
+        "not-offered": 0
+      },
+      "rows": 1847,
+      "agentOrdersRows": 42,
+      "dispatchRows": {
+        "equal": 38,
+        "agent-lacks": 4
+      }
+    },
+    "42b607688 (both; shipped)": {
+      "summary": {
+        "agent-exceeds": 0,
+        "agent-lacks": 515,
+        "equal": 1290,
+        "not-offered": 0
+      },
+      "rows": 1805,
+      "agentOrdersRows": 0,
+      "dispatchRows": {
+        "equal": 38,
+        "agent-lacks": 4
+      }
+    }
+  },
+  "exemptionRowDelta": "42 rows gone between the base and 342b64251, all `tape action agent_orders | no agent_orders standing order | agent-lacks`; 0 added; no other row changed",
+  "pairingRowDelta": "38 rows between 342b64251 and 42b607688, each `no prospector_dispatch standing order | agent-lacks` -> `HARVEST standing order reaches prospector_dispatch | equal`; the 4 door-refused boards keep agent-lacks"
+}

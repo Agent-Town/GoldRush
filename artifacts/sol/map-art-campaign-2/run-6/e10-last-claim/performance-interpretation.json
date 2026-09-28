@@ -1,0 +1,24 @@
+{
+  "rows": [
+    {
+      "width": 1280,
+      "runsPerArm": 8,
+      "fastestObservedBeforeP95": 10.299999999999272,
+      "slowestObservedAfterP95": 10.099999999999454,
+      "conservativeFrameRegressionBoundPercent": -1.941747572813901,
+      "drawRatio": 1.024390243902439,
+      "observedWithin15Percent": true
+    },
+    {
+      "width": 390,
+      "runsPerArm": 8,
+      "fastestObservedBeforeP95": 16.699999999999818,
+      "slowestObservedAfterP95": 10,
+      "conservativeFrameRegressionBoundPercent": -40.11976047904127,
+      "drawRatio": 1.018181818181818,
+      "observedWithin15Percent": true
+    }
+  ],
+  "method": "Retain the initial four runs per arm and the repeated four with a fresh browser per run. Baseline and candidate favor different host timing modes; pooled percent decreases are not a claimed causal speedup. Conservative non-regression compares the slowest candidate to the fastest observed baseline, and draw-call maxima. Desktop has an initial 10.3 ms baseline sample; phone has no observed fast-mode baseline.",
+  "freshBrowserPerFinalRun": true
+}

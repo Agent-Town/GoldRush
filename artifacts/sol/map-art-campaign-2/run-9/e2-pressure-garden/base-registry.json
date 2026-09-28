@@ -1,0 +1,58 @@
+{
+  "storeBase": "d8938178a7464c637a79bca81d5f788bc8ad954d",
+  "base": "ebb60fb9ca2518dcec2cd8e33310b6ab74e7decc",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "f85bf724ef08a6a8acd443f96e79a6955f6aa19bab5c878542f16ee898af2b12",
+      "baseSha256": "89c0d262add12e9a7c6d894fc6d040f871300b380c4e0f8d0f5a78be37f141e4"
+    },
+    "src/world/Water.ts": {
+      "candidateSha256": "d8725c246f8b8a4c4898845b5e7aa3db3dfaaf9ca07f34ab4358dd1b50e1f008",
+      "baseSha256": "f6ad3b9e528a0e04c4f8408f81530d32569cf850abd0bbac1115ed2544929b30"
+    },
+    "assets/pilots/map-rebuild-spike/pressure-garden-panorama-contract.json": {
+      "candidateSha256": "e7803fca62451de99c66f32273151a864c5e333b9b8e43564ef263d967f6645b",
+      "baseSha256": "0002c9d8d6b84a88ef5bc8a8a5236ad567f17b21a2522e10cd8237037264f13d"
+    },
+    "assets/pilots/map-rebuild-spike/pressure-garden-panorama.blend": {
+      "candidateSha256": "b720d0782b24ba16cc6b56916df8431968f7c0088461de467345299dc664a23a",
+      "baseSha256": "ea7e1e130228c1d3ae01a08d039b9edb276bd92a61264f52ece72f372607bf0c"
+    },
+    "assets/pilots/map-rebuild-spike/pressure-garden-panorama.glb": {
+      "candidateSha256": "d80f2979401a5fe7eb842bdff79a3263a1042914d561b240ef47f58b2e6d205e",
+      "baseSha256": "424fad6a426387ccded6a8819251b362c8340b53bd0e6762704e0a18d6b691ca"
+    }
+  },
+  "pattern": "all sixteen contracts mount|rim and horizon probes|all fifteen contracts stay painted",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "e300ac0f43d653be8b76c3f65610264ad5c2db023a9dd15a115a275cad6ea6f7",
+  "baseEngine": "a8afc11f313a5bc6567deac76bb40da24aab1ff19d7f935146229510289ad7c1",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e2-pressure-garden-base-registry/test-results",
+    "--grep",
+    "all sixteen contracts mount|rim and horizon probes|all fifteen contracts stay painted",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/engraved-river-gravel.png": "3b956b1e6a02c92be91aeb0567e43a97e65f51c0574c17badd24c540d220ca71",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/dress-bank-scenery.py": "555bf37ec24da5dd38dfc135f0056da6ceb137f0a67991cbea658de96f640b7f",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/panorama-input-contract.json": "0002c9d8d6b84a88ef5bc8a8a5236ad567f17b21a2522e10cd8237037264f13d",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/provenance.md": "d26f166df7476e76565b8441d00bcc5628ac3babadb4832c926b2996f22bc83f",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/panorama-input.blend": "ea7e1e130228c1d3ae01a08d039b9edb276bd92a61264f52ece72f372607bf0c",
+    "assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/bank-grounding.json": "23cf2a0a7198b04fc5334afd7144939a3ede5a2f8cb0fcb36ba46b732f832f44"
+  },
+  "restoredEngine": "e300ac0f43d653be8b76c3f65610264ad5c2db023a9dd15a115a275cad6ea6f7",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e2-pressure-garden-base-registry/tests.log"
+}

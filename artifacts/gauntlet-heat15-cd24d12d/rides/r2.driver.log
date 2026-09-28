@@ -1,0 +1,62 @@
+
+########## RIDE r2 · seed e5-regatta-01 · gen 135 · stake map-rebuilt · wall 2100s ##########
+--- 1 charter ---
+{"rig":"opus","contract":"e5-regatta","seed":"e5-regatta-01","seedMode":"bench","stake":"map-rebuilt","generation":135,"wall":2100,"notebookSha256":"753777bfd9f580bda95508b291ae856ab484192e175f89dab82d5c390dd791a6","charterSha256":"ba05c9a6dbbfd8a7a3347e437a00288bb5db491b4b3f9133ef1305bd79cb8ef4","bytes":1122178,"out":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-heat15/artifacts/gauntlet-heat15-cd24d12d/rides/r2/charter.md"}
+--- 2 ride ---
+START opus claude-opus-5 pid=68212 session=0a834cfc-2571-465f-a03d-73a4378906ca at=2026-09-22T03:43:10.612Z
+FIRST-OUTPUT opus +135s
+OUTCOME opus secured=false waves=14 gold=0 runsSoFar=0 scored=0 +150s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=0 scored=0 +435s
+OUTCOME opus secured=true waves=12 gold=200 runsSoFar=2 scored=1 +570s
+END opus rc=0 signal=null wall=685s wallHit=false
+ride-wall rc=0 signal=-
+--- 3 land ---
+
+=== 1 finish-ride ===
+{"rig":"opus","contract":"r2","wall":685,"wallHit":false,"rc":0,"tracked":[],"files":13,"outcome":{"secured":true,"waves":12,"gold":200,"runsSoFar":2,"scoredAttempts":1,"tape":"/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-heat15-arena/artifacts/heat15/opus/r2/attempt-1-tape.json","worldModel":"sim-import"},"scoredTapes":[{"file":"attempt-1-tape.json","id":"agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133","secured":true,"waves":12,"gold":200,"durationTicks":8160,"lastEntryTick":7441,"promotedByRig":true,"discoveredBy":"outcome-file+filename"}],"otherSecured":[{"file":"tune-1-tape.json","id":"agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133","waves":12,"gold":200}],"reportSections":{"outcome":1355,"whatTheMapAsked":7809,"winnability":807,"lessons":5376},"usage":{"turns":64,"toolCalls":23,"tokensIn":128,"tokensOut":134164}}
+tape chosen: attempt-1-tape.json (id agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133, promotedByRig=true, discoveredBy=outcome-file+filename)
+
+=== 2 freeze notebook header ===
+{"headerOnly":true,"headerBytes":430}
+
+=== 3 harnessDigest ===
+31e5dd33a8069fe9eba7ef4906fca5824c18064a64d490e741604438cee25f5f
+
+=== 4 build-submission ===
+{"tapeId":"agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133","contract":"e5-regatta","epochId":"epoch-5-deepwater","seed":"e5-regatta-01","seedMode":"bench","score":{"secured":true,"waves":12,"timeAlive":272,"gold":200,"baseValue":0},"papers":{"buildId":"cd24d12d2","engineHash":"52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5","era":6,"viewVersion":3},"durationTicks":8160,"lastEntryTick":7441,"stack":{"model":"claude-opus-5","harness":"heat15-operator","harnessVersion":"2.1.272","harnessDigest":"31e5dd33a8069fe9eba7ef4906fca5824c18064a64d490e741604438cee25f5f","worldModel":"sim-import","config":"attended-hosted headless `claude -p` ride (heat 15, the Regatta's heat) on Claude Code CLI 2.1.272; charter + door manual + own notebook (self-memory); own controller authored in-ride","calls":24,"tokensIn":34151145,"tokensOut":134164}}
+
+=== 5 publish (POST → poll → WATCH) ===
+{"rank":null,"tapeId":"agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133","assay":"verified","assayHash":"fnv1a32:b92da1bf","papers":{"buildId":"cd24d12d2","engineHash":"52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5","era":6,"viewVersion":3}}
+
+=== LANDED ===
+{
+ "rig": "opus",
+ "contract": "e5-regatta",
+ "tapeFile": "attempt-1-tape.json",
+ "tapeId": "agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133",
+ "assay": "verified",
+ "assayHash": "fnv1a32:b92da1bf",
+ "ranked": true,
+ "rank": null,
+ "waves": 12,
+ "gold": 200,
+ "calls": 24,
+ "eventLogHash": "fnv1a32:136a45a0",
+ "wall": 685,
+ "harnessDigest": "31e5dd33a8069fe9eba7ef4906fca5824c18064a64d490e741604438cee25f5f",
+ "usage": {
+  "turns": 64,
+  "toolCalls": 23,
+  "tokensIn": 34151145,
+  "tokensOut": 134164
+ }
+}
+
+land rc=0
+--- 4 notebook ---
+{"notebook":"/Users/robin/Claude/Projects/goldrush-gauntlet/memories/claude__opus-5/NOTEBOOK.md","generation":135,"headerBytes":430,"entryBytes":14998}
+--- 5 matrix ---
+| 2 | e5-regatta<br>`r2` | `e5-regatta-01` | map-rebuilt | 135 | **SECURED** | 12 | 200 | 272s | 685s | `attempt-1-tape.json` · `agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133`<br>fnv1a32:136a45a0 | verified `fnv1a32:b92da1bf` | gen 135<br>slip `agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133` |
+{"contract":"e5-regatta","secured":true,"tapesOnDisk":10,"scoredTapes":1,"otherSecured":1,"runs":2,"scoredAttempts":1,"wallHit":false,"rc":0,"assay":"verified","ranked":true,"winnability":"Secured, and the margin was **wide on every axis that can lose the run and exactly at the ceiling on\nevery axis that scores**: the hero took **no damage at all** (100/100 at all 26 views, `threats.alive`\nnever above 3), the race finished at **≈ t 142 against a t = 272 freeze** — 130 seconds, 1.9× slack —\nand the purse **capped at t = 200.97**, 71 seconds before the secure tick, with `goldPanned` frozen at\n200 thereafter because `Economy` refuses credits against a full bank. The 200 gold is a **ceiling, not\na margin left behind**: five `BUILD stockpile` probes at five distinct coordinates varying both axes\ninside the sole declared build zone each answered `UNREACHABLE: BUILD target is outside buildable\nterrain`, so the cap cannot be raised on this map and 200 is the most this contract can publish."}
+########## END r2 ##########
+

@@ -1,0 +1,23 @@
+[
+  {
+    "label": "census",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-4/e2-pressure-garden-census",
+      "e2e/map-census.spec.ts",
+      "--grep",
+      "e2-pressure-garden"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 14.61,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-4/e2-pressure-garden-census.log"
+  }
+]

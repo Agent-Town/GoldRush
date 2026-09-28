@@ -1,0 +1,96 @@
+{
+  "allowFallbackBefore": false,
+  "extraSources": [],
+  "epoch": "2",
+  "assets": [
+    {
+      "name": "incline-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "incline-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "lower-yard-engine-crane.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "west-line-brake-tower.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-line-brake-tower.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "upper-ore-cable-house.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "ford-service-pump.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "upper-ore-cable-house",
+      "entry",
+      -24,
+      -18
+    ],
+    [
+      "upper-ore-cable-house",
+      "new5",
+      22,
+      34
+    ],
+    [
+      "lower-yard-engine-crane",
+      "new5",
+      2,
+      26.8
+    ],
+    [
+      "west-line-brake-tower",
+      "new5",
+      -34,
+      41.5
+    ],
+    [
+      "east-line-brake-tower",
+      "new5",
+      34,
+      40
+    ],
+    [
+      "ford-service-pump",
+      "new5",
+      25,
+      26.5
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        820,
+        330,
+        950,
+        570
+      ]
+    ],
+    [
+      390,
+      [
+        265,
+        365,
+        365,
+        520
+      ]
+    ]
+  ],
+  "contracts": [
+    "incline-landmark-pack-contract.json"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "tag": "pp5",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5383,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-play-proofs-5 — Devil's Alley PROVED on the phone (wave 20, banked, reloaded; desktop partial: one missed build), Dome Basin and Seed Run HELD on survival with their objectives working (F-PP5-1, F-PP5-2), Incline re-proved with the changed driver; three new gated specs (Astra on the owner ChatGPT subscription, lane-c; owner 2026-09-25 \"Can you do play proofs using Astra for these maps?\")",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": false,
+    "specs": [
+      "e2e/native-proofs/the-claim.spec.ts",
+      "e2e/locked-win.spec.ts",
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "warmup": [
+      "/",
+      "/?contract=the-claim"
+    ],
+    "allowedBattery": []
+  },
+  "review": {
+    "path": "reviews/sol-play-proofs-5.md",
+    "title": "Drain review: `sol-play-proofs-5`, run 5 of the play-proofs campaign: the first three E9 maps (Astra, lane-c)",
+    "body": "scripts/attended/landings/pp5-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-play-proofs-5.md",
+    "rowKey": "SOL PLAY PROOFS RUN 5 LANDED",
+    "rowEmoji": "🧭",
+    "rowText": "Devil's Alley PROVED on the phone (wave 20 / 600.07 s, banked, Book, plain reload, clean; three bays and both yards built) and PARTIAL on desktop (same cells, the east-bay build missed: F-PP5-3, a missed build not balance); Dome Basin HELD (deaths waves 15/13 with quarry 4/4, gates 3/3, all five grounds built; F-PP5-1) and Seed Run HELD (13/14, caravan arrives with 236 guard; F-PP5-2): objectives work, survival fails; Incline re-proved with the changed driver (wave 14). Eight rows zero errors. Yield after five runs: 17 maps attempted, 3 proved (Incline, the Claim control, Devil's Alley phone), 2 partial, 1 defect (Canyon Works), 12 holds on the driver's survival ceiling. Run 6 takes the last three untouched maps (Old Canal, Last Claim, River) and closes the campaign with a table and a recommendation. Hash unchanged {PIN}.",
+    "statusPhrase": "run 5 of the play proofs landed: Devil's Alley proved on the phone, Dome Basin and Seed Run hold on survival, and run 6 takes the last three untouched maps",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh pp5)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-5"
+}

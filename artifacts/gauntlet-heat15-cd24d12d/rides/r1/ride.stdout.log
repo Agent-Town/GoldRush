@@ -1,0 +1,16 @@
+No tracked files were touched — everything I wrote is new, under my workspace only. The ride is complete.
+
+## Outcome: SECURED
+
+`e5-regatta` / `e5-regatta-01` — **wave 12 / 272.000 s / 0 gold / 4 calls**, secured on the **first controller ride**. Tape put forward: `attempt-1-tape.json` (byte-identical copy of `tune-1-tape.json` — one ride under two filenames, promoted by name in `gauntlet-outcome.json`'s `tape` field). 2 sim runs, 1 scored attempt. Assay-clean: the replay reproduces the tape header's `fnv1a32:f3a9c00c` with `securedSnapshot {12, 0, 272}` agreeing with the declared gold; envelope clear on all three axes (6,028 B against a 1,938,784 B ceiling computed from `runTapeEnvelopeForContract`, not the charter's summary).
+
+**The map has genuinely been rebuilt under my row.** My notebook's generation 116 secured this seed by *walking the hero* from mark to mark; `regattaRacer` now answers the hull's point only while a body is aboard and null otherwise, so that whole plan is dead. I read the two things that decide it out of source before riding: the course **freezes at t = 272** (`advance()` returns early at `wave >= secureWave`), and one step with no racer after gate 1 **forfeits terminally**.
+
+**I made the forfeit structurally unreachable rather than carefully avoided.** `stepAshore` requires a point *outside* the hull's clamp box, which `boatWaterFor` insets to `[-49.75, 49.75]²`; so every waypoint I emitted was asserted inside `[-49, 49]²`, hence navigable, hence never a step ashore. Zero refusals of any kind, no forfeit, all seven waypoints first try — including dodging the landmark blockers on all three buoy anchors and both line rigs (gates are radius 6, so I aimed 4–5 units off centre).
+
+**The race:** boarded at **t 2.73** by crossing the deck's east rail; buoys fell at **2.73 / 27.77 / 44.70 / 64.13 / 88.07**; terminal `state: "finished"`.
+
+Two things worth your attention:
+
+- **My own bug, named and priced.** The published `now.regatta` is **flat** — `readRegatta` flattens and renames the internal `AgentRegattaSource` type the engines compile against (`.race.gatesPassed[].passedAt` → `buoysPassed[].atSeconds`). I wrote the controller from the source type, read `{}` at every view, and so re-sent the chain from gate 2 each time and **sailed the course a second lap** — finishing at ≈ t 257 instead of ≈ t 145, which ate the 120 s post-race window I had designed for panning the 200-gold cap. The 0 gold is a **margin, not a ceiling**; the fix is one line.
+- **Four parity gaps for the county**, the sharpest being that `finishedAt` and `forfeitedAt` exist in `RegattaRaceSystem` and are **dropped by the view**: all five checkpoints carry an exact `atSeconds` and the decisive sixth gate carries none, so I could only bound the finish between views and compute ≈ t 257 from the published speed. A rider cannot report when it won. Also unpublished: the boarding instant, the hull's clamp box (the one boundary that forfeits a run), and the landmark blockers.

@@ -1,0 +1,35 @@
+{
+  "storeBase": "8ea5370ba1dfd4bc85276380875fdb87f17f7bf7",
+  "base": "82782f50617ff7482fa5acedeee048ba6371a31c",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "589846713530c32d445be5d5c1a204eace41d5e4f0e67f41d25ceb69f20b58e2",
+      "baseSha256": "a2a968252677f9b99c8ee80991f1c25b66bf30d83b905cda27a944c2864f1cae"
+    }
+  },
+  "pattern": "recession hands",
+  "specs": [
+    "e2e/e10-static-boss.spec.ts"
+  ],
+  "candidateEngine": "4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21",
+  "baseEngine": "9ab63072bf545c545e192f2a6d4623ccceb60235662638adb6f3c27736648cf5",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e10-river-base-secured/test-results",
+    "--grep",
+    "recession hands",
+    "e2e/e10-static-boss.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {},
+  "restoredEngine": "4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-river-base-secured/tests.log"
+}

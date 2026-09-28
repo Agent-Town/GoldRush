@@ -1,11 +1,16 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "34884b39b6dfc3adea1bc6b89b1643f0820572f9cc3a35634c80181e95d1ce76",
+  "engineHash": "2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
-    "version": 2,
+    "version": 4,
+    "additions": [
+      "now.regatta.finishedAt",
+      "now.regatta.forfeitedAt",
+      "now.regatta.canStepAshore"
+    ],
     "fields": [
       "almanac",
       "appendLog",
@@ -197,6 +202,318 @@
       "engineHash": "34884b39b6dfc3adea1bc6b89b1643f0820572f9cc3a35634c80181e95d1ce76",
       "pinnedAt": "2026-09-20",
       "cause": "same era, pin #19: sol-map-art-corrections-1 (Astra gpt-6-astra on the owner's ChatGPT subscription; owner 2026-09-20 \"correct all the 23 UNACCEPTED maps, one after the other, the Last Claim verdict goes back to Astra\"): the Last Claim re-verdicted, Night Shift, Twin Banks, the Baron and the Trestle corrected on the render side and in their pilot sources (map-rebuild-spike packs and contracts, Terrain3dClaimPilot.ts, Water.ts); no gameplay contract, sim table or null floor moved; the run stopped on the usage limit after five maps. Measured on the tree that also carries e5-regatta-boat-02 (pin #18), which landed first. reviews/sol-map-art-corrections-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "8544c803bfa47d4fd29da04b33ac01ed7f37d2fd6af2ba70c5738abc8d32ab35",
+      "pinnedAt": "2026-09-20",
+      "cause": "same era, pin #20: sol-map-art-corrections-2 (Astra on the owner's new Codex subscription, capped at 3 maps; owner 2026-09-20 \"lets start with a first set of maps and Astra - I want to keep this going. Can you work from E2 over E3 etc. up so I can test things?\"): the Pressure Garden, the Incline, the Canyon Works corrected on the render side and in their pilot sources — the pilot sources now live in Agent-Town/GoldRush-assets (store main 068c0db, landed before this pin; assets/pilots is a symlink into it); no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-2.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "fd5fb81fed8b9a783e33d43b7fce6068b74179c9c7c815bb774d830a0f01d2c9",
+      "pinnedAt": "2026-09-20",
+      "cause": "same era, pin #21: e5-regatta-boat-03 (owner 2026-09-20 \"A14 - do it\"; slice 3 of specs/agent-play/e5-regatta-steerable-boat.md): the view publishes now.regatta on both engines (view schema 2 -> 3), NOT_ABOARD and UNREACHABLE_WATER join the published refusals, the manifest reads the Regatta from the contract; no sim table, contract data or null floor moved; measured with the art store clean on its main after Astra's first corrections set landed. reviews/e5-regatta-boat-03.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "491f2a917b0e360fcaa1e0eda3ee5eb7ba840cc1cd9bf852e3d574d34350725d",
+      "pinnedAt": "2026-09-20",
+      "cause": "same era, pin #22: sol-map-art-corrections-3 (Astra on the owner's new Codex subscription, capped at 3 maps; owner 2026-09-20 \"ok, then lets continue with the next batch of maps but don't let it run through all of them\"): the Dust Flats, the Long Road, Gusher County corrected on the render side and in their pilot sources — the pilot sources now live in Agent-Town/GoldRush-assets (store main b959768, landed before this pin; assets/pilots is a symlink into it); no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-3.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "d2f15b7a6ec3c5e04fa54c71dfcc16dda4288e20d6890f0eedca77b9035b878f",
+      "pinnedAt": "2026-09-21",
+      "cause": "same era, pin #23: sol-map-art-corrections-4, slice 1 landed mid-run (Astra on the owner's ChatGPT subscription, no cap; owner 2026-09-21 \"Ok, lets continue on the current ChatGPT subscription with the Astra work. Lets actually complete all the maps.\"): the Boneyard, the Glow Mesa, Half-Life Hollow corrected on the render side and in their pilot sources — the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 850ae86 before this pin, which was measured in a store worktree detached at that commit; no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-4.md, slice 1",
+      "aliases": []
+    },
+    {
+      "engineHash": "36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc",
+      "pinnedAt": "2026-09-21",
+      "cause": "same era, pin #24: sol-map-art-corrections-4, slice 2 landed mid-run (Astra on the owner's ChatGPT subscription, no cap; owner 2026-09-21 \"Ok, lets continue on the current ChatGPT subscription with the Astra work. Lets actually complete all the maps.\"): the Picnic, the Dead Band, Relay Rush corrected on the render side and in their pilot sources — the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 0535aa5 before this pin, which was measured in a store worktree detached at that commit; no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-4.md, slice 2",
+      "aliases": []
+    },
+    {
+      "engineHash": "8e71546045562c64ef70c60d2616e0a2cc1cee965709dc89d691ca13d57164dc",
+      "pinnedAt": "2026-09-21",
+      "cause": "same era, pin #25: sol-map-art-corrections-4, slice 3 landed mid-run (Astra on the owner's ChatGPT subscription, no cap; owner 2026-09-21 \"Ok, lets continue on the current ChatGPT subscription with the Astra work. Lets actually complete all the maps.\"): the Far Side, Low Orbit, the Dome Basin corrected on the render side and in their pilot sources — the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 4613a6f before this pin, which was measured in a store worktree detached at that commit; no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-4.md, slice 3",
+      "aliases": []
+    },
+    {
+      "engineHash": "c2018fcb58b57688525b2afe23a8fd99dd20e3ce481894e58f9017db628333c7",
+      "pinnedAt": "2026-09-21",
+      "cause": "same era, pin #26: sol-map-art-corrections-4, slice 4 landed mid-run (Astra on the owner's ChatGPT subscription, no cap; owner 2026-09-21 \"Ok, lets continue on the current ChatGPT subscription with the Astra work. Lets actually complete all the maps.\"): the Seed Run, Devil's Alley, the Old Canal corrected on the render side and in their pilot sources — the store's main (Agent-Town/GoldRush-assets) fast-forwarded to ce3a6a5 before this pin, which was measured in a store worktree detached at that commit; no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-4.md, slice 4",
+      "aliases": []
+    },
+    {
+      "engineHash": "2a898e9e9e87ddd72c9dea598df97363c9e179592ef33e69a54871da21c1efd3",
+      "pinnedAt": "2026-09-21",
+      "cause": "same era, pin #27: sol-map-art-corrections-4, slice 5 landed mid-run (Astra on the owner's ChatGPT subscription, no cap; owner 2026-09-21 \"Ok, lets continue on the current ChatGPT subscription with the Astra work. Lets actually complete all the maps.\"): the Last Claim corrected on the render side and in their pilot sources — the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 97d29c7 before this pin, which was measured in a store worktree detached at that commit; no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-4.md, slice 5",
+      "aliases": []
+    },
+    {
+      "engineHash": "4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21",
+      "pinnedAt": "2026-09-21",
+      "cause": "same era, pin #28: sol-map-art-corrections-4, slice 6 landed mid-run (Astra on the owner's ChatGPT subscription, no cap; owner 2026-09-21 \"Ok, lets continue on the current ChatGPT subscription with the Astra work. Lets actually complete all the maps.\"): the Ember Shore, the Archive World, the River (render half) corrected on the render side and in their pilot sources — the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 8ea5370 before this pin, which was measured in a store worktree detached at that commit; no gameplay contract, sim table or null floor moved. reviews/sol-map-art-corrections-4.md, slice 6",
+      "aliases": []
+    },
+    {
+      "engineHash": "048d8adfd230e0783a71a2a3ccb03e720ecd49823f857dbf58d1269e539fc01d",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #29: f-rb2-2-gangway-reach (Opus implementer on the Anthropic subscription; owner 2026-09-22 \"F-RB2-2: gangway-reach only\", ruling (a)): the Regatta boat disembarks only onto standable ground within one plank of the gangway (the deck anchor), not a boat-length ahead, and a rider's MOVE_HERO point gets the same reach (ADR-005); a sim rule for one map, no contract, table or null floor moved; the store unchanged at 8ea5370. reviews/f-rb2-2-gangway-reach.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #30: f-corr4-2-variant-footprints (Astra on the owner's ChatGPT subscription; owner 2026-09-22 \"F-CORR4-2: ok, lets do it\"): the Picnic, the Dead Band, Relay Rush, the Far Side — the collision resolver unions the parent blockers with each variant map's registered solids and the render side mounts them; collision footprints changed on those four maps by the owner's word, no height, mask, route or contract number moved; the store's main (Agent-Town/GoldRush-assets) landed at 7bfbd3f before this pin, measured in a store worktree detached at that commit. reviews/f-corr4-2-variant-footprints.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "6abbafbebf86f1af6cd5496a7d6eb530337e3ff66b16d18aaef691fd9d22d3f5",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #31: f-corr4-18-river-pack (Astra on the owner's ChatGPT subscription; owner 2026-09-22 \"F-CORR4-18: ok, give the raw route its own small pack\"): the River (render half: its own pack) — a render-only pack (terrain grid, panorama, nonblocking shoreline bodies) mounted through the registry for the raw River, zero collision mounts, the finale untouched; the store's main (Agent-Town/GoldRush-assets) landed at d5e2552 before this pin, measured in a store worktree detached at that commit. reviews/f-corr4-18-river-pack.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "789b97dee3a6447c9d984e3009538d4cc133ab610c10de5ddb9f76800bca48c8",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #32: f-heat15-4-mechanic-beats-walk (Opus implementer on the Anthropic subscription; owner 2026-09-22 \"F-HEAT15-4: yes\", ruling (a)): the replay reports whether the Regatta race finished, the assayer forwards it, the door stores it and ranks a finished race above any unfinished row on e5-regatta; county and replay code, no sim rule, contract, table or null floor moved; the store unchanged at d5e2552. reviews/f-heat15-4-mechanic-beats-walk.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "88c4256efeb97d64c205919e785173b9c7375fd4553c92bbe26de6a37d197ea4",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #33: f-fc2-5-cradle-to-rim (Opus implementer on the Anthropic subscription; owner 2026-09-22 \"F-FC2-5: lets move it\"): the Far Side's probe recovery cradle moves to the recovery zone's north rim and is a real blocker again — a collision footprint on one map by the owner's word, the zone (also the air crossing) untouched; the store's main (Agent-Town/GoldRush-assets) landed at aee63ba before this pin, measured in a store worktree detached at that commit. reviews/f-fc2-5-cradle-to-rim.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "c72f302925f627b0a783f8d44bd132ed1fa61ae737379454a746e1033e1adfeb",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #34: sol-map-art-fidelity-1, slice 1 landed mid-run (Astra on the owner's ChatGPT subscription; the wave prepared on the owner's 2026-09-22 \"Ok, then prep for Astra's next wave.\" and dispatched on the word in the ledger): the Last Claim — the art-owned HELD clauses of the corrections campaign taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to f3078c4 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-1.md, slice 1",
+      "aliases": []
+    },
+    {
+      "engineHash": "ac5caf75c8186240ed5c5e56ec5ea55c8b8769fa9db2324fb21726efdb34c200",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #35: sol-map-art-fidelity-1, slice 2 landed mid-run (Astra on the owner's ChatGPT subscription; the wave prepared on the owner's 2026-09-22 \"Ok, then prep for Astra's next wave.\" and dispatched on the word in the ledger): the Ember Shore — the art-owned HELD clauses of the corrections campaign taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 75bdd35 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-1.md, slice 2",
+      "aliases": []
+    },
+    {
+      "engineHash": "872cfc6474c7bdcba83290f87685a14c6882749c12b5564bbe1a355a0d45a6ff",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #36: sol-map-art-fidelity-1, slice 3 landed mid-run (Astra on the owner's ChatGPT subscription; the wave prepared on the owner's 2026-09-22 \"Ok, then prep for Astra's next wave.\" and dispatched on the word in the ledger): the Archive World — the art-owned HELD clauses of the corrections campaign taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to f5f617c before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-1.md, slice 3",
+      "aliases": []
+    },
+    {
+      "engineHash": "b7113b37c1a7e10b10f504947a660147c581c22b667aa1df2feb695bbb96100c",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #37: sol-map-art-fidelity-1, slice 4 landed mid-run (Astra on the owner's ChatGPT subscription; the wave prepared on the owner's 2026-09-22 \"Ok, then prep for Astra's next wave.\" and dispatched on the word in the ledger): the River, the Motor vehicle — the art-owned HELD clauses of the corrections campaign taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to adf6bd1 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-1.md, slice 4",
+      "aliases": []
+    },
+    {
+      "engineHash": "df53e4483e0f1f173a1ab0fb02c1938e8f5201d482220e26315b5928c87686db",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #38: sol-regatta-view-parity (Astra on the owner's wave word 2026-09-22 \"Full Codex power\", lane-b; F-HEAT15-2, F-HEAT15-3): now.regatta publishes finishedAt / forfeitedAt and the finish gate in buoysPassed, canStepAshore and the shore as a bounds rule on regatta_boat; view schema 3 → 4; no order, contract, table or null floor moved; the finish stake recorded as the sixth passed gate re-pins the race spec's event-log hashes by named cause (F-RVP-8); the store unchanged at adf6bd1. Renumbered: the chain pinned #37 (b489190a…) before the fidelity-1 final slice landed its own #37, so this is the merged tree's hash re-measured after the main merge, as #38. reviews/sol-regatta-view-parity.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "24b70411d2849f7a8bb5454decdfffd3bae4e4ba6878bd81f6b3edcceb7a5e6b",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #39: sol-test-truth-registry-census (Astra on the owner's wave word 2026-09-22 \"Full Codex power\", lane-b): the terrain registry, the E10 census and the map census read the truths that moved under them; test files only, no assertion weakened, no source, store, contract or null floor moved; the store unchanged at d893817. reviews/sol-test-truth-registry-census.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "dcb4de59ae7dff13e11432fb748139356683407cd27efdde2ea8536dbc277f9f",
+      "pinnedAt": "2026-09-22",
+      "cause": "same era, pin #40: sol-entry-framing (Astra on the owner's wave word 2026-09-22 \"Full Codex power\" and his words \"Can we do this one now? entry framing, five maps (lane-c)\", lane-c): the plain entry frames the declared landmark on the Glow Mesa, the Far Side and Half-Life Hollow with a timed glance from the existing camera rig (the Dead Band and Relay Rush were already framed), the landmark declared per pack in both mirrored contracts, one manifest sentence per framed map; camera only, the view and every order untouched; the store's main (Agent-Town/GoldRush-assets) at d893817 since 17:32Z. Renumbered: this chain pinned #39 (dcb4de59…) before the test-truth landing took #39; that pin's hash moved because these entry-framing store contracts had already landed on the store's main between its prep and its pin, so #39's cause names the test-truth task while the mover was this store landing. reviews/sol-entry-framing.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "39b444b44c8ea24952ff640dc6fc771f77db6084c2e952d45a455a2636e170cc",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #41: sol-map-art-fidelity-2, slice 1 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Pressure Garden — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 25fed85 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 1",
+      "aliases": []
+    },
+    {
+      "engineHash": "16c2576d36273edf4d202c5c9e364daaf6812474927f4cee9ce1834138b6e86a",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #42: sol-map-art-fidelity-2, slice 2 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Incline — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to d76ee14 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 2",
+      "aliases": []
+    },
+    {
+      "engineHash": "0a23a5425e7b47bb1e7bf7cef05dacb2b3b68c103cc9337459d2bc6cc32823b0",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #43: sol-map-art-fidelity-2, slice 3 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Canyon Works — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to b041416 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 3",
+      "aliases": []
+    },
+    {
+      "engineHash": "7811cb664727d4e4e9da87f09ae49a92f429af42d000a50d495f36aa5e250443",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #44: sol-map-art-fidelity-2, slice 4 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Dust Flats — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to b1e2c12 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 4",
+      "aliases": []
+    },
+    {
+      "engineHash": "8a51dec200e748ad42ea24d3ffd8f53525dfc7f34edba41b260107179b9f809c",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #45: sol-map-art-fidelity-2, slice 5 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Long Road — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to e33b812 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 5",
+      "aliases": []
+    },
+    {
+      "engineHash": "e5acca191da821a5e1bf2ad225fef65ce93a11bd32d0610213465b7b23680bd7",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #46: sol-map-art-fidelity-2, slice 6 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): Gusher County — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 8ef0a03 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 6",
+      "aliases": []
+    },
+    {
+      "engineHash": "49242d1713cb1c67838adc284919b18f067b4efad6ea61a61b42cba95bdfd731",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #47: sol-map-art-fidelity-2, slice 7 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Boneyard — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to e62dbf9 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 7",
+      "aliases": []
+    },
+    {
+      "engineHash": "083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #48: sol-map-art-fidelity-2, slice 8 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): Half-Life Hollow — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 92db3dc before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 8",
+      "aliases": []
+    },
+    {
+      "engineHash": "e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #49: sol-map-art-fidelity-2, slice 9 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Picnic — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 9e33801 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 9",
+      "aliases": []
+    },
+    {
+      "engineHash": "6655ba7569775a529216d58cf8f288556ca9fc19cfd7bbeae41dbeb9a99adf33",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #50: sol-map-art-fidelity-2, slice 10 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Dead Band — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 892b7f6 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 10",
+      "aliases": []
+    },
+    {
+      "engineHash": "b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #51: sol-map-art-fidelity-2, slice 11 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Far Side — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 70b78b4 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 11",
+      "aliases": []
+    },
+    {
+      "engineHash": "984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #52: sol-map-art-fidelity-2, slice 12 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): Low Orbit — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 4a2976f before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 12",
+      "aliases": []
+    },
+    {
+      "engineHash": "9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #53: sol-map-art-fidelity-2, slice 13 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Dome Basin — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 60c635c before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 13",
+      "aliases": []
+    },
+    {
+      "engineHash": "fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #54: sol-map-art-fidelity-2, slice 15 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Seed Run, Devil's Alley — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to 03ccce8 before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 15",
+      "aliases": []
+    },
+    {
+      "engineHash": "d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959",
+      "pinnedAt": "2026-09-23",
+      "cause": "same era, pin #55: sol-map-art-fidelity-2, slice 16 landed mid-run (Astra on the owner's ChatGPT subscription; run 9 on the owner's wave word 2026-09-22 \"Full Codex power\"): the Old Canal — the art-owned HELD clauses of the other twenty-two maps taken further on the render side and in the pilot sources; the store's main (Agent-Town/GoldRush-assets) fast-forwarded to c092e3d before this pin, measured in a store worktree detached at that commit; no gameplay contract, sim table, collision footprint or null floor moved. reviews/sol-map-art-fidelity-2.md, slice 16",
+      "aliases": []
+    },
+    {
+      "engineHash": "dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b",
+      "pinnedAt": "2026-09-24",
+      "cause": "same era, pin #56: sol-entry-framing-2 (Astra on the owner's 2026-09-24 rulings on F-F2-39 (\"(1) ok, yes … The maps that were held back, we have to fix them as well.\"), lane-c): the plain entry frames the declared landmark on Night Shift, Twin Banks, the Baron and the Trestle, and a second landmark on the Glow Mesa (the cooling rack) and Relay Rush (the charting station and west dishes), with the first pass's glance and per-pack declarations; camera only, the view and every order untouched; the store's main (Agent-Town/GoldRush-assets) landed at 5793a96 before this pin, measured in a store worktree detached at that commit. reviews/sol-entry-framing-2.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "0b017ed5230a0b8c2e46d756004388034a3dc58bca94848b2708a33d35d4dce7",
+      "pinnedAt": "2026-09-24",
+      "cause": "same era, pin #57: sol-code-presentation-1 (Astra on the owner's 2026-09-24 rulings on F-F2-39 (\"(1) ok, yes … The maps that were held back, we have to fix them as well.\"), lane-b): Twin Banks' riparian scatter cards, the Trestle's rail joins and buffer stops, Relay Rush's active relay signal; render-side owners only, no sim state, contract, collision, route or null floor moved; the store unchanged at 5793a96. reviews/sol-code-presentation-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "6a33752598ba8c5ae2c97d217c265394dd17cd9ec3334c2259737265a0e27c21",
+      "pinnedAt": "2026-09-24",
+      "cause": "same era, pin #58: release-gate-on-deploy-1 (Opus implementer on the outside review of 2026-09-24, BUILD-1 and F-SEF2-2): the E4 hauler body leaves the E1 bundle through a lazy asset glob the release plugin already narrows (src/entities/Vehicle.ts, render-side vehicle loading only; no sim rule, contract, collision, floor or table moved); the release assertion joins the production deploy; the store unchanged at 5793a96. reviews/release-gate-on-deploy-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "f64ee547206cde3dfe8aca56ad3249aaae121f16036b00a1480668d425cf78be",
+      "pinnedAt": "2026-09-24",
+      "cause": "same era, pin #59: ux-entry-robustness-1 (Opus implementer on the outside review of 2026-09-24, UX-1, UX-2, UX-4): the boot router inverts to a run-route allowlist so tracking and share links land on the start menu and mint no profile, a boot guard draws a card on a failed chunk or a refused WebGL context, focus loss clears held keys and the solo pick clock freezes while hidden, the unnamed-prospector fallback is neutral, a bare ?contract= still launches once a profile store exists (drain cure F-UX1-6) (src/main.ts, src/core/BootGuard.ts, src/core/InputController.ts, src/game/Game.ts pick clock, src/game/ProfileStorage.ts, src/ui/DeathOverlay.ts, index.html; boot and input only; no sim rule, contract, collision, floor or table moved); the store unchanged at 5793a96. reviews/ux-entry-robustness-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "91dd025ed5e01410a9095d72db2669ccbffd930e4fc7067cc21455618938145f",
+      "pinnedAt": "2026-09-24",
+      "cause": "same era, pin #60: sec-headers-and-data-hygiene-1 (Opus implementer on the outside review of 2026-09-24, SEC-8, SEC-5, SEC-7): a privacy-notice link on the account card and the complaints desk (src/game/ProfileManager.ts, src/ui/ComplaintDesk.ts; UI text only), the site headers, CORS and the bug-report TTL live outside the corpus; no sim rule, contract, collision, floor or table moved; the store unchanged at 5793a96. reviews/sec-headers-and-data-hygiene-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef",
+      "pinnedAt": "2026-09-25",
+      "cause": "same era, pin #61: hm-06-twin-banks-braid-water (Astra, gpt-6-astra on the ChatGPT subscription; owner rulings 2026-09-24 (5)(b) and 2026-09-25 twin banks): the production water mask is the authority for Twin Banks mounted and fallback water surfaces (src/world/Terrain.ts, src/world/Terrain3dClaimPilot.ts; render-side only: two ribbons, the declared 4 x 4 m source pool inside the existing confluence draw, the fords shallows, the dry plait); no sim rule, contract, collision, floor or table moved (83 of 83 floors match, no store commit). The store unchanged at 5793a96. reviews/hm-06-twin-banks-braid-water.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa",
+      "pinnedAt": "2026-09-25",
+      "cause": "same era, pin #62: live-seed-rotation-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; owner: the seed changes every Monday): the run, its county standing and the co-op room ride the live rotation seed (src/game/liveSeed.ts, src/game/Game.ts two literals, src/mp/RideTogether.ts one literal, src/town/TownScene.ts the card label); no sim rule, contract, collision, floor or table moved. The store unchanged at 5793a96. reviews/live-seed-rotation-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "9a995b76569235178101263919756b45713eb3f9e0dc71643ed8cf1d2cd74be6",
+      "pinnedAt": "2026-09-25",
+      "cause": "same era, pin #63: canyon-works-traversal-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; from Astra's play-proofs finding F-PP2-2 of 2026-09-25): one line in the e3-canyon-works elevation block, creekBlendStart minus 8 to minus 14, so the creek bank's 1.5 m drop runs over 8 m (peak sim gradient 1.03 to 0.28 under the 0.35 limit); creekBlendEnd, creekHeight and railHeight unchanged, null floors 83 of 83, both canyon seeds' view streams byte-identical; no other contract, rule, collision or table moved. The store unchanged at 5793a96. reviews/canyon-works-traversal-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "2cf26ba49f0ed0f08bf38791408c625187808ed81d6a3ebc3d00d9e9a148405b",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #64: small-fixes-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; owner 2026-09-25: the spare budget): the signed-in account card links the privacy notice, one line in src/game/ProfileManager.ts (F-SEC2-4); no sim rule, contract, collision, floor or table moved. The store unchanged at 5793a96. reviews/small-fixes-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "ca12dc2a4cb327689084adbe0664bc2c680b6a8e8fa452fc806790e84a9cdda1",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #65: canyon-works-traversal-2 (Opus 5.5 implementer at max effort on the Anthropic subscription; from Astra's F-PP2-2 and F-CW1-1): two numbers in the e3-canyon-works elevation block, t2RampStart 18 to 14 and t2RampEnd 28 to 32, so the ramp's 4 m rise runs over 18 m (peak sim gradient 0.333 under the 0.35 limit) and the whole works can be walked; the cliff, creek and every other number unchanged; the two canyon null floors moved on event hash only because the contract's authored turrets now stand (81 others byte-identical). The store unchanged at 5793a96. reviews/canyon-works-traversal-2.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #66: is-main-2 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-SF1-2): scripts/assay-replay-agent.mjs decides main-module through the pinned isMain copy instead of an unresolved process.argv[1] comparison; the agent's bytes are part of the engine hash corpus, the sim, contracts, floors and tables are untouched (83 of 83 floors). The store unchanged at 5793a96. reviews/is-main-2.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "29324ba84fc802adf46cd38825f4721686a75f8d62e4d6089f0d6854c8a21b1f",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #67: river-ending-score-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-PP6-2, owner 2026-09-26): src/game/Game.ts records the River ceremony's first pan as a completed e10-river score and reel, holds its county post behind RIVER_STANDING_POSTS_ENABLED, and labels replays by scoredContractId; no sim rule, contract, collision, floor or table moved; two agent-arm tapes and two browser-arm reels replay byte-identical on base and tip. The store unchanged at 5793a96. reviews/river-ending-score-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "af0e2d889eb353cef53fc6b4eaa695d4460961d4aea894ee22b544f396041e45",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #68: charter-press-locked-lands-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-1179-4 (a), owner 2026-09-26): the Charter Press panel offers only unlocked lands; src/charter/PressPanel.ts is the one differing input of 662; no sim, contract, floor or table changed; the heat-15 probe tape replays byte-identical on base and branch (fnv1a32:b131e18e, secured, 10 waves, 335 gold, 300 s). The store unchanged at 5793a96. reviews/charter-press-locked-lands-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #69: county-board-open-week-1 (Opus 5.5 implementer at max effort on the Anthropic subscription; F-LSR1-1, owner 2026-09-26): the county board reader (src/encyclopedia/reader.ts) shows the open week's partition and src/game/liveSeed.ts gains one export (liveSeedRotationId); no sim, contract, floor or table changed; the door half alone leaves the hash unchanged; an existing era-6 tape replays identical on base and branch; null floors 83 of 83. The store unchanged at 5793a96. reviews/county-board-open-week-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0",
+      "pinnedAt": "2026-09-26",
+      "cause": "same era, pin #70: river-assay-1: a River reel replays in its ceremony world and verifies to its completed score; the harvest seams follow the run's seed (live seeds keep the constant layout); a live solo run moves by the rounded axes its reel records (F-RVA1-1); the headless arm refuses e10-river. No contract, collision, floor or table moved (3 of 662 inputs differ: scripts/assay-replay-agent.mjs, src/game/Game.ts, src/main.ts; seven existing replays byte-identical; null floors 83 of 83). The store unchanged at 5793a96. reviews/river-assay-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d",
+      "pinnedAt": "2026-09-27",
+      "cause": "same era, pin #71: tape-pause-fix-1 (Astra, gpt-6-astra on the ChatGPT subscription; F-RVA1-6): src/game/Game.ts ignores recorded set_pause actions during a run-tape replay only; no recorder, sim rule, contract, floor or table moved; heat-15 reels and the era-6 agent tape replay byte-identical. The store unchanged at 5793a967da46e8f00c0ba16f92f17dc10d36558d. reviews/tape-pause-fix-1.md",
       "aliases": []
     }
   ],

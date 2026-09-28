@@ -1,6 +1,6 @@
 # Map census
 
-Generated: 2026-09-10T23:38:02.695Z
+Generated: 2026-09-22T16:37:13.148Z
 
 Census-closed: MQ-3
 
@@ -46,5 +46,5 @@ Census-closed: MQ-3
 | e9-old-canal | 9 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS-exempt: not a mobile spot |
 | e10-ember-shore | 10 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS-exempt: not a mobile spot |
 | e10-archive-world | 10 | PASS | PASS | PASS | PASS | PASS | PASS | PASS | PASS-exempt: not a mobile spot |
-| e10-last-claim | 10 | PASS | PASS | PASS | FAIL: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveAttribute[2m([22m[32mexpected[39m[2m)[22m failed | PASS | PASS-exempt: no mounted landmark by contract | PASS | PASS-exempt: not a mobile spot |
+| e10-last-claim | 10 | PASS | PASS | PASS | PASS | PASS | PASS-exempt: no mounted landmark by contract | PASS | PASS-exempt: not a mobile spot |
 | e10-river | 10 | PASS-exempt: contract unavailable | PASS-exempt: contract unavailable | PASS-exempt: contract unavailable | PASS-exempt: contract unavailable | PASS-exempt: contract unavailable | PASS-exempt: contract unavailable | PASS-exempt: contract unavailable | PASS-exempt: contract unavailable |

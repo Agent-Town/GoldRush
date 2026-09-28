@@ -6,8 +6,8 @@
 // seed, one order stream, two runtimes).
 //
 // Usage: node scripts/e7-playbook-digest.mjs [--all | <contract>]
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+// The digest runs only when this file is the entry point, decided by real path (F-SF1-2).
+import { isMain } from './is-main.mjs';
 import { createServer } from 'vite';
 
 const RELAY_R1_PAD = { x: -45, z: 40 };
@@ -110,10 +110,10 @@ export function playbookDigest(sim, script, turns = 40) {
   };
 }
 
-// Compared as RESOLVED PATHS, never as a `file://${argv[1]}` string: this repo's own checkout path
-// contains a space, which `import.meta.url` percent-encodes and `process.argv[1]` does not, so the
-// string form silently never matches and the script prints nothing at all.
-if (fileURLToPath(import.meta.url) === path.resolve(process.argv[1] ?? '')) {
+// isMain compares REAL paths: never a `file://${argv[1]}` string (this repo's checkout path contains
+// a space, which `import.meta.url` percent-encodes) and never a resolved path, which a symlinked run
+// defeats; either form silently never matches and the script prints nothing at all (F-SF1-2).
+if (isMain(import.meta.url)) {
   const requested = process.argv.includes('--all')
     ? Object.keys(E7_PLAYBOOK_SCRIPTS)
     : process.argv.slice(2).filter((argument) => !argument.startsWith('--'));

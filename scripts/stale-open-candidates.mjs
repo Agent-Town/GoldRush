@@ -30,6 +30,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { FINDING } from './findings-state-guard.mjs';
+import { BACKLOG_INDEX, backlogParts, corpusDeclaration } from './ledger-corpus.mjs';
 
 function arg(flag, fallback) {
   const i = process.argv.indexOf(flag);
@@ -56,7 +57,15 @@ const SUBJECT_CHARS = 90;
 const FILE_RE = /\b([A-Za-z0-9._-]+\.(?:mjs|ts|tsx|js|json|sh))\b/g;
 
 const rows = [];
-for (const [i, line] of fs.readFileSync(BACKLOG, 'utf8').split('\n').entries()) {
+// ledger-shape-1 (owner ruling 2026-09-24, item 13a): the ledger is `tasks/BACKLOG.md` PLUS
+// `tasks/backlog/**`. Reading the index alone after the split narrows the candidate set SILENTLY and
+// fails OPEN. `scripts/ledger-corpus.mjs` lists the corpus; coordinates carry their own file so
+// they still resolve (bare for the index, `<rel>:<n>` for a split part).
+const CORPUS = backlogParts(ROOT);
+console.log(`ledger corpus: ${corpusDeclaration(CORPUS.map((p) => p.rel))}`);
+for (const { where, line } of CORPUS.flatMap((part) => part.text.split('\n').map((line, n) => ({
+  line, where: part.rel === BACKLOG_INDEX ? String(n + 1) : `${part.rel}:${n + 1}`,
+})))) {
   const subject = line.slice(0, SUBJECT_CHARS);
   const lead = line.trimStart();
   const struck =
@@ -67,7 +76,10 @@ for (const [i, line] of fs.readFileSync(BACKLOG, 'utf8').split('\n').entries()) 
   const ids = [...new Set(subject.match(FINDING) || [])];
   if (!ids.length) continue;
   rows.push({
-    line: i + 1,
+    // `where` is ALREADY the 1-based coordinate its file carries (the corpus builder above owns
+    // the +1). It used to be `i + 1` over a raw index; with a string coordinate that would
+    // CONCATENATE — "950" + 1 = "9501" — a line number past the end of a 6,237-line file.
+    line: where,
     state: lead.startsWith('✅') || struck ? 'closed' : 'open',
     ids,
     files: [...new Set([...line.matchAll(FILE_RE)].map((m) => m[1]))],

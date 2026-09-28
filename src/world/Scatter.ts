@@ -125,6 +125,15 @@ const FORD_PROBE = { x: 0, z: (Terrain.RIVER_MIN_Z + Terrain.RIVER_MAX_Z) / 2 };
 const ROUTING_PROBE = { x: 0, z: -14 };
 const SCATTER_DESCRIPTOR = activeContract().tileParams.scatter;
 
+type RiparianCard = 'reeds' | 'willow' | 'driftwood';
+// Appearance only: keep the contract's class counts and each class's draw/clearing owner.
+// Unlisted maps take the original profiles, materials and placement stream verbatim.
+const MAP_SCATTER: Readonly<Record<string, Partial<Record<DetailClassId, RiparianCard>>>> = {
+  'e1-twin-banks': { rocks: 'driftwood', stumps: 'willow', dry_grass: 'reeds',
+    wagon_ruts: 'driftwood', claim_posts: 'willow', reeds: 'reeds' },
+};
+const RIPARIAN_TABLE = MAP_SCATTER[activeContract().id];
+
 export class DetailScatter {
   readonly group = new THREE.Group();
 
@@ -135,6 +144,7 @@ export class DetailScatter {
   private readonly contactShadows: THREE.InstancedMesh;
   private buildingClearings: readonly DetailScatterClearPoint[] = [];
   private clearingsSignature = '';
+  private groundStamp = '';
 
   constructor() {
     this.group.name = 'DetailScatter';
@@ -148,6 +158,7 @@ export class DetailScatter {
   }
 
   syncBuildingClearings(clearings: readonly DetailScatterClearPoint[]): void {
+    if (RIPARIAN_TABLE) this.syncRiparianGround();
     const signature = clearings
       .map((point) => `${point.x.toFixed(1)},${point.z.toFixed(1)},${point.radius.toFixed(1)}`)
       .join('|');
@@ -218,6 +229,37 @@ export class DetailScatter {
     disposeObject3D(this.group);
   }
 
+  /** The GLB height source arrives after scatter construction. Re-seat only this map's
+   * cards and rebuild its baked batches once on that swap, including their contact patches. */
+  private syncRiparianGround(): void {
+    const stamp = `${Terrain.sampleHeight(-25, 0)},${Terrain.sampleHeight(25, 0)}`;
+    if (stamp === this.groundStamp) return;
+    this.groundStamp = stamp;
+    for (const detail of this.seededInstances) {
+      detail.y = Terrain.visualY(detail.x, detail.z, -0.025);
+      writeInstance(detail.mesh, detail.index, detail, detail.hidden);
+      if (detail.shadowIndex >= 0) writeContactShadow(this.contactShadows, detail.shadowIndex, detail, detail.hidden);
+    }
+    this.contactShadows.instanceMatrix.needsUpdate = true;
+    for (const child of [...this.group.children]) {
+      if (child.name.startsWith('DetailScatter.opaque.') || child.name.endsWith('.contact')) {
+        // Batch materials borrow the class atlas; do not dispose that shared texture.
+        const mesh = child as THREE.Mesh;
+        if ((mesh as THREE.InstancedMesh).isInstancedMesh) (mesh as THREE.InstancedMesh).dispose();
+        mesh.geometry.dispose();
+        if (child.name.endsWith('.contact')) (mesh.material as THREE.MeshBasicMaterial).map?.dispose();
+        (mesh.material as THREE.Material).dispose();
+        this.group.remove(child);
+      }
+    }
+    for (const entry of this.classes) {
+      entry.mesh.instanceMatrix.needsUpdate = true;
+      const contact = contactPatchMesh(entry.instances, entry.profile);
+      if (contact) this.group.add(contact);
+    }
+    this.batchOpaqueClasses();
+  }
+
   /** F-ASTRA-6: the census found 68–88% of the solid scatter outside the camera.
    * Flatten static instances into two compatible opaque draws, preserving each class's
    * linear tint, roughness, metalness and sidedness. Reeds retain their instanced sway;
@@ -254,6 +296,7 @@ export class DetailScatter {
           const geometry = new THREE.BufferGeometry();
           geometry.setAttribute('position', entry.profile.geometry.getAttribute('position').clone());
           geometry.setAttribute('normal', entry.profile.geometry.getAttribute('normal').clone());
+          if (RIPARIAN_TABLE) geometry.setAttribute('uv', entry.profile.geometry.getAttribute('uv').clone());
           if (entry.profile.geometry.index) geometry.setIndex(entry.profile.geometry.index.clone());
           const count = geometry.getAttribute('position').count;
           const color = new THREE.Color();
@@ -264,7 +307,11 @@ export class DetailScatter {
           geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
           geometry.setAttribute('scatterRoughness', new THREE.BufferAttribute(new Float32Array(count).fill(source.roughness), 1));
           const matrix = new THREE.Matrix4();
+          // Clearing is a visibility predicate in the batch, not a baked zero transform.
+          // A terrain swap can happen while a player building is hiding this card.
+          if (RIPARIAN_TABLE && detail.hidden) writeInstance(entry.mesh, detail.index, detail, false);
           entry.mesh.getMatrixAt(detail.index, matrix);
+          if (RIPARIAN_TABLE && detail.hidden) writeInstance(entry.mesh, detail.index, detail, true);
           parts.push({ geometry, matrix, hidden: () => detail.hidden });
           temporary.push(geometry);
         }
@@ -339,7 +386,7 @@ export class DetailScatter {
 }
 
 function createProfiles(): DetailProfile[] {
-  return [
+  const profiles: DetailProfile[] = [
     {
       id: 'rocks',
       baseCount: profileCount('rocks', 44),
@@ -415,6 +462,65 @@ function createProfiles(): DetailProfile[] {
       contact: { radius: 0.38, minScale: 0.98 },
     },
   ];
+  if (!RIPARIAN_TABLE) return profiles;
+  const atlas = new THREE.TextureLoader().load(new URL('../../assets/pilots/map-rebuild-spike/landmarks/twin-banks/twin-banks-landmarks-atlas.png', import.meta.url).href);
+  atlas.colorSpace = THREE.SRGBColorSpace;
+  for (const profile of profiles) {
+    const card = RIPARIAN_TABLE[profile.id];
+    if (!card) continue;
+    profile.geometry.dispose();
+    profile.geometry = riparianCardGeometry(card);
+    // Ruts already own a transparent, double-sided draw. Keep it, but stand its driftwood up.
+    delete profile.groundRotationX;
+    const material = profile.material as THREE.MeshStandardMaterial | THREE.MeshBasicMaterial;
+    material.map?.dispose();
+    material.map = atlas;
+    material.color.set('#ffffff');
+    material.side = THREE.DoubleSide;
+    material.userData.riparianCard = card;
+    profile.baseY = -0.025;
+  }
+  return profiles;
+}
+
+/** Cut silhouettes from the shipped atlas's green (2,1) and pale wood (0,1) cells.
+ * These are geometric cards, not a new bitmap or a new asset-store authoring path. */
+function riparianCardGeometry(kind: RiparianCard): THREE.BufferGeometry {
+  const positions: number[] = [], uvs: number[] = [];
+  const wood = [0.025, 0.525, 0.225, 0.725], green = [0.525, 0.525, 0.725, 0.725];
+  const strip = (ax: number, ay: number, bx: number, by: number, width: number, tip: number, cell: number[], angle: number) => {
+    const dx = bx - ax, dy = by - ay, length = Math.hypot(dx, dy);
+    const nx = -dy / length, ny = dx / length;
+    const points = [[ax + nx * width, ay + ny * width], [ax - nx * width, ay - ny * width],
+      [bx + nx * tip, by + ny * tip], [bx - nx * tip, by - ny * tip]];
+    for (const index of [0, 1, 2, 2, 1, 3]) {
+      const [x, y] = points[index]!;
+      positions.push(x! * Math.cos(angle), y!, x! * Math.sin(angle));
+      uvs.push(cell[index % 2 === 0 ? 0 : 2]!, cell[index < 2 ? 1 : 3]!);
+    }
+  };
+  for (const angle of [0, Math.PI / 2]) {
+    if (kind === 'driftwood') {
+      strip(-0.65, 0.13, 0.65, 0.18, 0.13, 0.09, wood, angle);
+      strip(0.08, 0.18, 0.38, 0.46, 0.06, 0.025, wood, angle);
+    } else if (kind === 'willow') {
+      strip(0, 0, 0.08, 1.85, 0.085, 0.02, wood, angle);
+      for (const side of [-1, 1]) for (const y of [0.9, 1.3, 1.7]) {
+        strip(0, y, side * 0.55, y - 0.12, 0.035, 0.012, wood, angle);
+        strip(side * 0.27, y, side * 0.48, y - 0.58, 0.18, 0.008, green, angle);
+      }
+    } else {
+      for (const [x, height] of [[-0.22, 0.86], [0, 1.25], [0.22, 1.05]]) {
+        strip(x!, 0, x! * 1.5, height!, 0.065, 0.006, green, angle);
+        strip(x! * 1.4, height! * 0.72, x! * 1.5, height! * 0.94, 0.042, 0.04, wood, angle);
+      }
+    }
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.computeVertexNormals();
+  return geometry;
 }
 
 function profileCount(id: DetailClassId, fallback: number): number {
@@ -448,6 +554,17 @@ function placeDetail(
 }
 
 function staticExcluded(x: number, z: number): boolean {
+  if (RIPARIAN_TABLE) {
+    // Include the widest card's footprint, not just its root. No vegetation in either build
+    // rectangle or either ford approach; no card reaches across a bank into navigable water.
+    const pad = 1.0;
+    const tile = activeContract().tileParams;
+    if (tile.buildZones?.some(zone => x >= zone.minX - pad && x <= zone.maxX + pad && z >= zone.minZ - pad && z <= zone.maxZ + pad)) return true;
+    if (tile.fords?.some(ford => Math.abs(x - ford.x) < ford.halfWidth + pad && Math.abs(z) < 7)) return true;
+    for (const [dx, dz] of [[pad, 0], [-pad, 0], [0, pad], [0, -pad]]) {
+      if (Terrain.sample(x + dx!, z + dz!).zone !== 'bank') return true;
+    }
+  }
   if (Terrain.routingLaneDistance(x, z) < Balance.world.detailRoutingLaneClearRadius) return true;
   if (distanceSq(x, z, BUILD_PAD_PROBE.x, BUILD_PAD_PROBE.z) < Balance.world.detailBuildPadClearRadius ** 2) return true;
   for (const anchor of Terrain.nodeAnchors) {
@@ -781,7 +898,7 @@ function contactPatchMesh(details: readonly DetailInstance[], profile: DetailPro
   mesh.receiveShadow = false;
   const object = new THREE.Object3D();
   for (const [index, detail] of tufts.entries()) {
-    object.position.set(detail.x, detail.y + 0.012, detail.z);
+    object.position.set(detail.x, (RIPARIAN_TABLE ? Terrain.visualY(detail.x, detail.z, 0) : detail.y) + 0.012, detail.z);
     object.rotation.set(-Math.PI / 2, 0, detail.rotation);
     object.scale.set(detail.scale, detail.scale * 0.72, 1);
     object.updateMatrix();

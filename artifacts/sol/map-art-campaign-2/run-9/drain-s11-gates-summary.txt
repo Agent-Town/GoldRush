@@ -1,0 +1,35 @@
+slice 11: lane aef5f1297ecdcde580bfcad7420df7e613ac9c13 store 70b78b433ff926b3552fc3d201970d101edf4906 maps: the Far Side 18:09Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> 70b78b4 (art(store): e8-far-side — pressure vessel and native metal surfaces)
+store main pushed: 70b78b4
+scratch store: detached at 70b78b4, clean
+chain fast-forwarded to main 0a4e4ca66
+chain base 0a4e4ca66 merging lane aef5f1297 (lane tip aef5f1297) 18:09Z
+merged a383a8d3d
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 70b78b4): b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34318148 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (314.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 18:16Z: e2e/e8-far-side-probe.spec.ts e2e/er01-e8-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/ss-09-e8-beats.spec.ts e2e/e8-remaining-maps-parity.spec.ts 
+warm-up: first boot rc=0, second rc=0 (the gate below starts on a warmed server; optimizer lines in the vite log: 1)
+e2e: rc=1   2 failed   4 skipped   70 passed (9.0m)  18:26Z
+1) [desktop-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+2) [mobile-chrome] › e2e/er01-e8-census.spec.ts:75:3 › e8-mare-claim census pins the Orbital contract's door state 
+battery start 18:26Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  18:33Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (169296.624084ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (598.3245ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (116.311208ms)
+dirt after battery: 0
+FID2-S11-PREP-DONE
+known-red overrides: e2e e2e/er01-e8-census\.spec\.ts:75:3 battery ^$
+hash at pin time: b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df
+pin #51
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

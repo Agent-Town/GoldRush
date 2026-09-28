@@ -1,0 +1,10 @@
+# Picnic — rejected iterations and verification repairs
+
+These are development attempts, not acceptance evidence. Final receipts and screenshots are in this directory; raw rejected evidence is under `_raw/run-9/`.
+
+1. The first generated ground capture bypassed the existing height-pigment treatment because the texture shader replacement ran first. Corrected the order: height treatment composes before the Picnic map replacement. All final ground numbers include both.
+2. The original atlas looked blurry over the larger cloth surfaces. Replaced those slots with a native-generated cloth/wicker atlas, preserving the original atlas for other surfaces.
+3. The first new atlas export exceeded the existing 1024-pixel family cap and omitted actual two-primitive/two-material declarations. The render guard failed. The recipe now resamples the generated source during export and declares actual counts; all budgets are unchanged. The guard was rerun, with no assertion or grandfathered baseline change.
+4. An early recipe proof incorrectly forwarded its own command arguments to the export recipe and wrote a draft into `e6-picnic/`. Blender returned zero despite a Python error. Moved those generated files to rejected raw evidence, stopped argument forwarding, and require explicit `SOURCE PROOF PASS` / `RECIPE PROOF PASS` markers in addition to exit zero. No draft is staged.
+5. Independent critique caught the missing canopy bench. Restored the frozen bench and atom mesh components, added bench feet, then direct inspection caught the pendant intersecting the sagging cloth. Lowered that ornament within the unchanged body envelope. Restarted final captures, proofs, builds, guards and four-run performance; incomplete earlier timing is not pooled into the final results.
+6. One invariant invocation omitted the changed-body arguments and correctly rejected the four edited GLBs as supposedly unchanged siblings. The final invocation identifies exactly those four bodies and verifies every protected sibling, transform, bound, mount, station, budget and simulation authority.

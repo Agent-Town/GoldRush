@@ -1,0 +1,88 @@
+{
+  "candidateCounts": {
+    "passed": 58,
+    "skipped": 4,
+    "failed": 2
+  },
+  "baseCounts": {
+    "passed": 0,
+    "skipped": 0,
+    "failed": 2
+  },
+  "exactBaseEngine": "b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df",
+  "restoredCandidateEngine": "984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5",
+  "allCasesAlsoFailOnBase": true,
+  "exactFingerprintCount": 2,
+  "failures": [
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/e8-roster.spec.ts",
+      "title": "plain Orbital-era boot stays error-free without the debug harness",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/e8-roster.spec.ts",
+        "testLine": 172,
+        "title": "plain Orbital-era boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e8-roster.spec.ts:183:93"
+        ]
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/e8-roster.spec.ts",
+        "testLine": 172,
+        "title": "plain Orbital-era boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e8-roster.spec.ts:183:93"
+        ]
+      }
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/e8-roster.spec.ts",
+      "title": "plain Orbital-era boot stays error-free without the debug harness",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/e8-roster.spec.ts",
+        "testLine": 172,
+        "title": "plain Orbital-era boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e8-roster.spec.ts:183:93"
+        ]
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/e8-roster.spec.ts",
+        "testLine": 172,
+        "title": "plain Orbital-era boot stays error-free without the debug harness",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: true",
+          "Received: false"
+        ],
+        "assertionLocations": [
+          "e2e/e8-roster.spec.ts:183:93"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "candidateCounts": {
+    "passed": 51,
+    "skipped": 5,
+    "failed": 4
+  },
+  "baseCounts": {
+    "passed": 0,
+    "skipped": 0,
+    "failed": 4
+  },
+  "exactBaseEngine": "083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6",
+  "restoredCandidateEngine": "e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32",
+  "allCasesAlsoFailOnBase": true,
+  "exactFingerprintCount": 2,
+  "failures": [
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 195,
+        "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: \"river\"",
+          "Received: \"bank\""
+        ],
+        "assertionLocations": [
+          "e2e/terrain3d-registry.spec.ts:235:34"
+        ]
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 195,
+        "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: \"river\"",
+          "Received: \"bank\""
+        ],
+        "assertionLocations": [
+          "e2e/terrain3d-registry.spec.ts:235:34"
+        ]
+      }
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "baseAlsoFails": true,
+      "exactFingerprint": false,
+      "candidate": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 271,
+        "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+        "fingerprint": [
+          "Error: expect(received).toBeGreaterThan(expected)",
+          "Expected: > 8",
+          "Received:   2.3335065878329417"
+        ],
+        "assertionLocations": [
+          "e2e/terrain3d-registry.spec.ts:303:27"
+        ]
+      },
+      "base": {
+        "project": "desktop-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 271,
+        "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+        "fingerprint": [
+          "Error: expect(received).toBeGreaterThan(expected)",
+          "Expected: > 8",
+          "Received:   2.333815008015005"
+        ],
+        "assertionLocations": [
+          "e2e/terrain3d-registry.spec.ts:303:27"
+        ]
+      }
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "baseAlsoFails": true,
+      "exactFingerprint": true,
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 195,
+        "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: \"river\"",
+          "Received: \"bank\""
+        ],
+        "assertionLocations": [
+          "e2e/terrain3d-registry.spec.ts:235:34"
+        ]
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 195,
+        "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+        "fingerprint": [
+          "Error: expect(received).toBe(expected) // Object.is equality",
+          "Expected: \"river\"",
+          "Received: \"bank\""
+        ],
+        "assertionLocations": [
+          "e2e/terrain3d-registry.spec.ts:235:34"
+        ]
+      }
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "baseAlsoFails": true,
+      "exactFingerprint": false,
+      "candidate": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 271,
+        "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+        "fingerprint": [
+          "Error: expect(received).toBeGreaterThan(expected)",
+          "Expected: > 8",
+          "Received:   1.7416758726859591"
+        ],
+        "assertionLocations": [
+          "e2e/terrain3d-registry.spec.ts:303:27"
+        ]
+      },
+      "base": {
+        "project": "mobile-chrome",
+        "spec": "e2e/terrain3d-registry.spec.ts",
+        "testLine": 271,
+        "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+        "fingerprint": [
+          "Error: expect(received).toBeGreaterThan(expected)",
+          "Expected: > 8",
+          "Received:   1.7421072883368156"
+        ],
+        "assertionLocations": [
+          "e2e/terrain3d-registry.spec.ts:303:27"
+        ]
+      }
+    }
+  ]
+}

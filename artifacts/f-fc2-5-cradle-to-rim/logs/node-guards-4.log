@@ -1,0 +1,102 @@
+(node:48027) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"closedAtWave":22,"open":{"secured":true,"waves":20,"timeMs":600000,"gold":0,"kills":172,"calls":33,"defaultedPicks":11,"defaultedSecure":0,"eventLogHash":"fnv1a32:83d1cf7e"}}
+✔ the gravity half was already composed: all three publish the profile the browser holds (60.948792ms)
+✔ the air wall arms on each map own declaration, and on nothing else (0.186625ms)
+✔ air is the wall: the suit drains outside a shelter, refills inside one, and only a wall map breaches (2.9555ms)
+✔ the crossing is made on air, or it is not made: a breathless entry counts and credits nothing (0.253166ms)
+✔ the crossing window credits at most one entry per window, and holds the rest (0.315917ms)
+✔ low orbit crosses its two outboard decks, and the returning-lob seam is untouched (0.63025ms)
+✔ the eclipse removes an air route mid-run, and the secure needs a ground worked after it (0.449667ms)
+✔ the ride the audit measured, now carrying its air, and the un-composed hash it replaces (4463.87ms)
+✔ the Mare Claim is the control: byte-identical with the siblings composed and with them gone (1359.96825ms)
+✔ the secure turns on the crossing: same seed, same orders, two latches (20009.300292ms)
+✔ parseGlb rejects a non-GLB and reads the JSON + BIN chunks of a real one (0.936417ms)
+✔ metrics reproduce the runtime definitions: triangles, welded vertices, world bounds (0.67525ms)
+✔ bounds are TRANSFORMED bounds: a node translation moves them (F-ASTRA-8) (0.172375ms)
+✔ a node rotation is applied to the bounds, not ignored (0.155417ms)
+✔ non-finite positions are counted, not silently folded into the bounds (0.387333ms)
+✔ the grid probe accepts a complete lattice and rejects a punctured one (0.244959ms)
+✔ texture dimensions come from the real image header, and the family cap is enforced (0.2565ms)
+✔ external buffers and images are policy violations (0.121708ms)
+✔ an alpha mode outside the family policy is a violation; a permitted one is not (0.198291ms)
+✔ required extras are reported as ONE violation per asset, listing every missing key (0.156292ms)
+✔ the baseline key carries the detail, so a NEW violation on a baselined asset still reds (0.112291ms)
+✔ water metadata is required by the asset's own contract, never by blanket family rule (0.269917ms)
+✔ contract counts and bounds are compared against the sibling JSON the runtime reads (0.204125ms)
+
+| family            | assets | triangles | vertices  | materials | textures | max tex | cap   | 2-sided | anims | skins | extras | anchors |
+|-------------------|--------|-----------|-----------|-----------|----------|---------|-------|---------|-------|-------|--------|---------|
+| bosses            | 7      | 116,429   | 63,219    | 7         | 7        | 2048²   | 1024² | 7       | 0     | 0     | 1      | 0       |
+| finale            | 2      | 25,260    | 13,834    | 2         | 2        | 1024²   | 1024² | 2       | 0     | 0     | 0      | 0       |
+| landmarks         | 212    | 244,362   | 139,627   | 213       | 212      | 1024²   | 1024² | 212     | 0     | 0     | 212    | 0       |
+| panoramas         | 34     | 86,008    | 60,986    | 34        | 34       | 2048²   | 2048² | 34      | 0     | 0     | 34     | 0       |
+| props             | 65     | 92,934    | 50,517    | 68        | 67       | 1024²   | 512²  | 68      | 0     | 0     | 0      | 19      |
+| rail-element      | 1      | 132       | 72        | 1         | 1        | 256²    | 512²  | 1       | 0     | 0     | 0      | 0       |
+| terrain           | 34     | 1,132,544 | 575,074   | 34        | 34       | 2048²   | 2048² | 34      | 0     | 0     | 34     | 0       |
+| town-buildings    | 9      | 49,744    | 26,371    | 9         | 9        | 2048²   | 1024² | 9       | 0     | 0     | 0      | 0       |
+| town-era-variants | 73     | 472,838   | 252,013   | 73        | 73       | 1024²   | 1024² | 73      | 0     | 0     | 0      | 55      |
+| TOTAL             | 437    | 2,220,251 | 1,181,713 | 441       | 439      |         |       | 440     | 0     | 0     | 281    | 74      |
+437 production GLBs · 6 violations · 6 grandfathered · 0 live
+✔ THE CORPUS: every production GLB is clean or explicitly grandfathered (3150.372125ms)
+✔ landmark pack records bind the actual bytes, triangles and Blender-coordinate bounds (5.023709ms)
+✔ the census totals every family in the manifest and every family has a policy (131.271625ms)
+✔ the terrain family and the hero carry an export sidecar, and every sidecar is well-formed (4.310458ms)
+✔ reexport-pilot.sh reads the sidecar and leaves the no-sidecar path on the old recipe (0.494291ms)
+✔ the baseline is paid down by hand: no regenerate path exists in the guard (0.604291ms)
+✔ contractFor resolves the same sibling JSON Terrain3dClaimPilot.ts imports (0.563542ms)
+✔ census rows sum to the asset count (0.290041ms)
+✔ the shared landmark source ledger covers every shipped pack and current source declaration (123.301792ms)
+✔ landmark contracts honor declared material counts and retain legacy defaults (3.00375ms)
+✔ e6-picnic retains the parent blockers and appends its own registered solids (0.91575ms)
+✔ e7-dead-band retains the parent blockers and appends its own registered solids (0.088375ms)
+✔ e7-relay-rush retains the parent blockers and appends its own registered solids (0.051958ms)
+✔ e8-far-side retains the parent blockers and appends its own registered solids (0.059458ms)
+✔ alias-only maps retain exactly their parent blockers (0.062917ms)
+✔ plain maps retain their footprints without duplication (0.09ms)
+PASS: translated/rotated/scaled/sheared surfaces agree with raycasts; invalid transforms and bounds rejected; disposal idempotent
+✔ scripts/landmark-walk-surfaces.test.mjs (74.852333ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27605.546542

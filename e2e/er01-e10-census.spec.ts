@@ -18,7 +18,7 @@ const EXPECTED_RULES: Record<string, string[]> = {
   // Both Ember Shore rules are DERIVED FROM CONSUMERS both engines run, which is what this census
   // is for: the debt on the card must match the debt in the engine.
   'e10-ember-shore': ['build_zones', 'hero_orders', 'preserve_vent', 'static_squall'],
-  'e10-archive-world': ['build_zones', 'hero_orders'],
+  'e10-archive-world': ['archive_restoration', 'build_zones', 'hero_orders', 'static_squall'], // 2026-09-22, 6351690fb0 + 7c2744e5a: squall + restoration consumers.
   'e10-last-claim': ['build_zones', 'hero_orders'],
   'e10-river': ['hero_orders', 'river', 'water_crossings'],
 };
@@ -57,17 +57,17 @@ const EXPECTED_DEPENDENCY: Record<string, string | undefined> = {
 };
 
 /**
- * Only the Ember Shore's dependency has landed a consumer. Every other Deep Sky row is still
- * `missing` and this map defaults them, so a second map flipping without its own evidence would
- * red here rather than pass by omission.
+ * Landed dependencies are named here; every omitted Deep Sky row still defaults to `missing`, so
+ * another map flipping without its own evidence would red here rather than pass by omission. The
+ * explicit rows keep every landed state tied to its cited consumer evidence.
  */
 const EXPECTED_DEPENDENCY_STATUS: Record<string, 'missing' | 'landed'> = {
-  'e10-ember-shore': 'landed',
+  'e10-ember-shore': 'landed', 'e10-archive-world': 'landed', // 2026-09-22, 7c2744e5a: Archive consumers landed.
 };
 
 const EXPECTED_LOSS_STAKES: Record<string, number> = {
   'e10-ember-shore': 1,
-  'e10-archive-world': 0,
+  'e10-archive-world': 1, // 2026-09-22, 7c2744e5a: archive-entry hero start is the loss stake.
   'e10-last-claim': 3,
   'e10-river': 0,
 };
@@ -89,7 +89,7 @@ const EXPECTED_LOSS_STAKES: Record<string, number> = {
  */
 const ADMITTED: Record<string, boolean> = {
   'e10-ember-shore': true,
-  'e10-archive-world': false,
+  'e10-archive-world': true, // 2026-09-22, 7c2744e5a: harvest anchors opened the derived AP-07 door.
   'e10-last-claim': true,
   'e10-river': false,
 };
@@ -111,7 +111,7 @@ const EXPECTED_BUILDABLES = ['sentry_beacon', 'palisade', 'sluice', 'stockpile',
  */
 const EXPECTED_SEEDS: Record<string, string[] | undefined> = {
   'e10-ember-shore': ['e10-ember-shore-01', 'e10-ember-shore-02'],
-  'e10-archive-world': undefined,
+  'e10-archive-world': ['e10-archive-world-01', 'e10-archive-world-02'], // 2026-09-22, 7c2744e5a: two authored seeds landed.
   'e10-last-claim': undefined,
   'e10-river': undefined,
 };

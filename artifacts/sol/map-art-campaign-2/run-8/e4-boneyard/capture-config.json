@@ -1,0 +1,101 @@
+{
+  "allowFallbackBefore": false,
+  "extraSources": [
+    "entities/Vehicle"
+  ],
+  "epoch": "epoch-4-motor",
+  "assets": [
+    {
+      "name": "boneyard-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "boneyard-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "flivver-row-west-a.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "flivver-row-west-b.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "flivver-row-west-c.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "spent-boiler-west.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "spent-boiler-east.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "flivver-row-east-a.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "flivver-row-east-b.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "flivver-row-east-c.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "hauler-bed-north-a.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "hauler-bed-north-b.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "half-buried-sleeper.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "unmarked-wagon.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "hauler",
+      "entry",
+      0,
+      0
+    ],
+    [
+      "hauler",
+      5,
+      0,
+      0
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        440,
+        300,
+        850,
+        380
+      ]
+    ],
+    [
+      390,
+      [
+        20,
+        285,
+        145,
+        390
+      ]
+    ]
+  ],
+  "actorMaskAtEntry": false,
+  "baselineCorrectionRun": 6
+}

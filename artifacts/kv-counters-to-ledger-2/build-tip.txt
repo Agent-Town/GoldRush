@@ -1,0 +1,18 @@
+# npm run build at the tip (trimmed: the header, the exit line and the asset-diet summary; the full log is 350 KB of per-file asset-diet lines)
+# build at 64d696c0f node=v26.4.0 start 13:10:35Z
+# end 13:10:55Z
+BUILD_EXIT=0
+...
+[asset-diet] 434 manifest GLBs 915138140 -> 132857344 bytes (85% cut); 55 plate-class PNGs 189040048 -> 25129996 bytes (87% cut); herald spot cuts 375470 bytes.
+| Family | GLBs | Before bytes | After bytes | Cut | Policy |
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 34 | 262548708 | 36923264 | 86% | compress |
+| landmarks | 213 | 382800564 | 58455012 | 85% | compress |
+| panoramas | 34 | 78357908 | 8957316 | 89% | compress |
+| town-buildings | 9 | 18058896 | 2604264 | 86% | compress |
+| town-era-variants | 73 | 112127592 | 17922008 | 84% | compress |
+| props | 62 | 30189152 | 3172404 | 89% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 7 | 26457976 | 4353216 | 84% | compress |
+| finale | 2 | 4597344 | 469860 | 90% | compress |
+BUILD_EXIT=0

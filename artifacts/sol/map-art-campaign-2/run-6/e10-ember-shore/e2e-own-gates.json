@@ -1,0 +1,22 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e10-ember-shore-own",
+      "e2e/e10-ember-shore-preserve.spec.ts",
+      "e2e/e10-ember-shore-squall.spec.ts"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 245.63,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-ember-shore-own.log"
+  }
+]

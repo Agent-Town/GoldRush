@@ -1,0 +1,20 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/exact-base-results",
+      "e2e/e8-roster.spec.ts:172"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 6.83,
+    "log": "artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/e2e-exact-base.log"
+  }
+]

@@ -1,0 +1,24 @@
+import { expect, test } from '@playwright/test';
+import { readFile, writeFile } from 'node:fs/promises';
+import path from 'node:path';
+import { nativeProof } from './driver';
+import { boardEntry } from '../../artifacts/sol/play-proofs/run-11/board-entry';
+test.skip(process.env.GR_NATIVE_PROOF !== '1', 'full native objective run — set GR_NATIVE_PROOF=1');
+test.use({ trace: 'off' });
+const id = 'e1-dry-gulch';
+const epoch = 'epoch-1-frontier';
+test.beforeEach(async ({ page }) => { await boardEntry(page, id, epoch); });
+nativeProof(id, 11);
+test.afterEach(async ({ page }, info) => {
+  if (info.status !== 'passed') return;
+  const root = path.resolve(`artifacts/sol/play-proofs/run-${process.env.GR_NATIVE_RUN ?? 11}/${id}`);
+  const row = JSON.parse(await readFile(path.join(root, `row-${info.project.name}.json`), 'utf8'));
+  expect(row.secures.ok).toBe(true);
+  await page.getByTestId(`contract-chapter-tab-${epoch}`).click();
+  const cell = page.getByTestId(`contract-best-${id}`);
+  await cell.scrollIntoViewIfNeeded();
+  await expect(cell).toContainText('Secured');
+  await cell.screenshot({ path: path.join(root, `bank-cell-${info.project.name}.png`) });
+  await page.screenshot({ path: path.join(root, `bank-book-${info.project.name}.png`) });
+  await writeFile(path.join(root, `bank-cell-${info.project.name}.json`), JSON.stringify({ text: await cell.innerText(), url: page.url(), originalContext: true, wave: row.peakWave }, null, 2) + '\n');
+});

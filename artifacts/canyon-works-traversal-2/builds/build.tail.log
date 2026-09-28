@@ -1,0 +1,29 @@
+start 2026-09-26T01:31:17Z head 2f2247cd056d14782b9cc5fa9da474c083c06348 load 163.95 187.76 190.33
+
+> gold-rush@0.1.0 build
+...
+  - vite:asset-import-meta-url transform (30 calls)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+[asset-diet] Herald dev-path art 1158214 bytes (1500000 byte ceiling).
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+[asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png
+[asset-diet] 434 manifest GLBs 915138140 -> 132857344 bytes (85% cut); 55 plate-class PNGs 189040048 -> 25129996 bytes (87% cut); herald spot cuts 375470 bytes.
+[asset-diet] GLB bytes by manifest family:
+| Family | GLBs | Before bytes | After bytes | Cut | Policy |
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 34 | 262548708 | 36923264 | 86% | compress |
+| landmarks | 213 | 382800564 | 58455012 | 85% | compress |
+| panoramas | 34 | 78357908 | 8957316 | 89% | compress |
+| town-buildings | 9 | 18058896 | 2604264 | 86% | compress |
+| town-era-variants | 73 | 112127592 | 17922008 | 84% | compress |
+| props | 62 | 30189152 | 3172404 | 89% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 7 | 26457976 | 4353216 | 84% | compress |
+| finale | 2 | 4597344 | 469860 | 90% | compress |
+build rc=0
+end 2026-09-26T01:32:03Z

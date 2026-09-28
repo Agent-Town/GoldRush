@@ -1,0 +1,55 @@
+{
+  "storeBase": "97d29c730796c9b5ddfae1f44073c44e1eced3e0",
+  "base": "19bdb6bce961c116df5d4a38b6a5e60259ed82c4",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "1f23ba1b63f84995e06834c6ce506fd299058883eb947df03bd69f5d573ac8d4",
+      "baseSha256": "2784f75fd91380f3f5ad3c1368920a5b74437b0b0e43b3e3ac79a6180e706777"
+    },
+    "assets/pilots/map-rebuild-spike/ember-shore-terrain-contract.json": {
+      "candidateSha256": "212f355465dda182f8d4e32d6fc72bb8be9eec73180917c15ed3e004e4033ccf",
+      "baseSha256": "e76d70ad3098720cbe08e1f2f1ad5b791505839da3e18e006e06c6329b7f5deb"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/ember-shore/cooled-titan-shelf.glb": {
+      "candidateSha256": "8fb07dfc4f414e4f1f1e684a5d91e66060ee15a088a482258820e80cffb1a6ba",
+      "baseSha256": "c042ace708d89ac129287f989d5e31d069d09d1b686a01fafaa092cde3199a2b"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/ember-shore/ember-shore-landmark-pack-contract.json": {
+      "candidateSha256": "491bd665bee6b7fe41b09b7119cefdf667a4319b640dae00a19d39366514e9dd",
+      "baseSha256": "94ee2a8eec0c1587182779ffe755dbade7f0e66a8d502d3bbafb8e62194aec3e"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/ember-shore/ember-shore-landmarks.blend": {
+      "candidateSha256": "acf041facb734f4fd61a17f574ba1bdcb150f23f182414a0c229c7e0547de0f4",
+      "baseSha256": "373f02269ffbc2aaf277c5bbff6d1f0310ed81eaa31737dc3fcb01f68ea2799e"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/landmark-source-ledger.json": {
+      "candidateSha256": "b0917fcf2ce388447d5e97010a24adeb08fb3d2d74e5d47dc443694058a2e3e5",
+      "baseSha256": "5fcaa9570d4afffbabe2dbced5b175f3ae69c938fe671d969bf284510da4fe40"
+    }
+  },
+  "pattern": "all sixteen contracts mount",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "0df7afdfb61520a896c158f0208e401731a733f465ab77a8fc4232bc495c65ba",
+  "baseEngine": "2a898e9e9e87ddd72c9dea598df97363c9e179592ef33e69a54871da21c1efd3",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e10-ember-shore-base-registry/test-results",
+    "--grep",
+    "all sixteen contracts mount",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {},
+  "restoredEngine": "0df7afdfb61520a896c158f0208e401731a733f465ab77a8fc4232bc495c65ba",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-ember-shore-base-registry/tests.log"
+}

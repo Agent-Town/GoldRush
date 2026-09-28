@@ -1,0 +1,122 @@
+{
+  "root": "870fa5eb08be8812a71746b4c670948da9353720",
+  "start": "2026-09-26T17:00:00.000Z",
+  "end": "2026-09-27T17:00:00.000Z",
+  "before": "b7602f6b3c5337216c463e0922012a73a0729deb",
+  "final": "cb82f79a4a9601222e4e42defeabaaf0c5abf807",
+  "mainUpdates": 143,
+  "firstParentCommits": 135,
+  "controlSeptember25": 136,
+  "playerEvents": 4,
+  "events": [
+    {
+      "hash": "fc5157f6b0a66237e3d918d2feaa049fd3a34c30",
+      "stamp": "2026-09-27T00:52:32+07:00",
+      "time": 1790445152000,
+      "subject": "merge fc5157f6b0a66237e3d918d2feaa049fd3a34c30: Fast-forward",
+      "previous": "f2b0f83b528f3a0ed11de9756a06037ced7c4674",
+      "playerFiles": [
+        "assets/engine-era.json",
+        "functions/api/standings.ts",
+        "src/encyclopedia/reader.css",
+        "src/encyclopedia/reader.ts",
+        "src/game/liveSeed.ts"
+      ],
+      "reviews": [
+        "reviews/county-board-open-week-1.md"
+      ],
+      "introduced": [
+        "fc5157f6b 2026-09-27T00:52:31+07:00 drain: merge main into the cbw1 chain (pass 1)",
+        "fd1b12023 2026-09-27T00:52:00+07:00 drain: cbw1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "e7fafe2a5 2026-09-27T00:52:00+07:00 era 6, same-era pin: cbw1, measured on the merged tree with the store at 5793a96 (7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551)",
+        "d9cc954ab 2026-09-27T00:18:36+07:00 drain: county-board-open-week-1 — the deferred follow-ups ledgered (F-CBW1-7, F-CBW1-6)",
+        "40c1ee15b 2026-09-27T00:14:27+07:00 drain: merge feat/county-board-open-week-1 — county-board-open-week-1 — the public board GET serves the open week's partition (?rotation=<id>|open; unknown, unopened or non-carrying weeks 400 bad_rotation; the unfiltered board byte-identical) and the in-game County Standings opens a rotation contract on the week a live run rides ('Week 39 claim', All time one tap away), so a human's weekly standing is visible in the game for the first time (F-LSR1-1; owner '3 - ok, lets do that' 2026-09-26; Opus 5.5 implementer at max effort)",
+        "97ec5b5dd 2026-09-27T00:12:21+07:00 feat: county-board-open-week-1 report and evidence, READY-FOR-GATES",
+        "a9289a04a 2026-09-27T00:11:47+07:00 feat: county-board-open-week-1, the board shots frame the rows",
+        "c2423804b 2026-09-26T19:09:53+07:00 feat: county-board-open-week-1, assay-season-roll opens the all-time board first (lift F-CBW1-1)",
+        "d71aa1415 2026-09-26T19:09:53+07:00 feat: county-board-open-week-1, the in-game county board opens on the live week (F-LSR1-1)",
+        "2a26070e4 2026-09-26T19:09:53+07:00 feat: county-board-open-week-1, test:stats reads the week's board through the Pages runtime",
+        "851cf903c 2026-09-26T19:09:53+07:00 feat: county-board-open-week-1, the public board serves one week's partition (F-LSR1-1)"
+      ]
+    },
+    {
+      "hash": "2d4802c0458631481c7a1c6e0bf72495d3dc5cf5",
+      "stamp": "2026-09-27T00:57:47+07:00",
+      "time": 1790445467000,
+      "subject": "commit: docs: the door document names ?rotation= for the public board GET beside the transfer-board read (F-CBW1-4; the landing's cure had placed it under the reels and the guard reverted it)",
+      "previous": "486b2fd285fa47e10804f98542538f35bdcef6b2",
+      "playerFiles": [
+        "public/skill.md"
+      ],
+      "reviews": [],
+      "introduced": [
+        "2d4802c04 2026-09-27T00:57:47+07:00 docs: the door document names ?rotation= for the public board GET beside the transfer-board read (F-CBW1-4; the landing's cure had placed it under the reels and the guard reverted it)"
+      ]
+    },
+    {
+      "hash": "dfa1ed17d8c6112b2f119051bfad791b2487fa92",
+      "stamp": "2026-09-27T06:31:48+07:00",
+      "time": 1790465508000,
+      "subject": "merge dfa1ed17d8c6112b2f119051bfad791b2487fa92: Fast-forward",
+      "previous": "24c426d1bb2fb0b39ce427ec4d9d68a81cd8a4e8",
+      "playerFiles": [
+        "assets/engine-era.json",
+        "src/game/Game.ts",
+        "src/main.ts"
+      ],
+      "reviews": [
+        "reviews/river-assay-1.md"
+      ],
+      "introduced": [
+        "dfa1ed17d 2026-09-27T06:31:47+07:00 drain: merge main into the rva1 chain (pass 1)",
+        "f27ecc907 2026-09-27T06:31:46+07:00 drain: rva1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "9ce6ecba9 2026-09-27T06:31:46+07:00 era 6, same-era pin: rva1, measured on the merged tree with the store at 5793a96 (f6084527ce4a4d1c9a02ecf84d0859c105d69f04add6316998545a790535b5b0)",
+        "40f9fd4fd 2026-09-27T05:56:49+07:00 drain: river-assay-1 — F-RVA1-6 ledgered (a pause makes any human reel unassayable; corrective tape-pause-fix-1 for Astra)",
+        "712db42e2 2026-09-27T05:56:48+07:00 drain: merge feat/river-assay-1 — river-assay-1 — a River reel replays in its ceremony world and verifies to its completed score (fresh diagonal-walk River reels VERIFIED by the county's own worker and ranked first; tampers of gold, time and pan tick rejected); the harvest seams follow the run's seed with live seeds keeping the constant layout (form b, no live layout moves); a live solo run moves by the rounded axes its reel records (F-RVA1-1, the general fix: no diagonal-movement reel could verify before); the headless arm refuses e10-river; RIVER_STANDING_POSTS_ENABLED flipped on (one standing POST at the pan, stored pending, verified); every existing verified reel and 83 null floors unchanged (owner '2 - sure, lets do that' 2026-09-26, F-PP6-2's county-board half; Opus 5.5 implementer at max effort, the last one)",
+        "072fe8828 2026-09-27T05:54:28+07:00 feat: river-assay-1 report (the implementer's final text, committed by the attended session after a hook refused the file write)",
+        "3501e94c1 2026-09-27T05:49:06+07:00 feat: river-assay-1 evidence: a recorded pause stops every replay (F-RVA1-6), measured on the tree's one human standing and on a paused River run",
+        "71510d4e7 2026-09-27T05:16:12+07:00 feat: river-assay-1 evidence: the environment-bound node-guards reds reproduce on the base",
+        "bb07b82a2 2026-09-27T05:09:06+07:00 feat: river-assay-1 evidence: the in-game watch path replays a River reel in its ceremony world, both projects",
+        "33a0e9f88 2026-09-27T05:06:32+07:00 feat: river-assay-1 evidence: before, mid-point, pre-cure, after, final, controls and both batteries",
+        "94c0c1a3b 2026-09-27T03:46:35+07:00 feat: RIVER_STANDING_POSTS_ENABLED = true: the River's pan posts its county standing (F-PP6-2, the county-board half)",
+        "b8a7c1a72 2026-09-27T03:46:34+07:00 feat: the verdict-row fixture re-recorded on the corrected seams (fnv1a32:eef28ae4)",
+        "7c15a2444 2026-09-27T03:19:21+07:00 feat: the seams' seed is a pure function of the reel's seed; live seeds keep the constant layout (F-RES1-6, form (b))",
+        "624a7aebe 2026-09-27T03:18:36+07:00 feat: the browser arm prints the replayed clock to the microsecond again; the worker's tolerance carries the comparison",
+        "0d1c0bcde 2026-09-27T03:18:20+07:00 feat: hold the River post again while two adjacent reds are corrected (reverts 67e04f0d9)",
+        "67e04f0d9 2026-09-27T02:16:31+07:00 feat: RIVER_STANDING_POSTS_ENABLED = true: the River's pan posts its county standing (F-PP6-2, the county-board half)",
+        "7d8282e23 2026-09-27T02:16:17+07:00 feat: river-ending-score asserts the River's one standing post, stored pending, verified by the county's own worker and ranked on its board",
+        "02be4953e 2026-09-27T02:16:17+07:00 feat: the River's verdict rows, on the node-guards roster (river-assay-1 scope item 3)",
+        "0f6f2d1cf 2026-09-27T01:47:22+07:00 feat: a live solo run moves by the rounded axes its reel records, so any walk replays to its own hash (F-RVA1-1)",
+        "2b4e68c38 2026-09-27T01:46:06+07:00 feat: the browser's harvest seams follow the run's seed, so a replay of any browser run lays the same seams (F-RES1-6)",
+        "51068d739 2026-09-27T01:35:23+07:00 feat: the headless arm refuses a River reel by name; River reels reach the browser arm by the existing discriminator",
+        "505c72205 2026-09-27T01:35:23+07:00 feat: the River verdict reads the ceremony's outcome, and the worker compares the clock at a stated tolerance (F-RES1-1 causes 2 and 3)",
+        "f665d8674 2026-09-27T01:35:11+07:00 feat: a River reel replays in the ceremony world, staged as the finale lever stages the run (F-RES1-1 cause 1)"
+      ]
+    },
+    {
+      "hash": "df0f305b94c5113c7e7fa53ddb1c23d9507cf522",
+      "stamp": "2026-09-27T09:37:27+07:00",
+      "time": 1790476647000,
+      "subject": "merge df0f305b94c5113c7e7fa53ddb1c23d9507cf522: Fast-forward",
+      "previous": "75f9a67244a7af0ddc5cc60143cb9be4833e8055",
+      "playerFiles": [
+        "assets/engine-era.json",
+        "src/game/Game.ts"
+      ],
+      "reviews": [
+        "reviews/tape-pause-fix-1.md"
+      ],
+      "introduced": [
+        "df0f305b9 2026-09-27T09:36:56+07:00 fix: tape-pause-fix-1 — land replay pause cure, pin 71 and drain evidence",
+        "28272092e 2026-09-27T09:34:26+07:00 Merge branch 'main' into HEAD",
+        "52cac1459 2026-09-27T09:20:07+07:00 s2695: tape-pause-fix-1 same-era pin — candidate gates complete; landing held for next fire window",
+        "e7fa70341 2026-09-27T08:58:53+07:00 Merge branch 'main' into HEAD",
+        "7875d9a8a 2026-09-27T08:03:45+07:00 Merge commit '0fd459d068438f40f7ecbd0faa1f4d4c93b8a1ab' into HEAD",
+        "63cd904a9 2026-09-27T07:26:50+07:00 fix: merge tape-pause-fix-1 for s2693 detached drain gates",
+        "19dc0195f 2026-09-27T07:15:22+07:00 fix: the same-game audit's set_pause source anchor follows the replay-skip line (tape-pause-fix-1 moved it; four audit guard rows were red on the landing's gates)",
+        "5e494d724 2026-09-27T07:04:13+07:00 fix: record tape pause replay verification evidence",
+        "17de886e6 2026-09-27T07:04:06+07:00 fix: ignore recorded player pauses during run tape replay"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+slice 16: lane cc4940c0c5706091d9a77b210c7c4f374c78e0c9 store c092e3de241f34163e903279bf071fe1f4fa6d56 maps: the Old Canal 20:48Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> c092e3d (art(store): e9-old-canal — supported drives and native materials)
+store main pushed: c092e3d
+scratch store: detached at c092e3d, clean
+chain fast-forwarded to main cc0bfe736
+chain base cc0bfe736 merging lane cc4940c0c (lane tip cc4940c0c) 20:48Z
+merged 9f842f2a0
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at c092e3d): d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34318546 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (298.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 20:55Z: e2e/e9-old-canal-choices.spec.ts e2e/er01-e9-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/ss-10-e9-beats.spec.ts e2e/e9-canal-stages.spec.ts 
+warm-up: first boot rc=0, second rc=0 (the gate below starts on a warmed server; optimizer lines in the vite log: 1)
+e2e: rc=0   4 skipped   72 passed (6.9m)  21:03Z
+battery start 21:03Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  21:10Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (170200.703084ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (439.710541ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (203.327625ms)
+dirt after battery: 0
+FID2-S16-PREP-DONE
+known-red overrides: e2e ^$ battery ^$
+hash at pin time: d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959
+pin #55
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

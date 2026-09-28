@@ -1,0 +1,17 @@
+{
+  "owningConfig": "playwright.release.config.ts",
+  "portAdapter": "artifacts/sol/map-art-campaign-2/run-8/release-on-lane-port.config.ts",
+  "baseURL": "http://127.0.0.1:5303",
+  "build": "GR_RELEASE=e1 npm run build",
+  "grep": "later contract URLs and modes decline",
+  "projects": [
+    "desktop-chrome",
+    "mobile-chrome"
+  ],
+  "workers": 1,
+  "pass": 2,
+  "fail": 0,
+  "seconds": 16.7,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/e10-last-claim-e1-release-final.log",
+  "earlierHarnessAttempt": "The dev-only config correctly rejected the preview before test collection. The final owning release config uses the same assertions and devices on the assigned port; GR_CAPTURE_EXTERNAL_SERVER is unset for this explicit production test."
+}

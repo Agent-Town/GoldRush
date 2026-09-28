@@ -1,0 +1,48 @@
+control: 11855 first-parent commits in the whole history
+walk (first-parent) on 2026-09-24: 120
+reachable on 2026-09-24:          184
+files changed on the walk: 2786, player-path files (distinct): 25
+walk commits touching a player path: 18
+off-walk on the day: 64, of which player-path: 23
+off-walk player-path contained in a walk commit: 23, orphaned: 0
+
+--- walk commits touching a player path ---
+3f5bc0456 drain: merge fix/ux-entry-robustness-1 bb25bfdfb — ux-entry-robustness-1 — the boot router inverts to a run-route allowlist (tracking and share links land on the start menu and mint no profile), a boot guard draws a card on a failed chunk or a refused WebGL context, focus loss clears held keys and the solo pick clock freezes while hidden, the unnamed-prospector fallback stops greeting strangers by the owner's name, ?contract= accepts a matching run suspend (Opus implementer on the Anthropic subscription; the outside review of 2026-09-24, UX-1, UX-2, UX-4; UX-7 reverted by measurement, F-UX7-1)
+    index.html src/core/BootGuard.ts src/core/InputController.ts src/game/Game.ts src/game/ProfileStorage.ts src/main.ts src/ui/DeathOverlay.ts
+3079d5db0 era 6, same-era pin: release-gate-on-deploy-1, measured on the merged tree with the store at 5793a96 (6a33752598ba8c5ae2c97d217c265394dd17cd9ec3334c2259737265a0e27c21)
+    assets/engine-era.json
+459c21394 drain: merge fix/release-gate-on-deploy-1 322d338e6 — release-gate-on-deploy-1 — the E4 hauler leaves the E1 bundle (a lazy ?url glob the release plugin already narrows), the release assertion runs on the production deploy path, the release suite's two Dry Gulch harvest reds were a stale approach point (the anchors moved in 7c2744e5a) and are re-pinned, the F-PERFC-1 citation re-based (Opus implementer on the Anthropic subscription; the outside review's BUILD-1, F-SEF2-2, F-SEF2-3)
+    src/entities/Vehicle.ts
+23e50fc53 era 6, same-era pin: sol-code-presentation-1, measured on the merged tree with the store at 5793a96 (0b017ed5230a0b8c2e46d756004388034a3dc58bca94848b2708a33d35d4dce7)
+    assets/engine-era.json
+00e4e98c1 drain: merge sol/wave-lane-b bbabf5617 — sol-code-presentation-1 — Twin Banks' riparian scatter cards, the Trestle's rail joins and buffer stops, Relay Rush's active relay signal: the three code-owned presentation holds, render only (Astra, lane-b, the ChatGPT subscription; owner 2026-09-24, F-F2-39 item 3)
+    src/game/Game.ts src/systems/RelaySignalPresentation.ts src/world/RailPath.ts src/world/Scatter.ts
+78934b5b7 drain: merge fix/sec-signin-hardening-1 134a27c90 — sec-signin-hardening-1 — the sign-in door counts guesses atomically before the compare, verify gets a per-address hourly cap, a new code no longer refills the budget, dev codes need an unbound mail sender, the office token moves to a header with a constant-time compare, the nginx limit_req lines in the droplet mirror (Opus implementer on the Anthropic subscription; the outside review of 2026-09-24, SEC-1, SEC-9, SEC-10)
+    functions/api/_accounts.ts functions/api/_bugs.ts functions/api/_compare.ts functions/api/redeem.ts functions/api/standings.ts
+d8705dc6e drain: merge sol/wave-lane-b 8b89e4231 — sol-phone-hud-entry-2 — the 390 px HUD census and cure extended to Night Shift, Twin Banks, the Baron and the Trestle, the maps the first pass did not list, inside the first pass's bounds (Astra, lane-b, the ChatGPT subscription; owner 2026-09-24, F-F2-39 item 1); the campaign report and the status doc resolved by key against the entry-framing-2 landing (md-3way)
+    src/ui/theme.css
+b541ac711 rotation: r2026w39 minted late (RT-01; no fire ran since 2026-09-20, F-FIRE-1), skill.md block refreshed with the whole registry; ledger rows and handover 13z-16
+    assets/rotations/rotation-seeds.json public/skill.md
+3a9628385 era 6, same-era pin: sol-entry-framing-2, measured on the merged tree with the store at 5793a96 (dcc407bec54d01d4040d835f8140c21368c4cec8c445400d346cda59220b3d0b)
+    assets/engine-era.json
+26e4a5a9c drain: merge sol/map-art-campaign-2 up to 598943981 — sol-entry-framing-2 — the plain entry frames the declared landmark on the four E1/E2 maps and a second landmark on the Glow Mesa and Relay Rush, the first pass's glance, camera only (Astra, lane-c; the owner's 2026-09-24 rulings in /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wave-word3.txt): Night Shift, Twin Banks, the Claim-Jumper Baron, the Trestle, the Glow Mesa (the cooling rack), Relay Rush (the charting station and west dishes); pilot contracts landed in Agent-Town/GoldRush-assets main 5793a96 first
+    src/agent/MechanicsManifest.ts src/systems/CameraRig.ts
+55db53d86 era 6, same-era pin: sol-map-art-fidelity-2 slice 16, measured on the merged tree with the store at c092e3d (d4e4bfb1167e66755209b2f679bf8682e03286b48dc9f8d1b929a1465f264959)
+    assets/engine-era.json
+9f842f2a0 drain: merge sol/map-art-campaign-2 up to cc4940c0c — Astra's fidelity run 2 (the other twenty-two maps), slice 16, landed mid-run (the owner's wave word in /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wave-word.txt): the Old Canal; pilot sources landed in Agent-Town/GoldRush-assets main c092e3d first
+    src/systems/CanalFlowPresentation.ts src/world/Terrain3dClaimPilot.ts
+eed03c91d era 6, same-era pin: sol-map-art-fidelity-2 slice 15, measured on the merged tree with the store at 03ccce8 (fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa)
+    assets/engine-era.json
+f3e95539c drain: merge sol/map-art-campaign-2 up to e0fa15426 — Astra's fidelity run 2 (the other twenty-two maps), slice 15, landed mid-run (the owner's wave word in /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wave-word.txt): Devil\'s Alley; pilot sources landed in Agent-Town/GoldRush-assets main 03ccce8 first
+    src/systems/SeedCaravanPresentation.ts
+208863d39 era 6, same-era pin: sol-map-art-fidelity-2 slice 13, measured on the merged tree with the store at 60c635c (9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1)
+    assets/engine-era.json
+3edb6efd1 era 6, same-era pin: sol-map-art-fidelity-2 slice 12, measured on the merged tree with the store at 4a2976f (984a9f2498c3445a6fe7f4e9b600f9334b4e7a394d0f3b284493b76dc39ba1a5)
+    assets/engine-era.json
+37a7141c8 era 6, same-era pin: sol-map-art-fidelity-2 slice 11, measured on the merged tree with the store at 70b78b4 (b4eff9b0b2c8df3dcd53fdca0bfbdefdc15f04a241db2293628deeca13b4d4df)
+    assets/engine-era.json
+36aa9fa6c era 6, same-era pin: sol-map-art-fidelity-2 slice 10, measured on the merged tree with the store at 892b7f6 (6655ba7569775a529216d58cf8f288556ca9fc19cfd7bbeae41dbeb9a99adf33)
+    assets/engine-era.json
+
+fire-session-prefixed commits on the walk: sessions s2667, s2668, s2669, s2670, s2671, s2672, s2673
+day boundary: 114eb2b9868cd2b26e47c38cb7c584672993741e^..3f5bc04565e0107241c7e88c4de39ccbc72f6627

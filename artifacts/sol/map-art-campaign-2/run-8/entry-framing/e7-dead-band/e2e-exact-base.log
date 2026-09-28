@@ -1,0 +1,176 @@
+(node:23848) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+
+(node:23913) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/6] [desktop-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+[desktop-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+[e7-parity] plain player use={"declared":true,"objective":"relay","objectiveMet":true,"uses":1,"relaysLitByProgram":["relay-site-r1"]} lit=["ford-table"]
+
+
+(node:23913) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[2/6] [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness
+  1) [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      173 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      174 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 175 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.enabled)).toBe(true);
+          |                                                                                           ^
+      176 |   expect(errors).toEqual({ console: [], page: [] });
+      177 | });
+      178 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-roster.spec.ts:175:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+
+(node:24332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[3/6] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once
+  2) [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      136 |     const contracts = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      137 |     return contracts.activateEpoch('epoch-8-orbital');
+    > 138 |   })).toBe(true);
+          |       ^
+      139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      140 | });
+      141 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-signal-systems.spec.ts:138:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/error-context.md
+
+
+
+(node:24447) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/6] [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch
+  3) [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch 
+
+    Test timeout of 180000ms exceeded.
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+      - waiting for getByTestId('playbook-record')
+        - locator resolved to <button type="button" data-recording="true" data-testid="playbook-record">Save Tape</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        305 × waiting for element to be visible, enabled and stable
+            - element is not visible
+          - retrying click action
+            - waiting 500ms
+
+
+      247 |   if (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build.mode)) await page.keyboard.press('KeyB');
+      248 |   await page.getByTestId('playbook-toggle').click();
+    > 249 |   await page.getByTestId('playbook-record').click();
+          |                                             ^
+      250 |   await page.getByTestId('playbook-toggle').click();
+      251 |   await page.getByTestId('playbook-toggle').click();
+      252 |   await page.getByTestId('playbook-replay-Relay Patrol').click();
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-playbook-rows.spec.ts:249:45
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-playbook-rows-HUMAN-PAR-818a2-ol-through-the-shared-latch-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-playbook-rows-HUMAN-PAR-818a2-ol-through-the-shared-latch-mobile-chrome/error-context.md
+
+
+
+(node:93412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:93412) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[5/6] [mobile-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness
+  4) [mobile-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      173 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      174 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 175 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.enabled)).toBe(true);
+          |                                                                                           ^
+      176 |   expect(errors).toEqual({ console: [], page: [] });
+      177 | });
+      178 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-roster.spec.ts:175:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-roster-plain-Signal-era-d9798-e-without-the-debug-harness-mobile-chrome/error-context.md
+
+
+
+(node:93523) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/6] [mobile-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once
+  5) [mobile-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      136 |     const contracts = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      137 |     return contracts.activateEpoch('epoch-8-orbital');
+    > 138 |   })).toBe(true);
+          |       ^
+      139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      140 | });
+      141 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e7-signal-systems.spec.ts:138:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-mobile-chrome/error-context.md
+
+
+  5 failed
+    [desktop-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+    [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+    [mobile-chrome] › e2e/e7-playbook-rows.spec.ts:218:1 › HUMAN PARITY: a plain-boot player records and delegates a patrol through the shared latch 
+    [mobile-chrome] › e2e/e7-roster.spec.ts:164:1 › plain Signal-era boot stays error-free without the debug harness 
+    [mobile-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+  1 passed (3.6m)

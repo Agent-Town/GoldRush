@@ -1,0 +1,25 @@
+branch fix/kv-counters-to-ledger-2 tip b9984e055 2026-09-25 14:31Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/kv2.json
+scratch store at the store's main 5793a96
+chain base 3ef2e3eed
+merged f68542f50
+desk row F-KV2-6: inserted at line 45
+cure kv2: desk row committed 44eaac79d
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 150 ℹ fail 0 
+functions gates: accounts rc=0 | mp rc=0 | stats rc=0
+battery start 14:33Z
+battery: rc=1 ℹ tests 1018 ℹ pass 1011 ℹ fail 2 ℹ skipped 5  14:49Z
+✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (963978.078291ms)
+✖ scripts/open-sea-water.test.mjs (150.642875ms)
+dirt after battery: 0
+kv2-PREP-DONE
+battery reds: ✖ all 161 scripts/*.test.mjs fixture owners remove their temp directories (963978.078291ms) ; ✖ scripts/open-sea-water.test.mjs (150.642875ms)
+verdict — needs hands
+RESUME-PREP 14:51Z: fixture sweep = contention child failed (load); open-sea-water whole-file crash passes alone on main, branch touches nothing it reads
+verdict: clean
+RESUME 2026-09-26 03:21Z: chain 44eaac79d, merge f68542f50, continuing at the pin
+hash at pin time: c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef
+review: reviews/kv-counters-to-ledger-2.md

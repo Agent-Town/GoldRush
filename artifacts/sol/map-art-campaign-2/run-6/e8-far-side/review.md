@@ -1,0 +1,23 @@
+# The Far Side — run 6 correction
+
+**IMPROVED / HELD.** The unselected landing frame now provides local orbital architecture. Fine regolith pigment replaces the shared Mare's broad blurred paint bands and nearly removes its dark rail scar. The circular crater vista and full equipment compound remain unaccepted.
+
+| Original defect | Result |
+| --- | --- |
+| Crater basin not communicated | IMPROVED surface separation: the existing south rim now reads as a lit wall above fine ground. HELD circular basin and distant vista by contract/layout/camera owners via Claude. The actual shared Mare has exact rectangular height-6 rim bands; sculpt, baked sampler and gameplay heights are unchanged. |
+| Pressure equipment not communicated | IMPROVED landing-frame identity: **5→6 selected bodies**, **600 additional authored triangles**. Entry body median **0.294** at **0.45** whole-body emission, with **37,180 desktop / 41,472 phone body pixels**. HELD the plate's pressure vessel and richer compound by contract/collision and art/layout owners. |
+| Suit rack not communicated | HELD by contract/collision owner: the existing variant rack declares a solid footprint, but Far Side's active resolver aliases Mare Claim. The rack, probe cradle and two solid marker/posts remain explicitly unselected in both mirrored variant contracts until their collision meaning is reconciled. Original collision-backed bodies are retained. |
+| Isolated dish not communicated | IMPROVED diffuse readability at the retained Earthrise array: 5 m median **0.162→0.233 desktop / 0.163→0.232 phone** at emission 0.45. Declared **3 m** inspection reduces phone persistent HUD **37.22% at 5 m→10.75%**, with full bbox inside the viewport. HELD entry placement by layout/camera owners: the array at z56 is entirely offscreen from the hero at z−36, not zero-covered. |
+| Broad blurred ground bands dominate | IMPROVED fine surface detail, rather than another blur pass. Fixed clear-ground RMS **0.00478→0.00869 (+81.75%) desktop / 0.01158→0.02188 (+89.02%) phone**; display median **0.168→0.438 / 0.188→0.418**. Two-pixel high-pass RMS **0.00159→0.00661 / 0.00128→0.00647** measures the fine detail separately. Small world-space pigment variation fades with pixel footprint and does not displace geometry. |
+| Long dark stripe dominates | IMPROVED inherited Mare rail-paint contrast **36.09%→1.56%** against adjacent ground in fixed desktop boxes. Far Side has no gameplay rail; only pigment changed. |
+| Otherwise sparse scene / portrait context | IMPROVED local landing-frame silhouette. Entry persistent coverage **0.013% desktop / 10.385% phone**; declared **3 m** station **0.047% / 5.768%**. HELD remaining phone overlays by UI/camera owners, larger compound by collision/layout owners. The simple existing frame and base do not equal the plate's detailed pressure vessel. |
+
+[Desktop plain board](board-1280.png) · [Phone plain board](board-390.png) · [Body/HUD metrics](visual-metrics.json) · [Fine-detail and stripe measurements](ground-detail.json). Ordinary boots retain the normal HUD, no debug/test hook, fixed seed and approximately ten seconds after entry; all four record zero console/page errors. Diagnostic inspection frames remain separately labelled.
+
+No GLB, atlas, blend, source mount transform, collision registry/code, mask truth or sampler changed. Terrain **32,768/60,000**, panorama **3,072/4,000**, landing frame **600/3,000** triangles; all other bodies remain within their caps. [Invariant proof](invariants.json) · [Budgets](asset-budgets.json). Six fresh mount/dispose cycles verify six selected bodies, no held variants or walk surfaces, no errors, and zero retained scene children. Generic loading **8/8** and repeat **2/2** pass.
+
+TypeScript/default/full builds, scoped render guards **34/34**, named guards **3/3**, Far Side parity/census **6/6**, shared brightness/collision **16 pass / four opt-in skips** pass. Own Orbital batch **22 pass / two failures**, both reproduced on exact base: the ordinary Mare Claim profile does not expose its arsenal. [Attribution and owner](failure-attribution.md). No assertions changed; candidate bytes were restored exactly before timing.
+
+Four fresh timing runs per arm/viewport: desktop p95 **9.70→9.75 ms (+0.52%)**, phone **9.60→9.70 ms (+1.04%)**, single comparable modes, within 15%. Draw calls **62→63 / 49→50**, triangles **99,748→100,348 / 97,830→98,430**. [All samples](performance-summary.json).
+
+Engine `36abad02458965365c31dfe66a98155d66182324ab136feb6709bfa791ff0abc` → `37a425e8df7634b36005ac5712ccee589eba59ab7aac41f7033a2949d203c146`; pin untouched. Store `d134d7607cda6b995a9421c5727fbd11f9a69230` pushed on `astra/corrections-4`.

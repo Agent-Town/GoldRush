@@ -1,0 +1,69 @@
+{
+  "storeBase": "60c635c2e48eedc288ffcf34c685e862f959057d",
+  "base": "7cc23fb59a0870594dabeb21060e0617d69926d6",
+  "paths": {
+    "src/systems/SeedCaravanPresentation.ts": {
+      "candidateSha256": "8ada3df6472f84c4c4a010f438cc9335432f625aeb44a675e4f99d858824adad",
+      "baseSha256": "6eb92aa62d8a1cdd6c95b45a8349779890b91ecee65f7cef28e2c7cef63d05c9"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/center-seed-vault.glb": {
+      "candidateSha256": "c915048294c9fca9d0bf72185f07675c433f3d38a9e6ea6b7abd6997d14911ce",
+      "baseSha256": "da729f516ddec7575b552b337b9318ec72184256e6d25df510a2e1e914299482"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/east-seed-vault.glb": {
+      "candidateSha256": "8e0d3c943292fa7709c8eb2b0d6e9209c936aaa231fa45f63890c7c24a2e8028",
+      "baseSha256": "0bdf5896e9a31b80d78bb84b579dba050a1f2c53bcb4b00f5abfd56523396307"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/north-basin-waygate.glb": {
+      "candidateSha256": "01cdda79de37717c46682e30b444c87655830eafff69365aa1a5069037f93079",
+      "baseSha256": "1af0f66f88f535b360ba623720b2f0afb25b935ffc10662ae976ac5ace34e487"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/seed-run-landmark-pack-contract.json": {
+      "candidateSha256": "5551f37954d099b206639f56fba9d60a88dc3aab5c5cd7d446f94e906b531625",
+      "baseSha256": "7bfbc197046239bdba3dfe01dbfd4857e3c2402b894fa409f3908c7a79c630e5"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/seed-run-landmarks-atlas.png": {
+      "candidateSha256": "3b23219ef04870fa71a73f3006a8f80225c95d1f3be56f66a8b4e0975e3b721b",
+      "baseSha256": "2522b65a4aa152f0c4f9278204ebb46e035c2d95d221f5ed49da372bc146a1b7"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/seed-run-landmarks.blend": {
+      "candidateSha256": "02e9352e173b3e2b0b546f5ebda5e63c780fc34f0441d5875c7946f1ff4db480",
+      "baseSha256": "ae309847dff14306f2c9cdf506dd901eab707d7a070ba7ea4a8811d46ad8a22f"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/south-seed-caravan-gate.glb": {
+      "candidateSha256": "a648d5c6f6d4e2c6ad403abd2cfac6597135986b22529db7c16fb6212276e5e7",
+      "baseSha256": "7c73c5b2986640672f03efebeeba4c86fa8e3d5016c7af47641916f418780edf"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/west-seed-vault.glb": {
+      "candidateSha256": "a9c05126c92f961436756c8fa9913f4b7b10725d600d60846e7008e318fbea4a",
+      "baseSha256": "5e5e5d1d5c4728a7e6e7471e740c22055fc03e784e5b1975b7343b71f10dcf5c"
+    }
+  },
+  "pattern": "plain\\ Red\\ Fields\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+  "specs": [
+    "e2e/e9-roster.spec.ts"
+  ],
+  "candidateEngine": "bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb",
+  "baseEngine": "9103137b1b23675af890f27fb87c0ea568796246e79560bdf2153e2056ed48f1",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e9-seed-run-base-failures/test-results",
+    "--grep",
+    "plain\\ Red\\ Fields\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+    "e2e/e9-roster.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e9-seed-run-fidelity-2/landmark-input-contract.json": "7bfbc197046239bdba3dfe01dbfd4857e3c2402b894fa409f3908c7a79c630e5"
+  },
+  "restoredEngine": "bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e9-seed-run-base-failures/tests.log"
+}

@@ -1,0 +1,49 @@
+{
+  "label": "before-cold-2",
+  "root": "/Users/robin/Claude/Projects/wt-wvc1",
+  "port": 5326,
+  "force": true,
+  "spawnedAt": "2026-09-25T14:46:42.416Z",
+  "pid": 9724,
+  "load1AtStart": 15.09,
+  "load1AtBoot": 14.94,
+  "readyMs": 347,
+  "bootMs": 3619,
+  "page": {
+    "ok": true,
+    "pageStart": 1790347602971,
+    "pageMs": 3064,
+    "bootedAt": 1790347606035,
+    "error": null,
+    "navigationsAtBoot": 2,
+    "reloadsBeforeBoot": 1,
+    "reloadsInSettle": 0,
+    "consoleErrors": [],
+    "badResponses": [],
+    "failedRequests": [
+      "net::ERR_ABORTED /node_modules/.vite/deps/three.module-BifoCqb3.js?v=3a8e4a1d"
+    ]
+  },
+  "markers": {
+    "scanFailed": [
+      "+385ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ],
+    "tsconfigError": [
+      "+386ms \u001b[31m[TSCONFIG_ERROR] \u001b[0mFailed to load tsconfig '../tsconfig.json': Tsconfig not found"
+    ],
+    "newDepsOptimized": [],
+    "reoptimizing": [
+      "+127ms 9:46:42 PM [vite] (client) Forced re-optimization of dependencies"
+    ],
+    "reloading": [
+      "+1442ms 9:46:43 PM [vite] (client) optimized dependencies changed. reloading"
+    ],
+    "errors": [
+      "+385ms (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:"
+    ]
+  },
+  "stop": {
+    "code": 143,
+    "signal": null
+  }
+}

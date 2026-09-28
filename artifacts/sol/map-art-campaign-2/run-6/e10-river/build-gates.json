@@ -1,0 +1,40 @@
+[
+  {
+    "label": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 6.37,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-river-tsc-rerun-3.log"
+  },
+  {
+    "label": "default-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 26.3,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-river-default-build-rerun-2.log"
+  },
+  {
+    "label": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {
+      "GR_RELEASE": "full"
+    },
+    "exit": 0,
+    "seconds": 19.75,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-river-full-build-rerun-2.log"
+  }
+]

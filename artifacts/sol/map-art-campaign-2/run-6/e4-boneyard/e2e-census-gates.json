@@ -1,0 +1,23 @@
+[
+  {
+    "label": "census",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e4-boneyard-census",
+      "e2e/map-census.spec.ts",
+      "--grep",
+      "e4-boneyard census"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 8.82,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e4-boneyard-census.log"
+  }
+]

@@ -20,6 +20,7 @@ import { depenetrateToWalkable } from '../world/LandmarkCollision';
 import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
 import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
+import { liveSeedLabel } from '../game/liveSeed';
 import { META_PROGRESS_KEY, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, activeProfileName } from '../game/ProfileStorage';
 import { clearRunSuspend, readRunSuspend, type RunSuspendEnvelope } from '../game/RunSuspend';
@@ -2512,7 +2513,7 @@ export class TownScene {
             ? `<dl class="town-ui__ride-agent" data-testid="ride-contract">
                 <div><dt>Contract</dt><dd>${escapeHtml(this.rideSetup.contractId)}</dd></div>
                 <div><dt>Difficulty</dt><dd>${escapeHtml(this.rideSetup.difficultyPreset)}</dd></div>
-                <div><dt>Seed</dt><dd><small>${escapeHtml(this.rideSetup.seed)}</small></dd></div>
+                <div><dt>Seed</dt><dd><small>${escapeHtml(liveSeedLabel(this.rideSetup.seed) ? `${liveSeedLabel(this.rideSetup.seed)} (${this.rideSetup.seed})` : this.rideSetup.seed)}</small></dd></div>
               </dl>`
             : ''
         }

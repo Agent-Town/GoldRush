@@ -1,0 +1,27 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e6-glow-mesa-own",
+      "e2e/e6-wrangle.spec.ts",
+      "e2e/e6-arsenal.spec.ts",
+      "e2e/e6-boss-homemaker.spec.ts",
+      "e2e/e6-tile-consumers.spec.ts",
+      "e2e/e6-roster.spec.ts",
+      "e2e/er01-e6-census.spec.ts",
+      "e2e/ss-07-e6-beats.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 242.12,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e6-glow-mesa-own.log"
+  }
+]

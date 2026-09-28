@@ -1,0 +1,79 @@
+{
+  "storeBase": "aee63ba07d388a14ba4c48a0ef3fe9ecee42965a",
+  "base": "debcc5001cc365b64d74f4ce2a1f7dcb0388646b",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "ff705dffde5933ab4d7da9c96eb070f6a02ef611c302a483a426c7677ada80f5",
+      "baseSha256": "781c9fa2f030bbf1b82a6f1aa7391c027107fe8856329fcd754a0f15568295b9"
+    },
+    "assets/pilots/map-rebuild-spike/build_last_claim_pack.py": {
+      "candidateSha256": "f24e7d77572a19f9a69d7dd1f0d8b4e34c5eb2d50ff618fc5c8b63975e0ec7ff",
+      "baseSha256": "67407d817fbcc21c98de2a78960d8f5ea576a0e26e2d88b805f1ec96d18f7d8c"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/last-claim-landmark-pack-contract.json": {
+      "candidateSha256": "ca6e4f75b3755a3d2af7e94797fe6e04d20abaad9330e8856b7862386b186c4a",
+      "baseSha256": "ce8001626b1528268851a16ce3168cd92606895a2be16cb50671978590f33c52"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/last-claim-landmarks.blend": {
+      "candidateSha256": "cae2af712a3eea41830ca6bb63410e3507a5b3506b7589cfb4cf396bdbc90b79",
+      "baseSha256": "8481246c2103a5ac57a0d261a9311f5fb1cc363e9ed5041e8fbb8016d760813c"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/stern-memory-arch.glb": {
+      "candidateSha256": "11305377bbcc239df4de040500d83548f28425a81345682881b7a5e8f30fa4b7",
+      "baseSha256": "5fa8b3b7e1b45305819463189a8172c94c2de8f91c81848ce849b9ed61801a08"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-panorama-atlas.png": {
+      "candidateSha256": "0b6ecaf3c7f4ded7adf4ba5db6544b615a7eeb089f35dae2baa74912e163ed05",
+      "baseSha256": "e6902a845b8324062b92ab7744521c5c5a4b579cc5547943552c278d3979fd65"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-panorama-contract.json": {
+      "candidateSha256": "1ffe95aaf7fed6227680687d3200c25b36b16cff91fae5488a3714444ce3eb0f",
+      "baseSha256": "e01071fc67d928af916a62562ff9daf58526c4bbbd5d79ffe20191326120d40f"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-panorama.blend": {
+      "candidateSha256": "a49a4f214b27bf77a18dc7799b95a9ffa8f4475f2338bc86740e6f0ba02524bc",
+      "baseSha256": "19f6d9974d8b1695f6204cf6d6bfdb858c6051bc91ede6f8b44e7d679f40e1db"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-panorama.glb": {
+      "candidateSha256": "3ccf3ce9a0ed7854fca950cf7f59420142b2220c80e105f9767f6e3770a7d6df",
+      "baseSha256": "08021d6fb8d08dfe51b44ad07459ccd12f659dd6b838252e4d56783439bff247"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-terrain-atlas.png": {
+      "candidateSha256": "822f685b83d8d3a8384f9253d426fa469f6b6aaeedbe5ad17a9589a1c5914e3c",
+      "baseSha256": "621a457ee276de08c7563686a0d9e76371413fe1dd03ffa174a9747a8a07d101"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-terrain-contract.json": {
+      "candidateSha256": "b727d1798265afdd8818f2839031e36d6d792497f2ffc4c7ea9efb1396c467b9",
+      "baseSha256": "76a7acb88c89794a500f63f1e0a4d1f4aeaabf5d7415930979a4186de9d2441b"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-terrain.blend": {
+      "candidateSha256": "7f0648384b80db5a0b2e920a8f8423ba28bc9c9583e34bc9c5ead39ab1bab0aa",
+      "baseSha256": "2699f37b05c0a2060b4574fc66d8b7be240d15ddffa6620cf572d01d5ad63d7e"
+    },
+    "assets/pilots/map-rebuild-spike/last-claim-terrain.glb": {
+      "candidateSha256": "cd15bfcfb513e126fae8682568f3d29b00500fb0225d5c4154ec4ddd30d2b094",
+      "baseSha256": "a9b6c50c8cef5542b564c8ba36278cbd5f11e6838fedf00fb502ad659326b8af"
+    }
+  },
+  "pattern": "sprite-leak",
+  "specs": [
+    "--e1-build"
+  ],
+  "candidateEngine": "c72f302925f627b0a783f8d44bd132ed1fa61ae737379454a746e1033e1adfeb",
+  "baseEngine": "88c4256efeb97d64c205919e785173b9c7375fd4553c92bbe26de6a37d197ea4",
+  "command": [
+    "npm",
+    "run",
+    "build:release"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/engraved-bronze-deck.png": "822f685b83d8d3a8384f9253d426fa469f6b6aaeedbe5ad17a9589a1c5914e3c",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/engraved-star-vista-square.png": "0b6ecaf3c7f4ded7adf4ba5db6544b615a7eeb089f35dae2baa74912e163ed05",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/engraved-star-vista.png": "87bded5b0a2a86c608ffcb19ac9ca2201181d2705e6a6a2810e998bea94cd4ca",
+    "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/provenance.json": "c9f1d35925c2659e6ccb1623eb612350183c4404175155b9ca6de22d131e74de"
+  },
+  "restoredEngine": "c72f302925f627b0a783f8d44bd132ed1fa61ae737379454a746e1033e1adfeb",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-8/e10-last-claim-base-e1-release/tests.log"
+}

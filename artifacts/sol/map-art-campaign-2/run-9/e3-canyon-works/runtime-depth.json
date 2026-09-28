@@ -1,0 +1,42 @@
+{
+  "rows": [
+    {
+      "mesh": "CanyonWorksPanorama",
+      "material": "CanyonWorksPanoramaMaterial",
+      "depthWrite": false,
+      "depthTest": true,
+      "transparent": false,
+      "farPlaneOverride": true,
+      "fog": false,
+      "renderOrder": -100,
+      "vertexColors": true,
+      "triangles": 2304
+    },
+    {
+      "mesh": "CanyonApronEarth",
+      "material": "CanyonApronEarth",
+      "depthWrite": true,
+      "depthTest": true,
+      "transparent": false,
+      "farPlaneOverride": false,
+      "fog": true,
+      "renderOrder": 0,
+      "vertexColors": false,
+      "triangles": 192
+    },
+    {
+      "mesh": "CanyonRimStrata",
+      "material": "CanyonCliffStone",
+      "depthWrite": true,
+      "depthTest": true,
+      "transparent": false,
+      "farPlaneOverride": false,
+      "fog": true,
+      "renderOrder": 0,
+      "vertexColors": true,
+      "triangles": 1484
+    }
+  ],
+  "errors": [],
+  "method": "Runtime-loaded meshes and material compilation callbacks; only the retained sky uses far-plane projection. The ordinary screenshots independently show geometry contact and layering."
+}

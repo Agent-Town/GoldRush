@@ -1,0 +1,71 @@
+{
+  "storeBase": "d76ee141dcac825aa29cf4e5d4a868fe845fb1c8",
+  "base": "84992f3bf69f04cb7815744442b81b50958775c7",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "cb7d47198fa378f187b4cbc1d679ee30f1409e5b1103a5df8cc5f53097670eff",
+      "baseSha256": "b427e4c8190c9dcb21694db0bcf86e28dbdb987bba5fd0e98581bf038ee2be55"
+    },
+    "assets/pilots/map-rebuild-spike/canyon-works-panorama-contract.json": {
+      "candidateSha256": "1d3ba5b68f95ffcabd889049de0e146ee5f0de76fb8a68948a93b362db598161",
+      "baseSha256": "a23e87075149a948baf0e1b99edd992fe95d7b669852efc4885db29b17a78484"
+    },
+    "assets/pilots/map-rebuild-spike/canyon-works-panorama.blend": {
+      "candidateSha256": "0d33823ad084bbb77127ec03f1fab0672bf1eba1b09e4ba7e155048e7b9be1cd",
+      "baseSha256": "aaa7b4e37c2a41b820cd285e84e873e6b035ee5ecbb3b4f95b2279a69d92f9fe"
+    },
+    "assets/pilots/map-rebuild-spike/canyon-works-panorama.glb": {
+      "candidateSha256": "9fe5358f1c6846c948e903a38a02feabcabe3221997fecd23c9cd910b97127ae",
+      "baseSha256": "0ede694c463988536a48d07dbe3d1ffb09b8b8f9d9edd256122f4ccf220f92d4"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/canyon-works/canyon-works-landmark-pack-contract.json": {
+      "candidateSha256": "ef4a796e8b8d7eaa91499afd7fd287546361fb4bf7d577537ad5fdd61b8eb5f6",
+      "baseSha256": "a7c6decaffb496278c0be45b792d428396188c9332a95c998c9964684cd28f90"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/canyon-works/canyon-works-landmarks.blend": {
+      "candidateSha256": "0408ec1016c8261dec57e23764381ecfb90c853b3bbc4341fcddf40acbccce0f",
+      "baseSha256": "ed03453445e07431a5442e8774b8ab519a518b95b2850450f6c41ef96faea42d"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/canyon-works/sub-hall-dynamo-house.glb": {
+      "candidateSha256": "46ab6511e9c77dfd3677b4e4018298a55e7ffa7acd3b8e3a162b6df6d9c7cfa4",
+      "baseSha256": "fa1022631542ba25f4610601296c017ebbcc9ca2db7d41a4d75ce2a6f903c7ff"
+    }
+  },
+  "pattern": "board-selected Canyon escort|e3-canyon-works census|enemies slow on slopes|all sixteen contracts|rim and horizon probes|all fifteen contracts|mounts the Crawler GLB",
+  "specs": [
+    "e2e/cw-02-escort.spec.ts",
+    "e2e/er01-e3-census.spec.ts",
+    "e2e/gt-03-enemy-elevation.spec.ts",
+    "e2e/terrain3d-registry.spec.ts",
+    "e2e/wire-crawler-3d.spec.ts"
+  ],
+  "candidateEngine": "c01ea77a83fe3183df84df0b627f3f5ab252047ad3f1afb7d3b840e31879e56e",
+  "baseEngine": "72968f9ab06af85b2754a57ba175fb04a106f60db887103b4cf8f494584ea3c2",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e3-canyon-works-base-failures/test-results",
+    "--grep",
+    "board-selected Canyon escort|e3-canyon-works census|enemies slow on slopes|all sixteen contracts|rim and horizon probes|all fifteen contracts|mounts the Crawler GLB",
+    "e2e/cw-02-escort.spec.ts",
+    "e2e/er01-e3-census.spec.ts",
+    "e2e/gt-03-enemy-elevation.spec.ts",
+    "e2e/terrain3d-registry.spec.ts",
+    "e2e/wire-crawler-3d.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e3-canyon-works-fidelity-2/landmark-input-contract.json": "a7c6decaffb496278c0be45b792d428396188c9332a95c998c9964684cd28f90",
+    "assets/pilots/map-rebuild-spike/sources/e3-canyon-works-fidelity-2/panorama-input-contract.json": "a23e87075149a948baf0e1b99edd992fe95d7b669852efc4885db29b17a78484",
+    "assets/pilots/map-rebuild-spike/sources/e3-canyon-works-fidelity-2/rim-layout.json": "750988dbd784da997d2a11d1e46bb49cdbd4129ca6af894d9823dd9231e49773"
+  },
+  "restoredEngine": "c01ea77a83fe3183df84df0b627f3f5ab252047ad3f1afb7d3b840e31879e56e",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e3-canyon-works-base-failures/tests.log"
+}

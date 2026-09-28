@@ -1,0 +1,54 @@
+{
+  "storeBase": "b9597680a8c6eff78526b0c2af2cdc3f05b86f85",
+  "base": "d00459be2c130d6dbd029339640dbc44baa2a5f2",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "c066cbf0b9a50d41a9799b32a1c80a5f90ffa410cd0b8c5b4f515428f99c5952",
+      "baseSha256": "5bdb7bd86f70c8e8ca011866d816c9c2619186d8c06d020e1a1a8346943cea9f"
+    },
+    "assets/pilots/map-rebuild-spike/boneyard-terrain-contract.json": {
+      "candidateSha256": "54b3694dbda7e184ca5d120f51c471e11865cff341fcbb71fc8a5227c14311cf",
+      "baseSha256": "96ec20742cc6eea1d4ea86aa10103f67186787a4dfc568e871074e82bb4c8dd1"
+    },
+    "assets/pilots/map-rebuild-spike/build_landmark_packs.py": {
+      "candidateSha256": "bb923325f20f01074b47bf5e148f736494549ae867e9aff926e7462fd89c14b7",
+      "baseSha256": "101a910863a3b9241f93bea7c159efdcf1da42e11ce88a48d287a0d1d758f8fe"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/boneyard/boneyard-landmark-pack-contract.json": {
+      "candidateSha256": "590613c771830431d261f8f783872b1e854ab9f9d46e25b6dd4b727f487fbd31",
+      "baseSha256": "878320408f7b4d2aba7fc28e2522349d5e239c1e666366e46eabc53bd84084da"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/boneyard/boneyard-landmarks.blend": {
+      "candidateSha256": "8a8ed14a3997b9b7c90fd7252672c6e3547a93883d5a7165a3a4cd56718d8618",
+      "baseSha256": "f2e69aa860938dc30b2a2b9bb1d5594ba41bfe50ba24384cea2451dc1a8803ca"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/boneyard/half-buried-sleeper.glb": {
+      "candidateSha256": "e34f75459918bc763522fb32b34f813f91896e30d6013d0902e8f43a5f3f1d5b",
+      "baseSha256": "cdb9f5f55b43f3c3636b8bea644e49788e7d0bb1f53a2df04396134c570d4c1b"
+    }
+  },
+  "pattern": "every Motor reel replays",
+  "specs": [
+    "e2e/e4-roads-and-convoys.spec.ts"
+  ],
+  "candidateEngine": "913b95b1635b5609d8d97fcd9ef8bb4644d6c88c8858096a2986db54f3ecd935",
+  "baseEngine": "491f2a917b0e360fcaa1e0eda3ee5eb7ba840cc1cd9bf852e3d574d34350725d",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e4-boneyard-base-motor-reels/test-results",
+    "--grep",
+    "every Motor reel replays",
+    "e2e/e4-roads-and-convoys.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "913b95b1635b5609d8d97fcd9ef8bb4644d6c88c8858096a2986db54f3ecd935",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e4-boneyard-base-motor-reels/tests.log"
+}

@@ -1,0 +1,334 @@
+(node:63363) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 26 tests using 1 worker
+
+
+
+(node:63422) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:63422) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/26] [mobile-chrome] › e2e/e1-baron.spec.ts:317:1 › default contract does not preload Baron art
+[2/26] [mobile-chrome] › e2e/e1-baron.spec.ts:343:1 › contract board requires science plus two secured claims and always shows an earned medal
+[3/26] [mobile-chrome] › e2e/e1-baron.spec.ts:389:1 › board launch uses the live Baron contract for cadence and wave 20 spawn
+[4/26] [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  1) [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts:302:6)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:65132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:65132) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[5/26] [mobile-chrome] › e2e/e1-baron.spec.ts:489:1 › wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data
+[6/26] [mobile-chrome] › e2e/e1-baron.spec.ts:526:1 › Baron damage visibly drains bar segments and the launcher stays carried
+[7/26] [mobile-chrome] › e2e/e1-baron.spec.ts:557:1 › standard rig damage defeats the Baron, doubles science, and persists the medal
+[8/26] [mobile-chrome] › e2e/e1-baron.spec.ts:607:1 › fast Baron kill preserves the queued arrival card before secure
+[9/26] [mobile-chrome] › e2e/e1-baron.spec.ts:644:1 › Baron art fallback keeps the placeholder path green when generated art fails
+[10/26] [mobile-chrome] › e2e/e1-baron.spec.ts:675:1 › same-frame overrun and Baron kill does not award the medal
+[11/26] [mobile-chrome] › e2e/e1-baron.spec.ts:704:1 › loss to the Baron contract remains the normal overrun ledger with no medal
+[12/26] [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting
+  2) [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "fogFar": 42,
+    -   "fogNear": 18,
+    +   "fogFar": 58,
+    +   "fogNear": 34,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      337 |     darkness: 1,
+      338 |   });
+    > 339 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({
+          |                                                                                             ^
+      340 |     fogNear: 18,
+      341 |     fogFar: 42,
+      342 |   });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:339:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-loads-Night-40c38-ull-dusk-dark-dawn-lighting-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:66596) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:66596) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[13/26] [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring
+  3) [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.06045960784313726
+
+      403 |   expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+      404 |   expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+    > 405 |   expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+          |                                                    ^
+      406 |   expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+      407 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
+      408 |   await shot(page, testInfo, 'true-dark-lantern-ring');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:405:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-lantern-pos-843df-ghts-a-true-dark-light-ring-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:66984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:66984) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[14/26] [mobile-chrome] › e2e/e1-night-shift.spec.ts:413:1 › lantern coverage is necessary for threat visibility
+[15/26] [mobile-chrome] › e2e/e1-night-shift.spec.ts:435:1 › a lantern pool makes only its build island readable at true dark
+[16/26] [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue
+  4) [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      169 |
+      170 | async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+    > 171 |   await page.waitForFunction(
+          |              ^
+      172 |     ([key, wanted]) => {
+      173 |       const raw = localStorage.getItem(key);
+      174 |       if (!raw) return false;
+        at waitForSavedNightWave (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:171:14)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-night-shift.spec.ts:480:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-night-shift-cold-lanter-9635d-ve-run-suspend-and-continue-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:67523) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:67523) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[17/26] [mobile-chrome] › e2e/e1-night-shift.spec.ts:520:1 › pre-placed lanterns leave the full player build cap available
+[18/26] [mobile-chrome] › e2e/e1-night-shift.spec.ts:555:1 › render dimming does not stop turret acquisition or damage
+[19/26] [mobile-chrome] › e2e/e1-night-shift.spec.ts:582:1 › wave 25 secures the claim through the dawn victory path
+[20/26] [mobile-chrome] › e2e/e1-night-shift.spec.ts:611:1 › seeded Night Shift diagnostics and dark render budget are stable
+[21/26] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake
+  5) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "bank"
+
+      94 |   expect(snapshot.water?.fordPresent).toBe(true);
+      95 |   expect(snapshot.water?.fordStones).toBe(14);
+    > 96 |   expect(snapshot.samples.center?.zone).toBe('river');
+         |                                         ^
+      97 |   expect(snapshot.samples.westFord?.zone).toBe('ford');
+      98 |   expect(snapshot.samples.eastFord?.zone).toBe('ford');
+      99 |   await shot(page, testInfo, 'both-bank-base');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:96:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-loads-Twin-B-f3e5b-ld-zones-and-one-loss-stake-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:69172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[22/26] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool
+  6) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      46 |   await teleport(page, x, z + 2);
+      47 |   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
+    > 48 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+         |                                                                                                              ^
+      49 |   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+      50 | }
+      51 |
+        at placeBuildableAt (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:48:110)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:110:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-builds-sluic-7516b-banks-against-one-gold-pool-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:69541) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[23/26] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords
+  7) [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      226 |       timeout: 15_000,
+      227 |     })
+    > 228 |     .toBe(true);
+          |      ^
+      229 |   const track = await page.evaluate(() => (window as unknown as { __twinRoute?: { deepSamples: number; fordSamples: number } }).__twinRoute);
+      230 |   expect(track?.deepSamples).toBe(0);
+      231 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);
+        at assertFordRoute (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:228:6)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-twin-banks.spec.ts:127:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-campaign/e1-twin-banks-routes-enemi-16f6c-gh-both-west-and-east-fords-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:70463) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[24/26] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:135:1 › north marker is not the run loss stake, south overrun still ends the run, and waves use the two ford-forcing edges
+[25/26] [mobile-chrome] › e2e/e1-twin-banks.spec.ts:192:1 › seeded Twin Banks diagnostics are stable
+
+(node:70463) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[26/26] [mobile-chrome] › e2e/e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems
+[mobile-chrome] › e2e/e2-trestle.spec.ts:60:1 › The Trestle unlocks after Hill Mine and runs the shipped crossing systems
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  7 failed
+    [mobile-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:271:1 › loads Night Shift contract data and ramps full, dusk, dark, dawn lighting 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:372:1 › lantern post is Night Shift gated and relights a true-dark light ring 
+    [mobile-chrome] › e2e/e1-night-shift.spec.ts:478:1 › cold lantern relight costs survive run suspend and continue 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:64:1 › loads Twin Banks contract with two fords, two build zones, and one loss stake 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:103:1 › builds sluices and stockpiles on both banks against one gold pool 
+    [mobile-chrome] › e2e/e1-twin-banks.spec.ts:122:1 › routes enemies through both west and east fords 
+  19 passed (4.9m)

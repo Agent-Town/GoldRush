@@ -82,15 +82,28 @@ test('the Regatta is won by the BOAT and secures both bench seeds deterministica
     expect(rule).toMatchObject({
       source: 'RegattaRaceSystem.advance+movementMultiplierAt',
       data: {
-        gates: beacons.map(({ id }: { id: string }) => id),
+        // RE-POINTED 2026-09-20 by `e5-regatta-boat-03`, which is the slice the ⛔ below named.
+        // TWO THINGS MOVED, both of them lies this assertion was holding open on purpose.
+        //
+        //   1. `gates` published the FIVE authored beacons for a course that is raced over SIX:
+        //      `advance` walks the beacons and then takes the `heroStart` stake as the finish line,
+        //      so a rider counting marks thought it had won a gate early. It now publishes the
+        //      course AS RACED, with `gateCount` beside it.
+        //   2. `fastWaterMultiplier` published 1.35, the on-foot number slice 2 DELETED from the
+        //      engine when it closed F-RB1-2 and made the contract's own the single source. A rider
+        //      reading `stablePrefix.mechanics` was told the water runs at 1.35 while the hull
+        //      steers on 1.5. It is now read from the authored hull physics, and asserted here
+        //      AGAINST THE CONTRACT rather than against a literal so it cannot rot the same way.
+        gates: [...beacons.map(({ id }: { id: string }) => id), 'claim-boat'],
+        gateCount: beacons.length + 1,
         gateRadiusFallback: 6,
-        // ⛔ F-RB2-3, FOR SLICE 3: the published manifest still says 1.35, which is the number this
-        // slice DELETED from the engine. `MechanicsManifest.ts:564` hardcodes it and that file is
-        // slice 3's (the view bump, the fence, the manifest and the census pin are one censused
-        // act). Asserted at the manifest's real value so the lie is measured, not hidden.
-        fastWaterMultiplier: 1.35,
+        fastWaterMultiplier: contract.tileParams.deepwater.claimBoat.physics.fastWaterMultiplier,
         deadlineWave: 12,
         competingRacerLoot: false,
+        // Law 3 and Q2, published for the rider by slice 3 so they are learned before a run is lost
+        // to them; `now.regatta` is where the live answer sits.
+        leavingTheBoatForfeits: true,
+        view: 'now.regatta',
       },
     });
 
@@ -150,13 +163,19 @@ test('the Regatta is won by the BOAT and secures both bench seeds deterministica
       expect(turn.terminal).toBe(true);
       expect(turn.view.now.deepwater?.race?.forfeited).toBe(false);
       expect(turn.view.now.deepwater?.race?.finished).toBe(true);
-      expect(turn.view.now.deepwater?.race?.gatesPassed).toHaveLength(5);
+      // Schema 4 (2026-09-22, sol-regatta-view-parity): the finish stake `claim-boat` is the sixth and last
+      // gate row, with the same timestamp as `finishedAt`; five course gates plus the finish.
+      expect(turn.view.now.deepwater?.race?.gatesPassed).toHaveLength(6);
       return sim.outcome();
     };
 
     const expected = {
-      'e5-regatta-01': 'fnv1a32:1bf7c1ff',
-      'e5-regatta-02': 'fnv1a32:e8b9b2ff',
+      // NAMED-CAUSE RE-PIN (sol-regatta-view-parity, 2026-09-22): the finish stake is now recorded as the
+      // sixth passed gate (RegattaRaceSystem pushes it into `passed`), one more row in the event log; the
+      // outcome (secured, waves 12, kills 25) and both runs' equality are unchanged. Old pins:
+      // fnv1a32:1bf7c1ff / fnv1a32:e8b9b2ff.
+      'e5-regatta-01': 'fnv1a32:79f2ff16',
+      'e5-regatta-02': 'fnv1a32:d2195750',
     } as const;
     for (const [seed, eventLogHash] of Object.entries(expected)) {
       const first = run(seed);

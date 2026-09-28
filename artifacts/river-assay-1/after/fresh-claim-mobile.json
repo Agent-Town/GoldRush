@@ -1,0 +1,96 @@
+{
+  "version": 2,
+  "id": "c135537b-91ff-4b7d-9ca8-38cc6cbd7af6",
+  "createdAt": 1790448712634,
+  "kept": false,
+  "contract": "the-claim",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "difficulty": "trail",
+  "simVersion": 1,
+  "meta": {
+    "buildId": "dev",
+    "viewVersion": 4,
+    "engineHash": "7bfbed8b0c6ecfff4ec3aa9457f74866bcc49c119a242631f2ac9b783a246551",
+    "era": 6
+  },
+  "runStart": {
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "research": {
+      "version": 1,
+      "epochId": "epoch-1-frontier",
+      "metaScienceCursor": 999,
+      "progress": {
+        "version": 1,
+        "tracks": {
+          "territory": 40,
+          "science": 999,
+          "hero": 40,
+          "agent": 40
+        }
+      },
+      "taken": [],
+      "proposalSalt": 0,
+      "pinnedTarget": null,
+      "unlocks": {}
+    }
+  },
+  "inputLog": {
+    "version": 1,
+    "name": "c135537b-91ff-4b7d-9ca8-38cc6cbd7af6",
+    "contractId": "the-claim",
+    "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+    "difficultyPreset": "trail",
+    "stepSeconds": 0.03333333333333333,
+    "start": {
+      "x": 0,
+      "z": 12
+    },
+    "durationTicks": 125,
+    "entries": [
+      {
+        "t": 42,
+        "mx": -1,
+        "my": 0,
+        "a": []
+      },
+      {
+        "t": 43,
+        "mx": -0.707,
+        "my": -0.707,
+        "a": []
+      },
+      {
+        "t": 86,
+        "mx": 0.707,
+        "my": 0.707,
+        "a": []
+      },
+      {
+        "t": 113,
+        "mx": 0,
+        "my": 0,
+        "a": []
+      }
+    ],
+    "truncated": null,
+    "primarySlot": 0,
+    "streams": [],
+    "playbookUses": []
+  },
+  "eventLogHash": "fnv1a32:f8c3032c",
+  "outcome": {
+    "reason": "death",
+    "secured": false,
+    "waves": 0,
+    "timeAlive": 4.166666666666662,
+    "gold": 0
+  }
+}

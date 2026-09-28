@@ -1,0 +1,35 @@
+[
+  {
+    "label": "own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e4-dust-flats-own",
+      "e2e/_s2080-f1742-1-boot-probe.spec.ts",
+      "e2e/e4-roads-and-convoys.spec.ts",
+      "e2e/e5-arsenal.spec.ts",
+      "e2e/terrain3d-registry.spec.ts",
+      "e2e/e4-landyacht-boss.spec.ts",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/e4-dust-flats.spec.ts",
+      "e2e/er01-e4-census.spec.ts",
+      "e2e/run3d-gold-seam.spec.ts",
+      "e2e/rider-parity-grammar.spec.ts",
+      "e2e/ss-05-e4-beats.spec.ts",
+      "e2e/wd02-barks.spec.ts",
+      "e2e/true-reel-harness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 1026.8,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-dust-flats-own.log"
+  }
+]

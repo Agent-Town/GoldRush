@@ -1,0 +1,21 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/release-results",
+      "--config=artifacts/sol/map-art-campaign-2/run-10/entry-framing/release.config.ts",
+      "e2e/release-build.spec.ts"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 113.91,
+    "log": "artifacts/sol/map-art-campaign-2/run-10/entry-framing/e7-relay-rush/e2e-release.log"
+  }
+]

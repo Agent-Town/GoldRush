@@ -1,0 +1,8 @@
+destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+newest ledger backup already present: /Users/robin/.goldrush/ledger-backups/ledger-2026-09-27.db
+⏳ NOT DISCHARGED for today — ledger-2026-09-28.db does not exist on the box yet.
+   The droplet writes it on goldrush-ledger-backup.timer: OnCalendar 02:00 UTC
+   + RandomizedDelaySec=1h, so the trigger is UNIFORM IN [02:00, 03:00) UTC and
+   RE-ROLLED DAILY (measured s2600; re-measured s2601 from the unit — 15 writes
+   span 02:07–02:58 UTC, so no fixed "not before" time is right).
+   Nothing is wrong. Re-run any time after 02:00 UTC; this pull costs ~3s.

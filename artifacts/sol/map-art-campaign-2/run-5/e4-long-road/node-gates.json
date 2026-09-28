@@ -1,0 +1,30 @@
+{
+  "renderGuards": {
+    "command": [
+      "node",
+      "--test",
+      "scripts/glb-contract-guard.test.mjs",
+      "scripts/terrain-height-sampler.test.mjs",
+      "scripts/landmark-walk-surfaces.test.mjs",
+      "scripts/open-sea-water.test.mjs",
+      "scripts/shared-atlas-plugin.test.mjs"
+    ],
+    "exit": 0,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-5/e4-long-road-renderGuards.log"
+  },
+  "namedGuards": {
+    "command": [
+      "node",
+      "scripts/run-guards.mjs",
+      "--only",
+      "test:task-guards,test:citations,test:gate-callers"
+    ],
+    "exit": 0,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-5/e4-long-road-namedGuards.log"
+  },
+  "changedSince": {
+    "status": "HELD for drain",
+    "base": "f6eb64d1ba4fbbf777388e8eab1cdb162c81b6ec",
+    "reason": "scripts/run-guards.mjs:107-113 includes drain-only test:node-guards unconditionally for --changed-since. Scoped checks are not claimed as the whole selector green."
+  }
+}

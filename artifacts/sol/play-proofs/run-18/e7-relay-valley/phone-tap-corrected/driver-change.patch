@@ -1,0 +1,30 @@
+--- a/e2e/native-proofs/driver.ts (a76600897)
++++ b/e2e/native-proofs/driver.ts (attempt only, reverted)
+@@ -848,9 +848,25 @@
+         row.upgrades.push(offer[preferred] ?? `card${preferred}`);
+         await page.getByTestId(`upgrade-card-${preferred}`).click({ timeout: 1000 });
+       }
+-      try { await page.getByTestId(id).click({ timeout: 600 }); return; }
++      try {
++        const control = page.getByTestId(id);
++        if (row.contract === 'e7-relay-valley' && row.project === 'mobile-chrome') {
++          // Observe the live rail after leaving placement, then use the phone's native input.
++          if ((await read(page))?.buildMode) await page.keyboard.press('KeyB');
++          await control.scrollIntoViewIfNeeded();
++          await page.waitForFunction(testid => {
++            const button = document.querySelector(`[data-testid="${testid}"]`);
++            if (!button) return false;
++            const r = button.getBoundingClientRect();
++            return button.contains(document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2));
++          }, id, { timeout: 2000 });
++          await control.tap({ timeout: 1000 });
++          row.notes.push(`Tape phone native tap ${id}: live centre hit checked`);
++        } else await control.click({ timeout: 600 });
++        return;
++      }
+       catch (error) {
+-        if (attempt === 0 && id === 'playbook-toggle' && row.contract === 'e7-relay-valley' && row.project === 'mobile-chrome') await phoneTapMoment(page, error);
++        if (process.env.GR_NATIVE_STRATEGY !== 'phone-tap-corrected' && attempt === 0 && id === 'playbook-toggle' && row.contract === 'e7-relay-valley' && row.project === 'mobile-chrome') await phoneTapMoment(page, error);
+         row.notes.push(`Tape ${id} attempt ${attempt + 1}: ${String(error).split('\n')[0]}`);
+         if (attempt === 7) throw error;
+       }

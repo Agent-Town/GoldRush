@@ -1,0 +1,44 @@
+
+Running 1 test using 1 worker
+
+
+(node:2156) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [mobile-chrome] › e2e/native-proofs/driver.ts:575:5 › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow
+[mobile-chrome] › e2e/native-proofs/driver.ts:575:5 › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow
+e3-fairground {"t":10.4,"wave":0,"hp":100,"gold":0,"kills":0,"x":-10.8,"z":-30.5,"alive":2,"seams":2}
+
+e3-fairground {"t":21.2,"wave":0,"hp":100,"gold":25,"kills":1,"x":-14.8,"z":-34.5,"alive":5,"seams":2}
+
+e3-fairground {"t":32,"wave":1,"hp":100,"gold":0,"kills":6,"x":9.8,"z":-21.6,"alive":8,"seams":2}
+
+e3-fairground {"t":42.3,"wave":1,"hp":100,"gold":25,"kills":12,"x":9.8,"z":-16.7,"alive":5,"seams":2}
+
+  1) [mobile-chrome] › e2e/native-proofs/driver.ts:575:5 › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: Fair Wheel stopped irreversibly: {"active":true,"spinning":false,"hp":230.4,"maxHp":240,"outputWatts":0,"configuredWatts":24,"viewRadius":18,"x":0,"z":8}; flocks={"enabled":true,"count":3,"escortRadius":7,"speed":3.6,"home":{"x":0,"z":-30},"night":1,"attempts":6,"completions":1,"frights":4,"allCrossed":false,"flocks":[{"id":"flock-1","x":-20,"z":-30,"phase":"home","destination":"copper-pavilion","attempts":2,"crossings":1,"frights":1,"crossed":true},{"id":"flock-2","x":0,"z":-30,"phase":"home","destination":"ferris-wheel","attempts":2,"crossings":0,"frights":2,"crossed":false},{"id":"flock-3","x":20,"z":7.920000000000027,"phase":"outbound","destination":"silver-pavilion","attempts":2,"crossings":0,"frights":1,"crossed":false}]}; wheel and all three flock crossings not proved
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      947 |       }
+      948 |
+    > 949 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      950 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      951 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      952 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:949:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-2/e3-fairground/phone-results/native-proofs-e3-fairgroun-4ea21-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-2/e3-fairground/phone-results/native-proofs-e3-fairgroun-4ea21-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/native-proofs/driver.ts:575:5 › e3-fairground plays to its secure wave, banks, reloads and returns to the board @slow 

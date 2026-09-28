@@ -1,0 +1,148 @@
+{
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-long-road-own.log",
+  "counts": {
+    "passed": 57,
+    "skipped": 17,
+    "failed": 10
+  },
+  "failures": [
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/e4-roads-and-convoys.spec.ts",
+      "testLine": 69,
+      "title": "every Motor reel replays to its claimed hash in Node and Chromium",
+      "fingerprint": [
+        "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+        "assay replay failed: malformed tape"
+      ],
+      "assertionLocations": [
+        "e2e/e4-roads-and-convoys.spec.ts:80:29"
+      ]
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/rider-parity-grammar.spec.ts",
+      "testLine": 77,
+      "title": "a plain-boot human can build on the Claim-Boat deck (BOAT_BUILD parity)",
+      "fingerprint": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Expected: visible",
+        "Received: hidden"
+      ],
+      "assertionLocations": [
+        "e2e/rider-parity-grammar.spec.ts:86:29"
+      ]
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/rider-parity-grammar.spec.ts",
+      "testLine": 107,
+      "title": "a plain-boot human can weigh anchor from the same prompt (REANCHOR parity)",
+      "fingerprint": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Expected: visible",
+        "Received: hidden"
+      ],
+      "assertionLocations": [
+        "e2e/rider-parity-grammar.spec.ts:116:30"
+      ]
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 195,
+      "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "fingerprint": [
+        "Error: expect(received).toBe(expected) // Object.is equality",
+        "Expected: \"river\"",
+        "Received: \"bank\""
+      ],
+      "assertionLocations": [
+        "e2e/terrain3d-registry.spec.ts:235:34"
+      ]
+    },
+    {
+      "project": "desktop-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 271,
+      "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "fingerprint": [
+        "Error: expect(received).toBeGreaterThan(expected)",
+        "Expected: > 8",
+        "Received:   2.332378540340833"
+      ],
+      "assertionLocations": [
+        "e2e/terrain3d-registry.spec.ts:303:27"
+      ]
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/e4-roads-and-convoys.spec.ts",
+      "testLine": 69,
+      "title": "every Motor reel replays to its claimed hash in Node and Chromium",
+      "fingerprint": [
+        "Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json",
+        "assay replay failed: malformed tape"
+      ],
+      "assertionLocations": [
+        "e2e/e4-roads-and-convoys.spec.ts:80:29"
+      ]
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/rider-parity-grammar.spec.ts",
+      "testLine": 77,
+      "title": "a plain-boot human can build on the Claim-Boat deck (BOAT_BUILD parity)",
+      "fingerprint": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Expected: visible",
+        "Received: hidden"
+      ],
+      "assertionLocations": [
+        "e2e/rider-parity-grammar.spec.ts:86:29"
+      ]
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/rider-parity-grammar.spec.ts",
+      "testLine": 107,
+      "title": "a plain-boot human can weigh anchor from the same prompt (REANCHOR parity)",
+      "fingerprint": [
+        "Error: expect(locator).toBeVisible() failed",
+        "Expected: visible",
+        "Received: hidden"
+      ],
+      "assertionLocations": [
+        "e2e/rider-parity-grammar.spec.ts:116:30"
+      ]
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 195,
+      "title": "all sixteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water",
+      "fingerprint": [
+        "Error: expect(received).toBe(expected) // Object.is equality",
+        "Expected: \"river\"",
+        "Received: \"bank\""
+      ],
+      "assertionLocations": [
+        "e2e/terrain3d-registry.spec.ts:235:34"
+      ]
+    },
+    {
+      "project": "mobile-chrome",
+      "spec": "e2e/terrain3d-registry.spec.ts",
+      "testLine": 271,
+      "title": "rim and horizon probes keep the terrain meeting gradual and every panorama readable",
+      "fingerprint": [
+        "Error: expect(received).toBeGreaterThan(expected)",
+        "Expected: > 8",
+        "Received:   1.7416758726859591"
+      ],
+      "assertionLocations": [
+        "e2e/terrain3d-registry.spec.ts:303:27"
+      ]
+    }
+  ]
+}

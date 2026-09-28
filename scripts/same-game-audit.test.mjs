@@ -449,7 +449,28 @@ test('same-game audit runs over every contract and keeps its row schema', () => 
   // maps-campaign-land-era6 (2026-09-14): Astra's map campaign moved 22 rows from agent-lacks to equal (the door now
   // admits the Archive World's restoration, the flotilla and the E8 air work on both sides) and added one row:
   // 533 -> 511 agent-lacks, 1229 -> 1252 equal; docs/bench/same-game-audit.md regenerated on the landed tree.
-  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 511, equal: 1252, 'not-offered': 0 });
+  // door-tape-grammar-2 (2026-09-25, F-DTG2-1): the door learned two more client verbs, prospector_dispatch and agent_orders,
+  // so 42 + 42 rows moved into agent-lacks (511 -> 595) and none moved out (equal stays 1252 over 1847 rows). The audit reads
+  // the door's verb set from standings.ts; teaching it that agent_orders is the rider's own channel is a slice for its owner.
+  // same-game-audit-verbs-1 (F-DTG2-1, the audit owner's ruling in tasks/same-game-audit-verbs-1.md): the wire's agent_orders
+  // is the seated rider's OWN order channel, not a human control, so its exemption publishes no parity row and its 42 rows
+  // leave agent-lacks without entering equal: 595 -> 553, equal 1252 unchanged, 1847 -> 1805 rows. MEASURED on the --json
+  // row sets, not inferred: before and after differ by exactly the 42 `tape action agent_orders | agent-lacks` rows, no row
+  // added and no other row changed (artifacts/same-game-audit-verbs-1/report.md).
+  // same-game-audit-verbs-1, the second move: prospector_dispatch pairs with HARVEST, MEASURED WITH THE SIM rather than
+  // inferred from the target shapes (artifacts/same-game-audit-verbs-1/dispatch-pairing.json: Game.ts's own dispatch
+  // methods, lifted, against a HARVEST through the harness's door, same contract and same seed, on all 42 boards). The
+  // 38 boards the door admits all pair at base stats: same path and arrival tick, the same seam panned once for the same
+  // gold, the same remaining and economy; only the cadence differs (the dispatch pans 2 ticks later and leaves the seam
+  // 26 ticks sooner). With panning upgraded HARVEST can out-earn the dispatch by one passive pan per order (F-SGA1-2);
+  // these rows measure reach, so that yield gap does not move them.
+  // So 38 rows move agent-lacks -> equal and the 4 door-refused boards keep theirs: 553 -> 515, equal 1252 -> 1290,
+  // rows 1805 unchanged. ATTRIBUTED BY REVERT-AND-REPRODUCE, all four corners measured on this branch:
+  //   neither (the base)                 -> 0 / 595 / 1252 / 0 over 1847
+  //   the exemption only                 -> 0 / 553 / 1252 / 0 over 1805
+  //   the pairing only (exemption undone) -> 0 / 557 / 1290 / 0 over 1847
+  //   both (shipped)                     -> 0 / 515 / 1290 / 0 over 1805
+  assert.deepEqual(audit.summary, { 'agent-exceeds': 0, 'agent-lacks': 515, equal: 1290, 'not-offered': 0 });
 
   assert.ok(audit.admission.measurements.every((entry) => entry.booted && entry.firstView && entry.terminal && !entry.error));
 });
@@ -481,9 +502,21 @@ test('same-game audit follows the door grammar through the final AP-16 verbs', (
   assert.ok(has('the-claim', 'verb', 'CONTEXT_ACTION', 'equal'), 'building context actions must reach the door');
   const audit = JSON.parse(result.stdout);
   assert.deepEqual(audit.tapeExemptions.map(({ actions }) => actions), [
-    'death_action', 'research_pick / research_skip', 'set_pause', 'skip_ceremony',
+    'death_action', 'research_pick / research_skip', 'set_pause', 'skip_ceremony', 'agent_orders',
   ]);
   assert.ok(audit.tapeExemptions.every(({ reason, citation }) => reason.length > 20 && citation.length > 5));
+  // F-DTG2-1: the seated rider's own order channel is not a human control. It is the one exemption that publishes NO
+  // parity row (neither agent-lacks nor equal); every other exemption keeps its rows as a real, cited lack.
+  assert.deepEqual(audit.tapeExemptions.filter(({ parityRow }) => !parityRow).map(({ actions }) => actions), ['agent_orders']);
+  assert.equal(rows.filter((row) => row['humans-get'] === 'tape action agent_orders').length, 0,
+    'the rider\'s own order channel came back as a human tape action row');
+  // F-DTG2-1: the player's dispatch pairs with HARVEST (measured, artifacts/same-game-audit-verbs-1/dispatch-pairing.json)
+  // wherever the door admits the contract; where the door refuses it, the row inherits that refusal like every verb row.
+  const dispatchRows = rows.filter((row) => row['humans-get'] === 'tape action prospector_dispatch');
+  assert.equal(dispatchRows.length, reachability.size);
+  assert.ok(dispatchRows.every((row) => row.direction === (reachability.get(row.contract) === 'equal' ? 'equal' : 'agent-lacks')),
+    'a prospector_dispatch row disagrees with its contract\'s admission');
+  assert.ok(has('the-claim', 'verb', 'HARVEST standing order reaches prospector_dispatch', 'equal'));
 });
 
 test('same-game audit also emits a complete markdown table', () => {

@@ -1,0 +1,20 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/base-verified-results",
+      "e2e/e1-baron.spec.ts:411"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 27.69,
+    "log": "artifacts/sol/map-art-campaign-2/run-10/entry-framing/e1-baron/e2e-base-verified.log"
+  }
+]

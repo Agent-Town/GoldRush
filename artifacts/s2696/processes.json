@@ -1,0 +1,44 @@
+[
+  {
+    "pid": 22253,
+    "ppid": 6589,
+    "elapsed": "01:34",
+    "cmd": "node /Users/robin/.goldrush/fire-s2696/main-node.mjs"
+  },
+  {
+    "pid": 22256,
+    "ppid": 22253,
+    "elapsed": "01:34",
+    "cmd": "npm run test:node-guards"
+  },
+  {
+    "pid": 22268,
+    "ppid": 22256,
+    "elapsed": "01:33",
+    "cmd": "sh -c node scripts/run-node-guards.mjs scripts/river-assay.test.mjs scripts/live-seed-rotation.test.mjs scripts/phone-hud-entry-census.test.mjs scripts/e5-stillwater-front-crew.test.mjs scripts/kit-guard.test.mjs scripts/e10-preserve-objective.test.mjs scripts/e8-mare-claim-physics.test.mjs scripts/e8-remaining-maps.test.mjs scripts/view-schema-gua…"
+  },
+  {
+    "pid": 22269,
+    "ppid": 22268,
+    "elapsed": "01:33",
+    "cmd": "node scripts/run-node-guards.mjs scripts/river-assay.test.mjs scripts/live-seed-rotation.test.mjs scripts/phone-hud-entry-census.test.mjs scripts/e5-stillwater-front-crew.test.mjs scripts/kit-guard.test.mjs scripts/e10-preserve-objective.test.mjs scripts/e8-mare-claim-physics.test.mjs scripts/e8-remaining-maps.test.mjs scripts/view-schema-guard.tes…"
+  },
+  {
+    "pid": 22281,
+    "ppid": 22269,
+    "elapsed": "01:33",
+    "cmd": "/Users/robin/.nvm/versions/node/v26.4.0/bin/node --test --test-timeout=300000 --test-concurrency=1 --test-reporter=spec --test-reporter-destination=stdout --test-reporter=tap --test-reporter-destination=/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/node-guards-tap-YPAiJD/battery.tap scripts/river-assay.test.mjs scripts/live-seed-rotation.test.mj…"
+  },
+  {
+    "pid": 23205,
+    "ppid": 22281,
+    "elapsed": "01:11",
+    "cmd": "/Users/robin/.nvm/versions/node/v26.4.0/bin/node --test-concurrency=1 --heap-prof-interval=524288 --tls-cipher-list=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-…"
+  },
+  {
+    "pid": 26447,
+    "ppid": 23205,
+    "elapsed": "00:12",
+    "cmd": "/Users/robin/.nvm/versions/node/v26.4.0/bin/node scripts/assay-replay.mjs /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-assay-overtime-UjXx21/overtime-tape.json"
+  }
+]

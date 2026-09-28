@@ -1,0 +1,21 @@
+{
+  "tag": "mpp1",
+  "branch": "test/map-play-proofs-1",
+  "port": 5370,
+  "mergeMessage": "drain: merge test/map-play-proofs-1 — map-play-proofs-1 — the generic secure-playability census of the eighteen pending maps: every pair boots clean, four maps secured on both projects and two on one, twelve instrument limits, banks attributed to the instrument by controls on two trees (the score is written at secure time since 07248387a; the spec counts a row the click adds), F-MPP1-1..6 (Opus implementers on the Anthropic subscription; owner 2026-09-25 \"lets also do the play proofs. but don't use too much effort here?\")",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false, "payload": false, "halo": false, "nullFloors": false, "releaseSuite": false, "functions": false, "ledgerBattery": false,
+    "specs": ["e2e/playability-secure.spec.ts", "e2e/m2-01-build-menu.spec.ts", "e2e/task-025-bandits-dont-swim.spec.ts"],
+    "warmup": ["/", "/?contract=the-claim"]
+  },
+  "cure": "scripts/attended/landings/mpp1-cure.sh",
+  "review": { "path": "reviews/map-play-proofs-1.md", "title": "Drain review: `map-play-proofs-1`, the generic play census of the eighteen pending maps, and why banking was never broken (Opus implementers; owner 2026-09-25 light effort)", "body": "scripts/attended/landings/mpp1-review.md" },
+  "bookkeeping": {
+    "taskFile": "map-play-proofs-1.md", "rowKey": "PLAY PROOFS CENSUS LANDED", "rowEmoji": "🎮",
+    "rowText": "The secure-playability spec widened by `GR_SECURE_CONTRACTS`, the eighteen maps on both projects (48 rows with the smoke, four re-runs and four controls): every pair boots with zero console and page errors; secured on both projects: Pressure Garden, Blackout Ridge, Last Claim, River; on one: Devil's Alley (desktop), Seed Run (phone); twelve instrument limits (seven need an objective verb the kit lacks: Baron, Incline, Canyon Works, Fairground, Dust Flats, Gusher County, Boneyard; five could not fund their opening defences: Far Side, Low Orbit, Eclipse, Dome Basin, Old Canal); two single-project deaths with every defence built. BANKING IS NOT BROKEN: controls on today's tree and on the tree before ux-entry-robustness-1 fail identically, the game has written the secured score at secure time since `07248387a` (2026-07-22) and the spec counts only a row the click adds (F-MPP1-1, fire-authorable, with F-MPP1-4: the spec reads secureWave 0 where the engine secures at 20). Census `docs/bench/playability-secure-census-2026-09-25.md`; the eighteen status rows' second column carries the cells. The hand-driven proofs go to Astra (`sol-play-proofs-1`, queued by this landing). Engine hash unchanged {PIN}; no deploy.",
+    "statusPhrase": "the generic play census of the eighteen maps: every map boots clean, six secured, none banked because the spec counts the wrong row; the Astra proofs queued",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh mpp1)"
+  },
+  "deploy": false, "preview": false, "evidenceDir": "artifacts/map-play-proofs-1"
+}

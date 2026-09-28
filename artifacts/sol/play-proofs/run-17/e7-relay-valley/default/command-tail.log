@@ -1,0 +1,35 @@
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - performing click action
+          - <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="midlife" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-b…></canvas> intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - performing click action
+        - <canvas width="780" height="1688" id="game-canvas" data-hero-skin="stock" data-hero-sheet="midlife" data-railcar3d-state="off" data-boss-bar-depleted="0" data-crawler3d-state="off" data-boss-bar-remaining="0" data-boss-bar-anchor="none" data-engine="three.js r184" data-run3d-pilot-meshes="0" data-homemaker3d-state="off" data-prospector-skin="stock" data-hero-skin-sheet="stock" data-asset-prefetch-ready="0" data-asset-prefetch-total="0" data-boss-bar-visible="false" data-boss-bar-semantic="none" data-b…></canvas> intercepts pointer events
+      - retrying click action
+        - waiting 500ms
+
+
+      840 |         await page.getByTestId(`upgrade-card-${preferred}`).click({ timeout: 1000 });
+      841 |       }
+    > 842 |       try { await page.getByTestId(id).click({ timeout: 600 }); return; }
+          |                                        ^
+      843 |       catch (error) {
+      844 |         row.notes.push(`Tape ${id} attempt ${attempt + 1}: ${String(error).split('\n')[0]}`);
+      845 |         if (attempt === 7) throw error;
+        at clickTape (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:842:40)
+        at tapeDemonstration (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:864:3)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1508:107
+
+    Error Context: ../../../../../.goldrush/play-proofs/run-17/default/e7-relay-valley/results/native-proofs-e7-relay-val-58d90-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1301:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1301:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow

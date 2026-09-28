@@ -1,0 +1,23 @@
+FOLLOWUP start (tip 6af7bf60b, pre-change bea0a4dcb, base be37d83cf) 2026-09-26T13:51:55Z load 53.02 124.96 81.34
+tip vite 50919 ready
+tip warm rc=0
+SPEC_RC=0
+spec done 2026-09-26T13:54:02Z load 15.57 84.74 71.37
+ADJ_RC=0
+adjacent done 2026-09-26T13:55:42Z load 11.58 63.47 64.55
+probe tip desktop rc=0
+probe tip mobile rc=0
+tip vite stopped (50919)
+pre vite 74740 ready
+pre warm rc=0
+PRE_SPEC_RC=1
+probe pre desktop rc=0
+probe pre mobile rc=0
+pre vite stopped (74740)
+pre-change done 2026-09-26T13:57:49Z load 10.93 44.99 56.99
+agent tape 1 probe-idle-tape.json: base rc=0 tip rc=0 stdout identical stderr identical (148 bytes)
+agent tape 2 e3-moth-season.tape.json: base rc=1 tip rc=1 stdout identical stderr identical (0 bytes)
+browser reel 1 reel-desktop-chrome.json: base rc=0 tip rc=0 identical (wallMs excluded)
+browser reel 2 reel-desktop-chrome-relabelled-the-claim.json: base rc=0 tip rc=0 identical (wallMs excluded)
+FOLLOWUP end 2026-09-26T13:58:10Z load 10.25 42.63 55.86
+BATCH-DONE

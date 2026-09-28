@@ -1,0 +1,11 @@
+# F-PP3-2 — Gusher deliveries work but both native runs fail the full terminal
+
+2026-09-25. FAIL desktop/phone, two honest attempts exhausted, commands exit 1. Both boot and stay clean (zero console/page errors); no secure/bank/Book/reload acceptance. This finding measures the two strategies and an instrument interruption, not a map impossibility.
+
+Desktop: west delivery at 36.7 s, east at 68.4 s. At the north stake, the confirm inputs did not update the Hauler destination: it stayed at (12.219,-7.894) with 16.178 fuel. The first helper stopped on that unchanged arrived state. The run then built five defenses but died wave 14 / 425.6 s, 549 kills, 25 gold. North delivery was never completed. Source confirms `confirmAction` grades before dispatching (`src/game/Game.ts`); the exact reason the later confirm was missed is not established. The driver now services upgrades and retries a real confirm until the published vehicle destination changes, bounded at five presses.
+
+Phone, destination-verifying driver: all three lease heads reached while open, at 35.7 / 67.1 / 94.4 s. Final haul position (-0.231,45.659); 275.803 units driven, 237.403 on graded road, 27.631 fuel spent and 8.369 remaining. This establishes an honest fuel-feasible delivery route. The Prospector then died gathering for the first turret, wave 4 / 134.0 s, 62 kills, 45 gold, zero buildings. The delivery alone does not satisfy the wave-12 terminal.
+
+The route harvests all three tar nodes, grades at each surveyed start, sends the Hauler along each spoke, returns through camp, and waits out a closed lease. The open-stop times and full fuel/vehicle readings are in row notes. `MotorSocket.settleDeliveries` latches arrivals within 2.5 units only on open roads; `Game.autoSecureWaveForRun` waits for the objective and secure wave. No production changes or engine calls. No load-shaped timeout and no timing rerun.
+
+[Desktop row](row-desktop-chrome.json) · [phone row](row-mobile-chrome.json) · [desktop terminal](terminal-desktop-chrome.png) · [phone terminal](terminal-mobile-chrome.png). Next: Boneyard. A planned future attempt can fund defenses during the lease visits, rather than starting the economy after the entire errand.

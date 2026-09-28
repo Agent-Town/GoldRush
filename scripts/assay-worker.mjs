@@ -70,9 +70,25 @@ async function replay(tape) {
   }
 }
 
+// THE CLOCK IS COMPARED AT A STATED TOLERANCE (river-assay-1, F-RES1-1 cause 3). A browser reel declares the raw
+// float its run accumulated (4.833333333333326 for a pan at tick 145) while the browser instrument prints its replay
+// rounded to the microsecond (4.833333), so an exact comparison rejected a perfect replay of every browser reel whose
+// float is not six-decimal exact. The two are equal when they differ by no more than one microsecond: the round moves
+// a value by at most half of that, a double's representation by about 1e-15 at these magnitudes, and nothing else
+// fits, since the sim clock moves in fixed steps of 1/30 s and a replay one step early or late misses by 33,333
+// microseconds. The published time is never the claim anyway: a verdict posts the replay's own secure snapshot (the
+// raw float), which the county applies over the row and refuses when it is later than the score.
+const TIME_ALIVE_TOLERANCE_SECONDS = 1e-6;
+
+function sameTimeAlive(claimed, replayed) {
+  return Number.isFinite(claimed) && Number.isFinite(replayed) && Math.abs(claimed - replayed) <= TIME_ALIVE_TOLERANCE_SECONDS;
+}
+
 function outcomeMismatch(claim, actual) {
   if (!claim || !actual || typeof claim !== 'object' || typeof actual !== 'object') return 'malformed outcome';
-  const mismatches = ['secured', 'waves', 'timeAlive', 'gold'].filter((field) => actual[field] !== claim[field]);
+  const mismatches = ['secured', 'waves', 'timeAlive', 'gold'].filter((field) => (field === 'timeAlive'
+    ? !sameTimeAlive(claim.timeAlive, actual.timeAlive)
+    : actual[field] !== claim[field]));
   return mismatches.length ? `outcome mismatch: ${mismatches.join(', ')}` : null;
 }
 
@@ -81,6 +97,19 @@ function validSecuredSnapshot(value) {
     && Number.isInteger(value.waves) && value.waves >= 0
     && Number.isInteger(value.gold) && value.gold >= 0
     && Number.isFinite(value.timeAlive) && value.timeAlive >= 0;
+}
+
+// THE MECHANIC THE MAP IS ABOUT (F-HEAT15-4, owner ruling 2026-09-22 (a)). The instrument reports
+// it only for a contract that declares one, so ABSENT is the ordinary case and never an error; a
+// PRESENT-but-malformed one is an instrument defect and is treated exactly as a malformed
+// `securedSnapshot` is — thrown inside the attempt loop, retried, and finally `unassayable` rather
+// than posted. The worker never invents the field and never forwards it on a verdict the county
+// would refuse it on; the door is still the authority and validates it again.
+function validMechanic(value) {
+  return Boolean(value) && typeof value === 'object'
+    && typeof value.id === 'string' && value.id.length > 0 && value.id.length <= 64
+    && typeof value.complete === 'boolean'
+    && Object.keys(value).length === 2;
 }
 
 async function assay(row) {
@@ -118,6 +147,7 @@ async function assay(row) {
       }
       if (attemptResult.eventLogHash === claimedHash && !outcomeMismatch(row.score, attemptResult.outcome)
         && !validSecuredSnapshot(attemptResult.securedSnapshot)) throw new Error('instrument returned no valid securedSnapshot');
+      if (attemptResult.mechanic !== undefined && !validMechanic(attemptResult.mechanic)) throw new Error('instrument returned a malformed mechanic');
       result = attemptResult;
       reason = undefined;
       break;
@@ -148,7 +178,9 @@ async function assay(row) {
   // box's absolute paths through `error.message`; those say nothing to a rider and something to a
   // stranger, so they are named by basename on the wire and left whole in the log.
   const payload = { locator: row?.locator, verdict, ...(replayedHash ? { replayedHash } : {}),
-    ...(verdict === 'verified' ? { securedSnapshot: result.securedSnapshot } : {}), ...(reason ? { reason: publicReason(reason) } : {}) };
+    ...(verdict === 'verified' ? { securedSnapshot: result.securedSnapshot } : {}),
+    ...(verdict === 'verified' && result.mechanic !== undefined ? { mechanic: result.mechanic } : {}),
+    ...(reason ? { reason: publicReason(reason) } : {}) };
   let recorded;
   if (!dryRun) {
     const response = await requestJson(verdictUrl, {

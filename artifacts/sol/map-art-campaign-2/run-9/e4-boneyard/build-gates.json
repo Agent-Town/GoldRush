@@ -1,0 +1,40 @@
+[
+  {
+    "label": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 18.75,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-boneyard-tsc-rerun-4.log"
+  },
+  {
+    "label": "default-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 56.8,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-boneyard-default-build-rerun-4.log"
+  },
+  {
+    "label": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {
+      "GR_RELEASE": "full"
+    },
+    "exit": 0,
+    "seconds": 49.34,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e4-boneyard-full-build-rerun-4.log"
+  }
+]

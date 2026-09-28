@@ -1,0 +1,29 @@
+batch start 2026-09-26T18:36:50Z load { 11.64 14.59 25.00 } head 51068d739 port 5852
+replay report-desktop-3f5a03c5 rc=0 2s {"eventLogHash":"fnv1a32:cc10780d","outcome":{"secured":true,"waves":0,"gold":5,"timeAlive":4.833333333333326},"securedSnapshot":{"waves":0,"gold":5,"timeAlive":4.833333333333326},"ticks":145,"wallMs":1861}
+replay report-phone-647005f9 rc=0 3s {"eventLogHash":"fnv1a32:95bceda6","outcome":{"secured":true,"waves":0,"gold":5,"timeAlive":4.799999999999993},"securedSnapshot":{"waves":0,"gold":5,"timeAlive":4.799999999999993},"ticks":144,"wallMs":1874}
+replay run7-desktop-a1a3a3f5 rc=0 3s {"eventLogHash":"fnv1a32:883207a0","outcome":{"secured":true,"waves":0,"gold":5,"timeAlive":4.966666666666659},"securedSnapshot":{"waves":0,"gold":5,"timeAlive":4.966666666666659},"ticks":149,"wallMs":1925}
+replay run7-phone-b9509309 rc=0 3s {"eventLogHash":"fnv1a32:f9a8b8f2","outcome":{"secured":true,"waves":0,"gold":5,"timeAlive":4.799999999999993},"securedSnapshot":{"waves":0,"gold":5,"timeAlive":4.799999999999993},"ticks":144,"wallMs":1860}
+replay heat15-probe-b131e18e rc=0 9s {"eventLogHash":"fnv1a32:b131e18e","outcome":{"secured":true,"waves":10,"gold":335,"timeAlive":300},"securedSnapshot":{"waves":10,"gold":335,"timeAlive":300},"ticks":9001,"engine":"headless-contract-sim","wallMs":9204}
+replay heat15-r1-f3a9c00c rc=0 4s {"eventLogHash":"fnv1a32:f3a9c00c","outcome":{"secured":true,"waves":12,"gold":0,"timeAlive":272},"securedSnapshot":{"waves":12,"gold":0,"timeAlive":272},"mechanic":{"id":"regatta-race","complete":true},"ticks":8760,"engine":"headless-contract-sim","wallMs":4126}
+replay heat15-r2-b92da1bf rc=0 7s {"eventLogHash":"fnv1a32:b92da1bf","outcome":{"secured":true,"waves":12,"gold":200,"timeAlive":272},"securedSnapshot":{"waves":12,"gold":200,"timeAlive":272},"mechanic":{"id":"regatta-race","complete":true},"ticks":8760,"engine":"headless-contract-sim","wallMs":6776}
+replay heat14-era6-idle-a45ba9ac rc=0 5s {"eventLogHash":"fnv1a32:5a139ec0","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":23.966666666667017},"securedSnapshot":null,"ticks":2453,"wallMs":3690}
+agent-arm report-desktop-3f5a03c5 rc=1  assay replay failed: e10-river is the River ceremony, a browser run: its reel is assayed by the browser arm (scripts/assay-replay.mjs), never by the headless door
+agent-arm run7-desktop-a1a3a3f5 rc=1  assay replay failed: e10-river is the River ceremony, a browser run: its reel is assayed by the browser arm (scripts/assay-replay.mjs), never by the headless door
+agent-arm heat14-era6-idle-a45ba9ac rc=0 {"eventLogHash":"fnv1a32:a45ba9ac","outcome":{"secured":false,"waves":2,"gold":0,"timeAlive":81.767},"ticks":2453,"engine":"headless-contract-sim"} 
+agent-arm heat15-probe-b131e18e rc=0 {"eventLogHash":"fnv1a32:b131e18e","outcome":{"secured":true,"waves":10,"gold":335,"timeAlive":300},"securedSnapshot":{"waves":10,"gold":335,"timeAlive":300},"ticks":9001,"engine":"headless-contract-sim"} 
+report-desktop-3f5a03c5: rejected (claimed fnv1a32:3f5a03c5, replayed fnv1a32:cc10780d; eventLogHash mismatch: claimed fnv1a32:3f5a03c5, replayed fnv1a32:cc10780d)
+report-phone-647005f9: rejected (claimed fnv1a32:647005f9, replayed fnv1a32:95bceda6; eventLogHash mismatch: claimed fnv1a32:647005f9, replayed fnv1a32:95bceda6)
+run7-desktop-a1a3a3f5: rejected (claimed fnv1a32:a1a3a3f5, replayed fnv1a32:883207a0; eventLogHash mismatch: claimed fnv1a32:a1a3a3f5, replayed fnv1a32:883207a0)
+run7-phone-b9509309: rejected (claimed fnv1a32:b9509309, replayed fnv1a32:f9a8b8f2; eventLogHash mismatch: claimed fnv1a32:b9509309, replayed fnv1a32:f9a8b8f2)
+heat15-probe-b131e18e: verified (claimed fnv1a32:b131e18e, replayed fnv1a32:b131e18e)
+heat15-r1-f3a9c00c: verified (claimed fnv1a32:f3a9c00c, replayed fnv1a32:f3a9c00c)
+heat15-r2-b92da1bf: verified (claimed fnv1a32:b92da1bf, replayed fnv1a32:b92da1bf)
+heat14-era6-idle-a45ba9ac: rejected (claimed fnv1a32:a45ba9ac, replayed fnv1a32:5a139ec0; eventLogHash mismatch: claimed fnv1a32:a45ba9ac, replayed fnv1a32:5a139ec0)
+worker rc=0
+batch end 2026-09-26T18:38:14Z load { 25.86 17.09 24.88 }
+report-desktop-3f5a03c5.json: boot seams [[-9,6.7],[-1.5,-6.4]], end gold 5, secured true, sameHash false, bit-identical time true
+report-phone-647005f9.json: boot seams [[-9,6.7],[-1.5,-6.4]], end gold 5, secured true, sameHash false, bit-identical time true
+run7-desktop-a1a3a3f5.json: boot seams [[-9,6.7],[-1.5,-6.4]], end gold 5, secured true, sameHash false, bit-identical time true
+run7-phone-b9509309.json: boot seams [[-9,6.7],[-1.5,-6.4]], end gold 5, secured true, sameHash false, bit-identical time true
+mid done 2026-09-26T18:38:25Z load { 24.69 17.13 24.80 }
+exit=0

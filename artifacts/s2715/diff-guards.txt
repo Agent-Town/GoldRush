@@ -1,0 +1,48 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-27T16:01:44.646Z — s2715 run 9 diff-selected guards ########
+cwd=/Users/robin/.goldrush/fire-s2715/wt-pp9
+env+ GR_GUARD_NO_ARTIFACT=1 CLAUDE_CONFIG_DIR=/Users/robin/.claude-fires PATH=/Users/robin/.nvm/versions/node/v26.4.0/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0Kj3au2:/Users/robin/.foundry/bin
+
+===== diff-selected guards =====
+$ node scripts/run-guards.mjs --changed-since f366a863b1bdbe5ba08a9d8f1eb398d3aba38566
+rc=1 903.6s
+run-guards: 102 file(s) changed since f366a863b1bdbe5ba08a9d8f1eb398d3aba38566
+  base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
+  (no path rule matched -- base gate only)
+
+FAIL  rc=signal:SIGTERM  900s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.330ms
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  3s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+--- test:node-guards (rc=signal:SIGTERM) last 20 lines ---
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+WebSocket server error: Port 24678 is already in use
+✔ shipped Fairground crowd consumer loads without a missing dependency declaration (280.36775ms)
+✔ real history has exactly the four former double-state findings and current BACKLOG has none (168.4845ms)
+✔ prose citations are not declarations, only struck declarations close, and duplicate opens stay open (31.105333ms)
+✔ regression arm: narrow open vocabulary is byte-identical when explicitly selected (0.299125ms)
+✔ wide open vocabulary admits an explicit 🟠 OPEN declaration (0.090166ms)
+✔ 🟢 RULING without a state word is not an open declaration (0.06725ms)
+✔ wide open vocabulary exposes a ✅ plus separate 🔬 OPEN conflict without reddening narrow (25.220917ms)
+✔ wide-open advisory reports skipped rows, hidden open IDs, and narrow closed-only IDs (24.964834ms)
+✔ a conflict SPLIT ACROSS the index and a part file is still caught, with both coordinates (50.865917ms)
+✔ with no tasks/backlog/ at all the corpus line says so and the census is unchanged (25.674125ms)
+✔ fire shell (CLAUDE_CONFIG_DIR present) resolves playwright workers to 1 (241.555625ms)
+✔ non-fire shell (CLAUDE_CONFIG_DIR absent) keeps playwright parallelism (243.390667ms)
+✔ the pinned family lists are sorted, deduped and disjoint (0.626667ms)
+✔ the family derivation survives a rebuild (0.291917ms)
+✔ every first-town request belongs to a pinned family (2.469709ms)
+✔ no second map is warmed inside the first town window (0.992ms)
+FIRE SHELL — test:node-guards ran with reduced file concurrency 1 (F-1409-1/F-1410-1); this is the conservative default pending fire-side measurement.
+
+guards: 4/5 passed -- RED: test:node-guards
+guard-stats: appended 5 record(s) to /Users/robin/.goldrush/fire-s2715/wt-pp9/logs/guard-stats.jsonl
+
+
+SUMMARY {"diff-selected guards":1}
+OVERALL rc=1

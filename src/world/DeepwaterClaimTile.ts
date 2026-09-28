@@ -1,4 +1,5 @@
 import {
+  CLAIM_BOAT_GANGWAY_REACH,
   CLAIM_BOAT_HULL_RADIUS,
   ClaimBoat,
   type BoatRiderPosition,
@@ -170,8 +171,10 @@ export class DeepwaterClaimTile {
    * walked before this slice existed.
    *
    * `orderTarget` is a rider's live `MOVE_HERO` point (null for a human at the keys); `intent` is
-   * the unit move vector BOTH species produce. A target within a plank of the rail that the hull
-   * cannot float in is a step ashore; anything else is a course to steer.
+   * the unit move vector BOTH species produce. A target within the GANGWAY'S REACH of the deck
+   * anchor that the hull cannot float in is a step ashore; anything else is a course to steer
+   * (F-RB2-2 (a), owner 2026-09-22 "gangway-reach only": the reach used to run the hull's length
+   * over the bow, so a key held near a rim put the body over the side and forfeited the race).
    */
   helm(
     dt: number,
@@ -214,7 +217,8 @@ export class DeepwaterClaimTile {
       return boat.navigable(target.x, target.z) || boat.stepAshore(target, walkable) ? null : 'UNREACHABLE_WATER';
     }
     // Ashore (standing where the hull cannot float) and ordered out into the navigable water,
-    // past the gangway: that order only makes sense aboard.
+    // past the gangway — the anchor's own reach since F-RB2-2 (a): that order only makes sense
+    // aboard.
     return !boat.navigable(hero.x, hero.z)
       && boat.navigable(target.x, target.z)
       && !boat.withinGangplank(target.x, target.z)
@@ -226,6 +230,22 @@ export class DeepwaterClaimTile {
   fastWaterAt(x: number, z: number): boolean {
     const zone = this.contract.tileParams.raceCourse?.fastWaterZone;
     return zone !== undefined && x >= zone.minX && x <= zone.maxX && z >= zone.minZ && z <= zone.maxZ;
+  }
+
+  /**
+   * Read-only shore geometry for both engines, independent of boarding/physics (also useful at a
+   * moored jetty). Mirror stepAshore's off-deck, non-navigable, walkable clauses at 16 headings.
+   * Walkable water inside the clamp is swimming, not a step ashore.
+   */
+  canStepAshore({ walkable }: BoatHelmPorts): boolean {
+    const { x, z } = this.boat.position;
+    for (let heading = 0; heading < 16; heading += 1) {
+      const angle = heading * Math.PI / 8;
+      const px = x + Math.cos(angle) * CLAIM_BOAT_GANGWAY_REACH;
+      const pz = z + Math.sin(angle) * CLAIM_BOAT_GANGWAY_REACH;
+      if (!this.boat.contains(px, pz) && !this.boat.navigable(px, pz) && walkable(px, pz)) return true;
+    }
+    return false;
   }
 
   reset(): ReturnType<DeepwaterClaimTile['snapshot']> {
@@ -291,7 +311,7 @@ export class DeepwaterClaimTile {
  * inset by the hull's turning radius so the deck never leaves the water it was cleared for. Null
  * where no region admits a boat at all, which makes the boat unsteerable rather than unbounded.
  */
-function boatWaterFor(tile: WaterTileParams): ClaimBoatWater | null {
+export function boatWaterFor(tile: WaterTileParams): ClaimBoatWater | null {
   const sailable = tile.regions.filter((region) => region.travel.includes('boat'));
   if (sailable.length === 0) return null;
   const minX = Math.min(...sailable.map((region) => region.minX)) + CLAIM_BOAT_HULL_RADIUS;

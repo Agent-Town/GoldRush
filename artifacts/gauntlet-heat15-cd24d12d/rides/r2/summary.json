@@ -1,0 +1,190 @@
+{
+  "rig": "opus",
+  "contract": "r2",
+  "model": "claude-opus-5",
+  "sessionId": "0a834cfc-2571-465f-a03d-73a4378906ca",
+  "startedAt": "2026-09-22T03:43:10.612Z",
+  "endedAt": "2026-09-22T03:54:35.666Z",
+  "wallClockSeconds": 685,
+  "wallHit": false,
+  "exitCode": 0,
+  "signal": null,
+  "setupToFirstOutputSeconds": 135,
+  "arenaTrackedChanges": [],
+  "workspaceFiles": [
+    "attempt-1-tape.json",
+    "ctrl-v1.mjs",
+    "gauntlet-outcome.json",
+    "gauntlet-report.md",
+    "probe-idle-summary.json",
+    "probe-idle-tape.json",
+    "probe-idle-view0.json",
+    "probe-idle-viewlog.json",
+    "runner.mjs",
+    "tune-1-summary.json",
+    "tune-1-tape.json",
+    "tune-1-view0.json",
+    "tune-1-viewlog.json"
+  ],
+  "outcome": {
+    "secured": true,
+    "waves": 12,
+    "timeMs": 272000,
+    "gold": 200,
+    "kills": 28,
+    "calls": 24,
+    "defaultedPicks": 0,
+    "defaultedSecure": 1,
+    "eventLogHash": "fnv1a32:136a45a0",
+    "tape": "/private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-heat15-arena/artifacts/heat15/opus/r2/attempt-1-tape.json",
+    "scored": true,
+    "runsSoFar": 2,
+    "scoredAttempts": 1,
+    "worldModel": "sim-import",
+    "note": "attempt-1-tape.json is a BYTE-IDENTICAL copy of tune-1-tape.json (78,243 bytes, verified equal). They are ONE ride, not two: the first controller secured, the stop rule ends the heat at the first SECURED outcome, and this file's `tape` field is the declaration the operator reads.",
+    "assay": {
+      "instrument": "scripts/assay-replay-agent.mjs",
+      "controlFirst": "probe-idle-tape.json -> 'tape ran out after 27600 steps with the run still alive'. EXPECTED: a zero-order CEILING tape cannot replay by design (endReason wave-ceiling). The control's failure belongs to ceiling tapes, not to the instrument.",
+      "reelReplay": "fnv1a32:b92da1bf == the TAPE HEADER's eventLogHash. CLEAN.",
+      "outcomeLineHash": "fnv1a32:136a45a0 — a DIFFERENT number by design; never the comparand.",
+      "securedSnapshot": {
+        "waves": 12,
+        "gold": 200,
+        "timeAlive": 272
+      },
+      "snapshotAgrees": true
+    },
+    "envelope": {
+      "durationTicks": 8160,
+      "lastEntryTick": 7441,
+      "ticksSlack": 719,
+      "entries": 24,
+      "bytes": 78243,
+      "axesChecked": "ticks, entries and bytes all measured off the first reel that existed"
+    },
+    "nullFloorCheck": {
+      "published": "e5-regatta-01 = w14 / 320000 ms / 0 gold / 39 kills / fnv1a32:8050c83f",
+      "idleProbeReproduced": "fnv1a32:8050c83f",
+      "meaning": "instrument verified, rules unmoved, and this is the post-boat world (pin #18 re-recorded exactly the two Regatta floors)"
+    },
+    "ceilingNote": "EVERY RANKING AXIS IS AT ITS ARITHMETIC MAXIMUM, so this row can only TIE my standing row (w12 / 200 g / 272 s) and never beat it. waves 12 = twist.secureWave and regatta_race.deadlineWave; timeAlive 272.000 = the wave-12 instant the storm scheduler fixes; gold 200 = Balance.economy.bankCap, and the ONLY cap-raiser on the roster (stockpile, 60 g x2, +150 each) is unplaceable — MEASURED this ride, not inherited: five BUILD probes at five distinct coordinates varying BOTH axes inside the sole declared build zone (claim-boat-deck-mask, x[-54,-44] z[-5,5]) each answered 'UNREACHABLE: BUILD target is outside buildable terrain', because the spring_pond makes the whole tile `shallows` while isBuildable demands `bank`. The county ranks exact ties to the earlier submission, so the door will store this and never assay it. That is the board's own rule, not a failure of the ride."
+  },
+  "outcomeError": null,
+  "promotedTapeName": "attempt-1-tape.json",
+  "scoredTapes": [
+    {
+      "file": "attempt-1-tape.json",
+      "id": "agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd24d12d2",
+        "engineHash": "52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5",
+        "era": 6,
+        "viewVersion": 3
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 24,
+      "durationTicks": 8160,
+      "lastEntryTick": 7441,
+      "promotedByRig": true,
+      "discoveredBy": "outcome-file+filename"
+    }
+  ],
+  "otherTapes": [
+    {
+      "file": "probe-idle-tape.json",
+      "id": "agent-aa9b15ba-92342b43-2c88-48bf-aa1c-6d5316696f68",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd24d12d2",
+        "engineHash": "52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5",
+        "era": 6,
+        "viewVersion": 3
+      },
+      "outcome": {
+        "reason": "death",
+        "secured": false,
+        "waves": 14,
+        "timeAlive": 320,
+        "gold": 0
+      },
+      "entries": 0,
+      "durationTicks": 9600,
+      "lastEntryTick": null
+    },
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd24d12d2",
+        "engineHash": "52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5",
+        "era": 6,
+        "viewVersion": 3
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 24,
+      "durationTicks": 8160,
+      "lastEntryTick": 7441
+    }
+  ],
+  "otherSecuredTapes": [
+    {
+      "file": "tune-1-tape.json",
+      "id": "agent-ae781bc1-722225b2-0bc4-4766-8655-01e3a8380133",
+      "contract": "e5-regatta",
+      "seed": "e5-regatta-01",
+      "difficulty": "trail",
+      "meta": {
+        "buildId": "cd24d12d2",
+        "engineHash": "52a84bc29febd924518528080bee8d0843e4e6d5c89165c1f8cb6f43dd61bcd5",
+        "era": 6,
+        "viewVersion": 3
+      },
+      "outcome": {
+        "reason": "secured",
+        "secured": true,
+        "waves": 12,
+        "timeAlive": 272,
+        "gold": 200
+      },
+      "entries": 24,
+      "durationTicks": 8160,
+      "lastEntryTick": 7441
+    }
+  ],
+  "report": {
+    "outcome": "**SECURED**, on the first controller ride.\n\n| | |\n|---|---|\n| waves | **12** |\n| timeAlive | **272.000 s** |\n| gold | **200** |\n| kills | 28 · calls **24** · defaultedSecure 1 · defaultedPicks 0 |\n| tape put forward | `attempt-1-tape.json` (byte-identical copy of `tune-1-tape.json`, 78,243 B — **one ride**) |\n| sim runs | **2** (one idle probe, one controller) |\n| scored attempts | **1** |\n| assay | replay reproduces the tape header's `fnv1a32:b92da1bf`; `securedSnapshot {12, 200, 272}` agrees |\n| envelope | 24 entries, 78,243 B, last accepted order **719 ticks** inside `durationTicks` 8,160 |\n\nOutcome line verbatim:\n`{\"secured\":true,\"waves\":12,\"timeMs\":272000,\"gold\":200,\"kills\":28,\"calls\":24,\"defaultedPicks\":0,\"defaultedSecure\":1,\"eventLogHash\":\"fnv1a32:136a45a0\"}`\n\n**Every ranking axis is at its arithmetic maximum, so this row can only tie my standing row and\nnever beat it.** waves 12 is `twist.secureWave` and `regatta_race.deadlineWave`; timeAlive 272.000\nis the wave-12 instant the storm scheduler fixes; gold 200 is `Balance.economy.bankCap`, and the\nonly cap-raiser on the roster is unplaceable (measured this ride — see below). The county ranks\nexact ties to the earlier submission, so the door will store this and never assay it. That is the\nboard's rule, not a fault in the ride, and I record it rather than dressing a tie as a win.",
+    "whatTheMapAsked": "It asked for its era's signature mechanic — **E5 storms schedule the waves** — and the storm is the\n**clock**, not the adversary. `deepwater_storm_track` declares `replacesScheduledWaves: true`, so the\nwhole timetable is computable from view 0 (wave *N* at 8 + 24(*N*−1)); `RegattaRaceSystem.advance`\nreturns early at `wave >= deadlineWave 12`, so **the course freezes forever at t = 272** and the race\nis a distance-over-time budget denominated in storm cycles. I did that arithmetic before writing an\norder: 253.7 units of course at `topSpeed` 1.65 with `fastWaterMultiplier` 1.5 over z ∈ [34, 54] is\n~154 s naive against a 272 s freeze — comfortable, and the corner-cutting a radius-6 gate allows\nbrought it in at ~142. The *adversarial* half stayed inert exactly as my notebook remembers:\n`stormMovementMultiplier: 0.72` is published and never reaches the hull — the `regatta_boat` physics\nblock carries no weather term at all, so a storm cannot slow the boat.\n\nThe fields that carried it were `now.regatta.boat.{x,z,speed,aboard}`, `now.regatta.{nextBuoy,\nbuoysPassed,state,finished,forfeited}`, plus `now.timers.runSeconds`, `now.seams[].{id,active,x,z}`,\n`now.gold` against `now.score.goldPanned`, `now.orders[].status/reason`, and `now.pendingSecure`.\nThe orders were **`MOVE_HERO` and nothing else** for the whole race — seven waypoints — then\n`HARVEST`, five `BUILD` probes, and one blank line. **There is no Regatta verb: the helm is\n`MOVE_HERO` while aboard**, which is exactly what ADR-005 intended.\n\n**Does it still play the way my notebook remembers? Yes in its bones, and the one clause that was\nwrong was mine, not the map's.** Generation 134's geometry, gate seconds and boarding pair all\nreproduced to the hundredth of a second (start-beacon 2.73 both rides; northwest 27.83 against\n27.77; midcourse 44.70 identical; northeast 64.13 identical; finish-beacon 87.93 against 88.07).\nWhat changed is that this ride read the *flat* view, so it sailed **one** lap instead of two and the\npost-race panning window actually arrived. Its first minute: the hero stepped off the deck over the\nbeam to (−42, −6), turned back across the rail toward (−47, 6), **boarded on the crossing**, and was\nalready under way at 1.65 u/s by the t = 8.03 view with the start beacon behind it. Nothing\nthreatening happened at all — `threats.alive` never exceeded 3 and the hero finished **100/100,\nhaving taken no damage in any of the 26 views**.\n\nOne genuine improvement on my predecessor's legibility complaint: gen 134 reported that \"a rider\nworking from the view alone cannot compute the one boundary that forfeits its run.\" **That is now\nfalse.** The hull's clamp is `pondSize/2 − hullRadius`, and both numbers are published in\n`stablePrefix.mechanics.rules` — `deepwater_water_regions.size: 128` and `regatta_boat.hullRadius:\n14.25` — giving exactly ±49.75, the figure gen 134 had to read out of the engine. I derived it from\nthe view and built the forfeit invariant on it.\n\n### The race, as it happened\n\n- **Boarding.** Yes. `now.regatta.boat.aboard` read `false` at t = 0 (hero (−49, 0), on the deck,\n  boarded nothing) and `true` at the t = 8.03 view (hero (−46.88, 5.96), hull making 1.65 u/s). The\n  crossing instant is **not published**; it is recoverable only because the start gate coincides with\n  the mooring, so gate 1's own `atSeconds` dates it: **run second 2.73**. The crossing *point* is\n  **computed, not observed** — walking from (−42, −6) toward (−47, 6) re-enters the deck box\n  (half-width 4.4 about the anchor) at ≈ **(−42.67, −4.4)**, the beam rail.\n- **Buoys, in the order they recorded, with the second each fell** (verbatim from\n  `now.regatta.buoysPassed`):\n\n  | # | id | `atSeconds` |\n  |---|---|---|\n  | 1 | `start-beacon` | **2.73** |\n  | 2 | `northwest-checkpoint` | **27.83** |\n  | 3 | `midcourse-checkpoint` | **44.70** |\n  | 4 | `northeast-checkpoint` | **64.13** |\n  | 5 | `finish-beacon` | **87.93** |\n\n  The sixth and final gate — the start stake `claim-boat` at (−49, 0), which `nextBuoy` named from\n  t = 104.03 onward — **never appears in `buoysPassed` and its second is never published**. I can only\n  bound it between views: at t = 128.03 `nextBuoy` was still `claim-boat` with the hull at\n  (−20.34, −0.08) making 1.65 u/s; at t = 152.03 `nextBuoy` was `null` and `state` read `finished`.\n  Computed from the published speed — 22.66 units from x = −20.34 to the disc edge at x = −43 — the\n  **finish fell at ≈ t 141.8 (±1)**. `now.regatta.state` at the terminal view read **`\"finished\"`**,\n  with `finished: true`, `forfeited: false`, `nextBuoy: null`.\n- **Refusals: none, of any kind.** Across all 26 views every `MOVE_HERO` record reads `pending`,\n  `active` or `done`; there is not one refused hero order. The status channel **never** answered\n  `NOT_ABOARD`, `UNREACHABLE_WATER`, `UNREACHABLE_TERRAIN` or `UNREACHABLE_APPROACH`. All seven\n  waypoints landed first try. Nothing to quote, and no hero/boat/point triple to give, because the\n  two boat refusals were never provoked — by construction, per the invariant below. (The only failed\n  records in the run were the five deliberate `BUILD` probes and the ordinary `HARVEST` failures a\n  depleted seam raises.)\n- **Forfeited: no.** `forfeited: false` at every one of the 26 views, and `state` never left\n  `racing` → `finished`. No point I issued was ever a forfeit candidate, and that was designed\n  rather than avoided: `stepAshore` requires a point that is **not** navigable water, so every\n  waypoint was placed inside the hull's clamp (±49.75), which fails that clause outright. The\n  tightest margin I allowed was the finish-beacon aim at **(44.0, 0) — 5.0 from the mark (inside its\n  radius 6, so it still scored) and 5.75 inside the clamp wall**; I deliberately pulled both eastern\n  aim points inward from the rim, because `regatta_boat`'s own prose warns that a beam intent that\n  close to the rim can still leave her. For the record, a point at (55, 0) *would* have been a legal\n  step ashore at 6.0 of the 6.4 gangway reach. I never named one.\n- **What `now.regatta` did NOT tell me, and I had to infer, measure or guess.** Three things, and the\n  first is the one that costs a rider something real:\n  1. **The finish second is withheld.** `RegattaRaceSystem` stores `finishedAt`, and the view's\n     `readRegatta` drops it, handing the rider `state` instead. So the five checkpoints each carry an\n     exact `atSeconds` and **the decisive gate carries none** — I could only bracket it across a\n     24-second view gap and compute ≈ 141.8 from the published speed. A rider cannot report when it\n     won. (Generation 134 reported this same gap; it reproduces exactly, and it is the one field whose\n     absence I would most like closed.)\n  2. **The boarding instant is unpublished.** There is no `aboard` transition record and no \"boarded\n     at\" second; `boat.aboard` is a bare boolean. On this course the start beacon happens to sit on\n     the mooring, so gate 1's timestamp recovers it — on a course whose start gate sat elsewhere, that\n     coincidence would not exist and the instant would be unrecoverable from the view.\n  3. **The landmark blockers are not in the view.** The buoy anchors and line rigs are\n     `MOVE_HERO`-refusing ground published in a pilot asset, not in `now` or `stablePrefix`. I did\n     **not** re-verify them this ride: I aimed 4.2–5.0 units off every mark's centre on my\n     predecessor's measurement and never provoked one, so I can only report that aiming off-centre\n     cost nothing and refused nothing.\n\n  Two things my notebook listed as gaps are **no longer gaps**, and I want the county to have the\n  correction: `gangwayReach` (6.4) *is* published, on the `regatta_boat` rule, and the clamp box *is*\n  computable from `size` and `hullRadius` as shown above.",
+    "winnability": "Secured, and the margin was **wide on every axis that can lose the run and exactly at the ceiling on\nevery axis that scores**: the hero took **no damage at all** (100/100 at all 26 views, `threats.alive`\nnever above 3), the race finished at **≈ t 142 against a t = 272 freeze** — 130 seconds, 1.9× slack —\nand the purse **capped at t = 200.97**, 71 seconds before the secure tick, with `goldPanned` frozen at\n200 thereafter because `Economy` refuses credits against a full bank. The 200 gold is a **ceiling, not\na margin left behind**: five `BUILD stockpile` probes at five distinct coordinates varying both axes\ninside the sole declared build zone each answered `UNREACHABLE: BUILD target is outside buildable\nterrain`, so the cap cannot be raised on this map and 200 is the most this contract can publish.",
+    "lessons": "- **My predecessor's single field-name bug was the entire heat, and the cure was the cheapest possible\n  discipline: dump the raw contract-scoped object from view 0 and branch only on keys I have SEEN in\n  that dump.** `now.regatta` is flat and seven-keyed; gen 134 read `now.regatta.race` from the\n  engine's internal *type*, got `{}` at every view, and sailed the course twice. Same map, same seed,\n  same engine: reading the view instead of the type moved the finish from ≈ t 257 to ≈ t 142 and the\n  purse from 0 to the 200 cap. **Seventh generation to lose ground to one field name — and the first\n  where simply obeying my own predecessor's written correction was the whole fix.**\n- **Emit only the REMAINING waypoints, indexed off the view's own `nextBuoy`, and lapping becomes\n  structurally impossible.** Deriving the phase from `GATE_ORDER.indexOf(now.regatta.nextBuoy.id)`\n  and slicing the chain from there is idempotent by construction: it cannot re-run a mark already\n  rounded, however many times the array is replaced. That is strictly better than remembering not to\n  re-send — a guard I have to honour every view is a guard I will eventually forget.\n- **Make the terminal failure unreachable rather than carefully avoided, and derive the boundary from\n  the view.** `stepAshore` needs a non-navigable point; the clamp is `size/2 − hullRadius` = ±49.75,\n  both terms published. Asserting every waypoint inside ±44 meant a forfeit — terminal for the claim\n  — could not happen no matter what else went wrong. **A bug inside an invariant is a slow run; a bug\n  outside one is a dead run**, and gen 134's lapping bug proved the point by re-issuing waypoints for\n  150 unplanned seconds without ever endangering the claim.\n- **Pull an aim point INWARD when the mark sits near the rim.** A radius-6 gate gives 6 units of\n  freedom, and on the two eastern marks I spent it toward the course centre: (44.0, 0) still scores\n  the finish beacon at 5.0 while standing 5.75 inside the clamp. Aiming at a mark's centre is the\n  worst of both worlds — it is where the landmark pad sits *and*, near the rim, where the shore is.\n- **Free probes convert an inherited belief into a measurement, and they cost nothing because a\n  refused order yields the tick.** Five `BUILD stockpile` orders rode in the panning array purely to\n  test gen 116's \"the cap can never be raised here\". They all refused, in the same tick, and turned\n  a ceiling I would otherwise have *asserted* into one I can *report*. Had one landed, the cap would\n  have gone 200 → 350 and I would have beaten my own standing row instead of tying it — so the probe\n  was also the only route to an actual improvement, for six wasted bytes.\n- **When the ceiling equals my own standing row, say so plainly and stop.** Waves, time and gold were\n  all pinned before I wrote an order, so the best available outcome was an exact tie that the board\n  stores and never assays. The right response is a clean, assay-verified receipt on the rebuilt map\n  plus an honest statement of the arithmetic — not a second ride chasing a score the ranking rule\n  cannot award, and not a tie described as a win.\n- **Read the objective system's own early-return before budgeting the clock.** `advance()` returns at\n  `wave >= deadlineWave`, so the course *freezes* at t = 272 rather than merely getting harder: the\n  race is a deadline even though nothing in the view is labelled \"deadline\". Eighth contract where\n  reading the early-return order inside the system, not the predicate that reads its counter, sized\n  the whole plan.\n- **Control-test the assay before believing it, then compare the right pair of hashes.** The idle\n  probe's replay failed — \"tape ran out with the run still alive\" — which is correct and expected for\n  a *ceiling* tape (gen 114 measured this), so the failure belongs to that class and not to the\n  instrument. The reel then reproduced the **tape header's** `fnv1a32:b92da1bf`, never the stdout\n  outcome line's `fnv1a32:136a45a0`; and `securedSnapshot {12, 200, 272}` is the third number to read,\n  because it is exactly what the door's `score_mismatch` rule compares against the declared gold. All\n  three agreed this time.\n- **A HARVEST tail behind a walking `MOVE_HERO` is dead weight, and the contract's own shape says when\n  to drop it.** An active `MOVE_HERO` returns truthy and owns the tick, so nothing behind it works —\n  but the finish gate *is* the start stake, so the course **returns the hull to the seam field**. Race\n  with nothing but waypoints, then drop every `MOVE_HERO` and stack `HARVEST`: 200 gold in ~46 seconds\n  of panning with a 4–6 unit commute, where my predecessor banked none.\n- **`null-floors.json` first, then grep the era pins for the contract id — thirteenth heat running, and\n  it has never once been wrong.** Reproducing the published floor to the hash is three things at once:\n  proof the rules have not moved, a verified instrument, and the licence to spend the whole reading\n  budget on what actually changed. Four minutes, and it is still the cheapest document in the county.\n- **Ride the skeleton first and change nothing — twenty-eighth heat where that is the whole discipline,\n  and the twenty-third in a row where it secured on ride one.** Two runs total: one ten-second probe\n  and one controller. The heat's real work is reading the contract, not riding it."
+  },
+  "usage": {
+    "transcript": "/Users/robin/.claude/projects/-private-tmp-claude-501--Users-robin-Claude-Projects-Gold-Rush-fe6b8d27-b064-40eb-934b-1d29d57a71db-scratchpad-wt-heat15-arena/0a834cfc-2571-465f-a03d-73a4378906ca.jsonl",
+    "assistantTurns": 64,
+    "toolCalls": 23,
+    "tokensIn": 128,
+    "tokensOut": 134164,
+    "cacheReadTokens": 34151017,
+    "cacheWriteTokens": 1727934,
+    "note": "tokensIn excludes cache reads/writes (reported separately); summed from the CLI session transcript, not self-reported by the rig"
+  }
+}

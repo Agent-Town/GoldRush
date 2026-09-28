@@ -1,0 +1,93 @@
+{
+  "allowFallbackBefore": false,
+  "extraSources": [],
+  "epoch": "epoch-4-motor",
+  "assets": [
+    {
+      "name": "dust-flats-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "dust-flats-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "north-railhead-storm-tower.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "west-road-wrecker-shed.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-horizon-fuel-reserve.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "south-grade-charting-post.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "dry-wash-recovery-gantry.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "south-grade-charting-post",
+      "entry",
+      0,
+      8
+    ],
+    [
+      "south-grade-charting-post",
+      5,
+      0,
+      -69
+    ],
+    [
+      "north-railhead-storm-tower",
+      5,
+      0,
+      79
+    ],
+    [
+      "west-road-wrecker-shed",
+      5,
+      -74,
+      5
+    ],
+    [
+      "east-horizon-fuel-reserve",
+      5,
+      74,
+      5
+    ],
+    [
+      "dry-wash-recovery-gantry",
+      5,
+      24,
+      -49
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        440,
+        195,
+        840,
+        300
+      ]
+    ],
+    [
+      390,
+      [
+        20,
+        275,
+        370,
+        370
+      ]
+    ]
+  ]
+}

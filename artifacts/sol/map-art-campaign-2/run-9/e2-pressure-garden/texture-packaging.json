@@ -1,0 +1,27 @@
+{
+  "nativeSourceDimensions": [
+    1254,
+    1254
+  ],
+  "nativeSourceSha256": "3b956b1e6a02c92be91aeb0567e43a97e65f51c0574c17badd24c540d220ca71",
+  "nativeSourceUnchanged": true,
+  "panoramaEmbeddedImages": [
+    {
+      "name": "pressure-garden-panorama-atlas",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "sha256": "fa2f5c58b8ab77ddcc6f92c9c241060a4b2b760dbec4f2f8be23043f37ffcf30"
+    },
+    {
+      "name": "engraved-river-gravel",
+      "dimensions": [
+        2048,
+        2048
+      ],
+      "sha256": "13d9c1fa60af21f72f0c8e560b8b04146e6eb1fe8125a57af6ef421dbe422f40"
+    }
+  ],
+  "method": "Blender image.scale(2048,2048) and pack during GLB export; original native PNG stays unedited on disk."
+}

@@ -30,7 +30,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
-
+import fs from 'node:fs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const CANONICAL_ASSAY_NODE_VERSION = '26.4.0';
 export const ENGINE_SOURCE_INPUTS = [
@@ -100,7 +100,19 @@ function installLocationShim(tape) {
   globalThis.window = { location };
 }
 
+/**
+ * THE RIVER IS NOT A HEADLESS RUN (river-assay-1, F-RES1-1). A reel scored `e10-river` is the finale lever's ceremony,
+ * played in the browser on THE RIVER charter pressed onto its lineage root under `nowaves`; the headless door cannot
+ * ride it (the raw River is not on its roster) and a browser reel carries no `agent_orders`, so the worker's seam
+ * (`isAgentTape`, `scripts/assay-replay.mjs`) sends it to the browser arm, which stages the ceremony. Refused here by
+ * name, before any engine loads, rather than by the generic roster message.
+ */
+export const RIVER_ENDING_CONTRACT_ID = 'e10-river';
+
 export async function replayAgentTape(rawTape) {
+  if (rawTape?.contract === RIVER_ENDING_CONTRACT_ID) {
+    throw new Error(`${RIVER_ENDING_CONTRACT_ID} is the River ceremony, a browser run: its reel is assayed by the browser arm (scripts/assay-replay.mjs), never by the headless door`);
+  }
   installLocationShim(rawTape);
   const vite = await createServer({ root, appType: 'custom', logLevel: 'silent', server: { middlewareMode: true, watch: null /* F-ASSAY-E2E-8: the replayer never edits files; default watching exhausts inotify on small boxes and crashed every live agent replay */ } });
   const quiet = { log: console.log, info: console.info, debug: console.debug };
@@ -119,7 +131,7 @@ export async function replayAgentTape(rawTape) {
   }
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMain(import.meta.url)) {
   const inputPath = process.argv[2];
   if (!inputPath) {
     process.stderr.write('Usage: node scripts/assay-replay-agent.mjs <reel.json>\n');
@@ -132,5 +144,24 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
   } catch (error) {
     process.stderr.write(`assay replay failed: ${error instanceof Error ? error.message : String(error)}\n`);
     process.exitCode = 1;
+  }
+}
+
+/**
+ * A VERBATIM COPY of isMain from ./is-main.mjs (F-SF1-2, is-main-2), not an import: this file is
+ * relocated without its siblings twice. assay-worker.test.mjs copies it into a bare scratch
+ * scripts/ beside assay-worker.mjs alone (a fixed list), and the deploy mirror (scripts/deploy.sh,
+ * MIRROR_FILTERS) ships it to the droplet assayer by name, without is-main.mjs; both were measured
+ * red with the import applied. It is also the first ENGINE_SOURCE_INPUTS entry, so the check stays
+ * inside the hashed bytes. scripts/is-main.test.mjs asserts this copy still matches the original
+ * byte for byte; change them together.
+ */
+function isMain(importMetaUrl) {
+  const entry = process.argv[1];
+  if (!entry || !importMetaUrl) return false;
+  try {
+    return fs.realpathSync(entry) === fs.realpathSync(fileURLToPath(importMetaUrl));
+  } catch {
+    return false;
   }
 }

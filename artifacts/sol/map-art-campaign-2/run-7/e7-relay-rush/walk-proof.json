@@ -1,0 +1,1080 @@
+[
+  {
+    "width": 1280,
+    "navigation": {
+      "spawn": {
+        "x": -25,
+        "y": 5.06,
+        "z": 41
+      },
+      "spawnWalkable": true,
+      "own": [
+        {
+          "id": "relay-rush:rush-start-horn",
+          "x": 0,
+          "z": -50,
+          "halfX": 1.469,
+          "halfZ": 1.08
+        }
+      ],
+      "blockers": [
+        {
+          "id": "relay-valley:west-ridge-dish-cluster",
+          "x": -56,
+          "z": 30,
+          "halfX": 2.320815623365354,
+          "halfZ": 1.6307534078847432
+        },
+        {
+          "id": "relay-valley:east-ridge-dish-cluster",
+          "x": 56,
+          "z": 30,
+          "halfX": 2.308801931149333,
+          "halfZ": 1.5933860377503082
+        },
+        {
+          "id": "relay-valley:dead-gap-charting-station",
+          "x": 0,
+          "z": 18,
+          "halfX": 2.2912200000000005,
+          "halfZ": 1.31328
+        },
+        {
+          "id": "relay-valley:valley-cable-drum-yard",
+          "x": -44,
+          "z": -26,
+          "halfX": 2.6942953933669846,
+          "halfZ": 1.9699649514722366
+        },
+        {
+          "id": "relay-valley:drone-recovery-beacon",
+          "x": 44,
+          "z": -26,
+          "halfX": 3.21408,
+          "halfZ": 3.21408
+        },
+        {
+          "id": "relay-rush:rush-start-horn",
+          "x": 0,
+          "z": -50,
+          "halfX": 1.469,
+          "halfZ": 1.08
+        }
+      ],
+      "targets": [
+        {
+          "kind": "stake",
+          "id": "relay-ridge-command-stake",
+          "x": -25,
+          "z": 41,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "0",
+          "x": -45,
+          "z": 32,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "1",
+          "x": -25,
+          "z": 32,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "2",
+          "x": 25,
+          "z": 32,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "3",
+          "x": 45,
+          "z": 32,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "rush-relay-r1-frame",
+          "x": -45,
+          "z": 44,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "rush-relay-r2-frame",
+          "x": -25,
+          "z": 44,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "rush-relay-r3-frame",
+          "x": 25,
+          "z": 44,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "rush-relay-r4-frame",
+          "x": 45,
+          "z": 44,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "west-ridge-dish-cluster",
+          "x": -56,
+          "z": 33,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "dead-gap-charting-station",
+          "x": 0,
+          "z": 20,
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "relay-site-r1",
+          "center": {
+            "x": -45,
+            "z": 41
+          },
+          "approach": {
+            "x": -45,
+            "z": 41
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "relay-site-r2",
+          "center": {
+            "x": -25,
+            "z": 41
+          },
+          "approach": {
+            "x": -25,
+            "z": 41
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "relay-site-r3",
+          "center": {
+            "x": 25,
+            "z": 41
+          },
+          "approach": {
+            "x": 25,
+            "z": 41
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "relay-site-r4",
+          "center": {
+            "x": 45,
+            "z": 41
+          },
+          "approach": {
+            "x": 45,
+            "z": 41
+          },
+          "reachable": true
+        }
+      ],
+      "reachableCells": 63303,
+      "step": 0.5
+    },
+    "probes": [
+      {
+        "id": "relay-rush:rush-start-horn",
+        "overlappingBlockerGroup": [
+          "relay-rush:rush-start-horn"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "relay-rush:rush-start-horn",
+            "start": {
+              "x": -2.649,
+              "z": -50
+            },
+            "hero": {
+              "x": -2.1341533318835046,
+              "y": 0.050955981542664744,
+              "z": -50
+            },
+            "boundaryDistance": 0.08515333188350471,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "relay-rush:rush-start-horn",
+            "start": {
+              "x": 2.649,
+              "z": -50
+            },
+            "hero": {
+              "x": 2.1341533318835046,
+              "y": 0.042575195808317104,
+              "z": -50
+            },
+            "boundaryDistance": 0.08515333188350471,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "relay-rush:rush-start-horn",
+            "start": {
+              "x": 0,
+              "z": -52.26
+            },
+            "hero": {
+              "x": 0,
+              "y": 0.03521405746011124,
+              "z": -51.74515333188349
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "relay-rush:rush-start-horn",
+            "start": {
+              "x": 0,
+              "z": -47.74
+            },
+            "hero": {
+              "x": 0,
+              "y": 0.03429856969023668,
+              "z": -48.25484666811651
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 16.188970332038036,
+          "y": 0.08187242958164437,
+          "z": -51.700000000000024
+        }
+      }
+    ],
+    "cycles": [
+      {
+        "cycle": 0,
+        "bodies": [
+          {
+            "id": "rush-start-horn",
+            "position": [
+              0,
+              -0.019563019275665283,
+              -50
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.0399999618530273,
+                "y": -0.019563019275665283,
+                "z": -51.5
+              },
+              "max": {
+                "x": 2.0399999618530273,
+                "y": 7.230436980724335,
+                "z": -48.5
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-relay-rush",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 1,
+        "bodies": [
+          {
+            "id": "rush-start-horn",
+            "position": [
+              0,
+              -0.019563019275665283,
+              -50
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.0399999618530273,
+                "y": -0.019563019275665283,
+                "z": -51.5
+              },
+              "max": {
+                "x": 2.0399999618530273,
+                "y": 7.230436980724335,
+                "z": -48.5
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-relay-rush",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 2,
+        "bodies": [
+          {
+            "id": "rush-start-horn",
+            "position": [
+              0,
+              -0.019563019275665283,
+              -50
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.0399999618530273,
+                "y": -0.019563019275665283,
+                "z": -51.5
+              },
+              "max": {
+                "x": 2.0399999618530273,
+                "y": 7.230436980724335,
+                "z": -48.5
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-relay-rush",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      }
+    ],
+    "errors": []
+  },
+  {
+    "width": 390,
+    "navigation": {
+      "spawn": {
+        "x": -25,
+        "y": 5.06,
+        "z": 41
+      },
+      "spawnWalkable": true,
+      "own": [
+        {
+          "id": "relay-rush:rush-start-horn",
+          "x": 0,
+          "z": -50,
+          "halfX": 1.469,
+          "halfZ": 1.08
+        }
+      ],
+      "blockers": [
+        {
+          "id": "relay-valley:west-ridge-dish-cluster",
+          "x": -56,
+          "z": 30,
+          "halfX": 2.320815623365354,
+          "halfZ": 1.6307534078847432
+        },
+        {
+          "id": "relay-valley:east-ridge-dish-cluster",
+          "x": 56,
+          "z": 30,
+          "halfX": 2.308801931149333,
+          "halfZ": 1.5933860377503082
+        },
+        {
+          "id": "relay-valley:dead-gap-charting-station",
+          "x": 0,
+          "z": 18,
+          "halfX": 2.2912200000000005,
+          "halfZ": 1.31328
+        },
+        {
+          "id": "relay-valley:valley-cable-drum-yard",
+          "x": -44,
+          "z": -26,
+          "halfX": 2.6942953933669846,
+          "halfZ": 1.9699649514722366
+        },
+        {
+          "id": "relay-valley:drone-recovery-beacon",
+          "x": 44,
+          "z": -26,
+          "halfX": 3.21408,
+          "halfZ": 3.21408
+        },
+        {
+          "id": "relay-rush:rush-start-horn",
+          "x": 0,
+          "z": -50,
+          "halfX": 1.469,
+          "halfZ": 1.08
+        }
+      ],
+      "targets": [
+        {
+          "kind": "stake",
+          "id": "relay-ridge-command-stake",
+          "x": -25,
+          "z": 41,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "0",
+          "x": -45,
+          "z": 32,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "1",
+          "x": -25,
+          "z": 32,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "2",
+          "x": 25,
+          "z": 32,
+          "reachable": true
+        },
+        {
+          "kind": "harvest",
+          "id": "3",
+          "x": 45,
+          "z": 32,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "rush-relay-r1-frame",
+          "x": -45,
+          "z": 44,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "rush-relay-r2-frame",
+          "x": -25,
+          "z": 44,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "rush-relay-r3-frame",
+          "x": 25,
+          "z": 44,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "rush-relay-r4-frame",
+          "x": 45,
+          "z": 44,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "west-ridge-dish-cluster",
+          "x": -56,
+          "z": 33,
+          "reachable": true
+        },
+        {
+          "kind": "station",
+          "id": "dead-gap-charting-station",
+          "x": 0,
+          "z": 20,
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "relay-site-r1",
+          "center": {
+            "x": -45,
+            "z": 41
+          },
+          "approach": {
+            "x": -45,
+            "z": 41
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "relay-site-r2",
+          "center": {
+            "x": -25,
+            "z": 41
+          },
+          "approach": {
+            "x": -25,
+            "z": 41
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "relay-site-r3",
+          "center": {
+            "x": 25,
+            "z": 41
+          },
+          "approach": {
+            "x": 25,
+            "z": 41
+          },
+          "reachable": true
+        },
+        {
+          "kind": "site",
+          "id": "relay-site-r4",
+          "center": {
+            "x": 45,
+            "z": 41
+          },
+          "approach": {
+            "x": 45,
+            "z": 41
+          },
+          "reachable": true
+        }
+      ],
+      "reachableCells": 63303,
+      "step": 0.5
+    },
+    "probes": [
+      {
+        "id": "relay-rush:rush-start-horn",
+        "overlappingBlockerGroup": [
+          "relay-rush:rush-start-horn"
+        ],
+        "faces": [
+          {
+            "axis": "x",
+            "sign": -1,
+            "key": "KeyD",
+            "faceBody": "relay-rush:rush-start-horn",
+            "start": {
+              "x": -2.649,
+              "z": -50
+            },
+            "hero": {
+              "x": -2.1341533318835046,
+              "y": 0.050955981542664744,
+              "z": -50
+            },
+            "boundaryDistance": 0.08515333188350471,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "x",
+            "sign": 1,
+            "key": "KeyA",
+            "faceBody": "relay-rush:rush-start-horn",
+            "start": {
+              "x": 2.649,
+              "z": -50
+            },
+            "hero": {
+              "x": 2.1341533318835046,
+              "y": 0.042575195808317104,
+              "z": -50
+            },
+            "boundaryDistance": 0.08515333188350471,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": -1,
+            "key": "KeyS",
+            "faceBody": "relay-rush:rush-start-horn",
+            "start": {
+              "x": 0,
+              "z": -52.26
+            },
+            "hero": {
+              "x": 0,
+              "y": 0.03521405746011124,
+              "z": -51.74515333188349
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          },
+          {
+            "axis": "z",
+            "sign": 1,
+            "key": "KeyW",
+            "faceBody": "relay-rush:rush-start-horn",
+            "start": {
+              "x": 0,
+              "z": -47.74
+            },
+            "hero": {
+              "x": 0,
+              "y": 0.03429856969023668,
+              "z": -48.25484666811651
+            },
+            "boundaryDistance": 0.08515333188349672,
+            "outsideAllBlockers": true
+          }
+        ],
+        "depenetrated": true,
+        "releasePosition": {
+          "x": 16.188970332038036,
+          "y": 0.08187242958164437,
+          "z": -51.700000000000024
+        }
+      }
+    ],
+    "cycles": [
+      {
+        "cycle": 0,
+        "bodies": [
+          {
+            "id": "rush-start-horn",
+            "position": [
+              0,
+              -0.019563019275665283,
+              -50
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.0399999618530273,
+                "y": -0.019563019275665283,
+                "z": -51.5
+              },
+              "max": {
+                "x": 2.0399999618530273,
+                "y": 7.230436980724335,
+                "z": -48.5
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-relay-rush",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 1,
+        "bodies": [
+          {
+            "id": "rush-start-horn",
+            "position": [
+              0,
+              -0.019563019275665283,
+              -50
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.0399999618530273,
+                "y": -0.019563019275665283,
+                "z": -51.5
+              },
+              "max": {
+                "x": 2.0399999618530273,
+                "y": 7.230436980724335,
+                "z": -48.5
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-relay-rush",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      },
+      {
+        "cycle": 2,
+        "bodies": [
+          {
+            "id": "rush-start-horn",
+            "position": [
+              0,
+              -0.019563019275665283,
+              -50
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "bounds": {
+              "isBox3": true,
+              "min": {
+                "x": -2.0399999618530273,
+                "y": -0.019563019275665283,
+                "z": -51.5
+              },
+              "max": {
+                "x": 2.0399999618530273,
+                "y": 7.230436980724335,
+                "z": -48.5
+              }
+            }
+          }
+        ],
+        "dataset": {
+          "terrain3dPilotContract": "e7-relay-rush",
+          "terrain3dPilotTerrainLoadState": "mounted",
+          "terrain3dPilotPanoramaLoadState": "mounted",
+          "terrain3dPilotLandmarkLoadState": "mounted",
+          "terrain3dPilotState": "ready",
+          "terrain3dPilotRenderSource": "glb",
+          "terrain3dPilotHeightSource": "baked-grid",
+          "terrain3dPilotMeshes": "1",
+          "terrain3dPilotTriangles": "32768",
+          "terrain3dPilotMaterials": "1",
+          "terrain3dPilotVertices": "16641",
+          "terrain3dPilotPanorama": "relay-valley-panorama",
+          "terrain3dPilotPanoramaMeshes": "1",
+          "terrain3dPilotPanoramaTriangles": "3084",
+          "terrain3dPilotPanoramaMaterials": "1",
+          "terrain3dPilotPanoramaVertices": "2246",
+          "assetLoadingLabel": "the claim",
+          "assetLoadingReady": "24",
+          "assetLoadingTotal": "24",
+          "assetLoadingProgress": "24/24",
+          "assetLoadingState": "ready",
+          "terrain3dPilotNightPools": "off",
+          "terrain3dPilotNightPoolSources": "0",
+          "terrain3dPilotSpringPonds": "0",
+          "terrain3dPilotSpringPondWaterRadii": "[]",
+          "terrain3dPilotChannelWater": "0",
+          "terrain3dPilotFordWater": "0",
+          "terrain3dPilotChannelWaterHalfWidths": "[]",
+          "terrain3dPilotHiddenRelief": "0",
+          "terrain3dPilotHiddenGroundLayers": "",
+          "terrain3dPilotContinuation": "panorama-owned-continuation",
+          "terrain3dPilotHorizonApron": "none",
+          "terrain3dPilotFarGroundProbe": "off",
+          "terrain3dPilotPanoramaFraming": "world-projected-horizon",
+          "terrain3dPilotSkirtBlend": "opaque-sculpt-edge",
+          "terrain3dPilotPanoramaFog": "excluded",
+          "terrain3dPilotPanoramaDepth": "screen-horizon-backdrop",
+          "terrain3dPilotLandmarkExpected": "10",
+          "terrain3dPilotWalkSurfaces": "0",
+          "terrain3dPilotLandmarkEmissive": "3",
+          "terrain3dPilotLandmarkSides": "{\"total\":{\"meshes\":10,\"closed\":10,\"open\":0,\"culled\":10,\"doubleSided\":0},\"mounts\":[{\"id\":\"west-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5.299,\"topY\":12.919},{\"id\":\"east-ridge-dish-cluster\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":4.995,\"topY\":12.615},{\"id\":\"dead-gap-charting-station\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.01,\"topY\":7.69},{\"id\":\"valley-cable-drum-yard\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.027,\"topY\":2.403},{\"id\":\"drone-recovery-beacon\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":0.045,\"topY\":6.363},{\"id\":\"rush-start-horn\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":-0.02,\"topY\":7.23},{\"id\":\"rush-relay-r1-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.58},{\"id\":\"rush-relay-r2-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.76},{\"id\":\"rush-relay-r3-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":11.94},{\"id\":\"rush-relay-r4-frame\",\"meshes\":1,\"closed\":1,\"open\":0,\"culled\":1,\"doubleSided\":0,\"reasons\":{\"closed\":1},\"baseY\":5,\"topY\":12.12}]}",
+          "terrain3dPilotLandmarks": "10",
+          "terrain3dPilotLandmarkSkipped": "0",
+          "terrain3dPilotLandmarkDiagnostics": "",
+          "terrain3dPilotLandmarkMounts": "[{\"id\":\"west-ridge-dish-cluster\",\"x\":-56,\"y\":5.298643112182617,\"z\":30},{\"id\":\"east-ridge-dish-cluster\",\"x\":56,\"y\":4.9947662353515625,\"z\":30},{\"id\":\"dead-gap-charting-station\",\"x\":0,\"y\":-0.010416525416076183,\"z\":18},{\"id\":\"valley-cable-drum-yard\",\"x\":-44,\"y\":-0.026742985472083092,\"z\":-26},{\"id\":\"drone-recovery-beacon\",\"x\":44,\"y\":0.04453114792704582,\"z\":-26},{\"id\":\"rush-start-horn\",\"x\":0,\"y\":-0.019563019275665283,\"z\":-50},{\"id\":\"rush-relay-r1-frame\",\"x\":-45,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r2-frame\",\"x\":-25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r3-frame\",\"x\":25,\"y\":5,\"z\":41},{\"id\":\"rush-relay-r4-frame\",\"x\":45,\"y\":5,\"z\":41}]",
+          "terrain3dPilotLandmarkMaterials": "[{\"id\":\"west-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"east-ridge-dish-cluster\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"dead-gap-charting-station\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"valley-cable-drum-yard\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"drone-recovery-beacon\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-start-horn\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r1-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r2-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r3-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0},{\"id\":\"rush-relay-r4-frame\",\"total\":1,\"transparent\":0,\"depthWriteDisabled\":0,\"emissiveIntensity\":[0.45,0.45],\"authoredEmissive\":[3,3],\"frontSided\":1,\"doubleSided\":0,\"roughness\":0.92,\"metalness\":0}]"
+        },
+        "remainingSceneChildren": 0
+      }
+    ],
+    "errors": []
+  }
+]

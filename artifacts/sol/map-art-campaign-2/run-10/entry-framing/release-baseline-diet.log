@@ -1,0 +1,17 @@
+[asset-diet] Herald dev-path art 1158214 bytes (1500000 byte ceiling).
+[asset-diet] 61 manifest GLBs 119498164 -> 17083880 bytes (86% cut); 7 plate-class PNGs 24705170 -> 3437116 bytes (86% cut); herald spot cuts 375470 bytes.
+[asset-diet] GLB bytes by manifest family:
+| Family | GLBs | Before bytes | After bytes | Cut | Policy |
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 5 | 36156888 | 4406152 | 88% | compress |
+| landmarks | 26 | 50092696 | 6873888 | 86% | compress |
+| panoramas | 5 | 2510108 | 436048 | 83% | compress |
+| town-buildings | 8 | 16651832 | 2452664 | 85% | compress |
+| town-era-variants | 0 | 0 | 0 | 0% | compress |
+| props | 16 | 9763068 | 2020176 | 79% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 1 | 4323572 | 894952 | 79% | compress |
+| finale | 0 | 0 | 0 | 0% | compress |
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.

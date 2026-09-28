@@ -1,0 +1,37 @@
+
+===== warmup — rc=0 5.9s =====
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.6s)
+
+  1 passed (5.4s)
+(node:12441) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup":0}
+OVERALL rc=0
+transcript -> artifacts/s2736/plain-gates.txt
+
+===== plain audio run — rc=0 14.3s =====
+
+Running 2 tests using 1 worker
+
+  ✓  1 [desktop-chrome] › artifacts/s2736/plain.spec.ts:5:1 › plain claim exposes the music control and keeps music off after reload (6.4s)
+  ✓  2 [mobile-chrome] › artifacts/s2736/plain.spec.ts:5:1 › plain claim exposes the music control and keeps music off after reload (6.1s)
+
+  2 passed (13.8s)
+(node:12568) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12626) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12626) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:12840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12840) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"plain audio run":0}
+OVERALL rc=0
+transcript -> artifacts/s2736/plain-gates.txt

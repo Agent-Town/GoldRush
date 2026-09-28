@@ -1,0 +1,218 @@
+{
+ "project": "desktop",
+ "scenario": "raw-river",
+ "startedAt": "2026-09-26T12:59:58.917Z",
+ "samples": [
+  {
+   "sim": 1.5,
+   "wave": 0,
+   "enemies": 0,
+   "gold": 0
+  },
+  {
+   "sim": 6.5,
+   "wave": 0,
+   "enemies": 0,
+   "gold": 0
+  },
+  {
+   "sim": 11.5,
+   "wave": 0,
+   "enemies": 2,
+   "gold": 0
+  },
+  {
+   "sim": 16.5,
+   "wave": 0,
+   "enemies": 1,
+   "gold": 0
+  },
+  {
+   "sim": 20.4,
+   "wave": 0,
+   "enemies": 1,
+   "gold": 0
+  },
+  {
+   "sim": 20.4,
+   "wave": 0,
+   "enemies": 1,
+   "gold": 0
+  },
+  {
+   "sim": 20.4,
+   "wave": 0,
+   "enemies": 1,
+   "gold": 0
+  },
+  {
+   "sim": 20.4,
+   "wave": 0,
+   "enemies": 1,
+   "gold": 0
+  },
+  {
+   "sim": 21.5,
+   "wave": 0,
+   "enemies": 1,
+   "gold": 0
+  }
+ ],
+ "events": [],
+ "requests": [],
+ "console": [],
+ "pageErrors": [],
+ "notes": [],
+ "bootMs": 2176,
+ "url": "http://127.0.0.1:5448/?contract=e10-river",
+ "atBoot": {
+  "frame": 14,
+  "sim": 0.9333333333333332,
+  "wave": 0,
+  "paused": false,
+  "runState": "playing",
+  "gold": 0,
+  "hero": {
+   "x": 0,
+   "z": 12
+  },
+  "enemies": 0,
+  "channeling": false,
+  "channels": [
+   {
+    "actorId": "0",
+    "channelNodeId": null,
+    "progress": 0,
+    "channeling": false
+   }
+  ],
+  "nodes": [],
+  "contract": {
+   "activeId": "e10-river",
+   "fallbackReason": null,
+   "name": "The River"
+  },
+  "secured": false
+ },
+ "rawAtBoot": {
+  "scores": "[{\"kills\":40,\"gold\":120,\"timeAlive\":240,\"at\":1000,\"waves\":8,\"secured\":true,\"contractId\":\"e10-last-claim\",\"profileName\":\"Robin\"}]",
+  "tapes": "{\"version\":1,\"tapes\":[],\"recording\":{\"contract\":\"e10-river\",\"meta\":{\"buildId\":\"dev\",\"viewVersion\":4,\"engineHash\":\"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\"era\":6}}}",
+  "history": null,
+  "keys": [
+   "gr.activeEpoch.v1",
+   "gr.firstClaim.done.v1",
+   "gr.meta.v1",
+   "gr.profile.v2",
+   "gr.profile.v2.robin.gr.activeEpoch.v1",
+   "gr.profile.v2.robin.gr.firstClaim.done.v1",
+   "gr.profile.v2.robin.gr.meta.v1",
+   "gr.profile.v2.robin.gr.research.epoch-1-frontier.v1",
+   "gr.profile.v2.robin.gr.research.epoch-10-deepsky.v1",
+   "gr.profile.v2.robin.gr.research.epoch-2-steamworks.v1",
+   "gr.profile.v2.robin.gr.research.epoch-3-voltage.v1",
+   "gr.profile.v2.robin.gr.research.epoch-4-motor.v1",
+   "gr.profile.v2.robin.gr.research.epoch-5-deepwater.v1",
+   "gr.profile.v2.robin.gr.research.epoch-6-atomic.v1",
+   "gr.profile.v2.robin.gr.research.epoch-7-signal.v1",
+   "gr.profile.v2.robin.gr.research.epoch-8-orbital.v1",
+   "gr.profile.v2.robin.gr.research.epoch-9-redfields.v1",
+   "gr.profile.v2.robin.gr.scores.v2",
+   "gr.profile.v2.robin.gr.story.firstBoot.v1",
+   "gr.profile.v2.robin.gr.story.tales.v1",
+   "gr.profile.v2.robin.gr.tapes.v1",
+   "gr.profile.v2.robin.gr.town.name.v1",
+   "gr.profile.v2.robin.gr.townWelcome.seen.v1",
+   "gr.research.epoch-1-frontier.v1",
+   "gr.research.epoch-10-deepsky.v1",
+   "gr.research.epoch-2-steamworks.v1",
+   "gr.research.epoch-3-voltage.v1",
+   "gr.research.epoch-4-motor.v1",
+   "gr.research.epoch-5-deepwater.v1",
+   "gr.research.epoch-6-atomic.v1",
+   "gr.research.epoch-7-signal.v1",
+   "gr.research.epoch-8-orbital.v1",
+   "gr.research.epoch-9-redfields.v1",
+   "gr.scores.v2",
+   "gr.story.tales.v1",
+   "gr.telemetry.devSend.v1",
+   "gr.town.name.v1",
+   "gr.townWelcome.seen.v1"
+  ]
+ },
+ "briefing": "The River",
+ "afterIdle": {
+  "frame": 5440,
+  "sim": 26.53333333333381,
+  "wave": 0,
+  "paused": false,
+  "runState": "playing",
+  "gold": 0,
+  "hero": {
+   "x": 0,
+   "z": 12
+  },
+  "enemies": 2,
+  "channeling": false,
+  "channels": [
+   {
+    "actorId": "0",
+    "channelNodeId": null,
+    "progress": 0,
+    "channeling": false
+   }
+  ],
+  "nodes": [],
+  "contract": {
+   "activeId": "e10-river",
+   "fallbackReason": null,
+   "name": "The River"
+  },
+  "secured": false
+ },
+ "rawAfterIdle": {
+  "scores": "[{\"kills\":40,\"gold\":120,\"timeAlive\":240,\"at\":1000,\"waves\":8,\"secured\":true,\"contractId\":\"e10-last-claim\",\"profileName\":\"Robin\"}]",
+  "tapes": "{\"version\":1,\"tapes\":[],\"recording\":{\"contract\":\"e10-river\",\"meta\":{\"buildId\":\"dev\",\"viewVersion\":4,\"engineHash\":\"642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a\",\"era\":6}}}",
+  "history": null,
+  "keys": [
+   "gr.activeEpoch.v1",
+   "gr.firstClaim.done.v1",
+   "gr.meta.v1",
+   "gr.profile.v2",
+   "gr.profile.v2.robin.gr.activeEpoch.v1",
+   "gr.profile.v2.robin.gr.claimLedger.discovered.v1",
+   "gr.profile.v2.robin.gr.firstClaim.done.v1",
+   "gr.profile.v2.robin.gr.meta.v1",
+   "gr.profile.v2.robin.gr.research.epoch-1-frontier.v1",
+   "gr.profile.v2.robin.gr.research.epoch-10-deepsky.v1",
+   "gr.profile.v2.robin.gr.research.epoch-2-steamworks.v1",
+   "gr.profile.v2.robin.gr.research.epoch-3-voltage.v1",
+   "gr.profile.v2.robin.gr.research.epoch-4-motor.v1",
+   "gr.profile.v2.robin.gr.research.epoch-5-deepwater.v1",
+   "gr.profile.v2.robin.gr.research.epoch-6-atomic.v1",
+   "gr.profile.v2.robin.gr.research.epoch-7-signal.v1",
+   "gr.profile.v2.robin.gr.research.epoch-8-orbital.v1",
+   "gr.profile.v2.robin.gr.research.epoch-9-redfields.v1",
+   "gr.profile.v2.robin.gr.scores.v2",
+   "gr.profile.v2.robin.gr.story.firstBoot.v1",
+   "gr.profile.v2.robin.gr.story.tales.v1",
+   "gr.profile.v2.robin.gr.tapes.v1",
+   "gr.profile.v2.robin.gr.town.name.v1",
+   "gr.profile.v2.robin.gr.townWelcome.seen.v1",
+   "gr.research.epoch-1-frontier.v1",
+   "gr.research.epoch-10-deepsky.v1",
+   "gr.research.epoch-2-steamworks.v1",
+   "gr.research.epoch-3-voltage.v1",
+   "gr.research.epoch-4-motor.v1",
+   "gr.research.epoch-5-deepwater.v1",
+   "gr.research.epoch-6-atomic.v1",
+   "gr.research.epoch-7-signal.v1",
+   "gr.research.epoch-8-orbital.v1",
+   "gr.research.epoch-9-redfields.v1",
+   "gr.scores.v2",
+   "gr.story.tales.v1",
+   "gr.telemetry.devSend.v1",
+   "gr.town.name.v1",
+   "gr.townWelcome.seen.v1"
+  ]
+ }
+}

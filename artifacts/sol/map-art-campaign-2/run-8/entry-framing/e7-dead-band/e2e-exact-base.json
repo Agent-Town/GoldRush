@@ -1,0 +1,22 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/exact-base-results",
+      "e2e/e7-roster.spec.ts:164",
+      "e2e/e7-signal-systems.spec.ts:104",
+      "e2e/e7-playbook-rows.spec.ts:218"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 216.63,
+    "log": "artifacts/sol/map-art-campaign-2/run-8/entry-framing/e7-dead-band/e2e-exact-base.log"
+  }
+]

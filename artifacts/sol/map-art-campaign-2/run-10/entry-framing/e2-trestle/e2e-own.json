@@ -1,0 +1,20 @@
+[
+  {
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/run-10/entry-framing/e2-trestle/own-results",
+      "e2e/e2-trestle.spec.ts"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 29.54,
+    "log": "artifacts/sol/map-art-campaign-2/run-10/entry-framing/e2-trestle/e2e-own.log"
+  }
+]

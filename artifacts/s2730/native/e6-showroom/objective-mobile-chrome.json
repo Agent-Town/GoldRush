@@ -1,0 +1,202 @@
+{
+  "url": "http://127.0.0.1:5317/?contract=e6-showroom&timescale=4",
+  "sim": 99.73333333333493,
+  "wave": 3,
+  "hp": 0,
+  "gold": 0,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "hero": {
+    "x": 4.448169490298479,
+    "y": 0.8799999928474427,
+    "z": 6.141314565146401
+  },
+  "defences": [],
+  "hollowCrossing": {
+    "declared": false,
+    "stage": "launch",
+    "routeId": null,
+    "onGlowBridge": false,
+    "radiationDamageDealt": 0
+  },
+  "picnicHold": [],
+  "showroomCaptureObjective": {
+    "declared": true,
+    "captures": 1,
+    "quota": 6,
+    "complete": false,
+    "objectiveAllowsSecure": false
+  },
+  "wrangle": {
+    "enabled": true,
+    "windDownSeconds": 8,
+    "windDownTicks": 240,
+    "captureRadius": 2.2,
+    "exhaustedSpeedMultiplier": 0.2,
+    "active": [
+      {
+        "enemyId": 0,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 227,
+        "resets": 0
+      },
+      {
+        "enemyId": 1,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 227,
+        "resets": 0
+      },
+      {
+        "enemyId": 2,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 223,
+        "resets": 2
+      },
+      {
+        "enemyId": 3,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 227,
+        "resets": 0
+      },
+      {
+        "enemyId": 4,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 227,
+        "resets": 0
+      },
+      {
+        "enemyId": 6,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 227,
+        "resets": 0
+      },
+      {
+        "enemyId": 7,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 238,
+        "resets": 2
+      },
+      {
+        "enemyId": 8,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 163,
+        "resets": 0
+      },
+      {
+        "enemyId": 9,
+        "variantId": "feral_toaster",
+        "state": "exhausted",
+        "remainingTicks": 0,
+        "resets": 0
+      },
+      {
+        "enemyId": 11,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 227,
+        "resets": 0
+      },
+      {
+        "enemyId": 14,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 167,
+        "resets": 0
+      },
+      {
+        "enemyId": 15,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 167,
+        "resets": 0
+      },
+      {
+        "enemyId": 16,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 167,
+        "resets": 0
+      },
+      {
+        "enemyId": 17,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 221,
+        "resets": 2
+      },
+      {
+        "enemyId": 19,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 218,
+        "resets": 2
+      }
+    ],
+    "pen": {
+      "roster": [
+        {
+          "variantId": "lawn_shepherd",
+          "count": 1
+        }
+      ],
+      "total": 1,
+      "tickSeconds": 15,
+      "goldPerMachine": 1,
+      "incomeGranted": 0
+    }
+  },
+  "interferenceFront": null,
+  "broadcastMirror": null,
+  "playbookUse": null,
+  "e7Signal": {
+    "enabled": false,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "repairs": 0,
+  "tapeShelf": []
+}

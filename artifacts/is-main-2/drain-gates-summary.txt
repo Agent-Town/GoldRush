@@ -1,0 +1,29 @@
+branch fix/is-main-2 tip 70bba488e 2026-09-26 04:47Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/im2.json
+scratch store at the store's main 5793a96
+chain base 93e357c57
+merged 20dc211ea
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a (pinned ca12dc2a4cb327689084adbe0664bc2c680b6a8e8fa452fc806790e84a9cdda1)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97716404 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34352207 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (333.8s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 163 ℹ fail 0 
+ledger battery start 04:55Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 05:00Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   24 passed (1.9m)  05:02Z
+battery start 05:02Z
+battery: rc=1 ℹ tests 1037 ℹ pass 1030 ℹ fail 2 ℹ skipped 5  05:21Z
+✖ rotation registry stays outside the engine identity corpus (578.474958ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (134.46125ms)
+dirt after battery: 0
+im2-PREP-DONE
+verdict: clean
+hash at pin time: 642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a
+pin #66 `642edcf6`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/is-main-2.md

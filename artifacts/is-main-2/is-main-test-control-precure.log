@@ -1,0 +1,130 @@
+✔ 1 CONTROL VALIDITY: the old comparison runs by the real path and is silent by a symlinked one (57.090708ms)
+✔ 2 CURE: isMain runs main() by the real path and by the symlinked one (58.229875ms)
+✔ 3 NO ARGV: the unguarded old line throws on import; isMain answers "not main" (59.727ms)
+✔ 4 A REAL GUARD: source-pointer-guard through a symlinked path still reds a rotted pointer (124.651459ms)
+✔ 5 A REAL IMPORT: dry-board-probe.mjs imports under node -e and does not run (29.959291ms)
+✔ 6 UNIT EDGES: missing, nonexistent and symlinked argv[1]; a URL that is not a file (0.360208ms)
+✔ 7 COVERAGE: eleven import isMain, two carry a byte-identical copy, none keeps the swept spelling (16.2335ms)
+✖ 8 THE TWENTY-THREE: nineteen import isMain, four carry the pinned copy, the two that threw now import (0.624833ms)
+✖ 9 CENSUS: every reader of process.argv[1] in tool code is isMain, a pinned copy, or a named census entry (29.240458ms)
+✔ 10 SPELLINGS: every spelling the census forbids is true by the real path and false by a symlinked one (0.8685ms)
+✖ 11a THE PRODUCTION DOOR: server/ledger/serve.mjs runs main through a symlinked path; its pre-cure line did not (174.209417ms)
+✖ 11b A NAMED GUARD: ruling-propagation-guard reds a stale refusal by both spellings; its pre-cure line was silent (61.792666ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 8
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 661.101042
+
+✖ failing tests:
+
+test at scripts/is-main.test.mjs:421:1
+✖ 8 THE TWENTY-THREE: nineteen import isMain, four carry the pinned copy, the two that threw now import (0.624833ms)
+  AssertionError [ERR_ASSERTION]: scripts/blocker-panel-closed-guard.mjs imports isMain exactly once
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-im2/scripts/is-main.test.mjs:427:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/is-main.test.mjs:448:1
+✖ 9 CENSUS: every reader of process.argv[1] in tool code is isMain, a pinned copy, or a named census entry (29.240458ms)
+  AssertionError [ERR_ASSERTION]: these read process.argv[1] outside isMain: to decide "am I the entry point", import { isMain } from ./is-main.mjs (a pinned copy if something relocates the file without it); otherwise name the reader in a census table with its reason
+  + actual - expected
+  
+  + [
+  +   'scripts/blocker-panel-closed-guard.mjs:237',
+  +   'scripts/desk-state-audit.mjs:264',
+  +   'scripts/e4-motor-ride.mjs:87',
+  +   'scripts/e7-playbook-digest.mjs:116',
+  +   'scripts/evidence-budget.mjs:199',
+  +   'scripts/evidence-offload.mjs:469',
+  +   'scripts/evidence-readers.mjs:518',
+  +   'scripts/frontier-registry.mjs:122',
+  +   'scripts/gate-battery.mjs:240',
+  +   'scripts/gazette-backfill-sweep.mjs:323',
+  +   'scripts/review-evidence-audit.mjs:214',
+  +   'scripts/row-quote-currency.mjs:452',
+  +   'scripts/ruling-propagation-guard.mjs:223',
+  +   'scripts/second-rider.mjs:315',
+  +   'scripts/spawn-bound-census.mjs:351',
+  +   'scripts/stream-director.mjs:139',
+  +   'scripts/stream-showcase.mjs:74',
+  +   'scripts/terrain-contract-scope.mjs:124',
+  +   'scripts/ticker-stats.mjs:193'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-im2/scripts/is-main.test.mjs:467:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 'scripts/blocker-panel-closed-guard.mjs:237', 'scripts/desk-state-audit.mjs:264', 'scripts/e4-motor-ride.mjs:87', 'scripts/e7-playbook-digest.mjs:116', 'scripts/evidence-budget.mjs:199', 'scripts/evidence-offload.mjs:469', 'scripts/evidence-readers.mjs:518', 'scripts/frontier-registry.mjs:122', 'scripts/gate-battery.mjs:240', 'scripts/gazette-backfill-sweep.mjs:323', 'scripts/review-evidence-audit.mjs:214', 'scripts/row-quote-currency.mjs:452', 'scripts/ruling-propagation-guard.mjs:223', 'scripts/second-rider.mjs:315', 'scripts/spawn-bound-census.mjs:351', 'scripts/stream-director.mjs:139', 'scripts/stream-showcase.mjs:74', 'scripts/terrain-contract-scope.mjs:124', 'scripts/ticker-stats.mjs:193' ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/is-main.test.mjs:529:1
+✖ 11a THE PRODUCTION DOOR: server/ledger/serve.mjs runs main through a symlinked path; its pre-cure line did not (174.209417ms)
+  AssertionError [ERR_ASSERTION]: by a symlinked path the door must refuse exactly the same:
+  
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-im2/scripts/is-main.test.mjs:538:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at scripts/is-main.test.mjs:563:1
+✖ 11b A NAMED GUARD: ruling-propagation-guard reds a stale refusal by both spellings; its pre-cure line was silent (61.792666ms)
+  AssertionError [ERR_ASSERTION]: by a symlinked path the cured guard must red exactly the same:
+  
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/wt-im2/scripts/is-main.test.mjs:580:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

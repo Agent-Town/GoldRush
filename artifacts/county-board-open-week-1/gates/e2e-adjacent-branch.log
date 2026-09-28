@@ -1,0 +1,118 @@
+(node:19078) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 52 tests using 1 worker
+
+
+(node:19148) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+dev rng seeds watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+dev claim room watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+live standing inside its week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:164:1 › a run ridden on last week and submitted after Monday 00:00 UTC is refused, and the player reads why
+[5/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+dev the-claim watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+dev e1-drill-yard watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[7/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+dev e1-dry-gulch watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[8/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+dev e1-night-shift watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[9/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+dev e1-twin-banks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[10/52] [desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+[desktop-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+dev e1-baron watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[11/52] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[12/52] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[13/52] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[14/52] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[15/52] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[16/52] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[17/52] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[18/52] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[19/52] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[20/52] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[21/52] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[22/52] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[23/52] [desktop-chrome] › e2e/tl-02-public-stats.spec.ts:136:1 › GET /api/stats returns populated aggregate counters
+[24/52] [desktop-chrome] › e2e/tl-02-public-stats.spec.ts:166:1 › GET /api/stats returns graceful empty states when bound with no runs or unbound
+[25/52] [desktop-chrome] › e2e/tl-02-public-stats.spec.ts:193:1 › GET /api/stats guards methods and CORS preflight
+[26/52] [desktop-chrome] › e2e/tl-02-public-stats.spec.ts:203:1 › GET /api/stats falls back to empty state on KV errors
+
+(node:22196) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[27/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:63:1 › the run seed feeds the wave and upgrade RNGs per contract, and a dev pin keeps precedence
+dev rng seeds watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[28/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:88:1 › a plain boot opens the Claim room and rides it on the open rotation seed, host and rider agreeing
+dev claim room watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[29/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:141:1 › a secured live run submits the seed it rode, and the real county door takes it inside its week
+live standing inside its week watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[30/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:164:1 › a run ridden on last week and submitted after Monday 00:00 UTC is refused, and the player reads why
+[31/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › the-claim: a plain launch rides the resolver's seed
+dev the-claim watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[32/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-drill-yard: a plain launch rides the resolver's seed
+dev e1-drill-yard watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[33/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-dry-gulch: a plain launch rides the resolver's seed
+dev e1-dry-gulch watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[34/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-night-shift: a plain launch rides the resolver's seed
+dev e1-night-shift watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[35/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-twin-banks: a plain launch rides the resolver's seed
+dev e1-twin-banks watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[36/52] [mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+[mobile-chrome] › e2e/live-seed-rotation.spec.ts:188:3 › e1-baron: a plain launch rides the resolver's seed
+dev e1-baron watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[37/52] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[38/52] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[39/52] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[40/52] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[41/52] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[42/52] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[43/52] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[44/52] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[45/52] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[46/52] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[47/52] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[48/52] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[49/52] [mobile-chrome] › e2e/tl-02-public-stats.spec.ts:136:1 › GET /api/stats returns populated aggregate counters
+[50/52] [mobile-chrome] › e2e/tl-02-public-stats.spec.ts:166:1 › GET /api/stats returns graceful empty states when bound with no runs or unbound
+[51/52] [mobile-chrome] › e2e/tl-02-public-stats.spec.ts:193:1 › GET /api/stats guards methods and CORS preflight
+[52/52] [mobile-chrome] › e2e/tl-02-public-stats.spec.ts:203:1 › GET /api/stats falls back to empty state on KV errors
+  52 passed (3.6m)

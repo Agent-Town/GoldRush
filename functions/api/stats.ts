@@ -1,3 +1,5 @@
+import { localhostOriginAllowed, type LocalhostOriginsEnv } from './_cors';
+
 type KVListResult = {
   keys: { name: string }[];
   list_complete: boolean;
@@ -10,7 +12,7 @@ type KVNamespaceLike = {
   list(options?: { prefix?: string; cursor?: string }): Promise<KVListResult>;
 };
 
-type StatsEnv = {
+type StatsEnv = LocalhostOriginsEnv & {
   TELEMETRY?: KVNamespaceLike; ACCOUNTS?: KVNamespaceLike;
 };
 
@@ -52,7 +54,7 @@ type Stats = {
 };
 
 export async function onRequest(context: StatsContext): Promise<Response> {
-  const cors = corsHeaders(context.request);
+  const cors = corsHeaders(context.request, context.env);
   if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'GET') return error(cors, 405, 'method_not_allowed', 'GET only');
@@ -196,7 +198,7 @@ function lastUtcDays(count: number): string[] {
   return Array.from({ length: count }, (_, index) => new Date(Date.now() - index * 24 * 60 * 60 * 1000).toISOString().slice(0, 10));
 }
 
-function corsHeaders(request: Request): Record<string, string> | null {
+function corsHeaders(request: Request, env: LocalhostOriginsEnv): Record<string, string> | null {
   const origin = request.headers.get('Origin');
   const headers: Record<string, string> = {
     'Access-Control-Allow-Headers': 'content-type',
@@ -205,7 +207,7 @@ function corsHeaders(request: Request): Record<string, string> | null {
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || localhostOriginAllowed(origin, env)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;

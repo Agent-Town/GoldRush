@@ -1,0 +1,2665 @@
+{
+  "summary": {
+    "label": "with-cradle-0-45",
+    "blockers": [
+      {
+        "id": "mare-claim:earthrise-listening-array",
+        "x": 0,
+        "z": 56,
+        "halfX": 2.952,
+        "halfZ": 1.368
+      },
+      {
+        "id": "mare-claim:lava-tube-survey-gantry",
+        "x": -42,
+        "z": 28,
+        "halfX": 2.558,
+        "halfZ": 2.075
+      },
+      {
+        "id": "mare-claim:regolith-core-yard",
+        "x": 22,
+        "z": 18,
+        "halfX": 2.71,
+        "halfZ": 2.017
+      },
+      {
+        "id": "mare-claim:west-rim-debris-catcher",
+        "x": -56,
+        "z": 20,
+        "halfX": 2.053,
+        "halfZ": 1.785
+      },
+      {
+        "id": "mare-claim:east-rim-debris-catcher",
+        "x": 56,
+        "z": 20,
+        "halfX": 2.053,
+        "halfZ": 1.785
+      },
+      {
+        "id": "far-side:probe-recovery-cradle",
+        "x": 0,
+        "z": 45,
+        "halfX": 2.52,
+        "halfZ": 1.8
+      },
+      {
+        "id": "far-side:west-comms-shadow-marker",
+        "x": -42,
+        "z": 24,
+        "halfX": 1.08,
+        "halfZ": 1.08
+      },
+      {
+        "id": "far-side:east-suit-cache-rack",
+        "x": 42,
+        "z": -24,
+        "halfX": 2.705,
+        "halfZ": 1.691
+      },
+      {
+        "id": "far-side:far-horizon-listening-post",
+        "x": 0,
+        "z": 56,
+        "halfX": 1.512,
+        "halfZ": 1.512
+      }
+    ],
+    "zone": {
+      "id": "listening-probe-crater",
+      "description": "A half-buried, unmarked old-world probe waits at the far end of the crossing.",
+      "minX": -14,
+      "maxX": 14,
+      "minZ": 38,
+      "maxZ": 52
+    },
+    "decisions": 47,
+    "terminal": true,
+    "offered": false,
+    "recoveredAt": null,
+    "firstWithin2m2OfZoneAt": null,
+    "finalWave": 28,
+    "finalHero": {
+      "x": 0,
+      "z": -36
+    },
+    "finalRecovered": false,
+    "finalRefusals": {
+      "outOfReach": 47,
+      "alreadyRecovered": 0
+    },
+    "finalCrossing": {
+      "zones": [
+        "listening-probe-crater"
+      ],
+      "required": 4,
+      "reached": [],
+      "credited": 0,
+      "breathlessEntries": 0,
+      "windowWaves": 4,
+      "window": 7,
+      "creditedThisWindow": 0,
+      "windowHeldEntries": 0,
+      "complete": false
+    },
+    "outcome": {
+      "secured": false,
+      "waves": 28,
+      "timeMs": 860100,
+      "gold": 0,
+      "kills": 335,
+      "calls": 47,
+      "defaultedPicks": 16,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:ad9294c7"
+    },
+    "closestApproach": {
+      "d": 0,
+      "wave": 0,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 0,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    "maxZ": -36
+  },
+  "rows": [
+    {
+      "d": 0,
+      "wave": 0,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 0,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 1,
+      "wave": 0,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 1,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 2,
+      "wave": 0,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 3,
+      "wave": 1,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 3,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 4,
+      "wave": 1,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 4,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 5,
+      "wave": 2,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 5,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 6,
+      "wave": 2,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 6,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 7,
+      "wave": 3,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 7,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 8,
+      "wave": 3,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 8,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 9,
+      "wave": 3,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 9,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 10,
+      "wave": 4,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 10,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 11,
+      "wave": 4,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 11,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 12,
+      "wave": 5,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 12,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 13,
+      "wave": 5,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 13,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 14,
+      "wave": 6,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 14,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 15,
+      "wave": 6,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 15,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 16,
+      "wave": 7,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 16,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 17,
+      "wave": 7,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 17,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 18,
+      "wave": 8,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 18,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 19,
+      "wave": 9,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 19,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 20,
+      "wave": 9,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 20,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 21,
+      "wave": 10,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 21,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 22,
+      "wave": 10,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 22,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 23,
+      "wave": 11,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 23,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 24,
+      "wave": 11,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 24,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 25,
+      "wave": 12,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 25,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 26,
+      "wave": 13,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 26,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 27,
+      "wave": 13,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 27,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 28,
+      "wave": 14,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 28,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 29,
+      "wave": 15,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 29,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 30,
+      "wave": 15,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 30,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 31,
+      "wave": 16,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 31,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 32,
+      "wave": 17,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 32,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 33,
+      "wave": 17,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 33,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 34,
+      "wave": 18,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 34,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 35,
+      "wave": 19,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 35,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 36,
+      "wave": 20,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 36,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 37,
+      "wave": 21,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 37,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 38,
+      "wave": 21,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 38,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 39,
+      "wave": 22,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 39,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 40,
+      "wave": 23,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 40,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 41,
+      "wave": 24,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 41,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 42,
+      "wave": 24,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 42,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 43,
+      "wave": 25,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 43,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 44,
+      "wave": 26,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 44,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 45,
+      "wave": 27,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 45,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 46,
+      "wave": 28,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 46,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    }
+  ]
+}

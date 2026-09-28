@@ -1,0 +1,23 @@
+[
+  {
+    "label": "census",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e6-glow-mesa-census",
+      "e2e/map-census.spec.ts",
+      "--grep",
+      "e6-glow-mesa census|e2-pressure-garden census"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 14.86,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e6-glow-mesa-census.log"
+  }
+]

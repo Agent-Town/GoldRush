@@ -1,0 +1,60 @@
+[
+  {
+    "name": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "env": {},
+    "code": 0,
+    "seconds": 5.743
+  },
+  {
+    "name": "build-default",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "env": {},
+    "code": 0,
+    "seconds": 18.085
+  },
+  {
+    "name": "build-full",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "env": {
+      "GR_RELEASE": "full"
+    },
+    "code": 0,
+    "seconds": 18.35
+  },
+  {
+    "name": "build-e1",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "env": {
+      "GR_RELEASE": "e1"
+    },
+    "code": 0,
+    "seconds": 8.395
+  },
+  {
+    "name": "first-town-payload",
+    "command": [
+      "node",
+      "scripts/first-town-payload.mjs"
+    ],
+    "env": {},
+    "code": 0,
+    "seconds": 0.041
+  }
+]

@@ -1,0 +1,46 @@
+1280 before 248 78 []
+1280 after 248 78 []
+390 before 102 56 []
+390 after 102 56 []
+e1-twin-banks 1280 before 10.033333333333308 []
+e1-twin-banks 1280 after 10.033333333333308 []
+e1-twin-banks 390 before 10.033333333333308 []
+e1-twin-banks 390 after 10.033333333333308 []
+1280 before 121 87 []
+1280 after 121 87 []
+390 before 50 66 []
+390 after 50 65 []
+e2-trestle 1280 before 10.033333333333308 []
+e2-trestle 1280 after 10.033333333333308 []
+e2-trestle 390 before 10.033333333333308 []
+e2-trestle 390 after 10.033333333333308 []
+1280 before 190 70 []
+1280 after 190 70 []
+390 before 78 52 []
+390 after 78 52 []
+e7-relay-rush 1280 before 10.033333333333308 []
+e7-relay-rush 1280 after 10.033333333333308 []
+e7-relay-rush 390 before 10.033333333333308 []
+e7-relay-rush 390 after 10.033333333333308 []
+1280 before 152 86 []
+1280 after 152 86 []
+390 before 63 67 []
+390 after 63 67 []
+1280 before 123 76 []
+1280 after 123 77 []
+390 before 50 58 []
+390 after 50 58 []
+1280 before 134 74 []
+1280 after 134 74 []
+390 before 55 56 []
+390 after 55 56 []
+Traceback (most recent call last):
+  File "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/sol/map-art-campaign-2/run-10/code-presentation/boards.py", line 1, in <module>
+    from PIL import Image, ImageDraw, ImageFont
+ModuleNotFoundError: No module named 'PIL'
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/opt/homebrew/Cellar/python@3.14/3.14.2_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['python3', 'artifacts/sol/map-art-campaign-2/run-10/code-presentation/boards.py']' returned non-zero exit status 1.

@@ -1,0 +1,50 @@
+[
+  {
+    "map": "e9-dome-basin",
+    "command": [
+      "node",
+      "--test",
+      "scripts/deploy-mirror-allowlist.test.mjs"
+    ],
+    "pass": 1,
+    "fail": 0,
+    "logSha256": "ab64779d57da7b4cc81c8c8643f3382805d0548fce7d6d23ae5d277eb96d3628",
+    "output": "mirror closure: ledger 2204 files; assay 2906 files; engine 656 files; total 3161\n\u2714 droplet mirror ships the runtime closure and deletes only unprotected spillover (1208.622916ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 1\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 1304.73925\n"
+  },
+  {
+    "map": "e9-seed-run",
+    "command": [
+      "node",
+      "--test",
+      "scripts/deploy-mirror-allowlist.test.mjs"
+    ],
+    "pass": 1,
+    "fail": 0,
+    "logSha256": "a36da611fe7a989bc773630550e696e6c5dc68fa91964ecb9b2ffe5b5a313350",
+    "output": "mirror closure: ledger 2204 files; assay 2906 files; engine 657 files; total 3162\n\u2714 droplet mirror ships the runtime closure and deletes only unprotected spillover (1213.447375ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 1\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 1326.553041\n"
+  },
+  {
+    "map": "e9-devils-alley",
+    "command": [
+      "node",
+      "--test",
+      "scripts/deploy-mirror-allowlist.test.mjs"
+    ],
+    "pass": 1,
+    "fail": 0,
+    "logSha256": "1998a2a95533ad38dee5ddd29bd0f5cccb75e8ea37cc4a26c7e63f24a48bbd02",
+    "output": "mirror closure: ledger 2204 files; assay 2906 files; engine 658 files; total 3163\n\u2714 droplet mirror ships the runtime closure and deletes only unprotected spillover (1288.519917ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 1\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 1397.883208\n"
+  },
+  {
+    "map": "e9-old-canal",
+    "command": [
+      "node",
+      "--test",
+      "scripts/deploy-mirror-allowlist.test.mjs"
+    ],
+    "pass": 1,
+    "fail": 0,
+    "logSha256": "e9bdb169285c8b4bb8f36bfbeb9df89ee0169921c5f70885d35909c656f87c55",
+    "output": "mirror closure: ledger 2204 files; assay 2906 files; engine 659 files; total 3164\n\u2714 droplet mirror ships the runtime closure and deletes only unprotected spillover (1275.683958ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 1\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 1385.796542\n"
+  }
+]

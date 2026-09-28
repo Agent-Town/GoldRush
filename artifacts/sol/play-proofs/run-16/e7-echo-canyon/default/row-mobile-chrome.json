@@ -1,0 +1,78 @@
+{
+  "project": "mobile-chrome",
+  "contract": "e7-echo-canyon",
+  "name": "Echo Canyon",
+  "secureWave": 20,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e7-echo-canyon secureWave=20"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "board": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "not run"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 0,
+  "simAtEnd": 0,
+  "runStateAtEnd": "",
+  "hpAtEnd": 0,
+  "goldAtEnd": 0,
+  "killsAtEnd": 0,
+  "peakHotBoilers": 0,
+  "powerBanksPeak": {},
+  "builds": [],
+  "upgrades": [
+    "double_tap_coil"
+  ],
+  "samples": [
+    {
+      "t": 10,
+      "wave": 0,
+      "hp": 100,
+      "gold": 0,
+      "kills": 0,
+      "x": 14.1,
+      "z": -5.1,
+      "alive": 2,
+      "seams": 2
+    },
+    {
+      "t": 40.7,
+      "wave": 1,
+      "hp": 100,
+      "gold": 50,
+      "kills": 12,
+      "x": 13.2,
+      "z": -14.7,
+      "alive": 5,
+      "seams": 2
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-7-signal",
+    "strategy=gather-and-extend",
+    "engine secureWave=20 cadenceMult=1",
+    "home=0.0,-16.0 circuit=[[-4,-20],[4,-20],[4,-12],[-4,-12]]"
+  ],
+  "at": "2026-09-28T02:36:41.242Z",
+  "rawEvidence": "/Users/robin/.goldrush/play-proofs/run-16/default/e7-echo-canyon/row-mobile-chrome.json",
+  "sampleCount": 4,
+  "packagingNote": "Timeout bypassed normal afterEach compaction; exact original row preserved externally after command completion."
+}

@@ -71,6 +71,8 @@ test('loads Twin Banks contract with two fords, two build zones, and one loss st
       water: diagnostics.terrain.water,
       samples: {
         center: window.__GR_TEST__?.terrainSample(0, 0),
+        northChannel: window.__GR_TEST__?.terrainSample(0, 2),
+        southChannel: window.__GR_TEST__?.terrainSample(0, -2),
         westFord: window.__GR_TEST__?.terrainSample(-16, 0),
         eastFord: window.__GR_TEST__?.terrainSample(16, 0),
       },
@@ -93,7 +95,11 @@ test('loads Twin Banks contract with two fords, two build zones, and one loss st
   expect(snapshot.water?.riverPresent).toBe(true);
   expect(snapshot.water?.fordPresent).toBe(true);
   expect(snapshot.water?.fordStones).toBe(14);
-  expect(snapshot.samples.center?.zone).toBe('river');
+  // HM-06: the owner ratified the two channels and the dry, unbuildable central plait.
+  expect(snapshot.samples.center).toMatchObject({ zone: 'bank', walkable: true });
+  expect(snapshot.contract.tileParams.buildZones?.some((zone) => zone.minX <= 0 && zone.maxX >= 0 && zone.minZ <= 0 && zone.maxZ >= 0)).toBe(false);
+  expect(snapshot.samples.northChannel).toMatchObject({ zone: 'river', walkable: false });
+  expect(snapshot.samples.southChannel).toMatchObject({ zone: 'river', walkable: false });
   expect(snapshot.samples.westFord?.zone).toBe('ford');
   expect(snapshot.samples.eastFord?.zone).toBe('ford');
   await shot(page, testInfo, 'both-bank-base');
@@ -107,8 +113,24 @@ test('builds sluices and stockpiles on both banks against one gold pool', async 
 
   await placeBuildableAt(page, 'sluice', -16, 7);
   await placeBuildableAt(page, 'sluice', 16, -7);
-  await placeBuildableAt(page, 'stockpile', -16, 10);
-  await placeBuildableAt(page, 'stockpile', 16, -10);
+  // RE-PINNED 2026-09-24 (F-SEF2-5, task e1-spec-truth-1). WAS (-16, 10) and (16, -10), and both have
+  // been UNBUILDABLE since `5e527a28b` (2026-07-19, the landmark-collision landing the owner ordered
+  // as F-N4, "walk-through landmarks: solidity by data") gave the `twin-banks` mounts real footprints.
+  // (-16, 10) sits inside `north_bank_winch` at (-16, 10.7), 3.096 by 1.728 m (z 9.836..11.564); (16,
+  // -10) sits inside `south_bank_winch` at (16, -10.7), 3.096 by 1.767 m (z -11.584..-9.817). Both are
+  // padded by `Balance.hero.radius + 0.08`, so `Terrain.sample` returns walkable: false and
+  // `build.ghostValid` never turns true. Measured on both projects (artifacts/e1-spec-truth-1/
+  // probe.json): walkable false at both old targets, true and unblocked at both new ones.
+  //
+  // WHY -15 AND NOT -13 ON THE SOUTH BANK: `placeBuildableAt` stands the hero 2 m NORTH of its target
+  // and the keyboard-fallback ghost is hero.z - 2 (BuildSystem.updateGhostPosition), so the hero's
+  // stand point has to be clear too. North of the river that offset walks AWAY from the winch; south
+  // of it the offset walks INTO it. Standing at (16, -11) the hero is inside the south winch's padded
+  // footprint, collision pushes it to z -12.2, and the ghost lands at (16, -14) while the line says
+  // -13. At (16, -15) the hero stands clear at (16, -13) and the ghost lands exactly on the target,
+  // identically on desktop and mobile.
+  await placeBuildableAt(page, 'stockpile', -16, 13);
+  await placeBuildableAt(page, 'stockpile', 16, -15);
 
   const build = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build);
   expect(build.sluices).toBe(2);
@@ -124,7 +146,17 @@ test('routes enemies through both west and east fords', async ({ page }, testInf
   const errors = await openGame(page, '?debug&contract=e1-twin-banks&timescale=12&nowaves&nokill&nolevel&nopause&seed=e1-twin-route');
   await setBalance(page, 'enemy.speed', 3.8);
   await assertFordRoute(page, -16);
-  await assertFordRoute(page, 16);
+  // RE-PINNED 2026-09-24 (F-TB-2, task e1-spec-truth-1). The east arm used to spawn ON the ford's own
+  // x, at (16, 14), which is inside `north_bank_homestead` at (13.5, 14.2), 5.184 by 4.018 m rotated
+  // -0.1 rad (x 10.72..16.28, z 11.94..16.46). A body that starts inside a solid footprint probes only
+  // 0.4 and 0.6 m for an escape and the nearest walkable ground is 0.86 m east, so it never moves:
+  // measured 1,740 samples on desktop and 1,741 on mobile over the same 15 s window, zero ford
+  // samples, final position bit-identical to the spawn point. One metre east, at (17, 14), the same
+  // enemy is on open bank and crosses the east ford to the hero in 887 ms (desktop) / 901 ms (mobile)
+  // with 72 ford samples and 0 deep samples. The FORD WINDOW stays centred on the ford itself (x 16,
+  // +-3.2), so this measures the crossing and not the spawn. The west arm is untouched: it spawns
+  // clear of every mount and reaches the hero in 871 ms / 886 ms with 40 ford samples.
+  await assertFordRoute(page, 16, 17);
   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(-16, 14));
   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(16, 14));
   await page.waitForTimeout(450);
@@ -190,6 +222,10 @@ test('north marker is not the run loss stake, south overrun still ends the run, 
 });
 
 test('seeded Twin Banks diagnostics are stable', async ({ page }) => {
+  // Two boots, each now waiting for the mounted sculpt's height source before it samples (see
+  // `determinismSnapshot`): the GLB pilot can take several seconds per boot on a loaded host, which
+  // the 30 s default was never sized for. A longer budget changes no assertion.
+  test.setTimeout(120_000);
   const errors = await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
   const first = await determinismSnapshot(page);
   await openGame(page, '?debug&contract=e1-twin-banks&timescale=3&nolevel&nowaves&seed=e1-twin-stable');
@@ -198,9 +234,14 @@ test('seeded Twin Banks diagnostics are stable', async ({ page }) => {
   expectClean(errors);
 });
 
-async function assertFordRoute(page: Page, fordX: number): Promise<void> {
+/**
+ * `fordX` is the ford whose crossing is being measured (the +-3.2 window below); `spawnX` is where the
+ * body starts. They were the same number until 2026-09-24, when the east arm's spawn had to move off
+ * the `north_bank_homestead` footprint (F-TB-2) without moving the window off the ford.
+ */
+async function assertFordRoute(page: Page, fordX: number, spawnX: number = fordX): Promise<void> {
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
-  await expect(page.evaluate((x) => window.__GR_TEST__?.spawnEnemyAt(x, 14), fordX)).resolves.toBe(true);
+  await expect(page.evaluate((x) => window.__GR_TEST__?.spawnEnemyAt(x, 14), spawnX)).resolves.toBe(true);
   await page.evaluate((x) => {
     const w = window as unknown as {
       __twinRoute?: { deepSamples: number; fordSamples: number; reached: boolean; samples: number };
@@ -231,12 +272,47 @@ async function assertFordRoute(page: Page, fordX: number): Promise<void> {
   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);
 }
 
+/**
+ * WAIT FOR THE HEIGHT SOURCE BEFORE READING A HEIGHT (F-SEF2-5c, test-truth-2, 2026-09-25).
+ *
+ * `heroPos.y` is a VISUAL height: `Game.syncHeroVisualHeight` sets it every frame from
+ * `Terrain.visualY`, and on Twin Banks the source behind `visualY` changes twice after boot. The
+ * mounted pilot (`src/world/Terrain3dClaimPilot.ts`) installs the sculpt's baked grid when the terrain
+ * GLB lands, then the landmark walk surfaces when the landmark bodies land, and only after that second
+ * install does `publish()` write `data-terrain3d-pilot-state="ready"` with
+ * `data-terrain3d-pilot-height-source="baked-grid"` on the canvas. Before this wait the snapshot was
+ * taken at `frame > 12` and nothing else, so a boot that sampled while the pilot was still `loading`
+ * read the painted fallback: the red measured on main was hero y 0.02688779068849728 (fallback) against
+ * 0.3672938919067383 (mounted), one boot of each, and Astra reproduced it 10 of 10 once its A/B proxy
+ * changed the boot timing (`artifacts/sol/map-art-campaign-2/run-11/braid/e1-twin-banks/report.md`).
+ *
+ * So each boot waits for the pilot to leave `loading` (to `ready`, or to a terminal `lite`/`failed`/
+ * `off`), lets two more frames render so the hero has been re-seated on the final source, and puts
+ * the pilot state and height source INTO the snapshot: two boots of one seed are equal only if they
+ * sampled the same surface, and a boot that demoted to the painted map says so in the diff instead of
+ * surfacing as an unexplained y.
+ */
 async function determinismSnapshot(page: Page): Promise<unknown> {
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 12);
+  await page.waitForFunction(
+    () => {
+      const state = document.querySelector<HTMLCanvasElement>('#game-canvas')?.dataset.terrain3dPilotState;
+      return state !== undefined && state !== 'loading';
+    },
+    undefined,
+    { timeout: 60_000 },
+  );
+  const settledAt = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0);
+  await page.waitForFunction((from) => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) >= from + 2, settledAt);
   return page.evaluate(() => {
     const diagnostics = window.__THREE_GAME_DIAGNOSTICS__!;
+    const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
     return {
       contract: diagnostics.contract.activeId,
+      pilot: {
+        state: canvas?.dataset.terrain3dPilotState ?? null,
+        heightSource: canvas?.dataset.terrain3dPilotHeightSource ?? null,
+      },
       hero: diagnostics.heroPos,
       water: diagnostics.terrain.water
         ? {
@@ -270,3 +346,23 @@ async function determinismSnapshot(page: Page): Promise<unknown> {
     };
   });
 }
+
+// Run 10: exercise the actual scatter owner against the delivered GLB height source.
+test('riparian scatter keeps its counts and clears both build banks and fords', async ({ page }) => {
+  await page.goto('/?debug&epoch=epoch-1-frontier&contract=e1-twin-banks&nowaves&seed=code-presentation&tier=full');
+  await page.waitForFunction(() => document.querySelector('#game-canvas')?.getAttribute('data-terrain3d-pilot-landmark-load-state') === 'mounted');
+  const result = await page.evaluate(async () => {
+    const { DetailScatter } = await Function('return import("/src/world/Scatter.ts")')();
+    const terrain = await Function('return import("/src/world/Terrain.ts")')();
+    const { activeContract } = await Function('return import("/src/meta/ContractFamilies.ts")')();
+    const scatter = new DetailScatter(), tile = activeContract().tileParams;
+    const details = scatter.seededInstances as Array<{ x: number; y: number; z: number }>;
+    const result = { count: scatter.diagnostics().seededInstances, kinds: scatter.classes.filter((c: { instances: unknown[] }) => c.instances.length).map((c: { profile: { material: { userData: { riparianCard: string } } } }) => c.profile.material.userData.riparianCard),
+      grounded: details.every(d => Math.abs(d.y - terrain.visualY(d.x, d.z, -0.025)) < 1e-7),
+      clear: details.every(d => !tile.buildZones.some((b: { minX: number; maxX: number; minZ: number; maxZ: number }) => d.x >= b.minX - 1 && d.x <= b.maxX + 1 && d.z >= b.minZ - 1 && d.z <= b.maxZ + 1) && !tile.fords.some((f: { x: number; halfWidth: number }) => Math.abs(d.x - f.x) < f.halfWidth + 1 && Math.abs(d.z) < 7)) };
+    scatter.dispose(); return result;
+  });
+  expect(result.count).toBe(test.info().project.name === 'mobile-chrome' ? 102 : 248);
+  expect(result.kinds).toEqual(['driftwood', 'willow', 'reeds', 'driftwood', 'willow', 'reeds']);
+  expect(result.grounded).toBe(true); expect(result.clear).toBe(true);
+});

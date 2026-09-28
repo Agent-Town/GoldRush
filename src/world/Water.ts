@@ -78,6 +78,10 @@ type WaterMaterialConfig = {
   textureBlend?: number;
   /** Multiplies the sine-ripple contribution without changing flow speed. */
   rippleStrength?: number;
+  /** Frequency of crossed ripple fronts; omitted preserves the original channel waves. */
+  rippleScale?: number;
+  /** Compress shallow/deep pigment contrast without changing declared water depth. */
+  depthContrast?: number;
   /** Strength of the pale ford wash. */
   fordTint?: number;
   /** Metres of alpha ramp at the band's outer edge. */
@@ -139,6 +143,8 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     config.anchors.map((anchor) => `${anchor.x.toFixed(2)},${anchor.z.toFixed(2)}`).join('_') || 'noglints',
     `texture${(config.textureBlend ?? 0.12).toFixed(3)}`,
     `ripple${(config.rippleStrength ?? 1).toFixed(2)}`,
+    ...(config.rippleScale === undefined ? [] : [`ripple-scale${config.rippleScale.toFixed(2)}`]),
+    ...(config.depthContrast === undefined ? [] : [`depth-contrast${config.depthContrast.toFixed(3)}`]),
     `ford${(config.fordTint ?? 0.72).toFixed(3)}`,
     `shorefade${(config.shoreFadeMeters ?? 0.95).toFixed(3)}`,
     (config.surfaceLift ?? config.bedDepth !== undefined) ? 'lift' : 'nolift',
@@ -244,7 +250,9 @@ ${config.bedDepth ? `  float bedMetres = texture2D(waterBedMap, vWaterUv).r * wa
   float rippleAmp = mix(0.06, 0.17, crossNoise) * ${(config.rippleStrength ?? 1).toFixed(2)};
   float ripple = ${config.openSea
     ? '(sin(vWaterWorld.x * 2.4 + vWaterWorld.y * 0.9 + sin(vWaterWorld.y * 0.32 - waterTime * 0.6) * 0.8 - waterTime * 2.0) * 0.72 + sin(vWaterWorld.x * 4.1 - vWaterWorld.y * 1.3 + phaseWarp - waterTime * 3.1) * 0.28)'
-    : 'sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise))'} * 0.5 + 0.5;
+    : config.rippleScale !== undefined
+      ? `(sin((vWaterWorld.x * 2.4 + vWaterWorld.y * 0.9) * ${config.rippleScale.toFixed(2)} + sin(vWaterWorld.y * 0.32 - waterTime * 0.6) * 0.8 - waterTime * 2.0) * 0.72 + sin((vWaterWorld.x * 4.1 - vWaterWorld.y * 1.3) * ${config.rippleScale.toFixed(2)} + phaseWarp - waterTime * 3.1) * 0.28)`
+      : 'sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise))'} * 0.5 + 0.5;
   float fineRipple = 0.0;
   if (waterQuality > 0.7) {
     fineRipple = sin(vWaterWorld.x * mix(3.7, 6.2, crossNoise) + vWaterWorld.y * mix(0.8, 2.4, lengthNoise) - waterTime * mix(3.8, 6.7, crossNoise) + phaseWarp * 2.0) * 0.5 + 0.5;
@@ -256,7 +264,7 @@ ${config.bedDepth ? `  float bedMetres = texture2D(waterBedMap, vWaterUv).r * wa
   vec3 mid = vec3(0.18, 0.40, 0.40);
   vec3 deep = vec3(0.06, 0.18, 0.17);
   vec3 ford = vec3(0.70, 0.69, 0.50);
-  vec3 waterColor = mix(shallow, deep, depth);
+  vec3 waterColor = mix(shallow, deep, depth${config.depthContrast === undefined ? '' : ` * ${config.depthContrast.toFixed(3)}`});
   waterColor = mix(waterColor, mid, ripple * rippleAmp * waterQuality);
   waterColor = mix(waterColor, ford, fordBand * ${(config.fordTint ?? 0.72).toFixed(3)});
   waterColor += vec3(0.08, 0.10, 0.08) * fineRipple * waterQuality * (1.0 - fordBand) * 0.22 * ${(config.rippleStrength ?? 1).toFixed(2)};
@@ -274,6 +282,14 @@ ${config.bedDepth ? `  // Sculpt-only. The declared band's foam line sits where 
   waterColor = mix(waterColor, vec3(0.94, 0.88, 0.70), shoreFoam * 0.5 * (1.0 - fordBand));` : ''}
 ${(config.surfaceLift ?? config.bedDepth !== undefined) ? `  // Lift face-on ripples independently of the bed-depth path.
   waterColor += vec3(0.10, 0.11, 0.08) * pow(ripple, 2.0) * waterQuality * (1.0 - fordBand) * ${(config.rippleStrength ?? 1).toFixed(2)};` : ''}
+${config.rippleScale !== undefined ? `  // Pressure Garden's short, irregular crests follow the existing current.
+  // Advect both warp and breakup so the marks do not read as a ruled overlay.
+  vec2 currentPoint = vec2(vWaterWorld.x - waterTime * 0.45, vWaterWorld.y) * 1.65;
+  float currentWarp = waterNoise(currentPoint * vec2(0.9, 1.6));
+  float flowLine = sin(currentPoint.y * ${(6.25 * config.rippleScale).toFixed(2)} + currentWarp * 5.5 + sin(currentPoint.x * 0.73) * 1.3);
+  float flowBreak = smoothstep(0.59, 0.83, waterNoise(currentPoint * vec2(1.2, 3.1) + vec2(7.4, 3.2)));
+  float flowCrest = smoothstep(0.88, 0.995, flowLine) * flowBreak;
+  waterColor += vec3(0.20, 0.24, 0.22) * flowCrest;` : ''}
   float alpha = mix(0.74, 0.94, depth);
   alpha = mix(alpha, 0.58, fordBand * ${(config.fordTint ?? 0.72).toFixed(3)});
   alpha = mix(alpha, 0.72, bankFoam * 0.4);

@@ -66,7 +66,7 @@ const BAR_WIDTH = 2.2;
 const BAR_THICKNESS = 0.16;
 const BAR_DEPTH = 0.3;
 
-/** Wheel ruts: a dashed wagon road, not a rail. Two ruts a gauge apart, re-laid on terrain. */
+/** Worn wheel ruts, two tracks a gauge apart, re-laid on the exact route. */
 const RUT_GAUGE = 1.05;
 const RUT_WIDTH = 0.2;
 const RUT_LENGTH = 1.5;
@@ -116,7 +116,7 @@ export class SeedCaravanPresentation {
   private readonly roadMaterial = new THREE.MeshBasicMaterial({
     color: ROAD_COLOR,
     transparent: true,
-    opacity: 0.42,
+    opacity: 0.30,
     depthWrite: false,
   });
   private readonly ringMaterial: THREE.MeshBasicMaterial;
@@ -383,7 +383,18 @@ export class SeedCaravanPresentation {
         for (const side of [-1, 1]) {
           const px = cx + across.x * RUT_GAUGE * 0.5 * side;
           const pz = cz + across.z * RUT_GAUGE * 0.5 * side;
-          const rut = new THREE.Mesh(this.geometry(new THREE.PlaneGeometry(RUT_WIDTH, RUT_LENGTH)), this.roadMaterial);
+          // Keep the same route stations and diagnostic count. Tapered, unequal
+          // impressions read as worn wheel tracks instead of painted road dashes.
+          const rutGeometry = new THREE.PlaneGeometry(RUT_WIDTH, RUT_LENGTH, 1, 4);
+          const vertices = rutGeometry.getAttribute('position');
+          const wear = (index * 7 + step * 3 + (side + 1)) % 5;
+          for (let vertex = 0; vertex < vertices.count; vertex += 1) {
+            const along = vertices.getY(vertex) / RUT_LENGTH;
+            const taper = 0.16 + 0.84 * (1 - Math.abs(along) * 2);
+            vertices.setX(vertex, vertices.getX(vertex) * taper * (0.72 + wear * 0.07));
+            vertices.setY(vertex, vertices.getY(vertex) * (0.66 + wear * 0.075));
+          }
+          const rut = new THREE.Mesh(this.geometry(rutGeometry), this.roadMaterial);
           rut.rotation.set(-Math.PI / 2, 0, -yaw);
           rut.position.set(px, this.groundY(px, pz) + ROAD_Y_LIFT, pz);
           rut.renderOrder = RenderLayers.groundDecals;

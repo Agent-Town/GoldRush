@@ -1,0 +1,187 @@
+{
+  "map": "e10-last-claim",
+  "base": {
+    "code": "debcc5001cc365b64d74f4ce2a1f7dcb0388646b",
+    "store": "aee63ba07d388a14ba4c48a0ef3fe9ecee42965a",
+    "engine": "88c4256efeb97d64c205919e785173b9c7375fd4553c92bbe26de6a37d197ea4"
+  },
+  "candidateEngine": "c72f302925f627b0a783f8d44bd132ed1fa61ae737379454a746e1033e1adfeb",
+  "verdict": "IMPROVED / HELD; full concept unaccepted",
+  "storeBranch": "astra/fidelity-1",
+  "codeBranch": "sol/map-art-campaign-2",
+  "nativeImageProvenance": "assets/pilots/map-rebuild-spike/sources/last-claim-fidelity-1/provenance.json",
+  "pinChanged": false,
+  "performance": [
+    {
+      "width": 1280,
+      "before": {
+        "p95": [
+          8.899999999999636,
+          9.100000000000364,
+          9.100000000000364,
+          9.199999999999818
+        ],
+        "median": 9.100000000000364,
+        "modes": [
+          [
+            8.899999999999636,
+            9.100000000000364,
+            9.100000000000364,
+            9.199999999999818
+          ]
+        ],
+        "calls": [
+          84
+        ],
+        "triangles": [
+          126614
+        ]
+      },
+      "after": {
+        "p95": [
+          9,
+          9,
+          9.099999999999454,
+          9.199999999999818
+        ],
+        "median": 9.049999999999727,
+        "modes": [
+          [
+            9,
+            9,
+            9.099999999999454,
+            9.199999999999818
+          ]
+        ],
+        "calls": [
+          85
+        ],
+        "triangles": [
+          129174
+        ]
+      },
+      "pooledMedianChangePercent": -0.5494505494575197,
+      "singleMode": true,
+      "within15Percent": true
+    },
+    {
+      "width": 390,
+      "before": {
+        "p95": [
+          9.099999999999454,
+          9.100000000000364,
+          9.199999999999818,
+          9.199999999999818
+        ],
+        "median": 9.150000000000091,
+        "modes": [
+          [
+            9.099999999999454,
+            9.100000000000364,
+            9.199999999999818,
+            9.199999999999818
+          ]
+        ],
+        "calls": [
+          56
+        ],
+        "triangles": [
+          122142
+        ]
+      },
+      "after": {
+        "p95": [
+          8.900000000000546,
+          9,
+          9,
+          9.100000000000364
+        ],
+        "median": 9.0,
+        "modes": [
+          [
+            8.900000000000546,
+            9,
+            9,
+            9.100000000000364
+          ]
+        ],
+        "calls": [
+          57
+        ],
+        "triangles": [
+          124702
+        ]
+      },
+      "pooledMedianChangePercent": -1.6393442622960608,
+      "singleMode": true,
+      "within15Percent": true
+    }
+  ],
+  "metricsAgainstRun6": [
+    {
+      "width": 1280,
+      "run6": {
+        "median": 0.2927827450980392,
+        "rms": 0.05572093911815209,
+        "darkShareBelow01": 0.0
+      },
+      "run8": {
+        "median": 0.29969098039215686,
+        "rms": 0.04892004683446275,
+        "darkShareBelow01": 0.0
+      },
+      "rmsChangePercent": -12.205272185503823
+    },
+    {
+      "width": 390,
+      "run6": {
+        "median": 0.31060745098039216,
+        "rms": 0.052199850331019794,
+        "darkShareBelow01": 0.0
+      },
+      "run8": {
+        "median": 0.4209764705882353,
+        "rms": 0.0481227090052208,
+        "darkShareBelow01": 0.0
+      },
+      "rmsChangePercent": -7.810637961496503
+    }
+  ],
+  "ownFinalStory": {
+    "pass": 14,
+    "fail": 0
+  },
+  "ownInitialBatch": {
+    "pass": 28,
+    "fail": 6,
+    "exactBaseFingerprintMatches": 4,
+    "unmatchedInitialFailures": 2
+  },
+  "remainingArt": [
+    "recognizable repeated floor motifs",
+    "finer perimeter ornament",
+    "fixture finish and route-wide lighting hierarchy"
+  ],
+  "heldOtherOwners": [
+    "square playable boundary and Ark integration: contract/finale",
+    "grayscale and heart effect: E10StaticBossSystem",
+    "dark orrery platform: E10FinaleSystem",
+    "normal story and phone overlay: UI"
+  ],
+  "storeCommit": "f3078c4001d86b8f177a1f1727464c32bdc166bb",
+  "e1PayloadBytes": 34274360,
+  "finalChecks": {
+    "builds": 5,
+    "scopedRender": 34,
+    "named": 3,
+    "story": 14,
+    "census": 2,
+    "sharedPass": 16,
+    "sharedOptInSkip": 4,
+    "loading": 8,
+    "repeat": 2,
+    "mapMountDisposeCycles": 6,
+    "e1Exclusion": 2
+  },
+  "baselineReleaseGuard": "Four char-jumper-e4-codex-v1 sprite filenames reproduce exactly on base-e1-release.json"
+}

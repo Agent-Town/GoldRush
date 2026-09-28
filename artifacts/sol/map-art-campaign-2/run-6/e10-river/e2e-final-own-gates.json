@@ -1,0 +1,22 @@
+[
+  {
+    "label": "final-own",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e10-river-final-own",
+      "e2e/e10-river-boot-guard.spec.ts",
+      "e2e/e10-finale-staging.spec.ts"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 20.31,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-river-final-own.log"
+  }
+]

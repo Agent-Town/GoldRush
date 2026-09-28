@@ -1,0 +1,174 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-28T07:29:08.895Z — s2736 warmup ########
+cwd=/Users/robin/.goldrush/s2736/wt-audio
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg03gn0ye:/Users/robin/.foundry/bin GR_AUDIO_EVIDENCE=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2736/plain-candidate GR_AUDIO_RESULTS=/Users/robin/.goldrush/s2736/plain-results GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5416
+
+===== warmup =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --grep enemy crossing the river reaches the hero through the ford only --workers=1
+rc=0 9.5s
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (7.2s)
+
+  1 passed (8.1s)
+(node:98189) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-28T07:29:18.354Z — s2736 audio own, adjacent and plain gates ########
+cwd=/Users/robin/.goldrush/s2736/wt-audio
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg03gn0ye:/Users/robin/.foundry/bin GR_AUDIO_EVIDENCE=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2736/plain-candidate GR_AUDIO_RESULTS=/Users/robin/.goldrush/s2736/plain-results GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5416
+
+===== audio own and adjacent =====
+$ npx playwright test e2e/audio-music-toggle.spec.ts e2e/050-audio-mix-and-access.spec.ts e2e/051-audio-governor.spec.ts e2e/mu-02-music.spec.ts e2e/music-survives-pause.spec.ts e2e/first-town-audio-deferred.spec.ts e2e/m2-01-build-menu.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m1-01-claim-jumpers-death.spec.ts --project=desktop-chrome --project=mobile-chrome --output=/Users/robin/.goldrush/s2736/browser-results --workers=1
+rc=0 550.4s
+
+Running 74 tests using 1 worker
+
+  ✓   1 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings (14.0s)
+  ✓   2 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast (9.7s)
+  ✓   3 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics (9.2s)
+  ✓   4 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops (10.3s)
+  ✓   5 [desktop-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling (9.4s)
+  ✓   6 [desktop-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience (8.3s)
+  ✓   7 [desktop-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns (9.9s)
+  ✓   8 [desktop-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly (8.9s)
+  ✓   9 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload (15.6s)
+  ✓  10 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings (6.0s)
+  ✓  11 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists (4.2s)
+  ✓  12 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile (4.2s)
+  ✓  13 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start (9.3s)
+[audio-defer] desktop-chrome/loopback cue 2662 responses 62723117 bytes; townReady observed 3888 ms, published 3771 ms; cue-window music 0; music before playable 0; after-ready music 2
+[audio-defer] desktop-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 3902 ms (scene the town ready)
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 2335 ms
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 2339 ms
+[audio-defer] desktop-chrome/loopback after-ready mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 3907 ms
+[audio-defer] desktop-chrome/loopback after-ready mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 3911 ms
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  14 [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback) (5.2s)
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  15 [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu (3.0s)
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  16 [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click (6.2s)
+  ✓  17 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (14.3s)
+  ✓  18 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent (6.3s)
+  ✓  19 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs (6.6s)
+  ✓  20 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth (13.0s)
+  ✓  21 [desktop-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget (6.8s)
+  ✓  22 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (5.8s)
+  ✓  23 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (6.5s)
+  ✓  24 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (5.8s)
+  ✓  25 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (5.9s)
+  ✓  26 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (8.8s)
+  ✓  27 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (10.5s)
+  ✓  28 [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (7.6s)
+  ✓  29 [desktop-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists (4.6s)
+  ✓  30 [desktop-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile (5.9s)
+  ✓  31 [desktop-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop (8.6s)
+  ✓  32 [desktop-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting (11.5s)
+  ✓  33 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (7.5s)
+  ✓  34 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (8.6s)
+  ✓  35 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (7.3s)
+  ✓  36 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (6.9s)
+  ✓  37 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (8.2s)
+  ✓  38 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings (11.1s)
+  ✓  39 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast (7.7s)
+  ✓  40 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics (6.7s)
+  ✓  41 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops (7.4s)
+  ✓  42 [mobile-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling (7.2s)
+  ✓  43 [mobile-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience (6.9s)
+  ✓  44 [mobile-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns (7.2s)
+  ✓  45 [mobile-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly (7.2s)
+  ✓  46 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload (14.7s)
+  ✓  47 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings (5.4s)
+  ✓  48 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists (3.7s)
+  ✓  49 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile (4.0s)
+  ✓  50 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start (9.6s)
+[audio-defer] mobile-chrome/loopback cue 2563 responses 58013092 bytes; townReady observed 3587 ms, published 3457 ms; cue-window music 1; music before playable 0; after-ready music 1
+[audio-defer] mobile-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 3573 ms (scene the town ready)
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 2395 ms
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 2418 ms
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 3581 ms
+[audio-defer] mobile-chrome/loopback after-ready mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 3594 ms
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  51 [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback) (5.2s)
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  52 [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu (2.5s)
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+  ✓  53 [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click (4.5s)
+  ✓  54 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:29:1 › T spawns Claim Jumpers, contact kills hero, R restarts in place (11.8s)
+  ✓  55 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:59:1 › T does not spawn Claim Jumpers without debug consent (3.7s)
+  ✓  56 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:72:1 › nospawn blocks debug packs (5.6s)
+  ✓  57 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth (11.6s)
+  ✓  58 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget (4.6s)
+  ✓  59 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (5.4s)
+  ✓  60 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (5.6s)
+  ✓  61 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (6.2s)
+  ✓  62 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (6.8s)
+  ✓  63 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (9.1s)
+  ✓  64 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (11.3s)
+  ✓  65 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (10.3s)
+  ✓  66 [mobile-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists (5.7s)
+  ✓  67 [mobile-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile (5.3s)
+  ✓  68 [mobile-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop (5.2s)
+  ✓  69 [mobile-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting (6.3s)
+  ✓  70 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.6s)
+  ✓  71 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.3s)
+  ✓  72 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.2s)
+  ✓  73 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.7s)
+  ✓  74 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.7s)
+
+  74 passed (9.2m)
+(node:98492) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98550) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98550) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:5760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5760) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+===== plain audio run =====
+$ npx playwright test --config artifacts/s2736/plain.config.ts --project=desktop-chrome --project=mobile-chrome --workers=1
+rc=1 0.7s
+Error: Cannot find module './scripts/external-server-guard.mjs'
+Require stack:
+- /Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js
+- /Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/program.js
+- /Users/robin/.goldrush/s2736/wt-audio/node_modules/@playwright/test/cli.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1568:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1122:27)
+    at defaultResolve (node:internal/modules/cjs/loader:1203:20)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolve (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:875:19)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveWithHooks (node:internal/modules/customization_hooks:417:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1216:25)
+    at require.resolve (node:internal/modules/helpers:209:31)
+    at resolveScript (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:750:18)
+    at /Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:559:128
+    at Array.map (<anonymous>)
+    at new FullConfigInternal (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:559:117)
+    at loadConfig (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:1343:22)
+    at Object.loadConfigFromFile (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:1553:10)
+    at runTests (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/cli/testActions.js:46:18)
+    at _Command.<anonymous> (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/program.js:53:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js',
+    '/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/program.js',
+    '/Users/robin/.goldrush/s2736/wt-audio/node_modules/@playwright/test/cli.js'
+  ]
+}
+
+
+SUMMARY {"audio own and adjacent":0,"plain audio run":1}
+OVERALL rc=1

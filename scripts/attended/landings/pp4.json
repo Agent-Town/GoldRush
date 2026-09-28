@@ -1,0 +1,43 @@
+{
+  "tag": "pp4",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5376,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-play-proofs-4 — the Claim driver control PASSED (wave 10, 300 s, all six cells), Incline re-proved on both projects with the final driver, and the three E8 maps HELD on survival after two honest attempts each (F-PP4-1..3: an orbital driver limit, not a balance claim); four new gated specs, the driver corrected twice, the status doc cells for E8 (Astra on the owner ChatGPT subscription, lane-c; owner 2026-09-25 \"Can you do play proofs using Astra for these maps?\")",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": false,
+    "specs": [
+      "e2e/native-proofs/the-claim.spec.ts",
+      "e2e/locked-win.spec.ts",
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "warmup": [
+      "/",
+      "/?contract=the-claim"
+    ],
+    "allowedBattery": []
+  },
+  "review": {
+    "path": "reviews/sol-play-proofs-4.md",
+    "title": "Drain review: `sol-play-proofs-4`, run 4 of the play-proofs campaign: the Claim driver control, then E8 onward (Astra, lane-c)",
+    "body": "scripts/attended/landings/pp4-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-play-proofs-4.md",
+    "rowKey": "SOL PLAY PROOFS RUN 4 LANDED",
+    "rowEmoji": "🧭",
+    "rowText": "The driver CONTROL on the Claim PASSED (unchanged driver: wave 10 / 300.07 s, 143 HP, six buildings, 299 kills, all six cells incl. a plain reload preserving 7400 score bytes), so the campaign method stands and the earlier holds are honest. Far Side, Low Orbit and Eclipse then HELD on survival after two attempts each (death waves 12/17, 13/14, 16/13; F-PP4-1..3), every row zero console/page errors; the driver was corrected twice (a floaty run coasting out of pan range; an arrival check burning suit air) and re-proved Incline desktop+phone (wave 14/17). Astra verbatim: \"These findings do not justify changing map balance.\" F-PP4-4: the shared driver plays ground maps; the E8 trio needs an orbital movement model before a retry has a changed premise. Yield after four runs: 14 maps attempted, 2 proved, 1 partial, 1 defect (Canyon Works, corrective in flight), 10 holds. Run 5 continues with E9 and E10 (Dome Basin first), E8 excluded until the orbital driver exists. Hash unchanged {PIN}.",
+    "statusPhrase": "run 4 of the play proofs landed: the Claim control passed, Incline re-proved, and the three E8 maps hold on the driver's orbital limits, not on balance",
+    "drainedBy": "attended 2026-09-25 (scripts/attended/land.sh pp4)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-4"
+}

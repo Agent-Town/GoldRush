@@ -1,0 +1,86 @@
+[
+  {
+    "file": "ceremony-framework.spec.ts",
+    "line": 777,
+    "title": "T10 THE CHARTER PRESS: the E10 science ceiling opens the existing River finale and idle opens nothing",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-24T02:26:57.128Z",
+    "durationMs": 15963,
+    "error": "Error: expect(locator).toHaveCount(expected) failed\n\nLocator:  getByTestId('open-charter-press-site')\nExpected: 0\nReceived: 1\nTimeout:  5000ms\n\nCall log:\n  - Expect \"toHaveCount\" with timeout 5000ms\n  - waiting for getByTestId('open-charter-press-site')\n    14 × locator resolved to 1 element\n       - unexpected value \"1\"\n\n\n  820 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);\n  821 |   await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.teleport(13.6, 5.3));\n> 822 |   await expect(page.getByTestId('open-charter-press-site')).toHaveCount(0);\n      |                                                             ^\n  823 |\n  824 |   await page.getByTestId('town-exit').click();\n  825 |   await page.evaluate(() => history.replaceState(null, '', '/'));\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ceremony-framework.spec.ts:822:61"
+  },
+  {
+    "file": "e6-picnic-opening.spec.ts",
+    "line": 386,
+    "title": "an unbuilt Picnic ends on the sandwiches, with the Prospector untouched",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-24T02:34:25.257Z",
+    "durationMs": 161418,
+    "error": "Error: an unbuilt run does end — this is a hold map, not a stroll\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: true\nReceived: false\n\n  443 |       .then(() => true)\n  444 |       .catch(() => false);\n> 445 |     expect(ended, 'an unbuilt run does end — this is a hold map, not a stroll').toBe(true);\n      |                                                                                 ^\n  446 |\n  447 |     const final = await snapshot(page);\n  448 |     expect(final.stakes.every((entry) => entry.claimed), 'the loss is all-stakes-claimed').toBe(true);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e6-picnic-opening.spec.ts:445:81"
+  },
+  {
+    "file": "e7-playbook-surface.spec.ts",
+    "line": 54,
+    "title": "record, name, shelf, and replay use the profile tape store and the slaved rig actor",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "timedOut",
+    "expected": "passed",
+    "startTime": "2026-09-24T02:40:01.062Z",
+    "durationMs": 32821,
+    "error": "Test timeout of 30000ms exceeded.\nError: locator.click: Test timeout of 30000ms exceeded.\nCall log:\n  - waiting for getByTestId('playbook-toggle')\n    - locator resolved to <button type=\"button\" aria-expanded=\"false\" data-testid=\"playbook-toggle\" class=\"playbook-surface__toggle\" aria-controls=\"playbook-library\">…</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not visible\n    - retrying click action\n      - waiting 100ms\n    55 × waiting for element to be visible, enabled and stable\n       - element is not visible\n     - retrying click action\n       - waiting 500ms\n\n\n  104 |   await page.getByTestId('prospector-rung-toggle-2').check();\n  105 |   await page.keyboard.press('Escape');\n> 106 |   await page.getByTestId('playbook-toggle').click();\n      |                                             ^\n  107 |   await page.getByTestId('playbook-shelf').getByRole('button', { name: 'Replay' }).click();\n  108 |   await expect(page.getByTestId('playbook-message')).toContainText('handed to the agent');\n  109 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e7Arsenal.playbookSlaved)).toBe(true);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-surface.spec.ts:106:45"
+  },
+  {
+    "file": "m2-05b-overwhelm-valves.spec.ts",
+    "line": 223,
+    "title": "lullFloor12 only clamps post-wave-12 pulse spacing",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-24T03:30:37.005Z",
+    "durationMs": 9719,
+    "error": "TypeError: Cannot read properties of undefined (reading 'lastPulseAt')\n\n  244 |   const wave1 = records.filter((record) => record.wave === 1);\n  245 |   const wave12 = records.filter((record) => record.wave === 12);\n> 246 |   expect(wave1[1].lastPulseAt - wave1[0].lastPulseAt).toBeCloseTo(0.5, 4);\n      |                   ^\n  247 |   expect(wave12[1].lastPulseAt - wave12[0].lastPulseAt).toBeGreaterThanOrEqual(2);\n  248 |   expect(errors.consoleErrors).toEqual([]);\n  249 |   expect(errors.pageErrors).toEqual([]);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts:246:19"
+  },
+  {
+    "file": "run-suspend.spec.ts",
+    "line": 282,
+    "title": "legacy no-controls restore at Territory I keeps the removed ring and its hints absent",
+    "project": "desktop-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-24T02:57:33.941Z",
+    "durationMs": 4693,
+    "error": "Error: expect(received).toMatchObject(expected)\n\n- Expected  - 1\n+ Received  + 1\n\n  Object {\n-   \"fallbackRingPresent\": false,\n+   \"fallbackRingPresent\": null,\n    \"finalRingPresent\": false,\n    \"restored\": true,\n  }\n\n  314 |     { territoryTier1: Balance.meta.territoryTier1 },\n  315 |   );\n> 316 |   expect(legacy).toMatchObject({ restored: true, fallbackRingPresent: false, finalRingPresent: false });\n      |                  ^\n  317 |\n  318 |   await page.goto('/');\n  319 |   await writeSuspend(page, legacy.raw);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/run-suspend.spec.ts:316:18"
+  },
+  {
+    "file": "run-suspend.spec.ts",
+    "line": 282,
+    "title": "legacy no-controls restore at Territory I keeps the removed ring and its hints absent",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-24T03:37:28.036Z",
+    "durationMs": 4740,
+    "error": "Error: expect(received).toMatchObject(expected)\n\n- Expected  - 1\n+ Received  + 1\n\n  Object {\n-   \"fallbackRingPresent\": false,\n+   \"fallbackRingPresent\": null,\n    \"finalRingPresent\": false,\n    \"restored\": true,\n  }\n\n  314 |     { territoryTier1: Balance.meta.territoryTier1 },\n  315 |   );\n> 316 |   expect(legacy).toMatchObject({ restored: true, fallbackRingPresent: false, finalRingPresent: false });\n      |                  ^\n  317 |\n  318 |   await page.goto('/');\n  319 |   await writeSuspend(page, legacy.raw);\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/run-suspend.spec.ts:316:18"
+  },
+  {
+    "file": "same-laws-harvest-parity.spec.ts",
+    "line": 110,
+    "title": "mouse and touch dispatch travel, then grant one rider-rate tick per command",
+    "project": "mobile-chrome",
+    "status": "unexpected",
+    "actual": "failed",
+    "expected": "passed",
+    "startTime": "2026-09-24T03:38:06.672Z",
+    "durationMs": 7888,
+    "error": "Error: (node:28721) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\nassay replay failed: Port 5300 is already in use\n\n\nexpect(received).toBe(expected) // Object.is equality\n\nExpected: 0\nReceived: 1\n\n  230 |     env: { ...process.env, GR_ASSAY_REPLAY_PORT: String(port) },\n  231 |   });\n> 232 |   expect(run.status, run.stderr).toBe(0);\n      |                                  ^\n  233 |   return JSON.parse(run.stdout.trim()) as { eventLogHash: string; ticks: number; wallMs: number };\n  234 | }\n  235 |\n    at assay (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/same-laws-harvest-parity.spec.ts:232:34)\n    at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/same-laws-harvest-parity.spec.ts:179:16"
+  }
+]

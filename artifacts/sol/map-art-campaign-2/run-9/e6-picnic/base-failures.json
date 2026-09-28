@@ -1,0 +1,67 @@
+{
+  "storeBase": "92db3dc4f87789f976b7c310b7adb7372f8c5c30",
+  "base": "d3e30384225b8a3d332693d5dcf567286a7bfdfc",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "6d24239063199ec62d1615359c3f906821cba42cd95836705b424c2173aae490",
+      "baseSha256": "2dcb9792805db7a58d3fcccc3d57918d832b2c52861a8e913ece1ba8f54f1971"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/picnic/center-picnic-blanket.glb": {
+      "candidateSha256": "92853e3f50eceb7bde033f8a0a48b82883e495421be31d1189e9f532518d3b92",
+      "baseSha256": "7b2f1f863e8005cbdf06089484c4d13478776d3356d191fe7988a2ad99633b99"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/picnic/east-picnic-blanket.glb": {
+      "candidateSha256": "f62146d103c557ba9b73a8a7ad6654360d2ea98e7d04cb279f67db63ff73b09a",
+      "baseSha256": "fb18ef8ddf162ac6928b071a413ef6d4dd1325c937bca2f9c1c0155fd1ef9661"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/picnic/mesa-civilian-shade.glb": {
+      "candidateSha256": "f4fc9ddc0ce1b31cd9f59070a51412d5f8b4c3f802e4c41fc87f06f9ecc741ca",
+      "baseSha256": "7be61299d70ee0f633a607c5811cf86539d18e7eb6a798a9c3e0123779a566ac"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/picnic/picnic-landmark-pack-contract.json": {
+      "candidateSha256": "3da558efdac2f9bd7929cb3c2ebaff35d3ca94aeec3898f9cea4667fa5d933a2",
+      "baseSha256": "356f294c50b6d9c310851db96a9da1364136d9951c5b7fdf8ff866b26da9c0de"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/picnic/picnic-landmarks.blend": {
+      "candidateSha256": "49e6454a6fe4b531ac41086c7f50b2039abe31dcdc9a0726b9c0bfee41b76f6c",
+      "baseSha256": "e4657dbef2c2794b5dc1b5d0c0699ec38d8403f9140b52d603acd4f451c4cb47"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/picnic/west-picnic-blanket.glb": {
+      "candidateSha256": "7fbdab427330dbee78eaa749fd9f69deac905be3de029dce33ab46f99d5cbc12",
+      "baseSha256": "214473b7765e30bc3b820e2e8f15d9a60a67cadf022d789544913f14cede8a0a"
+    }
+  },
+  "pattern": "all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+  "specs": [
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "candidateEngine": "e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32",
+  "baseEngine": "083530624944acf74fd7beb888149f7dc017721185f8398be1b7eefec2e14ca6",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e6-picnic-base-failures/test-results",
+    "--grep",
+    "all\\ sixteen\\ contracts\\ mount\\ terrain,\\ panorama,\\ and\\ grounded\\ render\\-only\\ landmarks\\ with\\ matching\\ water|rim\\ and\\ horizon\\ probes\\ keep\\ the\\ terrain\\ meeting\\ gradual\\ and\\ every\\ panorama\\ readable",
+    "e2e/terrain3d-registry.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e6-picnic-fidelity-2/README.md": "4702c8a90d90fe55a4c7b1893c0c84487692e5bc504a6a9d5ce303744a23d047",
+    "assets/pilots/map-rebuild-spike/sources/e6-picnic-fidelity-2/cloth-wicker-atlas.png": "112d0fd9be7df6d6f4d05856d1d766f677cae7ab3e43d6ad16334fe21f556010",
+    "assets/pilots/map-rebuild-spike/sources/e6-picnic-fidelity-2/image-provenance.md": "9551eb405b1506dde2d65dca95ed9fa84c251c1b2f36c2e86430ecd297791c19",
+    "assets/pilots/map-rebuild-spike/sources/e6-picnic-fidelity-2/landmark-input-contract.json": "356f294c50b6d9c310851db96a9da1364136d9951c5b7fdf8ff866b26da9c0de",
+    "assets/pilots/map-rebuild-spike/sources/e6-picnic-fidelity-2/landmarks-input.blend": "e4657dbef2c2794b5dc1b5d0c0699ec38d8403f9140b52d603acd4f451c4cb47",
+    "assets/pilots/map-rebuild-spike/sources/e6-picnic-fidelity-2/picnic-ground-clean.png": "9bed5cb8d17e099189d89dc0f1f1987aa494363be2cb673aa5b719db698307ec",
+    "assets/pilots/map-rebuild-spike/sources/e6-picnic-fidelity-2/refine-picnic-props.py": "7a6d798ecf60d0be7f5950f681285ce955e1d6cc6cc68ec76eb2f0b9feff55df"
+  },
+  "restoredEngine": "e7c87a88d08517d84983d408a876cfa994068807fa51b3c54ee96bbe24710e32",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e6-picnic-base-failures/tests.log"
+}

@@ -1,0 +1,38 @@
+{
+  "tag": "tap1",
+  "branch": "sol/open-findings-astra",
+  "port": 5409,
+  "mergeMessage": "drain: merge sol/open-findings-astra — e7-tape-toggle-phone-hit-target-1 — Astra's hit-target audit: every unobscured elementFromPoint sample at 390 px and on desktop reached the Tape Reel toggle in a plain boot; the run-16 phone interception was the instrument's click, not a player's tap; no production change; the adjacent inheritance red is F-SPH2-2 (pre-existing, corrective queued); landed attended after two fires deferred it",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/e7-tape-toggle-phone-hit-target.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/task-025-bandits-dont-swim.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/e7-tape-toggle-phone-hit-target-1-landing.md",
+    "title": "Drain review (attended landing): `e7-tape-toggle-phone-hit-target-1`, the phone Tape Reel toggle is reachable; instrument artefact, no production change",
+    "body": "scripts/attended/landings/tap1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "e7-tape-toggle-phone-hit-target-1.md",
+    "rowKey": "E7 TAPE TOGGLE PHONE HIT TARGET 1 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra's audit (lane-a, 131,622 tokens, evidence 646,406 B, commits `6693dfa37` + `97903ef7b`): a new spec `e2e/e7-tape-toggle-phone-hit-target.spec.ts` boots Echo Canyon plainly from the town board on both projects and samples `document.elementFromPoint` at the Tape Reel toggle's centre and four inset corners at three moments, plus the centre on Relay Rush and Dead Band on mobile: all 40 unobscured samples reached the toggle; the 10 samples with the Patent Office open reached its modal, as a player would expect. Verdict: instrument artefact, no production change, no F-TAPE ID; the run-16 phone interception was the driver's click. Side finding recorded as F-SPH2-2 (the `e7-playbook-surface` inheritance test red on unchanged pre-task source; corrective `e7-tape-drawer-inheritance-1` queued behind this landing). No `src/**`. Landed attended after the s2733 and s2734 fires deferred it",
+    "statusPhrase": "the phone Tape Reel toggle audit landed attended: every unobscured tap sample reached the toggle in a plain boot, an instrument artefact with no production change; the inheritance corrective queues behind it",
+    "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh tap1; Astra on lane-a, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/e7-tape-toggle-phone-hit-target-1"
+}

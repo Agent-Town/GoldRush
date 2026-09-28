@@ -1,0 +1,21 @@
+{
+  "head": "86cebe3cb61980bccbcbbabdf76e8e3f2cb29d09",
+  "driverSha256": "e8b5f29d1a78e7e104e2b8640086b859f99a3388ecf26344f361ade82272658a",
+  "argv": [
+    "npx",
+    "playwright",
+    "test",
+    "e2e/native-proofs/e6-showroom.spec.ts",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--workers=1",
+    "--reporter=line",
+    "--output=/Users/robin/.goldrush/play-proofs/run-18/default/e6-showroom/results"
+  ],
+  "env": {
+    "GR_NATIVE_PROOF": "1",
+    "GR_NATIVE_RUN": "18/default",
+    "GR_CAPTURE_EXTERNAL_SERVER": "1",
+    "GR_CAPTURE_BASE_URL": "http://127.0.0.1:5303"
+  }
+}

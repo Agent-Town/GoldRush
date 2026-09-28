@@ -1,0 +1,28 @@
+slice 4: lane 0bafed36e store ce3a6a5ad3b8d9f44c4adece0d6c8b424735b5e4 maps: the Seed Run, Devil's Alley, the Old Canal 17:15Z
+store on 'astra/corrections-4', dirty 0 (Astra's, untouched)
+store main -> ce3a6a5 (art(store): Old Canal — supported hand winches and 5 m inspection)
+store main pushed: ce3a6a5
+scratch store: detached at ce3a6a5, clean
+chain base b07e03d36 merging lane 0bafed36e (lane tip 0bafed36e) 17:15Z
+merged c76d6456e
+single-line law: nothing to flatten
+engine hash merged (scratch store at ce3a6a5): c2018fcb58b57688525b2afe23a8fd99dd20e3ce481894e58f9017db628333c7
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34262903 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (291.0s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 95 ℹ fail 0 
+e2e start 17:22Z: e2e/e9-seed-run-caravan.spec.ts e2e/e9-devils-alley-relocation.spec.ts e2e/e9-old-canal-choices.spec.ts e2e/er01-e9-census.spec.ts e2e/ss-10-e9-beats.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/fort-landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   4 skipped   80 passed (9.0m)  17:31Z
+battery start 17:31Z
+battery: rc=1 ℹ tests 940 ℹ pass 932 ℹ fail 3 ℹ skipped 5  17:40Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (225216.320333ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (548.323833ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (181.729792ms)
+dirt after battery: 0
+CORR4-S4-PREP-DONE
+hash at pin time: c2018fcb58b57688525b2afe23a8fd99dd20e3ce481894e58f9017db628333c7
+pin #26
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

@@ -1,0 +1,44 @@
+{
+  "unchangedFiles": [
+    {
+      "path": "canyon-works-terrain.glb",
+      "sha256": "e230248caf31a133ad80fa449991bb16c8d787de8fa60c90dee667cea9cc2ac3",
+      "bytes": 8238136
+    },
+    {
+      "path": "canyon-works-terrain.blend",
+      "sha256": "bf8ee79603c4aab593b514b3f0b5ced41f0c1613b16bea717bd7bbf538fca79d",
+      "bytes": 8321522
+    },
+    {
+      "path": "canyon-works-terrain-atlas.png",
+      "sha256": "d6f9245cf23af0f337c9d822a4829e6ee81e75ce94cfd8a3dfb80e0a9a3bf5c5",
+      "bytes": 7507264
+    },
+    {
+      "path": "canyon-works-panorama-atlas.png",
+      "sha256": "17cddd1fafea2f2daa7768f571a6ef682b427223a0f9ddb5e1c03b6ba9c9304d",
+      "bytes": 555017
+    }
+  ],
+  "contracts": [
+    {
+      "path": "canyon-works-terrain-contract.json",
+      "originalGameplayFieldsPreserved": true
+    },
+    {
+      "path": "landmarks/canyon-works/canyon-works-landmark-pack-contract.json",
+      "originalGameplayFieldsPreserved": true
+    }
+  ],
+  "mirroredStationsIdentical": true,
+  "panoramaEmbeddedPaintUnchanged": true,
+  "allFiveBodiesShareOneEmbeddedAtlas": "9fe8575082cc082ed29452f563650d9d29fe93e8bf10581c5cd44bd4c4de4587",
+  "recipe": {
+    "beforeByteIdentical": true,
+    "beforeSha256": "5819f8eec12371756a0b2b36342bdbf8560ee3c4e99c16f35fe2cae28c1bbd5b",
+    "afterRepeatByteIdentical": true,
+    "afterSha256": "9fe8575082cc082ed29452f563650d9d29fe93e8bf10581c5cd44bd4c4de4587",
+    "rootFix": "Atlas-only reads input contracts/processed art from game cwd after art-store split; no helper or gameplay file changed."
+  }
+}

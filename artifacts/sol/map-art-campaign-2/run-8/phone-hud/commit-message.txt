@@ -1,0 +1,15 @@
+feat: compact phone HUD with measured entry clearance
+
+Reduce the six 390px persistent HUD unions by 39.45-44.70% while
+retaining numbers, testids, 44px touch targets, and desktop panel boxes.
+Visible entry bodies meet the requested run-6 mask's 10% ceiling.
+Record offscreen bodies and the inherited mask omission explicitly.
+
+TypeScript/default/full/E1 builds, 61 scoped node guards and 3 named
+guards pass. E1 first-town payload grows 4,351 B to 34,277,296 B.
+Full Build/mobile-layout checks pass both Chrome projects. Preserve
+baseline browser and E1 release holds with original-CSS controls;
+no existing assertion, gameplay, art-store file or pin is changed.
+
+READY-FOR-GATES with baseline-test, offscreen-framing and mask holds.
+See artifacts/sol/map-art-campaign-2/run-8/phone-hud/review.md.

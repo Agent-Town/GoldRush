@@ -1,0 +1,104 @@
+{
+  "e5-regatta": {
+    "ruleIds": [
+      "build_zones",
+      "deepwater_arsenal",
+      "deepwater_claim_boat",
+      "deepwater_levers_unreachable",
+      "deepwater_storm_track",
+      "deepwater_water_regions",
+      "hero_orders",
+      "regatta_boat",
+      "regatta_race",
+      "spring_cells"
+    ],
+    "regatta_race": {
+      "gates": [
+        "start-beacon",
+        "northwest-checkpoint",
+        "midcourse-checkpoint",
+        "northeast-checkpoint",
+        "finish-beacon",
+        "claim-boat"
+      ],
+      "gateCount": 6,
+      "finish": "claim-boat",
+      "gateRadiusFallback": 6,
+      "fastWaterZone": "storm-front-fast-water",
+      "fastWaterMultiplier": 1.5,
+      "racer": "the Claim-Boat with a body aboard; a swimming hero and a moored hull score nothing",
+      "leavingTheBoatForfeits": true,
+      "forfeitIsTerminalForTheRace": true,
+      "deadlineWave": 12,
+      "competingRacerLoot": false,
+      "view": "now.regatta"
+    },
+    "regatta_boat": {
+      "boatId": "claim-boat",
+      "helm": "MOVE_HERO",
+      "helmedWhile": "aboard; a MOVE_HERO to navigable water sails the hull, and the hero rides the deck anchor",
+      "embark": "walk the hero onto the deck: boarding is a CROSSING of the rail, so a hero that boots on the deck has not boarded",
+      "disembark": "a move intent toward standable ground off the deck and within the gangplank; after the start beacon this forfeits",
+      "gangplankReach": 2,
+      "deckHalfWidth": 4.4,
+      "deckHalfLength": 14.25,
+      "hullRadius": 14.25,
+      "refusals": [
+        "NOT_ABOARD",
+        "UNREACHABLE_WATER"
+      ],
+      "topSpeed": 1.65,
+      "acceleration": 0.55,
+      "turnRateRadPerSec": 3.14,
+      "drag": 0.8,
+      "fastWaterMultiplier": 1.5,
+      "view": "now.regatta.boat"
+    }
+  },
+  "e5-deepwater-claim": {
+    "ruleIds": [
+      "baron",
+      "build_zones",
+      "deepwater_arsenal",
+      "deepwater_boss_socket",
+      "deepwater_claim_boat",
+      "deepwater_levers_unreachable",
+      "deepwater_storm_track",
+      "deepwater_water_regions",
+      "hero_orders",
+      "spring_cells"
+    ],
+    "regatta_race": null,
+    "regatta_boat": null
+  },
+  "e5-flotilla": {
+    "ruleIds": [
+      "build_zones",
+      "deepwater_arsenal",
+      "deepwater_claim_boat",
+      "deepwater_levers_unreachable",
+      "deepwater_storm_track",
+      "deepwater_water_regions",
+      "flotilla_hulls",
+      "hero_orders",
+      "spring_cells"
+    ],
+    "regatta_race": null,
+    "regatta_boat": null
+  },
+  "e5-stillwater": {
+    "ruleIds": [
+      "build_zones",
+      "deepwater_arsenal",
+      "deepwater_claim_boat",
+      "deepwater_levers_unreachable",
+      "deepwater_storm_track",
+      "deepwater_water_regions",
+      "hero_orders",
+      "noise_hunt",
+      "spring_cells"
+    ],
+    "regatta_race": null,
+    "regatta_boat": null
+  }
+}

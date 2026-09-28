@@ -1,0 +1,41 @@
+{
+  "method": "Fixed route/green-ground patches, separate from clear-ground metrics; includes authored route color variation. Final candidate.",
+  "regions": [
+    {
+      "width": 1280,
+      "box": [
+        900,
+        360,
+        1010,
+        460
+      ],
+      "before": {
+        "median": 0.06714980392156863,
+        "rms": 0.07118578302655405
+      },
+      "after": {
+        "median": 0.3396752941176471,
+        "rms": 0.03766067697155785
+      },
+      "rmsChangePercent": -47.09522692542486
+    },
+    {
+      "width": 390,
+      "box": [
+        25,
+        395,
+        105,
+        475
+      ],
+      "before": {
+        "median": 0.2913356862745098,
+        "rms": 0.052639025406144235
+      },
+      "after": {
+        "median": 0.33023686274509806,
+        "rms": 0.027376988510376194
+      },
+      "rmsChangePercent": -47.99108019355418
+    }
+  ]
+}

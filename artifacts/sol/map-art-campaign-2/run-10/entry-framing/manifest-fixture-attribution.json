@@ -1,0 +1,23 @@
+{
+  "fixture": "e2e/fixtures/e1-mechanics-manifests.json",
+  "baselineBytesMatch": true,
+  "candidateMatchesAfterRemovingOnlyAuthorizedSentences": true,
+  "authorized": [
+    {
+      "contract": "e1-night-shift",
+      "rule": "darkness_cycle",
+      "sentence": "This map leads with the lampworks_yard landmark."
+    },
+    {
+      "contract": "e1-twin-banks",
+      "rule": "water_crossings",
+      "sentence": "This map leads with the south_bank_homestead landmark."
+    },
+    {
+      "contract": "e1-baron",
+      "rule": "baron",
+      "sentence": "This map leads with the seized_headframe landmark."
+    }
+  ],
+  "disposition": "The unchanged agent-view fixture test fails on both projects because these three required sentences are absent from the protected fixture. This is an introduced fixture mismatch, not a pre-existing failure. Test assertions and fixture remain untouched under the task firewall."
+}

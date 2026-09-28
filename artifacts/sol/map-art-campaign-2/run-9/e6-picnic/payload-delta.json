@@ -1,0 +1,33 @@
+{
+  "glbs": [
+    {
+      "asset": "landmarks/picnic/center-picnic-blanket.glb",
+      "beforeBytes": 1504960,
+      "afterBytes": 3728276,
+      "deltaBytes": 2223316
+    },
+    {
+      "asset": "landmarks/picnic/west-picnic-blanket.glb",
+      "beforeBytes": 1491524,
+      "afterBytes": 3686332,
+      "deltaBytes": 2194808
+    },
+    {
+      "asset": "landmarks/picnic/east-picnic-blanket.glb",
+      "beforeBytes": 1491524,
+      "afterBytes": 3686332,
+      "deltaBytes": 2194808
+    },
+    {
+      "asset": "landmarks/picnic/mesa-civilian-shade.glb",
+      "beforeBytes": 1485884,
+      "afterBytes": 3667120,
+      "deltaBytes": 2181236
+    }
+  ],
+  "rawGlbDelta": 8794168,
+  "runtimeGroundPngBytes": 3009994,
+  "totalRawRuntimeDelta": 11804162,
+  "releaseE1": "not applicable to this E6-only leg",
+  "note": "Uncompressed source bytes, not a measured transfer budget. New cloth image is embedded in each GLB and shares decoded source at runtime under the existing shared-atlas loader."
+}

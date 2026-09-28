@@ -1,0 +1,32 @@
+slice 1: lane 6e306d1a0c8ebec7ac44d19a5c066518e3e48817 store 25fed85ea017ff54abd78d5e4186dddf1dea6efc maps: the Pressure Garden 00:46Z
+store on 'main', dirty 0 (Astra's, untouched)
+store main -> 25fed85 (art(store): Pressure Garden - engraved river and grounded banks)
+store main pushed: 25fed85
+scratch store: detached at 25fed85, clean
+chain fast-forwarded to main 73c695edc
+chain base 73c695edc merging lane 6e306d1a0 (lane tip 6e306d1a0) 00:46Z
+merged 79faa20b0
+single-line law: nothing to flatten
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged (scratch store at 25fed85): 39b444b44c8ea24952ff640dc6fc771f77db6084c2e952d45a455a2636e170cc
+droplet mirror closure (early check, F-FID1-5 class: a store slice can add a corpus file the mirror does not ship): rc=0
+tsc/build/e1: 0 / 0 / 0
+first-town payload: 34316949 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaque RGB unchanged
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (316.2s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 98 ℹ fail 0 
+e2e start 00:54Z: e2e/e2-pressure-garden.spec.ts e2e/er01-e2-census.spec.ts e2e/landmark-brightness.spec.ts e2e/landmark-collision.spec.ts e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts 
+e2e: rc=0   4 skipped   48 passed (5.9m)  01:00Z
+battery start 01:00Z
+battery: rc=1 ℹ tests 955 ℹ pass 947 ℹ fail 3 ℹ skipped 5  01:07Z
+✖ all 152 scripts/*.test.mjs fixture owners remove their temp directories (166037.057625ms)
+✖ failing tests:
+✖ rotation registry stays outside the engine identity corpus (679.956625ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (176.2795ms)
+dirt after battery: 0
+FID2-S1-PREP-DONE
+known-red overrides: e2e ^$ battery ^$
+hash at pin time: 39b444b44c8ea24952ff640dc6fc771f77db6084c2e952d45a455a2636e170cc
+pin #41
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 

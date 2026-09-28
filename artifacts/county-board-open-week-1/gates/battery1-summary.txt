@@ -1,0 +1,56 @@
+B1 start (branch be37d83cf + worktree edits; base be37d83cf) 2026-09-26T11:33:59Z load { 10.47 11.67 26.61 }
+build rc=0
+build done 2026-09-26T11:34:18Z load { 13.26 12.20 26.45 }
+hash branch rc=0 official computeEngineHash: cc0b2288965ecf45d7c1f30cd19de2aca66c6391ba0ade33141ef502ee3a05fb
+hash base rc=0 official computeEngineHash: 642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a
+door before/after rc=0 8 same, 5 moved
+replay artifacts/gauntlet-heat14-e3949bfa/rides/the-claim/work/probe-idle-tape.json: branch rc=0 base rc=0 outputs identical
+replay artifacts/gauntlet-heat15-cd24d12d/rides/r3/work/probe-null-tape.json: branch rc=1 base rc=1 outputs identical
+replay artifacts/eh3-fixture/tape.json: branch rc=1 base rc=1 outputs identical
+replays done 2026-09-26T11:34:51Z load { 10.95 11.75 25.79 }
+vite pid 17940 up rc=0
+warmup rc=0
+e2e spec rc=1  4 failed  6 passed (26.1s) 
+    red:   1) [desktop-chrome] › e2e/county-board-open-week.spec.ts:166:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+    red:   2) [desktop-chrome] › e2e/county-board-open-week.spec.ts:370:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open 
+    red:   3) [mobile-chrome] › e2e/county-board-open-week.spec.ts:166:1 › door: an unknown, unopened or non-carrying week is refused 400 bad_rotation, and every other read keeps its grammar 
+    red:   4) [mobile-chrome] › e2e/county-board-open-week.spec.ts:370:1 › board: a secured live run posts to its week, and its rider finds the standing on the board they open 
+e2e adjacent rc=0  52 passed (3.6m) 
+e2e board rc=1  12 failed  46 passed (2.3m) 
+    red:   1) [desktop-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger 
+    red:   2) [desktop-chrome] › e2e/assay-season-roll.spec.ts:148:1 › the archive door serves season one read-only and refuses the pen 
+    red:   3) [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration 
+    red:   4) [desktop-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name 
+    red:   5) [desktop-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run 
+    red:   6) [desktop-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell 
+    red:   7) [mobile-chrome] › e2e/assay-season-roll.spec.ts:103:1 › the county board opens on the season now riding and reaches the closed first ledger 
+    red:   8) [mobile-chrome] › e2e/assay-season-roll.spec.ts:148:1 › the archive door serves season one read-only and refuses the pen 
+    red:   9) [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:387:1 › endpoint stores optional self-declared stack and publishes only its board-safe declaration 
+    red:   10) [mobile-chrome] › e2e/lb-01-county-standings.spec.ts:654:1 › secure submits the county row with pinned origin, hashes, and profile name 
+    red:   11) [mobile-chrome] › e2e/milk-county-board.spec.ts:446:1 › plain boot: posse chips rank within size, the field book counts hands, and a row watches its run 
+    red:   12) [mobile-chrome] › e2e/transfer-board.spec.ts:8:1 › landing renders the weekly rotation and generalization cell 
+e2e reels rc=1  6 failed 
+    red:   1) [desktop-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug 
+    red:   2) [desktop-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board 
+    red:   3) [desktop-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal 
+    red:   4) [mobile-chrome] › e2e/agent-reels.spec.ts:288:1 › plain town board WATCH plays an era-current reel without debug 
+    red:   5) [mobile-chrome] › e2e/agent-reels.spec.ts:303:1 › the Hill Mine crown keeps its tape contract through a landing link and the town board 
+    red:   6) [mobile-chrome] › e2e/agent-reels.spec.ts:322:1 › plain town board WATCH gives a half-stamped reel its honest unstamped-era refusal 
+vite 17940 stopped
+branch e2e done 2026-09-26T11:42:57Z load { 6.58 9.17 18.59 }
+control vite pid 31245 up rc=1
+control warmup rc=1
+control e2e/agent-reels.spec.ts rc=1 
+control e2e/assay-season-roll.spec.ts rc=1 
+control e2e/lb-01-county-standings.spec.ts rc=1 
+control e2e/milk-county-board.spec.ts rc=1 
+control e2e/transfer-board.spec.ts rc=1 
+control vite 31245 stopped
+control done 2026-09-26T11:46:05Z load { 6.89 8.03 16.26 }
+test:stats rc=0 stats worker checks passed (99) standings assay kv checks passed (617) standings assay sqlite checks passed (617) ledger worker HTTP contract checks passed (26) 
+test:stats done 2026-09-26T11:46:18Z load { 6.91 7.98 16.10 }
+node-guards rc=1 ℹ tests 1037 ℹ pass 1026 ℹ fail 6 ℹ skipped 5 
+node-guards done 2026-09-26T12:03:07Z load { 7.53 13.00 22.03 }
+null floors rc=0 83 of 83 null floors match assets/contracts/null-floors.json (290.1s).
+B1 end 2026-09-26T12:07:57Z load { 4.68 8.17 17.21 }
+B1-DONE

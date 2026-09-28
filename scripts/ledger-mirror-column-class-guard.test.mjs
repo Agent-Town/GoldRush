@@ -30,7 +30,7 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { mkdtempSync, writeFileSync, readFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, readFileSync, rmSync, cpSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { DatabaseSync } from 'node:sqlite';
 import os from 'node:os';
@@ -77,6 +77,12 @@ function variantOf(find, replace) {
   const dir = keep(mkdtempSync(path.join(os.tmpdir(), 'gr-colclass-variant-')));
   const file = path.join(dir, 'ledger-mirror-exposure.mjs');
   writeFileSync(file, src.replace(find, replace));
+  // Since s2672 the subject imports the shared destination resolver by relative path
+  // (scripts/ledger-mirror-dest.mjs). A variant lifted out of scripts/ must carry it, or
+  // every mutation arm here dies on ERR_MODULE_NOT_FOUND — which LOOKS like the mutation
+  // being caught and is nothing of the kind. The control-validity assertion in runVariant
+  // is what turned that into a visible red rather than a silent vacuous pass.
+  cpSync(path.join(REPO, 'scripts', 'ledger-mirror-dest.mjs'), path.join(dir, 'ledger-mirror-dest.mjs'));
   return file;
 }
 

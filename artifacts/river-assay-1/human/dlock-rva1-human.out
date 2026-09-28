@@ -1,0 +1,8 @@
+tip start 2026-09-26T22:20:36Z head 71510d4e7 load { 7.80 35.54 40.89 }
+tip replay rc=1 148s 
+tip worker rc=0 {"verdict":"unassayable","claimedHash":"fnv1a32:c218335c","replayedHash":null,"reason":"assay replay failed: page.waitForFunction: Timeout 120000ms exceeded.","wallMs":476204}
+base start 2026-09-26T22:31:00Z head 8f4be3286 load { 66.53 26.20 29.03 }
+base replay rc=1 165s 
+base worker rc=0 {"verdict":"unassayable","claimedHash":"fnv1a32:c218335c","replayedHash":null,"reason":"assay replay failed: page.waitForFunction: Timeout 120000ms exceeded.","wallMs":460152}
+end 2026-09-26T22:41:26Z
+exit=0

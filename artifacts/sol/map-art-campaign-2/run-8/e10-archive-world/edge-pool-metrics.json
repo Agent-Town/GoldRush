@@ -1,0 +1,123 @@
+{
+  "edge-desktop": {
+    "box": [
+      250,
+      20,
+      450,
+      210
+    ],
+    "run6": [
+      {
+        "image": "before-frozen-1280.png",
+        "median": 0.0710713725490196,
+        "mean": 0.06875211360165118,
+        "rms": 0.008805517173369769,
+        "darkShareBelow01": 1.0
+      },
+      {
+        "image": "after-frozen-1280.png",
+        "median": 0.22640392156862743,
+        "mean": 0.22655547562435496,
+        "rms": 0.008620451273831412,
+        "darkShareBelow01": 0.0
+      }
+    ],
+    "run8": [
+      {
+        "image": "before-frozen-1280.png",
+        "median": 0.22638352941176468,
+        "mean": 0.22655555795665633,
+        "rms": 0.008620740722754273,
+        "darkShareBelow01": 0.0
+      },
+      {
+        "image": "after-frozen-1280.png",
+        "median": 0.27511450980392155,
+        "mean": 0.2746747303405573,
+        "rms": 0.009624791631455902,
+        "darkShareBelow01": 0.0
+      }
+    ]
+  },
+  "edge-phone": {
+    "box": [
+      175,
+      20,
+      215,
+      230
+    ],
+    "run6": [
+      {
+        "image": "before-frozen-390.png",
+        "median": 0.07387607843137255,
+        "mean": 0.07250156162464987,
+        "rms": 0.006737413947492384,
+        "darkShareBelow01": 1.0
+      },
+      {
+        "image": "after-frozen-390.png",
+        "median": 0.22528235294117646,
+        "mean": 0.22559077236227826,
+        "rms": 0.008561029332180505,
+        "darkShareBelow01": 0.0
+      }
+    ],
+    "run8": [
+      {
+        "image": "before-frozen-390.png",
+        "median": 0.22528235294117646,
+        "mean": 0.2255903729225023,
+        "rms": 0.00856103703315975,
+        "darkShareBelow01": 0.0
+      },
+      {
+        "image": "after-frozen-390.png",
+        "median": 0.27428078431372543,
+        "mean": 0.23429365098039218,
+        "rms": 0.06857680425309404,
+        "darkShareBelow01": 0.008095238095238095
+      }
+    ]
+  },
+  "earned-pool": {
+    "box": [
+      440,
+      440,
+      540,
+      500
+    ],
+    "run6": [
+      {
+        "image": "staged-paint-restored-without-pool-1280.png",
+        "median": 0.24656235294117645,
+        "mean": 0.24642590784313725,
+        "rms": 0.007333367160682958,
+        "darkShareBelow01": 0.0
+      },
+      {
+        "image": "staged-paint-west-restored-1280.png",
+        "median": 0.3945254901960784,
+        "mean": 0.3928745945098039,
+        "rms": 0.017129509145836375,
+        "darkShareBelow01": 0.0
+      }
+    ],
+    "run8": [
+      {
+        "image": "staged-paint-restored-without-pool-1280.png",
+        "median": 0.31374823529411766,
+        "mean": 0.31408750692810455,
+        "rms": 0.004348942589244407,
+        "darkShareBelow01": 0.0
+      },
+      {
+        "image": "staged-paint-west-restored-1280.png",
+        "median": 0.5079725490196079,
+        "mean": 0.5069785841830065,
+        "rms": 0.011808209617347435,
+        "darkShareBelow01": 0.0
+      }
+    ]
+  },
+  "qualification": "Edge phone ROI now includes the new portico, so its luminance measures scene content, not just background. Staged pool control keeps restored grayscale state fixed and disables only the added warm floor/facade terms; it is not native objective completion."
+}

@@ -27,7 +27,7 @@ import {
 import { ProbeRecovery } from '../systems/ProbeRecovery';
 import { FLOTILLA_HULL_RULES } from '../systems/FlotillaHullSystem';
 import { NOISE_HUNT_RULES } from '../systems/NoiseHuntSystem';
-import { deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
+import { boatWaterFor, deepwaterStormDrivesWaves } from '../world/DeepwaterClaimTile';
 import { ShowroomCaptureObjective } from '../systems/ShowroomCaptureObjective';
 import { HOLLOW_EXTRACTION_RADIUS, HOLLOW_GLOW_DAMAGE_PER_SECOND } from '../systems/HollowCrossingSystem';
 // From the LEAF module, never `../sim/MotorSocket`: that file's graph reaches `world/Terrain` and
@@ -36,9 +36,30 @@ import { MOTOR_GRADE_REACH, MOTOR_GRADE_VERB, MOTOR_HAUL_VERB, MOTOR_STOP_REACH 
 
 /** The public verb a rider uses to lift the probe, named once so the manifest cannot drift. */
 const PROBE_RECOVER_ACTION = 'recover';
+
+/**
+ * E5 Regatta — the gate radius a mark that authors none falls back to, which on the Regatta is the
+ * SIXTH and last gate: the course as raced is the five authored beacons and then the `heroStart`
+ * stake, and a stake marker carries no radius. `RegattaRaceSystem.DEFAULT_GATE_RADIUS` is the
+ * engine's own copy of this number; slice 3's firewall forbids editing that file, so the constant
+ * lives here — beside the `regatta_race` rule that already published the literal — rather than as a
+ * third copy inside `View.ts`. `scripts/regatta-boat-steer.test.mjs` pins the two against each
+ * other by source text so they cannot drift; a later slice that may touch the race system should
+ * move this constant there and export it from the engine.
+ */
+export const REGATTA_GATE_RADIUS_FALLBACK = 6;
 // hero-move-verb: read from the verb's own module so the published contract cannot drift from the
 // executor that enforces it.
-import { HERO_ARRIVE_RADIUS, HERO_ORDER_REFUSALS } from './StandingOrders';
+import { BOAT_ORDER_REFUSALS, HERO_ARRIVE_RADIUS, HERO_ORDER_REFUSALS } from './StandingOrders';
+// E5 Regatta slice 3: the hull's GEOMETRY, read from the entity that owns it so the published
+// gangplank and deck cannot drift from the predicates `board`/`stepAshore` actually apply.
+import {
+  CLAIM_BOAT_DECK_BOUNDS,
+  CLAIM_BOAT_GANGPLANK_REACH,
+  CLAIM_BOAT_GANGWAY_REACH,
+  CLAIM_BOAT_HULL_RADIUS,
+  type ClaimBoatPhysics,
+} from '../entities/ClaimBoat';
 import {
   SEED_CARAVAN_DWELL_SECONDS,
   SEED_CARAVAN_MAX_HP,
@@ -556,14 +577,67 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       }));
     }
     if (tile.raceCourse) {
+      const finishId = tile.stakeMarkers?.find(({ heroStart }) => heroStart)?.id ?? '';
+      // `ContractDeepwaterFields.claimBoat` predates the steerable boat and publishes no `physics`
+      // in its type; `RegattaRaceSystem.create` and `DeepwaterClaimTile` read the same authored
+      // block through the same narrowing. This is that narrowing, not a second schema.
+      const boatPhysics = (deepwater.claimBoat as { physics?: ClaimBoatPhysics } | undefined)?.physics;
       rules.push(rule('regatta_race', 'RegattaRaceSystem.advance+movementMultiplierAt', {
-        gates: tile.raceCourse.beacons.map(({ id }) => id),
-        finish: tile.stakeMarkers?.find(({ heroStart }) => heroStart)?.id ?? '',
-        gateRadiusFallback: 6,
+        // THE COURSE AS RACED, not as authored (slice 2). `advance` walks the authored beacons and
+        // then takes the `heroStart` stake as the finish line, so the course is SIX gates and a
+        // rider counting five would think it had won a mark early.
+        gates: [...tile.raceCourse.beacons.map(({ id }) => id), finishId],
+        gateCount: tile.raceCourse.beacons.length + 1,
+        finish: finishId,
+        gateRadiusFallback: REGATTA_GATE_RADIUS_FALLBACK,
         fastWaterZone: tile.raceCourse.fastWaterZone.id,
-        fastWaterMultiplier: 1.35,
+        // F-RB1-2, CLOSED BY SLICE 2 AND RE-READ HERE. This row published a hard 1.35 for a body on
+        // foot while the hull steered on the contract's own number; slice 2 deleted the on-foot
+        // number and made the contract's the single source, and `RegattaRaceSystem.create` now
+        // REFUSES a course whose racing body authors no physics. The manifest was the last copy of
+        // the stale 1.35 and is read from the same authored field as the engine from here on.
+        fastWaterMultiplier: boatPhysics?.fastWaterMultiplier ?? 0,
+        // Law 3, "the race counts the boat": one racer or none, and the racer is the hull with a
+        // body aboard. Published because a rider that does not know this will swim the course.
+        racer: 'the Claim-Boat with a body aboard; a swimming hero and a moored hull score nothing',
+        // Q2, ratified 2026-09-19: leaving the boat after the start beacon ends the run's race.
+        leavingTheBoatForfeits: true,
+        forfeitIsTerminalForTheRace: true,
         deadlineWave: twist.secureWave ?? 0,
         competingRacerLoot: false,
+        view: 'now.regatta',
+      }));
+      // E5 REGATTA SLICE 3 — THE HULL AS A BODY, published beside `deepwater_claim_boat` rather
+      // than folded into it. That rule is the MOORED boat every Deepwater map has (pads, anchors,
+      // deck buildings); this one exists only where a race course declares the hull a racing body,
+      // and a rider reading the two together can tell the pads from the helm.
+      rules.push(rule('regatta_boat', 'ClaimBoat.board+steer+stepAshore', {
+        boatId: deepwater.claimBoat.id,
+        // ADR-005's whole claim on this map: no new verb, and the same intent for both species.
+        helm: 'MOVE_HERO',
+        helmedWhile: 'aboard; a MOVE_HERO to navigable water sails the hull, and the hero rides the deck anchor',
+        embark: 'walk the hero onto the deck: boarding is a CROSSING of the rail, so a hero that boots on the deck has not boarded',
+        // F-RB2-2 (a), owner 2026-09-22 "gangway-reach only": the reach is measured from the DECK
+        // ANCHOR you ride, so it is the same in every direction and you leave her over the SIDE.
+        disembark: 'a move intent toward standable ground off the deck and within gangwayReach of the deck anchor, so a bow-ward intent steps nowhere and the hull runs aground on its clamp instead; after the start beacon this forfeits',
+        gangwayReach: CLAIM_BOAT_GANGWAY_REACH,
+        waterBounds: boatWaterFor(deepwater.waterTile) ?? {},
+        standable: 'A step ashore needs STANDABLE ground: walkable terrain off the deck and outside the hull water bounds, within gangwayReach of the deck anchor. The Regatta has walkable shallows beyond parts of this clamp; other points are blocked. Read canStepAshore before ordering: all-water scenery does not make leaving the boat unreachable.',
+        shoreView: 'now.regatta.canStepAshore samples off-deck, non-navigable, walkable terrain at 16 headings around the gangway reach circle',
+        gangplankReach: CLAIM_BOAT_GANGPLANK_REACH,
+        deckHalfWidth: CLAIM_BOAT_DECK_BOUNDS.maxX,
+        deckHalfLength: CLAIM_BOAT_DECK_BOUNDS.maxZ,
+        hullRadius: CLAIM_BOAT_HULL_RADIUS,
+        refusals: BOAT_ORDER_REFUSALS,
+        topSpeed: boatPhysics?.topSpeed ?? 0,
+        acceleration: boatPhysics?.acceleration ?? 0,
+        turnRateRadPerSec: boatPhysics?.turnRateRadPerSec ?? 0,
+        drag: boatPhysics?.drag ?? 0,
+        fastWaterMultiplier: boatPhysics?.fastWaterMultiplier ?? 0,
+        // F-HEAT15-4, owner ruling 2026-09-22 (a): published because a rider that cannot read this
+        // has no way to know that sailing the course is worth more than tying on the scored axes.
+        boardRanking: 'the county ranks a finished race above any unfinished row on this board',
+        view: 'now.regatta.boat',
       }));
     }
     if (tile.flotilla) {
@@ -1148,7 +1222,13 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       })),
     } : {}),
     interactables: interactables(contract),
-    rules: rules.sort(byId),
+    rules: rules.map((row) => {
+      const pack = entryPacks[contract.id];
+      const entries = pack?.entryLandmarks ?? (pack?.entryLandmark ? [pack.entryLandmark] : []);
+      return entries.length && row.id === entryRuleIds[contract.id]
+        ? { ...row, data: { ...row.data, entryLandmark: `This map leads with the ${entries.map(entry => `${entry.mountId} landmark`).join(', then the ')}.` } }
+        : row;
+    }).sort(byId),
     modes: (contract.modes ?? []).map((mode) => ({ ...mode })),
     posting: {
       waves: waves.sort((left, right) => left.wave - right.wave || compare(left.event, right.event)),
@@ -1261,3 +1341,35 @@ function byId<T extends { id: string }>(left: T, right: T): number {
 function compare(left: string, right: string): number {
   return left < right ? -1 : left > right ? 1 : 0;
 }
+
+import glowMesaEntryPack from '../../assets/pilots/map-rebuild-spike/glow-mesa-terrain-contract.json' with { type: 'json' };
+import deadBandEntryPack from '../../assets/pilots/map-rebuild-spike/dead-band-terrain-contract.json' with { type: 'json' };
+import farSideEntryPack from '../../assets/pilots/map-rebuild-spike/far-side-terrain-contract.json' with { type: 'json' };
+import halfLifeHollowEntryPack from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json' with { type: 'json' };
+import relayRushEntryPack from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json' with { type: 'json' };
+import night_shiftEntryPack from '../../assets/pilots/map-rebuild-spike/night-shift-terrain-contract.json' with { type: 'json' };
+import twin_banksEntryPack from '../../assets/pilots/map-rebuild-spike/twin-banks-terrain-contract.json' with { type: 'json' };
+import baronEntryPack from '../../assets/pilots/map-rebuild-spike/baron-terrain-contract.json' with { type: 'json' };
+import trestleEntryPack from '../../assets/pilots/map-rebuild-spike/trestle-terrain-contract.json' with { type: 'json' };
+const entryPacks: Readonly<Record<string, { contractId: string; entryLandmark?: { mountId: string }; entryLandmarks?: readonly { mountId: string }[] }>> = {
+  'e1-night-shift': night_shiftEntryPack,
+  'e1-twin-banks': twin_banksEntryPack,
+  'e1-baron': baronEntryPack,
+  'e2-trestle': trestleEntryPack,
+  'e6-glow-mesa': glowMesaEntryPack,
+  'e7-dead-band': deadBandEntryPack,
+  'e8-far-side': farSideEntryPack,
+  'e6-half-life-hollow': halfLifeHollowEntryPack,
+  'e7-relay-rush': relayRushEntryPack,
+};
+const entryRuleIds: Readonly<Record<string, string>> = {
+  'e2-trestle': 'river',
+  'e1-baron': 'baron',
+  'e1-twin-banks': 'water_crossings',
+  'e1-night-shift': 'darkness_cycle',
+  'e6-glow-mesa': 'night_vein_ring',
+  'e7-dead-band': 'signal_suppression',
+  'e8-far-side': 'probe_recovery',
+  'e6-half-life-hollow': 'hollow_crossing',
+  'e7-relay-rush': 'interference_front',
+};

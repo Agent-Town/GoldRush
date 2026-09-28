@@ -1,0 +1,25 @@
+=== LB-01 pull rc=0
+destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+ledger backup already present for today: /Users/robin/.goldrush/ledger-backups/ledger-2026-09-24.db
+
+=== LB-01 push rc=0
+destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+local series: 32 dated mirror(s), 159084544 B, 2026-08-24 -> 2026-09-24
+LEDGER MIRROR EXPOSURE — LB-01 standing encryption gate
+
+  corpus                  : read (32 mirror(s), 32 read, 0 unreadable)
+  dir                     : /Users/robin/.goldrush/ledger-backups  (argument)
+  keys inspected          : 1486
+  column-class verdicts   : refusals.anon_id, refusals.profile_name = county-standings by SCHEMA (account denylist still checked first)
+  account-class rows      : 0
+  unrecognised rows       : 0
+
+✅ CLEAN — every key in every mirror is county-standings class.
+   Nothing here carries account data; these mirrors are safe to commit.
+archive remote: github.com:Agent-Town/GoldRush-archive.git (branch ledger-backups)
+archive branch: exists, extending it
+✅ UNCHANGED — the archive branch already holds this series. No commit, no push.
+
+=== FM-01 rc=0
+fire-memory-mirror: unchanged (branch up to date)
+

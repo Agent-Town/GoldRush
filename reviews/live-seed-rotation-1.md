@@ -1,0 +1,42 @@
+# Drain review: `live-seed-rotation-1`, the run and the room ride the live weekly seed (Opus 5.5 implementer at max effort; owner: the seed changes every Monday)
+
+**Branch** `feat/live-seed-rotation-1` at `38c0c03c3` · **merge** `da13ea750` · engine hash #62 `755400f8` · drained attended 2026-09-25 20:31Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `lsr1`).
+
+**Verdict: LANDED.**
+
+### What it does
+The owner ruled the seed changes every Monday; until now the browser rode the literal `gold-rush` while the county door already refused rotation tapes outside their week. This branch (Opus 5.5 implementer at max effort; the drain finished item 4) makes the run, its county standing and the co-op room ride the LIVE seed: `src/game/liveSeed.ts` resolves the week open now for the contract (the door's own UTC window), else the latest week already opened, else `gold-rush`; a replay tape's seed and a dev `?seed=` pin still come first; the standing names the seed the run was actually ridden on, so a run crossing Monday gets `rotation_closed` rather than `bad_payload`; the Ride Together host and every rider resolve the same week; the card names it ("Week 39 claim"). No grace at the door: the ratified L3 allows none and the owner's words are the ruling. Where the player sees it: the Ride Together card's Seed line and, once the door hotfix lands, their standing on the week's board. The hotfix matters because the implementer found F-LSR1-0 on the way: the door has refused every browser standing with a reel since 2026-09-05 (verified in code by the drain; `door-tape-grammar-1` is running).
+
+### Measured
+Unit 7/7; tsc clean; dev and release builds green; the registry ships in the release bundle; `test:stats` unchanged; new spec 20/20 dev and 14 + 6 dev-only skips release; adjacent suites 36/36 and 48/48; the pre-existing reds (e5-regatta-boat `:122` desktop, four census rows, two lb-01 rows, six onboarding rows) fail identically on a clean-main control worktree; `mp-ride-lobby` red on purpose on the branch and cured by the drain's item-4 fix (the card shows the week label, the spec accepts label or literal). Seeds a boot resolves today: the five Frontier contracts on their `r2026w39` seeds, Drill Yard `gold-rush` (not in the registry). The engine hash moves (three `src/` files); no sim rule, contract, floor or table moved.
+
+### Merge classification
+LANE-TOUCHED: `src/game/liveSeed.ts` (new), `src/game/Game.ts` (two literals), `src/mp/RideTogether.ts` (one literal), `src/town/TownScene.ts` (the card label; drain), `e2e/live-seed-rotation.spec.ts` (new), `e2e/mp-ride-lobby.spec.ts` (one expectation; drain), `scripts/live-seed-rotation.test.mjs` (new) and its roster line in `package.json` (drain), `artifacts/live-seed-rotation-1/**`. Nothing on main moved under them.
+
+### Findings
+- **F-LSR1-0 (critical, pre-existing):** the door's twelve-key tape grammar against the recorder's `playbookUses`; hotfix `door-tape-grammar-1` in flight, P0.
+- **F-LSR1-1 (the owner's, on the desk):** human standings on a rotation seed appear on no in-game board (the public board keeps only rows without a `rotationId`; the transfer board is site-only and verified-solo). Recommendation: the in-game board reads the open week's partition.
+- **F-LSR1-2 (ops, on the desk with a recommendation):** a bundle without the open week falls back to last week and the door refuses every such standing until a deploy lands; week 39 was minted three days late and week 40 is not minted as of this landing (week 39 closes Monday 2026-09-28 00:00 UTC). The RT-01 mint must run a week ahead.
+- **F-LSR1-3 (a slice):** `View.ts` publishes the URL seed or `gold-rush`, not the run's seed.
+- **F-LSR1-5 (documented):** "Try Again" keeps the old seed after Monday; a suspended run resumed across Monday mixes seeds; a rider joining after the close is refused `setup_mismatch`.
+
+### Battery attribution (drain, 17:32Z)
+Three reds in the chain battery: the two registry rows are the expected pre-pin reds of a hash-moving branch (default-allowed) and the fixture sweep failed on "scripts/bench-seeds.test.mjs child failed", the same pre-pin red seen through the sweep child; the pin cures it. Allowed for this landing only.
+
+### Drain correction (17:40Z)
+The drain's first item-4 edit made the Ride Together card show the week label INSTEAD of the seed, which broke the implementer's own room row (`e2e/live-seed-rotation.spec.ts:88` asserts the exact seed on `ride-contract`) on both projects; the landing's e2e caught it and the verdict refused. The card now shows the label and the exact seed together ("Week 39 claim (e1-the-claim-r2026w39-…)", `38c0c03c3`); the live-seed spec and the lobby spec pass 24 of 24 on both projects against a private server. The landing was re-run fresh, not resumed.
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| strict release build (the assertion) | `(strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97710283 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)` |
+| first-town payload | `34351639 bytes` |
+| halo | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu` |
+| null floors | `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (291.2s).` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 145 ℹ fail 0` |
+| the release suite under its own config | `(own config): rc=0   30 passed (2.2m)` |
+| e2e both projects, --workers=1 | `rc=0   60 passed (4.5m)  20:14Z` |
+| full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 1025 ℹ pass 1018 ℹ fail 2 ℹ skipped 5  20:31Z` |
+| engine hash | `merged: 755400f89e096800cd8fa08e2bde744d15cca76e74d17f59c87d2f20468b89fa (pinned c63def1bfc493e243f31b9b115344ec6e3aacd57075554ec6a2ce872dfd90bef)` |

@@ -1,0 +1,1389 @@
+{
+  "project": "mobile-chrome",
+  "contract": "e3-fairground",
+  "name": "The Fairground",
+  "secureWave": 12,
+  "boots": {
+    "ok": true,
+    "detail": "activeId=e3-fairground secureWave=12"
+  },
+  "secures": {
+    "ok": false,
+    "detail": "Fair Wheel stopped irreversibly: {\"active\":true,\"spinning\":false,\"hp\":230.4,\"maxHp\":240,\"outputWatts\":0,\"configuredWatts\":24,\"viewRadius\":18,\"x\":0,\"z\":8}; flocks={\"enabled\":true,\"count\":3,\"escortRadius\":7,\"speed\":3.6,\"home\":{\"x\":0,\"z\":-30},\"night\":1,\"attempts\":6,\"completions\":1,\"frights\":4,\"allCrossed\":false,\"flocks\":[{\"id\":\"flock-1\",\"x\":-20,\"z\":-30,\"phase\":\"home\",\"destination\":\"copper-pavilion\",\"attempts\":2,\"crossings\":1,\"frights\":1,\"crossed\":true},{\"id\":\"flock-2\",\"x\":0,\"z\":-30,\"phase\":\"home\",\"destination\":\"ferris-wheel\",\"attempts\":2,\"crossings\":0,\"frights\":2,\"crossed\":false},{\"id\":\"flock-3\",\"x\":20,\"z\":7.920000000000027,\"phase\":\"outbound\",\"destination\":\"silver-pavilion\",\"attempts\":2,\"crossings\":0,\"frights\":1,\"crossed\":false}]}; wheel and all three flock crossings not proved"
+  },
+  "banks": {
+    "ok": false,
+    "detail": "skipped: never secured"
+  },
+  "board": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "reload": {
+    "ok": false,
+    "detail": "skipped: never banked"
+  },
+  "clean": {
+    "ok": true,
+    "detail": "0 console, 0 page"
+  },
+  "peakWave": 1,
+  "simAtEnd": 46.93333333333321,
+  "runStateAtEnd": "playing",
+  "hpAtEnd": 100,
+  "goldAtEnd": 30,
+  "killsAtEnd": 14,
+  "peakHotBoilers": 0,
+  "powerBanksPeak": {},
+  "builds": [
+    {
+      "id": "palisade",
+      "at": 9.466666666666672,
+      "wave": 0,
+      "x": -7,
+      "z": -30
+    },
+    {
+      "id": "sentry_beacon",
+      "at": 25.333333333333282,
+      "wave": 0,
+      "x": -5,
+      "z": -34
+    },
+    {
+      "id": "palisade",
+      "at": 30.266666666666598,
+      "wave": 1,
+      "x": 7,
+      "z": -30
+    }
+  ],
+  "upgrades": [
+    "double_tap_coil"
+  ],
+  "samples": [
+    {
+      "t": 10.4,
+      "wave": 0,
+      "hp": 100,
+      "gold": 0,
+      "kills": 0,
+      "x": -10.8,
+      "z": -30.5,
+      "alive": 2,
+      "seams": 2
+    },
+    {
+      "t": 21.2,
+      "wave": 0,
+      "hp": 100,
+      "gold": 25,
+      "kills": 1,
+      "x": -14.8,
+      "z": -34.5,
+      "alive": 5,
+      "seams": 2
+    },
+    {
+      "t": 32,
+      "wave": 1,
+      "hp": 100,
+      "gold": 0,
+      "kills": 6,
+      "x": 9.8,
+      "z": -21.6,
+      "alive": 8,
+      "seams": 2
+    },
+    {
+      "t": 42.3,
+      "wave": 1,
+      "hp": 100,
+      "gold": 25,
+      "kills": 12,
+      "x": 9.8,
+      "z": -16.7,
+      "alive": 5,
+      "seams": 2
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "notes": [
+    "epoch=epoch-3-voltage",
+    "strategy=gather-and-extend",
+    "engine secureWave=12 cadenceMult=1",
+    "home=0.0,-30.0 circuit=[[-4,-34],[4,-34],[4,-26],[-4,-26]]",
+    "kit=palisade+sentry_beacon+palisade+sentry_beacon+palisade+palisade+sentry_beacon+sentry_beacon+palisade+palisade",
+    "seam gold-seam-2 (-18.0,-38.0) unreachable on foot",
+    "could not fund sentry_beacon (cost 35, purse 0)"
+  ],
+  "at": "2026-09-25T09:12:42.189Z",
+  "objective": {
+    "fairground": {
+      "active": true,
+      "spinning": false,
+      "hp": 220.8,
+      "maxHp": 240,
+      "outputWatts": 0,
+      "configuredWatts": 24,
+      "viewRadius": 18,
+      "x": 0,
+      "z": 8
+    },
+    "crowdFlocks": {
+      "enabled": true,
+      "count": 3,
+      "escortRadius": 7,
+      "speed": 3.6,
+      "home": {
+        "x": 0,
+        "z": -30
+      },
+      "night": 1,
+      "attempts": 6,
+      "completions": 1,
+      "frights": 4,
+      "allCrossed": false,
+      "flocks": [
+        {
+          "id": "flock-1",
+          "x": -20,
+          "z": -30,
+          "phase": "home",
+          "destination": "copper-pavilion",
+          "attempts": 2,
+          "crossings": 1,
+          "frights": 1,
+          "crossed": true
+        },
+        {
+          "id": "flock-2",
+          "x": 0,
+          "z": -30,
+          "phase": "home",
+          "destination": "ferris-wheel",
+          "attempts": 2,
+          "crossings": 0,
+          "frights": 2,
+          "crossed": false
+        },
+        {
+          "id": "flock-3",
+          "x": 20,
+          "z": 8.880000000000027,
+          "phase": "outbound",
+          "destination": "silver-pavilion",
+          "attempts": 2,
+          "crossings": 0,
+          "frights": 1,
+          "crossed": false
+        }
+      ]
+    },
+    "canyonWorks": null,
+    "baron": {
+      "cartVisible": false,
+      "carried": false,
+      "distanceFromBaron": 0,
+      "telegraphActive": false,
+      "telegraphElapsed": 0,
+      "nextVolleyIn": 0,
+      "volleys": 0,
+      "suppressed": false,
+      "targetKind": null,
+      "lastOwnerId": "",
+      "lastTarget": {
+        "x": 0,
+        "z": 0
+      },
+      "target": {
+        "x": 0,
+        "z": 0
+      },
+      "props": {
+        "state": "off",
+        "source": "placeholder",
+        "launcher": false,
+        "rocket": false,
+        "powderKeg": false,
+        "triangles": {
+          "launcher": 2020,
+          "rocket": 876,
+          "powder_keg": 704
+        }
+      },
+      "manifest": null
+    },
+    "boss": {
+      "visible": false,
+      "ratio": 0,
+      "renderedRatio": 1,
+      "litSegments": 7,
+      "segments": 0,
+      "groupId": null,
+      "aliveComponents": 0,
+      "destroyedComponents": 0,
+      "components": []
+    },
+    "medals": {
+      "version": 1,
+      "baronBeaten": false,
+      "rocketCartCaptured": false
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 2.898055228320035,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 2.1204977469010786,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 2.512039357965642,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "escort": {
+      "enabled": false
+    },
+    "power": {
+      "id": "e3-fairground-grid",
+      "tick": 352,
+      "topologyRevision": 0,
+      "allocationRevision": 1,
+      "totalSupplyWatts": 0,
+      "totalDemandWatts": 12,
+      "nodes": [
+        {
+          "id": "copper-pavilion-lights",
+          "labelKey": "Copper Pavilion Lamps",
+          "kind": "consumer",
+          "x": -20,
+          "z": 10,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 20,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "ferris-wheel",
+          "labelKey": "Fair Wheel Dynamo",
+          "kind": "producer",
+          "x": 0,
+          "z": 8,
+          "online": false,
+          "outputWatts": 24,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "silver-pavilion-lights",
+          "labelKey": "Silver Pavilion Lamps",
+          "kind": "consumer",
+          "x": 20,
+          "z": 10,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 20,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        }
+      ],
+      "wires": [
+        {
+          "id": "copper-pavilion-lights--ferris-wheel",
+          "a": "copper-pavilion-lights",
+          "b": "ferris-wheel",
+          "state": "intact",
+          "length": 20.1,
+          "maxLength": 24
+        },
+        {
+          "id": "ferris-wheel--silver-pavilion-lights",
+          "a": "ferris-wheel",
+          "b": "silver-pavilion-lights",
+          "state": "intact",
+          "length": 20.1,
+          "maxLength": 24
+        }
+      ],
+      "components": [
+        {
+          "id": "component-1",
+          "nodeIds": [
+            "copper-pavilion-lights"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 6,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "copper-pavilion-lights"
+          ]
+        },
+        {
+          "id": "component-2",
+          "nodeIds": [
+            "silver-pavilion-lights"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 6,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "silver-pavilion-lights"
+          ]
+        }
+      ],
+      "signature": "80:99334920963772ac",
+      "active": true,
+      "budgetMs": 0.5,
+      "lastSolveMs": 0.09999990463256836,
+      "maxSolveMs": 0.40000009536743164,
+      "lastStepMs": 0,
+      "maxStepMs": 0.5,
+      "overBudget": false,
+      "overBudgetCount": 0,
+      "solveCount": 2,
+      "nodeCount": 3,
+      "wireCount": 2,
+      "intactWireCount": 2,
+      "cutWireCount": 0,
+      "events": [
+        {
+          "seq": 1,
+          "tick": 0,
+          "nodeId": "copper-pavilion-lights",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 2,
+          "tick": 0,
+          "nodeId": "ferris-wheel",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 3,
+          "tick": 0,
+          "nodeId": "silver-pavilion-lights",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 4,
+          "tick": 347,
+          "nodeId": "copper-pavilion-lights",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 5,
+          "tick": 347,
+          "nodeId": "ferris-wheel",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 6,
+          "tick": 347,
+          "nodeId": "silver-pavilion-lights",
+          "from": "powered",
+          "to": "dark"
+        }
+      ],
+      "render": {
+        "active": true,
+        "renderLayer": 2,
+        "renderSlot": "gameplay",
+        "topologyRevision": 0,
+        "allocationRevision": 1,
+        "rebuildCount": 2,
+        "spans": 2,
+        "poweredSpans": 0,
+        "darkSpans": 2,
+        "intactSpans": 2,
+        "cutSpans": 0,
+        "segments": 24,
+        "poweredSegments": 0,
+        "darkSegments": 24,
+        "drawCalls": 1,
+        "asset": "procedural-catenary"
+      }
+    }
+  },
+  "finalSnapshot": {
+    "escort": {
+      "enabled": false
+    },
+    "canyonWorks": null,
+    "fairground": {
+      "active": true,
+      "spinning": false,
+      "hp": 220.8,
+      "maxHp": 240,
+      "outputWatts": 0,
+      "configuredWatts": 24,
+      "viewRadius": 18,
+      "x": 0,
+      "z": 8
+    },
+    "crowdFlocks": {
+      "enabled": true,
+      "count": 3,
+      "escortRadius": 7,
+      "speed": 3.6,
+      "home": {
+        "x": 0,
+        "z": -30
+      },
+      "night": 1,
+      "attempts": 6,
+      "completions": 1,
+      "frights": 4,
+      "allCrossed": false,
+      "flocks": [
+        {
+          "id": "flock-1",
+          "x": -20,
+          "z": -30,
+          "phase": "home",
+          "destination": "copper-pavilion",
+          "attempts": 2,
+          "crossings": 1,
+          "frights": 1,
+          "crossed": true
+        },
+        {
+          "id": "flock-2",
+          "x": 0,
+          "z": -30,
+          "phase": "home",
+          "destination": "ferris-wheel",
+          "attempts": 2,
+          "crossings": 0,
+          "frights": 2,
+          "crossed": false
+        },
+        {
+          "id": "flock-3",
+          "x": 20,
+          "z": 8.880000000000027,
+          "phase": "outbound",
+          "destination": "silver-pavilion",
+          "attempts": 2,
+          "crossings": 0,
+          "frights": 1,
+          "crossed": false
+        }
+      ]
+    },
+    "power": {
+      "id": "e3-fairground-grid",
+      "tick": 352,
+      "topologyRevision": 0,
+      "allocationRevision": 1,
+      "totalSupplyWatts": 0,
+      "totalDemandWatts": 12,
+      "nodes": [
+        {
+          "id": "copper-pavilion-lights",
+          "labelKey": "Copper Pavilion Lamps",
+          "kind": "consumer",
+          "x": -20,
+          "z": 10,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 20,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-1",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "ferris-wheel",
+          "labelKey": "Fair Wheel Dynamo",
+          "kind": "producer",
+          "x": 0,
+          "z": 8,
+          "online": false,
+          "outputWatts": 24,
+          "demandWatts": 0,
+          "priority": 0,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        },
+        {
+          "id": "silver-pavilion-lights",
+          "labelKey": "Silver Pavilion Lamps",
+          "kind": "consumer",
+          "x": 20,
+          "z": 10,
+          "online": true,
+          "outputWatts": 0,
+          "demandWatts": 6,
+          "priority": 20,
+          "state": "dark",
+          "allocatedWatts": 0,
+          "allocationRatio": 0,
+          "componentId": "component-2",
+          "storedWh": 0,
+          "capacityWh": 0,
+          "chargeWatts": 0,
+          "dischargeWatts": 0
+        }
+      ],
+      "wires": [
+        {
+          "id": "copper-pavilion-lights--ferris-wheel",
+          "a": "copper-pavilion-lights",
+          "b": "ferris-wheel",
+          "state": "intact",
+          "length": 20.1,
+          "maxLength": 24
+        },
+        {
+          "id": "ferris-wheel--silver-pavilion-lights",
+          "a": "ferris-wheel",
+          "b": "silver-pavilion-lights",
+          "state": "intact",
+          "length": 20.1,
+          "maxLength": 24
+        }
+      ],
+      "components": [
+        {
+          "id": "component-1",
+          "nodeIds": [
+            "copper-pavilion-lights"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 6,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "copper-pavilion-lights"
+          ]
+        },
+        {
+          "id": "component-2",
+          "nodeIds": [
+            "silver-pavilion-lights"
+          ],
+          "supplyWatts": 0,
+          "generationWatts": 0,
+          "storageDischargeWatts": 0,
+          "demandWatts": 6,
+          "unusedWatts": 0,
+          "storedWh": 0,
+          "state": "dark",
+          "shedOrder": [
+            "silver-pavilion-lights"
+          ]
+        }
+      ],
+      "signature": "80:99334920963772ac",
+      "active": true,
+      "budgetMs": 0.5,
+      "lastSolveMs": 0.09999990463256836,
+      "maxSolveMs": 0.40000009536743164,
+      "lastStepMs": 0,
+      "maxStepMs": 0.5,
+      "overBudget": false,
+      "overBudgetCount": 0,
+      "solveCount": 2,
+      "nodeCount": 3,
+      "wireCount": 2,
+      "intactWireCount": 2,
+      "cutWireCount": 0,
+      "events": [
+        {
+          "seq": 1,
+          "tick": 0,
+          "nodeId": "copper-pavilion-lights",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 2,
+          "tick": 0,
+          "nodeId": "ferris-wheel",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 3,
+          "tick": 0,
+          "nodeId": "silver-pavilion-lights",
+          "from": null,
+          "to": "powered"
+        },
+        {
+          "seq": 4,
+          "tick": 347,
+          "nodeId": "copper-pavilion-lights",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 5,
+          "tick": 347,
+          "nodeId": "ferris-wheel",
+          "from": "powered",
+          "to": "dark"
+        },
+        {
+          "seq": 6,
+          "tick": 347,
+          "nodeId": "silver-pavilion-lights",
+          "from": "powered",
+          "to": "dark"
+        }
+      ],
+      "render": {
+        "active": true,
+        "renderLayer": 2,
+        "renderSlot": "gameplay",
+        "topologyRevision": 0,
+        "allocationRevision": 1,
+        "rebuildCount": 2,
+        "spans": 2,
+        "poweredSpans": 0,
+        "darkSpans": 2,
+        "intactSpans": 2,
+        "cutSpans": 0,
+        "segments": 24,
+        "poweredSegments": 0,
+        "darkSegments": 24,
+        "drawCalls": 1,
+        "asset": "procedural-catenary"
+      }
+    },
+    "pressure": {
+      "enabled": false,
+      "multiplayerPosture": "single-player-gated",
+      "coal": 0,
+      "seams": [
+        {
+          "x": -12,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 2.898055228320035,
+          "spriteVisible": false
+        },
+        {
+          "x": -5,
+          "z": 43,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 2.1204977469010786,
+          "spriteVisible": false
+        },
+        {
+          "x": 3,
+          "z": 39,
+          "harvested": false,
+          "progress": 0,
+          "marked": false,
+          "visualY": null,
+          "groundY": 2.512039357965642,
+          "spriteVisible": false
+        }
+      ],
+      "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+      "boilers": [
+        {
+          "index": 0,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 1,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        },
+        {
+          "index": 2,
+          "active": false,
+          "position": {
+            "x": 0,
+            "z": 0
+          },
+          "hot": false,
+          "cooling": false
+        }
+      ],
+      "vents": 0,
+      "safeBand": null,
+      "objective": {
+        "active": false,
+        "failed": false,
+        "complete": false,
+        "hotBoilers": 0,
+        "waves": "8-12"
+      }
+    },
+    "objective": {
+      "fairground": {
+        "active": true,
+        "spinning": false,
+        "hp": 220.8,
+        "maxHp": 240,
+        "outputWatts": 0,
+        "configuredWatts": 24,
+        "viewRadius": 18,
+        "x": 0,
+        "z": 8
+      },
+      "crowdFlocks": {
+        "enabled": true,
+        "count": 3,
+        "escortRadius": 7,
+        "speed": 3.6,
+        "home": {
+          "x": 0,
+          "z": -30
+        },
+        "night": 1,
+        "attempts": 6,
+        "completions": 1,
+        "frights": 4,
+        "allCrossed": false,
+        "flocks": [
+          {
+            "id": "flock-1",
+            "x": -20,
+            "z": -30,
+            "phase": "home",
+            "destination": "copper-pavilion",
+            "attempts": 2,
+            "crossings": 1,
+            "frights": 1,
+            "crossed": true
+          },
+          {
+            "id": "flock-2",
+            "x": 0,
+            "z": -30,
+            "phase": "home",
+            "destination": "ferris-wheel",
+            "attempts": 2,
+            "crossings": 0,
+            "frights": 2,
+            "crossed": false
+          },
+          {
+            "id": "flock-3",
+            "x": 20,
+            "z": 8.880000000000027,
+            "phase": "outbound",
+            "destination": "silver-pavilion",
+            "attempts": 2,
+            "crossings": 0,
+            "frights": 1,
+            "crossed": false
+          }
+        ]
+      },
+      "canyonWorks": null,
+      "baron": {
+        "cartVisible": false,
+        "carried": false,
+        "distanceFromBaron": 0,
+        "telegraphActive": false,
+        "telegraphElapsed": 0,
+        "nextVolleyIn": 0,
+        "volleys": 0,
+        "suppressed": false,
+        "targetKind": null,
+        "lastOwnerId": "",
+        "lastTarget": {
+          "x": 0,
+          "z": 0
+        },
+        "target": {
+          "x": 0,
+          "z": 0
+        },
+        "props": {
+          "state": "off",
+          "source": "placeholder",
+          "launcher": false,
+          "rocket": false,
+          "powderKeg": false,
+          "triangles": {
+            "launcher": 2020,
+            "rocket": 876,
+            "powder_keg": 704
+          }
+        },
+        "manifest": null
+      },
+      "boss": {
+        "visible": false,
+        "ratio": 0,
+        "renderedRatio": 1,
+        "litSegments": 7,
+        "segments": 0,
+        "groupId": null,
+        "aliveComponents": 0,
+        "destroyedComponents": 0,
+        "components": []
+      },
+      "medals": {
+        "version": 1,
+        "baronBeaten": false,
+        "rocketCartCaptured": false
+      },
+      "pressure": {
+        "enabled": false,
+        "multiplayerPosture": "single-player-gated",
+        "coal": 0,
+        "seams": [
+          {
+            "x": -12,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 2.898055228320035,
+            "spriteVisible": false
+          },
+          {
+            "x": -5,
+            "z": 43,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 2.1204977469010786,
+            "spriteVisible": false
+          },
+          {
+            "x": 3,
+            "z": 39,
+            "harvested": false,
+            "progress": 0,
+            "marked": false,
+            "visualY": null,
+            "groundY": 2.512039357965642,
+            "spriteVisible": false
+          }
+        ],
+        "seamSource": "PressureSystem.DEFAULT_COAL_SEAMS",
+        "boilers": [
+          {
+            "index": 0,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 1,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          },
+          {
+            "index": 2,
+            "active": false,
+            "position": {
+              "x": 0,
+              "z": 0
+            },
+            "hot": false,
+            "cooling": false
+          }
+        ],
+        "vents": 0,
+        "safeBand": null,
+        "objective": {
+          "active": false,
+          "failed": false,
+          "complete": false,
+          "hotBoilers": 0,
+          "waves": "8-12"
+        }
+      },
+      "escort": {
+        "enabled": false
+      },
+      "power": {
+        "id": "e3-fairground-grid",
+        "tick": 352,
+        "topologyRevision": 0,
+        "allocationRevision": 1,
+        "totalSupplyWatts": 0,
+        "totalDemandWatts": 12,
+        "nodes": [
+          {
+            "id": "copper-pavilion-lights",
+            "labelKey": "Copper Pavilion Lamps",
+            "kind": "consumer",
+            "x": -20,
+            "z": 10,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 6,
+            "priority": 20,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-1",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "ferris-wheel",
+            "labelKey": "Fair Wheel Dynamo",
+            "kind": "producer",
+            "x": 0,
+            "z": 8,
+            "online": false,
+            "outputWatts": 24,
+            "demandWatts": 0,
+            "priority": 0,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          },
+          {
+            "id": "silver-pavilion-lights",
+            "labelKey": "Silver Pavilion Lamps",
+            "kind": "consumer",
+            "x": 20,
+            "z": 10,
+            "online": true,
+            "outputWatts": 0,
+            "demandWatts": 6,
+            "priority": 20,
+            "state": "dark",
+            "allocatedWatts": 0,
+            "allocationRatio": 0,
+            "componentId": "component-2",
+            "storedWh": 0,
+            "capacityWh": 0,
+            "chargeWatts": 0,
+            "dischargeWatts": 0
+          }
+        ],
+        "wires": [
+          {
+            "id": "copper-pavilion-lights--ferris-wheel",
+            "a": "copper-pavilion-lights",
+            "b": "ferris-wheel",
+            "state": "intact",
+            "length": 20.1,
+            "maxLength": 24
+          },
+          {
+            "id": "ferris-wheel--silver-pavilion-lights",
+            "a": "ferris-wheel",
+            "b": "silver-pavilion-lights",
+            "state": "intact",
+            "length": 20.1,
+            "maxLength": 24
+          }
+        ],
+        "components": [
+          {
+            "id": "component-1",
+            "nodeIds": [
+              "copper-pavilion-lights"
+            ],
+            "supplyWatts": 0,
+            "generationWatts": 0,
+            "storageDischargeWatts": 0,
+            "demandWatts": 6,
+            "unusedWatts": 0,
+            "storedWh": 0,
+            "state": "dark",
+            "shedOrder": [
+              "copper-pavilion-lights"
+            ]
+          },
+          {
+            "id": "component-2",
+            "nodeIds": [
+              "silver-pavilion-lights"
+            ],
+            "supplyWatts": 0,
+            "generationWatts": 0,
+            "storageDischargeWatts": 0,
+            "demandWatts": 6,
+            "unusedWatts": 0,
+            "storedWh": 0,
+            "state": "dark",
+            "shedOrder": [
+              "silver-pavilion-lights"
+            ]
+          }
+        ],
+        "signature": "80:99334920963772ac",
+        "active": true,
+        "budgetMs": 0.5,
+        "lastSolveMs": 0.09999990463256836,
+        "maxSolveMs": 0.40000009536743164,
+        "lastStepMs": 0,
+        "maxStepMs": 0.5,
+        "overBudget": false,
+        "overBudgetCount": 0,
+        "solveCount": 2,
+        "nodeCount": 3,
+        "wireCount": 2,
+        "intactWireCount": 2,
+        "cutWireCount": 0,
+        "events": [
+          {
+            "seq": 1,
+            "tick": 0,
+            "nodeId": "copper-pavilion-lights",
+            "from": null,
+            "to": "powered"
+          },
+          {
+            "seq": 2,
+            "tick": 0,
+            "nodeId": "ferris-wheel",
+            "from": null,
+            "to": "powered"
+          },
+          {
+            "seq": 3,
+            "tick": 0,
+            "nodeId": "silver-pavilion-lights",
+            "from": null,
+            "to": "powered"
+          },
+          {
+            "seq": 4,
+            "tick": 347,
+            "nodeId": "copper-pavilion-lights",
+            "from": "powered",
+            "to": "dark"
+          },
+          {
+            "seq": 5,
+            "tick": 347,
+            "nodeId": "ferris-wheel",
+            "from": "powered",
+            "to": "dark"
+          },
+          {
+            "seq": 6,
+            "tick": 347,
+            "nodeId": "silver-pavilion-lights",
+            "from": "powered",
+            "to": "dark"
+          }
+        ],
+        "render": {
+          "active": true,
+          "renderLayer": 2,
+          "renderSlot": "gameplay",
+          "topologyRevision": 0,
+          "allocationRevision": 1,
+          "rebuildCount": 2,
+          "spans": 2,
+          "poweredSpans": 0,
+          "darkSpans": 2,
+          "intactSpans": 2,
+          "cutSpans": 0,
+          "segments": 24,
+          "poweredSegments": 0,
+          "darkSegments": 24,
+          "drawCalls": 1,
+          "asset": "procedural-catenary"
+        }
+      }
+    },
+    "frame": 1260,
+    "sim": 46.93333333333321,
+    "wave": 1,
+    "hudWave": 1,
+    "runState": "playing",
+    "paused": false,
+    "secured": false,
+    "hp": 100,
+    "maxHp": 100,
+    "gold": 30,
+    "hero": {
+      "x": -4.323943009484503,
+      "z": -31.616926430741955
+    },
+    "enemiesAlive": 6,
+    "kills": 14,
+    "pendingLevels": 0,
+    "offer": null,
+    "upgradeOpen": false,
+    "buildMode": false,
+    "ghostValid": false,
+    "ghostPos": {
+      "x": 7,
+      "z": -30
+    },
+    "nodes": [
+      {
+        "id": "gold-seam-1",
+        "active": false,
+        "x": 10,
+        "z": -16,
+        "respawnIn": 15.466666666666683,
+        "respawnScheduled": true
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "x": -18,
+        "z": -38,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "x": 0,
+        "z": 0,
+        "respawnIn": 0,
+        "respawnScheduled": false
+      }
+    ],
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 35,
+        "count": 1,
+        "maxCount": 6,
+        "canAfford": false
+      },
+      {
+        "id": "palisade",
+        "cost": 0,
+        "count": 2,
+        "maxCount": 48,
+        "canAfford": true
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "count": 0,
+        "maxCount": 3,
+        "canAfford": false
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "count": 0,
+        "maxCount": 2,
+        "canAfford": false
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "count": 0,
+        "maxCount": 1,
+        "canAfford": false
+      }
+    ],
+    "defences": [
+      {
+        "id": "sentry_beacon",
+        "index": 0,
+        "hp": 0,
+        "maxHp": 40,
+        "wrecked": true,
+        "repairCost": 7,
+        "x": -5,
+        "z": -34
+      },
+      {
+        "id": "palisade",
+        "index": 0,
+        "hp": 0,
+        "maxHp": 60,
+        "wrecked": true,
+        "repairCost": 3,
+        "x": -7,
+        "z": -30
+      },
+      {
+        "id": "palisade",
+        "index": 1,
+        "hp": 0,
+        "maxHp": 60,
+        "wrecked": true,
+        "repairCost": 3,
+        "x": 7,
+        "z": -30
+      }
+    ],
+    "repairs": 0,
+    "channeling": false
+  }
+}

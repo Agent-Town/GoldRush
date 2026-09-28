@@ -1,0 +1,9 @@
+static gates, charter-press-locked-lands-1, Node v26.4.0, 2026-09-26 (local +07)
+pre-flight on base 6cf158c4a (untouched tree, 18:00 local): npm run build rc 0 in 39.0 s wall (0 lines containing 'error' in the log; last row: | finale | 2 | 4597344 | 469860 | 90% | compress |)
+branch 3ed71bbce (18:16 local): npx tsc --noEmit rc 0, 0 bytes of output
+branch 3ed71bbce: npm run build rc 0 (last row: | finale | 2 | 4597344 | 469860 | 90% | compress |)
+branch 3ed71bbce: GR_RELEASE=e1 npm run build rc 0 (last row: | finale | 0 | 0 | 0 | 0% | compress |)
+branch 3ed71bbce: GR_RELEASE=e1 node scripts/assert-release-build.mjs rc 0: [release-build] E1-only: 1127 files, 97717484 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+E1 dist files containing 'charter-lever' (the Lever's class prefix): 0 (the press lives behind ?editor, which a release build drops)
+tip 5dc23a6b6 (after the spec commits): npx tsc --noEmit rc 0 (tsconfig includes e2e/), 0 bytes of output
+node scripts/law-pointer-guard.mjs rc 0 on the branch (7 surfaces: 6 law surfaces plus tasks/goals.json; 13 candidates)

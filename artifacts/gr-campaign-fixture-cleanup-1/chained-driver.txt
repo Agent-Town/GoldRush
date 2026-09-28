@@ -1,0 +1,114 @@
+
+===== original chained leg 2 — rc=0 0.0s =====
+ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+
+
+===== original chained leg 3 — rc=0 0.2s =====
+
+> gold-rush@0.1.0 test:findings-state
+> node scripts/findings-state-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+declared subjects : 697
+declared closed   : 513
+declared open     : 184
+double-state      : 0
+wide-open advisory : 376 skipped marker-led rows; 7 F-IDs open only there; 0 narrow closed-only
+findings-state-guard: PASS
+
+
+===== original chained leg 4 — rc=0 0.4s =====
+
+> gold-rush@0.1.0 test:blocker-panel
+> node scripts/blocker-panel-closed-guard.mjs
+
+ledger corpus     : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+panel rows        : 45
+rows with an F-ID : 42
+census closed     : 623
+closed-on-panel   : 0
+blocker-panel-closed-guard: PASS
+
+
+===== original chained leg 5 — rc=0 0.1s =====
+
+> gold-rush@0.1.0 test:ruling-propagation
+> node scripts/ruling-propagation-guard.mjs
+
+ruling-propagation: 14 findings recorded RULED · 70 goal leaves still refuse work · 0 stale
+ledger corpus: tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+  reason corpus     : 62/70 refusals state their basis under a key this guard reads · 8 DECLARED UNREAD
+      unread: stopped     b4v3-picnic-active-defense  [note_s2131, note]
+      unread: stopped     b4v2-picnic-stake-pressure  [note_s2090, note_s2088, note_s2089, note_s2139, note]
+      unread: stopped     f2251-1-county-board-red  [note_s2251b, note]
+      unread: superseded  art-jumper-rotation-retake  [note_s_att_20260824, note_s2249, note]
+      unread: superseded  lane-vp-02b-jumper-slot-red  [authorNotes, drainNotes]
+      unread: superseded  lane-c-f1148-1-trajectory-split  [authorNotes, drainNotes]
+      unread: superseded  jumper-8way-wiring  [note_s_att_20260824]
+      unread: superseded  ap-orders-adapter-wiring  [note]
+PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+
+
+===== original chained leg 6 — rc=2 0.2s =====
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs
+
+=== desk-declaration-guard ===
+corpus tree       : linked-worktree
+desk F-IDs        : 2
+desk slugs        : 1
+🔺 desk segments  : 3
+unexamined        : 0
+with a BACKLOG row: 3
+undeclared        : 0 (grandfathered 0)
+
+desk-declaration-guard: REFUSING — this is a linked worktree and its STATUS.md
+  line-1 is NOT the one main carries.
+  Both corpora here are TRACKED, so this tree is frozen at its branch point and
+  the desk(s) above are a self-consistent reading of the WRONG handoff. A PASS
+  would certify a board this run never read (F-2232-1 / F-2241-1 / F-2242-1, each
+  proven by manufacturing: a real defect on main read byte-identically to a clean
+  board from here).
+  Re-run from the main worktree, or pass --root <main worktree>.
+
+
+===== original chained leg 7 — rc=0 2.7s =====
+nul-audit: corpus 29132 text subject(s) — 28646 read, 486 empty.
+nul-audit: excluded 12226 known-binary, 154 UNCLASSIFIED of 41512 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .exit×44 .cpuprofile×29 .bak×14 (no extension)×10 .pid×10 .sha256×8 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .done×3 .stderr×2 .meta×2 .timer×2 .example×1 .stranded-1e057810×1 .progress×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+
+
+===== original chained leg 8 — rc=0 29.3s =====
+✔ public/_headers sends the five security headers on every path (1.564542ms)
+✔ the Cache-Control rules 058-device-tiers gates are still there (0.08925ms)
+✔ the bug-office report TTL and the number the fetch script prints are the same (0.365667ms)
+✔ the audit catches a deleted policy, a widened source and an enforcing flip (1.483625ms)
+✔ --dry-run states the accounting per destination and leaves the tree untouched (37.466916ms)
+✔ --apply moves the closed months and keeps line 1, the law bullets and the current month (36.719458ms)
+✔ a second --apply moves nothing and changes no byte (67.362ms)
+✔ the trailing window holds the newest bullets on the board whatever their month (30.938917ms)
+✔ an unstamped bullet is filed by its session neighbours, and prose dates never decide (31.983375ms)
+✔ a bullet that cannot be placed at all STAYS ON THE BOARD (29.653958ms)
+✔ MANUFACTURED DEFECT — a header whose bytes go uncounted REFUSES and writes nothing (35.867667ms)
+✔ REVERSE CONTROL — the unpatched tool on the same fixture balances and applies (36.039875ms)
+✔ neither/both of --dry-run and --apply refuses on both channels (86.344208ms)
+✔ every boss-kind dispatch trigger names a contract that declares a boss (3.297875ms)
+✔ M8-5 is keyed to Low Orbit being secured, not to a boss it never had (1.414834ms)
+✔ the guard BITES: a boss trigger on a bossless map is rejected (1.263709ms)
+ℹ tests 87
+ℹ suites 0
+ℹ pass 87
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29189.938375
+
+
+SUMMARY {"original chained leg 2":0,"original chained leg 3":0,"original chained leg 4":0,"original chained leg 5":0,"original chained leg 6":2,"original chained leg 7":0,"original chained leg 8":0}
+OVERALL rc=1
+transcript -> artifacts/gr-campaign-fixture-cleanup-1/chained-gates.txt

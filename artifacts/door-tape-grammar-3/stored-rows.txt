@@ -1,0 +1,40 @@
+Rows ALREADY STORED with each shape, read back through the real handlers (probe: stored-probe.mjs.txt). Each case: a clean control row, then the same row with the shape set by hand, alone on a fresh store. RANKED = on the board; RETIRED = off the board and counted in retiredCount; DROPPED = gone from every surface.
+
+== base 3b12c4236 (control worktree)
+stored row carrying                                                                 state    board retiredCount ?reel= assay-queue
+control for a place_build id of whitespace only                                     RANKED   1     0            200    queued
+a place_build id of whitespace only                                                 RANKED   1     0            200    queued
+control for a pick_upgrade id of whitespace only                                    RANKED   1     0            200    queued
+a pick_upgrade id of whitespace only                                                RANKED   1     0            200    queued
+control for a set_agent_ability naming fly                                          RANKED   1     0            200    queued
+a set_agent_ability naming fly                                                      RANKED   1     0            200    queued
+control for a second rider's set_agent_ability naming fly                           RANKED   1     0            200    queued
+a second rider's set_agent_ability naming fly                                       RANKED   1     0            200    queued
+control for a playbook use whose recording has a place_build id of whitespace only  RANKED   1     0            200    queued
+a playbook use whose recording has a place_build id of whitespace only              DROPPED  0     0            404    absent
+
+== tip a3531c91b
+stored row carrying                                                                 state    board retiredCount ?reel= assay-queue
+control for a place_build id of whitespace only                                     RANKED   1     0            200    queued
+a place_build id of whitespace only                                                 RETIRED  0     1            200    queued
+control for a pick_upgrade id of whitespace only                                    RANKED   1     0            200    queued
+a pick_upgrade id of whitespace only                                                RETIRED  0     1            200    queued
+control for a set_agent_ability naming fly                                          RANKED   1     0            200    queued
+a set_agent_ability naming fly                                                      RETIRED  0     1            200    queued
+control for a second rider's set_agent_ability naming fly                           RANKED   1     0            200    queued
+a second rider's set_agent_ability naming fly                                       RETIRED  0     1            200    queued
+control for a playbook use whose recording has a place_build id of whitespace only  RANKED   1     0            200    queued
+a playbook use whose recording has a place_build id of whitespace only              DROPPED  0     0            404    absent
+
+== tip with M5, the naive fix (the client check also applied at read), for comparison only
+stored row carrying                                                                 state    board retiredCount ?reel= assay-queue
+control for a place_build id of whitespace only                                     RANKED   1     0            200    queued
+a place_build id of whitespace only                                                 DROPPED  0     0            404    absent
+control for a pick_upgrade id of whitespace only                                    RANKED   1     0            200    queued
+a pick_upgrade id of whitespace only                                                DROPPED  0     0            404    absent
+control for a set_agent_ability naming fly                                          RANKED   1     0            200    queued
+a set_agent_ability naming fly                                                      DROPPED  0     0            404    absent
+control for a second rider's set_agent_ability naming fly                           RANKED   1     0            200    queued
+a second rider's set_agent_ability naming fly                                       DROPPED  0     0            404    absent
+control for a playbook use whose recording has a place_build id of whitespace only  RANKED   1     0            200    queued
+a playbook use whose recording has a place_build id of whitespace only              DROPPED  0     0            404    absent

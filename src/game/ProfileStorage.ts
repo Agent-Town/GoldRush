@@ -36,6 +36,19 @@ export const DREDGE_QUEEN_WRECK_KEY = 'gr.e5W6Wreck.v1';
 export const STORY_FIRST_BOOT_KEY = 'gr.story.firstBoot.v1';
 const TILE_STATE_DATA_KEY_PREFIX = 'tilestate.';
 export const DEFAULT_PROFILE_NAME = 'Robin';
+/**
+ * UX-1 (outside review 2026-09-24): the name shown when there is NO profile to read one from - a
+ * store that throws, a legacy score row with no `profileName`. It used to fall back to
+ * `DEFAULT_PROFILE_NAME`, which is the OWNER'S FIRST NAME, so a stranger's Best Claims board and
+ * wardrobe greeted them by his name. A neutral in-canon label belongs here instead; the owner's
+ * name is a person, not a default.
+ *
+ * ⚠️ NOT `DEFAULT_PROFILE_NAME` itself. That one names the profile the LEGACY MIGRATION mints
+ * (`ensureProfileState` below), and `e2e/m3-06-demo-profiles.spec.ts:48,59,70` plus
+ * `scripts/test-accounts.mjs:140` assert that migrated profile is called 'Robin'. Renaming it is a
+ * separate, ledgered change - see F-UX1-2 in artifacts/ux-entry-robustness-1/report.md.
+ */
+export const UNNAMED_PROSPECTOR_NAME = 'Prospector';
 export const DEFAULT_DIFFICULTY_PRESET: DifficultyPresetId = 'trail';
 
 export const PROFILE_DATA_KEYS = new Set([
@@ -183,9 +196,9 @@ export function activeProfile(storage: ProfileStorage): ProfileRecord {
 export function activeProfileName(storage?: ProfileStorage): string {
   try {
     const source = storage ?? browserStorage();
-    return source ? activeProfile(source).name : DEFAULT_PROFILE_NAME;
+    return source ? activeProfile(source).name : UNNAMED_PROSPECTOR_NAME;
   } catch {
-    return DEFAULT_PROFILE_NAME;
+    return UNNAMED_PROSPECTOR_NAME;
   }
 }
 

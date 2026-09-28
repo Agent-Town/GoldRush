@@ -1,0 +1,79 @@
+(node:54901) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"contractId":"e5-regatta","directStepAshore":true,"point":{"x":-55,"z":0},"atHeatPoint":false,"at55":{"walkable":true,"speedMul":1,"zone":"shallows","waterSource":"spring_pond","waterDepth":0.2,"waterClass":"wade"}}
+{"contractId":"e5-regatta","shore":[{"x":-42.6,"z":0,"walkable":true,"outside":false,"offDeck":true},{"x":-43.08717099192776,"z":2.449173967136575,"walkable":true,"outside":false,"offDeck":true},{"x":-44.4745166004061,"z":4.525483399593904,"walkable":true,"outside":false,"offDeck":true},{"x":-46.55082603286343,"z":5.912829008072236,"walkable":true,"outside":false,"offDeck":false},{"x":-49,"z":6.4,"walkable":true,"outside":false,"offDeck":false},{"x":-51.44917396713657,"z":5.912829008072236,"walkable":true,"outside":true,"offDeck":false},{"x":-53.5254833995939,"z":4.525483399593905,"walkable":true,"outside":true,"offDeck":true},{"x":-54.91282900807224,"z":2.4491739671365753,"walkable":true,"outside":true,"offDeck":true},{"x":-55.4,"z":7.837739514543061e-16,"walkable":true,"outside":true,"offDeck":true},{"x":-54.91282900807224,"z":-2.4491739671365735,"walkable":true,"outside":true,"offDeck":true},{"x":-53.5254833995939,"z":-4.525483399593904,"walkable":true,"outside":true,"offDeck":true},{"x":-51.44917396713658,"z":-5.912829008072234,"walkable":true,"outside":true,"offDeck":false},{"x":-49,"z":-6.4,"walkable":true,"outside":false,"offDeck":false},{"x":-46.55082603286343,"z":-5.912829008072235,"walkable":true,"outside":false,"offDeck":false},{"x":-44.4745166004061,"z":-4.525483399593905,"walkable":true,"outside":false,"offDeck":true},{"x":-43.08717099192776,"z":-2.449173967136579,"walkable":true,"outside":false,"offDeck":true}]}
+{"contractId":"e5-regatta","boat":{"id":"claim-boat","anchor":{"id":"start-line","x":-49,"z":0},"motion":{"x":-49,"z":0,"heading":0,"speed":0,"aboard":"hero","steerable":true},"pads":[{"id":"bow","x":0,"z":-3,"occupied":false},{"id":"port","x":-3,"z":1,"occupied":false},{"id":"starboard","x":3,"z":1,"occupied":false}],"buildings":[]},"bounds":{"minX":-64,"maxX":64,"minZ":-64,"maxZ":64},"water":{"minX":-49.75,"maxX":49.75,"minZ":-49.75,"maxZ":49.75},"flag":true,"samples":[{"z":0,"walkable":true},{"z":8,"walkable":true},{"z":16,"walkable":true},{"z":24,"walkable":true},{"z":30,"walkable":true},{"z":38,"walkable":true},{"z":46,"walkable":true},{"z":49.75,"walkable":false}],"stakes":[{"id":"claim-boat","x":-49,"z":0,"heroStart":true}]}
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+{"contractId":"e5-deepwater-claim","shore":[{"x":6.4,"z":30,"walkable":true,"outside":false,"offDeck":true},{"x":5.912829008072236,"z":32.44917396713657,"walkable":true,"outside":false,"offDeck":true},{"x":4.525483399593905,"z":34.5254833995939,"walkable":true,"outside":false,"offDeck":true},{"x":2.4491739671365753,"z":35.91282900807224,"walkable":true,"outside":false,"offDeck":false},{"x":3.9188697572715305e-16,"z":36.4,"walkable":true,"outside":false,"offDeck":false},{"x":-2.4491739671365744,"z":35.91282900807224,"walkable":true,"outside":false,"offDeck":false},{"x":-4.525483399593904,"z":34.5254833995939,"walkable":true,"outside":false,"offDeck":true},{"x":-5.912829008072236,"z":32.44917396713657,"walkable":true,"outside":false,"offDeck":true},{"x":-6.4,"z":30,"walkable":true,"outside":false,"offDeck":true},{"x":-5.9128290080722365,"z":27.550826032863426,"walkable":true,"outside":false,"offDeck":true},{"x":-4.525483399593905,"z":25.474516600406098,"walkable":true,"outside":false,"offDeck":true},{"x":-2.4491739671365784,"z":24.087170991927767,"walkable":true,"outside":false,"offDeck":false},{"x":-1.175660927181459e-15,"z":23.6,"walkable":true,"outside":false,"offDeck":false},{"x":2.449173967136576,"z":24.087170991927763,"walkable":true,"outside":false,"offDeck":false},{"x":4.525483399593903,"z":25.474516600406094,"walkable":true,"outside":false,"offDeck":true},{"x":5.912829008072234,"z":27.55082603286342,"walkable":true,"outside":false,"offDeck":true}]}
+{"contractId":"e5-deepwater-claim","boat":{"id":"claim-boat","anchor":{"id":"lagoon","x":0,"z":30},"motion":{"x":0,"z":30,"heading":0,"speed":0,"aboard":null,"steerable":false},"pads":[{"id":"bow","x":0,"z":-3,"occupied":false},{"id":"port","x":-3,"z":1,"occupied":false},{"id":"starboard","x":3,"z":1,"occupied":false}],"buildings":[]},"bounds":{"minX":-64,"maxX":64,"minZ":-64,"maxZ":64},"water":{"minX":-49.75,"maxX":49.75,"minZ":-49.75,"maxZ":49.75},"flag":false,"samples":[{"z":0,"walkable":true},{"z":8,"walkable":true},{"z":16,"walkable":true},{"z":24,"walkable":true},{"z":30,"walkable":true},{"z":38,"walkable":true},{"z":46,"walkable":true},{"z":49.75,"walkable":true}],"stakes":[{"id":"claim-boat","x":0,"z":30,"heroStart":true}]}

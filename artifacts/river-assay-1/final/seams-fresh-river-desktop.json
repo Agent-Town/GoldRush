@@ -1,0 +1,94 @@
+{
+  "reel": "artifacts/river-assay-1/final/fresh-river-desktop.json",
+  "contract": "e10-river",
+  "seed": "e1-the-claim-r2026w39-492bfb6017b9",
+  "claimed": {
+    "eventLogHash": "fnv1a32:eef28ae4",
+    "outcome": {
+      "reason": "secured",
+      "secured": true,
+      "waves": 0,
+      "timeAlive": 4.7666666666666595,
+      "gold": 5
+    },
+    "durationTicks": 143
+  },
+  "errors": [],
+  "query": "debug=&assayReplay=&replay=be5fc36f-cea9-4c1c-8b45-66cc72be41e0&contract=the-claim&difficulty=trail&nowaves=",
+  "atBoot": {
+    "sim": 0,
+    "hero": {
+      "x": 0,
+      "z": 12
+    },
+    "gold": 0,
+    "channeling": false,
+    "seams": [
+      {
+        "id": "gold-seam-1",
+        "x": -9,
+        "z": 6.7,
+        "remaining": 30
+      },
+      {
+        "id": "gold-seam-2",
+        "x": -1.5,
+        "z": -6.4,
+        "remaining": 30
+      }
+    ],
+    "contract": {
+      "activeId": "the-claim",
+      "name": "The River"
+    },
+    "wave": 0,
+    "enemies": 0,
+    "run": {
+      "secured": false,
+      "securedSnapshot": null
+    }
+  },
+  "end": {
+    "sim": 4.7666666666666595,
+    "hero": {
+      "x": -8.091792451858417,
+      "z": 6.626805089559271
+    },
+    "gold": 5,
+    "channeling": true,
+    "seams": [
+      {
+        "id": "gold-seam-1",
+        "x": -9,
+        "z": 6.7,
+        "remaining": 25
+      },
+      {
+        "id": "gold-seam-2",
+        "x": -1.5,
+        "z": -6.4,
+        "remaining": 30
+      }
+    ],
+    "contract": {
+      "activeId": "the-claim",
+      "name": "The River"
+    },
+    "wave": 0,
+    "enemies": 0,
+    "run": {
+      "secured": true,
+      "securedSnapshot": {
+        "waves": 0,
+        "gold": 5,
+        "timeAlive": 4.7666666666666595
+      }
+    }
+  },
+  "replayed": {
+    "eventLogHash": "fnv1a32:eef28ae4",
+    "ticks": 143
+  },
+  "sameHash": true,
+  "timeAliveBitIdentical": true
+}

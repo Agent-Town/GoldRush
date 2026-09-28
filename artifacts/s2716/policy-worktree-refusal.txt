@@ -1,0 +1,12 @@
+
+  ⛔ CANNOT VERIFY — DO NOT DRAIN, DO NOT QUEUE off this run
+    corpus tree     : LINKED WORKTREE — the board lives in /Users/robin/Claude/Projects/Gold Rush
+    cwd             : /Users/robin/.goldrush/fire-s2715/wt-pp9
+    tasks/goals.json and tasks/done/ are TRACKED, so this tree hands the check a
+    board FROZEN at that branch's commit. A master registered after the branch
+    point resolves to "? UNKNOWN" — which exits 0 — and a leaf the owner has
+    since unblocked still reads "blocked". Measured s2224: from worktrees/lane-c
+    an already-SHIPPED master answered "? UNKNOWN" rc=0 where the repo root
+    answered "⛔ ALREADY SHIPPED — DO NOT QUEUE" rc=1 (F-2223-1).
+    Re-run from the repo root. Do NOT re-run elsewhere until it goes green.
+

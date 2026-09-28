@@ -1,0 +1,11 @@
+# build byte-identity (worktree-vite-cache-1): npm run build (tsc && vite build && node scripts/asset-diet.mjs), same source, before and after the vite.config.ts change
+before: start 2026-09-25T14:30:18Z load: { 29.87 46.56 61.83 } store=5793a96 head=2526d626b node=v26.4.0
+after:  start 2026-09-25T15:03:54Z load: { 7.78 16.76 29.04 } store=5793a96 head=2526d626b vite.config.ts sha256 96c55fc195c27af1 node=v26.4.0
+before rc: rc=0  after rc: rc=0
+dist files: before 3173 / after 3173; JS bundles: before 483 / after 483
+manifest (sha256 of every dist file, LC_ALL=C sorted) sha256: before 507fb7e4a06c4ad276c41a6ee62833f739f6218b47c0c7f7749e5f5533080f74
+                                                        after  507fb7e4a06c4ad276c41a6ee62833f739f6218b47c0c7f7749e5f5533080f74
+cmp: the two manifests are byte-identical, so every dist file is byte-identical; dist-manifest.sha256 here is that one manifest
+JS bundles only: sha256 of the .js lines: before ae8abd22ecc8dd99 after ae8abd22ecc8dd99
+build log differences (timings stripped): the first log's pre-build 'ls: dist' line, 'built in 2.25s' vs '4.09s', and one [PLUGIN_TIMINGS] diagnostic in the second (rolldown prints it when plugin hooks dominate a slow build; it names only vite's own hooks, and the same diagnostic is already in main's artifacts/asset-diet-explicit-manifest-2/baseline-build.log)
+.vite-cache untouched by vite build: its mtimes 15:01:54Z predate the after-build (15:03:54Z to 15:04:16Z)

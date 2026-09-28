@@ -1,0 +1,130 @@
+[
+  {
+    "label": "select",
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-7/select-map.py",
+      "e7-dead-band"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 0.02,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-select.log"
+  },
+  {
+    "label": "invariants",
+    "command": [
+      "node",
+      "artifacts/sol/map-art-campaign-2/run-7/verify-invariants.mjs",
+      "e7-dead-band"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 0.46,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-invariants.log"
+  },
+  {
+    "label": "budgets",
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-7/asset-budgets.py",
+      "relay-valley",
+      "e7-dead-band",
+      "dead-band"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 0.03,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-budgets.log"
+  },
+  {
+    "label": "builds",
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-7/gates.py",
+      "e7-dead-band",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 53.47,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-builds.log"
+  },
+  {
+    "label": "walk",
+    "command": [
+      "node",
+      "artifacts/sol/map-art-campaign-2/run-7/walk-proof.mjs",
+      "e7-dead-band"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 13.56,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-walk.log"
+  },
+  {
+    "label": "plain",
+    "command": [
+      "node",
+      "artifacts/sol/map-art-campaign-2/run-7/paired-capture.mjs"
+    ],
+    "environment": {
+      "MAP": "e7-dead-band",
+      "MODE": "plain"
+    },
+    "exit": 0,
+    "seconds": 49.89,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-plain.log"
+  },
+  {
+    "label": "performance",
+    "command": [
+      "node",
+      "artifacts/sol/map-art-campaign-2/run-7/paired-capture.mjs"
+    ],
+    "environment": {
+      "MAP": "e7-dead-band",
+      "MODE": "performance",
+      "FRESH_BROWSER_PER_RUN": "1"
+    },
+    "exit": 0,
+    "seconds": 105.13,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-performance.log"
+  },
+  {
+    "label": "performance-summary",
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-7/performance-summary.py",
+      "e7-dead-band"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 0.05,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-performance-summary.log"
+  },
+  {
+    "label": "boards",
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-7/boards.py",
+      "e7-dead-band"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 0.04,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-boards.log"
+  },
+  {
+    "label": "boards-resolved",
+    "command": [
+      "/Users/robin/.hermes/hermes-agent/venv/bin/python3",
+      "artifacts/sol/map-art-campaign-2/run-7/boards.py",
+      "e7-dead-band"
+    ],
+    "exit": 0,
+    "seconds": 0.38,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e7-dead-band-boards-resolved.log",
+    "note": "Use the existing Python environment with Pillow; the first Homebrew Python invocation lacked PIL."
+  }
+]

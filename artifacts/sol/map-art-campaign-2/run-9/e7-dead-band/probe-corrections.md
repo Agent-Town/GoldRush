@@ -1,0 +1,3 @@
+# Evidence-probe corrections
+
+The first map-specific mount/dispose invocation passed the pack slug `relay-valley` as the runtime tile, so the installer correctly stayed on its painted fallback and the probe timed out. The authoritative tile in `dead-band-terrain-contract.json` and the plain-boot diagnostic is **`e7-relay-valley`**. The corrected invocation uses that tile, with a startup equality assertion in the evidence script to reject the wrong argument. The original failed log remains in `_raw/run-9/e7-dead-band-mount-proof.log`; successful evidence is `mount-repeat-proof.json`. No runtime, contract or test assertion was changed to accommodate this instrument error.

@@ -20,7 +20,8 @@ type Row = {
 type Errors = { console: string[]; page: string[] };
 
 const ARTIFACT = path.resolve('artifacts/map-census/table.md');
-const PAINTED_FALLBACKS = new Set(['e10-last-claim', 'e10-river']);
+// 2026-09-22, 19bdb6bce: Last Claim mounts its dedicated memorial GLB; only River remains painted.
+const PAINTED_FALLBACKS = new Set(['e10-river']);
 const MOBILE_SPOTS = new Set(['the-claim', 'e2-pressure-garden', 'e5-deepwater-claim', 'e8-low-orbit', 'e10-river']);
 const CONTRACTS = listEpochs().flatMap(({ id: epochId }) => {
   const era = Number(epochId.match(/epoch-(\d+)/)?.[1]);

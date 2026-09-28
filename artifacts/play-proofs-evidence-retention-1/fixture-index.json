@@ -1,0 +1,1406 @@
+{
+ "version": 1,
+ "note": "Written by scripts/evidence-offload.mjs --apply. Cited-only evidence lives in the private archive repository; every path here is recoverable from the commit named beside it. Nothing was deleted (CLAUDE.md 4.10b).",
+ "archive": {
+  "remote": "archive",
+  "branch": "evidence",
+  "prefix": "evidence"
+ },
+ "subtrees": {
+  "artifacts/sol-play-proofs-7-record": {
+   "archiveCommits": [
+    "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7"
+   ],
+   "files": 230,
+   "bytes": 86011222,
+   "movedDate": "2026-09-27",
+   "previews": [
+    "artifacts/sol-play-proofs-7-record/PREVIEW.png"
+   ],
+   "kept": [],
+   "oversizeLeftInPlace": []
+  }
+ },
+ "files": {
+  "artifacts/sol-play-proofs-7-record/base.txt": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b85a522cf46a10e7a82fbeb33ef5e7cc4e03e0c9058fc8dfafdd0cffb572a252",
+   "bytes": 41,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/build-final.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/build-final.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5c14b5587fdf463f5cb62c69b5c6c237fc2f6fb4b90d855885c984dffdc596ec",
+   "bytes": 351375,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/contracts.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "01d0c82589223a9d3aaeae4d1f46154d1f343ac2014a0afbea402d7c4aa3e143",
+   "bytes": 18761,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/diff-check.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/diff-check.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/drill-corrected.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/drill-corrected.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "2a135c37877e189254c667be117763f6a0430b6059bc83c9ff3dcb19344e7e4e",
+   "bytes": 688,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/drill-native.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/drill-native.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "30f58728d70753659cdcce23f32fe006211aa0e9f809394824925b46541ab985",
+   "bytes": 4943,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/drill.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/drill.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "d40a473ce952456dbb072e7ef7383d2aab55959375af7c6343f5bd8732b1028d",
+   "bytes": 285,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/driver-before.sha256": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b9ab3f3bee623f361934f38192bf22ac3abd3e5c991efb70f02523de820e0b81",
+   "bytes": 94,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/board-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a21bac422d38a25e76d2b01c76d74c4f896c74819bd89cf17f970ab83c7250b9",
+   "bytes": 1072772,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/board-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "6a5e2b160ab69aaa9c54241de4fd584e166604ac909b77b736280dac91b83289",
+   "bytes": 1764083,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/board-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "f770526c346d8b06cf28cc8569b4f107f83f54ca934315159b5e0b4b5ee0907a",
+   "bytes": 1073283,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/board-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "77af8d69fb5accec3b4c2b4eea728fe46f5ca20213cff33ea2ab8e2ae2480da1",
+   "bytes": 1761098,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "be4b24e59c558e63783eedd0751d3a14accbfabd6f656931be31e96621a36c74",
+   "bytes": 1548402,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "edff1a96dd540f7e75b5137c455776030403c11c113d5d71603a8d544958534e",
+   "bytes": 2276492,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/no-bank-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "257465d3563fa8b0f8cc21becf0df287d47fea0fe70e03ae8e4deedf690770e3",
+   "bytes": 540969,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/no-bank-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "20799274f07de0a6733d9148c3f5e6b9f35598242d482a52848a4d7fd3c9de47",
+   "bytes": 1104823,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/results/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "1d81a2bad75ea132df7034063a85cb8a903ef26cd4e453d9cb773bb191cf9c9f",
+   "bytes": 145,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "2bf8c78886356840f00bbf1b230895b9c83cf0e4155793a29812284bad168d22",
+   "bytes": 3405,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "ce1e09f811146eca20271cb9ff56f7e64b86e403d00e6bac8f71be39d6bdf603",
+   "bytes": 1549625,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "1809da5ef57a0b5cf4249927eb9c531d528623310041ec16a9b6e6b3cd7bc11b",
+   "bytes": 3615,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/results/native-proofs-e1-drill-yar-5ddd9-ed-plain-reload-persistence-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4237d1e5c7cb06c9d904bfaaaad52ff46aa0d19c83b5fcd642354026e41b80d2",
+   "bytes": 2276733,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "3861f27ef92f016277b30dc41955b1c8b8172146d16e5d0c3208bd028dc6f0c8",
+   "bytes": 1880,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "f2400cb53b2aafa6b4428f86ec31d7b1cbe961d3a564baf4fd80e728d5f97695",
+   "bytes": 1879,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4c7c836fb8a775f55b22b20453bfdd6448c5ccd2a6830a158acb20a55d510780",
+   "bytes": 1152953,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/initial/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "8fb526a78c5f75bc62101f60d88801cfb3b8befa29b930e128d0d648f1a4b9a9",
+   "bytes": 1825156,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "2c05e0571e56f6df885f856e3f4e74cf6e3fc66020d95179e3f10b055c84c393",
+   "bytes": 1099275,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "44613412a0f9c041cd73abe3b48d5189f921dcf861ecb0459db81f145c99d818",
+   "bytes": 1635537,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/no-bank-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "257465d3563fa8b0f8cc21becf0df287d47fea0fe70e03ae8e4deedf690770e3",
+   "bytes": 540969,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/no-bank-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "20799274f07de0a6733d9148c3f5e6b9f35598242d482a52848a4d7fd3c9de47",
+   "bytes": 1104823,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/proof.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5481ba87c938e45dbcebd11f5e1b27f21de2179f1f49bca75e0b94ea2ff9fc6e",
+   "bytes": 1545,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/refusal-results/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+   "bytes": 45,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/refusal.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/refusal.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "88293febc65c04b8d7db485dc8e968e4e5ed01e25c8b0e3462bcb6dc050f1e9a",
+   "bytes": 669,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/results/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+   "bytes": 45,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "f77c02ba6a82abd9119c8a5b393a83f2a899ae4464ea7b1dcd7aec6eb686909b",
+   "bytes": 2248,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "69c2bf8f4b702c93653b94f5000efb7d19b8bce866ad5d30157a83ed9a75afea",
+   "bytes": 2247,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "670eecd4e07bf4b9a1614a827e911a30a3824377e947a3833de8ccb56e3040fd",
+   "bytes": 1154332,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-drill-yard/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "3626168b4eb361ca55144cb3e88290ca07b295204eacf896b30c13de9c3607b5",
+   "bytes": 1824321,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/command-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "3150e7e83683627e3708ff11134a29b06ad3add99b13066c2bb91b26e08096eb",
+   "bytes": 465,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/command-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "57f5ce51aeb8d3923d3efc774278149111bb203282772e0c1fd5beab60c3d14c",
+   "bytes": 463,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/desktop-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/desktop-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "00b8b7115bc7dd1fb02c7a811f7faa5f358fdb0695035bde8e1570a898bbe5d8",
+   "bytes": 7111,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/driver/e1-dry-gulch/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "1d49897c400da84ace804d65430dfed3dd980957a22dbd16db32a8965c4879b1",
+   "bytes": 1276471,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/driver/e1-dry-gulch/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "05cb1265d740364414080830df89e01cab5a419b81de9f166db163ef8e2c640b",
+   "bytes": 1231165,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/driver/e1-dry-gulch/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e771b227f3b8acd3135b9ead2b006df62d252c8cbcd3a84b4ab88c3ab3b6eb7d",
+   "bytes": 33304,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/driver/e1-dry-gulch/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "40d1c1344dc218dc2dcfaed49d9d72d71808c48474a1af82f8497267dca883d2",
+   "bytes": 33547,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/driver/e1-dry-gulch/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "3b6b785443bc1c1f395b0c36479c94fe549a7004cd24e3a4fb42b610ffcef6ae",
+   "bytes": 1253983,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/driver/e1-dry-gulch/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "d39c35c292777f2ef7634e1d643b73138ee76210422271f42c2f76906b8ae02e",
+   "bytes": 1229365,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/mobile-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/mobile-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "225c568550b7a50689595abc81d46ed300864235de0395e34385b68b95dc28f7",
+   "bytes": 7250,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/results-desktop-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5654855e1f1ad53ebb236b3838ec85aa9e6c26a3205048c1e78d15b2f29ba027",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "81000da6a14749a9326241a3a623074b6c50bb3bc118345e3ff184b57bdc36c1",
+   "bytes": 19904,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "fcd256bfc7a5ddbbb1c728643d2879a545e6249e97663ed289f474acbfe432ba",
+   "bytes": 1296959,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/results-mobile-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5d039d0abf06707a79b5c269792092bcc9b8e173bc016d33cf9269eeb125347d",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "3d201bdb65f40ec7e70360d2be45f33ed94526f22e7944ef3e490a5a1592ec05",
+   "bytes": 19983,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/default/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b6abc3c38c9d2433cdd3d7379d0d2af59051dce79b0a5b3e3a92fe8984f27c73",
+   "bytes": 1229869,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/finding.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "58e5672009a9f7fd8f3978ccc765387d2361ef1d592081e2e2f977b8108cbc96",
+   "bytes": 2253,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/command-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "17b6a995dd085558baf26ca597d95cb78a268b24a8f8d1793c382bd53c2170ae",
+   "bytes": 523,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/command-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "41ceeeecb892664db0b5c131f8569e09cc1e0ced3373a93377e3310426656572",
+   "bytes": 521,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/desktop-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/desktop-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "0a350bcdf103ab307dcec88bed83b8fe6482a88c17d8b2df6b91112c7e32844e",
+   "bytes": 7265,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "99900486020e44108977cd3d703b7ac8f83ad67f22bd74719a8aac5d3ff3dd9e",
+   "bytes": 1262018,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5e43b2651def3edd7a3a3dc8f84610163f101fb9369d0075fcd3e9c24a9a7294",
+   "bytes": 1225295,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "dd454dda9d97f890b64cf8a9ba392b977a6d3052e2ffee4d2305b7751d7f59a6",
+   "bytes": 34154,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "175c7bc0c9e216089d7b2a5b4ce67d5a768b674679f0c1bf17245703cad0afc6",
+   "bytes": 33778,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "6ad6134fb8479e394f28121a00ce65ca844b3c80f4f34adca74eae631b0b9d96",
+   "bytes": 1402204,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/driver/e1-dry-gulch/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "33efbaab646bd78a48b3a94398183c1496f2a225873bd3a0884ecbadca42c54e",
+   "bytes": 1965791,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/mobile-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/mobile-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "45287e9b89c6235e57adbb082f41716c9510a5315b3ee810f72c6c9ea7427cf4",
+   "bytes": 7258,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/results-desktop-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5654855e1f1ad53ebb236b3838ec85aa9e6c26a3205048c1e78d15b2f29ba027",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "50705242e2421d319b47143df5b10379362c925a9e799b3d2f06caf92fa53998",
+   "bytes": 19908,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/results-desktop-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "6af081358fb690b8d960a1828c4af4c14d4f61930870275667184f9f2f649cbc",
+   "bytes": 1285216,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/results-mobile-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5d039d0abf06707a79b5c269792092bcc9b8e173bc016d33cf9269eeb125347d",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "081b7e32cdf09c4c9f4428493893dfe93649bcb34fa5d793b8471a5a3cf83d3d",
+   "bytes": 19999,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-dry-gulch/restore-ground/results-mobile-chrome/native-proofs-e1-dry-gulch-3151a-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "cff69d82070b8ffde72a78a151395091e813a72f4a8137f851dd78f747cb64af",
+   "bytes": 1229619,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/command-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "247d72ae784f118b45a89f426dda8b53ed8b29dd8d1647cb29aca9ee15b280f8",
+   "bytes": 471,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/command-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "bd76d8e0a201fc8ae266f8dffadc2296a8dfb9cf0901b8b44a1c798e10c5bdf9",
+   "bytes": 469,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/desktop-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/desktop-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "2ee18d601a4afc760f53be642eb98a8f1858f1de417896ed4af690d95e279263",
+   "bytes": 7613,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/driver/e1-night-shift/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "111df64509ab252bda704ea9a90791a2502e395056eebecfcdaccdf04a7434a7",
+   "bytes": 598823,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/driver/e1-night-shift/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "124bb7da14058c3e4c06bd47e7cd5a48fb424d69875b0f6db43dd387ae5da3a8",
+   "bytes": 1022313,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/driver/e1-night-shift/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "f6733ea8facd4a1467402df57c6909311b9e138cdf090cd89d4dd3b3051508f3",
+   "bytes": 35039,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/driver/e1-night-shift/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5ef5fc3fb4ed374c69f3c073cafab26240461e0a42e7e94261a397190f04b85c",
+   "bytes": 34369,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/driver/e1-night-shift/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "bf7624f31402ef9273de0b293004f8d31480189980bd5013a585d52a6b3ea2b0",
+   "bytes": 634717,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/driver/e1-night-shift/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "f8c6983ba2020b6f025172a9aa2b18ce632f35f9e049a945f1082b19936aff75",
+   "bytes": 1799818,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/mobile-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/mobile-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "ac59812e7b6f2240ae394c8747811324e182b077019abca57acb6ec51f730784",
+   "bytes": 7028,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/results-desktop-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "0a517106e722b3c405fdb493b4813e04dcd4f9634fd0507e6e5c5afb24d3cdac",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a0332dddf8b1c6e46cf7f17bec92cf540af24b4c09098e1a9c733eb6008b61d9",
+   "bytes": 19927,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "d8d84c303a245fac64c67a8fac9135f4555c5779cbe57106827df3f981817a7a",
+   "bytes": 527673,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/results-mobile-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "1eefa4c20da55aad5d758ab2bd2bdc0eef9272a1775fe8cdd6f25e8f1ddb6c5a",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4d650c48105d83a6c103e3c38fda5792f4443e7cb43b5713f89b56f6731ebefe",
+   "bytes": 19999,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/default/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "33f5267277c24974674a903efbf4e1b8742535fcae72219a3f2fd300bf821e68",
+   "bytes": 952282,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/finding.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "632a9df69dfa9e4b6cc9f62233f0e37e8f0967add069c7926c54c1da96c904b9",
+   "bytes": 2317,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/command-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "17855108b4117485f7f446a93f4febde8e164bad2c9a6e4003f434ff4938c02d",
+   "bytes": 529,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/command-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "197823e22750a7f4e86441b4416951ab86628bd71a11de2b4b0534c9083d347a",
+   "bytes": 527,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/desktop-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/desktop-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "1084ed9c2589636d97fbe972ce6b2d6d2fc0ee499c84b7eac9acb288d0c46595",
+   "bytes": 7387,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/driver/e1-night-shift/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e195679e784876d840b06df59f2ac9caa2dc74d73fa3103f417f5bebaad4b0c1",
+   "bytes": 723717,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/driver/e1-night-shift/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "6d2532bd4c8b1833be7970195ecdd42e150f711ae4873be21f040abc038ff3df",
+   "bytes": 972264,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/driver/e1-night-shift/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "0494064bb960fcf296c1b94656ee20a3e9e0191ba8a281d4409102d37941db25",
+   "bytes": 37448,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/driver/e1-night-shift/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "6726775bbc342024767035bdc4dd22d0fde66fb3c968e076ed0e94eef116d3a3",
+   "bytes": 37438,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/driver/e1-night-shift/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b0f765b9922a38ddcdbac9131562fe387ef52559f5b9ab5a2a38b5ebff243de9",
+   "bytes": 804918,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/driver/e1-night-shift/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "15a04c2bf0342f41dcb82e7c7746eadae234f4fede0fe069f1e1af0d5674cc79",
+   "bytes": 1508758,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/mobile-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/mobile-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b59fe2569ba53edd04fa7117439b97f715ddaf6c9cdc2b4875a8509cea1f0092",
+   "bytes": 7275,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/results-desktop-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "0a517106e722b3c405fdb493b4813e04dcd4f9634fd0507e6e5c5afb24d3cdac",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "d7d5da081ce3bdd4d557c2fe39a25b087fd5d903f199494dc3e23228199708ed",
+   "bytes": 19914,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/results-desktop-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "7a3512691044dbced0a2eb9d10c2200f942e4a3dfcd0991785bceb3e89614c93",
+   "bytes": 682366,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/results-mobile-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "1eefa4c20da55aad5d758ab2bd2bdc0eef9272a1775fe8cdd6f25e8f1ddb6c5a",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "c9ef4e88afc242fb716d3aaf12477a53022043b1ab818c1fdb86d3f1ffe07705",
+   "bytes": 20004,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e1-night-shift/restore-ground/results-mobile-chrome/native-proofs-e1-night-shi-ecd59-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4a31641284dc9196493da755a443844b854dab56fdff8f1436296ea58ea9d741",
+   "bytes": 901309,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/command-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "7fad6768c4e9ce7cfcc867a3df93c497ef5ec574b5ccaa84e6ba06841d8cba1a",
+   "bytes": 465,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/command-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "63366e6d24ba48f7ed0cc448517f1af4c53108f7ce175ecdce6207bfbe83260d",
+   "bytes": 463,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/desktop-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/desktop-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "0a04877e486fb6dcc019f1e1ecd0e38b642d362e0fd688b29fd844fd6e1d39f7",
+   "bytes": 3033,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/driver/e2-hill-mine/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "8223f92a919585f87f622cd0a6888d1169385289db2a8386f0d0ff19600287c8",
+   "bytes": 977855,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/driver/e2-hill-mine/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "0e486fcfffe155b789fea2d97c1a7f7b2330a1841e1fb32660365ac411a57ce8",
+   "bytes": 1056868,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/driver/e2-hill-mine/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "7d355a203b2023affbb17c20488a358bbe10ff2a5a71678d997940edaceca044",
+   "bytes": 24732,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/driver/e2-hill-mine/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "6468ce07d1b139e24e9e8fe85ce7c2dc7a9f9d1920c69c6cca699242459fa396",
+   "bytes": 25109,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/driver/e2-hill-mine/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b6a59a5dcc922cf0b693f2248aab12108490d5ca454d2bf937b647d984ae6a3a",
+   "bytes": 1117826,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/driver/e2-hill-mine/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "ba9871bd48cffee1ddfc614c1ef31eddbecbbf6add7dedbf0c30b4ddb4609bac",
+   "bytes": 1056860,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/mobile-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/mobile-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "202f48086afad192c2e79b6d72ad8bcc3b77a2adce8d08fea6339da61b5f60f5",
+   "bytes": 3122,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/results-desktop-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a9f757a635ffb402a06eb432e5bf914e30e0dcdf2490b7943793da8465d2b3aa",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "c5e1a9fbc248c3032b92bd98a4dc359da93b6472023f63ae06ea71d9051db2e1",
+   "bytes": 19863,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a0c82807a5eaac0f8b77937469b5a6b2c3fb44c01ca84bfef7c559cc38bbf1f4",
+   "bytes": 978282,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/results-mobile-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "601d9c1721e24374b5f3a25659389dfa9ff236bb8ad14f436db8ae30d5908447",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/results-mobile-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "3c1e80937f851c4f8a8cd40aa3eb7e530f141092cc31376c1fb87414fdd71542",
+   "bytes": 21188,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/default/results-mobile-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e96fad0649d72dad600ecbea274f2e8c85a6808bfd75ea4f5f0aa0f664265fd9",
+   "bytes": 1057020,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/finding.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4f531e78d1c26c5ffcd08a419dd536a1ddf06e88b81040bf4b79c1d2b115afd9",
+   "bytes": 2456,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/command-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "fe8f7d46b3d0980959dbfec5338f7977c8eba9af312e8834a33075c1dded77e9",
+   "bytes": 523,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/command-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "fe004f13df0347ef7886347b9b0d1f1db7446d9d28311061e9876b4e6c779123",
+   "bytes": 521,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/desktop-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/desktop-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "63f2fb63750807c07a9429b8754a1ef4a1a42b7fadf4dda343b54980448b8e31",
+   "bytes": 3044,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/driver/e2-hill-mine/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e890e37df44b52eb0d7316a87c8d62bae3153f72d19d8a8115a25986c92f16ec",
+   "bytes": 969013,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/driver/e2-hill-mine/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "916177e686fda4bd7dba1b6fa5874a0b689a5e06f79a147664192a2aefd4b8dc",
+   "bytes": 1069119,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/driver/e2-hill-mine/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "6f2aa327a0164839157951588ce6b6108c59450262795b980099f6cefa891f87",
+   "bytes": 24724,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/driver/e2-hill-mine/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a83ebeb764c4fdce72dda85ab8d7d42733e51641cfa6166a44d24fbcb9580518",
+   "bytes": 25031,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/driver/e2-hill-mine/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "6a0229517c6c76517e662c2c358c04531815409c48893170887fa4835d19cd14",
+   "bytes": 1211151,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/driver/e2-hill-mine/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "caca35ea6d40df9b3844b0c9dfe692d76ca89b556b2fb510231f4198bb13d4d8",
+   "bytes": 1340986,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/mobile-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/mobile-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "d60507bd818f97cd03a09cfc4a31339cb31dd746c2364ffdfafb002509cfcefe",
+   "bytes": 3138,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/results-desktop-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a9f757a635ffb402a06eb432e5bf914e30e0dcdf2490b7943793da8465d2b3aa",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "03d9753d1f6b2e4d1092d126133629cf2add5252cb170689258811933b8e902c",
+   "bytes": 19863,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/results-desktop-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e56996104c56981a5a6525baa54df62f00fb8294a87b45fcb1ed25451c6eb83b",
+   "bytes": 973074,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/results-mobile-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "601d9c1721e24374b5f3a25659389dfa9ff236bb8ad14f436db8ae30d5908447",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/results-mobile-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "bf116ff971e4bc12cc79a9f0d05451edeb1293478d5001f81024b97f5b70e074",
+   "bytes": 21233,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-hill-mine/restore-ground/results-mobile-chrome/native-proofs-e2-hill-mine-1c2f7-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a1eb1dc420d81753a6e9399f5e68132d5a5ad0fbdcb968b29372564837c1d68e",
+   "bytes": 1054052,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/command-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b919fc0f7c125d48a1a645bbc1a8da27d91da9114945e0d129cf27f202df44e8",
+   "bytes": 459,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/command-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "db34d4e91f216ae60caf7ed9868488951a536f0de10350c7bc39440b1f478afa",
+   "bytes": 457,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/desktop-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/desktop-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "c3b45bec08bf91fb98fc7674eac983525ead588070c8d7ac325db22f155c2bd0",
+   "bytes": 7902,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/driver/e2-trestle/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "08e053cf24d9585a8e87dfa292343ea63b7fade2a458344a6dab0f723b4d0076",
+   "bytes": 987938,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/driver/e2-trestle/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4cf67fae28a5e6d3d485fad6bd63e9d61b6025c969385ddc7ce31ca8077ebb8c",
+   "bytes": 1117398,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/driver/e2-trestle/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "16728beb7dd9478f5814d15ab425d1f65c659a3078ef7367166a54572dd739e7",
+   "bytes": 36975,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/driver/e2-trestle/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "cca03eb8dc3e0f1203837827a108c18fff4951ca65457b648a6b89013d43c8c6",
+   "bytes": 36941,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/driver/e2-trestle/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5c3204cc41aeceb019aa0b3515f971083e89888c17a09056cf3eb5e53b530788",
+   "bytes": 1228373,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/driver/e2-trestle/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "cc6894f49727345e3ae1fe356980b8343832d1e2476552450e1eb2c1dffe1232",
+   "bytes": 1676307,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/mobile-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/mobile-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "3bc3de5b83de1036bd85165c6e89537fa64b02bbf03c9ac4da86051db6304cef",
+   "bytes": 7911,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/results-desktop-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "65f6df79356fe44e9390777948b895d230a66a559e1b7b1a8af4a3f4a3af1619",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/results-desktop-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "bfb724338ba1a8c3ad0386869308762d6c2f65725abc143b77471f370d7c12e4",
+   "bytes": 19983,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/results-desktop-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "53f589dde497741616cdf807d532ac414a6e14d10f4962d60924cac8a82ca948",
+   "bytes": 981219,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/results-mobile-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "8064be2cbd738aac8ddc95e14090047e3d9c6582e0af03385a541a6d4c392062",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/results-mobile-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "723b42c13ec473dd62352d9f7448a7d9a0260bd8d45c3e65bdd22da9ac10baed",
+   "bytes": 20075,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/default/results-mobile-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5030817a0cfa058ea02b2b3d2447627bcd7117cf6a47f2ae9e41cbf454364baf",
+   "bytes": 1106149,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/finding.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "d65f67756e5e7967b65ed9b896070872a13c0cf43131bfe8bf3ddbc720ee9a68",
+   "bytes": 2365,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/command-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5404efbd6ef8c049f4a9738efccf0a5e1259e41cdb96b66dabd288b4dbd04f1e",
+   "bytes": 517,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/command-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4946ed38cc49d67f27f837cf3c0bc7db0fdcf8cb1bd3959f3d80f1690b7525a5",
+   "bytes": 515,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/desktop-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/desktop-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "51c8c98e206337654889bb666cf5bc643dc129c7804440248d35b7b0d844667a",
+   "bytes": 7721,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/driver/e2-trestle/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "d0c5ced87455efb6e9415e7b2a1b6677e160645865e118ea555535a377389290",
+   "bytes": 988157,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/driver/e2-trestle/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "ff39827f24afdf3ac6699789acae3c5c4c901657ce02f3d4507da7af2bd883c9",
+   "bytes": 1045339,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/driver/e2-trestle/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "5ae85b028b753ecc3e6a84655103bc4c1498a27546612abec1b327ef4c98253d",
+   "bytes": 36860,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/driver/e2-trestle/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "02d8903a9f17ed578f29a756310640acd5278980f20b32c56d7ca111f777eb10",
+   "bytes": 35182,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/driver/e2-trestle/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "f013db4d107aa45ff7170e3572021c770ef7008c0239ccebb47bb4b5eb7d1693",
+   "bytes": 1110780,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/driver/e2-trestle/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "0cc06b144792ad5cfc4447055b8144ac501b4b0a69f0ad077bf8ff00074aef63",
+   "bytes": 1078628,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/mobile-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/mobile-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "d779b0ee1222af5e9508598c406a0287cd3f8ba920a2896d16d0fff64b1babae",
+   "bytes": 7285,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/results-desktop-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "65f6df79356fe44e9390777948b895d230a66a559e1b7b1a8af4a3f4a3af1619",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/results-desktop-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "c1b2a12e7afdaa7ca66707aa068d9b9a444a36d8499dba6bac2fb1eeb918f4e9",
+   "bytes": 19984,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/results-desktop-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "91d26c21b87759d4017b686d0641826fbee984451ddaf81dc1f96f94b957d1bb",
+   "bytes": 984177,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/results-mobile-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "8064be2cbd738aac8ddc95e14090047e3d9c6582e0af03385a541a6d4c392062",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/results-mobile-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "c752c645d98d10eb2c8cb511247559022b4e6f2d458969b7d83b5fcf44959346",
+   "bytes": 20062,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e2-trestle/restore-ground/results-mobile-chrome/native-proofs-e2-trestle-e-d84b3-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "1e448b375e9cbcb56d08cc12febd1ff0389f581c51c38df553b1dba769cf7466",
+   "bytes": 1045457,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/command-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "8f945a14c519bc71048689650e52d23435c59a7ded443c50d15ff6c920b480b9",
+   "bytes": 471,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/command-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a205fde33d598e33257bb9b5559fc356b3cf017ae52b2aa41820f935a5f7c3e3",
+   "bytes": 469,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/desktop-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/desktop-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "6bb6011786bd2246a1869fb8d0f64183d1ee4e4002c9aa0b24314579df0b1ffb",
+   "bytes": 6112,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/driver/e3-moth-season/last-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "73389fdb861021c440c1120949e5018736d079884ead8aa4ecde476995c9d37c",
+   "bytes": 844586,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/driver/e3-moth-season/last-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "684afe0f54b93a54979af227831362429ab99e00bceae20b0b79e5d911ce3623",
+   "bytes": 1022986,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/driver/e3-moth-season/row-desktop-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e748bedc564fe2d9d07d8d5b4345e0646f14b9196791abaac75c947c2ba09848",
+   "bytes": 44431,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/driver/e3-moth-season/row-mobile-chrome.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "86a529a1e91f7b5bc5535cb3def3e02f031052a0a0b501fe6bbf243d3877cb86",
+   "bytes": 45280,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/driver/e3-moth-season/terminal-desktop-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "efb70a16284d9bd05c7637307aa7acd0d128d293a74217c2776ed4ed36d5be09",
+   "bytes": 864410,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/driver/e3-moth-season/terminal-mobile-chrome.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a9c1ec27d174e7c32612c25828bbadae1bf1e8ad02cf7a82d404f37895c02228",
+   "bytes": 1044943,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/mobile-chrome.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/mobile-chrome.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "f16e3b9054a81e2d24228df0ae056a7e9c51c0565417944e571814bed2a268be",
+   "bytes": 6413,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/results-desktop-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "ec44626d885b03e99f52ec49810ba156e22979ce29772b4ef063bae769e2fa39",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/results-desktop-chrome/native-proofs-e3-moth-seas-3c562-ds-and-returns-to-the-board-desktop-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "2875ef3516de4418855c29ff066697081b674e60c9b9a9af738325815fc6f1ed",
+   "bytes": 19936,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/results-desktop-chrome/native-proofs-e3-moth-seas-3c562-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "ec1a2dc7dee3b8ee446211d1595a439c5404e91d85dcdd40b37355fbcd0043de",
+   "bytes": 837590,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/results-mobile-chrome/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "94a550883e6707538b3e3143bd48de75126b104f977363cfaa83cc09f06d450e",
+   "bytes": 96,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/results-mobile-chrome/native-proofs-e3-moth-seas-3c562-ds-and-returns-to-the-board-mobile-chrome/error-context.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b28bfff1dfc7ba6fc3628e0c01d4ab980cd8446663768c41119953fb175037de",
+   "bytes": 20044,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/default/results-mobile-chrome/native-proofs-e3-moth-seas-3c562-ds-and-returns-to-the-board-mobile-chrome/test-failed-1.png": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "97a6271025a9911e964a7448859dc0a571510b375ae71d2f5c7f53f2ff0002da",
+   "bytes": 976394,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/e3-moth-season/finding.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "354d9f5efe29a352c70144fcf70a7695da5c7b287e3f8fd8a3ec0e9e7ee767c4",
+   "bytes": 2074,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/gate-unset-final.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/gate-unset-final.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e2380a948468de41081707932618028d8a9efdaad5dd5ea1247d539459ee081e",
+   "bytes": 1926,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/gate-unset.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/gate-unset.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e2380a948468de41081707932618028d8a9efdaad5dd5ea1247d539459ee081e",
+   "bytes": 1926,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/preflight-build.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e903f17ca484f2fabf69d4d573219ebff140f72076c3464f5493b66e689c6716",
+   "bytes": 351375,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/preflight-install.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "2965f8804acb1b257799c3da6b2b06fd1b8bc0df6a37ba106629b4757b51a0bd",
+   "bytes": 21,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/preflight.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "40174395e9de58a30f397e2d75f7290067bc30d8188042f399fcdb94c04f4c4c",
+   "bytes": 814,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/record-map.py": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "7b3c8e355d51d20bab8bafbfc45b7ec008e5dae78d490b9173c80356326358b7",
+   "bytes": 2049,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/run-map.py": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b10d90b83b94a71795ac73467f62298bfbe39625f7d553ef477f9c9e477bff0c",
+   "bytes": 1296,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/run-note.md": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "c9787227a545726a9df8ff29e9d96c558c7425051a48747952c71886a2d4b791",
+   "bytes": 11715,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/server.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "756897251cedc9b06b899d7632f1bdb463bd22eddacd814306eebc5b345a6ad7",
+   "bytes": 4020,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/summarize.py": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "b772f2428a3e39a57d0a4729ecb50ee2f71b10f9e3ff58845b4e762997e0c820",
+   "bytes": 787,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/tsc-final.exit": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+   "bytes": 2,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/tsc-final.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/tsc-initial.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "53f978fd75f5315b433525862c4c35222fd2bf3e2f6ae90be208c4ec9a357a2f",
+   "bytes": 270,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/tsc.log": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/unset-final-results/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+   "bytes": 45,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/unset-results/.last-run.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903",
+   "bytes": 45,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/verification.json": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "f9da0051c2b20d7dfdf9dace340b2666077448831af66670593757bbcbd68313",
+   "bytes": 854,
+   "movedDate": "2026-09-27"
+  },
+  "artifacts/sol-play-proofs-7-record/verify.py": {
+   "archiveCommit": "f0699d656e7cf16ba8eb7ac653ec6ad4a103e0e7",
+   "sha256": "a7681256690680a8764e9c6d42cf9a40f89a01c3eb14fc79ed38089899147315",
+   "bytes": 2519,
+   "movedDate": "2026-09-27"
+  }
+ }
+}

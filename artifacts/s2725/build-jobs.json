@@ -1,0 +1,32 @@
+[
+  [
+    "TypeScript",
+    "npx",
+    "tsc",
+    "--noEmit"
+  ],
+  [
+    "normal build",
+    "npm",
+    "run",
+    "build"
+  ],
+  [
+    "E1 build",
+    "/opt/homebrew/bin/node",
+    "-e",
+    "require('child_process').execFileSync('npm',['run','build'],{env:{...process.env,GR_RELEASE:'e1'},stdio:'inherit'})"
+  ],
+  [
+    "E1 payload",
+    "node",
+    "scripts/first-town-payload.mjs"
+  ],
+  [
+    "evidence budget",
+    "node",
+    "scripts/evidence-budget.mjs",
+    "1ff7054fe39b8f55b8e0c0a1cf372fde419f4496",
+    "HEAD"
+  ]
+]

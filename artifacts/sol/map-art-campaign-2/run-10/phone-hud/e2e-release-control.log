@@ -1,0 +1,252 @@
+
+[WebServer] (node:94151) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (node:94190) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+(node:94093) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+
+
+(node:94192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:94192) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/4] [desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+  1) [desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      328 |   await moveHeroTo(page, -4.5, -6.4);
+      329 |   await moveHeroTo(page, -2.5, -6.4);
+    > 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);
+          |                                                                                                       ^
+      331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);
+      332 |   await moveHeroTo(page, -4.5, -6.4);
+      333 |   await moveHeroTo(page, -4.5, 6.7);
+        at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:330:103)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:81:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:94614) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:94614) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[2/4] [desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+
+[desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75
+  throw new Error(`[release-build] ${message}`);
+        ^
+
+Error: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb
+    at fail (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75:9)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:46:26
+
+Node.js v26.4.0
+  2) [desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets 
+
+    Error: expect(received).not.toThrow()
+
+    Error name:    "Error"
+    Error message: "Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs
+    file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75
+      throw new Error(`[release-build] ${message}`);
+            ^·
+    Error: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb
+        at fail (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75:9)
+        at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:46:26·
+    Node.js v26.4.0
+    "
+
+          at fail (file:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75:9)
+          at file:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:46:26
+          Node.js v26.4.0
+          at file:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts:245:16
+          at Object.<anonymous> (node_modules/playwright/lib/matchers/expect.js:11428:9)
+          at invokeMatcher (node_modules/playwright/lib/matchers/expect.js:12925:20)
+          at invoke (node_modules/playwright/lib/matchers/expect.js:12904:109)
+          at _Zone.run (node_modules/playwright-core/lib/coreBundle.js:8572:40)
+          at callMatcherAsStep (node_modules/playwright/lib/matchers/expect.js:12905:64)
+          at Object.toThrow (node_modules/playwright/lib/matchers/expect.js:12867:23)
+          at file:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts:248:11
+          at node_modules/playwright/lib/worker/workerProcessEntry.js:1662:15
+          at node_modules/playwright/lib/worker/workerProcessEntry.js:1154:17
+          at TimeoutManager.withRunnable (node_modules/playwright/lib/worker/workerProcessEntry.js:426:9)
+          at TestInfoImpl._runWithTimeout (node_modules/playwright/lib/worker/workerProcessEntry.js:1152:34)
+          at node_modules/playwright/lib/worker/workerProcessEntry.js:1660:22
+          at WorkerMain._runTest (node_modules/playwright/lib/worker/workerProcessEntry.js:1633:5)
+          at WorkerMain.runTestGroup (node_modules/playwright/lib/worker/workerProcessEntry.js:1528:9)
+          at process.<anonymous> (node_modules/playwright/lib/common/index.js:1991:25)
+
+      246 |     cwd: process.cwd(),
+      247 |     env: { ...process.env, GR_RELEASE: 'e1' },
+    > 248 |   })).not.toThrow();
+          |           ^
+      249 | });
+      250 |
+      251 | async function seedProfile(
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:248:11
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:94713) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:94713) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[3/4] [mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice
+  3) [mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      328 |   await moveHeroTo(page, -4.5, -6.4);
+      329 |   await moveHeroTo(page, -2.5, -6.4);
+    > 330 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);
+          |                                                                                                       ^
+      331 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);
+      332 |   await moveHeroTo(page, -4.5, -6.4);
+      333 |   await moveHeroTo(page, -4.5, 6.7);
+        at harvestSluiceBudget (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:330:103)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:81:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-first-player-6bd11-s-a-Dry-Gulch-spring-sluice-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:95039) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:95039) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[4/4] [mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+
+[mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75
+  throw new Error(`[release-build] ${message}`);
+        ^
+
+Error: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb
+    at fail (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75:9)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:46:26
+
+Node.js v26.4.0
+  4) [mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets 
+
+    Error: expect(received).not.toThrow()
+
+    Error name:    "Error"
+    Error message: "Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assert-release-build.mjs
+    file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75
+      throw new Error(`[release-build] ${message}`);
+            ^·
+    Error: [release-build] later plate/GLB assets emitted: motor-hauler-DGEx9v27-diet-c2bea0ac.glb
+        at fail (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75:9)
+        at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:46:26·
+    Node.js v26.4.0
+    "
+
+          at fail (file:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:75:9)
+          at file:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/assert-release-build.mjs:46:26
+          Node.js v26.4.0
+          at file:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts:245:16
+          at Object.<anonymous> (node_modules/playwright/lib/matchers/expect.js:11428:9)
+          at invokeMatcher (node_modules/playwright/lib/matchers/expect.js:12925:20)
+          at invoke (node_modules/playwright/lib/matchers/expect.js:12904:109)
+          at _Zone.run (node_modules/playwright-core/lib/coreBundle.js:8572:40)
+          at callMatcherAsStep (node_modules/playwright/lib/matchers/expect.js:12905:64)
+          at Object.toThrow (node_modules/playwright/lib/matchers/expect.js:12867:23)
+          at file:/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/e2e/release-build.spec.ts:248:11
+          at node_modules/playwright/lib/worker/workerProcessEntry.js:1662:15
+          at node_modules/playwright/lib/worker/workerProcessEntry.js:1154:17
+          at TimeoutManager.withRunnable (node_modules/playwright/lib/worker/workerProcessEntry.js:426:9)
+          at TestInfoImpl._runWithTimeout (node_modules/playwright/lib/worker/workerProcessEntry.js:1152:34)
+          at node_modules/playwright/lib/worker/workerProcessEntry.js:1660:22
+          at WorkerMain._runTest (node_modules/playwright/lib/worker/workerProcessEntry.js:1633:5)
+          at WorkerMain.runTestGroup (node_modules/playwright/lib/worker/workerProcessEntry.js:1528:9)
+          at process.<anonymous> (node_modules/playwright/lib/common/index.js:1991:25)
+
+      246 |     cwd: process.cwd(),
+      247 |     env: { ...process.env, GR_RELEASE: 'e1' },
+    > 248 |   })).not.toThrow();
+          |           ^
+      249 | });
+      250 |
+      251 | async function seedProfile(
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/release-build.spec.ts:248:11
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-release-control/release-build-dist-has-no--73caf-est-ids-or-plate-GLB-assets-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  4 failed
+    [desktop-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice 
+    [desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets 
+    [mobile-chrome] › e2e/release-build.spec.ts:24:1 › first player reaches textured town actors and places a Dry Gulch spring sluice 
+    [mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets 

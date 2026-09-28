@@ -1,0 +1,8 @@
+{
+  "command": "node scripts/status-archive-audit.mjs",
+  "nodeVersion": "v23.11.1",
+  "exitCode": 134,
+  "error": "Reached heap limit Allocation failed - JavaScript heap out of memory",
+  "context": "Unbounded all-history invocation; stdout retained in status-archive.txt and stderr in logs/fire-20260927.log. Not a verdict on this handoff.",
+  "correction": "Use existing test:ledger-guards bounded invocation --limit 40 --quiet, without changing the checker."
+}

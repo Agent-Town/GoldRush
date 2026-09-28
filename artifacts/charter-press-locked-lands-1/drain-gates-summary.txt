@@ -1,0 +1,48 @@
+branch feat/charter-press-locked-lands-1 tip 867cd8f6a 2026-09-26 14:07Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/cpl1.json
+scratch store at the store's main 5793a96
+chain base cc57b954e
+merged f9f4c0d23
+cure cpl1: desk row committed 5936d9e82
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: f8b1c19ab5864e48f695ed5885cc9eb627d9ed890a846c90aa6c112b1929f049 (pinned 642edcf65fcab2089164c6f33cfabf4a1a9805735a3b6df6f33dfa947cb6a32a)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1127 files, 97717484 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34352207 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (289.5s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+ledger battery start 14:14Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 14:19Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/charter-press-totality.spec.ts e2e/ap16-7-epoch-levers.spec.ts e2e/cp01-charter-roundtrip.spec.ts e2e/cp04-lever.spec.ts
+e2e: rc=1   14 failed   68 passed (5.7m)  14:25Z
+1) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+2) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+3) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+4) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+5) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+6) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+7) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean 
+8) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean 
+9) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean 
+10) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean 
+11) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean 
+12) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean 
+13) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean 
+14) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean 
+battery start 14:25Z
+battery: rc=1 ℹ tests 1037 ℹ pass 1030 ℹ fail 2 ℹ skipped 5  14:42Z
+✖ rotation registry stays outside the engine identity corpus (638.788917ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (180.891084ms)
+dirt after battery: 0
+cpl1-PREP-DONE
+unattributed e2e reds: 1) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean  ; 2) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean  ; 3) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean  ; 4) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean  ; 5) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean  ; 6) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean  ; 7) [desktop-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean  ; 8) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/big-build/busy starts clean  ; 9) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-dry-gulch/defend/classic starts clean  ; 10) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/explore-quiet/busy starts clean  ; 11) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-night-shift/big-build/gentle starts clean  ; 12) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/defend/busy starts clean  ; 13) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-twin-banks/explore-quiet/gentle starts clean  ; 14) [mobile-chrome] › e2e/cp04-lever.spec.ts:173:3 › seeded boot e1-baron/big-build/classic starts clean 
+verdict — needs hands
+RESUME-PREP 14:44Z: the fourteen cp04:173 seeded-boot reds attributed (base control, F-CPL1-3); resume HELD until LAND-rvs1-DONE, then main merged into this chain before the pin
+verdict: clean
+RESUME 2026-09-26 15:40Z: chain aa25c1138, merge f9f4c0d23, continuing at the pin
+hash at pin time: af0e2d889eb353cef53fc6b4eaa695d4460961d4aea894ee22b544f396041e45
+pin #68 `af0e2d88`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/charter-press-locked-lands-1.md

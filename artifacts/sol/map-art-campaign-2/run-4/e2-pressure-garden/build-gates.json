@@ -1,0 +1,40 @@
+[
+  {
+    "label": "tsc",
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 6.75,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-4/e2-pressure-garden-tsc.log"
+  },
+  {
+    "label": "default-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 20.06,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-4/e2-pressure-garden-default-build.log"
+  },
+  {
+    "label": "full-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "environment": {
+      "GR_RELEASE": "full"
+    },
+    "exit": 0,
+    "seconds": 24.95,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-4/e2-pressure-garden-full-build.log"
+  }
+]

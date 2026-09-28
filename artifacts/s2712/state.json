@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-09-27T15:10:05.727Z",
+  "head": "67c5759934dc95d6ea39a3bfb5de4a58609916a8",
+  "results": {
+    "dry-board": {
+      "exit": 0
+    },
+    "lanes": {
+      "exit": 0
+    },
+    "status-archive": {
+      "exit": 0
+    },
+    "health": {
+      "exit": 0
+    }
+  },
+  "failedSinceLastHandoff": [],
+  "queued": {
+    "art": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "main": []
+  },
+  "running": [
+    "lane-c--20260927-220217-sol-play-proofs-9.md",
+    "lane-c.pid"
+  ],
+  "pendingOrders": [],
+  "trackedDiff": [
+    "logs/.blocked-seen",
+    "logs/.goal-tree.html",
+    "logs/dashboard.html",
+    "logs/factory-usage.json",
+    "logs/task-stats.jsonl",
+    "logs/usage-history.jsonl"
+  ],
+  "committedSincePredecessor": [
+    "STATUS.md",
+    "docs/HANDOVER-2026-09-06-attended.md"
+  ]
+}

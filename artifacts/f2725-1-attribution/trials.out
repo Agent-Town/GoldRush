@@ -1,0 +1,28 @@
+arena /Users/robin/.goldrush/control/wt-holds1-candidate at cf9cd95c4 ready
+arena /Users/robin/.goldrush/control/wt-1ff7054fe at 1ff7054fe ready
+server command: npx vite --port 5309 --strictPort --host 127.0.0.1
+=== trial cand-1 in /Users/robin/.goldrush/control/wt-holds1-candidate 01:05:50Z load { 4.37 9.79 8.67 }
+playwright rc=0 in 81 s:   1 passed (1.3m) 
+   secures=ok: Claim Secured at wave 8 / 248.4s sim, 72 HP, 3 buildings
+   banks=ok: a NEW secured row for e6-glow-mesa: waves=8 gold=96 timeAlive=248 kills=198 (41 new row(s) since pre-play, ret
+      (no reloads key)
+   terminal wave 8 hp 71.80000000000003 sim 248.39999999999614 errors None
+=== trial base-1 in /Users/robin/.goldrush/control/wt-1ff7054fe 01:07:18Z load { 5.29 8.69 8.35 }
+playwright rc=1 in 83 s:   1 failed 
+   secures=FAIL: runState=dead at wave 10 / 303.1s sim, 291 kills, 11 gold
+   banks=FAIL: skipped: never secured
+      (no reloads key)
+   terminal wave 10 hp None sim 303.0666666666597 errors None
+=== trial base-2 in /Users/robin/.goldrush/control/wt-1ff7054fe 01:08:49Z load { 6.60 8.44 8.30 }
+playwright rc=1 in 74 s:   1 failed 
+   secures=ok: Claim Secured at wave 8 / 245.2s sim, 122 HP, 3 buildings
+   banks=FAIL: no new secured row since pre-play for e6-glow-mesa at >= wave 12 (41 new row(s): [{"kills":40,"gold":400,"time
+      (no reloads key)
+   terminal wave 0 hp 100 sim 0 errors None
+=== trial cand-2 in /Users/robin/.goldrush/control/wt-holds1-candidate 01:10:11Z load { 5.39 7.59 7.98 }
+playwright rc=0 in 92 s:   1 passed (1.5m) 
+   secures=ok: Claim Secured at wave 8 / 252.0s sim, 91 HP, 3 buildings
+   banks=ok: a NEW secured row for e6-glow-mesa: waves=8 gold=6 timeAlive=252 kills=210 (41 new row(s) since pre-play, reta
+      (no reloads key)
+   terminal wave 8 hp 91.00000000000001 sim 251.99999999999594 errors None
+=== all four trials done 01:11:50Z

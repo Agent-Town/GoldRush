@@ -103,7 +103,7 @@ if [ "$dry" = "1" ] && [ "$skips" -lt 11 ]; then
 fi
 echo 0 > "$SKIPCOUNT_F"
 
-FIRE_MODEL=${FIRE_MODEL:-claude-opus-5}
+FIRE_MODEL=${FIRE_MODEL:-claude-opus-5-5}  # owner 2026-09-25: Opus 5.5 where we can; the id answers on Claude Code 2.1.282
 # FIRE ENGINE SWITCH (owner 2026-08-12, verbatim: "could we switch the fires to be GPT 5.6 Sol
 # xhigh instead of Opus? The Anthropic subscription is running low and will only be replenished
 # on Saturday.") — engine 'codex' rides the owner's OpenAI subscription via the codex CLI
@@ -116,7 +116,7 @@ FIRE_MODEL=${FIRE_MODEL:-claude-opus-5}
 # ~/.claude-fires (launchd), the weekly-wall bounce is ~/.claude-alt; both are the owner's Anthropic
 # account. The codex path below stays intact for a future owner word; tasks/CODEX-WALL (same date)
 # keeps every lane queue empty so the idle Codex lane-runner has nothing to pick up.
-FIRE_ENGINE=${FIRE_ENGINE:-claude}
+FIRE_ENGINE=${FIRE_ENGINE:-codex}  # SWITCHED TO CODEX 2026-09-26 (owner, verbatim: "Can you switch the fires to Astra xhigh from Opus max? I am running out of Anthropic subscription now instead of OpenAI."): default is codex (gpt-6-astra, xhigh, from ~/.codex/config.toml) until the owner says otherwise; the claude path below stays intact.
 if [ "$FIRE_ENGINE" = "codex" ]; then
   # Resolution PROBES, never trusts paths (F-1635-3 dual-install met again 2026-08-12, twice in
   # one hour): launchd's PATH finds an orphaned homebrew 0.133; nvm-v24's wrapper is half-installed
@@ -133,7 +133,7 @@ if [ "$FIRE_ENGINE" = "codex" ]; then
   done
   if [ -n "$CODEX_BIN" ]; then
     echo "[fire-runner] $(date +%H:%M:%S) FIRE START (engine codex, model from ~/.codex config)" >> "$LOG"
-    "$CODEX_BIN" exec --sandbox danger-full-access --skip-git-repo-check "$(cat scripts/fire.md)" >> "$LOG" 2>&1
+    "$CODEX_BIN" exec --sandbox danger-full-access --skip-git-repo-check < scripts/fire.md >> "$LOG" 2>&1
     RC=$?
     echo "[fire-runner] $(date +%H:%M:%S) FIRE END rc=$RC (codex; ALT fallback is claude-only, skipped)" >> "$LOG"
     exit 0
@@ -141,7 +141,7 @@ if [ "$FIRE_ENGINE" = "codex" ]; then
   echo "[fire-runner] $(date +%H:%M:%S) codex binary missing — falling through to claude engine" >> "$LOG"
 fi
 echo "[fire-runner] $(date +%H:%M:%S) FIRE START (model $FIRE_MODEL)" >> "$LOG"
-"$CLAUDE_BIN" -p "$(cat scripts/fire.md)" \
+"$CLAUDE_BIN" -p < scripts/fire.md \
   --model "$FIRE_MODEL" \
   >> "$LOG" 2>&1
 RC=$?
@@ -149,7 +149,7 @@ echo "[fire-runner] $(date +%H:%M:%S) FIRE END rc=$RC" >> "$LOG"
 # THE ALT FALLBACK (owner-authorized 2026-07-25: the brainstem tank, 97% headroom): a weekly-wall bounce retries once on the alt subscription.
 if [ "$RC" != "0" ] && tail -4 "$LOG" | grep -qi "weekly limit"; then
   echo "[fire-runner] $(date +%H:%M:%S) WALL on primary — ALT FIRE (config ~/.claude-alt)" >> "$LOG"
-  CLAUDE_CONFIG_DIR="$HOME/.claude-alt" "$CLAUDE_BIN" -p "$(cat scripts/fire.md)" --model "$FIRE_MODEL" >> "$LOG" 2>&1
+  CLAUDE_CONFIG_DIR="$HOME/.claude-alt" "$CLAUDE_BIN" -p < scripts/fire.md --model "$FIRE_MODEL" >> "$LOG" 2>&1
   RC=$?
   echo "[fire-runner] $(date +%H:%M:%S) ALT FIRE END rc=$RC" >> "$LOG"
 fi

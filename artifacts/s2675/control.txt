@@ -1,0 +1,292 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-24T19:15:07.213Z — s2675 CONTROL on clean main 9b2fe43b3 ########
+cwd=/Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate
+
+===== warm (desktop only, cold-compile absorber) =====
+$ npx playwright test e2e/menu-safe-params.spec.ts --project=desktop-chrome --workers=1
+rc=1 10.9s
+
+Running 2 tests using 1 worker
+
+  ✘  1 [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run (6.2s)
+  ✓  2 [desktop-chrome] › e2e/menu-safe-params.spec.ts:18:1 › a contract param still launches the run path (838ms)
+
+
+  1) [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('start-menu-enter-town')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('start-menu-enter-town')
+
+
+       7 |   page.on('pageerror', (error) => errors.push(error.message));
+       8 |   await page.goto('/?town3dPilot=all');
+    >  9 |   await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+         |                                                           ^
+      10 |   await page.getByTestId('start-menu-enter-town').click();
+      11 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+      12 |   await expect
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/e2e/menu-safe-params.spec.ts:9:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+  1 passed (9.3s)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[WebServer] (!) Failed to run dependency scan. Skipping dependency pre-bundling. Error:   Failed to scan for dependencies from entries:
+[WebServer]   /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/index.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/logs/cast-sheets.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/logs/dashboard.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/site/index-legacy-2026-08-13.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/site/index.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/site/news.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/scripts/stream-dashboard.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/scripts/stream-player.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/boss-art-fidelity-2026-09-08/index.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/dashboard-truth/after.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/dashboard-truth/before.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/goal-tracker-dashboard/dashboard.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/map-art-inventory-20260908/index.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/src/replay/harness.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/boss-fidelity/e1-baron/index.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/boss-fidelity/e2-railcar/index.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/boss-fidelity/e4-landyacht/index.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/boss-fidelity/e3-crawler/index.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/artifacts/boss-fidelity/e5-dredge-queen/index.html
+[WebServer] /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/assets/pilots/hero-3d/compare.html
+[WebServer] 
+[WebServer]   Build failed with 1 error:
+[WebServer] 
+[WebServer] [TSCONFIG_ERROR] Failed to load tsconfig '../tsconfig.json': Tsconfig not found
+[WebServer] 
+[WebServer]     at aggregateBindingErrorsIntoJsError (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/rolldown/dist/shared/error-CGhV1ebk.mjs:48:18)
+[WebServer]     at unwrapBindingResult (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/rolldown/dist/shared/error-CGhV1ebk.mjs:18:128)
+[WebServer]     at scan (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/rolldown/dist/experimental-index.mjs:238:3)
+[WebServer]     at async Object.build (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:27504:3)
+[WebServer]     at async scan (file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:27443:4)
+[WebServer]     at async file:///Users/robin/Claude/Projects/Gold%20Rush/node_modules/vite/dist/node/chunks/node.js:35201:15
+
+
+===== menu-safe-params BOTH projects =====
+$ npx playwright test e2e/menu-safe-params.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1
+rc=1 18.3s
+
+Running 4 tests using 1 worker
+
+  ✘  1 [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run (6.3s)
+  ✓  2 [desktop-chrome] › e2e/menu-safe-params.spec.ts:18:1 › a contract param still launches the run path (864ms)
+  ✘  3 [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run (6.3s)
+  ✓  4 [mobile-chrome] › e2e/menu-safe-params.spec.ts:18:1 › a contract param still launches the run path (1.1s)
+
+
+  1) [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('start-menu-enter-town')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('start-menu-enter-town')
+
+
+       7 |   page.on('pageerror', (error) => errors.push(error.message));
+       8 |   await page.goto('/?town3dPilot=all');
+    >  9 |   await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+         |                                                           ^
+      10 |   await page.getByTestId('start-menu-enter-town').click();
+      11 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+      12 |   await expect
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/e2e/menu-safe-params.spec.ts:9:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('start-menu-enter-town')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('start-menu-enter-town')
+
+
+       7 |   page.on('pageerror', (error) => errors.push(error.message));
+       8 |   await page.goto('/?town3dPilot=all');
+    >  9 |   await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+         |                                                           ^
+      10 |   await page.getByTestId('start-menu-enter-town').click();
+      11 |   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+      12 |   await expect
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/e2e/menu-safe-params.spec.ts:9:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/menu-safe-params--town3dPi-ba6fa-ts-the-start-menu-not-a-run-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+    [mobile-chrome] › e2e/menu-safe-params.spec.ts:5:1 › ?town3dPilot=all boots the start menu, not a run 
+  2 passed (17.8s)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+
+===== m3-06 legacy migration row BOTH projects =====
+$ npx playwright test e2e/m3-06-demo-profiles.spec.ts -g legacy single-profile --project=desktop-chrome --project=mobile-chrome --workers=1
+rc=1 4.0s
+
+Running 2 tests using 1 worker
+
+  ✘  1 [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults (757ms)
+  ✘  2 [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults (838ms)
+
+
+  1) [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 3
+
+      Object {
+        "difficultyPreset": "trail",
+    -   "hintsSeen": Array [],
+    +   "hintsSeen": Array [
+    +     "story:first-boot",
+    +   ],
+        "name": "Robin",
+      }
+
+      57 |   const state = await readJson<ProfileState>(page, PROFILE_KEY);
+      58 |   expect(state.activeId).toBe('robin');
+    > 59 |   expect(state.profiles[0]).toMatchObject({ name: 'Robin', difficultyPreset: 'trail', hintsSeen: [] });
+         |                             ^
+      60 |   expect(await readJson<unknown[]>(page, profileDataKey('robin', SCOREBOARD_KEY))).toHaveLength(1);
+      61 |   expect(await page.evaluate(() => window.__GR_PROFILE__?.markHintSeen('first-run'))).toBe(true);
+      62 |   expect((await readJson<ProfileState>(page, PROFILE_KEY)).profiles[0]?.hintsSeen).toContain('first-run');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/e2e/m3-06-demo-profiles.spec.ts:59:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 1
+    + Received  + 3
+
+      Object {
+        "difficultyPreset": "trail",
+    -   "hintsSeen": Array [],
+    +   "hintsSeen": Array [
+    +     "story:first-boot",
+    +   ],
+        "name": "Robin",
+      }
+
+      57 |   const state = await readJson<ProfileState>(page, PROFILE_KEY);
+      58 |   expect(state.activeId).toBe('robin');
+    > 59 |   expect(state.profiles[0]).toMatchObject({ name: 'Robin', difficultyPreset: 'trail', hintsSeen: [] });
+         |                             ^
+      60 |   expect(await readJson<unknown[]>(page, profileDataKey('robin', SCOREBOARD_KEY))).toHaveLength(1);
+      61 |   expect(await page.evaluate(() => window.__GR_PROFILE__?.markHintSeen('first-run'))).toBe(true);
+      62 |   expect((await readJson<ProfileState>(page, PROFILE_KEY)).profiles[0]?.hintsSeen).toContain('first-run');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/s2675-gate/e2e/m3-06-demo-profiles.spec.ts:59:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m3-06-demo-profiles-legacy-4e638-fficulty-and-hints-defaults-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+    [mobile-chrome] › e2e/m3-06-demo-profiles.spec.ts:49:1 › legacy single-profile scores migrate into Robin with difficulty and hints defaults 
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+(node:75297) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:75352) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:75396) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warm (desktop only, cold-compile absorber)":1,"menu-safe-params BOTH projects":1,"m3-06 legacy migration row BOTH projects":1}
+OVERALL rc=1

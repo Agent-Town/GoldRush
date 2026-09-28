@@ -1,0 +1,655 @@
+(node:64452) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 152 tests using 1 worker
+
+[1/152] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[2/152] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+e10-ember-shore stoke watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[3/152] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+e10-ember-shore plain-boot errand watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[4/152] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+e10-ember-shore vent guttered watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[5/152] [desktop-chrome] › e2e/e10-ember-shore-squall.spec.ts:85:1 › E10S-2 plain boot: the Ember Shore opens as itself and its squall clock is already running
+[desktop-chrome] › e2e/e10-ember-shore-squall.spec.ts:85:1 › E10S-2 plain boot: the Ember Shore opens as itself and its squall clock is already running
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[6/152] [desktop-chrome] › e2e/e10-ember-shore-squall.spec.ts:131:1 › E10S-2 the clock: the browser changes phase on the same ticks the headless engine does
+[desktop-chrome] › e2e/e10-ember-shore-squall.spec.ts:131:1 › E10S-2 the clock: the browser changes phase on the same ticks the headless engine does
+e10-ember-shore squall clock watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[7/152] [desktop-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+[8/152] [desktop-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+[desktop-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+e10 preserve plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[9/152] [desktop-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+[desktop-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+e10 preserve terminal parity watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[10/152] [desktop-chrome] › e2e/e10-river-boot-guard.spec.ts:12:1 › raw E10 River door opens as The River without errors
+[11/152] [desktop-chrome] › e2e/e10-static-boss.spec.ts:37:1 › The Last Claim boots directly and the Static arrives without the e10static flag
+[12/152] [desktop-chrome] › e2e/e10-static-boss.spec.ts:71:1 › the Static pressures meaning, three preserves make the Quiet recede, and nothing is killed
+[13/152] [desktop-chrome] › e2e/e10-static-boss.spec.ts:145:1 › the Static stays unarmed without the E10 contract or explicit debug seam
+[14/152] [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale
+  1) [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('bank-secured-claim')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('bank-secured-claim')
+
+
+      176 |   });
+      177 |
+    > 178 |   await expect(page.getByTestId('bank-secured-claim')).toBeVisible();
+          |                                                        ^
+      179 |   await page.getByTestId('bank-secured-claim').click();
+      180 |   await expect(page.getByTestId('e10-river-lever')).toBeVisible();
+      181 |   expect(await page.evaluate(() => ({
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/e2e/e10-static-boss.spec.ts:178:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[15/152] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[16/152] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  2) [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
+
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/e2e/er01-e10-census.spec.ts:138:69
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[17/152] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[18/152] [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[19/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › the-claim census
+[20/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-drill-yard census
+[21/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-dry-gulch census
+[22/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-night-shift census
+[23/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-twin-banks census
+[24/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e1-baron census
+[25/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e2-hill-mine census
+[26/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e2-trestle census
+[27/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e2-pressure-garden census
+[28/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e2-incline census
+[29/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e3-blackout-ridge census
+[30/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e3-moth-season census
+[31/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e3-canyon-works census
+[32/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e3-fairground census
+[33/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e4-dust-flats census
+[34/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e4-long-road census
+[35/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e4-gusher-county census
+[36/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e4-boneyard census
+[37/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e5-deepwater-claim census
+[38/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e5-regatta census
+[39/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e5-stillwater census
+[40/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e5-flotilla census
+[41/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e6-glow-mesa census
+[42/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e6-showroom census
+[43/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e6-half-life-hollow census
+[44/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e6-picnic census
+[45/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e7-relay-valley census
+[46/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e7-echo-canyon census
+[47/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e7-dead-band census
+[48/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e7-relay-rush census
+[49/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e8-mare-claim census
+[50/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e8-far-side census
+[51/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e8-low-orbit census
+[52/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e8-eclipse census
+[53/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e9-dome-basin census
+[54/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e9-seed-run census
+[55/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e9-devils-alley census
+[56/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e9-old-canal census
+[57/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e10-ember-shore census
+[58/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e10-archive-world census
+[59/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e10-last-claim census
+[60/152] [desktop-chrome] › e2e/map-census.spec.ts:35:3 › e10-river census
+[61/152] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › the-claim mobile spot
+[62/152] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › e2-pressure-garden mobile spot
+[63/152] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › e5-deepwater-claim mobile spot
+[64/152] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › e8-low-orbit mobile spot
+[65/152] [desktop-chrome] › e2e/map-census.spec.ts:43:3 › e10-river mobile spot
+[66/152] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:176:1 › the board data still says 16 of 42 contracts unlock by default
+[67/152] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+[desktop-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+preview-unlock-all watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[68/152] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+[desktop-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+preview-unlock-all-fresh watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[69/152] [desktop-chrome] › e2e/preview-unlock-all.spec.ts:264:1 › the E1 release build carries no such control
+[70/152] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:169:1 › SS-11 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[71/152] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:182:1 › every Deep Sky beat cites a storybook line in source
+[72/152] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[73/152] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[74/152] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[75/152] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers
+  3) [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 7
+    + Received  + 0
+
+      Array [
+        "e10-ark-boarding",
+    -   "e10-long-table-seed",
+    -   "e10-welcome-from",
+    -   "e10-baron-stays",
+    -   "e10-quack-freed",
+    -   "e10-ember-shore-arrival",
+    -   "e10-gazette-new-verb",
+    -   "e10-heir-always-said-so",
+      ]
+
+      289 |
+      290 |   await emit(EMBER_SHORE);
+    > 291 |   expect(await drain()).toEqual([...EMBER_SHORE_DRAIN]);
+          |                         ^
+      292 |
+      293 |   // No E10 contract carries a twist.baron, so the BARON path emits nothing in this era; since the
+      294 |   // story-signal-gaps slice the Quiet's own system reports its lifecycle instead
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/e2e/ss-11-e10-beats.spec.ts:291:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-11-e10-beats-the-Quiet--cf4e8--only-on-their-own-triggers-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-11-e10-beats-the-Quiet--cf4e8--only-on-their-own-triggers-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-11-e10-beats-the-Quiet--cf4e8--only-on-their-own-triggers-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-11-e10-beats-the-Quiet--cf4e8--only-on-their-own-triggers-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:74926) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[76/152] [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+[desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[77/152] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[78/152] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+e10-ember-shore stoke watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[79/152] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+e10-ember-shore plain-boot errand watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[80/152] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+e10-ember-shore vent guttered watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[81/152] [mobile-chrome] › e2e/e10-ember-shore-squall.spec.ts:85:1 › E10S-2 plain boot: the Ember Shore opens as itself and its squall clock is already running
+[mobile-chrome] › e2e/e10-ember-shore-squall.spec.ts:85:1 › E10S-2 plain boot: the Ember Shore opens as itself and its squall clock is already running
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[82/152] [mobile-chrome] › e2e/e10-ember-shore-squall.spec.ts:131:1 › E10S-2 the clock: the browser changes phase on the same ticks the headless engine does
+[mobile-chrome] › e2e/e10-ember-shore-squall.spec.ts:131:1 › E10S-2 the clock: the browser changes phase on the same ticks the headless engine does
+e10-ember-shore squall clock watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[83/152] [mobile-chrome] › e2e/e10-finale-staging.spec.ts:14:1 › E10 closes on the Ark, re-inks, and offers THE RIVER through the Press
+[84/152] [mobile-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+[mobile-chrome] › e2e/e10-preserve-objective.spec.ts:8:1 › a plain Last Claim boot shows the warm vent preserve objective
+e10 preserve plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[85/152] [mobile-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+[mobile-chrome] › e2e/e10-preserve-objective.spec.ts:29:1 › the browser uses the same seeded preserve-fell terminal rule
+e10 preserve terminal parity watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[86/152] [mobile-chrome] › e2e/e10-river-boot-guard.spec.ts:12:1 › raw E10 River door opens as The River without errors
+[87/152] [mobile-chrome] › e2e/e10-static-boss.spec.ts:37:1 › The Last Claim boots directly and the Static arrives without the e10static flag
+[88/152] [mobile-chrome] › e2e/e10-static-boss.spec.ts:71:1 › the Static pressures meaning, three preserves make the Quiet recede, and nothing is killed
+[89/152] [mobile-chrome] › e2e/e10-static-boss.spec.ts:145:1 › the Static stays unarmed without the E10 contract or explicit debug seam
+[90/152] [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale
+  4) [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('bank-secured-claim')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('bank-secured-claim')
+
+
+      176 |   });
+      177 |
+    > 178 |   await expect(page.getByTestId('bank-secured-claim')).toBeVisible();
+          |                                                        ^
+      179 |   await page.getByTestId('bank-secured-claim').click();
+      180 |   await expect(page.getByTestId('e10-river-lever')).toBeVisible();
+      181 |   expect(await page.evaluate(() => ({
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/e2e/e10-static-boss.spec.ts:178:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e10-static-boss-recession--53f77-isting-T10-re-inking-finale-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[91/152] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-ember-shore census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[92/152] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt
+  5) [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    Expected: undefined
+    Received: ["e10-archive-world-01", "e10-archive-world-02"]
+
+      136 |     console.warn = (...args: unknown[]) => consoleErrors.push(args.map(String).join(' '));
+      137 |     try {
+    > 138 |       expect((benchSeeds as Record<string, string[]>)[contract.id]).toEqual(EXPECTED_SEEDS[contract.id]);
+          |                                                                     ^
+      139 |       const dependency = 'engineDependencies' in contract.tileParams
+      140 |         ? contract.tileParams.engineDependencies
+      141 |         : undefined;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr3-land/e2e/er01-e10-census.spec.ts:138:69
+
+    Error Context: test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/er01-e10-census-e10-archiv-b80f9--the-existing-Deep-Sky-debt-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[93/152] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-last-claim census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[94/152] [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-river census cites the existing Deep Sky debt
+[gold-rush] performance tier {
+  tier: 'full',
+  override: 'auto',
+  source: 'auto',
+  reason: 'desktop-class defaults',
+  gpuRenderer: 'unknown',
+  deviceMemory: null,
+  userAgent: 'Node.js/26',
+  config: {
+    maxDpr: 2,
+    shadowsQuality: 'soft',
+    shadowMapSize: 1536,
+    fogNear: 42,
+    fogFar: 88,
+    postEnabled: true,
+    postPaperGrainOpacity: 0.008,
+    detailDensity: 1,
+    detailMobileDensity: 0.42,
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    terrainMesh: false,
+    terrainSplat: false,
+    terrainMeshVertexStep: 1,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    freedWalkerCap: 10,
+    enemyBarCap: 60
+  },
+  runtimeVerdict: 0
+}
+
+[95/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › the-claim census
+[96/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-drill-yard census
+[97/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-dry-gulch census
+[98/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-night-shift census
+[99/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-twin-banks census
+[100/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e1-baron census
+[101/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e2-hill-mine census
+[102/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e2-trestle census
+[103/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e2-pressure-garden census
+[104/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e2-incline census
+[105/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e3-blackout-ridge census
+[106/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e3-moth-season census
+[107/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e3-canyon-works census
+[108/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e3-fairground census
+[109/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e4-dust-flats census
+[110/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e4-long-road census
+[111/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e4-gusher-county census
+[112/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e4-boneyard census
+[113/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e5-deepwater-claim census
+[114/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e5-regatta census
+[115/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e5-stillwater census
+[116/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e5-flotilla census
+[117/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e6-glow-mesa census
+[118/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e6-showroom census
+[119/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e6-half-life-hollow census
+[120/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e6-picnic census
+[121/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e7-relay-valley census
+[122/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e7-echo-canyon census
+[123/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e7-dead-band census
+[124/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e7-relay-rush census
+[125/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e8-mare-claim census
+[126/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e8-far-side census
+[127/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e8-low-orbit census
+[128/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e8-eclipse census
+[129/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e9-dome-basin census
+[130/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e9-seed-run census
+[131/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e9-devils-alley census
+[132/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e9-old-canal census
+[133/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e10-ember-shore census
+[134/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e10-archive-world census
+[135/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e10-last-claim census
+[136/152] [mobile-chrome] › e2e/map-census.spec.ts:35:3 › e10-river census
+[137/152] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › the-claim mobile spot
+[138/152] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › e2-pressure-garden mobile spot
+[139/152] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › e5-deepwater-claim mobile spot
+[140/152] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › e8-low-orbit mobile spot
+[141/152] [mobile-chrome] › e2e/map-census.spec.ts:43:3 › e10-river mobile spot
+[142/152] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:176:1 › the board data still says 16 of 42 contracts unlock by default
+[143/152] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+[mobile-chrome] › e2e/preview-unlock-all.spec.ts:186:1 › one control on the board opens every claim and locks them all again
+preview-unlock-all watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[144/152] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+[mobile-chrome] › e2e/preview-unlock-all.spec.ts:237:1 › a fresh Frontier profile reaches all ten chapters through the control
+preview-unlock-all-fresh watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[145/152] [mobile-chrome] › e2e/preview-unlock-all.spec.ts:264:1 › the E1 release build carries no such control
+[146/152] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:169:1 › SS-11 table is attributed, presentational, and uses the E2/E3 trigger vocabulary
+[147/152] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:182:1 › every Deep Sky beat cites a storybook line in source
+[148/152] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:194:1 › a player-selected Deep Sky town presents the boarding and the Long Table before the ride
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[149/152] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:234:1 › The Claim cannot load Deep Sky beats in Frontier
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[150/152] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:249:1 › epoch-3-voltage cannot load Deep Sky beats
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[151/152] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[152/152] [mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+[mobile-chrome] › e2e/ss-11-e10-beats.spec.ts:340:1 › the other two Deep Sky worlds speak only when their own card unlocks
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+  5 failed
+    [desktop-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+    [desktop-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+    [desktop-chrome] › e2e/ss-11-e10-beats.spec.ts:260:1 › the Quiet, the return and the Press beats fire only on their own triggers 
+    [mobile-chrome] › e2e/e10-static-boss.spec.ts:153:1 › recession hands the secured claim to the existing T10 re-inking finale 
+    [mobile-chrome] › e2e/er01-e10-census.spec.ts:120:3 › e10-archive-world census cites the existing Deep Sky debt 
+  2 skipped
+  145 passed (19.1m)

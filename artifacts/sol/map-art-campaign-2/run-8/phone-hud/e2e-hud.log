@@ -1,0 +1,2585 @@
+(node:37037) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 506 tests using 1 worker
+
+
+
+(node:37165) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:37165) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/506] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings
+[2/506] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast
+[3/506] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics
+[4/506] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops
+[5/506] [desktop-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling
+[6/506] [desktop-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience
+[7/506] [desktop-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns
+[8/506] [desktop-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly
+[9/506] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung
+[10/506] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:268:1 › manual early-wave seam resets an expired countdown before forcing the transition
+[11/506] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:287:1 › consent restores a save from before place-building existed
+[12/506] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:315:1 › place-building consent survives a new save round-trip
+[13/506] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:359:1 › plain-boot production orders pan a seam and place a real building
+[14/506] [desktop-chrome] › e2e/ap-standing-orders.spec.ts:433:1 › production pan does not advance an active player channel
+[15/506] [desktop-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound
+[16/506] [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
+  1) [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:39813) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:39813) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[17/506] [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage
+[18/506] [desktop-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap
+[19/506] [desktop-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops
+[20/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:135:1 › every buyable tier rung changes a live stat
+[21/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:152:1 › turret tier raises live damage and spends the exact tier-2 cost
+[22/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:181:1 › same-frame upgrade and confirm does not demolish the upgraded building
+[23/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:205:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button
+  2) [desktop-chrome] › e2e/bt-01-tiers.spec.ts:205:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button 
+
+    Error: expect(received).toBeNull()
+
+    Received: {"effectiveDamage": 72.8, "effectiveFireRate": 1.298, "hp": 50, "id": "turret", "index": 0, "maxHp": 50, "panRateMult": undefined, "position": {"x": 0, "z": 12}, "repairCost": 0, "repairProgress": 0, "tier": 2, "worn": false, "wrecked": false, "yieldPerCycle": undefined}
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      214 |   await page.keyboard.press('Enter');
+      215 |
+    > 216 |   await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();
+          |                                                                  ^
+      217 |   await expect.poll(() => buildableCount(page, 'turret')).toBe(0);
+      218 |   expect(errors.consoleErrors).toEqual([]);
+      219 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:216:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:40548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[24/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:222:1 › palisade tier raises max HP, heals, and wears only below half the new max
+[25/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:255:1 › sluice tier raises pan-out yield and out-earns two tier-1 rates
+[26/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:284:1 › upgraded palisade keeps identical footprint blocking and edge-touch behavior
+[27/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:306:1 › tier cap stops at tier 3 without extra spend
+[28/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:322:1 › stockpile tiers raise cap, survive restore, demolish cleanly, and stop at tier 3
+[29/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:367:1 › stockpile upgrade names the yard and shows its tier capacity in the build menu
+[30/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:415:1 › demolish refund ignores tier investment
+[31/506] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:430:1 › insufficient gold leaves tier and gold unchanged
+  3) [desktop-chrome] › e2e/bt-01-tiers.spec.ts:430:1 › insufficient gold leaves tier and gold unchanged 
+
+    Error: expect(received).toBeNull()
+
+    Received: {"effectiveDamage": undefined, "effectiveFireRate": undefined, "hp": 60, "id": "palisade", "index": 0, "maxHp": 60, "panRateMult": undefined, "position": {"x": 0, "z": 9}, "repairCost": 0, "repairProgress": 0, "tier": 1, "worn": false, "wrecked": false, "yieldPerCycle": undefined}
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      441 |   await expect(page.getByTestId('building-context-prompt')).toBeVisible();
+      442 |   await page.keyboard.press('Enter');
+    > 443 |   await expect.poll(() => hpEntry(page, 'palisade', palisade.index)).toBeNull();
+          |                                                                      ^
+      444 |   expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * Balance.palisade.cost));
+      445 |   expect(errors.consoleErrors).toEqual([]);
+      446 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:443:70
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:42220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[32/506] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[33/506] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+e10-ember-shore stoke watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[34/506] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+e10-ember-shore plain-boot errand watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[35/506] [desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+[desktop-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+e10-ember-shore vent guttered watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[36/506] [desktop-chrome] › e2e/e2-pressure-economy.spec.ts:35:1 › Economy keeps gold replay byte-identical while pressure is separate
+[37/506] [desktop-chrome] › e2e/e2-pressure-economy.spec.ts:66:1 › epoch-1 boot hides pressure chip and leaves gold flow unchanged
+[38/506] [desktop-chrome] › e2e/e2-pressure-economy.spec.ts:94:1 › debug Steamworks epoch override shows pressure chip and exchange rows
+[39/506] [desktop-chrome] › e2e/e2-pressure-in-run.spec.ts:24:1 › coal feeds boilers, pressure vents, and PRESSURIZE completes
+[40/506] [desktop-chrome] › e2e/e2-pressure-in-run.spec.ts:98:1 › boilers remain Hill Mine-only
+[41/506] [desktop-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+[desktop-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[42/506] [desktop-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit
+[desktop-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+
+(node:42220) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[43/506] [desktop-chrome] › e2e/e3-moth-season.spec.ts:39:1 › locks the night, scales the moth wave with light, and pays the decoy tithe
+[44/506] [desktop-chrome] › e2e/e3-moth-season.spec.ts:112:1 › the corridor span cuts the lamp dark and a repair lights it again
+[45/506] [desktop-chrome] › e2e/e3-moth-season.spec.ts:178:1 › HUMAN PARITY: a plain boot offers the relay the rider BUILDs, and no debug flag is needed
+[46/506] [desktop-chrome] › e2e/e3-moth-season.spec.ts:232:1 › both engines ride the corridor floor to the same event-log hash
+
+[desktop-chrome] › e2e/e3-moth-season.spec.ts:232:1 › both engines ride the corridor floor to the same event-log hash
+(node:46341) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:46341) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[e3-moth-season-both-engines] claimed=fnv1a32:c29ee8f0 node=fnv1a32:c29ee8f0/10801 browser=fnv1a32:c29ee8f0/10801
+
+[47/506] [desktop-chrome] › e2e/e3-power-graph.spec.ts:42:1 › flag-off boot has zero power graph work
+[48/506] [desktop-chrome] › e2e/e3-power-graph.spec.ts:63:1 › dev graph solves producer, pylons, consumers, and brown-out branch
+[49/506] [desktop-chrome] › e2e/e3-power-graph.spec.ts:115:1 › cut and repair recompute the component ledger on fixed ticks
+[50/506] [desktop-chrome] › e2e/e3-power-graph.spec.ts:139:1 › dev graph is deterministic across seeded runs
+[51/506] [desktop-chrome] › e2e/e6-picnic-opening.spec.ts:337:3 › e6-picnic: the opening the card describes › the run card names the hold, its six-second clock and the price of stopping it
+[52/506] [desktop-chrome] › e2e/e6-picnic-opening.spec.ts:386:3 › e6-picnic: the opening the card describes › an unbuilt Picnic ends on the sandwiches, with the Prospector untouched
+[53/506] [desktop-chrome] › e2e/e6-picnic-opening.spec.ts:459:3 › e6-picnic: the opening the card describes › one panned palisade on a sandwich holds the meadow past sixty seconds and into wave 2
+[54/506] [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward
+  4) [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('playbook-toggle')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('playbook-toggle')
+
+
+      47 |
+      48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');
+    > 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+         |                                                     ^
+      50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+      51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      52 | });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-surface.spec.ts:49:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:57665) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:57665) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[55/506] [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:54:1 › record, name, shelf, and replay use the profile tape store and the slaved rig actor
+[56/506] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:34:1 › S1 relay graph is stable, leaves the dead gap open, and a correctly placed tower bridges it
+[57/506] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:67:1 › S2 jack-board milestones remain inert before the Signal Era
+[58/506] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:79:1 › S2 seeded progress lights each jack once, persists, and keeps player copy frontier-clean
+[59/506] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once
+  5) [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      136 |     const contracts = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      137 |     return contracts.activateEpoch('epoch-8-orbital');
+    > 138 |   })).toBe(true);
+          |       ^
+      139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      140 | });
+      141 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-signal-systems.spec.ts:138:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:60565) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[60/506] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:73:1 › surveys, legally unmakes its path, never attacks, and cannot be killed
+[61/506] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:103:1 › boards the live machine, spawns drones, takes hazard ticks, and dismounts safely
+[62/506] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the prior recording and persists gentle
+[63/506] [desktop-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the no-recording survey fallback and persists gentle
+[64/506] [desktop-chrome] › e2e/f1158-ghostvalid-poll-probe.spec.ts:40:1 › ghostValid poll: cost and necessity, interleaved arms
+[65/506] [desktop-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice
+  6) [desktop-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('hud-wave')
+    Timeout: 5000ms
+    - Expected substring  - 1
+    + Received string     + 8
+
+    - Stake your claim.
+    +
+    +         
+    +         
+    +         
+    +           
+    +           the Prospector: follows and observes. Chip by weapon; claim wins grow it.
+    +         
+    +       
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('hud-wave')
+        12 × locator resolved to <div class="hud__wave" data-testid="hud-wave" aria-label="Wave status">…</div>
+           - unexpected value "
+            
+            
+            
+              
+              the Prospector: follows and observes. Chip by weapon; claim wins grow it.
+            
+          "
+
+
+      31 |
+      32 |   const banner = page.getByTestId('hud-wave');
+    > 33 |   await expect(banner).toContainText('Stake your claim.');
+         |                        ^
+      34 |   await expect
+      35 |     .poll(async () => Number(await banner.evaluate((element) => getComputedStyle(element).opacity)))
+      36 |     .toBeGreaterThan(0.5);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/feedback-fx.spec.ts:33:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:62294) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[66/506] [desktop-chrome] › e2e/feedback-fx.spec.ts:45:1 › gold panning spawns pooled world-space float text
+[desktop-chrome] › e2e/feedback-fx.spec.ts:45:1 › gold panning spawns pooled world-space float text
+frameMs avg=9.18 p95=25.10
+
+[67/506] [desktop-chrome] › e2e/feedback-fx.spec.ts:69:1 › xp mote pickup spawns teal world-space float text
+[68/506] [desktop-chrome] › e2e/lane-c-activations-assay-office.spec.ts:107:1 › claim jumpers walk through the 8-way rotation matrix
+[69/506] [desktop-chrome] › e2e/lane-c-activations-assay-office.spec.ts:135:1 › build menu shows the six processed building portraits
+[70/506] [desktop-chrome] › e2e/lane-c-activations-assay-office.spec.ts:154:1 › Assay Office is river-adjacent only and opens the bench on confirm
+[71/506] [desktop-chrome] › e2e/lane-crossing-armed.spec.ts:7:1 › Twin Banks crossings stay armed while open deep water disarms readably
+
+(node:62294) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[72/506] [desktop-chrome] › e2e/locked-win.spec.ts:65:1 › wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks
+[73/506] [desktop-chrome] › e2e/locked-win.spec.ts:108:1 › leaving at secure follows the full victory ledger flow
+[74/506] [desktop-chrome] › e2e/locked-win.spec.ts:122:1 › The Claim card names wave 10 while Night Shift and Baron keep their tuned secure waves
+[75/506] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives
+  7) [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 2
+
+      33 |
+      34 |   await waitForSim(page, 4.8);
+    > 35 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? -1)).toBe(0);
+         |                                                                                            ^
+      36 |
+      37 |   await waitForSim(page, 8);
+      38 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBeGreaterThan(0);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m1-03-wave-pressure.spec.ts:35:92
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:63634) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[76/506] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:44:1 › wave banner and diagnostics advance on the 30s cadence
+[77/506] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:59:1 › spawn accounting reaches trickle plus first two wave pulses by sim-t 60
+[78/506] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:73:1 › alive cap holds under no-kill pressure
+[79/506] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:89:1 › resetRun mid-wave clears wave pressure and opens with the claim banner
+[80/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:86:1 › X opens level-up and freezes sim clocks while enemies are alive
+[81/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:103:1 › draft shows its clock and a normal pick beats expiry
+[82/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:126:1 › draft expiry files the first offer and the run continues
+[83/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:142:1 › picking a card applies stacks and resumes after pending choices without wave drift
+[84/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:161:1 › first offer is deterministic for a fixed seed and has no duplicates
+[85/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:177:1 › investment weighting prefers owned families without losing discovery
+[86/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:212:1 › owned-family cards show a compact stack pip
+[87/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:225:1 › sampled offers never contain duplicate ids
+[88/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:238:1 › maxed upgrades leave the offer pool
+[89/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:263:1 › Beacon Dynamo is gated until a beacon stands
+[90/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:283:1 › Split Spark visibly increases volley stats and live bolts
+[91/506] [desktop-chrome] › e2e/m1-06-level-up-choices.spec.ts:320:1 › resetRun clears progression and HUD XP truth
+[92/506] [desktop-chrome] › e2e/m1-07-charm.spec.ts:56:1 › debug exposes GUI and setBalance mutates rig tuning echo
+[93/506] [desktop-chrome] › e2e/m1-07-charm.spec.ts:66:1 › enemy kill triggers hit-pause and then sim time resumes
+[94/506] [desktop-chrome] › e2e/m1-07-charm.spec.ts:92:1 › nopause disables hit-pause and camera impulse on kills
+[95/506] [desktop-chrome] › e2e/m1-07-charm.spec.ts:118:1 › death overlay shows flavor line and secondary Try Again restarts
+[96/506] [desktop-chrome] › e2e/m1-07-charm.spec.ts:134:1 › wave banner rotation avoids immediate repeats
+[97/506] [desktop-chrome] › e2e/m1-07-charm.spec.ts:153:1 › upgrade cards show concrete effects and procedural icon slots
+[98/506] [desktop-chrome] › e2e/m1-07-charm.spec.ts:168:1 › scoreboard records two deaths and highlights current run
+[99/506] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[100/506] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[101/506] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[102/506] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[103/506] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[104/506] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[105/506] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[106/506] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:90:1 › river-adjacent placement rejects away from river and accepts near the bank
+[107/506] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:111:1 › sluice income follows Balance cadence and replays to the HUD balance
+[108/506] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:137:1 › contested sluice pauses its timer and resumes after the threat is cleared
+[109/506] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:156:1 › bank cap blocks panning and sluicing until a stockpile raises capacity
+[110/506] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:207:1 › R rotates the palisade footprint and the rotated AABB blocks on that axis
+[111/506] [desktop-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:260:1 › 390px build menu has four tappable tiles and keyboard slots 1-4 select them
+[112/506] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:161:1 › scheduled thief flags never exceed the concurrency cap
+[113/506] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:189:1 › wrecker pulses get a distinct telegraph and normal pulses do not
+[114/506] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing
+[115/506] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:252:1 › theft ping shows edge glyph, auto-hides, and debug flags suppress it
+[116/506] [desktop-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:293:1 › wave-12 palisade line survives one wrecker pulse and repair stays cheaper than new placement
+[117/506] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:71:1 › toggle defaults to rig, then blast kills while rig owner stops
+[118/506] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:92:1 › one blast detonation kills a frozen cluster once through hero_blast
+[119/506] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:106:1 › blast friendly fire leaves hero and buildables intact, beacon still fires
+[120/506] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target
+  8) [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      153 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 8));
+      154 |   await page.waitForTimeout(2200);
+    > 155 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().arsenal.turretKills ?? 0)).toBe(0);
+          |                                                                                           ^
+      156 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBe(1);
+      157 |
+      158 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(6, 12));
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:155:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:70634) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[121/506] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:168:1 › slot 5 selects turret, spends once, and HUD gold matches replay
+[122/506] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:189:1 › real waves stay neutral without toggling or turrets
+[123/506] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:212:1 › stress blast pool never exceeds cap
+  9) [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:212:1 › stress blast pool never exceeds cap 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      226 |   });
+      227 |
+    > 228 |   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().arsenal.detonations ?? 0), { timeout: 15_000 }).toBeGreaterThan(0);
+          |                                                                                                                           ^
+      229 |   // Give the rAF tracker time to actually sample: at ~6fps one poll round-trip spans ~2 frames,
+      230 |   // so asserting samples>2 immediately after the detonation poll is a coin flip (s25 gate, env A/B-proven).
+      231 |   await expect
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:228:123
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-06-arsenal-blast-charge-eef69-last-pool-never-exceeds-cap-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-06-arsenal-blast-charge-eef69-last-pool-never-exceeds-cap-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-06-arsenal-blast-charge-eef69-last-pool-never-exceeds-cap-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-06-arsenal-blast-charge-eef69-last-pool-never-exceeds-cap-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:71549) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[124/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:148:1 › plain boot renders the Prospector near the claim with no debug gate
+[125/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:187:1 › permission chip shows portrait, current level, abilities, and growth path
+[126/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:205:1 › Prospector floats above terrain while following hero probe points
+[127/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:238:1 › normal play Prospector gathers XP motes when permission allows
+[128/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:257:1 › Prospector defers XP gathering while a higher-priority receipt is active
+[129/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement
+  10) [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 8
+    Received: 1
+
+      303 |   const idle = await waitForProspectorSprite(page);
+      304 |   expect(['idle', 'walk']).toContain(idle.clip);
+    > 305 |   expect(idle.fps).toBe(8);
+          |                    ^
+      306 |   expect(idle.frameKey).not.toContain('createProspectorTexture');
+      307 |   await saveM407Shot(page, testInfo, 'idle');
+      308 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:305:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:72233) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[130/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:373:1 › debug receipt moves the Prospector toward a panning target and floats ledger voice
+[131/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:404:1 › permission-denied receipts do not send the Prospector to the denied target
+[desktop-chrome] › e2e/m4-06-embodiment.spec.ts:404:1 › permission-denied receipts do not send the Prospector to the denied target
+[m4-06-denied] driftAbs=0.06648308055437839 gapClosed=0.06587219710749004 tickBefore=39 tickAfter=61 tickDelta=22 simSecondsDelta=1.8333333333333366
+
+[132/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:442:1 › permission-denied bark survives the first idle survey
+[133/506] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:469:1 › the Prospector has no collider for scripted enemy movement
+[134/506] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:56:1 › G, Esc, chip, and outside tap control the panel without pausing the run
+[135/506] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:93:1 › ladder renders earned toggles, unearned hints, and current abilities
+[136/506] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts
+[137/506] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:151:1 › mobile chip tap opens a full-width bottom sheet with a 44px close target
+[138/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:95:1 › booting never posts the default local sample order
+[139/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:109:1 › queue capability gates posting honestly for this runtime
+[140/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:151:1 › post the order writes the exact pending request JSON
+[141/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:185:1 › posted orders stay visible across reloads and refresh to verdicts on reopen
+[142/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:274:1 › stale open refresh cannot hide a newly posted pending order
+[143/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:317:1 › verdicted order ids cannot be recreated as pending
+[144/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:351:1 › blank bench submits stay local
+[145/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:364:1 › first-run pipeline consumes pending orders and keeps verdicts flexible
+[146/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:394:1 › approved fixtures enter a profile history once
+[147/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:420:1 › bench hint is visible, avoids HUD chips, and closes both ways
+[148/506] [desktop-chrome] › e2e/m5-04-offline-queue.spec.ts:444:1 › rejected fixtures show pipeline reasons in the bench
+
+(node:72233) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[149/506] [desktop-chrome] › e2e/mobile-overlay-input.spec.ts:92:1 › town overlays leave the world interactive outside their visible cards
+[150/506] [desktop-chrome] › e2e/mobile-overlay-input.spec.ts:131:1 › run overlays only own the viewport while their modal is open
+[151/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:45:1 › seam collection plays the pan animation in solo desktop and mobile
+[152/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:58:1 › a slot-one browser rider keeps the pan animation beside a headless rider
+[153/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:93:1 › place-building consent is accepted on the multiplayer wire
+[154/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:102:1 › consecutive action pulses survive the filled input-delay window exactly once
+[155/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:183:1 › two clients advance 500 ticks with identical lockstep hashes
+  11) [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:183:1 › two clients advance 500 ticks with identical lockstep hashes 
+
+    TimeoutError: page.waitForFunction: Timeout 30000ms exceeded.
+
+      906 |
+      907 | async function waitForTick(page: Page, tick: number, timeout = 30_000): Promise<void> {
+    > 908 |   await page.waitForFunction((target) => (window.__GR_MP__?.state()?.tick ?? 0) >= target, tick, { timeout });
+          |              ^
+      909 | }
+      910 |
+      911 | async function waitForActors(page: Page, count = 2): Promise<void> {
+        at waitForTick (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/mp-02-lockstep.spec.ts:908:14)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/mp-02-lockstep.spec.ts:193:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-two-clients-80b4a-h-identical-lockstep-hashes-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-two-clients-80b4a-h-identical-lockstep-hashes-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/mp-02-lockstep-two-clients-80b4a-h-identical-lockstep-hashes-desktop-chrome/error-context.md
+
+    Error Context: test-results/mp-02-lockstep-two-clients-80b4a-h-identical-lockstep-hashes-desktop-chrome/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/mp-02-lockstep-two-clients-80b4a-h-identical-lockstep-hashes-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/mp-02-lockstep-two-clients-80b4a-h-identical-lockstep-hashes-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[156/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:220:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+[157/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:258:1 › real elite and boss-group divergence restores exact future state for 120 ticks
+[158/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:347:1 › two clients promote both roster slots to real local-camera heroes and shared run credit
+[159/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:466:1 › both riders place buildings and pick upgrades with equal hashes for 300 ticks
+[160/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:570:1 › @slow four riders move and act with identical hashes and shared credit
+[161/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:654:1 › @slow one of four riders desyncs and all four converge again
+[162/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders
+[163/506] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:737:1 › town Ride Together invalid word stays friendly at 390px
+[164/506] [desktop-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-dry-gulch plays to its secure wave, banks, reloads and returns to the board @slow
+[165/506] [desktop-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-night-shift plays to its secure wave, banks, reloads and returns to the board @slow
+[166/506] [desktop-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-twin-banks plays to its secure wave, banks, reloads and returns to the board @slow
+[167/506] [desktop-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+[168/506] [desktop-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-hill-mine plays to its secure wave, banks, reloads and returns to the board @slow
+[169/506] [desktop-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e4-long-road plays to its secure wave, banks, reloads and returns to the board @slow
+[170/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › the-claim boots plain, briefs, moves and reaches wave 2 @slow
+[171/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow
+[172/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-dry-gulch boots plain, briefs, moves and reaches wave 2 @slow
+[173/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-night-shift boots plain, briefs, moves and reaches wave 2 @slow
+[174/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-twin-banks boots plain, briefs, moves and reaches wave 2 @slow
+[175/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-baron boots plain, briefs, moves and reaches wave 2 @slow
+[176/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-hill-mine boots plain, briefs, moves and reaches wave 2 @slow
+[177/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow
+[178/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-pressure-garden boots plain, briefs, moves and reaches wave 2 @slow
+[179/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow
+[180/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e3-blackout-ridge boots plain, briefs, moves and reaches wave 2 @slow
+[181/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e3-moth-season boots plain, briefs, moves and reaches wave 2 @slow
+[182/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e3-canyon-works boots plain, briefs, moves and reaches wave 2 @slow
+[183/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e3-fairground boots plain, briefs, moves and reaches wave 2 @slow
+[184/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e4-dust-flats boots plain, briefs, moves and reaches wave 2 @slow
+[185/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e4-long-road boots plain, briefs, moves and reaches wave 2 @slow
+[186/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e4-gusher-county boots plain, briefs, moves and reaches wave 2 @slow
+[187/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e4-boneyard boots plain, briefs, moves and reaches wave 2 @slow
+[188/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e5-deepwater-claim boots plain, briefs, moves and reaches wave 2 @slow
+[189/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e5-regatta boots plain, briefs, moves and reaches wave 2 @slow
+[190/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e5-stillwater boots plain, briefs, moves and reaches wave 2 @slow
+[191/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e5-flotilla boots plain, briefs, moves and reaches wave 2 @slow
+[192/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-glow-mesa boots plain, briefs, moves and reaches wave 2 @slow
+[193/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-showroom boots plain, briefs, moves and reaches wave 2 @slow
+[194/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-half-life-hollow boots plain, briefs, moves and reaches wave 2 @slow
+[195/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow
+[196/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e7-relay-valley boots plain, briefs, moves and reaches wave 2 @slow
+[197/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e7-echo-canyon boots plain, briefs, moves and reaches wave 2 @slow
+[198/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e7-dead-band boots plain, briefs, moves and reaches wave 2 @slow
+[199/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e7-relay-rush boots plain, briefs, moves and reaches wave 2 @slow
+[200/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e8-mare-claim boots plain, briefs, moves and reaches wave 2 @slow
+[201/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e8-far-side boots plain, briefs, moves and reaches wave 2 @slow
+[202/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e8-low-orbit boots plain, briefs, moves and reaches wave 2 @slow
+[203/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e8-eclipse boots plain, briefs, moves and reaches wave 2 @slow
+[204/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e9-dome-basin boots plain, briefs, moves and reaches wave 2 @slow
+[205/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e9-seed-run boots plain, briefs, moves and reaches wave 2 @slow
+[206/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e9-devils-alley boots plain, briefs, moves and reaches wave 2 @slow
+[207/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e9-old-canal boots plain, briefs, moves and reaches wave 2 @slow
+[208/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e10-ember-shore boots plain, briefs, moves and reaches wave 2 @slow
+[209/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e10-archive-world boots plain, briefs, moves and reaches wave 2 @slow
+[210/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e10-last-claim boots plain, briefs, moves and reaches wave 2 @slow
+[211/506] [desktop-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e10-river boots plain, briefs, moves and reaches wave 2 @slow
+
+
+(node:77876) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[212/506] [desktop-chrome] › e2e/polish-03-mobile-hud.spec.ts:197:1 › mobile HUD controls fit, tap, and avoid overlap at 390px and 430px
+[213/506] [desktop-chrome] › e2e/process-e2-building-art.spec.ts:7:1 › Steamworks build and research UI use processed art
+[214/506] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [desktop-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"securedSnapshot":null,"ticks":601,"wallMs":9286}
+
+[215/506] [desktop-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+
+(node:77876) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[216/506] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:77:3 › Assay research stamps contract tier 1 into pending orders
+[217/506] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:77:3 › Assay research stamps contract tier 2 into pending orders
+[218/506] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:77:3 › Assay research stamps contract tier 3 into pending orders
+[219/506] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:106:1 › contract tier budgets come from the epoch bundle
+[220/506] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:140:1 › Pattern Library offers family-tagged approved items with a 2-card cap
+[221/506] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:163:1 › Pattern Library keeps approved fixtures scoped to their queue profile
+[222/506] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:181:1 › Agent Schooling appears after wave 15 and grants one run policy slot
+[223/506] [desktop-chrome] › e2e/sci-03-assay-branch.spec.ts:206:1 › SCI-03 node copy stays effect-first and numbered
+[224/506] [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits
+  12) [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "founding-welcome"
+    Received: "ledger-page:the_claim"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-speaker="clerk" data-ceremony-step="" data-testid="story-beat-card" data-beat-id="ledger-page:the_claim" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "ledger-page:the_claim"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:113:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:80078) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:80078) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[225/506] [desktop-chrome] › e2e/ss-01-beats.spec.ts:150:1 › Tales setting silences story beats at queue level
+[226/506] [desktop-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction
+[227/506] [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick
+  13) [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "first-loss"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:202:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-01-beats-story-card-wai-5a8b3-rs-when-both-fire-same-tick-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:81095) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[228/506] [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:146:1 › debug play builds the Assay Office and posts an order at the bench
+[229/506] [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:181:1 › prompt hides in build mode and returns after closing the bench
+[230/506] [desktop-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:202:1 › mobile touch confirm opens and closes the bench without HUD overlap
+
+(node:81095) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[231/506] [desktop-chrome] › e2e/task-046-territory-ring-pacing.spec.ts:76:1 › T1 banks the old ring as a run-scoped palisade kit and spends it before gold
+[232/506] [desktop-chrome] › e2e/task-046-territory-ring-pacing.spec.ts:134:1 › T0 keeps ordinary paid palisade placement unchanged
+[233/506] [desktop-chrome] › e2e/town-scale-zoom.spec.ts:13:1 › town grows, both scenes zoom without moving HUD or planar door picking, and zoom persists
+[234/506] [desktop-chrome] › e2e/trail-guide-beat-priority.spec.ts:59:1 › first-run Guide holds through a bark storm, then the newest bark surfaces
+[235/506] [desktop-chrome] › e2e/trail-guide-plain-boot.spec.ts:127:1 › plain fresh boot teaches the first claim once
+[236/506] [desktop-chrome] › e2e/trail-guide.spec.ts:100:1 › fresh profile sees the first three trail beats once, in order, and reload stays quiet
+  14) [desktop-chrome] › e2e/trail-guide.spec.ts:100:1 › fresh profile sees the first three trail beats once, in order, and reload stays quiet 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      51 | async function expectBark(page: Page, text: string): Promise<void> {
+      52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);
+    > 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+         |                                                     ^
+      54 | }
+      55 |
+      56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {
+        at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:112:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:91092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:91092) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[237/506] [desktop-chrome] › e2e/trail-guide.spec.ts:128:1 › first build-menu open teaches once, survives reload, and stays off for veterans
+  15) [desktop-chrome] › e2e/trail-guide.spec.ts:128:1 › first build-menu open teaches once, survives reload, and stays off for veterans 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      51 | async function expectBark(page: Page, text: string): Promise<void> {
+      52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);
+    > 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+         |                                                     ^
+      54 | }
+      55 |
+      56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {
+        at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:140:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:91893) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:91893) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[238/506] [desktop-chrome] › e2e/trail-guide.spec.ts:160:1 › first confirmed theft teaches once, survives reload, and stays off for veterans
+[239/506] [desktop-chrome] › e2e/trail-guide.spec.ts:184:1 › veteran profile receives no Trail Guide barks
+[240/506] [desktop-chrome] › e2e/trail-guide.spec.ts:201:1 › first boot asks only for a name and uses the default preset
+[241/506] [desktop-chrome] › e2e/trail-guide.spec.ts:221:1 › profile-title first boot also asks only for a name
+[242/506] [desktop-chrome] › e2e/visual.spec.ts:64:1 › renders a nonblank interactive game canvas
+[243/506] [desktop-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds
+  16) [desktop-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 4
+    + Received  + 4
+
+    @@ -8,22 +8,22 @@
+          "speedMul": 0.85,
+          "walkable": true,
+          "zone": "ford",
+        },
+        "northBank": Object {
+    -     "speedMul": 1,
+    -     "walkable": true,
+    +     "speedMul": 0,
+    +     "walkable": false,
+          "zone": "bank",
+        },
+        "out": Object {
+          "speedMul": 0,
+          "walkable": false,
+          "zone": "out",
+        },
+        "river": Object {
+    -     "speedMul": 0.55,
+    -     "walkable": true,
+    +     "speedMul": 0,
+    +     "walkable": false,
+          "zone": "river",
+        },
+        "shallows": Object {
+          "speedMul": 0.8,
+          "walkable": true,
+
+      116 |
+      117 |   const probes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes);
+    > 118 |   expect(probes).toMatchObject({
+          |                  ^
+      119 |     bank: { walkable: true, speedMul: 1, zone: 'bank' },
+      120 |     shallows: { walkable: true, speedMul: 0.8, zone: 'shallows' },
+      121 |     river: { walkable: true, speedMul: 0.55, zone: 'river' },
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:118:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-terrain-diagnostics-expose-claim-zones-and-speeds-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-terrain-diagnostics-expose-claim-zones-and-speeds-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/visual-terrain-diagnostics-expose-claim-zones-and-speeds-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/visual-terrain-diagnostics-expose-claim-zones-and-speeds-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:93692) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[244/506] [desktop-chrome] › e2e/visual.spec.ts:128:1 › HUD shell is readable and stable as run numbers tick
+[245/506] [desktop-chrome] › e2e/visual.spec.ts:190:1 › P toggles pause diagnostics and freezes sim time
+[246/506] [desktop-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics
+  17) [desktop-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics ──
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "shallows"
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      228 |   await expect
+      229 |     .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone))
+    > 230 |     .toBe('river');
+          |      ^
+      231 |   await page.waitForTimeout(400);
+      232 |   const riverSpeed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0);
+      233 |   await page.keyboard.up('KeyW');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:230:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-river-band-slows-the-hero-through-diagnostics-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-river-band-slows-the-hero-through-diagnostics-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/visual-river-band-slows-the-hero-through-diagnostics-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/visual-river-band-slows-the-hero-through-diagnostics-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:94330) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:94330) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[247/506] [desktop-chrome] › e2e/world-info-notes.spec.ts:163:1 › run-world notes explain seams, stake, ford, prospector, and soften after two approaches
+[248/506] [desktop-chrome] › e2e/world-info-notes.spec.ts:196:1 › building notes sit with existing assay and upgrade prompts
+  18) [desktop-chrome] › e2e/world-info-notes.spec.ts:196:1 › building notes sit with existing assay and upgrade prompts 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  getByTestId('world-info-note')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('world-info-note')
+        14 × locator resolved to <details name="" hidden="" aria-live="polite" data-compact="true" data-testid="world-info-note" data-object-class="assay_office" class="world-info-note world-info-note--compact">…</details>
+           - unexpected value "hidden"
+
+
+       96 | async function expectNote(page: Page, objectClass: WorldInfoObjectClass, text?: string): Promise<void> {
+       97 |   const note = page.getByTestId('world-info-note');
+    >  98 |   await expect(note).toBeVisible();
+          |                      ^
+       99 |   await expect(note).toHaveAttribute('data-object-class', objectClass);
+      100 |   if (text) await expect(note).toContainText(text);
+      101 | }
+        at expectNote (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:98:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:222:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:94863) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:94863) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[249/506] [desktop-chrome] › e2e/world-info-notes.spec.ts:236:1 › contract-specific world notes cover Dry Gulch water without a phantom territory ring
+[250/506] [desktop-chrome] › e2e/world-info-notes.spec.ts:269:1 › Night Shift lantern post note uses the same registry
+[251/506] [desktop-chrome] › e2e/world-info-notes.spec.ts:278:1 › megaproject site registers a note without replacing the signboard readout
+[252/506] [desktop-chrome] › e2e/world-info-notes.spec.ts:293:1 › town shells use info notes beside opens-soon prompts
+  19) [desktop-chrome] › e2e/world-info-notes.spec.ts:293:1 › town shells use info notes beside opens-soon prompts 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('town-approach-prompt')
+    Timeout: 5000ms
+    - Expected substring  - 1
+    + Received string     + 4
+
+    - opens soon
+    +
+    +         Tavern ... the board is warm
+    +         Board
+    +       
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('town-approach-prompt')
+        7 × locator resolved to <div hidden="" role="status" aria-live="polite" class="town-ui__prompt" data-testid="town-approach-prompt">…</div>
+          - unexpected value "
+            Tavern ... the board is warm
+            Board
+          "
+        7 × locator resolved to <div role="status" aria-live="polite" class="town-ui__prompt" data-testid="town-approach-prompt">…</div>
+          - unexpected value "
+            Tavern ... the board is warm
+            Board
+          "
+
+
+      299 |
+      300 |   await approachTownBuilding(page, 'tavern');
+    > 301 |   await expect(page.getByTestId('town-approach-prompt')).toContainText('opens soon');
+          |                                                          ^
+      302 |   await expect(page.getByTestId('town-open-board')).toBeVisible();
+      303 |   await expectNote(page, 'town_tavern', 'contract board');
+      304 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:301:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:95339) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:95339) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[253/506] [desktop-chrome] › e2e/world-info-notes.spec.ts:322:1 › 390px world note clears the touch stick zone
+  20) [desktop-chrome] › e2e/world-info-notes.spec.ts:322:1 › 390px world note clears the touch stick zone 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  getByTestId('world-info-note')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('world-info-note')
+        13 × locator resolved to <details name="" hidden="" aria-live="polite" class="world-info-note" data-testid="world-info-note">…</details>
+           - unexpected value "hidden"
+
+
+       96 | async function expectNote(page: Page, objectClass: WorldInfoObjectClass, text?: string): Promise<void> {
+       97 |   const note = page.getByTestId('world-info-note');
+    >  98 |   await expect(note).toBeVisible();
+          |                      ^
+       99 |   await expect(note).toHaveAttribute('data-object-class', objectClass);
+      100 |   if (text) await expect(note).toContainText(text);
+      101 | }
+        at expectNote (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:98:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:326:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:96510) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:96510) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[254/506] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings
+[255/506] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast
+[256/506] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics
+[257/506] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops
+[258/506] [mobile-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling
+[259/506] [mobile-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience
+[260/506] [mobile-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns
+[261/506] [mobile-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly
+[262/506] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:123:1 › seeded standing orders obey priority, gates, legal actions, surprises, and the live rung
+[263/506] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:268:1 › manual early-wave seam resets an expired countdown before forcing the transition
+[264/506] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:287:1 › consent restores a save from before place-building existed
+[265/506] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:315:1 › place-building consent survives a new save round-trip
+[266/506] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:359:1 › plain-boot production orders pan a seam and place a real building
+[267/506] [mobile-chrome] › e2e/ap-standing-orders.spec.ts:433:1 › production pan does not advance an active player channel
+[268/506] [mobile-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound
+[269/506] [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
+  21) [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:99108) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:99108) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[270/506] [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage
+[271/506] [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap
+[272/506] [mobile-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops
+[273/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:135:1 › every buyable tier rung changes a live stat
+[274/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:152:1 › turret tier raises live damage and spends the exact tier-2 cost
+[275/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:181:1 › same-frame upgrade and confirm does not demolish the upgraded building
+[276/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:205:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button
+  22) [mobile-chrome] › e2e/bt-01-tiers.spec.ts:205:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button 
+
+    Error: expect(received).toBeNull()
+
+    Received: {"effectiveDamage": 72.8, "effectiveFireRate": 1.298, "hp": 50, "id": "turret", "index": 0, "maxHp": 50, "panRateMult": undefined, "position": {"x": 0, "z": 12}, "repairCost": 0, "repairProgress": 0, "tier": 2, "worn": false, "wrecked": false, "yieldPerCycle": undefined}
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      214 |   await page.keyboard.press('Enter');
+      215 |
+    > 216 |   await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();
+          |                                                                  ^
+      217 |   await expect.poll(() => buildableCount(page, 'turret')).toBe(0);
+      218 |   expect(errors.consoleErrors).toEqual([]);
+      219 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:216:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:99846) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[277/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:222:1 › palisade tier raises max HP, heals, and wears only below half the new max
+[278/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:255:1 › sluice tier raises pan-out yield and out-earns two tier-1 rates
+[279/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:284:1 › upgraded palisade keeps identical footprint blocking and edge-touch behavior
+[280/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:306:1 › tier cap stops at tier 3 without extra spend
+[281/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:322:1 › stockpile tiers raise cap, survive restore, demolish cleanly, and stop at tier 3
+[282/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:367:1 › stockpile upgrade names the yard and shows its tier capacity in the build menu
+[283/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:415:1 › demolish refund ignores tier investment
+[284/506] [mobile-chrome] › e2e/bt-01-tiers.spec.ts:430:1 › insufficient gold leaves tier and gold unchanged
+  23) [mobile-chrome] › e2e/bt-01-tiers.spec.ts:430:1 › insufficient gold leaves tier and gold unchanged 
+
+    Error: expect(received).toBeNull()
+
+    Received: {"effectiveDamage": undefined, "effectiveFireRate": undefined, "hp": 60, "id": "palisade", "index": 0, "maxHp": 60, "panRateMult": undefined, "position": {"x": 0, "z": 9}, "repairCost": 0, "repairProgress": 0, "tier": 1, "worn": false, "wrecked": false, "yieldPerCycle": undefined}
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      441 |   await expect(page.getByTestId('building-context-prompt')).toBeVisible();
+      442 |   await page.keyboard.press('Enter');
+    > 443 |   await expect.poll(() => hpEntry(page, 'palisade', palisade.index)).toBeNull();
+          |                                                                      ^
+      444 |   expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * Balance.palisade.cost));
+      445 |   expect(errors.consoleErrors).toEqual([]);
+      446 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:443:70
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:5114) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[285/506] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:155:1 › E10S-3 plain boot: the Ember Shore shows the vent meter on the ordinary HUD
+e10-ember-shore plain boot watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[286/506] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:204:1 › E10S-3 the stoke: confirm at the vent spends the authored gold for the authored warmth
+e10-ember-shore stoke watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[287/506] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:274:1 › E10S-4 plain boot: panning a cooling vein pays for the stoke that keeps the vent
+e10-ember-shore plain-boot errand watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[288/506] [mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+[mobile-chrome] › e2e/e10-ember-shore-preserve.spec.ts:336:1 › E10S-3 the loss: an unstoked vent gutters inside the first squall and ends the run
+e10-ember-shore vent guttered watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[289/506] [mobile-chrome] › e2e/e2-pressure-economy.spec.ts:35:1 › Economy keeps gold replay byte-identical while pressure is separate
+[290/506] [mobile-chrome] › e2e/e2-pressure-economy.spec.ts:66:1 › epoch-1 boot hides pressure chip and leaves gold flow unchanged
+[291/506] [mobile-chrome] › e2e/e2-pressure-economy.spec.ts:94:1 › debug Steamworks epoch override shows pressure chip and exchange rows
+[292/506] [mobile-chrome] › e2e/e2-pressure-in-run.spec.ts:24:1 › coal feeds boilers, pressure vents, and PRESSURIZE completes
+[293/506] [mobile-chrome] › e2e/e2-pressure-in-run.spec.ts:98:1 › boilers remain Hill Mine-only
+[294/506] [mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span
+  24) [mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span 
+
+    Error: locator.screenshot: Element is not attached to the DOM
+    Call log:
+      - taking element screenshot
+      - waiting for fonts to load...
+      - fonts loaded
+      - attempting scroll into view action
+        - waiting for navigation to finish...
+        - navigated to "http://127.0.0.1:5312/?debug&epoch=epoch-3-voltage&contract=e3-canyon-works&nowaves&nospawn&nolevel&nopause&seed=canyon-1"
+        - waiting for element to be stable
+
+
+      29 | async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+      30 |   await mkdir(ARTIFACT_DIR, { recursive: true });
+    > 31 |   await page.locator('#game-canvas').screenshot({ path: `${ARTIFACT_DIR}/${testInfo.project.name}-${name}.png` });
+         |                                      ^
+      32 | }
+      33 |
+      34 | test('strings the gorge, holds the night, and restores a cut span', async ({ page }, testInfo) => {
+        at shot (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e3-canyon-works.spec.ts:31:38)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e3-canyon-works.spec.ts:83:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e3-canyon-works-strings-th-90a1b-ght-and-restores-a-cut-span-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:11131) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[295/506] [mobile-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit
+[mobile-chrome] › e2e/e3-canyon-works.spec.ts:116:1 › keeps the Voltage era gate and saboteur ledger explicit
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+
+(node:11131) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[296/506] [mobile-chrome] › e2e/e3-moth-season.spec.ts:39:1 › locks the night, scales the moth wave with light, and pays the decoy tithe
+[297/506] [mobile-chrome] › e2e/e3-moth-season.spec.ts:112:1 › the corridor span cuts the lamp dark and a repair lights it again
+[298/506] [mobile-chrome] › e2e/e3-moth-season.spec.ts:178:1 › HUMAN PARITY: a plain boot offers the relay the rider BUILDs, and no debug flag is needed
+[299/506] [mobile-chrome] › e2e/e3-moth-season.spec.ts:232:1 › both engines ride the corridor floor to the same event-log hash
+
+[mobile-chrome] › e2e/e3-moth-season.spec.ts:232:1 › both engines ride the corridor floor to the same event-log hash
+(node:11729) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11729) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[e3-moth-season-both-engines] claimed=fnv1a32:c29ee8f0 node=fnv1a32:c29ee8f0/10801 browser=fnv1a32:c29ee8f0/10801
+
+[300/506] [mobile-chrome] › e2e/e3-power-graph.spec.ts:42:1 › flag-off boot has zero power graph work
+[301/506] [mobile-chrome] › e2e/e3-power-graph.spec.ts:63:1 › dev graph solves producer, pylons, consumers, and brown-out branch
+[302/506] [mobile-chrome] › e2e/e3-power-graph.spec.ts:115:1 › cut and repair recompute the component ledger on fixed ticks
+[303/506] [mobile-chrome] › e2e/e3-power-graph.spec.ts:139:1 › dev graph is deterministic across seeded runs
+[304/506] [mobile-chrome] › e2e/e6-picnic-opening.spec.ts:337:3 › e6-picnic: the opening the card describes › the run card names the hold, its six-second clock and the price of stopping it
+[305/506] [mobile-chrome] › e2e/e6-picnic-opening.spec.ts:386:3 › e6-picnic: the opening the card describes › an unbuilt Picnic ends on the sandwiches, with the Prospector untouched
+[306/506] [mobile-chrome] › e2e/e6-picnic-opening.spec.ts:459:3 › e6-picnic: the opening the card describes › one panned palisade on a sandwich holds the meadow past sixty seconds and into wave 2
+[307/506] [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward
+  25) [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('playbook-toggle')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('playbook-toggle')
+
+
+      47 |
+      48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');
+    > 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+         |                                                     ^
+      50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+      51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      52 | });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-surface.spec.ts:49:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:19220) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:19220) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[308/506] [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:54:1 › record, name, shelf, and replay use the profile tape store and the slaved rig actor
+[309/506] [mobile-chrome] › e2e/e7-signal-systems.spec.ts:34:1 › S1 relay graph is stable, leaves the dead gap open, and a correctly placed tower bridges it
+[310/506] [mobile-chrome] › e2e/e7-signal-systems.spec.ts:67:1 › S2 jack-board milestones remain inert before the Signal Era
+[311/506] [mobile-chrome] › e2e/e7-signal-systems.spec.ts:79:1 › S2 seeded progress lights each jack once, persists, and keeps player copy frontier-clean
+[312/506] [mobile-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once
+  26) [mobile-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      136 |     const contracts = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      137 |     return contracts.activateEpoch('epoch-8-orbital');
+    > 138 |   })).toBe(true);
+          |       ^
+      139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      140 | });
+      141 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-signal-systems.spec.ts:138:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:20532) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[313/506] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:73:1 › surveys, legally unmakes its path, never attacks, and cannot be killed
+[314/506] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:103:1 › boards the live machine, spawns drones, takes hazard ticks, and dismounts safely
+[315/506] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the prior recording and persists gentle
+[316/506] [mobile-chrome] › e2e/e9-boss-old-digger.spec.ts:123:3 › THE SWAP uses the no-recording survey fallback and persists gentle
+[317/506] [mobile-chrome] › e2e/f1158-ghostvalid-poll-probe.spec.ts:40:1 › ghostValid poll: cost and necessity, interleaved arms
+[318/506] [mobile-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice
+  27) [mobile-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('hud-wave')
+    Timeout: 5000ms
+    - Expected substring  - 1
+    + Received string     + 8
+
+    - Stake your claim.
+    +
+    +         
+    +         
+    +         
+    +           
+    +           the Prospector: follows and observes. Chip by weapon; claim wins grow it.
+    +         
+    +       
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('hud-wave')
+        13 × locator resolved to <div class="hud__wave" data-testid="hud-wave" aria-label="Wave status">…</div>
+           - unexpected value "
+            
+            
+            
+              
+              the Prospector: follows and observes. Chip by weapon; claim wins grow it.
+            
+          "
+
+
+      31 |
+      32 |   const banner = page.getByTestId('hud-wave');
+    > 33 |   await expect(banner).toContainText('Stake your claim.');
+         |                        ^
+      34 |   await expect
+      35 |     .poll(async () => Number(await banner.evaluate((element) => getComputedStyle(element).opacity)))
+      36 |     .toBeGreaterThan(0.5);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/feedback-fx.spec.ts:33:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:21126) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[319/506] [mobile-chrome] › e2e/feedback-fx.spec.ts:45:1 › gold panning spawns pooled world-space float text
+[mobile-chrome] › e2e/feedback-fx.spec.ts:45:1 › gold panning spawns pooled world-space float text
+frameMs avg=8.34 p95=9.20
+
+[320/506] [mobile-chrome] › e2e/feedback-fx.spec.ts:69:1 › xp mote pickup spawns teal world-space float text
+[321/506] [mobile-chrome] › e2e/lane-c-activations-assay-office.spec.ts:107:1 › claim jumpers walk through the 8-way rotation matrix
+[322/506] [mobile-chrome] › e2e/lane-c-activations-assay-office.spec.ts:135:1 › build menu shows the six processed building portraits
+[323/506] [mobile-chrome] › e2e/lane-c-activations-assay-office.spec.ts:154:1 › Assay Office is river-adjacent only and opens the bench on confirm
+[324/506] [mobile-chrome] › e2e/lane-crossing-armed.spec.ts:7:1 › Twin Banks crossings stay armed while open deep water disarms readably
+
+(node:21126) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[325/506] [mobile-chrome] › e2e/locked-win.spec.ts:65:1 › wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks
+  28) [mobile-chrome] › e2e/locked-win.spec.ts:65:1 › wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('hud-pause')
+        - locator resolved to <button type="button" class="hud-pause" data-hud-pause="" data-testid="hud-pause" aria-keyshortcuts="P Escape" aria-label="Pause the claim">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <button class="lil-title" aria-expanded="false">Game tuning</button> from <div class="lil-gui lil-root lil-allow-touch-styles lil-auto-place autoPlace lil-closed">…</div> subtree intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <button class="lil-title" aria-expanded="false">Game tuning</button> from <div class="lil-gui lil-root lil-allow-touch-styles lil-auto-place autoPlace lil-closed">…</div> subtree intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        59 × waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <button class="lil-title" aria-expanded="false">Game tuning</button> from <div class="lil-gui lil-root lil-allow-touch-styles lil-auto-place autoPlace lil-closed">…</div> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      78 |   await expect(page.getByTestId('claim-secured-chip')).toContainText('CLAIM SECURED ✓');
+      79 |   await expect(page.getByTestId('claim-secured-chip')).toContainText('The win is banked');
+    > 80 |   await page.getByTestId('hud-pause').click();
+         |                                       ^
+      81 |   await expect(page.getByTestId('claim-secured-chip')).toBeVisible();
+      82 |   await page.getByTestId('hud-pause').click();
+      83 |   await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(11));
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/locked-win.spec.ts:80:39
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/locked-win-wave-10-banks-t-c82d0-and-records-both-wave-marks-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:23176) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:23176) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[326/506] [mobile-chrome] › e2e/locked-win.spec.ts:108:1 › leaving at secure follows the full victory ledger flow
+[327/506] [mobile-chrome] › e2e/locked-win.spec.ts:122:1 › The Claim card names wave 10 while Night Shift and Baron keep their tuned secure waves
+[328/506] [mobile-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives
+  29) [mobile-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      33 |
+      34 |   await waitForSim(page, 4.8);
+    > 35 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? -1)).toBe(0);
+         |                                                                                            ^
+      36 |
+      37 |   await waitForSim(page, 8);
+      38 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBeGreaterThan(0);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m1-03-wave-pressure.spec.ts:35:92
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:23700) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[329/506] [mobile-chrome] › e2e/m1-03-wave-pressure.spec.ts:44:1 › wave banner and diagnostics advance on the 30s cadence
+[330/506] [mobile-chrome] › e2e/m1-03-wave-pressure.spec.ts:59:1 › spawn accounting reaches trickle plus first two wave pulses by sim-t 60
+[331/506] [mobile-chrome] › e2e/m1-03-wave-pressure.spec.ts:73:1 › alive cap holds under no-kill pressure
+[332/506] [mobile-chrome] › e2e/m1-03-wave-pressure.spec.ts:89:1 › resetRun mid-wave clears wave pressure and opens with the claim banner
+[333/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:86:1 › X opens level-up and freezes sim clocks while enemies are alive
+[334/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:103:1 › draft shows its clock and a normal pick beats expiry
+[335/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:126:1 › draft expiry files the first offer and the run continues
+[336/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:142:1 › picking a card applies stacks and resumes after pending choices without wave drift
+[337/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:161:1 › first offer is deterministic for a fixed seed and has no duplicates
+[338/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:177:1 › investment weighting prefers owned families without losing discovery
+[339/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:212:1 › owned-family cards show a compact stack pip
+[340/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:225:1 › sampled offers never contain duplicate ids
+[341/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:238:1 › maxed upgrades leave the offer pool
+[342/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:263:1 › Beacon Dynamo is gated until a beacon stands
+[343/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:283:1 › Split Spark visibly increases volley stats and live bolts
+[344/506] [mobile-chrome] › e2e/m1-06-level-up-choices.spec.ts:320:1 › resetRun clears progression and HUD XP truth
+[345/506] [mobile-chrome] › e2e/m1-07-charm.spec.ts:56:1 › debug exposes GUI and setBalance mutates rig tuning echo
+[346/506] [mobile-chrome] › e2e/m1-07-charm.spec.ts:66:1 › enemy kill triggers hit-pause and then sim time resumes
+[347/506] [mobile-chrome] › e2e/m1-07-charm.spec.ts:92:1 › nopause disables hit-pause and camera impulse on kills
+[348/506] [mobile-chrome] › e2e/m1-07-charm.spec.ts:118:1 › death overlay shows flavor line and secondary Try Again restarts
+[349/506] [mobile-chrome] › e2e/m1-07-charm.spec.ts:134:1 › wave banner rotation avoids immediate repeats
+[350/506] [mobile-chrome] › e2e/m1-07-charm.spec.ts:153:1 › upgrade cards show concrete effects and procedural icon slots
+[351/506] [mobile-chrome] › e2e/m1-07-charm.spec.ts:168:1 › scoreboard records two deaths and highlights current run
+[352/506] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[353/506] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[354/506] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[355/506] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[356/506] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[357/506] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[358/506] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[359/506] [mobile-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:90:1 › river-adjacent placement rejects away from river and accepts near the bank
+[360/506] [mobile-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:111:1 › sluice income follows Balance cadence and replays to the HUD balance
+[361/506] [mobile-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:137:1 › contested sluice pauses its timer and resumes after the threat is cleared
+[362/506] [mobile-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:156:1 › bank cap blocks panning and sluicing until a stockpile raises capacity
+[363/506] [mobile-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:207:1 › R rotates the palisade footprint and the rotated AABB blocks on that axis
+[364/506] [mobile-chrome] › e2e/m2-02-sluice-and-stockpile.spec.ts:260:1 › 390px build menu has four tappable tiles and keyboard slots 1-4 select them
+[365/506] [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:161:1 › scheduled thief flags never exceed the concurrency cap
+[366/506] [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:189:1 › wrecker pulses get a distinct telegraph and normal pulses do not
+[367/506] [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing
+  30) [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing 
+
+    TypeError: Cannot read properties of undefined (reading 'lastPulseAt')
+
+      244 |   const wave1 = records.filter((record) => record.wave === 1);
+      245 |   const wave12 = records.filter((record) => record.wave === 12);
+    > 246 |   expect(wave1[1].lastPulseAt - wave1[0].lastPulseAt).toBeCloseTo(0.5, 4);
+          |                   ^
+      247 |   expect(wave12[1].lastPulseAt - wave12[0].lastPulseAt).toBeGreaterThanOrEqual(2);
+      248 |   expect(errors.consoleErrors).toEqual([]);
+      249 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-05b-overwhelm-valves.spec.ts:246:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-05b-overwhelm-valves-lu-406d1--post-wave-12-pulse-spacing-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:29419) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[368/506] [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:252:1 › theft ping shows edge glyph, auto-hides, and debug flags suppress it
+[369/506] [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:293:1 › wave-12 palisade line survives one wrecker pulse and repair stays cheaper than new placement
+[370/506] [mobile-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:71:1 › toggle defaults to rig, then blast kills while rig owner stops
+[371/506] [mobile-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:92:1 › one blast detonation kills a frozen cluster once through hero_blast
+[372/506] [mobile-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:106:1 › blast friendly fire leaves hero and buildables intact, beacon still fires
+[373/506] [mobile-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target
+  31) [mobile-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      153 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 8));
+      154 |   await page.waitForTimeout(2200);
+    > 155 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().arsenal.turretKills ?? 0)).toBe(0);
+          |                                                                                           ^
+      156 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBe(1);
+      157 |
+      158 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(6, 12));
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:155:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:30940) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[374/506] [mobile-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:168:1 › slot 5 selects turret, spends once, and HUD gold matches replay
+[375/506] [mobile-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:189:1 › real waves stay neutral without toggling or turrets
+[376/506] [mobile-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:212:1 › stress blast pool never exceeds cap
+[377/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:148:1 › plain boot renders the Prospector near the claim with no debug gate
+[378/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:187:1 › permission chip shows portrait, current level, abilities, and growth path
+  32) [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:187:1 › permission chip shows portrait, current level, abilities, and growth path 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  getByTestId('hud-agent').locator('[data-hud-agent-portrait]')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('hud-agent').locator('[data-hud-agent-portrait]')
+        13 × locator resolved to <img alt="" data-hud-agent-portrait="" class="hud-agent-chip__portrait" src="http://127.0.0.1:5312/assets/processed/char-prospector-portrait.png"/>
+           - unexpected value "hidden"
+
+
+      190 |   const chip = page.getByTestId('hud-agent');
+      191 |
+    > 192 |   await expect(chip.locator('[data-hud-agent-portrait]')).toBeVisible();
+          |                                                           ^
+      193 |   await expect(chip).toContainText('L1');
+      194 |   await expect(chip).toContainText('approval-required');
+      195 |   await chip.click();
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:192:59
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m4-06-embodiment-permissio-826e3-l-abilities-and-growth-path-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m4-06-embodiment-permissio-826e3-l-abilities-and-growth-path-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m4-06-embodiment-permissio-826e3-l-abilities-and-growth-path-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m4-06-embodiment-permissio-826e3-l-abilities-and-growth-path-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:31691) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[379/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:205:1 › Prospector floats above terrain while following hero probe points
+[380/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:238:1 › normal play Prospector gathers XP motes when permission allows
+[381/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:257:1 › Prospector defers XP gathering while a higher-priority receipt is active
+[382/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement
+  33) [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 8
+    Received: 1
+
+      303 |   const idle = await waitForProspectorSprite(page);
+      304 |   expect(['idle', 'walk']).toContain(idle.clip);
+    > 305 |   expect(idle.fps).toBe(8);
+          |                    ^
+      306 |   expect(idle.frameKey).not.toContain('createProspectorTexture');
+      307 |   await saveM407Shot(page, testInfo, 'idle');
+      308 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:305:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:32285) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[383/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:373:1 › debug receipt moves the Prospector toward a panning target and floats ledger voice
+[384/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:404:1 › permission-denied receipts do not send the Prospector to the denied target
+[mobile-chrome] › e2e/m4-06-embodiment.spec.ts:404:1 › permission-denied receipts do not send the Prospector to the denied target
+[m4-06-denied] driftAbs=0.13370115930686585 gapClosed=0.13271922003873726 tickBefore=35 tickAfter=58 tickDelta=23 simSecondsDelta=1.9666666666666703
+
+[385/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:442:1 › permission-denied bark survives the first idle survey
+[386/506] [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:469:1 › the Prospector has no collider for scripted enemy movement
+[387/506] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:56:1 › G, Esc, chip, and outside tap control the panel without pausing the run
+[388/506] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:93:1 › ladder renders earned toggles, unearned hints, and current abilities
+[389/506] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts
+[390/506] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:151:1 › mobile chip tap opens a full-width bottom sheet with a 44px close target
+[391/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:95:1 › booting never posts the default local sample order
+[392/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:109:1 › queue capability gates posting honestly for this runtime
+[393/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:151:1 › post the order writes the exact pending request JSON
+[394/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:185:1 › posted orders stay visible across reloads and refresh to verdicts on reopen
+[395/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:274:1 › stale open refresh cannot hide a newly posted pending order
+[396/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:317:1 › verdicted order ids cannot be recreated as pending
+[397/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:351:1 › blank bench submits stay local
+[398/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:364:1 › first-run pipeline consumes pending orders and keeps verdicts flexible
+[399/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:394:1 › approved fixtures enter a profile history once
+[400/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:420:1 › bench hint is visible, avoids HUD chips, and closes both ways
+[401/506] [mobile-chrome] › e2e/m5-04-offline-queue.spec.ts:444:1 › rejected fixtures show pipeline reasons in the bench
+
+(node:32285) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[402/506] [mobile-chrome] › e2e/mobile-overlay-input.spec.ts:92:1 › town overlays leave the world interactive outside their visible cards
+[403/506] [mobile-chrome] › e2e/mobile-overlay-input.spec.ts:131:1 › run overlays only own the viewport while their modal is open
+[404/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:45:1 › seam collection plays the pan animation in solo desktop and mobile
+[405/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:58:1 › a slot-one browser rider keeps the pan animation beside a headless rider
+[406/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:93:1 › place-building consent is accepted on the multiplayer wire
+[407/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:102:1 › consecutive action pulses survive the filled input-delay window exactly once
+[408/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:183:1 › two clients advance 500 ticks with identical lockstep hashes
+[409/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:220:1 › hash mismatch pauses, shows the wire card, and restores from relay snapshot
+[410/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:258:1 › real elite and boss-group divergence restores exact future state for 120 ticks
+[411/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:347:1 › two clients promote both roster slots to real local-camera heroes and shared run credit
+[412/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:466:1 › both riders place buildings and pick upgrades with equal hashes for 300 ticks
+[413/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:570:1 › @slow four riders move and act with identical hashes and shared credit
+[414/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:654:1 › @slow one of four riders desyncs and all four converge again
+[415/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders
+[416/506] [mobile-chrome] › e2e/mp-02-lockstep.spec.ts:737:1 › town Ride Together invalid word stays friendly at 390px
+[417/506] [mobile-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-dry-gulch plays to its secure wave, banks, reloads and returns to the board @slow
+[418/506] [mobile-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-night-shift plays to its secure wave, banks, reloads and returns to the board @slow
+[419/506] [mobile-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-twin-banks plays to its secure wave, banks, reloads and returns to the board @slow
+[420/506] [mobile-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e1-baron plays to its secure wave, banks, reloads and returns to the board @slow
+[421/506] [mobile-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e2-hill-mine plays to its secure wave, banks, reloads and returns to the board @slow
+[422/506] [mobile-chrome] › e2e/playability-secure.spec.ts:644:5 › playability secure: the six open maps, plain boot to secure, bank, reload, board › e4-long-road plays to its secure wave, banks, reloads and returns to the board @slow
+[423/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › the-claim boots plain, briefs, moves and reaches wave 2 @slow
+[424/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-drill-yard boots plain, briefs, moves and reaches wave 2 @slow
+[425/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-dry-gulch boots plain, briefs, moves and reaches wave 2 @slow
+[426/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-night-shift boots plain, briefs, moves and reaches wave 2 @slow
+[427/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-twin-banks boots plain, briefs, moves and reaches wave 2 @slow
+[428/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e1-baron boots plain, briefs, moves and reaches wave 2 @slow
+[429/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-hill-mine boots plain, briefs, moves and reaches wave 2 @slow
+[430/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-trestle boots plain, briefs, moves and reaches wave 2 @slow
+[431/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-pressure-garden boots plain, briefs, moves and reaches wave 2 @slow
+[432/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e2-incline boots plain, briefs, moves and reaches wave 2 @slow
+[433/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e3-blackout-ridge boots plain, briefs, moves and reaches wave 2 @slow
+[434/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e3-moth-season boots plain, briefs, moves and reaches wave 2 @slow
+[435/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e3-canyon-works boots plain, briefs, moves and reaches wave 2 @slow
+[436/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e3-fairground boots plain, briefs, moves and reaches wave 2 @slow
+[437/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e4-dust-flats boots plain, briefs, moves and reaches wave 2 @slow
+[438/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e4-long-road boots plain, briefs, moves and reaches wave 2 @slow
+[439/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e4-gusher-county boots plain, briefs, moves and reaches wave 2 @slow
+[440/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e4-boneyard boots plain, briefs, moves and reaches wave 2 @slow
+[441/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e5-deepwater-claim boots plain, briefs, moves and reaches wave 2 @slow
+[442/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e5-regatta boots plain, briefs, moves and reaches wave 2 @slow
+[443/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e5-stillwater boots plain, briefs, moves and reaches wave 2 @slow
+[444/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e5-flotilla boots plain, briefs, moves and reaches wave 2 @slow
+[445/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-glow-mesa boots plain, briefs, moves and reaches wave 2 @slow
+[446/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-showroom boots plain, briefs, moves and reaches wave 2 @slow
+[447/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-half-life-hollow boots plain, briefs, moves and reaches wave 2 @slow
+[448/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e6-picnic boots plain, briefs, moves and reaches wave 2 @slow
+[449/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e7-relay-valley boots plain, briefs, moves and reaches wave 2 @slow
+[450/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e7-echo-canyon boots plain, briefs, moves and reaches wave 2 @slow
+[451/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e7-dead-band boots plain, briefs, moves and reaches wave 2 @slow
+[452/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e7-relay-rush boots plain, briefs, moves and reaches wave 2 @slow
+[453/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e8-mare-claim boots plain, briefs, moves and reaches wave 2 @slow
+[454/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e8-far-side boots plain, briefs, moves and reaches wave 2 @slow
+[455/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e8-low-orbit boots plain, briefs, moves and reaches wave 2 @slow
+[456/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e8-eclipse boots plain, briefs, moves and reaches wave 2 @slow
+[457/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e9-dome-basin boots plain, briefs, moves and reaches wave 2 @slow
+[458/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e9-seed-run boots plain, briefs, moves and reaches wave 2 @slow
+[459/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e9-devils-alley boots plain, briefs, moves and reaches wave 2 @slow
+[460/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e9-old-canal boots plain, briefs, moves and reaches wave 2 @slow
+[461/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e10-ember-shore boots plain, briefs, moves and reaches wave 2 @slow
+[462/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e10-archive-world boots plain, briefs, moves and reaches wave 2 @slow
+[463/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e10-last-claim boots plain, briefs, moves and reaches wave 2 @slow
+[464/506] [mobile-chrome] › e2e/playability-smoke.spec.ts:311:5 › playability smoke: every board contract, plain boot › e10-river boots plain, briefs, moves and reaches wave 2 @slow
+[465/506] [mobile-chrome] › e2e/polish-03-mobile-hud.spec.ts:197:1 › mobile HUD controls fit, tap, and avoid overlap at 390px and 430px
+[466/506] [mobile-chrome] › e2e/process-e2-building-art.spec.ts:7:1 › Steamworks build and research UI use processed art
+[467/506] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+[mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:110:1 › mouse and touch dispatch travel, then grant one rider-rate tick per command
+same-laws parity [mobile-chrome] seam=gold-seam-1
+| tick | player dispatch (s after command) | rider HARVEST (s after order) | gold | cumulative |
+|---|---|---|---|---|
+| 1 | 1.867 | 1.867 | 5 | 5 / 5 |
+| 2 | 1.900 | 1.900 | 5 | 10 / 10 |
+
+SAME_LAWS_ASSAY_SLIP {"eventLogHash":"fnv1a32:a6c04f80","outcome":{"secured":false,"waves":0,"gold":10,"timeAlive":20.033333},"securedSnapshot":null,"ticks":601,"wallMs":3843}
+
+[468/506] [mobile-chrome] › e2e/same-laws-harvest-parity.spec.ts:203:1 › plain boot: the command is reachable without ?debug and the boot is clean
+[469/506] [mobile-chrome] › e2e/sci-03-assay-branch.spec.ts:77:3 › Assay research stamps contract tier 1 into pending orders
+[470/506] [mobile-chrome] › e2e/sci-03-assay-branch.spec.ts:77:3 › Assay research stamps contract tier 2 into pending orders
+[471/506] [mobile-chrome] › e2e/sci-03-assay-branch.spec.ts:77:3 › Assay research stamps contract tier 3 into pending orders
+[472/506] [mobile-chrome] › e2e/sci-03-assay-branch.spec.ts:106:1 › contract tier budgets come from the epoch bundle
+[473/506] [mobile-chrome] › e2e/sci-03-assay-branch.spec.ts:140:1 › Pattern Library offers family-tagged approved items with a 2-card cap
+[474/506] [mobile-chrome] › e2e/sci-03-assay-branch.spec.ts:163:1 › Pattern Library keeps approved fixtures scoped to their queue profile
+[475/506] [mobile-chrome] › e2e/sci-03-assay-branch.spec.ts:181:1 › Agent Schooling appears after wave 15 and grants one run policy slot
+[476/506] [mobile-chrome] › e2e/sci-03-assay-branch.spec.ts:206:1 › SCI-03 node copy stays effect-first and numbered
+[477/506] [mobile-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits
+  34) [mobile-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "founding-welcome"
+    Received: "ledger-page:the_claim"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-speaker="clerk" data-ceremony-step="" data-testid="story-beat-card" data-beat-id="ledger-page:the_claim" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "ledger-page:the_claim"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:113:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:36959) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:36959) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[478/506] [mobile-chrome] › e2e/ss-01-beats.spec.ts:150:1 › Tales setting silences story beats at queue level
+[479/506] [mobile-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction
+  35) [mobile-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ───
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "deputy-hello"
+    Received: "first-boot"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-ceremony-step="" data-beat-id="first-boot" data-speaker="tavernkeeper" data-testid="story-beat-card" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "first-boot"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:177:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/ss-01-beats-pointer-glow-clears-on-first-interaction-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:37294) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:37294) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[480/506] [mobile-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick
+[481/506] [mobile-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:146:1 › debug play builds the Assay Office and posts an order at the bench
+[482/506] [mobile-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:181:1 › prompt hides in build mode and returns after closing the bench
+[483/506] [mobile-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:202:1 › mobile touch confirm opens and closes the bench without HUD overlap
+  36) [mobile-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:202:1 › mobile touch confirm opens and closes the bench without HUD overlap 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      209 |   await expect(prompt.locator('.assay-office-prompt__key')).toBeHidden();
+      210 |   const promptBox = await prompt.boundingBox();
+    > 211 |   expect(intersects(promptBox, await page.locator('#touch-controls').boundingBox())).toBe(false);
+          |                                                                                      ^
+      212 |   expect(intersects(promptBox, await page.getByTestId('hud-build-panel').boundingBox())).toBe(false);
+      213 |   expect(intersects(promptBox, await page.getByTestId('hud-xp').boundingBox())).toBe(false);
+      214 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/task-037-assay-bench-ungate.spec.ts:211:86
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/task-037-assay-bench-ungat-e0781-e-bench-without-HUD-overlap-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/task-037-assay-bench-ungat-e0781-e-bench-without-HUD-overlap-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/task-037-assay-bench-ungat-e0781-e-bench-without-HUD-overlap-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/task-037-assay-bench-ungat-e0781-e-bench-without-HUD-overlap-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:38039) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:38039) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[484/506] [mobile-chrome] › e2e/task-046-territory-ring-pacing.spec.ts:76:1 › T1 banks the old ring as a run-scoped palisade kit and spends it before gold
+  37) [mobile-chrome] › e2e/task-046-territory-ring-pacing.spec.ts:76:1 › T1 banks the old ring as a run-scoped palisade kit and spends it before gold 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByTestId('pause-meta-territory')
+    Expected: "Territory I: palisade kit ready (7 free placements)"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('pause-meta-territory')
+
+
+      91 |   await placePalisade(page, PALISADE_SITES[0]!);
+      92 |   await page.keyboard.press('KeyP');
+    > 93 |   await expect(page.getByTestId('pause-meta-territory')).toHaveText('Territory I: palisade kit ready (7 free placements)');
+         |                                                          ^
+      94 |   await page.waitForTimeout(100);
+      95 |   await page.keyboard.press('KeyP');
+      96 |   await expect(page.getByTestId('pause-meta-panel')).toBeHidden();
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/task-046-territory-ring-pacing.spec.ts:93:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/task-046-territory-ring-pa-f5dd8-t-and-spends-it-before-gold-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/task-046-territory-ring-pa-f5dd8-t-and-spends-it-before-gold-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/task-046-territory-ring-pa-f5dd8-t-and-spends-it-before-gold-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/task-046-territory-ring-pa-f5dd8-t-and-spends-it-before-gold-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:39164) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:39164) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[485/506] [mobile-chrome] › e2e/task-046-territory-ring-pacing.spec.ts:134:1 › T0 keeps ordinary paid palisade placement unchanged
+[486/506] [mobile-chrome] › e2e/town-scale-zoom.spec.ts:13:1 › town grows, both scenes zoom without moving HUD or planar door picking, and zoom persists
+[487/506] [mobile-chrome] › e2e/trail-guide-beat-priority.spec.ts:59:1 › first-run Guide holds through a bark storm, then the newest bark surfaces
+[488/506] [mobile-chrome] › e2e/trail-guide-plain-boot.spec.ts:127:1 › plain fresh boot teaches the first claim once
+[489/506] [mobile-chrome] › e2e/trail-guide.spec.ts:100:1 › fresh profile sees the first three trail beats once, in order, and reload stays quiet
+  38) [mobile-chrome] › e2e/trail-guide.spec.ts:100:1 › fresh profile sees the first three trail beats once, in order, and reload stays quiet 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      51 | async function expectBark(page: Page, text: string): Promise<void> {
+      52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);
+    > 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+         |                                                     ^
+      54 | }
+      55 |
+      56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {
+        at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:112:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:40711) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:40711) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[490/506] [mobile-chrome] › e2e/trail-guide.spec.ts:128:1 › first build-menu open teaches once, survives reload, and stays off for veterans
+  39) [mobile-chrome] › e2e/trail-guide.spec.ts:128:1 › first build-menu open teaches once, survives reload, and stays off for veterans 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      51 | async function expectBark(page: Page, text: string): Promise<void> {
+      52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);
+    > 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+         |                                                     ^
+      54 | }
+      55 |
+      56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {
+        at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:140:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:48988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:48988) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[491/506] [mobile-chrome] › e2e/trail-guide.spec.ts:160:1 › first confirmed theft teaches once, survives reload, and stays off for veterans
+[492/506] [mobile-chrome] › e2e/trail-guide.spec.ts:184:1 › veteran profile receives no Trail Guide barks
+[493/506] [mobile-chrome] › e2e/trail-guide.spec.ts:201:1 › first boot asks only for a name and uses the default preset
+[494/506] [mobile-chrome] › e2e/trail-guide.spec.ts:221:1 › profile-title first boot also asks only for a name
+[495/506] [mobile-chrome] › e2e/visual.spec.ts:64:1 › renders a nonblank interactive game canvas
+[496/506] [mobile-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds
+  40) [mobile-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 4
+    + Received  + 4
+
+    @@ -8,22 +8,22 @@
+          "speedMul": 0.85,
+          "walkable": true,
+          "zone": "ford",
+        },
+        "northBank": Object {
+    -     "speedMul": 1,
+    -     "walkable": true,
+    +     "speedMul": 0,
+    +     "walkable": false,
+          "zone": "bank",
+        },
+        "out": Object {
+          "speedMul": 0,
+          "walkable": false,
+          "zone": "out",
+        },
+        "river": Object {
+    -     "speedMul": 0.55,
+    -     "walkable": true,
+    +     "speedMul": 0,
+    +     "walkable": false,
+          "zone": "river",
+        },
+        "shallows": Object {
+          "speedMul": 0.8,
+          "walkable": true,
+
+      116 |
+      117 |   const probes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes);
+    > 118 |   expect(probes).toMatchObject({
+          |                  ^
+      119 |     bank: { walkable: true, speedMul: 1, zone: 'bank' },
+      120 |     shallows: { walkable: true, speedMul: 0.8, zone: 'shallows' },
+      121 |     river: { walkable: true, speedMul: 0.55, zone: 'river' },
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:118:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-terrain-diagnostics-expose-claim-zones-and-speeds-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-terrain-diagnostics-expose-claim-zones-and-speeds-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/visual-terrain-diagnostics-expose-claim-zones-and-speeds-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/visual-terrain-diagnostics-expose-claim-zones-and-speeds-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:63835) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[497/506] [mobile-chrome] › e2e/visual.spec.ts:128:1 › HUD shell is readable and stable as run numbers tick
+[498/506] [mobile-chrome] › e2e/visual.spec.ts:190:1 › P toggles pause diagnostics and freezes sim time
+[499/506] [mobile-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics
+  41) [mobile-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics ───
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "shallows"
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      228 |   await expect
+      229 |     .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone))
+    > 230 |     .toBe('river');
+          |      ^
+      231 |   await page.waitForTimeout(400);
+      232 |   const riverSpeed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0);
+      233 |   await page.keyboard.up('KeyW');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:230:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/visual-river-band-slows-the-hero-through-diagnostics-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/visual-river-band-slows-the-hero-through-diagnostics-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/visual-river-band-slows-the-hero-through-diagnostics-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/visual-river-band-slows-the-hero-through-diagnostics-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:82984) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:82984) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[500/506] [mobile-chrome] › e2e/world-info-notes.spec.ts:163:1 › run-world notes explain seams, stake, ford, prospector, and soften after two approaches
+[501/506] [mobile-chrome] › e2e/world-info-notes.spec.ts:196:1 › building notes sit with existing assay and upgrade prompts
+  42) [mobile-chrome] › e2e/world-info-notes.spec.ts:196:1 › building notes sit with existing assay and upgrade prompts 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  getByTestId('world-info-note')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('world-info-note')
+        14 × locator resolved to <details name="" hidden="" aria-live="polite" data-compact="true" data-testid="world-info-note" data-object-class="assay_office" class="world-info-note world-info-note--compact">…</details>
+           - unexpected value "hidden"
+
+
+       96 | async function expectNote(page: Page, objectClass: WorldInfoObjectClass, text?: string): Promise<void> {
+       97 |   const note = page.getByTestId('world-info-note');
+    >  98 |   await expect(note).toBeVisible();
+          |                      ^
+       99 |   await expect(note).toHaveAttribute('data-object-class', objectClass);
+      100 |   if (text) await expect(note).toContainText(text);
+      101 | }
+        at expectNote (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:98:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:222:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:3777) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:3777) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[502/506] [mobile-chrome] › e2e/world-info-notes.spec.ts:236:1 › contract-specific world notes cover Dry Gulch water without a phantom territory ring
+[503/506] [mobile-chrome] › e2e/world-info-notes.spec.ts:269:1 › Night Shift lantern post note uses the same registry
+[504/506] [mobile-chrome] › e2e/world-info-notes.spec.ts:278:1 › megaproject site registers a note without replacing the signboard readout
+[505/506] [mobile-chrome] › e2e/world-info-notes.spec.ts:293:1 › town shells use info notes beside opens-soon prompts
+  43) [mobile-chrome] › e2e/world-info-notes.spec.ts:293:1 › town shells use info notes beside opens-soon prompts 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('town-approach-prompt')
+    Timeout: 5000ms
+    - Expected substring  - 1
+    + Received string     + 4
+
+    - opens soon
+    +
+    +         Tavern ... the board is warm
+    +         Board
+    +       
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('town-approach-prompt')
+        6 × locator resolved to <div hidden="" role="status" aria-live="polite" class="town-ui__prompt" data-testid="town-approach-prompt">…</div>
+          - unexpected value "
+            Tavern ... the board is warm
+            Board
+          "
+        8 × locator resolved to <div role="status" aria-live="polite" class="town-ui__prompt" data-testid="town-approach-prompt">…</div>
+          - unexpected value "
+            Tavern ... the board is warm
+            Board
+          "
+
+
+      299 |
+      300 |   await approachTownBuilding(page, 'tavern');
+    > 301 |   await expect(page.getByTestId('town-approach-prompt')).toContainText('opens soon');
+          |                                                          ^
+      302 |   await expect(page.getByTestId('town-open-board')).toBeVisible();
+      303 |   await expectNote(page, 'town_tavern', 'contract board');
+      304 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:301:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:29830) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:29830) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[506/506] [mobile-chrome] › e2e/world-info-notes.spec.ts:322:1 › 390px world note clears the touch stick zone
+  44) [mobile-chrome] › e2e/world-info-notes.spec.ts:322:1 › 390px world note clears the touch stick zone 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 586
+    Received:    660
+
+      337 |   });
+      338 |   expect(boxes).toBeTruthy();
+    > 339 |   expect(boxes!.note.bottom).toBeLessThanOrEqual(boxes!.controls.top - 8);
+          |                              ^
+      340 |   await shot(page, testInfo, 'mobile-390-stake-note');
+      341 |   assertNoErrors(errors);
+      342 | });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:339:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  44 failed
+    [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [desktop-chrome] › e2e/bt-01-tiers.spec.ts:205:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button 
+    [desktop-chrome] › e2e/bt-01-tiers.spec.ts:430:1 › insufficient gold leaves tier and gold unchanged 
+    [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+    [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+    [desktop-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice 
+    [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives 
+    [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target 
+    [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:212:1 › stress blast pool never exceeds cap 
+    [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement 
+    [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:183:1 › two clients advance 500 ticks with identical lockstep hashes 
+    [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+    [desktop-chrome] › e2e/ss-01-beats.spec.ts:187:1 › story card waits until wave banner clears when both fire same tick 
+    [desktop-chrome] › e2e/trail-guide.spec.ts:100:1 › fresh profile sees the first three trail beats once, in order, and reload stays quiet 
+    [desktop-chrome] › e2e/trail-guide.spec.ts:128:1 › first build-menu open teaches once, survives reload, and stays off for veterans 
+    [desktop-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds 
+    [desktop-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics ────
+    [desktop-chrome] › e2e/world-info-notes.spec.ts:196:1 › building notes sit with existing assay and upgrade prompts 
+    [desktop-chrome] › e2e/world-info-notes.spec.ts:293:1 › town shells use info notes beside opens-soon prompts 
+    [desktop-chrome] › e2e/world-info-notes.spec.ts:322:1 › 390px world note clears the touch stick zone 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [mobile-chrome] › e2e/bt-01-tiers.spec.ts:205:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button 
+    [mobile-chrome] › e2e/bt-01-tiers.spec.ts:430:1 › insufficient gold leaves tier and gold unchanged 
+    [mobile-chrome] › e2e/e3-canyon-works.spec.ts:34:1 › strings the gorge, holds the night, and restores a cut span 
+    [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+    [mobile-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+    [mobile-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice 
+    [mobile-chrome] › e2e/locked-win.spec.ts:65:1 › wave 10 banks the win; a wave 12 Rush death keeps it and records both wave marks 
+    [mobile-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives 
+    [mobile-chrome] › e2e/m2-05b-overwhelm-valves.spec.ts:223:1 › lullFloor12 only clamps post-wave-12 pulse spacing 
+    [mobile-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target 
+    [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:187:1 › permission chip shows portrait, current level, abilities, and growth path 
+    [mobile-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement 
+    [mobile-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+    [mobile-chrome] › e2e/ss-01-beats.spec.ts:169:1 › pointer glow clears on first interaction ─────
+    [mobile-chrome] › e2e/task-037-assay-bench-ungate.spec.ts:202:1 › mobile touch confirm opens and closes the bench without HUD overlap 
+    [mobile-chrome] › e2e/task-046-territory-ring-pacing.spec.ts:76:1 › T1 banks the old ring as a run-scoped palisade kit and spends it before gold 
+    [mobile-chrome] › e2e/trail-guide.spec.ts:100:1 › fresh profile sees the first three trail beats once, in order, and reload stays quiet 
+    [mobile-chrome] › e2e/trail-guide.spec.ts:128:1 › first build-menu open teaches once, survives reload, and stays off for veterans 
+    [mobile-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds ─
+    [mobile-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics ─────
+    [mobile-chrome] › e2e/world-info-notes.spec.ts:196:1 › building notes sit with existing assay and upgrade prompts 
+    [mobile-chrome] › e2e/world-info-notes.spec.ts:293:1 › town shells use info notes beside opens-soon prompts 
+    [mobile-chrome] › e2e/world-info-notes.spec.ts:322:1 › 390px world note clears the touch stick zone 
+  112 skipped
+  8 did not run
+  342 passed (55.1m)

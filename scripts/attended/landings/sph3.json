@@ -1,0 +1,37 @@
+{
+  "tag": "sph3",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5408,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-play-proofs-holds-3 — Astra's run 17: the Ember Shore PROVED both screens by the Stoke fix (seven Stokes, three squalls, wave 12 secured, bank/Book/reload), the Mare Claim's air consumer and dome braking work (4/4 mining, zero air damage) with the hold now on survival, Relay Valley's relay program lights its site on desktop, the Archive World's beacon still lands outside the light disc; equivalence on Flotilla and Regatta PASS; landed attended per the native-ride rule; no src change, no balance change",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/sol-play-proofs-holds-3-landing.md",
+    "title": "Drain review (attended landing): `sol-play-proofs-holds-3`, the Ember Shore proved by the Stoke fix, the Mare's air fixed with the hold moved to survival, Relay Valley's program lights its site, the Archive's beacon still misses its disc",
+    "body": "scripts/attended/landings/sph3-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-play-proofs-holds-3.md",
+    "rowKey": "SOL PLAY PROOFS HOLDS 3 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra's run 17 (`artifacts/sol/play-proofs/run-17/`, 223,826 tokens, evidence 2,850,894 B, ten lane commits, tip `404583963`): the Ember Shore PASS both screens (the driver reserves the Stoke cost, returns inside the vent's disc and uses the native Stoke: seven Stokes, three squalls survived, wave 12 secured, bank/Book/reload: the second campaign hold converted into a proof by fixing the instrument); the Mare Claim HELD on survival (the driver reads the declared `e8Atmosphere` consumer, brakes inside a dome and completes 4/4 mining windows with zero air damage on all four rides; the hero then dies); Relay Valley HELD (the recorded program lights its relay site on desktop, survival fails; the phone ride still never reaches Record because the driver's own tap timing, not the toggle, fails: the audit proved the toggle reachable); the Archive World HELD, corrective incomplete (the beacon preview lands outside the west light disc, zero completed holds). Flotilla/Regatta equivalence PASS; 13 rides, zero errors; no F-PPH3 IDs; no `src/**`. Remaining driver work (candidate holds-4): the Archive beacon placement, the phone Tape control in the ride, the Long Road far stop, the Deepwater wreck re-entry, the Showroom survivable capture sequence; survival holds stay on the owner's desk",
+    "statusPhrase": "holds-3 landed attended: the Ember Shore proved by the Stoke fix, the Mare's air consumer and dome braking work with the hold now on survival, Relay Valley's program lights its site on desktop, the Archive's beacon still misses its disc",
+    "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh sph3; Astra on lane-c, the ChatGPT subscription; native-ride landings are attended-owned, 13z-91)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-17"
+}

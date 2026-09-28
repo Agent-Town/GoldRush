@@ -1,0 +1,1956 @@
+{
+  "summary": {
+    "label": "cradle-at-rim-0-50p5",
+    "blockers": [
+      {
+        "id": "mare-claim:earthrise-listening-array",
+        "x": 0,
+        "z": 56,
+        "halfX": 2.952,
+        "halfZ": 1.368
+      },
+      {
+        "id": "mare-claim:lava-tube-survey-gantry",
+        "x": -42,
+        "z": 28,
+        "halfX": 2.558,
+        "halfZ": 2.075
+      },
+      {
+        "id": "mare-claim:regolith-core-yard",
+        "x": 22,
+        "z": 18,
+        "halfX": 2.71,
+        "halfZ": 2.017
+      },
+      {
+        "id": "mare-claim:west-rim-debris-catcher",
+        "x": -56,
+        "z": 20,
+        "halfX": 2.053,
+        "halfZ": 1.785
+      },
+      {
+        "id": "mare-claim:east-rim-debris-catcher",
+        "x": 56,
+        "z": 20,
+        "halfX": 2.053,
+        "halfZ": 1.785
+      },
+      {
+        "id": "far-side:probe-recovery-cradle",
+        "x": 0,
+        "z": 50.5,
+        "halfX": 2.52,
+        "halfZ": 1.8
+      },
+      {
+        "id": "far-side:west-comms-shadow-marker",
+        "x": -42,
+        "z": 24,
+        "halfX": 1.08,
+        "halfZ": 1.08
+      },
+      {
+        "id": "far-side:east-suit-cache-rack",
+        "x": 42,
+        "z": -24,
+        "halfX": 2.705,
+        "halfZ": 1.691
+      },
+      {
+        "id": "far-side:far-horizon-listening-post",
+        "x": 0,
+        "z": 56,
+        "halfX": 1.512,
+        "halfZ": 1.512
+      }
+    ],
+    "zone": {
+      "id": "listening-probe-crater",
+      "description": "A half-buried, unmarked old-world probe waits at the far end of the crossing.",
+      "minX": -14,
+      "maxX": 14,
+      "minZ": 38,
+      "maxZ": 52
+    },
+    "decisions": 33,
+    "terminal": true,
+    "offered": true,
+    "recoveredAt": 3,
+    "firstWithin2m2OfZoneAt": 2,
+    "finalWave": 20,
+    "finalHero": {
+      "x": 0,
+      "z": -32.868
+    },
+    "finalRecovered": true,
+    "finalRefusals": {
+      "outOfReach": 2,
+      "alreadyRecovered": 0
+    },
+    "finalCrossing": {
+      "zones": [
+        "listening-probe-crater"
+      ],
+      "required": 4,
+      "reached": [
+        "listening-probe-crater"
+      ],
+      "credited": 5,
+      "breathlessEntries": 0,
+      "windowWaves": 4,
+      "window": 5,
+      "creditedThisWindow": 0,
+      "windowHeldEntries": 0,
+      "complete": true
+    },
+    "outcome": {
+      "secured": true,
+      "waves": 20,
+      "timeMs": 600000,
+      "gold": 0,
+      "kills": 172,
+      "calls": 33,
+      "defaultedPicks": 11,
+      "defaultedSecure": 0,
+      "eventLogHash": "fnv1a32:83d1cf7e"
+    },
+    "closestApproach": {
+      "d": 2,
+      "wave": 1,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": 48.033
+      },
+      "reachToZone": 0,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 1,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 31.533
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.547
+      },
+      "movedBy": 93.58
+    },
+    "maxZ": 48.109
+  },
+  "rows": [
+    {
+      "d": 0,
+      "wave": 0,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 0,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -36
+      },
+      "movedBy": 0
+    },
+    {
+      "d": 1,
+      "wave": 0,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -36
+      },
+      "reachToZone": 74,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 1,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 0,
+        "creditedThisWindow": 0,
+        "reached": [],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": 48.033
+      },
+      "movedBy": 84.033
+    },
+    {
+      "d": 2,
+      "wave": 1,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": 48.033
+      },
+      "reachToZone": 0,
+      "recovered": false,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 1,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 31.533
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "CONTEXT_ACTION",
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 2
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.547
+      },
+      "movedBy": 93.58
+    },
+    {
+      "d": 3,
+      "wave": 2,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.547
+      },
+      "reachToZone": 83.547,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 1,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -40.604
+      },
+      "movedBy": 4.943
+    },
+    {
+      "d": 4,
+      "wave": 2,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -40.604
+      },
+      "reachToZone": 78.604,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 1,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.975
+      },
+      "movedBy": 7.629
+    },
+    {
+      "d": 5,
+      "wave": 2,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -32.975
+      },
+      "reachToZone": 70.975,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 1,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.105
+      },
+      "movedBy": 12.13
+    },
+    {
+      "d": 6,
+      "wave": 3,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.105
+      },
+      "reachToZone": 83.105,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 1,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.969
+      },
+      "movedBy": 12.136
+    },
+    {
+      "d": 7,
+      "wave": 3,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -32.969
+      },
+      "reachToZone": 70.969,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 1,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.111
+      },
+      "movedBy": 12.142
+    },
+    {
+      "d": 8,
+      "wave": 4,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.111
+      },
+      "reachToZone": 83.111,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 1,
+        "creditedThisWindow": 0,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -40.169
+      },
+      "movedBy": 4.942
+    },
+    {
+      "d": 9,
+      "wave": 4,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -40.169
+      },
+      "reachToZone": 78.169,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 1,
+        "creditedThisWindow": 0,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": 48.025
+      },
+      "movedBy": 88.194
+    },
+    {
+      "d": 10,
+      "wave": 5,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": 48.025
+      },
+      "reachToZone": 0,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 2,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 33
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": 39.835
+      },
+      "movedBy": 8.19
+    },
+    {
+      "d": 11,
+      "wave": 5,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": 39.835
+      },
+      "reachToZone": 0,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 2,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 31.133
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.556
+      },
+      "movedBy": 85.391
+    },
+    {
+      "d": 12,
+      "wave": 6,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.556
+      },
+      "reachToZone": 83.556,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 2,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.983
+      },
+      "movedBy": 12.573
+    },
+    {
+      "d": 13,
+      "wave": 6,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -32.983
+      },
+      "reachToZone": 70.983,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 2,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.126
+      },
+      "movedBy": 12.143
+    },
+    {
+      "d": 14,
+      "wave": 7,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.126
+      },
+      "reachToZone": 83.126,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 2,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.983
+      },
+      "movedBy": 12.143
+    },
+    {
+      "d": 15,
+      "wave": 7,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -32.983
+      },
+      "reachToZone": 70.983,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 2,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.124
+      },
+      "movedBy": 12.141
+    },
+    {
+      "d": 16,
+      "wave": 8,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.124
+      },
+      "reachToZone": 83.124,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 2,
+        "creditedThisWindow": 0,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": 48.109
+      },
+      "movedBy": 93.233
+    },
+    {
+      "d": 17,
+      "wave": 9,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": 48.109
+      },
+      "reachToZone": 0,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 3,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 33.033
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.472
+      },
+      "movedBy": 93.581
+    },
+    {
+      "d": 18,
+      "wave": 10,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.472
+      },
+      "reachToZone": 83.472,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 3,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.9
+      },
+      "movedBy": 12.572
+    },
+    {
+      "d": 19,
+      "wave": 10,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -32.9
+      },
+      "reachToZone": 70.9,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 3,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.042
+      },
+      "movedBy": 12.142
+    },
+    {
+      "d": 20,
+      "wave": 11,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.042
+      },
+      "reachToZone": 83.042,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 3,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.899
+      },
+      "movedBy": 12.143
+    },
+    {
+      "d": 21,
+      "wave": 12,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -32.899
+      },
+      "reachToZone": 70.899,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 3,
+        "creditedThisWindow": 0,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": false
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": 48.037
+      },
+      "movedBy": 80.936
+    },
+    {
+      "d": 22,
+      "wave": 13,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": 48.037
+      },
+      "reachToZone": 0,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 4,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 30.9
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": 38.868
+      },
+      "movedBy": 9.169
+    },
+    {
+      "d": 23,
+      "wave": 13,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": 38.868
+      },
+      "reachToZone": 0,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 4,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 28.867
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.544
+      },
+      "movedBy": 84.412
+    },
+    {
+      "d": 24,
+      "wave": 14,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.544
+      },
+      "reachToZone": 83.544,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 4,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.971
+      },
+      "movedBy": 12.573
+    },
+    {
+      "d": 25,
+      "wave": 14,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -32.971
+      },
+      "reachToZone": 70.971,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 4,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -43.392
+      },
+      "movedBy": 10.421
+    },
+    {
+      "d": 26,
+      "wave": 15,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -43.392
+      },
+      "reachToZone": 81.392,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 4,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -33.273
+      },
+      "movedBy": 10.119
+    },
+    {
+      "d": 27,
+      "wave": 16,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -33.273
+      },
+      "reachToZone": 71.273,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 4,
+        "creditedThisWindow": 0,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "listening-probe-crater",
+      "targetPos": {
+        "x": 0,
+        "z": 45
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": 48.063
+      },
+      "movedBy": 81.336
+    },
+    {
+      "d": 28,
+      "wave": 17,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": 48.063
+      },
+      "reachToZone": 0,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 5,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 30.967
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -45.517
+      },
+      "movedBy": 93.58
+    },
+    {
+      "d": 29,
+      "wave": 18,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -45.517
+      },
+      "reachToZone": 83.517,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 5,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.945
+      },
+      "movedBy": 12.572
+    },
+    {
+      "d": 30,
+      "wave": 18,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -32.945
+      },
+      "reachToZone": 70.945,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 5,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -44.942
+      },
+      "movedBy": 11.997
+    },
+    {
+      "d": 31,
+      "wave": 19,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -44.942
+      },
+      "reachToZone": 82.942,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 5,
+        "creditedThisWindow": 1,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "target": "far-side-landing-yard",
+      "targetPos": {
+        "x": 0,
+        "z": -39
+      },
+      "orders": [
+        "MOVE_HERO"
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.868
+      },
+      "movedBy": 12.074
+    },
+    {
+      "d": 32,
+      "wave": 20,
+      "timeMs": null,
+      "heroBefore": {
+        "x": 0,
+        "z": -32.868
+      },
+      "reachToZone": 70.868,
+      "recovered": true,
+      "refusals": {
+        "outOfReach": 2,
+        "alreadyRecovered": 0
+      },
+      "inReach": null,
+      "crossing": {
+        "credited": 5,
+        "creditedThisWindow": 0,
+        "reached": [
+          "listening-probe-crater"
+        ],
+        "complete": true
+      },
+      "suit": {
+        "seconds": 60
+      },
+      "orders": [
+        {
+          "verb": "SECURE_CHOICE"
+        }
+      ],
+      "accepted": true,
+      "outcome": {
+        "ok": true,
+        "result": {
+          "count": 1
+        },
+        "economyLog": [
+          {
+            "id": "gr-sim-1",
+            "at": 0,
+            "type": "run_reset"
+          }
+        ]
+      },
+      "heroAfter": {
+        "x": 0,
+        "z": -32.868
+      },
+      "movedBy": 0
+    }
+  ]
+}

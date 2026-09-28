@@ -1,0 +1,207 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e6-picnic&timescale=4",
+  "sim": 83.33333333333411,
+  "wave": 2,
+  "hp": 100,
+  "gold": 15,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "hero": {
+    "x": 23.398815312318565,
+    "y": 1.06,
+    "z": -21.710468066314668
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -20,
+        "z": 18
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -15,
+        "z": 14
+      }
+    }
+  ],
+  "hollowCrossing": {
+    "declared": false,
+    "stage": "launch",
+    "routeId": null,
+    "onGlowBridge": false,
+    "radiationDamageDealt": 0
+  },
+  "picnicHold": [
+    {
+      "id": "sandwich-west",
+      "position": {
+        "x": -16,
+        "z": 18
+      },
+      "held": false,
+      "claimed": true,
+      "contested": false,
+      "timer": 6
+    },
+    {
+      "id": "sandwich-center",
+      "position": {
+        "x": 0,
+        "z": 26
+      },
+      "held": false,
+      "claimed": true,
+      "contested": false,
+      "timer": 6
+    },
+    {
+      "id": "sandwich-east",
+      "position": {
+        "x": 16,
+        "z": 18
+      },
+      "held": false,
+      "claimed": true,
+      "contested": false,
+      "timer": 6
+    }
+  ],
+  "wrangle": {
+    "enabled": true,
+    "windDownSeconds": 8,
+    "windDownTicks": 240,
+    "captureRadius": 2.2,
+    "exhaustedSpeedMultiplier": 0.2,
+    "active": [
+      {
+        "enemyId": 0,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 125,
+        "resets": 0
+      },
+      {
+        "enemyId": 1,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 215,
+        "resets": 0
+      },
+      {
+        "enemyId": 2,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 66,
+        "resets": 0
+      },
+      {
+        "enemyId": 3,
+        "variantId": "feral_toaster",
+        "state": "winding-down",
+        "remainingTicks": 66,
+        "resets": 0
+      },
+      {
+        "enemyId": 4,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 170,
+        "resets": 0
+      },
+      {
+        "enemyId": 5,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 239,
+        "resets": 1
+      },
+      {
+        "enemyId": 6,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 200,
+        "resets": 0
+      },
+      {
+        "enemyId": 7,
+        "variantId": "lawn_shepherd",
+        "state": "winding-down",
+        "remainingTicks": 229,
+        "resets": 0
+      }
+    ],
+    "pen": {
+      "roster": [],
+      "total": 0,
+      "tickSeconds": 15,
+      "goldPerMachine": 1,
+      "incomeGranted": 0
+    }
+  },
+  "interferenceFront": null,
+  "broadcastMirror": null,
+  "playbookUse": null,
+  "e7Signal": {
+    "enabled": false,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "repairs": 0
+}

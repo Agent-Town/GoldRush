@@ -1,0 +1,50 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-28T07:39:22.527Z — s2736 warmup ########
+cwd=/Users/robin/.goldrush/s2736/wt-audio
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg03gn0ye:/Users/robin/.foundry/bin GR_AUDIO_EVIDENCE=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2736/plain-candidate GR_AUDIO_RESULTS=/Users/robin/.goldrush/s2736/plain-results GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5416
+
+===== warmup =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --grep enemy crossing the river reaches the hero through the ford only --workers=1
+rc=0 5.9s
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.6s)
+
+  1 passed (5.4s)
+(node:12441) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-28T07:39:28.414Z — s2736 plain-run correction ########
+cwd=/Users/robin/.goldrush/s2736/wt-audio
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg03gn0ye:/Users/robin/.foundry/bin GR_AUDIO_EVIDENCE=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2736/plain-candidate GR_AUDIO_RESULTS=/Users/robin/.goldrush/s2736/plain-results GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5416
+
+===== plain audio run =====
+$ npx playwright test --config artifacts/s2736/plain.config.ts --project=desktop-chrome --project=mobile-chrome --workers=1
+rc=0 14.3s
+
+Running 2 tests using 1 worker
+
+  ✓  1 [desktop-chrome] › artifacts/s2736/plain.spec.ts:5:1 › plain claim exposes the music control and keeps music off after reload (6.4s)
+  ✓  2 [mobile-chrome] › artifacts/s2736/plain.spec.ts:5:1 › plain claim exposes the music control and keeps music off after reload (6.1s)
+
+  2 passed (13.8s)
+(node:12568) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12626) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12626) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:12840) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12840) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"plain audio run":0}
+OVERALL rc=0

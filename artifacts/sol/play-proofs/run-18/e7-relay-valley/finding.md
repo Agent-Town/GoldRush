@@ -1,0 +1,15 @@
+# Relay Valley phone — HELD: unresolved instrument hit-testing mismatch
+
+**Classification: instrument/viewport hit-testing hold; no demonstrated player-facing layering defect and no F-PPH4 ID. The attempted driver correction did not pass and was reverted.** No production code changed. Two authorized phone rides, both direct exit 1; zero console/page errors in both. Desktop was not re-ridden and retains run-17 survival deaths 18/19.
+
+## First refused click: measured geometry
+
+[Moment JSON](phone-tap-moment.json) and [390 px outlined JPEG](phone-tap-moment.jpg) were captured immediately after the first refused click. The centre (229,118) hits the toggle's SPAN child; all four inset corners hit BUTTON[data-testid=playbook-toggle]. No point hits the canvas. Toggle rectangle (202,92,54,52), weapon panel (8,92,374,52), canvas (0,0,390,844). Toggle pointer-events auto and z-index auto; panel pointer-events none and z-index auto; HUD z-index 5, class hud--announcement-visible; canvas pointer-events auto and z-index auto. Page scroll offsets and ancestor scroll offsets are zero. No visible modal; upgrade overlay hidden. Screenshot visibly confirms the button. The exact Playwright click log nevertheless reports canvas interception. Thus the task's player-facing condition (canvas above the visible toggle centre) is **not observed**. The geometry is a post-timeout observation, not an event-time trace; it cannot rule out a transient change during dispatch.
+
+Unlike the run-17 interpretation, this ride's first Record action succeeded: the stack points to the toggle AFTER the recorded turret build. One turret at (-45,41) was placed at 60.8 sim seconds. At the dump: wave 2, 400 HP, hero (-44.578,5.06,43.058). At abort: 80.8 sim seconds, 400 HP; Tape uses 0 and objective false. This is a live abort, not a survival loss.
+
+## Single corrected ride, not a successful correction
+
+The attempted correction left build mode with native B if needed, scrolled the control into view, waited for its centre hit, then would use native tap. It instead timed out eight times at the centre-hit wait BEFORE its first tap/Record. Abort at wave 3 with 363.2 measured HP (the earlier screenshot showed 364), no turret and no Tape use. No forced click or DOM/game-state mutation was used. [Corrected attempt](phone-tap-corrected/) preserves its exact driver hash, command and live screenshot; full error context and log are external. Both failure screenshots were inspected. The failed correction was reverted, retaining only the read-only failure dump in the shared driver.
+
+**Remaining instrument work, owner QA/native controls:** capture event-time pointer coordinates and visualViewport scale/offset alongside layout geometry during the refused click, then resolve the layout/visual-viewport or transient-rail mismatch. Current evidence does not prove which causes it. No third ride is authorized; no source/balance fix follows from this hold. Original and corrected raw dumps remain under ~/.goldrush/play-proofs/run-18/{default,phone-tap-corrected}/e7-relay-valley/.

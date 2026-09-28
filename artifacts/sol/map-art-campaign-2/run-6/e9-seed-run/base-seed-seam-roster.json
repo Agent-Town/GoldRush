@@ -1,0 +1,52 @@
+{
+  "storeBase": "4613a6ff288eb6e984dbdd44e7e861ee1627da73",
+  "base": "2ead3e33c89909f799d713b622fe7c0186fee1d4",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "70d45c1f7ef44d448d67da75382dca45578f24fcc7b699f3da3a2141dfd7fb8e",
+      "baseSha256": "947bb772d0c5e79a16e8608779d5ec9c06c932b61b53ddabde1aea5082a9051e"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/center-seed-vault.glb": {
+      "candidateSha256": "9bb53a5098107b317ec92c8bf71e12506416b9a2b7055592e4b048ad12c013df",
+      "baseSha256": "a72ad184703d2e4d7e5d54ff9b6062802fa2b249519b47293d6a4677242890d0"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/seed-run-landmark-pack-contract.json": {
+      "candidateSha256": "a54d101f28c4d1b81f8282ffad7600a3e69fe1bbe14b5523fca46d3f4fd89299",
+      "baseSha256": "6f73268e8eea248f0b37e3722289310722ca273653558741362278668205e49d"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/seed-run/seed-run-landmarks.blend": {
+      "candidateSha256": "e668af010c335def464536a79b3c51a25ca19db58fb6a741e451874d8cf88c88",
+      "baseSha256": "eadff552358784628008bfdbb5e49666bec77fe81f00381f9820433607cf0d3b"
+    },
+    "assets/pilots/map-rebuild-spike/seed-run-terrain-contract.json": {
+      "candidateSha256": "4c0a098b34bc137b60cbd44bca32e2ebe88ff8126b910323f07f608437b35cf3",
+      "baseSha256": "9d18123802d57db5da9f68d9facffb9e54de2f6bddc6f76c321bf09e38b908cc"
+    }
+  },
+  "pattern": "those pixels are the seam|plain Red Fields boot",
+  "specs": [
+    "e2e/seam-visual-follows-sculpt.spec.ts",
+    "e2e/e9-roster.spec.ts"
+  ],
+  "candidateEngine": "069445213755f07bbd24c769e6a732cc9f717c1996ea8622f107588ac8e39685",
+  "baseEngine": "8e71546045562c64ef70c60d2616e0a2cc1cee965709dc89d691ca13d57164dc",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-base-seed-seam-roster/test-results",
+    "--grep",
+    "those pixels are the seam|plain Red Fields boot",
+    "e2e/seam-visual-follows-sculpt.spec.ts",
+    "e2e/e9-roster.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "069445213755f07bbd24c769e6a732cc9f717c1996ea8622f107588ac8e39685",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e9-seed-run-base-seed-seam-roster/tests.log"
+}

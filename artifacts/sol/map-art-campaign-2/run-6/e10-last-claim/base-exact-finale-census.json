@@ -1,0 +1,61 @@
+{
+  "storeBase": "ce3a6a5ad3b8d9f44c4adece0d6c8b424735b5e4",
+  "base": "0bafed36e53f02ea475903d6452581f9f4364138",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "2784f75fd91380f3f5ad3c1368920a5b74437b0b0e43b3e3ac79a6180e706777",
+      "baseSha256": "8a36755399382a80dfce8618a669b56fbe3eacb6414c3fc01ca89b75c1879a73"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/landmark-source-ledger.json": {
+      "candidateSha256": "5fcaa9570d4afffbabe2dbced5b175f3ae69c938fe671d969bf284510da4fe40",
+      "baseSha256": "2f2951aae9b5b17e19870e05abaeba7908be3496accd9bc04da827284ca9be3f"
+    }
+  },
+  "pattern": "recession hands|e10-archive-world census",
+  "specs": [
+    "e2e/e10-static-boss.spec.ts",
+    "e2e/er01-e10-census.spec.ts"
+  ],
+  "candidateEngine": "2a898e9e9e87ddd72c9dea598df97363c9e179592ef33e69a54871da21c1efd3",
+  "baseEngine": "c2018fcb58b57688525b2afe23a8fd99dd20e3ce481894e58f9017db628333c7",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e10-last-claim-base-exact-finale-census/test-results",
+    "--grep",
+    "recession hands|e10-archive-world census",
+    "e2e/e10-static-boss.spec.ts",
+    "e2e/er01-e10-census.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/build_last_claim_pack.py": "67407d817fbcc21c98de2a78960d8f5ea576a0e26e2d88b805f1ec96d18f7d8c",
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/central-orrery.glb": "53761411e710c2e427321ef52a4555aad9c6d98aa0007392b9fc465f9a433504",
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/last-claim-landmark-pack-contract.json": "ce8001626b1528268851a16ce3168cd92606895a2be16cb50671978590f33c52",
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/last-claim-landmarks-atlas.png": "3ebb2607b09b3af5e8b64ecb803616b172bec8866ac4b0fbd8250731cc94b8ad",
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/last-claim-landmarks.blend": "8481246c2103a5ac57a0d261a9311f5fb1cc363e9ed5041e8fbb8016d760813c",
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/preserve-last-lantern.glb": "01c4e40b5142bd12e3011a3955be33bdc536afec19855fcfcf980bbf9118942f",
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/preserve-last-portrait.glb": "f5dba69909941adc4e8bb6f76ba4811ae4941ea9c667d8a3976457546ae3a560",
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/preserve-pan-theme-song.glb": "43c0a4e90c4912c55020c1b02463b0cc8cb347143bded38b959979cfec2c8c1b",
+    "assets/pilots/map-rebuild-spike/landmarks/last-claim/stern-memory-arch.glb": "5fa8b3b7e1b45305819463189a8172c94c2de8f91c81848ce849b9ed61801a08",
+    "assets/pilots/map-rebuild-spike/last-claim-fallback-height-grid.json": "845cbb06b7d586d636f442b3e6321ba894ec56aec2d651b968085c8549147501",
+    "assets/pilots/map-rebuild-spike/last-claim-panorama-atlas.png": "e6902a845b8324062b92ab7744521c5c5a4b579cc5547943552c278d3979fd65",
+    "assets/pilots/map-rebuild-spike/last-claim-panorama-contract.json": "e01071fc67d928af916a62562ff9daf58526c4bbbd5d79ffe20191326120d40f",
+    "assets/pilots/map-rebuild-spike/last-claim-panorama.blend": "19f6d9974d8b1695f6204cf6d6bfdb858c6051bc91ede6f8b44e7d679f40e1db",
+    "assets/pilots/map-rebuild-spike/last-claim-panorama.glb": "08021d6fb8d08dfe51b44ad07459ccd12f659dd6b838252e4d56783439bff247",
+    "assets/pilots/map-rebuild-spike/last-claim-terrain-atlas.png": "621a457ee276de08c7563686a0d9e76371413fe1dd03ffa174a9747a8a07d101",
+    "assets/pilots/map-rebuild-spike/last-claim-terrain-contract.json": "76a7acb88c89794a500f63f1e0a4d1f4aeaabf5d7415930979a4186de9d2441b",
+    "assets/pilots/map-rebuild-spike/last-claim-terrain.blend": "2699f37b05c0a2060b4574fc66d8b7be240d15ddffa6620cf572d01d5ad63d7e",
+    "assets/pilots/map-rebuild-spike/last-claim-terrain.export.json": "565f653a80fa24590bcfd99dab05867a0d7454869cff8c14871dcf6a6b779b3e",
+    "assets/pilots/map-rebuild-spike/last-claim-terrain.glb": "a9b6c50c8cef5542b564c8ba36278cbd5f11e6838fedf00fb502ad659326b8af"
+  },
+  "restoredEngine": "2a898e9e9e87ddd72c9dea598df97363c9e179592ef33e69a54871da21c1efd3",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e10-last-claim-base-exact-finale-census/tests.log"
+}

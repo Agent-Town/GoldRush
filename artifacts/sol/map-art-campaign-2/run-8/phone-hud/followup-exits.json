@@ -1,0 +1,80 @@
+[
+  {
+    "name": "layout-check",
+    "command": "node",
+    "args": [
+      "artifacts/sol/map-art-campaign-2/run-8/phone-hud/check-layout.mjs"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "census-final",
+    "command": "node",
+    "args": [
+      "scripts/phone-hud-entry-census.mjs",
+      "after"
+    ],
+    "exitCode": 0
+  },
+  {
+    "name": "census-final-guard",
+    "command": "node",
+    "args": [
+      "--test",
+      "scripts/phone-hud-entry-census.test.mjs"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "boards-final",
+    "command": "python3",
+    "args": [
+      "artifacts/sol/map-art-campaign-2/run-8/phone-hud/boards.py"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "e2e-additional",
+    "command": "npx",
+    "args": [
+      "playwright",
+      "test",
+      "e2e/mp-06-party-overview.spec.ts",
+      "e2e/safari-swap.spec.ts",
+      "e2e/locked-win.spec.ts:65",
+      "e2e/m4-06-embodiment.spec.ts:187",
+      "e2e/bt-04b-automation.spec.ts",
+      "e2e/contract-briefings.spec.ts",
+      "e2e/drill-yard.spec.ts",
+      "e2e/e7-playbook-rows.spec.ts",
+      "e2e/en-01-claim-ledger.spec.ts",
+      "e2e/en-02-e1-coverage.spec.ts",
+      "e2e/m4-09-agent-rung-clarity.spec.ts",
+      "e2e/m4-10-agent-actions-integrity.spec.ts",
+      "e2e/meta-presence.spec.ts",
+      "e2e/pause-goal-progress.spec.ts",
+      "e2e/run-suspend.spec.ts",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line,json"
+    ],
+    "exitCode": 1
+  },
+  {
+    "name": "e2e-mp-hud",
+    "command": "npx",
+    "args": [
+      "playwright",
+      "test",
+      "e2e/mp-02-lockstep.spec.ts",
+      "--grep",
+      "both riders place buildings and pick upgrades with equal hashes for 300 ticks",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--workers=1",
+      "--reporter=line,json"
+    ],
+    "exitCode": 0
+  }
+]

@@ -1,0 +1,48 @@
+{
+  "inventory": [
+    {
+      "id": "terrain",
+      "triangles": 32768,
+      "budget": 60000
+    },
+    {
+      "id": "panorama",
+      "triangles": 1024,
+      "budget": 4000
+    },
+    {
+      "id": "south-west-shore",
+      "triangles": 2240,
+      "budget": 3000,
+      "blocking": "none; low decorative stones, no collision or walk surface"
+    },
+    {
+      "id": "south-east-shore",
+      "triangles": 2240,
+      "budget": 3000,
+      "blocking": "none; low decorative stones, no collision or walk surface"
+    },
+    {
+      "id": "north-west-shore",
+      "triangles": 2240,
+      "budget": 3000,
+      "blocking": "none; low decorative stones, no collision or walk surface"
+    },
+    {
+      "id": "north-east-shore",
+      "triangles": 2240,
+      "budget": 3000,
+      "blocking": "none; low decorative stones, no collision or walk surface"
+    },
+    {
+      "id": "ford-wet-stones",
+      "triangles": 1600,
+      "budget": 2000,
+      "blocking": "none; low decorative stones, no collision or walk surface"
+    }
+  ],
+  "allWithinBudget": true,
+  "packTriangles": 44352,
+  "bodies": 5,
+  "collisionMounts": 0
+}

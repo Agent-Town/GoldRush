@@ -1,0 +1,258 @@
+{
+  "contractId": "dead-band-reuse-verdict",
+  "tileId": "e7-relay-valley",
+  "renderOnly": true,
+  "sculptVerdict": {
+    "verdict": "reuse",
+    "baseTile": "relay-valley",
+    "baseTerrainContract": "relay-valley-terrain-contract.json",
+    "reason": "maskTruth.tileId is e7-relay-valley; the dead-band is a signal-state variant on the accepted ridgeline tile",
+    "terrainGlb": "relay-valley-terrain.glb",
+    "panoramaGlb": "relay-valley-panorama.glb",
+    "duplicateSculpt": "forbidden; gameplay contract rides the existing tileId"
+  },
+  "maskTable": "assets/contracts/epoch-7-signal/mask-tables/e7-dead-band.json",
+  "maskTruth": {
+    "source": "assets/contracts/epoch-7-signal/contracts.json; lore/STORYBOOK.md E7 contracts",
+    "tileId": "e7-relay-valley",
+    "size": 128,
+    "dimensions": {
+      "width": 128,
+      "height": 128
+    },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "dead-band-yard",
+        "bank": "south",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": -42,
+        "maxZ": 12
+      },
+      {
+        "id": "west-old-tool-ground",
+        "bank": "north",
+        "minX": -50,
+        "maxX": -20,
+        "minZ": 26,
+        "maxZ": 48
+      },
+      {
+        "id": "east-old-tool-ground",
+        "bank": "north",
+        "minX": 20,
+        "maxX": 50,
+        "minZ": 26,
+        "maxZ": 48
+      }
+    ],
+    "stakeMarkers": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": {
+      "id": "relay-valley-ridgelines",
+      "mode": "visual"
+    },
+    "signalNullZones": [
+      {
+        "id": "dead-band-iron-shadow",
+        "description": "Signal does not propagate anywhere inside the iron-ore shadow.",
+        "minX": -54,
+        "maxX": 54,
+        "minZ": -54,
+        "maxZ": 54
+      }
+    ],
+    "lanes": {
+      "spawnEdges": [
+        "north",
+        "west",
+        "east"
+      ],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": []
+    },
+    "spawnGates": []
+  },
+  "landmarkMountSpace": {
+    "coordinates": "game X/Y/Z",
+    "positionY": "local offset added to Terrain.visualY at the mount X/Z",
+    "rotation": "XYZ Euler radians",
+    "scale": "XYZ multiplier",
+    "ownership": "landmark assets mount at runtime and are never baked into terrain"
+  },
+  "landmarkMounts": [
+    {
+      "id": "dead-band-yard-null-post",
+      "position": [
+        0.0,
+        0.0,
+        -40.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/dead-band/dead-band-yard-null-post.glb",
+      "contractIds": [
+        "e7-dead-band"
+      ]
+    },
+    {
+      "id": "west-old-tool-cache",
+      "position": [
+        -42.0,
+        0.0,
+        38.0
+      ],
+      "rotation": [
+        0.0,
+        0.16,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/dead-band/west-old-tool-cache.glb",
+      "contractIds": [
+        "e7-dead-band"
+      ]
+    },
+    {
+      "id": "east-old-tool-cache",
+      "position": [
+        42.0,
+        0.0,
+        38.0
+      ],
+      "rotation": [
+        0.0,
+        -0.16,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/dead-band/east-old-tool-cache.glb",
+      "contractIds": [
+        "e7-dead-band"
+      ]
+    },
+    {
+      "id": "iron-shadow-warning-frame",
+      "position": [
+        0.0,
+        0.0,
+        6.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/dead-band/iron-shadow-warning-frame.glb",
+      "contractIds": [
+        "e7-dead-band"
+      ]
+    },
+    {
+      "id": "north-silence-gate",
+      "position": [
+        0.0,
+        0.0,
+        54.0
+      ],
+      "rotation": [
+        0.0,
+        3.1416,
+        0.0
+      ],
+      "scale": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "asset": "landmarks/dead-band/north-silence-gate.glb",
+      "contractIds": [
+        "e7-dead-band"
+      ]
+    }
+  ],
+  "landmarkPack": {
+    "contract": "landmarks/dead-band/dead-band-landmark-pack-contract.json",
+    "atlas": "landmarks/dead-band/dead-band-landmarks-atlas.png",
+    "era": 7,
+    "sourceLadder": "reuse > derive > build-new",
+    "ownership": "separate mounted render-only GLBs; no simulation authority"
+  },
+  "simulation": "reuse verdict only; terrain, collision, movement, placement, water, spawns, fog, and variant mechanics remain unchanged",
+  "landmarkAcceptanceStations": [
+    {
+      "id": "iron-shadow-warning-frame",
+      "heroPositionXZ": [
+        0.0,
+        9.0
+      ],
+      "offsetFromMountXZ": [
+        0,
+        3
+      ],
+      "backMeters": 3,
+      "purpose": "Render-only inspection at full default zoom; measured in map-art-campaign-2/run-6/e7-dead-band. Plain entry remains a separate acceptance surface."
+    },
+    {
+      "id": "north-silence-gate",
+      "heroPositionXZ": [
+        0.0,
+        57.0
+      ],
+      "offsetFromMountXZ": [
+        0,
+        3
+      ],
+      "backMeters": 3,
+      "purpose": "Render-only inspection at full default zoom; measured in map-art-campaign-2/run-6/e7-dead-band. Plain entry remains a separate acceptance surface."
+    },
+    {
+      "id": "dead-gap-charting-station",
+      "heroPositionXZ": [
+        0,
+        20
+      ],
+      "offsetFromMountXZ": [
+        0,
+        2
+      ],
+      "backMeters": 2,
+      "purpose": "Retained Relay Valley body, measured at the Dead Band inspection station; no mount or footprint change."
+    }
+  ],
+  "mountInterlock": {
+    "activeBase": "Relay Valley terrain, panorama, five original landmark bodies and all active collision footprints are retained unchanged.",
+    "additionalDressing": "Two authored nonblocking frames mount through the existing contractIds filter.",
+    "heldMounts": {},
+    "additionalSolids": "Owner ruling F-CORR4-2, 2026-09-22: dead-band-yard-null-post, west-old-tool-cache, east-old-tool-cache. Mounted at the registered transforms; variant footprints supplement the unchanged parent blockers."
+  },
+  "entryLandmark": {
+    "mountId": "iron-shadow-warning-frame",
+    "reason": "The plate leads into its silent corridor through paired empty warning frames; the mounted iron-shadow frame gives that entrance its recognizable silhouette."
+  }
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-8/gates.py",
+      "motor-hauler",
+      "e2e",
+      "final-selected",
+      "e2e/e4-dust-flats.spec.ts",
+      "e2e/e4-roads-and-convoys.spec.ts",
+      "e2e/ss-05-e4-beats.spec.ts",
+      "e2e/e5-arsenal.spec.ts",
+      "e2e/rider-parity-grammar.spec.ts",
+      "e2e/terrain3d-registry.spec.ts",
+      "e2e/true-reel-harness.spec.ts",
+      "--grep",
+      "fires the authored storm|offers road grading|every Motor reel|a player-selected Motor town|pressure-seals the rig|a plain-boot human can|all sixteen contracts|rim and horizon probes|terrain2d and the 3D|all fifteen contracts|the browser replays the Claim|the module worker takes Hill Mine"
+    ],
+    "exit": 1
+  },
+  {
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-8/gates.py",
+      "motor-hauler",
+      "e2e",
+      "shared",
+      "e2e/landmark-brightness.spec.ts",
+      "e2e/landmark-collision.spec.ts",
+      "e2e/fort-landmark-collision.spec.ts"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-8/gates.py",
+      "motor-hauler",
+      "e2e",
+      "census",
+      "e2e/map-census.spec.ts",
+      "--grep",
+      "e4-(dust-flats|long-road|gusher-county|boneyard) census"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "python3",
+      "artifacts/sol/map-art-campaign-2/run-8/gates.py",
+      "motor-hauler",
+      "probes"
+    ],
+    "exit": 0
+  }
+]

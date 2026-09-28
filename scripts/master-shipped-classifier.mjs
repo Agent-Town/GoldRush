@@ -4,7 +4,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { pathToFileURL } from 'node:url';
+import { isMain } from './is-main.mjs';
 
 /**
  * 'on-branch' | 'detached' | 'no-git' | 'unverifiable' — F-2333-1's detachment half.
@@ -422,7 +422,7 @@ function printTable(result) {
   }
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (isMain(import.meta.url)) {
   const rootIndex = process.argv.indexOf('--root');
   const root = rootIndex === -1 ? process.cwd() : process.argv[rootIndex + 1];
   try {

@@ -1,0 +1,69 @@
+{
+  "storeBase": "8ea5370ba1dfd4bc85276380875fdb87f17f7bf7",
+  "base": "823b06b1dce4b861be2fccf646245fc4cc864588",
+  "paths": {
+    "src/world/LandmarkCollision.ts": {
+      "candidateSha256": "3650bd8c00e22a8cb458a22ff258b7561482565b4fe9cc47fdd5916a4a51a9e5",
+      "baseSha256": "52ff39655ddf3babc8d47d5eef67847ddb9187dba4e4664729991c3b5d65ed07"
+    },
+    "assets/pilots/map-rebuild-spike/dead-band-terrain-contract.json": {
+      "candidateSha256": "71924d406d5a36817e89660ada1f0a43093d089751bd8a748a9f8e4b07303b09",
+      "baseSha256": "3e9d2d5058f9181c1f2a150d8f309721203d56fed0b241f1948f918c76cc2680"
+    },
+    "assets/pilots/map-rebuild-spike/far-side-terrain-contract.json": {
+      "candidateSha256": "64cff2c3d907f73b894bc44c3a77daab9e950e13a2cf79726d6d68e053d87230",
+      "baseSha256": "07200d7d22a18bada814e90754a100a6b7323d417d680ea36d0d74be3a604693"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dead-band/dead-band-landmark-pack-contract.json": {
+      "candidateSha256": "6beddd199dd657c040e94ece2f6a60893eef2e1de363214c8bcfc62b57bed24c",
+      "baseSha256": "22151c597a48ced06c37aef0879ee3006ca275f92bc464cb2599d242709009e9"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/far-side/far-side-landmark-pack-contract.json": {
+      "candidateSha256": "812d264c132176dec6b53b744affdd5846eb979fff6f978cf45dc27333baf2d0",
+      "baseSha256": "1482078b6927a49b35ecbcdd21932b59ff745f5a21b950bcb1597df99774a861"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/picnic/picnic-landmark-pack-contract.json": {
+      "candidateSha256": "356f294c50b6d9c310851db96a9da1364136d9951c5b7fdf8ff866b26da9c0de",
+      "baseSha256": "72672d62a8afb36c50efe1ee91883f90f3bab592674f0d6675efc7859eebf8ae"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/relay-rush/relay-rush-landmark-pack-contract.json": {
+      "candidateSha256": "1e2048607bd098824324aef4dfe0d4cf68b8c4720a55f49f312f14bdeeb119b9",
+      "baseSha256": "ca1ea9bb9ffcc18f8125820a6a8110fb9a8041114965fbdb04f25eb54a510241"
+    },
+    "assets/pilots/map-rebuild-spike/picnic-terrain-contract.json": {
+      "candidateSha256": "57b9f2210f162f6a969acdd5d1aae84379f37ad5f8010a5bb62d3695f251683d",
+      "baseSha256": "762f36f5edb01aca94eedded1e2d3b84a4607b6decfe0e0e24180b68a5d1d6ae"
+    },
+    "assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json": {
+      "candidateSha256": "dffaf5fb1510dfccae00b57116c5841796a33020ecf38574ac775e2eb104248b",
+      "baseSha256": "930fafe40d41b455b16e80459890e31b6d05f6515dbe214086524407154072fb"
+    }
+  },
+  "pattern": "plain Orbital-era boot|e8-mare-claim census pins",
+  "specs": [
+    "e2e/e8-roster.spec.ts",
+    "e2e/er01-e8-census.spec.ts"
+  ],
+  "candidateEngine": "d0c21418d922a2362290fe2a457321f363b50f1c1a01d3ec6b11fa2ca7edf013",
+  "baseEngine": "4374cdbfcb7631c86982f9439fb30583eb3eba1acbf70e1bcccaf8fb6e210b21",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-7/e8-far-side-base-orbital-gates/test-results",
+    "--grep",
+    "plain Orbital-era boot|e8-mare-claim census pins",
+    "e2e/e8-roster.spec.ts",
+    "e2e/er01-e8-census.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {},
+  "restoredEngine": "d0c21418d922a2362290fe2a457321f363b50f1c1a01d3ec6b11fa2ca7edf013",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-7/e8-far-side-base-orbital-gates/tests.log"
+}

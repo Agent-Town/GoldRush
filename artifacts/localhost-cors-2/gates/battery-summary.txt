@@ -1,0 +1,9 @@
+leg 1/8 rc=1 1211s :: node scripts/run-node-guards.mjs scripts/live-seed-rotation.test.mjs scripts/phone-hud-ent... :: ℹ tests 1032, ℹ pass 1022, ℹ fail 5, ℹ cancelled 0, ℹ skipped 5
+leg 2/8 rc=0 0s :: node scripts/test-ticker-stats.mjs :: ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)
+leg 3/8 rc=0 0s :: npm run test:findings-state :: findings-state-guard: PASS
+leg 4/8 rc=0 1s :: npm run test:blocker-panel :: blocker-panel-closed-guard: PASS
+leg 5/8 rc=0 0s :: npm run test:ruling-propagation :: PASS — no READABLE refusal cites a finding the owner has already ruled. 8 refusal(s) state their basis in a narrative field this guard does not scan; their text is above.
+leg 6/8 rc=2 0s :: npm run test:desk-declaration ::   Re-run from the main worktree, or pass --root <main worktree>.
+leg 7/8 rc=0 2s :: node scripts/nul-audit.mjs :: nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+leg 8/8 rc=0 29s :: npm run test:review-fixes scripts/node-guards-watchdog.test.mjs scripts/ratelimit-window.t... :: ℹ tests 86, ℹ pass 86, ℹ fail 0, ℹ cancelled 0, ℹ skipped 0
+BATTERY: 8 legs, combined rc 1

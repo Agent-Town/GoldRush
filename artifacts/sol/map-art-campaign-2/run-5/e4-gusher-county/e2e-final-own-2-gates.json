@@ -1,0 +1,25 @@
+[
+  {
+    "label": "final-own-2",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-5/e4-gusher-county-final-own-2",
+      "e2e/e4-roads-and-convoys.spec.ts",
+      "e2e/panorama-framing.spec.ts",
+      "e2e/ss-05-e4-beats.spec.ts",
+      "--grep",
+      "publishes its own errand|human parity|e4-gusher-county keeps|legacy painted ground|SS-05 table"
+    ],
+    "environment": {},
+    "exit": 1,
+    "seconds": 48.15,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-5/e4-gusher-county-final-own-2.log"
+  }
+]

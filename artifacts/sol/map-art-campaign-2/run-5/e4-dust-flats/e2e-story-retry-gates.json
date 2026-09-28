@@ -1,0 +1,23 @@
+[
+  {
+    "label": "story-retry",
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "--workers=1",
+      "--project=desktop-chrome",
+      "--project=mobile-chrome",
+      "--trace=off",
+      "--reporter=line",
+      "--output=artifacts/sol/map-art-campaign-2/_raw/run-5/e4-dust-flats-story-retry",
+      "e2e/ss-05-e4-beats.spec.ts",
+      "--grep",
+      "player-selected Motor town"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 82.26,
+    "log": "artifacts/sol/map-art-campaign-2/_raw/run-5/e4-dust-flats-story-retry.log"
+  }
+]

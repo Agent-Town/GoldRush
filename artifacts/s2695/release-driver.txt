@@ -1,0 +1,31 @@
+
+===== release suite owning config — rc=0 159.1s =====
+[WebServer] - Using dynamic import() to code-split the application
+[WebServer] - Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+[WebServer] - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[WebServer] (node:40291) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] quantize: Skipping TEXCOORD_0; out of [0,1] range.
+[WebServer] [asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png
+[WebServer] (node:40319) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:40358) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+(node:40044) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40366) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40366) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[desktop-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+(node:41334) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:41334) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[mobile-chrome] › e2e/release-build.spec.ts:244:1 › dist has no later manifest ids or plate/GLB assets
+
+
+SUMMARY {"release suite owning config":0}
+OVERALL rc=0
+transcript -> artifacts/s2695/release.txt

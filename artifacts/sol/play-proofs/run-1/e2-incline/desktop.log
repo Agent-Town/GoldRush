@@ -1,0 +1,44 @@
+
+Running 1 test using 1 worker
+
+
+(node:66797) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [desktop-chrome] › e2e/native-proofs/driver.ts:535:5 › e2-incline plays to its secure wave, banks, reloads and returns to the board @slow
+[desktop-chrome] › e2e/native-proofs/driver.ts:535:5 › e2-incline plays to its secure wave, banks, reloads and returns to the board @slow
+e2-incline {"t":10.4,"wave":0,"hp":100,"gold":0,"kills":0,"x":-4.3,"z":-20.8,"alive":2,"seams":2}
+
+e2-incline {"t":20.8,"wave":0,"hp":100,"gold":10,"kills":0,"x":29.1,"z":-20.2,"alive":6,"seams":2}
+
+e2-incline {"t":31.2,"wave":0,"hp":100,"gold":30,"kills":0,"x":10.2,"z":-4.5,"alive":11,"seams":1}
+
+e2-incline {"t":41.7,"wave":1,"hp":74,"gold":30,"kills":6,"x":-16.3,"z":26.2,"alive":13,"seams":1}
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:535:5 › e2-incline plays to its secure wave, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 1 / 51.3s sim, 12 kills, 50 gold; Incline Haul not completed: {"enabled":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      835 |       }
+      836 |
+    > 837 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+          |                                                                ^
+      838 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      839 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      840 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:837:64
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/play-proofs/run-1/e2-incline/desktop-results/native-proofs-e2-incline-e-c0c24-ds-and-returns-to-the-board-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/play-proofs/run-1/e2-incline/desktop-results/native-proofs-e2-incline-e-c0c24-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+
+  1 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:535:5 › e2-incline plays to its secure wave, banks, reloads and returns to the board @slow 

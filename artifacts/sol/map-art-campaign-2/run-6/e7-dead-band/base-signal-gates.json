@@ -1,0 +1,46 @@
+{
+  "storeBase": "13038c4f2324f0fec063663db72ccde43238301a",
+  "base": "199b99705505ccecb829cfdfdf2783b29f4222eb",
+  "paths": {
+    "src/world/Terrain3dClaimPilot.ts": {
+      "candidateSha256": "d183b1b5c889adf8da3cbe1f3720da436a82b5958f93f3e3c4d42e7bb7c71e0b",
+      "baseSha256": "76725bbac390c356ab43f8e6c6e5d806f5344a1ebaa1fa23509e1d962223ecd7"
+    },
+    "assets/pilots/map-rebuild-spike/dead-band-terrain-contract.json": {
+      "candidateSha256": "3e9d2d5058f9181c1f2a150d8f309721203d56fed0b241f1948f918c76cc2680",
+      "baseSha256": "277265f49087240ecda8b364839e692ded199f49aee241c37b67245c5c2e1e41"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/dead-band/dead-band-landmark-pack-contract.json": {
+      "candidateSha256": "22151c597a48ced06c37aef0879ee3006ca275f92bc464cb2599d242709009e9",
+      "baseSha256": "8410093dcf1db916d54aaf680903ef843a2b8e592916b25a60edbbe4bb246390"
+    }
+  },
+  "pattern": "plain Signal-era boot|S3 silences|HUMAN PARITY",
+  "specs": [
+    "e2e/e7-roster.spec.ts",
+    "e2e/e7-signal-systems.spec.ts",
+    "e2e/e7-playbook-rows.spec.ts"
+  ],
+  "candidateEngine": "c4de03c756e538abb6c3787d9a1e4b80cc03b62cc3de095eaa2fedb8df814ab4",
+  "baseEngine": "338b9a112823ee64444dc9d7cc4525dea0e2bc84474174c6af583ea8ce9545ad",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-6/e7-dead-band-base-signal-gates/test-results",
+    "--grep",
+    "plain Signal-era boot|S3 silences|HUMAN PARITY",
+    "e2e/e7-roster.spec.ts",
+    "e2e/e7-signal-systems.spec.ts",
+    "e2e/e7-playbook-rows.spec.ts"
+  ],
+  "exit": 1,
+  "restoredEngine": "c4de03c756e538abb6c3787d9a1e4b80cc03b62cc3de095eaa2fedb8df814ab4",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-6/e7-dead-band-base-signal-gates/tests.log"
+}

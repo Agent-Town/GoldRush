@@ -1,0 +1,81 @@
+{
+  "allowFallbackBefore": false,
+  "extraSources": [],
+  "epoch": "epoch-4-motor",
+  "assets": [
+    {
+      "name": "long-road-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "long-road-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "west-way-station.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "middle-way-station.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-way-station.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "convoy-lead-hauler-start.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-railhead.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "convoy-lead-hauler-start",
+      "entry",
+      -182,
+      0
+    ],
+    [
+      "convoy-lead-hauler-start",
+      5,
+      -180,
+      5
+    ],
+    [
+      "west-way-station",
+      5,
+      -136,
+      -9
+    ],
+    [
+      "panorama",
+      "entry",
+      -182,
+      0
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        460,
+        185,
+        970,
+        300
+      ]
+    ],
+    [
+      390,
+      [
+        20,
+        280,
+        150,
+        380
+      ]
+    ]
+  ]
+}

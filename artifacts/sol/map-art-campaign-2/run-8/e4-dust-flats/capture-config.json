@@ -1,0 +1,73 @@
+{
+  "allowFallbackBefore": false,
+  "extraSources": [
+    "entities/Vehicle"
+  ],
+  "epoch": "epoch-4-motor",
+  "assets": [
+    {
+      "name": "dust-flats-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "dust-flats-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "north-railhead-storm-tower.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "west-road-wrecker-shed.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-horizon-fuel-reserve.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "south-grade-charting-post.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "dry-wash-recovery-gantry.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "hauler",
+      "entry",
+      0,
+      0
+    ],
+    [
+      "hauler",
+      5,
+      0,
+      0
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        440,
+        195,
+        840,
+        300
+      ]
+    ],
+    [
+      390,
+      [
+        20,
+        275,
+        370,
+        370
+      ]
+    ]
+  ],
+  "actorMaskAtEntry": false,
+  "baselineCorrectionRun": 5
+}

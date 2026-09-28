@@ -1,0 +1,972 @@
+(node:75418) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 25 tests using 1 worker
+
+
+(node:75552) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:75552) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/25] [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
+  1) [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:81718) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/25] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:205:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button
+  2) [desktop-chrome] › e2e/bt-01-tiers.spec.ts:205:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button 
+
+    Error: expect(received).toBeNull()
+
+    Received: {"effectiveDamage": 72.8, "effectiveFireRate": 1.298, "hp": 50, "id": "turret", "index": 0, "maxHp": 50, "panRateMult": undefined, "position": {"x": 0, "z": 12}, "repairCost": 0, "repairProgress": 0, "tier": 2, "worn": false, "wrecked": false, "yieldPerCycle": undefined}
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      214 |   await page.keyboard.press('Enter');
+      215 |
+    > 216 |   await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();
+          |                                                                  ^
+      217 |   await expect.poll(() => buildableCount(page, 'turret')).toBe(0);
+      218 |   expect(errors.consoleErrors).toEqual([]);
+      219 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:216:66
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/bt-01-tiers-Enter-tears-do-b31df--the-focused-upgrade-button-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:82848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/25] [desktop-chrome] › e2e/bt-01-tiers.spec.ts:430:1 › insufficient gold leaves tier and gold unchanged
+  3) [desktop-chrome] › e2e/bt-01-tiers.spec.ts:430:1 › insufficient gold leaves tier and gold unchanged 
+
+    Error: expect(received).toBeNull()
+
+    Received: {"effectiveDamage": undefined, "effectiveFireRate": undefined, "hp": 60, "id": "palisade", "index": 0, "maxHp": 60, "panRateMult": undefined, "position": {"x": 0, "z": 9}, "repairCost": 0, "repairProgress": 0, "tier": 1, "worn": false, "wrecked": false, "yieldPerCycle": undefined}
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      441 |   await expect(page.getByTestId('building-context-prompt')).toBeVisible();
+      442 |   await page.keyboard.press('Enter');
+    > 443 |   await expect.poll(() => hpEntry(page, 'palisade', palisade.index)).toBeNull();
+          |                                                                      ^
+      444 |   expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * Balance.palisade.cost));
+      445 |   expect(errors.consoleErrors).toEqual([]);
+      446 |   expect(errors.pageErrors).toEqual([]);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/bt-01-tiers.spec.ts:443:70
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/bt-01-tiers-insufficient-gold-leaves-tier-and-gold-unchanged-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:83134) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[4/25] [desktop-chrome] › e2e/ceremony-framework.spec.ts:777:1 › T10 THE CHARTER PRESS: the E10 science ceiling opens the existing River finale and idle opens nothing
+
+(node:83134) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[5/25] [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18
+  4) [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+        "bannerAsset": "loaded",
+        "bannerSprites": 0,
+    -   "baronAnimationLoaded": true,
+    +   "baronAnimationLoaded": false,
+        "baronAsset": "loaded",
+        "baronSprites": 0,
+        "portraitSrc": null,
+      }
+
+    Call Log:
+    - Timeout 10000ms exceeded while waiting on the predicate
+
+      300 |       { timeout: 10_000 },
+      301 |     )
+    > 302 |     .toEqual({
+          |      ^
+      303 |       baronAsset: 'loaded',
+      304 |       bannerAsset: 'loaded',
+      305 |       baronAnimationLoaded: true,
+        at expectBaronPresentationPrefetched (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts:302:6)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e1-baron.spec.ts:414:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e1-baron-Baron-manifest-lo-b4ca0-s-fire-at-waves-5-12-and-18-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:83740) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:83740) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[6/25] [desktop-chrome] › e2e/e6-picnic-opening.spec.ts:386:3 › e6-picnic: the opening the card describes › an unbuilt Picnic ends on the sandwiches, with the Prospector untouched
+[7/25] [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward
+  5) [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('playbook-toggle')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('playbook-toggle')
+
+
+      47 |
+      48 |   await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');
+    > 49 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+         |                                                     ^
+      50 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+      51 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      52 | });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-playbook-surface.spec.ts:49:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:90132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:90132) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[8/25] [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:54:1 › record, name, shelf, and replay use the profile tape store and the slaved rig actor
+[9/25] [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once
+  6) [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      136 |     const contracts = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      137 |     return contracts.activateEpoch('epoch-8-orbital');
+    > 138 |   })).toBe(true);
+          |       ^
+      139 |   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+      140 | });
+      141 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/e7-signal-systems.spec.ts:138:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/e7-signal-systems-S3-silen-c08f3--the-last-beat-exactly-once-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:90600) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:90600) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[10/25] [desktop-chrome] › e2e/en-02-e1-coverage.spec.ts:407:1 › EN-02 enemy stats reveal once, persist, and hero facts live-read abilities
+  7) [desktop-chrome] › e2e/en-02-e1-coverage.spec.ts:407:1 › EN-02 enemy stats reveal once, persist, and hero facts live-read abilities 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+    Call Log:
+    - Timeout 12000ms exceeded while waiting on the predicate
+
+      433 |   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst
+      434 |   // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).
+    > 435 |   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);
+          |                                                                                                              ^
+      436 |
+      437 |   await openLedgerDirect(page, 'claim_jumper');
+      438 |   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/en-02-e1-coverage.spec.ts:435:110
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/en-02-e1-coverage-EN-02-en-b81bd-o-facts-live-read-abilities-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:91404) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[11/25] [desktop-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice
+  8) [desktop-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('hud-wave')
+    Timeout: 5000ms
+    - Expected substring  - 1
+    + Received string     + 8
+
+    - Stake your claim.
+    +
+    +         
+    +         
+    +         
+    +           
+    +           the Prospector: follows and observes. Chip by weapon; claim wins grow it.
+    +         
+    +       
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('hud-wave')
+        13 × locator resolved to <div class="hud__wave" data-testid="hud-wave" aria-label="Wave status">…</div>
+           - unexpected value "
+            
+            
+            
+              
+              the Prospector: follows and observes. Chip by weapon; claim wins grow it.
+            
+          "
+
+
+      31 |
+      32 |   const banner = page.getByTestId('hud-wave');
+    > 33 |   await expect(banner).toContainText('Stake your claim.');
+         |                        ^
+      34 |   await expect
+      35 |     .poll(async () => Number(await banner.evaluate((element) => getComputedStyle(element).opacity)))
+      36 |     .toBeGreaterThan(0.5);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/feedback-fx.spec.ts:33:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/feedback-fx-announcement-b-cb8b5-er-the-opening-claim-notice-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:92516) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[12/25] [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives
+  9) [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      33 |
+      34 |   await waitForSim(page, 4.8);
+    > 35 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? -1)).toBe(0);
+         |                                                                                            ^
+      36 |
+      37 |   await waitForSim(page, 8);
+      38 |   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBeGreaterThan(0);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m1-03-wave-pressure.spec.ts:35:92
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m1-03-wave-pressure-grace--809f6--then-first-trickle-arrives-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:92780) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[13/25] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target
+  10) [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      153 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 8));
+      154 |   await page.waitForTimeout(2200);
+    > 155 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().arsenal.turretKills ?? 0)).toBe(0);
+          |                                                                                           ^
+      156 |   expect(await page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBe(1);
+      157 |
+      158 |   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(6, 12));
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:155:91
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m2-06-arsenal-blast-charge-49405--shoots-clear-second-target-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:93143) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[14/25] [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:212:1 › stress blast pool never exceeds cap
+  11) [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:212:1 › stress blast pool never exceeds cap 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+    Call Log:
+    - Timeout 15000ms exceeded while waiting on the predicate
+
+      226 |   });
+      227 |
+    > 228 |   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().arsenal.detonations ?? 0), { timeout: 15_000 }).toBeGreaterThan(0);
+          |                                                                                                                           ^
+      229 |   // Give the rAF tracker time to actually sample: at ~6fps one poll round-trip spans ~2 frames,
+      230 |   // so asserting samples>2 immediately after the detonation poll is a coin flip (s25 gate, env A/B-proven).
+      231 |   await expect
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m2-06-arsenal-blast-charge.spec.ts:228:123
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m2-06-arsenal-blast-charge-eef69-last-pool-never-exceeds-cap-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m2-06-arsenal-blast-charge-eef69-last-pool-never-exceeds-cap-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m2-06-arsenal-blast-charge-eef69-last-pool-never-exceeds-cap-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m2-06-arsenal-blast-charge-eef69-last-pool-never-exceeds-cap-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:94083) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[15/25] [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement
+  12) [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 8
+    Received: 19
+
+      303 |   const idle = await waitForProspectorSprite(page);
+      304 |   expect(['idle', 'walk']).toContain(idle.clip);
+    > 305 |   expect(idle.fps).toBe(8);
+          |                    ^
+      306 |   expect(idle.frameKey).not.toContain('createProspectorTexture');
+      307 |   await saveM407Shot(page, testInfo, 'idle');
+      308 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-06-embodiment.spec.ts:305:20
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/m4-06-embodiment-real-Pros-a75a9-oads-and-faces-pan-movement-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:94368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:94368) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[16/25] [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders
+  13) [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders 
+
+    TimeoutError: page.waitForFunction: Timeout 15000ms exceeded.
+
+      703 |     expect(phrase).toMatch(/^[A-Z]+-[A-Z]+-[0-9A-V]{20}$/);
+      704 |     await alice.getByTestId('ride-start').click();
+    > 705 |     await alice.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 15_000 });
+          |                 ^
+      706 |
+      707 |     await openTownBoard(bob, BOB);
+      708 |     await ensureRideOpen(bob);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/mp-02-lockstep.spec.ts:705:17
+
+    attachment #1: card (image/png) ────────────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/attachments/card-4d8e022c8a4fad4952bafb39a88d795537a63d4d.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/test-failed-2.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/error-context.md
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/error-context.md
+
+    attachment #6: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/mp-02-lockstep-town-Ride-T-cc04e--and-joins-two-named-riders-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:95371) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:95371) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[17/25] [desktop-chrome] › e2e/run-suspend.spec.ts:282:1 › legacy no-controls restore at Territory I keeps the removed ring and its hints absent
+[18/25] [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits
+  14) [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: "first-contract"
+    Received: "ledger-page:town_elder"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to <article role="status" data-art-key="" aria-live="polite" data-speaker="clerk" data-ceremony-step="" data-testid="story-beat-card" data-beat-id="ledger-page:town_elder" class="story-beat-card story-beat-card--visible">…</article>
+           - unexpected value "ledger-page:town_elder"
+
+
+      86 |   await expect(card).toBeVisible({ timeout: 8_000 });
+      87 |   await expect(card).toHaveClass(/story-beat-card--visible/);
+    > 88 |   await expect(card).toHaveAttribute('data-beat-id', id);
+         |                      ^
+      89 |   await expect(card).toHaveAttribute('data-speaker', speaker);
+      90 |   await expect(page.getByTestId('story-beat-portrait')).toHaveAttribute('src', new RegExp(portraitNeedle));
+      91 | }
+        at expectBeat (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:88:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/ss-01-beats.spec.ts:118:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/ss-01-beats-founding-first-d6d9b-ts-fire-once-with-portraits-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:97026) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:97026) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[19/25] [desktop-chrome] › e2e/trail-guide.spec.ts:100:1 › fresh profile sees the first three trail beats once, in order, and reload stays quiet
+  15) [desktop-chrome] › e2e/trail-guide.spec.ts:100:1 › fresh profile sees the first three trail beats once, in order, and reload stays quiet 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      51 | async function expectBark(page: Page, text: string): Promise<void> {
+      52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);
+    > 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+         |                                                     ^
+      54 | }
+      55 |
+      56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {
+        at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:112:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/trail-guide-fresh-profile--f499e-rder-and-reload-stays-quiet-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:97328) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:97328) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[20/25] [desktop-chrome] › e2e/trail-guide.spec.ts:128:1 › first build-menu open teaches once, survives reload, and stays off for veterans
+  16) [desktop-chrome] › e2e/trail-guide.spec.ts:128:1 › first build-menu open teaches once, survives reload, and stays off for veterans 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('story-beat-card')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByTestId('story-beat-card')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      51 | async function expectBark(page: Page, text: string): Promise<void> {
+      52 |   await expect(page.getByTestId('hud-agent-feed')).toContainText(text);
+    > 53 |   await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+         |                                                     ^
+      54 | }
+      55 |
+      56 | async function approachFirstSeam(page: Page, seconds: number): Promise<void> {
+        at expectBark (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:53:53)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/trail-guide.spec.ts:140:3
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/trail-guide-first-build-me-bd0fb--and-stays-off-for-veterans-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:97697) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[21/25] [desktop-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds
+  17) [desktop-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 4
+    + Received  + 4
+
+    @@ -8,22 +8,22 @@
+          "speedMul": 0.85,
+          "walkable": true,
+          "zone": "ford",
+        },
+        "northBank": Object {
+    -     "speedMul": 1,
+    -     "walkable": true,
+    +     "speedMul": 0,
+    +     "walkable": false,
+          "zone": "bank",
+        },
+        "out": Object {
+          "speedMul": 0,
+          "walkable": false,
+          "zone": "out",
+        },
+        "river": Object {
+    -     "speedMul": 0.55,
+    -     "walkable": true,
+    +     "speedMul": 0,
+    +     "walkable": false,
+          "zone": "river",
+        },
+        "shallows": Object {
+          "speedMul": 0.8,
+          "walkable": true,
+
+      116 |
+      117 |   const probes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes);
+    > 118 |   expect(probes).toMatchObject({
+          |                  ^
+      119 |     bank: { walkable: true, speedMul: 1, zone: 'bank' },
+      120 |     shallows: { walkable: true, speedMul: 0.8, zone: 'shallows' },
+      121 |     river: { walkable: true, speedMul: 0.55, zone: 'river' },
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:118:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/visual-terrain-diagnostics-expose-claim-zones-and-speeds-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/visual-terrain-diagnostics-expose-claim-zones-and-speeds-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/visual-terrain-diagnostics-expose-claim-zones-and-speeds-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/visual-terrain-diagnostics-expose-claim-zones-and-speeds-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:97952) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[22/25] [desktop-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics
+  18) [desktop-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics ──
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "river"
+    Received: "shallows"
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      228 |   await expect
+      229 |     .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone))
+    > 230 |     .toBe('river');
+          |      ^
+      231 |   await page.waitForTimeout(400);
+      232 |   const riverSpeed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0);
+      233 |   await page.keyboard.up('KeyW');
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/visual.spec.ts:230:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/visual-river-band-slows-the-hero-through-diagnostics-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/visual-river-band-slows-the-hero-through-diagnostics-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/visual-river-band-slows-the-hero-through-diagnostics-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/visual-river-band-slows-the-hero-through-diagnostics-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:99208) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:99208) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[23/25] [desktop-chrome] › e2e/world-info-notes.spec.ts:196:1 › building notes sit with existing assay and upgrade prompts
+  19) [desktop-chrome] › e2e/world-info-notes.spec.ts:196:1 › building notes sit with existing assay and upgrade prompts 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  getByTestId('world-info-note')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByTestId('world-info-note')
+        14 × locator resolved to <details name="" hidden="" aria-live="polite" data-compact="true" data-testid="world-info-note" data-object-class="assay_office" class="world-info-note world-info-note--compact">…</details>
+           - unexpected value "hidden"
+
+
+       96 | async function expectNote(page: Page, objectClass: WorldInfoObjectClass, text?: string): Promise<void> {
+       97 |   const note = page.getByTestId('world-info-note');
+    >  98 |   await expect(note).toBeVisible();
+          |                      ^
+       99 |   await expect(note).toHaveAttribute('data-object-class', objectClass);
+      100 |   if (text) await expect(note).toContainText(text);
+      101 | }
+        at expectNote (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:98:22)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:222:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-building--a904f-g-assay-and-upgrade-prompts-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:99793) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:99793) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[24/25] [desktop-chrome] › e2e/world-info-notes.spec.ts:293:1 › town shells use info notes beside opens-soon prompts
+  20) [desktop-chrome] › e2e/world-info-notes.spec.ts:293:1 › town shells use info notes beside opens-soon prompts 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('town-approach-prompt')
+    Timeout: 5000ms
+    - Expected substring  - 1
+    + Received string     + 4
+
+    - opens soon
+    +
+    +         Tavern ... the board is warm
+    +         Board
+    +       
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for getByTestId('town-approach-prompt')
+        7 × locator resolved to <div hidden="" role="status" aria-live="polite" class="town-ui__prompt" data-testid="town-approach-prompt">…</div>
+          - unexpected value "
+            Tavern ... the board is warm
+            Board
+          "
+        7 × locator resolved to <div role="status" aria-live="polite" class="town-ui__prompt" data-testid="town-approach-prompt">…</div>
+          - unexpected value "
+            Tavern ... the board is warm
+            Board
+          "
+
+
+      299 |
+      300 |   await approachTownBuilding(page, 'tavern');
+    > 301 |   await expect(page.getByTestId('town-approach-prompt')).toContainText('opens soon');
+          |                                                          ^
+      302 |   await expect(page.getByTestId('town-open-board')).toBeVisible();
+      303 |   await expectNote(page, 'town_tavern', 'contract board');
+      304 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:301:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-town-shel-90f0b-s-beside-opens-soon-prompts-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+
+(node:337) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:337) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[25/25] [desktop-chrome] › e2e/world-info-notes.spec.ts:322:1 › 390px world note clears the touch stick zone
+  21) [desktop-chrome] › e2e/world-info-notes.spec.ts:322:1 › 390px world note clears the touch stick zone 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 586
+    Received:    660
+
+      337 |   });
+      338 |   expect(boxes).toBeTruthy();
+    > 339 |   expect(boxes!.note.bottom).toBeLessThanOrEqual(boxes!.controls.top - 8);
+          |                              ^
+      340 |   await shot(page, testInfo, 'mobile-390-stake-note');
+      341 |   assertNoErrors(errors);
+      342 | });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/world-info-notes.spec.ts:339:30
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/sol/map-art-campaign-2/run-10/phone-hud/failures/e2e-baseline-desktop-chrome/world-info-notes-390px-wor-5c2cb-clears-the-touch-stick-zone-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  21 failed
+    [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [desktop-chrome] › e2e/bt-01-tiers.spec.ts:205:1 › Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button 
+    [desktop-chrome] › e2e/bt-01-tiers.spec.ts:430:1 › insufficient gold leaves tier and gold unchanged 
+    [desktop-chrome] › e2e/e1-baron.spec.ts:411:1 › Baron manifest loads and taunts fire at waves 5, 12, and 18 
+    [desktop-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+    [desktop-chrome] › e2e/e7-signal-systems.spec.ts:104:1 › S3 silences wait for midpoint, darken in canon order, and arm the last beat exactly once 
+    [desktop-chrome] › e2e/en-02-e1-coverage.spec.ts:407:1 › EN-02 enemy stats reveal once, persist, and hero facts live-read abilities 
+    [desktop-chrome] › e2e/feedback-fx.spec.ts:28:1 › announcement banner fades after the opening claim notice 
+    [desktop-chrome] › e2e/m1-03-wave-pressure.spec.ts:31:1 › grace holds pressure until sim-t 5, then first trickle arrives 
+    [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:131:1 › turret line of sight ignores blocked nearest and shoots clear second target 
+    [desktop-chrome] › e2e/m2-06-arsenal-blast-charge.spec.ts:212:1 › stress blast pool never exceeds cap 
+    [desktop-chrome] › e2e/m4-06-embodiment.spec.ts:298:1 › real Prospector sprite loads and faces pan movement 
+    [desktop-chrome] › e2e/mp-02-lockstep.spec.ts:687:1 › town Ride Together card creates a claim word and joins two named riders 
+    [desktop-chrome] › e2e/ss-01-beats.spec.ts:103:1 › founding, first contract, and Prospector XP beats fire once with portraits 
+    [desktop-chrome] › e2e/trail-guide.spec.ts:100:1 › fresh profile sees the first three trail beats once, in order, and reload stays quiet 
+    [desktop-chrome] › e2e/trail-guide.spec.ts:128:1 › first build-menu open teaches once, survives reload, and stays off for veterans 
+    [desktop-chrome] › e2e/visual.spec.ts:113:1 › terrain diagnostics expose claim zones and speeds 
+    [desktop-chrome] › e2e/visual.spec.ts:212:1 › river band slows the hero through diagnostics ────
+    [desktop-chrome] › e2e/world-info-notes.spec.ts:196:1 › building notes sit with existing assay and upgrade prompts 
+    [desktop-chrome] › e2e/world-info-notes.spec.ts:293:1 › town shells use info notes beside opens-soon prompts 
+    [desktop-chrome] › e2e/world-info-notes.spec.ts:322:1 › 390px world note clears the touch stick zone 
+  4 passed (8.3m)

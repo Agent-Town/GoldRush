@@ -1,0 +1,73 @@
+{
+  "epoch": "epoch-8-orbital",
+  "assets": [
+    {
+      "name": "low-orbit-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "low-orbit-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "west-scaffold-handhold-frame.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "claw-carcass-rig.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-scaffold-handhold-frame.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "north-debris-catcher.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "south-return-beacon.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "claw-carcass-rig",
+      "entry",
+      0,
+      12
+    ],
+    [
+      "claw-carcass-rig",
+      14,
+      0,
+      14
+    ],
+    [
+      "claw-carcass-rig",
+      3,
+      0,
+      3
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        800,
+        360,
+        900,
+        470
+      ]
+    ],
+    [
+      390,
+      [
+        20,
+        380,
+        95,
+        470
+      ]
+    ]
+  ]
+}

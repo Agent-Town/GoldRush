@@ -1,0 +1,65 @@
+{
+  "storeBase": "0c64c9355000a0304978c31c81fdb70439f0730f",
+  "base": "87f218e98473a4ddf6ebad65d37eeb8fe90ffc02",
+  "paths": {
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/center-wind-anchor.glb": {
+      "candidateSha256": "22d4ba9b930d39e9d57b55e726f7b85a7187cb0dd94371acb3befdf7e53a4f06",
+      "baseSha256": "597d8f87f16497275be81229d4b023d2940e504154176fb98f697443486aa28d"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/devils-alley-landmark-pack-contract.json": {
+      "candidateSha256": "83eada476fb31b407b43cc0872853d3ec95aef48e6342bb3915fefc3ffbfabba",
+      "baseSha256": "558b73fe72adac8cabb1b2a1327c03cd460504c4b5cd3584a79229691a5950f5"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/devils-alley-landmarks-atlas.png": {
+      "candidateSha256": "3b23219ef04870fa71a73f3006a8f80225c95d1f3be56f66a8b4e0975e3b721b",
+      "baseSha256": "d4a8511eeb3b9bbbe9a61ea4e61db8ae0a6a690f7af87724cd1a85fba227af29"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/devils-alley-landmarks.blend": {
+      "candidateSha256": "bf12db5667984e7aad013c43bcddd65a2cdc61a27efe335f45582b5c34a9f4ac",
+      "baseSha256": "ecf1a39f1fe5af2a4b1f742609bb545ffa2b1def401141f279226ba3898dc7fd"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/east-wind-anchor.glb": {
+      "candidateSha256": "94c9fa3f7ebb58e501a6539e8ff85c62de0cc2490a17559c1c5734155dc19abc",
+      "baseSha256": "c388e4f7cfc855cbf74d19331e81e00633df70c7fa020a866647543aa73dc1eb"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/north-anchor-gate.glb": {
+      "candidateSha256": "96bd7bbd0533ff6b1a6a67560ad856afe105d726b1fcd533e2b4c18744ed5b04",
+      "baseSha256": "42ef6ec52049237a63dcf9c5f65302cb5bc99870eb8687937a2fdae78a1111a9"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/south-anchor-gate.glb": {
+      "candidateSha256": "ba924699bf9b620db706af8ff04cd53188548c3f3a1d27c78ea24d1caca7b947",
+      "baseSha256": "c69349a8c9adf1e4b974eb5b4f622cb1f172837a8dde5da7ea2232b39ca1edf4"
+    },
+    "assets/pilots/map-rebuild-spike/landmarks/devils-alley/west-wind-anchor.glb": {
+      "candidateSha256": "7eb5bd131806887fb8a4af0846c6f62bd13c1fee90f6b9d5792d7ea9a6101c22",
+      "baseSha256": "c91b61a21036e7ffd64ef62f141c55766e11e4bb43de8a7071b0ed25668a1275"
+    }
+  },
+  "pattern": "plain\\ Red\\ Fields\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+  "specs": [
+    "e2e/e9-roster.spec.ts"
+  ],
+  "candidateEngine": "fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa",
+  "baseEngine": "bfa5e66df8f7adb07081b40e77913ff03a6cf3b496bc868189ea70409fe21bdb",
+  "command": [
+    "npx",
+    "playwright",
+    "test",
+    "--workers=1",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--trace=off",
+    "--reporter=line",
+    "--output=artifacts/sol/map-art-campaign-2/_raw/run-9/e9-devils-alley-base-failures/test-results",
+    "--grep",
+    "plain\\ Red\\ Fields\\ boot\\ stays\\ error\\-free\\ without\\ the\\ debug\\ harness",
+    "e2e/e9-roster.spec.ts"
+  ],
+  "exit": 1,
+  "newAssetsAbsentDuringBase": {
+    "assets/pilots/map-rebuild-spike/sources/e9-devils-alley-fidelity-2/landmark-input-contract.json": "558b73fe72adac8cabb1b2a1327c03cd460504c4b5cd3584a79229691a5950f5"
+  },
+  "restoredEngine": "fa80dda3304171f1c703a8baa2d6f304204e34ea9a1de4f10d2bf70caf71a4fa",
+  "candidateRestoredExactly": true,
+  "log": "artifacts/sol/map-art-campaign-2/_raw/run-9/e9-devils-alley-base-failures/tests.log"
+}

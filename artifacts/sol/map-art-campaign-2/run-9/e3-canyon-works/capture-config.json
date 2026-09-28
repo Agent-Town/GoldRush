@@ -1,0 +1,97 @@
+{
+  "allowFallbackBefore": false,
+  "extraSources": [],
+  "epoch": "epoch-3-voltage",
+  "assets": [
+    {
+      "name": "canyon-works-terrain.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "canyon-works-panorama.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "sub-hall-dynamo-house.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "west-switchback-line-house.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "east-switchback-line-house.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "dam-crest-gate-house.glb",
+      "type": "model/gltf-binary"
+    },
+    {
+      "name": "downriver-tram-lamp.glb",
+      "type": "model/gltf-binary"
+    }
+  ],
+  "stations": [
+    [
+      "sub-hall-dynamo-house",
+      "entry",
+      0,
+      -44
+    ],
+    [
+      "sub-hall-dynamo-house",
+      "new3",
+      0,
+      -51
+    ],
+    [
+      "west-switchback-line-house",
+      "new4",
+      -38,
+      -14
+    ],
+    [
+      "east-switchback-line-house",
+      "new4",
+      38,
+      -14
+    ],
+    [
+      "dam-crest-gate-house",
+      "new5",
+      0,
+      13
+    ],
+    [
+      "downriver-tram-lamp",
+      "new5",
+      44,
+      47
+    ]
+  ],
+  "regions": [
+    [
+      1280,
+      [
+        800,
+        350,
+        1000,
+        510
+      ]
+    ],
+    [
+      390,
+      [
+        270,
+        340,
+        375,
+        470
+      ]
+    ]
+  ],
+  "contracts": [
+    "canyon-works-panorama-contract.json",
+    "canyon-works-landmark-pack-contract.json"
+  ]
+}

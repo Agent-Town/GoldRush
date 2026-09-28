@@ -27,6 +27,7 @@ import glowMesaPanoramaContractText from '../../assets/pilots/map-rebuild-spike/
 import relayValleyContractText from '../../assets/pilots/map-rebuild-spike/relay-valley-terrain-contract.json?raw';
 import relayValleyPanoramaContractText from '../../assets/pilots/map-rebuild-spike/relay-valley-panorama-contract.json?raw';
 import mareClaimContractText from '../../assets/pilots/map-rebuild-spike/mare-claim-terrain-contract.json?raw';
+import farSideContractText from '../../assets/pilots/map-rebuild-spike/far-side-terrain-contract.json?raw';
 import mareClaimPanoramaContractText from '../../assets/pilots/map-rebuild-spike/mare-claim-panorama-contract.json?raw';
 import domeBasinContractText from '../../assets/pilots/map-rebuild-spike/dome-basin-terrain-contract.json?raw';
 import domeBasinPanoramaContractText from '../../assets/pilots/map-rebuild-spike/dome-basin-panorama-contract.json?raw';
@@ -44,6 +45,9 @@ import echoCanyonContractText from '../../assets/pilots/map-rebuild-spike/echo-c
 import echoCanyonPanoramaContractText from '../../assets/pilots/map-rebuild-spike/echo-canyon-panorama-contract.json?raw';
 import gusherCountyContractText from '../../assets/pilots/map-rebuild-spike/gusher-county-terrain-contract.json?raw';
 import gusherCountyPanoramaContractText from '../../assets/pilots/map-rebuild-spike/gusher-county-panorama-contract.json?raw';
+import relayRushContractText from '../../assets/pilots/map-rebuild-spike/relay-rush-terrain-contract.json?raw';
+import deadBandContractText from '../../assets/pilots/map-rebuild-spike/dead-band-terrain-contract.json?raw';
+import picnicContractText from '../../assets/pilots/map-rebuild-spike/picnic-terrain-contract.json?raw';
 import halfLifeHollowContractText from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json?raw';
 import halfLifeHollowPanoramaContractText from '../../assets/pilots/map-rebuild-spike/half-life-hollow-panorama-contract.json?raw';
 import inclineContractText from '../../assets/pilots/map-rebuild-spike/incline-terrain-contract.json?raw';
@@ -83,6 +87,16 @@ import { installVisualHeightSource, waterSources } from './Terrain';
 import { createLandmarkWalkSurfaces, type LandmarkWalkSurface } from './LandmarkWalkSurfaces';
 import { createSpringPondSurface, type SpringPondSurface } from './Water';
 import { createFordSheet, createWaterConfluence, createWaterRibbon, updateWaterMaterial } from './Water';
+import type { ContractManifest } from '../meta/ContractFamilies';
+
+import lastClaimContractText from '../../assets/pilots/map-rebuild-spike/last-claim-terrain-contract.json?raw';
+import lastClaimPanoramaContractText from '../../assets/pilots/map-rebuild-spike/last-claim-panorama-contract.json?raw';
+import riverContractText from '../../assets/pilots/map-rebuild-spike/river-terrain-contract.json?raw';
+import riverPanoramaContractText from '../../assets/pilots/map-rebuild-spike/river-panorama-contract.json?raw';
+
+type MotorGroundTruth = Pick<ContractManifest['tileParams'], 'dimensions' | 'roadCorridors' | 'tarSeams' | 'orbitSpawn'>;
+type PaintRoutePoint = { x: number; z: number };
+type PaintZone = { minX: number; maxX: number; minZ: number; maxZ: number };
 
 type Contract = {
   tileId: string;
@@ -93,7 +107,13 @@ type Contract = {
   boundsMeters: { min: [number, number, number]; max: [number, number, number] };
   panoramaMount: Mount;
   landmarkMounts?: LandmarkMount[];
-  maskTruth?: { waterMask?: { id: string; regions: MaskRegion[] } };
+  maskTruth?: MotorGroundTruth & {
+    canalRoute?: { points: PaintRoutePoint[] };
+    inheritedCanalRoute?: { points: PaintRoutePoint[] };
+    caravanRoute?: PaintRoutePoint[];
+    permanentGreenWaypointZones?: PaintZone[];
+    waterMask?: { id: string; regions: MaskRegion[] };
+  };
   maskAgreement?: { waterPlaneY?: number };
   waterSurface?: { owner: string; includedInTerrainGLB: boolean };
 };
@@ -117,7 +137,7 @@ type Mount = {
   renderOnly: boolean;
 };
 type LandmarkMount = Omit<Mount, 'renderOnly'> & { asset?: string; contractIds?: string[]; walkSurfaces?: LandmarkWalkSurface[] };
-type Entry = { terrainUrl: string; panoramaUrl: string; contract: Contract; panoramaContract: PanoramaContract };
+type Entry = { terrainUrl: string; panoramaUrl: string; contract: Contract; panoramaContract: PanoramaContract; detailTextureUrl?: string };
 type Host = {
   scene: THREE.Scene;
   canvas: HTMLCanvasElement;
@@ -144,12 +164,12 @@ type Host = {
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
 type HiddenRelief = { object: THREE.Object3D; visible: boolean };
 
-const entry = (terrainUrl: string, panoramaUrl: string, contractText: string, panoramaContractText: string): Entry => ({
-  terrainUrl,
-  panoramaUrl,
-  contract: JSON.parse(contractText) as Contract,
-  panoramaContract: JSON.parse(panoramaContractText) as PanoramaContract,
-});
+const entry = (terrainUrl: string, panoramaUrl: string, contractText: string, panoramaContractText: string, dressingText?: string, detailTextureUrl?: string): Entry => {
+  const contract = JSON.parse(contractText) as Contract;
+  // Variant dressing supplements the base bodies; the existing mount filter and transforms apply.
+  if (dressingText) contract.landmarkMounts = [...(contract.landmarkMounts ?? []), ...((JSON.parse(dressingText) as Contract).landmarkMounts ?? [])];
+  return { terrainUrl, panoramaUrl, contract, panoramaContract: JSON.parse(panoramaContractText) as PanoramaContract, detailTextureUrl };
+};
 const REGISTRY: Record<string, Entry> = {
   'the-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/the-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/the-claim-panorama.glb', import.meta.url).href, claimContractText, claimPanoramaContractText),
   'e1-dry-gulch': entry(new URL('../../assets/pilots/map-rebuild-spike/dry-gulch-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/dry-gulch-panorama.glb', import.meta.url).href, dryGulchContractText, dryGulchPanoramaContractText),
@@ -167,8 +187,8 @@ const REGISTRY: Record<string, Entry> = {
   'e7-relay-valley': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText),
   'e8-mare-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/mare-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/mare-claim-panorama.glb', import.meta.url).href, mareClaimContractText, mareClaimPanoramaContractText),
   'e9-dome-basin': entry(new URL('../../assets/pilots/map-rebuild-spike/dome-basin-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/dome-basin-panorama.glb', import.meta.url).href, domeBasinContractText, domeBasinPanoramaContractText),
-  'e10-ember-shore': entry(new URL('../../assets/pilots/map-rebuild-spike/ember-shore-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/ember-shore-panorama.glb', import.meta.url).href, emberShoreContractText, emberShorePanoramaContractText),
-  'e2-pressure-garden': entry(new URL('../../assets/pilots/map-rebuild-spike/pressure-garden-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/pressure-garden-panorama.glb', import.meta.url).href, pressureGardenContractText, pressureGardenPanoramaContractText),
+  'e10-ember-shore': entry(new URL('../../assets/pilots/map-rebuild-spike/ember-shore-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/ember-shore-panorama.glb', import.meta.url).href, emberShoreContractText, emberShorePanoramaContractText, undefined, new URL('../../assets/pilots/map-rebuild-spike/sources/ember-shore-fidelity-1/engraved-basalt.png', import.meta.url).href),
+  'e2-pressure-garden': entry(new URL('../../assets/pilots/map-rebuild-spike/pressure-garden-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/pressure-garden-panorama.glb', import.meta.url).href, pressureGardenContractText, pressureGardenPanoramaContractText, undefined, new URL('../../assets/pilots/map-rebuild-spike/sources/e2-pressure-garden-fidelity-2/engraved-river-gravel.png', import.meta.url).href),
   'e2-incline': entry(new URL('../../assets/pilots/map-rebuild-spike/incline-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/incline-panorama.glb', import.meta.url).href, inclineContractText, inclinePanoramaContractText),
   'e3-canyon-works': entry(new URL('../../assets/pilots/map-rebuild-spike/canyon-works-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/canyon-works-panorama.glb', import.meta.url).href, canyonWorksContractText, canyonWorksPanoramaContractText),
   'e3-moth-season': entry(new URL('../../assets/pilots/map-rebuild-spike/moth-season-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/moth-season-panorama.glb', import.meta.url).href, mothSeasonContractText, mothSeasonPanoramaContractText),
@@ -181,20 +201,22 @@ const REGISTRY: Record<string, Entry> = {
   'e5-flotilla': entry(new URL('../../assets/pilots/map-rebuild-spike/deepwater-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/deepwater-claim-panorama.glb', import.meta.url).href, deepwaterClaimContractText, deepwaterClaimPanoramaContractText),
   'e6-showroom': entry(new URL('../../assets/pilots/map-rebuild-spike/showroom-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/showroom-panorama.glb', import.meta.url).href, showroomContractText, showroomPanoramaContractText),
   'e6-half-life-hollow': entry(new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-panorama.glb', import.meta.url).href, halfLifeHollowContractText, halfLifeHollowPanoramaContractText),
-  // Glow Mesa alias: The Picnic keeps the caprock sculpt and changes campaign rules only.
-  'e6-picnic': entry(new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-panorama.glb', import.meta.url).href, glowMesaContractText, glowMesaPanoramaContractText),
+  // Picnic retains the Glow Mesa sculpt and collision-backed bodies, adding its nonblocking dressing.
+  'e6-picnic': entry(new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-panorama.glb', import.meta.url).href, glowMesaContractText, glowMesaPanoramaContractText, picnicContractText, new URL('../../assets/pilots/map-rebuild-spike/sources/e6-picnic-fidelity-2/picnic-ground-clean.png', import.meta.url).href),
   'e7-echo-canyon': entry(new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-panorama.glb', import.meta.url).href, echoCanyonContractText, echoCanyonPanoramaContractText),
   // Relay Valley aliases: both signal variants reuse its terrain and panorama.
-  'e7-dead-band': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText),
-  'e7-relay-rush': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText),
+  'e7-dead-band': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText, deadBandContractText),
+  'e7-relay-rush': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText, relayRushContractText),
   // Mare Claim aliases: Far Side and Eclipse change campaign rules without changing the sculpt.
-  'e8-far-side': entry(new URL('../../assets/pilots/map-rebuild-spike/mare-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/mare-claim-panorama.glb', import.meta.url).href, mareClaimContractText, mareClaimPanoramaContractText),
+  'e8-far-side': entry(new URL('../../assets/pilots/map-rebuild-spike/mare-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/mare-claim-panorama.glb', import.meta.url).href, mareClaimContractText, mareClaimPanoramaContractText, farSideContractText),
   'e8-low-orbit': entry(new URL('../../assets/pilots/map-rebuild-spike/low-orbit-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/low-orbit-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(lowOrbitContractText), boundsMeters: { min: [-64, -64, -5.869689], max: [64, 64, 1.08] } }), lowOrbitPanoramaContractText),
   'e8-eclipse': entry(new URL('../../assets/pilots/map-rebuild-spike/mare-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/mare-claim-panorama.glb', import.meta.url).href, mareClaimContractText, mareClaimPanoramaContractText),
   'e9-seed-run': entry(new URL('../../assets/pilots/map-rebuild-spike/seed-run-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/seed-run-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(seedRunContractText), boundsMeters: { min: [-64, -64, -0.14], max: [64, 64, 3.715142] } }), seedRunPanoramaContractText),
   'e9-devils-alley': entry(new URL('../../assets/pilots/map-rebuild-spike/devils-alley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/devils-alley-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(devilsAlleyContractText), boundsMeters: { min: [-64, -64, -0.14], max: [64, 64, 4.567115] } }), devilsAlleyPanoramaContractText),
   'e9-old-canal': entry(new URL('../../assets/pilots/map-rebuild-spike/old-canal-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/old-canal-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(oldCanalContractText), boundsMeters: { min: [-64, -64, -1.42], max: [64, 64, 2.906317] } }), oldCanalPanoramaContractText),
-  'e10-archive-world': entry(new URL('../../assets/pilots/map-rebuild-spike/archive-world-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/archive-world-panorama.glb', import.meta.url).href, archiveWorldContractText, archiveWorldPanoramaContractText),
+  'e10-archive-world': entry(new URL('../../assets/pilots/map-rebuild-spike/archive-world-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/archive-world-panorama.glb', import.meta.url).href, archiveWorldContractText, archiveWorldPanoramaContractText, undefined, new URL('../../assets/pilots/map-rebuild-spike/sources/archive-world-fidelity-1/engraved-masonry.png', import.meta.url).href),
+  'e10-last-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/last-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/last-claim-panorama.glb', import.meta.url).href, lastClaimContractText, lastClaimPanoramaContractText),
+  'e10-river': entry(new URL('../../assets/pilots/map-rebuild-spike/river-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/river-panorama.glb', import.meta.url).href, riverContractText, riverPanoramaContractText),
   }),
 };
 const LANDMARK_ASSETS = import.meta.glob([
@@ -360,6 +382,8 @@ type SculptWaterDressing = {
    */
   glints: 'harvest' | Array<{ x: number; z: number }>;
   rippleStrength?: number;
+  rippleScale?: number;
+  depthContrast?: number;
   /** Blend weight for the procedural canvas map. See the note on the hill mine's entry. */
   textureBlend?: number;
   /** Skip the baked bed map when the authored bed is a flat pan. */
@@ -417,7 +441,7 @@ const SCULPT_WATER_DRESSING: Record<string, SculptWaterDressing> = {
   //     depth) rather than the claim's 0.5.
   'e2-hill-mine': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#8a8177', opacity: 0.72, fordSkim: 0.11, deepMeters: 0.12, shoreMeters: 0.05, visualHalfWidth: 5.9, glints: [{ x: -27, z: -5.1 }, { x: 13, z: 5.1 }, { x: 33, z: -5.1 }], rippleStrength: 1.15, textureBlend: 0, },
   'e2-trestle': { surface: { kind: 'below-gorge-floor', quantile: 0.8, drop: 0.006 }, color: '#7e8480', opacity: 0.86, fordSkim: 0.11, deepMeters: 0.42, shoreMeters: 0.16, glints: [{ x: -15.5, z: -4.3 }, { x: -4.5, z: -4.5 }], rippleStrength: 0.4, textureBlend: 0.05, },
-  'e2-pressure-garden': { surface: { kind: 'channel-fill', fill: 0.11 }, color: '#d6f0ee', opacity: 0.8, fordSkim: 0.11, deepMeters: 0.5, shoreMeters: 0.15, bed: false, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: -12, z: 4.45 }, { x: 12, z: 4.45 }, { x: 30, z: 4.45 }], rippleStrength: 0.75, textureBlend: 0.04, fordTint: 0.44, shoreFadeMeters: 2.2, surfaceLift: true, overhangMeters: 10, emissive: '#0d2a33', collars: [{ mount: 'garden-pressure-manifold', radius: 2.9 }, { mount: 'water-band-pump-station', radius: 2.6 }], },
+  'e2-pressure-garden': { surface: { kind: 'channel-fill', fill: 0.11 }, color: '#a2c8d9', opacity: 0.99, fordSkim: 0.11, deepMeters: 0.5, shoreMeters: 0.15, bed: false, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: -12, z: 4.45 }, { x: 12, z: 4.45 }, { x: 30, z: 4.45 }], rippleStrength: 0.4, rippleScale: 1.6, depthContrast: 0.35, textureBlend: 0, fordTint: 0.25, shoreFadeMeters: 1, surfaceLift: true, overhangMeters: 10, collars: [{ mount: 'garden-pressure-manifold', radius: 2.9 }, { mount: 'water-band-pump-station', radius: 2.6 }], },
   'e2-incline': { surface: { kind: 'channel-fill', fill: 0.42 }, color: '#bb9366', opacity: 0.62, fordSkim: 0.125, deepMeters: 0.145, shoreMeters: 0.07, visualHalfWidth: 6.25, glints: [{ x: -30, z: 4.45 }, { x: 30, z: -4.45 }], rippleStrength: 0.6, textureBlend: 0.2, },
 };
 /** The E5 contracts reserve their sea for runtime; the sculpt supplies the visible bed. */
@@ -850,25 +874,10 @@ const LANDMARK_EMISSIVE_WHOLE_BODY_MIN = 0.12;
  * emissive), none of which route through this function — the cap below only ever touches a body
  * whose own diffuse atlas was being used as its light source.
  */
-/**
- * Contracts whose landmark atlas is too dark for the sun to carry: measured, each one reds
- * `e2e/map-census.spec.ts`'s 0.06 landmark-readability floor at EVERY legal calibrated lift on a
- * full 47-test run, while the pre-change tree is clean. They keep their authored emissive until
- * F-ASTRA-1's value separation reaches their atlas. Membership is a MEASUREMENT, not a taste: a map
- * leaves this list the moment a full census run clears the floor without it.
- */
-// Moth material atlas and frame remap pass the normal-emission census and visual gate (material-light21/gate22).
-const LANDMARK_EMISSIVE_READABILITY_EXEMPT = new Set([
-  'e2-pressure-garden',
-  'e6-glow-mesa',
-  'e6-picnic',
-]);
-
-function calibratedLandmarkIntensity(authored: number, contractId: string): number {
+function calibratedLandmarkIntensity(authored: number): number {
   const dials = lightingDials();
   if (dials.mode === 'legacy') return authored;
   if (dials.emissive !== undefined) return dials.emissive;
-  if (LANDMARK_EMISSIVE_READABILITY_EXEMPT.has(contractId)) return authored;
   const grade = authored / LANDMARK_EMISSIVE_DEFAULT;
   const lift = LANDMARK_EMISSIVE_CALIBRATED_DEFAULT * grade;
   return +THREE.MathUtils.clamp(lift, LANDMARK_EMISSIVE_WHOLE_BODY_MIN, LANDMARK_EMISSIVE_WHOLE_BODY_MAX).toFixed(4);
@@ -1004,6 +1013,12 @@ function cullVerifiedClosedMeshes(model: THREE.Object3D, mountId: string): Closu
 }
 
 function dressLandmark(model: THREE.Object3D, contractId: string, mountId: string): void {
+  if (contractId === 'e4-boneyard') model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || mesh.material.name !== 'BoneyardDriftEarth') return;
+    // Untextured burial soil follows the earth's light, not the machinery's paint.
+    mesh.material.emissiveIntensity = 0;
+  });
   if (contractId === 'e10-ember-shore' && mountId === 'last-warm-vent-altar') {
     const lamp = new THREE.Mesh(new THREE.CylinderGeometry(0.684, 0.684, 0.96, 16), new THREE.MeshBasicMaterial({ color: 0xffb438 }));
     lamp.name = 'last-warm-vent-altar.AmberWindow';
@@ -1080,7 +1095,20 @@ function keepLandmarkPaintReadable(model: THREE.Object3D, paint: LandmarkPaint =
     // wrote and the lit value it renders at — and so `?lighting=legacy` restores the exact
     // pre-calibration render from a material that may already have been re-installed once.
     material.userData.landmarkAuthoredEmissive = paint.intensity;
-    material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity, contractId);
+    material.emissiveIntensity = calibratedLandmarkIntensity(paint.intensity);
+    if ((contractId === 'e2-pressure-garden' || contractId === 'e6-glow-mesa' || contractId === 'e6-picnic' || contractId === 'e7-dead-band' || contractId === 'e7-relay-rush' || contractId === 'e8-far-side' || contractId === 'e8-low-orbit' || contractId === 'e9-dome-basin' || contractId === 'e9-seed-run' || contractId === 'e9-devils-alley' || contractId === 'e9-old-canal' || contractId === 'e10-last-claim' || contractId === 'e10-ember-shore' || contractId === 'e10-archive-world') && !material.userData.landmarkDiffuseGrade) {
+      material.userData.landmarkDiffuseGrade = true;
+      // Recover the atlas's dark iron detail in its diffuse paint, so the body can
+      // leave the legacy-emission exemption without turning its texture into a lamp.
+      const compile = material.onBeforeCompile.bind(material);
+      material.onBeforeCompile = (shader, renderer) => {
+        compile(shader, renderer);
+        shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+diffuseColor.rgb = min(vec3(0.88), pow(max(diffuseColor.rgb, vec3(0.0)), vec3(0.62)) * vec3(0.94, 0.99, 1.06) + vec3(0.014));`);
+      };
+      material.customProgramCacheKey = () => 'landmark-diffuse-iron-v1';
+      material.needsUpdate = true;
+    }
   });
 }
 
@@ -1393,6 +1421,8 @@ function mountSculptWater(host: Host, heightAt: (x: number, z: number) => number
     color: stillwater ? '#a5c5d0' : dressing.color,
     opacity: stillwater ? 0.62 : dressing.opacity,
     rippleStrength: stillwater ? 0.04 : dressing.rippleStrength,
+    rippleScale: dressing.rippleScale,
+    depthContrast: dressing.depthContrast,
     textureBlend: stillwater ? 0.06 : dressing.textureBlend,
     fordTint: dressing.fordTint,
     shoreFadeMeters: dressing.shoreFadeMeters,
@@ -1791,7 +1821,7 @@ function mountHaulSteam(
   }];
   if (cableHouse) vents.push({
     id: 'cable-house', x: cableHouse.position.x - 0.6, z: cableHouse.position.z - 1.4, y: 5,
-    interval: 1.5, phase: 0.4, life: 3.2, rise: 1.3, radius: 3.6, grow: 1.9,
+    interval: 1.5, phase: 0.4, life: 3.2, rise: 1.3, radius: 1.45, grow: 1.4,
     drift: [-0.4, -0.2], slots: 3,
   });
   if (crane) vents.push({
@@ -2025,6 +2055,686 @@ diffuseColor.rgb = mix(diffuseColor.rgb, trestleWorkedPigment, 0.23 * trestleBan
   }
 }
 
+/** Quiet desert pigment and wheel cuts follow the published Motor masks, never new roads. */
+function clarifyMotorGround(model: THREE.Object3D, truth: MotorGroundTruth, panorama = false, paintMix = 0.78): void {
+  if (isMapBeautyDisabled()) return;
+  const roads = truth.roadCorridors ?? [];
+  const seams = truth.tarSeams ?? [];
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.motorPaintMix = { value: paintMix };
+      shader.uniforms.motorEarth = { value: new THREE.Color('#9f8564') };
+      shader.uniforms.motorRoad = { value: new THREE.Color('#c5a274') };
+      shader.uniforms.motorRoads = { value: roads.map(r => new THREE.Vector4(r.start.x, r.start.z, r.end.x, r.end.z)) };
+      shader.uniforms.motorTar = { value: seams.length ? seams.map(s => new THREE.Vector3(s.x, s.z, s.radius)) : [new THREE.Vector3()] };
+      shader.uniforms.motorOrbit = { value: truth.orbitSpawn?.radius ?? 0 };
+      shader.uniforms.motorHalfSize = { value: new THREE.Vector2(truth.dimensions!.width / 2, truth.dimensions!.height / 2) };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vMotorGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvMotorGround = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>
+varying vec3 vMotorGround;
+uniform vec3 motorEarth, motorRoad;
+uniform vec4 motorRoads[${roads.length}];
+uniform vec3 motorTar[${Math.max(1, seams.length)}];
+uniform vec2 motorHalfSize;
+uniform float motorOrbit, motorPaintMix;`)
+        .replace('#include <map_fragment>', `#include <map_fragment>
+vec2 motorP = vMotorGround.xz;
+vec3 motorOriginal = diffuseColor.rgb;
+float motorGrain = fract(sin(dot(floor(motorP * 18.0), vec2(12.9898,78.233))) * 43758.5453);
+float motorMottle = sin(motorP.x * 0.37 + sin(motorP.y * 0.21)) * sin(motorP.y * 0.43);
+diffuseColor.rgb = mix(diffuseColor.rgb, motorEarth * (0.94 + motorGrain * 0.06 + motorMottle * 0.035), motorHalfSize.x > 100.0 ? 0.95 : motorPaintMix);
+float motorDistance = 10000.0;
+float motorRut = 0.0;
+for (int i = 0; i < ${roads.length}; i++) {
+  vec2 a = motorRoads[i].xy, b = motorRoads[i].zw, ab = b - a;
+  float along = dot(motorP - a, ab) / dot(ab, ab);
+  float distance = length(motorP - a - ab * clamp(along, 0.0, 1.0));
+  motorDistance = min(motorDistance, distance);
+  motorRut = max(motorRut, (1.0 - smoothstep(0.12, 0.28 + fwidth(distance), abs(distance - 1.55))) * smoothstep(0.0, 0.06, along) * (1.0 - smoothstep(0.94, 1.0, along)));
+}
+if (motorOrbit > 0.0) {
+  float angle = atan(motorP.y, motorP.x);
+  float wobble = sin(angle * 3.0 + 0.4) * 0.62 + sin(angle * 7.0 - 0.8) * 0.28;
+  float distance = abs(length(motorP) - motorOrbit - wobble);
+  motorDistance = min(motorDistance, distance);
+  motorRut = max(motorRut, 1.0 - smoothstep(0.12, 0.28 + fwidth(distance), abs(distance - 1.55)));
+}
+float motorRoadMask = 1.0 - smoothstep(2.8, 4.8, motorDistance);
+diffuseColor.rgb = mix(diffuseColor.rgb, motorRoad * (0.96 + motorGrain * 0.04), motorRoadMask * 0.62);
+diffuseColor.rgb *= 1.0 - motorRut * 0.16;
+for (int i = 0; i < ${seams.length}; i++) {
+  float radius = length(motorP - motorTar[i].xy) / motorTar[i].z;
+  float tar = 1.0 - smoothstep(0.65, 1.05 + motorMottle * 0.12, radius);
+  diffuseColor.rgb = mix(diffuseColor.rgb, motorEarth * 0.28, tar * 0.62);
+}
+float motorInterior = 1.0 - smoothstep(0.72, 1.0, max(abs(motorP.x) / motorHalfSize.x, abs(motorP.y) / motorHalfSize.y));
+if (motorHalfSize.x > 100.0) motorInterior = (1.0 - smoothstep(205.0, 260.0, abs(motorP.x))) * (1.0 - smoothstep(0.72, 1.0, abs(motorP.y) / motorHalfSize.y)) * (1.0 - smoothstep(1.0, 12.0, vMotorGround.y));
+diffuseColor.rgb = mix(motorOriginal, diffuseColor.rgb, motorInterior);${panorama ? '\n// Balance the differently lit Long Road apron against its adjacent earth.\ndiffuseColor.rgb *= mix(1.0, 1.12, motorInterior);' : ''}`);
+      if (panorama) shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\ntotalEmissiveRadiance *= 1.0 - motorInterior;');
+    };
+    material.customProgramCacheKey = () => `motor-ground-${roads.length}-${seams.length}-${panorama}-v2`;
+    material.needsUpdate = true;
+  }
+}
+
+/** Fine regolith pigment replaces the reused Mare's broad paint bands, without a new surface. */
+function clarifyFarSideRegolith(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.farSideDust = { value: new THREE.Color('#aaa596') };
+      shader.uniforms.farSideRim = { value: new THREE.Color('#c4bba5') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vFarSideGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvFarSideGround = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vFarSideGround;\nuniform vec3 farSideDust, farSideRim;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+vec2 farSideP = vFarSideGround.xz;
+float farSideGrain = fract(sin(dot(floor(vFarSideGround * 18.0), vec3(12.9898, 78.233, 37.719))) * 43758.5453);
+float farSideGrainFade = 1.0 - smoothstep(0.4, 1.2, max(max(fwidth(vFarSideGround.x), fwidth(vFarSideGround.z)), fwidth(vFarSideGround.y)) * 18.0);
+float farSideMottle = sin(farSideP.x * 0.73 + sin(farSideP.y * 0.41)) * sin(farSideP.y * 0.87);
+vec3 farSidePigment = mix(farSideDust, farSideRim, smoothstep(0.5, 5.8, vFarSideGround.y));
+farSidePigment *= 0.96 + (farSideGrain - 0.5) * 0.14 * farSideGrainFade + farSideMottle * 0.045;
+float farSideInterior = 1.0 - smoothstep(54.0, 63.0, max(abs(farSideP.x), abs(farSideP.y)));
+diffuseColor.rgb = mix(diffuseColor.rgb, farSidePigment, 0.92 * farSideInterior);`);
+    };
+    material.customProgramCacheKey = () => 'far-side-regolith-v2';
+    material.needsUpdate = true;
+  }
+}
+
+/** A circular memorial inlay stays on the complete authored square floor. */
+function paintLastClaimDeck(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.memorialBrass = { value: new THREE.Color('#c4a465') };
+      shader.uniforms.memorialBand = { value: new THREE.Color('#8c8270') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vMemorialDeck;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvMemorialDeck = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vMemorialDeck;\nuniform vec3 memorialBrass, memorialBand;')
+        .replace('#include <map_fragment>', `
+#ifdef USE_MAP
+// Polar paint lives in the shader: the sampler's regular grid has no UV seam duplicates.
+vec2 memorialUV = vec2(atan(vMemorialDeck.y, vMemorialDeck.x) / 6.28318530718 * 16.0, length(vMemorialDeck) / 22.0);
+diffuseColor *= texture2D(map, memorialUV);
+#endif
+float memorialRadius = length(vMemorialDeck);
+float memorialInside = 1.0 - smoothstep(55.8, 57.0, memorialRadius);
+diffuseColor.rgb = (pow(max(diffuseColor.rgb, vec3(0.0)), vec3(0.68)) * 0.84 + vec3(0.026)) * mix(0.76, 1.0, memorialInside);
+float memorialAnnulus = smoothstep(44.7, 45.0, memorialRadius) * (1.0 - smoothstep(48.3, 48.6, memorialRadius));
+diffuseColor.rgb = mix(diffuseColor.rgb, memorialBand, memorialAnnulus * 0.24);
+float memorialRingDistance = min(min(abs(memorialRadius - 44.6), abs(memorialRadius - 48.7)), min(abs(memorialRadius - 55.2), min(abs(memorialRadius - 20.0), abs(memorialRadius - 5.0))));
+float memorialRing = 1.0 - smoothstep(0.065, 0.16, memorialRingDistance);
+float memorialSpokeDistance = abs(sin(atan(vMemorialDeck.y, vMemorialDeck.x) * 6.0)) * memorialRadius;
+float memorialSpoke = (1.0 - smoothstep(0.08, 0.20, memorialSpokeDistance)) * smoothstep(4.5, 5.0, memorialRadius) * (1.0 - smoothstep(43.9, 44.3, memorialRadius));
+// Small divisions within the outer bands read as a surveyed memorial deck.
+float memorialAngle = atan(vMemorialDeck.y, vMemorialDeck.x);
+float memorialTick = (1.0 - smoothstep(0.04, 0.11, abs(sin(memorialAngle * 96.0)) * memorialRadius))
+  * smoothstep(48.9, 49.0, memorialRadius) * (1.0 - smoothstep(49.8, 49.9, memorialRadius));
+diffuseColor.rgb = mix(diffuseColor.rgb, memorialBrass, max(max(memorialRing, memorialSpoke), memorialTick) * 0.66);
+float memorialContact = min(length(vMemorialDeck - vec2(-10.0, 47.0)), length(vMemorialDeck - vec2(10.0, 47.0)));
+diffuseColor.rgb *= mix(0.62, 1.0, smoothstep(1.28, 1.85, memorialContact));`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+// Authored light cast by the memorial instruments; no gameplay state is written.
+float lanternPool = exp(-dot(vMemorialDeck - vec2(-10.0, 47.0), vMemorialDeck - vec2(-10.0, 47.0)) / 18.0);
+float portraitPool = exp(-dot(vMemorialDeck - vec2(10.0, 47.0), vMemorialDeck - vec2(10.0, 47.0)) / 12.0);
+float archPool = exp(-dot(vMemorialDeck - vec2(0.0, -51.0), vMemorialDeck - vec2(0.0, -51.0)) / 24.0);
+totalEmissiveRadiance += vec3(0.30, 0.14, 0.045) * (lanternPool + portraitPool * 0.65 + archPool * 0.4) * smoothstep(1.30, 2.0, memorialContact);`);
+    };
+    material.customProgramCacheKey = () => 'last-claim-memorial-inlay-v3';
+    material.needsUpdate = true;
+  });
+}
+
+/** The raw River keeps its run-6 water; the dedicated grid replaces bank paint. */
+function paintRiverBanks(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    const cacheKey = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.riverSand = { value: new THREE.Color('#b8a47c') };
+      shader.uniforms.riverWet = { value: new THREE.Color('#69746b') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vRiverBank;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvRiverBank = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vRiverBank;\nuniform vec3 riverSand, riverWet;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float riverEdge = abs(vRiverBank.y) + sin(vRiverBank.x * 0.79) * 0.25 + sin(vRiverBank.x * 1.93) * 0.12;
+float riverDamp = 1.0 - smoothstep(5.7, 8.5, riverEdge);
+float riverFord = 1.0 - smoothstep(2.5, 3.0, abs(vRiverBank.x));
+vec3 riverPigment = mix(riverSand, riverWet, riverDamp * (1.0 - 0.45 * riverFord));
+diffuseColor.rgb = mix(diffuseColor.rgb, riverPigment, 0.72);`);
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|river-bank-dawn-v1`;
+    material.needsUpdate = true;
+  });
+}
+
+/** The original stones and new gravel share a cool damp lower edge. */
+function paintRiverStones(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material), key = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vRiverStone;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvRiverStone = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vRiverStone;')
+        .replace('#include <map_fragment>', '#include <map_fragment>\ndiffuseColor.rgb *= mix(0.75, 1.0, smoothstep(5.6, 8.3, abs(vRiverStone.z)));')
+        .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(0.44, roughnessFactor, smoothstep(5.6, 8.3, abs(vRiverStone.z)));');
+    };
+    material.customProgramCacheKey = () => `${key}|river-wet-stone-v1`;
+    material.needsUpdate = true;
+  });
+}
+
+/** A material-only dawn treatment for the raw River's existing painted fallback. */
+function paintRiverReturn(host: Host): () => void {
+  if (host.contractId !== 'e10-river' || isMapBeautyDisabled()) return () => undefined;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  host.scene.traverse(node => {
+    const mesh = node as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) {
+      if ((material as THREE.MeshStandardMaterial).isMeshStandardMaterial && (material.userData.terrainUniforms || material.userData.waterUniforms)) materials.add(material as THREE.MeshStandardMaterial);
+    }
+  });
+  const restore = [...materials].map(material => {
+    const compile = material.onBeforeCompile, key = material.customProgramCacheKey;
+    const cacheKey = key.call(material), water = !!material.userData.waterUniforms;
+    material.onBeforeCompile = (shader, renderer) => {
+      compile.call(material, shader, renderer);
+      if (water) {
+        shader.fragmentShader = shader.fragmentShader.replace('bankFoam * 0.58', 'bankFoam * 0.16').replace('vec4 sampledDiffuseColor = vec4(waterColor, alpha);', `
+vec3 returnWater = mix(vec3(0.26, 0.40, 0.40), vec3(0.16, 0.29, 0.34), depth);
+returnWater = mix(returnWater, vec3(0.48, 0.46, 0.35), fordBand * 0.55);
+waterColor = mix(waterColor, returnWater, 0.86);
+// Break only the visual outer fade inward; declared widths and depth uniforms stay exact.
+alpha *= smoothstep(0.0, 0.65, visualEdgeDist - waterNoise(vWaterWorld * vec2(0.24, 0.8)) * 0.25);
+float returnFlowLine = sin(vWaterWorld.y * 7.0 + waterNoise(vWaterWorld * vec2(1.2, 1.8) - vec2(waterTime * 0.32, 0.0)) * 4.8);
+float returnFlowBreak = smoothstep(0.50, 0.78, waterNoise(vWaterWorld * vec2(3.4, 2.3) - vec2(waterTime * 0.4, 0.0)));
+waterColor += vec3(0.12, 0.11, 0.075) * smoothstep(0.94, 0.995, returnFlowLine) * returnFlowBreak * waterQuality * (1.0 - fordBand) * smoothstep(0.05, 0.20, depth);
+vec4 sampledDiffuseColor = vec4(waterColor, alpha);`);
+      } else {
+        shader.uniforms.returnBankPigment = { value: new THREE.Color('#ad9c75') };
+        shader.fragmentShader = shader.fragmentShader
+          .replace('#include <common>', '#include <common>\nuniform vec3 returnBankPigment;')
+          .replace('diffuseColor *= sampledDiffuseColor;', 'diffuseColor *= sampledDiffuseColor;\ndiffuseColor.rgb = mix(diffuseColor.rgb, returnBankPigment, 0.25);');
+      }
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|raw-river-dawn-v2:${water ? 'water' : 'bank'}`;
+    material.needsUpdate = true;
+    return () => { material.onBeforeCompile = compile; material.customProgramCacheKey = key; material.needsUpdate = true; };
+  });
+  return () => { for (const reset of restore) reset(); };
+}
+
+/** Quiet the archive paving; warm pools appear only for already-restored wings. */
+function clarifyArchiveTerraces(model: THREE.Object3D, readState?: () => ArchiveRestorationState | null, detailTextureUrl?: string): void {
+  if (isMapBeautyDisabled()) return;
+  const zones = readState?.()?.zones ?? [];
+  const pools = { value: zones.map(zone => new THREE.Vector4((zone.minX + zone.maxX) / 2, (zone.minZ + zone.maxZ) / 2, (zone.maxX - zone.minX) * 0.37, (zone.maxZ - zone.minZ) * 0.37)) };
+  const restored = { value: new Float32Array(zones.length) };
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const beforeRender = mesh.onBeforeRender.bind(mesh);
+    mesh.onBeforeRender = (renderer, scene, camera, geometry, material, group) => {
+      beforeRender(renderer, scene, camera, geometry, material, group);
+      const state = readState?.();
+      zones.forEach((zone, index) => { restored.value[index] = state?.restoredWingIds.includes(zone.id) ? 1 : 0; });
+    };
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    let disposed = false;
+    const detail = detailTextureUrl ? new THREE.TextureLoader().load(detailTextureUrl, texture => { if (disposed) texture.dispose(); }) : undefined;
+    if (detail) {
+      detail.colorSpace = THREE.SRGBColorSpace;
+      detail.wrapS = detail.wrapT = THREE.RepeatWrapping;
+      material.addEventListener('dispose', () => { disposed = true; detail.dispose(); });
+    }
+    const cacheKey = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.archiveFloorLow = { value: new THREE.Color('#776f5e') };
+      shader.uniforms.archiveFloorHigh = { value: new THREE.Color('#a8a38d') };
+      if (detail) shader.uniforms.archiveMasonry = { value: detail };
+      shader.uniforms.archiveFloorPools = pools;
+      shader.uniforms.archiveFloorRestored = restored;
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vArchiveFloor;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvArchiveFloor = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>
+varying vec3 vArchiveFloor;
+uniform vec3 archiveFloorLow, archiveFloorHigh;
+${detail ? 'uniform sampler2D archiveMasonry;' : ''}
+${zones.length ? `uniform vec4 archiveFloorPools[${zones.length}];\nuniform float archiveFloorRestored[${zones.length}];` : ''}`)
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float archiveTerrace = smoothstep(-0.7, 2.2, vArchiveFloor.y);
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(archiveFloorLow, archiveFloorHigh, archiveTerrace), 0.78);
+${detail ? 'float archiveEngraving = dot(texture2D(archiveMasonry, vArchiveFloor.xz / 24.0).rgb, vec3(0.2126, 0.7152, 0.0722));\ndiffuseColor.rgb *= 0.90 + archiveEngraving * 0.30;' : ''}`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+${zones.length ? `for (int i = 0; i < ${zones.length}; i++) {
+  vec4 pool = archiveFloorPools[i];
+  float archivePool = 1.0 - smoothstep(0.12, 1.0, length((vArchiveFloor.xz - pool.xy) / pool.zw));
+  totalEmissiveRadiance += vec3(0.30, 0.14, 0.045) * archivePool * archiveFloorRestored[i];
+}` : ''}`);
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|archive-terraces-v2:${zones.length}:${!!detail}`;
+    material.needsUpdate = true;
+  });
+}
+
+/** Contact at the footing and earned warm facade wash; no restoration writes. */
+function lightArchiveFacade(model: THREE.Object3D, readState?: () => ArchiveRestorationState | null): void {
+  if (isMapBeautyDisabled()) return;
+  const bounds = new THREE.Box3().setFromObject(model), center = bounds.getCenter(new THREE.Vector3());
+  const zone = readState?.()?.zones.find(z => center.x >= z.minX && center.x <= z.maxX && center.z >= z.minZ && center.z <= z.maxZ);
+  const restored = { value: 0 };
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const beforeRender = mesh.onBeforeRender.bind(mesh);
+    mesh.onBeforeRender = (renderer, scene, camera, geometry, material, group) => {
+      beforeRender(renderer, scene, camera, geometry, material, group);
+      restored.value = zone && readState?.()?.restoredWingIds.includes(zone.id) ? 1 : 0;
+    };
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material), key = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.archiveFacadeBase = { value: bounds.min.y };
+      shader.uniforms.archiveFacadeRestored = restored;
+      shader.vertexShader = shader.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vArchiveFacade;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvArchiveFacade = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec3 vArchiveFacade;\nuniform float archiveFacadeBase, archiveFacadeRestored;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float archiveFacadeHeight = vArchiveFacade.y - archiveFacadeBase;
+diffuseColor.rgb *= mix(0.63, 1.0, smoothstep(0.0, 0.7, archiveFacadeHeight));`)
+        .replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+float archiveFacadeWash = smoothstep(0.1, 0.8, archiveFacadeHeight) * (1.0 - smoothstep(2.5, 6.0, archiveFacadeHeight));
+totalEmissiveRadiance += vec3(0.11, 0.055, 0.012) * archiveFacadeWash * archiveFacadeRestored;`);
+    };
+    material.customProgramCacheKey = () => `${key}|archive-facade-v1`;
+    material.needsUpdate = true;
+  });
+}
+
+/** The near library halls use real depth; distant sky and apron stay at far depth. */
+function prepareArchiveLibrary(model: THREE.Object3D, detailTextureUrl?: string): void {
+  if (!detailTextureUrl) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !['ArchiveLibraryScenery', 'ArchiveLibraryRecess'].includes(mesh.material.name)) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material), key = material.customProgramCacheKey();
+    mesh.renderOrder = 0;
+    material.depthWrite = true;
+    material.fog = true;
+    material.vertexColors = false;
+    material.color.set('#b6aa8d');
+    const recess = material.name === 'ArchiveLibraryRecess';
+    material.emissive.set(recess ? '#39362c' : '#88847a');
+    material.emissiveIntensity = 0.18;
+    let disposed = false;
+    const detail = new THREE.TextureLoader().load(detailTextureUrl, texture => { if (disposed) texture.dispose(); });
+    detail.colorSpace = THREE.SRGBColorSpace;
+    detail.wrapS = detail.wrapT = THREE.RepeatWrapping;
+    material.addEventListener('dispose', () => { disposed = true; detail.dispose(); });
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.vertexShader = shader.vertexShader.replace('gl_Position.z = gl_Position.w * 0.999999;', '');
+      shader.uniforms.archiveFacadeStone = { value: detail };
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform sampler2D archiveFacadeStone;')
+        .replace('#include <map_fragment>', '#include <map_fragment>\ndiffuseColor.rgb = texture2D(archiveFacadeStone, vMapUv).rgb * ' + (recess ? 'vec3(0.38, 0.36, 0.32);' : 'vec3(0.70, 0.65, 0.56);'));
+    };
+    material.customProgramCacheKey = () => `${key}|archive-library-v4:${recess}`;
+    material.needsUpdate = true;
+  });
+}
+
+/** Shared basalt pigment for sculpt, continuation and authored scenery rock.
+ * Fractures and strata change the material only; heat still comes from the atlas. */
+function clarifyEmberBasalt(model: THREE.Object3D, detailTextureUrl?: string, scenery = false): void {
+  if (isMapBeautyDisabled() || !detailTextureUrl) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    if (scenery && material.name !== 'EmberShoreBasaltScenery') return;
+    if (scenery) { material.fog = true; material.vertexColors = false; }
+    // This material owns its native detail sampler, including late decode after
+    // disposal. The GLB's original color map remains the heat-paint authority.
+    let disposed = false;
+    const detail = new THREE.TextureLoader().load(detailTextureUrl, texture => {
+      if (disposed) texture.dispose();
+    });
+    detail.colorSpace = THREE.SRGBColorSpace;
+    detail.wrapS = detail.wrapT = THREE.RepeatWrapping;
+    material.addEventListener('dispose', () => { disposed = true; detail.dispose(); });
+    const cacheKey = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.emberBasaltDetail = { value: detail };
+      shader.uniforms.emberBasaltLow = { value: new THREE.Color('#5d727c') };
+      shader.uniforms.emberBasaltHigh = { value: new THREE.Color('#9c9e91') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vEmberBasalt;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvEmberBasalt = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>
+varying vec3 vEmberBasalt;
+uniform vec3 emberBasaltLow, emberBasaltHigh;
+uniform sampler2D emberBasaltDetail;
+float emberHeatCore(vec3 paint) { return clamp((paint.r - max(paint.g, paint.b) * 1.8) * 18.0, 0.0, 1.0); }`)
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float emberWarm = clamp((diffuseColor.r - max(diffuseColor.g, diffuseColor.b) * 1.8) * 18.0, 0.0, 1.0);
+float emberShelf = smoothstep(-1.8, 1.8, vEmberBasalt.y);
+vec3 emberSample = texture2D(emberBasaltDetail, vEmberBasalt.xz / 12.0).rgb;
+float emberEtching = dot(emberSample, vec3(0.2126, 0.7152, 0.0722));
+vec3 emberStone = mix(emberBasaltLow, emberBasaltHigh, emberShelf);
+emberStone *= clamp(0.82 + emberEtching * 1.35, 0.76, 1.22);
+diffuseColor.rgb = emberStone;
+float emberPlayfield = 1.0 - smoothstep(63.8, 64.0, max(abs(vEmberBasalt.x), abs(vEmberBasalt.z)));
+float emberVein = emberWarm * emberPlayfield * clamp(0.58 + emberEtching * 1.8, 0.58, 1.0);
+float emberCore = ${scenery ? '0.0' : `min(min(emberHeatCore(texture2D(map, vMapUv + vec2(0.00045, 0.0)).rgb), emberHeatCore(texture2D(map, vMapUv - vec2(0.00045, 0.0)).rgb)), min(emberHeatCore(texture2D(map, vMapUv + vec2(0.0, 0.00045)).rgb), emberHeatCore(texture2D(map, vMapUv - vec2(0.0, 0.00045)).rgb)))`};
+emberCore *= emberWarm * emberPlayfield;
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(vec3(0.20, 0.034, 0.010), vec3(0.38, 0.075, 0.014), emberCore), emberVein * 0.82);`)
+        .replace('#include <emissivemap_fragment>', 'totalEmissiveRadiance = vec3(0.055, 0.012, 0.002) * emberVein + vec3(0.36, 0.11, 0.015) * emberCore;');
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|ember-basalt-v11:${scenery}`;
+    material.needsUpdate = true;
+  });
+}
+
+/** Dry canal/road pigment follows published routes. Permanent green zones are
+ * authored terrain paint; staged water and planted state keep their existing owners. */
+function clarifyRedFieldsRoute(model: THREE.Object3D, points: PaintRoutePoint[], greenZones: PaintZone[] = [], cutBanks = false): void {
+  if (isMapBeautyDisabled() || points.length < 2) return;
+  const segments = points.slice(1).map((end, i) => new THREE.Vector4(points[i]!.x, points[i]!.z, end.x, end.z));
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.domeCanalSegments = { value: segments };
+      shader.uniforms.domeCanalEarth = { value: new THREE.Color('#af8b69') };
+      shader.uniforms.domeCanalBed = { value: new THREE.Color(greenZones.length ? '#b39b74' : '#777467') };
+      shader.uniforms.redFieldsGreen = { value: new THREE.Color('#82916e') };
+      shader.uniforms.redFieldsZones = { value: greenZones.map(z => new THREE.Vector4(z.minX, z.minZ, z.maxX, z.maxZ)) };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vDomeCanal;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvDomeCanal = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>\nvarying vec3 vDomeCanal;\nuniform vec4 domeCanalSegments[${segments.length}];\nuniform vec3 domeCanalEarth, domeCanalBed;${greenZones.length ? `\nuniform vec3 redFieldsGreen;\nuniform vec4 redFieldsZones[${greenZones.length}];` : ''}`)
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float domeCanalDistance = 1000.0;
+for (int i = 0; i < ${segments.length}; i++) {
+  vec2 a = domeCanalSegments[i].xy, ab = domeCanalSegments[i].zw - a;
+  float t = clamp(dot(vDomeCanal.xz - a, ab) / max(dot(ab, ab), 0.001), 0.0, 1.0);
+  domeCanalDistance = min(domeCanalDistance, length(vDomeCanal.xz - a - ab * t));
+}
+float domeCanalInterior = 1.0 - smoothstep(50.0, 63.0, max(abs(vDomeCanal.x), abs(vDomeCanal.z)));
+float domeCanalGrain = sin(vDomeCanal.x * 1.7 + sin(vDomeCanal.z * 0.8)) * sin(vDomeCanal.z * 2.3);
+vec3 domeCanalPigment = domeCanalEarth * mix(0.82, 1.13, smoothstep(-2.0, 4.0, vDomeCanal.y));
+${greenZones.length ? `float redFieldsGreenMask = 0.0;
+for (int i = 0; i < ${greenZones.length}; i++) {
+  vec4 zone = redFieldsZones[i];
+  vec2 inset = min(vDomeCanal.xz - zone.xy, zone.zw - vDomeCanal.xz);
+  redFieldsGreenMask = max(redFieldsGreenMask, smoothstep(0.0, 2.0, min(inset.x, inset.y)));
+}
+domeCanalPigment = mix(domeCanalPigment, redFieldsGreen, redFieldsGreenMask * 0.82);` : ''}
+diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalPigment * (1.0 + domeCanalGrain * 0.035), ${greenZones.length ? '0.48' : '0.58'} * domeCanalInterior);
+float domeCanalBedMask = 1.0 - smoothstep(${cutBanks ? '1.4, 1.65' : '1.3, 2.1'}, domeCanalDistance);
+float domeCanalShoulder = smoothstep(${cutBanks ? '1.4, 1.65' : '1.5, 2.1'}, domeCanalDistance) * (1.0 - smoothstep(${cutBanks ? '2.35, 2.8' : '2.8, 3.8'}, domeCanalDistance));
+diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalBed * (0.94 + domeCanalGrain * 0.04), ${greenZones.length ? '0.48' : '0.68'} * domeCanalBedMask * domeCanalInterior);
+diffuseColor.rgb = mix(diffuseColor.rgb, domeCanalEarth * 1.22, ${greenZones.length ? '0.18' : '0.35'} * domeCanalShoulder * domeCanalInterior);${cutBanks ? `
+// A narrow mineral lip defines the inherited cut without inventing height or water.
+float oldCanalLip = smoothstep(1.25, 1.4, domeCanalDistance) * (1.0 - smoothstep(1.6, 1.8, domeCanalDistance));
+diffuseColor.rgb *= 1.0 - oldCanalLip * domeCanalInterior * 0.16;` : ''}`);
+    };
+    material.customProgramCacheKey = () => `redfields-dry-route-v2:${segments.length}:${greenZones.length}${cutBanks ? ':cut-banks-v1' : ''}`;
+    material.needsUpdate = true;
+  }
+}
+
+/** Picnic owns a cleaned pigment atlas; the Mesa source and sampled geometry stay shared. */
+function paintPicnicGround(model: THREE.Object3D, detailTextureUrl?: string): void {
+  if (!detailTextureUrl) return;
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial || !mesh.material.map) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    let disposed = false;
+    const pigment = new THREE.TextureLoader().load(detailTextureUrl, texture => { if (disposed) texture.dispose(); });
+    pigment.colorSpace = THREE.SRGBColorSpace;
+    pigment.flipY = false; // Match the GLB map's UV orientation.
+    pigment.anisotropy = mesh.material.map.anisotropy;
+    material.addEventListener('dispose', () => { disposed = true; pigment.dispose(); });
+    const cacheKey = material.customProgramCacheKey();
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.picnicGround = { value: pigment };
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform sampler2D picnicGround;')
+        .replace('#include <map_fragment>', 'diffuseColor *= texture2D(picnicGround, vMapUv);');
+    };
+    material.customProgramCacheKey = () => `${cacheKey}|picnic-ground-v1`;
+    material.needsUpdate = true;
+  });
+}
+
+/** Separate existing shelves from their lower ground without moving any surface. */
+function gradeTerrainByHeight(model: THREE.Object3D, lowColor: string, highColor: string, lowHeight: number, highHeight: number, paintMix: number): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.heightPaintLow = { value: new THREE.Color(lowColor) };
+      shader.uniforms.heightPaintHigh = { value: new THREE.Color(highColor) };
+      shader.uniforms.heightPaintRange = { value: new THREE.Vector2(lowHeight, highHeight) };
+      shader.uniforms.heightPaintMix = { value: paintMix };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vHeightPaint;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvHeightPaint = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vHeightPaint;\nuniform vec3 heightPaintLow, heightPaintHigh;\nuniform vec2 heightPaintRange;\nuniform float heightPaintMix;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float heightPaintInterior = 1.0 - smoothstep(48.0, 64.0, max(abs(vHeightPaint.x), abs(vHeightPaint.z)));
+float heightPaintFactor = smoothstep(heightPaintRange.x, heightPaintRange.y, vHeightPaint.y);
+diffuseColor.rgb = mix(diffuseColor.rgb, mix(heightPaintLow, heightPaintHigh, heightPaintFactor), heightPaintMix * heightPaintInterior);`);
+    };
+    material.customProgramCacheKey = () => 'terrain-height-pigment-v1';
+    material.needsUpdate = true;
+  }
+}
+
+/** Prepared boiler aprons and combed earth follow the existing terrace/bed coordinates. */
+function clarifyPressureGardenTerraces(model: THREE.Object3D, detailTextureUrl?: string): void {
+  if (isMapBeautyDisabled() || !detailTextureUrl) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    let disposed = false;
+    const gravel = new THREE.TextureLoader().load(detailTextureUrl, texture => { if (disposed) texture.dispose(); });
+    gravel.colorSpace = THREE.SRGBColorSpace;
+    gravel.wrapS = gravel.wrapT = THREE.RepeatWrapping;
+    material.addEventListener('dispose', () => { disposed = true; gravel.dispose(); });
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.gardenGravel = { value: gravel };
+      shader.uniforms.gardenWorkedPigment = { value: new THREE.Color('#957957') };
+      shader.uniforms.gardenRowPigment = { value: new THREE.Color('#9d8662') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vGardenGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvGardenGround = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vGardenGround;\nuniform vec3 gardenWorkedPigment;\nuniform vec3 gardenRowPigment;\nuniform sampler2D gardenGravel;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float gardenX = abs(vGardenGround.x), gardenZ = vGardenGround.y;
+// The broad dark rectangles belong to the old painted bed, not water depth.
+// Keep the carved surface and crossing intact; replace only their pigment.
+vec3 gardenStone = texture2D(gardenGravel, vGardenGround / 5.7).rgb;
+vec3 gardenFine = texture2D(gardenGravel, mat2(0.8, -0.6, 0.6, 0.8) * vGardenGround / 3.1 + vec2(0.31, 0.67)).rgb;
+gardenStone = mix(gardenStone, gardenFine, 0.32);
+float gardenBankBreak = sin(vGardenGround.x * 0.73) * 0.27 + sin(vGardenGround.x * 1.91 + gardenZ) * 0.12;
+float gardenGravelEdge = 1.0 - smoothstep(5.9 + gardenBankBreak * 0.2, 6.6 + gardenBankBreak * 0.2, abs(gardenZ));
+float gardenEnd = 1.0 - smoothstep(44.0, 48.0, gardenX);
+float gardenWet = 1.0 - smoothstep(5.65, 6.7, abs(gardenZ));
+vec3 gardenBedPigment = gardenStone * mix(vec3(0.94, 0.85, 0.69), vec3(0.46, 0.52, 0.48), gardenWet);
+diffuseColor.rgb = mix(diffuseColor.rgb, gardenBedPigment, gardenGravelEdge * gardenEnd);
+float gardenWidth = 1.0 - smoothstep(38.0, 44.0, gardenX);
+float gardenService = smoothstep(6.25, 9.0, gardenZ) * (1.0 - smoothstep(15.5, 18.0, gardenZ)) * gardenWidth;
+float gardenGrowing = smoothstep(11.5, 13.0, gardenX) * (1.0 - smoothstep(37.0, 38.5, gardenX)) * smoothstep(19.5, 21.0, gardenZ) * (1.0 - smoothstep(28.0, 29.5, gardenZ));
+diffuseColor.rgb = mix(diffuseColor.rgb, gardenWorkedPigment, gardenService * 0.30);
+diffuseColor.rgb = mix(diffuseColor.rgb, gardenRowPigment, gardenGrowing * 0.23);
+float gardenRowPhase = abs(sin(vGardenGround.x * 2.85 + sin(gardenZ * 0.19) * 0.18));
+float gardenRowInk = 1.0 - smoothstep(0.10, 0.20 + fwidth(gardenRowPhase), gardenRowPhase);
+diffuseColor.rgb *= 1.0 - gardenGrowing * gardenRowInk * 0.18;
+float gardenBedX = abs(vGardenGround.x - 12.0 * floor(vGardenGround.x / 12.0 + 0.5));
+float gardenBed = max(gardenBedX / 2.5, abs(gardenZ - 12.0) / 2.0);
+float gardenApron = (1.0 - smoothstep(0.65, 1.20, gardenBed)) * (1.0 - smoothstep(15.0, 16.0, gardenX));
+diffuseColor.rgb = mix(diffuseColor.rgb, gardenWorkedPigment * 1.12, gardenApron * 0.18);
+float gardenCrest = max(1.0 - smoothstep(0.15, 0.65, abs(gardenZ - 22.4)), 1.0 - smoothstep(0.15, 0.65, abs(gardenZ - 35.4)));
+diffuseColor.rgb = mix(diffuseColor.rgb, gardenRowPigment, gardenCrest * gardenWidth * 0.20);`);
+    };
+    material.customProgramCacheKey = () => 'pressure-garden-worked-terraces-gravel-v2';
+    material.needsUpdate = true;
+  }
+}
+
+/** Authored rocks use world depth even when carried by the panorama pack. */
+function preparePanoramaRocks(model: THREE.Object3D, ...materialNames: string[]): void {
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !materialNames.includes(mesh.material.name)) return;
+    const material = mesh.material, compile = material.onBeforeCompile.bind(material);
+    const key = material.customProgramCacheKey();
+    mesh.renderOrder = 0;
+    material.depthWrite = true;
+    material.fog = true;
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.vertexShader = shader.vertexShader.replace('gl_Position.z = gl_Position.w * 0.999999;', '');
+    };
+    material.customProgramCacheKey = () => `${key}|garden-bank-foreground`;
+    material.needsUpdate = true;
+  });
+}
+
+/** Worked yards and pale ballast follow the two published funicular lines and terrace tops. */
+function clarifyInclineYards(model: THREE.Object3D): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial && mesh.material.map) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.inclineEarth = { value: new THREE.Color('#92795c') };
+      shader.uniforms.inclineBallast = { value: new THREE.Color('#aaa088') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vInclineGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvInclineGround = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vInclineGround;\nuniform vec3 inclineEarth;\nuniform vec3 inclineBallast;')
+        .replace('#include <map_fragment>', `#include <map_fragment>
+float inclineX = abs(vInclineGround.x), inclineZ = vInclineGround.y;
+float inclineDry = smoothstep(6.25, 9.0, abs(inclineZ));
+float inclineInterior = 1.0 - smoothstep(38.0, 47.0, max(inclineX, abs(inclineZ)));
+float inclineRail = 1.0 - smoothstep(0.75, 1.75, abs(inclineX - 12.0));
+diffuseColor.rgb = mix(diffuseColor.rgb, inclineEarth, 0.28 * inclineDry * inclineInterior);
+diffuseColor.rgb = mix(diffuseColor.rgb, inclineBallast, 0.42 * inclineRail * inclineDry * inclineInterior);
+float inclineCrest = max(1.0 - smoothstep(0.2, 0.9, abs(inclineZ - 13.0)), max(1.0 - smoothstep(0.2, 0.9, abs(inclineZ - 28.0)), 1.0 - smoothstep(0.2, 0.9, abs(inclineZ - 42.0))));
+diffuseColor.rgb = mix(diffuseColor.rgb, inclineBallast, 0.22 * inclineCrest * inclineInterior);`);
+    };
+    material.customProgramCacheKey = () => 'incline-worked-yards-v1';
+    material.needsUpdate = true;
+  }
+}
+
+/** Quiet the canyon's repeated hatch and carry its earth value into the painted apron. */
+function clarifyCanyonGround(model: THREE.Object3D, panorama = false): void {
+  if (isMapBeautyDisabled()) return;
+  const materials = new Set<THREE.MeshStandardMaterial>();
+  model.traverse(node => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (mesh.isMesh && !Array.isArray(mesh.material) && mesh.material.isMeshStandardMaterial) materials.add(mesh.material);
+  });
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.uniforms.canyonEarth = { value: new THREE.Color('#806a53') };
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vCanyonGround;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvCanyonGround = (modelMatrix * vec4(position, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vCanyonGround;\nuniform vec3 canyonEarth;');
+      if (panorama && material.name !== 'CanyonApronEarth') {
+        // The apron belongs to the panorama mesh, not the heightfield. Preserve sky paint.
+        shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+float canyonApron = (1.0 - smoothstep(66.0, 108.0, max(abs(vCanyonGround.x) * 56.0 / 48.0, abs(vCanyonGround.z)))) * (1.0 - smoothstep(1.0, 8.0, vCanyonGround.y));
+totalEmissiveRadiance = mix(totalEmissiveRadiance, canyonEarth * 0.32, canyonApron * 0.65);`);
+      } else {
+        shader.fragmentShader = shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+float canyonDry = smoothstep(6.25, 9.0, abs(vCanyonGround.z));
+diffuseColor.rgb = mix(diffuseColor.rgb, canyonEarth, 0.34 * canyonDry);
+float canyonShelf = smoothstep(0.5, 6.0, vCanyonGround.y);
+diffuseColor.rgb *= 1.0 + canyonShelf * 0.10;`);
+      }
+    };
+    material.customProgramCacheKey = () => `canyon-ground-v2-${panorama}-${material.name}`;
+    material.needsUpdate = true;
+  }
+}
+
 function applyNightTerrainPools(model: THREE.Object3D, host: Host, opaqueLandmark = false): void {
   // Carried pools use the rig's steel-blue family at the prior ground tint's luminance.
   const materials = new Set<THREE.Material>();
@@ -2164,6 +2874,9 @@ function createLiveSpringPonds(host: Host, heightAt: (x: number, z: number) => n
 function hidePaintedRelief(host: Host): HiddenRelief[] {
   const objects = new Set<THREE.Object3D>();
   host.scene.traverse((object) => {
+    // F-CORR4-18 keeps the contract-owned water and its existing animation/depth.
+    // Only the bank, ford paint and old stepping stones yield to the new pack.
+    if (host.contractId === 'e10-river' && object.userData.assetSlot === 'terrain.river') return;
     if (
       object.userData.terrainRelief === true ||
       object.userData.terrainVista === true ||
@@ -2181,7 +2894,8 @@ function hidePaintedRelief(host: Host): HiddenRelief[] {
 
 function createChannelWater(contractId: string, contract: Contract, heightAt: (x: number, z: number) => number): THREE.Group | undefined {
   const dressing = CONTRACT_CHANNEL_WATER[contractId];
-  const regions = contract.maskTruth?.waterMask?.regions ?? [];
+  const productionMask = Terrain.waterMask();
+  const regions: MaskRegion[] = productionMask?.regions ?? contract.maskTruth?.waterMask?.regions ?? [];
   if (!dressing || regions.length === 0) return undefined;
   // `?nochannelwater` boots the identical build with the dressing withheld. It exists because a
   // beauty claim is only worth what its A/B proves, and it also answers "is this render or sim?"
@@ -2192,10 +2906,13 @@ function createChannelWater(contractId: string, contract: Contract, heightAt: (x
   const group = new THREE.Group();
   group.name = 'Terrain3dChannelWater';
   group.userData.renderOnly = true;
+  group.userData.waterMask = productionMask?.id;
+  group.userData.waterRegions = regions.map((region) => region.id);
+  group.userData.waterPools = productionMask?.regions.filter((region) => region.kind === 'rect' && region.zone === 'river') ?? [];
   for (const region of regions) {
     const channel = dressing.channels[region.id];
     const points = region.points ?? [];
-    if (!channel || region.kind !== 'polyline_band' || region.zone !== 'river' || points.length < 2 || !region.halfWidth) continue;
+    if (region.kind !== 'polyline_band' || (!channel && !productionMask) || points.length < 2 || !region.halfWidth) continue;
     group.add(createWaterRibbon({
       name: `Terrain3dChannelWater.${region.id}`,
       points,
@@ -2207,18 +2924,42 @@ function createChannelWater(contractId: string, contract: Contract, heightAt: (x
       surfaceY: (contract.maskAgreement?.waterPlaneY ?? 0) + dressing.surfaceLift,
       // Render depth, not sim depth: it only picks a point on the shader's wade..deep colour
       // ramp, so the contract's north-deeper-than-south ORDER reads as colour and foam.
-      depth: channel.depth === 'deep' ? deep : wade + (deep - wade) * 0.34,
-      glints: channel.glints ?? [],
-      headInset: channel.headInset,
-      tailInset: channel.tailInset,
-      headFade: channel.headFade,
-      tailFade: channel.tailFade,
+      depth: region.zone === 'shallows' || region.zone === 'ford' ? wade : channel?.depth === 'deep' ? deep : wade + (deep - wade) * 0.34,
+      glints: channel?.glints ?? [],
+      headInset: channel?.headInset,
+      tailInset: channel?.tailInset,
+      headFade: channel?.headFade ?? 0,
+      tailFade: channel?.tailFade ?? 0,
       bed: { heightAt, ...dressing.bed },
     }));
   }
+  // Keep the exterior continuations, but replace their guessed source reach with the
+  // production rectangle. Pool and continuations remain one draw, with no stacked pool sheet.
+  let confluencePaths = dressing.confluences.map((confluence) => confluence.points);
+  for (const pool of productionMask?.regions ?? []) {
+    if (pool.kind !== 'rect' || pool.zone !== 'river') continue;
+    const z = (pool.minZ + pool.maxZ) / 2;
+    const halfWidth = (pool.maxZ - pool.minZ) / 2;
+    let joined = false;
+    confluencePaths = confluencePaths.map((path) => {
+      const first = path[0]!, last = path.at(-1)!;
+      if (first.x > pool.minX || last.x < pool.maxX || path.some((point) => point.z !== z)) return path;
+      joined = true;
+      return [
+        ...path.filter((point) => point.x < pool.minX),
+        { x: pool.minX, z, halfWidth, alpha: 1 },
+        { x: pool.maxX, z, halfWidth, alpha: 1 },
+        ...path.filter((point) => point.x > pool.maxX),
+      ];
+    });
+    if (!joined) confluencePaths.push([
+      { x: pool.minX, z, halfWidth, alpha: 1 },
+      { x: pool.maxX, z, halfWidth, alpha: 1 },
+    ]);
+  }
   group.add(createWaterConfluence({
     name: 'Terrain3dChannelWater.confluences',
-    paths: dressing.confluences.map((confluence) => confluence.points),
+    paths: confluencePaths,
     surfaceY: (contract.maskAgreement?.waterPlaneY ?? 0) + dressing.surfaceLift + 0.001,
     depth: wade + (deep - wade) * 0.58,
   }));
@@ -2226,7 +2967,7 @@ function createChannelWater(contractId: string, contract: Contract, heightAt: (x
   // across an 11 m band while only a 3.4 m ribbon crosses them, so the pans rendered as brown
   // gravel with a stripe of river through it and the pressure board showed enemies wading dry
   // ground. One sheet for both pans, from the mask's own ford rects.
-  const pans = regions.filter((region) => region.kind === 'rect' && region.zone === 'ford' && region.minX !== undefined);
+  const pans = regions.filter((region) => region.kind === 'rect' && (region.zone === 'ford' || (productionMask && region.zone === 'shallows')) && region.minX !== undefined);
   if (dressing.fordDepth !== undefined && pans.length > 0) {
     const halfDepth = Math.max(...pans.map((pan) => (pan.maxZ! - pan.minZ!) / 2));
     group.add(createFordSheet({
@@ -2280,11 +3021,12 @@ function createContinuation(
       }
     }
   });
+  const deepSkyGround = contractId === 'e10-ember-shore' || contractId === 'e10-archive-world';
   const halfX = Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
   const halfZ = Math.max(Math.abs(bounds.min.z), Math.abs(bounds.max.z));
-  if (!Number.isFinite(outerRadius) || (contractId !== 'e10-ember-shore' && innerChebyshev <= Math.max(halfX, halfZ) + 0.5)) return undefined;
+  if (!Number.isFinite(outerRadius) || (!deepSkyGround && innerChebyshev <= Math.max(halfX, halfZ) + 0.5)) return undefined;
   // The panorama's near ridge starts at radius 161.5; cover the intervening ground.
-  if (contractId === 'e10-ember-shore') outerRadius = 160;
+  if (deepSkyGround) outerRadius = 160;
 
   // Keep the night ground beyond every square corner and the perimeter landmarks.
   if (contractId === 'e3-moth-season') outerRadius = Math.max(outerRadius, Math.hypot(halfX, halfZ) + 12);
@@ -2314,8 +3056,8 @@ function createContinuation(
       const sampleX = innerX - innerX / innerRadius * sampleDepth;
       const sampleZ = innerZ - innerZ / innerRadius * sampleDepth;
       positions.push(x, THREE.MathUtils.lerp(heightAt(innerX, innerZ), outerHeight, eased), z);
-      const uvX = (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') ? x : sampleX;
-      const uvZ = (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') ? z : sampleZ;
+      const uvX = (contractId === 'e3-moth-season' || deepSkyGround) ? x : sampleX;
+      const uvZ = (contractId === 'e3-moth-season' || deepSkyGround) ? z : sampleZ;
       uvs.push((uvX - bounds.min.x) / (bounds.max.x - bounds.min.x), (bounds.max.z - uvZ) / (bounds.max.z - bounds.min.z));
     }
   }
@@ -2335,9 +3077,33 @@ function createContinuation(
   geometry.setAttribute('uv1', new THREE.Float32BufferAttribute(uvs, 2));
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
+  if (contractId === 'e10-ember-shore') {
+    // The two surfaces already meet in position. Match their lighting normals
+    // at that join, then blend into the apron over its first two rings.
+    const sourcePositions = source.geometry.getAttribute('position');
+    const sourceNormals = source.geometry.getAttribute('normal');
+    const normals = geometry.getAttribute('normal');
+    const edgeNormals = new Map<string, THREE.Vector3>();
+    for (let i = 0; i < sourcePositions.count; i += 1) {
+      const x = sourcePositions.getX(i), z = sourcePositions.getZ(i);
+      if (Math.abs(Math.abs(x) - halfX) < 0.001 || Math.abs(Math.abs(z) - halfZ) < 0.001) {
+        edgeNormals.set(`${x.toFixed(3)},${z.toFixed(3)}`, new THREE.Vector3().fromBufferAttribute(sourceNormals, i));
+      }
+    }
+    const blended = new THREE.Vector3();
+    for (let ring = 0; ring < 2; ring += 1) for (let i = 0; i < edge.length; i += 1) {
+      const [x, z] = edge[i]!;
+      const normal = edgeNormals.get(`${x.toFixed(3)},${z.toFixed(3)}`);
+      if (!normal) continue;
+      const index = ring * edge.length + i;
+      blended.fromBufferAttribute(normals, index).lerp(normal, 1 - ring * 0.5).normalize();
+      normals.setXYZ(index, blended.x, blended.y, blended.z);
+    }
+    normals.needsUpdate = true;
+  }
   geometry.computeBoundingSphere();
   const material = source.material.clone();
-  if (contractId === 'e3-moth-season' || contractId === 'e10-ember-shore') {
+  if (contractId === 'e3-moth-season' || deepSkyGround) {
     const mapped = material as THREE.MeshStandardMaterial;
     if (mapped.map) {
       mapped.map = mapped.map.clone();
@@ -2346,7 +3112,7 @@ function createContinuation(
     }
   }
   material.side = THREE.DoubleSide;
-  (material as THREE.Material & { fog?: boolean }).fog = contractId === 'e10-ember-shore';
+  (material as THREE.Material & { fog?: boolean }).fog = deepSkyGround;
   material.depthWrite = false;
   material.onBeforeCompile = (shader) => {
     shader.vertexShader = shader.vertexShader.replace(
@@ -2354,13 +3120,19 @@ function createContinuation(
       '#include <project_vertex>\ngl_Position.z = gl_Position.w * 0.99999;',
     );
   };
+  if (contractId === 'e10-archive-world') {
+    // The floor must occlude the buried feet of near library scenery.
+    material.depthWrite = true;
+    material.onBeforeCompile = () => undefined;
+    material.customProgramCacheKey = () => 'archive-continuation-depth-v1';
+  }
   // THE ATMOSPHERICS SHIFT: this apron — not the panorama — is what a run frame's top edge
   // actually contains once the player crosses onto the far bank. Measured, per contract, in
   // src/world/HorizonApron.ts.
   const apron = horizonApronProfile(contractId);
   if (apron) paintHorizonApron(material, apron);
   const continuation = new THREE.Mesh(geometry, material);
-  continuation.receiveShadow = contractId === 'e10-ember-shore';
+  continuation.receiveShadow = deepSkyGround;
   continuation.userData.horizonApron = apron ? 'painted' : 'plain';
   continuation.frustumCulled = false;
   continuation.renderOrder = -50;
@@ -2380,8 +3152,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   if (!selected || selected.contract.tileId !== host.tileId) {
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'off';
     publish(host.canvas, 'failed', 'painted', undefined, undefined, undefined, 'pilot-contract-unavailable');
-    return () => undefined;
+    return paintRiverReturn(host);
   }
+  const restoreRiverPaint = paintRiverReturn(host);
   let disposed = false;
   let terrain: THREE.Object3D | undefined;
   let panorama: THREE.Object3D | undefined;
@@ -2452,6 +3225,26 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (host.contractId === 'e1-twin-banks') calmTwinBanksGround(nextTerrain);
       if (host.contractId === 'e1-baron') separateBaronGroundScars(nextTerrain);
       if (host.contractId === 'e2-trestle') calmTrestleApproaches(nextTerrain);
+      if (host.contractId === 'e2-pressure-garden') clarifyPressureGardenTerraces(nextTerrain, selected.detailTextureUrl);
+      if (host.contractId === 'e2-incline') clarifyInclineYards(nextTerrain);
+      if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextTerrain);
+      if (host.contractId === 'e10-last-claim') paintLastClaimDeck(nextTerrain);
+      if (host.contractId === 'e10-river') paintRiverBanks(nextTerrain);
+      if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextTerrain, selected.detailTextureUrl);
+      if (host.contractId === 'e10-archive-world') clarifyArchiveTerraces(nextTerrain, host.archiveRestoration, selected.detailTextureUrl);
+      if (host.contractId === 'e9-devils-alley') gradeTerrainByHeight(nextTerrain, '#9f8b6e', '#bba487', -0.14, 4.57, 0.46);
+      if (host.contractId === 'e8-low-orbit') gradeTerrainByHeight(nextTerrain, '#777a76', '#a5a28e', -4.8, 0.7, 0.38);
+      if (host.contractId === 'e8-far-side') clarifyFarSideRegolith(nextTerrain);
+      if (host.contractId === 'e9-dome-basin' && selected.contract.maskTruth?.canalRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.canalRoute.points);
+      if (host.contractId === 'e9-old-canal' && selected.contract.maskTruth?.inheritedCanalRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.inheritedCanalRoute.points, [], true);
+      if (host.contractId === 'e9-seed-run' && selected.contract.maskTruth?.caravanRoute) clarifyRedFieldsRoute(nextTerrain, selected.contract.maskTruth.caravanRoute, selected.contract.maskTruth.permanentGreenWaypointZones);
+      if (host.contractId === 'e6-glow-mesa') gradeTerrainByHeight(nextTerrain, '#9f8867', '#9b9682', 1.5, 4.6, 0.34);
+      if (host.contractId === 'e7-relay-rush') gradeTerrainByHeight(nextTerrain, '#898476', '#b2a482', 0.4, 4.6, 0.34);
+      if (host.contractId === 'e7-dead-band') gradeTerrainByHeight(nextTerrain, '#888474', '#b2ab92', 0.4, 4.6, 0.34);
+      if (host.contractId === 'e6-picnic') gradeTerrainByHeight(nextTerrain, '#9f8867', '#a1a483', 1.5, 4.6, 0.34);
+      if (host.contractId === 'e6-picnic') paintPicnicGround(nextTerrain, selected.detailTextureUrl);
+      if (host.contractId === 'e6-half-life-hollow') gradeTerrainByHeight(nextTerrain, '#897c68', '#b9a788', -1.9, 1.8, 0.32);
+      if ((host.contractId === 'e4-dust-flats' || host.contractId === 'e4-long-road' || host.contractId === 'e4-gusher-county' || host.contractId === 'e4-boneyard') && selected.contract.maskTruth) clarifyMotorGround(nextTerrain, selected.contract.maskTruth, false, host.contractId === 'e4-gusher-county' ? 0.30 : host.contractId === 'e4-boneyard' ? 0.72 : 0.78);
       if (host.nightMode) applyNightTerrainPools(nextTerrain, host);
       else {
         host.canvas.dataset.terrain3dPilotNightPools = 'off';
@@ -2463,10 +3256,19 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       nextPanorama.rotation.set(...mount.rotation);
       nextPanorama.scale.fromArray(mount.scale);
       preparePanorama(nextPanorama);
+      if (host.contractId === 'e2-pressure-garden') preparePanoramaRocks(nextPanorama, 'GardenBankStone');
+      if (host.contractId === 'e3-canyon-works') preparePanoramaRocks(nextPanorama, 'CanyonCliffStone', 'CanyonApronEarth');
+      if (host.contractId === 'e10-archive-world') prepareArchiveLibrary(nextPanorama, selected.detailTextureUrl);
+      if (host.contractId === 'e10-ember-shore') clarifyEmberBasalt(nextPanorama, selected.detailTextureUrl, true);
+      if (host.contractId === 'e3-canyon-works') clarifyCanyonGround(nextPanorama, true);
+      if (host.contractId === 'e4-long-road' && selected.contract.maskTruth) clarifyMotorGround(nextPanorama, selected.contract.maskTruth, true);
       if (selected.contract.waterSurface?.owner === 'runtime DeepwaterClaimTile') {
         host.canvas.dataset.terrain3dPilotSeaApronTriangles = String(routeSeaApron(nextTerrain, nextPanorama, terrainMetrics.bounds));
       }
       const nextSkirt = createContinuation(nextTerrain, nextPanorama, heightAt, terrainMetrics.bounds, host.contractId);
+      if (host.contractId === 'e10-river' && nextSkirt) paintRiverBanks(nextSkirt);
+      if (host.contractId === 'e10-ember-shore' && nextSkirt) clarifyEmberBasalt(nextSkirt, selected.detailTextureUrl);
+      if (host.contractId === 'e10-archive-world' && nextSkirt) clarifyArchiveTerraces(nextSkirt, host.archiveRestoration, selected.detailTextureUrl);
       if (host.contractId === 'e3-moth-season' && host.nightMode && nextSkirt) {
         const material = nextSkirt.material as THREE.Material;
         const programKey = material.customProgramCacheKey();
@@ -2494,6 +3296,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.canvas.dataset.terrain3dPilotSpringPonds = String(ponds.length);
       host.canvas.dataset.terrain3dPilotSpringPondWaterRadii = JSON.stringify(ponds.map((pond) => pond.waterRadius));
       if (nextChannelWater) host.scene.add(nextChannelWater);
+      if (nextChannelWater?.userData.waterMask) {
+        host.canvas.dataset.terrain3dPilotWaterMask = nextChannelWater.userData.waterMask;
+        host.canvas.dataset.terrain3dPilotWaterRegions = JSON.stringify(nextChannelWater.userData.waterRegions);
+        host.canvas.dataset.terrain3dPilotWaterPools = JSON.stringify(nextChannelWater.userData.waterPools);
+      }
       host.canvas.dataset.terrain3dPilotChannelWater = String(
         nextChannelWater?.children.filter((child) => child.name.includes('-channel')).length ?? 0,
       );
@@ -2613,7 +3420,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
             installBannerSway(model, BARON_SWAY_AMPLITUDE[mount.id]!);
           }
           dressLandmark(model, host.contractId, mount.id);
+          if (host.contractId === 'e10-river') paintRiverStones(model);
           if (host.archiveRestoration) installArchiveRestoration(model, host.archiveRestoration);
+          if (host.contractId === 'e10-archive-world') lightArchiveFacade(model, host.archiveRestoration);
           return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);
@@ -2795,6 +3604,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
 
   return () => {
     disposed = true;
+    restoreRiverPaint();
     host.canvas.removeEventListener('webglcontextlost', onContextLost);
     disposeLoaded();
     uninstallHeightSource?.();
@@ -2896,6 +3706,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     landmarks = undefined;
     channelWater = undefined;
     delete host.canvas.dataset.terrain3dPilotChannelWaterHalfWidths;
+    delete host.canvas.dataset.terrain3dPilotWaterMask;
+    delete host.canvas.dataset.terrain3dPilotWaterRegions;
+    delete host.canvas.dataset.terrain3dPilotWaterPools;
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
   };
 }
@@ -2920,8 +3733,8 @@ type LandmarkPaint = { intensity: number; tint: string };
  */
 const LANDMARK_PAINT: Record<string, Record<string, LandmarkPaint>> = {
   'e2-trestle': { 'trestle-crossing': { intensity: 2.6, tint: '#ffffff' }, 'south-boiler-site': { intensity: 2.5, tint: '#e4e5e7' }, 'north-boiler-site': { intensity: 2.5, tint: '#e4e5e7' }, 'mine-spur-kit': { intensity: 2.2, tint: '#efe2cc' }, 'south-approach-kit': { intensity: 2.2, tint: '#ffffff' }, 'north-approach-kit': { intensity: 2.2, tint: '#ffffff' }, },
-  'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 1.3, tint: '#efe0d2' }, 'water-band-pump-station': { intensity: 1.3, tint: '#efe0d2' }, },
-  'e2-incline': { 'upper-ore-cable-house': { intensity: 1.5, tint: '#c2a48c' }, 'west-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, 'east-line-brake-tower': { intensity: 1.28, tint: '#b3a693' }, },
+  'e2-pressure-garden': { 'garden-pressure-manifold': { intensity: 3, tint: '#e4e5e7' }, 'water-band-pump-station': { intensity: 3, tint: '#e4e5e7' }, 'west-terrace-pipe-header': { intensity: 3, tint: '#e4e5e7' }, 'east-terrace-pipe-header': { intensity: 3, tint: '#e4e5e7' }, 'coal-seam-service-winch': { intensity: 3, tint: '#e4e5e7' }, },
+  'e2-incline': { 'upper-ore-cable-house': { intensity: 2.5, tint: '#e0e3df' }, 'west-line-brake-tower': { intensity: 2.5, tint: '#e0e3df' }, 'east-line-brake-tower': { intensity: 2.5, tint: '#e0e3df' }, },
   'e1-baron': {
     fortified_far_bank: { intensity: 2.5, tint: '#aab5bb' },
     siege_line: { intensity: 2.2, tint: '#a8b0b4' },

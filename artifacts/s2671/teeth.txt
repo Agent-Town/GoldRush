@@ -1,0 +1,27 @@
+
+### CONTROL (no mutation)
+  expected to red : all arms green
+  actually red    : none   (green: 21)
+  ✅ the arm has teeth
+
+### A. the ORIGINAL defect: left edge taken from the corpus again
+  expected to red : 16
+  actually red    : 16   (green: 20)
+  ✅ the arm has teeth
+
+### B. the cure degrades SILENTLY to the defect when the anchor is missing
+  expected to red : 17, 18
+  actually red    : 17, 18   (green: 19)
+  ✅ the arm has teeth
+
+### C. the anchor is resolved against process.cwd() instead of the subject
+  expected to red : 9
+  actually red    : 9   (green: 20)
+  ✅ the arm has teeth
+
+### D. a malformed anchor day is accepted as read
+  expected to red : 18
+  actually red    : 18   (green: 20)
+  ✅ the arm has teeth
+
+✅ every mutation landed on exactly the arm claimed

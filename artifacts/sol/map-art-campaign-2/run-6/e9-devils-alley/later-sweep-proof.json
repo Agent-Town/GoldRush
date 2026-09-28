@@ -1,0 +1,194 @@
+[
+  {
+    "width": 1280,
+    "state": {
+      "columnVisible": true,
+      "columnAt": {
+        "x": 3.12,
+        "z": 0
+      },
+      "anchorRings": 3,
+      "routeId": "center-devil-sweep"
+    },
+    "diagnostics": {
+      "declared": true,
+      "columnRadius": 4,
+      "sweepSeconds": 20,
+      "routes": [
+        {
+          "id": "south-devil-sweep",
+          "from": {
+            "x": -52,
+            "z": -26
+          },
+          "to": {
+            "x": 52,
+            "z": -26
+          }
+        },
+        {
+          "id": "center-devil-sweep",
+          "from": {
+            "x": 52,
+            "z": 0
+          },
+          "to": {
+            "x": -52,
+            "z": 0
+          }
+        },
+        {
+          "id": "north-devil-sweep",
+          "from": {
+            "x": -52,
+            "z": 26
+          },
+          "to": {
+            "x": 52,
+            "z": 26
+          }
+        }
+      ],
+      "anchors": [
+        {
+          "id": "anchor-west",
+          "zoneId": "west-anchor-bay",
+          "x": -40,
+          "z": -10,
+          "holdRadius": 8
+        },
+        {
+          "id": "anchor-center",
+          "zoneId": "center-anchor-bay",
+          "x": 0,
+          "z": 0,
+          "holdRadius": 8
+        },
+        {
+          "id": "anchor-east",
+          "zoneId": "east-anchor-bay",
+          "x": 40,
+          "z": 10,
+          "holdRadius": 8
+        }
+      ],
+      "phase": "sweeping",
+      "routeId": "center-devil-sweep",
+      "nextRouteId": "north-devil-sweep",
+      "progress": 0.47,
+      "devil": {
+        "x": 3.12,
+        "z": 0
+      },
+      "wave": 2,
+      "sweepsStarted": 2,
+      "sweepsCompleted": 1,
+      "carried": [],
+      "relocations": 0,
+      "lastRelocation": null,
+      "works": [],
+      "refusals": {
+        "anchored": 0,
+        "immovable": 0,
+        "alreadyAtDrop": 0
+      }
+    },
+    "errors": []
+  },
+  {
+    "width": 390,
+    "state": {
+      "columnVisible": true,
+      "columnAt": {
+        "x": 2.947,
+        "z": 0
+      },
+      "anchorRings": 3,
+      "routeId": "center-devil-sweep"
+    },
+    "diagnostics": {
+      "declared": true,
+      "columnRadius": 4,
+      "sweepSeconds": 20,
+      "routes": [
+        {
+          "id": "south-devil-sweep",
+          "from": {
+            "x": -52,
+            "z": -26
+          },
+          "to": {
+            "x": 52,
+            "z": -26
+          }
+        },
+        {
+          "id": "center-devil-sweep",
+          "from": {
+            "x": 52,
+            "z": 0
+          },
+          "to": {
+            "x": -52,
+            "z": 0
+          }
+        },
+        {
+          "id": "north-devil-sweep",
+          "from": {
+            "x": -52,
+            "z": 26
+          },
+          "to": {
+            "x": 52,
+            "z": 26
+          }
+        }
+      ],
+      "anchors": [
+        {
+          "id": "anchor-west",
+          "zoneId": "west-anchor-bay",
+          "x": -40,
+          "z": -10,
+          "holdRadius": 8
+        },
+        {
+          "id": "anchor-center",
+          "zoneId": "center-anchor-bay",
+          "x": 0,
+          "z": 0,
+          "holdRadius": 8
+        },
+        {
+          "id": "anchor-east",
+          "zoneId": "east-anchor-bay",
+          "x": 40,
+          "z": 10,
+          "holdRadius": 8
+        }
+      ],
+      "phase": "sweeping",
+      "routeId": "center-devil-sweep",
+      "nextRouteId": "north-devil-sweep",
+      "progress": 0.472,
+      "devil": {
+        "x": 2.947,
+        "z": 0
+      },
+      "wave": 2,
+      "sweepsStarted": 2,
+      "sweepsCompleted": 1,
+      "carried": [],
+      "relocations": 0,
+      "lastRelocation": null,
+      "works": [],
+      "refusals": {
+        "anchored": 0,
+        "immovable": 0,
+        "alreadyAtDrop": 0
+      }
+    },
+    "errors": []
+  }
+]

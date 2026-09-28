@@ -25,6 +25,30 @@ export const CLAIM_BOAT_HULL_RADIUS = Math.max(
 /** The gangplank: how far off the rail a body may step, and how far off it may step aboard. */
 export const CLAIM_BOAT_GANGPLANK_REACH = 2;
 
+/**
+ * F-RB2-2, OWNER 2026-09-22, verbatim: "F-RB2-2: gangway-reach only" — option (a) of the finding
+ * in `reviews/e5-regatta-boat-02.md`: a body leaves the boat ONLY onto standable ground within the
+ * GANGWAY'S REACH, never a boat-length away.
+ *
+ * The gangway is the deck anchor (spec law 2: "the existing anchor is the gangway"), and the aboard
+ * body rides exactly there — so the reach is measured FROM THE ANCHOR and is the same in every
+ * direction. Slice 1 measured it from the deck RECTANGLE instead, which let the reach run the
+ * hull's whole LENGTH: 16.25 m over the bow (14.25 + the plank) against 6.4 m over the beam. That
+ * is how a racer holding the wrong key near a rim went over the side and, since slice 2, forfeited
+ * unwarned, and how a rider's `MOVE_HERO` a metre past the bow was accepted as a step ashore.
+ *
+ * WHY THE BEAM HALF-WIDTH IS PART OF THE NUMBER AND THE PLANK IS NOT THE WHOLE OF IT: the deck is
+ * 8.8 m wide, so a 2 m circle around the anchor lies ENTIRELY INSIDE it, `stepAshore`'s "off the
+ * deck" clause would refuse every direction, and disembark — spec law 2 — would stop existing.
+ * `deckHalfWidth + plank` is the SHORTEST reach that keeps the law alive; it is precisely the reach
+ * the BEAM already had (6.4 m, unchanged by this ruling), and it is the bow's that shortens.
+ *
+ * The consequence, stated rather than hidden: the step ashore is now over the SIDE. An intent
+ * within ~46.5 degrees of the keel lands inside the boat's own deck, so the hull runs aground on
+ * its clamp — as it does today — instead of putting a body over the bow.
+ */
+export const CLAIM_BOAT_GANGWAY_REACH = CLAIM_BOAT_DECK_BOUNDS.maxX + CLAIM_BOAT_GANGPLANK_REACH;
+
 export type BoatRiderPosition = { x: number; z: number };
 export type ClaimBoatPad = Readonly<{ id: string; x: number; z: number }>;
 export type ClaimBoatPlacement = Readonly<{
@@ -144,7 +168,11 @@ export class ClaimBoat {
       && z >= this.hullZ + b.minZ && z <= this.hullZ + b.maxZ;
   }
 
-  /** 0 inside the deck, otherwise the shortest distance from the point to the rail. */
+  /**
+   * 0 inside the deck, otherwise the shortest distance from the point to the rail. NOT the gangway
+   * measure any more: F-RB2-2 (a) moved that to the anchor (`withinGangplank` below), because this
+   * one is as long as the HULL and the gangway is not.
+   */
   distanceToDeck(x: number, z: number): number {
     const b = CLAIM_BOAT_DECK_BOUNDS;
     const dx = Math.max(this.hullX + b.minX - x, 0, x - (this.hullX + b.maxX));
@@ -152,8 +180,14 @@ export class ClaimBoat {
     return Math.hypot(dx, dz);
   }
 
+  /**
+   * F-RB2-2 (a) — the gangway's reach, measured from the DECK ANCHOR the aboard body rides, not
+   * from the deck rectangle. ONE predicate, both species (ADR-005): a rider's `MOVE_HERO` point a
+   * metre past the BOW is refused exactly as a human's bow-ward key is, instead of being accepted
+   * for lying within a plank of the rectangle's far end 15 m away.
+   */
   withinGangplank(x: number, z: number): boolean {
-    return this.distanceToDeck(x, z) <= CLAIM_BOAT_GANGPLANK_REACH + 1e-9;
+    return Math.hypot(x - this.hullX, z - this.hullZ) <= CLAIM_BOAT_GANGWAY_REACH + 1e-9;
   }
 
   /** Water the HULL may float in. Everything is navigable for a boat that only moors. */
@@ -176,10 +210,12 @@ export class ClaimBoat {
 
   /**
    * Spec law 2 — disembark is a POSITION too: a point the BODY can stand on that the HULL cannot
-   * float in, off the deck and within a plank of the rail. On a course that is all open water the
-   * rim beyond the hull's clamp is that ground, which is also exactly the ground the boat would
-   * run aground on. One predicate, both species: a rider's `MOVE_HERO` point and the point a
-   * human's key direction reaches over the rail are tested the same way.
+   * float in, off the deck and within the GANGWAY'S REACH of the deck anchor (F-RB2-2 (a), owner
+   * 2026-09-22 "gangway-reach only"; "within reach" in law 2 has meant the gangway's reach since).
+   * On a course that is all open water the rim beyond the hull's clamp is that ground, which is
+   * also exactly the ground the boat would run aground on. One predicate, both species: a rider's
+   * `MOVE_HERO` point and the point a human's key direction reaches over the rail are tested the
+   * same way — and now they reach the same distance, too.
    */
   stepAshore(point: BoatRiderPosition, walkable: (x: number, z: number) => boolean): boolean {
     return this.steerable
@@ -190,17 +226,22 @@ export class ClaimBoat {
       && walkable(point.x, point.z);
   }
 
-  /** Where a key direction reaches over the rail: the deck exit along `intent`, plus one plank. */
+  /**
+   * Where a key direction reaches over the rail: `CLAIM_BOAT_GANGWAY_REACH` along `intent` from the
+   * DECK ANCHOR, F-RB2-2 (a). It used to be the deck exit along the intent plus one plank, which
+   * over the bow was 16.25 m — a boat-length — and put a racer holding the wrong key near a rim
+   * over the side. Now the reach is one number in every direction, so a bow-ward key probes a point
+   * inside the boat's own deck and steps nowhere; the hull runs aground on its clamp instead.
+   */
   gangplankPoint(intent: { x: number; y: number }): BoatRiderPosition | null {
     const length = Math.hypot(intent.x, intent.y);
     if (length === 0) return null;
     const ux = intent.x / length;
     const uz = intent.y / length;
-    const b = CLAIM_BOAT_DECK_BOUNDS;
-    const tx = ux > 0 ? b.maxX / ux : ux < 0 ? b.minX / ux : Number.POSITIVE_INFINITY;
-    const tz = uz > 0 ? b.maxZ / uz : uz < 0 ? b.minZ / uz : Number.POSITIVE_INFINITY;
-    const reach = Math.min(tx, tz) + CLAIM_BOAT_GANGPLANK_REACH;
-    return { x: this.hullX + ux * reach, z: this.hullZ + uz * reach };
+    return {
+      x: this.hullX + ux * CLAIM_BOAT_GANGWAY_REACH,
+      z: this.hullZ + uz * CLAIM_BOAT_GANGWAY_REACH,
+    };
   }
 
   disembark(): void {

@@ -1,0 +1,68 @@
+(node:18704) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+
+(node:18776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:18776) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[1/2] [desktop-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness
+  1) [desktop-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      181 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      182 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 183 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e8Arsenal.available)).toBe(true);
+          |                                                                                             ^
+      184 |   expect(errors).toEqual({ console: [], page: [] });
+      185 | });
+      186 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e8-roster.spec.ts:183:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/exact-base-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/exact-base-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-desktop-chrome/error-context.md
+
+
+
+(node:18861) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:18861) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+[2/2] [mobile-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness
+  2) [mobile-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      181 |   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+      182 |   expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
+    > 183 |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.e8Arsenal.available)).toBe(true);
+          |                                                                                             ^
+      184 |   expect(errors).toEqual({ console: [], page: [] });
+      185 | });
+      186 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/e8-roster.spec.ts:183:93
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/exact-base-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/sol/map-art-campaign-2/run-8/entry-framing/e8-far-side/exact-base-results/e8-roster-plain-Orbital-er-2bc57-e-without-the-debug-harness-mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 
+    [mobile-chrome] › e2e/e8-roster.spec.ts:172:1 › plain Orbital-era boot stays error-free without the debug harness 

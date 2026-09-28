@@ -72,8 +72,9 @@ test('Regatta measures the rider, applies fast water to that body, and secures r
       }
       const end = sim.currentTurn();
       assert.equal(end.terminal, true, JSON.stringify({ ticks, now: end.view.now, orders: sim.standingOrdersSnapshot() }));
-      assert.equal(end.view.now.deepwater.race.gatesPassed.length, 5);
+      assert.equal(end.view.now.deepwater.race.gatesPassed.length, 6);
       assert.equal(end.view.now.deepwater.race.finished, true);
+      assert.equal(end.view.now.regatta.finishedAt, end.view.now.regatta.buoysPassed.at(-1).atSeconds);
       assert.equal(end.view.now.deepwater.race.forfeited, false);
       assert.equal(sim.outcome().secured, true, JSON.stringify(sim.outcome()));
       assert.equal(sim.outcome().waves, 12);

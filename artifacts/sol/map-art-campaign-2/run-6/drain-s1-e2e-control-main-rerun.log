@@ -1,0 +1,139 @@
+(node:90035) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+
+(node:90095) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/8] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+
+[desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+(node:90169) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:90241) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+assay replay failed: malformed tape
+  1) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+
+    Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json
+    (node:90241) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    assay replay failed: malformed tape
+
+
+      78 |     const tapePath = `${ARTIFACTS}/${map.id}-floor.tape.json`;
+      79 |     const tape = JSON.parse(await readFile(tapePath, 'utf8'));
+    > 80 |     const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', tapePath], { encoding: 'utf8', timeout: 150_000 }).trim().split('\n').at(-1)!);
+         |                             ^
+      81 |     expect(tape.contract).toBe(map.id);
+      82 |     // THE HASH CLAIM, in the half that holds: the reel this slice recorded replays to its claimed
+      83 |     // hash in a second Node engine (`assay-replay-agent.mjs`, a separate process and module graph).
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr4-land/e2e/e4-roads-and-convoys.spec.ts:80:29
+
+    Error Context: test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:90244) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[2/8] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:123:1 › every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake
+  2) [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:123:1 › every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake 
+
+    Error: page.evaluate: Execution context was destroyed, most likely because of a navigation.
+
+      131 |     await page.goto(HARNESS(map.id, `${map.id}-01`));
+      132 |     await page.waitForFunction(() => Boolean(window.__GR_AGENT_TAPE_REPLAY__));
+    > 133 |     const result = await page.evaluate(async ({ contract, far, modules }) => {
+          |                               ^
+      134 |       const { HeadlessContractSim } = await import(/* @vite-ignore */ modules.sim);
+      135 |       const sim = new HeadlessContractSim({ contractId: contract, seed: `${contract}-01` });
+      136 |       const opening = sim.currentTurn().view;
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr4-land/e2e/e4-roads-and-convoys.spec.ts:133:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/e4-roads-and-convoys-every-0a182--GRADE-is-refused-off-stake-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/e4-roads-and-convoys-every-0a182--GRADE-is-refused-off-stake-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-roads-and-convoys-every-0a182--GRADE-is-refused-off-stake-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-roads-and-convoys-every-0a182--GRADE-is-refused-off-stake-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:90320) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/8] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar
+[4/8] [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+[desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+E4_PLAIN_BOOT_ASSAY_SLIP {"eventLogHash":"fnv1a32:d1c3bcab","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":5.8},"securedSnapshot":null,"ticks":174,"wallMs":2256}
+
+
+(node:90523) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[5/8] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+
+[mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium
+(node:90596) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+(node:90653) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+assay replay failed: malformed tape
+  3) [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+
+    Error: Command failed: /opt/homebrew/Cellar/node/26.4.0/bin/node scripts/assay-replay-agent.mjs artifacts/e4-roads-and-convoys/e4-dust-flats-floor.tape.json
+    (node:90653) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+    (Use `node --trace-warnings ...` to show where the warning was created)
+    assay replay failed: malformed tape
+
+
+      78 |     const tapePath = `${ARTIFACTS}/${map.id}-floor.tape.json`;
+      79 |     const tape = JSON.parse(await readFile(tapePath, 'utf8'));
+    > 80 |     const node = JSON.parse(execFileSync(process.execPath, ['scripts/assay-replay-agent.mjs', tapePath], { encoding: 'utf8', timeout: 150_000 }).trim().split('\n').at(-1)!);
+         |                             ^
+      81 |     expect(tape.contract).toBe(map.id);
+      82 |     // THE HASH CLAIM, in the half that holds: the reel this slice recorded replays to its claimed
+      83 |     // hash in a second Node engine (`assay-replay-agent.mjs`, a separate process and module graph).
+        at /private/tmp/claude-501/-Users-robin-Claude-Projects-Gold-Rush/fe6b8d27-b064-40eb-934b-1d29d57a71db/scratchpad/wt-corr4-land/e2e/e4-roads-and-convoys.spec.ts:80:29
+
+    Error Context: test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/e4-roads-and-convoys-every-84f41-d-hash-in-Node-and-Chromium-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:90707) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/8] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:123:1 › every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake
+[7/8] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:160:1 › human parity: a Motor plain boot mounts its declared Hauler and tar
+[8/8] [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+[mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:197:1 › a plain-boot Dust Flats player gathers tar and calls the Hauler with recorded inputs
+E4_PLAIN_BOOT_ASSAY_SLIP {"eventLogHash":"fnv1a32:5e55f84f","outcome":{"secured":false,"waves":0,"gold":0,"timeAlive":5.7},"securedSnapshot":null,"ticks":171,"wallMs":2273}
+
+  3 failed
+    [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+    [desktop-chrome] › e2e/e4-roads-and-convoys.spec.ts:123:1 › every Motor map publishes its own errand to a browser rider, and GRADE is refused off-stake 
+    [mobile-chrome] › e2e/e4-roads-and-convoys.spec.ts:69:1 › every Motor reel replays to its claimed hash in Node and Chromium 
+  5 passed (1.2m)

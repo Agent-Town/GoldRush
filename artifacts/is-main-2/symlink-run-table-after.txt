@@ -1,0 +1,30 @@
+symlink-run-table (after, the cured tree (uncommitted, 24 files)): /Users/robin/Claude/Projects/wt-im2
+node v26.4.0; 1-min load at start 9.1
+tool | real: rc, bytes | symlinked: rc, bytes | verdict | node -e import: rc | import verdict
+server/ledger/serve.mjs | 1, 27 B | 1, 27 B | SAME | 0 | IMPORTS | 0.3 s
+scripts/ruling-propagation-guard.mjs | 0, 1601 B | 0, 1601 B | SAME | 0 | IMPORTS | 0.1 s
+scripts/assay-replay-agent.mjs | 1, 55 B | 1, 55 B | SAME | 0 | IMPORTS | 0.3 s
+scripts/blocker-panel-closed-guard.mjs | 0, 723 B | 0, 723 B | SAME | 0 | IMPORTS | 0.8 s
+scripts/desk-state-audit.mjs | 0, 207 B | 0, 207 B | SAME | 0 | IMPORTS | 0.2 s
+scripts/e4-motor-ride.mjs | 1, 605 B | 1, 605 B | SAME | 0 | IMPORTS | 0.1 s
+scripts/e7-playbook-digest.mjs | 1, 684 B | 1, 684 B | DIFFERENT | 0 | IMPORTS | 3.8 s
+scripts/evidence-budget.mjs | 0, 847 B | 0, 847 B | SAME | 0 | IMPORTS | 0.5 s
+scripts/evidence-readers.mjs | 0, 51895 B | 0, 51895 B | SAME | 0 | IMPORTS | 4.3 s
+scripts/evidence-offload.mjs | 1, 108 B | 1, 108 B | SAME | 0 | IMPORTS | 0.1 s
+scripts/findings-state-guard.mjs | 0, 815 B | 0, 815 B | SAME | 0 | IMPORTS | 0.1 s
+scripts/gate-battery.mjs | 2, 138 B | 2, 138 B | SAME | 0 | IMPORTS | 0.1 s
+scripts/frontier-registry.mjs | 1, 604 B | 1, 604 B | SAME | 0 | IMPORTS | 0.1 s
+scripts/gazette-backfill-sweep.mjs | 0, 20018 B | 0, 20018 B | SAME | 0 | IMPORTS | 381.7 s
+scripts/review-evidence-audit.mjs | 0, 215 B | 0, 215 B | SAME | 0 | IMPORTS | 0.1 s
+scripts/spawn-bound-census.mjs | 0, 702 B | 0, 702 B | SAME | 0 | IMPORTS | 0.3 s
+scripts/row-quote-currency.mjs | 0, 22312 B | 0, 22312 B | SAME | 0 | IMPORTS | 1.1 s
+scripts/stream-showcase.mjs | 1, 39 B | 1, 39 B | SAME | 0 | IMPORTS | 0.1 s
+scripts/terrain-contract-scope.mjs | 1, 679 B | 1, 679 B | SAME | 0 | IMPORTS | 0.3 s
+scripts/second-rider.mjs | 1, 101 B | 1, 101 B | SAME | 0 | IMPORTS | 0.7 s
+scripts/stream-director.mjs | 0, 31 B | 0, 31 B | SAME | 0 | IMPORTS | 0.2 s
+scripts/ticker-stats.mjs | 0, 359 B | 0, 359 B | SAME | 0 | IMPORTS | 0.2 s
+scripts/withheld-evidence-audit.mjs | 0, 342 B | 0, 342 B | SAME | 0 | IMPORTS | 0.1 s
+scripts/glb-contract-guard.mjs | 0, 1755 B | 0, 0 B | SILENT | 0 | IMPORTS | 5.0 s
+scripts/modified-tracked-evidence-census.mjs | 0, 5445 B | 0, 0 B | SILENT | 0 | IMPORTS | 17.5 s
+scripts/untracked-evidence-durability.mjs | signal SIGKILL, 0 B | 0, 0 B | DIFFERENT | 0 | IMPORTS | 300.1 s
+1-min load at end 7.9

@@ -1,0 +1,43 @@
+{
+  "canonicalMasksByteEquivalent": true,
+  "contractOnlyDescriptionChanged": true,
+  "terrainMeshFlagUnchanged": "off; renderer registry mount does not need a descriptor flag",
+  "mountsMirrored": true,
+  "zeroNewCollisionsOrWalkSurfaces": true,
+  "unchangedCodeAndGameplay": [
+    "src/game",
+    "src/sim",
+    "src/meta",
+    "src/story",
+    "src/systems/E10FinaleSystem.ts",
+    "src/world/Terrain.ts",
+    "src/world/Water.ts",
+    "src/world/LandmarkCollision.ts",
+    "assets/engine-era.json",
+    "e2e"
+  ],
+  "existingStoreAssetsUnchangedExceptAdditiveSourceLedger": true,
+  "rasters": {
+    "river-terrain-atlas.png": {
+      "target": "river-terrain-atlas.png",
+      "source": "assets/processed/terrain-bank-tile.png",
+      "sha256": "430cfa931f506a02611e997a23669976e103e56371c3563aff55f3dd121e38f8",
+      "bytes": 418589,
+      "byteIdentical": true
+    },
+    "river-panorama-atlas.png": {
+      "target": "river-panorama-atlas.png",
+      "source": "assets/raw/plate-contract-e10-river.png",
+      "sha256": "8e87399729c5aaca4ae52d016d0eb99f5b42c5bc0aed461dc8e6623d48914706",
+      "bytes": 3591800,
+      "byteIdentical": true
+    },
+    "landmarks/river/river-landmarks-atlas.png": {
+      "target": "landmarks/river/river-landmarks-atlas.png",
+      "source": "assets/pilots/map-rebuild-spike/landmarks/twin-banks/twin-banks-landmarks-atlas.png",
+      "sha256": "bb1cf6fb8d1d1f5606421ce937f2dc048f55859ae7caf2dd602b78cb2246e301",
+      "bytes": 1997891,
+      "byteIdentical": true
+    }
+  }
+}

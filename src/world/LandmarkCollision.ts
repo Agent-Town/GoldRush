@@ -22,19 +22,22 @@ type LandmarkRecord = {
   footprint: LandmarkFootprint;
 };
 const registry = JSON.parse(registryText) as { version: 1; maps: Record<string, LandmarkRecord[]> };
-const aliases: Record<string, string> = {
-  'e5-stillwater': 'deepwater-claim',
-  'e5-flotilla': 'deepwater-claim',
-  'e6-picnic': 'glow-mesa',
-  'e7-dead-band': 'relay-valley',
-  'e7-relay-rush': 'relay-valley',
-  'e8-far-side': 'mare-claim',
-  'e8-eclipse': 'mare-claim',
+const aliases: Record<string, readonly string[]> = {
+  'e5-stillwater': ['deepwater-claim'],
+  'e5-flotilla': ['deepwater-claim'],
+  'e6-picnic': ['glow-mesa', 'picnic'],
+  'e7-dead-band': ['relay-valley', 'dead-band'],
+  'e7-relay-rush': ['relay-valley', 'relay-rush'],
+  'e8-far-side': ['mare-claim', 'far-side'],
+  'e8-eclipse': ['mare-claim'],
 };
 
 export function landmarkBlockersFor(contractId: string): LandmarkBlocker[] {
-  const map = aliases[contractId] ?? contractId.replace(/^e\d+-/, '');
-  return (registry.maps[map] ?? []).map((mount) => {
+  // Only the authorized variant packs supplement their parent's solid footprints.
+  const maps = aliases[contractId] ?? [contractId.replace(/^e\d+-/, '')];
+  // Inherited Object.prototype names keep the legacy unknown-contract result.
+  if (!Array.isArray(maps)) return [];
+  return maps.flatMap((map) => (registry.maps[map] ?? []).map((mount) => {
     const scaleX = Math.abs(mount.scale[0]);
     const scaleZ = Math.abs(mount.scale[1]);
     let halfX: number;
@@ -48,5 +51,5 @@ export function landmarkBlockersFor(contractId: string): LandmarkBlocker[] {
       halfZ = (mount.footprint.w * scaleX * sin + mount.footprint.d * scaleZ * cos) / 2;
     }
     return { id: `${map}:${mount.id}`, x: mount.position[0], z: mount.position[1], halfX, halfZ };
-  });
+  }));
 }
