@@ -30,3 +30,7 @@ WHY no landing: the full Node and diff-selected gates remain outstanding. The kn
 4. Daily backup/memory coverage September 29; next weekly mint September 30. Owner's three desk items remain unchanged.
 
 The closing ledger battery runs after these writes. Its result will be recorded before the final lock-clearing commit, which is the last main write of this fire.
+
+## Final handoff
+
+At 2026-09-28T07:52Z, closing ledger **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **351.260 s**, Node v26.4.0, checkpoint efed44038. Exact predecessor and three-item Owner's Desk verified. Candidate c2ac179b1 remains detached and unpinned; all own Vite processes stopped and drain/landing locks archived. No product landing, dispatch or deploy. Commits before clearance: 04d5cd706 lock, 9a809c631 generated bookkeeping, 73a57e362 attended Holds-4 preparation, efed44038 evidence/ledger. This clearing commit is the final main write; normal origin backup follows.
