@@ -24,3 +24,9 @@ WHY no product landing: all five real done-moves belong to work already owned by
 4. Next daily backup and memory coverage September 29 after 02:10 UTC; weekly rotation mint September 30. Three inherited Owner's Desk items remain, with no new owner question.
 
 No source change, deploy, publication, new master, queue copy or Gazette item. Closing ledger receipt follows before the final lock-clearing commit; that commit will be this fire's last main write.
+
+## Closing gate attempt 1 and control
+
+The first literal `npm run test:ledger-guards` returned rc 1 after 364.030 s on Node 26.4.0: 1262/1263 passed, zero skips, one failure in `scripts/gazette-scan-space-guard.test.mjs:110`. Its month-history child reached the unchanged 240-second cap (`spawnSync node ETIMEDOUT`, child SIGKILL). The remaining npm tail did not execute. Host load measured afterward was 61.14 / 133.59 / 99.67; the live lane-d retry was also running its full Node battery. Contention is a hypothesis, not a demonstrated source defect.
+
+The same complete test file on current main then passed 9/9 in 73.024 s, including the failed arm in 72.577 s, with no timeout, assertion or source change. Both the test and sweep are byte-unchanged from the pre-fire commit 87a88f983. This is a controlled non-reproduction. Receipts: `ledger-attempt-1.txt`, `ledger-attempt-1.json`, `gazette-scan-control.txt`. A second complete literal ledger run follows; the first failure remains evidence.
