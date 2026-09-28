@@ -1,0 +1,118 @@
+(node:67236) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 64 tests using 1 worker
+
+
+(node:67300) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/64] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings
+[2/64] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast
+[3/64] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics
+[4/64] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops
+[5/64] [desktop-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling
+[6/64] [desktop-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience
+[7/64] [desktop-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns
+[8/64] [desktop-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly
+[9/64] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload
+[10/64] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings
+[11/64] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists
+[12/64] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile
+[13/64] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start
+[14/64] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[audio-defer] desktop-chrome/loopback cue 2662 responses 64054716 bytes; townReady observed 1292 ms, published 1253 ms; cue-window music 0; music before playable 0; after-ready music 2
+
+[audio-defer] desktop-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 1290 ms (scene the town ready)
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 681 ms
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 699 ms
+
+[audio-defer] desktop-chrome/loopback after-ready mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 1295 ms
+
+[audio-defer] desktop-chrome/loopback after-ready mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 1295 ms
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[15/64] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[16/64] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[17/64] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[18/64] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[19/64] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[20/64] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[21/64] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[22/64] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[23/64] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[24/64] [desktop-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists
+[25/64] [desktop-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile
+[26/64] [desktop-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop
+[27/64] [desktop-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting
+[28/64] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[29/64] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[30/64] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[31/64] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[32/64] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:69458) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[33/64] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings
+[34/64] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast
+[35/64] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics
+[36/64] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops
+[37/64] [mobile-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling
+[38/64] [mobile-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience
+[39/64] [mobile-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns
+[40/64] [mobile-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly
+[41/64] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload
+[42/64] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings
+[43/64] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists
+[44/64] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile
+[45/64] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start
+[46/64] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[audio-defer] mobile-chrome/loopback cue 2569 responses 59958822 bytes; townReady observed 1276 ms, published 1207 ms; cue-window music 2; music before playable 0; after-ready music 0
+
+[audio-defer] mobile-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 1235 ms (scene the town ready)
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 664 ms
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 682 ms
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 1236 ms
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 1237 ms
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[47/64] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[48/64] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[49/64] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[50/64] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[51/64] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[52/64] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[53/64] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[54/64] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[55/64] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[56/64] [mobile-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists
+[57/64] [mobile-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile
+[58/64] [mobile-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop
+[59/64] [mobile-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting
+[60/64] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[61/64] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[62/64] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[63/64] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[64/64] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  64 passed (3.9m)
