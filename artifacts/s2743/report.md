@@ -27,3 +27,7 @@ Closing ledger receipt follows before the final lock-clearing commit. That commi
 ## Instrument receipts
 
 The initial board and lane commands completed successfully; their observation is recorded in initial-board-observation.txt. Later attempts to save fresh full transcripts reached this fire's 60-second collection bound (exit=null); both incomplete files are retained and are not treated as a new clean verdict. The health, private freshness and both remote-head captures completed with rc 0. An independent bounded status archive audit reports zero permanently absent or abridged handoffs. No timing-related source or guard change was made.
+
+## Closing gate, first attempt and control
+
+The literal npm run test:ledger-guards on checkpoint 7c8510843 returned rc 1 in 358.229 s: 1262/1263 pass, one failure, zero skips. The sole failure was scripts/gazette-scan-space-guard.test.mjs:110, whose unchanged history-scan child reached its existing 240-second bound (ETIMEDOUT); the chained npm checks therefore did not run. Retained ledger-guards.txt and ledger-receipt.json contain the full failure. The same unchanged file then passed independently on main: 9/9, rc 0 in 109.950 s, Node v26.4.0 (gazette-control.txt and gazette-control-receipt.json). This measured control is the basis for a second complete literal battery; no source, assertion, time limit or concurrency setting was changed.
