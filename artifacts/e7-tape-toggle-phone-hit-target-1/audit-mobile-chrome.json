@@ -1,0 +1,693 @@
+{
+  "project": "mobile-chrome",
+  "samples": [
+    {
+      "moment": "HUD mounted",
+      "url": "http://127.0.0.1:5188/?contract=e7-echo-canyon",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "contract": "e7-echo-canyon",
+      "wave": 0,
+      "sim": 2.3000000000000016,
+      "overlayOpen": false,
+      "box": {
+        "x": 202,
+        "y": 92,
+        "width": 54,
+        "height": 52,
+        "top": 92,
+        "right": 256,
+        "bottom": 144,
+        "left": 202
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "hud--announcement-visible",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 229,
+          "y": 118,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-left",
+          "x": 204,
+          "y": 94,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-right",
+          "x": 254,
+          "y": 94,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-left",
+          "x": 204,
+          "y": 142,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-right",
+          "x": 254,
+          "y": 142,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        }
+      ]
+    },
+    {
+      "moment": "wave 1",
+      "url": "http://127.0.0.1:5188/?contract=e7-echo-canyon",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "contract": "e7-echo-canyon",
+      "wave": 1,
+      "sim": 30.73333333333402,
+      "overlayOpen": false,
+      "box": {
+        "x": 202,
+        "y": 92,
+        "width": 54,
+        "height": 52,
+        "top": 92,
+        "right": 256,
+        "bottom": 144,
+        "left": 202
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "hud--announcement-visible",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 229,
+          "y": 118,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-left",
+          "x": 204,
+          "y": 94,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-right",
+          "x": 254,
+          "y": 94,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-left",
+          "x": 204,
+          "y": 142,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-right",
+          "x": 254,
+          "y": 142,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        }
+      ]
+    },
+    {
+      "moment": "Patent Office open",
+      "url": "http://127.0.0.1:5188/?contract=e7-echo-canyon",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "contract": "e7-echo-canyon",
+      "wave": 2,
+      "sim": 70.63333333333189,
+      "overlayOpen": true,
+      "box": {
+        "x": 202,
+        "y": 92,
+        "width": 54,
+        "height": 52,
+        "top": 92,
+        "right": 256,
+        "bottom": 144,
+        "left": 202
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 229,
+          "y": 118,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        },
+        {
+          "name": "top-left",
+          "x": 204,
+          "y": 94,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        },
+        {
+          "name": "top-right",
+          "x": 254,
+          "y": 94,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        },
+        {
+          "name": "bottom-left",
+          "x": 204,
+          "y": 142,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        },
+        {
+          "name": "bottom-right",
+          "x": 254,
+          "y": 142,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        }
+      ]
+    },
+    {
+      "moment": "Patent Office closed",
+      "url": "http://127.0.0.1:5188/?contract=e7-echo-canyon",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "contract": "e7-echo-canyon",
+      "wave": 2,
+      "sim": 70.66666666666522,
+      "overlayOpen": false,
+      "box": {
+        "x": 202,
+        "y": 92,
+        "width": 54,
+        "height": 52,
+        "top": 92,
+        "right": 256,
+        "bottom": 144,
+        "left": 202
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 229,
+          "y": 118,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-left",
+          "x": 204,
+          "y": 94,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-right",
+          "x": 254,
+          "y": 94,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-left",
+          "x": 204,
+          "y": 142,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-right",
+          "x": 254,
+          "y": 142,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        }
+      ]
+    },
+    {
+      "moment": "HUD mounted",
+      "url": "http://127.0.0.1:5188/?contract=e7-relay-rush",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "contract": "e7-relay-rush",
+      "wave": 0,
+      "sim": 1.700000000000002,
+      "overlayOpen": false,
+      "box": {
+        "x": 202,
+        "y": 92,
+        "width": 54,
+        "height": 52,
+        "top": 92,
+        "right": 256,
+        "bottom": 144,
+        "left": 202
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "hud--announcement-visible",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 229,
+          "y": 118,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-left",
+          "x": 204,
+          "y": 94,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-right",
+          "x": 254,
+          "y": 94,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-left",
+          "x": 204,
+          "y": 142,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-right",
+          "x": 254,
+          "y": 142,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        }
+      ]
+    },
+    {
+      "moment": "HUD mounted",
+      "url": "http://127.0.0.1:5188/?contract=e7-dead-band",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "contract": "e7-dead-band",
+      "wave": 0,
+      "sim": 1.5666666666666682,
+      "overlayOpen": false,
+      "box": {
+        "x": 202,
+        "y": 94.4375,
+        "width": 54,
+        "height": 52,
+        "top": 94.4375,
+        "right": 256,
+        "bottom": 146.4375,
+        "left": 202
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "hud--announcement-visible",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 229,
+          "y": 120.4375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-left",
+          "x": 204,
+          "y": 96.4375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-right",
+          "x": 254,
+          "y": 96.4375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-left",
+          "x": 204,
+          "y": 144.4375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-right",
+          "x": 254,
+          "y": 144.4375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        }
+      ]
+    }
+  ],
+  "errors": {
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+}
