@@ -1,0 +1,56 @@
+{
+  "at": "2026-09-28T03:03Z",
+  "head": "94065e3173222b865600d342e083f9b096e23763",
+  "leaves": [
+    {
+      "id": "sol-play-proofs-holds-1",
+      "status": "merged",
+      "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'fix the maps where we find issues'); Run 10 landed in s2721 with full main Node green; queue copy and dispatch remain attended-owned",
+      "mergeHash": "a69534fe9ae6a6f35971f977f9f3d4249a86584b"
+    },
+    {
+      "id": "sol-play-proofs-holds-2",
+      "status": "queued",
+      "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'fix the maps where we find issues'); the queue copy is HELD until sol-play-proofs-holds-1 has landed on main"
+    },
+    {
+      "id": "sol-play-proofs-holds-3",
+      "status": "queued",
+      "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'fix the maps where we find issues'); the queue copy is HELD until sol-play-proofs-holds-2 has landed on main"
+    }
+  ],
+  "holds1Ancestor": true,
+  "failed": [
+    {
+      "n": "shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md",
+      "at": "2026-09-20T06:53:51.129Z"
+    },
+    {
+      "n": "shipped-s1065-20260708-095336-gt-04-sightlines-ebbb04de.md",
+      "at": "2026-09-20T06:53:51.129Z"
+    },
+    {
+      "n": "shipped-s1065-20260707-143237-damage-orientation-e9fabff7.md",
+      "at": "2026-09-20T06:53:51.128Z"
+    }
+  ],
+  "pending": [],
+  "wrapper": [
+    "landing wrapper exited rc=0 02:25Z"
+  ],
+  "receipt": [
+    "ℹ tests 1040",
+    "ℹ pass 1035",
+    "ℹ fail 0",
+    "ℹ cancelled 0",
+    "ℹ skipped 5",
+    "ℹ duration_ms 1273685.3035",
+    "ℹ tests 87",
+    "ℹ pass 87",
+    "ℹ fail 0",
+    "ℹ cancelled 0",
+    "ℹ skipped 0",
+    "ℹ duration_ms 30413.910584"
+  ],
+  "node": "v26.4.0 /opt/homebrew/Cellar/node/26.4.0/bin/node"
+}
