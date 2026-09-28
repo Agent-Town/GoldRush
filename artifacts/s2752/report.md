@@ -17,3 +17,8 @@ WHY no product drain: the prescribed board probe finds zero real drains and zero
 1. Owner decides F-2742-1; attended repair refreshes against current main, preserving the accepted audio test and subsequent evidence before moving main.
 2. Owner listens to the audio comparison and chooses keep or revert. Existing Owner's Desk items stay unchanged.
 3. September 28 ticker after September 29 06:00 local; private coverage after September 29 02:10 UTC; week-41 mint September 30.
+
+
+## Closing verification
+
+**READY-FOR-GATES.** At 2026-09-28T17:12Z, the complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **199.458 seconds**, Node v26.4.0, checkpoint d5863c826. Every chained leg completed; skillmd also passed 19/19. Final queues, running tasks and pending orders are empty; all four runner lanes have zero ahead commits. Exact s2751 predecessor and four-item Owner's Desk tail preserved byte-for-byte. No product drain, dispatch, deploy, history repair or unchanged rejected push. Commits before clearance: 2ea69f360, c9005b46f and d5863c826. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
