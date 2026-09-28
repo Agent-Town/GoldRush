@@ -23,3 +23,6 @@ Verified this fire: own audit 2/2; all 40 unobscured points reach the toggle, al
 4. Next daily backups September 29; weekly rotation September 30. Existing three Owner's Desk items unchanged.
 
 Closing ledger verification runs after these ledger/report writes and before the final lock-clearing commit. Its result is appended below. The clearing commit will be the last write to main, followed only by the normal origin push and read-only verification.
+
+
+Evidence retention correction: four Playwright traces total 400,312,439 bytes. They were accidentally included in unpublished bookkeeping commit b38e48967 because a newline-separated shell sequence continued after the size check failed. That commit is preserved; no history was rewritten. The files were moved intact to the local external archive named in artifacts/s2733/trace-archive.json, with SHA-256 hashes and original paths. Screenshots, error contexts, TAP and gate transcripts remain in the review bundle. Historical trace blobs remain reachable in the retained commit; the final evidence tree excludes them.

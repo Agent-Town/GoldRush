@@ -1,4 +1,4 @@
-ACTIVE 2026-09-28T04:56Z (s2733 fire) — Gate the Tape Reel hit-target audit; verify Holds-2 completion and daily duties
+ACTIVE 2026-09-28T05:32Z (s2733 fire) — Tape audit held; finish evidence retention and closing ledger checks
 
 - **s2732 handoff (line-1 archive):** Last updated: 2026-09-28T04:48Z s2732 handoff, lock CLEARED — Holds-2 landed on main/origin; attended main battery still running. Tape audit next; Holds-3 live. Ledger 1263/1263 + kit 83/83, rc 0; skillmd 19/19; LB/FM current 36/36. Evidence artifacts/s2732/report.md. 🔺 **OWNER'S DESK — 3 awaiting a word.** 🔺 **F-2642-3** — **the account-registry deploy day.** (the item in full: docs/OWNER-DESK-2026-09-19.md) 🔺 **`b1-device-verdict-rows`** (B1) — the device verdict rows, ten minutes on your phone (the ruling left this yours). 🔺 **F-2299-1** — **the August Claude Code token: support request issued 2026-09-25, awaiting the revocation** (the attended session re-probes the backup each session and closes the row on the first refusal; nothing else owed by the owner; the row in full at the top of `tasks/BACKLOG.md`).
 
