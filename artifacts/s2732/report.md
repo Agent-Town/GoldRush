@@ -30,4 +30,10 @@ Evidence: `state.json`, `processes.txt`, `ancestry.txt`, `origin-main.txt`, `lan
 3. Attended sequencing owns the inheritance corrective after the audit lands, and the running Holds-3 campaign. Fires dispatch neither.
 4. Next daily backups September 29 after 02:10 UTC; weekly rotation September 30. The existing three Owner's Desk items remain as written.
 
-Closing verification will be recorded before the final lock-clearing commit.
+## Final handoff
+
+Closing ledger **1263/1263 + kit 83/83**, all chained checks green, **npm rc 0**, **326.772 s**, Node **v26.4.0**, checkpoint **72f976573b5173b3b76102aa0c79751c13c5f113**. Fresh skillmd **19/19**, health **200/200/200**, private backup corpus **36/36**.
+
+At **2026-09-28T04:48Z**, attended Holds-2 still owns its live main battery and has no final wrapper receipt. Lane-c Holds-3 remains live. No second drain began. The exact predecessor archive and three-item Owner's Desk were checked before clearance. The final lock-clearing commit is this fire's last write to main; only the normal origin push and read-only verification follow.
+
+Commit trail: lock **f45e38370**, generated bookkeeping **515c0ec3b**, verification checkpoint **72f976573**. The clearing commit includes this final receipt. Remaining work stays in the ordered list above.
