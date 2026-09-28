@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "npx",
+    "playwright",
+    "test",
+    "e2e/native-proofs/e7-dead-band.spec.ts",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--workers=1",
+    "--reporter=line",
+    "--output=/Users/robin/.goldrush/play-proofs/run-16/default/e7-dead-band/results"
+  ],
+  "env": {
+    "GR_NATIVE_PROOF": "1",
+    "GR_NATIVE_RUN": "16/default",
+    "GR_CAPTURE_EXTERNAL_SERVER": "1",
+    "GR_CAPTURE_BASE_URL": "http://127.0.0.1:5303"
+  }
+}

@@ -1,5 +1,5 @@
 """Run a single authorized ride pair, preserving direct exits outside the tree."""
-import os, pathlib, subprocess, sys, json
+import os, pathlib, subprocess, sys, json, hashlib
 contract = sys.argv[1]
 strategy = sys.argv[2] if len(sys.argv) > 2 else 'default'
 projects = sys.argv[3:] or ['desktop-chrome', 'mobile-chrome']
@@ -9,7 +9,7 @@ env = dict(os.environ, GR_NATIVE_PROOF='1', GR_NATIVE_RUN=f'16/{strategy}', GR_C
 env.pop('GR_NATIVE_STRATEGY', None)
 if strategy != 'default': env['GR_NATIVE_STRATEGY'] = strategy
 cmd = ['npx', 'playwright', 'test', f'e2e/native-proofs/{contract}.spec.ts', *[f'--project={p}' for p in projects], '--workers=1', '--reporter=line', f'--output={root}/results']
-(root / 'command.json').write_text(json.dumps({'argv':cmd,'env':{k:v for k,v in env.items() if k.startswith('GR_NATIVE') or k.startswith('GR_CAPTURE')}},indent=2)+'\n')
+(root / 'command.json').write_text(json.dumps({'head':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'driverSha256':hashlib.sha256(pathlib.Path('e2e/native-proofs/driver.ts').read_bytes()).hexdigest(),'argv':cmd,'env':{k:v for k,v in env.items() if k.startswith('GR_NATIVE') or k.startswith('GR_CAPTURE')}},indent=2)+'\n')
 with (root / 'command.log').open('w') as log:
     result = subprocess.run(cmd, env=env, stdout=log, stderr=subprocess.STDOUT)
 (root / 'command.exit').write_text(str(result.returncode)+'\n')

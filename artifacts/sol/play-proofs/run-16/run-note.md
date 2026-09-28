@@ -47,7 +47,7 @@ Carried from run 15; only rows with new completed measurements will move to deci
 | Half-Life Hollow (e6-half-life-hollow) | HELD — survival ceiling; crossing complete; all four deaths wave 4 | 13 | [Finding](../run-13/e6-half-life-hollow/finding.md) |
 | The Picnic (e6-picnic) | HELD — three stakes held all rides; survival deaths 17/17 default, 18/17 restore | 16 | [Finding](../run-16/e6-picnic/finding.md) |
 | The Showroom (e6-showroom) | HELD — default captures 6/6 both; deaths 5/13; restore terminal capture lost to driver confirms | 16 | [Finding](../run-16/e6-showroom/finding.md) |
-| The Dead Band (e7-dead-band) | HELD — objective never engaged; deaths 18/18; refusal unexercised | 13 | [Finding](../run-13/e7-dead-band/finding.md) |
+| The Dead Band (e7-dead-band) | HELD — refusal latch met all rides; survival deaths 19/12 default, 17/14 restore | 16 | [Finding](../run-16/e7-dead-band/finding.md) |
 | Echo Canyon (e7-echo-canyon) | HELD — objective never engaged; deaths 16/19; no playbook/mirror | 13 | [Finding](../run-13/e7-echo-canyon/finding.md) |
 | Relay Rush (e7-relay-rush) | HELD — objective never engaged; deaths 18/19; deadline 1/3, no muted use | 13 | [Finding](../run-13/e7-relay-rush/finding.md) |
 | Relay Valley (e7-relay-valley) | HELD — objective never engaged; playbook uses 0, deaths 17/17 | 14 | [Finding](../run-14/e7-relay-valley/finding.md) |
