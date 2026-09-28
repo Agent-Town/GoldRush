@@ -1,0 +1,63 @@
+{
+  "stamp": "2026-09-28T18:59Z",
+  "head": "44e3c91cb0355f445da6183a65028a75647d06f0",
+  "directories": {
+    "tasks/queue": {
+      "count": 0,
+      "newest": []
+    },
+    "tasks/running": {
+      "count": 0,
+      "newest": []
+    },
+    "tasks/failed": {
+      "count": 117,
+      "newest": [
+        {
+          "file": "tasks/failed/shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md",
+          "mtime": "2026-09-20T06:53:51.129Z"
+        },
+        {
+          "file": "tasks/failed/shipped-s1065-20260708-095336-gt-04-sightlines-ebbb04de.md",
+          "mtime": "2026-09-20T06:53:51.129Z"
+        },
+        {
+          "file": "tasks/failed/shipped-s1065-20260707-143237-damage-orientation-e9fabff7.md",
+          "mtime": "2026-09-20T06:53:51.128Z"
+        }
+      ]
+    },
+    "assets/crafting-queue/pending": {
+      "count": 0,
+      "newest": []
+    }
+  },
+  "audioDrainOnMain": true,
+  "traceIntroductionOnMain": true,
+  "oversizedTraceBytes": 113467543,
+  "tickerSeptember27": true,
+  "tickerSeptember28": false,
+  "rotations": [
+    {
+      "id": "r2026w37",
+      "opensAt": "2026-09-07T00:00:00.000Z",
+      "closesAt": "2026-09-14T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w38",
+      "opensAt": "2026-09-14T00:00:00.000Z",
+      "closesAt": "2026-09-21T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w39",
+      "opensAt": "2026-09-21T00:00:00.000Z",
+      "closesAt": "2026-09-28T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w40",
+      "opensAt": "2026-09-28T00:00:00.000Z",
+      "closesAt": "2026-10-05T00:00:00.000Z"
+    }
+  ],
+  "latestRun": "20260928-214502-lane-b-audio-integration-first-boot-spec-1.md.log"
+}
