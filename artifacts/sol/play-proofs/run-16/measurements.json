@@ -67,6 +67,7 @@
     "latch": null,
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e6-picnic/default/row-desktop-chrome.json"
   },
   {
@@ -137,6 +138,7 @@
     "latch": null,
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e6-picnic/default/row-mobile-chrome.json"
   },
   {
@@ -207,6 +209,7 @@
     "latch": null,
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/row-desktop-chrome.json"
   },
   {
@@ -277,6 +280,7 @@
     "latch": null,
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e6-picnic/restore-ground/row-mobile-chrome.json"
   },
   {
@@ -319,6 +323,7 @@
     "latch": null,
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e6-showroom/default/row-desktop-chrome.json"
   },
   {
@@ -361,6 +366,7 @@
     "latch": null,
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e6-showroom/default/row-mobile-chrome.json"
   },
   {
@@ -397,6 +403,7 @@
     "latch": null,
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e6-showroom/restore-ground/row-desktop-chrome.json"
   },
   {
@@ -433,6 +440,7 @@
     "latch": null,
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e6-showroom/restore-ground/row-mobile-chrome.json"
   },
   {
@@ -475,6 +483,7 @@
     },
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e7-dead-band/default/row-desktop-chrome.json"
   },
   {
@@ -517,6 +526,7 @@
     },
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e7-dead-band/default/row-mobile-chrome.json"
   },
   {
@@ -559,6 +569,7 @@
     },
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/row-desktop-chrome.json"
   },
   {
@@ -601,6 +612,200 @@
     },
     "mirror": null,
     "front": null,
+    "tapes": [],
     "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e7-dead-band/restore-ground/row-mobile-chrome.json"
+  },
+  {
+    "contract": "e7-echo-canyon",
+    "project": "desktop-chrome",
+    "strategy": "default",
+    "terminalCaptured": true,
+    "lastObservation": {
+      "t": 493.7,
+      "wave": 16,
+      "hp": 21,
+      "gold": 10,
+      "kills": 702,
+      "x": -13.7,
+      "z": -5.7,
+      "alive": 19,
+      "seams": 1
+    },
+    "wave": 16,
+    "sim": 498.26666666664863,
+    "hp": 0,
+    "gold": 10,
+    "repairs": 0,
+    "standing": 6,
+    "pieces": 6,
+    "secure": false,
+    "bank": false,
+    "book": false,
+    "reload": false,
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "stakes": [],
+    "captures": null,
+    "latch": {
+      "declared": true,
+      "objective": "mirror",
+      "objectiveMet": true,
+      "uses": 1,
+      "relaysLitByProgram": []
+    },
+    "mirror": {
+      "declared": true,
+      "delay": "next-wave",
+      "recordedUses": 1,
+      "distinctPlaybooks": 1,
+      "maxRepeat": 0,
+      "pending": [],
+      "squadsFielded": 1,
+      "bodiesFielded": 2,
+      "lastFieldedWave": 3,
+      "capPerWave": 3,
+      "hpPerRepeat": 0.1,
+      "refusals": {
+        "cappedSquads": 0
+      }
+    },
+    "front": null,
+    "tapes": [
+      {
+        "name": "Native movement and build",
+        "contractId": "e7-echo-canyon",
+        "durationTicks": 26,
+        "entries": 6,
+        "movementEntries": 3,
+        "buildActions": [
+          {
+            "id": "turret",
+            "position": {
+              "x": 1,
+              "z": -20
+            },
+            "rotationSteps": 0,
+            "type": "place_build"
+          }
+        ],
+        "truncated": null
+      }
+    ],
+    "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e7-echo-canyon/default/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e7-echo-canyon",
+    "project": "mobile-chrome",
+    "strategy": "default",
+    "terminalCaptured": false,
+    "lastObservation": {
+      "t": 40.7,
+      "wave": 1,
+      "hp": 100,
+      "gold": 50,
+      "kills": 12,
+      "x": 13.2,
+      "z": -14.7,
+      "alive": 5,
+      "seams": 2
+    },
+    "wave": null,
+    "sim": null,
+    "hp": null,
+    "gold": null,
+    "repairs": null,
+    "standing": null,
+    "pieces": null,
+    "secure": false,
+    "bank": false,
+    "book": false,
+    "reload": false,
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "stakes": null,
+    "captures": null,
+    "latch": null,
+    "mirror": null,
+    "front": null,
+    "tapes": [],
+    "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e7-echo-canyon/default/row-mobile-chrome.json"
+  },
+  {
+    "contract": "e7-echo-canyon",
+    "project": "desktop-chrome",
+    "strategy": "restore-ground",
+    "terminalCaptured": true,
+    "lastObservation": {
+      "t": 517.5,
+      "wave": 17,
+      "hp": 53,
+      "gold": 45,
+      "kills": 748,
+      "x": -13.4,
+      "z": -6,
+      "alive": 13,
+      "seams": 1
+    },
+    "wave": 17,
+    "sim": 527.066666666647,
+    "hp": 0,
+    "gold": 45,
+    "repairs": 0,
+    "standing": 5,
+    "pieces": 5,
+    "secure": false,
+    "bank": false,
+    "book": false,
+    "reload": false,
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "stakes": [],
+    "captures": null,
+    "latch": {
+      "declared": true,
+      "objective": "mirror",
+      "objectiveMet": true,
+      "uses": 1,
+      "relaysLitByProgram": []
+    },
+    "mirror": {
+      "declared": true,
+      "delay": "next-wave",
+      "recordedUses": 1,
+      "distinctPlaybooks": 1,
+      "maxRepeat": 0,
+      "pending": [],
+      "squadsFielded": 1,
+      "bodiesFielded": 2,
+      "lastFieldedWave": 3,
+      "capPerWave": 3,
+      "hpPerRepeat": 0.1,
+      "refusals": {
+        "cappedSquads": 0
+      }
+    },
+    "front": null,
+    "tapes": [
+      {
+        "name": "Native movement and build",
+        "contractId": "e7-echo-canyon",
+        "durationTicks": 29,
+        "entries": 7,
+        "movementEntries": 4,
+        "buildActions": [
+          {
+            "id": "turret",
+            "position": {
+              "x": 1,
+              "z": -20
+            },
+            "rotationSteps": 0,
+            "type": "place_build"
+          }
+        ],
+        "truncated": null
+      }
+    ],
+    "row": "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-16/e7-echo-canyon/restore-ground/row-desktop-chrome.json"
   }
 ]
