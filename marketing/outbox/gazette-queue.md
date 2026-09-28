@@ -3141,3 +3141,10 @@ standing appears in the game. All time is one tap away. The public board's
 rotation parameter is also documented for riders reading the door instructions.
 merge `40c1ee15b`, `2d4802c04` · pin `e7fafe2a5` · review `reviews/county-board-open-week-1.md`
 ROUNDUP-CLASS — 2026-W39; s2723 backfills the September 27 landing. Pin 69 remains in era 6. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — Keep the Tape Reel on earlier maps
+After reaching the Signal Era, the Prospector keeps the Tape Reel when returning
+to earlier maps. Explicit epoch previews still show that map's own state.
+merge `f6b61e4c5` · pin `ab573c67a` · review `reviews/e7-tape-drawer-inheritance-1.md`
+ROUNDUP-CLASS — 2026-W40; s2742 records the attended September 28 landing. Pin 72 remains in era 6. Draft only; publication stays owner-only.
