@@ -1,0 +1,31 @@
+[deploy] building…
+[deploy] release assertion: E1-only bundle confirmed
+[deploy] checking first-town asset budget…
+[deploy] MEASURED NOTHING: probe tripwire parsed 0 projects (playwright rc=1) — this is NOT a pass
+[deploy] first-town payload: 34355212 / 52000000 bytes (17644788 bytes headroom)
+[deploy] deploying snapshot /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T//gold-rush-dist.Qx7q3L to Pages project 'gold-rush'…
+[deploy] DEPLOYED ok https://010b0180.gold-rush-3in.pages.dev
+[deploy] VERIFY attempt 1/7: https://gold-rush-3in.pages.dev/version.json says 954bb2cd
+[deploy] VERIFIED published 954bb2cd at https://gold-rush-3in.pages.dev
+[deploy] ASSAYER SYNCED: droplet tree + pin 954bb2cd, services restarted
+[deploy] mirror weight after sync: 1684 MB
+[deploy] RELEASE VERDICT
+[deploy] Build: 954bb2cd
+[deploy] Budget: PASS (limit: 52000000 bytes)
+[deploy]   payload GATE (declared, computed from the build): PASS (34355212 / 52000000 bytes, 17644788 bytes headroom)
+[deploy]   | group | gated | families | files | bytes |
+[deploy]   | --- | --- | ---: | ---: | ---: |
+[deploy]   | hero | yes | 8 | 106 | 4211621 |
+[deploy]   | cast | yes | 10 | 272 | 19573461 |
+[deploy]   | plates | yes | 19 | 19 | 4348229 |
+[deploy]   | models | yes | 16 | 16 | 3951220 |
+[deploy]   | audio | yes | 1 | 1 | 8821 |
+[deploy]   | code | yes | 33 | 33 | 2259760 |
+[deploy]   | document | yes | 1 | 1 | 2100 |
+[deploy]   | GATED TOTAL | yes | 88 | 448 | 34355212 |
+[deploy]   | DECLARED TOTAL (gated + demand-paged) | — | — | — | 34355212 |
+[deploy]   first-town payload demand-paged: 0 bytes
+[deploy]   first-town payload declared: 34355212 bytes
+[deploy]   probe TRIPWIRE (browser cue window, ceiling 30000000 bytes, host speed not payload): NOT MEASURED (probe rc=1; measured projects=0; report failures=0) — reported, does not gate
+[deploy] Device verdict: WARN missing docs/release/verdict-954bb2cd.md
+[deploy] Outcome: deployed
