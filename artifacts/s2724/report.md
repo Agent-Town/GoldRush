@@ -36,8 +36,13 @@ The s2723 predecessor is archived verbatim, and all three Owner's Desk items rem
 
 ## Remaining list in order
 
-1. Finish the ledger battery and final lock-clearing handoff; that commit is the last main write.
-2. Next fire: strict policy, detached gating and drain of holds-1. Preserve its measured PASS/PARTIAL/HELD distinctions. Holds-2/-3 dispatch remains attended-owned.
-3. Next private coverage duty after 02:10 UTC; news publication remains owner-only.
+1. Next fire: strict policy, detached gating and drain of holds-1. Preserve its measured PASS/PARTIAL/HELD distinctions. Holds-2/-3 dispatch remains attended-owned.
+2. Next private coverage duty after 02:10 UTC; news publication remains owner-only.
 
 No second drain was started: mandatory main verification consumed the fire window. Main landing 4c4a44371 and the source merge 430631913 are already backed up through 058217774. Lock claim b8996ddb3; renewal 976423acd. Final checkpoint, ledger and handoff hashes follow below.
+
+## Final ledger and handoff
+
+Final ledger **PASS rc 0, 1263/1263, zero failures/skips**, **182.596 s**, measured after the closure row was committed at **ea3bd6870d07b096d23081b61c03a7cc6e3377dd**. Full transcript ledger-final.txt and structured ledger-result.json / ledger-summary.json. Evidence budget PASS: **15.0 MB / 40.0 MB**. Bounded archive audit: zero permanently absent or abridged handoffs across 40 commits. The s2723 handoff and three-item Owner's Desk are preserved byte-for-byte.
+
+Lock clearance at **2026-09-28T00:28Z** is this fire's **last main write**. Only backup push and read-only verification follow. The owned drain lock is archived outside the repository after the final commit; the launcher keeps tasks/.fire.lock until this process exits. No owner approval was needed or requested. One source drain completed; no further drain or dispatch was started.
