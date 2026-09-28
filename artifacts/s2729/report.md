@@ -31,3 +31,11 @@ The attended main Node log, last modified **2026-09-28T02:25:00.144Z**, confirms
 3. September 29 LB/FM after 02:10 UTC; Wednesday September 30 rotation mint.
 
 Final ledger verification and lock clearance will be recorded below before the last main commit.
+
+## Final verification and handoff
+
+Ledger **PASS, npm rc 0**, **1263/1263**, zero failures/skips/cancellations; every chained leg completed and final kit **83/83**. Total **330.160 s**, Node **26.4.0**, stable checkpoint **6fa31e6b80bf54a7f39e6fe483e3ea3265d78f71**. Receipts: `ledger-final.txt`, `ledger-result.json`, `final-verification.json`. Archive audit clean; predecessor and Owner's Desk checked byte-for-byte. Final state still has Holds-2 running. No eligible product drain, deploy, source change or new ledger/goal row.
+
+Project knowledge and the session digest are retained in the shared Obsidian vault (`vault-notes.json`). Inherited generated log churn is preserved in the closing bookkeeping set. Prior commits: lock **4867416a9**, generated bookkeeping **ea2ff35da**, verified receipt/handoff checkpoint **6fa31e6b8**.
+
+Lock clearance **2026-09-28T02:55Z** is this fire's last write/commit on main. The normal origin/main backup push and read-only remote verification follow; the launcher retains its own directory until process exit. Remaining work is listed above.
