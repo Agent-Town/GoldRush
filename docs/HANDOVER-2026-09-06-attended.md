@@ -1254,3 +1254,10 @@ F-2725-1: source candidate `cf9cd95c4` remains detached/saved, no main merge. Fr
 - Exact s2753 predecessor archived; four-item Owner's Desk retained. Evidence and ordered remainder: artifacts/s2754/report.md. Closing pinned-runtime ledger battery follows before clearance.
 
 - s2754 closing receipt: At 2026-09-28T17:40Z, the complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **205.847 seconds**, Node v26.4.0, checkpoint bcbb31c10. Every chained leg completed. Final queues, running tasks and pending orders are empty; all four runner lanes have zero ahead commits. Exact s2753 predecessor and four-item Owner's Desk tail preserved byte-for-byte. No product drain, dispatch, deploy, history repair or unchanged rejected push. Commits before clearance: 88799f992, 5459f7920 and bcbb31c10. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
+
+
+### s2755 fire — dry board; heartbeat duties current
+- WHY no product drain: board 0 real / 0 unknown and all four runner lanes ahead=0; queues, running tasks, pending orders and staged art empty; no new failed entry. Runner 25494 alive; latest completed task is the accepted audio persistence test. Five ahead scratch worktrees remain attended-owned; CODEX-WALL forbids independent fire dispatch/refill.
+- Health 200/200/200. Strict private coverage 36/36 through September 28; live archive ledger/fire-memory heads unchanged from the duty receipts. September 27 ticker and r2026w40 are present. Next ticker after September 29 06:00 local; private coverage September 29 after 02:10 UTC; week-41 mint September 30.
+- Live origin main/candidate unchanged at 0979de763/23f27b940; historical trace remains reachable. F-2742-1 needs the existing owner decision and attended candidate refresh preserving accepted audio drain 15da41c60 and later evidence. No unchanged rejected push or pointer move.
+- Exact s2754 predecessor archived; four-item Owner's Desk retained. Evidence and ordered remainder: artifacts/s2755/report.md. Closing pinned-runtime ledger battery follows before clearance.

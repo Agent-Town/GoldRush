@@ -1,0 +1,62 @@
+{
+  "clock": "2026-09-28T17:49Z",
+  "localClock": "2026-09-29T00:49+0700",
+  "head": "01b391992b8c8d25e8e5a0c7012444bbb7bce54c",
+  "queues": {
+    "art": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "main": []
+  },
+  "running": [],
+  "pendingOrders": [],
+  "failedNewerThanPredecessor": [],
+  "latestRun": {
+    "n": "20260928-214502-lane-b-audio-integration-first-boot-spec-1.md.log",
+    "mtime": 1790607315320.3064
+  },
+  "runner": "PID  PPID TTY      STAT STARTED\n25494     1 ??       SN   Sun Sep 20 13:55:15 2026",
+  "lanes": [
+    {
+      "branch": "sol/open-findings-astra",
+      "commitsAhead": ""
+    },
+    {
+      "branch": "sol/wave-lane-b",
+      "commitsAhead": ""
+    },
+    {
+      "branch": "sol/map-art-campaign-2",
+      "commitsAhead": ""
+    },
+    {
+      "branch": "art/portraits-e5-e10-generated",
+      "commitsAhead": ""
+    }
+  ],
+  "acceptedAudioDrainOnMain": true,
+  "oversizedTraceIntroducingCommitOnMain": true,
+  "historicalBlobBytes": 113467543,
+  "rotationIds": [
+    {
+      "id": "r2026w37",
+      "opensAt": "2026-09-07T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w38",
+      "opensAt": "2026-09-14T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w39",
+      "opensAt": "2026-09-21T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w40",
+      "opensAt": "2026-09-28T00:00:00.000Z"
+    }
+  ],
+  "pinnedNode": "v26.4.0",
+  "nvmrc": "26.4.0"
+}
