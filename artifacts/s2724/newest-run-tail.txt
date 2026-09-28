@@ -1,0 +1,35 @@
+20260928-045750-lane-c-sol-play-proofs-holds-1.md.log
++            // finish before secureWave; require a fresh secured score, not a later wave.
++            const banked = fresh.find((score) => score.contractId === contract.id && score.secured === true);
+             row.banks = banked
+               ? pass(`a NEW secured row for ${contract.id}: waves=${banked.waves} gold=${banked.gold} timeAlive=${Math.round(banked.timeAlive ?? 0)} kills=${banked.kills ?? '?'} (${fresh.length} new row(s) since pre-play, retained after Return to Town)`)
+               : fail(
+-                  `no new secured row since pre-play for ${contract.id} at >= wave ${secureWave} (${fresh.length} new row(s): ${JSON.stringify(fresh.slice(0, 2))})`,
++                  `no new secured row since pre-play for ${contract.id} after Claim Secured (${fresh.length} new row(s): ${JSON.stringify(fresh.slice(0, 2))})`,
+                 );
+           } catch (error) {
+             row.banks = fail(String((error as Error).message).split('\n').slice(0, 3).join(' | '));
+@@ -1437,7 +1536,8 @@
+             ? pass('0 console, 0 page')
+             : fail(`${consoleErrors.length} console / ${pageErrors.length} page: ${[...consoleErrors, ...pageErrors].slice(0, 3).join(' || ')}`);
+       } finally {
+-        if (!row.banks.ok) row.finalSnapshot = (await read(page)) ?? undefined;
++        // Preserve the terminal captured before Return to Town, even if banking fails.
++        if (!row.finalSnapshot) row.finalSnapshot = (await read(page)) ?? undefined;
+         if (row.finalSnapshot) {
+           if (id !== 'e10-river') row.objective = row.finalSnapshot.objective;
+           if (!row.banks.ok) {
+
+tokens used
+204,131
+**READY-FOR-GATES with recorded holds.**
+
+- **Long Road: HELD** — far-stop approach stalled; both rides died at wave 3.
+- **Deepwater: PARTIAL** — boss and bank/Book/reload passed; final deck correction not re-ridden, wreck restoration unproved.
+- **Glow Mesa: PASS** — both wave-8 endings banked and survived reload.
+
+Flotilla/Regatta equivalence passed. Typecheck, build and main-checkout task guard passed. All eight rides had zero browser errors. No F-IDs; remaining holds belong to QA/native drivers.
+
+Run-15 evidence: **2,834,659 bytes**, below 25 MB. Final commit: `673003605`; lane clean.
+
+[Full report and ordered remaining work](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/sol/play-proofs/run-15/run-note.md>)
