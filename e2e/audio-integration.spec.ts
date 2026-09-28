@@ -3,7 +3,7 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { PROFILE_KEY } from '../src/game/ProfileStorage';
 import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY } from '../src/audio/settings';
 
-const SHOT_DIR = 'artifacts/audio-integration';
+const SHOT_DIR = 'artifacts/audio-integration-first-boot-spec-1';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type HarvestNode = {
@@ -79,12 +79,15 @@ test('boot stays audio-locked until gesture, then seeded panning requests sound'
 
 test('settings volume and mute persist across reload', async ({ page }, testInfo: TestInfo) => {
   const errors = collectErrors(page);
+  // Settings belongs to the returning-player menu. Preserve preferences on reload.
+  await page.addInitScript((profileKey) => {
+    if (!localStorage.getItem(profileKey)) localStorage.setItem(profileKey, JSON.stringify({
+      version: 2,
+      activeId: 'audio-persistence',
+      profiles: [{ id: 'audio-persistence', name: 'Audio Persistence', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+    }));
+  }, PROFILE_KEY);
   await page.goto('/');
-  await page.evaluate(() => {
-    localStorage.clear();
-    sessionStorage.clear();
-  });
-  await page.reload();
 
   await page.getByTestId('start-menu-settings').click();
   await mkdir(SHOT_DIR, { recursive: true });
@@ -112,6 +115,8 @@ test('settings volume and mute persist across reload', async ({ page }, testInfo
   await page.getByTestId('start-menu-settings').click();
   await expect(page.getByTestId('start-menu-volume')).toHaveValue('25');
   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
+  await page.goto('/?debug&nowaves&nolevel&seed=audio-persistence');
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio)).toMatchObject({ volume: 0.25, muted: true });
   assertNoErrors(errors);
 });
 
