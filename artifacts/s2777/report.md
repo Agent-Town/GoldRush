@@ -24,3 +24,7 @@ Evidence: `day.mjs`, `day.json`, `main-reflog.txt`, `ticker-check.json`, `dry-bo
 4. September 29 private coverage after 02:10 UTC; week-41 mint September 30 after 00:00 UTC.
 
 Closing `npm run test:ledger-guards` follows under Node 26.4.0, with `/opt/homebrew/bin` first on the child PATH, before the final lock-clearing commit.
+
+## Closing verification
+
+**READY-FOR-GATES.** At 2026-09-28T23:13Z, the complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm exit 0**, **216.476 seconds**, Node v26.4.0, checkpoint deb8244a5. Every chained leg completed. Final queues, running tasks and pending orders remain empty; all four runner lanes have zero ahead commits. The exact s2776 predecessor and four-item Owner's Desk are preserved byte-for-byte. Commits before clearance: fe9f36c46, 985c83d5f, deb8244a5. TK-01 draft completed; no product drain, dispatch, deployment or history repair. No unchanged rejected push retried under F-2742-1. Generated dashboard changes remain runtime-owned churn. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
