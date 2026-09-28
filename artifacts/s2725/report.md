@@ -45,3 +45,11 @@ Previous s2724 source landing remains on main; its full Node result is inherited
 4. LB-01/FM-01 next after 02:10 UTC; news publication remains owner-only.
 
 Checkpoint, final ledger verdict and lock-clearing commit are recorded below after verification. No further source drain is attempted.
+
+## Final verification and handoff
+
+Checkpoint **7f42ab279277887b5d13b22aab180df53988e320** includes the finding, original gate-side block, corrective master/goal registration and review. Final ledger **PASS rc 0, 1263/1263, zero fail/skip; kit 83/83**, 183.7 seconds, Node 26.4.0. Full transcript `ledger-final.txt`, result `ledger-result.json`, summary `ledger-summary.json`. Checkpoint evidence **6,837,121 B / 40,000,000 B**. Authored docs/goal changes pass whitespace checks; raw Vite/Playwright transcripts retain their original whitespace. Bounded archive audit reports zero permanently missing or abridged handoffs. Predecessor and all three desk items verified byte-identical.
+
+Adaptations: independent npm-ci arenas, preserved sibling art-link topology, unique native-output suffixes and serial controls at the same warmed port. No product, driver, assertion or timeout edit. The landed registry was read directly: era 6, 71 pins. No source drain or full-Node verdict is claimed.
+
+Lock clearance at **2026-09-28T01:06Z** is this fire's last main write. The final commit contains this receipt and the lock-clearing STATUS. Only backup pushes, read-only verification and archiving the owned external drain lock follow. The launcher retains tasks/.fire.lock until exit. Source candidate saved as `save/sol-play-proofs-holds-1-s2725`; backup includes that ref as well as main. No approval was requested.
