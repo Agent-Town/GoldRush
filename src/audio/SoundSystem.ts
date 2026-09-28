@@ -22,6 +22,13 @@ const HEADROOM_GAIN_FLOOR = 0.45;
 // Same timeout the advance stream gives its own idle work: an idle callback that never gets an
 // idle slot still fires within a second, so a busy load cannot strand the music indefinitely.
 const MUSIC_HOLD_TIMEOUT_MS = 1_000;
+// Review audio-review-1 measured tail fades and gaps. The files stay untouched.
+const MUSIC_SEAMS: Partial<Record<SoundName, { fade: number; gap: number }>> = {
+  'title-theme': { fade: 3, gap: 0.465 },
+  'era-e1-frontier-loop': { fade: 3, gap: 0.085 },
+  'era-e2-steamworks-loop': { fade: 1, gap: 0.180 },
+  'era-e3-voltage-loop': { fade: 3, gap: 0.490 },
+};
 let audioWasUnlocked = false;
 
 type IdleWindow = Window & {
@@ -65,6 +72,8 @@ type SoundDiagnostics = {
 type LoopState = {
   source: AudioBufferSourceNode;
   gain: GainNode;
+  envelope: GainNode;
+  musicSources: Set<AudioBufferSourceNode>;
   voiceId: number;
   volume: number;
   sourceCount: number;
@@ -116,7 +125,7 @@ export class SoundSystem {
     if (audioWasUnlocked) this.unlock();
   }
 
-  play(name: SoundName | string, volume = 1): void {
+  play(name: SoundName | string, volume = 1, gainScale = 1): void {
     if (this.disposed) return;
     this.requests += 1;
     this.lastRequested = name;
@@ -134,7 +143,7 @@ export class SoundSystem {
     const voiceId = this.reserveVoice(name, false, true);
     if (voiceId === null) return;
     this.activeBySound.set(name, count + 1);
-    void this.playLoaded(name, volume, voiceId);
+    void this.playLoaded(name, volume * this.effectiveVolume(gainScale), voiceId);
   }
 
   setLoop(name: SoundName, on: boolean, volume = 1): void {
@@ -162,7 +171,7 @@ export class SoundSystem {
     if (!loop || !entry) return;
     loop.volume = volume;
     loop.sourceCount = this.loopSourceCount(name, loop.sourceCount);
-    loop.gain.gain.value = this.effectiveVolume(entry.volume * volume * loopSourceScale(loop.sourceCount) * this.groupVolume(entry));
+    loop.gain.gain.setTargetAtTime(this.effectiveVolume(entry.volume * volume * loopSourceScale(loop.sourceCount) * this.groupVolume(entry)), this.context!.currentTime, 0.03);
   }
 
   stopLoop(name: SoundName): void {
@@ -191,13 +200,13 @@ export class SoundSystem {
     this.play('invalid', 0.8);
   }
 
-  playShot(kind: ProjectileKind, ownerId: string): void {
+  playShot(kind: ProjectileKind, ownerId: string, gainScale = 1): void {
     if (ownerId === 'turrets') {
-      this.play('turret-fire');
+      this.play('turret-fire', 1, gainScale);
     } else if (kind === 'lob') {
       this.play('blast-charge-arm');
     } else {
-      this.play('spark-bolt-fire');
+      this.play('spark-bolt-fire', 1, gainScale);
     }
   }
 
@@ -221,7 +230,10 @@ export class SoundSystem {
     window.removeEventListener('keydown', this.unlock);
     this.unsubscribePreferences();
     for (const voice of [...this.voices.values()]) this.releaseVoice(voice.id, true);
-    void this.context?.close();
+    const context = this.context;
+    // Keep the scene's audio context alive until its music fade has actually played.
+    if (context?.state === 'running') window.setTimeout(() => { void context.close().catch(() => undefined); }, 550);
+    else void context?.close().catch(() => undefined);
     this.context = null;
     this.masterGain = null;
     this.musicGain = null;
@@ -301,9 +313,13 @@ export class SoundSystem {
   private ensureContext(): AudioContext {
     if (!this.context) {
       this.context = new AudioContext();
-      this.masterGain = this.context.createGain();
-      this.musicGain = this.context.createGain();
-      this.masterGain.connect(this.context.destination);
+      this.masterGain = new GainNode(this.context, { gain: 0 });
+      this.musicGain = new GainNode(this.context, { gain: 0 });
+      const shelf = this.context.createBiquadFilter();
+      shelf.type = 'highshelf';
+      shelf.frequency.value = 4_000;
+      shelf.gain.setTargetAtTime(-3, this.context.currentTime, 0.03);
+      this.masterGain.connect(shelf).connect(this.context.destination);
       this.musicGain.connect(this.context.destination);
       this.updateMasterGain();
     }
@@ -325,10 +341,10 @@ export class SoundSystem {
     if (!voice) return;
     const entry: SoundManifestEntry = soundManifest[name];
     const source = context.createBufferSource();
-    const gain = context.createGain();
+    const gain = new GainNode(context, { gain: 0 });
     source.buffer = buffer;
     source.playbackRate.value = this.playbackRate(entry.pitchVariance);
-    gain.gain.value = this.effectiveVolume(entry.volume * volume * this.groupVolume(entry));
+    gain.gain.setTargetAtTime(this.effectiveVolume(entry.volume * volume * this.groupVolume(entry)), context.currentTime, 0.005);
     source.connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
     voice.source = source;
     source.onended = () => this.releaseVoice(voiceId);
@@ -360,23 +376,64 @@ export class SoundSystem {
       return;
     }
     const source = context.createBufferSource();
-    const gain = context.createGain();
+    const gain = new GainNode(context, { gain: 0 });
     const entry: SoundManifestEntry = soundManifest[name];
-    source.buffer = buffer;
-    source.loop = true;
-    source.connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
-    voice.source = source;
-    this.loops.set(name, { source, gain, voiceId, volume, sourceCount: this.loopSourceCount(name, 1), startedAt: context.currentTime });
-    this.setLoopVolume(name, volume);
-    source.onended = () => {
-      if (this.loops.get(name)?.source === source) this.loops.delete(name);
-      this.releaseVoice(voiceId);
+    const envelope = new GainNode(context, { gain: entry.group === 'music' ? 0 : 1 });
+    if (entry.group === 'music') envelope.gain.setTargetAtTime(1, context.currentTime, 0.2);
+    const loop: LoopState = {
+      source, gain, envelope, musicSources: new Set(), voiceId, volume,
+      sourceCount: this.loopSourceCount(name, 1), startedAt: context.currentTime,
     };
+    envelope.connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
+    this.loops.set(name, loop);
+    this.setLoopVolume(name, volume);
     this.startingLoops.delete(name);
-    source.start();
+    const seam = MUSIC_SEAMS[name];
+    if (seam) {
+      const stride = buffer.duration - seam.gap - seam.fade;
+      // Schedule both passes on the audio clock. onended schedules the next pass a
+      // whole stride ahead, so a background-tab timer cannot open a hole at the seam.
+      this.startMusicPass(name, loop, buffer, context.currentTime, seam, true);
+      this.startMusicPass(name, loop, buffer, context.currentTime + stride, seam, false);
+    } else {
+      source.buffer = buffer;
+      source.loop = true;
+      source.connect(envelope);
+      voice.source = source;
+      source.onended = () => this.releaseVoice(voiceId);
+      source.start();
+    }
     this.started += 1;
     this.recordStarted(name);
     this.lastStarted = name;
+  }
+
+  private startMusicPass(
+    name: SoundName, loop: LoopState, buffer: AudioBuffer, at: number,
+    seam: { fade: number; gap: number }, first: boolean,
+  ): void {
+    const context = this.context!;
+    const stride = buffer.duration - seam.gap - seam.fade;
+    const source = context.createBufferSource();
+    const envelope = new GainNode(context, { gain: first ? 1 : 0 });
+    source.buffer = buffer;
+    source.connect(envelope).connect(loop.envelope);
+    if (!first) envelope.gain.setTargetAtTime(1, at, seam.fade / 5);
+    envelope.gain.setTargetAtTime(0, at + stride, seam.fade / 5);
+    loop.musicSources.add(source);
+    source.onended = () => {
+      loop.musicSources.delete(source);
+      source.disconnect();
+      envelope.disconnect();
+      if (!this.disposed && this.loops.get(name) === loop) {
+        this.startMusicPass(name, loop, buffer, at + 2 * stride, seam, false);
+      } else if (loop.musicSources.size === 0) {
+        loop.envelope.disconnect();
+        loop.gain.disconnect();
+      }
+    };
+    source.start(at, 0);
+    source.stop(at + buffer.duration - seam.gap);
   }
 
   private acceptSoundRequest(name: SoundName): boolean {
@@ -432,10 +489,16 @@ export class SoundSystem {
     if (!voice) return;
     this.voices.delete(voiceId);
     if (voice.countsPerSound) this.releaseSoundSlot(voice.name);
-    if (voice.loop && this.loops.get(voice.name)?.voiceId === voiceId) this.loops.delete(voice.name);
+    const loop = voice.loop && this.loops.get(voice.name)?.voiceId === voiceId ? this.loops.get(voice.name) : undefined;
+    if (loop) this.loops.delete(voice.name);
+    const fade = stop && loop && soundManifest[voice.name].group === 'music' && this.context?.state === 'running';
+    if (fade) loop.envelope.gain.setTargetAtTime(0, this.context!.currentTime, 0.1);
+    if (stop && loop) {
+      for (const source of loop.musicSources) source.stop(fade ? this.context!.currentTime + 0.5 : 0);
+    }
     if (stop && voice.source) {
       try {
-        voice.source.stop();
+        voice.source.stop(fade ? this.context!.currentTime + 0.5 : 0);
       } catch {}
     }
     this.updateMasterGain();
@@ -528,8 +591,8 @@ export class SoundSystem {
 
   private updateMasterGain(): void {
     const volume = readAudioMuted() ? 0 : readAudioVolume();
-    if (this.masterGain) this.masterGain.gain.value = volume * this.headroomGain();
-    if (this.musicGain) this.musicGain.gain.value = volume;
+    if (this.masterGain) this.masterGain.gain.setTargetAtTime(volume * this.headroomGain(), this.context!.currentTime, 0.03);
+    if (this.musicGain) this.musicGain.gain.setTargetAtTime(volume, this.context!.currentTime, 0.03);
   }
 
   private governedVoiceCount(): number {
@@ -678,4 +741,9 @@ function soundPriority(name: SoundName): SoundPriority {
 
 function priorityRank(priority: SoundPriority): number {
   return priority === 'ui' ? 3 : priority === 'combat' ? 2 : priority === 'economy' ? 1 : 0;
+}
+
+/** Audio-only falloff: full within the rig's 10m reach, 0.35 at 60m and beyond. */
+export function buildingShotGain(distance: number): number {
+  return Math.max(0.35, 1 - 0.65 * Math.max(0, distance - 10) / 50);
 }
