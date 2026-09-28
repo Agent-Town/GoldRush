@@ -1,0 +1,39 @@
+{
+  "tag": "rgw1",
+  "branch": "art/portraits-e5-e10-generated",
+  "port": 5413,
+  "mergeMessage": "drain: merge art/portraits-e5-e10-generated — run-guards-node-watchdog-1 — the diff-selected guard wrapper gives the full Node battery a bounded 60-minute outer budget (other guards keep 15 minutes; inner timeouts and watchdogs unchanged), so a fire can finish a src landing's guard leg again (F-2737-1); the full wrapper ran to completion in 1,182 s on the candidate with one pre-existing linked-worktree desk refusal reproduced on the unchanged base; scripts only, hash unchanged",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": [
+      "scripts/run-guards.test.mjs"
+    ]
+  },
+  "review": {
+    "path": "reviews/run-guards-node-watchdog-1.md",
+    "title": "Drain review: `run-guards-node-watchdog-1`, the full Node guard battery gets a bounded 60-minute outer budget so the fires can finish a src landing's guard leg again",
+    "body": "scripts/attended/landings/rgw1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "run-guards-node-watchdog-1.md",
+    "rowKey": "RUN GUARDS NODE WATCHDOG 1 LANDED",
+    "rowEmoji": "🔧",
+    "rowText": "Fire-authored (s2737, F-2737-1), adapted for Astra on lane-d, two attempts (the first stopped over lane-d's `node_modules` symlink; `ef16c955b` implementation + `a9fca769e` evidence; 178,154 tokens in all): `scripts/run-guards.mjs` gives `test:node-guards` a 3,600 s outer child budget while every other guard keeps 900 s; per-test bounds, the progress watchdog, retries, concurrency and exit-code semantics unchanged; `scripts/run-guards.test.mjs` covers both budget classes with a bounded spawn-option fixture (12/12). The literal diff-selected wrapper ran to completion on the candidate in 1,181.895 s (it used to be cut at 900 s against a 2,567 s healthy run): Node 1,034 pass / 5 skip / 1 fail, the failure the linked-worktree desk refusal reproduced on the unchanged base (the F-LAND-11 class, not this change's). tsc/build green. Scripts only, no `src/**`, hash unchanged. Landed attended; the fires' saved audio candidate no longer needs it (landed attended as amt1)",
+    "statusPhrase": "the guard wrapper lets the full Node battery finish inside a measured 60-minute budget; the fires can gate src landings again",
+    "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh rgw1; Astra on lane-d, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/run-guards-node-watchdog-1"
+}

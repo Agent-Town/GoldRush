@@ -1,0 +1,10 @@
+tasks/queue: 
+tasks/running: 
+assets/crafting-queue/pending: 
+newest failed move {"x":"shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md","t":"2026-09-20T06:53:51.129Z"}
+  PID  PPID TTY      STAT STARTED
+25494     1 ??       SN   Sun Sep 20 13:55:15 2026    
+36774 36750 ??       SN   Mon Sep 28 17:37:20 2026    
+36786 36774 ??       SN   Mon Sep 28 17:37:20 2026    
+
+main semaphore     if [ "$slot" = "main" ] && [[ "$l1" == *ACTIVE* && "$l1" != *"lock CLEARED"* ]]; then
