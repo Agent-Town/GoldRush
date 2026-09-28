@@ -1,0 +1,35 @@
+
+e8-mare-claim {"t":422.3,"wave":14,"hp":98,"gold":95,"kills":519,"x":3.9,"z":5.9,"alive":42,"seams":1}
+
+e8-mare-claim {"t":432.8,"wave":14,"hp":21,"gold":0,"kills":547,"x":-8.5,"z":17.7,"alive":37,"seams":2}
+
+e8-mare-claim {"t":442.9,"wave":14,"hp":5,"gold":0,"kills":576,"x":-16.8,"z":2.1,"alive":21,"seams":2}
+
+e8-mare-claim {"t":452.9,"wave":15,"hp":5,"gold":0,"kills":596,"x":-20.7,"z":17.1,"alive":29,"seams":2}
+
+e8-mare-claim {"t":463.2,"wave":15,"hp":5,"gold":0,"kills":615,"x":-22,"z":25.8,"alive":34,"seams":2}
+
+  2) [mobile-chrome] › e2e/native-proofs/driver.ts:1300:5 › e8-mare-claim plays to its authored terminal, banks, reloads and returns to the board @slow
+
+    Error: secures: runState=dead at wave 15 / 465.3s sim, 619 kills, 10 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1818 |       }
+      1819 |
+    > 1820 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1821 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1822 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1823 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1820:64
+
+    Error Context: ../../../../../.goldrush/play-proofs/run-17/default/e8-mare-claim/results/native-proofs-e8-mare-clai-296e3-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  2 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1300:5 › e8-mare-claim plays to its authored terminal, banks, reloads and returns to the board @slow
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1300:5 › e8-mare-claim plays to its authored terminal, banks, reloads and returns to the board @slow

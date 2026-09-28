@@ -18,6 +18,7 @@ import { researchStateKey } from '../../src/meta/ResearchTree';
 import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 
 import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json' with { type: 'json' };
+import { E10ArchiveSystem } from '../../src/systems/E10ArchiveSystem';
 import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';
 
 const TIMESCALE = '4';
@@ -180,7 +181,7 @@ async function read(page: Page): Promise<Snapshot | null> {
         caravan: d.seedCaravan,
         canal: d.e9Canal,
         physics: d.e8Physics,
-        air: d.e8SuitAir,
+        air: d.e8SuitAir ?? d.e8Atmosphere,
         probe: d.probeRecovery,
         fuel: d.fuel,
         vehicle: d.vehicle,
@@ -190,7 +191,7 @@ async function read(page: Page): Promise<Snapshot | null> {
         crowdFlocks: d.crowdFlocks,
         power: d.power,
         pressure: d.pressure,
-        objective: { canalChoices: d.canalChoices, preserve: d.preserve, devils: d.devilsAlley, caravan: d.seedCaravan, canal: d.e9Canal, air: d.e8SuitAir, probe: d.probeRecovery, fuel: d.fuel, vehicle: d.vehicle, landYacht: d.landYachtBoss, fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
+        objective: { canalChoices: d.canalChoices, preserve: d.preserve, devils: d.devilsAlley, caravan: d.seedCaravan, canal: d.e9Canal, air: d.e8SuitAir ?? d.e8Atmosphere, probe: d.probeRecovery, fuel: d.fuel, vehicle: d.vehicle, landYacht: d.landYachtBoss, fairground: d.fairground, crowdFlocks: d.crowdFlocks, canyonWorks: d.canyonWorks, baron: d.baronRocket, boss: d.readability?.bossHpBar, medals: d.contract?.medals, pressure: d.pressure, escort: d.escort, power: d.power },
         frame: d.frame ?? 0,
         sim: d.timeAlive ?? 0,
         wave: d.wave ?? 0,
@@ -288,7 +289,10 @@ async function takeUpgrades(page: Page, row: Row): Promise<void> {
       if (node.kind === 'storage') row.powerBanksPeak[node.id] = Math.max(row.powerBanksPeak[node.id] ?? 0, node.storedWh ?? 0);
     }
     if (now) row.peakHotBoilers = Math.max(row.peakHotBoilers, now.pressure?.objective.hotBoilers ?? 0);
-    if (!now || !now.upgradeOpen) return;
+    if (!now || !now.upgradeOpen) {
+      if (row.contract === 'e10-ember-shore') await stokeEmber(page, row);
+      return;
+    }
     const offer = now.offer ?? [];
     let index = 0;
     if (now.hp < now.maxHp * 0.7) {
@@ -308,6 +312,35 @@ async function takeUpgrades(page: Page, row: Row): Promise<void> {
     await page.keyboard.press(`Digit${Math.min(3, index + 1)}`);
     await page.waitForTimeout(250);
   }
+}
+
+// Moving to the vent also observes upgrades; prevent that observation re-entering this errand.
+const stoking = new WeakSet<Row>();
+async function stokeEmber(page: Page, row: Row): Promise<void> {
+  if (stoking.has(row)) return;
+  const vent = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.preserveVent);
+  const now = await read(page);
+  if (!vent?.position || !now || now.runState === 'dead' || now.secured || vent.guttered
+      || vent.warmth > vent.maxWarmth - vent.stoke.warmthRestore + 10 || now.gold < vent.stoke.goldCost) return;
+  stoking.add(row);
+  try {
+    // Stand south of the altar, inside the authored action disc.
+    const reached = await walkTo(page, row, vent.position.x, vent.position.z - vent.stoke.radius * 0.625, 0.6, 100);
+    for (let press = 0; reached && press < 4; press++) {
+      await takeUpgrades(page, row);
+      const state = await read(page);
+      if (!state || state.runState === 'dead' || state.secured) break;
+      if (state.buildMode) await page.getByTestId('hud-build').click({ timeout: 1000 });
+      await page.keyboard.press('Enter');
+      await page.waitForTimeout(100);
+      const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.preserveVent);
+      if ((after?.stoke.uses ?? 0) > vent.stoke.uses) {
+        row.notes.push(`Stoke wave=${state.wave}: warmth=${vent.warmth}->${after?.warmth}, uses=${after?.stoke.uses}, survived=${after?.squallsSurvived}, gold=${state.gold}->${(await read(page))?.gold}`);
+        return;
+      }
+    }
+    row.notes.push(`Stoke stalled: reached=${reached}, wave=${now.wave}, warmth=${vent.warmth}, hero=${JSON.stringify((await read(page))?.hero)}`);
+  } finally { stoking.delete(row); }
 }
 
 async function unpause(page: Page, row: Row): Promise<void> {
@@ -331,7 +364,9 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
   const zones = tile.buildZones ?? [];
 
   const holding = stake ? zones.find((entry) => stake.x >= entry.minX && stake.x <= entry.maxX && stake.z >= entry.minZ && stake.z <= entry.maxZ) : undefined;
-  const zone = contract.id === 'e6-showroom' ? zones.find(z => z.id === 'model-home-village') : contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
+  const archiveWing = contract.id === 'e10-archive-world' ? E10ArchiveSystem.create(contract)?.wings[0] : undefined;
+  const mareDome = contract.id === 'e8-mare-claim' ? zones.find(z => z.id === 'dome-cluster-pad-center') : undefined;
+  const zone = mareDome ?? (archiveWing ? zones.find(z => z.id === archiveWing.id) : contract.id === 'e6-showroom' ? zones.find(z => z.id === 'model-home-village') : contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0]);
   const centre =
     stake && (holding || zones.length === 0)
       ? { x: stake.x, z: stake.z }
@@ -339,9 +374,11 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
         ? { x: (zone.minX + zone.maxX) / 2, z: (zone.minZ + zone.maxZ) / 2 }
         : { x: hero.x, z: hero.z };
 
+  if (archiveWing) { centre.x = archiveWing.x; centre.z = archiveWing.z; }
   if (contract.id === 'e6-showroom') { centre.x = 0; centre.z = 6; }
   if (contract.id === "e1-baron") { centre.x = 3; centre.z = 11; }
   if (contract.id === "e2-incline") { centre.x = 0; centre.z = -18; }
+  if (contract.id === 'e8-mare-claim') { centre.x = 0; centre.z = 0; }
   if (contract.id === 'e8-low-orbit') { centre.x = 10; centre.z = -6; }
   if (contract.id === 'e9-devils-alley') { centre.x = 0; centre.z = 0; }
   if (contract.id === 'e9-seed-run') { centre.x = 0; centre.z = 3; }
@@ -377,7 +414,19 @@ async function walkTo(page: Page, row: Row, x: number, z: number, tolerance: num
     const velocity = now.physics.filteredMovement;
     // Position is the walking goal. A sub-unit arrival must not wait for an
     // unrelated momentum threshold while suit air drains; fund rechecks pan range.
-    if (gap <= tolerance) return true;
+    if (row.contract === 'e8-mare-claim' && drifting) {
+      // Arrive stopped: a position-only arrival coasts straight out of the pan/dome.
+      if (gap <= tolerance && Math.hypot(velocity.x, velocity.y) < 0.12) return true;
+      if (gap < 10) {
+        await steer(page, dx - 5 * velocity.x, dz - 5 * velocity.y, 35);
+        continue;
+      }
+      // Leave air for the return trip; the refill helper itself targets a dome.
+      const zones = BOARD_CONTRACTS.find(c => c.id === row.contract)!.tileParams.buildZones ?? [];
+      const domeTarget = zones.some(zone => now.air?.domes.some(dome => dome.id === zone.id)
+        && x === (zone.minX + zone.maxX) / 2 && z === (zone.minZ + zone.maxZ) / 2);
+      if (!domeTarget && (now.air?.suit.seconds ?? 60) < 25) return false;
+    } else if (gap <= tolerance) return true;
     if (drifting && gap < 8) {
       // Counter-thrust against the published momentum before calling a seam reached.
       // Releasing keys alone coasts out of the 1.6-unit harvest disc.
@@ -426,6 +475,10 @@ async function journey(page: Page, row: Row, x: number, z: number, tolerance: nu
 }
 
 async function fund(page: Page, row: Row, amount: number, deadline: number, fords: Crossing[], unreachable: Set<string>): Promise<boolean> {
+  if (row.contract === 'e10-ember-shore') {
+    const vent = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.preserveVent);
+    amount += vent?.stoke.goldCost ?? 0;
+  }
   while (Date.now() < deadline) {
     await takeUpgrades(page, row);
     const now = await read(page);
@@ -445,7 +498,7 @@ async function fund(page: Page, row: Row, amount: number, deadline: number, ford
     const live = now.nodes.filter((node) => node.active && !unreachable.has(`${node.x},${node.z}`));
     const bank = fords.length > 0 ? live.filter((node) => Math.sign(node.z) === Math.sign(now.hero.z) || Math.abs(node.z) < 1.5) : live;
     let pool = bank.length > 0 ? bank : live;
-    if (row.contract === 'e8-eclipse' && now.air?.regolith.creditedThisWindow === 0) {
+    if (['e8-eclipse', 'e8-mare-claim'].includes(row.contract) && now.air?.regolith.creditedThisWindow === 0) {
       const fresh = pool.filter(n => !now.air!.regolith.worked.includes(n.anchorIndex));
       if (fresh.length) pool = fresh;
     }
@@ -543,6 +596,13 @@ async function build(
     if (row.contract === 'e6-picnic' && Math.hypot(state.ghostPos.x - x, state.ghostPos.z - z) > PICNIC_HOLD_RADIUS - 1) {
       row.notes.push(`stake placement refused outside target disc: target=${x},${z}; ghost=${JSON.stringify(state.ghostPos)}`);
       break;
+    }
+    if (row.contract === 'e10-archive-world' && id === 'sentry_beacon') {
+      const wing = E10ArchiveSystem.create(BOARD_CONTRACTS.find(c => c.id === row.contract)!)!.wings[0];
+      if (Math.hypot(state.ghostPos.x - wing.x, state.ghostPos.z - wing.z) > wing.radius) {
+        row.notes.push(`Archive light outside ${wing.id}: radius=${wing.radius}, ghost=${JSON.stringify(state.ghostPos)}, wave=${state.wave}`);
+        break;
+      }
     }
     await page.keyboard.press('Space');
     await page.waitForTimeout(250);
@@ -687,6 +747,30 @@ async function maintain(page: Page, row: Row, home: Home, deadline: number, ford
 
 // Return to this map's authored pressurised ground, using ordinary movement.
 async function refillOrbital(page: Page, row: Row): Promise<boolean> {
+  if (row.contract === 'e8-mare-claim') {
+    const before = await read(page);
+    if (!before?.air) return false;
+    const zones = BOARD_CONTRACTS.find(c => c.id === row.contract)!.tileParams.buildZones ?? [];
+    const domes = zones.filter(zone => before.air!.domes.some(d => d.id === zone.id && d.air > 0))
+      .map(zone => ({ id: zone.id, x: (zone.minX + zone.maxX) / 2, z: (zone.minZ + zone.maxZ) / 2 }))
+      .sort((a, b) => Math.hypot(a.x - before.hero.x, a.z - before.hero.z) - Math.hypot(b.x - before.hero.x, b.z - before.hero.z));
+    const dome = domes[0];
+    if (!dome) return false;
+    const reached = await walkTo(page, row, dome.x, dome.z, 1.5, 180);
+    for (let tick = 0; reached && tick < 100; tick++) {
+      await takeUpgrades(page, row);
+      const now = await read(page);
+      if (!now || now.runState === 'dead' || now.secured) break;
+      if (now.air?.suit.inDome && now.air.suit.seconds >= now.air.suit.capacity - 2) {
+        row.notes.push(`Mare refill ${dome.id}: ${before.air.suit.seconds}->${now.air.suit.seconds}; hero=${JSON.stringify(now.hero)}; window=${now.air.regolith.window}`);
+        return true;
+      }
+      if (Math.hypot(now.hero.x - dome.x, now.hero.z - dome.z) > 2) await walkTo(page, row, dome.x, dome.z, 1.5, 30);
+      else await page.waitForTimeout(100);
+    }
+    row.notes.push(`Mare refill stalled ${dome.id}: reached=${reached}; state=${JSON.stringify(await read(page))}`);
+    return false;
+  }
   const target = row.contract === 'e8-far-side' ? [10, -34] : row.contract === 'e8-eclipse' ? [0, 0] : [10, -6];
   if (!(await walkTo(page, row, target[0], target[1], 1.5, 150))) return false;
   for (let tick = 0; tick < 100; tick++) {
@@ -764,10 +848,12 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
   };
   const tape = 'Native movement and build';
   const relay = contract.id === 'e7-relay-rush';
-  const sites = (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront?.sites ?? []))
+  const valley = contract.id === 'e7-relay-valley';
+  const sites = (valley ? (contract.tileParams.buildZones ?? []).filter(zone => zone.id.startsWith('relay-site'))
+    : await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront?.sites ?? []))
     .slice().sort((a, b) => Math.abs((a.minX + a.maxX) / 2 - home.x) - Math.abs((b.minX + b.maxX) / 2 - home.x));
-  const x = relay && sites[0] ? (sites[0].minX + sites[0].maxX) / 2 : home.x;
-  const z = relay && sites[0] ? (sites[0].minZ + sites[0].maxZ) / 2 : home.z - 4;
+  const x = (relay || valley) && sites[0] ? (sites[0].minX + sites[0].maxX) / 2 : home.x;
+  const z = (relay || valley) && sites[0] ? (sites[0].minZ + sites[0].maxZ) / 2 : home.z - 4;
   // Gather before recording so the tape contains a short walk and a funded placement.
   if (contract.id !== 'e7-dead-band') {
     const cost = (await read(page))?.buildables.find(b => b.id === 'turret')?.cost;
@@ -1112,6 +1198,11 @@ async function regattaJourney(page: Page, row: Row, contract: ContractManifest, 
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
+  if (contract.id === 'e10-archive-world') return [
+    { id: 'sentry_beacon', dx: 0, dz: 0 },
+    { id: 'turret', dx: -5, dz: 0 },
+    { id: 'turret', dx: 5, dz: 0 },
+  ];
   if (contract.id === 'e9-old-canal') return [
     { id: 'turret', dx: 0, dz: -3 },
     { id: 'sentry_beacon', dx: -4, dz: 2 },
@@ -1414,7 +1505,7 @@ export function nativeProof(id: string, run = 1) {
             }
           }
         }
-        if (['e7-dead-band', 'e7-echo-canyon', 'e7-relay-rush'].includes(contract.id)) await tapeDemonstration(page, row, contract, home, deadline, unreachable);
+        if (['e7-dead-band', 'e7-echo-canyon', 'e7-relay-rush', 'e7-relay-valley'].includes(contract.id)) await tapeDemonstration(page, row, contract, home, deadline, unreachable);
         if (contract.id === 'e6-showroom') await showroomCaptures(page, row, Math.min(deadline, Date.now() + 180_000));
         if (contract.id === 'e6-picnic') await picnicOpening(page, row, contract, deadline, unreachable);
         if (contract.id === 'e5-regatta') await regattaJourney(page, row, contract, deadline);
@@ -1479,7 +1570,7 @@ export function nativeProof(id: string, run = 1) {
             continue;
           }
 
-          if (contract.id === 'e8-eclipse' && now.air && !now.air.regolith.complete && now.air.regolith.creditedThisWindow === 0) {
+          if (['e8-eclipse', 'e8-mare-claim'].includes(contract.id) && now.air && !now.air.regolith.complete && now.air.regolith.creditedThisWindow === 0) {
             await fund(page, row, now.gold + 5, Math.min(deadline, Date.now() + 25_000), fords, unreachable);
             continue;
           }

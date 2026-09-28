@@ -1,0 +1,92 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e7-relay-valley&timescale=4",
+  "sim": 73.73333333333363,
+  "wave": 2,
+  "hp": 400,
+  "gold": 50,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": null,
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": 1790570807189,
+      "lastWriteMs": 0.2,
+      "sizeBytes": 18403
+    }
+  },
+  "hero": {
+    "x": -44.044547576240845,
+    "y": 5.06,
+    "z": 44.830249235905505
+  },
+  "defences": [],
+  "e7Signal": {
+    "enabled": true,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "playbookUse": {
+    "declared": true,
+    "objective": "relay",
+    "objectiveMet": false,
+    "uses": 0,
+    "relaysLitByProgram": []
+  },
+  "air": null,
+  "physics": {
+    "active": false,
+    "contractId": "e7-relay-valley",
+    "source": "default",
+    "movement": "normal",
+    "feelG": 1,
+    "lobArcDistanceMultiplier": 1,
+    "lobAirTimeMultiplier": 1,
+    "knockbackScale": 1,
+    "orbitalReturn": false,
+    "vacuum": false,
+    "fixedTimestepOnly": true,
+    "filteredMovement": {
+      "x": 0,
+      "y": 0
+    },
+    "adaptedLobs": [
+      {
+        "resumeKey": "orbital:kineticLobber",
+        "range": 15,
+        "airTime": 1.68
+      }
+    ]
+  },
+  "atmosphere": null,
+  "squall": null,
+  "preserveVent": null,
+  "repairs": 0
+}

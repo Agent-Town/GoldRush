@@ -62,6 +62,8 @@ Added landing evidence: **2691128 bytes** including run-15 table growth; run-16 
 
 All 42 contracts appear once. The five task rows now have deciding run **16**, with the same amendments in run 15's table. Other campaign rows retain prior evidence; equivalence does not expand those maps' historical proof scope. Totals remain **8 PROVED both, 3 PROVED one, 2 PARTIAL, 28 HELD, 1 historical DEFECT corrected**.
 
+Run-17 table amendment (2026-09-28): Mare and Relay desktop objectives now work but survival remains held; Archive remains held on preview placement; Ember is PROVED both. The four amended rows below use deciding run 17. Current totals: **9 PROVED both, 3 PROVED one, 2 PARTIAL, 27 HELD, 1 historical DEFECT corrected**. The run-16 results above remain historical.
+
 | Map | Campaign verdict | Deciding run | Finding / evidence |
 | --- | --- | --- | --- |
 | The Claim (the-claim) | PROVED one screen — desktop control | 4 | [Control](../run-4/the-claim/row-desktop-chrome.json); older both-project status proof is outside this series |
@@ -102,10 +104,10 @@ All 42 contracts appear once. The five task rows now have deciding run **16**, w
 | The Dead Band (e7-dead-band) | HELD — refusal latch met all rides; survival deaths 19/12 default, 17/14 restore | 16 | [Finding](../run-16/e7-dead-band/finding.md) |
 | Echo Canyon (e7-echo-canyon) | HELD — desktop mirror 1 squad/2 bodies, deaths 16/17; phone Tape toggle timeout before Record | 16 | [Finding](../run-16/e7-echo-canyon/finding.md) |
 | Relay Rush (e7-relay-rush) | HELD — desktop deadline 3/3 and muted use 1, deaths 16/18; phone Tape toggle blocked | 16 | [Finding](../run-16/e7-relay-rush/finding.md) |
-| Relay Valley (e7-relay-valley) | HELD — objective never engaged; playbook uses 0, deaths 17/17 | 14 | [Finding](../run-14/e7-relay-valley/finding.md) |
-| The Mare Claim (e8-mare-claim) | HELD — orbital movement / driver instrumentation; wrong air read, 1/4 mining, deaths 2/2 | 14 | [Finding](../run-14/e8-mare-claim/finding.md) |
-| The Archive World (e10-archive-world) | HELD — objective never engaged; 0 light holds, deaths 20/20 | 14 | [Finding](../run-14/e10-archive-world/finding.md) |
-| The Ember Shore (e10-ember-shore) | HELD — objective never engaged; 0 stokes, vent lost 3/3 | 14 | [Finding](../run-14/e10-ember-shore/finding.md) |
+| Relay Valley (e7-relay-valley) | HELD — desktop program lights r1, survival deaths 18/19; phone Tape toggle blocked before Record | 17 | [Finding](../run-17/e7-relay-valley/finding.md) |
+| The Mare Claim (e8-mare-claim) | HELD — 4/4 mining and no air damage all rides; survival deaths 13/15 default, 14/15 restore | 17 | [Finding](../run-17/e8-mare-claim/finding.md) |
+| The Archive World (e10-archive-world) | HELD — west-light preview outside radius 4; zero holds, deaths 17/20 | 17 | [Finding](../run-17/e10-archive-world/finding.md) |
+| The Ember Shore (e10-ember-shore) | PROVED both screens — seven Stokes, three squalls, wave-12 bank/Book/reload | 17 | [Proof](../run-17/e10-ember-shore/proof.md) |
 
 ## REMAINING LIST IN ORDER
 

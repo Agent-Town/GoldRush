@@ -1,0 +1,312 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e10-ember-shore&timescale=4",
+  "sim": 360.13333333332315,
+  "wave": 12,
+  "hp": 167,
+  "gold": 60,
+  "run": {
+    "secured": true,
+    "rush": false,
+    "lastRunEndedReason": null,
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 41,
+        "science": 1000,
+        "hero": 41,
+        "agent": 41
+      }
+    },
+    "victoryPayout": {
+      "territory": 1,
+      "science": 1,
+      "hero": 1,
+      "agent": 1
+    },
+    "secureWaveReached": 12,
+    "securedResultAt": 1790571475811,
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 60,
+      "timeAlive": 360.13333333332315
+    },
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": 1790571475812,
+      "lastWriteMs": 0.3,
+      "sizeBytes": 39749
+    }
+  },
+  "hero": {
+    "x": -19.38560456684077,
+    "y": 0.34803450126283786,
+    "z": -33.72547862939548
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -2,
+        "z": -10
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 2,
+        "z": -15
+      }
+    },
+    {
+      "id": "turret",
+      "index": 1,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 7,
+        "z": -13
+      }
+    },
+    {
+      "id": "turret",
+      "index": 2,
+      "tier": 1,
+      "hp": 98,
+      "maxHp": 98,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 3,
+        "z": -7
+      }
+    }
+  ],
+  "e7Signal": {
+    "enabled": false,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "playbookUse": null,
+  "air": null,
+  "physics": {
+    "active": false,
+    "contractId": "e10-ember-shore",
+    "source": "default",
+    "movement": "normal",
+    "feelG": 1,
+    "lobArcDistanceMultiplier": 1,
+    "lobAirTimeMultiplier": 1,
+    "knockbackScale": 1,
+    "orbitalReturn": false,
+    "vacuum": false,
+    "fixedTimestepOnly": true,
+    "filteredMovement": {
+      "x": 0,
+      "y": 0
+    },
+    "adaptedLobs": [
+      {
+        "resumeKey": "orbital:kineticLobber",
+        "range": 15,
+        "airTime": 1.68
+      }
+    ]
+  },
+  "atmosphere": null,
+  "squall": {
+    "declared": true,
+    "calmSeconds": 60,
+    "telegraphSeconds": 8,
+    "squallSeconds": 25,
+    "recoverSeconds": 8,
+    "cycleSeconds": 101,
+    "phase": "calm",
+    "phaseProgress": 0.9499999999998304,
+    "cycle": 3,
+    "tick": 2700,
+    "elapsedSeconds": 360,
+    "secondsToNextPhase": 3,
+    "secondsToNextSquall": 11,
+    "squallsStarted": 3,
+    "squallsCompleted": 3,
+    "motePressureMultiplier": 2,
+    "blowing": false,
+    "transitions": [
+      {
+        "from": null,
+        "to": "calm",
+        "tick": 0,
+        "atSeconds": 0,
+        "cycle": 0
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 451,
+        "atSeconds": 60.133,
+        "cycle": 0
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 510,
+        "atSeconds": 68,
+        "cycle": 0
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 698,
+        "atSeconds": 93.067,
+        "cycle": 0
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 758,
+        "atSeconds": 101.067,
+        "cycle": 1
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 1208,
+        "atSeconds": 161.067,
+        "cycle": 1
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 1268,
+        "atSeconds": 169.067,
+        "cycle": 1
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 1456,
+        "atSeconds": 194.133,
+        "cycle": 1
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 1516,
+        "atSeconds": 202.133,
+        "cycle": 2
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 1966,
+        "atSeconds": 262.133,
+        "cycle": 2
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 2026,
+        "atSeconds": 270.133,
+        "cycle": 2
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 2213,
+        "atSeconds": 295.067,
+        "cycle": 2
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 2273,
+        "atSeconds": 303.067,
+        "cycle": 3
+      }
+    ]
+  },
+  "preserveVent": {
+    "declared": true,
+    "stakeId": "last-warm-vent",
+    "position": {
+      "x": 3,
+      "z": -10
+    },
+    "warmth": 74.933,
+    "maxWarmth": 100,
+    "alight": true,
+    "guttered": false,
+    "gutteredAtSeconds": null,
+    "decayPerSecond": 4,
+    "decaying": false,
+    "warmthLost": 300.267,
+    "warmthRestored": 275.2,
+    "stoke": {
+      "action": "STOKE",
+      "goldCost": 15,
+      "warmthRestore": 40,
+      "radius": 4,
+      "uses": 7,
+      "refusals": {
+        "undeclared": 0,
+        "guttered": 0,
+        "out-of-reach": 0,
+        "insufficient-gold": 0,
+        "already-warm": 0
+      },
+      "lastRefusal": null
+    },
+    "squallsSurvived": 3,
+    "squallsRequired": 1,
+    "motePressure": {
+      "multiplier": 2,
+      "active": false,
+      "pressShare": 0.25
+    },
+    "objectiveMet": true
+  },
+  "repairs": 0
+}
