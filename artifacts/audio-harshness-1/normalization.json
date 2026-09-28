@@ -1,0 +1,1453 @@
+{
+  "agent-works": {
+    "input": {
+      "input_i": "-19.71",
+      "input_tp": "-6.17",
+      "input_lra": "0.50",
+      "input_thresh": "-29.71",
+      "output_i": "-14.10",
+      "output_tp": "-1.00",
+      "output_lra": "0.50",
+      "output_thresh": "-24.10",
+      "normalization_type": "dynamic",
+      "target_offset": "0.10"
+    },
+    "output": {
+      "input_i": "-14.08",
+      "input_tp": "-2.14",
+      "input_lra": "0.00",
+      "input_thresh": "-24.08",
+      "output_i": "-14.04",
+      "output_tp": "-2.06",
+      "output_lra": "0.00",
+      "output_thresh": "-24.04",
+      "normalization_type": "linear",
+      "target_offset": "0.04"
+    },
+    "attempts": 5,
+    "target": -12.82,
+    "ceiling": -2.47,
+    "duration": 0.8,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "baron-arrival-sting": {
+    "input": {
+      "input_i": "-8.50",
+      "input_tp": "-0.08",
+      "input_lra": "1.60",
+      "input_thresh": "-20.38",
+      "output_i": "-13.97",
+      "output_tp": "-4.46",
+      "output_lra": "1.60",
+      "output_thresh": "-25.78",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.03"
+    },
+    "output": {
+      "input_i": "-14.04",
+      "input_tp": "-5.88",
+      "input_lra": "0.00",
+      "input_thresh": "-26.11",
+      "output_i": "-14.00",
+      "output_tp": "-5.84",
+      "output_lra": "0.00",
+      "output_thresh": "-26.07",
+      "normalization_type": "linear",
+      "target_offset": "0.00"
+    },
+    "attempts": 2,
+    "target": -15.06,
+    "ceiling": -1.3,
+    "duration": 2.48,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "baron-defeat-fanfare": {
+    "input": {
+      "input_i": "-8.20",
+      "input_tp": "0.74",
+      "input_lra": "4.20",
+      "input_thresh": "-19.78",
+      "output_i": "-14.06",
+      "output_tp": "-4.88",
+      "output_lra": "4.20",
+      "output_thresh": "-25.49",
+      "normalization_type": "dynamic",
+      "target_offset": "0.06"
+    },
+    "output": {
+      "input_i": "-14.00",
+      "input_tp": "-5.15",
+      "input_lra": "1.80",
+      "input_thresh": "-25.88",
+      "output_i": "-13.49",
+      "output_tp": "-4.46",
+      "output_lra": "1.60",
+      "output_thresh": "-25.10",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.51"
+    },
+    "attempts": 2,
+    "target": -14.29,
+    "ceiling": -1.3,
+    "duration": 4.0,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "blast-charge-arm": {
+    "input": {
+      "input_i": "-17.32",
+      "input_tp": "-8.99",
+      "input_lra": "0.60",
+      "input_thresh": "-27.32",
+      "output_i": "-14.05",
+      "output_tp": "-5.73",
+      "output_lra": "0.70",
+      "output_thresh": "-24.05",
+      "normalization_type": "dynamic",
+      "target_offset": "0.05"
+    },
+    "output": {
+      "input_i": "-14.15",
+      "input_tp": "-6.72",
+      "input_lra": "0.00",
+      "input_thresh": "-24.15",
+      "output_i": "-13.98",
+      "output_tp": "-6.57",
+      "output_lra": "0.00",
+      "output_thresh": "-23.98",
+      "normalization_type": "linear",
+      "target_offset": "-0.02"
+    },
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 1.2,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "blast-charge-boom": {
+    "input": {
+      "input_i": "-15.37",
+      "input_tp": "-3.18",
+      "input_lra": "1.70",
+      "input_thresh": "-27.32",
+      "output_i": "-13.84",
+      "output_tp": "-1.00",
+      "output_lra": "2.50",
+      "output_thresh": "-25.65",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.16"
+    },
+    "output": {
+      "input_i": "-14.18",
+      "input_tp": "-1.93",
+      "input_lra": "0.00",
+      "input_thresh": "-26.72",
+      "output_i": "-13.98",
+      "output_tp": "-1.74",
+      "output_lra": "0.00",
+      "output_thresh": "-26.52",
+      "normalization_type": "linear",
+      "target_offset": "-0.02"
+    },
+    "attempts": 2,
+    "target": -13.3,
+    "ceiling": -1.3,
+    "duration": 1.2,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "build-place": {
+    "input": {
+      "input_i": "-42.31",
+      "input_tp": "-29.85",
+      "input_lra": "0.00",
+      "input_thresh": "-52.59",
+      "output_i": "-14.01",
+      "output_tp": "-1.53",
+      "output_lra": "0.00",
+      "output_thresh": "-24.55",
+      "normalization_type": "linear",
+      "target_offset": "0.01"
+    },
+    "output": {
+      "input_i": "-13.88",
+      "input_tp": "-1.35",
+      "input_lra": "0.00",
+      "input_thresh": "-23.88",
+      "output_i": "-14.01",
+      "output_tp": "-1.47",
+      "output_lra": "0.00",
+      "output_thresh": "-24.01",
+      "normalization_type": "linear",
+      "target_offset": "0.01"
+    },
+    "preprocess": "volume=-6.4dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 0.6802494331065759,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "chirp-acknowledge": {
+    "input": {
+      "input_i": "-15.22",
+      "input_tp": "-2.98",
+      "input_lra": "0.60",
+      "input_thresh": "-25.26",
+      "output_i": "-14.08",
+      "output_tp": "-1.82",
+      "output_lra": "0.30",
+      "output_thresh": "-24.08",
+      "normalization_type": "dynamic",
+      "target_offset": "0.08"
+    },
+    "output": {
+      "input_i": "-13.77",
+      "input_tp": "-2.42",
+      "input_lra": "0.00",
+      "input_thresh": "-23.77",
+      "output_i": "-13.97",
+      "output_tp": "-2.65",
+      "output_lra": "0.00",
+      "output_thresh": "-23.97",
+      "normalization_type": "linear",
+      "target_offset": "-0.03"
+    },
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 0.6802494331065759,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "chirp-refuse": {
+    "input": {
+      "input_i": "-8.58",
+      "input_tp": "-0.85",
+      "input_lra": "1.00",
+      "input_thresh": "-19.85",
+      "output_i": "-13.80",
+      "output_tp": "-5.69",
+      "output_lra": "1.30",
+      "output_thresh": "-25.01",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.20"
+    },
+    "output": {
+      "input_i": "-14.01",
+      "input_tp": "-5.16",
+      "input_lra": "0.00",
+      "input_thresh": "-25.76",
+      "output_i": "-14.01",
+      "output_tp": "-5.15",
+      "output_lra": "0.00",
+      "output_thresh": "-25.76",
+      "normalization_type": "linear",
+      "target_offset": "0.01"
+    },
+    "attempts": 2,
+    "target": -12.79,
+    "ceiling": -1.3,
+    "duration": 0.6802494331065759,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "defeat-sting": {
+    "input": {
+      "input_i": "-10.68",
+      "input_tp": "-0.14",
+      "input_lra": "0.00",
+      "input_thresh": "-23.17",
+      "output_i": "-13.90",
+      "output_tp": "-1.07",
+      "output_lra": "0.20",
+      "output_thresh": "-26.36",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.10"
+    },
+    "output": {
+      "input_i": "-13.99",
+      "input_tp": "-3.08",
+      "input_lra": "0.80",
+      "input_thresh": "-26.68",
+      "output_i": "-11.86",
+      "output_tp": "-1.08",
+      "output_lra": "0.00",
+      "output_thresh": "-24.69",
+      "normalization_type": "dynamic",
+      "target_offset": "-2.14"
+    },
+    "attempts": 2,
+    "target": -15.45,
+    "ceiling": -1.3,
+    "duration": 3.0,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "demolish": {
+    "input": {
+      "input_i": "-35.10",
+      "input_tp": "-25.03",
+      "input_lra": "1.90",
+      "input_thresh": "-45.44",
+      "output_i": "-14.41",
+      "output_tp": "-4.54",
+      "output_lra": "1.30",
+      "output_thresh": "-24.89",
+      "normalization_type": "dynamic",
+      "target_offset": "0.41"
+    },
+    "output": {
+      "input_i": "-13.97",
+      "input_tp": "-4.71",
+      "input_lra": "0.00",
+      "input_thresh": "-23.97",
+      "output_i": "-14.01",
+      "output_tp": "-4.74",
+      "output_lra": "0.00",
+      "output_thresh": "-24.01",
+      "normalization_type": "linear",
+      "target_offset": "0.01"
+    },
+    "preprocess": "volume=-5.37dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 1.36,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "dredge-queen-arrival-horn": {
+    "input": {
+      "input_i": "-25.22",
+      "input_tp": "-16.11",
+      "input_lra": "2.10",
+      "input_thresh": "-36.41",
+      "output_i": "-13.89",
+      "output_tp": "-3.23",
+      "output_lra": "2.20",
+      "output_thresh": "-25.66",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.11"
+    },
+    "output": {
+      "input_i": "-14.00",
+      "input_tp": "-5.55",
+      "input_lra": "0.00",
+      "input_thresh": "-26.07",
+      "output_i": "-14.00",
+      "output_tp": "-5.55",
+      "output_lra": "0.00",
+      "output_thresh": "-26.07",
+      "normalization_type": "linear",
+      "target_offset": "0.00"
+    },
+    "attempts": 2,
+    "target": -15.76,
+    "ceiling": -1.3,
+    "duration": 2.4,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "epoch-door-sting": {
+    "input": {
+      "input_i": "-16.30",
+      "input_tp": "-5.17",
+      "input_lra": "0.00",
+      "input_thresh": "-28.29",
+      "output_i": "-13.73",
+      "output_tp": "-1.00",
+      "output_lra": "0.20",
+      "output_thresh": "-25.68",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.27"
+    },
+    "output": {
+      "input_i": "-13.99",
+      "input_tp": "-3.23",
+      "input_lra": "0.10",
+      "input_thresh": "-26.20",
+      "output_i": "-10.33",
+      "output_tp": "-1.00",
+      "output_lra": "0.00",
+      "output_thresh": "-22.69",
+      "normalization_type": "dynamic",
+      "target_offset": "-3.67"
+    },
+    "attempts": 3,
+    "target": -17.01,
+    "ceiling": -1.3,
+    "duration": 3.0,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "founding-stamp-thunk": {
+    "input": {
+      "input_i": "-37.17",
+      "input_tp": "-24.08",
+      "input_lra": "0.00",
+      "input_thresh": "-47.41",
+      "output_i": "-14.08",
+      "output_tp": "-1.00",
+      "output_lra": "0.00",
+      "output_thresh": "-24.74",
+      "normalization_type": "linear",
+      "target_offset": "0.08"
+    },
+    "output": {
+      "input_i": "-14.10",
+      "input_tp": "-1.44",
+      "input_lra": "0.00",
+      "input_thresh": "-24.10",
+      "output_i": "-14.00",
+      "output_tp": "-1.34",
+      "output_lra": "0.00",
+      "output_thresh": "-24.00",
+      "normalization_type": "linear",
+      "target_offset": "-0.00"
+    },
+    "preprocess": "volume=-4.26dB,alimiter=limit=0.0625:attack=5:release=50:level=false:latency=true,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 0.8,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "gold-chime": {
+    "input": {
+      "input_i": "-27.26",
+      "input_tp": "-15.19",
+      "input_lra": "1.20",
+      "input_thresh": "-39.53",
+      "output_i": "-13.89",
+      "output_tp": "-1.00",
+      "output_lra": "1.60",
+      "output_thresh": "-25.72",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.11"
+    },
+    "output": {
+      "input_i": "-14.19",
+      "input_tp": "-3.94",
+      "input_lra": "0.00",
+      "input_thresh": "-26.36",
+      "output_i": "-14.01",
+      "output_tp": "-3.75",
+      "output_lra": "0.00",
+      "output_thresh": "-26.18",
+      "normalization_type": "linear",
+      "target_offset": "0.01"
+    },
+    "attempts": 3,
+    "target": -10.910000000000002,
+    "ceiling": -1.3,
+    "duration": 0.8,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "homemaker-done-chime": {
+    "input": {
+      "input_i": "-34.53",
+      "input_tp": "-21.27",
+      "input_lra": "1.70",
+      "input_thresh": "-46.46",
+      "output_i": "-14.03",
+      "output_tp": "-1.00",
+      "output_lra": "2.00",
+      "output_thresh": "-25.82",
+      "normalization_type": "dynamic",
+      "target_offset": "0.03"
+    },
+    "output": {
+      "input_i": "-14.22",
+      "input_tp": "-2.39",
+      "input_lra": "0.00",
+      "input_thresh": "-25.94",
+      "output_i": "-13.99",
+      "output_tp": "-2.18",
+      "output_lra": "0.00",
+      "output_thresh": "-25.72",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "attempts": 4,
+    "target": -10.03,
+    "ceiling": -1.3,
+    "duration": 1.2,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "invalid": {
+    "input": {
+      "input_i": "-41.98",
+      "input_tp": "-29.73",
+      "input_lra": "0.00",
+      "input_thresh": "-52.27",
+      "output_i": "-14.02",
+      "output_tp": "-1.75",
+      "output_lra": "0.00",
+      "output_thresh": "-24.30",
+      "normalization_type": "linear",
+      "target_offset": "0.02"
+    },
+    "output": {
+      "input_i": "-14.08",
+      "input_tp": "-1.76",
+      "input_lra": "0.00",
+      "input_thresh": "-24.08",
+      "output_i": "-13.98",
+      "output_tp": "-1.68",
+      "output_lra": "0.00",
+      "output_thresh": "-23.98",
+      "normalization_type": "linear",
+      "target_offset": "-0.02"
+    },
+    "preprocess": "volume=-5.87dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 0.6,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "ledger-open": {
+    "input": {
+      "input_i": "-35.19",
+      "input_tp": "-24.08",
+      "input_lra": "0.00",
+      "input_thresh": "-45.19",
+      "output_i": "-13.99",
+      "output_tp": "-2.90",
+      "output_lra": "0.00",
+      "output_thresh": "-23.99",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "output": {
+      "input_i": "-14.11",
+      "input_tp": "-1.18",
+      "input_lra": "0.00",
+      "input_thresh": "-24.11",
+      "output_i": "-13.99",
+      "output_tp": "-1.08",
+      "output_lra": "0.00",
+      "output_thresh": "-23.99",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "preprocess": "volume=13.51dB,alimiter=limit=0.0625:attack=5:release=50:level=false:latency=true,",
+    "attempts": 2,
+    "target": -12.57,
+    "ceiling": -1.3,
+    "duration": 0.8,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "menu-tap": {
+    "input": {
+      "input_i": "-37.47",
+      "input_tp": "-24.08",
+      "input_lra": "0.00",
+      "input_thresh": "-47.47",
+      "output_i": "-14.39",
+      "output_tp": "-1.00",
+      "output_lra": "0.00",
+      "output_thresh": "-24.39",
+      "normalization_type": "linear",
+      "target_offset": "0.39"
+    },
+    "output": {
+      "input_i": "-14.05",
+      "input_tp": "-1.27",
+      "input_lra": "0.00",
+      "input_thresh": "-24.05",
+      "output_i": "-14.05",
+      "output_tp": "-1.22",
+      "output_lra": "0.00",
+      "output_thresh": "-24.05",
+      "normalization_type": "linear",
+      "target_offset": "0.05"
+    },
+    "preprocess": "volume=-4.87dB,alimiter=limit=0.0625:attack=5:release=50:level=false:latency=true,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 0.48,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "old-digger-tape-swap": {
+    "input": {
+      "input_i": "-26.52",
+      "input_tp": "-4.61",
+      "input_lra": "0.20",
+      "input_thresh": "-37.04",
+      "output_i": "-16.78",
+      "output_tp": "-1.00",
+      "output_lra": "0.50",
+      "output_thresh": "-27.32",
+      "normalization_type": "dynamic",
+      "target_offset": "2.78"
+    },
+    "output": {
+      "input_i": "-14.20",
+      "input_tp": "-1.80",
+      "input_lra": "0.00",
+      "input_thresh": "-24.20",
+      "output_i": "-14.00",
+      "output_tp": "-1.60",
+      "output_lra": "0.00",
+      "output_thresh": "-24.00",
+      "normalization_type": "linear",
+      "target_offset": "0.00"
+    },
+    "attempts": 3,
+    "target": -13.68,
+    "ceiling": -2.04,
+    "duration": 0.8,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "palisade-collapse": {
+    "input": {
+      "input_i": "-35.47",
+      "input_tp": "-29.81",
+      "input_lra": "1.80",
+      "input_thresh": "-45.86",
+      "output_i": "-14.43",
+      "output_tp": "-8.98",
+      "output_lra": "0.90",
+      "output_thresh": "-24.69",
+      "normalization_type": "dynamic",
+      "target_offset": "0.43"
+    },
+    "output": {
+      "input_i": "-14.09",
+      "input_tp": "-8.30",
+      "input_lra": "0.00",
+      "input_thresh": "-24.09",
+      "output_i": "-14.00",
+      "output_tp": "-8.21",
+      "output_lra": "0.00",
+      "output_thresh": "-24.00",
+      "normalization_type": "linear",
+      "target_offset": "-0.00"
+    },
+    "preprocess": "volume=-6.04dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 1.76,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "palisade-crack": {
+    "input": {
+      "input_i": "-34.96",
+      "input_tp": "-24.08",
+      "input_lra": "0.20",
+      "input_thresh": "-45.53",
+      "output_i": "-13.29",
+      "output_tp": "-2.55",
+      "output_lra": "0.00",
+      "output_thresh": "-23.79",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.71"
+    },
+    "output": {
+      "input_i": "-13.91",
+      "input_tp": "-2.54",
+      "input_lra": "0.00",
+      "input_thresh": "-23.91",
+      "output_i": "-14.01",
+      "output_tp": "-2.63",
+      "output_lra": "0.00",
+      "output_thresh": "-24.01",
+      "normalization_type": "linear",
+      "target_offset": "0.01"
+    },
+    "preprocess": "volume=9.76dB,alimiter=limit=0.0625:attack=5:release=50:level=false:latency=true,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 1.0,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "palisade-hit": {
+    "input": {
+      "input_i": "-36.34",
+      "input_tp": "-24.78",
+      "input_lra": "0.00",
+      "input_thresh": "-46.76",
+      "output_i": "-14.00",
+      "output_tp": "-2.44",
+      "output_lra": "0.00",
+      "output_thresh": "-24.42",
+      "normalization_type": "linear",
+      "target_offset": "0.00"
+    },
+    "output": {
+      "input_i": "-13.93",
+      "input_tp": "-2.82",
+      "input_lra": "0.00",
+      "input_thresh": "-23.93",
+      "output_i": "-13.97",
+      "output_tp": "-2.89",
+      "output_lra": "0.00",
+      "output_thresh": "-23.97",
+      "normalization_type": "linear",
+      "target_offset": "-0.03"
+    },
+    "preprocess": "volume=11.870000000000001dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 0.8,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "pan-swish": {
+    "input": {
+      "input_i": "-34.62",
+      "input_tp": "-26.03",
+      "input_lra": "0.10",
+      "input_thresh": "-44.78",
+      "output_i": "-13.61",
+      "output_tp": "-5.19",
+      "output_lra": "0.00",
+      "output_thresh": "-23.78",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.39"
+    },
+    "output": {
+      "input_i": "-14.06",
+      "input_tp": "-6.13",
+      "input_lra": "0.00",
+      "input_thresh": "-24.06",
+      "output_i": "-13.98",
+      "output_tp": "-6.07",
+      "output_lra": "0.00",
+      "output_thresh": "-23.98",
+      "normalization_type": "linear",
+      "target_offset": "-0.02"
+    },
+    "preprocess": "volume=-4.17dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 1.0,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "research-pick-sting": {
+    "input": {
+      "input_i": "-31.94",
+      "input_tp": "-17.60",
+      "input_lra": "1.40",
+      "input_thresh": "-44.54",
+      "output_i": "-14.29",
+      "output_tp": "-1.00",
+      "output_lra": "0.60",
+      "output_thresh": "-26.74",
+      "normalization_type": "dynamic",
+      "target_offset": "0.29"
+    },
+    "output": {
+      "input_i": "-14.10",
+      "input_tp": "-4.49",
+      "input_lra": "0.00",
+      "input_thresh": "-26.62",
+      "output_i": "-14.00",
+      "output_tp": "-4.39",
+      "output_lra": "0.00",
+      "output_thresh": "-26.52",
+      "normalization_type": "linear",
+      "target_offset": "0.00"
+    },
+    "attempts": 2,
+    "target": -12.84,
+    "ceiling": -1.3,
+    "duration": 1.48,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "research-pick": {
+    "input": {
+      "input_i": "-31.26",
+      "input_tp": "-18.69",
+      "input_lra": "1.30",
+      "input_thresh": "-42.23",
+      "output_i": "-13.87",
+      "output_tp": "-1.00",
+      "output_lra": "1.40",
+      "output_thresh": "-24.81",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.13"
+    },
+    "output": {
+      "input_i": "-14.09",
+      "input_tp": "-2.23",
+      "input_lra": "0.00",
+      "input_thresh": "-24.09",
+      "output_i": "-13.99",
+      "output_tp": "-2.14",
+      "output_lra": "0.00",
+      "output_thresh": "-23.99",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 0.88,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "save-tick": {
+    "input": {
+      "input_i": "-29.61",
+      "input_tp": "-16.46",
+      "input_lra": "0.10",
+      "input_thresh": "-39.61",
+      "output_i": "-13.98",
+      "output_tp": "-1.00",
+      "output_lra": "0.00",
+      "output_thresh": "-23.98",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.02"
+    },
+    "output": {
+      "input_i": "-13.85",
+      "input_tp": "-1.71",
+      "input_lra": "0.00",
+      "input_thresh": "-23.85",
+      "output_i": "-13.95",
+      "output_tp": "-1.86",
+      "output_lra": "0.00",
+      "output_thresh": "-23.95",
+      "normalization_type": "linear",
+      "target_offset": "-0.05"
+    },
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 0.48,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "sign-in-chime": {
+    "input": {
+      "input_i": "-25.37",
+      "input_tp": "-17.81",
+      "input_lra": "1.80",
+      "input_thresh": "-37.15",
+      "output_i": "-13.64",
+      "output_tp": "-4.26",
+      "output_lra": "3.60",
+      "output_thresh": "-26.76",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.36"
+    },
+    "output": {
+      "input_i": "-13.97",
+      "input_tp": "-4.87",
+      "input_lra": "0.00",
+      "input_thresh": "-28.74",
+      "output_i": "-13.97",
+      "output_tp": "-4.90",
+      "output_lra": "0.00",
+      "output_thresh": "-28.74",
+      "normalization_type": "linear",
+      "target_offset": "-0.03"
+    },
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 1.2,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "slot-save-confirm": {
+    "input": {
+      "input_i": "-36.85",
+      "input_tp": "-25.79",
+      "input_lra": "0.40",
+      "input_thresh": "-47.60",
+      "output_i": "-12.99",
+      "output_tp": "-2.26",
+      "output_lra": "0.00",
+      "output_thresh": "-23.85",
+      "normalization_type": "dynamic",
+      "target_offset": "-1.01"
+    },
+    "output": {
+      "input_i": "-13.99",
+      "input_tp": "-1.87",
+      "input_lra": "0.00",
+      "input_thresh": "-23.99",
+      "output_i": "-14.01",
+      "output_tp": "-1.88",
+      "output_lra": "0.00",
+      "output_thresh": "-24.01",
+      "normalization_type": "linear",
+      "target_offset": "0.01"
+    },
+    "preprocess": "volume=10.8dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 2,
+    "target": -14.29,
+    "ceiling": -1.3,
+    "duration": 1.0,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "spark-bolt-fire": {
+    "input": {
+      "input_i": "-8.17",
+      "input_tp": "2.13",
+      "input_lra": "1.30",
+      "input_thresh": "-20.46",
+      "output_i": "-13.49",
+      "output_tp": "-1.99",
+      "output_lra": "1.90",
+      "output_thresh": "-25.60",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.51"
+    },
+    "output": {
+      "input_i": "-14.20",
+      "input_tp": "-1.14",
+      "input_lra": "0.00",
+      "input_thresh": "-26.41",
+      "output_i": "-14.10",
+      "output_tp": "-1.00",
+      "output_lra": "0.00",
+      "output_thresh": "-26.31",
+      "normalization_type": "linear",
+      "target_offset": "0.10"
+    },
+    "attempts": 3,
+    "target": -11.79,
+    "ceiling": -1.3,
+    "duration": 0.8,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "spark-bolt-hit": {
+    "input": {
+      "input_i": "-25.31",
+      "input_tp": "-14.75",
+      "input_lra": "0.90",
+      "input_thresh": "-35.35",
+      "output_i": "-14.19",
+      "output_tp": "-3.51",
+      "output_lra": "0.90",
+      "output_thresh": "-24.19",
+      "normalization_type": "dynamic",
+      "target_offset": "0.19"
+    },
+    "output": {
+      "input_i": "-14.00",
+      "input_tp": "-2.26",
+      "input_lra": "0.00",
+      "input_thresh": "-24.00",
+      "output_i": "-14.00",
+      "output_tp": "-2.26",
+      "output_lra": "0.00",
+      "output_thresh": "-24.00",
+      "normalization_type": "linear",
+      "target_offset": "0.00"
+    },
+    "preprocess": "highpass=f=80,volume=40.36dB,asoftclip=type=tanh:threshold=0.0625:oversample=4,",
+    "attempts": 2,
+    "target": -13.0,
+    "ceiling": -1.3,
+    "duration": 0.6802494331065759,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "stockpile-deposit": {
+    "input": {
+      "input_i": "-34.42",
+      "input_tp": "-29.12",
+      "input_lra": "0.00",
+      "input_thresh": "-44.42",
+      "output_i": "-14.02",
+      "output_tp": "-8.70",
+      "output_lra": "0.00",
+      "output_thresh": "-24.02",
+      "normalization_type": "linear",
+      "target_offset": "0.02"
+    },
+    "output": {
+      "input_i": "-14.03",
+      "input_tp": "-8.58",
+      "input_lra": "0.00",
+      "input_thresh": "-24.03",
+      "output_i": "-13.99",
+      "output_tp": "-8.56",
+      "output_lra": "0.00",
+      "output_thresh": "-23.99",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "preprocess": "volume=-1.1600000000000001dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 0.88,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "t4-first-wave": {
+    "input": {
+      "input_i": "-16.44",
+      "input_tp": "-3.80",
+      "input_lra": "0.90",
+      "input_thresh": "-28.54",
+      "output_i": "-13.74",
+      "output_tp": "-1.00",
+      "output_lra": "1.30",
+      "output_thresh": "-25.81",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.26"
+    },
+    "output": {
+      "input_i": "-13.75",
+      "input_tp": "-1.77",
+      "input_lra": "0.00",
+      "input_thresh": "-26.42",
+      "output_i": "-14.00",
+      "output_tp": "-2.01",
+      "output_lra": "0.00",
+      "output_thresh": "-26.66",
+      "normalization_type": "linear",
+      "target_offset": "-0.00"
+    },
+    "attempts": 2,
+    "target": -15.62,
+    "ceiling": -1.3,
+    "duration": 1.6,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "t4-wind": {
+    "input": {
+      "input_i": "-20.42",
+      "input_tp": "-3.95",
+      "input_lra": "1.20",
+      "input_thresh": "-32.85",
+      "output_i": "-14.77",
+      "output_tp": "-1.00",
+      "output_lra": "1.70",
+      "output_thresh": "-26.95",
+      "normalization_type": "dynamic",
+      "target_offset": "0.77"
+    },
+    "output": {
+      "input_i": "-13.85",
+      "input_tp": "-1.39",
+      "input_lra": "0.00",
+      "input_thresh": "-25.39",
+      "output_i": "-14.01",
+      "output_tp": "-1.54",
+      "output_lra": "0.00",
+      "output_thresh": "-25.54",
+      "normalization_type": "linear",
+      "target_offset": "0.01"
+    },
+    "attempts": 3,
+    "target": -15.18,
+    "ceiling": -1.3,
+    "duration": 1.36,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "t5-surfacing": {
+    "input": {
+      "input_i": "-38.26",
+      "input_tp": "-29.79",
+      "input_lra": "1.50",
+      "input_thresh": "-48.57",
+      "output_i": "-14.46",
+      "output_tp": "-6.14",
+      "output_lra": "0.40",
+      "output_thresh": "-24.67",
+      "normalization_type": "dynamic",
+      "target_offset": "0.46"
+    },
+    "output": {
+      "input_i": "-14.05",
+      "input_tp": "-5.26",
+      "input_lra": "0.00",
+      "input_thresh": "-24.05",
+      "output_i": "-13.99",
+      "output_tp": "-5.21",
+      "output_lra": "0.00",
+      "output_thresh": "-23.99",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "preprocess": "volume=-3.49dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 1.48,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "t5-winch-rhythm": {
+    "input": {
+      "input_i": "-11.25",
+      "input_tp": "0.72",
+      "input_lra": "0.80",
+      "input_thresh": "-21.35",
+      "output_i": "-14.07",
+      "output_tp": "-2.10",
+      "output_lra": "0.70",
+      "output_thresh": "-24.17",
+      "normalization_type": "dynamic",
+      "target_offset": "0.07"
+    },
+    "output": {
+      "input_i": "-13.99",
+      "input_tp": "-1.69",
+      "input_lra": "0.00",
+      "input_thresh": "-23.99",
+      "output_i": "-13.99",
+      "output_tp": "-1.69",
+      "output_lra": "0.00",
+      "output_thresh": "-23.99",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "attempts": 2,
+    "target": -13.47,
+    "ceiling": -1.3,
+    "duration": 1.76,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "tier-up": {
+    "input": {
+      "input_i": "-31.35",
+      "input_tp": "-25.12",
+      "input_lra": "0.10",
+      "input_thresh": "-41.49",
+      "output_i": "-13.65",
+      "output_tp": "-7.60",
+      "output_lra": "0.00",
+      "output_thresh": "-23.80",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.35"
+    },
+    "output": {
+      "input_i": "-13.93",
+      "input_tp": "-7.16",
+      "input_lra": "0.00",
+      "input_thresh": "-23.93",
+      "output_i": "-13.98",
+      "output_tp": "-7.23",
+      "output_lra": "0.00",
+      "output_thresh": "-23.98",
+      "normalization_type": "linear",
+      "target_offset": "-0.02"
+    },
+    "preprocess": "volume=2.6999999999999993dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 1.0,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "town-enter-chime": {
+    "input": {
+      "input_i": "-16.25",
+      "input_tp": "-5.14",
+      "input_lra": "3.00",
+      "input_thresh": "-29.45",
+      "output_i": "-13.84",
+      "output_tp": "-1.25",
+      "output_lra": "3.60",
+      "output_thresh": "-26.78",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.16"
+    },
+    "output": {
+      "input_i": "-14.14",
+      "input_tp": "-2.09",
+      "input_lra": "0.00",
+      "input_thresh": "-27.37",
+      "output_i": "-14.04",
+      "output_tp": "-1.95",
+      "output_lra": "0.00",
+      "output_thresh": "-27.26",
+      "normalization_type": "linear",
+      "target_offset": "0.04"
+    },
+    "attempts": 2,
+    "target": -13.32,
+    "ceiling": -1.3,
+    "duration": 2.0,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "turret-fire": {
+    "input": {
+      "input_i": "-34.88",
+      "input_tp": "-25.57",
+      "input_lra": "0.00",
+      "input_thresh": "-45.13",
+      "output_i": "-13.99",
+      "output_tp": "-4.69",
+      "output_lra": "0.00",
+      "output_thresh": "-24.24",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "output": {
+      "input_i": "-14.05",
+      "input_tp": "-4.79",
+      "input_lra": "0.00",
+      "input_thresh": "-24.05",
+      "output_i": "-13.98",
+      "output_tp": "-4.75",
+      "output_lra": "0.00",
+      "output_thresh": "-23.98",
+      "normalization_type": "linear",
+      "target_offset": "-0.02"
+    },
+    "preprocess": "volume=-3.92dB,acompressor=threshold=0.025:ratio=12:attack=0.01:release=30:makeup=1,",
+    "attempts": 2,
+    "target": -14.35,
+    "ceiling": -1.3,
+    "duration": 0.6802494331065759,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "victory-sting": {
+    "input": {
+      "input_i": "-7.42",
+      "input_tp": "0.32",
+      "input_lra": "0.00",
+      "input_thresh": "-19.42",
+      "output_i": "-13.84",
+      "output_tp": "-4.27",
+      "output_lra": "0.70",
+      "output_thresh": "-25.82",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.16"
+    },
+    "output": {
+      "input_i": "-13.99",
+      "input_tp": "-6.18",
+      "input_lra": "0.30",
+      "input_thresh": "-25.83",
+      "output_i": "-11.73",
+      "output_tp": "-4.07",
+      "output_lra": "0.00",
+      "output_thresh": "-23.83",
+      "normalization_type": "dynamic",
+      "target_offset": "-2.27"
+    },
+    "attempts": 2,
+    "target": -15.51,
+    "ceiling": -1.3,
+    "duration": 3.0,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "wave-start-horn": {
+    "input": {
+      "input_i": "-16.21",
+      "input_tp": "-6.17",
+      "input_lra": "1.50",
+      "input_thresh": "-27.32",
+      "output_i": "-13.98",
+      "output_tp": "-3.68",
+      "output_lra": "1.50",
+      "output_thresh": "-25.04",
+      "normalization_type": "dynamic",
+      "target_offset": "-0.02"
+    },
+    "output": {
+      "input_i": "-13.96",
+      "input_tp": "-4.15",
+      "input_lra": "0.00",
+      "input_thresh": "-25.01",
+      "output_i": "-13.99",
+      "output_tp": "-4.19",
+      "output_lra": "0.00",
+      "output_thresh": "-25.03",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "attempts": 1,
+    "target": -14.0,
+    "ceiling": -1.3,
+    "duration": 1.76,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  },
+  "wind-gust": {
+    "input": {
+      "input_i": "-23.37",
+      "input_tp": "-8.89",
+      "input_lra": "1.30",
+      "input_thresh": "-34.14",
+      "output_i": "-14.65",
+      "output_tp": "-1.00",
+      "output_lra": "1.20",
+      "output_thresh": "-25.21",
+      "normalization_type": "dynamic",
+      "target_offset": "0.65"
+    },
+    "output": {
+      "input_i": "-14.00",
+      "input_tp": "-1.26",
+      "input_lra": "0.00",
+      "input_thresh": "-24.47",
+      "output_i": "-13.99",
+      "output_tp": "-1.26",
+      "output_lra": "0.00",
+      "output_thresh": "-24.46",
+      "normalization_type": "linear",
+      "target_offset": "-0.01"
+    },
+    "attempts": 3,
+    "target": -14.75,
+    "ceiling": -1.3,
+    "duration": 1.28,
+    "codec": {
+      "sample_rate": "44100",
+      "channels": 2,
+      "bit_rate": "128000"
+    }
+  }
+}
