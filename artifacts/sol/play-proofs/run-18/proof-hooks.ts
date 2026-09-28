@@ -23,7 +23,7 @@ export function proofHooks(id: string, epoch: string) {
           const d = window.__THREE_GAME_DIAGNOSTICS__;
           return d ? { url: location.href, sim: d.timeAlive, wave: d.wave, hp: d.hp,
             gold: d.economy?.gold, run: d.run, hero: d.heroPos, defences: d.build?.hp,
-            vehicle: d.vehicle, fuel: d.fuel, deepwater: d.deepwaterClaim,
+            vehicle: d.vehicle, fuel: d.fuel, deepwater: d.deepwaterClaim, showroom: d.showroomCaptureObjective, wrangle: d.wrangle,
             e7Signal: d.e7Signal, playbookUse: d.playbookUse,
             air: d.e8SuitAir, physics: d.e8Physics, atmosphere: d.e8Atmosphere,
             squall: d.squall, preserveVent: d.preserveVent, archive: (d as ThreeGameDiagnostics & { archive?: unknown }).archive,
