@@ -1,0 +1,18 @@
+=== Gold Rush factory — 2026-09-28 16:55:04 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : RUNNING
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-28T09:53Z (s2739 fire) — verify attended landing outcomes, lane custody and daily duties
+- **s2737 hand
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+  sol/open-findings-astra: 4 commit(s) ahead
+  sol/wave-lane-b: 5 commit(s) ahead
+  art/portraits-e5-e10-generated: 4 commit(s) ahead
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: NODE" in /Users/robin/Claude/Projects/Gold Rush

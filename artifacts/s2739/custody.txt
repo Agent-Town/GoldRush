@@ -1,0 +1,101 @@
+/Users/robin/.goldrush/drain.lock/holder
+76419 2026-09-28T09:53Z node scripts/phone-hud-entry-census.mjs after
+
+
+/Users/robin/.goldrush/land/amt1-run.out
+held 2026-09-28T09:12Z (unnamed); touch loop pid 71497
+fire hold on 09:12Z; landing amt1
+land-queue: admitted at load { 33.07 69.53 81.52 } 09:12Z
+release requested; tasks/.fire.lock gone
+fire hold released at the verdict () 09:51Z
+landing wrapper exited rc=1 09:51Z
+
+
+/Users/robin/.goldrush/land/amt1-gates.txt
+branch sol/wave-lane-b tip a65a958fd 2026-09-28 09:12Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/amt1.json
+scratch store at the store's main 5793a96
+chain base 82d8335d9
+merged db8d2e2e7
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: e7d3073d0d8619912cbdc5d8c3b3e9a08f0d51fa6d36ee2f6b8113c0955cdb74 (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1128 files, 97730201 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34352905 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (396.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+ledger battery start 09:21Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.5m) 
+e2e start 09:27Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/audio-music-toggle.spec.ts e2e/050-audio-mix-and-access.spec.ts e2e/051-audio-governor.spec.ts e2e/mu-02-music.spec.ts e2e/music-survives-pause.spec.ts e2e/first-town-audio-deferred.spec.ts
+e2e: rc=0   64 passed (4.4m)  09:32Z
+battery start 09:32Z
+battery: rc=1 ℹ tests 4 ℹ pass 3 ℹ fail 1 ℹ skipped 0 ℹ tests 5 ℹ pass 4 ℹ fail 1 ℹ skipped 0 ℹ tests 1040 ℹ pass 1032 ℹ fail 3 ℹ skipped 5  09:51Z
+✖ current census pins persistent union, entry coverage and unchanged desktop boxes (3.612208ms)
+✖ rotation registry stays outside the engine identity corpus (589.453416ms)
+✖ rotation registry stays outside the engine identity corpus (73.240417ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (274.320667ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (62.553875ms)
+dirt after battery: 0
+amt1-PREP-DONE
+battery reds: ✖ current census pins persistent union, entry coverage and unchanged desktop boxes (3.612208ms)
+verdict — needs hands
+
+
+  PID  PPID TTY      STAT STARTED
+25494     1 ??       SN   Sun Sep 20 13:55:15 2026    
+56641     1 ??       S    Mon Sep 28 16:52:33 2026    
+56690 56689 ??       S    Mon Sep 28 16:52:34 2026    
+76419 75157 ??       S    Mon Sep 28 16:53:54 2026    
+
+
+  PID  PPID COMMAND
+83789     1 bash /Users/robin/.goldrush/land/queue-audio-lane-b.sh
+
+
+{
+  "id": "e7-tape-drawer-inheritance-1",
+  "title": "A profile that reached the Signal Era keeps its Tape Reel on earlier maps again: the mount reads the campaign's epoch as well as the previewed map's (F-SPH2-2, the unrecorded main red in e7-playbook-surface's inheritance test since 7c2744e5a)",
+  "status": "queued",
+  "taskFile": "e7-tape-drawer-inheritance-1.md",
+  "lane": "lane-a (Astra, gpt-6-astra, the ChatGPT subscription); the queue copy is HELD until e7-tape-toggle-phone-hit-target-1 has landed on main",
+  "authoredAt": "2026-09-28",
+  "authoredBy": "attended (Fable), from the sph2 drain's e2e red and the lane-a audit's control, 2026-09-28",
+  "queuedAt": "2026-09-28"
+}
+
+{
+  "id": "audio-music-toggle-1",
+  "title": "One tap turns the music off everywhere a player hears it: a fourth per-profile key, a 44 px toggle in the run HUD, the town bar, the start menu and the first-boot card, music-off skips the fetch; no new key (owner Q1); the review's pause-panel measurement",
+  "status": "queued",
+  "taskFile": "audio-music-toggle-1.md",
+  "lane": "lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md rank 1; owner 2026-09-28 'users asked about how to disable the music quickly')",
+  "authoredAt": "2026-09-28",
+  "authoredBy": "attended (Fable), from the Opus 5.5 audio review, 2026-09-28",
+  "queuedAt": "2026-09-28"
+}
+
+{
+  "id": "audio-harshness-1",
+  "title": "The sound stops being spiky: one-shots normalized to the LEDGER's -14 LUFS, the manifest re-balanced by simulation, a high-shelf and distance attenuation for building shots, ramped gains, faded and seam-free (crossfaded) music loops, before/after renders for the owner's listen; no limiter (none needed), no music content change (owner Q2/Q3)",
+  "status": "queued",
+  "taskFile": "audio-harshness-1.md",
+  "lane": "lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md ranks 2 to 4); the queue copy is HELD until audio-music-toggle-1 has landed on main",
+  "authoredAt": "2026-09-28",
+  "authoredBy": "attended (Fable), from the Opus 5.5 audio review, 2026-09-28",
+  "queuedAt": "2026-09-28"
+}
+
+{
+  "id": "run-guards-node-watchdog-1",
+  "title": "F-2737-1: let the full Node guard battery complete within its measured outer budget; preserve the test and progress bounds",
+  "status": "queued",
+  "taskFile": "run-guards-node-watchdog-1.md",
+  "lane": "lane-d (Astra, gpt-6-astra, the ChatGPT subscription; adapted from the s2737 fire's scratch master by the attended session 2026-09-28; CODEX-WALL still forbids FIRE dispatch, this copy was dispatched attended)",
+  "authoredAt": "2026-09-28",
+  "authoredBy": "s2737 fire",
+  "spec": "tasks/run-guards-node-watchdog-1.md",
+  "note": "AUTHORED ONLY, no queue copy or dispatch. Source policy 900 s verified; healthy full main receipt 2566.773 s at s2724. Audio integration remains held.",
+  "queuedAt": "2026-09-28"
+}
