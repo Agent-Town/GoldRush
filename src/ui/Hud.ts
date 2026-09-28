@@ -3,7 +3,7 @@ import type { BuildableId } from '../game/buildables';
 import type { AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import type { ContractBriefing } from '../meta/ContractFamilies';
-import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
+import { bindAudioSettingsControls, renderAudioSettingsControls, bindMusicToggle, renderMusicToggle } from '../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../story/settings';
 import { BuildButton } from './BuildButton';
 import { ProspectorPanel } from './ProspectorPanel';
@@ -159,6 +159,7 @@ export class Hud {
   private metaRecapClearTimer = 0;
   private contractBriefingTimer = 0;
   private pauseMetaKey = '';
+  private disposeMusicToggle: () => void = () => undefined;
   private disposeAudioSettings: () => void = () => undefined;
   private disposeStorySettings: () => void = () => undefined;
   private readonly buildButton: BuildButton;
@@ -296,6 +297,7 @@ export class Hud {
 
       <section class="hud-panel hud-panel--meta" data-testid="pause-meta-panel" aria-label="Claim paused" hidden></section>
 
+      ${renderMusicToggle('hud-music-toggle')}
       <button class="hud-pause" type="button" data-testid="hud-pause" data-hud-pause aria-keyshortcuts="P Escape">
         <span class="hud-pause__key" aria-hidden="true">P - </span>catch your breath
       </button>
@@ -355,6 +357,7 @@ export class Hud {
     root.append(this.prospectorPanel.element);
     this.loadProspectorPortrait();
 
+    this.disposeMusicToggle = bindMusicToggle(root);
     this.elements.pauseHint.addEventListener('click', this.onPauseClick);
     this.elements.contractBriefing.addEventListener('click', this.onBriefingClick);
     this.elements.agentChip.addEventListener('click', this.onAgentChipClick);
@@ -413,6 +416,7 @@ export class Hud {
     if (this.disposed) return;
     this.disposed = true;
     if (mountedHuds.get(this.elements.root) === this) mountedHuds.delete(this.elements.root);
+    this.disposeMusicToggle();
     this.disposeAudioSettings();
     this.disposeStorySettings();
     this.elements.pauseHint.removeEventListener('click', this.onPauseClick);

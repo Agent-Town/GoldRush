@@ -2118,3 +2118,48 @@
     padding-top: max(100px, env(safe-area-inset-top));
   }
 }
+
+/* One-tap music controls share the audio preference across scene owners. */
+.music-toggle {
+  min-width: 44px;
+  min-height: 44px;
+  touch-action: manipulation;
+}
+.hud-music-toggle {
+  position: absolute;
+  right: calc(max(16px, env(safe-area-inset-right)) + 180px);
+  bottom: max(18px, env(safe-area-inset-bottom));
+  padding: 6px 10px;
+  border: 2px solid var(--at-wood-950);
+  border-radius: 8px;
+  background: var(--at-sand-100);
+  color: var(--at-wood-950);
+  font: inherit;
+  font-size: .82rem;
+  pointer-events: auto;
+}
+.music-toggle:focus-visible {
+  outline: 2px solid var(--at-teal-600);
+  outline-offset: 2px;
+}
+@media (pointer: coarse), (max-width: 760px) {
+  .hud-music-toggle {
+    right: calc(max(18px, env(safe-area-inset-right)) + 82px);
+    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 238px);
+  }
+  #hud[data-paused="true"] .hud-music-toggle {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: calc(max(12px, env(safe-area-inset-bottom)) + 64px);
+  }
+}
+@media (min-width: 390px) and (max-width: 430px) and (min-height: 701px) {
+  #hud .hud-music-toggle {
+    position: static;
+    grid-column: 3;
+    grid-row: 2;
+    width: 44px;
+    padding: 2px;
+    font-size: .6875rem;
+    line-height: 1.1;
+  }
+}

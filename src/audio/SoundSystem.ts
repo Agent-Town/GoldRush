@@ -1,6 +1,6 @@
 import type { ProjectileKind } from '../systems/CombatSystem';
 import { soundManifest, soundUrlLoader, type SoundManifestEntry, type SoundName } from './manifest';
-import { readAudioMuted, readAudioVolume, readMusicVolume, subscribeAudioPreferences } from './settings';
+import { readAudioMuted, readAudioVolume, readMusicOff, readMusicVolume, subscribeAudioPreferences } from './settings';
 
 export { soundManifest, type SoundName } from './manifest';
 export {
@@ -140,7 +140,7 @@ export class SoundSystem {
   setLoop(name: SoundName, on: boolean, volume = 1): void {
     if (on) this.desiredLoops.set(name, volume);
     else this.desiredLoops.delete(name);
-    if (!on || readAudioMuted() || readAudioVolume() <= 0) {
+    if (!on || readAudioMuted() || readAudioVolume() <= 0 || (soundManifest[name].group === 'music' && readMusicOff())) {
       this.stopLoop(name);
       return;
     }
@@ -348,7 +348,8 @@ export class SoundSystem {
       return;
     }
     const buffer = await this.loadBuffer(name);
-    if (!buffer || this.disposed || this.loops.has(name) || readAudioMuted()) {
+    if (!buffer || this.disposed || this.loops.has(name) || readAudioMuted() || readAudioVolume() <= 0
+      || !this.desiredLoops.has(name) || (soundManifest[name].group === 'music' && readMusicOff())) {
       this.startingLoops.delete(name);
       this.releaseVoice(voiceId);
       return;

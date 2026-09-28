@@ -1,0 +1,30 @@
+{
+  "baseline": {
+    "install_exit": 0,
+    "build_exit": 0
+  },
+  "tsc_exit": 0,
+  "build_exit": 0,
+  "initial_new_spec": {
+    "exit": 1,
+    "passed": 4,
+    "failed": 2,
+    "reason": "test destination expected menu after profile creation; corrected to town"
+  },
+  "new_spec": {
+    "exit": 1,
+    "passed": 8,
+    "failed": 2,
+    "reason": "literal firewall excludes actual src/game/ProfileStorage.ts registry; pending approval"
+  },
+  "console_and_page_errors": 0,
+  "adjacent": {
+    "exit": 0,
+    "passed": 44,
+    "failed": 0,
+    "projects": {
+      "desktop-chrome": 22,
+      "mobile-chrome": 22
+    }
+  }
+}

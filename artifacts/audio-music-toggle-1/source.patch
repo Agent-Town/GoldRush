@@ -1,0 +1,190 @@
+diff --git a/src/audio/AudioSettingsControl.ts b/src/audio/AudioSettingsControl.ts
+index 8271a89d4..e37744cf0 100644
+--- a/src/audio/AudioSettingsControl.ts
++++ b/src/audio/AudioSettingsControl.ts
+@@ -1 +1 @@
+-import { readAudioMuted, readAudioVolume, readMusicVolume, setAudioMuted, setAudioVolume, setMusicVolume, subscribeAudioPreferences } from './settings';
++import { readAudioMuted, readAudioVolume, readMusicVolume, readMusicOff, setMusicOff, setAudioMuted, setAudioVolume, setMusicVolume, subscribeAudioPreferences } from './settings';
+@@ -25,0 +26,4 @@ export function renderAudioSettingsControls(ids: AudioSettingsControlIds): strin
++    <label>
++      <span>Music</span>
++      <input data-testid="${ids.music}-enabled" type="checkbox" ${readMusicOff() ? '' : 'checked'} />
++    </label>
+@@ -39 +43,2 @@ export function bindAudioSettingsControls(root: ParentNode, ids: AudioSettingsCo
+-  if (!volume || !output || !mute || !music || !musicOutput) return () => undefined;
++  const musicEnabled = root.querySelector<HTMLInputElement>(`[data-testid="${ids.music}-enabled"]`);
++  if (!musicEnabled || !volume || !output || !mute || !music || !musicOutput) return () => undefined;
+@@ -45,0 +51 @@ export function bindAudioSettingsControls(root: ParentNode, ids: AudioSettingsCo
++    musicEnabled.checked = !readMusicOff();
+@@ -52,0 +59,2 @@ export function bindAudioSettingsControls(root: ParentNode, ids: AudioSettingsCo
++  const onMusicEnabled = () => setMusicOff(!musicEnabled.checked);
++  musicEnabled.addEventListener('change', onMusicEnabled);
+@@ -59,0 +68 @@ export function bindAudioSettingsControls(root: ParentNode, ids: AudioSettingsCo
++    musicEnabled.removeEventListener('change', onMusicEnabled);
+@@ -65,0 +75,23 @@ export function bindAudioSettingsControls(root: ParentNode, ids: AudioSettingsCo
++
++export function renderMusicToggle(className = ''): string {
++  const on = !readMusicOff();
++  return `<button type="button" class="music-toggle ${className}" data-testid="music-toggle" aria-pressed="${on}">Music ${on ? 'on' : 'off'}</button>`;
++}
++
++export function bindMusicToggle(root: ParentNode): () => void {
++  const button = root.querySelector<HTMLButtonElement>('[data-testid="music-toggle"]');
++  if (!button) return () => undefined;
++  const sync = () => {
++    const on = !readMusicOff();
++    button.textContent = `Music ${on ? 'on' : 'off'}`;
++    button.setAttribute('aria-pressed', String(on));
++  };
++  const toggle = () => setMusicOff(!readMusicOff());
++  button.addEventListener('click', toggle);
++  const unsubscribe = subscribeAudioPreferences(sync);
++  sync();
++  return () => {
++    button.removeEventListener('click', toggle);
++    unsubscribe();
++  };
++}
+diff --git a/src/audio/SoundSystem.ts b/src/audio/SoundSystem.ts
+index f5ff726a9..95d866b4b 100644
+--- a/src/audio/SoundSystem.ts
++++ b/src/audio/SoundSystem.ts
+@@ -3 +3 @@ import { soundManifest, soundUrlLoader, type SoundManifestEntry, type SoundName
+-import { readAudioMuted, readAudioVolume, readMusicVolume, subscribeAudioPreferences } from './settings';
++import { readAudioMuted, readAudioVolume, readMusicOff, readMusicVolume, subscribeAudioPreferences } from './settings';
+@@ -143 +143 @@ export class SoundSystem {
+-    if (!on || readAudioMuted() || readAudioVolume() <= 0) {
++    if (!on || readAudioMuted() || readAudioVolume() <= 0 || (soundManifest[name].group === 'music' && readMusicOff())) {
+@@ -351 +351,2 @@ export class SoundSystem {
+-    if (!buffer || this.disposed || this.loops.has(name) || readAudioMuted()) {
++    if (!buffer || this.disposed || this.loops.has(name) || readAudioMuted() || readAudioVolume() <= 0
++      || !this.desiredLoops.has(name) || (soundManifest[name].group === 'music' && readMusicOff())) {
+diff --git a/src/audio/settings.ts b/src/audio/settings.ts
+index c5f1aa600..b87711cb2 100644
+--- a/src/audio/settings.ts
++++ b/src/audio/settings.ts
+@@ -2,0 +3 @@ export const AUDIO_MUTED_STORAGE_KEY = 'gr.audio.muted.v1';
++export const MUSIC_OFF_STORAGE_KEY = 'gr.audio.music-off.v1';
+@@ -51,0 +53,16 @@ export function setMusicVolume(value: number): number {
++export function readMusicOff(): boolean {
++  try {
++    return globalThis.localStorage?.getItem(MUSIC_OFF_STORAGE_KEY) === '1';
++  } catch {
++    return false;
++  }
++}
++
++export function setMusicOff(value: boolean): boolean {
++  try {
++    globalThis.localStorage?.setItem(MUSIC_OFF_STORAGE_KEY, value ? '1' : '0');
++  } catch {}
++  notifyAudioPreferenceListeners();
++  return value;
++}
++
+diff --git a/src/news/greenhornGazette.ts b/src/news/greenhornGazette.ts
+index a6bbb576c..51be0ad6a 100644
+--- a/src/news/greenhornGazette.ts
++++ b/src/news/greenhornGazette.ts
+@@ -30 +30 @@ export function greenhornGazetteControlCopy(
+-          `${controls.upgrade} takes an upgrade. ${controls.pause} pauses, ${controls.mute} mutes, and ${controls.cancel} backs out.`,
++          `${controls.upgrade} takes an upgrade. ${controls.pause} pauses, ${controls.mute} mutes, the Music toggle quiets only the music, and ${controls.cancel} backs out.`,
+diff --git a/src/town/TownScene.ts b/src/town/TownScene.ts
+index 6ff875e72..6c77052be 100644
+--- a/src/town/TownScene.ts
++++ b/src/town/TownScene.ts
+@@ -101 +101 @@ import { SoundSystem } from '../audio/SoundSystem';
+-import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
++import { bindAudioSettingsControls, renderAudioSettingsControls, bindMusicToggle, renderMusicToggle } from '../audio/AudioSettingsControl';
+@@ -490,0 +491 @@ export class TownScene {
++  private disposeMusicToggle: () => void = () => undefined;
+@@ -714,0 +716 @@ export class TownScene {
++    this.disposeMusicToggle();
+@@ -1163,0 +1166 @@ export class TownScene {
++          ${renderMusicToggle('town-ui__exit')}
+@@ -1224,0 +1228 @@ export class TownScene {
++    this.disposeMusicToggle = bindMusicToggle(this.ui);
+diff --git a/src/ui/Hud.ts b/src/ui/Hud.ts
+index fa33b4470..9c1a6c931 100644
+--- a/src/ui/Hud.ts
++++ b/src/ui/Hud.ts
+@@ -6 +6 @@ import type { ContractBriefing } from '../meta/ContractFamilies';
+-import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
++import { bindAudioSettingsControls, renderAudioSettingsControls, bindMusicToggle, renderMusicToggle } from '../audio/AudioSettingsControl';
+@@ -161,0 +162 @@ export class Hud {
++  private disposeMusicToggle: () => void = () => undefined;
+@@ -298,0 +300 @@ export class Hud {
++      ${renderMusicToggle('hud-music-toggle')}
+@@ -357,0 +360 @@ export class Hud {
++    this.disposeMusicToggle = bindMusicToggle(root);
+@@ -415,0 +419 @@ export class Hud {
++    this.disposeMusicToggle();
+diff --git a/src/ui/menu/StartMenu.ts b/src/ui/menu/StartMenu.ts
+index ca2cb8c03..a03cd5d75 100644
+--- a/src/ui/menu/StartMenu.ts
++++ b/src/ui/menu/StartMenu.ts
+@@ -13 +13 @@ import { SoundSystem } from '../../audio/SoundSystem';
+-import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
++import { bindAudioSettingsControls, renderAudioSettingsControls, bindMusicToggle, renderMusicToggle } from '../../audio/AudioSettingsControl';
+@@ -57,0 +58 @@ export class StartMenu {
++  private disposeMusicToggle: () => void = () => undefined;
+@@ -96,0 +98 @@ export class StartMenu {
++    this.disposeMusicToggle();
+@@ -108,0 +111 @@ export class StartMenu {
++    this.disposeMusicToggle();
+@@ -145,0 +149 @@ export class StartMenu {
++          ${renderMusicToggle('gr-start-menu__button')}
+@@ -168,0 +173 @@ export class StartMenu {
++    this.disposeMusicToggle = bindMusicToggle(this.root);
+@@ -191,0 +197 @@ export class StartMenu {
++        ${renderMusicToggle('gr-start-menu__button')}
+diff --git a/src/ui/theme.css b/src/ui/theme.css
+index aa984609a..83df9dc89 100644
+--- a/src/ui/theme.css
++++ b/src/ui/theme.css
+@@ -2120,0 +2121,45 @@
++
++/* One-tap music controls share the audio preference across scene owners. */
++.music-toggle {
++  min-width: 44px;
++  min-height: 44px;
++  touch-action: manipulation;
++}
++.hud-music-toggle {
++  position: absolute;
++  right: calc(max(16px, env(safe-area-inset-right)) + 180px);
++  bottom: max(18px, env(safe-area-inset-bottom));
++  padding: 6px 10px;
++  border: 2px solid var(--at-wood-950);
++  border-radius: 8px;
++  background: var(--at-sand-100);
++  color: var(--at-wood-950);
++  font: inherit;
++  font-size: .82rem;
++  pointer-events: auto;
++}
++.music-toggle:focus-visible {
++  outline: 2px solid var(--at-teal-600);
++  outline-offset: 2px;
++}
++@media (pointer: coarse), (max-width: 760px) {
++  .hud-music-toggle {
++    right: calc(max(18px, env(safe-area-inset-right)) + 82px);
++    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 238px);
++  }
++  #hud[data-paused="true"] .hud-music-toggle {
++    right: max(12px, env(safe-area-inset-right));
++    bottom: calc(max(12px, env(safe-area-inset-bottom)) + 64px);
++  }
++}
++@media (min-width: 390px) and (max-width: 430px) and (min-height: 701px) {
++  #hud .hud-music-toggle {
++    position: static;
++    grid-column: 3;
++    grid-row: 2;
++    width: 44px;
++    padding: 2px;
++    font-size: .6875rem;
++    line-height: 1.1;
++  }
++}
