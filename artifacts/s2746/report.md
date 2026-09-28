@@ -1,6 +1,6 @@
 # s2746 — audio harshness final main verification is complete
 
-**READY-FOR-GATES: verified bookkeeping; no fire product drain. Closing ledger verification is pending below.**
+**READY-FOR-GATES: verified bookkeeping; no fire product drain. All closing ledger checks passed.**
 
 WHY no product drain: dry-board-probe reports zero real drains, zero unknowns, 13 closed or blocked subjects and 75 merged ghosts. All four named lane branches have zero ahead commits. CODEX-WALL bars independent fire dispatch and refills; no new scope was invented.
 
@@ -22,4 +22,4 @@ WHY no product drain: dry-board-probe reports zero real drains, zero unknowns, 1
 
 ## Closing verification
 
-The full literal ledger battery must finish before the final lock-clearing commit. Its exit and all chained legs will be recorded here.
+At 2026-09-28T14:41Z, the complete literal npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **308.900 s**, Node v26.4.0, checkpoint 4d3106b40. Every chained leg completed on the first attempt. Skillmd is 19/19; the bounded archive audit found zero permanently absent or abridged handoffs. The predecessor and four-item Owner's Desk were reverified byte-for-byte. Attended ahr1 is complete: final main Node 1035 passed / five skips / zero failures plus 87/87, LAND-ahr1-DONE; deployed 954bb2cd with ASSAYER SYNCED. Live origin was rechecked before clearance and remains 0979de763, blocked under F-2742-1. No unchanged rejected push, source edit, dispatch, product drain, pin or deploy by this fire. Commits before clearance: 672cee43f, 4b966d81b, 4d3106b40. This clearing commit is the final write to main; only read-only checks and the external vault digest follow.
