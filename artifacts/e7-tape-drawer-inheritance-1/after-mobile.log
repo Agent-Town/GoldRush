@@ -1,0 +1,58 @@
+[WebServer] (node:7508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+Running 2 tests using 1 worker
+
+(node:7526) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward (16.3s)
+(node:8244) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:54:1 › record, name, shelf, and replay use the profile tape store and the slaved rig actor (8.0s)
+
+
+  1) [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('playbook-toggle')
+    Expected: 0
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByTestId('playbook-toggle')
+        14 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      38 |   );
+      39 |   await open(page, 'epoch-6-atomic');
+    > 40 |   await expect(page.getByTestId('playbook-toggle')).toHaveCount(0);
+         |                                                     ^
+      41 |
+      42 |   await open(page, 'epoch-7-signal');
+      43 |   await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/e2e/e7-playbook-surface.spec.ts:40:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/e7-tape-drawer-inheritance-1/after-mobile-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/e7-tape-drawer-inheritance-1/after-mobile-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/e7-tape-drawer-inheritance-1/after-mobile-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/e7-tape-drawer-inheritance-1/after-mobile-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [mobile-chrome] › e2e/e7-playbook-surface.spec.ts:33:1 › the tape drawer arms at the Signal Era and remains inherited afterward 
+  1 passed (32.7s)

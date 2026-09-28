@@ -1,0 +1,38 @@
+import { expect, test } from '@playwright/test';
+import { writeFile } from 'node:fs/promises';
+import { ACTIVE_EPOCH_KEY } from '../../src/meta/ContractFamilies';
+import { profileDataKey } from '../../src/game/ProfileStorage';
+
+test('fresh E6 has no drawer; Signal profile inherits it on plain E1 and E6 maps', async ({ page }, info) => {
+  test.setTimeout(90_000);
+  const errors = { consoleErrors: [] as string[], pageErrors: [] as string[] };
+  const boots: unknown[] = [];
+  page.on('console', message => { if (message.type() === 'error') errors.consoleErrors.push(message.text()); });
+  page.on('pageerror', error => errors.pageErrors.push(error.message));
+  try {
+    for (const [contract, epoch, inherited] of [
+      ['e6-glow-mesa', 'epoch-6-atomic', false],
+      ['the-claim', 'epoch-1-frontier', true],
+      ['e6-glow-mesa', 'epoch-6-atomic', true],
+    ] as const) {
+      if (inherited) await page.addInitScript(({ key }) => localStorage.setItem(key, 'epoch-7-signal'), {
+        key: profileDataKey('robin', ACTIVE_EPOCH_KEY),
+      });
+      await page.goto(`/?contract=${contract}&nowaves&nolevel&nopause`);
+      await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0)).toBeGreaterThan(10);
+      const state = await page.evaluate(() => ({
+        contract: window.__THREE_GAME_DIAGNOSTICS__!.contract.activeId,
+        epoch: window.__THREE_GAME_DIAGNOSTICS__!.contract.epochId,
+        campaign: localStorage.getItem('gr.activeEpoch.v1'),
+        debug: window.__GR_TEST__ !== undefined,
+        toggleCount: document.querySelectorAll('[data-testid="playbook-toggle"]').length,
+      }));
+      boots.push(state);
+      expect(state).toMatchObject({ contract, epoch, debug: false, toggleCount: inherited ? 1 : 0 });
+      if (inherited) await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+    }
+    expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+  } finally {
+    await writeFile(`artifacts/e7-tape-drawer-inheritance-1/plain-boots-${info.project.name}.json`, JSON.stringify({ boots, errors }, null, 2) + '\n');
+  }
+});
