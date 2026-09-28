@@ -1,0 +1,130 @@
+{
+  "boots": [
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scene": "menu",
+      "route": "/",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scene": "town",
+      "route": "/",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "scene": "run",
+      "route": "/?seed=audio-plain",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": "menu",
+      "route": "/",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": "town",
+      "route": "/",
+      "errors": []
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "scene": "run",
+      "route": "/?seed=audio-plain",
+      "errors": []
+    }
+  ],
+  "seams": [
+    {
+      "name": "title-theme",
+      "fade": 3,
+      "gap": 0.465,
+      "stride": 56.510666666666665,
+      "minSeam100msRmsDbfs": -24.190444179370143,
+      "maxSeamSampleStep": 0.34619393944740295,
+      "peakDbfs": -3.609023676077851
+    },
+    {
+      "name": "era-e1-frontier-loop",
+      "fade": 3,
+      "gap": 0.085,
+      "stride": 86.89083333333333,
+      "minSeam100msRmsDbfs": -25.68384465140195,
+      "maxSeamSampleStep": 0.21750754117965698,
+      "peakDbfs": -4.410076811679533
+    },
+    {
+      "name": "era-e2-steamworks-loop",
+      "fade": 1,
+      "gap": 0.18,
+      "stride": 118.84391666666666,
+      "minSeam100msRmsDbfs": -26.3904797111664,
+      "maxSeamSampleStep": 0.33610159158706665,
+      "peakDbfs": -3.478399413663391
+    },
+    {
+      "name": "era-e3-voltage-loop",
+      "fade": 3,
+      "gap": 0.49,
+      "stride": 116.53391666666667,
+      "minSeam100msRmsDbfs": -28.204095094374672,
+      "maxSeamSampleStep": 0.10165219753980637,
+      "peakDbfs": -4.192990580537365
+    }
+  ],
+  "lifecycle": {
+    "initial": 0,
+    "fadedIn": 0.9947648048400879,
+    "fadingOut": 0.08112955093383789,
+    "stillRunning": "running",
+    "ended": [
+      0.5013333333333334,
+      0.5066666666666668
+    ],
+    "disposalInitial": "running",
+    "disposalFinal": "closed",
+    "distances": [
+      [
+        0,
+        1
+      ],
+      [
+        10,
+        1
+      ],
+      [
+        25,
+        0.8049999999999999
+      ],
+      [
+        60,
+        0.35
+      ],
+      [
+        100,
+        0.35
+      ]
+    ]
+  }
+}
