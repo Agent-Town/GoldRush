@@ -28,3 +28,7 @@ WHY no product landing: the required diff-selected wrapper gives the full Node b
 5. Daily backup/memory coverage September 29 and weekly mint September 30. Three inherited Owner's Desk items remain.
 
 The closing ledger battery runs after all ledger writes. Its result is recorded before the final lock-clearing commit, the last main write of this fire. No source, engine pin, deploy or Gazette item changed this increment.
+
+## Final handoff
+
+At 2026-09-28T08:42Z, closing ledger PASS: 1263/1263, zero failures/skips; kit 83/83; npm rc 0; 295.700 s, Node v26.4.0, checkpoint dfa3f4385594026db04360043175b86ce925ad24. Master path references verified. No product landing, engine pin, dispatch or deploy. Holds-4 final attended main battery still has no completion receipt. Commits before clearance: 92a7d1194 lock, 3d6ceeefd bookkeeping, 31c99e244 master/row/leaf, 4d8952d2d evidence, dfa3f4385 report. The lock-clearing commit is this fire's final main write; origin backup follows.
