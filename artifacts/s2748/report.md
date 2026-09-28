@@ -21,4 +21,4 @@ The useful increment is a verified correction to the existing origin-repair hand
 
 ## Closing verification
 
-Pending the complete literal `npm run test:ledger-guards` before lock clearance. Lock commit: `fc52aa058`. All final receipts will be included in the clearing commit, which is the last write to main.
+**READY-FOR-GATES.** At 2026-09-28T16:11Z, the complete literal npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **210.446 seconds**, Node v26.4.0, checkpoint 9df211c8c. Every chained leg completed. Final queues, running tasks and pending orders are empty; all four runner branches have zero ahead commits. Live origin main remains 0979de763; candidate 23f27b940 still covers the earlier 075e97b6c checkpoint and must be refreshed to include accepted audio drain 15da41c60. Exact s2747 predecessor and four-item Owner's Desk tail verified byte-for-byte. No product drain, source edit, dispatch, pin, deploy or unchanged rejected push. Commits before clearance: fc52aa058 and 9df211c8c. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
