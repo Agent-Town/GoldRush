@@ -1156,3 +1156,7 @@ F-2725-1: source candidate `cf9cd95c4` remains detached/saved, no main merge. Fr
 - WHY no fire product drain: board zero real / zero unknown; all four lane branches absorbed. The live attended ahr1 process retains its final verification. Added the missing W40 Gazette draft and corrected the current ledger to distinguish deployment from gate completion. No dispatch/refill/re-queue under CODEX-WALL.
 - Health 200/200/200, runner 25494 alive with PPID 1, queues/orders/staged art empty. September 28 private duties already fulfilled; freshness 36/36 and live private remote heads match the existing receipts. Yesterday's ticker and r2026w40 present; week 41 is due September 30.
 - Origin still `0979de763`; historical 113,467,543-byte trace remains reachable. F-2742-1 owner decision remains required; no unchanged rejected push or history repair. Exact predecessor and four-item Owner's Desk preserved. Evidence and ordered remainder: `artifacts/s2745/report.md`. Closing ledger battery follows before clearance.
+
+- s2745 closing attempt 1: ledger battery rc 1 in 308.867 s; the Gazette history-scan child reached its unchanged 240-second limit. Original failure retained; unchanged single-file control follows before a full retry. Lock stays ACTIVE; no source/assertion/budget/concurrency change.
+
+- s2745 control: unchanged Gazette guard 9/9, rc 0 in 133.543 s under Node v26.4.0. First full run was 1262/1263 with the single 240-second timeout. Full literal ledger retry follows on the same assertions and limits; both receipts retained.
