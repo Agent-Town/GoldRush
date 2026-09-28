@@ -1,0 +1,48 @@
+{
+  "tag": "ahr1",
+  "branch": "sol/wave-lane-b",
+  "port": 5414,
+  "mergeMessage": "drain: merge sol/wave-lane-b — audio-harshness-1 — the sound stops being spiky: 41 one-shots normalized to the LEDGER's -14 LUFS in place, the manifest re-balanced by the review's own simulation (early Spark Rig brightness 68.2% → 28.4% of SFX energy above 2 kHz, SFX over music +2.6 → +1.7 LU, the four loud cues about 6 LU quieter, the hits within 2 LU of the music), a gentle SFX high-shelf and distance attenuation for building shots, ramped gains, faded and crossfaded music loops; before/after listen clips for the owner; no limiter (none needed), no music content change; from reviews/audio-review-1.md ranks 2 to 4; engine-pinned, reversible on the owner's word",
+  "hash": "pin",
+  "pinCause": "audio-harshness-1: src/audio/manifest.ts volumes and pitch spread re-balanced against normalized assets, src/audio/SoundSystem.ts gains ramped, music loops faded and crossfaded across two sources, an SFX high-shelf filter, an optional gain scale on play() used by the beacon and turret shot call sites in src/systems; 41 mp3 one-shots under assets/audio/raw replaced by loudness-normalized versions; no gameplay or sim value change",
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/050-audio-mix-and-access.spec.ts",
+      "e2e/051-audio-governor.spec.ts",
+      "e2e/mu-02-music.spec.ts",
+      "e2e/mu-03-era-audio.spec.ts",
+      "e2e/music-survives-pause.spec.ts",
+      "e2e/audio-integration.spec.ts",
+      "e2e/audio-music-toggle.spec.ts"
+    ],
+    "allowedE2E": [
+      "audio-integration\\.spec\\.ts:80:1 › settings volume and mute persist across reload"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/audio-harshness-1.md",
+    "title": "Drain review: `audio-harshness-1`, the sound stops being spiky (normalized assets, a simulated re-balance, ramps, fades, seam-free loops); the owner's listen decides keep or revert",
+    "body": "scripts/attended/landings/ahr1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "audio-harshness-1.md",
+    "rowKey": "AUDIO HARSHNESS 1 LANDED",
+    "rowEmoji": "🎧",
+    "rowText": "From `reviews/audio-review-1.md` ranks 2 to 4. Astra on lane-b (168,590 tokens; commits `30ade2e31` to `26eefc242`): 41 one-shot mp3s normalized in place to the LEDGER's -14 LUFS / -1 dBTP (byte-for-byte reproducible by `artifacts/audio-harshness-1/normalize.py`; git keeps the old versions), the manifest re-balanced by re-running the review's `simulate.py`: early Spark Rig SFX energy above 2 kHz 68.2% → 28.4%, SFX over music +2.6 → +1.7 LU (late Spark Rig +4.2 → +2.9), the four loud cues about 6 LU quieter, the two hits within 2 LU of the music, mix peaks lower at default and maximum settings; a gentle SFX high-shelf and distance attenuation for beacon and turret shots; every gain write ramped; music loops fade in and out and cross the seam through two alternating sources; no limiter (the review measured no clipping), no music content change (F-AUD-13/14 are the owner's). Listen clips: `artifacts/audio-harshness-1/listen-before.ogg` and `listen-after.ogg` (30 s each, the early Spark Rig scenario). tsc/build green; the seven audio suites plus the toggle spec 48/50 with the two reds pre-existing on the exact pre-task source (`audio-integration.spec.ts`, first-boot Settings expectation, F-AUD-16); six plain boots zero errors; evidence 968,650 B. Landed attended and pinned, deployed; REVERSIBLE on the owner's word after the listen (F-AUD-15 on the desk)",
+    "statusPhrase": "the sound effects sit down into the mix: normalized, re-balanced by simulation, ramped and faded, with seam-free loops; the owner's listen decides keep or revert",
+    "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh ahr1; Astra on lane-b, the ChatGPT subscription; owner absent, reversible, inside the commissioned review's ranked recommendations)"
+  },
+  "deploy": true,
+  "preview": false,
+  "evidenceDir": "artifacts/audio-harshness-1"
+}
