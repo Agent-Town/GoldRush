@@ -49,15 +49,15 @@ Call log:
   2   | import { expect, test, type Page, type TestInfo } from '@playwright/test';
   3   | import { PROFILE_KEY } from '../src/game/ProfileStorage';
   4   | import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY } from '../src/audio/settings';
-  5   | 
+  5   |
   6   | const SHOT_DIR = 'artifacts/audio-integration';
-  7   | 
+  7   |
   8   | type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
   9   | type HarvestNode = {
   10  |   active: boolean;
   11  |   position: { x: number; z: number };
   12  | };
-  13  | 
+  13  |
   14  | function collectErrors(page: Page): ErrorBucket {
   15  |   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
   16  |   page.on('console', (message) => {
@@ -66,26 +66,26 @@ Call log:
   19  |   page.on('pageerror', (error) => bucket.pageErrors.push(error.message));
   20  |   return bucket;
   21  | }
-  22  | 
+  22  |
   23  | async function clearStorage(page: Page): Promise<void> {
   24  |   await page.addInitScript(() => {
   25  |     localStorage.clear();
   26  |     sessionStorage.clear();
   27  |   });
   28  | }
-  29  | 
+  29  |
   30  | async function openGame(page: Page, query = '?debug&timescale=6&nowaves&nolevel&seed=audio'): Promise<ErrorBucket> {
   31  |   const errors = collectErrors(page);
   32  |   await page.goto(`/${query}`, { waitUntil: 'domcontentloaded' });
   33  |   await expect(page.getByTestId('hud-vitals')).toBeVisible();
   34  |   return errors;
   35  | }
-  36  | 
+  36  |
   37  | async function unlockAudio(page: Page): Promise<void> {
   38  |   await page.mouse.click(24, 24);
   39  |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.unlocked ?? false)).toBe(true);
   40  | }
-  41  | 
+  41  |
   42  | async function nearestActiveNode(page: Page): Promise<HarvestNode> {
   43  |   const nodes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.filter((node) => node.active) ?? []);
   44  |   expect(nodes.length).toBeGreaterThan(0);
@@ -93,37 +93,37 @@ Call log:
   46  |   nodes.sort((a, b) => distanceSq(hero, a.position) - distanceSq(hero, b.position));
   47  |   return nodes[0]!;
   48  | }
-  49  | 
+  49  |
   50  | function distanceSq(a: { x: number; z: number }, b: { x: number; z: number }): number {
   51  |   const dx = a.x - b.x;
   52  |   const dz = a.z - b.z;
   53  |   return dx * dx + dz * dz;
   54  | }
-  55  | 
+  55  |
   56  | function assertNoErrors(errors: ErrorBucket): void {
   57  |   expect(errors.consoleErrors).toEqual([]);
   58  |   expect(errors.pageErrors).toEqual([]);
   59  | }
-  60  | 
+  60  |
   61  | test('boot stays audio-locked until gesture, then seeded panning requests sound', async ({ page }) => {
   62  |   await clearStorage(page);
   63  |   const errors = await openGame(page, '?debug&timescale=6&nowaves&nolevel&seed=audio-pan');
-  64  | 
+  64  |
   65  |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.unlocked)).toBe(false);
   66  |   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started)).toBe(0);
   67  |   assertNoErrors(errors);
-  68  | 
+  68  |
   69  |   await unlockAudio(page);
   70  |   const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.requests ?? 0);
   71  |   const target = await nearestActiveNode(page);
   72  |   await page.evaluate((position) => window.__GR_TEST__?.teleport(position.x, position.z), target.position);
-  73  | 
+  73  |
   74  |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.requests ?? 0)).toBeGreaterThan(before);
   75  |   const lastRequested = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.lastRequested);
   76  |   expect(['pan-swish', 'gold-chime']).toContain(lastRequested);
   77  |   assertNoErrors(errors);
   78  | });
-  79  | 
+  79  |
   80  | test('settings volume and mute persist across reload', async ({ page }, testInfo: TestInfo) => {
   81  |   const errors = collectErrors(page);
   82  |   await page.goto('/');
@@ -132,12 +132,12 @@ Call log:
   85  |     sessionStorage.clear();
   86  |   });
   87  |   await page.reload();
-  88  | 
+  88  |
 > 89  |   await page.getByTestId('start-menu-settings').click();
       |                                                 ^ Error: locator.click: Test timeout of 30000ms exceeded.
   90  |   await mkdir(SHOT_DIR, { recursive: true });
   91  |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
-  92  | 
+  92  |
   93  |   await page.getByTestId('start-menu-volume').evaluate((element) => {
   94  |     const input = element as HTMLInputElement;
   95  |     input.value = '25';
@@ -145,7 +145,7 @@ Call log:
   97  |   });
   98  |   await page.getByTestId('start-menu-mute').check();
   99  |   await expect(page.getByTestId('start-menu-volume-value')).toHaveText('25%');
-  100 | 
+  100 |
   101 |   await expect(
   102 |     page.evaluate(
   103 |       ({ mutedKey, volumeKey }) => ({
@@ -155,14 +155,14 @@ Call log:
   107 |       { mutedKey: AUDIO_MUTED_STORAGE_KEY, volumeKey: AUDIO_VOLUME_STORAGE_KEY },
   108 |     ),
   109 |   ).resolves.toEqual({ muted: '1', volume: '0.25' });
-  110 | 
+  110 |
   111 |   await page.reload();
   112 |   await page.getByTestId('start-menu-settings').click();
   113 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('25');
   114 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
   115 |   assertNoErrors(errors);
   116 | });
-  117 | 
+  117 |
   118 | test('legacy audio preferences migrate into profile storage', async ({ page }) => {
   119 |   const errors = collectErrors(page);
   120 |   await page.addInitScript(
@@ -182,10 +182,10 @@ Call log:
   134 |     },
   135 |     { profileKey: PROFILE_KEY, mutedKey: AUDIO_MUTED_STORAGE_KEY, volumeKey: AUDIO_VOLUME_STORAGE_KEY },
   136 |   );
-  137 | 
+  137 |
   138 |   await page.goto('/');
   139 |   await page.getByTestId('start-menu-settings').click();
-  140 | 
+  140 |
   141 |   await expect(page.getByTestId('start-menu-volume')).toHaveValue('35');
   142 |   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
   143 |   await expect(
@@ -199,34 +199,34 @@ Call log:
   151 |   ).resolves.toEqual({ muted: '1', volume: '0.35' });
   152 |   assertNoErrors(errors);
   153 | });
-  154 | 
+  154 |
   155 | test('first-use bursts respect the per-sound pool cap', async ({ page }) => {
   156 |   await clearStorage(page);
   157 |   const errors = await openGame(page, '?debug&timescale=3&nowaves&nolevel&seed=audio-pool');
   158 |   await page.keyboard.press('p');
   159 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.unlocked ?? false)).toBe(true);
   160 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused ?? false)).toBe(true);
-  161 | 
+  161 |
   162 |   const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
   163 |   await page.evaluate(() => {
   164 |     for (let i = 0; i < 8; i += 1) window.__GR_TEST__?.testAudio('invalid');
   165 |   });
-  166 | 
+  166 |
   167 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0)).toBeGreaterThan(before);
   168 |   const started = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.started ?? 0);
   169 |   expect(started - before).toBeLessThanOrEqual(4);
   170 |   assertNoErrors(errors);
   171 | });
-  172 | 
+  172 |
   173 | test('missing audio names are silent no-ops', async ({ page }) => {
   174 |   await clearStorage(page);
   175 |   const errors = await openGame(page, '?debug&timescale=3&nowaves&nolevel&seed=audio-missing');
   176 |   await unlockAudio(page);
-  177 | 
+  177 |
   178 |   const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.missing ?? 0);
   179 |   await page.evaluate(() => window.__GR_TEST__?.testAudio('__missing_audio__'));
   180 |   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio.missing ?? 0)).toBe(before + 1);
   181 |   assertNoErrors(errors);
   182 | });
-  183 | 
+  183 |
 ```

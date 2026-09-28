@@ -14,7 +14,7 @@ Running 5 tests using 1 worker
 
 [1/5] [mobile-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound
 [2/5] [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
-  1) [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+  1) [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
 
     Test timeout of 30000ms exceeded.
 
@@ -55,5 +55,5 @@ Running 5 tests using 1 worker
 [4/5] [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap
 [5/5] [mobile-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops
   1 failed
-    [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload
   4 passed (42.6s)
