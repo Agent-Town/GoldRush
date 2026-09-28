@@ -1,0 +1,170 @@
+{
+  "url": "http://127.0.0.1:5317/?contract=e4-long-road&timescale=4",
+  "sim": 107.73333333333532,
+  "wave": 3,
+  "hp": 0,
+  "gold": 0,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "defences": [],
+  "deepwater": null,
+  "regatta": null,
+  "homemaker": null,
+  "vehicle": {
+    "active": true,
+    "kind": "hauler",
+    "state": "idle",
+    "x": -180,
+    "z": 0,
+    "target": null,
+    "speed": 9,
+    "burnPerSecond": 3,
+    "distanceTravelled": 0,
+    "onRoad": true,
+    "roadDistance": 0,
+    "dispatch": null
+  },
+  "fuel": {
+    "active": true,
+    "tar": 3,
+    "stored": 24,
+    "capacity": 24,
+    "harvestedNodes": 3,
+    "refinedTar": 6,
+    "drawn": 0,
+    "nodes": [
+      {
+        "x": -12,
+        "z": -8,
+        "harvested": true,
+        "progress": 1
+      },
+      {
+        "x": 0,
+        "z": -8,
+        "harvested": true,
+        "progress": 1
+      },
+      {
+        "x": 12,
+        "z": -8,
+        "harvested": true,
+        "progress": 1
+      }
+    ]
+  },
+  "repairs": 0,
+  "harvest": {
+    "activeNodes": [
+      {
+        "id": "gold-seam-1",
+        "active": true,
+        "anchorIndex": 1,
+        "position": {
+          "x": -130,
+          "z": -16
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "anchorIndex": 2,
+        "position": {
+          "x": -6,
+          "z": 10
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      }
+    ],
+    "channeling": false,
+    "channelNodeId": null,
+    "progress": 0,
+    "channels": [
+      {
+        "actorId": "0",
+        "channelNodeId": null,
+        "progress": 0,
+        "channeling": false
+      }
+    ],
+    "lastGoldGain": 0,
+    "lastGoldPosition": null
+  }
+}

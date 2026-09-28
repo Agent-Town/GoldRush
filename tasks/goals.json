@@ -6827,7 +6827,7 @@
             {
               "id": "sol-play-proofs-holds-1",
               "title": "Play-proofs holds 1 (run 15 on disk): the driver learns the Long Road motor errand, the Deepwater deck-pad boss and authored early endings, then re-rides those three maps; survival-ceiling holds stay on the owner's desk",
-              "status": "queued",
+              "status": "blocked",
               "taskFile": "sol-play-proofs-holds-1.md",
               "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'fix the maps where we find issues'); Run 10 landed in s2721 with full main Node green; queue copy and dispatch remain attended-owned",
               "authoredAt": "2026-09-27",
@@ -6841,7 +6841,9 @@
                 "liftedBy": "attended (Fable)",
                 "evidence": "artifacts/f2725-1-attribution",
                 "verdict": "paired phone trials of e2e/native-proofs/e6-glow-mesa.spec.ts (mobile-chrome, --workers=1, private vite on 127.0.0.1:5309, drain lock held, attended shell, Node 26.4.0): candidate cf9cd95c4 PASS 2/2 (secures at wave 8, banks, 72 and 91 HP); clean main 1ff7054fe with the UNCHANGED driver: one ride died at wave 10 before securing, the other secured wave 8 and failed only the old wave-12 bank floor; the same map on the same tree swings between a death and a wave-8 ending from ride to ride, so the fire\u0027s single wave-4 death is ride variance (the fire shell\u0027s load makes it likelier), not an effect of the driver change; the s2725 fire's wave-4 phone death did not reproduce in the attended shell and is attributed to ride variance under the fire shell's load, not to the driver change; root cause of that single ride remains unobserved"
-              }
+              },
+              "blockClass": "gate-side",
+              "blockedReason": "F-2725-1 / s2726 repeated fire-stage red: synchronized candidate 8f3c4a6f7 again dies at secures on Glow Mesa phone, wave 4 / 144.8 s; attended candidate trials passed 2/2. Per HANDOVER 13z-91 the next landing is ATTENDED-OWNED under land.sh, using the recorded controls; no further FIRE retry, queue, or new attribution dispatch. Lift by attended re-registration and the required completed landing gates. Source, done-move and save/sol-play-proofs-holds-1-s2726 remain intact. Evidence artifacts/s2726/report.md."
             },
             {
               "id": "sol-play-proofs-holds-2",

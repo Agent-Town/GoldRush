@@ -1,0 +1,19 @@
+evidence-budget — the evidence bytes this landing adds
+  range    : caf12f60fbfc56d742e547d2af66b2ae1ecb835f..HEAD
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 76 changed evidence path(s)
+  added    : 2.8 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 2.8 MB
+  limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+          0.3 MB  A  artifacts/sol/play-proofs/run-15/e6-glow-mesa/default/board-mobile-chrome.jpg
+          0.3 MB  A  artifacts/sol/play-proofs/run-15/e5-deepwater-claim/default/board-mobile-chrome.jpg
+          0.2 MB  A  artifacts/sol/play-proofs/run-15/e6-glow-mesa/default/terminal-mobile-chrome.jpg
+          0.2 MB  A  artifacts/sol/play-proofs/run-15/e5-deepwater-claim/default/terminal-mobile-chrome.jpg
+          0.2 MB  A  artifacts/sol/play-proofs/run-15/e4-long-road/default/terminal-mobile-chrome.jpg
+          0.2 MB  A  artifacts/sol/play-proofs/run-15/e6-glow-mesa/default/board-desktop-chrome.jpg
+          0.2 MB  A  artifacts/sol/play-proofs/run-15/e5-deepwater-claim/default/board-desktop-chrome.jpg
+          0.2 MB  A  artifacts/sol/play-proofs/run-15/e5-flotilla/equivalence/board-desktop-chrome.jpg
+      … and 68 more growing path(s)
+  tree     : 9309.6 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 2.8 MB added, inside the 40.0 MB ceiling.

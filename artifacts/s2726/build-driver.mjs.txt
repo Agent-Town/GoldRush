@@ -1,0 +1,4 @@
+import fs from 'node:fs';
+import {runBattery} from "file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gate-battery.mjs";
+const r=runBattery([["TypeScript", "npx", "tsc", "--noEmit"], ["normal build", "npm", "run", "build"], ["E1 build", "/opt/homebrew/bin/node", "-e", "require('child_process').execFileSync('npm',['run','build'],{env:{...process.env,GR_RELEASE:'e1'},stdio:'inherit'})"], ["E1 payload", "node", "scripts/first-town-payload.mjs"], ["evidence budget", "node", "scripts/evidence-budget.mjs", "1ff7054fe39b8f55b8e0c0a1cf372fde419f4496", "HEAD"]],{cwd:"/Users/robin/.goldrush/fire-s2725/wt-holds1",transcript:"/Users/robin/Claude/Projects/Gold Rush/artifacts/s2726/build-gates.txt",label:'s2726 holds-1 detached builds',env:{PATH:'/opt/homebrew/bin:'+process.env.PATH}});
+fs.writeFileSync("/Users/robin/Claude/Projects/Gold Rush/artifacts/s2726/build-result.json",JSON.stringify(r,null,2)+'\n');process.exit(r.overall);

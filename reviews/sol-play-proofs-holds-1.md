@@ -2,7 +2,7 @@
 
 Slice `sol-play-proofs-holds-1`, lane `sol/map-art-campaign-2`, tip `67300360529086da32cf668e7fc41a9e22668d46`. Candidate `cf9cd95c4` remains detached at `~/.goldrush/fire-s2725/wt-holds1`.
 
-**Verdict: BLOCKED / NOT LANDED — F-2725-1.** The goal is gate-side blocked; the done-move remains open.
+**Current verdict (s2726): HELD FOR ATTENDED LANDING / NOT LANDED — F-2725-1.** The fresh fire gate repeated the phone secures-stage death after the attended lift. Per handover 13z-91, the next landing belongs to the attended session; no further fire retry. Goal gate-side blocked, original done-move retained. The s2725 evidence below is historical; the s2726 result follows at the end.
 
 The test driver now attempts the Long Road's authored motor errand, operates Deepwater's deck controls and boss sequence, and accepts a fresh secured score after the actual terminal even when the authored ending occurs before wave 12. Terminal counters are preserved before banking. No production code, balance, renderer, art, dependencies or engine input changed. Players see the existing game; these opt-in native proofs exercise the ordinary town/Book entry without debug or seed URL flags.
 
@@ -41,3 +41,26 @@ Per [.claude/skills/drain/SKILL.md](../.claude/skills/drain/SKILL.md): “Any NE
 1. Attended dispatch/review of `gr-glow-mesa-proof-attribution-1`; no fire retry or queue copy.
 2. If its condition is met, re-register holds-1, gate a synchronized detached candidate including `run-guards --changed-since` and full Node, then the normal landing/main-Node sequence. None is claimed complete here.
 3. Holds-2/-3 remain attended-owned and cannot follow until their predecessor lands. Long Road route and Deepwater direct wreck/re-entry holds remain explicit.
+
+
+## s2726 fresh gate after the attended lift
+
+Policy was CLEAR on `tasks/sol-play-proofs-holds-1.md` before classification. The preserved candidate was synchronized with main `caf12f60fbfc56d742e547d2af66b2ae1ecb835f` as `8f3c4a6f73a46824040f39575d4736181fa25ff5`, without source conflicts or executable changes from `cf9cd95c4`. A fresh npm ci passed, and status was clean before gates. Source still has 80 paths, 2,834,992 evidence bytes; store main `5793a967da46e8f00c0ba16f92f17dc10d36558d` is clean. Candidate retained at `save/sol-play-proofs-holds-1-s2726`.
+
+| Fresh check | Result |
+| --- | --- |
+| tsc, normal build, E1 build, payload, evidence budget | PASS; E1 34,350,664 B |
+| Adjacent suites and plain boots, both projects | 42/42; all eight boot records zero console/page errors, no debug |
+| Own native batch | 3 pass / 3 fail; all six rides zero browser errors |
+| Long Road desktop / phone | HELD: death wave 3 at 107.733 / 118.133 sim seconds |
+| Deepwater desktop / phone | Secure wave 12, 272.133 s, 100 HP, 50 purse; three pads built, boat/pieces/rider moved; bank/Book/reload PASS |
+| Glow Mesa desktop | Secure wave 8, 242.800 s, 135.4 HP, 95 purse; bank/Book/reload PASS |
+| Glow Mesa phone | `secures` FAIL: death wave 4, 144.800 s, 79 kills, 57 purse |
+
+The six compact rows were compared to their raw external captures, including terminal records, all four outcome fields, errors and sample endpoints. `artifacts/s2726/native-summary.json` uses the driver's frozen peakWave, simAtEnd, hpAtEnd and goldAtEnd counters; snapshotWave is retained separately (Deepwater's wave display derives from its storm counter). Regenerated evidence was copied before path-scoped restoration. The sole Vite PID 83850 was stopped normally after the gate.
+
+The attended `artifacts/f2725-1-attribution/README.md` remains the current attribution: two candidate phone passes, while unchanged base had one death and one secure ending followed by the old bank refusal. This fire corroborates recurrence under the fire process; it does not independently prove a CPU causal mechanism or a map defect. The individual ride's cause remains unobserved. Per handover 13z-91's explicit repeat condition, the landing now moves to the attended `land.sh` path with those control fingerprints. No third identical fire trial or duplicate corrective is authorized.
+
+This is a stopped drain, not an accepted merge. Diff-selected/full Node gates and final engine measurement were not started after the browser refusal. No pin, production deployment or Gazette item is due. Main has no source changes; original source lane and done-move remain intact. The existing Long Road route and direct Deepwater wreck/re-entry proof holds stay open.
+
+Remaining in order: attended re-registration and required detached landing gates; source landing and full main Node; attended holds-2 then holds-3. See `artifacts/s2726/report.md` for final ledger and backup receipts.
