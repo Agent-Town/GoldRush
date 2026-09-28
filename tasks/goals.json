@@ -6909,12 +6909,16 @@
             {
               "id": "e7-tape-toggle-phone-hit-target-1",
               "title": "Does a phone tap reach the Tape Reel toggle? Hit-target audit at 390 px on the E7 maps in a plain boot (elementFromPoint at the toggle's centre, three moments), the layering fixed only if the audit proves the canvas or another element swallows the tap; an F-TAPE finding if it is player-facing",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "e7-tape-toggle-phone-hit-target-1.md",
               "lane": "lane-a (Astra, gpt-6-astra, the ChatGPT subscription; from run 16's phone finding; owner 2026-09-27 'fix the maps where we find issues')",
               "authoredAt": "2026-09-28",
               "authoredBy": "attended (Fable), from run 16's Echo Canyon and Relay Rush phone findings, 2026-09-28",
-              "queuedAt": "2026-09-28"
+              "queuedAt": "2026-09-28",
+              "mergeHash": "00e12579e572c135ac874da20b09ef45938733d5",
+              "mergedAt": "2026-09-28",
+              "review": "reviews/e7-tape-toggle-phone-hit-target-1-landing.md",
+              "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh tap1; Astra on lane-a, the ChatGPT subscription)"
             },
             {
               "id": "e7-tape-drawer-inheritance-1",
