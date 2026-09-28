@@ -2,54 +2,53 @@
   "project": "mobile-chrome",
   "link": "loopback",
   "bundle": false,
-  "navigatedAtMs": 644,
-  "clickedAtMs": 926,
-  "townReadyAtMs": 1699,
+  "navigatedAtMs": 547,
+  "clickedAtMs": 777,
+  "townReadyAtMs": 1389,
   "cueWindow": {
-    "responses": 2566,
-    "bytes": 58230378,
+    "responses": 2568,
+    "bytes": 60032588,
     "mp3": [
       {
         "url": "/assets/audio/raw/menu-tap.mp3?import&url",
         "bytes": 414,
-        "at": 844
+        "at": 715
       },
       {
         "url": "/assets/audio/raw/menu-tap.mp3",
         "bytes": 8821,
-        "at": 881
-      }
-    ]
-  },
-  "townRaisingAtMs": 1262,
-  "townPlayableAtMs": 1660,
-  "afterTownReady": {
-    "music": [
+        "at": 734
+      },
       {
         "url": "/assets/audio/raw/era-e1-frontier-loop.mp3?import&url",
         "bytes": 486,
-        "at": 1704
+        "at": 1330
       },
       {
         "url": "/assets/audio/raw/era-e1-frontier-loop.mp3",
         "bytes": 1800881,
-        "at": 1705
+        "at": 1331
       }
     ]
+  },
+  "townRaisingAtMs": 1046,
+  "townPlayableAtMs": 1286,
+  "afterTownReady": {
+    "music": []
   },
   "musicFetchedWhileTownRaising": [],
   "musicFetchedBeforeTownPlayable": [],
   "audioFetches": [
     {
       "url": "/assets/audio/raw/menu-tap.mp3",
-      "at": 817,
+      "at": 699,
       "label": "",
       "state": "",
       "progress": ""
     },
     {
       "url": "/assets/audio/raw/era-e1-frontier-loop.mp3",
-      "at": 1700,
+      "at": 1328,
       "label": "the town",
       "state": "ready",
       "progress": "20/20"
@@ -57,25 +56,25 @@
   ],
   "loadingPhases": [
     {
-      "at": 29,
+      "at": 25,
       "label": "",
       "state": "",
       "progress": ""
     },
     {
-      "at": 983,
+      "at": 821,
       "label": "the town",
       "state": "ready",
       "progress": "0/0"
     },
     {
-      "at": 1262,
+      "at": 1046,
       "label": "the town",
       "state": "loading",
       "progress": "0/20"
     },
     {
-      "at": 1660,
+      "at": 1286,
       "label": "the town",
       "state": "ready",
       "progress": "20/20"
