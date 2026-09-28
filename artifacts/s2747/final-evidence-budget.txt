@@ -1,0 +1,19 @@
+evidence-budget — the evidence bytes this landing adds
+  range    : 075e97b6c5b9b3a4dc95221dc1b10f94c45a0cc6..HEAD
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 100 changed evidence path(s)
+  added    : 28.2 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 28.2 MB
+  limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+          1.9 MB  A  artifacts/audio-integration-first-boot-spec-1/before-mobile-chrome-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/test-failed-1.png
+          1.9 MB  A  artifacts/audio-integration-first-boot-spec-1/first-boot-mobile-chrome.png
+          1.9 MB  A  artifacts/s2747/plain-boots/first-boot-mobile-chrome.png
+          1.8 MB  A  artifacts/s2747/adjacent-rerenders/artifacts/050/mobile-chrome-mute-toast.png
+          1.7 MB  A  artifacts/audio-integration-first-boot-spec-1/before-desktop-chrome-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+          1.7 MB  A  artifacts/audio-integration-first-boot-spec-1/first-boot-desktop-chrome.png
+          1.7 MB  A  artifacts/s2747/plain-boots/first-boot-desktop-chrome.png
+          1.7 MB  A  artifacts/audio-integration-first-boot-spec-1/after-desktop-chrome-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+      … and 90 more growing path(s)
+  tree     : 9412.8 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 28.2 MB added, inside the 40.0 MB ceiling.
