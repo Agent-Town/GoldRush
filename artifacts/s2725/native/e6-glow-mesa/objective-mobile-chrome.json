@@ -1,0 +1,196 @@
+{
+  "url": "http://127.0.0.1:5317/?contract=e6-glow-mesa&timescale=4",
+  "sim": 142.80000000000214,
+  "wave": 4,
+  "hp": 0,
+  "gold": 47,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -4,
+        "z": -30
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": 0,
+        "z": -35
+      }
+    }
+  ],
+  "deepwater": null,
+  "regatta": null,
+  "homemaker": {
+    "active": false,
+    "act": 0,
+    "position": {
+      "x": 8,
+      "z": 4
+    },
+    "tidiedMarkers": 0,
+    "liveComponents": [],
+    "unbuilds": 0,
+    "unbuildOrder": [],
+    "partsStackPickups": 0,
+    "rackArcs": 0,
+    "rackTelegraphed": false,
+    "structureDamageEvents": 0,
+    "playerDamageEvents": 0,
+    "pickupsCurated": 0,
+    "loosePickups": 0,
+    "pileCenters": [
+      {
+        "x": 6.5,
+        "z": 6.2
+      },
+      {
+        "x": 9.5,
+        "z": 6.2
+      }
+    ],
+    "pictogram": "none",
+    "chairPlaced": false,
+    "poweredDown": false,
+    "nonHostile": false,
+    "kept": false,
+    "persistentKept": false
+  },
+  "vehicle": null,
+  "fuel": null,
+  "repairs": 0,
+  "harvest": {
+    "activeNodes": [
+      {
+        "id": "gold-seam-1",
+        "active": true,
+        "anchorIndex": 3,
+        "position": {
+          "x": 24,
+          "z": 30
+        },
+        "remaining": 10,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-2",
+        "active": true,
+        "anchorIndex": 1,
+        "position": {
+          "x": -14,
+          "z": 34
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-3",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-4",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-5",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      },
+      {
+        "id": "gold-seam-6",
+        "active": false,
+        "anchorIndex": -1,
+        "position": {
+          "x": 0,
+          "z": 0
+        },
+        "remaining": 30,
+        "respawnScheduled": false,
+        "respawnIn": 0
+      }
+    ],
+    "channeling": true,
+    "channelNodeId": "gold-seam-1",
+    "progress": 0.5333333333333333,
+    "channels": [
+      {
+        "actorId": "0",
+        "channelNodeId": "gold-seam-1",
+        "progress": 0.5333333333333333,
+        "channeling": true
+      }
+    ],
+    "lastGoldGain": 0,
+    "lastGoldPosition": null
+  }
+}
