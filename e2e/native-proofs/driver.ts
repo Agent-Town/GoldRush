@@ -784,7 +784,6 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
   }
   const recordedWave = (await read(page))?.wave ?? 0;
   const useDeadline = Math.min(deadline, Date.now() + 40_000);
-  await page.getByTestId('playbook-toggle').click();
   while (Date.now() < useDeadline) {
     await takeUpgrades(page, row);
     const now = await read(page);
@@ -792,13 +791,14 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
     const front = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront);
     const covered = front?.centerX !== null && front?.centerX !== undefined && Math.abs(now.hero.x - front.centerX) < front.halfWidth - 1;
     if (relay ? covered : now.wave > recordedWave) {
+      await page.getByTestId('playbook-toggle').click();
       await page.getByTestId(`playbook-replay-${tape}`).click();
       row.notes.push(`Tape USE wave=${now.wave}, hero=${JSON.stringify(now.hero)}, front=${JSON.stringify(front)}: ${await page.getByTestId('playbook-message').innerText()}`);
       break;
     }
     await page.waitForTimeout(80);
   }
-  await page.getByTestId('playbook-toggle').click();
+  if (await page.getByTestId('playbook-library').isVisible()) await page.getByTestId('playbook-toggle').click();
   // Echo fields the mirror at the wave AFTER use. Observe that consumer before stopping.
   const mirrorDeadline = Math.min(deadline, Date.now() + 15_000);
   while (!relay && Date.now() < mirrorDeadline) {
