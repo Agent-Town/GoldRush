@@ -1,0 +1,95 @@
+
+Running 6 tests using 1 worker
+
+
+(node:22383) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/6] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload
+[2/6] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings
+[3/6] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists
+  1) [desktop-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByTestId('start-menu').getByTestId('music-toggle')
+    Expected: "Music off"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('start-menu').getByTestId('music-toggle')
+
+
+      147 |   await page.getByTestId('profile-name-input').fill('Quiet claim');
+      148 |   await page.getByTestId('profile-create').click();
+    > 149 |   await expect(page.getByTestId('start-menu').getByTestId('music-toggle')).toHaveText('Music off');
+          |                                                                            ^
+      150 | });
+      151 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-music-toggle.spec.ts:149:76
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-music-toggle-first-b-15aae-sic-before-a-profile-exists-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-music-toggle-first-b-15aae-sic-before-a-profile-exists-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-music-toggle-first-b-15aae-sic-before-a-profile-exists-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-music-toggle-first-b-15aae-sic-before-a-profile-exists-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:24153) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/6] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload
+[5/6] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings
+[6/6] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists
+  2) [mobile-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByTestId('start-menu').getByTestId('music-toggle')
+    Expected: "Music off"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" with timeout 5000ms
+      - waiting for getByTestId('start-menu').getByTestId('music-toggle')
+
+
+      147 |   await page.getByTestId('profile-name-input').fill('Quiet claim');
+      148 |   await page.getByTestId('profile-create').click();
+    > 149 |   await expect(page.getByTestId('start-menu').getByTestId('music-toggle')).toHaveText('Music off');
+          |                                                                            ^
+      150 | });
+      151 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-music-toggle.spec.ts:149:76
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-music-toggle-first-b-15aae-sic-before-a-profile-exists-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-music-toggle-first-b-15aae-sic-before-a-profile-exists-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-music-toggle-first-b-15aae-sic-before-a-profile-exists-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-music-toggle-first-b-15aae-sic-before-a-profile-exists-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+  2 failed
+    [desktop-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists 
+    [mobile-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists 
+  4 passed (1.3m)

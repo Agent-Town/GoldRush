@@ -1,5 +1,6 @@
 export const AUDIO_VOLUME_STORAGE_KEY = 'gr.audio.volume.v1';
 export const AUDIO_MUTED_STORAGE_KEY = 'gr.audio.muted.v1';
+export const MUSIC_OFF_STORAGE_KEY = 'gr.audio.music-off.v1';
 export const MUSIC_VOLUME_STORAGE_KEY = 'gr.audio.music-volume.v1';
 
 let audioVolume = readStoredAudioVolume();
@@ -47,6 +48,22 @@ export function setMusicVolume(value: number): number {
   } catch {}
   notifyAudioPreferenceListeners();
   return musicVolume;
+}
+
+export function readMusicOff(): boolean {
+  try {
+    return globalThis.localStorage?.getItem(MUSIC_OFF_STORAGE_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+export function setMusicOff(value: boolean): boolean {
+  try {
+    globalThis.localStorage?.setItem(MUSIC_OFF_STORAGE_KEY, value ? '1' : '0');
+  } catch {}
+  notifyAudioPreferenceListeners();
+  return value;
 }
 
 export function subscribeAudioPreferences(listener: () => void): () => void {

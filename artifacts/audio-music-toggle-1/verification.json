@@ -1,0 +1,61 @@
+{
+  "baseline": {
+    "install_exit": 0,
+    "build_exit": 0
+  },
+  "tsc_exit": 0,
+  "build_exit": 0,
+  "initial_new_spec": {
+    "exit": 1,
+    "passed": 4,
+    "failed": 2,
+    "reason": "test destination expected menu after profile creation; corrected to town"
+  },
+  "new_spec": {
+    "exit": 0,
+    "passed": 10,
+    "failed": 0,
+    "projects": {
+      "desktop-chrome": 5,
+      "mobile-chrome": 5
+    },
+    "attempt": 3
+  },
+  "console_and_page_errors": 0,
+  "adjacent": {
+    "exit": 0,
+    "passed": 44,
+    "failed": 0,
+    "projects": {
+      "desktop-chrome": 22,
+      "mobile-chrome": 22
+    },
+    "attempt": 3
+  },
+  "attempt": 3,
+  "predecessor_commits": [
+    "a029c8f8e",
+    "88542b748",
+    "bdd70d410",
+    "f2cdc6533",
+    "a65a958fd"
+  ],
+  "attempt_1_new_spec": {
+    "exit": 1,
+    "passed": 8,
+    "failed": 2,
+    "reason": "literal firewall excludes actual src/game/ProfileStorage.ts registry; pending approval"
+  },
+  "registry_patch_applied": true,
+  "census": {
+    "exit": 0,
+    "guard_exit": 0,
+    "guard_passed": 3,
+    "rows": 20,
+    "union_unchanged": true,
+    "boxes_unchanged": true,
+    "console_and_page_errors": 0
+  },
+  "server_stopped": true,
+  "drain_lock_released": true
+}

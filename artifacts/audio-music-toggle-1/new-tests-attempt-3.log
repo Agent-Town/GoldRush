@@ -1,0 +1,22 @@
+
+Running 10 tests using 1 worker
+
+
+(node:88729) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload
+[2/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings
+[3/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists
+[4/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile
+[5/10] [desktop-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start
+
+(node:89122) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[6/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload
+[7/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings
+[8/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists
+[9/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile
+[10/10] [mobile-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start
+  10 passed (38.3s)

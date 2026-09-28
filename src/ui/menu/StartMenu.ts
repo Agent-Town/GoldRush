@@ -10,7 +10,7 @@ import {
 } from '../../game/ProfileStorage';
 import { reconcileActiveEpoch } from '../../meta/ResearchTree';
 import { SoundSystem } from '../../audio/SoundSystem';
-import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
+import { bindAudioSettingsControls, renderAudioSettingsControls, bindMusicToggle, renderMusicToggle } from '../../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
 import { bindPerformanceTierControl, renderPerformanceTierControl } from '../../game/PerformanceTier';
 import { bindTelemetrySettingsControl, renderTelemetrySettingsControl } from '../../telemetry/payload';
@@ -55,6 +55,7 @@ type StartMenuOptions = {
 export class StartMenu {
   private readonly root = document.createElement('section');
   private readonly audio = new SoundSystem();
+  private disposeMusicToggle: () => void = () => undefined;
   private disposeAudioSettings: () => void = () => undefined;
   private disposeStorySettings: () => void = () => undefined;
   private disposePerformanceSettings: () => void = () => undefined;
@@ -94,6 +95,7 @@ export class StartMenu {
   }
 
   dispose(): void {
+    this.disposeMusicToggle();
     this.disposeAudioSettings();
     this.disposeStorySettings();
     this.disposePerformanceSettings();
@@ -106,6 +108,7 @@ export class StartMenu {
   }
 
   private render(): void {
+    this.disposeMusicToggle();
     this.disposeAudioSettings();
     this.disposeStorySettings();
     this.disposePerformanceSettings();
@@ -143,6 +146,7 @@ export class StartMenu {
           <button class="gr-start-menu__button gr-start-menu__button--primary" type="button" data-menu-action="town" data-testid="start-menu-enter-town">Enter Town</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="ledger" data-menu-secondary data-testid="start-menu-claim-ledger">Claim Ledger</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="profile" data-testid="start-menu-profile">Profile</button>
+          ${renderMusicToggle('gr-start-menu__button')}
           <button class="gr-start-menu__button" type="button" data-menu-action="settings" data-testid="start-menu-settings">Settings</button>
         </nav>`
         }
@@ -166,6 +170,7 @@ export class StartMenu {
         </section>
       </div>
     `;
+    this.disposeMusicToggle = bindMusicToggle(this.root);
     this.disposeAudioSettings = bindAudioSettingsControls(this.root, AUDIO_SETTINGS_IDS);
     this.disposeStorySettings = bindStorySettingsControl(this.root, STORY_SETTINGS_IDS);
     this.disposePerformanceSettings = bindPerformanceTierControl(this.root, PERFORMANCE_TIER_ID);
@@ -189,6 +194,7 @@ export class StartMenu {
         <h2>Who's prospecting?</h2>
         <p>Name the claim-holder before the first claim.</p>
         ${this.profileMessage ? `<p class="gr-profile-message" data-testid="profile-message">${escapeHtml(this.profileMessage)}</p>` : ''}
+        ${renderMusicToggle('gr-start-menu__button')}
         <form class="gr-profile-create gr-profile-create--first" data-testid="profile-create-form">
           <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Claim-holder name" />
           <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Open ledger</button>
