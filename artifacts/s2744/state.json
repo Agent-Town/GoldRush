@@ -1,0 +1,32 @@
+{
+  "stamp": "2026-09-28T13:11Z",
+  "head": "22fccf383bae641f8f6cbeadfbd474b438522997",
+  "leaves": [
+    {
+      "id": "audio-music-toggle-1",
+      "title": "One tap turns the music off everywhere a player hears it: a fourth per-profile key, a 44 px toggle in the run HUD, the town bar, the start menu and the first-boot card, music-off skips the fetch; no new key (owner Q1); the review's pause-panel measurement",
+      "status": "merged",
+      "taskFile": "audio-music-toggle-1.md",
+      "lane": "lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md rank 1; owner 2026-09-28 'users asked about how to disable the music quickly')",
+      "authoredAt": "2026-09-28",
+      "authoredBy": "attended (Fable), from the Opus 5.5 audio review, 2026-09-28",
+      "queuedAt": "2026-09-28",
+      "mergeHash": "cdf30c09e90f4f957ba09e52e0782a9679977fd1",
+      "mergedAt": "2026-09-28",
+      "review": "reviews/audio-music-toggle-1.md",
+      "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh amt1; Astra on lane-b, the ChatGPT subscription; the fires' wrapper cap F-2737-1 kept them from landing it)"
+    },
+    {
+      "id": "audio-harshness-1",
+      "title": "The sound stops being spiky: one-shots normalized to the LEDGER's -14 LUFS, the manifest re-balanced by simulation, a high-shelf and distance attenuation for building shots, ramped gains, faded and seam-free (crossfaded) music loops, before/after renders for the owner's listen; no limiter (none needed), no music content change (owner Q2/Q3)",
+      "status": "queued",
+      "taskFile": "audio-harshness-1.md",
+      "lane": "lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md ranks 2 to 4); the queue copy is HELD until audio-music-toggle-1 has landed on main",
+      "authoredAt": "2026-09-28",
+      "authoredBy": "attended (Fable), from the Opus 5.5 audio review, 2026-09-28",
+      "queuedAt": "2026-09-28"
+    }
+  ],
+  "largeBlobBytes": 113467543,
+  "ahr1GateLogExists": false
+}
