@@ -1,0 +1,94 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-28T00:51:44.360Z ########
+cwd=/Users/robin/.goldrush/fire-s2725/wt-control
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg09bebXL:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5317
+
+===== control warmup =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --grep enemy crossing the river reaches the hero through the ford only --workers=1
+rc=0 5.9s
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.7s)
+
+  1 passed (5.4s)
+(node:60041) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"control warmup":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-28T00:51:50.221Z — same-spec Glow Mesa phone clean-base control ########
+cwd=/Users/robin/.goldrush/fire-s2725/wt-control
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg09bebXL:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5317 GR_NATIVE_PROOF=1 GR_NATIVE_RUN=s2725-glow-control GR_NATIVE_STRATEGY=fire-s2725-glow-control
+
+===== Glow Mesa phone clean-main control =====
+$ npx playwright test e2e/native-proofs/e6-glow-mesa.spec.ts --project=mobile-chrome --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2725/glow-control-results --workers=1
+rc=1 74.9s
+
+Running 1 test using 1 worker
+
+e6-glow-mesa {"t":10.7,"wave":0,"hp":100,"gold":0,"kills":0,"x":-14.1,"z":-10,"alive":2,"seams":2}
+e6-glow-mesa {"t":21.2,"wave":0,"hp":100,"gold":5,"kills":3,"x":-14.1,"z":33.2,"alive":3,"seams":2}
+e6-glow-mesa {"t":31.5,"wave":1,"hp":100,"gold":30,"kills":7,"x":1.1,"z":38.2,"alive":7,"seams":1}
+e6-glow-mesa {"t":41.9,"wave":1,"hp":100,"gold":54,"kills":14,"x":0.1,"z":18.9,"alive":3,"seams":1}
+e6-glow-mesa {"t":52.1,"wave":1,"hp":100,"gold":54,"kills":15,"x":1.8,"z":-14.6,"alive":7,"seams":2}
+e6-glow-mesa {"t":62.5,"wave":2,"hp":100,"gold":29,"kills":19,"x":-11.1,"z":-21.6,"alive":12,"seams":2}
+e6-glow-mesa {"t":72.5,"wave":2,"hp":100,"gold":38,"kills":25,"x":-24,"z":16.9,"alive":12,"seams":2}
+e6-glow-mesa {"t":82.9,"wave":2,"hp":93,"gold":38,"kills":30,"x":-4.3,"z":-28.4,"alive":12,"seams":2}
+e6-glow-mesa {"t":93.3,"wave":3,"hp":93,"gold":3,"kills":36,"x":-23.3,"z":8.6,"alive":16,"seams":2}
+e6-glow-mesa {"t":103.6,"wave":3,"hp":93,"gold":28,"kills":40,"x":-23.8,"z":17,"alive":21,"seams":1}
+e6-glow-mesa {"t":114,"wave":3,"hp":93,"gold":38,"kills":46,"x":3,"z":37.8,"alive":20,"seams":0}
+e6-glow-mesa {"t":124.5,"wave":4,"hp":68,"gold":38,"kills":55,"x":6.2,"z":34.7,"alive":23,"seams":1}
+e6-glow-mesa {"t":134.5,"wave":4,"hp":68,"gold":52,"kills":61,"x":10.7,"z":17.7,"alive":27,"seams":2}
+e6-glow-mesa {"t":144.8,"wave":4,"hp":68,"gold":52,"kills":63,"x":5.6,"z":-29.1,"alive":32,"seams":2}
+e6-glow-mesa {"t":155.2,"wave":5,"hp":68,"gold":2,"kills":75,"x":23.9,"z":0,"alive":33,"seams":2}
+e6-glow-mesa {"t":165.2,"wave":5,"hp":68,"gold":17,"kills":80,"x":23.9,"z":29.6,"alive":40,"seams":2}
+e6-glow-mesa {"t":175.2,"wave":5,"hp":68,"gold":22,"kills":89,"x":-11.9,"z":34.6,"alive":38,"seams":1}
+e6-glow-mesa {"t":187.6,"wave":6,"hp":68,"gold":52,"kills":111,"x":-13.2,"z":33.4,"alive":30,"seams":1}
+e6-glow-mesa {"t":197.9,"wave":6,"hp":87,"gold":67,"kills":130,"x":3,"z":37.8,"alive":28,"seams":1}
+e6-glow-mesa {"t":208.3,"wave":6,"hp":87,"gold":72,"kills":133,"x":-3.9,"z":-7.1,"alive":32,"seams":2}
+e6-glow-mesa {"t":219.2,"wave":7,"hp":112,"gold":2,"kills":147,"x":10.1,"z":-10.9,"alive":44,"seams":2}
+e6-glow-mesa {"t":229.6,"wave":7,"hp":112,"gold":21,"kills":162,"x":25.8,"z":10.2,"alive":38,"seams":2}
+e6-glow-mesa {"t":239.7,"wave":7,"hp":137,"gold":36,"kills":177,"x":3.7,"z":37.7,"alive":31,"seams":1}
+e6-glow-mesa {"t":251.3,"wave":8,"hp":117,"gold":46,"kills":192,"x":3.7,"z":37.7,"alive":47,"seams":0}
+e6-glow-mesa {"t":261.3,"wave":8,"hp":90,"gold":56,"kills":215,"x":-13.3,"z":34.9,"alive":33,"seams":1}
+e6-glow-mesa {"t":271.7,"wave":9,"hp":90,"gold":76,"kills":227,"x":2.6,"z":12.8,"alive":45,"seams":1}
+  ✘  1 [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-glow-mesa plays to its authored terminal, banks, reloads and returns to the board @slow (1.2m)
+
+
+  1) [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-glow-mesa plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: banks: no new secured row since pre-play for e6-glow-mesa at >= wave 12 (41 new row(s): [{"kills":40,"gold":400,"timeAlive":600,"at":41,"waves":30,"secured":true,"contractId":"e10-last-claim","profileName":"Robin","baseValue":0,"weaponSplit":{"spark":0,"blast":0}},{"kills":40,"gold":400,"timeAlive":600,"at":40,"waves":30,"secured":true,"contractId":"e10-archive-world","profileName":"Robin","baseValue":0,"weaponSplit":{"spark":0,"blast":0}}])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1455 |
+      1456 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+    > 1457 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+           |                                                          ^
+      1458 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1459 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+      1460 |       expect(row.clean.ok, `clean: ${row.clean.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2725/wt-control/e2e/native-proofs/driver.ts:1457:58
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2725/glow-control-results/native-proofs-e6-glow-mesa-b3350-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  1 failed
+    [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e6-glow-mesa plays to its authored terminal, banks, reloads and returns to the board @slow 
+(node:60210) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:60272) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:60272) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"Glow Mesa phone clean-main control":1}
+OVERALL rc=1

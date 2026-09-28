@@ -1,0 +1,77 @@
+
+===== warmup — rc=0 6.4s =====
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (4.6s)
+
+  1 passed (5.4s)
+(node:43124) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup":0}
+OVERALL rc=0
+transcript -> artifacts/s2725/browser-gates.txt
+
+===== adjacent and plain boots — rc=0 199.7s =====
+  ✓  29 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:83:1 › double restart recycles enemies without geometry growth (8.8s)
+  ✓  30 [mobile-chrome] › e2e/m1-01-claim-jumpers-death.spec.ts:109:1 › stress=120 stays within pool and draw-call budget (3.5s)
+  ✓  31 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend (3.2s)
+  ✓  32 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs (3.1s)
+  ✓  33 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (3.1s)
+  ✓  34 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (3.0s)
+  ✓  35 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (5.8s)
+  ✓  36 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (9.5s)
+  ✓  37 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (6.2s)
+  ✓  38 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.5s)
+  ✓  39 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.3s)
+  ✓  40 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.2s)
+  ✓  41 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.6s)
+  ✓  42 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.5s)
+
+  42 passed (3.3m)
+(node:43239) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43297) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:43297) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:45309) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:45309) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"adjacent and plain boots":0}
+OVERALL rc=0
+transcript -> artifacts/s2725/browser-gates.txt
+
+===== own three native specs — rc=1 347.8s =====
+      1559 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2725/wt-holds1/e2e/native-proofs/driver.ts:1556:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2725/native-results/native-proofs-e6-glow-mesa-b3350-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  3 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:1039:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1039:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1039:5 › e6-glow-mesa plays to its authored terminal, banks, reloads and returns to the board @slow 
+  3 passed (5.8m)
+(node:46455) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:46512) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:46512) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:47789) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47789) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:51026) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:51026) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:51616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:51616) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"own three native specs":1}
+OVERALL rc=1
+transcript -> artifacts/s2725/native-gates.txt

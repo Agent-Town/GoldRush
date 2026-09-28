@@ -1,0 +1,128 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-09-28T00:49:44.684Z ########
+cwd=/Users/robin/.goldrush/fire-s2725/wt-control
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg09bebXL:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5317
+
+===== control warmup =====
+$ npx playwright test e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --grep enemy crossing the river reaches the hero through the ford only --workers=1
+rc=0 5.4s
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.7s)
+
+  1 passed (4.5s)
+(node:57505) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"control warmup":0}
+OVERALL rc=0
+
+
+######## BATTERY 2026-09-28T00:49:50.105Z — same-spec Long Road clean-base control ########
+cwd=/Users/robin/.goldrush/fire-s2725/wt-control
+env+ PATH=/opt/homebrew/bin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg09bebXL:/Users/robin/.foundry/bin GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5317 GR_NATIVE_PROOF=1 GR_NATIVE_RUN=s2725-control GR_NATIVE_STRATEGY=fire-s2725-control
+
+===== Long Road clean-main control =====
+$ npx playwright test e2e/native-proofs/e4-long-road.spec.ts --project=desktop-chrome --project=mobile-chrome --output=/Users/robin/Claude/Projects/Gold Rush/artifacts/s2725/control-results --workers=1
+rc=1 105.6s
+
+Running 2 tests using 1 worker
+
+e4-long-road {"t":10.5,"wave":0,"hp":100,"gold":0,"kills":0,"x":-168.5,"z":-16.9,"alive":2,"seams":2}
+e4-long-road {"t":20.5,"wave":0,"hp":100,"gold":0,"kills":0,"x":-132.4,"z":-16.9,"alive":6,"seams":2}
+e4-long-road {"t":30.7,"wave":1,"hp":100,"gold":30,"kills":0,"x":-130.5,"z":-15.8,"alive":14,"seams":1}
+e4-long-road {"t":41.2,"wave":1,"hp":100,"gold":30,"kills":0,"x":-88.2,"z":9.6,"alive":17,"seams":1}
+e4-long-road {"t":51.7,"wave":1,"hp":68,"gold":30,"kills":7,"x":-45.9,"z":12.3,"alive":15,"seams":2}
+e4-long-road {"t":61.9,"wave":2,"hp":68,"gold":30,"kills":12,"x":-10,"z":6.7,"alive":19,"seams":2}
+e4-long-road {"t":72.4,"wave":2,"hp":60,"gold":30,"kills":19,"x":-62.9,"z":-10.3,"alive":18,"seams":2}
+e4-long-road {"t":82.9,"wave":2,"hp":60,"gold":30,"kills":22,"x":-117.9,"z":-10.3,"alive":20,"seams":2}
+e4-long-road {"t":93.2,"wave":3,"hp":60,"gold":50,"kills":24,"x":-139.6,"z":-10.3,"alive":28,"seams":2}
+e4-long-road {"t":103.6,"wave":3,"hp":52,"gold":0,"kills":33,"x":-140.8,"z":-15.2,"alive":28,"seams":2}
+e4-long-road {"t":114.1,"wave":3,"hp":52,"gold":10,"kills":43,"x":-139.8,"z":-10.8,"alive":23,"seams":1}
+e4-long-road {"t":124.8,"wave":4,"hp":52,"gold":10,"kills":53,"x":-139.8,"z":-10.8,"alive":25,"seams":1}
+e4-long-road {"t":135.2,"wave":4,"hp":52,"gold":10,"kills":55,"x":-114.5,"z":14.4,"alive":34,"seams":2}
+e4-long-road {"t":145.7,"wave":4,"hp":44,"gold":10,"kills":61,"x":-66.2,"z":17.6,"alive":34,"seams":2}
+  ✘  1 [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow (42.0s)
+e4-long-road {"t":10.1,"wave":0,"hp":100,"gold":0,"kills":0,"x":-168.5,"z":-16.9,"alive":2,"seams":2}
+e4-long-road {"t":20.8,"wave":0,"hp":100,"gold":0,"kills":0,"x":-139.8,"z":-13.9,"alive":6,"seams":2}
+e4-long-road {"t":31.1,"wave":1,"hp":100,"gold":20,"kills":0,"x":-129.7,"z":-15.3,"alive":14,"seams":2}
+e4-long-road {"t":41.7,"wave":1,"hp":100,"gold":30,"kills":0,"x":-97.2,"z":10.1,"alive":17,"seams":1}
+e4-long-road {"t":52.1,"wave":1,"hp":76,"gold":30,"kills":5,"x":-38.1,"z":10.1,"alive":17,"seams":1}
+e4-long-road {"t":62.3,"wave":2,"hp":76,"gold":45,"kills":9,"x":-6.9,"z":10.1,"alive":22,"seams":2}
+e4-long-road {"t":72.4,"wave":2,"hp":68,"gold":50,"kills":15,"x":-41.6,"z":-18.1,"alive":22,"seams":2}
+e4-long-road {"t":82.7,"wave":2,"hp":68,"gold":50,"kills":20,"x":-78.3,"z":-15.3,"alive":22,"seams":2}
+e4-long-road {"t":93.2,"wave":3,"hp":68,"gold":50,"kills":23,"x":-121.4,"z":-18.1,"alive":29,"seams":2}
+e4-long-road {"t":103.6,"wave":3,"hp":68,"gold":0,"kills":28,"x":-141.1,"z":-15.1,"alive":33,"seams":2}
+e4-long-road {"t":114,"wave":3,"hp":68,"gold":25,"kills":41,"x":-139.9,"z":-10.6,"alive":25,"seams":2}
+e4-long-road {"t":124.4,"wave":4,"hp":68,"gold":5,"kills":51,"x":-98.9,"z":11.5,"alive":27,"seams":1}
+e4-long-road {"t":134.5,"wave":4,"hp":28,"gold":5,"kills":60,"x":-57.8,"z":8.5,"alive":28,"seams":2}
+e4-long-road {"t":144.9,"wave":4,"hp":20,"gold":5,"kills":67,"x":-11.1,"z":11,"alive":28,"seams":2}
+e4-long-road {"t":155.3,"wave":5,"hp":12,"gold":20,"kills":81,"x":5.1,"z":16,"alive":27,"seams":1}
+e4-long-road {"t":167.6,"wave":5,"hp":12,"gold":45,"kills":105,"x":5.1,"z":16,"alive":17,"seams":0}
+e4-long-road {"t":177.9,"wave":5,"hp":12,"gold":70,"kills":118,"x":4.5,"z":12.9,"alive":11,"seams":1}
+e4-long-road {"t":188.4,"wave":6,"hp":12,"gold":70,"kills":124,"x":-42.2,"z":-15.5,"alive":27,"seams":2}
+e4-long-road {"t":198.9,"wave":6,"hp":29,"gold":70,"kills":129,"x":-85.2,"z":-16,"alive":29,"seams":2}
+e4-long-road {"t":209.6,"wave":6,"hp":29,"gold":70,"kills":131,"x":-130,"z":-14.7,"alive":35,"seams":2}
+e4-long-road {"t":220.1,"wave":7,"hp":29,"gold":0,"kills":140,"x":-88.1,"z":7.4,"alive":52,"seams":2}
+  ✘  2 [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow (1.0m)
+
+
+  1) [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 5 / 151.5s sim, 63 kills, 10 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1454 |       }
+      1455 |
+    > 1456 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1457 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1458 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1459 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2725/wt-control/e2e/native-proofs/driver.ts:1456:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2725/control-results/native-proofs-e4-long-road-06d3b-ds-and-returns-to-the-board-desktop-chrome/error-context.md
+
+  2) [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow 
+
+    Error: secures: runState=dead at wave 7 / 226.4s sim, 151 kills, 0 gold
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1454 |       }
+      1455 |
+    > 1456 |       expect(row.secures.ok, `secures: ${row.secures.detail}`).toBe(true);
+           |                                                                ^
+      1457 |       expect(row.banks.ok, `banks: ${row.banks.detail}`).toBe(true);
+      1458 |       expect(row.board.ok, `board: ${row.board.detail}`).toBe(true);
+      1459 |       expect(row.reload.ok, `reload: ${row.reload.detail}`).toBe(true);
+        at /Users/robin/.goldrush/fire-s2725/wt-control/e2e/native-proofs/driver.ts:1456:64
+
+    Error Context: ../../../Claude/Projects/Gold Rush/artifacts/s2725/control-results/native-proofs-e4-long-road-06d3b-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+  2 failed
+    [desktop-chrome] › e2e/native-proofs/driver.ts:949:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow 
+    [mobile-chrome] › e2e/native-proofs/driver.ts:949:5 › e4-long-road plays to its authored terminal, banks, reloads and returns to the board @slow 
+(node:57614) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:57672) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:57672) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:58024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:58024) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+SUMMARY {"Long Road clean-main control":1}
+OVERALL rc=1

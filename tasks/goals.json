@@ -6827,12 +6827,14 @@
             {
               "id": "sol-play-proofs-holds-1",
               "title": "Play-proofs holds 1 (run 15 on disk): the driver learns the Long Road motor errand, the Deepwater deck-pad boss and authored early endings, then re-rides those three maps; survival-ceiling holds stay on the owner's desk",
-              "status": "queued",
+              "status": "blocked",
               "taskFile": "sol-play-proofs-holds-1.md",
               "lane": "lane-c (Astra, gpt-6-astra, the ChatGPT subscription; owner 2026-09-27 'fix the maps where we find issues'); Run 10 landed in s2721 with full main Node green; queue copy and dispatch remain attended-owned",
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable), from run 12's three findings, 2026-09-27",
-              "queuedAt": "2026-09-27"
+              "queuedAt": "2026-09-27",
+              "blockClass": "gate-side",
+              "blockedReason": "F-2725-1 (s2725, 2026-09-28): candidate phone Glow Mesa dies at secures wave 4; clean-main control secures wave 9 and fails only banks, so the new red is UNATTRIBUTED. Lift only after gr-glow-mesa-proof-attribution-1 supplies same-stage control attribution or a separately authorized correction, followed by fresh required gates and re-registration. Candidate cf9cd95c4 preserved at save/sol-play-proofs-holds-1-s2725; no main merge. Holds-2/-3 dispatch remains attended-owned."
             },
             {
               "id": "sol-play-proofs-holds-2",
@@ -6867,6 +6869,15 @@
               "authoredAt": "2026-09-27",
               "authoredBy": "attended (Fable), from run 14's four instrument findings, 2026-09-27",
               "queuedAt": "2026-09-27"
+            },
+            {
+              "id": "gr-glow-mesa-proof-attribution-1",
+              "title": "Attribute the unmatched Glow Mesa phone survival red with bounded paired evidence; no gameplay or assertion changes",
+              "taskFile": "gr-glow-mesa-proof-attribution-1.md",
+              "status": "planned",
+              "lane": "scratch worktree /Users/robin/Claude/Projects/wt-glow-proof-attribution; attended-owned Opus implementer dispatch; no FIRE dispatch",
+              "authoredAt": "2026-09-28",
+              "authoredBy": "s2725 fire from F-2725-1 paired drain evidence"
             }
           ]
         }
