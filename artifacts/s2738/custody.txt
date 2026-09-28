@@ -1,0 +1,23 @@
+  PID  PPID TTY      STAT STARTED
+25494     1 ??       SN   Sun Sep 20 13:55:15 2026    
+52667 47588 ??       Ss   Mon Sep 28 15:52:03 2026    
+53974 47588 ??       Ss   Mon Sep 28 15:52:58 2026    
+57135     1 ??       S    Mon Sep 28 15:53:03 2026    
+58695 58694 ??       SN   Mon Sep 28 15:53:13 2026    
+
+/Users/robin/.goldrush/land/sph4-run.out
+held 2026-09-28T07:55Z (unnamed); touch loop pid 87601
+fire hold on 07:55Z; landing sph4
+land-queue: admitted at load { 29.90 60.50 67.52 } 07:55Z
+release requested; tasks/.fire.lock gone
+fire hold released at the verdict (verdict: clean) 08:21Z
+landing wrapper exited rc=0 08:44Z
+
+/Users/robin/.goldrush/land/sph4-gates.txt
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+e2e: rc=0   24 passed (1.8m)  08:02Z
+battery: rc=0 ℹ tests 1040 ℹ pass 1035 ℹ fail 0 ℹ skipped 5 ℹ tests 87 ℹ pass 87 ℹ fail 0 ℹ skipped 0  08:21Z
+dirt after battery: 0
+verdict: clean
+LAND-sph4-DONE
+runner semaphore: 239:     if [ "$slot" = "main" ] && [[ "$l1" == *ACTIVE* && "$l1" != *"lock CLEARED"* ]]; then
