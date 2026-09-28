@@ -45,7 +45,7 @@ Reproduction commands and direct subprocess exits are in [checks.py](checks.py),
 
 ## Complete campaign table
 
-All 42 contracts appear once. The four changed rows use deciding run **17**, identically amended in run 16. Other rows retain their prior evidence and bounded proof qualifications. Totals: **9 PROVED both, 3 PROVED one, 2 PARTIAL, 27 HELD, 1 historical DEFECT corrected**.
+Amended by run 18: all 42 contracts appear once; five rows now use deciding run 18. Earlier rows retain their proof qualifications. Totals: **11 PROVED both, 3 PROVED one, 1 PARTIAL, 26 HELD, 1 historical DEFECT corrected**.
 
 | Map | Campaign verdict | Deciding run | Finding / evidence |
 | --- | --- | --- | --- |
@@ -75,21 +75,21 @@ All 42 contracts appear once. The four changed rows use deciding run **17**, ide
 | The Hill Mine (e2-hill-mine) | HELD — survival ceiling; escort works; deaths 1/1 and 2/2 | 11 | [Evidence](../run-11/run-note.md) |
 | The Trestle (e2-trestle) | HELD — survival ceiling; escort works; deaths 13/13 and 13/11 | 11 | [Evidence](../run-11/run-note.md) |
 | Moth Season (e3-moth-season) | HELD — objective never engaged; CONNECT 0/1; deaths 12/13 | 11 | [Evidence](../run-11/run-note.md) |
-| The Long Road (e4-long-road) | HELD — tar/grade work; far-stop approach stalls, deaths 3/3 | 15 | [Finding](../run-15/e4-long-road/finding.md) |
-| Deepwater Claim (e5-deepwater-claim) | PARTIAL both — boss and full terminal journey proved; deck and wreck restoration unproved | 15 | [Finding](../run-15/e5-deepwater-claim/finding.md) |
+| The Long Road (e4-long-road) | HELD — graded route and radius read work; final railhead approach still stalls; deaths 3/3 | 18 | [Finding](../run-18/e4-long-road/finding.md) |
+| Deepwater Claim (e5-deepwater-claim) | PROVED both — three deck pads/carried rider, boss, bank/Book/reload, ceremony write and restored wreck at later birth | 18 | [Proof](../run-18/e5-deepwater-claim/proof.md) |
 | Flotilla (e5-flotilla) | PROVED both screens — terminal journey; construction/reshape not proved | 12 | [Proof](../run-12/e5-flotilla/proof.md) |
 | Regatta (e5-regatta) | PROVED both screens — six-gate boat race/full journey | 12 | [Proof](../run-12/e5-regatta/proof.md) |
 | Stillwater (e5-stillwater) | PROVED both screens — terminal journey; five-ground work not proved | 12 | [Proof](../run-12/e5-stillwater/proof.md) |
 | Glow Mesa (e6-glow-mesa) | PROVED both screens — authored wave-8 ending, bank/Book/reload | 15 | [Proof](../run-15/e6-glow-mesa/proof.md) |
 | Half-Life Hollow (e6-half-life-hollow) | HELD — survival ceiling; crossing complete; all four deaths wave 4 | 13 | [Finding](../run-13/e6-half-life-hollow/finding.md) |
 | The Picnic (e6-picnic) | HELD — three stakes held all rides; survival deaths 17/17 default, 18/17 restore | 16 | [Finding](../run-16/e6-picnic/finding.md) |
-| The Showroom (e6-showroom) | HELD — default captures 6/6 both; deaths 5/13; restore terminal capture lost to driver confirms | 16 | [Finding](../run-16/e6-showroom/finding.md) |
+| The Showroom (e6-showroom) | HELD — captures 6/6 desktop, 5/6 phone; deaths 3/4; death guard preserves terminal | 18 | [Finding](../run-18/e6-showroom/finding.md) |
 | The Dead Band (e7-dead-band) | HELD — refusal latch met all rides; survival deaths 19/12 default, 17/14 restore | 16 | [Finding](../run-16/e7-dead-band/finding.md) |
 | Echo Canyon (e7-echo-canyon) | HELD — desktop mirror 1 squad/2 bodies, deaths 16/17; phone Tape toggle timeout before Record | 16 | [Finding](../run-16/e7-echo-canyon/finding.md) |
 | Relay Rush (e7-relay-rush) | HELD — desktop deadline 3/3 and muted use 1, deaths 16/18; phone Tape toggle blocked | 16 | [Finding](../run-16/e7-relay-rush/finding.md) |
-| Relay Valley (e7-relay-valley) | HELD — desktop program lights r1, survival deaths 18/19; phone Tape toggle blocked before Record | 17 | [Finding](../run-17/e7-relay-valley/finding.md) |
+| Relay Valley (e7-relay-valley) | HELD — desktop survival retained from 17; phone hit-test mismatch, attempted correction failed; uses 0 | 18 | [Finding](../run-18/e7-relay-valley/finding.md) |
 | The Mare Claim (e8-mare-claim) | HELD — 4/4 mining and no air damage all rides; survival deaths 13/15 default, 14/15 restore | 17 | [Finding](../run-17/e8-mare-claim/finding.md) |
-| The Archive World (e10-archive-world) | HELD — west-light preview outside radius 4; zero holds, deaths 17/20 | 17 | [Finding](../run-17/e10-archive-world/finding.md) |
+| The Archive World (e10-archive-world) | PROVED both — valid beacon inside disc, completed light hold, wave-12 bank/Book/reload | 18 | [Proof](../run-18/e10-archive-world/proof.md) |
 | The Ember Shore (e10-ember-shore) | PROVED both screens — seven Stokes, three squalls, wave-12 bank/Book/reload | 17 | [Proof](../run-17/e10-ember-shore/proof.md) |
 
 
