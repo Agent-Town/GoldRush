@@ -12,14 +12,14 @@ index 6b2b6aeed..fa834574a 100644
      await writeFile(path.join(root, `audit-${info.project.name}.json`), JSON.stringify({ project: info.project.name, samples, errors }, null, 2) + '\n');
      expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 diff --git a/src/game/Game.ts b/src/game/Game.ts
-index bb6f5e402..dd23b78b6 100644
+index bb6f5e402..6fde29bf7 100644
 --- a/src/game/Game.ts
 +++ b/src/game/Game.ts
 @@ -19,6 +19,7 @@ import {
    activeTileDescriptor,
    contractDescriptorJson, contractHeroMaxHpBonus,
    DEFAULT_EPOCH_ID,
-+  epochIsActive,
++  tapeReelEpochOrder,
    listEpochs,
    loadContract,
    loadEpoch,
@@ -28,7 +28,30 @@ index bb6f5e402..dd23b78b6 100644
      this.getElement('#hud').append(this.assetLoadingCue);
      this.e7SignalSystem.mount(this.getElement('#hud'));
 -    if (this.activeEpoch.order >= 7) {
-+    if (this.activeEpoch.order >= 7 || epochIsActive('epoch-7-signal')) {
++    if (tapeReelEpochOrder() >= 7) {
        this.playbookSurface = new PlaybookSurface(this.getElement('#hud'), {
          capacity: Balance.e7Playbook.shelfCapacity,
          list: () => listPlaybooks(localStorage),
+diff --git a/src/meta/ContractFamilies.ts b/src/meta/ContractFamilies.ts
+index 7e12e86f9..f376ba32f 100644
+--- a/src/meta/ContractFamilies.ts
++++ b/src/meta/ContractFamilies.ts
+@@ -1134,6 +1134,18 @@ export function campaignEpochId(storage?: Pick<Storage, 'getItem'>): string {
+   return DEFAULT_EPOCH_ID;
+ }
+
++/** Contract runs inherit the player's drawer; explicit epoch previews keep their own era. */
++export function tapeReelEpochOrder(): number {
++  const params = readSearchParams();
++  const requestedId = params.get('epoch');
++  const debug = !RELEASE_E1 && (params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase');
++  const preview = replayContractId === null && requestedId && debug && manifestsById.has(requestedId);
++  const order = activeEpoch().order;
++  return !preview && params.has('contract')
++    ? Math.max(order, manifestsById.get(campaignEpochId())!.order)
++    : order;
++}
++
+ export function epochIsActive(id: string): boolean {
+   const active = manifestsById.get(campaignEpochId());
+   const requested = manifestsById.get(id);
