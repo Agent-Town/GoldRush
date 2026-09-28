@@ -22,3 +22,7 @@ Evidence: lock-owner.txt, ledger-context.json, dry-board.txt, lane-usable.txt, i
 3. September 28 ticker after September 29 06:00 local; September 29 private coverage after 02:10 UTC; week-41 mint September 30.
 
 Closing ledger verification follows before the final lock-clearing commit.
+
+## Closing verification
+
+**READY-FOR-GATES.** At 2026-09-28T22:41Z, complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm exit 0**, **201.984 seconds**, Node v26.4.0, checkpoint 90a7b8fc0. Every chained leg completed. Final queues, running tasks and pending orders are empty; four runner lanes ahead=0. Exact s2774 predecessor and four-item Owner's Desk preserved byte-for-byte. Prior commits: 84a6911a5, 424d07b44, 90a7b8fc0. No product drain, dispatch, deployment or history repair. Runtime dashboard churn is left to its owner. The closing parser's initial false refusal on runtime logs was corrected before any handoff write; no gate failed. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
