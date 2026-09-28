@@ -1,0 +1,19 @@
+evidence-budget — the evidence bytes this landing adds
+  range    : caf12f60fbfc56d742e547d2af66b2ae1ecb835f..HEAD
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 76 changed evidence path(s)
+  added    : 6.2 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 6.2 MB
+  limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+          1.5 MB  A  artifacts/s2726/regenerated/artifacts/056/mobile-390-build-menu-icons-blurb.png
+          1.1 MB  A  artifacts/s2726/regenerated/artifacts/056/desktop-build-menu-icons-blurb.png
+          1.1 MB  A  artifacts/s2726/regenerated/artifacts/056/desktop-build-menu-palisade.png
+          0.5 MB  A  artifacts/s2726/build-gates.txt
+          0.3 MB  A  artifacts/s2726/native/e5-deepwater-claim/board-mobile-chrome.jpg
+          0.3 MB  A  artifacts/s2726/native/e6-glow-mesa/terminal-mobile-chrome.jpg
+          0.2 MB  A  artifacts/s2726/native/e4-long-road/terminal-mobile-chrome.jpg
+          0.2 MB  A  artifacts/s2726/native/e5-deepwater-claim/terminal-mobile-chrome.jpg
+      … and 67 more growing path(s)
+  tree     : 9313.0 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 6.2 MB added, inside the 40.0 MB ceiling.

@@ -49,3 +49,9 @@ LB-01 is whole/current, **35/35 days through September 27**, outside the public 
 4. Next private coverage duty after 02:10 UTC; news publication stays owner-only.
 
 Final ledger and checkpoint receipts are appended after verification. The eventual lock-clearing commit is the final write to main; only backup pushes and read-only checks follow it.
+
+## Final verification and handoff
+
+Checkpoint **28742c14f1a0452a216c64ff94c074dbf472e80c** records the gate-side hold, review and evidence. Final ledger **PASS rc 0, 1263/1263, zero fail/skip; kit 83/83**, **182.0 seconds**, Node 26.4.0. Full receipt `ledger-final.txt`; `ledger-result.json` and `ledger-summary.json` record the exit. Checkpoint adds **6.2 MB**, below the 40 MB ceiling. Bounded status audit is clean; predecessor and three-item desk tail are verified byte-identical. Final candidate status is clean after moving its retained native output outside the arena. Project fact and session digest are recorded in the vault (`vault-notes.json`).
+
+Lock clearance **2026-09-28T01:35Z** is this fire's last write to main. Main and `save/sol-play-proofs-holds-1-s2726` are pushed next; their remote identities will be verified read-only. The launcher keeps tasks/.fire.lock until exit; only the owned external drain directory is archived after the push. No full-Node, source-merge or deployment claim.

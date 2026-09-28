@@ -1,0 +1,31 @@
+
+===== final ledger — rc=0 182.0s =====
+  ok: bash -n fire-runner.sh
+  ok: bash -n health-watch.sh
+  ok: bash -n lane-runner.sh
+== 9. fire-runner --dry-run: exit 0, plans only, no side effects ==
+  ok: fire-runner --dry-run exit 0
+  ok: fire-runner prints DRY-RUN
+  ok: fire-runner reads model from config
+  ok: fire-runner sees protocol file
+  ok: no lock taken
+  ok: no log written
+== 10. lane-runner --dry-run: exit 0, flags missing worktrees, no side effects ==
+  ok: lane-runner --dry-run exit 0
+  ok: lane-runner prints DRY-RUN
+  ok: missing worktree flagged for lane-a
+  ok: main workdir resolves to root
+  ok: dry-run left the queue untouched
+  ok: no runner lock taken
+== 11. idempotency: re-run refuses loudly, overwrites nothing ==
+  ok: re-run exited nonzero
+  ok: refusal is loud (REFUSED)
+  ok: existing files untouched
+
+RESULT: 83 passed, 0 failed
+/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/runner-processes.d7ZLkY/stop-rejected-runner.sh: line 1: 40115 Killed: 9               IGNORE_TERM=1 bash "$isolated/lane-runner-v3.sh"
+
+
+SUMMARY {"final ledger":0}
+OVERALL rc=0
+transcript -> artifacts/s2726/ledger-final.txt
