@@ -1,0 +1,151 @@
+
+/Users/robin/.goldrush/land/rgw1-gates.txt
+branch art/portraits-e5-e10-generated tip a9fca769e 2026-09-28 10:37Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/rgw1.json
+scratch store at the store's main 5793a96
+chain base cabc68d90
+merged 3717fb210
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 149 ℹ fail 0 
+ledger battery start 10:39Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+e2e start 10:41Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   24 passed (1.8m)  10:43Z
+battery start 10:43Z
+battery: rc=0 ℹ tests 1040 ℹ pass 1035 ℹ fail 0 ℹ skipped 5 ℹ tests 87 ℹ pass 87 ℹ fail 0 ℹ skipped 0  11:02Z
+dirt after battery: 0
+rgw1-PREP-DONE
+verdict: clean
+hash at pin time: 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d
+review: reviews/run-guards-node-watchdog-1.md
+bookkeeping: leaf merged, row, STATUS phrase (3717fb210)
+STATUS.md: theirs (main)
+tasks/BACKLOG.md: union
+main now d15390b49
+error: failed to push some refs to 'github.com:Agent-Town/GoldRush.git'
+post-ff: law rc=0 | desk ℹ pass 57 ℹ fail 0 
+no deploy (config)
+
+
+/Users/robin/.goldrush/land/rgw1-run.out
+held 2026-09-28T10:37Z (unnamed); touch loop pid 36767
+fire hold on 10:37Z; landing rgw1
+land-queue: admitted at load { 34.46 36.12 44.65 } 10:37Z
+release requested; tasks/.fire.lock gone
+fire hold released at the verdict (verdict: clean) 11:02Z
+
+
+/Users/robin/.goldrush/land/rgw1-battery-main.log
+
+
+/Users/robin/.goldrush/land/tdi1-gates.txt
+branch sol/open-findings-astra tip 5670f2134 2026-09-28 10:05Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/tdi1.json
+scratch store at the store's main 5793a96
+chain base a825b1486
+merged f6b61e4c5
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1128 files, 97727876 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34350679 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=1 
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+ledger battery start 10:07Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 10:13Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/e7-playbook-surface.spec.ts e2e/e7-tape-toggle-phone-hit-target.spec.ts
+e2e: rc=0   30 passed (5.1m)  10:18Z
+battery start 10:18Z
+battery: rc=1 ℹ tests 4 ℹ pass 3 ℹ fail 1 ℹ skipped 0 ℹ tests 5 ℹ pass 4 ℹ fail 1 ℹ skipped 0 ℹ tests 1040 ℹ pass 1033 ℹ fail 2 ℹ skipped 5  10:36Z
+✖ rotation registry stays outside the engine identity corpus (415.401291ms)
+✖ rotation registry stays outside the engine identity corpus (71.675459ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (542.597292ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (73.534625ms)
+dirt after battery: 0
+tdi1-PREP-DONE
+null floors moved
+verdict — needs hands
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (306.9s). — re-run 10:59Z in the chain worktree under the drain lock after the first run's vite transport disconnect (crash, not a moved floor)
+verdict: clean
+
+
+/Users/robin/.goldrush/land/tdi1-run.out
+held 2026-09-28T10:05Z (unnamed); touch loop pid 96993
+fire hold on 10:05Z; landing tdi1
+land-queue: admitted at load { 29.81 79.52 74.68 } 10:05Z
+release requested; tasks/.fire.lock gone
+fire hold released at the verdict () 10:36Z
+landing wrapper exited rc=1 10:36Z
+
+
+/Users/robin/.goldrush/land/amt1-gates.attempt4.txt
+branch sol/wave-lane-b tip a65a958fd 2026-09-28 09:12Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/amt1.json
+scratch store at the store's main 5793a96
+chain base 82d8335d9
+merged db8d2e2e7
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: e7d3073d0d8619912cbdc5d8c3b3e9a08f0d51fa6d36ee2f6b8113c0955cdb74 (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1128 files, 97730201 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34352905 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (396.7s).
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+ledger battery start 09:21Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.5m) 
+e2e start 09:27Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/audio-music-toggle.spec.ts e2e/050-audio-mix-and-access.spec.ts e2e/051-audio-governor.spec.ts e2e/mu-02-music.spec.ts e2e/music-survives-pause.spec.ts e2e/first-town-audio-deferred.spec.ts
+e2e: rc=0   64 passed (4.4m)  09:32Z
+battery start 09:32Z
+battery: rc=1 ℹ tests 4 ℹ pass 3 ℹ fail 1 ℹ skipped 0 ℹ tests 5 ℹ pass 4 ℹ fail 1 ℹ skipped 0 ℹ tests 1040 ℹ pass 1032 ℹ fail 3 ℹ skipped 5  09:51Z
+✖ current census pins persistent union, entry coverage and unchanged desktop boxes (3.612208ms)
+✖ rotation registry stays outside the engine identity corpus (589.453416ms)
+✖ rotation registry stays outside the engine identity corpus (73.240417ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (274.320667ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (62.553875ms)
+dirt after battery: 0
+amt1-PREP-DONE
+battery reds: ✖ current census pins persistent union, entry coverage and unchanged desktop boxes (3.612208ms)
+verdict — needs hands
+
+
+/Users/robin/.goldrush/land/amt1-run.attempt4.out
+held 2026-09-28T09:12Z (unnamed); touch loop pid 71497
+fire hold on 09:12Z; landing amt1
+land-queue: admitted at load { 33.07 69.53 81.52 } 09:12Z
+release requested; tasks/.fire.lock gone
+fire hold released at the verdict () 09:51Z
+landing wrapper exited rc=1 09:51Z
+
+/Users/robin/.goldrush/land.lock/holder
+36774 2026-09-28T10:37Z /bin/bash scripts/attended/land.sh scripts/attended/landings/rgw1.json
+
+LEAF {"id":"e7-tape-drawer-inheritance-1","title":"A profile that reached the Signal Era keeps its Tape Reel on earlier maps again: the mount reads the campaign's epoch as well as the previewed map's (F-SPH2-2, the unrecorded main red in e7-playbook-surface's inheritance test since 7c2744e5a)","status":"queued","taskFile":"e7-tape-drawer-inheritance-1.md","lane":"lane-a (Astra, gpt-6-astra, the ChatGPT subscription); the queue copy is HELD until e7-tape-toggle-phone-hit-target-1 has landed on main","authoredAt":"2026-09-28","authoredBy":"attended (Fable), from the sph2 drain's e2e red and the lane-a audit's control, 2026-09-28","queuedAt":"2026-09-28"}
+LEAF {"id":"audio-music-toggle-1","title":"One tap turns the music off everywhere a player hears it: a fourth per-profile key, a 44 px toggle in the run HUD, the town bar, the start menu and the first-boot card, music-off skips the fetch; no new key (owner Q1); the review's pause-panel measurement","status":"queued","taskFile":"audio-music-toggle-1.md","lane":"lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md rank 1; owner 2026-09-28 'users asked about how to disable the music quickly')","authoredAt":"2026-09-28","authoredBy":"attended (Fable), from the Opus 5.5 audio review, 2026-09-28","queuedAt":"2026-09-28"}
+LEAF {"id":"audio-harshness-1","title":"The sound stops being spiky: one-shots normalized to the LEDGER's -14 LUFS, the manifest re-balanced by simulation, a high-shelf and distance attenuation for building shots, ramped gains, faded and seam-free (crossfaded) music loops, before/after renders for the owner's listen; no limiter (none needed), no music content change (owner Q2/Q3)","status":"queued","taskFile":"audio-harshness-1.md","lane":"lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md ranks 2 to 4); the queue copy is HELD until audio-music-toggle-1 has landed on main","authoredAt":"2026-09-28","authoredBy":"attended (Fable), from the Opus 5.5 audio review, 2026-09-28","queuedAt":"2026-09-28"}
+LEAF {"id":"run-guards-node-watchdog-1","title":"F-2737-1: let the full Node guard battery complete within its measured outer budget; preserve the test and progress bounds","status":"merged","taskFile":"run-guards-node-watchdog-1.md","lane":"lane-d (Astra, gpt-6-astra, the ChatGPT subscription; adapted from the s2737 fire's scratch master by the attended session 2026-09-28; CODEX-WALL still forbids FIRE dispatch, this copy was dispatched attended)","authoredAt":"2026-09-28","authoredBy":"s2737 fire","spec":"tasks/run-guards-node-watchdog-1.md","note":"AUTHORED ONLY, no queue copy or dispatch. Source policy 900 s verified; healthy full main receipt 2566.773 s at s2724. Audio integration remains held.","queuedAt":"2026-09-28","mergeHash":"3717fb210388131df019a5f4e2005b10afcc316c","mergedAt":"2026-09-28","review":"reviews/run-guards-node-watchdog-1.md","drainedBy":"attended 2026-09-28 (scripts/attended/land-held.sh rgw1; Astra on lane-d, the ChatGPT subscription)"}
+3717fb210 ancestor main rc=0
+f6b61e4c5 ancestor main rc=1
+97a6a6493 ancestor main rc=1
+sol/open-findings-astra main..branch 5670f2134 fix: retain compact passing Tape Reel inheritance evidence
+fdfef8530 fix: inherit the Tape Reel on contract boots while isolating epoch previews
+7eda17dd7 fix: record e7-tape-drawer-inheritance-1 evidence and acceptance blocker
+0d7949951 fix: inherit the Tape Reel from campaign progress
+
+sol/wave-lane-b main..branch 425f29fe2 test: re-record the phone HUD entry census on the merged tree (main's UI sources moved its hash; boxes and coverage unchanged)
+f12318fe1 merge: main into sol/wave-lane-b before the amt1 landing — the phone HUD census evidence stays the lane's (it matches the lane's UI), the regenerated build-menu screenshots take main's (F-1266-1 churn)
+ca7508ab3 runner(lane-b): audio-music-toggle-1.md
+97a6a6493 feat: preserve phone HUD geometry for music toggle
+a65a958fd test: take main's regenerated evidence for 3 conflicting artifact path(s) (F-1266-1 churn, never byte-gated) so the amt1 landing merges cleanly
+f2cdc6533 runner(lane-b): audio-music-toggle-1.md
+bdd70d410 feat: complete per-profile music toggle persistence
+88542b748 runner(lane-b): audio-music-toggle-1.md
+a029c8f8e feat: add one-tap music controls pending profile registry approval
+
+sol/map-art-campaign-2 main..branch 
+art/portraits-e5-e10-generated main..branch 
