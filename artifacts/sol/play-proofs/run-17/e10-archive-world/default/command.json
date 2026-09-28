@@ -1,0 +1,21 @@
+{
+  "head": "cdf1d514c7fc50ea4651b90b7eeaeabad5fdfe55",
+  "driverSha256": "97507ce9718776435357165e0ccf4e5963dc6d9d267ccf8c2bcce78f988fe2f8",
+  "argv": [
+    "npx",
+    "playwright",
+    "test",
+    "e2e/native-proofs/e10-archive-world.spec.ts",
+    "--project=desktop-chrome",
+    "--project=mobile-chrome",
+    "--workers=1",
+    "--reporter=line",
+    "--output=/Users/robin/.goldrush/play-proofs/run-17/default/e10-archive-world/results"
+  ],
+  "env": {
+    "GR_NATIVE_PROOF": "1",
+    "GR_NATIVE_RUN": "17/default",
+    "GR_CAPTURE_EXTERNAL_SERVER": "1",
+    "GR_CAPTURE_BASE_URL": "http://127.0.0.1:5303"
+  }
+}

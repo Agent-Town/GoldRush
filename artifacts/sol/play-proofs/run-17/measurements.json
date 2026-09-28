@@ -615,5 +615,485 @@
     "pageErrors": 0,
     "row": "artifacts/sol/play-proofs/run-17/e7-relay-valley/restore-ground/row-desktop-chrome.json",
     "raw": "/Users/robin/.goldrush/play-proofs/run-17/restore-ground/e7-relay-valley/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e10-archive-world",
+    "strategy": "default",
+    "project": "desktop-chrome",
+    "wave": 17,
+    "sim": 525.5999999999805,
+    "hp": 0,
+    "gold": 25,
+    "repairs": 0,
+    "worksStanding": 4,
+    "worksTotal": 4,
+    "objectiveMet": false,
+    "air": null,
+    "relay": null,
+    "archive": {
+      "restoredWingIds": [],
+      "restoredThisRun": [],
+      "holdingWingId": null,
+      "completedHolds": 0,
+      "objectiveAllowsSecure": false
+    },
+    "vent": null,
+    "squall": {
+      "declared": true,
+      "calmSeconds": 60,
+      "telegraphSeconds": 8,
+      "squallSeconds": 25,
+      "recoverSeconds": 8,
+      "cycleSeconds": 101,
+      "phase": "calm",
+      "phaseProgress": 0.3433333333330078,
+      "cycle": 5,
+      "tick": 3942,
+      "elapsedSeconds": 525.6,
+      "secondsToNextPhase": 39.4,
+      "secondsToNextSquall": 47.4,
+      "squallsStarted": 5,
+      "squallsCompleted": 5,
+      "motePressureMultiplier": 2,
+      "blowing": false,
+      "transitions": [
+        {
+          "from": null,
+          "to": "calm",
+          "tick": 0,
+          "atSeconds": 0,
+          "cycle": 0
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 451,
+          "atSeconds": 60.133,
+          "cycle": 0
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 510,
+          "atSeconds": 68,
+          "cycle": 0
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 698,
+          "atSeconds": 93.067,
+          "cycle": 0
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 758,
+          "atSeconds": 101.067,
+          "cycle": 1
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1208,
+          "atSeconds": 161.067,
+          "cycle": 1
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 1268,
+          "atSeconds": 169.067,
+          "cycle": 1
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 1456,
+          "atSeconds": 194.133,
+          "cycle": 1
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 1516,
+          "atSeconds": 202.133,
+          "cycle": 2
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1966,
+          "atSeconds": 262.133,
+          "cycle": 2
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2026,
+          "atSeconds": 270.133,
+          "cycle": 2
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2213,
+          "atSeconds": 295.067,
+          "cycle": 2
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 2273,
+          "atSeconds": 303.067,
+          "cycle": 3
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 2723,
+          "atSeconds": 363.067,
+          "cycle": 3
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2783,
+          "atSeconds": 371.067,
+          "cycle": 3
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2971,
+          "atSeconds": 396.133,
+          "cycle": 3
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 3031,
+          "atSeconds": 404.133,
+          "cycle": 4
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 3481,
+          "atSeconds": 464.133,
+          "cycle": 4
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 3541,
+          "atSeconds": 472.133,
+          "cycle": 4
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 3728,
+          "atSeconds": 497.067,
+          "cycle": 4
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 3788,
+          "atSeconds": 505.067,
+          "cycle": 5
+        }
+      ]
+    },
+    "hero": {
+      "x": -33.155660619921065,
+      "y": 0.6200000023841858,
+      "z": 0.427813988385326
+    },
+    "cells": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e10-archive-world secureWave=12"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 17 / 525.6s sim, 767 kills, 25 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "row": "artifacts/sol/play-proofs/run-17/e10-archive-world/default/row-desktop-chrome.json",
+    "raw": "/Users/robin/.goldrush/play-proofs/run-17/default/e10-archive-world/row-desktop-chrome.json"
+  },
+  {
+    "contract": "e10-archive-world",
+    "strategy": "default",
+    "project": "mobile-chrome",
+    "wave": 20,
+    "sim": 608.6666666666424,
+    "hp": 0,
+    "gold": 25,
+    "repairs": 0,
+    "worksStanding": 4,
+    "worksTotal": 4,
+    "objectiveMet": false,
+    "air": null,
+    "relay": null,
+    "archive": {
+      "restoredWingIds": [],
+      "restoredThisRun": [],
+      "holdingWingId": null,
+      "completedHolds": 0,
+      "objectiveAllowsSecure": false
+    },
+    "vent": null,
+    "squall": {
+      "declared": true,
+      "calmSeconds": 60,
+      "telegraphSeconds": 8,
+      "squallSeconds": 25,
+      "recoverSeconds": 8,
+      "cycleSeconds": 101,
+      "phase": "calm",
+      "phaseProgress": 0.04444444444404023,
+      "cycle": 6,
+      "tick": 4565,
+      "elapsedSeconds": 608.667,
+      "secondsToNextPhase": 57.333,
+      "secondsToNextSquall": 65.333,
+      "squallsStarted": 6,
+      "squallsCompleted": 6,
+      "motePressureMultiplier": 2,
+      "blowing": false,
+      "transitions": [
+        {
+          "from": null,
+          "to": "calm",
+          "tick": 0,
+          "atSeconds": 0,
+          "cycle": 0
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 451,
+          "atSeconds": 60.133,
+          "cycle": 0
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 510,
+          "atSeconds": 68,
+          "cycle": 0
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 698,
+          "atSeconds": 93.067,
+          "cycle": 0
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 758,
+          "atSeconds": 101.067,
+          "cycle": 1
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1208,
+          "atSeconds": 161.067,
+          "cycle": 1
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 1268,
+          "atSeconds": 169.067,
+          "cycle": 1
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 1456,
+          "atSeconds": 194.133,
+          "cycle": 1
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 1516,
+          "atSeconds": 202.133,
+          "cycle": 2
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 1966,
+          "atSeconds": 262.133,
+          "cycle": 2
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2026,
+          "atSeconds": 270.133,
+          "cycle": 2
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2213,
+          "atSeconds": 295.067,
+          "cycle": 2
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 2273,
+          "atSeconds": 303.067,
+          "cycle": 3
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 2723,
+          "atSeconds": 363.067,
+          "cycle": 3
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 2783,
+          "atSeconds": 371.067,
+          "cycle": 3
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 2971,
+          "atSeconds": 396.133,
+          "cycle": 3
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 3031,
+          "atSeconds": 404.133,
+          "cycle": 4
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 3481,
+          "atSeconds": 464.133,
+          "cycle": 4
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 3541,
+          "atSeconds": 472.133,
+          "cycle": 4
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 3728,
+          "atSeconds": 497.067,
+          "cycle": 4
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 3788,
+          "atSeconds": 505.067,
+          "cycle": 5
+        },
+        {
+          "from": "calm",
+          "to": "telegraph",
+          "tick": 4238,
+          "atSeconds": 565.067,
+          "cycle": 5
+        },
+        {
+          "from": "telegraph",
+          "to": "squall",
+          "tick": 4298,
+          "atSeconds": 573.067,
+          "cycle": 5
+        },
+        {
+          "from": "squall",
+          "to": "recover",
+          "tick": 4486,
+          "atSeconds": 598.133,
+          "cycle": 5
+        },
+        {
+          "from": "recover",
+          "to": "calm",
+          "tick": 4546,
+          "atSeconds": 606.133,
+          "cycle": 6
+        }
+      ]
+    },
+    "hero": {
+      "x": -24.87066854481798,
+      "y": 0.6200000023841858,
+      "z": -0.5529373609171759
+    },
+    "cells": {
+      "boots": {
+        "ok": true,
+        "detail": "activeId=e10-archive-world secureWave=12"
+      },
+      "secures": {
+        "ok": false,
+        "detail": "runState=dead at wave 20 / 608.7s sim, 944 kills, 25 gold"
+      },
+      "banks": {
+        "ok": false,
+        "detail": "skipped: never secured"
+      },
+      "board": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "reload": {
+        "ok": false,
+        "detail": "skipped: never banked"
+      },
+      "clean": {
+        "ok": true,
+        "detail": "0 console, 0 page"
+      }
+    },
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "row": "artifacts/sol/play-proofs/run-17/e10-archive-world/default/row-mobile-chrome.json",
+    "raw": "/Users/robin/.goldrush/play-proofs/run-17/default/e10-archive-world/row-mobile-chrome.json"
   }
 ]
