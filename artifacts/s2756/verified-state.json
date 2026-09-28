@@ -1,0 +1,57 @@
+{
+  "utc": "2026-09-28T18:03Z",
+  "runner": {
+    "rc": 0,
+    "output": "PID  PPID TTY      STAT STARTED\n25494     1 ??       SN   Sun Sep 20 13:55:15 2026"
+  },
+  "origin": {
+    "rc": 0,
+    "output": "23f27b9407c0e192552e348d1dfe8597e18e6669\trefs/heads/candidate/main-repair-2026-09-28b\n0979de76328c5a225f543d620f47c66a9f5c4382\trefs/heads/main"
+  },
+  "archive": {
+    "rc": 0,
+    "output": "53d87470fb2670626fb4605d4dc0eb5bffd899fb\trefs/heads/fire-memory\n409ffd397abde6b0d465fb8a79be145112f9e9f6\trefs/heads/ledger-backups"
+  },
+  "coverage": {
+    "rc": 0,
+    "output": "LEDGER MIRROR FRESHNESS — LB-01, advisory\n  destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)\n\n  corpus                  : read (36 entries, 36 dated)\n  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus\n  newest                  : ledger-2026-09-28.db  (yesterday)\n  span                    : 2026-08-24 -> 2026-09-28  (36/36 day(s) present, left edge from the anchor)\n\n  ✅ WHOLE AND CURRENT — every calendar day from the DECLARED first coverage day\n     (2026-08-24, anchored outside the corpus) to the newest mirror is present,\n     and the newest is not behind. Nothing owed."
+  },
+  "statusArchive": {
+    "rc": 0,
+    "output": "board corpus     : STATUS.md + 2 archive month(s): archive/status/2026-08.md, archive/status/2026-07.md\nCLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (5 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 19 same-session rewrites excluded, 0 attended self-updates superseded, of 35 replacements across 40 STATUS.md commits"
+  },
+  "latestRun": {
+    "n": "20260928-214502-lane-b-audio-integration-first-boot-spec-1.md.log",
+    "mtime": 1790607315320.3064
+  },
+  "failedSincePredecessor": [],
+  "queue": {
+    "art": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "main": []
+  },
+  "running": [],
+  "pendingOrders": [],
+  "traceBytes": 113467543,
+  "traceIntroducingCommitOnMain": true,
+  "acceptedAudioDrainOnMain": true,
+  "runtime": "v26.4.0",
+  "predecessorExactlyArchived": true,
+  "deskExactlyPreserved": true,
+  "rotations": [
+    {
+      "id": "r2026w39",
+      "opensAt": "2026-09-21T00:00:00.000Z",
+      "closesAt": "2026-09-28T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w40",
+      "opensAt": "2026-09-28T00:00:00.000Z",
+      "closesAt": "2026-10-05T00:00:00.000Z"
+    }
+  ],
+  "ticker": true
+}
