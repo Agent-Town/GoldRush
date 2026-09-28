@@ -21,14 +21,17 @@ WHY no product drain: the three remaining done-moves are attempts of the attende
 ## Remaining list in order
 
 1. Owner decides F-2742-1: attended archive-first clean re-land of the unpublished history, with preservation, gates and accepted origin backup. Current origin remains behind; no unchanged push retry.
-2. Attended tdi1 owner completes final main verification and its final receipt.
-3. Attended amt1 owner integrates the third-attempt toggle, then the already-owned audio-harshness sequence.
-4. September 29 private coverage after 02:10 UTC; September 30 week-41 mint. The three inherited owner decisions remain alongside the new backup decision.
+2. Attended amt1 owner integrates the third-attempt toggle, then the already-owned audio-harshness sequence.
+3. September 29 private coverage after 02:10 UTC; September 30 week-41 mint. The three inherited owner decisions remain alongside the new backup decision.
 
-Closing ledger receipt follows before the final lock-clearing commit. That commit is this fire's last write to main, followed by origin backup and read-only verification.
+Closing ledger receipt follows before the final lock-clearing commit. That commit is this fire's last write to main. Origin backup remains rejected as F-2742-1; only read-only verification follows.
 
 ## Backup rejection and first ledger receipt
 
 The first complete literal ledger run passed **1263/1263, zero failures/skips, kit 83/83, npm rc 0**, **356.932 s**, Node v26.4.0, checkpoint caa6786b3. The subsequently verified origin rejection required a new desk row; a second complete ledger run follows those changes. Both receipts are retained.
 
 F-2742-1 root cause: evidence commit 7eda17dd7 added the 113,467,543-byte before-desktop trace; 5670f2134 removed it, but the merged ancestry retains the blob. The current trace path is absent and the offloaded local evidence directory exists. An ordinary append-only commit cannot cure this; source and history stay intact pending the attended repair decision. This is a backup blocker, not a claim of a broken deployed game.
+
+## Final handoff
+
+At 2026-09-28T12:03Z, the final complete literal npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **362.156 s**, Node v26.4.0, checkpoint 8b512a188. The new four-item desk was included. A final read now verifies **LAND-tdi1-DONE**: inheritance main battery **1035 pass / 5 skips / zero failures, plus 87/87**, and the attended holder has exited. This supersedes the earlier pending tdi1 snapshots. Origin remains **0979de763**, rejected by the 113,467,543-byte historical trace (F-2742-1); no unchanged retry. Local archive/s2742-origin-rejected-lineage at 8b512a188 preserves the rejected ancestry, without claiming offsite backup. Next: owner repair decision, attended audio integration and harshness, then the scheduled private coverage and rotation duties. Exact predecessor and three inherited desk items verified; the fourth item is F-2742-1. Commits before clearance: dc0258e95, caa6786b3, 8b512a188. No fire product drain, source edit or deploy. This clearing commit is the final main write; only read-only verification follows.
