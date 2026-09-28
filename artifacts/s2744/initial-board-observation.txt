@@ -1,0 +1,8 @@
+Successful direct commands observed by s2744 at 2026-09-28T13:09Z (full tool output in launcher log logs/fire-20260928.log):
+node scripts/lane-usable.mjs --all: rc 0; lane-a/c/d ahead 0; lane-b ahead 5, behind 6, 71 changed paths, tracked dirt 0; 61 off-convention worktrees not reported, attended-owned.
+health-watch.sh status through node: rc 0; landing/game/api 200/200/200; runner alive; queues 0; in-flight 0; pending orders 0; staged art 0.
+node scripts/dry-board-probe.mjs: rc 0; 1473 done-moves, 88 subjects, 1 real (audio-harshness-1), zero unknown, 13 closed/blocked, 74 merged ghosts. NOT DRY.
+Strict drain-block-check on tasks/done/20260928-193932-audio-harshness-1.md: CLEAR, status queued. Ownership remains attended under handover 13z-100 and scripts/attended/landings/ahr1.json.
+Latest runner log tasks/runs/20260928-193932-lane-b-audio-harshness-1.md.log ends READY-FOR-GATES, tokens 168590; no interruption or credit wall. Latest failed move mtime 2026-09-20T06:53:51Z.
+Independent runner PID 25494 PPID 1, alive. Launcher ancestry 69090 (Codex) -> 69088 (node) -> 69039 (bash, PPID 1), all started at 13:08:40Z matching tasks/.fire.lock. No competing fire lock taken.
+Skillmd guard rc 0, 19/19; status archive audit rc 0, zero permanently absent or abridged handoffs over last 40 STATUS commits.
