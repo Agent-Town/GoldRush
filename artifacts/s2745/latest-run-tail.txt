@@ -1,0 +1,232 @@
+20260928-193932-lane-b-audio-harshness-1.md.log
+surements-after.json
+ create mode 100644 artifacts/audio-harshness-1/measurements-before.json
+ create mode 100644 artifacts/audio-harshness-1/normalization-replay.json
+ create mode 100644 artifacts/audio-harshness-1/report.md
+ create mode 100644 artifacts/audio-harshness-1/runtime-checks.json
+ create mode 100644 artifacts/audio-harshness-1/simulate.py
+ create mode 100644 artifacts/audio-harshness-1/simulation-after-max.json
+ create mode 100644 artifacts/audio-harshness-1/simulation-after.json
+ create mode 100644 artifacts/audio-harshness-1/simulation-before-max.json
+ create mode 100644 artifacts/audio-harshness-1/simulation-before.json
+ create mode 100644 artifacts/audio-harshness-1/tsc.log
+ create mode 100644 artifacts/audio-harshness-1/verification.json
+{
+ "mode": "landing",
+ "base": "80ba31fd110e504e4e06e87c1aa41659329c5e6a",
+ "tip": "HEAD",
+ "files": 26,
+ "added": 968650,
+ "removed": 0,
+ "net": 968650,
+ "growth": [
+  {
+   "path": "artifacts/audio-harshness-1/listen-before.ogg",
+   "bytes": 377450,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/listen-after.ogg",
+   "bytes": 355155,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/measurements-after.json",
+   "bytes": 44280,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/measurements-before.json",
+   "bytes": 44263,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/normalization.json",
+   "bytes": 36746,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/audio-e2e.log",
+   "bytes": 12689,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/simulate.py",
+   "bytes": 12393,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/report.md",
+   "bytes": 10580,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/adjacent-error-context.md",
+   "bytes": 10565,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/normalization-replay.json",
+   "bytes": 7571,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/measure.py",
+   "bytes": 6411,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/simulation-before-max.json",
+   "bytes": 6253,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/simulation-after-max.json",
+   "bytes": 6251,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/simulation-after.json",
+   "bytes": 6073,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/simulation-before.json",
+   "bytes": 6054,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/control-e2e.log",
+   "bytes": 5916,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/check-audio.mjs",
+   "bytes": 5379,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/before-after.md",
+   "bytes": 3741,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/normalize.py",
+   "bytes": 2661,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/runtime-checks.json",
+   "bytes": 2506,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/check-cues.py",
+   "bytes": 1712,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/build.log",
+   "bytes": 1439,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/cue-levels.json",
+   "bytes": 1402,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/verification.json",
+   "bytes": 1136,
+   "status": "A"
+  },
+  {
+   "path": "artifacts/audio-harshness-1/.gitignore",
+   "bytes": 24,
+   "status": "A"
+  }
+ ],
+ "limit": 25000000,
+ "over": false,
+ "total": {
+  "rev": "HEAD",
+  "bytes": 9383201908,
+  "files": 31317
+ },
+ "baseline": {
+  "perLandingLimitBytes": 40000000,
+  "prefixes": [
+   "artifacts/",
+   "reviews/shots-"
+  ],
+  "totalArtifacts": {
+   "ceilingBytes": null,
+   "bankedBytes": null,
+   "bankedFiles": null,
+   "commit": null,
+   "measuredAt": null,
+   "setBy": "NOT BANKED YET. The attended drain that runs the first offload (task evidence-offload-1) banks it: measure `node scripts/evidence-budget.mjs --total` on the merged tree AFTER the offload commit, then set ceilingBytes to that total plus one quarter of headroom, bankedBytes/bankedFiles to the measurement, commit to the offload commit and measuredAt to that day. Until then the tool reports the total and exits 0, because a budget nobody has set must never refuse a drain.",
+   "measuredBefore": {
+    "bytes": 8657137147,
+    "files": 26345,
+    "commit": "39acd87471960d7489f87dbc58f55b7e35757c69",
+    "measuredAt": "2026-09-25",
+    "note": "The tree the tools were written against, recorded so the first offload's cut is checkable rather than claimed: 8657.1 MB / 26,345 tracked files, of which the derived must-stay set is 1040.9 MB / 5,959 files and the movable remainder 7616.2 MB / 20,386 files."
+   }
+  },
+  "source": "scripts/evidence-budget-baseline.json"
+ }
+}
+
+codex
+The listen files and report are ready. All 41 normalized assets reproduced byte-for-byte, the four loud cues measured about 6 LU quieter, and the two hits are now within 2 LU of the music. I’m finishing the evidence-size check and final commit.
+
+exec
+/bin/zsh -lc "git status --short
+git log -5 --oneline
+rg -n 'Evidence budget' artifacts/audio-harshness-1/report.md
+git diff 80ba31fd110e504e4e06e87c1aa41659329c5e6a HEAD --stat -- src assets/audio/LEDGER.md
+" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b
+ succeeded in 145ms:
+?? logs/guard-stats.jsonl
+26eefc242 fix: record audio-harshness-1 measurements listening clips and gates
+1ae4313cc fix: crossfade alternating music sources over measured tails
+82e38e8b1 fix: ramp audio gains and fade music at scene boundaries
+2d918847d fix: darken SFX and attenuate building shots by distance
+30ade2e31 fix: normalize one-shots and rebalance audio-harshness-1 mix
+49:Commands and full test logs are retained in this directory. `verification.json` holds exit codes and asset/listen byte checks. Evidence budget is recorded below for this complete landing.
+110:## Evidence budget
+112:Evidence budget: **968650 bytes** added under the measured evidence prefixes, below the task’s 25,000,000-byte limit. Measured with `node scripts/evidence-budget.mjs 80ba31fd110e504e4e06e87c1aa41659329c5e6a HEAD --limit 25000000 --json`. The stock script counts `artifacts/` and `reviews/shots-`, not assets; separately, normalized MP3 positive growth is **0 bytes**, net **−2,508 bytes**. Therefore the combined evidence-plus-positive-asset-delta budget is the same number. Scratch files are ignored and excluded.
+ assets/audio/LEDGER.md      |   4 ++
+ src/audio/SoundSystem.ts    | 122 ++++++++++++++++++++++++++++++++++----------
+ src/audio/manifest.ts       |  67 ++++++++++++------------
+ src/systems/CombatSystem.ts |   8 ++-
+ 4 files changed, 139 insertions(+), 62 deletions(-)
+
+codex
+READY-FOR-GATES — [report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/report.md>).
+
+- Early Spark Rig brightness: **68.2% → 28.4%**; SFX above music: **+2.6 → +1.7 LU**.
+- TypeScript/build pass. Audio tests: **48/50**; both failures reproduced on baseline. Six plain boots: zero errors.
+- Evidence: **968,650 bytes**, under 25 MB.
+
+Listen: [before](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/listen-before.ogg>) · [after](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/listen-after.ogg>).
+
+Commits: `30ade2e31`, `2d918847d`, `82e38e8b1`, `1ae4313cc`, `26eefc242`.
+
+Remaining: adjudicate baseline test failures, owner listen, integration gates.
+tokens used
+168,590
+READY-FOR-GATES — [report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/report.md>).
+
+- Early Spark Rig brightness: **68.2% → 28.4%**; SFX above music: **+2.6 → +1.7 LU**.
+- TypeScript/build pass. Audio tests: **48/50**; both failures reproduced on baseline. Six plain boots: zero errors.
+- Evidence: **968,650 bytes**, under 25 MB.
+
+Listen: [before](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/listen-before.ogg>) · [after](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/listen-after.ogg>).
+
+Commits: `30ade2e31`, `2d918847d`, `82e38e8b1`, `1ae4313cc`, `26eefc242`.
+
+Remaining: adjudicate baseline test failures, owner listen, integration gates.
+[lane-runner-v3] withheld factory accounting: logs/guard-stats.jsonl
+[lane-runner-v3] withheld 1 factory-accounting path(s)
