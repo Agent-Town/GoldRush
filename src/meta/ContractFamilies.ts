@@ -1134,6 +1134,18 @@ export function campaignEpochId(storage?: Pick<Storage, 'getItem'>): string {
   return DEFAULT_EPOCH_ID;
 }
 
+/** Contract runs inherit the player's drawer; explicit epoch previews keep their own era. */
+export function tapeReelEpochOrder(): number {
+  const params = readSearchParams();
+  const requestedId = params.get('epoch');
+  const debug = !RELEASE_E1 && (params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase');
+  const preview = replayContractId === null && requestedId && debug && manifestsById.has(requestedId);
+  const order = activeEpoch().order;
+  return !preview && params.has('contract')
+    ? Math.max(order, manifestsById.get(campaignEpochId())!.order)
+    : order;
+}
+
 export function epochIsActive(id: string): boolean {
   const active = manifestsById.get(campaignEpochId());
   const requested = manifestsById.get(id);

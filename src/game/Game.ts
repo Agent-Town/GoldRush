@@ -19,7 +19,7 @@ import {
   activeTileDescriptor,
   contractDescriptorJson, contractHeroMaxHpBonus,
   DEFAULT_EPOCH_ID,
-  epochIsActive,
+  tapeReelEpochOrder,
   listEpochs,
   loadContract,
   loadEpoch,
@@ -1923,7 +1923,7 @@ export class Game {
     this.partyOverview = new PartyOverview(this.getElement('#hud'), (playerId) => this.glanceAtRider(playerId));
     this.getElement('#hud').append(this.assetLoadingCue);
     this.e7SignalSystem.mount(this.getElement('#hud'));
-    if (this.activeEpoch.order >= 7 || epochIsActive('epoch-7-signal')) {
+    if (tapeReelEpochOrder() >= 7) {
       this.playbookSurface = new PlaybookSurface(this.getElement('#hud'), {
         capacity: Balance.e7Playbook.shelfCapacity,
         list: () => listPlaybooks(localStorage),
