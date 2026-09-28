@@ -121,6 +121,8 @@ test('plain E7 board launches expose the Tape Reel hit target', async ({ page, i
       samples.push(row);
       expect.soft(row.points[0].reachesToggle, contract).toBe(true);
     }
+    await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');
+    await expect(page.getByTestId('playbook-toggle')).toBeVisible();
   } finally {
     await writeFile(path.join(root, `audit-${info.project.name}.json`), JSON.stringify({ project: info.project.name, samples, errors }, null, 2) + '\n');
     expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });

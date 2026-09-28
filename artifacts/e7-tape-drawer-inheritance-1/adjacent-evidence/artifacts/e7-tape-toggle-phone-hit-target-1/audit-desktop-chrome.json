@@ -1,0 +1,465 @@
+{
+  "project": "desktop-chrome",
+  "samples": [
+    {
+      "moment": "HUD mounted",
+      "url": "http://127.0.0.1:5188/?contract=e7-echo-canyon",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "contract": "e7-echo-canyon",
+      "wave": 0,
+      "sim": 1.5000000000000013,
+      "overlayOpen": false,
+      "box": {
+        "x": 1083.40625,
+        "y": 213.484375,
+        "width": 166.59375,
+        "height": 44,
+        "top": 213.484375,
+        "right": 1250,
+        "bottom": 257.484375,
+        "left": 1083.40625
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "hud--announcement-visible",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 1166.703125,
+          "y": 235.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-left",
+          "x": 1085.40625,
+          "y": 215.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-right",
+          "x": 1248,
+          "y": 215.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-left",
+          "x": 1085.40625,
+          "y": 255.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-right",
+          "x": 1248,
+          "y": 255.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        }
+      ]
+    },
+    {
+      "moment": "wave 1",
+      "url": "http://127.0.0.1:5188/?contract=e7-echo-canyon",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "contract": "e7-echo-canyon",
+      "wave": 1,
+      "sim": 30.633333333334015,
+      "overlayOpen": false,
+      "box": {
+        "x": 1083.40625,
+        "y": 213.484375,
+        "width": 166.59375,
+        "height": 44,
+        "top": 213.484375,
+        "right": 1250,
+        "bottom": 257.484375,
+        "left": 1083.40625
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "hud--announcement-visible",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 1166.703125,
+          "y": 235.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-left",
+          "x": 1085.40625,
+          "y": 215.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-right",
+          "x": 1248,
+          "y": 215.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-left",
+          "x": 1085.40625,
+          "y": 255.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-right",
+          "x": 1248,
+          "y": 255.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        }
+      ]
+    },
+    {
+      "moment": "Patent Office open",
+      "url": "http://127.0.0.1:5188/?contract=e7-echo-canyon",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "contract": "e7-echo-canyon",
+      "wave": 2,
+      "sim": 70.63333333333189,
+      "overlayOpen": true,
+      "box": {
+        "x": 1083.40625,
+        "y": 213.484375,
+        "width": 166.59375,
+        "height": 44,
+        "top": 213.484375,
+        "right": 1250,
+        "bottom": 257.484375,
+        "left": 1083.40625
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 1166.703125,
+          "y": 235.484375,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        },
+        {
+          "name": "top-left",
+          "x": 1085.40625,
+          "y": 215.484375,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        },
+        {
+          "name": "top-right",
+          "x": 1248,
+          "y": 215.484375,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        },
+        {
+          "name": "bottom-left",
+          "x": 1085.40625,
+          "y": 255.484375,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        },
+        {
+          "name": "bottom-right",
+          "x": 1248,
+          "y": 255.484375,
+          "top": {
+            "tag": "SECTION",
+            "id": "",
+            "className": "upgrade-overlay upgrade-overlay--visible",
+            "testId": "upgrade-overlay",
+            "pointerEvents": "auto",
+            "zIndex": "11"
+          },
+          "reachesToggle": false
+        }
+      ]
+    },
+    {
+      "moment": "Patent Office closed",
+      "url": "http://127.0.0.1:5188/?contract=e7-echo-canyon",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "contract": "e7-echo-canyon",
+      "wave": 2,
+      "sim": 70.63333333333189,
+      "overlayOpen": false,
+      "box": {
+        "x": 1083.40625,
+        "y": 213.484375,
+        "width": 166.59375,
+        "height": 44,
+        "top": 213.484375,
+        "right": 1250,
+        "bottom": 257.484375,
+        "left": 1083.40625
+      },
+      "zIndex": "auto",
+      "pointerEvents": "auto",
+      "ancestors": [
+        {
+          "tag": "SECTION",
+          "id": "",
+          "className": "hud-panel hud-panel--weapon",
+          "testId": "hud-weapon",
+          "pointerEvents": "none",
+          "zIndex": "auto"
+        },
+        {
+          "tag": "SECTION",
+          "id": "hud",
+          "className": "",
+          "testId": null,
+          "pointerEvents": "none",
+          "zIndex": "5"
+        }
+      ],
+      "points": [
+        {
+          "name": "centre",
+          "x": 1166.703125,
+          "y": 235.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-left",
+          "x": 1085.40625,
+          "y": 215.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "top-right",
+          "x": 1248,
+          "y": 215.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-left",
+          "x": 1085.40625,
+          "y": 255.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        },
+        {
+          "name": "bottom-right",
+          "x": 1248,
+          "y": 255.484375,
+          "top": {
+            "tag": "BUTTON",
+            "id": "",
+            "className": "playbook-surface__toggle",
+            "testId": "playbook-toggle",
+            "pointerEvents": "auto",
+            "zIndex": "auto"
+          },
+          "reachesToggle": true
+        }
+      ]
+    }
+  ],
+  "errors": {
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+}
