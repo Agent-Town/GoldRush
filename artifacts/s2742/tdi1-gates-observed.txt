@@ -1,0 +1,42 @@
+branch sol/open-findings-astra tip 5670f2134 2026-09-28 10:05Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/tdi1.json
+scratch store at the store's main 5793a96
+chain base a825b1486
+merged f6b61e4c5
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)
+tsc/build/e1: 0 / 0 / 0
+build:release (strict, the assertion): rc=0 [release-build] E1-only: 1128 files, 97727876 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)
+first-town payload: 34350679 bytes
+halo: rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu
+null floors: rc=1 
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 137 ℹ fail 0 
+ledger battery start 10:07Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+release suite (own config): rc=0   30 passed (2.2m) 
+e2e start 10:13Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts e2e/e7-playbook-surface.spec.ts e2e/e7-tape-toggle-phone-hit-target.spec.ts
+e2e: rc=0   30 passed (5.1m)  10:18Z
+battery start 10:18Z
+battery: rc=1 ℹ tests 4 ℹ pass 3 ℹ fail 1 ℹ skipped 0 ℹ tests 5 ℹ pass 4 ℹ fail 1 ℹ skipped 0 ℹ tests 1040 ℹ pass 1033 ℹ fail 2 ℹ skipped 5  10:36Z
+✖ rotation registry stays outside the engine identity corpus (415.401291ms)
+✖ rotation registry stays outside the engine identity corpus (71.675459ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (542.597292ms)
+✖ the landed registry names the live engine and stays outside its hash corpus (73.534625ms)
+dirt after battery: 0
+tdi1-PREP-DONE
+null floors moved
+verdict — needs hands
+null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (306.9s). — re-run 10:59Z in the chain worktree under the drain lock after the first run's vite transport disconnect (crash, not a moved floor)
+verdict: clean
+RESUME 2026-09-28 11:38Z: chain f6b61e4c5, merge f6b61e4c5, continuing at the pin
+hash at pin time: 2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c
+pin #72 `2f11c1a5`
+era (chain, scratch store): ℹ pass 9 ℹ fail 0 
+review: reviews/e7-tape-drawer-inheritance-1.md
+bookkeeping: leaf merged, row, STATUS phrase (f6b61e4c5)
+STATUS.md: theirs (main)
+tasks/BACKLOG.md: union
+main now 5b868b11f
+error: failed to push some refs to 'github.com:Agent-Town/GoldRush.git'
+post-ff: law rc=0 | desk ℹ pass 57 ℹ fail 0 
+deploy: rc=0 [deploy] DEPLOYED ok https://8836a856.gold-rush-3in.pages.dev [deploy] VERIFIED published 5b868b11 at https://gold-rush-3in.pages.dev [deploy] ASSAYER SYNCED: droplet tree + pin 5b868b11, services restarted [deploy] Outcome: deployed 
