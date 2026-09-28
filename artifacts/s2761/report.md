@@ -20,3 +20,7 @@ WHY no product drain: the prescribed board probe found **0 real drains and 0 unk
 3. September 28 ticker after September 29 06:00 local; September 29 private coverage after 02:10 UTC; week-41 mint September 30.
 
 Closing ledger verification follows before the final lock-clearing commit.
+
+## Closing verification
+
+**READY-FOR-GATES.** At 2026-09-28T19:18Z, the complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **210.108 seconds**, Node v26.4.0, checkpoint ca5b34237. Every chained leg completed. Bounded archive audit: zero permanently absent and zero abridged. Final queues, running tasks and pending orders are empty; all four runner lanes have zero ahead commits. Exact s2760 predecessor and four-item Owner's Desk are preserved byte-for-byte. Commits before clearance: eb58f6731, 386684e90, ca5b34237. No product drain, dispatch, deploy, history repair or unchanged rejected push. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
