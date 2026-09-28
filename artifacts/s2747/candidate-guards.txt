@@ -1,0 +1,12 @@
+run-guards: 64 file(s) changed since 075e97b6c5b9b3a4dc95221dc1b10f94c45a0cc6
+  base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
+  (no path rule matched -- base gate only)
+
+PASS  rc=0  2249s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.336ms
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  2s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+guards: 5/5 passed
+guard-stats: appended 5 record(s) to /Users/robin/.goldrush/s2747/wt-aif1/logs/guard-stats.jsonl

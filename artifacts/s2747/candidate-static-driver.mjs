@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import {runBattery} from "file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gate-battery.mjs";
+const wt="/Users/robin/.goldrush/s2747/wt-aif1",out="/Users/robin/Claude/Projects/Gold Rush/artifacts/s2747";
+const env={PATH:'/opt/homebrew/bin:'+process.env.PATH};
+const normal=runBattery([['policy','node','scripts/drain-block-check.mjs','--strict','audio-integration-first-boot-spec-1.md'],['tsc','npx','tsc','--noEmit'],['build','npm','run','build']],{cwd:wt,env,transcript:out+'/candidate-static.txt',label:'s2747 candidate static'});
+fs.writeFileSync(out+'/candidate-static-result.json',JSON.stringify(normal,null,2));
+if(normal.overall)process.exit(normal.overall);
+const release=runBattery([['E1 build','npm','run','build'],['E1 payload','node','scripts/first-town-payload.mjs'],['evidence budget','node','scripts/evidence-budget.mjs',"075e97b6c5b9b3a4dc95221dc1b10f94c45a0cc6",'HEAD']],{cwd:wt,env:{...env,GR_RELEASE:'e1'},transcript:out+'/candidate-static.txt',label:'s2747 E1 build and evidence'});
+fs.writeFileSync(out+'/candidate-release-result.json',JSON.stringify(release,null,2));
+if(release.overall)process.exit(release.overall);
+const guards=runBattery([['diff selected guards','node','scripts/run-guards.mjs','--changed-since',"075e97b6c5b9b3a4dc95221dc1b10f94c45a0cc6"]],{cwd:wt,env,transcript:out+'/candidate-guards.txt',label:'s2747 diff selected guards'});
+fs.writeFileSync(out+'/candidate-guards-result.json',JSON.stringify(guards,null,2));
+process.exitCode=guards.overall;
