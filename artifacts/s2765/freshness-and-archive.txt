@@ -1,0 +1,15 @@
+LEDGER MIRROR FRESHNESS — LB-01, advisory
+  destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+
+  corpus                  : read (36 entries, 36 dated)
+  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus
+  newest                  : ledger-2026-09-28.db  (yesterday)
+  span                    : 2026-08-24 -> 2026-09-28  (36/36 day(s) present, left edge from the anchor)
+
+  ✅ WHOLE AND CURRENT — every calendar day from the DECLARED first coverage day
+     (2026-08-24, anchored outside the corpus) to the newest mirror is present,
+     and the newest is not behind. Nothing owed.
+board corpus     : STATUS.md + 2 archive month(s): archive/status/2026-08.md, archive/status/2026-07.md
+CLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (6 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 13 same-session rewrites excluded, 0 attended self-updates superseded, of 34 replacements across 40 STATUS.md commits
+
+Exit code: 0
