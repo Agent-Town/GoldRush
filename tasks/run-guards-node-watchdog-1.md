@@ -33,7 +33,7 @@ NO changes to: `scripts/run-node-guards.mjs`, other scripts, `package.json`, dep
 
 - `node --test scripts/run-guards.test.mjs` and the literal diff-selected wrapper above; exit codes, not printed totals.
 - `npx tsc --noEmit`, `npm run build`, `git diff --check`.
-- This is a guard-runner change with no player surface. Browser proof at drain time remains unchanged: `e2e/task-025-bandits-dont-swim.spec.ts`, `e2e/m1-01-death.spec.ts`, `e2e/m2-01-build-menu.spec.ts`, both projects, `--workers=1`, plus plain desktop/390px boots with zero console/page errors. Do not create a browser test for a Node spawn policy.
+- This is a guard-runner change with no player surface. Browser proof at drain time remains unchanged: `e2e/task-025-bandits-dont-swim.spec.ts`, `e2e/m1-01-claim-jumpers-death.spec.ts`, `e2e/m2-01-build-menu.spec.ts`, both projects, `--workers=1`, plus plain desktop/390px boots with zero console/page errors. Do not create a browser test for a Node spawn policy.
 - Every server and browser batch takes the existing drain lock through the attended protocol. Stop only PIDs you started, never `pkill -f`. Commit with `fix:` and path-scoped adds.
 
 End: READY-FOR-GATES + root cause + per-guard budgets, times and exit codes + focused counts + what was adapted + commit hashes + REMAINING LIST IN ORDER.
