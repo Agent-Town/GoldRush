@@ -1,6 +1,10 @@
 # Task run-guards-node-watchdog-1: let the full Node battery finish inside a measured outer budget (LANE-D, Astra, commit prefix "fix:")
 
 CODEX: model=gpt-6-astra
+LANE-SAFETY-OPT-IN: BUILD-ON-PREDECESSOR
+EXPECTED-HOLDS: artifacts/run-guards-node-watchdog-1/report.md
+
+ATTEMPT 2 (2026-09-28T08:52Z): attempt 1 (46,458 tokens, 08:48Z to 08:50Z) stopped at pre-flight because lane-d's `node_modules` is a SYMLINK to the primary checkout's (`/Users/robin/Claude/Projects/Gold Rush/node_modules`), and you rightly refused to run `npm install` through a dependency link that would write outside the lane. EXEMPTION, explicit: that symlink is expected on lane-d and is NOT dirt; do NOT run `npm install` or `npm ci` in this lane at all (the primary's dependencies are the same lockfile; this task edits two scripts and runs node tests, no install is needed); `npx tsc --noEmit` and `npm run build` may read through the link. The lane's ahead commit is your own attempt-1 blocker report (declared above); do not reset the lane, build on it. Everything else in the pre-flight still holds. If anything ELSE in `git status --short` is a modified tracked file you did not make, STOP as before.
 
 **FIRE-AUTHORED s2737, 2026-09-28; assigned 2026-09-28 by the attended session to Astra on lane-d (owner 2026-09-26: tasks run as Codex lane masters for Astra). CODEX-WALL still forbids FIRE dispatch; this copy was dispatched attended.**
 
