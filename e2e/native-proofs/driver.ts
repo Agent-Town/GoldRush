@@ -742,6 +742,78 @@ async function lowOrbitCrossing(page: Page, row: Row, deadline: number, unreacha
 }
 
 // Motor errands use the ordinary confirm key at surveyed stakes and haul destinations.
+async function tapeDemonstration(page: Page, row: Row, contract: ContractManifest, home: Home, deadline: number, unreachable: Set<string>): Promise<void> {
+  const tape = 'Native movement and build';
+  const relay = contract.id === 'e7-relay-rush';
+  const sites = (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront?.sites ?? []))
+    .slice().sort((a, b) => Math.abs((a.minX + a.maxX) / 2 - home.x) - Math.abs((b.minX + b.maxX) / 2 - home.x));
+  const x = relay && sites[0] ? (sites[0].minX + sites[0].maxX) / 2 : home.x;
+  const z = relay && sites[0] ? (sites[0].minZ + sites[0].maxZ) / 2 : home.z - 4;
+  // Gather before recording so the tape contains a short walk and a funded placement.
+  if (contract.id !== 'e7-dead-band') {
+    const cost = (await read(page))?.buildables.find(b => b.id === 'turret')?.cost;
+    if (cost !== undefined) await fund(page, row, cost, Math.min(deadline, Date.now() + 60_000), [], unreachable);
+    await walkTo(page, row, x, z + 4, 1.2);
+  }
+  await takeUpgrades(page, row);
+  await page.getByTestId('playbook-toggle').click();
+  await page.getByTestId('playbook-name').fill(tape);
+  await page.getByTestId('playbook-record').click();
+  const recording = await page.getByTestId('playbook-record').getAttribute('data-recording');
+  if (recording !== 'true') {
+    row.notes.push(`Tape Record refused: ${await page.getByTestId('playbook-message').innerText()}`);
+    await page.getByTestId('playbook-toggle').click();
+    row.notes.push(`Tape latch after refusal: ${JSON.stringify(await page.evaluate(() => ({ latch: window.__THREE_GAME_DIAGNOSTICS__?.playbookUse, arsenal: window.__THREE_GAME_DIAGNOSTICS__?.e7Arsenal })))}`);
+    return;
+  }
+  await steer(page, 1, 0, 120);
+  await build(page, row, 'turret', x, z, Math.min(deadline, Date.now() + 25_000), [], unreachable);
+  await takeUpgrades(page, row);
+  await page.getByTestId('playbook-toggle').click();
+  await page.getByTestId('playbook-record').click();
+  row.notes.push(`Tape saved: ${await page.getByTestId('playbook-message').innerText()}`);
+  await page.getByTestId('playbook-toggle').click();
+  if (relay) {
+    for (const site of sites.slice(1, 3)) {
+      await build(page, row, 'sentry_beacon', (site.minX + site.maxX) / 2, (site.minZ + site.maxZ) / 2,
+        Math.min(deadline, Date.now() + 50_000), [], unreachable);
+      row.notes.push(`relay service ${site.id}: ${JSON.stringify(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront))}`);
+    }
+    // Wait on an authored corridor point; the moving front must reach the player.
+    await walkTo(page, row, home.x, home.z, 1.2);
+  }
+  const recordedWave = (await read(page))?.wave ?? 0;
+  const useDeadline = Math.min(deadline, Date.now() + 40_000);
+  await page.getByTestId('playbook-toggle').click();
+  while (Date.now() < useDeadline) {
+    await takeUpgrades(page, row);
+    const now = await read(page);
+    if (!now || now.runState === 'dead' || now.secured) break;
+    const front = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront);
+    const covered = front?.centerX !== null && front?.centerX !== undefined && Math.abs(now.hero.x - front.centerX) < front.halfWidth - 1;
+    if (relay ? covered : now.wave > recordedWave) {
+      await page.getByTestId(`playbook-replay-${tape}`).click();
+      row.notes.push(`Tape USE wave=${now.wave}, hero=${JSON.stringify(now.hero)}, front=${JSON.stringify(front)}: ${await page.getByTestId('playbook-message').innerText()}`);
+      break;
+    }
+    await page.waitForTimeout(80);
+  }
+  await page.getByTestId('playbook-toggle').click();
+  // Echo fields the mirror at the wave AFTER use. Observe that consumer before stopping.
+  const mirrorDeadline = Math.min(deadline, Date.now() + 15_000);
+  while (!relay && Date.now() < mirrorDeadline) {
+    await takeUpgrades(page, row);
+    const state = await page.evaluate(() => ({ latch: window.__THREE_GAME_DIAGNOSTICS__?.playbookUse, hp: window.__THREE_GAME_DIAGNOSTICS__?.hp }));
+    if (state.latch?.objectiveMet || !state.hp) break;
+    await page.waitForTimeout(150);
+  }
+  await page.getByTestId('playbook-toggle').click();
+  const replay = page.getByTestId(`playbook-replay-${tape}`);
+  if (await replay.innerText() === 'Stop') await replay.click();
+  await page.getByTestId('playbook-toggle').click();
+  row.notes.push(`Tape objective: ${JSON.stringify(await page.evaluate(() => ({ latch: window.__THREE_GAME_DIAGNOSTICS__?.playbookUse, mirror: window.__THREE_GAME_DIAGNOSTICS__?.broadcastMirror, front: window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront })))}`);
+}
+
 async function captureShowroom(page: Page, row: Row): Promise<void> {
   const state = await page.evaluate(() => {
     const d = window.__THREE_GAME_DIAGNOSTICS__;
@@ -1321,6 +1393,7 @@ export function nativeProof(id: string, run = 1) {
             }
           }
         }
+        if (['e7-dead-band', 'e7-echo-canyon', 'e7-relay-rush'].includes(contract.id)) await tapeDemonstration(page, row, contract, home, deadline, unreachable);
         if (contract.id === 'e6-showroom') await showroomCaptures(page, row, Math.min(deadline, Date.now() + 180_000));
         if (contract.id === 'e6-picnic') await picnicOpening(page, row, contract, deadline, unreachable);
         if (contract.id === 'e5-regatta') await regattaJourney(page, row, contract, deadline);
