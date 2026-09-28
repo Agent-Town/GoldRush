@@ -1,0 +1,19 @@
+✔ happy, failing, append, projection, p95, and declarations (648.068917ms)
+✔ default path is anchored to the script tree, not cwd (189.991916ms)
+✔ write failure is declared but cannot change a passing guard exit (176.904ms)
+✔ tracked stats path is skipped without dirtying the repository or changing the guard exit (322.290958ms)
+✔ untracked stats path in the same repository still appends without changing the guard exit (241.047792ms)
+✔ stats path outside a repository still appends without changing the guard exit (171.721125ms)
+✔ an unclassifiable stats path fails closed without changing the guard exit (166.596166ms)
+✔ git exit 128 from a classification failure is not mistaken for an outside-repository path (264.4255ms)
+✔ manufactured pre-cure append dirties a tracked stats path without changing the guard exit (239.588667ms)
+✔ manufactured defects prove the reverse controls have teeth (611.846708ms)
+✔ pre-change persistence absence reddens every persistence arm, but not guard exits (352.916958ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3442.354917
