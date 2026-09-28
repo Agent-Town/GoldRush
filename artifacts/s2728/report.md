@@ -32,3 +32,11 @@ This is a read of the attended owner's receipt, not a new fire-side battery. The
 4. September 29 LB/FM after 02:10 UTC; Wednesday September 30 rotation mint.
 
 The final ledger receipt and clearing stamp will be appended before the last main commit. No new product finding, goal leaf or BACKLOG row was invented from this heartbeat.
+
+## Final verification and handoff
+
+Final ledger **PASS, npm rc 0**, **1263/1263**, zero failures, skips or cancellations; all chained legs completed, kit **83/83**. Total **326.078 s**, Node **26.4.0**, checkpoint **b686086a37fdb78da07ad86509a8fd17a5ae5e25**. Receipts: `ledger-final.txt` and `ledger-result.json`. Archive audit: zero permanently absent and zero abridged handoffs; predecessor and three-item Owner's Desk checked byte-for-byte. Final read still finds Holds-2 running.
+
+Project knowledge and a session digest are retained in the shared Obsidian vault (`vault-notes.json`). Inherited factory log churn is included in the final bookkeeping set. No product source, tests, law, goal or BACKLOG row changed.
+
+Lock clearance **2026-09-28T02:38Z** is this fire's last write/commit on main; the normal origin/main backup push and read-only remote verification follow. The launcher retains its own fire directory until process exit.
