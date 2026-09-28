@@ -1,0 +1,6 @@
+board corpus     : STATUS.md + 2 archive month(s): archive/status/2026-08.md, archive/status/2026-07.md
+DROPPED 04d5cd70  2026-09-28T14:22:08+07:00
+  s2736 destroyed s2735's handoff line (966 chars)
+  commit: s2736: lock ACTIVE — verify Tape custody and heartbeat duties
+  lost  : Last updated: 2026-09-28T07:15Z s2735 handoff, lock CLEARED — Tape audit source landed 00e12579e; attended main battery ...
+LOST: 1 handoff line-1s PERMANENTLY absent at HEAD (7 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 18 same-session rewrites excluded, 0 attended self-updates superseded, of 34 replacements across 40 STATUS.md commits

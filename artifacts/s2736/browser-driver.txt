@@ -1,0 +1,73 @@
+
+===== warmup — rc=0 9.5s =====
+
+Running 1 test using 1 worker
+
+  ✓  1 [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (7.2s)
+
+  1 passed (8.1s)
+(node:98189) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+SUMMARY {"warmup":0}
+OVERALL rc=0
+transcript -> artifacts/s2736/browser-gates.txt
+
+===== audio own and adjacent — rc=0 550.4s =====
+  ✓  61 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining (6.2s)
+  ✓  62 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu (6.8s)
+  ✓  63 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through (9.1s)
+  ✓  64 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls (11.3s)
+  ✓  65 [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons (10.3s)
+  ✓  66 [mobile-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists (5.7s)
+  ✓  67 [mobile-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile (5.3s)
+  ✓  68 [mobile-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop (5.2s)
+  ✓  69 [mobile-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting (6.3s)
+  ✓  70 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only (3.6s)
+  ✓  71 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves (6.3s)
+  ✓  72 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel (3.2s)
+  ✓  73 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote (2.7s)
+  ✓  74 [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open (3.7s)
+
+  74 passed (9.2m)
+(node:98492) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98550) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:98550) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(node:5760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5760) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+
+
+===== plain audio run — rc=1 0.7s =====
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1568:15)
+    at wrapResolveFilename (node:internal/modules/cjs/loader:1122:27)
+    at defaultResolve (node:internal/modules/cjs/loader:1203:20)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolve (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:875:19)
+    at nextStep (node:internal/modules/customization_hooks:189:26)
+    at resolveWithHooks (node:internal/modules/customization_hooks:417:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1216:25)
+    at require.resolve (node:internal/modules/helpers:209:31)
+    at resolveScript (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:750:18)
+    at /Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:559:128
+    at Array.map (<anonymous>)
+    at new FullConfigInternal (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:559:117)
+    at loadConfig (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:1343:22)
+    at Object.loadConfigFromFile (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js:1553:10)
+    at runTests (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/cli/testActions.js:46:18)
+    at _Command.<anonymous> (/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/program.js:53:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/common/index.js',
+    '/Users/robin/.goldrush/s2736/wt-audio/node_modules/playwright/lib/program.js',
+    '/Users/robin/.goldrush/s2736/wt-audio/node_modules/@playwright/test/cli.js'
+  ]
+}
+
+
+SUMMARY {"audio own and adjacent":0,"plain audio run":1}
+OVERALL rc=1
+transcript -> artifacts/s2736/browser-gates.txt

@@ -1,0 +1,44 @@
+✔ editing viewSchema does not rotate computeEngineHash (54.716959ms)
+✔ schema 4 names Regatta time and shore additions without requiring them on other maps (2407.658959ms)
+✔ e1-dry-gulch hash is identical across installed Node engines (74736.22075ms)
+✔ the-claim hash is identical across installed Node engines (23211.213125ms)
+✔ e1-night-shift hash is identical across installed Node engines (97700.191834ms)
+✔ whole suite collects without loading Vite-only modules (5314.803333ms)
+✔ every functions/**/*.ts is type-checked (19863.269083ms)
+✔ positive arm accepts the expected Wrangler version (0.98125ms)
+✔ violation arm rejects Wrangler version drift (21.136375ms)
+✔ missing arm reports Wrangler absent from PATH (0.271083ms)
+✔ escape arm warns loudly and permits explicit drift (12.178541ms)
+✔ county stack directory matches the live rig names by whole normalized words (0.687541ms)
+✔ county stack directory links public mind ids without guessing bare unknowns (0.1685ms)
+ℹ tests 1040
+ℹ suites 0
+ℹ pass 1034
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 5
+ℹ todo 0
+ℹ duration_ms 1490596.858958
+
+✖ failing tests:
+
+test at scripts/agent-reels.test.mjs:14:1
+✖ agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids (32909.099292ms)
+  AssertionError [ERR_ASSERTION]: (node:61187) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+  (Use `node --trace-warnings ...` to show where the warning was created)
+  
+  
+  null !== 0
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/agent-reels.test.mjs:86:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: null,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+ℹ TAP-QUIET MAX: 1095.2s of 2700s bound (F-POC-8 watchdog)
