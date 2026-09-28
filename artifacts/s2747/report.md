@@ -1,6 +1,6 @@
 # s2747 — audio persistence regression test is landed
 
-**READY-FOR-GATES. One test-only drain landed at 15da41c60515658c4ea93724d66b816fbdcb190d; closing ledger verification remains pending below.**
+**READY-FOR-GATES. One test-only drain landed at 15da41c60515658c4ea93724d66b816fbdcb190d; all closing ledger checks passed.**
 
 The lane finished during this fire. Initial triage had no ready drains, so the initial ledger battery ran; triage restarted when the done-move arrived. The test now reaches Settings through a returning-player profile, preserves volume and mute across reload, and checks the live SoundSystem values. The prior test cleared storage into the first-boot card, where Settings does not exist. The task quoted the preceding audio-lock test title; the changed row is settings volume and mute persist across reload. F-AUD-16 is corrected.
 
@@ -30,4 +30,4 @@ The lane finished during this fire. Initial triage had no ready drains, so the i
 
 ## Closing verification
 
-Initial pre-drain ledger: **1263/1263 plus kit 83/83**, rc 0, **348.315 seconds**. The fresh post-landing literal ledger battery follows this report; its completed receipt must precede lock clearance.
+Initial pre-drain ledger: **1263/1263 plus kit 83/83**, rc 0, **348.315 seconds**. At 2026-09-28T15:56Z, the fresh post-landing literal npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm rc 0**, **226.829 seconds**, Node v26.4.0, checkpoint ad483104d. Every chained step, including the bounded status archive audit, completed successfully. One audio persistence test drain is accepted at 15da41c60 (implementation merge bf65df7de); browser 62/62, eight zero-error plain surfaces, diff-selected guards 5/5 including full Node rc 0, unchanged engine on candidate and main. Final board has zero real drains or unknowns and all four named lane branches have zero ahead commits. Health 200/200/200, no queued or running tasks or pending orders. Origin remains blocked under F-2742-1; no unchanged push retry. The complete s2746 predecessor and its four-item Owner's Desk tail are preserved byte-for-byte. This clearing commit is the final write to main; only read-only verification, release of the external drain lock and the external vault digest follow.
