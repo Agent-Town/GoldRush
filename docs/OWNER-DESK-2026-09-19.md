@@ -243,3 +243,14 @@ The register mis-transcribed the finding: at source the 227 are shipped art cell
 
 ## 7. Running now — no decision
 Astra: the map-art corrections campaign is COMPLETE (2026-09-22, all sixteen rows, `reviews/sol-map-art-corrections-4.md`; its residue is F-CORR4-2 above); both follow-ons landed the same day; the wave is DISPATCHED 2026-09-22 on "There will be a reset in the next 24 hours. Lets hit it! Full Codex power." — lane-c: `sol-map-art-fidelity-1` → `sol-entry-framing` → `sol-map-art-fidelity-2`; lane-b beside it: `sol-phone-hud-entry` → `sol-regatta-view-parity`; each drain queues the next; fast mode on, lane-b the account registry, lane-a its two open findings. Opus: the Codex strips landed and wired, the assay-index drop (F-HEAT14-6), battery robustness (F-POC-8). Each is drained attended when it reports.
+
+
+## 8. F-2742-1 — restore origin backup after the inheritance trace rejection
+
+**OPEN, 2026-09-28 (s2742).** Origin refuses main because the inheritance merge carries a 113,467,543-byte trace ZIP in its history. The file was subsequently removed, so the current tree is compact; its earlier blob still reaches the push. Origin is at `0979de763`, while inheritance deployed as `5b868b11`. This is an origin-backup failure, not a reported production outage.
+
+**Why your word.** Repair requires replacing the unpublished local ancestry. The fire protocol forbids git-history repair by a fire; an append-only commit cannot remove a reachable historical blob. No history or trace has been deleted or rewritten.
+
+**Options.** (a) authorize an attended archive-first clean re-land of the net tree since `0979de763`, preserving the rejected lineage before changing main's pointer, then a normal push (recommended); (b) keep the local lineage as it stands and defer origin backup. No force-push is proposed. The attended repair must verify retained source/evidence, run the required gates, then verify origin's new tip. Do not launch another unchanged push.
+
+**Evidence.** Blob `6e329b47a526bb6ad14ee86877f98b2669ca7606`, introduced by `7eda17dd7`, removed from the current tree by `5670f2134`; `git push origin main` rc 1, GH001. Full paths and bytes: `artifacts/s2742/origin-large-blobs.json`; rejection excerpt: `artifacts/s2742/origin-push-failure.txt`; current verification and ordered remainder: `artifacts/s2742/report.md`.

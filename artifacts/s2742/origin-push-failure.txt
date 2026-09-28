@@ -1,0 +1,15 @@
+Observed command: git push origin main
+Observed exit: 1 (session 34332)
+Local head at attempt: caa6786b3b5f6992bb1d238cc08a199752445951
+Live origin after rejection: 0979de76328c5a225f543d620f47c66a9f5c4382
+
+Relevant stderr excerpt:
+remote: error: File artifacts/e7-tape-drawer-inheritance-1/before-desktop-results/e7-playbook-surface-the-ta-294f3-remains-inherited-afterward-desktop-chrome/trace.zip is 108.21 MB; this exceeds GitHub's file size limit of 100.00 MB
+remote: error: GH001: Large files detected.
+ ! [remote rejected] main -> main (pre-receive hook declined)
+error: failed to push some refs to 'github.com:Agent-Town/GoldRush.git'
+
+Exact blob 6e329b47a526bb6ad14ee86877f98b2669ca7606 is 113467543 bytes.
+The after-desktop blob is 102030954 bytes (97.30 MiB), a warning rather than the hard rejection.
+Both are reachable through the inheritance merge's ancestry despite the current working-tree evidence diet.
+No credentials, production data, or log payloads were printed or copied by this census.
