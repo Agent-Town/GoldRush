@@ -1,0 +1,25 @@
+# Task audio-integration-first-boot-spec-1: the audio persistence test boots the way a player does today (LANE-B, Astra, commit prefix "test:")
+
+CODEX: model=gpt-6-astra
+
+You are Codex (gpt-6-astra), implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b` (branch `sol/wave-lane-b`). You do not touch STATUS.md, reviews, tasks or other lanes.
+READ FIRST: AGENTS.md; `e2e/audio-integration.spec.ts` (the red test at line 80, "boot stays audio-locked until gesture, then seeded panning requests sound", which clears all storage and then clicks a `start-menu-settings` control at line 89); `artifacts/audio-harshness-1/report.md` (the attribution: reproduced on the exact pre-task source and assets, both projects); `reviews/audio-review-1.md` section 3(d) and F-AUD-9 (first boot has no route to Settings while the title theme plays); `src/ui/menu/StartMenu.ts` (the first-boot card and the returning-player menu with its Settings entry; the music toggle added by `audio-music-toggle-1`); `e2e/audio-music-toggle.spec.ts` (how the landed toggle spec boots first-boot and returning-player states, the model to copy); `e2e/050-audio-mix-and-access.spec.ts` (the pause-panel persistence proofs that already pass).
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL; the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B sol/wave-lane-b main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work; resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence (`artifacts/**`, `reviews/shots-*`, any `.png`) are NEVER work and NEVER a STOP; discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. Then `git -C worktrees/lane-b status --short` must be clean, with the FACTORY-CHURN EXCEPTION (F-1407-1): `logs/**`, `artifacts/**`, `reviews/shots-*` and any `.png` are always expected, never a STOP; what still STOPs is modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
+
+## Why (F-AUD-16, recorded 2026-09-28 from the harshness task's adjacent battery)
+`e2e/audio-integration.spec.ts:80` ("boot stays audio-locked until gesture, then seeded panning requests sound") is red on main on both projects: it clears all storage, so the game shows the FIRST-BOOT card, and then waits for `start-menu-settings`, a control the first-boot card does not offer (the review's F-AUD-9; the landed music toggle is that card's only audio control by design). The persistence the test wants to prove (volume and mute survive a reload) is real and proved elsewhere for the pause panel; this test's route is what rotted. Every audio landing now has to attribute this row (ahr1 did); it must be green.
+
+## Scope
+1. Make the test boot the way a player who can reach Settings does: seed a profile the way `e2e/audio-music-toggle.spec.ts` does for its returning-player cases (or complete the first-boot card with the same helper), then open Settings from the returning-player menu, set Volume and Mute, reload, and assert both persisted; keep the assertions on persistence exactly as strong as before (values survive the reload; the SoundSystem reads them). Do NOT add a Settings entry to the first-boot card (an owner question, F-AUD-9's card was ruled to carry the music toggle) and do NOT change any `src/**`.
+2. If a first-boot variant is still worth proving, add ONE assertion that the first-boot card exposes the music toggle and no Settings entry (the current product), so the test documents the route instead of assuming it.
+3. Run `e2e/audio-integration.spec.ts` on both projects until 10/10 (`--workers=1`, exit codes from the command); adjacent unchanged-green both projects: `e2e/050-audio-mix-and-access.spec.ts`, `e2e/audio-music-toggle.spec.ts`, `e2e/m2-01-build-menu.spec.ts`.
+4. Report `artifacts/audio-integration-first-boot-spec-1/report.md`: before/after exits per project, the route the test now takes, the diff summary. If you find yourself about to exit without changes, WRITE WHY into your report first.
+
+## Firewall
+Touch ONLY: `e2e/audio-integration.spec.ts`, `artifacts/audio-integration-first-boot-spec-1/**`.
+NO changes to: `src/**`, other e2e files, `scripts/**`, `tasks/**`, `specs/**`, `reviews/*.md`, `CLAUDE.md`, `STATUS.md`, `tasks/BACKLOG.md`, `logs/**`, the other lanes' work.
+
+## Self-check (evidence, not vibes)
+`npx tsc --noEmit` green. `e2e/audio-integration.spec.ts` 10/10 on `desktop-chrome` and `mobile-chrome`; the three adjacent suites unchanged-green both projects; zero console and page errors. No `src/**` change (hash unchanged landing).
+End: READY-FOR-GATES + the spec's before/after exits per project + adjacent counts + commit hashes.
