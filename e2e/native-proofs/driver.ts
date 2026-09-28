@@ -743,6 +743,25 @@ async function lowOrbitCrossing(page: Page, row: Row, deadline: number, unreacha
 
 // Motor errands use the ordinary confirm key at surveyed stakes and haul destinations.
 async function tapeDemonstration(page: Page, row: Row, contract: ContractManifest, home: Home, deadline: number, unreachable: Set<string>): Promise<void> {
+  // The mobile HUD can move beneath an upgrade overlay between observation and click.
+  // Retry native clicks with bounded waits; never click through a death ledger.
+  const clickTape = async (id: string): Promise<void> => {
+    for (let attempt = 0; attempt < 8; attempt++) {
+      const state = await read(page);
+      if (!state || state.runState === 'dead' || state.secured) throw new Error(`Tape ${id}: run ended before control`);
+      if (state.upgradeOpen) {
+        const offer = state.offer ?? [];
+        const preferred = UPGRADE_PRIORITY.map(id => offer.indexOf(id)).find(index => index >= 0) ?? 0;
+        row.upgrades.push(offer[preferred] ?? `card${preferred}`);
+        await page.getByTestId(`upgrade-card-${preferred}`).click({ timeout: 1000 });
+      }
+      try { await page.getByTestId(id).click({ timeout: 600 }); return; }
+      catch (error) {
+        row.notes.push(`Tape ${id} attempt ${attempt + 1}: ${String(error).split('\n')[0]}`);
+        if (attempt === 7) throw error;
+      }
+    }
+  };
   const tape = 'Native movement and build';
   const relay = contract.id === 'e7-relay-rush';
   const sites = (await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront?.sites ?? []))
@@ -756,23 +775,23 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
     await walkTo(page, row, x, z + 4, 1.2);
   }
   await takeUpgrades(page, row);
-  await page.getByTestId('playbook-toggle').click();
-  await page.getByTestId('playbook-name').fill(tape);
-  await page.getByTestId('playbook-record').click();
+  await clickTape('playbook-toggle');
+  await page.getByTestId('playbook-name').fill(tape, { timeout: 4000 });
+  await clickTape('playbook-record');
   const recording = await page.getByTestId('playbook-record').getAttribute('data-recording');
   if (recording !== 'true') {
     row.notes.push(`Tape Record refused: ${await page.getByTestId('playbook-message').innerText()}`);
-    await page.getByTestId('playbook-toggle').click();
+    await clickTape('playbook-toggle');
     row.notes.push(`Tape latch after refusal: ${JSON.stringify(await page.evaluate(() => ({ latch: window.__THREE_GAME_DIAGNOSTICS__?.playbookUse, arsenal: window.__THREE_GAME_DIAGNOSTICS__?.e7Arsenal })))}`);
     return;
   }
   await steer(page, 1, 0, 120);
   await build(page, row, 'turret', x, z, Math.min(deadline, Date.now() + 25_000), [], unreachable);
   await takeUpgrades(page, row);
-  await page.getByTestId('playbook-toggle').click();
-  await page.getByTestId('playbook-record').click();
+  await clickTape('playbook-toggle');
+  await clickTape('playbook-record');
   row.notes.push(`Tape saved: ${await page.getByTestId('playbook-message').innerText()}`);
-  await page.getByTestId('playbook-toggle').click();
+  await clickTape('playbook-toggle');
   if (relay) {
     for (const site of sites.slice(1, 3)) {
       await build(page, row, 'sentry_beacon', (site.minX + site.maxX) / 2, (site.minZ + site.maxZ) / 2,
@@ -791,14 +810,14 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
     const front = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront);
     const covered = front?.centerX !== null && front?.centerX !== undefined && Math.abs(now.hero.x - front.centerX) < front.halfWidth - 1;
     if (relay ? covered : now.wave > recordedWave) {
-      await page.getByTestId('playbook-toggle').click();
-      await page.getByTestId(`playbook-replay-${tape}`).click();
+      await clickTape('playbook-toggle');
+      await clickTape(`playbook-replay-${tape}`);
       row.notes.push(`Tape USE wave=${now.wave}, hero=${JSON.stringify(now.hero)}, front=${JSON.stringify(front)}: ${await page.getByTestId('playbook-message').innerText()}`);
       break;
     }
     await page.waitForTimeout(80);
   }
-  if (await page.getByTestId('playbook-library').isVisible()) await page.getByTestId('playbook-toggle').click();
+  if (await page.getByTestId('playbook-library').isVisible()) await clickTape('playbook-toggle');
   // Echo fields the mirror at the wave AFTER use. Observe that consumer before stopping.
   const mirrorDeadline = Math.min(deadline, Date.now() + 15_000);
   while (!relay && Date.now() < mirrorDeadline) {
@@ -807,10 +826,10 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
     if (state.latch?.objectiveMet || !state.hp) break;
     await page.waitForTimeout(150);
   }
-  await page.getByTestId('playbook-toggle').click();
+  await clickTape('playbook-toggle');
   const replay = page.getByTestId(`playbook-replay-${tape}`);
-  if (await replay.innerText() === 'Stop') await replay.click();
-  await page.getByTestId('playbook-toggle').click();
+  if (await replay.innerText() === 'Stop') await clickTape(`playbook-replay-${tape}`);
+  await clickTape('playbook-toggle');
   row.notes.push(`Tape objective: ${JSON.stringify(await page.evaluate(() => ({ latch: window.__THREE_GAME_DIAGNOSTICS__?.playbookUse, mirror: window.__THREE_GAME_DIAGNOSTICS__?.broadcastMirror, front: window.__THREE_GAME_DIAGNOSTICS__?.interferenceFront })))}`);
 }
 
