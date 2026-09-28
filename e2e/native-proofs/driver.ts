@@ -289,7 +289,10 @@ async function takeUpgrades(page: Page, row: Row): Promise<void> {
       if (node.kind === 'storage') row.powerBanksPeak[node.id] = Math.max(row.powerBanksPeak[node.id] ?? 0, node.storedWh ?? 0);
     }
     if (now) row.peakHotBoilers = Math.max(row.peakHotBoilers, now.pressure?.objective.hotBoilers ?? 0);
-    if (!now || !now.upgradeOpen) return;
+    if (!now || !now.upgradeOpen) {
+      if (row.contract === 'e10-ember-shore') await stokeEmber(page, row);
+      return;
+    }
     const offer = now.offer ?? [];
     let index = 0;
     if (now.hp < now.maxHp * 0.7) {
@@ -309,6 +312,35 @@ async function takeUpgrades(page: Page, row: Row): Promise<void> {
     await page.keyboard.press(`Digit${Math.min(3, index + 1)}`);
     await page.waitForTimeout(250);
   }
+}
+
+// Moving to the vent also observes upgrades; prevent that observation re-entering this errand.
+const stoking = new WeakSet<Row>();
+async function stokeEmber(page: Page, row: Row): Promise<void> {
+  if (stoking.has(row)) return;
+  const vent = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.preserveVent);
+  const now = await read(page);
+  if (!vent?.position || !now || now.runState === 'dead' || now.secured || vent.guttered
+      || vent.warmth > vent.maxWarmth - vent.stoke.warmthRestore + 10 || now.gold < vent.stoke.goldCost) return;
+  stoking.add(row);
+  try {
+    // Stand south of the altar, inside the authored action disc.
+    const reached = await walkTo(page, row, vent.position.x, vent.position.z - vent.stoke.radius * 0.625, 0.6, 100);
+    for (let press = 0; reached && press < 4; press++) {
+      await takeUpgrades(page, row);
+      const state = await read(page);
+      if (!state || state.runState === 'dead' || state.secured) break;
+      if (state.buildMode) await page.getByTestId('hud-build').click({ timeout: 1000 });
+      await page.keyboard.press('Enter');
+      await page.waitForTimeout(100);
+      const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.preserveVent);
+      if ((after?.stoke.uses ?? 0) > vent.stoke.uses) {
+        row.notes.push(`Stoke wave=${state.wave}: warmth=${vent.warmth}->${after?.warmth}, uses=${after?.stoke.uses}, survived=${after?.squallsSurvived}, gold=${state.gold}->${(await read(page))?.gold}`);
+        return;
+      }
+    }
+    row.notes.push(`Stoke stalled: reached=${reached}, wave=${now.wave}, warmth=${vent.warmth}, hero=${JSON.stringify((await read(page))?.hero)}`);
+  } finally { stoking.delete(row); }
 }
 
 async function unpause(page: Page, row: Row): Promise<void> {
@@ -442,6 +474,10 @@ async function journey(page: Page, row: Row, x: number, z: number, tolerance: nu
 }
 
 async function fund(page: Page, row: Row, amount: number, deadline: number, fords: Crossing[], unreachable: Set<string>): Promise<boolean> {
+  if (row.contract === 'e10-ember-shore') {
+    const vent = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.preserveVent);
+    amount += vent?.stoke.goldCost ?? 0;
+  }
   while (Date.now() < deadline) {
     await takeUpgrades(page, row);
     const now = await read(page);
