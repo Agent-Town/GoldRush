@@ -1,0 +1,47 @@
+[
+  {
+    "check": "tsc-final",
+    "argv": [
+      "npx",
+      "tsc",
+      "--noEmit"
+    ],
+    "exit": 0,
+    "fullLog": "/Users/robin/.goldrush/play-proofs/run-17/tsc-final.log"
+  },
+  {
+    "check": "build-final",
+    "argv": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit": 0,
+    "fullLog": "/Users/robin/.goldrush/play-proofs/run-17/build-final.log"
+  },
+  {
+    "check": "task-guards",
+    "argv": [
+      "npm",
+      "run",
+      "test:task-guards"
+    ],
+    "exit": 0,
+    "fullLog": "/Users/robin/.goldrush/play-proofs/run-17/task-guards.log"
+  },
+  {
+    "check": "diff-check",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0,
+    "fullLog": "/Users/robin/.goldrush/play-proofs/run-17/diff-check.log"
+  },
+  {
+    "check": "task-guards-main",
+    "exit": 0,
+    "cwd": "/Users/robin/Claude/Projects/Gold Rush"
+  }
+]
