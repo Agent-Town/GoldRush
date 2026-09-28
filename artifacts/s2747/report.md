@@ -1,6 +1,6 @@
-# s2747 — audio first-boot correction is running; no ready drain
+# s2747 — audio first-boot correction passes detached gates
 
-WHY no product drain: the prescribed board probe finds zero real drains and zero unknowns. Lane-b is BUSY with the attended-authored audio-integration-first-boot-spec-1; its working test and evidence belong to that live run. The whole factory is not DRY. CODEX-WALL bars independent fire dispatch and refills.
+Initial triage (superseded by the completion below): the prescribed board probe finds zero real drains and zero unknowns. Lane-b is BUSY with the attended-authored audio-integration-first-boot-spec-1; its working test and evidence belong to that live run. The whole factory is not DRY. CODEX-WALL bars independent fire dispatch and refills.
 
 ## Verification
 
@@ -21,4 +21,4 @@ WHY no product drain: the prescribed board probe finds zero real drains and zero
 
 ## Closing verification
 
-Pending complete literal npm run test:ledger-guards on Node v26.4.0. Lock remains ACTIVE until the result is recorded and the final clearing commit is ready.
+The initial pre-drain ledger command passed 1263/1263 plus kit 83/83, rc 0, in 348.315 seconds. The lane completed during that battery, so triage restarted and policy returned CLEAR. Detached candidate bf65df7de6402fc0efa7ff63746cc65a1171cdcc passed TypeScript, both builds, E1 payload 34,355,296 bytes, browser 62/62 and eight zero-error plain surfaces. The literal diff-selected guard command passed 5/5, rc 0, in 2252.199 seconds; full Node was rc 0 in 2249 seconds, power p95 0.336 ms. The observed fixture sweep passed 162 owners, zero survivors and no failed children. The wrapper retains only successful command summaries, so no final Node per-test count is claimed. This one drain exceeded the approximate fire time budget to finish its already-running required command; no second drain was started. Final identity, landing and closing ledger checks follow before clearance.
