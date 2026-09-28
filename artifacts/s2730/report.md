@@ -1,8 +1,8 @@
-# s2730 — Live Holds-2 custody preserved; daily receipts verified
+# s2730 — Holds-2 candidate preserved; Showroom attribution and remaining gates owed
 
-**READY-FOR-GATES — heartbeat and bookkeeping; no product drain.** WHY: the done-board has no eligible finished output, while lane-c is actively implementing Holds-2. Its unmerged work remains with that implementer. No new source change, goal row or product finding was invented.
+**READY-FOR-GATES — partial drain preserved, NOT LANDED.** Holds-2 finished during this fire. Strict policy cleared, the detached candidate built and passed adjacent/plain-boot checks, and all ten fresh native tests failed. Showroom reached only 0/6 desktop and 1/6 phone captures against the source's 6/6 on both. The approximately 35-minute drain budget was reached after the active batch; clean-main attribution, diff guards and final engine verification remain. No new map or balance defect is established.
 
-## Verified triage
+## Initial triage, before Holds-2 finished
 
 - STATUS inherited s2729 lock CLEARED. The fresh process lock belongs to this fire: launcher 70600, node 70645, Codex 70646, all started at 03:00:59 UTC. Lock commit **4cfee0953** uses command-derived UTC 03:02Z. Main-slot semaphore is the ACTIVE-and-not-lock-CLEARED predicate in `scripts/lane-runner-v3.sh`; the launcher retains its directory until this process exits.
 - Inherited generated dashboard/task-stat bookkeeping preserved in **94065e317**. Historical untracked evidence, run logs and attended landing files remain intact.
@@ -20,10 +20,21 @@ Evidence: `dry-board.txt`, `lane-usable.txt`, `health.txt`, `state.json`, `lates
 - Registry includes r2026w40, opening September 28 and closing October 5. Next mint is Wednesday September 30. Fresh skillmd guard **19/19**, rc 0.
 - Previous STATUS line is archived exactly; three-item Owner's Desk is retained. Native-ride attribution law follow-up remains in the attended handover; no duplicate corrective is authored.
 
+## Drain evidence and custody
+
+Source `6b891fabdd8c74bba94b5cd4c90c1228461a625b`; candidate `2a6ccc4e0` saved as `save/sol-play-proofs-holds-2-s2730`, clean at `~/.goldrush/fire-s2730/wt-holds2`. All 125 paths classified, zero main overlap/conflicts, no blob above 50 MB. Fresh npm ci clean. TypeScript **7.0 s**, normal/E1 builds **40.8/14.3 s**, payload **34,350,664 B**, source evidence **2,691,128 B**. Independent raw equivalence **18/18**, isolated driver additions byte-check green. Warmup **1/1**; adjacent/plain boots **42/42**, **236.9 s**; eight clean plain boots, desktop/390px, no debug.
+
+Fresh native **0 pass / 10 fail, rc 1, 971.6 s**, zero console/page errors. Picnic holds three stakes on both screens, Dead Band's refusal objective is met on both, Echo desktop's mirror is met, Relay desktop has deadline 3/3 and muted-use objective met; all end in losses. Showroom dies at wave 3 with **0/6 desktop** and **1/6 phone** captures. Echo/Relay phone stop alive at their Tape toggles, wave 2, 100 HP, with objectives false. The source's two Showroom 6/6 captures are retained as source measurements, not re-certified. Root cause of the discrepancy is **UNVERIFIED**; no clean-main control has run. The earlier progress message's zero phone count is superseded by the final frozen snapshot's one capture.
+
+The candidate, source lane and original done-move remain intact. Main received only documentation/evidence/bookkeeping. No source landing, engine pin, goal closure, Gazette item or deploy. Owned Vite **68343** stopped by its recorded PID. Raw traces/results and regenerated evidence were moved intact into the scratch area; no files were deleted. `reviews/sol-play-proofs-holds-2.md` carries the complete evidence table, classification and executable continuation.
+
+Initial ledger checkpoint `f62f25248`: **1263/1263 + kit 83/83, rc 0, 320.156 s**, before the source finished. It is historical and does not stand in for the closing ledger battery after this handoff's ledger edit.
+
 ## Remaining list in order
 
-1. Holds-2 finishes; its completed output receives the strict policy check and required gates under the recorded ownership.
-2. Attended dispatches Holds-3 after Holds-2 lands; campaign survival/proof limits and the native-ride attribution follow-up remain explicit.
-3. September 29 LB/FM after 02:10 UTC; September 30 rotation mint.
+1. Strict policy check, synchronize the saved candidate, then attribute Showroom's missing capture proof and the phone Tape failures. Clean-main control at `~/.goldrush/fire-s2730/wt-control` is npm-ci clean at `f62f25248`; prepared controls are in the review and have not run. Preserve completed gates when their relevant inputs are unchanged.
+2. Complete diff-selected guards/full Node, final engine identity, then only on acceptance perform the goal/BACKLOG/review drain commit set, fast-forward, rename done-move, archive saved ref, backup and required main checks.
+3. Attended dispatches Holds-3 after Holds-2 lands. No fire dispatch or re-queue.
+4. September 29 LB/FM after 02:10 UTC; September 30 rotation mint. Existing three-item Owner's Desk remains unchanged.
 
 Final ledger receipt and lock clearance follow before this fire's last commit on main.

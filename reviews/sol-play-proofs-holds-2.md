@@ -2,7 +2,7 @@
 
 Source `sol/map-art-campaign-2`, tip `6b891fabdd8c74bba94b5cd4c90c1228461a625b`. Fire s2730. Detached candidate `2a6ccc4e0`, `/Users/robin/.goldrush/fire-s2730/wt-holds2`.
 
-**Verdict: GATES IN PROGRESS — NOT LANDED.** The retained run is an honest QA record, not five gameplay successes. This review records completed checks and does not accept a source merge before the remaining gates and failure attribution.
+**Verdict: PARTIAL GATES, ATTRIBUTION PENDING — NOT LANDED.** The source and detached candidate remain preserved. The fresh native battery failed 10/10; source gameplay holds remain explicit, and Showroom's reported capture success did not reproduce. This fire reached its approximately 35-minute drain budget after the active batch; control attribution and the remaining batteries continue in the next increment. No new map-defect cause is established.
 
 ## What changed
 
@@ -29,7 +29,19 @@ The source's 18 native rides all fail honestly and record zero console/page erro
 | Plain boot diagnostics | Eight clean boots, desktop and 390px, no debug query | `artifacts/s2730/plain-boot-audit.json`, `plain-boot-shots/` |
 | Retained images | Relay phone alive abort and Showroom phone loss agree with reported limits | `artifacts/s2730/source-visual-inspection.json` |
 
-Fresh five-map native gates are running serially. Diff-selected guards, any required clean-main attribution, final engine identity and post-landing checks remain unclaimed.
+Fresh native gate: **0 pass / 10 fail, rc 1, 971.6 s**, all ten with zero console/page errors. `artifacts/s2730/native-gates.txt`, `native-result.json`, `native-summary.json`, `native/` retain the receipts and snapshots.
+
+| Map | Fresh desktop | Fresh phone |
+| --- | --- | --- |
+| Picnic | Three stakes held; death wave 18 / 565.467 s | Three stakes held; death wave 17 / 530.933 s |
+| Showroom | **0/6 captures**, death wave 3 / 109.467 s | **1/6 captures**, death wave 3 / 99.733 s |
+| Dead Band | Refusal objective met; death wave 18 / 545.600 s | Refusal objective met; death wave 14 / 432.667 s |
+| Echo Canyon | Mirror objective met; death wave 17 / 519.333 s | Tape toggle timeout; alive at wave 2 / 67.733 s, 100 HP; objective false |
+| Relay Rush | Deadline 3/3 and muted-use objective met; death wave 18 / 549.733 s | Tape toggle timeout; alive at wave 2 / 79.867 s, 100 HP; objective false |
+
+Showroom source defaults reported 6/6 captures on both screens. The fresh candidate's 0/6 and 1/6 are an unresolved reproduction mismatch, not proof of a map or balance defect. An interim progress message said zero on both; the frozen phone snapshot establishes one and is authoritative. Echo/Relay phone fail in the new Tape interaction before the secure stage. Clean-main attribution has **not** run. No native red is accepted merely because this campaign has recorded holds.
+
+The owned Vite PID 68343 exited after the batch. Raw Playwright traces/results were moved intact to `~/.goldrush/fire-s2730/native-results`; regenerated tracked evidence was copied to that scratch area's `regenerated/` and restored to committed bytes. Candidate status is clean. No assertion, timeout or source cure was made. Diff-selected guards, full Node, final engine identity and post-landing checks remain unclaimed.
 
 ## Merge classification
 
@@ -39,7 +51,8 @@ The original relative assets symlink is preserved. Its scratch sibling resolves 
 
 ## Remaining list in order
 
-1. Finish and classify the fresh native gate receipts; attribute reds with applicable clean-main controls before deciding the drain.
-2. Complete diff-selected guards and any mandatory full-Node continuation, then measure final engine identity after every cure.
-3. Only on acceptance: synchronize main bookkeeping, update goal/BACKLOG/review in the drain commit set, fast-forward, rename the original done-move, push and complete required post-landing checks.
-4. Holds-3 dispatch remains attended-owned after Holds-2 lands. No fire refill or continuation dispatch is authorized.
+1. Reassert strict policy against the original done-move, verify saved candidate `save/sol-play-proofs-holds-2-s2730` at `2a6ccc4e0`, and synchronize newer main bookkeeping without invalidating the measured executable inputs. Preserve the completed gate receipts.
+2. Attribute Showroom first, then the native phone Tape failures and other required reds. A clean main control is prepared at `~/.goldrush/fire-s2730/wt-control`, base `f62f25248`, with fresh npm ci and clean status. Under the serial drain lock, the prepared commands are `/opt/homebrew/bin/node ~/.goldrush/fire-s2730/showroom-control.mjs` (desktop) and `.../control.mjs` (Echo phone), both on port 5317. Scripts are retained in `artifacts/s2730/*control-driver.mjs`; neither has run. Add the phone Showroom control or paired attended attribution as the evidence requires; do not excuse the mismatch from old run history alone.
+3. Complete `node scripts/run-guards.mjs --changed-since f62f25248be69d81e1d5400d855642ee12db0436` in the candidate, using the verified Node PATH. Its full-Node wrapper's historical 900-second limit can require a direct continuation; never turn an incomplete child into a pass. Measure final engine identity after every cure.
+4. Only on acceptance: update goal/BACKLOG/review in the drain commit set, fast-forward, rename the original done-move, archive the saved ref, push and complete required post-landing checks.
+5. Holds-3 dispatch remains attended-owned after Holds-2 lands. No fire refill or continuation dispatch is authorized.
