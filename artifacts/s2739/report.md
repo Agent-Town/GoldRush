@@ -23,3 +23,7 @@ WHY no product drain: all six real done-moves belong to the attended audio, Tape
 4. Audio-harshness dispatch by its attended owner after the toggle lands; next LB/FM coverage September 29 after 02:10 UTC and rotation duty September 30.
 
 No source changes, deploy, publication, new master, queue copy or product merge by this fire. Closing ledger receipt follows before the final lock-clearing commit, which will be this fire's last main write.
+
+## Final handoff
+
+At 2026-09-28T10:03Z, the complete literal npm run test:ledger-guards passed: 1263/1263, zero failures/skips; kit 83/83; npm rc 0 in 331.583 s on v26.4.0, checkpoint e2814320ce78862e9230222a5d100dfaa2cda576. Exact predecessor and three-item desk tail verified. Commits before clearance: f925412e4 lock and e2814320c verification/ledger. No product landing, source edit, dispatch, pin or deploy. The lock-clearing commit is this fire's final main write; normal origin backup follows.
