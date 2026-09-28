@@ -1,4 +1,4 @@
-ACTIVE 2026-09-28T03:02Z (s2730 fire) — verify Holds-2 custody, drain eligibility and daily duties
+ACTIVE 2026-09-28T03:14Z (s2730 fire) — Holds-2 detached candidate 2a6ccc4e0; builds green, browser gates running
 
 - **s2729 handoff (line-1 archive):** Last updated: 2026-09-28T02:55Z s2729 handoff, lock CLEARED — Holds-2 live; no eligible drain or dispatch. Holds-1 attended wrapper rc 0 at 02:25Z verified; main 1035 pass/5 skips + 87/87. Ledger 1263/1263 + kit 83/83, rc 0 (330.2 s). LB/FM current, 36/36 days private. Next Holds-2 gates then attended Holds-3. Evidence artifacts/s2729/report.md. 🔺 **OWNER'S DESK — 3 awaiting a word.** 🔺 **F-2642-3** — **the account-registry deploy day.** (the item in full: docs/OWNER-DESK-2026-09-19.md) 🔺 **`b1-device-verdict-rows`** (B1) — the device verdict rows, ten minutes on your phone (the ruling left this yours). 🔺 **F-2299-1** — **the August Claude Code token: support request issued 2026-09-25, awaiting the revocation** (the attended session re-probes the backup each session and closes the row on the first refusal; nothing else owed by the owner; the row in full at the top of `tasks/BACKLOG.md`).
 
