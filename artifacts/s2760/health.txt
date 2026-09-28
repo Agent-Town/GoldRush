@@ -1,0 +1,16 @@
+=== Gold Rush factory — 2026-09-29 01:58:55 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : RUNNING
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-09-28T18:58Z (s2760 fire) — verify board custody, scheduled duties and safe handoff
+
+- **s2759 handoff (li
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: /bin/zsh -lc 'git ls-remote archive refs/heads/ledger-backups refs/heads/fire-memory' in /Users/robin/Claude/Projects/Go
