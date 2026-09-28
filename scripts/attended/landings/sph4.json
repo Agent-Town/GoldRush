@@ -1,0 +1,37 @@
+{
+  "tag": "sph4",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5410,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-play-proofs-holds-4 — Astra's run 18: the Archive World PROVED both screens (beacon inside the disc, a completed light hold, wave 12, bank/Book/reload), the Deepwater Claim PROVED both screens including the wreck's ceremony write and restored re-entry, the Long Road still stalls outside its stop radius, the Showroom captures then dies (survival), the phone Tape tap an unresolved hit-testing mismatch with no player-facing defect established; equivalence PASS; landed attended per the native-ride rule; no src change, no balance change",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/sol-play-proofs-holds-4-landing.md",
+    "title": "Drain review (attended landing): `sol-play-proofs-holds-4`, the Archive World and the Deepwater Claim proved, the Long Road and the Showroom held, the phone Tape tap left as an instrument mismatch",
+    "body": "scripts/attended/landings/sph4-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-play-proofs-holds-4.md",
+    "rowKey": "SOL PLAY PROOFS HOLDS 4 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra's run 18 (`artifacts/sol/play-proofs/run-18/`, 228,605 tokens, evidence 3,480,604 B, six lane commits, tip `d40d657b9`, no `src/**`): the Archive World PASS both screens (the preview aimed against both predicates lands inside the west light disc, a completed hold, wave 12 secured, bank/Book/reload: the third hold converted into a proof by the instrument); the Deepwater Claim PASS both screens including the wreck's write at the ceremony and its restored re-entry on a plain reload (the fourth); the Long Road HELD (the graded approach still stalls outside the authored stop radius); the Showroom HELD on survival (desktop 6/6 captures then death at wave 3, phone 5/6 then death at wave 4); the phone Tape tap inside a ride: an unresolved hit-testing mismatch (the plain-boot audit reaches the toggle, the in-ride Playwright click reports the canvas; the attempted driver correction failed and was reverted), no player-facing defect established. Flotilla/Regatta equivalence PASS; 12 rides, zero errors; no F-PPH4 IDs. The campaign's instrument work is complete or named: what remains held is survival (the owner's, F-PP-CAMPAIGN), the Long Road's final approach and the in-ride phone tap",
+    "statusPhrase": "holds-4 landed attended: the Archive World and the Deepwater Claim proved on both screens, the Long Road and the Showroom held, the phone Tape tap left as an instrument mismatch; the campaign's instrument work is complete or named",
+    "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh sph4; Astra on lane-c, the ChatGPT subscription; native-ride landings are attended-owned, 13z-91)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-18"
+}
