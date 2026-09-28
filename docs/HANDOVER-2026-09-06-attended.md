@@ -1178,3 +1178,10 @@ F-2725-1: source candidate `cf9cd95c4` remains detached/saved, no main merge. Fr
 - **Live now from the audio review:** the one-tap music toggle everywhere (rank 1), normalized and re-balanced effects with ramps, fades and seam-free loops (ranks 2 to 4). Both reversible on a word. Owner's desk: F-AUD-15 (listen to `artifacts/audio-harshness-1/listen-before.ogg` and `listen-after.ogg`, keep or revert), F-AUD-12 (the key), F-AUD-13 (variation and credits), F-AUD-14 (the twang: processing or new takes).
 - **F-AUD-16 corrective** `audio-integration-first-boot-spec-1` authored and queued on lane-b (test only): the persistence test boots through a seeded profile instead of a cleared first boot.
 - **Everything else:** the play-proofs campaign is complete on the instrument side (holds-1 to holds-4 landed; four holds became proofs); what remains held is survival (F-PP-CAMPAIGN) plus the Long Road's final approach and the in-ride phone tap (instrument, named). Fires are healthy with the wrapper budget fix.
+
+### s2747 fire — audio first-boot correction remains live
+- WHY no fire product drain: zero real drains or unknowns; lane-b BUSY with audio-integration-first-boot-spec-1. The whole factory is not DRY. No source, assertion, goal-status, dispatch, refill, pin or deployment change.
+- Verified runner 25494 alive, all queues empty, one running task, no new failures or pending orders; health 200/200/200. The current leaf and handover identify the attended dispatch. The live lane's test and evidence are left with its implementer.
+- Fresh private coverage 36/36 through September 28; both archive heads match today's completed duty receipts. Yesterday's ticker exists; rotation week 40 is present and skillmd passes 19/19. Next coverage September 29 after 02:10 UTC; week-41 mint September 30.
+- Origin is still 0979de763 with the 113,467,543-byte historical trace reachable. F-2742-1 awaits the owner's archive-first repair decision; no unchanged rejected push. Four-item Owner's Desk tail preserved verbatim.
+- Evidence and ordered remainder: artifacts/s2747/report.md. Closing ledger battery follows before lock clearance.
