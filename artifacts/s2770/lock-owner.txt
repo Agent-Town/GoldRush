@@ -1,0 +1,10 @@
+[fire-runner] 03:57:57 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 04:02:57 FIRE START (engine codex, model from ~/.codex config)
+[fire-runner] 04:12:23 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 04:17:23 FIRE START (engine codex, model from ~/.codex config)
+  PID  PPID TTY      STAT STARTED                      COMM
+47266     1 ??       S    Tue Sep 29 04:17:23 2026     /bin/bash
+47313 47266 ??       S    Tue Sep 29 04:17:23 2026     node
+47314 47313 ??       S    Tue Sep 29 04:17:23 2026     /Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex
+process-lock mtime=2026-09-28T21:17:23.364Z
+main semaphore:     if [ "$slot" = "main" ] && [[ "$l1" == *ACTIVE* && "$l1" != *"lock CLEARED"* ]]; then
