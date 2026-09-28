@@ -1,4 +1,4 @@
-# s2727 — Holds-2 remains live; daily backup awaits server supply
+# s2727 — Holds-2 remains live; daily private backup secured
 
 **READY-FOR-GATES — bookkeeping and heartbeat increment; no source drain.** WHY: the completed Holds-1 slice already landed through the attended session. The done-move probe has zero real drains and zero unknowns; the only unabsorbed lane content belongs to live Holds-2. CODEX-WALL and attended dispatch ownership remain binding.
 
@@ -19,7 +19,7 @@ The recorded browser/tsc/build evidence is inherited and labelled as such in rev
 
 ## Daily duties
 
-- **LB-01 attempted at 02:10 UTC, NOT DISCHARGED for September 28.** Pull rc 0 in 3.477 s; the server's newest is September 27. The existing private series has **35 mirrors, 185,122,816 B**, August 24 through September 27. Push probe rc 0, unchanged. Exposure check reads all 35 mirrors and 1768 keys: **zero account-class, zero unrecognised, zero unreadable**. No mirror enters the public repo. Next fire retries when the server's randomized daily backup appears; no owner action is needed.
+- **LB-01 initially attempted at 02:10 UTC, then DISCHARGED at 02:19 UTC for September 28.** Pull rc 0 in 3.477 s; the server's newest is September 27. The existing private series has **35 mirrors, 185,122,816 B**, August 24 through September 27. Push probe rc 0, unchanged. Exposure check reads all 35 mirrors and 1768 keys: **zero account-class, zero unrecognised, zero unreadable**. No mirror enters the public repo. The final pull obtained today's file; strict exposure check read **36 mirrors / 1862 keys**, with zero account-class, unrecognised or unreadable entries. Push rc 0; private remote **409ffd397abde6b0d465fb8a79be145112f9e9f6** verified by ls-remote. All **36/36 coverage days** now backed up; no owner action. Initial and final receipts are both retained.
 - **FM-01 discharged:** rc 0, branch unchanged. Private remote heads before duty: ledger-backups **9e4c2a9d4e5840189ac9ba79366814adba2c57cc**, fire-memory **53d87470fb2670626fb4605d4dc0eb5bffd899fb**.
 - **TK-01 already present:** September 27 digest read, its UTC+07 window and four player-path landings are explicit. No new player-facing merge in this fire, so no new Gazette entry. Publication stays owner-only.
 - **RT-01 current:** r2026w40 opens September 28 and closes October 5; next mint is due on Wednesday September 30 for the coming Monday. skillmd guard **19/19**, rc 0. No rotation mutation.
@@ -29,7 +29,15 @@ The recorded browser/tsc/build evidence is inherited and labelled as such in rev
 
 1. Attended records the ongoing Holds-1 main Node result and resolves or attributes any remaining red; no all-green claim from this fire.
 2. Holds-2 finishes; gate its completed output under the applicable ownership and policy. Holds-3 dispatch remains attended-owned and follows the Holds-2 landing.
-3. Retry September 28 LB-01 supply in a later fire; the missing file is a supply window, not a fetch failure. FM-01 is current.
+3. LB-01 and FM-01 are current for September 28; the next coverage duty is September 29 after 02:10 UTC.
 4. Retain the attended follow-ups: native-ride attribution note, Long Road far-stop proof and Deepwater wreck re-entry.
 
-Final ledger, archive audit, vault digest and backup verification are recorded below before the last lock-clearing commit. No product finding or new task is invented from this heartbeat.
+Final ledger, archive audit and vault digest are recorded below before the last lock-clearing commit. The main backup push follows that commit. No product finding or new task is invented from this heartbeat.
+
+## Final verification
+
+Ledger **PASS, npm rc 0**, **1263/1263**, zero failures or skips; all chained legs including kit **83/83** completed. Wall time **324.964 s**, Node **26.4.0**, checkpoint **4802e87852960652f9243a05b93027d59fc0c4e4**. Receipts: ledger-final.txt and ledger-result.json. The last private-backup push independently passed its strict 36-mirror exposure gate.
+
+Final read still finds Holds-2 in tasks/running and the attended Holds-1 main battery without completion totals; no new source drain or unqualified full-Node green is claimed. The predecessor archive and three-item Owner's Desk are preserved byte-for-byte. No product source, test, law, goal or BACKLOG row was edited. The vault project note and session digest are listed in vault-notes.json.
+
+Lock clearance **2026-09-28T02:20Z** is the final main write/commit of s2727. A normal push to origin/main and read-only remote verification follow it. The launcher retains its own fire directory until this process exits.
