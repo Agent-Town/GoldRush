@@ -1,0 +1,59 @@
+{
+  "stamp": "2026-09-28T20:10Z",
+  "main": "cd16284ef7c81fef8911a0d844852163dc211285",
+  "originMain": "0979de76328c5a225f543d620f47c66a9f5c4382",
+  "originCandidate": "23f27b9407c0e192552e348d1dfe8597e18e6669",
+  "privateLedger": "409ffd397abde6b0d465fb8a79be145112f9e9f6",
+  "privateMemory": "53d87470fb2670626fb4605d4dc0eb5bffd899fb",
+  "historicalBlobBytes": 113467543,
+  "introducingCommitOnMain": true,
+  "acceptedAudioDrainOnMain": true,
+  "backupReceipts": [
+    {
+      "name": "ledger-pull",
+      "stamp": "2026-09-28T02:10Z",
+      "exit": 0,
+      "signal": null,
+      "seconds": 3.477
+    },
+    {
+      "name": "ledger-push",
+      "stamp": "2026-09-28T02:10Z",
+      "exit": 0,
+      "signal": null,
+      "seconds": 7.899
+    },
+    {
+      "name": "fire-memory",
+      "stamp": "2026-09-28T02:10Z",
+      "exit": 0,
+      "signal": null,
+      "seconds": 5.348
+    }
+  ],
+  "rotations": [
+    {
+      "id": "r2026w37",
+      "opensAt": "2026-09-07T00:00:00.000Z",
+      "closesAt": "2026-09-14T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w38",
+      "opensAt": "2026-09-14T00:00:00.000Z",
+      "closesAt": "2026-09-21T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w39",
+      "opensAt": "2026-09-21T00:00:00.000Z",
+      "closesAt": "2026-09-28T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w40",
+      "opensAt": "2026-09-28T00:00:00.000Z",
+      "closesAt": "2026-10-05T00:00:00.000Z"
+    }
+  ],
+  "tickerPresent": true,
+  "candidateBoundaryEvidence": "artifacts/s2748/repair-boundary.json",
+  "candidateBoundaryNote": "Candidate is not a local ref; current remote hash matches s2748 receipt. No fetch or new candidate-tree comparison performed."
+}
