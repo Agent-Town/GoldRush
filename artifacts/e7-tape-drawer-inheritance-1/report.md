@@ -1,61 +1,53 @@
-# Tape drawer inheritance — implementation complete, acceptance conflict blocks landing
+# Tape drawer inheritance — contract progress with explicit preview isolation
 
-READY-FOR-GATES — **not green for landing**. The requested map-or-campaign rule is implemented. The protected acceptance test contradicts that rule at its first assertion: it seeds Robin's campaign to E7 before opening E6, then requires no toggle. The task describes that boot as a fresh profile, but it is already an E7 profile. No acceptance assertions were changed or bypassed.
+READY-FOR-GATES — all assigned checks pass.
 
-## Root cause and diff
+## Root cause and change
 
-`activeEpochId()` intentionally reads the selected contract's content epoch. The old Tape Reel mount used only that epoch, hiding the player's inherited drawer on earlier contracts. `src/game/Game.ts` now imports the existing `epochIsActive()` helper and mounts when `this.activeEpoch.order >= 7 || epochIsActive('epoch-7-signal')`. The helper compares the saved campaign manifest order to E7. No new helper, map-content epoch change, capacity change, simulation change, or playbook behavior change was needed.
+The map-content epoch intentionally belongs to the selected contract. The original Tape Reel mount consulted only that epoch, so an E7 profile lost its drawer on earlier contracts. Attempt 1's unconditional campaign fallback then incorrectly armed the drawer in an explicit E6 debug preview. These are different boot modes, not contradictory acceptance criteria.
 
-The phone hit-target audit did not cover plain E1 inheritance. Its existing test now ends with a plain E1 navigation and exactly one added visibility assertion, under its existing console/page-error collectors. The protected `e7-playbook-surface.spec.ts` is byte-unchanged.
+`src/meta/ContractFamilies.ts:1138` now exports `tapeReelEpochOrder()`. It mirrors the existing valid debug-preview predicate (including editor, fullbase, release and replay handling); a valid preview keeps its active epoch order. A `?contract=` boot outside that preview branch takes the maximum of the active order and the saved campaign order. Other boots retain their active order. `src/game/Game.ts:22` imports the helper and `:1926` uses its order to mount the drawer. The existing `activeEpochId()` body, capacity, playbook behavior, and simulation are unchanged.
 
-**Engine-pinned landing:** `src/**` changed: `src/game/Game.ts:23` imports the helper and `:1926` changes the mount condition. Integration must use the engine-pinned landing path. This lane does not update pins, release, deploy, or modify orchestrator-owned files.
+Attempt 1 already added exactly one visibility assertion following a plain E1 navigation in the hit-target audit. It is retained without further e2e changes. The protected acceptance spec is byte-identical to the pre-task baseline. Full landing diff: `implementation.diff`.
 
-## Pre-flight
+**Engine-pinned landing:** `src/**` changed at the Game import/mount and ContractFamilies helper above. Integration must use the engine-pinned landing path. This task does not update the engine pin or deploy.
 
-Starting HEAD `97903ef7b51c508ab363b5b759fe90b2c00a7972`; main baseline `0ffd300fc4f9f614825a051f1e9ed881899ff85c`. Initial tracked worktree clean; `git log main..HEAD` empty (no undrained commits). Main contained the prerequisite `e7-tape-toggle-phone-hit-target-1` merge `00e12579e`. Reset the lane to local main with the prescribed checkout/clean command. No remote pull was performed: main is the locally attended integration branch.
+## Preflight and scope
 
-`git clean -fd` removed regenerated untracked evidence directories only: `artifacts/gr-campaign-fixture-cleanup-1/{injection-contract-helper,injection-early-exit,injection-first-helper,injection-live-child,injection-resume-assertion,injection-second-helper,injection-startup,playwright-results/*,same-assertion-after,same-assertion-before}` and `artifacts/play-proofs-evidence-retention-1/{desktop-chrome-results,mobile-chrome-results}/*` (six build-menu result directories in each family). `npm install --no-audit --no-fund` exited 0. Its sole tracked churn was removal of 30 lockfile libc metadata lines; restored that generated churn. Pre-flight build exited 0, and the lane was clean before implementation apart from newly collected task evidence.
+Start: `7eda17dd7`, branch `sol/open-findings-astra`, clean worktree. The only ahead commits were authorized predecessor commits `0d7949951` and `7eda17dd7`; both retained with no reset or history rewrite. Landing baseline: `0ffd300fc4f9f614825a051f1e9ed881899ff85c` (merge base with main).
 
-The vault was readable and searched. The task's explicit TOUCH-ONLY firewall prevents writing a vault digest during this slice; this report is the durable handoff.
+Fetched origin/main successfully. Prerequisite merge `00e12579e` is present in both local main and freshly fetched origin/main. Local main was `9a809c631`; fetched origin/main was `32c93f42e`. Main was inspected, not moved. `npm install --no-audit --no-fund` and preflight `npm run build` both exited 0. Restored only install-generated package-lock libc metadata churn; worktree was then clean before edits. Logs: `attempt-2-install.log`, `attempt-2-preflight-build.log`.
 
-## Unchanged acceptance before and after
+No unrelated source, protected assertions, specs, scripts, tasks, reviews, or other lanes changed. The vault was readable and searched; the task's explicit TOUCH-ONLY firewall prevents a vault write. This report is the durable handoff.
 
-Each command used `npx playwright test e2e/e7-playbook-surface.spec.ts --project=<project> --workers=1 --output=artifacts/e7-tape-drawer-inheritance-1/<phase>-<device>-results`. stdout/stderr and the command's direct exit status are retained in matching `.log` and `.exit` files.
+## Acceptance evidence
 
-| Project | Before | After | Record/replay test |
+All Playwright runs use the config-owned dev server at 127.0.0.1:5188 and `--workers=1`. Direct subprocess return codes are captured in `.exit` files, without a pipeline.
+
+| Project | Original baseline | Attempt 1 | Attempt 2 |
 | --- | --- | --- | --- |
-| desktop-chrome | exit 1; 1 failed, 1 passed; line 49, missing plain E1 toggle | exit 1; 1 failed, 1 passed; line 40, seeded E7 profile has E6 toggle | passed before and after |
-| mobile-chrome | exit 1; 1 failed, 1 passed; line 49, missing plain E1 toggle | exit 1; 1 failed, 1 passed; line 40, seeded E7 profile has E6 toggle | passed before and after |
+| desktop-chrome | exit 1; 1 passed, 1 failed at final plain E1 visibility | exit 1; 1 passed, 1 failed at E6 preview absence | exit 0; 2/2 passed (16.3s) |
+| mobile-chrome | exit 1; 1 passed, 1 failed at final plain E1 visibility | exit 1; 1 passed, 1 failed at E6 preview absence | exit 0; 2/2 passed (16.0s) |
 
-Before: desktop 1.4m, mobile 54.5s. After: desktop 52.8s, mobile 32.7s. Failure screenshots, traces, and error context are retained. The post-fix acceptance cannot reach its final E1 assertion because it stops at the contradictory E6 assertion. The added audit assertion and separate plain-boot probe provide direct coverage of that behavior without weakening the protected test.
+Historical before/after logs and exit files from attempt 1 remain in-tree. Their complete original records are also retained outside the tree. Attempt 2 runs are `npx playwright test e2e/e7-playbook-surface.spec.ts --project=<project> --workers=1 --output=<retention-root>/attempt-2/<device>-results`, logged as `attempt-2-after-<device>.log/.exit`.
 
-## Remaining list in order
+## Compiler, plain boots, and adjacency
 
-1. Orchestrator must resolve the acceptance contradiction: seed E7 only after checking genuinely fresh-profile E6, or revise the task's map-or-campaign rule. Editing the protected acceptance is outside this lane's firewall.
-2. Re-run the unchanged-or-authorized-corrected acceptance on desktop and mobile, then perform the engine-pinned integration gates.
+- `npx tsc --noEmit`: exit 0 (`attempt-2-typecheck.log/.exit`).
+- `npm run build`: exit 0 (`attempt-2-build.log/.exit`). Existing build warnings retained in the log.
+- Plain boot probes: exit 0, **2/2 passed** (19.2s). Command: `npx playwright test --config=artifacts/e7-tape-drawer-inheritance-1/plain-boots.config.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --output=<retention-root>/attempt-2/plain-boots-results`. On both projects the new E6 profile has zero toggles; E7 campaign profiles have one visible toggle on both plain E1 and E6 maps. Diagnostics confirm the actual map epochs remain E1/E6, no `__GR_TEST__`, and zero console/page errors in all six boots. See `plain-boots-<project>.json` and `attempt-2-plain-boots.log/.exit`. Acceptance tests also assert zero console/page errors.
+- Adjacent suites: exit 0, **26/26 passed** (4.6m), **13/13 per project**: hit-target audit 1, build menu 7, river/bandits 5. Command: `npx playwright test e2e/e7-tape-toggle-phone-hit-target.spec.ts e2e/m2-01-build-menu.spec.ts e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --output=<retention-root>/attempt-2/adjacent-results`. See `attempt-2-adjacent.log/.exit`. Both audit JSON records have zero console/page errors; their error collectors span all board launches and the final inherited plain E1 boot.
 
-## Adjacent gates and compiler checks
+The adjacent tests regenerated seven tracked evidence files outside the task directory. Moved the generated copies into `<retention-root>/attempt-2/regenerated/`, copied only the audit JSON records into this task’s `adjacent-evidence/`, and restored the seven original paths. No unrelated edits remain.
 
-- `npx tsc --noEmit`: exit **0** (`typecheck.log`, `typecheck.exit`).
-- `npm run build`: exit **0** (`build.log`, `build.exit`). Existing Vite native-loader/chunk-size and asset-diet warnings remain.
-- `npx playwright test e2e/e7-tape-toggle-phone-hit-target.spec.ts e2e/m2-01-build-menu.spec.ts e2e/task-025-bandits-dont-swim.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1 --output=artifacts/e7-tape-drawer-inheritance-1/adjacent-results`: exit **0**, **26/26 passed**, 5.0m (`adjacent.log`, `adjacent.exit`). Per project: Tape toggle **1/1**, build menu **7/7**, river/bandits **5/5**. Both Tape-toggle runs include the new inherited plain E1 assertion; all prior adjacent assertions remain unchanged.
-- Audit console/page errors: **0/0 on both projects**; each audit's error collection spans its board launches and final plain E1 boot. Record/replay errors also remain zero on both projects.
-- The adjacent specs regenerated seven tracked files outside this slice's evidence directory. Copied these into `adjacent-evidence/artifacts/{056,e7-tape-toggle-phone-hit-target-1}/`, then restored only those generated originals. No out-of-scope source or assertion changes.
+## Evidence retention
 
-Implementation commit: `0d7949951` (`fix: inherit the Tape Reel from campaign progress`). Evidence is committed separately with the task's `fix:` prefix; resolve the report's containing commit for its final hash.
+Complete attempt-1 snapshot: `/Users/robin/.goldrush/evidence/e7-tape-drawer-inheritance-1/attempt-1/`. All 30 tracked trace/screenshot/result files were moved out of the task tree and removed from the index using path-scoped `git rm --cached`. No retained files were deleted. The original committed history remains unchanged.
 
-## Plain-boot probe
+`retention-manifest.json` records each moved path, destination, byte size and SHA-256: 576,780,762 bytes moved. New Playwright result folders write directly to the same retention root under `attempt-2/`. In-tree evidence retains reports, JSON measurements, probe source/config, and command logs; no screenshots are required in-tree (zero is within the two-JPEG cap).
 
-`npx playwright test --config=artifacts/e7-tape-drawer-inheritance-1/plain-boots.config.ts --project=desktop-chrome --project=mobile-chrome --workers=1`: exit **0**, **2/2 passed**, 17.6s. Artifact-only config/spec and per-project JSON are retained. Both projects verified all three boots with **zero console and page errors** and no `__GR_TEST__`:
+Source fix: `fdfef8530` (`fix: inherit the Tape Reel on contract boots while isolating epoch previews`). Authorized predecessor commits: `0d7949951`, `7eda17dd7`. Evidence commit is the commit containing this final report; resolve with `git log -1 -- artifacts/e7-tape-drawer-inheritance-1/report.md`. Final evidence budget: **1,156,332 bytes added** against baseline `0ffd300fc4f9f614825a051f1e9ed881899ff85c`; below the task's 25,000,000-byte cap. Verified with `node scripts/evidence-budget.mjs 0ffd300fc4f9f614825a051f1e9ed881899ff85c HEAD --limit 25000000` after committing.
 
-| Campaign progress | Actual map | Actual content epoch | Tape toggle count |
-| --- | --- | --- | ---: |
-| E6 (new profile; only E6 access and staged Showroom launch seeded) | e6-showroom | epoch-6-atomic | 0 |
-| E7 | the-claim | epoch-1-frontier | 1, visible |
-| E7 | e6-showroom | epoch-6-atomic | 1, visible |
+## REMAINING LIST IN ORDER
 
-Probe adaptation: an entirely unseeded profile cannot directly launch the locked E6 map; its URL fell back to The Claim. That initial instrument run exited 1 on both projects, with zero errors, and is preserved in `probe-setup-control/`. The corrected probe uses the E6 access and staged-launch prerequisites already used by `e2e/e6-showroom-capture-quota.spec.ts`; it does not mutate simulation state. One intermediate collection attempt exited 1 because the archived probe retained a `.spec.ts` suffix and its relative imports moved; renamed the archive to `.ts.txt`, preserving the attempt's log/status. Neither probe setup finding warranted a production change.
-
-The requested inheritance rule and pre-Signal absence now have direct plain-boot evidence. The sole unresolved gate remains the protected acceptance test's E7-seeded E6 absence assertion.
-
-Evidence payload: **577,200,597 bytes** across **60 files**, excluding this report and its manifest; exact per-file counts are in `evidence-manifest.json`.
+1. Orchestrator: run the engine-pinned integration gates and land the slice. No implementation or verification items remain for this task.
