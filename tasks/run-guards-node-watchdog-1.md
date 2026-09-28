@@ -1,14 +1,16 @@
-# Task run-guards-node-watchdog-1: let the full Node battery finish inside a measured outer budget (SCRATCH, commit prefix "fix:")
+# Task run-guards-node-watchdog-1: let the full Node battery finish inside a measured outer budget (LANE-D, Astra, commit prefix "fix:")
 
-**FIRE-AUTHORED s2737, 2026-09-28. AUTHORED ONLY; no fire dispatch under tasks/CODEX-WALL.**
+CODEX: model=gpt-6-astra
 
-You are the implementer for Gold Rush in a fresh scratch worktree beside the primary checkout, `/Users/robin/Claude/Projects/gr-task-run-guards-node-watchdog-1`, branch `fix/run-guards-node-watchdog-1`, cut from main. The attended session owns dispatch and landing.
+**FIRE-AUTHORED s2737, 2026-09-28; assigned 2026-09-28 by the attended session to Astra on lane-d (owner 2026-09-26: tasks run as Codex lane masters for Astra). CODEX-WALL still forbids FIRE dispatch; this copy was dispatched attended.**
+
+You are Codex (gpt-6-astra), implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-d` (branch `art/portraits-e5-e10-generated`; the branch name is history, your commits are path-scoped to the two scripts and your evidence). You do not touch STATUS.md, reviews, tasks or other lanes.
 
 READ FIRST: AGENTS.md; CLAUDE.md; `tasks/CODEX-WALL`; `reviews/audio-music-toggle-1-s2736.md`; `artifacts/s2736/tape-main-failure.txt`; `artifacts/s2724/report.md`; `scripts/run-guards.mjs`; `scripts/run-guards.test.mjs`; `scripts/run-node-guards.mjs`; `tasks/lane-d-f1713-1-run-guards-outer-budget.md` (historical shipped predecessor, not work to repeat).
 
-Pre-flight: `git status --short` must show no staged or modified TRACKED file outside the two factory-churn classes; if any exist, STOP and report (a live drain or another task owns the tree). Untracked `??` host debris is EXPECTED; list briefly, proceed. FACTORY-CHURN EXCEPTION (F-1407-1): (a) `logs/**` (the fire and runner accounting, rewritten every cycle); (b) `artifacts/**`, `reviews/shots-*` and any `.png` (regenerated evidence, the F-1266-1 class). What still STOPs: modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`. A scratch worktree adds: `git log main..HEAD --oneline` empty (a fresh cut).
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL; the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B art/portraits-e5-e10-generated main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work; resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence (`artifacts/**`, `reviews/shots-*`, any `.png`) are NEVER work and NEVER a STOP; discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. Then `git -C worktrees/lane-d status --short` must be clean, with the FACTORY-CHURN EXCEPTION (F-1407-1): `logs/**`, `artifacts/**`, `reviews/shots-*` and any `.png` are always expected, never a STOP; what still STOPs is modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
 
-Prepare with `npm ci`, prove `git status --short` clean, then typecheck and build before editing. If this checkout already has a different measured wrapper policy, STOP and report its commit rather than overwriting it. Do not edit a script while a process is executing it.
+Prepare with `npm install --no-audit --no-fund` in the lane worktree (the LANE pre-flight above already covers cleanliness), then typecheck and build before editing. If this checkout already has a different measured wrapper policy, STOP and report its commit rather than overwriting it. Do not edit a script while a process is executing it (check `tasks/running/` and the fire lock; wait or report).
 
 ## Why (F-2737-1, measured 2026-09-28)
 
