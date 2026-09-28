@@ -17,6 +17,8 @@ import { ACTIVE_EPOCH_KEY, listBoardContracts, listEpochs, type ContractManifest
 import { researchStateKey } from '../../src/meta/ResearchTree';
 import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 
+import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';
+
 const TIMESCALE = '4';
 const HOLD_GROUND = process.env.GR_NATIVE_STRATEGY === 'hold-ground';
 const RESTORE_GROUND = process.env.GR_NATIVE_STRATEGY === 'restore-ground';
@@ -274,6 +276,13 @@ async function takeUpgrades(page: Page, row: Row): Promise<void> {
       row.samples.push({ t: +now.sim.toFixed(1), wave: Math.max(now.wave, now.hudWave), hp: Math.round(now.hp), gold: Math.round(now.gold), kills: now.kills, x: +now.hero.x.toFixed(1), z: +now.hero.z.toFixed(1), alive: now.enemiesAlive, seams: now.nodes.filter(n => n.active).length });
       console.log(row.contract, JSON.stringify(row.samples.at(-1)));
     }
+    if (row.contract === 'e6-picnic') {
+      const stakes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.picnicHold ?? []);
+      for (const stake of stakes.filter(s => s.claimed)) {
+        const prefix = `stake lost ${stake.id}:`;
+        if (!row.notes.some(note => note.startsWith(prefix))) row.notes.push(`${prefix} wave=${now?.wave}, sim=${now?.sim}, state=${JSON.stringify(stake)}`);
+      }
+    }
     if (now) for (const node of now.power.nodes) {
       if (node.kind === 'storage') row.powerBanksPeak[node.id] = Math.max(row.powerBanksPeak[node.id] ?? 0, node.storedWh ?? 0);
     }
@@ -527,6 +536,10 @@ async function build(
     if (!state || state.runState === 'dead' || state.secured ||
         (state.buildables.find(b => b.id === id)?.count ?? 0) > offer.count ||
         !state.buildMode || !state.ghostValid) break;
+    if (row.contract === 'e6-picnic' && Math.hypot(state.ghostPos.x - x, state.ghostPos.z - z) > PICNIC_HOLD_RADIUS - 1) {
+      row.notes.push(`stake placement refused outside target disc: target=${x},${z}; ghost=${JSON.stringify(state.ghostPos)}`);
+      break;
+    }
     await page.keyboard.press('Space');
     await page.waitForTimeout(250);
   }
@@ -725,6 +738,16 @@ async function lowOrbitCrossing(page: Page, row: Row, deadline: number, unreacha
 }
 
 // Motor errands use the ordinary confirm key at surveyed stakes and haul destinations.
+async function picnicOpening(page: Page, row: Row, contract: ContractManifest, deadline: number, unreachable: Set<string>): Promise<void> {
+  const stakes = contract.tileParams.stakeMarkers ?? [];
+  for (const stake of stakes) {
+    await build(page, row, 'palisade', stake.x, stake.z, Math.min(deadline, Date.now() + 30_000), [], unreachable);
+    const now = await read(page);
+    const distances = now?.defences.filter(b => b.hp > 0 && !b.wrecked).map(b => ({ id: b.id, x: b.x, z: b.z, distance: Math.hypot(b.x - stake.x, b.z - stake.z) })) ?? [];
+    row.notes.push(`stake ${stake.id}: radius=${PICNIC_HOLD_RADIUS}; wave=${now?.wave}; works=${JSON.stringify(distances)}; heldByWork=${distances.some(b => b.distance <= PICNIC_HOLD_RADIUS)}`);
+  }
+}
+
 async function motorStop(page: Page, row: Row, x: number, z: number, tolerance = 0.8): Promise<boolean> {
   if (!(await walkTo(page, row, x, z, tolerance, 120))) {
     row.notes.push(`motor stop unreachable: ${x},${z}; hero=${JSON.stringify((await read(page))?.hero)}`);
@@ -1017,6 +1040,7 @@ function kitFor(contract: ContractManifest): KitPiece[] {
     { id: 'turret', dx: -5, dz: 2 },
     { id: 'turret', dx: 1, dz: 6 },
   ];
+  if (contract.id === 'e6-picnic') return [{ id: 'turret', dx: 0, dz: -1 }, { id: 'sentry_beacon', dx: 1, dz: 1 }];
   const pieces = [...KIT];
   if ((contract.twist as { lightRamp?: unknown }).lightRamp) {
     pieces.splice(1, 0, { id: 'lantern_post', dx: 4, dz: 4 }, { id: 'lantern_post', dx: -4, dz: -4 });
@@ -1243,6 +1267,7 @@ export function nativeProof(id: string, run = 1) {
             }
           }
         }
+        if (contract.id === 'e6-picnic') await picnicOpening(page, row, contract, deadline, unreachable);
         if (contract.id === 'e5-regatta') await regattaJourney(page, row, contract, deadline);
         if (contract.id === 'e5-deepwater-claim') await deepwaterJourney(page, row, contract, deadline);
         const kit = contract.id === 'e5-deepwater-claim' ? [] : kitFor(contract);
