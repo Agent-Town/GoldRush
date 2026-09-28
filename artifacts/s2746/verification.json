@@ -1,0 +1,89 @@
+{
+  "observedAt": "2026-09-28T14:32Z",
+  "head": "4b966d81bc42ae7d1664185ff972911e4865286c",
+  "runner": "PID  PPID TTY      STAT STARTED\n25494     1 ??       SN   Sun Sep 20 13:55:15 2026",
+  "ancestry": {
+    "a214c82d7": 0,
+    "ade1f4120": 0,
+    "954bb2cde": 0,
+    "7eda17dd7": 0
+  },
+  "blockingBlobBytes": "113467543",
+  "lanes": {
+    "sol/open-findings-astra": "",
+    "sol/wave-lane-b": "",
+    "sol/map-art-campaign-2": "",
+    "art/portraits-e5-e10-generated": ""
+  },
+  "failedSincePredecessor": [],
+  "privateDutyReceipts": {
+    "ledger": {
+      "stamp": "2026-09-28T02:19Z",
+      "exit": 0,
+      "todayPresent": true
+    },
+    "memory": {
+      "stamp": "2026-09-28T02:10Z",
+      "exit": 0,
+      "signal": null,
+      "seconds": 5.348
+    }
+  },
+  "ticker": "# Ticker digest — 2026-09-27\n\nTK-01, compiled by s2723 at 2026-09-27T23:00Z, September 28 after 06:00 local. Draft for one owner approval; publication remains owner-only. Bold micro-headlines are at most 140 characters.\n\n## The day's news\n\n- **County Standings opens on the current week's claims, with All time one tap away.** `40c1ee15b`, `e7fafe2a5`. A player's weekly standing appears in the in-game board. The public board's rotation parameter is documented by `2d4802c04`. Review: `reviews/county-board-open-week-1.md`.\n- **The River's quiet pan can earn a verified county standing.** `712db42e2`, `9ce6ecba9`. Fresh reels with diagonal movement now follow the steps recorded on keyboard and phone. Historical reels carrying the old movement drift remain rejected. Review: `reviews/river-assay-1.md`.\n- **A recorded pause no longer stops a replay forever.** `28272092e`, `df0f305b9`, `52cac1459`. Fresh paused River reels verify on desktop and phone. This later landing resolves the pause limitation recorded in the preceding River review; it does not repair old movement-drift reels. Review: `reviews/tape-pause-fix-1.md`.\n\n## Landing dates and coverage\n\nThe local window is September 27 00:00 through September 28 00:00, UTC+07: `[2026-09-26T17:00Z, 2026-09-27T17:00Z)`. History is pinned at `870fa5eb0`. The saved main reflog records **143 updates**, all ancestor-preserving, from `b7602f6b3` to `cb82f79a4`; **four** updates touch the existing `isPlayerPath` corpus. The pinned first-parent walk contains **135** commits in this window. Every actual main update was compared with its preceding main tree, including introduced second-parent commits regardless of authoring date. The September 25 busy-day control reproduces **136** first-parent commits.\n\n| Main landing, local | Main tip | Coverage |\n| --- | --- | --- |\n| 00:52 | `fc5157f6b` | Weekly County Standings; same-era pin 69 |\n| 00:57 | `2d4802c04` | Public board rotation parameter documented |\n| 06:31 | `dfa1ed17d` | River county assay and recorded axes; pin 70 |\n| 09:37 | `df0f305b9` | Recorded pause replay; pin 71 |\n\nAll three pins remain in era 6. Later QA evidence and factory bookkeeping do not add player mechanics. The River and pause changes already have Gazette drafts; s2723 adds the missing weekly-board roundup. Nothing is published by this fire.\n\nEvidence: `artifacts/s2723/day.mjs`, `day.json`, `main-reflog.txt`. The JSON lists every introduced commit and changed player path for each update.\n",
+  "rotations": {
+    "rotations": [
+      {
+        "id": "r2026w37",
+        "opensAt": "2026-09-07T00:00:00.000Z",
+        "closesAt": "2026-09-14T00:00:00.000Z",
+        "seeds": {
+          "the-claim": "e1-the-claim-r2026w37-78c18ea52f17",
+          "e1-dry-gulch": "e1-dry-gulch-r2026w37-b60b6acd03d2",
+          "e1-twin-banks": "e1-twin-banks-r2026w37-9a654e7c7601",
+          "e1-night-shift": "e1-night-shift-r2026w37-4aecec4d856e",
+          "e2-hill-mine": "e2-hill-mine-r2026w37-96665bd39eee",
+          "e1-baron": "e1-baron-r2026w37-49de99c8e4bc"
+        }
+      },
+      {
+        "id": "r2026w38",
+        "opensAt": "2026-09-14T00:00:00.000Z",
+        "closesAt": "2026-09-21T00:00:00.000Z",
+        "seeds": {
+          "the-claim": "e1-the-claim-r2026w38-f94c101b7c67",
+          "e1-dry-gulch": "e1-dry-gulch-r2026w38-3af7ef7d769d",
+          "e1-twin-banks": "e1-twin-banks-r2026w38-cab524d634c4",
+          "e1-night-shift": "e1-night-shift-r2026w38-bd19fa27d1fc",
+          "e2-hill-mine": "e2-hill-mine-r2026w38-0eddff7ae6fa",
+          "e1-baron": "e1-baron-r2026w38-2acaf2d170fd"
+        }
+      },
+      {
+        "id": "r2026w39",
+        "opensAt": "2026-09-21T00:00:00.000Z",
+        "closesAt": "2026-09-28T00:00:00.000Z",
+        "seeds": {
+          "the-claim": "e1-the-claim-r2026w39-492bfb6017b9",
+          "e1-dry-gulch": "e1-dry-gulch-r2026w39-096d1b1e2451",
+          "e1-twin-banks": "e1-twin-banks-r2026w39-90a16dd8fc4b",
+          "e1-night-shift": "e1-night-shift-r2026w39-36c2504b618a",
+          "e2-hill-mine": "e2-hill-mine-r2026w39-b64d7667f323",
+          "e1-baron": "e1-baron-r2026w39-a70ccb333bb8"
+        }
+      },
+      {
+        "id": "r2026w40",
+        "opensAt": "2026-09-28T00:00:00.000Z",
+        "closesAt": "2026-10-05T00:00:00.000Z",
+        "seeds": {
+          "the-claim": "e1-the-claim-r2026w40-418026a0ec56",
+          "e1-dry-gulch": "e1-dry-gulch-r2026w40-026295aeed94",
+          "e1-twin-banks": "e1-twin-banks-r2026w40-04011cda25bf",
+          "e1-night-shift": "e1-night-shift-r2026w40-43ca36636450",
+          "e2-hill-mine": "e2-hill-mine-r2026w40-101072747bc7",
+          "e1-baron": "e1-baron-r2026w40-e7272e198e52"
+        }
+      }
+    ]
+  }
+}
