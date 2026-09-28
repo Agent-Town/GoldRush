@@ -1,0 +1,58 @@
+{
+  "at": "2026-09-28T07:07Z",
+  "head": "9fadfd0fca41b79294db94365f5ab6097d7c6092",
+  "launcher": {
+    "fireRunner": 12469,
+    "codex": 28599,
+    "lockDirectoryBelongsToThisInvocation": true
+  },
+  "tape": {
+    "merge": "00e12579e",
+    "goal": "merged",
+    "landLockHolder": 83021,
+    "mainBattery": 55550,
+    "mainBatteryComplete": false
+  },
+  "holds3": {
+    "merge": "ee16b7954",
+    "goal": "merged",
+    "wrapperExit": 0,
+    "mainBattery": {
+      "pass": 1033,
+      "fail": 2,
+      "skipped": 5
+    },
+    "attendedDisposition": "F-SPH3-1 load-class; standalone rerun rc 0 is recorded in attended handover, raw rerun receipt not located"
+  },
+  "audio": {
+    "policy": "CLEAR",
+    "branch": "sol/wave-lane-b",
+    "commit": "a029c8f8e",
+    "ahead": 2,
+    "ownTests": {
+      "pass": 8,
+      "fail": 2
+    },
+    "adjacent": {
+      "pass": 44,
+      "fail": 0
+    },
+    "sourceReport": "worktrees/lane-b/artifacts/audio-music-toggle-1/report.md",
+    "wrongFirewallPathExists": false,
+    "actualRegistryExists": true
+  },
+  "board": {
+    "drains": 1,
+    "unknown": 0,
+    "blockedOrClosed": 13,
+    "mergedGhosts": 66
+  },
+  "duties": {
+    "privateCoverage": "36/36",
+    "privateHeadsUnchanged": true,
+    "ticker": "marketing/outbox/ticker-digest-2026-09-27.md",
+    "rotation": "r2026w40",
+    "nextBackups": "2026-09-29 after 02:10 UTC",
+    "nextRotation": "2026-09-30"
+  }
+}
