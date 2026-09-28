@@ -1,0 +1,138 @@
+[WebServer] (node:64334) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+Running 50 tests using 1 worker
+
+(node:66465) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings (7.4s)
+  ✓   2 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast (4.4s)
+  ✓   3 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics (6.3s)
+  ✓   4 [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops (5.9s)
+  ✓   5 [desktop-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling (4.5s)
+  ✓   6 [desktop-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience (4.6s)
+  ✓   7 [desktop-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns (4.9s)
+  ✓   8 [desktop-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly (5.8s)
+  ✓   9 [desktop-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound (4.4s)
+  ✘  10 [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload (31.0s)
+(node:57690) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  11 [desktop-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage (1.9s)
+  ✓  12 [desktop-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (3.5s)
+  ✓  13 [desktop-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops (3.8s)
+  ✓  14 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload (9.4s)
+  ✓  15 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings (3.7s)
+  ✓  16 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists (2.0s)
+  ✓  17 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile (2.5s)
+  ✓  18 [desktop-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start (6.1s)
+  ✓  19 [desktop-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists (3.9s)
+  ✓  20 [desktop-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile (3.4s)
+  ✓  21 [desktop-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop (4.7s)
+  ✓  22 [desktop-chrome] › e2e/mu-03-era-audio.spec.ts:27:1 › E2 contract uses the Steamworks loop without boot-critical audio (3.6s)
+  ✓  23 [desktop-chrome] › e2e/mu-03-era-audio.spec.ts:31:1 › E1 contract keeps the frontier loop (4.0s)
+  ✓  24 [desktop-chrome] › e2e/mu-03-era-audio.spec.ts:35:1 › title autoplay gate, music volume, and mute still hold (3.3s)
+  ✓  25 [desktop-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting (6.7s)
+(node:89315) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  26 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings (5.1s)
+  ✓  27 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast (3.9s)
+  ✓  28 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics (3.5s)
+  ✓  29 [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops (4.3s)
+  ✓  30 [mobile-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling (3.6s)
+  ✓  31 [mobile-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience (3.5s)
+  ✓  32 [mobile-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns (3.5s)
+  ✓  33 [mobile-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly (4.3s)
+  ✓  34 [mobile-chrome] › e2e/audio-integration.spec.ts:61:1 › boot stays audio-locked until gesture, then seeded panning requests sound (3.4s)
+  ✘  35 [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload (30.7s)
+(node:27243) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  36 [mobile-chrome] › e2e/audio-integration.spec.ts:118:1 › legacy audio preferences migrate into profile storage (2.2s)
+  ✓  37 [mobile-chrome] › e2e/audio-integration.spec.ts:155:1 › first-use bursts respect the per-sound pool cap (3.5s)
+  ✓  38 [mobile-chrome] › e2e/audio-integration.spec.ts:173:1 › missing audio names are silent no-ops (3.5s)
+  ✓  39 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:45:1 › run one tap stops music, preserves volume, resumes live and survives reload (8.8s)
+  ✓  40 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:104:1 › menu and town share one music preference with Settings (3.4s)
+  ✓  41 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:137:1 › first boot can silence music before a profile exists (1.8s)
+  ✓  42 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:153:1 › music off is stored per profile (2.0s)
+  ✓  43 [mobile-chrome] › e2e/audio-music-toggle.spec.ts:168:1 › turning off during a music fetch prevents its late start (5.2s)
+  ✓  44 [mobile-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists (3.9s)
+  ✓  45 [mobile-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile (3.1s)
+  ✓  46 [mobile-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop (4.2s)
+  ✓  47 [mobile-chrome] › e2e/mu-03-era-audio.spec.ts:27:1 › E2 contract uses the Steamworks loop without boot-critical audio (3.7s)
+  ✓  48 [mobile-chrome] › e2e/mu-03-era-audio.spec.ts:31:1 › E1 contract keeps the frontier loop (3.4s)
+  ✓  49 [mobile-chrome] › e2e/mu-03-era-audio.spec.ts:35:1 › title autoplay gate, music volume, and mute still hold (3.1s)
+  ✓  50 [mobile-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting (6.2s)
+
+
+  1) [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+        - waiting for" http://127.0.0.1:5188/" navigation to finish...
+        - navigated to "http://127.0.0.1:5188/"
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Call log:
+      - waiting for getByTestId('start-menu-settings')
+
+
+      87 |   await page.reload();
+      88 |
+    > 89 |   await page.getByTestId('start-menu-settings').click();
+         |                                                 ^
+      90 |   await mkdir(SHOT_DIR, { recursive: true });
+      91 |   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-settings.png`, fullPage: true });
+      92 |
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/audio-integration.spec.ts:89:49
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/audio-integration-settings-422a5--mute-persist-across-reload-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+    [mobile-chrome] › e2e/audio-integration.spec.ts:80:1 › settings volume and mute persist across reload 
+  48 passed (4.6m)

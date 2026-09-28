@@ -1,0 +1,50 @@
+{
+  "base": "80ba31fd110e504e4e06e87c1aa41659329c5e6a",
+  "checks": {
+    "tsc": 0,
+    "build": 0,
+    "audio_e2e": {
+      "exit_code": 1,
+      "passed": 48,
+      "failed": 2
+    },
+    "baseline_control": {
+      "exit_code": 1,
+      "failed": 2,
+      "same_failure": "audio-integration.spec.ts:89 missing first-boot start-menu-settings"
+    },
+    "normalization_replay": {
+      "exit_code": 0,
+      "byte_identical_files": 41
+    },
+    "runtime_checks": {
+      "exit_code": 0,
+      "plain_boots": 6,
+      "console_errors": 0,
+      "page_errors": 0,
+      "music_seams": 4
+    }
+  },
+  "assets": {
+    "one_shots_changed": 41,
+    "loops_unchanged": 15,
+    "positive_growth_bytes": 0,
+    "net_delta_bytes": -2508,
+    "loudnorm_lufs_range": [
+      -14.22,
+      -13.75
+    ],
+    "max_true_peak_dbtp": -1.14,
+    "max_decoded_duration_delta_s": 0.032399999999999984
+  },
+  "listen_bytes": {
+    "listen-before.ogg": 377450,
+    "listen-after.ogg": 355155
+  },
+  "evidence_budget": {
+    "added_bytes": 968650,
+    "limit_bytes": 25000000,
+    "asset_positive_growth_bytes": 0,
+    "asset_net_delta_bytes": -2508
+  }
+}
