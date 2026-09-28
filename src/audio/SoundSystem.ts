@@ -22,6 +22,13 @@ const HEADROOM_GAIN_FLOOR = 0.45;
 // Same timeout the advance stream gives its own idle work: an idle callback that never gets an
 // idle slot still fires within a second, so a busy load cannot strand the music indefinitely.
 const MUSIC_HOLD_TIMEOUT_MS = 1_000;
+// Review audio-review-1 measured tail fades and gaps. The files stay untouched.
+const MUSIC_SEAMS: Partial<Record<SoundName, { fade: number; gap: number }>> = {
+  'title-theme': { fade: 3, gap: 0.465 },
+  'era-e1-frontier-loop': { fade: 3, gap: 0.085 },
+  'era-e2-steamworks-loop': { fade: 1, gap: 0.180 },
+  'era-e3-voltage-loop': { fade: 3, gap: 0.490 },
+};
 let audioWasUnlocked = false;
 
 type IdleWindow = Window & {
@@ -66,6 +73,7 @@ type LoopState = {
   source: AudioBufferSourceNode;
   gain: GainNode;
   envelope: GainNode;
+  musicSources: Set<AudioBufferSourceNode>;
   voiceId: number;
   volume: number;
   sourceCount: number;
@@ -372,21 +380,60 @@ export class SoundSystem {
     const entry: SoundManifestEntry = soundManifest[name];
     const envelope = new GainNode(context, { gain: entry.group === 'music' ? 0 : 1 });
     if (entry.group === 'music') envelope.gain.setTargetAtTime(1, context.currentTime, 0.2);
-    source.buffer = buffer;
-    source.loop = true;
-    source.connect(envelope).connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
-    voice.source = source;
-    this.loops.set(name, { source, gain, envelope, voiceId, volume, sourceCount: this.loopSourceCount(name, 1), startedAt: context.currentTime });
-    this.setLoopVolume(name, volume);
-    source.onended = () => {
-      if (this.loops.get(name)?.source === source) this.loops.delete(name);
-      this.releaseVoice(voiceId);
+    const loop: LoopState = {
+      source, gain, envelope, musicSources: new Set(), voiceId, volume,
+      sourceCount: this.loopSourceCount(name, 1), startedAt: context.currentTime,
     };
+    envelope.connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
+    this.loops.set(name, loop);
+    this.setLoopVolume(name, volume);
     this.startingLoops.delete(name);
-    source.start();
+    const seam = MUSIC_SEAMS[name];
+    if (seam) {
+      const stride = buffer.duration - seam.gap - seam.fade;
+      // Schedule both passes on the audio clock. onended schedules the next pass a
+      // whole stride ahead, so a background-tab timer cannot open a hole at the seam.
+      this.startMusicPass(name, loop, buffer, context.currentTime, seam, true);
+      this.startMusicPass(name, loop, buffer, context.currentTime + stride, seam, false);
+    } else {
+      source.buffer = buffer;
+      source.loop = true;
+      source.connect(envelope);
+      voice.source = source;
+      source.onended = () => this.releaseVoice(voiceId);
+      source.start();
+    }
     this.started += 1;
     this.recordStarted(name);
     this.lastStarted = name;
+  }
+
+  private startMusicPass(
+    name: SoundName, loop: LoopState, buffer: AudioBuffer, at: number,
+    seam: { fade: number; gap: number }, first: boolean,
+  ): void {
+    const context = this.context!;
+    const stride = buffer.duration - seam.gap - seam.fade;
+    const source = context.createBufferSource();
+    const envelope = new GainNode(context, { gain: first ? 1 : 0 });
+    source.buffer = buffer;
+    source.connect(envelope).connect(loop.envelope);
+    if (!first) envelope.gain.setTargetAtTime(1, at, seam.fade / 5);
+    envelope.gain.setTargetAtTime(0, at + stride, seam.fade / 5);
+    loop.musicSources.add(source);
+    source.onended = () => {
+      loop.musicSources.delete(source);
+      source.disconnect();
+      envelope.disconnect();
+      if (!this.disposed && this.loops.get(name) === loop) {
+        this.startMusicPass(name, loop, buffer, at + 2 * stride, seam, false);
+      } else if (loop.musicSources.size === 0) {
+        loop.envelope.disconnect();
+        loop.gain.disconnect();
+      }
+    };
+    source.start(at, 0);
+    source.stop(at + buffer.duration - seam.gap);
   }
 
   private acceptSoundRequest(name: SoundName): boolean {
@@ -446,6 +493,9 @@ export class SoundSystem {
     if (loop) this.loops.delete(voice.name);
     const fade = stop && loop && soundManifest[voice.name].group === 'music' && this.context?.state === 'running';
     if (fade) loop.envelope.gain.setTargetAtTime(0, this.context!.currentTime, 0.1);
+    if (stop && loop) {
+      for (const source of loop.musicSources) source.stop(fade ? this.context!.currentTime + 0.5 : 0);
+    }
     if (stop && voice.source) {
       try {
         voice.source.stop(fade ? this.context!.currentTime + 0.5 : 0);
