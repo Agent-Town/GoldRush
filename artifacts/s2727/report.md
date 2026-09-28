@@ -1,0 +1,35 @@
+# s2727 — Holds-2 remains live; daily backup awaits server supply
+
+**READY-FOR-GATES — bookkeeping and heartbeat increment; no source drain.** WHY: the completed Holds-1 slice already landed through the attended session. The done-move probe has zero real drains and zero unknowns; the only unabsorbed lane content belongs to live Holds-2. CODEX-WALL and attended dispatch ownership remain binding.
+
+## Verified state
+
+- The fresh fire directory belongs to this process: launcher 63745, wrapper 63821, agent 63823; the launch log records 09:06:39 local start after the previous fire's 08:36:37 end. Lock commit **54aaf7dee**, UTC stamp from date, names s2727. The runner's main-slot predicate remains scripts/lane-runner-v3.sh:239: ACTIVE and not lock CLEARED.
+- Holds-1 merge **a69534fe9ae6a6f35971f977f9f3d4249a86584b** is an ancestor of main. Its goal is merged with that mergeHash and the attended review; source tip 673003605 is absorbed. This supersedes s2726's unlanded status. The predecessor is preserved verbatim, including its attended addendum.
+- Runner **25494**, PPID 1, alive. Health landing/game/API **200/200/200**. No restart needed. Holds-2 is active on lane-c; the newest runner log shows new commits and successful TypeScript work, not a credit-wall stop. Holds-3 remains held behind its predecessor and attended-owned. No failed move has changed since s2726's 01:35Z handoff.
+- Dry-board probe: **0 real drains, 0 unknown, 13 closed/blocked, 63 merged ghosts**. This is a done-board result, not an idle-factory claim. Lane-c is BUSY with unabsorbed source; a/b/d have zero ahead commits. No queue refill, requeue, done-move rename or lane mutation. Attended scratch worktrees and the September 25 untracked mpp1 landing files remain untouched.
+- Pending crafting orders **0**, staged art **0**. No assayer verdict or art-staging audit is due.
+- Tracked generated dashboard/usage/task statistics preserved in bookkeeping commit **0b92762df**. Run logs and older evidence remain on disk; nothing deleted.
+
+## Holds-1 gate qualification
+
+The attended landing's clean verdict does **not** mean every raw gate was green. Its review and sph1-gates.txt record candidate full Node **rc 1, 1034 pass / 1 fail / 5 skips**, 1040 tests. The exact failure is scripts/node-guards-contention.test.mjs:124: the contention fixture observed **3 concurrent batteries where 2 were expected**. The failure excerpt is retained in inherited-node-failure.txt; no root-cause cure or clean-main attribution is claimed by this fire. The attended post-landing main battery at ~/.goldrush/land/sph1-battery-main.log is still running at the initial check. Its owner must record the final exit and disposition. We neither rerun that full battery nor alter its tests, timeout, assertions, landing verdict or goal.
+
+The recorded browser/tsc/build evidence is inherited and labelled as such in reviews/sol-play-proofs-holds-1-landing.md. This fire verifies ancestry and reads the actual receipt; it does not claim new gameplay proofs. The owed native-ride attribution law note remains with the attended handover's 13z-91/13z-92 follow-up.
+
+## Daily duties
+
+- **LB-01 attempted at 02:10 UTC, NOT DISCHARGED for September 28.** Pull rc 0 in 3.477 s; the server's newest is September 27. The existing private series has **35 mirrors, 185,122,816 B**, August 24 through September 27. Push probe rc 0, unchanged. Exposure check reads all 35 mirrors and 1768 keys: **zero account-class, zero unrecognised, zero unreadable**. No mirror enters the public repo. Next fire retries when the server's randomized daily backup appears; no owner action is needed.
+- **FM-01 discharged:** rc 0, branch unchanged. Private remote heads before duty: ledger-backups **9e4c2a9d4e5840189ac9ba79366814adba2c57cc**, fire-memory **53d87470fb2670626fb4605d4dc0eb5bffd899fb**.
+- **TK-01 already present:** September 27 digest read, its UTC+07 window and four player-path landings are explicit. No new player-facing merge in this fire, so no new Gazette entry. Publication stays owner-only.
+- **RT-01 current:** r2026w40 opens September 28 and closes October 5; next mint is due on Wednesday September 30 for the coming Monday. skillmd guard **19/19**, rc 0. No rotation mutation.
+- Three-item Owner's Desk carried verbatim. No new owner decision, production deployment or publish action.
+
+## Remaining list in order
+
+1. Attended records the ongoing Holds-1 main Node result and resolves or attributes any remaining red; no all-green claim from this fire.
+2. Holds-2 finishes; gate its completed output under the applicable ownership and policy. Holds-3 dispatch remains attended-owned and follows the Holds-2 landing.
+3. Retry September 28 LB-01 supply in a later fire; the missing file is a supply window, not a fetch failure. FM-01 is current.
+4. Retain the attended follow-ups: native-ride attribution note, Long Road far-stop proof and Deepwater wreck re-entry.
+
+Final ledger, archive audit, vault digest and backup verification are recorded below before the last lock-clearing commit. No product finding or new task is invented from this heartbeat.
