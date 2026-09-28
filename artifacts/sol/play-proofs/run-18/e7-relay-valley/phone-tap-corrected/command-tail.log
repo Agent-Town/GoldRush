@@ -1,0 +1,35 @@
+(node:95154) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/1] [mobile-chrome] › e2e/native-proofs/driver.ts:1327:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow
+[mobile-chrome] › e2e/native-proofs/driver.ts:1327:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow
+e7-relay-valley {"t":10,"wave":0,"hp":400,"gold":0,"kills":0,"x":-11.3,"z":18.4,"alive":2,"seams":2}
+
+e7-relay-valley {"t":20.7,"wave":0,"hp":400,"gold":30,"kills":3,"x":-2.8,"z":10,"alive":3,"seams":1}
+
+e7-relay-valley {"t":30.8,"wave":1,"hp":400,"gold":30,"kills":3,"x":35.4,"z":-20,"alive":11,"seams":1}
+
+e7-relay-valley {"t":41.1,"wave":1,"hp":400,"gold":50,"kills":9,"x":18.5,"z":-3.1,"alive":8,"seams":2}
+
+e7-relay-valley {"t":51.5,"wave":1,"hp":400,"gold":50,"kills":15,"x":-23.2,"z":36.9,"alive":7,"seams":2}
+
+  1) [mobile-chrome] › e2e/native-proofs/driver.ts:1327:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow
+
+    TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.
+
+      855 |           if ((await read(page))?.buildMode) await page.keyboard.press('KeyB');
+      856 |           await control.scrollIntoViewIfNeeded();
+    > 857 |           await page.waitForFunction(testid => {
+          |                      ^
+      858 |             const button = document.querySelector(`[data-testid="${testid}"]`);
+      859 |             if (!button) return false;
+      860 |             const r = button.getBoundingClientRect();
+        at clickTape (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:857:22)
+        at tapeDemonstration (/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:890:3)
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/native-proofs/driver.ts:1534:107
+
+    Error Context: ../../../../../.goldrush/play-proofs/run-18/phone-tap-corrected/e7-relay-valley/results/native-proofs-e7-relay-val-58d90-ds-and-returns-to-the-board-mobile-chrome/error-context.md
+
+
+  1 failed
+    [mobile-chrome] › e2e/native-proofs/driver.ts:1327:5 › e7-relay-valley plays to its authored terminal, banks, reloads and returns to the board @slow

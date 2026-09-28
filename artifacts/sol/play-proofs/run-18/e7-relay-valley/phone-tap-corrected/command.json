@@ -1,0 +1,21 @@
+{
+  "head": "174c2643ee2145d313eea13bbc252c898154f66b",
+  "driverSha256": "b22806df94d1b920547faea2e47ab2e089eab8d67d58da92316ccbe2885a74d3",
+  "argv": [
+    "npx",
+    "playwright",
+    "test",
+    "e2e/native-proofs/e7-relay-valley.spec.ts",
+    "--project=mobile-chrome",
+    "--workers=1",
+    "--reporter=line",
+    "--output=/Users/robin/.goldrush/play-proofs/run-18/phone-tap-corrected/e7-relay-valley/results"
+  ],
+  "env": {
+    "GR_NATIVE_PROOF": "1",
+    "GR_NATIVE_RUN": "18/phone-tap-corrected",
+    "GR_CAPTURE_EXTERNAL_SERVER": "1",
+    "GR_CAPTURE_BASE_URL": "http://127.0.0.1:5303",
+    "GR_NATIVE_STRATEGY": "phone-tap-corrected"
+  }
+}

@@ -1,0 +1,299 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e10-archive-world&timescale=4",
+  "sim": 360.13333333332315,
+  "wave": 12,
+  "hp": 119,
+  "gold": 85,
+  "run": {
+    "secured": true,
+    "rush": false,
+    "lastRunEndedReason": null,
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 41,
+        "science": 1000,
+        "hero": 41,
+        "agent": 41
+      }
+    },
+    "victoryPayout": {
+      "territory": 1,
+      "science": 1,
+      "hero": 1,
+      "agent": 1
+    },
+    "secureWaveReached": 12,
+    "securedResultAt": 1790579850886,
+    "securedSnapshot": {
+      "waves": 12,
+      "gold": 85,
+      "timeAlive": 360.13333333332315
+    },
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": 1790579850888,
+      "lastWriteMs": 0.3,
+      "sizeBytes": 42809
+    }
+  },
+  "hero": {
+    "x": 29.69653502432832,
+    "y": 0.24000000715255737,
+    "z": -50.03774264986555
+  },
+  "defences": [
+    {
+      "id": "sentry_beacon",
+      "index": 0,
+      "tier": 1,
+      "hp": 40,
+      "maxHp": 40,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -24,
+        "z": -6
+      }
+    },
+    {
+      "id": "sentry_beacon",
+      "index": 1,
+      "tier": 1,
+      "hp": 64,
+      "maxHp": 64,
+      "wrecked": false,
+      "worn": false,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -32,
+        "z": -6
+      }
+    },
+    {
+      "id": "turret",
+      "index": 0,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -33,
+        "z": -7
+      }
+    },
+    {
+      "id": "turret",
+      "index": 1,
+      "tier": 1,
+      "hp": 50,
+      "maxHp": 50,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -23,
+        "z": -6
+      }
+    },
+    {
+      "id": "turret",
+      "index": 2,
+      "tier": 1,
+      "hp": 66,
+      "maxHp": 66,
+      "wrecked": false,
+      "worn": false,
+      "effectiveDamage": 52,
+      "effectiveFireRate": 1.1,
+      "repairProgress": 0,
+      "repairCost": 0,
+      "position": {
+        "x": -25,
+        "z": -3
+      }
+    }
+  ],
+  "e7Signal": {
+    "enabled": false,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "playbookUse": null,
+  "air": null,
+  "physics": {
+    "active": false,
+    "contractId": "e10-archive-world",
+    "source": "default",
+    "movement": "normal",
+    "feelG": 1,
+    "lobArcDistanceMultiplier": 1,
+    "lobAirTimeMultiplier": 1,
+    "knockbackScale": 1,
+    "orbitalReturn": false,
+    "vacuum": false,
+    "fixedTimestepOnly": true,
+    "filteredMovement": {
+      "x": 0,
+      "y": 0
+    },
+    "adaptedLobs": [
+      {
+        "resumeKey": "orbital:kineticLobber",
+        "range": 15,
+        "airTime": 1.68
+      }
+    ]
+  },
+  "atmosphere": null,
+  "squall": {
+    "declared": true,
+    "calmSeconds": 60,
+    "telegraphSeconds": 8,
+    "squallSeconds": 25,
+    "recoverSeconds": 8,
+    "cycleSeconds": 101,
+    "phase": "calm",
+    "phaseProgress": 0.9499999999998304,
+    "cycle": 3,
+    "tick": 2700,
+    "elapsedSeconds": 360,
+    "secondsToNextPhase": 3,
+    "secondsToNextSquall": 11,
+    "squallsStarted": 3,
+    "squallsCompleted": 3,
+    "motePressureMultiplier": 2,
+    "blowing": false,
+    "transitions": [
+      {
+        "from": null,
+        "to": "calm",
+        "tick": 0,
+        "atSeconds": 0,
+        "cycle": 0
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 451,
+        "atSeconds": 60.133,
+        "cycle": 0
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 510,
+        "atSeconds": 68,
+        "cycle": 0
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 698,
+        "atSeconds": 93.067,
+        "cycle": 0
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 758,
+        "atSeconds": 101.067,
+        "cycle": 1
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 1208,
+        "atSeconds": 161.067,
+        "cycle": 1
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 1268,
+        "atSeconds": 169.067,
+        "cycle": 1
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 1456,
+        "atSeconds": 194.133,
+        "cycle": 1
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 1516,
+        "atSeconds": 202.133,
+        "cycle": 2
+      },
+      {
+        "from": "calm",
+        "to": "telegraph",
+        "tick": 1966,
+        "atSeconds": 262.133,
+        "cycle": 2
+      },
+      {
+        "from": "telegraph",
+        "to": "squall",
+        "tick": 2026,
+        "atSeconds": 270.133,
+        "cycle": 2
+      },
+      {
+        "from": "squall",
+        "to": "recover",
+        "tick": 2213,
+        "atSeconds": 295.067,
+        "cycle": 2
+      },
+      {
+        "from": "recover",
+        "to": "calm",
+        "tick": 2273,
+        "atSeconds": 303.067,
+        "cycle": 3
+      }
+    ]
+  },
+  "preserveVent": null,
+  "archive": {
+    "restoredWingIds": [
+      "west-stacks-wing"
+    ],
+    "restoredThisRun": [
+      "west-stacks-wing"
+    ],
+    "holdingWingId": null,
+    "completedHolds": 1,
+    "objectiveAllowsSecure": true
+  },
+  "repairs": 0
+}

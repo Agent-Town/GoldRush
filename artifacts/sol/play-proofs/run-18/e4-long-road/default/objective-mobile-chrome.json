@@ -1,0 +1,129 @@
+{
+  "url": "http://127.0.0.1:5303/?contract=e4-long-road&timescale=4",
+  "sim": 101.73333333333503,
+  "wave": 3,
+  "hp": 0,
+  "gold": 0,
+  "run": {
+    "secured": false,
+    "rush": false,
+    "lastRunEndedReason": "death",
+    "meta": {
+      "version": 1,
+      "tracks": {
+        "territory": 40,
+        "science": 999,
+        "hero": 40,
+        "agent": 40
+      }
+    },
+    "victoryPayout": null,
+    "secureWaveReached": null,
+    "securedResultAt": null,
+    "securedSnapshot": null,
+    "suspend": {
+      "hasSuspend": false,
+      "restored": false,
+      "restoredWave": null,
+      "lastWriteAt": null,
+      "lastWriteMs": null,
+      "sizeBytes": 0
+    }
+  },
+  "hero": {
+    "x": 139.61386042362338,
+    "y": 0.43983589574714926,
+    "z": 9.500058636670861
+  },
+  "defences": [],
+  "vehicle": {
+    "active": true,
+    "kind": "hauler",
+    "state": "idle",
+    "x": -180,
+    "z": 0,
+    "target": null,
+    "speed": 9,
+    "burnPerSecond": 3,
+    "distanceTravelled": 0,
+    "onRoad": true,
+    "roadDistance": 0,
+    "dispatch": null
+  },
+  "fuel": {
+    "active": true,
+    "tar": 3,
+    "stored": 24,
+    "capacity": 24,
+    "harvestedNodes": 3,
+    "refinedTar": 6,
+    "drawn": 0,
+    "nodes": [
+      {
+        "x": -12,
+        "z": -8,
+        "harvested": true,
+        "progress": 1
+      },
+      {
+        "x": 0,
+        "z": -8,
+        "harvested": true,
+        "progress": 1
+      },
+      {
+        "x": 12,
+        "z": -8,
+        "harvested": true,
+        "progress": 1
+      }
+    ]
+  },
+  "e7Signal": {
+    "enabled": false,
+    "graphHash": "fnv1a32:77c8ee63",
+    "nodes": [],
+    "links": [],
+    "linkedCoverage": false,
+    "threatVisibilityBonus": false,
+    "droneDropped": false,
+    "relayChainsSuppressed": false,
+    "dronesSuppressed": false,
+    "jacks": [],
+    "midpointReached": false,
+    "lastBeatCount": 0,
+    "e8ExitBeatReady": false,
+    "fragmentEvents": 0,
+    "latestFragment": ""
+  },
+  "playbookUse": null,
+  "air": null,
+  "physics": {
+    "active": false,
+    "contractId": "e4-long-road",
+    "source": "default",
+    "movement": "normal",
+    "feelG": 1,
+    "lobArcDistanceMultiplier": 1,
+    "lobAirTimeMultiplier": 1,
+    "knockbackScale": 1,
+    "orbitalReturn": false,
+    "vacuum": false,
+    "fixedTimestepOnly": true,
+    "filteredMovement": {
+      "x": 0,
+      "y": 0
+    },
+    "adaptedLobs": [
+      {
+        "resumeKey": "orbital:kineticLobber",
+        "range": 15,
+        "airTime": 1.68
+      }
+    ]
+  },
+  "atmosphere": null,
+  "squall": null,
+  "preserveVent": null,
+  "repairs": 0
+}

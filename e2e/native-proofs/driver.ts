@@ -18,7 +18,10 @@ import { researchStateKey } from '../../src/meta/ResearchTree';
 import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 
 import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json' with { type: 'json' };
+import { deriveMechanicsManifest } from '../../src/agent/MechanicsManifest';
 import { E10ArchiveSystem } from '../../src/systems/E10ArchiveSystem';
+import { readWreck } from '../../artifacts/sol/play-proofs/run-18/wreck';
+import { phoneTapMoment } from '../../artifacts/sol/play-proofs/run-18/phone-tap';
 import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';
 
 const TIMESCALE = '4';
@@ -55,6 +58,7 @@ type Row = {
   consoleErrors: string[];
   pageErrors: string[];
   notes: string[];
+  wreckReceipts?: { before: Awaited<ReturnType<typeof readWreck>>; ceremony?: Awaited<ReturnType<typeof readWreck>> };
   objective?: unknown;
   finalSnapshot?: Snapshot;
   peakHotBoilers: number;
@@ -577,11 +581,19 @@ async function build(
   }
   if (!selected) { row.notes.push(`could not select ${id} after upgrade interruptions`); return false; }
   await page.waitForTimeout(200);
-  for (let nudge = 0; nudge < 10; nudge += 1) {
+  const archiveSite = row.contract === 'e10-archive-world' && id === 'sentry_beacon'
+    ? E10ArchiveSystem.create(BOARD_CONTRACTS.find(c => c.id === row.contract)!)!.wings[0] : undefined;
+  for (let nudge = 0; nudge < (archiveSite ? 24 : 10); nudge += 1) {
     const now = await read(page);
     if (!now || now.runState === 'dead' || now.secured || now.fairground?.spinning === false) return false;
-    if (now.ghostValid) break;
-
+    const inside = !archiveSite || Math.hypot(now.ghostPos.x - archiveSite.x, now.ghostPos.z - archiveSite.z) <= archiveSite.radius;
+    if (now.ghostValid && inside) break;
+    if (archiveSite && !inside) {
+      // The native preview follows the hero/camera. Steer its observed miss inward
+      // rather than accepting the first valid position outside the objective disc.
+      await steer(page, archiveSite.x - now.ghostPos.x, archiveSite.z - now.ghostPos.z, 55);
+      continue;
+    }
     const turn = (nudge * 2.39996) % (Math.PI * 2);
     await steer(page, Math.cos(turn) * 2, Math.sin(turn) * 2, 170);
   }
@@ -841,6 +853,7 @@ async function tapeDemonstration(page: Page, row: Row, contract: ContractManifes
       }
       try { await page.getByTestId(id).click({ timeout: 600 }); return; }
       catch (error) {
+        if (attempt === 0 && id === 'playbook-toggle' && row.contract === 'e7-relay-valley' && row.project === 'mobile-chrome') await phoneTapMoment(page, error);
         row.notes.push(`Tape ${id} attempt ${attempt + 1}: ${String(error).split('\n')[0]}`);
         if (attempt === 7) throw error;
       }
@@ -986,6 +999,10 @@ async function motorStop(page: Page, row: Row, x: number, z: number, tolerance =
     row.notes.push(`motor stop unreachable: ${x},${z}; hero=${JSON.stringify((await read(page))?.hero)}`);
     return false;
   }
+  const atStop = (point: { x: number; z: number }) => {
+    const distance = Math.hypot(point.x - x, point.z - z);
+    return row.contract === 'e4-long-road' ? distance <= tolerance : distance < 2;
+  };
   // Confirm can be consumed by an upgrade appearing between movement and the key event.
   // Verify the actual destination, and issue a fresh key only if the dispatch never changed.
   for (let press = 0; press < 5; press++) {
@@ -995,15 +1012,15 @@ async function motorStop(page: Page, row: Row, x: number, z: number, tolerance =
     const next = await read(page);
     if (!next || next.runState === 'dead') return false;
     const target = next.vehicle?.target;
-    if (target && Math.hypot(target.x - x, target.z - z) < 2) break;
-    if (next.vehicle?.state === 'arrived' && Math.hypot(next.vehicle.x - x, next.vehicle.z - z) < 2) break;
+    if (target && atStop(target)) break;
+    if (next.vehicle?.state === 'arrived' && atStop(next.vehicle)) break;
   }
   for (let tick = 0; tick < 100; tick++) {
     await takeUpgrades(page, row);
     const now = await read(page);
     if (!now || now.runState === 'dead') return false;
     if (now.vehicle?.state === 'arrived' || now.vehicle?.state === 'dry') {
-      const arrived = now.vehicle.state === 'arrived' && Math.hypot(now.vehicle.x - x, now.vehicle.z - z) < 2;
+      const arrived = now.vehicle.state === 'arrived' && atStop(now.vehicle);
       row.notes.push(`motor stop ${x},${z}: arrived=${arrived}, sim=${now.sim.toFixed(1)}, vehicle=${JSON.stringify(now.vehicle)}, fuel=${JSON.stringify(now.fuel)}`);
       return arrived;
     }
@@ -1034,7 +1051,22 @@ async function motorOpening(page: Page, row: Row): Promise<void> {
     row.notes.push(`tar ${node.x},${node.z}: reached=${reached}, fuel=${JSON.stringify((await read(page))?.fuel)}`);
   }
   if (road) {
-    const arrived = await motorStop(page, row, road.end.x, road.end.z);
+    const stopReach = deriveMechanicsManifest(contract).rules.find(rule => rule.id === 'motor_haul_objective')?.data.stopReach;
+    if (typeof stopReach !== 'number') throw new Error('Long Road has no published stopReach');
+    const here = await read(page);
+    if (!here || here.runState === 'dead') return;
+    const dx = road.end.x - road.start.x, dz = road.end.z - road.start.z;
+    const progress = (point: { x: number; z: number }) => ((point.x - road.start.x) * dx + (point.z - road.start.z) * dz) / (dx * dx + dz * dz);
+    const t = Math.max(0, Math.min(1, progress(here.hero)));
+    // Rejoin the graded centreline before walking the authored forward waypoints.
+    const rejoined = await walkTo(page, row, road.start.x + t * dx, road.start.z + t * dz, 0.8, 120);
+    row.notes.push(`Long Road centreline: reached=${rejoined}; stopReach=${stopReach}; hero=${JSON.stringify((await read(page))?.hero)}`);
+    for (const point of (contract.tileParams.convoyRoute ?? []).filter(point => progress(point) > t && progress(point) < 1)) {
+      const reached = await walkTo(page, row, point.x, point.z, 0.8, 120);
+      row.notes.push(`Long Road graded waypoint ${point.x},${point.z}: reached=${reached}; hero=${JSON.stringify((await read(page))?.hero)}`);
+      if (!reached) break;
+    }
+    const arrived = await motorStop(page, row, road.end.x, road.end.z, stopReach);
     row.notes.push(`Long Road errand: arrived=${arrived}; vehicle=${JSON.stringify((await read(page))?.vehicle)}`);
   }
   if (row.contract === 'e4-boneyard') {
@@ -1104,6 +1136,7 @@ async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest
   // its native anchor action carries the rider and all occupied pads together.
   const initial = await readBoat();
   if (!initial) return;
+  row.wreckReceipts = { before: await readWreck(page) };
   await walkTo(page, row, initial.boat.anchor.x, initial.boat.anchor.z, 0.8);
   for (const pad of contract.tileParams.deepwater!.claimBoat.pads) {
     const boat = (await readBoat())?.boat;
@@ -1140,6 +1173,7 @@ async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest
     });
     const boss = fight.boss;
     if (!boss) { row.notes.push('Dredge-Queen diagnostics unavailable'); break; }
+    if (boss.crewQuit && !row.wreckReceipts.ceremony) row.wreckReceipts.ceremony = await readWreck(page);
     const stage = `${boss.act}/${boss.livePaddles}/${boss.persistentWreck}`;
     if (stage !== lastStage) {
       row.notes.push(`Dredge-Queen ${stage}: sim=${state.sim}, hp=${state.hp}, components=${JSON.stringify(fight.components)}`);
@@ -1158,6 +1192,7 @@ async function deepwaterJourney(page: Page, row: Row, contract: ContractManifest
       await steer(page, x - state.hero.x, z - state.hero.z, 100);
     } else await page.waitForTimeout(150);
   }
+  if (!row.wreckReceipts.ceremony) row.wreckReceipts.ceremony = await readWreck(page);
   row.notes.push(`Dredge-Queen journey end: ${JSON.stringify(await readBoat())}`);
 }
 
@@ -1815,6 +1850,7 @@ export function nativeProof(id: string, run = 1) {
         }
         await page.screenshot({ path: path.join(ARTIFACT_ROOT, `last-${testInfo.project.name}.png`) }).catch(() => undefined);
         row.clean = consoleErrors.length === 0 && pageErrors.length === 0 ? pass('0 console, 0 page') : fail(JSON.stringify({consoleErrors, pageErrors}));
+        if (row.wreckReceipts) await writeFile(path.join(ARTIFACT_ROOT, `wreck-write-${testInfo.project.name}.json`), JSON.stringify(row.wreckReceipts, null, 2) + '\n');
         await writeFile(path.join(ARTIFACT_ROOT, `row-${testInfo.project.name}.json`), JSON.stringify(row, null, 2) + '\n');
       }
 
