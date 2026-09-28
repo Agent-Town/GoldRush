@@ -27,7 +27,7 @@ Adjacent counts per project: `050-audio-mix-and-access` **4/4**, `audio-music-to
 - `npm install --no-audit --no-fund`: exit 0. It removed 30 lockfile lines locally; that generated change was restored before the clean pre-flight check.
 - Pre-edit `npm run build`: exit 0, including TypeScript, Vite and asset diet. Existing config-loader, chunk-size, GLB UV and unrecognised texture-tier warnings remained.
 - Final `npx tsc --noEmit`: exit 0 (`tsc.log`, `tsc.exit`).
-- `node artifacts/audio-integration-first-boot-spec-1/plain-boots.mjs`: exit 0. First-boot, town, returning menu and run on each device, no debug flag; zero console/page errors (`plain-boots.json`). Its dedicated dev server was stopped afterward.
+- `node artifacts/audio-integration-first-boot-spec-1/plain-boots.mjs`: exit 0. First-boot, town, returning menu and run on each device, no debug flag; zero console/page errors (`plain-boots.json`). Its dedicated dev server was stopped afterward. The screenshot path was corrected to decode the workspace URL with `fileURLToPath`; the two initial screenshots were moved into this directory and the resulting empty task directory removed. Existing unrelated encoded-path content was left alone.
 - `git diff --check`: exit 0. Eleven regenerated adjacent screenshots were restored; exact paths are in `restored-artifacts.txt`.
 - Source tree before and after: `2919de18adcba0acaad94a780ef91b1f9fcf8ebf`. No `src/**` change; no adjacent e2e change.
 
@@ -44,7 +44,7 @@ Before and intermediate integration runs used the same command with `before-` an
 
 Base: `26eefc2421f06450860f8226a4638dc0f4b7305e`. Implementation: `52860648a0d05cbcb82f6ff31b737165a63ef694` (`test: boot audio persistence with a returning-player profile`), **11 insertions / 6 deletions** in the single allowed spec. This report and its evidence are committed separately with the same `test:` prefix.
 
-Only `e2e/audio-integration.spec.ts` and this artifact directory are included. Raw failure traces remain local and are ignored by this directory's `.gitignore`; logs, failure context and screenshots are retained in git. The task's touch-only boundary also excludes vault writes.
+Only `e2e/audio-integration.spec.ts` and this artifact directory are included. Raw failure traces remain local and are ignored by this directory's `.gitignore`; logs, failure context and screenshots are retained in git (trailing whitespace stripped from generated text). The task's touch-only boundary also excludes vault writes.
 
 ## Remaining list in order
 
