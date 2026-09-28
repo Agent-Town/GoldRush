@@ -18,6 +18,7 @@ import { researchStateKey } from '../../src/meta/ResearchTree';
 import { STORY_TALES_STORAGE_KEY } from '../../src/story/settings';
 
 import showroomTerrain from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json' with { type: 'json' };
+import { E10ArchiveSystem } from '../../src/systems/E10ArchiveSystem';
 import { PICNIC_HOLD_RADIUS } from '../../src/systems/PicnicHoldSystem';
 
 const TIMESCALE = '4';
@@ -331,7 +332,8 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
   const zones = tile.buildZones ?? [];
 
   const holding = stake ? zones.find((entry) => stake.x >= entry.minX && stake.x <= entry.maxX && stake.z >= entry.minZ && stake.z <= entry.maxZ) : undefined;
-  const zone = contract.id === 'e6-showroom' ? zones.find(z => z.id === 'model-home-village') : contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
+  const archiveWing = contract.id === 'e10-archive-world' ? E10ArchiveSystem.create(contract)?.wings[0] : undefined;
+  const zone = archiveWing ? zones.find(z => z.id === archiveWing.id) : contract.id === 'e6-showroom' ? zones.find(z => z.id === 'model-home-village') : contract.id === 'e9-old-canal' ? zones.find(z => z.id === 'old-canal-segment-b') : contract.id === 'e9-devils-alley' ? zones.find(z => z.id === 'center-anchor-bay') : contract.id === 'e9-seed-run' ? zones.find(z => z.id === 'center-green-waypoint') : contract.id === 'e9-dome-basin' ? zones.find(z => z.id === 'seed-rows-footing') : contract.id === 'e8-eclipse' ? zones.find(z => z.minX < 0 && z.maxX > 0 && z.minZ < 0 && z.maxZ > 0) : holding ?? zones[0];
   const centre =
     stake && (holding || zones.length === 0)
       ? { x: stake.x, z: stake.z }
@@ -339,6 +341,7 @@ function homeFor(contract: ContractManifest, hero: { x: number; z: number }): Ho
         ? { x: (zone.minX + zone.maxX) / 2, z: (zone.minZ + zone.maxZ) / 2 }
         : { x: hero.x, z: hero.z };
 
+  if (archiveWing) { centre.x = archiveWing.x; centre.z = archiveWing.z; }
   if (contract.id === 'e6-showroom') { centre.x = 0; centre.z = 6; }
   if (contract.id === "e1-baron") { centre.x = 3; centre.z = 11; }
   if (contract.id === "e2-incline") { centre.x = 0; centre.z = -18; }
@@ -556,6 +559,13 @@ async function build(
     if (row.contract === 'e6-picnic' && Math.hypot(state.ghostPos.x - x, state.ghostPos.z - z) > PICNIC_HOLD_RADIUS - 1) {
       row.notes.push(`stake placement refused outside target disc: target=${x},${z}; ghost=${JSON.stringify(state.ghostPos)}`);
       break;
+    }
+    if (row.contract === 'e10-archive-world' && id === 'sentry_beacon') {
+      const wing = E10ArchiveSystem.create(BOARD_CONTRACTS.find(c => c.id === row.contract)!)!.wings[0];
+      if (Math.hypot(state.ghostPos.x - wing.x, state.ghostPos.z - wing.z) > wing.radius) {
+        row.notes.push(`Archive light outside ${wing.id}: radius=${wing.radius}, ghost=${JSON.stringify(state.ghostPos)}, wave=${state.wave}`);
+        break;
+      }
     }
     await page.keyboard.press('Space');
     await page.waitForTimeout(250);
@@ -1151,6 +1161,11 @@ async function regattaJourney(page: Page, row: Row, contract: ContractManifest, 
 type KitPiece = { id: string; dx: number; dz: number };
 
 function kitFor(contract: ContractManifest): KitPiece[] {
+  if (contract.id === 'e10-archive-world') return [
+    { id: 'sentry_beacon', dx: 0, dz: 0 },
+    { id: 'turret', dx: -5, dz: 0 },
+    { id: 'turret', dx: 5, dz: 0 },
+  ];
   if (contract.id === 'e9-old-canal') return [
     { id: 'turret', dx: 0, dz: -3 },
     { id: 'sentry_beacon', dx: -4, dz: 2 },
