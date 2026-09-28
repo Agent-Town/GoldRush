@@ -24,3 +24,7 @@ WHY no product drain: seven done-moves belong to the three attended-owned audio,
 4. September 29 private daily coverage and September 30 week-41 rotation mint; the existing three owner decisions remain unchanged.
 
 Closing ledger evidence follows before the final lock-clearing commit. That commit will be this fire's last write to main; origin backup and read-only verification follow. No product source edit, engine pin, deploy or publication by this fire.
+
+## Final handoff
+
+At 2026-09-28T11:13Z, the full literal npm run test:ledger-guards passed: 1263/1263, zero failures/skips; kit 83/83; npm rc 0 in 215.575 s on Node v26.4.0, checkpoint 7ebe752e076929708e78b472e9a18ca8e2a5efec. The bounded status archive audit reports zero lost or abridged handoffs. Exact predecessor and three-item desk tail verified again. Live attended rgw1 holder 36774 and landing child 36786 remain alive; its candidate receipt is green but no main completion is claimed. Commits before clearance: 2cb7879e8 lock, b4b04d601 preserved bookkeeping, 7ebe752e0 verification and ledger. No product landing, dispatch, pin or deploy. This clearing commit is the final main write; normal origin backup follows.
