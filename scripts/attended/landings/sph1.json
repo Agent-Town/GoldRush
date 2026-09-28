@@ -1,0 +1,37 @@
+{
+  "tag": "sph1",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5406,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — sol-play-proofs-holds-1 — Astra's run 15: Glow Mesa PROVED both screens by the driver fix (the bank predicate accepts a fresh secured score after the observed terminal), Deepwater Claim boss beaten and banked on both screens (the final deck fix verified by the s2725 gate), Long Road held at the far-stop approach; equivalence on Flotilla and Regatta PASS; F-2725-1 (the fire shell's Glow Mesa phone deaths at wave 4, twice) attributed to ride variance by paired attended trials, candidate PASS 2/2; no src change, no balance change",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "guards": []
+  },
+  "review": {
+    "path": "reviews/sol-play-proofs-holds-1-landing.md",
+    "title": "Drain review (attended landing): `sol-play-proofs-holds-1`, Glow Mesa proved by the driver fix, Deepwater's boss beaten, Long Road held at the far stop; F-2725-1 attributed by paired trials",
+    "body": "scripts/attended/landings/sph1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "sol-play-proofs-holds-1.md",
+    "rowKey": "SOL PLAY PROOFS HOLDS 1 LANDED",
+    "rowEmoji": "🎯",
+    "rowText": "Astra's run 15 (`artifacts/sol/play-proofs/run-15/`, 204,131 tokens, evidence 2,834,659 B): Glow Mesa PASS both screens (the bank predicate accepts a fresh secured score after the observed Claim Secured terminal without a wave floor; wave-8 endings banked, Book back, 7,225 score bytes identical across reload: the first campaign hold converted into a proof by fixing the instrument); Deepwater Claim boss beaten on both screens (pads occupied via the deck context, acts 2 and 3, hulk present, wave 12 secured, bank/Book/reload; the final deck correction verified by the s2725 fire gate on both screens; direct wreck re-entry still unproved); Long Road HELD at the far-stop approach (motor errand runs: corridor resolved, stake graded, 24 fuel; the approach stalls a few units short of destination Confirm; deaths at wave 3). Flotilla/Regatta equivalence PASS; no F-PPH1 IDs; no `src/**`. F-2725-1: the fire shell killed the Glow Mesa phone ride at wave 4 twice (s2725 142.8 s, s2726 144.8 s) while the candidate passed 2/2 in the attended shell and the unchanged driver on clean main swung between a wave-10 death and a wave-8 ending (`artifacts/f2725-1-attribution/`): ride variance under the fire shell's load, landed attended per the fire's own deferral",
+    "statusPhrase": "holds-1 landed attended: Glow Mesa proved by the driver fix, Deepwater's boss beaten and banked, Long Road held at the far stop; F-2725-1 attributed to fire-shell ride variance",
+    "drainedBy": "attended 2026-09-28 (scripts/attended/land.sh sph1; Astra on lane-c, the ChatGPT subscription; the s2726 fire deferred this landing to the attended session)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/sol/play-proofs/run-15"
+}
