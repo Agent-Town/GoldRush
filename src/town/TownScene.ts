@@ -99,7 +99,7 @@ import { takeTrailGuideBark } from '../story/trailGuide';
 import { contractUnlockStatus as contractUnlock, previewUnlockAllActive, togglePreviewUnlockAll } from '../meta/ContractUnlock';
 import { deriveMechanicsManifest, mechanicsManifestLine } from '../agent/MechanicsManifest';
 import { SoundSystem } from '../audio/SoundSystem';
-import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
+import { bindAudioSettingsControls, renderAudioSettingsControls, bindMusicToggle, renderMusicToggle } from '../audio/AudioSettingsControl';
 import tavernkeeperWalkFrames from '../../assets/processed/char-tavernkeeper-sheet-walk8.frames.json' with { type: 'json' };
 import tavernkeeperIdleFrames from '../../assets/processed/char-tavernkeeper-idle.frames.json' with { type: 'json' };
 import storekeeperIdleFrames from '../../assets/processed/char-storekeeper-idle.frames.json' with { type: 'json' };
@@ -489,6 +489,7 @@ type TownMegaproject = {
 
 export class TownScene {
   private readonly audio = new SoundSystem();
+  private disposeMusicToggle: () => void = () => undefined;
   private disposeAudioSettings: () => void = () => undefined;
   private settings?: HTMLDetailsElement;
   private readonly onSettingsKeyDown = (event: KeyboardEvent) => {
@@ -713,6 +714,7 @@ export class TownScene {
     this.wardrobe.removeEventListener('keydown', this.onWardrobeKeyDown);
     this.disposeWardrobe();
     this.settings?.removeEventListener('keydown', this.onSettingsKeyDown);
+    this.disposeMusicToggle();
     this.disposeAudioSettings();
     this.audio.dispose();
     this.nameCard.removeEventListener('submit', this.onNameSubmit);
@@ -1162,6 +1164,7 @@ export class TownScene {
           <span data-testid="town-subtitle">Four doors stand ready.</span>
         </div>
         <div class="claim-herald-actions">
+          ${renderMusicToggle('town-ui__exit')}
           <details class="town-ui__settings" data-testid="town-settings">
             <summary class="town-ui__exit" data-testid="town-settings-toggle">Settings</summary>
             <section class="town-ui__settings-panel" data-testid="town-settings-panel" aria-label="Audio settings">
@@ -1223,6 +1226,7 @@ export class TownScene {
     this.nameMessage = this.nameCard.querySelector<HTMLElement>('[data-testid="town-name-error"]') ?? undefined;
     this.nameBeat = this.nameCard.querySelector<HTMLElement>('[data-testid="town-name-beat"]') ?? undefined;
     this.nameInput?.addEventListener('keydown', stopKeyPropagation);
+    this.disposeMusicToggle = bindMusicToggle(this.ui);
     this.disposeAudioSettings = bindAudioSettingsControls(this.ui, TOWN_AUDIO_SETTINGS_IDS);
     const promptStack = this.ui.querySelector<HTMLElement>('[data-testid="town-prompt-stack"]');
     promptStack?.append(this.prompt);

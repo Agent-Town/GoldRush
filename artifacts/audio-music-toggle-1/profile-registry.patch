@@ -1,0 +1,27 @@
+--- a/src/game/ProfileStorage.ts
++++ b/src/game/ProfileStorage.ts
+@@ -2,7 +2,7 @@
+ import { META_PROGRESS_KEY } from './MetaProgress';
+ import { RESEARCH_STATE_KEY, researchStateKey } from '../meta/ResearchTree';
+ import { MEGAPROJECT_STATE_KEY } from '../meta/Megaproject';
+-import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY, MUSIC_VOLUME_STORAGE_KEY } from '../audio/settings';
++import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY, MUSIC_OFF_STORAGE_KEY, MUSIC_VOLUME_STORAGE_KEY } from '../audio/settings';
+ import { STORY_TALES_STORAGE_KEY } from '../story/settings';
+ import { LEDGER_DISCOVERED_STORAGE_KEY } from '../encyclopedia/storage';
+ import { PERFORMANCE_TIER_STORAGE_KEY, RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY } from './PerformanceTier';
+@@ -58,6 +58,7 @@
+   AUDIO_VOLUME_STORAGE_KEY,
+   AUDIO_MUTED_STORAGE_KEY,
+   MUSIC_VOLUME_STORAGE_KEY,
++  MUSIC_OFF_STORAGE_KEY,
+   STORY_TALES_STORAGE_KEY,
+   LEDGER_DISCOVERED_STORAGE_KEY,
+   ACTIVE_EPOCH_KEY,
+@@ -76,6 +77,7 @@
+   AUDIO_VOLUME_STORAGE_KEY,
+   AUDIO_MUTED_STORAGE_KEY,
+   MUSIC_VOLUME_STORAGE_KEY,
++  MUSIC_OFF_STORAGE_KEY,
+   STORY_TALES_STORAGE_KEY,
+   ACTIVE_EPOCH_KEY,
+   EPOCH_CEREMONY_KEY,

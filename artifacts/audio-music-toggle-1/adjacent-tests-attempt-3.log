@@ -1,0 +1,98 @@
+
+Running 44 tests using 1 worker
+
+
+(node:90566) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/44] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings
+[2/44] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast
+[3/44] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics
+[4/44] [desktop-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops
+[5/44] [desktop-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling
+[6/44] [desktop-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience
+[7/44] [desktop-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns
+[8/44] [desktop-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly
+[9/44] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[audio-defer] desktop-chrome/loopback cue 2668 responses 74711526 bytes; townReady observed 1490 ms, published 1368 ms; cue-window music 2; music before playable 0; after-ready music 0
+
+[audio-defer] desktop-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 1409 ms (scene the town ready)
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 733 ms
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 771 ms
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 1411 ms
+
+[audio-defer] desktop-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 1417 ms
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[10/44] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[11/44] [desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+[desktop-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[12/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[13/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[14/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[15/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[16/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[17/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[18/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[19/44] [desktop-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists
+[20/44] [desktop-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile
+[21/44] [desktop-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop
+[22/44] [desktop-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting
+
+(node:92909) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[23/44] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:49:1 › pause overlay volume and mute persist and sync with Settings
+[24/44] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:90:1 › M toggles mute mid-run with ledger toast
+[25/44] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:105:1 › spark rapid fire is throttled in render audio diagnostics
+[26/44] [mobile-chrome] › e2e/050-audio-mix-and-access.spec.ts:126:1 › audio fetch failures stay silent no-ops
+[27/44] [mobile-chrome] › e2e/051-audio-governor.spec.ts:85:1 › 20-source sluice mix uses one deduped water loop with source-count scaling
+[28/44] [mobile-chrome] › e2e/051-audio-governor.spec.ts:100:1 › global voice cap holds and UI displaces low-priority ambience
+[29/44] [mobile-chrome] › e2e/051-audio-governor.spec.ts:132:1 › gold and hit families share global cooldowns
+[30/44] [mobile-chrome] › e2e/051-audio-governor.spec.ts:153:1 › audio-absent stress releases governor slots cleanly
+[31/44] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:129:1 › music is fetched only after the first town is playable (loopback)
+[audio-defer] mobile-chrome/loopback cue 2568 responses 60032588 bytes; townReady observed 1389 ms, published 1286 ms; cue-window music 2; music before playable 0; after-ready music 0
+
+[audio-defer] mobile-chrome/loopback music fetch era-e1-frontier-loop.mp3 at 1328 ms (scene the town ready)
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3?import&url 414 B at 715 ms
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/menu-tap.mp3 8821 B at 734 ms
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3?import&url 486 B at 1330 ms
+
+[audio-defer] mobile-chrome/loopback cue-window mp3 /assets/audio/raw/era-e1-frontier-loop.mp3 1800881 B at 1331 ms
+
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[32/44] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:215:1 › the title theme answers a gesture made on the menu
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[33/44] [mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+[mobile-chrome] › e2e/first-town-audio-deferred.spec.ts:229:1 › the era loop plays in the town after the entering click
+watchErrors suppressed 0 known GLTFLoader blob error(s)
+
+[34/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[35/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[36/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[37/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[38/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[39/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[40/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[41/44] [mobile-chrome] › e2e/mu-02-music.spec.ts:20:1 › title music waits for a gesture and music volume persists
+[42/44] [mobile-chrome] › e2e/mu-02-music.spec.ts:46:1 › E1 music is lazy and active in-run on desktop and mobile
+[43/44] [mobile-chrome] › e2e/mu-02-music.spec.ts:60:1 › shot bursts do not restart the E1 music loop
+[44/44] [mobile-chrome] › e2e/music-survives-pause.spec.ts:7:1 › the era loop rides through pause without restarting
+  44 passed (3.4m)

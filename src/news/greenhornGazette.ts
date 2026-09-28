@@ -27,7 +27,7 @@ export function greenhornGazetteControlCopy(
         hands: [
           `Move with ${controls.move}; aim and pan with the mouse.`,
           `${controls.weaponToggle} hurls the Blast Charge. ${controls.build} opens Build; ${controls.buildSlots} choose works, ${controls.rotateBuild} rotates, and ${controls.confirm} places.`,
-          `${controls.upgrade} takes an upgrade. ${controls.pause} pauses, ${controls.mute} mutes, and ${controls.cancel} backs out.`,
+          `${controls.upgrade} takes an upgrade. ${controls.pause} pauses, ${controls.mute} mutes, the Music toggle quiets only the music, and ${controls.cancel} backs out.`,
         ],
       }
     : {
