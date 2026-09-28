@@ -1,0 +1,34 @@
+diff --git a/e2e/e7-tape-toggle-phone-hit-target.spec.ts b/e2e/e7-tape-toggle-phone-hit-target.spec.ts
+index 6b2b6aeed..fa834574a 100644
+--- a/e2e/e7-tape-toggle-phone-hit-target.spec.ts
++++ b/e2e/e7-tape-toggle-phone-hit-target.spec.ts
+@@ -121,6 +121,8 @@ test('plain E7 board launches expose the Tape Reel hit target', async ({ page, i
+       samples.push(row);
+       expect.soft(row.points[0].reachesToggle, contract).toBe(true);
+     }
++    await page.goto('/?contract=the-claim&nowaves&nolevel&nopause');
++    await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+   } finally {
+     await writeFile(path.join(root, `audit-${info.project.name}.json`), JSON.stringify({ project: info.project.name, samples, errors }, null, 2) + '\n');
+     expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+diff --git a/src/game/Game.ts b/src/game/Game.ts
+index bb6f5e402..dd23b78b6 100644
+--- a/src/game/Game.ts
++++ b/src/game/Game.ts
+@@ -19,6 +19,7 @@ import {
+   activeTileDescriptor,
+   contractDescriptorJson, contractHeroMaxHpBonus,
+   DEFAULT_EPOCH_ID,
++  epochIsActive,
+   listEpochs,
+   loadContract,
+   loadEpoch,
+@@ -1922,7 +1923,7 @@ export class Game {
+     this.partyOverview = new PartyOverview(this.getElement('#hud'), (playerId) => this.glanceAtRider(playerId));
+     this.getElement('#hud').append(this.assetLoadingCue);
+     this.e7SignalSystem.mount(this.getElement('#hud'));
+-    if (this.activeEpoch.order >= 7) {
++    if (this.activeEpoch.order >= 7 || epochIsActive('epoch-7-signal')) {
+       this.playbookSurface = new PlaybookSurface(this.getElement('#hud'), {
+         capacity: Balance.e7Playbook.shelfCapacity,
+         list: () => listPlaybooks(localStorage),

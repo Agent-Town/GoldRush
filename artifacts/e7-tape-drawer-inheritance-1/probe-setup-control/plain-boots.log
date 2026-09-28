@@ -1,0 +1,97 @@
+[WebServer] (node:22746) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+Running 2 tests using 1 worker
+
+(node:22994) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop-chrome] › artifacts/e7-tape-drawer-inheritance-1/plain-boots.spec.ts:6:1 › fresh E6 has no drawer; Signal profile inherits it on plain E1 and E6 maps (4.5s)
+(node:41811) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [mobile-chrome] › artifacts/e7-tape-drawer-inheritance-1/plain-boots.spec.ts:6:1 › fresh E6 has no drawer; Signal profile inherits it on plain E1 and E6 maps (4.3s)
+
+
+  1) [desktop-chrome] › artifacts/e7-tape-drawer-inheritance-1/plain-boots.spec.ts:6:1 › fresh E6 has no drawer; Signal profile inherits it on plain E1 and E6 maps 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "contract": "e6-glow-mesa",
+    +   "contract": "the-claim",
+        "debug": false,
+    -   "epoch": "epoch-6-atomic",
+    +   "epoch": "epoch-1-frontier",
+        "toggleCount": 0,
+      }
+
+      29 |       }));
+      30 |       boots.push(state);
+    > 31 |       expect(state).toMatchObject({ contract, epoch, debug: false, toggleCount: inherited ? 1 : 0 });
+         |                     ^
+      32 |       if (inherited) await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+      33 |     }
+      34 |     expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/e7-tape-drawer-inheritance-1/plain-boots.spec.ts:31:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/e7-tape-drawer-inheritance-1/plain-boots-results/plain-boots-fresh-E6-has-n-bf7d4--it-on-plain-E1-and-E6-maps-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/e7-tape-drawer-inheritance-1/plain-boots-results/plain-boots-fresh-E6-has-n-bf7d4--it-on-plain-E1-and-E6-maps-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/e7-tape-drawer-inheritance-1/plain-boots-results/plain-boots-fresh-E6-has-n-bf7d4--it-on-plain-E1-and-E6-maps-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/e7-tape-drawer-inheritance-1/plain-boots-results/plain-boots-fresh-E6-has-n-bf7d4--it-on-plain-E1-and-E6-maps-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › artifacts/e7-tape-drawer-inheritance-1/plain-boots.spec.ts:6:1 › fresh E6 has no drawer; Signal profile inherits it on plain E1 and E6 maps 
+
+    Error: expect(received).toMatchObject(expected)
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "contract": "e6-glow-mesa",
+    +   "contract": "the-claim",
+        "debug": false,
+    -   "epoch": "epoch-6-atomic",
+    +   "epoch": "epoch-1-frontier",
+        "toggleCount": 0,
+      }
+
+      29 |       }));
+      30 |       boots.push(state);
+    > 31 |       expect(state).toMatchObject({ contract, epoch, debug: false, toggleCount: inherited ? 1 : 0 });
+         |                     ^
+      32 |       if (inherited) await expect(page.getByTestId('playbook-toggle')).toBeVisible();
+      33 |     }
+      34 |     expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/artifacts/e7-tape-drawer-inheritance-1/plain-boots.spec.ts:31:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/e7-tape-drawer-inheritance-1/plain-boots-results/plain-boots-fresh-E6-has-n-bf7d4--it-on-plain-E1-and-E6-maps-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/e7-tape-drawer-inheritance-1/plain-boots-results/plain-boots-fresh-E6-has-n-bf7d4--it-on-plain-E1-and-E6-maps-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/e7-tape-drawer-inheritance-1/plain-boots-results/plain-boots-fresh-E6-has-n-bf7d4--it-on-plain-E1-and-E6-maps-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/e7-tape-drawer-inheritance-1/plain-boots-results/plain-boots-fresh-E6-has-n-bf7d4--it-on-plain-E1-and-E6-maps-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › artifacts/e7-tape-drawer-inheritance-1/plain-boots.spec.ts:6:1 › fresh E6 has no drawer; Signal profile inherits it on plain E1 and E6 maps 
+    [mobile-chrome] › artifacts/e7-tape-drawer-inheritance-1/plain-boots.spec.ts:6:1 › fresh E6 has no drawer; Signal profile inherits it on plain E1 and E6 maps 
