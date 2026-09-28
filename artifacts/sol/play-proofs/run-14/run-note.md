@@ -48,6 +48,8 @@ Reproduce an authorized ride with `python3 artifacts/sol/play-proofs/run-14/run-
 
 The 38 predecessor rows are carried from run 13 and its cited deciding runs, without re-testing or promoting older status-document proofs. The table uses mutually exclusive verdicts. “Objective never engaged” groups driver objective-engagement holds: some sub-actions work, but the required complete objective remains unexercised/unproved; the linked finding controls the exact scope. Canyon Works is a historical corrected defect, not a fresh full-proof pass. All 42 contracts appear exactly once; the map list is closed.
 
+Run-15 table amendment (2026-09-28): Long Road remains HELD at a measured approach step; Deepwater becomes PARTIAL with its terminal journey proved; Glow Mesa becomes PROVED both. Current table totals: **8 PROVED both, 3 PROVED one, 2 PARTIAL, 28 HELD, 1 historical DEFECT corrected**. The run-14 results above remain historical.
+
 | Map | Campaign verdict | Deciding run | Finding / evidence |
 | --- | --- | --- | --- |
 | The Claim (the-claim) | PROVED one screen — desktop control | 4 | [Control](../run-4/the-claim/row-desktop-chrome.json); older both-project status proof is outside this series |
@@ -76,12 +78,12 @@ The 38 predecessor rows are carried from run 13 and its cited deciding runs, wit
 | The Hill Mine (e2-hill-mine) | HELD — survival ceiling; escort works; deaths 1/1 and 2/2 | 11 | [Evidence](../run-11/run-note.md) |
 | The Trestle (e2-trestle) | HELD — survival ceiling; escort works; deaths 13/13 and 13/11 | 11 | [Evidence](../run-11/run-note.md) |
 | Moth Season (e3-moth-season) | HELD — objective never engaged; CONNECT 0/1; deaths 12/13 | 11 | [Evidence](../run-11/run-note.md) |
-| The Long Road (e4-long-road) | HELD — objective never engaged; deaths 4/5; convoy not dispatched | 12 | [Finding](../run-12/e4-long-road/finding.md) |
-| Deepwater Claim (e5-deepwater-claim) | HELD — objective never engaged; wave-100 budget exits; boss unengaged | 12 | [Finding](../run-12/e5-deepwater-claim/finding.md) |
+| The Long Road (e4-long-road) | HELD — tar/grade work; far-stop approach stalls, deaths 3/3 | 15 | [Finding](../run-15/e4-long-road/finding.md) |
+| Deepwater Claim (e5-deepwater-claim) | PARTIAL both — boss and full terminal journey proved; deck and wreck restoration unproved | 15 | [Finding](../run-15/e5-deepwater-claim/finding.md) |
 | Flotilla (e5-flotilla) | PROVED both screens — terminal journey; construction/reshape not proved | 12 | [Proof](../run-12/e5-flotilla/proof.md) |
 | Regatta (e5-regatta) | PROVED both screens — six-gate boat race/full journey | 12 | [Proof](../run-12/e5-regatta/proof.md) |
 | Stillwater (e5-stillwater) | PROVED both screens — terminal journey; five-ground work not proved | 12 | [Proof](../run-12/e5-stillwater/proof.md) |
-| Glow Mesa (e6-glow-mesa) | PARTIAL both — boss terminal 8/9; bank instrument rejects early finish | 12 | [Finding](../run-12/e6-glow-mesa/finding.md) |
+| Glow Mesa (e6-glow-mesa) | PROVED both screens — authored wave-8 ending, bank/Book/reload | 15 | [Proof](../run-15/e6-glow-mesa/proof.md) |
 | Half-Life Hollow (e6-half-life-hollow) | HELD — survival ceiling; crossing complete; all four deaths wave 4 | 13 | [Finding](../run-13/e6-half-life-hollow/finding.md) |
 | The Picnic (e6-picnic) | HELD — objective never engaged; stakes lost at wave 2 with full hero HP | 13 | [Finding](../run-13/e6-picnic/finding.md) |
 | The Showroom (e6-showroom) | HELD — objective never engaged; alive budget exits 79/78; captures 0/6 | 13 | [Finding](../run-13/e6-showroom/finding.md) |
