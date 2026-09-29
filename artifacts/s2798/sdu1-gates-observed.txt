@@ -1,0 +1,31 @@
+branch sol/map-art-campaign-2 tip 69bdb1d85 2026-09-29 09:05Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/sdu1.json
+scratch store at the store's main 5793a96
+chain base 205fb1193
+merged 73b82dbfe
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4 (pinned 999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 141 ℹ fail 0 
+ledger battery start 09:06Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+e2e start 09:09Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=1   3 failed   21 passed (2.4m)  09:11Z
+1) [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend 
+2) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only 
+3) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves 
+battery start 09:11Z
+battery: rc=0 ℹ tests 1047 ℹ pass 1042 ℹ fail 0 ℹ skipped 5 ℹ tests 87 ℹ pass 87 ℹ fail 0 ℹ skipped 0  09:31Z
+dirt after battery: 0
+sdu1-PREP-DONE
+unattributed e2e reds: 1) [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend  ; 2) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only  ; 3) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves 
+verdict — needs hands
+verdict: clean
+RESUME 2026-09-29 10:13Z: chain 73b82dbfe, merge 73b82dbfe, continuing at the pin
+hash at pin time: 999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4
+review: reviews/skill-door-unclaimed-refresh-1.md
+bookkeeping: leaf merged, row, STATUS phrase (73b82dbfe)
+main now f8cbf0e9d
+   3c4e8fb94..f8cbf0e9d  main -> main
+post-ff: law rc=0 | desk ℹ pass 57 ℹ fail 0 
+no deploy (config)
