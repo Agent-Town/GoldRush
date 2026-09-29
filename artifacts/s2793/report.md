@@ -25,4 +25,4 @@ Evidence: `dry-board.txt`, `lane-usable.txt`, `custody.json`, `processes.txt`, `
 
 ## Closing verification
 
-Pending the complete ledger battery and final custody check. The lock-clearing commit will be the last write to main.
+**READY-FOR-GATES.** At 2026-09-29T04:19Z, complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm exit 0**, **342.852 seconds**, Node v26.4.0, checkpoint 816bfdec1. All chained legs completed. The bounded STATUS archive audit found zero permanently absent and zero abridged across 40 commits. Final queues, running tasks and pending orders are empty; all four lane ancestry probes return zero ahead. Exact s2792 predecessor and four-item Owner's Desk remain preserved. Session commits before clearance: b37a21805 and 816bfdec1. No product drain, dispatch, re-queue, deployment, process termination or history repair occurred. Generated dashboard churn remains runtime-owned. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
