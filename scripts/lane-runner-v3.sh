@@ -38,6 +38,30 @@ capture_lane_baseline() {
 commit_lane_delta() {
   local wd="$1" baseline="$2" message="$3" log="$4"
   local delta record xy path paired baseline_path identity hash baseline_identity baseline_hash ignored_path withheld=0 swept=0
+  local evidence_withheld=0 evidence_base evidence_rc size
+  local withheld_file="${log%.log}-withheld-paths.txt"
+  # Append rather than truncate: retries must retain the earlier withholding receipt.
+  touch "$withheld_file"
+
+  withhold_evidence() {
+    printf '[lane-runner-v3] withheld %s: %s\n' "$2" "$1" >> "$log"
+    printf '%s\n' "$1" >> "$withheld_file"
+    evidence_withheld=$((evidence_withheld+1))
+  }
+
+  is_raw_evidence() {
+    case "/$1" in
+      */test-results/*|*/*-results/*|*/trace.zip|*.webm|*/test-failed-*.png) return 0 ;;
+    esac
+    case "$1" in
+      artifacts/*)
+        if [ -f "$wd/$1" ]; then
+          if [ "$(uname -s)" = Darwin ]; then size=$(stat -f '%z' "$wd/$1"); else size=$(stat -c '%s' "$wd/$1"); fi
+          [ "$size" -le 50000000 ] || return 0
+        fi ;;
+    esac
+    return 1
+  }
   # Git paths cannot be empty; the sentinel keeps Bash 3.2 + `set -u` happy on a clean lane.
   local -a baseline_paths=('')
   local -a baseline_identities=('')
@@ -87,6 +111,8 @@ commit_lane_delta() {
   while IFS= read -r -d '' record; do
     xy="${record:0:2}"; path="${record:3}"; paired=''
     case "$xy" in *R*|*C*) IFS= read -r -d '' paired || true ;; esac
+    # A probe can place its run log inside the worktree; receipts are runner output.
+    [ "$wd/$path" != "$withheld_file" ] && [ "$wd/$path" != "$log" ] || continue
     # F-2319-1 (s2319, from F-2316-1): the factory's OWN accounting lives DIRECTLY in
     # logs/ and is owned by main, never authored by a lane task — dashboard.html,
     # task-stats.jsonl, .goal-tree.html, .blocked-seen, lane-runner.out, guard-stats.jsonl
@@ -107,9 +133,21 @@ commit_lane_delta() {
       logs/*/*) : ;;
       logs/*)
         printf '[lane-runner-v3] withheld factory accounting: %s\n' "$path" >> "$log"
+        printf '%s\n' "$path" >> "$withheld_file"
         swept=$((swept+1))
         continue ;;
     esac
+    if is_raw_evidence "$path" || { [ -n "$paired" ] && is_raw_evidence "$paired"; }; then
+      withhold_evidence "$path" 'raw/oversized evidence'
+      [ -z "$paired" ] || withhold_evidence "$paired" 'raw/oversized evidence rename'
+      # Task-staged raw files must not inflate the budget for eligible evidence.
+      # Never disturb an index entry that belonged to the dispatch baseline.
+      if ! is_baseline_path "$path" && { [ -z "$paired" ] || ! is_baseline_path "$paired"; }; then
+        GIT_LITERAL_PATHSPECS=1 git -C "$wd" reset -q HEAD -- "$path" ${paired:+"$paired"} >> "$log" 2>&1
+      fi
+      # Exclusion from delta is essential: path-scoped commit otherwise re-adds it.
+      continue
+    fi
     if is_baseline_path "$path" || has_baseline_identity "$path" || \
        { [ -n "$paired" ] && is_baseline_path "$paired"; }; then
       printf '[lane-runner-v3] withheld baseline-dirty path: %s\n' "$path" >> "$log"
@@ -123,8 +161,53 @@ commit_lane_delta() {
 
   if [ -s "$delta" ]; then
     GIT_LITERAL_PATHSPECS=1 git -C "$wd" add -A --pathspec-from-file="$delta" --pathspec-file-nul 2>>"$log"
-    GIT_LITERAL_PATHSPECS=1 git -C "$wd" commit -q -m "$message" --pathspec-from-file="$delta" --pathspec-file-nul >>"$log" 2>&1 || true
+    # Main's common ancestor is the lane base, including evidence already committed by
+    # the implementer. A scratch repository without main can still guard its HEAD delta.
+    evidence_base=$(git -C "$wd" merge-base main HEAD 2>/dev/null) || evidence_base=HEAD
+    node "$ROOT/scripts/evidence-budget.mjs" "$evidence_base" HEAD --staged --root "$wd" --limit 25000000 >> "$log" 2>&1
+    evidence_rc=$?
+    if [ "$evidence_rc" -le 1 ]; then
+      # Trim only task-owned staged artifacts, largest INDEX blobs first. Restoring the
+      # index and filtering delta together preserves disk bytes and blocks re-staging.
+      node --input-type=module - "$ROOT" "$wd" "$evidence_base" "$delta" "$withheld_file" >> "$log" 2>&1 <<'NODE'
+import { execFileSync } from 'node:child_process';
+import { readFileSync, writeFileSync, appendFileSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
+const [root, wd, base, delta, receipt] = process.argv.slice(2);
+const { measureLanding } = await import(pathToFileURL(`${root}/scripts/evidence-budget.mjs`));
+const git = (...args) => execFileSync('git', ['-C', wd, ...args], { encoding: 'utf8', env: { ...process.env, GIT_LITERAL_PATHSPECS: '1' } });
+let paths = readFileSync(delta, 'utf8').split('\0').filter(Boolean);
+let board = measureLanding(wd, base, 'HEAD', { staged: true });
+const candidates = paths.filter(path => path.startsWith('artifacts/')).flatMap(path => {
+  // Deleted paths cannot relieve added bytes; don't treat them as missing-blob errors.
+  const entry = git('ls-files', '--stage', '-z', '--', path);
+  if (!entry) return [];
+  const oid = entry.split(' ')[1];
+  return [{ path, bytes: Number(git('cat-file', '-s', oid)) }];
+}).sort((a, b) => b.bytes - a.bytes || a.path.localeCompare(b.path));
+let count = 0;
+for (const { path } of candidates) {
+  if (board.added <= 25_000_000) break;
+  git('reset', '-q', 'HEAD', '--', path);
+  paths = paths.filter(p => p !== path);
+  appendFileSync(receipt, `${path}\n`);
+  console.log(`[lane-runner-v3] withheld staged evidence budget: ${path}`);
+  count++;
+  board = measureLanding(wd, base, 'HEAD', { staged: true });
+}
+writeFileSync(delta, paths.length ? `${paths.join('\0')}\0` : '');
+console.log(`[lane-runner-v3] withheld ${count} staged evidence budget path(s); ${board.added} added byte(s) remain`);
+if (board.added > 25_000_000) console.log('[lane-runner-v3] evidence budget remains over 25 MB outside eligible staged artifacts; drain verdict required');
+NODE
+      evidence_rc=$?
+    fi
+    if [ "$evidence_rc" -eq 0 ] && [ -s "$delta" ]; then
+      GIT_LITERAL_PATHSPECS=1 git -C "$wd" commit -q -m "$message" --pathspec-from-file="$delta" --pathspec-file-nul >>"$log" 2>&1 || true
+    elif [ "$evidence_rc" -ne 0 ]; then
+      printf '[lane-runner-v3] withheld auto-commit: evidence budget could not be measured; disk and index retained\n' >> "$log"
+    fi
   fi
+  printf '[lane-runner-v3] withheld %s raw/oversized evidence path(s); receipt: %s\n' "$evidence_withheld" "$withheld_file" >> "$log"
   rm -f "$delta"
   [ "$withheld" -eq 0 ] || printf '[lane-runner-v3] withheld %s baseline ownership collision(s)\n' "$withheld" >> "$log"
   # counted apart from $withheld on purpose: these are two different owed acts, and one

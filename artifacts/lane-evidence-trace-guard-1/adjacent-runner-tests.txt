@@ -1,0 +1,15 @@
+runner-commit-decoupling guard (F-1657-1, from F-1656-1)
+  ok   — lane-runner-v3.sh parses
+  ok   — DEFECT REPRODUCES: the compound form leaves HEAD at 'init' with work.txt stranded staged
+  ok   — CURE WORKS: the decoupled form commits the work and leaves the index clean
+  ok   — the ignored path did NOT leak into the decoupled commit
+  ok   — delta commit includes literal *.txt only; moved tracked/raw baseline dirt remains unstaged
+  ok   — factory accounting withheld; logs/session-scratch evidence and src still committed
+  ok   — no commit site is gated on the add's rc
+  ok   — both art routes keep the decoupled form and ordinary lanes use the delta boundary
+  ok   — the debris excludes are still in place on the lane commit site
+  ok   — red path fires — a runner with the `&&` restored is rejected
+  ok   — red path fires — restoring the old broad commit sweeps baseline dirt and is rejected
+  ok   — red path fires — a runner that sweeps logs/ accounting into lane commits is rejected
+  ok   — reverse control fires — a wholesale logs/ exclusion is rejected (retention hole)
+RESULT: 0 failure(s)

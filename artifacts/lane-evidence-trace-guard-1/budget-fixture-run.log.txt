@@ -1,0 +1,16 @@
+evidence-budget — the evidence bytes this landing adds
+  range    : 1d2ca65837f99fbceb1350ed7d6a7b38bf136fe8..INDEX
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 3 changed evidence path(s)
+  added    : 26.0 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 26.0 MB
+  limit    : 25.0 MB per landing
+         17.0 MB  A  artifacts/task/large shot.bin
+          9.0 MB  A  artifacts/task/small.bin
+          0.0 MB  A  artifacts/task/report.md
+  tree     : 0.0 MB tracked under artifacts/ (no ceiling banked yet)
+  OVER BUDGET — 26.0 MB added against a 25.0 MB ceiling. Offload first (node scripts/evidence-offload.mjs --plan), or raise the ceiling as an OWNER act with a reason.
+[lane-runner-v3] withheld staged evidence budget: artifacts/task/large shot.bin
+[lane-runner-v3] withheld 1 staged evidence budget path(s); 9000006 added byte(s) remain
+[lane-runner-v3] withheld 0 raw/oversized evidence path(s); receipt: /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/lane-evidence-receipt-LpcjGh/run-withheld-paths.txt

@@ -1,0 +1,26 @@
+[lane-runner-v3] withheld raw/oversized evidence: artifacts/big.bin
+[lane-runner-v3] withheld raw/oversized evidence: artifacts/task/test-failed-1.png
+[lane-runner-v3] withheld raw/oversized evidence: artifacts/task/x-results/trace.zip
+[lane-runner-v3] withheld raw/oversized evidence: clip.webm
+[lane-runner-v3] withheld raw/oversized evidence: nested/clip.webm
+[lane-runner-v3] withheld raw/oversized evidence: nested/test-results/data.txt
+[lane-runner-v3] withheld raw/oversized evidence: nested/trace.zip
+[lane-runner-v3] withheld raw/oversized evidence: test-failed-2.png
+[lane-runner-v3] withheld raw/oversized evidence: test-results/nested/data.txt
+[lane-runner-v3] withheld raw/oversized evidence: trace.zip
+[lane-runner-v3] withheld raw/oversized evidence: x-results/data.txt
+[lane-runner-v3] withheld factory accounting: logs/guard-stats.jsonl
+evidence-budget — the evidence bytes this landing adds
+  range    : 63551afc10ea5a7fb7881ec8ec9cb367c5b3a1cf..INDEX
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 1 changed evidence path(s)
+  added    : 0.0 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 0.0 MB
+  limit    : 25.0 MB per landing
+          0.0 MB  A  artifacts/task/report.md
+  tree     : 0.0 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 0.0 MB added, inside the 25.0 MB ceiling.
+[lane-runner-v3] withheld 0 staged evidence budget path(s); 15 added byte(s) remain
+[lane-runner-v3] withheld 11 raw/oversized evidence path(s); receipt: /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/lane-evidence-receipt-CBkBfZ/run-withheld-paths.txt
+[lane-runner-v3] withheld 1 factory-accounting path(s)
