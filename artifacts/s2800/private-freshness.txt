@@ -1,0 +1,13 @@
+LEDGER MIRROR FRESHNESS — LB-01, advisory
+  destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+
+  corpus                  : read (37 entries, 37 dated)
+  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus
+  newest                  : ledger-2026-09-29.db  (today)
+  span                    : 2026-08-24 -> 2026-09-29  (37/37 day(s) present, left edge from the anchor)
+
+  ✅ WHOLE AND CURRENT — every calendar day from the DECLARED first coverage day
+     (2026-08-24, anchored outside the corpus) to the newest mirror is present,
+     and the newest is not behind. Nothing owed.
+
+exit=0

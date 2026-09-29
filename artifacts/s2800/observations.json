@@ -1,0 +1,49 @@
+{
+  "at": "2026-09-29T12:29Z",
+  "head": "fcec378713a5dc2bc65fd1f53db35dab17a26669",
+  "queues": {
+    "art": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "main": []
+  },
+  "running": [],
+  "pending": [],
+  "newFailed": [],
+  "merged": [
+    {
+      "id": "emdash-entities-1",
+      "title": "Six &mdash; entities (ProspectorPanel rung copy ×2, Field Book blank cells ×4) leave the screen and scripts/no-emdash-guard.test.mjs learns to see entities and escapes; pinned landing",
+      "status": "merged",
+      "taskFile": "emdash-entities-1.md",
+      "lane": "lane-b (Astra, gpt-6-astra)",
+      "authoredAt": "2026-09-29",
+      "authoredBy": "attended (Fable), from the THREAD-v3 review findings, 2026-09-29",
+      "queuedAt": "2026-09-29",
+      "mergeHash": "a5aad2abf4c7db4a7aaad84ae52e8a438d731772",
+      "mergedAt": "2026-09-29",
+      "review": "reviews/emdash-entities-1.md",
+      "drainedBy": "attended 2026-09-29 (scripts/attended/land-held.sh emd1; Astra on lane-b, the ChatGPT subscription)",
+      "ancestor": true
+    },
+    {
+      "id": "skill-door-unclaimed-refresh-1",
+      "title": "public/skill.md stops calling e10-archive-world and e10-ember-shore unclaimed (first secured 2026-09-18 per reviews/heat-14-era6-reride.md); the block's writer found; the other unclaimed rows audited against dated records",
+      "status": "merged",
+      "taskFile": "skill-door-unclaimed-refresh-1.md",
+      "lane": "lane-c (Astra, gpt-6-astra)",
+      "authoredAt": "2026-09-29",
+      "authoredBy": "attended (Fable), from the THREAD-v3 review findings, 2026-09-29",
+      "queuedAt": "2026-09-29",
+      "mergeHash": "73b82dbfe30f9d29ee6d4386c337cdbf8d99476f",
+      "mergedAt": "2026-09-29",
+      "review": "reviews/skill-door-unclaimed-refresh-1.md",
+      "drainedBy": "attended 2026-09-29 (scripts/attended/land-held.sh sdu1; Astra on lane-c, the ChatGPT subscription)",
+      "ancestor": true
+    }
+  ],
+  "process": "  PID  PPID TTY      STAT STARTED\n25742     1 ??       S    Tue Sep 29 19:27:03 2026    \n25789 25742 ??       S    Tue Sep 29 19:27:04 2026    \n25791 25789 ??       S    Tue Sep 29 19:27:04 2026    \n31360     1 ??       Ss   Tue Sep 29 10:47:38 2026    \n",
+  "node": "v23.11.1"
+}
