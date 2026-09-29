@@ -10341,15 +10341,21 @@
         {
           "id": "lane-evidence-trace-guard-1",
           "title": "The lane runner never commits Playwright traces, result folders, videos, failure screenshots or files over 50 MB again: withheld at the auto-commit, a pre-commit evidence budget, guard tests (F-2742-1's cause)",
-          "status": "blocked",
+          "status": "queued",
           "taskFile": "lane-evidence-trace-guard-1.md",
           "lane": "lane-d (Astra, gpt-6-astra, the ChatGPT subscription)",
           "authoredAt": "2026-09-29",
           "authoredBy": "attended (Fable), from F-2742-1, 2026-09-29",
           "queuedAt": "2026-09-29",
-          "blockClass": "gate-side",
-          "blockedReason": "s2790: attempt 1 stopped at the task firewall. a444adb6b is a report-only commit; no withholding or budget implementation exists. GATE: attended author clarifies that the inactive lane copy may be edited, or supplies a compliant execution window; preserve the report-only predecessor while refreshing the stale lane, complete the existing task and its acceptance gates. CODEX-WALL bars fire re-queue. See reviews/lane-evidence-trace-guard-1-s2790.md.",
-          "note": "Attempt 1: 40,431 tokens, 2 minutes, lane-reported build PASS, guard tests 0/0, no source changes. Lane commit retained; stopped done-move is bookkeeping only, not a drain."
+          "note": "Attempt 1: 40,431 tokens, 2 minutes, lane-reported build PASS, guard tests 0/0, no source changes. Lane commit retained; stopped done-move is bookkeeping only, not a drain.",
+          "liftedAt": "2026-09-29T02:28Z",
+          "liftedBy": "attended (Fable)",
+          "liftedReason": "s2790's gate-side condition satisfied: the master now states that the lane copy worktrees/lane-d/scripts/lane-runner-v3.sh is the file to edit and that the run's own tasks/running entry is expected; BUILD-ON-PREDECESSOR declared over the report-only predecessor a444adb6b, which is preserved; attempt 2 queued on lane-d (F-ATT-12)",
+          "priorBlock": {
+            "by": "s2790",
+            "class": "gate-side",
+            "reason": "s2790: attempt 1 stopped at the task firewall. a444adb6b is a report-only commit; no withholding or budget implementation exists. GATE: attended author clarifies that the inactive lane copy may be edited, or supplies a compliant execution window; preserve the report-only predecessor while refreshing the stale lane, complete the existing task and its acceptance gates. CODEX-WALL bars fire re-queue. See reviews/lane-evidence-trace-guard-1-s2790.md."
+          }
         }
       ]
     },
