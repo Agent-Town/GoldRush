@@ -1,6 +1,6 @@
 # Audio harshness — before and after
 
-SIMULATED, 60 seconds per scenario, fixed RNG seed 20260928. Before is the original review method re-run on base `80ba31fd110e504e4e06e87c1aa41659329c5e6a`; after uses the normalized MP3s and the new gain chain. All arrows are before → after.
+SIMULATED, 60 seconds per scenario, fixed RNG seed 20260928. Before is the original review method re-run on base `a7410b05aa12b25f8e11aab1ba8065d8c3265d83`; after uses the normalized MP3s and the new gain chain. All arrows are before → after.
 
 | Scenario | SFX LUFS | SFX minus music LU | SFX energy >2 kHz | Mix peak default dBFS | Mix peak maximum dBFS |
 |---|---:|---:|---:|---:|---:|

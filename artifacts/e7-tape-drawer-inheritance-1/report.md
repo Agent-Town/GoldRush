@@ -14,7 +14,7 @@ Attempt 1 already added exactly one visibility assertion following a plain E1 na
 
 ## Preflight and scope
 
-Start: `7eda17dd7`, branch `sol/open-findings-astra`, clean worktree. The only ahead commits were authorized predecessor commits `0d7949951` and `7eda17dd7`; both retained with no reset or history rewrite. Landing baseline: `0ffd300fc4f9f614825a051f1e9ed881899ff85c` (merge base with main).
+Start: `3614d705a`, branch `sol/open-findings-astra`, clean worktree. The only ahead commits were authorized predecessor commits `0d7949951` and `3614d705a`; both retained with no reset or history rewrite. Landing baseline: `0ffd300fc4f9f614825a051f1e9ed881899ff85c` (merge base with main).
 
 Fetched origin/main successfully. Prerequisite merge `00e12579e` is present in both local main and freshly fetched origin/main. Local main was `9a809c631`; fetched origin/main was `32c93f42e`. Main was inspected, not moved. `npm install --no-audit --no-fund` and preflight `npm run build` both exited 0. Restored only install-generated package-lock libc metadata churn; worktree was then clean before edits. Logs: `attempt-2-install.log`, `attempt-2-preflight-build.log`.
 
@@ -46,7 +46,7 @@ Complete attempt-1 snapshot: `/Users/robin/.goldrush/evidence/e7-tape-drawer-inh
 
 `retention-manifest.json` records each moved path, destination, byte size and SHA-256: 576,780,762 bytes moved. New Playwright result folders write directly to the same retention root under `attempt-2/`. In-tree evidence retains reports, JSON measurements, probe source/config, and command logs; no screenshots are required in-tree (zero is within the two-JPEG cap).
 
-Source fix: `fdfef8530` (`fix: inherit the Tape Reel on contract boots while isolating epoch previews`). Authorized predecessor commits: `0d7949951`, `7eda17dd7`. Evidence commit is the commit containing this final report; resolve with `git log -1 -- artifacts/e7-tape-drawer-inheritance-1/report.md`. Final evidence budget: **1,156,332 bytes added** against baseline `0ffd300fc4f9f614825a051f1e9ed881899ff85c`; below the task's 25,000,000-byte cap. Verified with `node scripts/evidence-budget.mjs 0ffd300fc4f9f614825a051f1e9ed881899ff85c HEAD --limit 25000000` after committing.
+Source fix: `39f42724e` (`fix: inherit the Tape Reel on contract boots while isolating epoch previews`). Authorized predecessor commits: `0d7949951`, `3614d705a`. Evidence commit is the commit containing this final report; resolve with `git log -1 -- artifacts/e7-tape-drawer-inheritance-1/report.md`. Final evidence budget: **1,156,332 bytes added** against baseline `0ffd300fc4f9f614825a051f1e9ed881899ff85c`; below the task's 25,000,000-byte cap. Verified with `node scripts/evidence-budget.mjs 0ffd300fc4f9f614825a051f1e9ed881899ff85c HEAD --limit 25000000` after committing.
 
 ## REMAINING LIST IN ORDER
 

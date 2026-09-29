@@ -1,7 +1,7 @@
-branch sol/open-findings-astra tip 5670f2134 2026-09-28 10:05Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/tdi1.json
+branch sol/open-findings-astra tip f1a4fb214 2026-09-28 10:05Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/tdi1.json
 scratch store at the store's main 5793a96
 chain base a825b1486
-merged f6b61e4c5
+merged a950f588d
 law-pointer (pre): rc=0, no re-base needed
 engine hash merged: 2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)
 tsc/build/e1: 0 / 0 / 0
@@ -28,18 +28,18 @@ null floors moved
 verdict — needs hands
 null floors: rc=0 83 of 83 null floors match assets/contracts/null-floors.json (306.9s). — re-run 10:59Z in the chain worktree under the drain lock after the first run's vite transport disconnect (crash, not a moved floor)
 verdict: clean
-RESUME 2026-09-28 11:38Z: chain f6b61e4c5, merge f6b61e4c5, continuing at the pin
+RESUME 2026-09-28 11:38Z: chain a950f588d, merge a950f588d, continuing at the pin
 hash at pin time: 2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c
 pin #72 `2f11c1a5`
 era (chain, scratch store): ℹ pass 9 ℹ fail 0 
 review: reviews/e7-tape-drawer-inheritance-1.md
-bookkeeping: leaf merged, row, STATUS phrase (f6b61e4c5)
+bookkeeping: leaf merged, row, STATUS phrase (a950f588d)
 STATUS.md: theirs (main)
 tasks/BACKLOG.md: union
-main now 5b868b11f
+main now c4953ac70
 error: failed to push some refs to 'github.com:Agent-Town/GoldRush.git'
 post-ff: law rc=0 | desk ℹ pass 57 ℹ fail 0 
-deploy: rc=0 [deploy] DEPLOYED ok https://8836a856.gold-rush-3in.pages.dev [deploy] VERIFIED published 5b868b11 at https://gold-rush-3in.pages.dev [deploy] ASSAYER SYNCED: droplet tree + pin 5b868b11, services restarted [deploy] Outcome: deployed 
+deploy: rc=0 [deploy] DEPLOYED ok https://8836a856.gold-rush-3in.pages.dev [deploy] VERIFIED published c4953ac7 at https://gold-rush-3in.pages.dev [deploy] ASSAYER SYNCED: droplet tree + pin c4953ac7, services restarted [deploy] Outcome: deployed 
 battery on main: rc=0 ℹ tests 1040 ℹ pass 1035 ℹ fail 0 ℹ skipped 5 ℹ tests 87 ℹ pass 87 ℹ fail 0 ℹ skipped 0 
 chain worktree removed
 LAND-tdi1-DONE

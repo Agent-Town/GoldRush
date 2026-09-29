@@ -1,19 +1,19 @@
 {
-  "root": "985c83d5fb1edbd74bea17c0b226fff3716e7e7d",
+  "root": "d01ad96cade636c5f7c679948809b28178dd61a6",
   "start": "2026-09-27T17:00:00.000Z",
   "end": "2026-09-28T17:00:00.000Z",
   "before": "cb82f79a4a9601222e4e42defeabaaf0c5abf807",
-  "final": "abe0127ea9d870946b5647b36ad84e8a43d1c02e",
+  "final": "4f82ee1a75d7017ea2b2fdf7df58568b6d24506b",
   "mainUpdates": 201,
   "firstParentCommits": 187,
   "controlSeptember25": 136,
   "playerEvents": 3,
   "events": [
     {
-      "hash": "5b868b11f06623d9d073b6687b26ccb75adeaf6b",
+      "hash": "c4953ac7096dc09c56c3c93065af33312e485d73",
       "stamp": "2026-09-28T18:38:25+07:00",
       "time": 1790595505000,
-      "subject": "merge 5b868b11f06623d9d073b6687b26ccb75adeaf6b: Fast-forward",
+      "subject": "merge c4953ac7096dc09c56c3c93065af33312e485d73: Fast-forward",
       "previous": "0979de76328c5a225f543d620f47c66a9f5c4382",
       "playerFiles": [
         "assets/engine-era.json",
@@ -24,23 +24,23 @@
         "reviews/e7-tape-drawer-inheritance-1.md"
       ],
       "introduced": [
-        "5b868b11f 2026-09-28T18:38:25+07:00 drain: tdi1 bookkeeping re-applied after the main merge",
-        "e17b4897d 2026-09-28T18:38:24+07:00 drain: merge main into the tdi1 chain (pass 1)",
-        "09abb3f3d 2026-09-28T18:38:08+07:00 drain: tdi1 LANDED — review, leaf merged, ledger row, STATUS phrase",
-        "ab573c67a 2026-09-28T18:38:07+07:00 era 6, same-era pin: tdi1, measured on the merged tree with the store at 5793a96 (2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c)",
-        "f6b61e4c5 2026-09-28T17:05:18+07:00 drain: merge sol/open-findings-astra — e7-tape-drawer-inheritance-1 — a Signal-Era profile keeps its Tape Reel on earlier maps again: the mount reads the campaign's epoch in the contract branch of the boot's epoch selection, explicit epoch previews keep the previewed map's state; the inheritance test green on both projects without a change to it; closes F-SPH2-2 (red on main since 7c2744e5a); engine-pinned",
-        "5670f2134 2026-09-28T14:31:33+07:00 fix: retain compact passing Tape Reel inheritance evidence",
-        "fdfef8530 2026-09-28T14:26:53+07:00 fix: inherit the Tape Reel on contract boots while isolating epoch previews",
-        "7eda17dd7 2026-09-28T14:13:34+07:00 fix: record e7-tape-drawer-inheritance-1 evidence and acceptance blocker",
+        "c4953ac70 2026-09-28T18:38:25+07:00 drain: tdi1 bookkeeping re-applied after the main merge",
+        "575f80a68 2026-09-28T18:38:24+07:00 drain: merge main into the tdi1 chain (pass 1)",
+        "585592cde 2026-09-28T18:38:08+07:00 drain: tdi1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "d70e8c34a 2026-09-28T18:38:07+07:00 era 6, same-era pin: tdi1, measured on the merged tree with the store at 5793a96 (2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c)",
+        "a950f588d 2026-09-28T17:05:18+07:00 drain: merge sol/open-findings-astra — e7-tape-drawer-inheritance-1 — a Signal-Era profile keeps its Tape Reel on earlier maps again: the mount reads the campaign's epoch in the contract branch of the boot's epoch selection, explicit epoch previews keep the previewed map's state; the inheritance test green on both projects without a change to it; closes F-SPH2-2 (red on main since 7c2744e5a); engine-pinned",
+        "f1a4fb214 2026-09-28T14:31:33+07:00 fix: retain compact passing Tape Reel inheritance evidence",
+        "39f42724e 2026-09-28T14:26:53+07:00 fix: inherit the Tape Reel on contract boots while isolating epoch previews",
+        "3614d705a 2026-09-28T14:13:34+07:00 fix: record e7-tape-drawer-inheritance-1 evidence and acceptance blocker",
         "0d7949951 2026-09-28T14:07:32+07:00 fix: inherit the Tape Reel from campaign progress"
       ]
     },
     {
-      "hash": "80ba31fd110e504e4e06e87c1aa41659329c5e6a",
+      "hash": "a7410b05aa12b25f8e11aab1ba8065d8c3265d83",
       "stamp": "2026-09-28T19:39:05+07:00",
       "time": 1790599145000,
-      "subject": "merge 80ba31fd110e504e4e06e87c1aa41659329c5e6a: Fast-forward",
-      "previous": "77c1e7960ae73dfedd9bdae63151b16dd80aa0f3",
+      "subject": "merge a7410b05aa12b25f8e11aab1ba8065d8c3265d83: Fast-forward",
+      "previous": "fd6a21585d9aea145b9baf70193ea83933bc6110",
       "playerFiles": [
         "assets/engine-era.json",
         "src/audio/AudioSettingsControl.ts",
@@ -57,9 +57,9 @@
         "reviews/audio-music-toggle-1.md"
       ],
       "introduced": [
-        "80ba31fd1 2026-09-28T19:38:50+07:00 drain: amt1 LANDED — review, leaf merged, ledger row, STATUS phrase",
-        "3cc0c92e7 2026-09-28T19:38:49+07:00 era 6, same-era pin: amt1, measured on the merged tree with the store at 5793a96 (cd76fd088099119c9233e6ac50b2319fa07611ae1955082110b5043f2c7458f9)",
-        "cdf30c09e 2026-09-28T19:04:21+07:00 drain: merge sol/wave-lane-b — audio-music-toggle-1 — one tap turns the music off everywhere a player hears it: a fourth per-profile key, a 44 px toggle beside pause in the run HUD, on the town bar, on the start menu and the first-boot card, a Music checkbox beside the slider, music-off skips the loop fetch; from reviews/audio-review-1.md rank 1 (owner 2026-09-28: users asked how to disable the music quickly); no new key, M unchanged; engine-pinned",
+        "a7410b05a 2026-09-28T19:38:50+07:00 drain: amt1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "292434faa 2026-09-28T19:38:49+07:00 era 6, same-era pin: amt1, measured on the merged tree with the store at 5793a96 (cd76fd088099119c9233e6ac50b2319fa07611ae1955082110b5043f2c7458f9)",
+        "176aff07c 2026-09-28T19:04:21+07:00 drain: merge sol/wave-lane-b — audio-music-toggle-1 — one tap turns the music off everywhere a player hears it: a fourth per-profile key, a 44 px toggle beside pause in the run HUD, on the town bar, on the start menu and the first-boot card, a Music checkbox beside the slider, music-off skips the loop fetch; from reviews/audio-review-1.md rank 1 (owner 2026-09-28: users asked how to disable the music quickly); no new key, M unchanged; engine-pinned",
         "425f29fe2 2026-09-28T17:34:02+07:00 test: re-record the phone HUD entry census on the merged tree (main's UI sources moved its hash; boxes and coverage unchanged)",
         "f12318fe1 2026-09-28T17:29:43+07:00 merge: main into sol/wave-lane-b before the amt1 landing — the phone HUD census evidence stays the lane's (it matches the lane's UI), the regenerated build-menu screenshots take main's (F-1266-1 churn)",
         "ca7508ab3 2026-09-28T17:20:50+07:00 runner(lane-b): audio-music-toggle-1.md",
@@ -72,11 +72,11 @@
       ]
     },
     {
-      "hash": "954bb2cdeac5baf22318255f0d1d86466e4f98a1",
+      "hash": "420264a5fb9f016ca9380a232e6dc212662e1ddc",
       "stamp": "2026-09-28T20:57:51+07:00",
       "time": 1790603871000,
-      "subject": "merge 954bb2cdeac5baf22318255f0d1d86466e4f98a1: Fast-forward",
-      "previous": "136cb54fdecb596deb2303041888d08fae709749",
+      "subject": "merge 420264a5fb9f016ca9380a232e6dc212662e1ddc: Fast-forward",
+      "previous": "426da727dc527e75f237d284fa5db17ba3bb48aa",
       "playerFiles": [
         "assets/audio/LEDGER.md",
         "assets/audio/raw/agent-works.mp3",
@@ -129,14 +129,14 @@
         "reviews/audio-harshness-1.md"
       ],
       "introduced": [
-        "954bb2cde 2026-09-28T20:57:35+07:00 drain: ahr1 LANDED — review, leaf merged, ledger row, STATUS phrase",
-        "ade1f4120 2026-09-28T20:57:35+07:00 era 6, same-era pin: ahr1, measured on the merged tree with the store at 5793a96 (999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4)",
-        "a214c82d7 2026-09-28T20:19:06+07:00 drain: merge sol/wave-lane-b — audio-harshness-1 — the sound stops being spiky: 41 one-shots normalized to the LEDGER's -14 LUFS in place, the manifest re-balanced by the review's own simulation (early Spark Rig brightness 68.2% → 28.4% of SFX energy above 2 kHz, SFX over music +2.6 → +1.7 LU, the four loud cues about 6 LU quieter, the hits within 2 LU of the music), a gentle SFX high-shelf and distance attenuation for building shots, ramped gains, faded and crossfaded music loops; before/after listen clips for the owner; no limiter (none needed), no music content change; from reviews/audio-review-1.md ranks 2 to 4; engine-pinned, reversible on the owner's word",
-        "26eefc242 2026-09-28T20:00:45+07:00 fix: record audio-harshness-1 measurements listening clips and gates",
-        "1ae4313cc 2026-09-28T19:50:11+07:00 fix: crossfade alternating music sources over measured tails",
-        "82e38e8b1 2026-09-28T19:48:51+07:00 fix: ramp audio gains and fade music at scene boundaries",
-        "2d918847d 2026-09-28T19:48:07+07:00 fix: darken SFX and attenuate building shots by distance",
-        "30ade2e31 2026-09-28T19:47:37+07:00 fix: normalize one-shots and rebalance audio-harshness-1 mix"
+        "420264a5f 2026-09-28T20:57:35+07:00 drain: ahr1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "53db941dc 2026-09-28T20:57:35+07:00 era 6, same-era pin: ahr1, measured on the merged tree with the store at 5793a96 (999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4)",
+        "e277f077d 2026-09-28T20:19:06+07:00 drain: merge sol/wave-lane-b — audio-harshness-1 — the sound stops being spiky: 41 one-shots normalized to the LEDGER's -14 LUFS in place, the manifest re-balanced by the review's own simulation (early Spark Rig brightness 68.2% → 28.4% of SFX energy above 2 kHz, SFX over music +2.6 → +1.7 LU, the four loud cues about 6 LU quieter, the hits within 2 LU of the music), a gentle SFX high-shelf and distance attenuation for building shots, ramped gains, faded and crossfaded music loops; before/after listen clips for the owner; no limiter (none needed), no music content change; from reviews/audio-review-1.md ranks 2 to 4; engine-pinned, reversible on the owner's word",
+        "488a95c4d 2026-09-28T20:00:45+07:00 fix: record audio-harshness-1 measurements listening clips and gates",
+        "4fcced309 2026-09-28T19:50:11+07:00 fix: crossfade alternating music sources over measured tails",
+        "7da46910b 2026-09-28T19:48:51+07:00 fix: ramp audio gains and fade music at scene boundaries",
+        "106854327 2026-09-28T19:48:07+07:00 fix: darken SFX and attenuate building shots by distance",
+        "53fb39384 2026-09-28T19:47:37+07:00 fix: normalize one-shots and rebalance audio-harshness-1 mix"
       ]
     }
   ]

@@ -41,10 +41,10 @@ fire hold released at the verdict (verdict: clean) 11:02Z
 
 
 /Users/robin/.goldrush/land/tdi1-gates.txt
-branch sol/open-findings-astra tip 5670f2134 2026-09-28 10:05Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/tdi1.json
+branch sol/open-findings-astra tip f1a4fb214 2026-09-28 10:05Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/tdi1.json
 scratch store at the store's main 5793a96
 chain base a825b1486
-merged f6b61e4c5
+merged a950f588d
 law-pointer (pre): rc=0, no re-base needed
 engine hash merged: 2f11c1a5b75338d48d7ce7823646ff4d5ff1bd0d55ab13a865cf5d0917e5a92c (pinned 2d180e6bad6933ef15db2a006aaa0a1a3be8a97efdf9416cbc4646be71be4f6d)
 tsc/build/e1: 0 / 0 / 0
@@ -130,11 +130,11 @@ LEAF {"id":"audio-music-toggle-1","title":"One tap turns the music off everywher
 LEAF {"id":"audio-harshness-1","title":"The sound stops being spiky: one-shots normalized to the LEDGER's -14 LUFS, the manifest re-balanced by simulation, a high-shelf and distance attenuation for building shots, ramped gains, faded and seam-free (crossfaded) music loops, before/after renders for the owner's listen; no limiter (none needed), no music content change (owner Q2/Q3)","status":"queued","taskFile":"audio-harshness-1.md","lane":"lane-b (Astra, gpt-6-astra, the ChatGPT subscription; from reviews/audio-review-1.md ranks 2 to 4); the queue copy is HELD until audio-music-toggle-1 has landed on main","authoredAt":"2026-09-28","authoredBy":"attended (Fable), from the Opus 5.5 audio review, 2026-09-28","queuedAt":"2026-09-28"}
 LEAF {"id":"run-guards-node-watchdog-1","title":"F-2737-1: let the full Node guard battery complete within its measured outer budget; preserve the test and progress bounds","status":"merged","taskFile":"run-guards-node-watchdog-1.md","lane":"lane-d (Astra, gpt-6-astra, the ChatGPT subscription; adapted from the s2737 fire's scratch master by the attended session 2026-09-28; CODEX-WALL still forbids FIRE dispatch, this copy was dispatched attended)","authoredAt":"2026-09-28","authoredBy":"s2737 fire","spec":"tasks/run-guards-node-watchdog-1.md","note":"AUTHORED ONLY, no queue copy or dispatch. Source policy 900 s verified; healthy full main receipt 2566.773 s at s2724. Audio integration remains held.","queuedAt":"2026-09-28","mergeHash":"3717fb210388131df019a5f4e2005b10afcc316c","mergedAt":"2026-09-28","review":"reviews/run-guards-node-watchdog-1.md","drainedBy":"attended 2026-09-28 (scripts/attended/land-held.sh rgw1; Astra on lane-d, the ChatGPT subscription)"}
 3717fb210 ancestor main rc=0
-f6b61e4c5 ancestor main rc=1
+a950f588d ancestor main rc=1
 97a6a6493 ancestor main rc=1
-sol/open-findings-astra main..branch 5670f2134 fix: retain compact passing Tape Reel inheritance evidence
-fdfef8530 fix: inherit the Tape Reel on contract boots while isolating epoch previews
-7eda17dd7 fix: record e7-tape-drawer-inheritance-1 evidence and acceptance blocker
+sol/open-findings-astra main..branch f1a4fb214 fix: retain compact passing Tape Reel inheritance evidence
+39f42724e fix: inherit the Tape Reel on contract boots while isolating epoch previews
+3614d705a fix: record e7-tape-drawer-inheritance-1 evidence and acceptance blocker
 0d7949951 fix: inherit the Tape Reel from campaign progress
 
 sol/wave-lane-b main..branch 425f29fe2 test: re-record the phone HUD entry census on the merged tree (main's UI sources moved its hash; boxes and coverage unchanged)

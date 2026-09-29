@@ -1,6 +1,6 @@
 # Drain review: `lane-evidence-trace-guard-1`, the lane runner never commits Playwright traces or oversized evidence again (the cause of F-2742-1, cured at the auto-commit)
 
-**Branch** `art/portraits-e5-e10-generated` at `cf56d87c8` · **merge** `8c03eb512` · engine hash unchanged (`99920310`, no pin) · drained attended 2026-09-29 03:46Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `teg1`).
+**Branch** `art/portraits-e5-e10-generated` at `cf56d87c8` · **merge** `f19e79de3` · engine hash unchanged (`99920310`, no pin) · drained attended 2026-09-29 03:46Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `teg1`).
 
 **Verdict: LANDED.**
 

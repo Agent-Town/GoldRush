@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { isPlayerPath } from '../../scripts/gazette-backfill-sweep.mjs';
 
 const git = (...args) => execFileSync('git', args, { encoding: 'utf8', maxBuffer: 64e6 }).trim();
-const root = '985c83d5fb1edbd74bea17c0b226fff3716e7e7d';
+const root = 'd01ad96cade636c5f7c679948809b28178dd61a6';
 const start = Date.parse('2026-09-28T00:00:00+07:00');
 const end = Date.parse('2026-09-29T00:00:00+07:00');
 const reflog = git('reflog', 'show', 'main', '--date=iso-strict', '--format=%H%x09%gD%x09%gs')

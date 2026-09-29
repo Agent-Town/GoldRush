@@ -13,7 +13,7 @@ surements-after.json
  create mode 100644 artifacts/audio-harshness-1/verification.json
 {
  "mode": "landing",
- "base": "80ba31fd110e504e4e06e87c1aa41659329c5e6a",
+ "base": "a7410b05aa12b25f8e11aab1ba8065d8c3265d83",
  "tip": "HEAD",
  "files": 26,
  "added": 968650,
@@ -185,18 +185,18 @@ exec
 /bin/zsh -lc "git status --short
 git log -5 --oneline
 rg -n 'Evidence budget' artifacts/audio-harshness-1/report.md
-git diff 80ba31fd110e504e4e06e87c1aa41659329c5e6a HEAD --stat -- src assets/audio/LEDGER.md
+git diff a7410b05aa12b25f8e11aab1ba8065d8c3265d83 HEAD --stat -- src assets/audio/LEDGER.md
 " in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b
  succeeded in 145ms:
 ?? logs/guard-stats.jsonl
-26eefc242 fix: record audio-harshness-1 measurements listening clips and gates
-1ae4313cc fix: crossfade alternating music sources over measured tails
-82e38e8b1 fix: ramp audio gains and fade music at scene boundaries
-2d918847d fix: darken SFX and attenuate building shots by distance
-30ade2e31 fix: normalize one-shots and rebalance audio-harshness-1 mix
+488a95c4d fix: record audio-harshness-1 measurements listening clips and gates
+4fcced309 fix: crossfade alternating music sources over measured tails
+7da46910b fix: ramp audio gains and fade music at scene boundaries
+106854327 fix: darken SFX and attenuate building shots by distance
+53fb39384 fix: normalize one-shots and rebalance audio-harshness-1 mix
 49:Commands and full test logs are retained in this directory. `verification.json` holds exit codes and asset/listen byte checks. Evidence budget is recorded below for this complete landing.
 110:## Evidence budget
-112:Evidence budget: **968650 bytes** added under the measured evidence prefixes, below the task’s 25,000,000-byte limit. Measured with `node scripts/evidence-budget.mjs 80ba31fd110e504e4e06e87c1aa41659329c5e6a HEAD --limit 25000000 --json`. The stock script counts `artifacts/` and `reviews/shots-`, not assets; separately, normalized MP3 positive growth is **0 bytes**, net **−2,508 bytes**. Therefore the combined evidence-plus-positive-asset-delta budget is the same number. Scratch files are ignored and excluded.
+112:Evidence budget: **968650 bytes** added under the measured evidence prefixes, below the task’s 25,000,000-byte limit. Measured with `node scripts/evidence-budget.mjs a7410b05aa12b25f8e11aab1ba8065d8c3265d83 HEAD --limit 25000000 --json`. The stock script counts `artifacts/` and `reviews/shots-`, not assets; separately, normalized MP3 positive growth is **0 bytes**, net **−2,508 bytes**. Therefore the combined evidence-plus-positive-asset-delta budget is the same number. Scratch files are ignored and excluded.
  assets/audio/LEDGER.md      |   4 ++
  src/audio/SoundSystem.ts    | 122 ++++++++++++++++++++++++++++++++++----------
  src/audio/manifest.ts       |  67 ++++++++++++------------
@@ -212,7 +212,7 @@ READY-FOR-GATES — [report](</Users/robin/Claude/Projects/Gold Rush/worktrees/l
 
 Listen: [before](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/listen-before.ogg>) · [after](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/listen-after.ogg>).
 
-Commits: `30ade2e31`, `2d918847d`, `82e38e8b1`, `1ae4313cc`, `26eefc242`.
+Commits: `53fb39384`, `106854327`, `7da46910b`, `4fcced309`, `488a95c4d`.
 
 Remaining: adjudicate baseline test failures, owner listen, integration gates.
 tokens used
@@ -225,7 +225,7 @@ READY-FOR-GATES — [report](</Users/robin/Claude/Projects/Gold Rush/worktrees/l
 
 Listen: [before](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/listen-before.ogg>) · [after](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-harshness-1/listen-after.ogg>).
 
-Commits: `30ade2e31`, `2d918847d`, `82e38e8b1`, `1ae4313cc`, `26eefc242`.
+Commits: `53fb39384`, `106854327`, `7da46910b`, `4fcced309`, `488a95c4d`.
 
 Remaining: adjudicate baseline test failures, owner listen, integration gates.
 [lane-runner-v3] withheld factory accounting: logs/guard-stats.jsonl

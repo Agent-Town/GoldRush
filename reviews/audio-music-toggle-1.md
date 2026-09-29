@@ -1,6 +1,6 @@
 # Drain review: `audio-music-toggle-1`, one tap turns the music off on every surface a player hears it, the setting per profile, the loop fetch skipped when off
 
-**Branch** `sol/wave-lane-b` at `425f29fe2` · **merge** `cdf30c09e` · engine hash #73 `cd76fd08` · drained attended 2026-09-28 12:38Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `amt1`).
+**Branch** `sol/wave-lane-b` at `425f29fe2` · **merge** `176aff07c` · engine hash #73 `cd76fd08` · drained attended 2026-09-28 12:38Z in a detached chain worktree with the scratch store at `5793a96`; deployed (scripts/attended/land.sh, config `amt1`).
 
 **Verdict: LANDED.**
 

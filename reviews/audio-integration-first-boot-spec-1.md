@@ -1,6 +1,6 @@
 # Drain review — audio-integration-first-boot-spec-1
 
-Slice: audio-integration-first-boot-spec-1. Branch: sol/wave-lane-b. Tip: 68ad3e06f04f4e0b7b865305fbfbee9e79d5e18a. Pre-drain main: 075e97b6c5b9b3a4dc95221dc1b10f94c45a0cc6. Merge base: 26eefc2421f06450860f8226a4638dc0f4b7305e. Candidate: bf65df7de6402fc0efa7ff63746cc65a1171cdcc.
+Slice: audio-integration-first-boot-spec-1. Branch: sol/wave-lane-b. Tip: 33d2508c8cebae0017d00c8f32388b9e605dd8d8. Pre-drain main: 28095686429674fd80cfbaa6ddf50c09d21060b9. Merge base: 488a95c4d713bf9d53f780ed53a87239904d56e4. Candidate: 6c6c9c268d59bbc4aeedac13b12b480ae8777b53.
 
 Verdict: PASS — READY-FOR-GATES. Accepted for fast-forward; F-AUD-16 corrected.
 
@@ -34,8 +34,8 @@ F-AUD-16's obsolete first-boot Settings route is corrected and its own plus adja
 
 Literal diff-selected guards: **5/5, rc 0**, **2252.199 seconds** on Node v26.4.0. Full npm Node command: **rc 0, 2249 seconds**, including its chained tail. The wrapper retains successful command verdicts rather than passing per-test output, so a final per-test count is not claimed. During the run the fixture sweep reported **162 owners, zero survivors, no failed children**. Power budget p95 **0.336 ms**; task, citation and caller guards green. The initial fire ledger battery was **1263/1263 plus kit 83/83**, rc 0; a new closing ledger battery follows the landing.
 
-Main's intervening changes were this fire's lock refresh and evidence only, merged cleanly into the candidate as e467b7a2d0af73b73d2515a45cdd043ac53c8168. Final measured engine **999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4** equals the existing pin; store **5793a967da46e8f00c0ba16f92f17dc10d36558d**. No src/assets/functions diff and no new pin or deployment. The pre-existing origin backup block F-2742-1 still applies; its unchanged rejected push is not repeated.
+Main's intervening changes were this fire's lock refresh and evidence only, merged cleanly into the candidate as 6e901a9dfcf301f04cb279abd37b69e869e32961. Final measured engine **999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4** equals the existing pin; store **5793a967da46e8f00c0ba16f92f17dc10d36558d**. No src/assets/functions diff and no new pin or deployment. The pre-existing origin backup block F-2742-1 still applies; its unchanged rejected push is not repeated.
 
 Regenerated adjacent screenshots were copied into artifacts/s2747/adjacent-rerenders/ before their original tracked paths were restored. All source and fire evidence is retained. The prepared control arena was not run because the browser batch passed without any failures. One long drain only; its required full Node command exceeded the approximate fire time budget, and no subsequent drain was started.
 
-Post-landing closure: main ad483104d passed the complete ledger command **1263/1263 plus kit 83/83, rc 0**, in **226.829 seconds**. Final board and all four named lanes are DRY by their respective probes. The source merge is accepted locally; origin backup remains subject to F-2742-1.
+Post-landing closure: main 8d945b79e passed the complete ledger command **1263/1263 plus kit 83/83, rc 0**, in **226.829 seconds**. Final board and all four named lanes are DRY by their respective probes. The source merge is accepted locally; origin backup remains subject to F-2742-1.

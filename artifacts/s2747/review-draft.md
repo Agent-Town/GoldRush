@@ -1,6 +1,6 @@
 # Drain review — audio-integration-first-boot-spec-1
 
-Slice: audio-integration-first-boot-spec-1. Branch: sol/wave-lane-b. Tip: 68ad3e06f04f4e0b7b865305fbfbee9e79d5e18a. Pre-drain main: 075e97b6c5b9b3a4dc95221dc1b10f94c45a0cc6. Merge base: 26eefc2421f06450860f8226a4638dc0f4b7305e. Candidate: bf65df7de6402fc0efa7ff63746cc65a1171cdcc.
+Slice: audio-integration-first-boot-spec-1. Branch: sol/wave-lane-b. Tip: 33d2508c8cebae0017d00c8f32388b9e605dd8d8. Pre-drain main: 28095686429674fd80cfbaa6ddf50c09d21060b9. Merge base: 488a95c4d713bf9d53f780ed53a87239904d56e4. Candidate: 6c6c9c268d59bbc4aeedac13b12b480ae8777b53.
 
 Verdict: PENDING full Node guards and final identity verification.
 

@@ -42,7 +42,7 @@ Before and intermediate integration runs used the same command with `before-` an
 
 ## Commits and scope
 
-Base: `26eefc2421f06450860f8226a4638dc0f4b7305e`. Implementation: `52860648a0d05cbcb82f6ff31b737165a63ef694` (`test: boot audio persistence with a returning-player profile`), **11 insertions / 6 deletions** in the single allowed spec. This report and its evidence are committed separately with the same `test:` prefix.
+Base: `488a95c4d713bf9d53f780ed53a87239904d56e4`. Implementation: `6965c31efc748947fb229ec26754a145b3e20f3a` (`test: boot audio persistence with a returning-player profile`), **11 insertions / 6 deletions** in the single allowed spec. This report and its evidence are committed separately with the same `test:` prefix.
 
 Only `e2e/audio-integration.spec.ts` and this artifact directory are included. Raw failure traces remain local and are ignored by this directory's `.gitignore`; logs, failure context and screenshots are retained in git (trailing whitespace stripped from generated text). The task's touch-only boundary also excludes vault writes.
 

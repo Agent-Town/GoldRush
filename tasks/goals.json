@@ -6929,7 +6929,7 @@
               "authoredAt": "2026-09-28",
               "authoredBy": "attended (Fable), from the sph2 drain's e2e red and the lane-a audit's control, 2026-09-28",
               "queuedAt": "2026-09-28",
-              "mergeHash": "f6b61e4c5f4af90bf24338224e1c5bef8d4d9251",
+              "mergeHash": "a950f588de2e2bc59841c09b412b6c041d7e8779",
               "mergedAt": "2026-09-28",
               "review": "reviews/e7-tape-drawer-inheritance-1.md",
               "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh tdi1; Astra on lane-a, the ChatGPT subscription)"
@@ -6943,7 +6943,7 @@
               "authoredAt": "2026-09-28",
               "authoredBy": "attended (Fable), from the Opus 5.5 audio review, 2026-09-28",
               "queuedAt": "2026-09-28",
-              "mergeHash": "cdf30c09e90f4f957ba09e52e0782a9679977fd1",
+              "mergeHash": "176aff07c8bf4cf88492a482e6c488bb9ece352b",
               "mergedAt": "2026-09-28",
               "review": "reviews/audio-music-toggle-1.md",
               "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh amt1; Astra on lane-b, the ChatGPT subscription; the fires' wrapper cap F-2737-1 kept them from landing it)"
@@ -6957,7 +6957,7 @@
               "authoredAt": "2026-09-28",
               "authoredBy": "attended (Fable), from the Opus 5.5 audio review, 2026-09-28",
               "queuedAt": "2026-09-28",
-              "mergeHash": "a214c82d7d91a1f128efa39c7a4b482dc550791b",
+              "mergeHash": "e277f077dea91b6308264194c2533543bca2044c",
               "mergedAt": "2026-09-28",
               "review": "reviews/audio-harshness-1.md",
               "drainedBy": "attended 2026-09-28 (scripts/attended/land-held.sh ahr1; Astra on lane-b, the ChatGPT subscription; owner absent, reversible, inside the commissioned review's ranked recommendations)"
@@ -6985,7 +6985,7 @@
               "authoredAt": "2026-09-28",
               "authoredBy": "attended (Fable), from F-AUD-16, 2026-09-28",
               "queuedAt": "2026-09-28",
-              "mergeHash": "bf65df7de6402fc0efa7ff63746cc65a1171cdcc"
+              "mergeHash": "6c6c9c268d59bbc4aeedac13b12b480ae8777b53"
             }
           ]
         }
@@ -10360,7 +10360,7 @@
           "blockedBy": "s2791",
           "blockedAt": "2026-09-29T02:42Z",
           "blockedReason": "s2791: attempt 2 implemented as 00e7839ba; the inactive lane-copy scope is resolved. Primary runner PID 25494 (PPID 1) still executes the primary scripts/lane-runner-v3.sh. CLAUDE.md mistake 17 forbids writing an executing script; AGENTS permits stopping only PIDs this actor started. GATE: coordinate an attended quiescent runner window, complete the detached drain gates and pointer rebasing, verify no process executes the primary script before landing, then restart through scripts/start-lane-runner.sh. Preserve both lane commits and the done-move; no re-queue or new owner decision is required. See reviews/lane-evidence-trace-guard-1-s2791.md.",
-          "mergeHash": "8c03eb5128392edf78385cb113c6012a42da723c",
+          "mergeHash": "f19e79de3c07bdd99f32d837eb9d023cfc6e2e09",
           "mergedAt": "2026-09-29",
           "review": "reviews/lane-evidence-trace-guard-1.md",
           "drainedBy": "attended 2026-09-29 (scripts/attended/land-held.sh teg1; Astra on lane-d, the ChatGPT subscription)"
