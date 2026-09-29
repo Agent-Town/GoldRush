@@ -1,0 +1,13 @@
+diff --git a/scripts/attended/repair-main.sh b/scripts/attended/repair-main.sh
+index 692d8adfe..10c015748 100644
+--- a/scripts/attended/repair-main.sh
++++ b/scripts/attended/repair-main.sh
+@@ -45,7 +45,7 @@ git commit -q -m "shrink: every cited commit id re-pointed to the re-landed hist
+ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>" && log "re-point commit $(git rev-parse --short main)"
+ # 5. rebase lane-b's unlanded commits onto the new main (same content, new base), if any
+ if [ "$(git rev-list --count "$OLD"..sol/wave-lane-b)" -gt 0 ]; then git -C worktrees/lane-b rebase -q --onto main "$OLD" sol/wave-lane-b >> "$OUT" 2>&1 && log "lane-b rebased onto the new main ($(git rev-list --count main..sol/wave-lane-b) ahead)" || { log "lane-b rebase needs hands; aborted"; git -C worktrees/lane-b rebase --abort 2>/dev/null; }; fi
+-for L in lane-a:sol/open-findings-astra lane-c:sol/map-art-campaign-2 lane-d:art/portraits-e5-e10-generated; do W=${L%%:*}; B=${L##*:}; [ "$(git rev-list --count main..$B)" -gt 0 ] && [ "$(git rev-list --count "$OLD"..$B)" = "0" ] && git -C "worktrees/$W" reset -q --hard main && log "$W reset onto the new main (it held only old-lineage commits already on main)"; done
++for L in lane-a:sol/open-findings-astra lane-b:sol/wave-lane-b lane-c:sol/map-art-campaign-2 lane-d:art/portraits-e5-e10-generated; do W=${L%%:*}; B=${L##*:}; [ "$(git rev-list --count main..$B)" -gt 0 ] && [ "$(git rev-list --count "$OLD"..$B)" = "0" ] && git -C "worktrees/$W" reset -q --hard main && log "$W reset onto the new main (it held only old-lineage commits already on main)"; done
+ # 6. ordinary push
+ git push origin main 2>&1 | grep -E "error|rejected|GH0|main -> main" | tee -a "$OUT" | head -3
+ git ls-remote --heads origin main | cut -c1-9 | xargs -I{} echo "origin/main now {}" | tee -a "$OUT"

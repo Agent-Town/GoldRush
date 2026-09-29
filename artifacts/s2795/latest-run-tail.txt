@@ -1,0 +1,41 @@
+   "ceilingBytes": null,
+   "bankedBytes": null,
+   "bankedFiles": null,
+   "commit": null,
+   "measuredAt": null,
+   "setBy": "NOT BANKED YET. The attended drain that runs the first offload (task evidence-offload-1) banks it: measure `node scripts/evidence-budget.mjs --total` on the merged tree AFTER the offload commit, then set ceilingBytes to that total plus one quarter of headroom, bankedBytes/bankedFiles to the measurement, commit to the offload commit and measuredAt to that day. Until then the tool reports the total and exits 0, because a budget nobody has set must never refuse a drain.",
+   "measuredBefore": {
+    "bytes": 8657137147,
+    "files": 26345,
+    "commit": "39acd87471960d7489f87dbc58f55b7e35757c69",
+    "measuredAt": "2026-09-25",
+    "note": "The tree the tools were written against, recorded so the first offload's cut is checkable rather than claimed: 8657.1 MB / 26,345 tracked files, of which the derived must-stay set is 1040.9 MB / 5,959 files and the movable remainder 7616.2 MB / 20,386 files."
+   }
+  },
+  "source": "scripts/evidence-budget-baseline.json"
+ }
+}
+
+codex
+READY-FOR-GATES — committed as `00e7839ba`, preserving predecessor `a444adb6b`.
+
+- Withholds test-results/*-results trees, trace.zip, *.webm, test-failed-*.png, and artifacts over 50 MB.
+- Enforces the 25 MB staged budget; withheld files remain on disk.
+- Passed 21 tests, 13 adjacent checks, shell syntax, TypeScript and build.
+- Retention pointers: **565 → 648**, **567 → 650**.
+- Remaining: orchestrator gates and pointer rebasing.
+
+[Full report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/lane-evidence-trace-guard-1/report.md>).
+tokens used
+77,722
+READY-FOR-GATES — committed as `00e7839ba`, preserving predecessor `a444adb6b`.
+
+- Withholds test-results/*-results trees, trace.zip, *.webm, test-failed-*.png, and artifacts over 50 MB.
+- Enforces the 25 MB staged budget; withheld files remain on disk.
+- Passed 21 tests, 13 adjacent checks, shell syntax, TypeScript and build.
+- Retention pointers: **565 → 648**, **567 → 650**.
+- Remaining: orchestrator gates and pointer rebasing.
+
+[Full report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/lane-evidence-trace-guard-1/report.md>).
+[lane-runner-v3] withheld baseline-dirty path: node_modules
+[lane-runner-v3] withheld 1 baseline ownership collision(s)
