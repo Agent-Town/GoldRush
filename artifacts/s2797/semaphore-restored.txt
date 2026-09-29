@@ -1,0 +1,6 @@
+2026-09-29T08:50Z
+  PID  PPID TTY      STAT STARTED
+ 5285 96214 ??       S    Tue Sep 29 15:41:08 2026    
+ 6172  5285 ??       S    Tue Sep 29 15:41:09 2026    
+96214     1 ??       S    Tue Sep 29 15:41:02 2026    
+The previously present empty semaphore disappeared while its launcher and Codex remained alive; restored by mkdir after confirming s2797 still owns STATUS. Cause unverified.

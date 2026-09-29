@@ -1,6 +1,6 @@
 # s2797: no pending drain; two launch correctives are running
 
-**WHY no product drain:** the completed-task probe finds zero real drains and zero unknowns. All four runner branches have zero commits ahead of main; lanes B and C are BUSY with live implementers. Seven ahead scratch worktrees remain attended-owned. This fire does not claim the factory is dry, dispatch work under CODEX-WALL, or interfere with running tasks.
+**WHY no product drain:** at initial triage the completed-task probe found zero real drains and zero unknowns, while lanes B and C were BUSY. Both results arrived during the closing battery and remain unmerged for the next serial drain. The door-page result also reports a newly exposed guard defect outside its master's firewall. This heartbeat fire has not run either candidate's integration gates or certified a product landing. Seven ahead scratch worktrees remain attended-owned. The factory is not declared dry; no dispatch or refill occurred under CODEX-WALL.
 
 ## Verification
 
@@ -19,11 +19,23 @@ Evidence: `dry-board.txt`, `lane-usable.txt`, `health.txt`, `private-coverage.tx
 
 ## Remaining list in order
 
-1. Let lane B's dash-entity cleanup and lane C's door-page audit finish. The next drain must start with the strict policy check and respect any attended custody claim.
-2. Owner review of the completed launch film, then the agreed site embed and release copy; attended final verification remains attended-owned.
-3. Existing owner follow-ups: account-registry deployment evening, B1 phone verdict, and subscription-token revocation. The three-item desk remains unchanged.
-4. Mint week 41 September 30 after 00:00 UTC; the next private daily coverage follows its 02:10 UTC supply window.
+1. Gate `tasks/done/20260929-154006-emdash-entities-1.md` from lane B, the first pending serial drain. This is a same-era PINNED landing; its full integration gate is not satisfied by this fire's ledger battery.
+2. Review the lane-C `skill-door-unclaimed-refresh-1` result and authorize the separate correction to `scripts/skillmd-contracts-guard.test.mjs:60` before integration. Its mutation fixture assumes an unclaimed row; the corrected 38-row registry has none. The master forbids editing that test, so this fire reports the boundary and leaves it unchanged. Both reports also identify the pre-existing Field Book 400-versus-200 fixture failure; their controls are implementer evidence, not a fire-side gate.
+3. Owner review of the completed launch film, then the agreed site embed and release copy; attended final verification remains attended-owned.
+4. Existing owner follow-ups: account-registry deployment evening, B1 phone verdict, and subscription-token revocation. The three-item desk remains unchanged.
+5. Mint week 41 September 30 after 00:00 UTC; the next private daily coverage follows its 02:10 UTC supply window.
 
 ## Closing gate
 
-The full `npm run test:ledger-guards` runs on the prepared handoff with Node 26.4.0 before the final clearing commit. Its actual result will be appended below; no passing result is claimed in advance.
+The full `npm run test:ledger-guards` runs with Node 26.4.0 before the final clearing commit. The first preparation command refused because the launcher semaphore had disappeared; the following shell command nevertheless started the battery on ACTIVE. After re-proving launcher 96214, wrapper 5285, Codex 6172 and the unchanged s2797 STATUS ownership, this fire restored its empty semaphore with exclusive `mkdir` and prepared the final handoff while the test leg was running. The live desk/archive legs later in the same battery must validate that prepared handoff. The disappearance's cause is UNVERIFIED; no other process was stopped and no factory code was changed. Evidence: `semaphore-restored.txt`. The actual gate result will be appended below; no passing result is claimed in advance.
+
+
+## Late lane completion and closing result
+
+Both running entries were gone at the final snapshot. Their done-moves are `20260929-154006-emdash-entities-1.md` and `20260929-154006-skill-door-unclaimed-refresh-1.md`; no failed move exists. The first command against each candidate was `node scripts/drain-block-check.mjs --strict <done-move>`, and both returned **CLEAR, status queued, exit 0**. This is policy clearance only. No candidate was merged, no leaf was marked merged, and no mergeHash was invented.
+
+Lane B reports implementation `f1b31ceec33908832d7c7c1c4bfd6c9d084bbae3` plus its evidence commit, six replacements, guard 2/2, and browser 40 pass / 1 skip / 3 initial failures; its two Field Book failures were controlled, and the consent case passed a focused recheck. Lane C reports `fd5394c7b`, five corrected first-secure records, build and TypeScript passing, browser 53 pass / 1 skip / 2 controlled failures, and **contract guard 3 pass / 1 fail** (`no unclaimed marker available for the mutation proof`; baseline 4/4). Read reports in the respective lane artifact directories. These numbers are explicitly attributed to the implementers; they have not been independently re-certified by this fire.
+
+**READY-FOR-GATES (fire bookkeeping only; two product drains remain).** The complete `npm run test:ledger-guards` passed at 2026-09-29T08:54:44Z: **1263/1263 tests, zero failures/skips, all chained checks, kit 83/83, exit 0**, **306.804 seconds**, Node v26.4.0. The live declaration, birth, carryforward and archive legs checked the prepared handoff and passed; the archive reports zero permanently absent and zero abridged. The final handoff prose is then updated to name the two late done-moves and its four relevant desk/archive checks rerun before the final commit. No product test or deployment is claimed. Session commits before clearance: `1dbdf0fd3` (lock) and `80d996e80` (heartbeat evidence). The clearing commit is the final write to main; ordinary backup push, read-only verification and the external vault digest follow.
+
+Final prose checks: declaration, birth, carryforward and bounded archive audit all **PASS, exit 0** on the revised handoff naming the late done-moves (`final-handoff-guards.txt`). Three desk items carried, zero dropped; predecessor retained exactly.
