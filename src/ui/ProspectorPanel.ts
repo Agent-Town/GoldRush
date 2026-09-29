@@ -9,7 +9,7 @@ const RUNGS: readonly {
   unlock: string;
 }[] = [
   { level: 0, unlock: 'watches the claim and suggests work' },
-  { level: 1, unlock: 'acts with your approval &mdash; repairs, pickups' },
+  { level: 1, unlock: 'acts with your approval: repairs, pickups' },
   { level: 2, unlock: 'routine work unattended' },
   { level: 3, unlock: 'spends within a budget' },
 ];
@@ -187,7 +187,7 @@ export class ProspectorPanel {
     const bonusCopy = bonus > 0 ? ` (+${bonus} policy ${bonus === 1 ? 'slot' : 'slots'} this run)` : '';
     return `Autonomy: ${formatTrack(Math.min(current, 3))} / ${formatTrack(
       next,
-    )}${bonusCopy} &mdash; secured claims advance the Prospector`;
+    )}${bonusCopy}, secured claims advance the Prospector`;
   }
 
   private readonly onClick = (event: MouseEvent) => {
