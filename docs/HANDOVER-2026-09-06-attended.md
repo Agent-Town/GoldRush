@@ -1607,3 +1607,12 @@ F-2725-1: source candidate `cf9cd95c4` remains detached/saved, no main merge. Fr
 - Evidence and ordered remainder: artifacts/s2792/report.md. Full Node 26.4.0 closing ledger battery precedes clearance.
 
 - s2792 closing receipt: **READY-FOR-GATES.** At 2026-09-29T04:03Z, complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm exit 0**, **325.114 seconds**, Node v26.4.0, checkpoint 49b624c41. Every chained leg completed. Final queues, running tasks and pending orders are empty; the four lane ancestry probes are empty. Exact amended s2791 predecessor and four-item Owner's Desk preserved byte-for-byte. Prior commits: 6d4b359cb, df1b95b95, 49b624c41. No product drain, dispatch, deployment, independent-process termination or history repair; no unchanged rejected origin push. Generated dashboard changes remain runtime-owned churn. The clearing commit is the final write to main; only read-only verification and the external vault digest follow.
+
+
+### s2793 verification — 2026-09-29T04:12Z
+
+- WHY no product drain: board 0 real / 0 unknown; all four runner lanes ahead=0 and tracked-dirt=0; five ahead scratch worktrees remain attended-owned. Queues, running tasks and pending orders are empty, staged art zero. CODEX-WALL still prohibits fire refills and re-queues.
+- Attended trace guard 8c03eb512 is on main and its goal is merged; independent replacement runner 31360 is alive. Latest runner log completed successfully with 77,722 tokens. No credit-wall retry or runner restart is due.
+- Health 200/200/200; strict private coverage 37/37 through September 29. Live archive heads ledger-backups 2d8f9a975 / fire-memory 53d87470f match today's completed LB-01/FM-01 receipts. Ticker draft exists; week-41 mint is due September 30 after 00:00 UTC.
+- F-2742-1 remains owner-gated and attended-owned: live origin main/candidate 0979de763/d7f18e6c6. No unchanged rejected push or fire history repair. Exact s2792 predecessor archived and four-item Owner's Desk carried verbatim.
+- Evidence and ordered remainder: artifacts/s2793/report.md. The full Node 26.4.0 ledger battery runs before the final clearing commit. No product source, goal or BACKLOG row changed.
