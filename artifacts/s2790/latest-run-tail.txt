@@ -1,0 +1,44 @@
+## REMAINING LIST IN ORDER
+
+1. Arrange an execution window satisfying the no-active-lane-run firewall, or
+   explicitly clarify that editing only the inactive lane copy is permitted.
+2. Implement raw Playwright output and >50,000,000-byte artifact withholding,
+   retention, per-path logging and the withheld-paths record.
+3. Add staged-index budget measurement and 25,000,000-byte pre-commit trimming.
+4. Extend the guard fixtures, run all requested self-checks, and record exact
+   test counts, file/line diffs, epitaph shifts and implementation commit hashes.
+
+READY-FOR-GATES: BLOCKED — report only; implementation is not ready for gates.
+EOF
+ git add -- artifacts/lane-evidence-trace-guard-1/report.md
+ git commit -m '"'fix: record active-runner blocker for evidence trace guard'
+ git status --short
+ git rev-parse HEAD HEAD:src" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d
+ succeeded in 174ms:
+?? node_modules
+a444adb6b24999e02a22e2817e6bd391a054783b
+0ad2e09525f941a4d5d5c2e5176306c0efbbd4c0
+
+codex
+READY-FOR-GATES: **BLOCKED**. The task forbids runner edits during an active lane run; this task is itself running under PID `61979`.
+
+Committed [blocker report](artifacts/lane-evidence-trace-guard-1/report.md) as `a444adb6b`.
+
+- Build passed; source unchanged.
+- No guards implemented or tests added.
+- Line shifts: `565 → 565`, `567 → 567`.
+
+Resume in an inactive-runner window or explicitly permit editing the separate lane copy.
+tokens used
+40,431
+READY-FOR-GATES: **BLOCKED**. The task forbids runner edits during an active lane run; this task is itself running under PID `61979`.
+
+Committed [blocker report](artifacts/lane-evidence-trace-guard-1/report.md) as `a444adb6b`.
+
+- Build passed; source unchanged.
+- No guards implemented or tests added.
+- Line shifts: `565 → 565`, `567 → 567`.
+
+Resume in an inactive-runner window or explicitly permit editing the separate lane copy.
+[lane-runner-v3] withheld baseline-dirty path: node_modules
+[lane-runner-v3] withheld 1 baseline ownership collision(s)

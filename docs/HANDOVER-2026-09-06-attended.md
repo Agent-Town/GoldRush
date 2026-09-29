@@ -1570,3 +1570,11 @@ F-2725-1: source candidate `cf9cd95c4` remains detached/saved, no main merge. Fr
 - Exact s2788 predecessor archived; four-item Owner's Desk saved verbatim. Evidence and ordered remainder: artifacts/s2789/report.md. Closing ledger battery uses Node 26.4.0 before clearance.
 
 - s2789 closing receipt: **READY-FOR-GATES.** At 2026-09-29T02:06Z, complete `npm run test:ledger-guards` passed **1263/1263, zero failures/skips; kit 83/83; npm exit 0**, **227.038 seconds**, Node v26.4.0, checkpoint `c5e483e57`. Every chained leg completed. Final queues, running tasks and pending orders are empty; all four runner lanes remain ahead=0. Exact s2788 predecessor and four-item Owner's Desk are preserved byte-for-byte. Prior commits: `adfc3b2e6`, `e30109bf4`, `c5e483e57`. No product drain, dispatch, deployment or history repair; no unchanged rejected push. Generated dashboard and goal-tree changes remain runtime-owned churn. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
+
+
+### s2790 verification — 2026-09-29T02:18Z
+
+- WHY no product drain: lane-d trace-guard attempt 1 stopped at its own active-run firewall, a444adb6b contains only a 57-line report; build PASS is lane-reported, guards 0/0. Goal blocked/gate-side, stopped done-move renamed, lane retained. No re-queue under CODEX-WALL. NOT DRY: lane-d holds one report-only commit; a/b/c ahead=0, all tracked-dirt=0, five ahead scratch worktrees attended-owned.
+- September 29 LB-01 pulled and pushed to private archive; strict coverage 37/37, exposure CLEAN, zero account-class rows. FM-01 unchanged/current. Health 200/200/200; queues, running tasks, pending orders and staged art empty.
+- Existing F-2742-1 origin repair remains owner-gated and attended-owned; historical trace remains 113,467,543 B and reachable. No unchanged rejected push. September 28 ticker exists; week-41 mint due September 30 after 00:00 UTC.
+- Exact s2789 predecessor archived; four-item Owner's Desk retained byte-for-byte. Evidence and ordered remainder: artifacts/s2790/report.md. Closing ledger battery precedes clearance.
