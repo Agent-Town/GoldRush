@@ -3169,3 +3169,9 @@ secured. Their first-secure records are corrected from dated evidence, and
 the page is regenerated from those records.
 merge `73b82dbfe` · review `reviews/skill-door-unclaimed-refresh-1.md`
 ROUNDUP-CLASS — 2026-W40; s2798 records the attended September 29 landing. Landed on main; deployment remains deferred. Draft only; publication stays owner-only.
+
+## ROUNDUP — Clearer punctuation in the Prospector panel and Field Book
+The Prospector's approval and secured-claims copy uses colons and commas.
+Empty Field Book cells use a middle dot and keep their accessible labels.
+merge `a5aad2abf` · pin `04c66ee0e` · review `reviews/emdash-entities-1.md`
+ROUNDUP-CLASS — 2026-W40; s2800 records the attended September 29 landing. Same-era engine pin 75 remains in era 6. Landed on main; deployment waits for the owner's release verdict on build 954bb2cd. Draft only; publication stays owner-only.
