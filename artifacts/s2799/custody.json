@@ -1,0 +1,9 @@
+{
+  "date": "2026-09-29T11:20Z",
+  "main": "dba2b28edf071eaf6623b3dd314390d9e88dcb5b",
+  "line": "ACTIVE 2026-09-29T11:18Z (s2799 fire) — preserve attended landing bookkeeping and verify heartbeat duties",
+  "laneCommits": "d428568d7 fix: phone HUD census re-recorded on the emdash-entities-1 tree (ProspectorPanel.ts is a UI source; sourceHash moved, budgets untouched)\nf2a0903a6 runner(lane-b): emdash-entities-1.md\n114b56201 fix: record dash entity repair evidence and baseline controls\nf1b31ceec fix: remove rendered dash entities and guard encoded copy",
+  "processes": "PID  PPID TTY      STAT STARTED\n31360     1 ??       Ss   Tue Sep 29 10:47:38 2026    \n50388     1 ??       SN   Tue Sep 29 18:13:55 2026    \n50408 50388 ??       SN   Tue Sep 29 18:13:55 2026    \n50423 50408 ??       SN   Tue Sep 29 18:13:55 2026    \n53791     1 ??       S    Tue Sep 29 18:17:08 2026    \n53835 53791 ??       S    Tue Sep 29 18:17:08 2026    \n53836 53835 ??       S    Tue Sep 29 18:17:08 2026",
+  "semaphore": "ABSENT",
+  "restored": "Exclusive mkdir; launcher 53791 and child 53836 remain alive. Removal cause unverified."
+}
