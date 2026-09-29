@@ -53,7 +53,8 @@ const kept = tableRows('### Kept');
 const cut = tableRows('### Cut');
 const onDisk = existsSync(OUT) ? readdirSync(OUT).filter((name) => MEDIA.test(name) && statSync(path.join(OUT, name)).isFile()) : [];
 const cutDir = path.join(OUT, 'cut');
-const cutOnDisk = existsSync(cutDir) ? readdirSync(cutDir).filter((name) => MEDIA.test(name)) : [];
+// F-LVC3-1 (2026-09-29): phase 3 writes its exports into the same `cut/` folder; they are films, not cut takes.
+const cutOnDisk = existsSync(cutDir) ? readdirSync(cutDir).filter((name) => MEDIA.test(name) && !name.startsWith('gold-rush-launch-film-')) : [];
 
 const problems = [];
 const listed = new Set(kept.map((row) => row.file));
