@@ -58,8 +58,10 @@ test('the contract guard BITES a hand-edited marker', () => {
   const dir = mkdtempSync(path.join(tmpdir(), 'skillmd-contracts-'));
   const drifted = path.join(dir, 'skill.md');
   try {
-    const changed = skill.replace('| unclaimed', '| claimed by nobody');
-    assert.notEqual(changed, skill, 'no unclaimed marker available for the mutation proof');
+    // The mutation must not depend on an unclaimed row existing (none did after skill-door-unclaimed-refresh-1,
+    // 2026-09-29): drift ONE first-secure marker instead; any hand edit must red the renderer's --check.
+    const changed = skill.replace(/\| first secured by [^\n]+/, '| claimed by nobody');
+    assert.notEqual(changed, skill, 'no first-secure marker available for the mutation proof');
     writeFileSync(drifted, changed);
     const result = runRenderer({ SKILLMD_PATH: drifted });
     assert.notEqual(result.status, 0, 'a hand-edited marker did not red the renderer check');
