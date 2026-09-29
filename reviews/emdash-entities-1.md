@@ -1,0 +1,51 @@
+# Drain review: `emdash-entities-1`, the six entity em dashes leave the screen and the guard learns to see entities (engine-pinned; deploy deferred to the owner's release verdict)
+
+**Branch** `sol/wave-lane-b` at `d428568d7` · **merge** `a5aad2abf` · engine hash #75 `378f9213` · drained attended 2026-09-29 11:13Z in a detached chain worktree with the scratch store at `5793a96`; no deploy (scripts/attended/land.sh, config `emd1`).
+
+**Verdict: LANDED.**
+
+**Slice / branch / tip:** `emdash-entities-1`, lane-b `sol/wave-lane-b`, `f1b31ceec` (the repair and the guard), `114b56201` (evidence and baseline controls), `f2a0903a6` (the runner's evidence commit), Astra gpt-6-astra, 104,285 tokens, 2026-09-29 08:40Z to 08:54Z. Engine-pinned landing (same era), attended; deploy deferred (below).
+
+**What it does.** The owner's law forbids em dashes anywhere a reader sees one; six survived as HTML entities the guard could not see because it matched the literal character only. The Prospector's charter rung copy (`src/ui/ProspectorPanel.ts:12`, visible in the launch film) now reads "acts with your approval: repairs, pickups", and the secured-claims line (`:190`) uses a comma. The Field Book's four blank markers in `src/encyclopedia/reader.ts` (`:811` cost cells, `:816` and `:909` "No showing" cells, `:1129` the standings' missing submission time) show a middle dot with every aria-label kept. `scripts/no-emdash-guard.test.mjs` now detects `&mdash;`, `&ndash;`, `&#8212;`, `&#8211;`, `&#x2014;` and the `—` escape as well as the character, over transpiled source, the human-text keys and `public/`; a fixture proves each form reds and a comment does not. No gameplay or sim value changed.
+
+**Evidence (real numbers).**
+
+| Check | Result |
+|---|---|
+| The six sites | before/after table in the report; `git diff` shows exactly six `&mdash;` removals and no other `src/**` change |
+| `node --test scripts/no-emdash-guard.test.mjs` | red on the unrepaired tree naming exactly the two affected files (`guard-before.log`); a temporary `&mdash;` mutation in tracked copy exits 1 (`guard-fixture-red.log`); 2 of 2 on the repaired tree (re-run attended on the lane tree); with the scan-space guard 10 of 10 (`guard-final.log`) |
+| Plain boots | zero console and page errors at 1280x800 and 390x844 (`capture.mjs`), the charter and a Field Book blank cell photographed at both (`prospector-*.png`, `field-book-*.png`) |
+| Specs Astra ran | `m4-07-prospector-panel`, `task-026-prospector-collects-xp`, `m2-01-build-menu`, `task-025`, `field-book`; the Field Book red at `:147` is pre-existing on the unchanged baseline (`control-results/`, F-SDU1-1) and is the only allowed row of this landing |
+| tsc / build | exit 0 / exit 0 |
+| The evidence trace guard (its first live run) | four raw Playwright files withheld from the auto-commit (`consent-recheck-results/.last-run.json`, `control-results/.last-run.json`, two `error-context.md`) plus the factory-accounting `logs/guard-stats.jsonl`; receipt at `tasks/runs/20260929-154006-lane-b-emdash-entities-1.md-withheld-paths.txt` |
+| Evidence budget | 5.7 MB added, inside the budget and the ceiling |
+| Merge | `git merge-tree` clean against main (0 conflicts) |
+| Second landing battery (10:53Z to 11:12Z) | 1,048 Node tests, 1,040 pass, 3 fail: the two pre-pin registry lines every pinned landing carries (allowed by default) and `scripts/agent-reels.test.mjs:86` (`null !== 0`: its gr-sim child did not exit 0 inside the budget at 53.8 s under the battery's own load); the census guard was green after the re-record. CONTROL: the same test alone on the chain worktree right after the battery passed (`~/.goldrush/land/emd1-control-agent-reels.log`): load-class, allowed by its exact title (F-EMD1-3). Second e2e leg: 39 passed, only the pre-existing Field Book red |
+| First landing (09:32Z to 10:10Z) | release suite 30/30; e2e 38 passed, 3 failed: the pre-existing Field Book red on both projects (`:129`, allowed by title) and `m2-01-build-menu.spec.ts:178` "palisade footprint rejects overlap while allowing edge-touch chaining" on desktop, which the CONTROL re-run alone on the chain worktree (fresh vite on 5418, `--workers=1`, both projects) passed with only the Field Book red remaining (`~/.goldrush/land/emd1-control-e2e.log`, 20 passed / 2 failed): load-class, allowed by exact title (F-EMD1-2). Battery 1,048 tests, 3 fail: the two rotation-registry lines every pinned landing carries (allowed by default) and the phone-HUD census guard, which reds by design when a UI source changes (`src/ui/ProspectorPanel.ts` is in `UI_SOURCES`): cured by re-recording the census on the lane tree (`node scripts/phone-hud-entry-census.mjs after` on a fresh vite at 5312, budgets untouched; the guard green; committed on lane-b), F-EMD1-1. Second landing is the verdict |
+| Release build / payload / halo / null floors / release suite / ledger battery / pin | measured by this landing's gates (see the gates log) |
+
+**Merge classification.** Base: main at the chain cut. Lane-touched: `src/ui/ProspectorPanel.ts` (two strings), `src/encyclopedia/reader.ts` (four markers), `scripts/no-emdash-guard.test.mjs`. New: `artifacts/emdash-entities-1/**`. `src/**` changed: `hash: pin`, measured last.
+
+**Findings.**
+- **F-EMD1-1 (cured on the lane):** the census guard's `sourceHash` moved because the Prospector panel is a UI source; the census was re-recorded on the merged UI, no budget raised.
+- **F-EMD1-2 (load-class, attributed by control):** the desktop build-menu red at `:178`; the control re-run alone is the proof.
+- **F-EMD1-3 (load-class, attributed by control):** the agent-reels CLI child timing out under the battery; alone it passes. The same test reddened lvc3's battery on main for a different reason (HEAD moved under it, F-LVC3-9).
+- **Deploy deferred (attended decision):** the owner's release verdict template names build `954bb2cd`, the live deploy he is testing on his phone today; deploying this cosmetic fix now would move the build under his run. It ships with the next runtime deploy after his SHIP/HOLD (or with the landing-page embed's deploy).
+- **F-SDU1-1 (pre-existing, recorded at the sdu1 landing):** `e2e/field-book.spec.ts:129` ("minds and rigs aggregate the same standings without changing county ranking", its assertion at `:147`) reds on both projects on the unchanged baseline; the allowed row here is that test only.
+- **The trace guard worked:** its first live catch is on the record above; nothing else was excused.
+
+### Evidence (this drain's gates on the merged tree)
+| Check | Result |
+| --- | --- |
+| tsc / build / e1 | `0 / 0 / 0` |
+| strict release build (the assertion) | `(strict, the assertion): rc=0 [release-build] E1-only: 1128 files, 97734484 bytes, zero later manifest ids or plate/GLB assets (checked against 283 later-asset stems)` |
+| first-town payload | `34355296 bytes` |
+| halo | `rc=0 halo re-extraction PASS: 315 cured, 0 held, 760 regenerated-and-cured, 2127 scanned; alpha and opaqu` |
+| null floors | `rc=0 83 of 83 null floors match assets/contracts/null-floors.json (293.7s).` |
+| law-pointer | `rc=0 law-pointer-guard — do the law surfaces still point at what they claim?` |
+| named guards | `ℹ pass 146 ℹ fail 0` |
+| the ledger battery | `rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3` |
+| the release suite under its own config | `(own config): rc=0   30 passed (2.2m)` |
+| e2e both projects, --workers=1 | `rc=1   2 failed   1 skipped   39 passed (2.4m)  10:53Z` |
+| full npm run test:node-guards (before the pin) | `rc=1 ℹ tests 4 ℹ pass 3 ℹ fail 1 ℹ skipped 0 ℹ tests 5 ℹ pass 4 ℹ fail 1 ℹ skipped 0 ℹ tests 1048 ℹ pass 1040 ℹ fail 3 ℹ skipped 5  11:12Z` |
+| engine hash | `merged: 378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817 (pinned 999203109481b7906b00e957ee739ca015b05a692201f039b4a3062a2f344bd4)` |

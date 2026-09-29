@@ -1,0 +1,118 @@
+(node:8126) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 42 tests using 1 worker
+
+
+(node:8195) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/42] [desktop-chrome] › e2e/field-book.spec.ts:111:1 › the Drill Yard is the training ground — standings refuse it on both POST and GET
+[2/42] [desktop-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking
+  1) [desktop-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 400
+
+      145 |         tokensOut: stack.tokensOut + contractIndex,
+      146 |       };
+    > 147 |       expect((await post(kv, standing((fixtureIndex++).toString(16).repeat(32), contractId, crownByContract[contractIndex] === stackIndex ? 40 : 10 + stackIndex, costs))).status).toBe(200);
+          |                                                                                                                                                                                    ^
+      148 |     }
+      149 |   }
+      150 |   expect((await post(kv, standing('c'.repeat(32), 'the-claim', 1))).status).toBe(200);
+        at /Users/robin/.goldrush/land/wt-emd1/e2e/field-book.spec.ts:147:180
+
+    Error Context: test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:8259) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[3/42] [desktop-chrome] › e2e/field-book.spec.ts:215:1 › plain boot renders and expands the Minds and Rigs tables
+[4/42] [desktop-chrome] › e2e/field-book.spec.ts:355:1 › plain boot renders the honest empty Field Book state
+[5/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[6/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[7/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[8/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[9/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[10/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[11/42] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[12/42] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:56:1 › G, Esc, chip, and outside tap control the panel without pausing the run
+[13/42] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:93:1 › ladder renders earned toggles, unearned hints, and current abilities
+[14/42] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts
+[15/42] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:151:1 › mobile chip tap opens a full-width bottom sheet with a 44px close target
+[16/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[17/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[18/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[19/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[20/42] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[21/42] [desktop-chrome] › e2e/task-026-prospector-collects-xp.spec.ts:16:1 › collect_xp sweeps aged motes in batched receipts without entering deep water
+
+(node:9301) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[22/42] [mobile-chrome] › e2e/field-book.spec.ts:111:1 › the Drill Yard is the training ground — standings refuse it on both POST and GET
+[23/42] [mobile-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking
+  2) [mobile-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 400
+
+      145 |         tokensOut: stack.tokensOut + contractIndex,
+      146 |       };
+    > 147 |       expect((await post(kv, standing((fixtureIndex++).toString(16).repeat(32), contractId, crownByContract[contractIndex] === stackIndex ? 40 : 10 + stackIndex, costs))).status).toBe(200);
+          |                                                                                                                                                                                    ^
+      148 |     }
+      149 |   }
+      150 |   expect((await post(kv, standing('c'.repeat(32), 'the-claim', 1))).status).toBe(200);
+        at /Users/robin/.goldrush/land/wt-emd1/e2e/field-book.spec.ts:147:180
+
+    Error Context: test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:9360) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[24/42] [mobile-chrome] › e2e/field-book.spec.ts:215:1 › plain boot renders and expands the Minds and Rigs tables
+[25/42] [mobile-chrome] › e2e/field-book.spec.ts:355:1 › plain boot renders the honest empty Field Book state
+[26/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[27/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[28/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[29/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[30/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[31/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[32/42] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[33/42] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:56:1 › G, Esc, chip, and outside tap control the panel without pausing the run
+[34/42] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:93:1 › ladder renders earned toggles, unearned hints, and current abilities
+[35/42] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts
+[36/42] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:151:1 › mobile chip tap opens a full-width bottom sheet with a 44px close target
+[37/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[38/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[39/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[40/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[41/42] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[42/42] [mobile-chrome] › e2e/task-026-prospector-collects-xp.spec.ts:16:1 › collect_xp sweeps aged motes in batched receipts without entering deep water
+  2 failed
+    [desktop-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+    [mobile-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+  1 skipped
+  39 passed (2.4m)
