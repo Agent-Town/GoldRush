@@ -12,6 +12,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { isMain } from '../../is-main.mjs';
 import { parseArgs } from 'node:util';
 import { BEATS, CARDS, CUES, ERA_PUSH, FILM_FRAMES, FORMATS, INK, MENU_FRAMING, PLATES, TAKES, TEASER, TEASER_CUT, TEASER_CUES, VERSION, WEB } from './edl.mjs';
 import { CUT, FPS, WORK, bytes, duration, ensureDir, fmtTime, label, platePath, run, sidecar, takePath } from './lib.mjs';
@@ -462,8 +463,8 @@ export function evidence(outDir) {
 }
 
 // ---- main ----------------------------------------------------------------------------------------------------
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname);
-if (isMain) {
+// scripts/is-main.test.mjs test 9: the entry-point question is answered by the shared helper, never by a hand-rolled argv[1] compare.
+if (isMain(import.meta.url)) {
   const { values: args } = parseArgs({ options: { check: { type: 'boolean' }, cutlist: { type: 'string' }, evidence: { type: 'string' }, format: { type: 'string' }, beats: { type: 'string' }, 'no-export': { type: 'boolean' }, web: { type: 'boolean' }, teaser: { type: 'boolean' }, all: { type: 'boolean' } } });
   if (args.check || args.cutlist) {
     const list = cutList();

@@ -7,6 +7,7 @@
 // beside the WAV. Usage: node scripts/launch-video/cut/mix.mjs [film|teaser]
 import { writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { isMain } from '../../is-main.mjs';
 import { CUES, FILM_FRAMES, TEASER, TEASER_CUES } from './edl.mjs';
 import { FPS, WORK, audioPath, ensureDir, run } from './lib.mjs';
 
@@ -56,8 +57,8 @@ export function buildMix(kind = 'film') {
   return { wav, ...result };
 }
 
-const isMain = process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname);
-if (isMain) {
+// scripts/is-main.test.mjs test 9: the entry-point question is answered by the shared helper, never by a hand-rolled argv[1] compare.
+if (isMain(import.meta.url)) {
   const r = buildMix(process.argv[2] ?? 'film');
   console.log(`mix: ${r.kind} ${r.seconds} s -> ${r.wav}; pass 1 I ${r.pass1.input_i} LUFS, TP ${r.pass1.input_tp} dBTP, LRA ${r.pass1.input_lra}; pass 2 ${r.pass2.normalization_type}, out I ${r.pass2.output_i}, TP ${r.pass2.output_tp}; ebur128 I ${r.remeasured.integratedLufs} LUFS, TP ${r.remeasured.truePeakDbtp} dBTP, LRA ${r.remeasured.lraLu} LU`);
 }
