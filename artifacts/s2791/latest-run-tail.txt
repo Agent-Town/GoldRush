@@ -1,0 +1,34 @@
+  tree     : 9370.3 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 0.0 MB added, inside the 40.0 MB ceiling.
+0ad2e09525f941a4d5d5c2e5176306c0efbbd4c0
+
+exec
+/bin/zsh -lc "python3 - <<'PY'
+from pathlib import Path
+import tempfile
+out=Path('artifacts/lane-evidence-trace-guard-1')
+receipts=sorted(Path(tempfile.gettempdir()).glob('lane-evidence-receipt-*/run.log'),key=lambda p:p.stat().st_mtime,reverse=True)
+for tag,needle in [('raw','withheld 11 raw/oversized'),('budget','9000006 added byte(s) remain')]:
+    for p in receipts:
+        text=p.read_text()
+        if needle in text:
+            (out/f'{tag}-fixture-run.log.txt').write_text(text)
+            (out/f'{tag}-fixture-withheld-paths.txt').write_text(p.with_name('run-withheld-paths.txt').read_text())
+            break
+PY
+git diff -- scripts/lane-runner-v3.sh scripts/evidence-budget.mjs scripts/evidence-budget.test.mjs > artifacts/lane-evidence-trace-guard-1/implementation.diff
+wc -c artifacts/lane-evidence-trace-guard-1/*" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d
+ succeeded in 57ms:
+    1145 artifacts/lane-evidence-trace-guard-1/adjacent-runner-tests.txt
+    1153 artifacts/lane-evidence-trace-guard-1/budget-fixture-run.log.txt
+      30 artifacts/lane-evidence-trace-guard-1/budget-fixture-withheld-paths.txt
+  351376 artifacts/lane-evidence-trace-guard-1/build.txt
+     560 artifacts/lane-evidence-trace-guard-1/clean-index-budget.txt
+    2187 artifacts/lane-evidence-trace-guard-1/guard-tests.txt
+   19045 artifacts/lane-evidence-trace-guard-1/implementation.diff
+    1763 artifacts/lane-evidence-trace-guard-1/raw-fixture-run.log.txt
+     258 artifacts/lane-evidence-trace-guard-1/raw-fixture-withheld-paths.txt
+    3514 artifacts/lane-evidence-trace-guard-1/report.md
+       0 artifacts/lane-evidence-trace-guard-1/tsc.txt
+  381031 total
+

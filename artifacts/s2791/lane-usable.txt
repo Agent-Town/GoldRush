@@ -1,0 +1,67 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=290  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 290 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 37 file(s) main has moved that this lane lacks:
+          e2e/audio-integration.spec.ts
+          e2e/audio-music-toggle.spec.ts
+          e2e/native-proofs/driver.ts
+          e2e/native-proofs/e10-archive-world.spec.ts
+          e2e/native-proofs/e4-long-road.spec.ts
+          e2e/native-proofs/e5-deepwater-claim.spec.ts
+          e2e/native-proofs/e6-showroom.spec.ts
+          e2e/native-proofs/e7-relay-valley.spec.ts
+          … and 29 more
+lane-b  sol/wave-lane-b  ahead=0  behind=206  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/wave-lane-b is 206 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/wave-lane-b
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 5 file(s) main has moved that this lane lacks:
+          scripts/attended/README.md
+          scripts/attended/landings/ahr1-review.md
+          scripts/attended/landings/ahr1.json
+          scripts/attended/repair-main.sh
+          scripts/attended/repoint-ids.py
+lane-c  sol/map-art-campaign-2  ahead=0  behind=285  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/map-art-campaign-2 is 285 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/map-art-campaign-2
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-c) — F-1320-2.
+     📋 run-surface drift: 31 file(s) main has moved that this lane lacks:
+          e2e/audio-integration.spec.ts
+          e2e/audio-music-toggle.spec.ts
+          e2e/e7-tape-toggle-phone-hit-target.spec.ts
+          scripts/attended/README.md
+          scripts/attended/landings/ahr1-review.md
+          scripts/attended/landings/ahr1.json
+          scripts/attended/landings/amt1-review.md
+          scripts/attended/landings/amt1.json
+          … and 23 more
+lane-d  art/portraits-e5-e10-generated  ahead=1  behind=260  paths=1  tracked-dirt=3  untracked=5  BUSY
+    HELD LANE-ONLY  artifacts/lane-evidence-trace-guard-1/report.md  (49 of 49 added lines absent from main)
+      "# Lane evidence trace guard — blocked by active runner"
+      "WHY: no implementation changes were made because the task's firewall says:"
+      "“Do not edit `lane-runner-v3.sh` while a lane run is executing it (check"
+    TRACKED-DIRT scripts/evidence-budget.mjs
+    TRACKED-DIRT scripts/evidence-budget.test.mjs
+    TRACKED-DIRT scripts/lane-runner-v3.sh
+    untracked (clean -fd) artifacts/lane-evidence-trace-guard-1/adjacent-runner-tests.txt
+    untracked (clean -fd) artifacts/lane-evidence-trace-guard-1/build.txt
+    untracked (clean -fd) artifacts/lane-evidence-trace-guard-1/guard-tests.txt
+    untracked (clean -fd) artifacts/lane-evidence-trace-guard-1/tsc.txt
+    untracked (clean -fd) node_modules
+  => BUSY: a runner holds this slot — leave it alone
+     holder pid is ALIVE — a real runner is working here. Leave it alone.
+
+worktree coverage: reported 4 of 67 registered — 63 NOT reported (5 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported
