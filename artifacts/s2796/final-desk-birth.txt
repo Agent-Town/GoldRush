@@ -1,0 +1,30 @@
+=== desk-birth-guard ===
+corpus tree               : main
+window start              : 615a3b4e (s2667 handoff)
+   ⓘ skipped 1 same-session handoff commit(s) — this fire's own
+     addendum/amendment. Without this the window would collapse onto them
+     and the count below would range over minutes, not the fire (F-2260-1).
+owner-gated rows filed    : 1
+  ├ by an owner GATE clause : 1
+  └ by an owner-ACT declaration, no gate clause : 0  (+2 suppressed as closure records)
+unexamined by the parser  : 2
+   | 🐛 **debug-spawn-gate-1 (TO AUTHOR, attended; F-SGA1-5, 2026-09-25, inferred from reading, not run):** the debug-spawn key T may be ungated on the lockstep acti
+   | 🕯️ **HM-01a PARKED (owner-fork), authored 2026-09-24: `tasks/hm-01a-night-shift-lanterns.md`, Night Shift's home bank lit at entry (three posts), the far bank 
+   ⓘ ADVISORY, not a failure: each line above carries an owner gate and a key but
+     leads with neither an admitted glyph nor `**F-`, so this guard never examined
+     it. Widening membership was measured and manufactures false reds out of
+     closure rows (F-2259-1) — read these by hand and desk any that are real.
+of those, undesked        : 1
+
+FAIL — 1 owner-gated row(s) were filed this window and
+reached no desk. An owner fork on no desk is on no board Robin reads:
+  F-2742-1
+      GATE: owner authorizes that history repair, rejected lineage preservation is verified, the replacement passes its required gates and origin accepts it. Fires do
+      admitted by text at offset 0 past "GATE:"
+
+Put each on the desk at the END of line-1, or say why it is not owed:
+
+    DESK-NOT-OWED: <id> — <already desked as X | superseded by Y | ruled <when>>
+
+Attended sessions file rows and never compose a desk (F-1541-2), so the
+rows this catches are usually not yours — carry them anyway.
