@@ -2,7 +2,7 @@
 
 **WHY no product drain:** the board has zero eligible or unknown drains, and all four runner lanes have zero commits ahead of main. The five ahead scratch worktrees are attended-owned. CODEX-WALL prohibits fire refills and re-queues. This increment verifies the board and standing duties without inventing scope.
 
-## Verified at 2026-09-29T04:30Z
+## Verification
 
 - Lock commit `cac21aa1f` archived the exact s2793 predecessor. The four-item Owner's Desk is saved verbatim for clearance. The fresh process semaphore belongs to this fire: launcher 41831, wrapper 41877, Codex 41878, started at 04:26:10 UTC. The preceding FIRE END is 04:21:10 UTC. The launcher's EXIT trap owns removal of `tasks/.fire.lock`.
 - The main-slot exclusion predicate is `scripts/lane-runner-v3.sh:322`: ACTIVE holds main unless lock CLEARED appears. Independent runner 31360, PPID 1, is alive, started 03:47:38 UTC after the attended trace-guard landing. No restart or termination is due. The current Codex fire engine is authorized by the September 26 owner switch at `scripts/fire-runner.sh:119`; it does not lift the implementation-dispatch wall.
@@ -25,4 +25,4 @@ Evidence in this directory: `dry-board.txt`, `lane-usable.txt`, `custody.json`, 
 
 ## Closing verification
 
-Pending the full ledger battery. The final receipt and lock-clearance commit follow it; that commit will be the last write to main.
+**READY-FOR-GATES.** At 2026-09-29T04:36Z, complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm exit 0**, **362.857 seconds**, Node v26.4.0, checkpoint 21ab61aa5. Every chained leg completed. The bounded STATUS archive audit found zero permanently absent and zero abridged across 40 commits. Final queues, running tasks and pending orders are empty, and all four lane ancestry probes are zero ahead. The exact s2793 predecessor and four-item Owner's Desk are preserved. Prior session commits: cac21aa1f and 21ab61aa5. No product drain, dispatch, re-queue, deployment, process termination or history repair occurred. Generated dashboard churn remains runtime-owned. The lock-clearance commit is the final write to main; only read-only verification and the external vault digest follow.
