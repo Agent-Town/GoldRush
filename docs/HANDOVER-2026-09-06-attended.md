@@ -1490,3 +1490,11 @@ F-2725-1: source candidate `cf9cd95c4` remains detached/saved, no main merge. Fr
 - Exact s2780 predecessor archived; four-item Owner's Desk saved verbatim. Evidence and ordered remainder: artifacts/s2781/report.md. Closing ledger battery runs under Node 26.4.0 before clearance.
 
 - s2781 closing receipt: **READY-FOR-GATES.** At 2026-09-29T00:11Z, complete npm run test:ledger-guards passed **1263/1263, zero failures/skips; kit 83/83; npm exit 0**, **197.979 seconds**, Node v26.4.0, checkpoint 4d45c3234. Every chained leg completed. Final queues, running tasks and pending orders are empty; four runner lanes remain ahead=0. Bounded archive audit: zero permanently absent and zero abridged. Exact s2780 predecessor and four-item Owner's Desk preserved byte-for-byte. Prior commits: 7f8cc69c8, 6e272c413, 4d45c3234. No product drain, dispatch, deployment or history repair; no unchanged rejected push. Generated dashboard changes remain runtime-owned churn. This clearing commit is the final write to main; only read-only verification and the external vault digest follow.
+
+
+### s2782 verification — 2026-09-29T00:19Z
+
+- WHY no product drain: board 0 real / 0 unknown; four runner lanes ahead=0 and tracked-dirt=0. Queues, running tasks, pending orders and staged art empty. Runner 25494 alive and independent. Accepted audio-test drain 15da41c60 is on main and its goal is merged; five ahead scratch worktrees remain attended-owned. Dispatch wall stands.
+- Health 200/200/200; strict private coverage 36/36 through September 28. Live private heads match completed s2727 receipts. September 28 ticker already drafted. September 29 backups due after 02:10 UTC; week-41 mint September 30 after 00:00 UTC.
+- Live origin main/candidate 0979de763/23f27b940; historical trace remains 113,467,543 B and reachable. F-2742-1 remains owner-gated and attended-owned; no rejected push retry or history repair. Candidate coverage remains the dated s2748 receipt; refresh must preserve 15da41c60 and later evidence.
+- Exact s2781 predecessor archived; four-item Owner's Desk saved verbatim. Evidence and ordered remainder: artifacts/s2782/report.md. Closing ledger battery runs under Node 26.4.0 before clearance.
