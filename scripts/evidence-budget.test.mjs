@@ -208,7 +208,10 @@ test('measureLanding and measureTotal are usable without the CLI, so a drain can
 function runnerFixture(t) {
   const { root } = landing(t);
   const scratch = mkdtempSync(join(tmpdir(), 'lane-evidence-receipt-'));
-  // Keep the run receipt on disk for diagnosis; fixture cleanup is owned by landing().
+  // Removed at test end like landing()'s root: scripts/fixture-teardown.test.mjs reds on any
+  // surviving mkdtemp directory (six survived the teg1 landing battery, 2026-09-29). A failing
+  // assertion prints the run log inline, so nothing is lost by cleaning up.
+  t.after(() => rmSync(scratch, { recursive: true, force: true }));
   const baseline = join(scratch, 'baseline');
   const log = join(scratch, 'run.log');
   const runner = join(ROOT, 'scripts/lane-runner-v3.sh');
