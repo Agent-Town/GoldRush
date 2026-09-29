@@ -1,0 +1,83 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=17  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 17 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 9 file(s) main has moved that this lane lacks:
+          scripts/attended/README.md
+          scripts/attended/repoint-ids.py
+          scripts/launch-video/cut/assemble.mjs
+          scripts/launch-video/cut/cards.mjs
+          scripts/launch-video/cut/contact-sheet.mjs
+          scripts/launch-video/cut/edl.mjs
+          scripts/launch-video/cut/lib.mjs
+          scripts/launch-video/cut/mix.mjs
+          … and 1 more
+lane-b  sol/wave-lane-b  ahead=0  behind=17  paths=0  tracked-dirt=12  untracked=19  BUSY
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT reviews/shots-fd1/field-book-desktop-chrome.png
+    TRACKED-DIRT reviews/shots-fd3/after-field-book-desktop-chrome.png
+    TRACKED-DIRT reviews/shots-minds-and-rigs/rigs-desktop-chrome.png
+    TRACKED-DIRT reviews/shots-minds-rigs-full-width/rigs-desktop-chrome.png
+    TRACKED-DIRT reviews/shots-prospector-presence/desktop-chrome-plain-boot.png
+    TRACKED-DIRT reviews/shots-stack-directory/rigs-desktop-chrome.png
+    TRACKED-DIRT scripts/no-emdash-guard.test.mjs
+    untracked (clean -fd) artifacts/emdash-entities-1/build.log
+    untracked (clean -fd) artifacts/emdash-entities-1/capture-final.log
+    untracked (clean -fd) artifacts/emdash-entities-1/capture-results.json
+    untracked (clean -fd) artifacts/emdash-entities-1/capture.log
+    untracked (clean -fd) artifacts/emdash-entities-1/capture.mjs
+    untracked (clean -fd) artifacts/emdash-entities-1/dev-server.log
+    untracked (clean -fd) artifacts/emdash-entities-1/e2e.log
+    untracked (clean -fd) artifacts/emdash-entities-1/field-book-desktop.png
+    untracked (clean -fd) artifacts/emdash-entities-1/field-book-mobile-390.png
+    untracked (clean -fd) artifacts/emdash-entities-1/guard-after.log
+  => BUSY: a runner holds this slot — leave it alone
+     holder pid is ALIVE — a real runner is working here. Leave it alone.
+lane-c  sol/map-art-campaign-2  ahead=0  behind=327  paths=0  tracked-dirt=7  untracked=649  BUSY
+    TRACKED-DIRT artifacts/056/desktop-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/056/desktop-build-menu-palisade.png
+    TRACKED-DIRT artifacts/056/mobile-390-build-menu-icons-blurb.png
+    TRACKED-DIRT artifacts/agent-seat/boot-probe.json
+    TRACKED-DIRT artifacts/sol/wave-lane-b/regatta-view-parity/view-desktop-chrome.png
+    TRACKED-DIRT assets/rotations/winnability-receipts.json
+    TRACKED-DIRT public/skill.md
+    untracked (clean -fd) artifacts/agent-seat/seat-390px.png
+    untracked (clean -fd) artifacts/agent-seat/seat-desktop.png
+    untracked (clean -fd) artifacts/skill-door-unclaimed-refresh-1/baseline.txt
+    untracked (clean -fd) artifacts/skill-door-unclaimed-refresh-1/before-skill.md
+    untracked (clean -fd) artifacts/skill-door-unclaimed-refresh-1/build.log
+    untracked (clean -fd) artifacts/skill-door-unclaimed-refresh-1/contracts-guard.log
+    untracked (clean -fd) artifacts/skill-door-unclaimed-refresh-1/e10-archive-world-audit.txt
+    untracked (clean -fd) artifacts/skill-door-unclaimed-refresh-1/e10-ember-shore-audit.txt
+    untracked (clean -fd) artifacts/skill-door-unclaimed-refresh-1/e3-canyon-works-audit.txt
+    untracked (clean -fd) artifacts/skill-door-unclaimed-refresh-1/e7-relay-valley-audit.txt
+  => BUSY: a runner holds this slot — leave it alone
+     holder pid is ALIVE — a real runner is working here. Leave it alone.
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=299  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but art/portraits-e5-e10-generated is 299 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> art/portraits-e5-e10-generated
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-d) — F-1320-2.
+     📋 run-surface drift: 35 file(s) main has moved that this lane lacks:
+          e2e/audio-integration.spec.ts
+          e2e/audio-music-toggle.spec.ts
+          e2e/e7-tape-toggle-phone-hit-target.spec.ts
+          scripts/attended/README.md
+          scripts/attended/landings/ahr1-review.md
+          scripts/attended/landings/ahr1.json
+          scripts/attended/landings/amt1-review.md
+          scripts/attended/landings/rgw1-review.md
+          … and 27 more
+
+worktree coverage: reported 4 of 69 registered — 65 NOT reported (7 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported

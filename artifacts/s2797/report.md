@@ -1,0 +1,29 @@
+# s2797: no pending drain; two launch correctives are running
+
+**WHY no product drain:** the completed-task probe finds zero real drains and zero unknowns. All four runner branches have zero commits ahead of main; lanes B and C are BUSY with live implementers. Seven ahead scratch worktrees remain attended-owned. This fire does not claim the factory is dry, dispatch work under CODEX-WALL, or interfere with running tasks.
+
+## Verification
+
+- Session lock: `1dbdf0fd3`. Launcher PID 96214 started at 15:41:02 local (08:41:02 UTC), parent of wrapper 5285 and this Codex process 6172. Its fresh `tasks/.fire.lock` is this run's semaphore; the launcher's EXIT trap owns removal. `logs/fire-20260929.log` records its FIRE START at 15:41:08. The real filename uses YYYYMMDD. Runner PID 31360 is alive with PPID 1. No restart or termination is due. The main-slot predicate is `scripts/lane-runner-v3.sh:322`: ACTIVE without lock CLEARED holds main.
+- The exact s2796 predecessor is archived in STATUS by the lock commit. All three Owner's Desk items are carried forward verbatim. `DESK-NOT-OWED: F-2742-1` remains explicit because the prior fire demonstrated that the desk-birth history window still requires its discharged annotation.
+- BACKLOG was read through `scripts/ledger-corpus.mjs`: 19 files. The completed-task probe classified 1,476 done-moves and 89 subjects: **0 real drains, 0 unknown, 13 closed/blocked, 76 merged ghosts**. The lane probe reports **ahead=0 on all four lanes**, live BUSY holders on B and C, and seven ahead worktrees outside the runner fleet. The 65 unreported worktrees are attended-owned, not fire drain candidates.
+- The two running masters are `emdash-entities-1` on lane B and `skill-door-unclaimed-refresh-1` on lane C. Both have attended-authored queued leaves and BACKLOG rows. Their newest runner logs show active checks, not credit-wall interruptions. Queues are empty. No failed-run file is newer than the predecessor's September 29 07:12Z stamp. No re-queue applies.
+- Landing/game/API health is **200/200/200**; runner ALIVE. Pending crafting orders and staged art are both zero. No assayer verdict or staging audit is due.
+- LB-01/FM-01 were completed for September 29 by s2790. A fresh strict probe verifies **37/37 coverage days**, August 24 through September 29, outside the public checkout. Live private remote heads match the daily receipts: `ledger-backups` = `2d8f9a975aba4b5cdcc7cd9c01daa144112527eb`; `fire-memory` = `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. No duplicate pull or push is due. No private mirror content was copied into this repo.
+- Origin is accessible again: live `origin/main` resolves to `3bc733cd5547c6c26555bcc11647f6dccbba009b`, the parent of this fire's lock commit. F-2742-1 remains discharged; no history repair is attempted.
+- TK-01 is discharged by the existing September 28 ticker draft. Its saved census uses the UTC+07 day window `[2026-09-27T17:00Z, 2026-09-28T17:00Z)` and includes a busy-day control. The census was read, not rerun. No player-visible change landed in this fire, so it owes no Gazette item. Publication remains owner-only.
+- RT-01: the registry holds `r2026w40`, opening September 28 and closing October 5. Week 41 is due September 30 after 00:00 UTC; no early mint.
+- The previous handoff's film-cut next step is superseded by the attended landing `9a216a07d`, review `reviews/launch-video-cut-3.md`. The launch order remains owner approval of the cut, site embed, then owner-posted release copy. The film's final attended gate stays with its owner; this fire does not certify it independently.
+
+Evidence: `dry-board.txt`, `lane-usable.txt`, `health.txt`, `private-coverage.txt`, `origin-refs.txt`, `archive-refs.txt`, `processes.txt`. Generated dashboard/accounting churn and historical untracked evidence are retained in place. No product source, goal, BACKLOG row, task master, assertion, or deployment is changed by this fire.
+
+## Remaining list in order
+
+1. Let lane B's dash-entity cleanup and lane C's door-page audit finish. The next drain must start with the strict policy check and respect any attended custody claim.
+2. Owner review of the completed launch film, then the agreed site embed and release copy; attended final verification remains attended-owned.
+3. Existing owner follow-ups: account-registry deployment evening, B1 phone verdict, and subscription-token revocation. The three-item desk remains unchanged.
+4. Mint week 41 September 30 after 00:00 UTC; the next private daily coverage follows its 02:10 UTC supply window.
+
+## Closing gate
+
+The full `npm run test:ledger-guards` runs on the prepared handoff with Node 26.4.0 before the final clearing commit. Its actual result will be appended below; no passing result is claimed in advance.
