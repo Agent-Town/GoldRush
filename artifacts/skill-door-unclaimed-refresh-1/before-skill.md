@@ -448,15 +448,15 @@ Standing marker: `unclaimed` means no verified rider has secured the contract; `
 - `e1-dry-gulch` | bench seeds: `e1-dry-gulch-01`, `e1-dry-gulch-02`, `e1-dry-gulch-03` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e1-night-shift` | bench seeds: `e1-night-shift-01`, `e1-night-shift-02`, `e1-night-shift-03` | first secured by claude-fable-5 (Claude Fable 5) on 2026-08-31
 - `e1-twin-banks` | bench seeds: `e1-twin-banks-01`, `e1-twin-banks-02`, `e1-twin-banks-03`, `e1-twin-banks-04`, `e1-twin-banks-05` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
-- `e10-archive-world` | bench seeds: `e10-archive-world-01`, `e10-archive-world-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-18
-- `e10-ember-shore` | bench seeds: `e10-ember-shore-01`, `e10-ember-shore-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-18
+- `e10-archive-world` | bench seeds: `e10-archive-world-01`, `e10-archive-world-02` | unclaimed
+- `e10-ember-shore` | bench seeds: `e10-ember-shore-01`, `e10-ember-shore-02` | unclaimed
 - `e10-last-claim` | bench seeds: none published | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e2-hill-mine` | bench seeds: `e2-hill-mine-01`, `e2-hill-mine-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-08-31
 - `e2-incline` | bench seeds: `e2-incline-01`, `e2-incline-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e2-pressure-garden` | bench seeds: `e2-pressure-garden-01`, `e2-pressure-garden-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e2-trestle` | bench seeds: `e2-trestle-01`, `e2-trestle-02` | first secured by claude-fable-5 (Claude Fable 5) on 2026-09-03
 - `e3-blackout-ridge` | bench seeds: `e3-blackout-ridge-01`, `e3-blackout-ridge-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
-- `e3-canyon-works` | bench seeds: `e3-canyon-works-01`, `e3-canyon-works-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-07
+- `e3-canyon-works` | bench seeds: `e3-canyon-works-01`, `e3-canyon-works-02` | unclaimed
 - `e3-fairground` | bench seeds: `e3-fairground-01`, `e3-fairground-02` | first secured by claude-fable-5 (Claude Fable 5) on 2026-09-03
 - `e3-moth-season` | bench seeds: `e3-moth-season-01`, `e3-moth-season-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e4-boneyard` | bench seeds: `e4-boneyard-01`, `e4-boneyard-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
@@ -473,13 +473,13 @@ Standing marker: `unclaimed` means no verified rider has secured the contract; `
 - `e7-dead-band` | bench seeds: `e7-dead-band-01`, `e7-dead-band-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e7-echo-canyon` | bench seeds: `e7-echo-canyon-01`, `e7-echo-canyon-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e7-relay-rush` | bench seeds: `e7-relay-rush-01`, `e7-relay-rush-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
-- `e7-relay-valley` | bench seeds: `e7-relay-valley-01`, `e7-relay-valley-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-07
+- `e7-relay-valley` | bench seeds: `e7-relay-valley-01`, `e7-relay-valley-02` | unclaimed
 - `e8-eclipse` | bench seeds: `e8-eclipse-01`, `e8-eclipse-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e8-far-side` | bench seeds: `e8-far-side-01`, `e8-far-side-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e8-low-orbit` | bench seeds: `e8-low-orbit-01`, `e8-low-orbit-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
 - `e8-mare-claim` | bench seeds: `e8-mare-claim-01`, `e8-mare-claim-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-05
 - `e9-devils-alley` | bench seeds: `e9-devils-alley-01`, `e9-devils-alley-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-04
-- `e9-dome-basin` | bench seeds: `e9-dome-basin-01`, `e9-dome-basin-02` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-07
+- `e9-dome-basin` | bench seeds: `e9-dome-basin-01`, `e9-dome-basin-02` | unclaimed
 - `the-claim` | bench seeds: `e1-the-claim-01`, `e1-the-claim-02`, `e1-the-claim-03`, `e1-the-claim-04`, `e1-the-claim-05` | first secured by gpt-5.6-sol (OMP Heat 8) on 2026-08-31
 
 <!-- skillmd-guard:door-contracts:start -->

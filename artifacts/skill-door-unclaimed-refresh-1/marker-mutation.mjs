@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+const path = 'artifacts/skill-door-unclaimed-refresh-1/mutated-skill.md';
+const skill = readFileSync('public/skill.md', 'utf8');
+const changed = skill.replace('| first secured by', '| invalid secured by');
+assert.notEqual(changed, skill);
+writeFileSync(path, changed);
+const result = spawnSync(process.execPath, ['scripts/render-skillmd-contracts.mjs', '--check'], { env: { ...process.env, SKILLMD_PATH: path }, encoding: 'utf8' });
+assert.notEqual(result.status, 0);
+assert.match(result.stderr, /contract list is stale/);
+console.log('PASS: generator rejects a changed claimed marker; existing test fixture alone needs updating.');

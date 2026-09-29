@@ -1,0 +1,71 @@
+[WebServer] (node:32821) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+[WebServer]   - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+[WebServer] Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+Running 2 tests using 1 worker
+
+(node:35632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [desktop-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking (9ms)
+(node:36702) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [mobile-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking (10ms)
+
+
+  1) [desktop-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 400
+
+      145 |         tokensOut: stack.tokensOut + contractIndex,
+      146 |       };
+    > 147 |       expect((await post(kv, standing((fixtureIndex++).toString(16).repeat(32), contractId, crownByContract[contractIndex] === stackIndex ? 40 : 10 + stackIndex, costs))).status).toBe(200);
+          |                                                                                                                                                                                    ^
+      148 |     }
+      149 |   }
+      150 |   expect((await post(kv, standing('c'.repeat(32), 'the-claim', 1))).status).toBe(200);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/field-book.spec.ts:147:180
+
+    Error Context: artifacts/skill-door-unclaimed-refresh-1/baseline-playwright/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/skill-door-unclaimed-refresh-1/baseline-playwright/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/skill-door-unclaimed-refresh-1/baseline-playwright/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [mobile-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 400
+
+      145 |         tokensOut: stack.tokensOut + contractIndex,
+      146 |       };
+    > 147 |       expect((await post(kv, standing((fixtureIndex++).toString(16).repeat(32), contractId, crownByContract[contractIndex] === stackIndex ? 40 : 10 + stackIndex, costs))).status).toBe(200);
+          |                                                                                                                                                                                    ^
+      148 |     }
+      149 |   }
+      150 |   expect((await post(kv, standing('c'.repeat(32), 'the-claim', 1))).status).toBe(200);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/e2e/field-book.spec.ts:147:180
+
+    Error Context: artifacts/skill-door-unclaimed-refresh-1/baseline-playwright/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/skill-door-unclaimed-refresh-1/baseline-playwright/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/skill-door-unclaimed-refresh-1/baseline-playwright/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+    [mobile-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
