@@ -1,0 +1,521 @@
+
+Running 24 tests using 1 worker
+
+[1/24] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[2/24] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[3/24] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[4/24] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[5/24] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[6/24] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[7/24] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[8/24] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[9/24] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[10/24] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[11/24] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[12/24] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[13/24] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+  1) [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend 
+
+    Error: page.evaluate: Execution context was destroyed, most likely because of a navigation
+
+      51 |
+      52 | async function gold(page: Page): Promise<number> {
+    > 53 |   return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? 0);
+         |               ^
+      54 | }
+      55 |
+      56 | async function teleport(page: Page, x: number, z: number): Promise<void> {
+        at gold (/Users/robin/.goldrush/land/wt-sdu1/e2e/m2-01-build-menu.spec.ts:53:15)
+        at grantGold (/Users/robin/.goldrush/land/wt-sdu1/e2e/m2-01-build-menu.spec.ts:47:24)
+        at /Users/robin/.goldrush/land/wt-sdu1/e2e/m2-01-build-menu.spec.ts:113:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-menu-plac-5a520-d-logs-build-palisade-spend-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/m2-01-build-menu-menu-plac-5a520-d-logs-build-palisade-spend-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/m2-01-build-menu-menu-plac-5a520-d-logs-build-palisade-spend-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/m2-01-build-menu-menu-plac-5a520-d-logs-build-palisade-spend-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[14/24] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[15/24] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[16/24] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[17/24] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[18/24] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[19/24] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[20/24] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+  2) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 203
+
+    - Array []
+    + Array [
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "[boot-guard] chunk: crafting/AssayBench: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5417/src/crafting/AssayBench.ts?t=1790673064532",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "[vite] Failed to reload /src/playbook/playbook-surface.css. This could be due to syntax errors or importing non-existent modules. (see errors above)",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    + ]
+
+      117 |   expect(track?.deepSamples).toBe(0);
+      118 |   expect(track?.fordSamples ?? 0).toBeGreaterThan(0);
+    > 119 |   expect(errors.consoleErrors).toEqual([]);
+          |                                ^
+      120 |   expect(errors.pageErrors).toEqual([]);
+      121 | });
+      122 |
+        at /Users/robin/.goldrush/land/wt-sdu1/e2e/task-025-bandits-dont-swim.spec.ts:119:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/task-025-bandits-dont-swim-bce0f--hero-through-the-ford-only-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/task-025-bandits-dont-swim-bce0f--hero-through-the-ford-only-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/task-025-bandits-dont-swim-bce0f--hero-through-the-ford-only-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/task-025-bandits-dont-swim-bce0f--hero-through-the-ford-only-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[21/24] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+  3) [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 190
+
+    - Array []
+    + Array [
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "[boot-guard] chunk: crafting/AssayBench: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5417/src/crafting/AssayBench.ts",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    +   "Failed to load resource: net::ERR_CONNECTION_REFUSED",
+    + ]
+
+      133 |   expect(snapshot.watch?.deepSamples).toBe(0);
+      134 |   expect(snapshot.enemies.filter((enemy) => enemy.zone === 'river')).toHaveLength(0);
+    > 135 |   expect(errors.consoleErrors).toEqual([]);
+          |                                ^
+      136 |   expect(errors.pageErrors).toEqual([]);
+      137 | });
+      138 |
+        at /Users/robin/.goldrush/land/wt-sdu1/e2e/task-025-bandits-dont-swim.spec.ts:135:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/task-025-bandits-dont-swim-7595f-deep-river-over-three-waves-mobile-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/task-025-bandits-dont-swim-7595f-deep-river-over-three-waves-mobile-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/task-025-bandits-dont-swim-7595f-deep-river-over-three-waves-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/task-025-bandits-dont-swim-7595f-deep-river-over-three-waves-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[22/24] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[23/24] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[24/24] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+  3 failed
+    [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend 
+    [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only 
+    [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves 
+  21 passed (2.4m)
