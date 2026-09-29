@@ -1,0 +1,28 @@
+   await page.getByTestId('start-menu-settings').click();
+   await mkdir(SHOT_DIR, { recursive: true });
+@@ -112,6 +115,8 @@
+   await page.getByTestId('start-menu-settings').click();
+   await expect(page.getByTestId('start-menu-volume')).toHaveValue('25');
+   await expect(page.getByTestId('start-menu-mute')).toBeChecked();
++  await page.goto('/?debug&nowaves&nolevel&seed=audio-persistence');
++  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.audio)).toMatchObject({ volume: 0.25, muted: true });
+   assertNoErrors(errors);
+ });
+ 
+
+tokens used
+147,262
+READY-FOR-GATES.
+
+Fixed the persistence test to seed a returning-player profile and verify reloaded Settings plus SoundSystem values.
+
+- Both projects: exit **1 → 0**, integration **10/10**.
+- Unchanged adjacent suites: **32/32**.
+- TypeScript/build passed; zero console/page errors across eight plain surfaces.
+- `src/**` unchanged. Only orchestrator gates remain.
+
+Commits: `52860648a`, `f9a1a26e5`, `68ad3e06f`.
+
+[Evidence report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/audio-integration-first-boot-spec-1/report.md>)
+[lane-runner-v3] withheld factory accounting: logs/guard-stats.jsonl
+[lane-runner-v3] withheld 1 factory-accounting path(s)
