@@ -27,3 +27,9 @@ At 2026-09-29T02:42Z, attempt 2 is committed as 00e7839ba with predecessor a444a
 The first ledger battery passed 1263/1263, zero failures/skips, kit 83/83, npm exit 0 in 311.999 seconds against d464e6d2f. Its transcript/result are retained as initial-ledger-guards.txt and initial-ledger-result.json. Because the completion receipt and readiness hold were added afterward, the full closing battery is rerun on that final bookkeeping state before clearance.
 
 
+
+## Closing receipt — 2026-09-29T02:50Z
+
+**READY-FOR-GATES (fire bookkeeping complete; trace-guard drain HELD).** The complete npm run test:ledger-guards returned exit 0 in 352.525 seconds on Node v26.4.0: 1263/1263 tests, zero failures/skips, all chained legs complete and kit 83/83. Gated checkpoint 0aa86257f7fb8e7bc1fe7123fbf9bc9d95bbf126. Final queues/running tasks and pending orders are empty; lane a/b/c ahead=0 and lane-d retains both commits (2 ahead). Primary runner 25494 still executes the original file. The completed done-move remains present and strict policy refuses under the recorded gate-side condition.
+
+Exact s2790 predecessor is archived; the four-item Owner's Desk is byte-identical. Session commits before clearance: ba945f96d, aeb329bcd, d464e6d2f, 0aa86257f. No product source merge, dispatch, re-queue, deployment, independent-process termination or origin-history repair. No unchanged rejected origin push. This handoff commit is the last write to main; subsequent verification is read-only and the session digest is external to this repo.
