@@ -1,0 +1,10 @@
+evidence-budget — the evidence bytes this landing adds
+  range    : HEAD..INDEX
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 0 changed evidence path(s)
+  added    : 0.0 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 0.0 MB
+  limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+  tree     : 9370.3 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 0.0 MB added, inside the 40.0 MB ceiling.

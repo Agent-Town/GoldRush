@@ -11,6 +11,8 @@
 //   the LANDING  `node scripts/evidence-budget.mjs <base> <tip>` - the tracked bytes this landing
 //                ADDS under the evidence prefixes, against a per-landing ceiling (40 MB by default,
 //                from `scripts/evidence-budget-baseline.json`, overridable with `--limit`).
+//   the INDEX    `node scripts/evidence-budget.mjs <base> HEAD --staged` measures the index
+//                against base (HEAD by default), with the same added-byte accounting.
 //   the TREE     `node scripts/evidence-budget.mjs --total` - the whole tracked `artifacts/` total
 //                against the ceiling the first offload BANKS in that same file. While the ceiling is
 //                unbanked this reports the total and exits 0, because a budget nobody has set yet
@@ -84,8 +86,8 @@ function sizesOf(root, specs) {
  * `--no-renames` on purpose: a rename out of `artifacts/` is a real removal and one into it is a real
  * addition, which is exactly how a budget should read a file that MOVED into the evidence tree.
  */
-export function measureLanding(root, base, tip) {
-  const raw = git(root, ['diff', '-z', '--name-status', '--no-renames', base, tip, '--', 'artifacts', 'reviews']);
+export function measureLanding(root, base, tip, { staged = false } = {}) {
+  const raw = git(root, ['diff', '-z', '--name-status', '--no-renames', ...(staged ? ['--cached', base] : [base, tip]), '--', 'artifacts', 'reviews']);
   const fields = raw.split('\0').filter((f) => f !== '');
   const changes = [];
   for (let i = 0; i + 1 < fields.length; i += 2) {
@@ -93,9 +95,10 @@ export function measureLanding(root, base, tip) {
     const path = fields[i + 1];
     if (isEvidence(path)) changes.push({ status, path });
   }
+  const target = staged ? '' : tip;
   const specs = [];
   for (const change of changes) {
-    if (change.status !== 'D') specs.push(`${tip}:${change.path}`);
+    if (change.status !== 'D') specs.push(`${target}:${change.path}`);
     if (change.status !== 'A') specs.push(`${base}:${change.path}`);
   }
   const sizes = sizesOf(root, specs);
@@ -103,7 +106,7 @@ export function measureLanding(root, base, tip) {
   let removed = 0;
   const growth = [];
   for (const change of changes) {
-    const now = change.status === 'D' ? 0 : sizes.get(`${tip}:${change.path}`) ?? 0;
+    const now = change.status === 'D' ? 0 : sizes.get(`${target}:${change.path}`) ?? 0;
     const was = change.status === 'A' ? 0 : sizes.get(`${base}:${change.path}`) ?? 0;
     if (now > was) {
       added += now - was;
@@ -139,12 +142,14 @@ function main() {
   const root = flag('--root') ? resolve(flag('--root')) : DEFAULT_ROOT;
   const baseline = readBaseline(root, flag('--baseline', BASELINE_PATH));
   const asJson = argv.includes('--json');
-  const positional = argv.filter((a, i) => !a.startsWith('--') && !argv[i - 1]?.startsWith('--'));
+  const staged = argv.includes('--staged');
+  const valueFlags = ['--root', '--baseline', '--limit'];
+  const positional = argv.filter((a, i) => !a.startsWith('--') && !valueFlags.includes(argv[i - 1]));
 
   try {
     const total = measureTotal(root);
     const ceiling = baseline.totalArtifacts.ceilingBytes;
-    if (argv.includes('--total') || !positional.length) {
+    if (argv.includes('--total') || (!staged && !positional.length)) {
       const over = Number.isInteger(ceiling) && total.bytes > ceiling;
       if (asJson) {
         process.stdout.write(`${JSON.stringify({ mode: 'total', total, baseline, over }, null, 1)}\n`);
@@ -161,18 +166,18 @@ function main() {
       process.exit(over ? 1 : 0);
     }
 
-    if (positional.length < 2) throw new Error('give a base and a tip commit, or --total');
-    const [base, tip] = positional;
+    if (!staged && positional.length < 2) throw new Error('give a base and a tip commit, or --total');
+    const [base = 'HEAD', tip = 'HEAD'] = positional;
     const limit = Number(flag('--limit', baseline.perLandingLimitBytes));
     if (!Number.isFinite(limit) || limit <= 0) throw new Error(`--limit must be a positive byte count, got ${flag('--limit')}`);
-    const landing = measureLanding(root, base, tip);
+    const landing = measureLanding(root, base, tip, { staged });
     const over = landing.added > limit;
     if (asJson) {
-      process.stdout.write(`${JSON.stringify({ mode: 'landing', ...landing, limit, over, total, baseline }, null, 1)}\n`);
+      process.stdout.write(`${JSON.stringify({ mode: staged ? 'staged' : 'landing', ...landing, limit, over, total, baseline }, null, 1)}\n`);
       process.exit(over ? 1 : 0);
     }
     console.log('evidence-budget — the evidence bytes this landing adds');
-    console.log(`  range    : ${base}..${tip}`);
+    console.log(`  range    : ${base}..${staged ? 'INDEX' : tip}`);
     console.log(`  prefixes : ${baseline.prefixes.join(' ')} — a path outside these is not counted at all`);
     console.log(`  files    : ${landing.files} changed evidence path(s)`);
     console.log(`  added    : ${mb(landing.added)}  (new blobs plus the growth of modified ones)`);

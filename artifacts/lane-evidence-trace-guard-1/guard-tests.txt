@@ -1,0 +1,30 @@
+      tracked under artifacts/: 31096 file(s) 9370.3 MB · ceiling NOT BANKED YET
+✔ the baseline file exists, parses, and carries every field the tool reads (1.013084ms)
+✔ the per-landing ceiling is the owner ruling 14a default until someone rules otherwise (0.186167ms)
+✔ the tree total is REPORTED, and the unbanked state names who banks it (273.427958ms)
+✔ --total on the live tree prints the number and passes while unbanked (142.259958ms)
+✔ a landing inside the ceiling passes; one byte over it reds (441.776541ms)
+✔ a path outside the evidence prefixes is not counted at all (206.65875ms)
+✔ `reviews/shots-*` counts and the rest of reviews/ does not (242.07025ms)
+✔ a deletion is reported but never credited against the ceiling (341.403208ms)
+✔ growth of a MODIFIED evidence file counts, and shrinkage does not go negative (535.780166ms)
+✔ a banked tree ceiling reds when the tree is over it, and passes when it is under (447.612083ms)
+✔ an unbanked ceiling is advisory: it reports and never refuses (219.843875ms)
+✔ a missing or malformed baseline falls back to the declared defaults rather than crashing (244.135ms)
+✔ a bad range or a bad limit exits 2, never 1: "could not measure" is not "refused" (351.622667ms)
+✔ measureLanding and measureTotal are usable without the CLI, so a drain can script them (207.813042ms)
+✔ --staged measures index bytes against base, ignoring unstaged content and using HEAD by default (444.73825ms)
+✔ runner withholds raw output and 51 MB file, retaining disk bytes (prestaged=false) (643.358333ms)
+✔ runner withholds raw output and 51 MB file, retaining disk bytes (prestaged=true) (904.897333ms)
+✔ runner trims largest staged artifacts first to 25 MB while committing the report (773.279375ms)
+✔ runner keeps an exact 25 MB task budget and does not withhold normal evidence (721.743417ms)
+✔ budget withholding restores a modified artifact in the index without changing its disk bytes (887.407417ms)
+✔ a staged rename into a raw-results directory cannot bypass the guard (533.174167ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8617.847833

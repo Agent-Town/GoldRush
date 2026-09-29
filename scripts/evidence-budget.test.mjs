@@ -11,7 +11,7 @@
 
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import test from 'node:test';
@@ -202,4 +202,114 @@ test('measureLanding and measureTotal are usable without the CLI, so a drain can
   // the tree total the offload banks a ceiling for.
   assert.equal(total.files, 2, 'the seeded artifacts path plus the new one');
   assert.equal(total.bytes, 1000 + 2500);
+});
+
+// Use the runner's existing commit probe, so these assertions exercise the real add/commit.
+function runnerFixture(t) {
+  const { root } = landing(t);
+  const scratch = mkdtempSync(join(tmpdir(), 'lane-evidence-receipt-'));
+  // Keep the run receipt on disk for diagnosis; fixture cleanup is owned by landing().
+  const baseline = join(scratch, 'baseline');
+  const log = join(scratch, 'run.log');
+  const runner = join(ROOT, 'scripts/lane-runner-v3.sh');
+  const probe = (mode, ...args) => {
+    const result = spawnSync('bash', [runner, root, baseline, ...args], {
+      ...BOUND, env: { ...process.env, LANE_RUNNER_COMMIT_PROBE: mode },
+    });
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+  };
+  probe('capture');
+  const write = (path, bytes) => {
+    mkdirSync(dirname(join(root, path)), { recursive: true });
+    writeFileSync(join(root, path), typeof bytes === 'number' ? Buffer.alloc(bytes, 120) : bytes);
+  };
+  return { root, write, commit: () => probe('commit', 'guard output', log),
+    receipt: () => readFileSync(join(scratch, 'run-withheld-paths.txt'), 'utf8').trim().split('\n'),
+    log: () => readFileSync(log, 'utf8') };
+}
+
+test('--staged measures index bytes against base, ignoring unstaged content and using HEAD by default', (t) => {
+  const { root, base } = landing(t, { adds: { 'artifacts/committed.txt': 'a'.repeat(30) } });
+  writeFileSync(join(root, 'artifacts/staged.txt'), 'b'.repeat(71));
+  git(root, 'add', '--', 'artifacts/staged.txt');
+  writeFileSync(join(root, 'artifacts/staged.txt'), 'c'.repeat(9000));
+  const result = run(root, '--staged', base, 'HEAD', '--json', '--limit', '100');
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.equal(JSON.parse(result.stdout).added, 101);
+  assert.equal(JSON.parse(result.stdout).mode, 'staged');
+  const head = run(root, '--staged', '--json', '--limit', '71');
+  assert.equal(head.status, 0);
+  assert.equal(JSON.parse(head.stdout).added, 71);
+  git(root, 'reset', '-q', 'HEAD', '--', 'artifacts/staged.txt');
+  assert.equal(JSON.parse(run(root, '--staged', '--json').stdout).added, 0);
+});
+
+for (const staged of [false, true]) {
+  test(`runner withholds raw output and 51 MB file, retaining disk bytes (prestaged=${staged})`, (t) => {
+    const f = runnerFixture(t);
+    const raw = [
+      'artifacts/task/x-results/trace.zip', 'artifacts/task/test-failed-1.png',
+      'artifacts/big.bin', 'test-results/nested/data.txt', 'x-results/data.txt',
+      'trace.zip', 'clip.webm', 'nested/test-results/data.txt',
+      'nested/trace.zip', 'nested/clip.webm', 'test-failed-2.png',
+    ];
+    for (const path of raw) f.write(path, path === 'artifacts/big.bin' ? 51_000_000 : 13);
+    f.write('artifacts/task/report.md', 'ordinary report');
+    f.write('logs/guard-stats.jsonl', '{}');
+    if (staged) git(f.root, 'add', '--', ...raw);
+    f.commit();
+    assert.deepEqual(git(f.root, 'show', '--format=', '--name-only', 'HEAD').trim().split('\n'), ['artifacts/task/report.md']);
+    assert.deepEqual(f.receipt().sort(), [...raw, 'logs/guard-stats.jsonl'].sort());
+    for (const path of raw) assert.equal(statSync(join(f.root, path)).size, path === 'artifacts/big.bin' ? 51_000_000 : 13);
+    assert.match(f.log(), /withheld 11 raw\/oversized evidence path\(s\)/);
+  });
+}
+
+test('runner trims largest staged artifacts first to 25 MB while committing the report', (t) => {
+  const f = runnerFixture(t);
+  f.write('artifacts/task/large shot.bin', 17_000_000);
+  f.write('artifacts/task/small.bin', 9_000_000);
+  f.write('artifacts/task/report.md', 'report');
+  f.commit();
+  assert.deepEqual(f.receipt(), ['artifacts/task/large shot.bin']);
+  assert.equal(statSync(join(f.root, 'artifacts/task/large shot.bin')).size, 17_000_000);
+  assert.equal(git(f.root, 'diff', '--cached', '--name-only').trim(), '');
+  assert.deepEqual(git(f.root, 'show', '--format=', '--name-only', 'HEAD').trim().split('\n'), ['artifacts/task/report.md', 'artifacts/task/small.bin']);
+  assert.match(f.log(), /9000006 added byte\(s\) remain/);
+});
+
+test('runner keeps an exact 25 MB task budget and does not withhold normal evidence', (t) => {
+  const f = runnerFixture(t);
+  f.write('artifacts/task/normal.bin', 24_999_994);
+  f.write('artifacts/task/report.md', 'report');
+  f.commit();
+  assert.equal(f.receipt().join(''), '');
+  assert.equal(git(f.root, 'show', 'HEAD:artifacts/task/report.md'), 'report');
+  assert.equal(Number(git(f.root, 'cat-file', '-s', 'HEAD:artifacts/task/normal.bin')), 24_999_994);
+});
+
+
+test('budget withholding restores a modified artifact in the index without changing its disk bytes', (t) => {
+  const f = runnerFixture(t);
+  f.write('artifacts/seed/old.png', 26_000_000);
+  f.write('artifacts/task/report.md', 'report');
+  f.commit();
+  assert.deepEqual(f.receipt(), ['artifacts/seed/old.png']);
+  assert.equal(Number(git(f.root, 'cat-file', '-s', 'HEAD:artifacts/seed/old.png')), 1000);
+  assert.equal(statSync(join(f.root, 'artifacts/seed/old.png')).size, 26_000_000);
+  assert.equal(git(f.root, 'diff', '--cached', '--name-only').trim(), '');
+  assert.equal(git(f.root, 'show', 'HEAD:artifacts/task/report.md'), 'report');
+});
+
+test('a staged rename into a raw-results directory cannot bypass the guard', (t) => {
+  const f = runnerFixture(t);
+  mkdirSync(join(f.root, 'artifacts/x-results'), { recursive: true });
+  git(f.root, 'mv', 'artifacts/seed/old.png', 'artifacts/x-results/renamed.png');
+  f.write('artifacts/task/report.md', 'report');
+  f.commit();
+  assert.deepEqual(f.receipt().sort(), ['artifacts/seed/old.png', 'artifacts/x-results/renamed.png']);
+  assert.equal(statSync(join(f.root, 'artifacts/x-results/renamed.png')).size, 1000);
+  assert.equal(git(f.root, 'show', 'HEAD:artifacts/seed/old.png').length, 1000);
+  assert.equal(git(f.root, 'show', 'HEAD:artifacts/task/report.md'), 'report');
+  assert.equal(git(f.root, 'diff', '--cached', '--name-only').trim(), '');
 });
