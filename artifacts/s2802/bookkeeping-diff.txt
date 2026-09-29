@@ -1,0 +1,40 @@
+diff --git a/logs/factory-usage.json b/logs/factory-usage.json
+index 8ea56278d..3174056b5 100644
+--- a/logs/factory-usage.json
++++ b/logs/factory-usage.json
+@@ -1,19 +1,19 @@
+ {
+  "attended": {
+-  "in": 1025518927,
+-  "out": 66825745,
++  "in": 1025781402,
++  "out": 67010826,
+   "files": 538
+  },
+  "fires": {
+-  "in": 617823453,
+-  "out": 62178067,
++  "in": 617969202,
++  "out": 62228620,
+   "files": 671
+  },
+  "codexGR": {
+   "in": 0,
+   "out": 0,
+-  "files": 6866,
++  "files": 6873,
+   "cached": 0
+  },
+- "stamped": "2026-09-29T08:18"
++ "stamped": "2026-09-29T14:21"
+ }
+\ No newline at end of file
+diff --git a/logs/usage-history.jsonl b/logs/usage-history.jsonl
+index a1bb44d41..408b6817b 100644
+--- a/logs/usage-history.jsonl
++++ b/logs/usage-history.jsonl
+@@ -306,3 +306,4 @@
+ {"t":"2026-09-28T20:13","att_in":1022995988,"att_out":66445712,"fire_in":612033372,"fire_out":61330367,"cdx_in":0,"cdx_out":0,"cdx_cached":0}
+ {"t":"2026-09-29T02:16","att_in":1025094949,"att_out":66525975,"fire_in":612033372,"fire_out":61330367,"cdx_in":0,"cdx_out":0,"cdx_cached":0}
+ {"t":"2026-09-29T08:18","att_in":1025518927,"att_out":66825745,"fire_in":617823453,"fire_out":62178067,"cdx_in":0,"cdx_out":0,"cdx_cached":0}
++{"t":"2026-09-29T14:21","att_in":1025781402,"att_out":67010826,"fire_in":617969202,"fire_out":62228620,"cdx_in":0,"cdx_out":0,"cdx_cached":0}

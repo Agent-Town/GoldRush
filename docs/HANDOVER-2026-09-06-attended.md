@@ -1708,3 +1708,12 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Evidence and ordered remainder: artifacts/s2801/report.md. Full closing ledger gate tests the prepared handoff before the final clearing commit. No product landing claimed.
 
 - **s2801 final receipt: READY-FOR-GATES (bookkeeping).** Full ledger completed 2026-09-29T13:45:01.148Z: 1,263/1,263, zero failures/skips; every chained leg, kit 83/83; exit 0 in 185.848 s on v26.4.0. Tested handoff, predecessor and desk exact; final clearing commit is the last main write, followed by backup and external digest.
+
+### s2802 verification: eligible board dry; usage accounting preserved
+
+- WHY no drain: fresh board zero real drains/unknowns; all four runner lanes ahead=0, queues empty. Seven ahead off-fleet worktrees remain attended-owned. CODEX-WALL stands.
+- Preserved inherited usage accounting in 366212448; no source or task changes. Health 200/200/200; runner 31360 alive under PPID 1. Private coverage 37/37 and remote heads match today's completed duties. Yesterday's ticker exists; week-41 mint due September 30 after 00:00 UTC.
+- Rechecked the three launch goal merges as ancestors of main and both corrective Gazette drafts. Owner film/release verdict and site embed remain next. Exact predecessor, three-item desk and discharged F-2742-1 annotation retained.
+- Evidence and ordered remainder: artifacts/s2802/report.md. Full closing ledger gate tests the prepared handoff before the final clearing commit. No product landing or deployment claimed.
+
+- s2802 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-09-29T14:55:54.001Z: **1,263/1,263 tests, zero failures/skips; every chained check; kit 83/83; exit 0**, 320.950 seconds under v26.4.0. Tested handoff unchanged, exact s2801 predecessor and three-item desk verified; launcher semaphore remains present, queues/running tasks empty and main still at accounting commit 366212448. No product gate or deployment claimed. The final clearing commit is the last main write; only origin backup, read-only verification and the external vault digest follow.
