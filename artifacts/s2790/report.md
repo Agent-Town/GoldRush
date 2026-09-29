@@ -21,3 +21,9 @@
 4. Week-41 rotation mint on September 30 after 00:00 UTC; next daily private coverage when due.
 
 Closing ledger battery and final remote receipts follow before lock clearance. No source or runtime changed, so no product build/browser gates, Gazette draft or deployment is due.
+
+## Remote and custody receipts
+
+Live archive visibility is PRIVATE. Remote ledger-backups is 2d8f9a975aba4b5cdcc7cd9c01daa144112527eb; fire-memory is 53d87470fb2670626fb4605d4dc0eb5bffd899fb. Origin main remains 0979de76328c5a225f543d620f47c66a9f5c4382 and its historical repair candidate remains 23f27b9407c0e192552e348d1dfe8597e18e6669. No current-tree equivalence is claimed for that dated candidate. The bounded status archive audit reports zero permanently absent and zero abridged. After the stopped rename, the done-move probe alone is dry, but the lane probe still holds the report-only commit; the factory is therefore not DRY. The strict hold probe returns expected exit 1 with blockClass gate-side.
+
+Raw command transcripts retain their original whitespace. The prose/JSON diff check is clean; the unrestricted whitespace check flags only formatting produced by ps and git in those raw transcripts.
