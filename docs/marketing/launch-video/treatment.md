@@ -555,3 +555,41 @@ New in phase 2:
 1. **The Baron's fall: will you ride the Baron for the camera on the capture day?** The 2026-09-02 launch facts name the county's founder as the only human to have felled him (`marketing/outbox/launch-facts-vE1.md`). The alternative is to cut on his arrival and let the Herald print the ending. *Recommendation:* your ride, if you can spare about twelve minutes. If not, the cut is honest and still lands.
 2. **The voice: printed slips only, or a spoken read?** A spoken read would use a human voice you choose, yours or a family member's. The repo's voice path spends credits (`specs/audio/README.md`), so there is no generated voice without your word. *Recommendation:* printed slips for this cut. The Pan Theme carries it, and a voice can be added later without re-cutting.
 3. **The county's names: may the film show riders' model and harness names as the boards print them?** The Field Book row today reads "gpt-5.6-sol". The alternative is to keep machine riders unnamed. *Recommendation:* unnamed in the cut, with the end card's optional second line, "Bring your agent: agenttown.app/goldrush/skill.md", carrying the invitation instead.
+
+---
+
+## Phase 3: the cut (2026-09-29)
+
+**Status.** v1 cut, for the owner's notes. Task `launch-video-cut-3`; owner, 2026-09-29, verbatim: "lets do the film cut using Opus - it should not be too long" and, of the landing page, "we then need the film also to add it there". Phases 1 and 2 above stand as written; this section only adds to them.
+
+**What exists.** Five exports in `~/.goldrush/launch-video/cut/`, outside the repository:
+- the master `gold-rush-launch-film-1920x1200-v1.mp4` (94.000 s, the takes' own 1920x1200 at 60 fps);
+- `gold-rush-launch-film-1920x1080-v1.mp4` (94.000 s) for platforms;
+- the vertical `gold-rush-launch-film-vertical-1080x1920-v1.mp4` (94.000 s);
+- the landing page's copy `gold-rush-launch-film-web-1280x800-v1.mp4` (18,538,642 bytes, 1,577 kb/s, index at the front) and its poster, the B3 title frame (253,221 bytes);
+- the teaser `gold-rush-launch-film-teaser-30s-1920x1080-v1.mp4` (30.000 s).
+
+Every export carries the Pan Theme end to end, extended by the E1 loop per the cue sheet, and measures -14 LUFS integrated with a true peak of -2.2 dBTP (the teaser: -13.8 LUFS and -1.9 dBTP). Nothing was generated or bought. The only network use was the two Google Fonts faces.
+
+**Where the edit lives.** `scripts/launch-video/cut/`: the edit list `edl.mjs`, the type `cards.mjs`, the mix `mix.mjs`, the assembly `assemble.mjs` and the evidence sheets `contact-sheet.mjs`. A v2 is one edit to `edl.mjs` and one run of `assemble.mjs --all`. `docs/marketing/launch-video/edit-notes-v1.md` holds every take with its REAL or STAGED label, the three disclosures (F-LVC2-1, F-LVC2-2, F-LVC2-3), every fallback and every deviation. `artifacts/launch-video-cut-3/` holds the cut list, the two contact sheets, ffprobe and loudness.
+
+**Where the plan met the takes.**
+1. **Fallbacks taken.**
+   - B7 has no turret flash: no turret was raised in any Night Shift take, so the dark holds the pool, the two lights and the rim.
+   - B8 has no clear frame of the Baron himself, so the arrival is his standard coming down to the ford and his men crossing.
+   - B10: the shelf's Lantern Show prints no "THIS IS THE RIDE.", and its control bar is cropped.
+   - The held breath has no heartbeat, lantern hiss or footsteps: none exists in the game's audio, and none was generated.
+   - The vertical takes the treatment's reframe of the master for B1, the Baron's entry, taunt and arrival, and the Herald, the Field Book and the invitation. For B1 a vertical take exists, but its relight window pulses with the hurt vignette; for the others no 390x844 take exists.
+2. **Timecodes.** Every movement boundary holds: 0:05, 0:14, 0:18, 0:41, 0:50, 1:00, 1:20, 1:27 and the end at 1:34. Inside the movements, B4/B5, B5/B6 and B9/B10 move by at most 0.53 s; the table is in the edit notes.
+3. **Adaptations.**
+   - B1's cards sit above the pool, because the walkers enter from the bottom of the real frame.
+   - B3's lift is a dissolve, because the menu take has no lift animation.
+   - B5 is one continuous shot carrying all four FREED labels (gap 12).
+   - B8's taunt shot is 1.4 s and its plate 1.6 s.
+   - The Pan Theme's fullest statement begins at 1:10 rather than 1:20, so that its resolution lands by 1:27 without a splice inside it.
+
+**New in phase 3.**
+
+20. **The Baron's taunt card is on screen 1.3 to 1.5 s** in all seven taunts of the three Baron takes (measured by its oxblood colour at 10 fps), not the 3.8 s phase 2 expected: the next wave's callout replaces it.
+21. **The hurt vignette marks many takes.** This is the 0.5 s sienna rim when the heroine is hit (`src/ui/theme.css`, `.damage-vignette`). Every shot of the cut was chosen clear of it by measurement, which is what moved B1 to Night Shift t2 at 310.90 s, the dark of B7 to 322.80 s and the Baron's arrival to 532.85 s.
+22. **The phase-2 verifier counts the exports as unlisted cut takes.** `scripts/launch-video/verify-capture-list.mjs` lists every video and still at the top of `~/.goldrush/launch-video/cut/`, where this task was told to put the exports. It was green before the cut and reads red after, with exactly the six export files as its mismatches (finding F-LVC3-1 in `artifacts/launch-video-cut-3/report.md`).
