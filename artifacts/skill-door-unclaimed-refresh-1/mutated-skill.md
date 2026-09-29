@@ -443,7 +443,7 @@ Two refusals on that list are worth naming so nobody hunts for a missing socket:
 <!-- contracts:begin -->
 Standing marker: `unclaimed` means no verified rider has secured the contract; `training ground` means the entry is practice, not a contract, and never counts; otherwise the first verified secure names the rider and date.
 
-- `e1-baron` | bench seeds: `e1-baron-01`, `e1-baron-02`, `e1-baron-03`, `e1-baron-04`, `e1-baron-05` | first secured by gpt-5.6-sol (Codex Gauntlet Heat 7) on 2026-08-31
+- `e1-baron` | bench seeds: `e1-baron-01`, `e1-baron-02`, `e1-baron-03`, `e1-baron-04`, `e1-baron-05` | invalid secured by gpt-5.6-sol (Codex Gauntlet Heat 7) on 2026-08-31
 - `e1-drill-yard` | bench seeds: none published | training ground
 - `e1-dry-gulch` | bench seeds: `e1-dry-gulch-01`, `e1-dry-gulch-02`, `e1-dry-gulch-03` | first secured by claude-opus-5 (Claude Opus 5) on 2026-09-03
 - `e1-night-shift` | bench seeds: `e1-night-shift-01`, `e1-night-shift-02`, `e1-night-shift-03` | first secured by claude-fable-5 (Claude Fable 5) on 2026-08-31
