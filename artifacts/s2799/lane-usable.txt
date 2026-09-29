@@ -1,0 +1,228 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=32  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 32 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 17 file(s) main has moved that this lane lacks:
+          scripts/attended/README.md
+          scripts/attended/landings/emd1-review.md
+          scripts/attended/landings/emd1.json
+          scripts/attended/landings/lvc3-review.md
+          scripts/attended/landings/lvc3.json
+          scripts/attended/landings/sdu1-review.md
+          scripts/attended/landings/sdu1.json
+          scripts/attended/ledger-gap.sh
+          … and 9 more
+lane-b  sol/wave-lane-b  ahead=4  behind=32  paths=104  tracked-dirt=0  untracked=5
+    HELD LANE-ONLY  artifacts/emdash-entities-1/adjacent-panel-shots/panel-open-desktop.png  (BINARY)
+    HELD LANE-ONLY  artifacts/emdash-entities-1/adjacent-panel-shots/panel-open-mobile.png  (BINARY)
+    HELD LANE-ONLY  artifacts/emdash-entities-1/adjacent-panel-shots/receipts-stack.png  (BINARY)
+    HELD LANE-ONLY  artifacts/emdash-entities-1/adjacent-panel-shots/revoked-ability-state.png  (BINARY)
+    HELD LANE-ONLY  artifacts/emdash-entities-1/build.log  (3220 of 3220 added lines absent from main)
+      "> gold-rush@0.1.0 build"
+      "> tsc && vite build && node scripts/asset-diet.mjs"
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/capture-final.log  (2 of 2 added lines absent from main)
+      "desktop started"
+      "mobile-390 started"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/capture-results.json  (16 of 16 added lines absent from main)
+      "["
+      "  {"
+      "    \"name\": \"desktop\","
+    HELD LANE-ONLY  artifacts/emdash-entities-1/capture.log  (15 of 15 added lines absent from main)
+      "node:internal/modules/run_main:104"
+      "    triggerUncaughtException("
+      "    ^"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/capture.mjs  (44 of 44 added lines absent from main)
+      "import { chromium, devices } from '@playwright/test';"
+      "import assert from 'node:assert/strict';"
+      "import fs from 'node:fs';"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/consent-recheck.log  (5 of 5 added lines absent from main)
+      "Running 1 test using 1 worker"
+      "(node:66770) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/control.log  (45 of 45 added lines absent from main)
+      "Control source restored to 4cd9cfc6124c059dcee55f1e0d8860dcc45d7af0; git diff of all three implemen…"
+      "Running 4 tests using 1 worker"
+      "(node:58707) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+    HELD LANE-ONLY  artifacts/emdash-entities-1/control.py  (20 of 20 added lines absent from main)
+      "from pathlib import Path"
+      "import os, subprocess, json"
+      "root = Path(__file__).resolve().parents[2]"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/dev-server.log  (7 of 7 added lines absent from main)
+      "> gold-rush@0.1.0 dev"
+      "> vite --host 127.0.0.1 --port 5198 --strictPort"
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/e2e.log  (142 of 142 added lines absent from main)
+      "Running 44 tests using 1 worker"
+      "(node:88895) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set."
+      "(Use `node --trace-warnings ...` to show where the warning was created)"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/field-book-desktop.png  (BINARY)
+    HELD LANE-ONLY  artifacts/emdash-entities-1/field-book-mobile-390.png  (BINARY)
+    HELD LANE-ONLY  artifacts/emdash-entities-1/guard-after.log  (11 of 11 added lines absent from main)
+      "scan space: 301 tracked src TS files (293 scanned, 8 skipped)"
+      "✔ visitor copy and contract text fields contain no em dashes (4063.141375ms)"
+      "✔ dash entities and Unicode escapes cannot bypass the guard (2.896375ms)"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/guard-before.log  (32 of 32 added lines absent from main)
+      "scan space: 301 tracked src TS files (293 scanned, 8 skipped)"
+      "✖ visitor copy and contract text fields contain no em dashes (2186.616208ms)"
+      "✔ dash entities and Unicode escapes cannot bypass the guard (2.957166ms)"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/guard-final.log  (19 of 19 added lines absent from main)
+      "scan space: 301 tracked src TS files (293 scanned, 8 skipped)"
+      "✔ visitor copy and contract text fields contain no em dashes (8622.526583ms)"
+      "✔ dash entities and Unicode escapes cannot bypass the guard (90.987166ms)"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/guard-fixture-red.log  (32 of 32 added lines absent from main)
+      "scan space: 301 tracked src TS files (293 scanned, 8 skipped)"
+      "✖ visitor copy and contract text fields contain no em dashes (6501.176583ms)"
+      "✔ dash entities and Unicode escapes cannot bypass the guard (4.961084ms)"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/guard-restored.log  (11 of 11 added lines absent from main)
+      "scan space: 301 tracked src TS files (293 scanned, 8 skipped)"
+      "✔ visitor copy and contract text fields contain no em dashes (1533.1105ms)"
+      "✔ dash entities and Unicode escapes cannot bypass the guard (2.984375ms)"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/prospector-desktop.png  (BINARY)
+    HELD LANE-ONLY  artifacts/emdash-entities-1/prospector-mobile-390.png  (BINARY)
+    HELD LANE-ONLY  artifacts/emdash-entities-1/regenerated-evidence-restored.txt  (10 of 10 added lines absent from main)
+      "artifacts/056/desktop-build-menu-icons-blurb.png"
+      "artifacts/056/desktop-build-menu-palisade.png"
+      "artifacts/056/mobile-390-build-menu-icons-blurb.png"
+    HELD LANE-ONLY  artifacts/emdash-entities-1/report.md  (62 of 62 added lines absent from main)
+      "# Entity dash repair"
+      "Status: READY-FOR-GATES, with pre-existing Field Book API reds attributed by control. PINNED landin…"
+      "Base: `4cd9cfc6124c059dcee55f1e0d8860dcc45d7af0`, branch `sol/wave-lane-b`."
+    HELD LANE-ONLY  artifacts/emdash-entities-1/tsc.log  (0 of 0 added lines absent from main)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/after.json  (24 of 30 added lines absent from main)
+      "  \"capturedAt\": \"2026-09-29T10:13:41.745Z\","
+      "  \"sourceHash\": \"3b4859fec6550d475b866124e6db0b3809b0ad93fa4147c262071493d7faa26d\","
+      "      \"timeAlive\": 10.599999999999973,"
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-baron/after-1280-fortified_far_bank-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-baron/after-1280-fortified_far_bank-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-baron/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-baron/after-390-fortified_far_bank-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-baron/after-390-fortified_far_bank-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-baron/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-night-shift/after-1280-lampworks_yard-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-night-shift/after-1280-lampworks_yard-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-night-shift/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-night-shift/after-390-lampworks_yard-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-night-shift/after-390-lampworks_yard-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-night-shift/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-twin-banks/after-1280-channel-water-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-twin-banks/after-1280-channel-water-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-twin-banks/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-twin-banks/after-390-channel-water-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-twin-banks/after-390-channel-water-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e1-twin-banks/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e10-archive-world/after-1280-archive-entry-gate-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e10-archive-world/after-1280-archive-entry-gate-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e10-archive-world/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e10-archive-world/after-1280-union-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e10-archive-world/after-390-archive-entry-gate-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e10-archive-world/after-390-archive-entry-gate-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e10-archive-world/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e2-trestle/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e2-trestle/after-1280-trestle-crossing-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e2-trestle/after-1280-trestle-crossing-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e2-trestle/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e2-trestle/after-390-trestle-crossing-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e2-trestle/after-390-trestle-crossing-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e6-glow-mesa/after-1280-isotope-cooling-rack-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e6-glow-mesa/after-1280-isotope-cooling-rack-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e6-glow-mesa/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e6-glow-mesa/after-390-isotope-cooling-rack-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e6-glow-mesa/after-390-isotope-cooling-rack-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e6-glow-mesa/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-1280-dead-gap-charting-station-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-1280-dead-gap-charting-station-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-1280-iron-shadow-warning-frame-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-1280-iron-shadow-warning-frame-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-390-dead-gap-charting-station-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-390-dead-gap-charting-station-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-390-iron-shadow-warning-frame-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-390-iron-shadow-warning-frame-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-dead-band/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-1280-dead-gap-charting-station-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-1280-dead-gap-charting-station-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-1280-rush-relay-r2-frame-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-1280-rush-relay-r2-frame-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-1280-west-ridge-dish-cluster-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-1280-west-ridge-dish-cluster-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-390-dead-gap-charting-station-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-390-dead-gap-charting-station-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-390-rush-relay-r2-frame-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-390-rush-relay-r2-frame-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-390-union-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-390-west-ridge-dish-cluster-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e7-relay-rush/after-390-west-ridge-dish-cluster-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e8-low-orbit/after-1280-claw-carcass-rig-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e8-low-orbit/after-1280-claw-carcass-rig-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e8-low-orbit/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e8-low-orbit/after-390-claw-carcass-rig-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e8-low-orbit/after-390-claw-carcass-rig-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e8-low-orbit/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e9-seed-run/after-1280-center-seed-vault-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e9-seed-run/after-1280-center-seed-vault-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e9-seed-run/after-1280-plain.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e9-seed-run/after-390-center-seed-vault-body-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e9-seed-run/after-390-center-seed-vault-persistent-mask.png  (BINARY)
+    HELD LANE-ONLY  artifacts/sol/map-art-campaign-2/run-10/phone-hud/e9-seed-run/after-390-plain.png  (BINARY)
+    HELD LANE-ONLY  scripts/no-emdash-guard.test.mjs  (12 of 15 added lines absent from main)
+      "const FORBIDDEN_DASH = /—|&(?:mdash|ndash|#821[12]|#x2014);|\\\\u2014/i;"
+      "  return FORBIDDEN_DASH.test(ts.transpileModule(source, {"
+      "  }).outputText);"
+    HELD LANE-ONLY  src/encyclopedia/reader.ts  (4 of 4 added lines absent from main)
+      "  if (costs.length === 0) return '·';"
+      "  if (!cell) return '<td class=\"field-book__blank\" aria-label=\"No showing\">·</td>';"
+      "  if (!showing) return '<td class=\"field-book__blank\" aria-label=\"No showing\">·</td>';"
+    HELD LANE-ONLY  src/ui/ProspectorPanel.ts  (2 of 2 added lines absent from main)
+      "  { level: 1, unlock: 'acts with your approval: repairs, pickups' },"
+      "    )}${bonusCopy}, secured claims advance the Prospector`;"
+    untracked (clean -fd) artifacts/emdash-entities-1/consent-recheck-results/.last-run.json
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/.last-run.json
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/error-context.md
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/error-context.md
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => HOLDS: drain or rule on the held paths first — never auto-reset over them
+lane-c  sol/map-art-campaign-2  ahead=0  behind=340  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/map-art-campaign-2 is 340 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/map-art-campaign-2
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-c) — F-1320-2.
+     📋 run-surface drift: 50 file(s) main has moved that this lane lacks:
+          e2e/audio-integration.spec.ts
+          e2e/audio-music-toggle.spec.ts
+          e2e/e7-tape-toggle-phone-hit-target.spec.ts
+          scripts/attended/README.md
+          scripts/attended/landings/ahr1-review.md
+          scripts/attended/landings/ahr1.json
+          scripts/attended/landings/amt1-review.md
+          scripts/attended/landings/amt1.json
+          … and 42 more
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=314  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but art/portraits-e5-e10-generated is 314 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> art/portraits-e5-e10-generated
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-d) — F-1320-2.
+     📋 run-surface drift: 43 file(s) main has moved that this lane lacks:
+          e2e/audio-integration.spec.ts
+          e2e/audio-music-toggle.spec.ts
+          e2e/e7-tape-toggle-phone-hit-target.spec.ts
+          scripts/attended/README.md
+          scripts/attended/landings/ahr1-review.md
+          scripts/attended/landings/ahr1.json
+          scripts/attended/landings/amt1-review.md
+          scripts/attended/landings/emd1-review.md
+          … and 35 more
+
+worktree coverage: reported 4 of 69 registered — 65 NOT reported (8 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported

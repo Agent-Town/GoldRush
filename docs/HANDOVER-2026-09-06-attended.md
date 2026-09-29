@@ -1674,3 +1674,13 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - s2798 closing correction: 1263/1263 test cases passed, but the citation chain refused the attended door-page row's ellipsis-only title. Replaced it with the exact existing Field Book title in BACKLOG and the sdu1 template; no assertion changed. Focused citation check passes; full rerun required before clearance. Actual receipt in artifacts/s2798/report.md.
 
 - s2798 final receipt: **READY-FOR-GATES** for bookkeeping. Full rerun 2026-09-29T10:32:52.942Z: 1263/1263, zero failures/skips, all chained checks, kit 83/83, exit 0 in 292.283 s. Tested handoff unchanged; predecessor and three-item desk exact. Lane B four commits ahead and attended-owned; queues/running/orders empty. Own missing semaphore restored only after re-proving process custody and unchanged main; cause unverified, evidence in artifacts/s2798/semaphore-restored.txt. Final clearing commit is the last main write, followed by ordinary backup and external vault digest.
+
+
+### s2799 verification — 2026-09-29T11:21Z
+
+- WHY no product drain: emdash-entities-1 remains attended-owned, four lane-B commits ahead and leaf queued. Its live attended candidate now has a clean verdict and same-era pin 75 (378f9213), superseding s2798's pending-candidate wording; main integration and post-landing gates remain with that session. Preserved its config/control attribution unchanged in dba2b28ed. No fire dispatch, re-queue or deploy.
+- Fresh board: one real drain, zero unknowns; A/C/D ahead=0; eight ahead scratch worktrees attended-owned. Health 200/200/200, independent runner 31360 alive; queues/running/orders/staged art empty and no new failed run. CODEX-WALL unchanged.
+- Private coverage 37/37 and live private archive heads match s2790. September 28 ticker already complete; week-41 mint due September 30. Origin predecessor verified; F-2742-1 remains discharged. Exact predecessor and three-item desk retained.
+- Launcher semaphore was restored after proving this live process chain and unchanged main; removal cause remains unverified. Evidence and ordered remainder: artifacts/s2799/report.md. Full closing ledger check precedes the final clearing commit.
+
+- s2799 final receipt: **READY-FOR-GATES** for bookkeeping. Full ledger 2026-09-29T11:25:17.840Z: 1263/1263, zero failures/skips, all chained checks, kit 83/83, exit 0 in 199.815 s on v26.4.0. Tested handoff unchanged, predecessor/desk exact and live semaphore present. Final clearing commit is the last main write; backup and external digest follow. No product landing claimed.
