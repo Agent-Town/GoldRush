@@ -10341,7 +10341,7 @@
         {
           "id": "lane-evidence-trace-guard-1",
           "title": "The lane runner never commits Playwright traces, result folders, videos, failure screenshots or files over 50 MB again: withheld at the auto-commit, a pre-commit evidence budget, guard tests (F-2742-1's cause)",
-          "status": "blocked",
+          "status": "merged",
           "taskFile": "lane-evidence-trace-guard-1.md",
           "lane": "lane-d (Astra, gpt-6-astra, the ChatGPT subscription)",
           "authoredAt": "2026-09-29",
@@ -10359,7 +10359,11 @@
           "blockClass": "gate-side",
           "blockedBy": "s2791",
           "blockedAt": "2026-09-29T02:42Z",
-          "blockedReason": "s2791: attempt 2 implemented as 00e7839ba; the inactive lane-copy scope is resolved. Primary runner PID 25494 (PPID 1) still executes the primary scripts/lane-runner-v3.sh. CLAUDE.md mistake 17 forbids writing an executing script; AGENTS permits stopping only PIDs this actor started. GATE: coordinate an attended quiescent runner window, complete the detached drain gates and pointer rebasing, verify no process executes the primary script before landing, then restart through scripts/start-lane-runner.sh. Preserve both lane commits and the done-move; no re-queue or new owner decision is required. See reviews/lane-evidence-trace-guard-1-s2791.md."
+          "blockedReason": "s2791: attempt 2 implemented as 00e7839ba; the inactive lane-copy scope is resolved. Primary runner PID 25494 (PPID 1) still executes the primary scripts/lane-runner-v3.sh. CLAUDE.md mistake 17 forbids writing an executing script; AGENTS permits stopping only PIDs this actor started. GATE: coordinate an attended quiescent runner window, complete the detached drain gates and pointer rebasing, verify no process executes the primary script before landing, then restart through scripts/start-lane-runner.sh. Preserve both lane commits and the done-move; no re-queue or new owner decision is required. See reviews/lane-evidence-trace-guard-1-s2791.md.",
+          "mergeHash": "8c03eb5128392edf78385cb113c6012a42da723c",
+          "mergedAt": "2026-09-29",
+          "review": "reviews/lane-evidence-trace-guard-1.md",
+          "drainedBy": "attended 2026-09-29 (scripts/attended/land-held.sh teg1; Astra on lane-d, the ChatGPT subscription)"
         }
       ]
     },
