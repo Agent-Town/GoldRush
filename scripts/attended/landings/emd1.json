@@ -1,0 +1,48 @@
+{
+  "tag": "emd1",
+  "branch": "sol/wave-lane-b",
+  "port": 5418,
+  "mergeMessage": "drain: merge sol/wave-lane-b — emdash-entities-1 — the six HTML-entity em dashes leave the screen (the Prospector's charter rung copy rewritten with a colon and a comma; the Field Book's four blank cells and the standings' missing time show a middle dot) and scripts/no-emdash-guard.test.mjs now catches &mdash;/&ndash;/numeric entities and \\u2014 escapes with a red fixture; from the THREAD-v3 review; the first lane run under the evidence trace guard, which withheld four Playwright result files; engine-pinned (same era), deploy deferred until the owner's SHIP verdict on build 954bb2cd",
+  "hash": "pin",
+  "pinCause": "emdash-entities-1: src/ui/ProspectorPanel.ts two copy strings (no dash), src/encyclopedia/reader.ts four blank-cell markers (middle dot); no gameplay or sim value change",
+  "gates": {
+    "releaseBuild": true,
+    "payload": true,
+    "halo": true,
+    "nullFloors": true,
+    "releaseSuite": true,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts",
+      "e2e/m4-07-prospector-panel.spec.ts",
+      "e2e/task-026-prospector-collects-xp.spec.ts",
+      "e2e/field-book.spec.ts"
+    ],
+    "allowedE2E": [
+      "field-book\\.spec\\.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking",
+      "m2-01-build-menu\\.spec\\.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining"
+    ],
+    "guards": [
+      "scripts/no-emdash-guard.test.mjs",
+      "scripts/no-emdash-scan-space-guard.test.mjs"
+    ]
+  },
+  "review": {
+    "path": "reviews/emdash-entities-1.md",
+    "title": "Drain review: `emdash-entities-1`, the six entity em dashes leave the screen and the guard learns to see entities (engine-pinned; deploy deferred to the owner's release verdict)",
+    "body": "scripts/attended/landings/emd1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "emdash-entities-1.md",
+    "rowKey": "EMDASH ENTITIES 1 LANDED",
+    "rowEmoji": "✒️",
+    "rowText": "From the THREAD-v3 review. Astra on lane-b (`f1b31ceec` + `114b56201` + the runner commit `f2a0903a6`, 104,285 tokens, 08:40Z to 08:54Z): `src/ui/ProspectorPanel.ts:12` \"acts with your approval: repairs, pickups\" and `:190` \"…, secured claims advance the Prospector\"; the four `&mdash;` blank markers in `src/encyclopedia/reader.ts` (`:811`, `:816`, `:909`, `:1129`) are a middle dot with every aria-label kept; `scripts/no-emdash-guard.test.mjs` scans with `/—|&(?:mdash|ndash|#821[12]|#x2014);|\\\\u2014/i` over source, human-text keys and `public/`, with a fixture proving each form reds; the extended guard named exactly the two affected files on the unrepaired tree, then 2/2 (10/10 with the scan-space guard). Plain boots zero errors at 1280 and 390; screenshots of the charter rung copy and a blank cell in `artifacts/emdash-entities-1/`. The evidence trace guard's FIRST live catch: four Playwright `*-results/` files withheld from the auto-commit (receipt beside the run log). Evidence 5.7 MB. Engine-pinned, same era. DEPLOY DEFERRED: the owner's release verdict runs on build `954bb2cd`; the fix deploys with the next runtime deploy after his SHIP/HOLD",
+    "statusPhrase": "the last six em dashes leave the screen and the dash guard sees entities; deploy waits for the owner's release verdict on the current build",
+    "drainedBy": "attended 2026-09-29 (scripts/attended/land-held.sh emd1; Astra on lane-b, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/emdash-entities-1"
+}

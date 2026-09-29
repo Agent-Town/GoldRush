@@ -1,0 +1,44 @@
+{
+  "tag": "sdu1",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5417,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — skill-door-unclaimed-refresh-1 — the agents' door page stops calling five secured contracts unclaimed: the first-secure input assets/rotations/winnability-receipts.json repaired from dated review and ledger records (e10-archive-world and e10-ember-shore 2026-09-18, e3-canyon-works and e7-relay-valley 2026-09-07, one more per the audit) and public/skill.md re-rendered by its writer scripts/render-skillmd-contracts.mjs; every unclaimed row audited; the guard's mutation proof fixed to drift a first-secure marker; from the THREAD-v3 review; hash unchanged (assets/rotations is outside the engine corpus)",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "allowedE2E": [
+      "m2-01-build-menu\\.spec\\.ts:111:1 › menu places a palisade and logs build_palisade spend",
+      "task-025-bandits-dont-swim\\.spec\\.ts:105:1 › enemy crossing the river reaches the hero through the ford only",
+      "task-025-bandits-dont-swim\\.spec\\.ts:123:1 › scheduled waves never place enemies in deep river over three waves"
+    ],
+    "guards": [
+      "scripts/skillmd-contracts-guard.test.mjs"
+    ]
+  },
+  "review": {
+    "path": "reviews/skill-door-unclaimed-refresh-1.md",
+    "title": "Drain review: `skill-door-unclaimed-refresh-1`, the agents' door page stops calling five secured contracts unclaimed (receipts repaired from dated records, page re-rendered by its writer)",
+    "body": "scripts/attended/landings/sdu1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "skill-door-unclaimed-refresh-1.md",
+    "rowKey": "SKILL DOOR UNCLAIMED REFRESH 1 LANDED",
+    "rowEmoji": "🚪",
+    "rowText": "From the THREAD-v3 review. Astra on lane-c (`fd5394c7b`, 112,469 tokens, 08:40Z to 08:51Z; plus the attended guard-fixture fix): the writer of the door block is `scripts/render-skillmd-contracts.mjs` and its first-secure input `assets/rotations/winnability-receipts.json`; every unclaimed row was searched by id across `reviews/` and the ledger and five carried a dated first secure the ledger had missed (`e10-archive-world`, `e10-ember-shore` 2026-09-18 per `reviews/heat-14-era6-reride.md`; `e3-canyon-works`, `e7-relay-valley` 2026-09-07 per the heat-13 record; the fifth per the report's audit table), all `claude-opus-5`; the receipts repaired, `public/skill.md` re-rendered (10 lines), `assay-lineage-sweep.mjs` still parses. The guard `skillmd-contracts-guard.test.mjs` had a mutation proof that assumed an unclaimed row exists; it now drifts a first-secure marker (attended fix, 4/4). Also recorded: `e2e/field-book.spec.ts:147` (\"…\" the fixture POST expects 200 and gets 400) is red on both projects on the unchanged baseline too (F-SDU1-1, pre-existing, not this landing's). Evidence 9.3 MB, inside the budget (F-SDU1-2: a custom Playwright output dir under `artifacts/…/playwright/` slips past the new trace guard's `*-results/` patterns; nothing large, noted). Landed attended, hash unchanged (`assets/rotations` is outside the engine corpus)",
+    "statusPhrase": "the agents' door page tells the truth about five contracts secured since September 7; the first-secure receipts are repaired at the source",
+    "drainedBy": "attended 2026-09-29 (scripts/attended/land-held.sh sdu1; Astra on lane-c, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/skill-door-unclaimed-refresh-1"
+}
