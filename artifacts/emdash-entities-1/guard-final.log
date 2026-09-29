@@ -1,0 +1,19 @@
+scan space: 301 tracked src TS files (293 scanned, 8 skipped)
+✔ visitor copy and contract text fields contain no em dashes (8622.526583ms)
+✔ dash entities and Unicode escapes cannot bypass the guard (90.987166ms)
+✔ the scan space covers EVERY tracked src TypeScript file, at every depth (265.488792ms)
+✔ files sitting DIRECTLY under src/ are subjects — the exact class the `src/**/*.ts` pathspec dropped (67.476ms)
+✔ the declared numbers account for the WHOLE corpus — scanned + skipped === all (34.558083ms)
+✔ an empty corpus REFUSES rather than certifying — a loop over nothing reports success (72.252208ms)
+✔ every SRC_EXCEPTIONS entry is a real tracked file — a rotted allowlist quietly mis-states the skip count (53.935333ms)
+✔ the guard consumes the shared selector and carries no second implementation of it (0.405917ms)
+✔ the selector reads the same corpus from a subdirectory — the dangerous cwd, not tmpdir (464.493458ms)
+✔ the guard anchors its ROOT to import.meta.url, never to the process cwd (0.538167ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9555.444958

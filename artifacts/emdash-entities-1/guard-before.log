@@ -1,0 +1,36 @@
+scan space: 301 tracked src TS files (293 scanned, 8 skipped)
+✖ visitor copy and contract text fields contain no em dashes (2186.616208ms)
+✔ dash entities and Unicode escapes cannot bypass the guard (2.957166ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2546.767333
+
+✖ failing tests:
+
+test at scripts/no-emdash-guard.test.mjs:40:1
+✖ visitor copy and contract text fields contain no em dashes (2186.616208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   'src/encyclopedia/reader.ts',
+  +   'src/ui/ProspectorPanel.ts'
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-b/scripts/no-emdash-guard.test.mjs:60:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.start (node:internal/test_runner/test:944:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:297:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'src/encyclopedia/reader.ts', 'src/ui/ProspectorPanel.ts' ],
+    expected: [],
+    operator: 'deepStrictEqual'
+  }

@@ -1,0 +1,183 @@
+
+Running 44 tests using 1 worker
+
+
+(node:88895) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/44] [desktop-chrome] › e2e/_s106-prospector-boot-probe.spec.ts:6:1 › s106 boot probe: zero errors + prospector visible (plain boot)
+[2/44] [desktop-chrome] › e2e/field-book.spec.ts:111:1 › the Drill Yard is the training ground — standings refuse it on both POST and GET
+[3/44] [desktop-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking
+  1) [desktop-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 400
+
+      145 |         tokensOut: stack.tokensOut + contractIndex,
+      146 |       };
+    > 147 |       expect((await post(kv, standing((fixtureIndex++).toString(16).repeat(32), contractId, crownByContract[contractIndex] === stackIndex ? 40 : 10 + stackIndex, costs))).status).toBe(200);
+          |                                                                                                                                                                                    ^
+      148 |     }
+      149 |   }
+      150 |   expect((await post(kv, standing('c'.repeat(32), 'the-claim', 1))).status).toBe(200);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/field-book.spec.ts:147:180
+
+    Error Context: artifacts/emdash-entities-1/test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/emdash-entities-1/test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/emdash-entities-1/test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:90461) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[4/44] [desktop-chrome] › e2e/field-book.spec.ts:215:1 › plain boot renders and expands the Minds and Rigs tables
+[5/44] [desktop-chrome] › e2e/field-book.spec.ts:355:1 › plain boot renders the honest empty Field Book state
+[6/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[7/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[8/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[9/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[10/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[11/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[12/44] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[13/44] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:56:1 › G, Esc, chip, and outside tap control the panel without pausing the run
+[14/44] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:93:1 › ladder renders earned toggles, unearned hints, and current abilities
+[15/44] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts
+  2) [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts 
+
+    Test timeout of 45000ms exceeded.
+
+    Error: locator.check: Test timeout of 45000ms exceeded.
+    Call log:
+      - waiting for getByTestId('prospector-ability-auto_collect')
+        - locator resolved to <input type="checkbox" data-prospector-ability="auto_collect" id="prospector-ability-input-auto_collect" data-testid="prospector-ability-auto_collect"/>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div class="death-overlay__panel">…</div> from <section aria-hidden="false" aria-label="Run ledger" data-testid="death-overlay" class="death-overlay death-overlay--visible">…</section> subtree intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div class="death-overlay__panel">…</div> from <section aria-hidden="false" aria-label="Run ledger" data-testid="death-overlay" class="death-overlay death-overlay--visible">…</section> subtree intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        115 × waiting for element to be visible, enabled and stable
+            - element is visible, enabled and stable
+            - scrolling into view if needed
+            - done scrolling
+            - <div class="death-overlay__panel">…</div> from <section aria-hidden="false" aria-label="Run ledger" data-testid="death-overlay" class="death-overlay death-overlay--visible">…</section> subtree intercepts pointer events
+          - retrying click action
+            - waiting 500ms
+
+
+      125 |   expect(await receiptCount(page)).toBe(before);
+      126 |
+    > 127 |   await page.getByTestId('prospector-ability-auto_collect').check();
+          |                                                             ^
+      128 |   await expect
+      129 |     .poll(() => receiptCount(page), { timeout: 14_000 })
+      130 |     .toBeGreaterThan(before);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/m4-07-prospector-panel.spec.ts:127:61
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    artifacts/emdash-entities-1/test-results/m4-07-prospector-panel-aut-8bec4-acked-newest-first-receipts-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: artifacts/emdash-entities-1/test-results/m4-07-prospector-panel-aut-8bec4-acked-newest-first-receipts-desktop-chrome/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/emdash-entities-1/test-results/m4-07-prospector-panel-aut-8bec4-acked-newest-first-receipts-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/emdash-entities-1/test-results/m4-07-prospector-panel-aut-8bec4-acked-newest-first-receipts-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:98286) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[16/44] [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:151:1 › mobile chip tap opens a full-width bottom sheet with a 44px close target
+[17/44] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[18/44] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[19/44] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[20/44] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[21/44] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[22/44] [desktop-chrome] › e2e/task-026-prospector-collects-xp.spec.ts:16:1 › collect_xp sweeps aged motes in batched receipts without entering deep water
+
+(node:99136) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[23/44] [mobile-chrome] › e2e/_s106-prospector-boot-probe.spec.ts:6:1 › s106 boot probe: zero errors + prospector visible (plain boot)
+[24/44] [mobile-chrome] › e2e/field-book.spec.ts:111:1 › the Drill Yard is the training ground — standings refuse it on both POST and GET
+[25/44] [mobile-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking
+  3) [mobile-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 400
+
+      145 |         tokensOut: stack.tokensOut + contractIndex,
+      146 |       };
+    > 147 |       expect((await post(kv, standing((fixtureIndex++).toString(16).repeat(32), contractId, crownByContract[contractIndex] === stackIndex ? 40 : 10 + stackIndex, costs))).status).toBe(200);
+          |                                                                                                                                                                                    ^
+      148 |     }
+      149 |   }
+      150 |   expect((await post(kv, standing('c'.repeat(32), 'the-claim', 1))).status).toBe(200);
+        at /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/e2e/field-book.spec.ts:147:180
+
+    Error Context: artifacts/emdash-entities-1/test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    artifacts/emdash-entities-1/test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace artifacts/emdash-entities-1/test-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:99342) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[26/44] [mobile-chrome] › e2e/field-book.spec.ts:215:1 › plain boot renders and expands the Minds and Rigs tables
+[27/44] [mobile-chrome] › e2e/field-book.spec.ts:355:1 › plain boot renders the honest empty Field Book state
+[28/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[29/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[30/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[31/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[32/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[33/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[34/44] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[35/44] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:56:1 › G, Esc, chip, and outside tap control the panel without pausing the run
+[36/44] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:93:1 › ladder renders earned toggles, unearned hints, and current abilities
+[37/44] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts
+[38/44] [mobile-chrome] › e2e/m4-07-prospector-panel.spec.ts:151:1 › mobile chip tap opens a full-width bottom sheet with a 44px close target
+[39/44] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[40/44] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[41/44] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[42/44] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[43/44] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+[44/44] [mobile-chrome] › e2e/task-026-prospector-collects-xp.spec.ts:16:1 › collect_xp sweeps aged motes in batched receipts without entering deep water
+  3 failed
+    [desktop-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+    [desktop-chrome] › e2e/m4-07-prospector-panel.spec.ts:113:1 › auto-collect consent halts and resumes behavior, with stacked newest-first receipts 
+    [mobile-chrome] › e2e/field-book.spec.ts:129:1 › minds and rigs aggregate the same standings without changing county ranking 
+  1 skipped
+  40 passed (5.9m)

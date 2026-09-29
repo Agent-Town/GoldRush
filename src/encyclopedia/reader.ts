@@ -808,12 +808,12 @@ function renderAggregateCost(aggregate: FieldBookAggregate): string {
     aggregate.totalTokensOut === undefined ? undefined : `${formatCount(aggregate.totalTokensOut)} out`,
     aggregate.totalCalls === undefined ? undefined : `${formatCount(aggregate.totalCalls)} calls`,
   ].filter((value): value is string => value !== undefined);
-  if (costs.length === 0) return '&mdash;';
+  if (costs.length === 0) return '·';
   return `${costs.join(' &middot; ')}<small>${aggregate.declaredCells} declared &middot; ${aggregate.undeclaredCells} undeclared</small>`;
 }
 
 function renderFieldBookCell(cell: FieldBookCell | undefined, rowSlug: string, contractId: string): string {
-  if (!cell) return '<td class="field-book__blank" aria-label="No showing">&mdash;</td>';
+  if (!cell) return '<td class="field-book__blank" aria-label="No showing">·</td>';
   const costs = [
     cell.tokensIn === undefined ? undefined : `${formatCount(cell.tokensIn)} in`,
     cell.tokensOut === undefined ? undefined : `${formatCount(cell.tokensOut)} out`,
@@ -906,7 +906,7 @@ function renderPartyBookRow(row: PartyBookRow, contracts: readonly string[]): st
 }
 
 function renderPartyBookCell(showing: PartyBookShowing | undefined, rowSlug: string, contractId: string): string {
-  if (!showing) return '<td class="field-book__blank" aria-label="No showing">&mdash;</td>';
+  if (!showing) return '<td class="field-book__blank" aria-label="No showing">·</td>';
   return `<td data-testid="field-book-party-cell-${rowSlug}-${escapeHtml(contractId)}">
     <strong>Secured &middot; ${Math.floor(showing.score.waves)} waves</strong>
     <span>${escapeHtml(showing.riders.join(', ')) || 'Riders not named'}</span>
@@ -1126,7 +1126,7 @@ function renderCountyRow(row: CountyStanding, watchable: boolean): string {
     }</th>
     <td class="county-standings__result">${Math.floor(row.waves)} waves &middot; ${formatTime(row.timeAlive)} &middot; ${Math.floor(row.gold)} gold</td>
     <td>${row.submittedAt === undefined
-      ? '<span class="county-standings__when-missing" aria-label="Submission time unavailable">&mdash;</span>'
+      ? '<span class="county-standings__when-missing" aria-label="Submission time unavailable">·</span>'
       : `<time datetime="${safeIsoDate(row.submittedAt)}">${relativeAge(row.submittedAt)}</time>`}</td>
     ${
       watchable
