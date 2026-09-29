@@ -1,6 +1,6 @@
-# s2791: active trace-guard custody and verified heartbeat
+# s2791: completed trace guard held for safe primary integration
 
-**WHY no product drain:** at triage, the done-move probe found zero real drains and zero unknown subjects. The attended session satisfied s2790's scope hold and re-queued trace-guard attempt 2 at 02:28 UTC; lane-d is BUSY and its source changes are still in progress. No finished implementation candidate was available to drain. The factory is not dry. No fire dispatch, re-queue, deployment or history repair occurred.
+**WHY no product drain:** the completed result is held because independent PID 25494 still executes the primary runner script; no source was placed on main. At initial triage, the done-move probe found zero real drains and zero unknown subjects. The attended session satisfied s2790's scope hold and re-queued trace-guard attempt 2 at 02:28 UTC; lane-d is BUSY and its source changes are still in progress. No finished implementation candidate was available to drain. The factory is not dry. No fire dispatch, re-queue, deployment or history repair occurred.
 
 ## Verified at 2026-09-29T02:35Z
 
@@ -16,8 +16,14 @@
 
 ## Remaining list in order
 
-1. Let trace-guard attempt 2 finish; inspect its done-move with strict drain-block-check, then gate detached. Any landing must respect the executing primary runner script's custody.
+1. Coordinate the attended quiescent runner window for committed trace-guard attempt 2 (00e7839ba), complete detached gates and pointer rebasing, then integrate safely. No re-queue or new owner decision.
 2. Attended F-2742-1 history repair waits on the existing owner gate; preserve all accepted work in the fresh cut.
 3. Mint week 41 on September 30 after 00:00 UTC; next private coverage day follows its 02:10 UTC supply window. Existing Owner's Desk unchanged.
 
-Closing ledger receipt will be recorded before lock clearance.
+## Completion arrived during the first closing battery
+
+At 2026-09-29T02:42Z, attempt 2 is committed as 00e7839ba with predecessor a444adb6b preserved. Strict policy returned CLEAR; live ps proves the primary runner still executes the exact file to be replaced. Goal and existing BACKLOG row now record a gate-side readiness hold for the attended quiescent landing, with the original done-move intact. No new owner decision, re-queue, implementation failure or product acceptance is claimed. Review: reviews/lane-evidence-trace-guard-1-s2791.md.
+
+The first ledger battery passed 1263/1263, zero failures/skips, kit 83/83, npm exit 0 in 311.999 seconds against d464e6d2f. Its transcript/result are retained as initial-ledger-guards.txt and initial-ledger-result.json. Because the completion receipt and readiness hold were added afterward, the full closing battery is rerun on that final bookkeeping state before clearance.
+
+

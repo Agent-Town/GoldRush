@@ -1,0 +1,18 @@
+
+  ⛔ BLOCKED — DO NOT DRAIN: tasks/done/20260929-092828-lane-evidence-trace-guard-1.md
+
+  goal leaf       : lane-evidence-trace-guard-1  (tasks/goals.json, status="blocked")
+  reason          : s2791: attempt 2 implemented as 00e7839ba; the inactive lane-copy scope is resolved. Primary runner PID 25494 (PPID 1) still executes the primary scripts/lane-runner-v3.sh. CLAUDE.md mistake 17 forbids writing an executing script; AGENTS permits stopping only PIDs this actor started. GATE: coordinate an attended quiescent runner window, complete the detached drain gates and pointer rebasing, verify no process executes the primary script before landing, then restart through scripts/start-lane-runner.sh. Preserve both lane commits and the done-move; no re-queue or new owner decision is required. See reviews/lane-evidence-trace-guard-1-s2791.md.
+
+  BACKLOG context:
+    tasks/BACKLOG.md:5  🔺 **F-2742-1 — OWNER'S DESK (2026-09-28, from s2742): origin rejects the inheritance history's 108.21 MiB trace.** A normal `git push origin main` re
+    tasks/BACKLOG.md:91  🔧 **LANE EVIDENCE TRACE GUARD 1 — `lane-evidence-trace-guard-1` AUTHORED 2026-09-29, attempt 1 STOPPED on lane-d (Astra):** F-2742-1's cause, cured a
+
+  blockClass=gate-side — a FIRE-RECORDED readiness hold, NOT an owner debt. No
+  owner word exists that would lift this one, so carrying it to the desk parks it
+  forever. It still refuses the drain (rc=1): lift it by SATISFYING the condition
+  printed above and re-registering the leaf IN THE SAME COMMIT — not by merging
+  first, and not by a green battery that answers a narrower question than the hold.
+
+
+exit=1
