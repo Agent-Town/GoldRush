@@ -247,6 +247,8 @@ Astra: the map-art corrections campaign is COMPLETE (2026-09-22, all sixteen row
 
 ## 8. F-2742-1 — restore origin backup after the inheritance trace rejection
 
+**DISCHARGED, verified by s2796 on 2026-09-29.** The owner said "yes, go, move it please"; the attended session completed the repair and ordinary push, recorded in `docs/HANDOVER-2026-09-06-attended.md` §13z-105 and the closed F-2742-1 BACKLOG row. Live origin main is `580b60185`, containing the repair/re-point commit `4cd9cfc61` and closure `40dbcf2f8`; all three are ancestors of this fire's main. The rejected lineage remains at `archive/main-rejected-2026-09-28`. Evidence: `artifacts/s2796/origin-refs.txt` and `artifacts/s2796/repair-verification.json`. No owner decision remains for this item; the earlier snapshots below are historical.
+
 **OPEN, 2026-09-28 (s2742).** Origin refuses main because the inheritance merge carries a 113,467,543-byte trace ZIP in its history. The file was subsequently removed, so the current tree is compact; its earlier blob still reaches the push. Origin is at `0979de763`, while inheritance deployed as `c4953ac7`. This is an origin-backup failure, not a reported production outage.
 
 **Why your word.** Repair requires replacing the unpublished local ancestry. The fire protocol forbids git-history repair by a fire; an append-only commit cannot remove a reachable historical blob. No history or trace has been deleted or rewritten.

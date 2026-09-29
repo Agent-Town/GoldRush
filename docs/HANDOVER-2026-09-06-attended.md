@@ -1631,3 +1631,11 @@ F-2725-1: source candidate `cf9cd95c4` remains detached/saved, no main merge. Fr
 - **The launch film.** Owner: "lets do the film cut using Opus - it should not be too long"; "we then need the film also to add it there" (the landing). `tasks/launch-video-cut-3.md` dispatched at 05:45Z to an Opus 5.5 max implementer in `wt-lvc3` (cut from the NEW main `65f128c8a`); outputs to `~/.goldrush/launch-video/cut/`; the web export + poster feed the follow-up site-embed task after the owner's yes. Landing: attended, hash unchanged (`scripts/launch-video/cut/**`, edit notes, small artifacts).
 - **Release verdict.** `docs/release/verdict-954bb2cd.md` pre-filled from the live build (`954bb2cd`, 2026-09-28T13:59:45Z); the owner runs the phone steps at https://agenttown.app/goldrush and answers SHIP / HOLD in chat; the attended session fills the rows.
 - **Launch order agreed with the owner:** cut → owner's yes → site embed task → the release-slice posts in one file for him to copy into X (he posts by hand). itch.io: my advice, not for launch day. Nothing on the factory side blocks any step.
+
+
+### s2796 verification — 2026-09-29T07:03Z
+
+- WHY no product drain: board 0 real / 0 unknown; all four runner lanes ahead=0 and tracked-dirt=0; seven ahead scratch worktrees remain attended-owned. Queues, running tasks and pending orders empty. CODEX-WALL stands. Launch-film wt-lvc3 remains attended-owned.
+- F-2742-1 DISCHARGED verified: live origin main 580b60185 contains repair 4cd9cfc61 and closure 40dbcf2f8; rejected lineage remains archived. Retired the resolved item from STATUS's desk and updated the Owner's Desk document. The other three items are unchanged; exact s2795 predecessor archived.
+- Health 200/200/200; strict private coverage 37/37 through September 29, live private archive heads ledger-backups 2d8f9a975 / fire-memory 53d87470f. Today's duties discharged. September 28 ticker exists; week-41 mint due September 30 after 00:00 UTC.
+- Evidence and ordered remainder: artifacts/s2796/report.md. Node 26.4.0 ledger battery precedes the final clearing commit and ordinary origin backup push. No product source, goal or BACKLOG row changed.

@@ -1,0 +1,37 @@
+{
+  "head": "4938ceccfcf779f31a06871f56fb29b794f353ae",
+  "origin": "580b60185d51d54e4335edd89492b33a367d7943",
+  "originIsAncestor": true,
+  "repairCommit": "4cd9cfc61",
+  "repairIsAncestor": true,
+  "closureCommit": "40dbcf2f8",
+  "closureIsAncestor": true,
+  "archiveRetained": "0ca633dce9da0b7459be130730614681be77a287",
+  "traceGuardGoal": {
+    "id": "lane-evidence-trace-guard-1",
+    "title": "The lane runner never commits Playwright traces, result folders, videos, failure screenshots or files over 50 MB again: withheld at the auto-commit, a pre-commit evidence budget, guard tests (F-2742-1's cause)",
+    "status": "merged",
+    "taskFile": "lane-evidence-trace-guard-1.md",
+    "lane": "lane-d (Astra, gpt-6-astra, the ChatGPT subscription)",
+    "authoredAt": "2026-09-29",
+    "authoredBy": "attended (Fable), from F-2742-1, 2026-09-29",
+    "queuedAt": "2026-09-29",
+    "note": "Attempt 2 completed: 77,722 tokens, implementation 00e7839ba, predecessor a444adb6b retained. Lane reports 21/21 tests, 13 adjacent checks, tsc/build PASS. Full drain gates and safe primary integration remain owed; this is not an implementation failure.",
+    "liftedAt": "2026-09-29T02:28Z",
+    "liftedBy": "attended (Fable)",
+    "liftedReason": "s2790's gate-side condition satisfied: the master now states that the lane copy worktrees/lane-d/scripts/lane-runner-v3.sh is the file to edit and that the run's own tasks/running entry is expected; BUILD-ON-PREDECESSOR declared over the report-only predecessor a444adb6b, which is preserved; attempt 2 queued on lane-d (F-ATT-12)",
+    "priorBlock": {
+      "by": "s2790",
+      "class": "gate-side",
+      "reason": "s2790: attempt 1 stopped at the task firewall. a444adb6b is a report-only commit; no withholding or budget implementation exists. GATE: attended author clarifies that the inactive lane copy may be edited, or supplies a compliant execution window; preserve the report-only predecessor while refreshing the stale lane, complete the existing task and its acceptance gates. CODEX-WALL bars fire re-queue. See reviews/lane-evidence-trace-guard-1-s2790.md."
+    },
+    "blockClass": "gate-side",
+    "blockedBy": "s2791",
+    "blockedAt": "2026-09-29T02:42Z",
+    "blockedReason": "s2791: attempt 2 implemented as 00e7839ba; the inactive lane-copy scope is resolved. Primary runner PID 25494 (PPID 1) still executes the primary scripts/lane-runner-v3.sh. CLAUDE.md mistake 17 forbids writing an executing script; AGENTS permits stopping only PIDs this actor started. GATE: coordinate an attended quiescent runner window, complete the detached drain gates and pointer rebasing, verify no process executes the primary script before landing, then restart through scripts/start-lane-runner.sh. Preserve both lane commits and the done-move; no re-queue or new owner decision is required. See reviews/lane-evidence-trace-guard-1-s2791.md.",
+    "mergeHash": "f19e79de3c07bdd99f32d837eb9d023cfc6e2e09",
+    "mergedAt": "2026-09-29",
+    "review": "reviews/lane-evidence-trace-guard-1.md",
+    "drainedBy": "attended 2026-09-29 (scripts/attended/land-held.sh teg1; Astra on lane-d, the ChatGPT subscription)"
+  }
+}
