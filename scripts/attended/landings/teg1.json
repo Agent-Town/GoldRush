@@ -1,0 +1,40 @@
+{
+  "tag": "teg1",
+  "branch": "art/portraits-e5-e10-generated",
+  "port": 5415,
+  "mergeMessage": "drain: merge art/portraits-e5-e10-generated — lane-evidence-trace-guard-1 — the lane runner's auto-commit withholds Playwright traces, result folders, videos, failure shots and any artifacts/** file over 50 MB (a receipt beside the run log, nothing deleted), unstages task-staged raw files, and measures the staged evidence against the 25 MB task budget before committing (largest artifacts withheld first); a --staged mode for evidence-budget.mjs; 21/21 guard tests, 13/13 runner commit-decoupling checks; the cause of F-2742-1 cured at the source; scripts only, engine hash unchanged",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "allowedE2E": [],
+    "guards": [
+      "scripts/evidence-budget.test.mjs"
+    ]
+  },
+  "review": {
+    "path": "reviews/lane-evidence-trace-guard-1.md",
+    "title": "Drain review: `lane-evidence-trace-guard-1`, the lane runner never commits Playwright traces or oversized evidence again (the cause of F-2742-1, cured at the auto-commit)",
+    "body": "scripts/attended/landings/teg1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "lane-evidence-trace-guard-1.md",
+    "rowKey": "LANE EVIDENCE TRACE GUARD 1 LANDED",
+    "rowEmoji": "🔧",
+    "rowText": "Authored attended from F-2742-1 (the 108 MB `trace.zip` that GitHub refused for eleven hours). Astra on lane-d, two attempts (attempt 1 self-blocked on my clause, F-ATT-12; attempt 2 `00e7839ba`, 77,722 tokens, 02:28Z to 02:35Z; plus my 5-line review fix on the lane: the runner fixture now removes its `lane-evidence-receipt-*` scratch at test end, after six survived the first landing battery's fixture-teardown guard, F-TEG1-3): `commit_lane_delta` now withholds `**/test-results/**`, `**/*-results/**`, `**/trace.zip`, `**/*.webm`, `**/test-failed-*.png` and any regular `artifacts/**` file over 50,000,000 bytes (measured by `stat`), rename pairs together, each path logged `withheld …` and appended to `<run-log-stem>-withheld-paths.txt`; task-staged raw files are unstaged (baseline index entries untouched); before the commit the runner measures the index against `merge-base main HEAD` with the new `evidence-budget.mjs --staged` and withholds the largest staged `artifacts/**` blobs until the 25,000,000-byte task budget fits; a measurement error withholds the auto-commit itself with an explicit receipt (fail-closed, disk and index retained). Fixtures: 11 raw/oversized paths withheld incl. a 51,000,000-byte `big.bin`; a 26,000,006-byte staging trims its 17,000,000-byte largest file and commits 9,000,006 bytes; exactly 25,000,000 commits untouched; a rename into `x-results/` withheld both sides. `node --test scripts/evidence-budget.test.mjs` 21/21 (14 + 7 new); `runner-commit-decoupling-guard.test.sh` 13/13; `bash -n`, tsc, build green; `src/**` unchanged. Runner pointer shift +83 lines (old 565 → 648, 567 → 650); CLAUDE.md carries no runner coordinates since its 2026-09-25 compaction and the law-pointer guard is green. The live runner process runs the old code until restarted (done attended after this landing per the restart recipe). Landed attended, scripts only",
+    "statusPhrase": "the lane runner withholds raw Playwright output and oversized evidence at its auto-commit and keeps a lane's staged evidence inside the 25 MB budget",
+    "drainedBy": "attended 2026-09-29 (scripts/attended/land-held.sh teg1; Astra on lane-d, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/lane-evidence-trace-guard-1"
+}
