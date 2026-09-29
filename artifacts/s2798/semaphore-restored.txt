@@ -1,0 +1,6 @@
+2026-09-29T10:34Z: finalizer refused before any write because tasks/.fire.lock was missing. The cause is UNVERIFIED. Launcher log has this fire START at 17:15:17 local and no subsequent FIRE END or new START. Process custody re-proven:
+  PID  PPID TTY      STAT STARTED
+15867     1 ??       S    Tue Sep 29 17:15:12 2026    
+21986 15867 ??       S    Tue Sep 29 17:15:17 2026    
+23233 21986 ??       S    Tue Sep 29 17:15:19 2026    
+Main remains 9f1f34d07f51f8850c84050e9acead2edce8668a; tested handoff unchanged. Restored this run's empty semaphore with exclusive mkdir. No other process stopped; no factory code changed. Launcher EXIT trap retains removal ownership.

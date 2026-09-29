@@ -30,3 +30,11 @@ The full npm run test:ledger-guards will test the prepared handoff before the fi
 ### First closing attempt: citation failure, corrected before clearance
 
 The first npm invocation ended at 2026-09-29T10:26:17Z, exit 1 in 209.435 seconds. All 1263 Node test cases passed with zero failures/skips; the subsequent citation-title-guard refused the attended-authored BACKLOG first row because its title quotation was only an ellipsis. Read e2e/field-book.spec.ts:129 and replaced it with the exact title, "minds and rigs aggregate the same standings without changing county ranking", in the row and its source sdu1 config. This is documentation metadata only; no existing assertion changed. The initial edit corrected the ledger but stopped on an over-escaped template match; the follow-up corrected the JSON value after reading it. The focused citation check passed. The red transcript is retained; a complete ledger rerun follows before clearance.
+
+### Final closing receipt
+
+**READY-FOR-GATES (fire bookkeeping; attended product drain remains).** The complete rerun finished 2026-09-29T10:32:52.942Z: **1263/1263 tests, zero failures/skips, all chained checks, kit 83/83, npm exit 0**, **292.283 seconds**, Node v26.4.0. Citation, declaration, birth, carryforward and bounded archive legs all completed. The prepared handoff line is byte-identical to the tested line, the predecessor and three-item desk are exact. Lane B remains four commits ahead; queues, running tasks and pending orders are empty.
+
+The finalizer initially refused before writing because the launcher semaphore had disappeared. Cause UNVERIFIED. Re-proved launcher 15867 -> wrapper 21986 -> Codex 23233, unchanged main and tested STATUS, and no newer launcher start/end. Restored this run's semaphore with exclusive mkdir; evidence semaphore-restored.txt. No product or guard source changed after the passing battery, and no other process was stopped.
+
+Session commits before clearance: 3db293392 (lock), 7c2ce6ad2 (attended configurations), 959a1c370 (evidence and Gazette draft), 9f1f34d07 (citation repair and red receipt). The clearing commit is the final write to main. Ordinary origin backup, read-only verification and the external vault digest follow. No product merge, deployment, dispatch, re-queue, process termination or history repair occurred in this fire.
