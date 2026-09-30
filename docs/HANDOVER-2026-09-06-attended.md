@@ -1748,3 +1748,13 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Evidence and ordered remainder: artifacts/s2805/report.md. Full closing ledger tests the prepared handoff before the final clearing commit. No product landing or deployment claimed.
 
 - s2805 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-09-29T18:25:14.213Z: **1,263/1,263 tests, zero failures/skips; all chained checks, kit 83/83; exit 0**, 186.626 seconds under v26.4.0. Tested handoff unchanged, exact s2804 predecessor and three-item desk verified; launcher semaphore present, queues/running empty and main still at lock commit b4f163fee. No product gate or deployment claimed. The clearing commit is the last main write; only origin backup, read-only verification and the external vault digest follow.
+
+
+### s2812 verification: September 30 private duties completed
+
+- WHY no drain: fresh done-board zero eligible drains/unknowns; four runner lanes ahead=0 and all queues empty. Seven ahead off-fleet worktrees remain attended-owned; CODEX-WALL stands.
+- Health 200/200/200; runner 31360 alive under PPID 1. LB-01 pulled and privately backed up September 30: 38/38 coverage days, 2,050 keys clean; live archive ledger head 251d175f15ebe662f0c259a7115952537c84adc9. FM-01 unchanged and current at 53d87470fb2670626fb4605d4dc0eb5bffd899fb.
+- Week 41 and the September 29 ticker already prepared. Rechecked the three launch goal merges and Gazette drafts; film/release verdict and site embed remain next. Week 41 must deploy before October 5 under the existing release gate.
+- Preserved usage accounting in b328d66b7, exact predecessor and three-item desk. Evidence and ordered remainder: artifacts/s2812/report.md. Full closing ledger tests the prepared handoff and duty row before the final lock-clearing commit; no product landing claimed.
+
+- s2812 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-09-30T02:36:43.378Z: **1,263/1,263 tests, zero failures/skips; every chained check; factory kit 83/83; exit 0**, 356.176 seconds under v26.4.0. Exact tested handoff, s2811 archive and three-item desk verified; launcher semaphore present, queues/running empty, main still at accounting commit b328d66b7. No product gate or deployment claimed. The final clearing commit is the last main write; only origin backup, read-only verification and the external vault digest follow.
