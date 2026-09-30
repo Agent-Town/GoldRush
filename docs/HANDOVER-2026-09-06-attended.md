@@ -1758,3 +1758,13 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Preserved usage accounting in b328d66b7, exact predecessor and three-item desk. Evidence and ordered remainder: artifacts/s2812/report.md. Full closing ledger tests the prepared handoff and duty row before the final lock-clearing commit; no product landing claimed.
 
 - s2812 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-09-30T02:36:43.378Z: **1,263/1,263 tests, zero failures/skips; every chained check; factory kit 83/83; exit 0**, 356.176 seconds under v26.4.0. Exact tested handoff, s2811 archive and three-item desk verified; launcher semaphore present, queues/running empty, main still at accounting commit b328d66b7. No product gate or deployment claimed. The final clearing commit is the last main write; only origin backup, read-only verification and the external vault digest follow.
+
+
+### s2813 verification: eligible board dry and duties current
+
+- WHY no drain: fresh board zero eligible drains/unknowns; four runner lanes ahead=0; six queues empty. Seven ahead off-fleet worktrees remain attended-owned; CODEX-WALL stands.
+- Health 200/200/200; independent runner 31360 alive. Strict private mirror coverage 38/38; live archive heads match September 30 LB-01/FM-01 receipts. No duplicate duty execution.
+- Week 41 registry and public fence exactly match; September 29 ticker exists. Launch goal merges and Gazette drafts rechecked. Film/release verdict and site embed remain next; week 41 must deploy before October 5 under the release gate.
+- Exact predecessor and three-item desk retained. Evidence and ordered remainder: artifacts/s2813/report.md. Full ledger tests the prepared handoff before the final clearing commit; no product landing claimed.
+
+- s2813 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-09-30T03:47:29.682Z: **1,263/1,263 tests, zero failures/skips; all chained checks; factory kit 83/83; exit 0**, 191.885 seconds under v26.4.0. Exact tested handoff, s2812 archive and three-item desk verified. Launcher semaphore remains present, queues/running empty, main unchanged at c0c4e8cfd. No product or deployment claimed. The clearing commit is the last main write; origin backup, read-only verification and the external vault digest follow.
