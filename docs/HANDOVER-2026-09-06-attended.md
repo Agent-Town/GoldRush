@@ -1928,3 +1928,14 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Exact s2828 predecessor and three-item desk preserved. Evidence and ordered remainder: artifacts/s2829/report.md. Full ledger tests this prepared handoff before the final clearing commit; no product landing claimed.
 
 - s2829 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-09-30T22:38:28.758Z: **1,263/1,263 tests, zero failures/skips; all chained checks; factory kit 83/83; exit 0**, 186.62 seconds under v26.4.0. Exact tested handoff, s2828 archive and three-item desk verified; launcher semaphore present, queues/running/pending empty, and main remains at lock commit af89e32e6. No product gate or deployment claimed. The clearing commit is the final main write; only origin backup, read-only verification and the external vault digest follow.
+
+
+### s2830 verification: September 30 ticker complete; eligible board dry
+
+- WHY no product drain: fresh board zero eligible drains/unknowns; four runner lanes ahead=0 and six queues empty; no new failed run or pending crafting order. Seven ahead scratch worktrees remain attended-owned; CODEX-WALL stands.
+- TK-01 draft covers week 41 seeds at `11534c554`; September 30 UTC+07 window has 46 main updates, one player-path landing, 46 pinned first-parent commits; busy-day control 136. Gazette item already exists. Publication remains owner-only.
+- Health 200/200/200; independent runner 31360 alive. Private coverage 38/38 and live archive heads match September 30 receipts. October 1 LB-01/FM-01 are not due before 02:10 UTC; no duplicate duty writes.
+- Week 41 and all five public registry entries match. Film/corrective/mint/repair hashes are main ancestors; release verdict unsigned. Owner film/release/thread verdicts and attended site embed remain next; week 41 deploy before October 5 under the release hold.
+- Exact s2829 predecessor and three-item desk preserved. Evidence and ordered remainder: artifacts/s2830/report.md. Full ledger verification precedes the final clearing commit; no product gate or deployment claimed.
+
+- s2830 final receipt: **READY-FOR-GATES (fire bookkeeping and TK-01).** Full ledger completed 2026-09-30T23:50:13.339Z: **1,263/1,263 tests, zero failures/skips; all chained checks; factory kit 83/83; exit 0**, 206.033 seconds under v26.4.0. Exact tested handoff, s2829 archive and three-item desk verified; launcher semaphore present and queues/running/orders empty. No product gate or deployment claimed. The clearing commit is the final main write; only origin backup, read-only verification and the external vault digest follow.
