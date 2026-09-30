@@ -1,0 +1,46 @@
+✔ rotation registry stays outside the engine identity corpus (121.086791ms)
+✔ contract ids are globally unique across the ten epoch bundles (0.136209ms)
+✔ bench seed sets cover Frontier and contain only valid known-contract seeds (0.166959ms)
+✔ rotation mint is deterministic, week-sensitive, and requires a salt (132.155417ms)
+✔ the landing page holds no hand-written rotation id (27.134416ms)
+✔ the landing page declares no CURRENT_ROTATION_ID constant (16.597958ms)
+✔ the page derives the id the registry minted, for every rotation the county ships (0.839958ms)
+✔ the page and the door pick the same rotation at every instant the registry covers (0.640667ms)
+✔ a week that was never minted walks back to the latest rotation that did open (0.267125ms)
+✔ a resting door is asked once, not twelve times (0.24575ms)
+✔ an open week resolves its own seed, for every contract it carries, across its whole window (1.5585ms)
+✔ the week turns at Monday 00:00:00.000 UTC, half-open, whatever the local clock says (0.098125ms)
+✔ a closed week falls back to the latest week that has opened, never to one not yet open (0.542167ms)
+✔ a contract the registry does not carry rides the constant (0.080875ms)
+✔ the answer does not depend on registry order, and malformed entries are skipped (0.123625ms)
+✔ the seed line names the week in plain words, and only for a minted seed (0.131916ms)
+✔ the client and the county door read one registry file (0.216625ms)
+✔ score screen, landing, and rider protocol carry one county ranking rule (0.677792ms)
+(node:42925) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ skill.md pins the lawful world-model disclosure (0.489166ms)
+✔ skill.md pins the operator-probe ranking law (0.050291ms)
+✔ skill.md pins the E10 preserve ranking law (0.044417ms)
+✔ skill.md pins the Regatta mechanic-first ranking law (0.039959ms)
+✔ the door mirrors the engine's mechanic contracts (0.619208ms)
+✔ skill.md pins optional declared tokens outside ranking (0.044125ms)
+✔ skill.md pins the harness receipt law (0.056875ms)
+✔ every standings submission refusal branch is enumerated (0.388292ms)
+✔ skill.md refusal list matches the executable taxonomy (0.170875ms)
+✔ the refusal enumeration BITES an unrecorded branch (7473.951833ms)
+✔ skill.md pins the tape checkpoint command (0.063542ms)
+✔ skill.md grammar matches every StandingOrder source form (0.575166ms)
+✔ skill.md buildables match BuildableId (0.135667ms)
+✔ skill.md bench seeds match the source registry (0.122959ms)
+✔ skill.md rotations match the source registry (0.099ms)
+✔ skill.md door-contracts match SUPPORTED_CONTRACTS in HeadlessContractSim (0.092417ms)
+✔ the guard BITES a drifted skill.md (positive control, manufactured defect) (7666.493958ms)
+✔ the Regatta paragraph publishes terminal seconds and the standable-ground query (0.139917ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18749.73975
