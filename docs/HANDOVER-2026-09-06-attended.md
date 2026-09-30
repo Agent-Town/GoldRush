@@ -1778,3 +1778,13 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Exact predecessor and three-item desk retained. Evidence and ordered remainder: artifacts/s2814/report.md. Full ledger tests the prepared handoff before the final clearing commit; no product landing claimed.
 
 - s2814 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-09-30T04:59:51.036Z: **1,263/1,263 tests, zero failures/skips; all chained checks; factory kit 83/83; exit 0**, 358.306 seconds under v26.4.0. Exact tested handoff, s2813 archive and three-item desk verified; launcher semaphore present, queues/running empty and main still at lock commit 2eea83d49. No product gate or deployment claimed. The clearing commit is the last main write; origin backup, read-only verification and the external vault digest follow.
+
+
+### s2815 verification: eligible board dry and duties current
+
+- WHY no drain: fresh board zero eligible drains/unknowns; four runner lanes ahead=0; six queues empty. Seven ahead off-fleet worktrees remain attended-owned; CODEX-WALL stands.
+- Health 200/200/200; independent runner 31360 alive. Strict private mirror coverage 38/38; live archive heads match September 30 LB-01/FM-01 receipts. No duplicate duty execution.
+- Week 41 registry and public fence exactly match; September 29 ticker exists. Corrective goal merges and Gazette drafts rechecked. Film/release verdict and site embed remain next; week 41 must deploy before October 5 under the release gate.
+- Exact predecessor and three-item desk retained. Evidence and ordered remainder: artifacts/s2815/report.md. Full ledger tests the prepared handoff before the final clearing commit; no product landing claimed.
+
+- s2815 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger retry completed 2026-09-30T06:20:45.815Z: **1,263/1,263 tests, zero failures/skips; all chained checks; factory kit 83/83; exit 0**, 407.489 seconds under v26.4.0. The first attempt's Gazette timeout is preserved; unchanged isolated control passed 9/9, then the complete unchanged battery passed. Exact tested handoff, s2814 archive and three-item desk verified; launcher semaphore present, queues/running empty and main still at lock commit c6eae087b. No product gate or deployment claimed. The clearing commit is the last main write; origin backup, read-only verification and the external vault digest follow.
