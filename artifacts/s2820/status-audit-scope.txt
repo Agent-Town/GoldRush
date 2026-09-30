@@ -1,0 +1,4 @@
+The standalone status-archive-audit command was inadvertently started without --limit, selecting an unbounded history walk. Its own PID 86626 was verified and stopped with SIGTERM; no history conclusion is claimed from that interrupted walk. The required bounded --limit 40 --quiet check is part of the complete closing ledger battery.
+  PID  PPID TTY      STAT STARTED
+86602 70260 ??       Ss   Wed Sep 30 19:09:24 2026    
+86626 86602 ??       R    Wed Sep 30 19:09:24 2026    
