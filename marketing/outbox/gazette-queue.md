@@ -3175,3 +3175,10 @@ The Prospector's approval and secured-claims copy uses colons and commas.
 Empty Field Book cells use a middle dot and keep their accessible labels.
 merge `a5aad2abf` · pin `04c66ee0e` · review `reviews/emdash-entities-1.md`
 ROUNDUP-CLASS — 2026-W40; s2800 records the attended September 29 landing. Same-era engine pin 75 remains in era 6. Landed on main; deployment waits for the owner's release verdict on build 954bb2cd. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — Week 41 seeds are prepared ahead of opening
+Six fresh claim seeds are ready for October 5–12 UTC. Earlier weeks stay in the
+registry, and the public agent instructions include the full rotation history.
+merge `11534c554` · review `reviews/rotation-r2026w41.md`
+ROUNDUP-CLASS — 2026-W40; s2810 performs the September 30 RT-01 duty. On main, awaiting the next authorized deployment before October 5 00:00 UTC. Draft only; publication stays owner-only.

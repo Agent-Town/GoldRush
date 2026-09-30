@@ -1,0 +1,68 @@
+{
+  "root": "a26cdfe38a5bc69e3718c35026c18f3776dc89f3",
+  "start": "2026-09-28T17:00:00.000Z",
+  "end": "2026-09-29T17:00:00.000Z",
+  "before": "abe0127ea9d870946b5647b36ad84e8a43d1c02e",
+  "final": "d4f9949759c235f8e3d2811a167223ed34f1a4fb",
+  "mainUpdates": 220,
+  "firstParentCommits": 223,
+  "controlSeptember25": 136,
+  "replacements": [
+    {
+      "previous": "2b95b0ca12ba762521a106a45ae26bfc785423d9",
+      "next": "65f128c8ab6d8d9deebfb8eef9b5235d580fe725",
+      "stamp": "2026-09-29T11:54:50+07:00",
+      "tree": "a43859b2a142a5b1f5875eff4a2b1c15045fc70f"
+    }
+  ],
+  "playerEvents": 2,
+  "events": [
+    {
+      "hash": "f8cbf0e9d41d2d80234bf9d0062c9ab33b984cbe",
+      "stamp": "2026-09-29T17:13:29+07:00",
+      "time": 1790676809000,
+      "subject": "merge f8cbf0e9d41d2d80234bf9d0062c9ab33b984cbe: Fast-forward",
+      "previous": "3c4e8fb94d879b5fd460b066aa64f01d62fb4823",
+      "playerFiles": [
+        "assets/rotations/winnability-receipts.json",
+        "public/skill.md"
+      ],
+      "reviews": [
+        "reviews/skill-door-unclaimed-refresh-1.md"
+      ],
+      "introduced": [
+        "f8cbf0e9d 2026-09-29T17:13:29+07:00 drain: merge main into the sdu1 chain (pass 1)",
+        "d654e8000 2026-09-29T17:13:13+07:00 drain: sdu1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "73b82dbfe 2026-09-29T16:05:13+07:00 drain: merge sol/map-art-campaign-2 — skill-door-unclaimed-refresh-1 — the agents' door page stops calling five secured contracts unclaimed: the first-secure input assets/rotations/winnability-receipts.json repaired from dated review and ledger records (e10-archive-world and e10-ember-shore 2026-09-18, e3-canyon-works and e7-relay-valley 2026-09-07, one more per the audit) and public/skill.md re-rendered by its writer scripts/render-skillmd-contracts.mjs; every unclaimed row audited; the guard's mutation proof fixed to drift a first-secure marker; from the THREAD-v3 review; hash unchanged (assets/rotations is outside the engine corpus)",
+        "69bdb1d85 2026-09-29T15:53:45+07:00 fix: the skill.md contract guard's mutation proof drifts a first-secure marker, not an unclaimed row (none remain after the door refresh)",
+        "fd5394c7b 2026-09-29T15:51:01+07:00 fix: refresh agent door historical first-secure receipts"
+      ]
+    },
+    {
+      "hash": "8549ba6e31b7c464f0fc18261620e8562e4af1ba",
+      "stamp": "2026-09-29T18:27:17+07:00",
+      "time": 1790681237000,
+      "subject": "merge 8549ba6e31b7c464f0fc18261620e8562e4af1ba: Fast-forward",
+      "previous": "fc8b0c3a4a6a7d8ae7577d627420b327d9bd2866",
+      "playerFiles": [
+        "assets/engine-era.json",
+        "src/encyclopedia/reader.ts",
+        "src/ui/ProspectorPanel.ts"
+      ],
+      "reviews": [
+        "reviews/emdash-entities-1.md"
+      ],
+      "introduced": [
+        "8549ba6e3 2026-09-29T18:27:17+07:00 drain: emd1 bookkeeping re-applied after the main merge",
+        "d146fa6ae 2026-09-29T18:27:16+07:00 drain: merge main into the emd1 chain (pass 1)",
+        "9c0746f5c 2026-09-29T18:13:56+07:00 drain: emd1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "04c66ee0e 2026-09-29T18:13:56+07:00 era 6, same-era pin: emd1, measured on the merged tree with the store at 5793a96 (378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817)",
+        "a5aad2abf 2026-09-29T17:39:33+07:00 drain: merge sol/wave-lane-b — emdash-entities-1 — the six HTML-entity em dashes leave the screen (the Prospector's charter rung copy rewritten with a colon and a comma; the Field Book's four blank cells and the standings' missing time show a middle dot) and scripts/no-emdash-guard.test.mjs now catches &mdash;/&ndash;/numeric entities and \\u2014 escapes with a red fixture; from the THREAD-v3 review; the first lane run under the evidence trace guard, which withheld four Playwright result files; engine-pinned (same era), deploy deferred until the owner's SHIP verdict on build 954bb2cd",
+        "d428568d7 2026-09-29T17:18:47+07:00 fix: phone HUD census re-recorded on the emdash-entities-1 tree (ProspectorPanel.ts is a UI source; sourceHash moved, budgets untouched)",
+        "f2a0903a6 2026-09-29T15:52:32+07:00 runner(lane-b): emdash-entities-1.md",
+        "114b56201 2026-09-29T15:52:19+07:00 fix: record dash entity repair evidence and baseline controls",
+        "f1b31ceec 2026-09-29T15:51:34+07:00 fix: remove rendered dash entities and guard encoded copy"
+      ]
+    }
+  ]
+}
