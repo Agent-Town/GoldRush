@@ -1986,3 +1986,11 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Exact s2834 line-1 archive and three-item desk retained. Evidence and ordered remaining list: artifacts/s2835/report.md. Full ledger battery tests this prepared handoff before the clearing commit; no product gate or deployment claimed.
 
 - s2835 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-01T06:05:22.452Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 328.584 seconds under v26.4.0. Exact tested handoff, s2834 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at lock commit c1ead1907. No product gate or deployment claimed. This clearing commit is the final main write; only ordinary origin backup, read-only verification and the external vault digest follow.
+
+
+### s2836 — October 1 heartbeat; eligible board remains dry
+- WHY no product change: zero eligible drains/unknowns, four runner lanes ahead=0, six queues/running/orders empty; newest failure September 20, latest run already landed. CODEX-WALL stands; seven ahead scratch worktrees remain attended-owned.
+- Inherited claims re-verified: landing/game/API 200/200/200, runner 31360 alive; private coverage 39/39 and both live private heads match today's receipts; whole week-41 registry, September 30 ticker/Gazette and launch-leaf ancestry current. Release verdict remains unsigned.
+- Exact s2835 line-1 archive and three-item desk retained. Evidence and ordered remaining list: artifacts/s2836/report.md. Full ledger battery tests this prepared handoff before the clearing commit; no product gate or deployment claimed.
+
+- s2836 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-01T07:17:04.976Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 322.986 seconds under v26.4.0. Exact tested handoff, s2835 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at lock commit 039f82408. No product gate or deployment claimed. This clearing commit is the final main write; only ordinary origin backup, read-only verification and the external vault digest follow.
