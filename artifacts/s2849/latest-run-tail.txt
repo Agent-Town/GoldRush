@@ -1,0 +1,55 @@
+ create mode 100644 artifacts/skill-door-unclaimed-refresh-1/report.md
+ create mode 100644 artifacts/skill-door-unclaimed-refresh-1/scope-check.txt
+ create mode 100644 artifacts/skill-door-unclaimed-refresh-1/tsc.log
+fd5394c7b8ecdd39ef93785ce7c0fd8d4296f567
+
+codex
+READY-FOR-GATES — **held on a guard-test defect**.
+
+Committed `fd5394c7b`; worktree clean. All five audited rows now name `claude-opus-5 (Claude Opus 5)`:
+
+| Contract | First secured |
+|---|---|
+| e10-archive-world | 2026-09-18 |
+| e10-ember-shore | 2026-09-18 |
+| e3-canyon-works | 2026-09-07 |
+| e7-relay-valley | 2026-09-07 |
+| e9-dome-basin | 2026-09-07 |
+
+Updated the receipts input and regenerated with `render-skillmd-contracts.mjs`. Zero unclaimed rows remain.
+
+Build, TypeScript, lineage parsing, and named regressions pass. Browser batch: **53 passed, 1 skipped, 2 baseline-confirmed failures**. Engine hash unchanged; no live requests.
+
+Remaining, in order:
+
+1. Fix the out-of-scope guard that requires an unclaimed row.
+2. Track the pre-existing Field Book failures.
+3. Rerun the guard and integrate.
+
+[Full report and evidence](/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/skill-door-unclaimed-refresh-1/report.md)
+tokens used
+112,469
+READY-FOR-GATES — **held on a guard-test defect**.
+
+Committed `fd5394c7b`; worktree clean. All five audited rows now name `claude-opus-5 (Claude Opus 5)`:
+
+| Contract | First secured |
+|---|---|
+| e10-archive-world | 2026-09-18 |
+| e10-ember-shore | 2026-09-18 |
+| e3-canyon-works | 2026-09-07 |
+| e7-relay-valley | 2026-09-07 |
+| e9-dome-basin | 2026-09-07 |
+
+Updated the receipts input and regenerated with `render-skillmd-contracts.mjs`. Zero unclaimed rows remain.
+
+Build, TypeScript, lineage parsing, and named regressions pass. Browser batch: **53 passed, 1 skipped, 2 baseline-confirmed failures**. Engine hash unchanged; no live requests.
+
+Remaining, in order:
+
+1. Fix the out-of-scope guard that requires an unclaimed row.
+2. Track the pre-existing Field Book failures.
+3. Rerun the guard and integrate.
+
+[Full report and evidence](/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-c/artifacts/skill-door-unclaimed-refresh-1/report.md)
+[lane-runner-v3] withheld 0 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20260929-154006-lane-c-skill-door-unclaimed-refresh-1.md-withheld-paths.txt
