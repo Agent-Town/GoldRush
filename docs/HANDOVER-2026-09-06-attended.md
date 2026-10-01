@@ -1949,3 +1949,14 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Exact s2830 predecessor and three-item desk retained. Evidence and ordered remainder: artifacts/s2831/report.md. Full closing ledger verification precedes the final clearing commit; no product gate or deployment claimed.
 
 - s2831 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-01T01:02:03.316Z: **1,263/1,263 tests, zero failures/skips; all chained checks; factory kit 83/83; exit 0**, 304.793 seconds under v26.4.0. Exact tested handoff, s2830 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at the lock commit. No product gate or deployment claimed. The clearing commit is the final main write; only ordinary origin backup, read-only verification and the external vault digest follow.
+
+
+### s2832 verification: eligible board dry; October 1 ledger awaits source
+
+- WHY no product drain: fresh board zero eligible drains/unknowns; four runner lanes ahead=0; six queues, running tasks and crafting orders empty. Seven ahead scratch worktrees remain attended-owned; CODEX-WALL stands.
+- Health 200/200/200; independent runner 31360 alive. Private coverage 38/38 through September 30 and live archive heads verified. October 1 pull after 02:10 UTC returned NOT DISCHARGED: source snapshot absent in the documented randomized 02:00–03:00 UTC window. Retry LB-01 next fire; do not treat exit 0 or yesterday’s freshness verdict as today’s discharge.
+- Existing series passed the 2,050-key exposure gate and needs no push. FM-01 completed unchanged for October 1. No backup bytes entered the public repository.
+- September 30 ticker exists; week 41 and all five public registry entries match. Film/corrective/mint/repair hashes are main ancestors; release verdict unsigned. Owner film/release/thread verdicts and attended site embed remain next; week 41 deploy before October 5 under the release hold.
+- Exact s2831 predecessor and three-item desk preserved. Evidence and ordered remainder: artifacts/s2832/report.md. Full closing ledger verification precedes the final clearing commit; no product gate or deployment claimed.
+
+- s2832 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-01T02:15:31.762Z: **1,263/1,263 tests, zero failures/skips; all chained checks; factory kit 83/83; exit 0**, 186.829 seconds under v26.4.0. Exact tested handoff, s2831 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at lock commit 90325bd38. October 1 LB-01 remains pending source supply; FM-01 is discharged. No product gate or deployment claimed. The clearing commit is the final main write; only ordinary origin backup, read-only verification and the external vault digest follow.
