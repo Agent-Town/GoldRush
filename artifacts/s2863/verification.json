@@ -1,0 +1,104 @@
+{
+  "at": "2026-10-02T15:00Z",
+  "entryHead": "203641571c537c7e0262e103f796bc73bb1096c0",
+  "lockCommit": "d4ff4332fbc7a70863362d756c9208e3a2d4d0e5",
+  "lanes": [
+    {
+      "branch": "sol/open-findings-astra",
+      "unmerged": ""
+    },
+    {
+      "branch": "sol/wave-lane-b",
+      "unmerged": ""
+    },
+    {
+      "branch": "sol/map-art-campaign-2",
+      "unmerged": ""
+    },
+    {
+      "branch": "art/portraits-e5-e10-generated",
+      "unmerged": ""
+    }
+  ],
+  "queues": {
+    "art": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "main": []
+  },
+  "running": [],
+  "pendingOrders": [],
+  "goals": [
+    {
+      "id": "launch-video-cut-3",
+      "status": "merged",
+      "mergeHash": "9a216a07dd1c9492cb66b2ae594582d40ff1aa0d",
+      "ancestor": true
+    },
+    {
+      "id": "emdash-entities-1",
+      "status": "merged",
+      "mergeHash": "a5aad2abf4c7db4a7aaad84ae52e8a438d731772",
+      "ancestor": true
+    },
+    {
+      "id": "skill-door-unclaimed-refresh-1",
+      "status": "merged",
+      "mergeHash": "73b82dbfe30f9d29ee6d4386c337cdbf8d99476f",
+      "ancestor": true
+    }
+  ],
+  "rotations": {
+    "wholeFenceMatches": true,
+    "count": 5,
+    "comingId": "r2026w41",
+    "opensAt": "2026-10-05T00:00:00.000Z",
+    "seeds": 6
+  },
+  "ancestors": [
+    {
+      "hash": "11534c554",
+      "ancestor": true
+    },
+    {
+      "hash": "40dbcf2f8",
+      "ancestor": true
+    }
+  ],
+  "gazette": [
+    {
+      "hash": "a5aad2abf",
+      "present": true
+    },
+    {
+      "hash": "73b82dbfe",
+      "present": true
+    },
+    {
+      "hash": "11534c554",
+      "present": true
+    }
+  ],
+  "releaseVerdictUnsigned": true,
+  "ticker": {
+    "root": "7e2fa6c9569afc0df4a26fd47be3aa8fb98ad73d",
+    "start": "2026-09-30T17:00:00.000Z",
+    "end": "2026-10-01T17:00:00.000Z",
+    "before": "3702ffa453fc943e357cfaf5813abcbe7d2e0d53",
+    "final": "e8007ba8aad89127ffc93a688c1b4d525cbdadd0",
+    "mainUpdates": 42,
+    "firstParentCommits": 42,
+    "controlSeptember25": 136,
+    "replacements": [],
+    "playerEvents": 0,
+    "events": []
+  },
+  "privateHeadsMatchTodayReceipt": true,
+  "launcherSemaphorePresent": true,
+  "ledgerCorpus": {
+    "files": 19,
+    "bytes": 9537246
+  }
+}
