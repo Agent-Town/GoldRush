@@ -1,0 +1,102 @@
+{
+  "utc": "2026-10-02T05:30Z",
+  "entry": "87bb708aa1c406a5f2340a6e7c28e44c8b6ac088",
+  "origin": "87bb708aa1c406a5f2340a6e7c28e44c8b6ac088",
+  "lockCommit": "2ddcbfc018f7d74cb1fb607764ee7bf0caea84e6",
+  "lanes": [
+    {
+      "branch": "sol/open-findings-astra",
+      "unmerged": ""
+    },
+    {
+      "branch": "sol/wave-lane-b",
+      "unmerged": ""
+    },
+    {
+      "branch": "sol/map-art-campaign-2",
+      "unmerged": ""
+    },
+    {
+      "branch": "art/portraits-e5-e10-generated",
+      "unmerged": ""
+    }
+  ],
+  "queues": {
+    "art": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "main": []
+  },
+  "running": [],
+  "pending": [],
+  "newestRun": {
+    "file": "20260929-154006-lane-b-emdash-entities-1.md.log",
+    "mtime": "2026-09-29T08:52:32.764Z"
+  },
+  "newestFailure": {
+    "file": "shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md",
+    "mtime": "2026-09-20T06:53:51.129Z"
+  },
+  "rotation": {
+    "id": "r2026w41",
+    "opensAt": "2026-10-05T00:00:00.000Z",
+    "seeds": 6,
+    "registryEntries": 5,
+    "wholeFenceMatches": true
+  },
+  "leaves": [
+    {
+      "id": "launch-video-cut-3",
+      "status": "merged",
+      "mergeHash": "9a216a07dd1c9492cb66b2ae594582d40ff1aa0d"
+    },
+    {
+      "id": "emdash-entities-1",
+      "status": "merged",
+      "mergeHash": "a5aad2abf4c7db4a7aaad84ae52e8a438d731772"
+    },
+    {
+      "id": "skill-door-unclaimed-refresh-1",
+      "status": "merged",
+      "mergeHash": "73b82dbfe30f9d29ee6d4386c337cdbf8d99476f"
+    }
+  ],
+  "ancestorHashes": [
+    "11534c554",
+    "40dbcf2f8"
+  ],
+  "gazette": [
+    {
+      "subject": "emdash-entities-1",
+      "present": true
+    },
+    {
+      "subject": "skill-door-unclaimed-refresh-1",
+      "present": true
+    },
+    {
+      "subject": "r2026w41",
+      "present": true
+    }
+  ],
+  "releaseVerdictUnsigned": true,
+  "privateHeads": {
+    "refs/heads/fire-memory": "53d87470fb2670626fb4605d4dc0eb5bffd899fb",
+    "refs/heads/ledger-backups": "b1419a535086b73a5353e34871d73bf5d26b31fd"
+  },
+  "ticker": {
+    "root": "7e2fa6c9569afc0df4a26fd47be3aa8fb98ad73d",
+    "start": "2026-09-30T17:00:00.000Z",
+    "end": "2026-10-01T17:00:00.000Z",
+    "before": "3702ffa453fc943e357cfaf5813abcbe7d2e0d53",
+    "final": "e8007ba8aad89127ffc93a688c1b4d525cbdadd0",
+    "mainUpdates": 42,
+    "firstParentCommits": 42,
+    "controlSeptember25": 136,
+    "replacements": [],
+    "playerEvents": 0,
+    "events": []
+  }
+}
