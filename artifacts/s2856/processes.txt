@@ -1,0 +1,18 @@
+  PID  PPID TTY      STAT STARTED                      COMMAND
+41684 41683 ??       S    Fri Oct  2 13:40:07 2026     node
+
+  PID  PPID TTY      STAT STARTED                      COMMAND
+41683 38789 ??       Ss   Fri Oct  2 13:40:07 2026     /bin/zsh -c node <<'NODE'\012const fs=require('fs'),cp=require('child_process');const dir='artifacts/s2856';fs.mkdirSync(dir,{recursive:true});const status=fs.readFileSync('STATUS.md','utf8');const first=status.split('\n')[0];if(!first.includes('s2855 handoff, lock CLEARED'))throw Error('Handoff changed');fs.writeFileSync(dir+'/predecessor.txt',first+'\n');fs.writeFileSync(dir+'/entry-head.txt',cp.execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}));fs.writeFileSync(dir+'/desk-tail.txt',first.slice(first.indexOf('🔺 **OWNER’S DESK')>=0?first.indexOf('🔺 **OWNER’S DESK'):first.indexOf("🔺 **OWNER'S DESK"))+'\n');const stamp=cp.execFileSync('date',['-u','+%Y-%m-%dT%H:%MZ'],{encoding:'utf8'}).trim();const active=`ACTIVE ${stamp} (s2856 fire) — verify eligible board and standing duties`;fs.writeFileSync('STATUS.md',active+status.slice(status.indexOf('\n')));fs.writeFileSync(dir+'/lock.txt',active+'\n');fs.writeFileSync(dir+'/bookkeeping-diff.txt',cp.execFileSync('git',['diff','--','logs/.goal-tree.html','logs/dashboard.html','logs/factory-usage.json'],{encoding:'utf8',maxBuffer:8000000}));let pid=process.pid,lines=[];for(let i=0;i<7&&pid>1;i++){lines.push(cp.execFileSync('ps',['-o','pid,ppid,tty,stat,lstart,command','-p',String(pid)],{encoding:'utf8'}));pid=Number(cp.execFileSync('ps',['-o','ppid=','-p',String(pid)],{encoding:'utf8'}).trim());}fs.writeFileSync(dir+'/processes.txt',lines.join('\n'));const log=fs.readFileSync('logs/fire-20261002.log','utf8');const markers=log.split('\n').filter(x=>/^\[.*\] .*FIRE (START|END)/.test(x));fs.writeFileSync(dir+'/launcher.txt',markers.slice(-6).join('\n')+'\n');console.log(active,markers.slice(-6));\012NODE\012 git add -- STATUS.md && git commit -m 's2856: lock ACTIVE — verify eligible board and standing duties'
+
+  PID  PPID TTY      STAT STARTED                      COMMAND
+38789 38787 ??       S    Fri Oct  2 13:38:41 2026     /Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex exec --sandbox danger-full-access --skip-git-repo-check
+
+  PID  PPID TTY      STAT STARTED                      COMMAND
+38787 38737 ??       S    Fri Oct  2 13:38:41 2026     node /Users/robin/.nvm/versions/node/v23.11.1/bin/codex exec --sandbox danger-full-access --skip-git-repo-check
+
+  PID  PPID TTY      STAT STARTED                      COMMAND
+38737     1 ??       S    Fri Oct  2 13:38:40 2026     /bin/bash /Users/robin/Claude/Projects/Gold Rush/scripts/fire-runner.sh
+
+Independent runner (fd-255 discovery printed 31360):
+  PID  PPID TTY      STAT STARTED
+31360     1 ??       Ss   Tue Sep 29 10:47:38 2026
