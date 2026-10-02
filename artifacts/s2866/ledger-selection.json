@@ -1,0 +1,118 @@
+{
+  "corpus": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "bytes": 8684475
+    },
+    {
+      "rel": "tasks/backlog/closed-2026-07.md",
+      "bytes": 578262
+    },
+    {
+      "rel": "tasks/backlog/closed-2026-08.md",
+      "bytes": 128386
+    },
+    {
+      "rel": "tasks/backlog/e2-completion.md",
+      "bytes": 1955
+    },
+    {
+      "rel": "tasks/backlog/lane-c.md",
+      "bytes": 778
+    },
+    {
+      "rel": "tasks/backlog/later.md",
+      "bytes": 2199
+    },
+    {
+      "rel": "tasks/backlog/mp-07-ladder.md",
+      "bytes": 922
+    },
+    {
+      "rel": "tasks/backlog/multiplayer.md",
+      "bytes": 2642
+    },
+    {
+      "rel": "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+      "bytes": 33751
+    },
+    {
+      "rel": "tasks/backlog/owners-desk.md",
+      "bytes": 8427
+    },
+    {
+      "rel": "tasks/backlog/s1070.md",
+      "bytes": 2933
+    },
+    {
+      "rel": "tasks/backlog/s1071.md",
+      "bytes": 1886
+    },
+    {
+      "rel": "tasks/backlog/s1073.md",
+      "bytes": 1624
+    },
+    {
+      "rel": "tasks/backlog/s1074-fire.md",
+      "bytes": 1665
+    },
+    {
+      "rel": "tasks/backlog/s1077.md",
+      "bytes": 10271
+    },
+    {
+      "rel": "tasks/backlog/s1078.md",
+      "bytes": 18735
+    },
+    {
+      "rel": "tasks/backlog/s1079.md",
+      "bytes": 49952
+    },
+    {
+      "rel": "tasks/backlog/the-epoch-work-package-ladder.md",
+      "bytes": 7255
+    },
+    {
+      "rel": "tasks/backlog/the-saga-build-plan.md",
+      "bytes": 1128
+    }
+  ],
+  "rows": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 13,
+      "line": "🗓️ **RT-01 WEEK 41 MINTED (s2810, 2026-09-30):** `r2026w41` opens October 5 00:00 UTC and closes October 12 00:00 UTC; six seeds, the four earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-40 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w41.md`; evidence: `artifacts/s2810/`. Deployment remains deferred under the owner release hold; next authorized runtime landing must carry week 41 before October 5 and verify ASSAYER SYNCED.",
+      "where": "13"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 17,
+      "line": "🎬 **LAUNCH VIDEO CUT 3 LANDED — `launch-video-cut-3` as `9a216a07d` (drained attended 2026-09-29).** Owner 2026-09-29: \"lets do the film cut using Opus - it should not be too long\". Opus 5.5 at max effort in wt-lvc3 (687,995 tokens, 05:45Z to 07:47Z; commits `5bcd44971` tooling, `4aaae5bb4` edit notes + the treatment's phase-3 section, `20a8c7e03` evidence, plus the attended `ffd7d96e5` report and verifier cure): five exports under `~/.goldrush/launch-video/cut/` from the 23 phase-2 takes and the plates, nothing generated or bought: the master 1920x1200 (94.000 s, 156,701,247 B, 60 fps), 1920x1080 (147,624,862 B), the vertical 1080x1920 (124,373,170 B), the web export 1280x800 for the landing (18,538,642 B, faststart, poster 253,221 B), a 30 s teaser (29,946,455 B); loudness -14.0 LUFS / -2.2 dBTP (teaser -13.8 / -1.9); the slips in Rye and Wellfleet as PNG overlays (no drawtext here); every movement boundary on the treatment's timecode; fallbacks per the treatment where the footage lacked a shot (no brass flash in B7, the Baron's standard and men for B8, the fixture board kept out of B10, vertical reframes); `assemble.mjs --check` reproduces the cut list byte for byte and a rebuild is byte-identical; evidence 0.8 MB, no video in git. Findings F-LVC3-1 (cured in the landing), F-LVC3-2 (the Baron's taunt card shows 1.3 to 1.5 s), F-LVC3-3 (hurt vignette in many takes), F-LVC3-4 (brand book says masters go to `marketing/reel/`; video stays out of the repo, owner's call), F-LVC3-5/6/7 recorded in the report. THE OWNER WATCHES `gold-rush-launch-film-1920x1200-v1.mp4` and says yes or gives notes (a v2 is one edit to `edl.mjs` and one `assemble.mjs --all`); the landing-page embed is the drafted follow-up `reviews/launch-video-cut-3.md`.",
+      "where": "17"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 18,
+      "line": "🔧 **LANE EVIDENCE TRACE GUARD 1 LANDED — `lane-evidence-trace-guard-1` as `f19e79de3` (drained attended 2026-09-29).** Authored attended from F-2742-1 (the 108 MB `trace.zip` that GitHub refused for eleven hours). Astra on lane-d, two attempts (attempt 1 self-blocked on my clause, F-ATT-12; attempt 2 `00e7839ba`, 77,722 tokens, 02:28Z to 02:35Z; plus my 5-line review fix on the lane: the runner fixture now removes its `lane-evidence-receipt-*` scratch at test end, after six survived the first landing battery's fixture-teardown guard, F-TEG1-3): `commit_lane_delta` now withholds `**/test-results/**`, `**/*-results/**`, `**/trace.zip`, `**/*.webm`, `**/test-failed-*.png` and any regular `artifacts/**` file over 50,000,000 bytes (measured by `stat`), rename pairs together, each path logged `withheld …` and appended to `<run-log-stem>-withheld-paths.txt`; task-staged raw files are unstaged (baseline index entries untouched); before the commit the runner measures the index against `merge-base main HEAD` with the new `evidence-budget.mjs --staged` and withholds the largest staged `artifacts/**` blobs until the 25,000,000-byte task budget fits; a measurement error withholds the auto-commit itself with an explicit receipt (fail-closed, disk and index retained). Fixtures: 11 raw/oversized paths withheld incl. a 51,000,000-byte `big.bin`; a 26,000,006-byte staging trims its 17,000,000-byte largest file and commits 9,000,006 bytes; exactly 25,000,000 commits untouched; a rename into `x-results/` withheld both sides. `node --test scripts/evidence-budget.test.mjs` 21/21 (14 + 7 new); `runner-commit-decoupling-guard.test.sh` 13/13; `bash -n`, tsc, build green; `src/**` unchanged. Runner pointer shift +83 lines (old 565 → 648, 567 → 650); CLAUDE.md carries no runner coordinates since its 2026-09-25 compaction and the law-pointer guard is green. The live runner process runs the old code until restarted (done attended after this landing per the restart recipe). Landed attended, scripts only `reviews/lane-evidence-trace-guard-1.md`.",
+      "where": "18"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 133,
+      "line": "🧭 **OWNER RULINGS 2026-09-26, THE DESK ANSWERED (verbatim: \"A1 - not sure, 2 - sure, lets do that, 3 - ok, lets do that, 4 - a, a, move it to the cradle's rim, its own sculpt pack, a, B5 - deploy, C6 - lets keep it as it is, 7 - slips is good, 8 - unnamed, 9 - sure, do it, D - as you recommend it, E - please cleand the test temp dirs do as you see fit here\"):** A1 parked (unsure, no spend); A2 the River's quiet pan writes the completed score; A3 the in-game county board reads the open week; A4 Regatta tie (a), disembark (a) and the Far Side cradle rim and the River raw route's own sculpt pack RE-AFFIRMED (all four had been ruled and LANDED on 2026-09-22; their ledger rows were ghosts, F-ATT-5), the Charter Press hides locked lands (the one fork that was open); B5 `localhost-cors-2` deploys; C the film: no Baron ride (it cuts on the arrival), printed slips, unnamed boards, the three public-site changes; D the ops-evening batch as recommended (F-KV1-7 (a), F-KV2-6 keep, F-KV1-3 default, F-2355-2 on the evening, F-2352-3 ordering, F-2299-1 re-probe); E the temp fixtures cleaned, the veto windows closed as the attended session saw fit (F-CW2-1 stands, F-RT40-1 stands, F-SGA1-2 accepted, F-CW1-2/F-CW2-4 art deferred, F-F2-39 as recommended, F-2350-3 allowlist widening deferred: the guard reddens). Every slice authored from these quotes the owner's words with this date.",
+      "where": "133"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 433,
+      "line": "📱 **`b1-device-verdict-rows` (B1) — OWNER: ten minutes on your phone, and the device verdict rows are yours to fill.** The 2026-09-19 ruling decided 28 items and left exactly two things with you; this is the first. It is not a design question and nothing is blocked behind it — it wants the device in your pocket, not a decision. **Declared s2644** because the desk carried it unkeyed, which made `desk-carryforward-guard` unable to carry-check it and made the live desk count disagree with what the parser could read (5 declared vs 3 keyable). Keyed now as a backticked slug so it can be tracked across handoffs like any other item.",
+      "where": "433"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 490,
+      "line": "🔺 **F-2642-3 — OWNER: the registry deploy day is now ACTIONABLE, and the desk entry's own trigger condition has been met.** `docs/OWNER-DESK-2026-09-19.md:100–101` reads *\"Astra is landing the registry code behind a closed gate now (lane-b) … I bring you the checklist when the code lands.\"* **The code has landed (`fdfcab4d0`) and the checklist is `docs/ops/account-registry.md`** — five steps, each with its verification and its rollback sentence. ⚖️ **NOTHING DEPLOYED AND NOTHING MIGRATED, by construction and not by promise: the Pages binding ships as a COMMENTED block in `wrangler.toml` with `ACCOUNT_REGISTRY_SCOPE` deliberately unset, so both are absent and the door behaves byte-identically to main — which `closed-gate.test.mjs` asserts directly rather than by inspection.** Routine Pages deploys are unaffected. ⛔ **NO FIRE MAY ENABLE THIS**: the five steps need the owner's own deployment inventory, a quiesce of every identity writer including previews, an independently verified private export, a migration secret and a post-bootstrap smoke test of legacy saves — none of which the repo can know or automate. It is on the desk, not on the board.",
+      "where": "490"
+    }
+  ]
+}
