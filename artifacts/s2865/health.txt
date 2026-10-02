@@ -1,0 +1,15 @@
+=== Gold Rush factory — 2026-10-03 00:20:46 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : RUNNING
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-10-02T17:20Z (s2865 fire) — verify eligible output, health and duty schedule. DESK-NOT-OWED: F-2742-1 — 
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: /bin/zsh -lc "node -e \"const{execFileSync}=require('child_process');console.log(execFileSync('bash',['scripts/health-wa
+
