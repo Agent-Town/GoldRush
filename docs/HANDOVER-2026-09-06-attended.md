@@ -2363,3 +2363,13 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Next: owner film/release/thread verdicts and attended site embed; week 41 on the next authorized deploy before October 5. October 4 duties: October 3 ticker after 06:00 local; private backups after 02:10 UTC. Closing ledger tests this prepared handoff before the final clearing commit.
 
 - s2874 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-03T03:57:18.159Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 273.202 seconds under v26.4.0. Exact tested handoff, s2873 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at accounting commit 8cf0511d3. No product gate or deployment claimed. The clearing commit is the final write to main; ordinary origin backup, read-only verification and the external vault digest follow.
+
+
+### s2875 verification — 2026-10-03T05:05Z
+
+- WHY no product change: zero eligible drains or unknowns; four runner lanes ahead=0; queues, running tasks and pending orders empty. Newest runs already landed; newest failed-entry modification September 20. CODEX-WALL stands; seven ahead scratch worktrees remain attended-owned.
+- Inherited claims re-verified: health 200/200/200; independent runner 31360 alive; October 3 private coverage 41/41 and live private heads match completed receipts; whole week-41 registry fence, Gazette and launch ancestry current; October 2 ticker complete. Release verdict unsigned.
+- Next: owner film/release/thread verdicts and attended site embed; week 41 on the next authorized deploy before October 5. October 3 ticker after October 4 at 06:00 local; October 4 private duties after 02:10 UTC. Existing three-item Owner's Desk retained verbatim; exact s2874 predecessor archived.
+- Evidence, adaptations and ordered remainder: artifacts/s2875/report.md. The full ledger battery tests the prepared handoff before the final clearing commit, which is the last write to main; ordinary origin backup and an external vault digest follow.
+
+- s2875 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-03T05:08:24.197Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 159.731 seconds under v26.4.0. Exact tested handoff, s2874 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at lock commit fd12d62a4. No product gate or deployment claimed. The clearing commit is the final write to main; ordinary origin backup, read-only verification and the external vault digest follow.
