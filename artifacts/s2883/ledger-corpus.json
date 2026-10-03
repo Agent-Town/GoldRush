@@ -1,0 +1,88 @@
+{
+  "files": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "selected": [
+    {
+      "key": "LB-01 + FM-01 OCTOBER 3 COMPLETE",
+      "row": {
+        "rel": "tasks/BACKLOG.md",
+        "n": 1,
+        "line": "🗄️ **LB-01 + FM-01 OCTOBER 3 COMPLETE (s2873, 2026-10-03):** Private ledger coverage 41/41 days from August 24 through October 3; strict push gate inspected 2,332 keys, zero account-class or unrecognized rows and zero unreadable mirrors. Today’s mirror remains outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `55a33dc5b63a68c16916ee138faa0380bb5de785`. FM-01 reports unchanged and current; live fire-memory head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2873/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 4; no database bytes entered the public tree.",
+        "where": "1"
+      }
+    },
+    {
+      "key": "TK-01 OCTOBER 2 COMPLETE",
+      "row": {
+        "rel": "tasks/BACKLOG.md",
+        "n": 3,
+        "line": "📰 **TK-01 OCTOBER 2 COMPLETE (s2870, 2026-10-03 local):** `marketing/outbox/ticker-digest-2026-10-02.md` records no player-visible changes. UTC+07 census: 40 main updates, 40 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2870/day.json`.",
+        "where": "3"
+      }
+    },
+    {
+      "key": "RT-01 WEEK 41 MINTED",
+      "row": {
+        "rel": "tasks/BACKLOG.md",
+        "n": 17,
+        "line": "🗓️ **RT-01 WEEK 41 MINTED (s2810, 2026-09-30):** `r2026w41` opens October 5 00:00 UTC and closes October 12 00:00 UTC; six seeds, the four earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-40 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w41.md`; evidence: `artifacts/s2810/`. Deployment remains deferred under the owner release hold; next authorized runtime landing must carry week 41 before October 5 and verify ASSAYER SYNCED.",
+        "where": "17"
+      }
+    },
+    {
+      "key": "F-2742-1 —",
+      "row": {
+        "rel": "tasks/BACKLOG.md",
+        "n": 30,
+        "line": "✅ **F-2742-1 — OWNER'S DESK (2026-09-28, from s2742): origin rejects the inheritance history's 108.21 MiB trace.** A normal `git push origin main` returned rc 1 / GH001: historical blob `6e329b47a526bb6ad14ee86877f98b2669ca7606` is 113,467,543 B, above GitHub's 100 MiB limit. Evidence commit `3614d705a` introduced it; `f1a4fb214` removed the file from the tree, but merge `a950f588d` still carries that ancestry. Live origin remains `0979de763`; deployed inheritance `c4953ac7` and subsequent local bookkeeping are not backed up there. The traces remain in git and the existing private local evidence directory. Recommendation: an attended archive-first clean re-land from the last accepted origin tip, preserving the rejected lineage before changing any main pointer, then ordinary push; no force-push and no deletion. GATE: owner authorizes that history repair, rejected lineage preservation is verified, the replacement passes its required gates and origin accepts it. Fires do not repeat unchanged rejected pushes or rewrite this history. Current tdi1 main verification and audio custody remain attended-owned. Decision and options: `docs/OWNER-DESK-2026-09-19.md` §8; evidence `artifacts/s2742/origin-push-failure.txt`, `artifacts/s2742/origin-large-blobs.json`. **Attended 2026-09-28T15:57Z: the clean re-land is BUILT and BACKED UP. In a scratch clone, `git filter-repo --invert-paths` dropped only the five oversized trace-results directories from the 53 unpublished commits since `0979de763`; the new tip's tree is byte-identical to main's, no blob over 100 MB remains, 53 commits preserved, and the lineage is pushed to origin as `candidate/main-repair-2026-09-28b` (tip `23f27b940`), so today's landings are on GitHub now. The rejected lineage is kept locally as `archive/main-rejected-2026-09-28`. The old→new commit map is at `~/.goldrush/repair/commit-map-2026-09-28b.txt`; the re-point pass over every cited id (the A3 precedent) is scripted and dry-run. What waits on your word: moving local `main` onto the candidate (an ordinary fast-forward push, no force-push), the re-point commit, and rebasing lane-b's three unlanded commits. Fires are held during the move.** **s2748 verification (2026-09-28):** live origin confirms candidate `23f27b940`, but its commit-map source is `280956864`, the early s2747 checkpoint. Both trees are `3df9cafafb5dd15b3ad2f7412e062f1d8de6cc35`; this is a backup through that checkpoint, not current main. The later accepted audio test drain `8d08a8c5f` (implementation `6c6c9c268`), its review/evidence and subsequent bookkeeping are absent from the candidate. Lane-b now has zero commits ahead of main; the earlier rebase/landing to-do is superseded. Attended repair must refresh against current main and preserve this accepted drain before any pointer move. Origin main remains `0979de763`; owner gate unchanged. Evidence: `artifacts/s2748/repair-boundary.json`, `artifacts/s2748/candidate-delta.txt`. **Attended refresh (2026-09-29T02:06Z):** candidate REFRESHED against current main as `candidate/main-repair-2026-09-29` (`d7f18e6c6`, 228 commits, tip tree identical to `c5709dcd5`, which carries the s2747 audio drain s2748 named; no blob over 40 MB; map `~/.goldrush/repair/commit-map-2026-09-29.txt`, 229 lines). Main moved again within the minute (s2789's two commits, then the trace-guard master), so the repair no longer consumes a pre-cut candidate: on the owner's **go** the script RE-CUTS from the current main under the fire hold, from a data-derived list (every `-results/` path under the incident dir that is absent from the tip: 25 today), verifies identical tree, same commit count and no blob over 40 MB, backs the cut up as `candidate/main-repair-go-<stamp>`, and only then moves `main` (ordinary push, no force). The cause is being cured at the source by `lane-evidence-trace-guard-1` (lane-d). Owner gate unchanged: go / wait. ✅ DISCHARGED 2026-09-29T06:49Z on the owner's word (\"yes, go, move it please\", 2026-09-29): `scripts/attended/repair-main.sh` held the fires 04:53Z to 05:59Z, re-cut the clean lineage from the then-current main (`65f128c8a`: identical tip tree, same commit count, no blob over 40 MB, backed up as `candidate/main-repair-go-20260929-0453`), moved `main` by `update-ref` with the old value as guard, re-pointed every cited commit id (commit `4cd9cfc61`: 332 files, 1,149 insertions / 1,022 deletions, same-length ids; 0 residual old prefixes on the ledger surfaces; all 1,127 `mergeHash` values in `tasks/goals.json` resolve in the new history), reset lane-a and lane-b onto the new main (they held only old-lineage commits; lane-c/d were already ancestors), and pushed with an ORDINARY push: `0979de763..4cd9cfc61 main -> main`; origin/main = main, 0 unpushed. The rejected lineage stays under `archive/main-rejected-2026-09-28`. Method note: the regex re-point crawled 1.46 GB of evidence text at ~13 files an hour; a `grep -lF` pre-filter of the 250 changed 7-char prefixes found the 15 unreached files in 33 minutes and `repoint-ids.py --files` finished them in seconds (the option is now in the script); the crawl had rewritten 319. The cause is cured at the source by `lane-evidence-trace-guard-1` (landed `d690cae28`, runner restarted).",
+        "where": "30"
+      }
+    },
+    {
+      "key": "F-2642-3",
+      "row": {
+        "rel": "tasks/BACKLOG.md",
+        "n": 494,
+        "line": "🔺 **F-2642-3 — OWNER: the registry deploy day is now ACTIONABLE, and the desk entry's own trigger condition has been met.** `docs/OWNER-DESK-2026-09-19.md:100–101` reads *\"Astra is landing the registry code behind a closed gate now (lane-b) … I bring you the checklist when the code lands.\"* **The code has landed (`fdfcab4d0`) and the checklist is `docs/ops/account-registry.md`** — five steps, each with its verification and its rollback sentence. ⚖️ **NOTHING DEPLOYED AND NOTHING MIGRATED, by construction and not by promise: the Pages binding ships as a COMMENTED block in `wrangler.toml` with `ACCOUNT_REGISTRY_SCOPE` deliberately unset, so both are absent and the door behaves byte-identically to main — which `closed-gate.test.mjs` asserts directly rather than by inspection.** Routine Pages deploys are unaffected. ⛔ **NO FIRE MAY ENABLE THIS**: the five steps need the owner's own deployment inventory, a quiesce of every identity writer including previews, an independently verified private export, a migration secret and a post-bootstrap smoke test of legacy saves — none of which the repo can know or automate. It is on the desk, not on the board.",
+        "where": "494"
+      }
+    },
+    {
+      "key": "b1-device-verdict-rows",
+      "row": {
+        "rel": "tasks/BACKLOG.md",
+        "n": 437,
+        "line": "📱 **`b1-device-verdict-rows` (B1) — OWNER: ten minutes on your phone, and the device verdict rows are yours to fill.** The 2026-09-19 ruling decided 28 items and left exactly two things with you; this is the first. It is not a design question and nothing is blocked behind it — it wants the device in your pocket, not a decision. **Declared s2644** because the desk carried it unkeyed, which made `desk-carryforward-guard` unable to carry-check it and made the live desk count disagree with what the parser could read (5 declared vs 3 keyable). Keyed now as a backticked slug so it can be tracked across handoffs like any other item.",
+        "where": "437"
+      }
+    },
+    {
+      "key": "F-2299-1",
+      "row": {
+        "rel": "tasks/BACKLOG.md",
+        "n": 137,
+        "line": "🧭 **OWNER RULINGS 2026-09-26, THE DESK ANSWERED (verbatim: \"A1 - not sure, 2 - sure, lets do that, 3 - ok, lets do that, 4 - a, a, move it to the cradle's rim, its own sculpt pack, a, B5 - deploy, C6 - lets keep it as it is, 7 - slips is good, 8 - unnamed, 9 - sure, do it, D - as you recommend it, E - please cleand the test temp dirs do as you see fit here\"):** A1 parked (unsure, no spend); A2 the River's quiet pan writes the completed score; A3 the in-game county board reads the open week; A4 Regatta tie (a), disembark (a) and the Far Side cradle rim and the River raw route's own sculpt pack RE-AFFIRMED (all four had been ruled and LANDED on 2026-09-22; their ledger rows were ghosts, F-ATT-5), the Charter Press hides locked lands (the one fork that was open); B5 `localhost-cors-2` deploys; C the film: no Baron ride (it cuts on the arrival), printed slips, unnamed boards, the three public-site changes; D the ops-evening batch as recommended (F-KV1-7 (a), F-KV2-6 keep, F-KV1-3 default, F-2355-2 on the evening, F-2352-3 ordering, F-2299-1 re-probe); E the temp fixtures cleaned, the veto windows closed as the attended session saw fit (F-CW2-1 stands, F-RT40-1 stands, F-SGA1-2 accepted, F-CW1-2/F-CW2-4 art deferred, F-F2-39 as recommended, F-2350-3 allowlist widening deferred: the guard reddens). Every slice authored from these quotes the owner's words with this date.",
+        "where": "137"
+      }
+    }
+  ]
+}
