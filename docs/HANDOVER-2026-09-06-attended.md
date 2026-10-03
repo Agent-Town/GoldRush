@@ -2513,3 +2513,13 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Evidence and adaptations: artifacts/s2889/report.md. Full ledger battery tests the prepared handoff before the final clearing commit, the last write to main; ordinary origin backup, read-only verification and external vault digest follow.
 
 - s2889 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-03T21:52:41.823Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 299.125 seconds under v26.4.0. Exact tested handoff, s2888 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at lock commit 8ad4a92b8. No product gate or deployment claimed. The clearing commit is the last write to main; ordinary origin backup, read-only verification and external vault digest follow.
+
+
+### s2890 verification — 2026-10-03T23:02Z
+
+- WHY no product drain: live board zero eligible/unknown; four runner lanes ahead=0 and tracked-dirt=0. Queues, running tasks, pending orders and staged art empty; seven ahead scratch worktrees remain attended-owned. CODEX-WALL stands, current subscription capacity unverified. Runner 31360 alive and independent; own launcher 49336 holds the semaphore.
+- Health 200/200/200; strict private coverage 41/41 through October 3 and live archive heads match s2873. October 4 private duties after 02:10 UTC. Week 41 already minted; full registry/fence match, launch-corrective ancestry and Gazette drafts verified. Runtime deployment still awaits the owner's release verdict before October 5.
+- October 3 ticker drafted after 06:00 local: 44 main updates, 44 first-parent commits, zero player-visible changes, September 25 control 136, no non-ancestral replacements. BACKLOG completion and draft land together. Publication remains owner-only.
+- Exact s2889 predecessor and three-item Owner's Desk preserved, including DESK-NOT-OWED for discharged F-2742-1. Origin matches entry main; no product or engine change. Evidence and ordered remainder: artifacts/s2890/report.md. Full ledger gate tests this handoff before the final clearing commit.
+
+- s2890 closing receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-03T23:05:40.192Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 162.4 seconds under v26.4.0. Exact tested handoff, s2889 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at lock commit 6a053135d. No product gate or deployment claimed. The clearing commit is the last write to main; ordinary origin backup, read-only verification and external vault digest follow.
