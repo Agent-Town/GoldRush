@@ -2321,3 +2321,13 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Exact s2869 predecessor, three-item desk and discharged F-2742-1 annotation retained. Evidence, adaptations and ordered remainder: artifacts/s2870/report.md. Closing ledger tests this prepared handoff before the final clearing commit; no product gate or deployment claimed.
 
 - s2870 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-02T23:09:33.270Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 122.851 seconds under v26.4.0. Exact tested handoff, s2869 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at lock commit fbc5bca77. TK-01 October 2 complete. No product gate or deployment claimed. This clearing commit is the final main write; ordinary origin backup, read-only verification and the external vault digest follow.
+
+### s2871 — October 3 heartbeat; eligible board remains dry
+
+- WHY no product change: zero eligible drains/unknowns; four runner lanes ahead=0; six queues/running/orders empty. Newest runs are already landed; newest failure September 20. CODEX-WALL stands; seven ahead scratch worktrees remain attended-owned.
+- Inherited claims re-verified: health 200/200/200; independent runner 31360 alive; private coverage 40/40 through October 2 and live archive heads match completed receipts; whole week-41 registry fence, Gazette and launch ancestry current. Release verdict remains unsigned.
+- TK-01 October 2 is complete. October 3 private duties are not due until 02:10 UTC; next ticker October 4 after 06:00 local. No pending crafting order or art drain.
+- Next: owner film/release/thread verdicts and attended site embed; week 41 on the next authorized deploy before October 5. Existing three-item desk remains verbatim.
+- Exact s2870 predecessor and discharged F-2742-1 annotation retained. Evidence, adaptations and ordered remainder: artifacts/s2871/report.md. Closing ledger tests this prepared handoff before the final clearing commit; no product gate or deployment claimed.
+
+- s2871 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger completed 2026-10-03T00:19:39.592Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 162.809 seconds under v26.4.0. Exact tested handoff, s2870 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty and main unchanged at lock commit e8a6eefa1. No product gate or deployment claimed. This clearing commit is the final main write; ordinary origin backup, read-only verification and the external vault digest follow.
