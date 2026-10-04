@@ -1,0 +1,77 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=270  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 270 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 20 file(s) main has moved that this lane lacks:
+          scripts/attended/README.md
+          scripts/attended/landings/emd1-review.md
+          scripts/attended/landings/emd1.json
+          scripts/attended/landings/lvc3-review.md
+          scripts/attended/landings/lvc3.json
+          scripts/attended/landings/sdu1-review.md
+          scripts/attended/landings/sdu1.json
+          scripts/attended/ledger-gap.sh
+          … and 12 more
+lane-b  sol/wave-lane-b  ahead=0  behind=266  paths=0  tracked-dirt=0  untracked=5
+    untracked (clean -fd) artifacts/emdash-entities-1/consent-recheck-results/.last-run.json
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/.last-run.json
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/error-context.md
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/error-context.md
+    untracked (clean -fd) logs/guard-stats.jsonl
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/wave-lane-b is 266 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/wave-lane-b
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 17 file(s) main has moved that this lane lacks:
+          scripts/attended/README.md
+          scripts/attended/landings/emd1-review.md
+          scripts/attended/landings/emd1.json
+          scripts/attended/landings/lvc3-review.md
+          scripts/attended/landings/lvc3.json
+          scripts/attended/landings/sdu1-review.md
+          scripts/attended/landings/sdu1.json
+          scripts/attended/ledger-gap.sh
+          … and 9 more
+lane-c  sol/map-art-campaign-2  ahead=0  behind=578  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/map-art-campaign-2 is 578 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/map-art-campaign-2
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-c) — F-1320-2.
+     📋 run-surface drift: 53 file(s) main has moved that this lane lacks:
+          e2e/audio-integration.spec.ts
+          e2e/audio-music-toggle.spec.ts
+          e2e/e7-tape-toggle-phone-hit-target.spec.ts
+          scripts/attended/README.md
+          scripts/attended/landings/ahr1-review.md
+          scripts/attended/landings/ahr1.json
+          scripts/attended/landings/amt1-review.md
+          scripts/attended/landings/amt1.json
+          … and 45 more
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=552  paths=0  tracked-dirt=0  untracked=1
+    untracked (clean -fd) node_modules
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but art/portraits-e5-e10-generated is 552 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> art/portraits-e5-e10-generated
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-d) — F-1320-2.
+     📋 run-surface drift: 46 file(s) main has moved that this lane lacks:
+          e2e/audio-integration.spec.ts
+          e2e/audio-music-toggle.spec.ts
+          e2e/e7-tape-toggle-phone-hit-target.spec.ts
+          scripts/attended/README.md
+          scripts/attended/landings/ahr1-review.md
+          scripts/attended/landings/ahr1.json
+          scripts/attended/landings/amt1-review.md
+          scripts/attended/landings/emd1-review.md
+          … and 38 more
+
+worktree coverage: reported 4 of 68 registered — 64 NOT reported (7 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported
