@@ -1,0 +1,20 @@
+{
+  "started": "2026-10-04T11:27:59.641Z",
+  "node": "v26.4.0",
+  "source": "package.json scripts.test:ledger-guards",
+  "adaptation": "--test-concurrency=4 on opening node --test; complete chain retained",
+  "load": [
+    4.01416015625,
+    4.65673828125,
+    7.31787109375
+  ],
+  "ended": "2026-10-04T11:30:25.943Z",
+  "seconds": 146.302,
+  "exitCode": 0,
+  "signal": null,
+  "finalLoad": [
+    5.01806640625,
+    5.37646484375,
+    7.21875
+  ]
+}
