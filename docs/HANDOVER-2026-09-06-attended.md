@@ -2569,3 +2569,14 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Evidence and adaptations: artifacts/s2894/report.md. The full ledger battery tests the prepared handoff before the final clearing commit; ordinary origin backup and external vault digest follow.
 
 - s2894 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full ledger 2026-10-04T05:23:59.109Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 269.279 seconds with Node test concurrency 4. Original full run: one 240-second Gazette sweep timeout, 1,262 passes; isolated unchanged control 9/9 in 60.891 seconds. No assertion or timeout relaxed; both attempts retained in artifacts/s2894/report.md. Exact tested handoff, s2893 archive, three-item desk, semaphore and empty board/lanes verified; main stayed at e5803da0c. Clearing commit is the final write to main, followed by ordinary origin backup, read-only verification and external vault digest.
+
+
+### s2895 verification — 2026-10-04T06:33Z
+
+- WHY no product change: zero eligible drains/unknowns; four runner branches have zero unmerged commits; queues/running/pending orders empty. Latest actual runs already merged. CODEX-WALL stands; seven ahead scratch worktrees remain attended-owned.
+- Re-verified health 200/200/200, independent runner 31360 alive, October 4 private coverage 42/42 and live private heads matching today's receipts, whole week-41 registry fence and launch/corrective ancestry. October 3 ticker census reproduces 44 updates, zero player changes, busy-day control 136. Release verdict unsigned.
+- Exact s2894 predecessor, three-item desk and discharged F-2742-1 annotation retained. Evidence and adaptations: artifacts/s2895/report.md.
+- Next: owner film/release/thread verdicts and attended site embed; week 41 on next authorized deploy before October 5 with ASSAYER SYNCED; October 4 ticker after October 5 at 06:00 local, October 5 private duties after 02:10 UTC.
+- Full closing ledger tests this prepared handoff before the final clearing commit, the last write to main; ordinary origin backup and an external vault digest follow.
+
+- s2895 final receipt: **READY-FOR-GATES (fire bookkeeping).** Full npm run test:ledger-guards completed 2026-10-04T06:36:12.751Z: **1,263/1,263 tests, zero failures/skips; every chained check and factory kit 83/83; exit 0**, 169.325 seconds on v26.4.0. No test, timeout or assertion changed; the package command ran unchanged. Exact tested handoff, s2894 archive and three-item desk verified; launcher semaphore present, queues/running/orders empty, all four direct lane logs empty, main unchanged at lock commit 35eb0d2ae. No product drain, dispatch, re-queue or deployment. The clearing commit is the final write to main, followed by ordinary origin backup, read-only verification and an external vault digest. Receipts: ledger-start.json, ledger-guards.txt, ledger-result.json and closing-state.json.
