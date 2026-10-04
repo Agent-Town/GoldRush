@@ -1,0 +1,84 @@
+✔ site/ is in the scan space — the public door is examined at all (F-2345-1) (1.155125ms)
+✔ a site/-only change is classified as a player path (0.830917ms)
+✔ the original player paths still match — the cure is additive, not a replacement (0.319ms)
+✔ REVERSE CONTROL: factory surfaces are NOT player paths (0.116333ms)
+✔ REVERSE CONTROL: the prefixes are anchored at the start, not matched anywhere (0.076458ms)
+✔ REVERSE CONTROL: the dot in index.html is escaped (0.083417ms)
+✔ every declared prefix is load-bearing — the list drives the predicate (0.086166ms)
+✖ the scan space is DECLARED on stdout, naming every prefix (240014.37875ms)
+✔ the declaration prints on the emptiest happy path too (F-2208-1) (5464.580375ms)
+✖ 1. REVERSE CONTROL — the battery leg `--limit 40 --quiet` still succeeds and still reports (240598.568875ms)
+✔ 2. TEETH — an unrecognised option REFUSES with 2 rather than being swallowed (4263.618667ms)
+✔ 3. TEETH — a TYPO of the bounding flag refuses, and does so BOUNDED in time (4133.912292ms)
+✔ 4. TEETH — a non-positive limit refuses instead of printing CLEAN over an empty corpus (7542.66875ms)
+✔ 5. REVERSE CONTROL — the refusal reaches STDOUT, not stderr alone (F-2211-1) (43.133209ms)
+✔ 6. REVERSE CONTROL — `--limit N` consumes its value, so the number is not read as an option (229031.625292ms)
+✔ 7. REVERSE CONTROL — `--quiet` must NOT suppress the DROPPED blocks or the verdict (13001.279542ms)
+✔ 8. REVERSE CONTROL — `--all` still lists the excluded shapes; the cure did not break advisory output (69543.008042ms)
+✔ 9. TEETH — on a board that IS LOST, every prescribed form answers with 1 and never refuses as 2 (678.398709ms)
+✔ 10. F-2673-1 — the UNBOUNDED walk announces its price BEFORE it walks, not after (235.129709ms)
+✔ 11. F-2673-1 — a caller who CHOSE a bound is not lectured (one population, not two) (407.897208ms)
+✔ 12. TEETH — remove the announcement and arm 10 goes blind, while nothing else moves (377.061875ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 19
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 815593.38425
+
+✖ failing tests:
+
+test at scripts/gazette-scan-space-guard.test.mjs:110:1
+✖ the scan space is DECLARED on stdout, naming every prefix (240014.37875ms)
+  Error: spawnSync node ETIMEDOUT
+      at Object.spawnSync (node:internal/child_process:1144:20)
+      at spawnSync (node:child_process:912:24)
+      at execFileSync (node:child_process:955:15)
+      at run (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gazette-scan-space-guard.test.mjs:40:13)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gazette-scan-space-guard.test.mjs:111:15)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -60,
+    code: 'ETIMEDOUT',
+    syscall: 'spawnSync node',
+    path: 'node',
+    spawnargs: [ '/Users/robin/Claude/Projects/Gold Rush/scripts/gazette-backfill-sweep.mjs', '--since=2026-08-28' ],
+    error: Error: spawnSync node ETIMEDOUT
+        at Object.spawnSync (node:internal/child_process:1144:20)
+        at spawnSync (node:child_process:912:24)
+        at execFileSync (node:child_process:955:15)
+        at run (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gazette-scan-space-guard.test.mjs:40:13)
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gazette-scan-space-guard.test.mjs:111:15)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12),
+    status: null,
+    signal: 'SIGKILL',
+    output: [ null, '', '' ],
+    pid: 92323,
+    stdout: '',
+    stderr: ''
+  }
+
+test at scripts/status-archive-arg-guard.test.mjs:190:1
+✖ 1. REVERSE CONTROL — the battery leg `--limit 40 --quiet` still succeeds and still reports (240598.568875ms)
+  AssertionError [ERR_ASSERTION]: the verdict line always prints, however quiet the caller asked for
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/status-archive-arg-guard.test.mjs:198:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'board corpus     : STATUS.md + 2 archive month(s): archive/status/2026-08.md, archive/status/2026-07.md\n',
+    expected: /^(CLEAN|LOST):/m,
+    operator: 'match',
+    diff: 'simple'
+  }

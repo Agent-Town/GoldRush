@@ -1,0 +1,41 @@
+
+> gold-rush@0.1.0 test:desk-declaration
+> node scripts/desk-declaration-guard.mjs
+
+=== desk-declaration-guard ===
+corpus tree       : main
+desk F-IDs        : 2
+desk slugs        : 1
+🔺 desk segments  : 3
+unexamined        : 0
+with a BACKLOG row: 3
+undeclared        : 0 (grandfathered 0)
+PASS — every non-grandfathered desk item has a declaring row.
+
+> gold-rush@0.1.0 test:desk-birth
+> node scripts/desk-birth-guard.mjs
+
+=== desk-birth-guard ===
+corpus tree               : main
+window start              : f0b44f07 (s2668 handoff)
+owner-gated rows filed    : 1
+  ├ by an owner GATE clause : 1
+  └ by an owner-ACT declaration, no gate clause : 0  (+1 suppressed as closure records)
+unexamined by the parser  : 1
+   | 🐛 **debug-spawn-gate-1 (TO AUTHOR, attended; F-SGA1-5, 2026-09-25, inferred from reading, not run):** the debug-spawn key T may be ungated on the lockstep acti
+   ⓘ ADVISORY, not a failure: each line above carries an owner gate and a key but
+     leads with neither an admitted glyph nor `**F-`, so this guard never examined
+     it. Widening membership was measured and manufactures false reds out of
+     closure rows (F-2259-1) — read these by hand and desk any that are real.
+of those, undesked        : 0
+PASS — every owner-gated row filed this window reached the desk.
+=== desk-carryforward-guard ===
+corpus tree               : main
+status corpus             : STATUS.md + 2 part(s): archive/status/2026-08.md, archive/status/2026-07.md
+ledger corpus             : tasks/BACKLOG.md + 18 part(s): tasks/backlog/closed-2026-07.md, tasks/backlog/closed-2026-08.md, tasks/backlog/e2-completion.md, tasks/backlog/lane-c.md, tasks/backlog/later.md, tasks/backlog/mp-07-ladder.md, tasks/backlog/multiplayer.md, tasks/backlog/owner-rulings-2026-08-08-morning.md, tasks/backlog/owners-desk.md, tasks/backlog/s1070.md, tasks/backlog/s1071.md, tasks/backlog/s1073.md, tasks/backlog/s1074-fire.md, tasks/backlog/s1077.md, tasks/backlog/s1078.md, tasks/backlog/s1079.md, tasks/backlog/the-epoch-work-package-ladder.md, tasks/backlog/the-saga-build-plan.md
+previous desk (s2891): 3 items
+this desk                 : 3 items
+dropped                   : 0 (0 accounted for)
+PASS — every item on the previous desk is carried, closed, or accounted for.
+board corpus     : STATUS.md + 2 archive month(s): archive/status/2026-08.md, archive/status/2026-07.md
+CLEAN: 0 handoff line-1s PERMANENTLY absent at HEAD (16 more were dropped at lock time but restored by the fire's own handoff commit -- normal, not a defect), 0 abridged, 15 same-session rewrites excluded, 0 attended self-updates superseded, of 40 replacements across 40 STATUS.md commits
