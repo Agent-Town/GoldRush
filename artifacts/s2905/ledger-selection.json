@@ -1,0 +1,32 @@
+[
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 1,
+    "line": "🗄️ **LB-01 + FM-01 OCTOBER 4 COMPLETE (s2893, 2026-10-04):** Private ledger coverage 42/42 days from August 24 through October 4; strict push gate inspected 2,426 keys, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s mirror remains outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `31819c2a96d37613670a16ce80bd4cbe1da17fed`. FM-01 reports unchanged and current; live fire-memory head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2893/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 5; no database bytes entered the public tree.",
+    "where": "1"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 3,
+    "line": "📰 **TK-01 OCTOBER 3 COMPLETE (s2890, 2026-10-04 local):** `marketing/outbox/ticker-digest-2026-10-03.md` records no player-visible changes. UTC+07 census: 44 main updates, 44 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2890/day.json`.",
+    "where": "3"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 21,
+    "line": "🗓️ **RT-01 WEEK 41 MINTED (s2810, 2026-09-30):** `r2026w41` opens October 5 00:00 UTC and closes October 12 00:00 UTC; six seeds, the four earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-40 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w41.md`; evidence: `artifacts/s2810/`. Deployment remains deferred under the owner release hold; next authorized runtime landing must carry week 41 before October 5 and verify ASSAYER SYNCED.",
+    "where": "21"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 138,
+    "line": "🧭 **OWNER RULING 2026-09-26 21:50Z (verbatim: \"And for the tasks themselves, also use Astra now instead of Opus - I really need to save tokens.\"):** every implementation task from here runs as a Codex lane master for Astra (`CODEX: model=gpt-6-astra`, xhigh, the lane pre-flight, the ChatGPT subscription), not as an Opus 5.5 implementer in a scratch worktree; the one Opus implementer still running (`river-assay-1`, in its battery) finishes and lands, and no new one is dispatched. Supersedes the 2026-09-25 \"Opus 5.5 where we can\" for tasks while the Anthropic subscription is short; the fires run on codex from the same hour (row above).",
+    "where": "138"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 139,
+    "line": "🔥 **FIRE ENGINE SWITCHED TO CODEX 2026-09-26 21:45Z (owner, verbatim: \"Can you switch the fires to Astra xhigh from Opus max? I am running out of Anthropic subscription now instead of OpenAI.\"):** `scripts/fire-runner.sh:119` default `FIRE_ENGINE=codex` (gpt-6-astra at xhigh from `~/.codex/config.toml`; codex-cli 0.157.0 clears the 0.153.0 floor; the plist sets no engine); the claude path stays intact for the next owner word. The attended session also stops dispatching new Opus 5.5 implementers while the Anthropic subscription is short (the running `river-assay-1` finishes). Verify at the next fire: the log line reads \"FIRE START (engine codex, model from ~/.codex config)\".",
+    "where": "139"
+  }
+]
