@@ -1,0 +1,33 @@
+# s2921 — Eligible board dry; week-41 deployment remains held
+
+WHY no product change: the board probe classified 91 subjects among 1,478 done files: zero eligible drains, zero unknowns, 13 closed/blocked and 78 already merged. All four runner branches have empty main..branch logs and zero tracked source dirt. Six queues, running tasks, pending crafting orders and staged art are empty. Seven ahead scratch worktrees remain attended-owned. CODEX-WALL bars fire refills, dispatch and re-queue. No new scope was invented.
+
+## Inherited claims verified
+
+- Entry main 53b3229b01f2564e6b2d1029cc80066a7d4b2c2b matched live origin. Launcher 47147, Node 47198 and Codex 47200 began at 20:16:04–05 local, matching the semaphore mtime and FIRE START. The prior fire ended at 19:16:02 local. This run owns the semaphore; no stale-lock takeover was needed. Independent runner 31360 is alive under PPID 1; no restart is due. Lock commit a89a62ab1. The main-slot semaphore is the predicate at scripts/lane-runner-v3.sh:322: ACTIVE present and lock CLEARED absent. Receipts: processes.txt, origin-head-before.txt.
+- Health returned 200/200/200. Fresh board, lane-usable and direct branch logs prove no eligible undrained runner output. The newest runner logs are still September 29's two corrective runs; their tails were read and retained locally. Latest failed-entry modification is September 20. Those runs demonstrate prior implementer service; current subscription capacity remains UNVERIFIED. No bare Codex probe or dispatch was made. Receipts: health.txt, board.txt, lanes.txt, triage.json.
+- Entry tracked dirt consisted only of generated dashboards and usage accounting, preserved locally in bookkeeping-diff.txt. No attended source/task bookkeeping awaited commitment. The constitution, CODEX-WALL, 19-part ledger corpus through its shared reader, attended handover 13z-106/107, Owner's Desk and unsigned release verdict were read. Generated output was neither staged nor reverted.
+- LB-01/FM-01 are complete for October 5. Fresh strict coverage is 43/43 days, August 24 through October 5, outside the public tree. Archive visibility is freshly verified PRIVATE. Live heads match the completed s2913 receipts: ledger-backups ac6a3160cd012f54f59f1d5ac16b1ee834b05703; fire-memory 53d87470fb2670626fb4605d4dc0eb5bffd899fb. No duplicate pull or push is due. Receipts: mirror-freshness.txt, private-visibility.json, private-heads.txt.
+- RT-01 mint discharged: all five local rotations exactly match the whole public/skill.md fence, including six week-41 seeds. Fresh production reads at 13:19 UTC report build 954bb2cd, weeks 37–40 and no open served rotation. Week-41 transfer-board GET returns 400 bad_rotation; week-40 control returns 200. The local selector supplied the served registry chooses closed week 40 for all six contracts; main chooses week 41. No standing was submitted; a submission refusal was not measured. The existing unsigned SHIP/HOLD and attended release hold remain binding (docs/release/verdict-954bb2cd.md and handover 13z-106/107). Receipts: live-release.json, live-skill.md, rotation-registry.json, rotation-probe.json.
+- TK-01 October 4 is complete. The pinned UTC+07 census reproduces 37 main updates, 37 first-parent commits, zero player-path updates and no non-ancestral replacements; September 25 busy-day control 136. No duplicate digest or Gazette item is due. Receipts: day.mjs, day.json, day-summary.txt.
+- Closure 40dbcf2f8, film 9a216a07d and correctives a5aad2abf/73b82dbfe are freshly verified ancestors in triage.json. The exact s2920 handoff and this run's ACTIVE line are archived. The three-item Owner's Desk and discharged F-2742-1 annotation are preserved verbatim. No BACKLOG row, goal leaf, product source, art or engine registry changed.
+
+## Adaptations and gate scope
+
+The launcher's September 26 owner ruling selects Codex (scripts/fire-runner.sh:119); no model switch or delegation occurred. Prescribed shell/process operations ran through Node. The write-docs skill guides the handoff. Public/private archive guidance and shared-vault duty notes were checked against current evidence.
+
+The generated-dashboard diff exceeded Node's default capture buffer; it was preserved using shell output redirection. No source or history changed in that failed read. Broad initial listings were noisy; later reads were narrowed to relevant files and markers.
+
+The closing battery uses verified /opt/homebrew/bin/node v26.4.0 with that directory prepended to child PATH. It expands the complete package.json ledger command with only --test-concurrency=4 added to the opening Node test invocation, following the unchanged-suite resource attribution in artifacts/s2894/report.md. Assertions, timeouts and chained checks remain unchanged. No product drain occurred, so build/browser drain gates do not apply. The required status archive audit is the bounded --limit 40 --quiet leg within that battery.
+
+The battery tests the prepared handoff before the clearing commit. The launcher's semaphore remains until exit. The clearing commit is the last write to main, followed by ordinary origin backup, read-only verification and an external vault digest.
+
+## Remaining list in order
+
+1. Existing owner SHIP/HOLD and authorized attended deployment carrying week 41, overdue since October 5 00:00 UTC; verify ASSAYER SYNCED and a successful week-41 read.
+2. Owner film yes/notes and THREAD-v3 approval, then attended site embed and owner publication. Existing desk retains account-registry deploy day, B1 phone verdicts and token revocation.
+3. October 6 private duties after 02:10 UTC; October 5 ticker after October 6 06:00 local; week-42 mint after October 7 00:00 UTC. Inherited F-2472-3 spec-path work remains attended-owned, subject to the closing audit.
+
+## Closing gate
+
+**READY-FOR-GATES (fire bookkeeping).** Complete ledger finished 2026-10-05T13:23:13.062Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 160.329 seconds on Node v26.4.0 with four concurrent top-level files. Assertions and timeouts unchanged. The bounded status archive audit passed. Exact tested handoff, s2920 archive and three-item desk verified; launcher semaphore present; queues/running/orders and four direct lane logs empty. Main stayed at lock commit a89a62ab1. The attended-owed audit retains F-2472-3 as attended-only spec-path work without a gate failure. No product drain, dispatch, re-queue or deployment. The clearing commit is the last write to main, followed by ordinary origin backup, read-only verification and the external vault digest. Receipts: ledger-command.txt, ledger-start.json, ledger-guards.txt, ledger-result.json and closing-state.json.
