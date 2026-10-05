@@ -1,0 +1,44 @@
+{
+  "files": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "count": 6662,
+  "selected": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 5 COMPLETE (s2913, 2026-10-05):** The server snapshot is now available, superseding s2912’s pending-supply verdict. Private ledger coverage is 43/43 days from August 24 through October 5; strict push gate inspected 2,520 keys in 43 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s mirror stays outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `ac6a3160cd012f54f59f1d5ac16b1ee834b05703`. FM-01 remains unchanged/current, live head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2913/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 6; no database bytes entered the public tree.",
+      "where": "1"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 5,
+      "line": "📰 **TK-01 OCTOBER 4 COMPLETE (s2909, 2026-10-05 local):** `marketing/outbox/ticker-digest-2026-10-04.md` records no player-visible changes. UTC+07 census: 37 main updates, 37 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2909/day.json`.",
+      "where": "5"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 25,
+      "line": "🗓️ **RT-01 WEEK 41 MINTED (s2810, 2026-09-30):** `r2026w41` opens October 5 00:00 UTC and closes October 12 00:00 UTC; six seeds, the four earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-40 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w41.md`; evidence: `artifacts/s2810/`. Deployment remains deferred under the owner release hold; next authorized runtime landing must carry week 41 before October 5 and verify ASSAYER SYNCED. **s2910 verification, 2026-10-05 00:18 UTC: the deployment deadline has PASSED.** Live build remains `954bb2cd`; the served skill registry ends at week 40 with no open window. Read-only week-41 transfer-board GET returns HTTP 400 `bad_rotation`, versus week-40 HTTP 200. A local selector control over the served registry chooses closed week-40 seeds for all six contracts; main chooses week 41. The existing standings window check implies `rotation_closed` for otherwise valid old-week submissions; no live standing was submitted. The unsigned owner SHIP/HOLD in `docs/release/verdict-954bb2cd.md` and attended handover 13z-106/107 retain the release hold. Next: authorized attended runtime deployment carrying week 41, then ASSAYER SYNCED and a fresh week-41 read. Evidence: `artifacts/s2910/live-release.json`, `rotation-probe.json` and `report.md`. This supersedes the future-tense deadline above; no deploy by this fire.",
+      "where": "25"
+    }
+  ]
+}
