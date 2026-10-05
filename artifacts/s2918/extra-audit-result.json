@@ -1,0 +1,12 @@
+{
+  "command": "node scripts/status-archive-audit.mjs",
+  "runtime": "v23.11.1",
+  "outcome": "FAILED: heap exhausted before verdict",
+  "diagnostic": "FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory",
+  "scope": "Unrequested unbounded history scan after completed required battery",
+  "childExitCode": null,
+  "enclosingShellExitCode": 0,
+  "exitCodeCaveat": "Final tail command masked the audit child exit code; no success claimed",
+  "requiredBoundedLeg": "PASS in ledger-guards.txt: zero permanently absent handoffs of 40 replacements",
+  "processKilled": false
+}
