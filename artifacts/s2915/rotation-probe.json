@@ -1,0 +1,83 @@
+{
+  "observedAt": "2026-10-05T06:16:34.824Z",
+  "liveDocumentRotations": [
+    "r2026w37",
+    "r2026w38",
+    "r2026w39",
+    "r2026w40"
+  ],
+  "localRotations": [
+    "r2026w37",
+    "r2026w38",
+    "r2026w39",
+    "r2026w40",
+    "r2026w41"
+  ],
+  "liveDocumentOpenRotations": [],
+  "selectorControl": [
+    {
+      "contract": "the-claim",
+      "selected": "e1-the-claim-r2026w40-418026a0ec56",
+      "closed": true,
+      "localSelected": "e1-the-claim-r2026w41-238625ddfbab"
+    },
+    {
+      "contract": "e1-dry-gulch",
+      "selected": "e1-dry-gulch-r2026w40-026295aeed94",
+      "closed": true,
+      "localSelected": "e1-dry-gulch-r2026w41-296a66ca2018"
+    },
+    {
+      "contract": "e1-twin-banks",
+      "selected": "e1-twin-banks-r2026w40-04011cda25bf",
+      "closed": true,
+      "localSelected": "e1-twin-banks-r2026w41-24471794739e"
+    },
+    {
+      "contract": "e1-night-shift",
+      "selected": "e1-night-shift-r2026w40-43ca36636450",
+      "closed": true,
+      "localSelected": "e1-night-shift-r2026w41-92a3328db29a"
+    },
+    {
+      "contract": "e2-hill-mine",
+      "selected": "e2-hill-mine-r2026w40-101072747bc7",
+      "closed": true,
+      "localSelected": "e2-hill-mine-r2026w41-a3cade753d96"
+    },
+    {
+      "contract": "e1-baron",
+      "selected": "e1-baron-r2026w40-e7272e198e52",
+      "closed": true,
+      "localSelected": "e1-baron-r2026w41-a579a2b45890"
+    }
+  ],
+  "reads": [
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w41",
+      "status": 400,
+      "ok": false,
+      "error": "bad_rotation",
+      "message": "Rotation not accepted.",
+      "topLevelKeys": [
+        "ok",
+        "error",
+        "message"
+      ]
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w40",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "topLevelKeys": [
+        "ok",
+        "board",
+        "rotation",
+        "standings"
+      ]
+    }
+  ],
+  "scope": "Read-only HTTP probes and local selector control using the deployed public document registry. No standing submitted; POST refusal is inferred from the existing window check, not measured live."
+}

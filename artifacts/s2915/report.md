@@ -1,0 +1,31 @@
+# Fire s2915: eligible board dry and daily coverage verified
+
+WHY no product change: the fresh dry-board probe found zero eligible drains and zero unknowns among 91 subjects (1,478 done-moves; 13 closed/blocked and 78 merged). All four runner branches have empty main..branch logs and no tracked source dirt. Six queues, running tasks and pending crafting orders are empty. Seven ahead scratch worktrees remain attended-owned. CODEX-WALL and the owner release hold stand.
+
+## Verified state
+
+- Entry main e548698874ed6f60cb25b96e2af8471a048c201e matched live origin. Lock commit 8b91e3bd7. Current process ancestry is Codex 38128, Node 38127, launcher 38083, all started October 5 13:13:51 local; the fresh semaphore and FIRE START agree. Previous fire ended 12:13:37 local. Runner 31360 has PPID 1 and is alive, so no restart is due. Main-slot semaphore predicate remains scripts/lane-runner-v3.sh:322 (ACTIVE present and lock CLEARED absent).
+- Health is 200/200/200. Latest actual runner logs are September 29's two corrective runs, both tails read; newest failed-entry modification remains September 20. Lane-usable and direct branch proofs establish no undrained runner content. Current subscription capacity is UNVERIFIED: no dispatch or bare Codex probe was made. Receipts: health.txt, board.txt, lanes.txt, branch-proof.json, processes.txt and verification.json.
+- Entry tracked dirt consists only of generated dashboards and usage accounting. Its full diff is preserved locally in bookkeeping-diff.txt; no attended source/task bookkeeping awaits commitment. Generated output is not staged or reverted. Constitution, CODEX-WALL, all 19 ledger corpus files, handover 13z-106/107 and the current release verdict were consulted.
+- LB-01/FM-01 are already complete for October 5. Fresh strict coverage is 43/43 days, August 24 through October 5, outside this public tree. Archive visibility is freshly verified PRIVATE. Live heads match the completed s2913 receipts: ledger-backups ac6a3160cd012f54f59f1d5ac16b1ee834b05703; fire-memory 53d87470fb2670626fb4605d4dc0eb5bffd899fb. No duplicate pull or push was due. The 2,520-key exposure verdict belongs to s2913's recorded push, not a new scan by this fire. Receipts: mirror-freshness.txt, private-visibility.json and private-heads.txt.
+- RT-01 mint discharged: all five local rotations match the entire public documentation fence, including week 41 with six seeds. Fresh production GETs at 06:16 UTC report build 954bb2cd, served weeks 37–40, and no open served rotation. Week-41 transfer-board GET is 400 bad_rotation; week-40 control is 200. Local selector control over the served registry chooses closed week 40 for all six contracts; main chooses week 41. No standing was submitted. This re-confirms the existing missed deployment, without a new scope item. The owner SHIP/HOLD is unsigned; deployment stays attended-owned under handover 13z-106/107 and docs/release/verdict-954bb2cd.md. Receipts: live-release.json, live-skill.md, rotation-registry.json and rotation-probe.json.
+- TK-01 October 4 is complete. Re-executing the pinned UTC+07 census reproduces 37 main updates, 37 first-parent commits, zero player-path updates, no non-ancestral replacements and busy-day control 136. No duplicate digest or Gazette item is due. Receipts: day.mjs, day.json and day-summary.txt.
+- Exact s2914 handoff and current s2915 lock are archived. Three-item Owner's Desk tail and discharged F-2742-1 annotation are retained verbatim. Closure 40dbcf2f8, film 9a216a07d and correctives a5aad2abf/73b82dbfe remain ancestors. No BACKLOG row, goal leaf, source, art or engine registry changed.
+
+## Adaptations and validation
+
+The current launcher uses Codex under the September 26 owner ruling at scripts/fire-runner.sh:119. No model switch or delegation occurred. Prescribed shell and process operations run through Node. The write-docs skill guides the report and handoff. Shared-vault runtime guidance and the public/archive memory boundary were checked against current state.
+
+The login shell resolves Node 23.11.1. The closing battery uses verified /opt/homebrew/bin/node v26.4.0 and prepends /opt/homebrew/bin to child PATH. The full package.json ledger command is expanded with only --test-concurrency=4 added to its opening test invocation, following the unchanged-suite resource attribution recorded in artifacts/s2894/report.md. Assertions, timeouts and chained checks are unchanged. No product slice was drained, so build and browser gates do not apply.
+
+The full ledger tests the prepared handoff before the final clearing commit. The launcher semaphore remains until process exit. The clearing commit is the last write to main, followed by ordinary origin backup, read-only verification and an external vault digest.
+
+## Remaining list in order
+
+1. Existing owner SHIP/HOLD and authorized attended deployment carrying week 41, overdue since October 5 00:00 UTC; verify ASSAYER SYNCED and a successful week-41 read.
+2. Owner film yes/notes and THREAD-v3 approval, then attended site embed and owner publication. The existing desk retains account-registry deploy day, B1 phone verdicts and token revocation.
+3. October 6 private duties after 02:10 UTC; October 5 ticker after October 6 06:00 local; week-42 mint after October 7 00:00 UTC. The inherited F-2472-3 spec-path item remains attended-owned, subject to the closing audit.
+
+## Closing gate
+
+**READY-FOR-GATES (fire bookkeeping).** Complete ledger finished 2026-10-05T06:20:22.382Z: **1,263/1,263 tests, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 140.55 seconds on Node v26.4.0 with four concurrent top-level files. Assertions and timeouts unchanged. Exact tested handoff, s2914 archive and three-item desk verified; launcher semaphore present; queues/running/orders and four direct lane logs empty. Main stayed at lock commit 8b91e3bd7. The attended-owed audit retains F-2472-3 as attended-only spec-path work, without a gate failure. No product drain, dispatch, re-queue or deployment. Clearing commit is the last write to main, followed by ordinary origin backup, read-only verification and the external vault digest. Receipts: ledger-command.txt, ledger-start.json, ledger-guards.txt, ledger-result.json and closing-state.json.
