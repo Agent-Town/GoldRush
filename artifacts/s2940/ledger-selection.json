@@ -1,0 +1,23 @@
+{
+  "files": 19,
+  "matches": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 3,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 6 COMPLETE (s2933, 2026-10-06):** Private ledger coverage is 44/44 days from August 24 through October 6. The strict push gate inspected 2,614 keys in 44 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s snapshot stays outside the public tree and was pushed to the verified PRIVATE archive, ledger-backups head `06d7f8734fcbb28e07e303497d63ede589d77b85`. FM-01 remains unchanged/current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2933/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 7; no database or fire-memory bytes entered this repository.",
+      "where": "3"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 7,
+      "line": "📰 **TK-01 OCTOBER 5 COMPLETE (s2930, 2026-10-06 local):** `marketing/outbox/ticker-digest-2026-10-05.md` records no player-visible changes. UTC+07 census: 42 main updates, 42 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2930/day.json`.",
+      "where": "7"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 33,
+      "line": "🗓️ **RT-01 WEEK 41 MINTED (s2810, 2026-09-30):** `r2026w41` opens October 5 00:00 UTC and closes October 12 00:00 UTC; six seeds, the four earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-40 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w41.md`; evidence: `artifacts/s2810/`. Deployment remains deferred under the owner release hold; next authorized runtime landing must carry week 41 before October 5 and verify ASSAYER SYNCED. **s2910 verification, 2026-10-05 00:18 UTC: the deployment deadline has PASSED.** Live build remains `954bb2cd`; the served skill registry ends at week 40 with no open window. Read-only week-41 transfer-board GET returns HTTP 400 `bad_rotation`, versus week-40 HTTP 200. A local selector control over the served registry chooses closed week-40 seeds for all six contracts; main chooses week 41. The existing standings window check implies `rotation_closed` for otherwise valid old-week submissions; no live standing was submitted. The unsigned owner SHIP/HOLD in `docs/release/verdict-954bb2cd.md` and attended handover 13z-106/107 retain the release hold. Next: authorized attended runtime deployment carrying week 41, then ASSAYER SYNCED and a fresh week-41 read. Evidence: `artifacts/s2910/live-release.json`, `rotation-probe.json` and `report.md`. This supersedes the future-tense deadline above; no deploy by this fire.",
+      "where": "33"
+    }
+  ]
+}
