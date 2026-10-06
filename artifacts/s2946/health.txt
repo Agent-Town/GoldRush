@@ -1,0 +1,15 @@
+=== Gold Rush factory — 2026-10-07 01:06:32 ===
+edge   : landing=200 game=200 api=200   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : RUNNING
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-10-06T18:06Z (s2946 fire) — verify eligible drains, wall, health and due duties. DESK-NOT-OWED: F-2742-1 �
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: /opt/homebrew/bin/node --experimental-strip-types artifacts/s2946/rotation-probe.mjs > artifacts/s2946/rotation-summary.
+
