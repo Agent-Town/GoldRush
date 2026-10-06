@@ -1,0 +1,27 @@
+✖ 8. REVERSE CONTROL — `--all` still lists the excluded shapes; the cure did not break advisory output (420.073417ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 459.704833
+
+✖ failing tests:
+
+test at artifacts/s2932/all-listing-mutation/status-archive-arg-guard.test.mjs:268:1
+✖ 8. REVERSE CONTROL — `--all` still lists the excluded shapes; the cure did not break advisory output (420.073417ms)
+  AssertionError [ERR_ASSERTION]: --all must still add the ok-excluded listing (plain 558 B vs --all 558 B)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/artifacts/s2932/all-listing-mutation/status-archive-arg-guard.test.mjs:280:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

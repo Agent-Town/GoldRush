@@ -1,0 +1,20 @@
+✔ 1. REVERSE CONTROL — the battery leg `--limit 40 --quiet` still succeeds and still reports (3155.470083ms)
+✔ 2. TEETH — an unrecognised option REFUSES with 2 rather than being swallowed (30.045833ms)
+✔ 3. TEETH — a TYPO of the bounding flag refuses, and does so BOUNDED in time (30.307417ms)
+✔ 4. TEETH — a non-positive limit refuses instead of printing CLEAN over an empty corpus (58.99125ms)
+✔ 5. REVERSE CONTROL — the refusal reaches STDOUT, not stderr alone (F-2211-1) (29.417708ms)
+✔ 6. REVERSE CONTROL — `--limit N` consumes its value, so the number is not read as an option (3250.594625ms)
+✔ 7. REVERSE CONTROL — `--quiet` must NOT suppress the DROPPED blocks or the verdict (305.9575ms)
+✔ 8. REVERSE CONTROL — `--all` still lists the excluded shapes; the cure did not break advisory output (408.657167ms)
+✔ 9. TEETH — on a board that IS LOST, every prescribed form answers with 1 and never refuses as 2 (495.955667ms)
+✔ 10. F-2673-1 — the UNBOUNDED walk announces its price BEFORE it walks, not after (243.242959ms)
+✔ 11. F-2673-1 — a caller who CHOSE a bound is not lectured (one population, not two) (393.408334ms)
+✔ 12. TEETH — remove the announcement and arm 10 goes blind, while nothing else moves (404.962916ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8849.194291

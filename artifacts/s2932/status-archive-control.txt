@@ -1,0 +1,40 @@
+✔ 1. REVERSE CONTROL — the battery leg `--limit 40 --quiet` still succeeds and still reports (3094.042583ms)
+✔ 2. TEETH — an unrecognised option REFUSES with 2 rather than being swallowed (27.985375ms)
+✔ 3. TEETH — a TYPO of the bounding flag refuses, and does so BOUNDED in time (27.110459ms)
+✔ 4. TEETH — a non-positive limit refuses instead of printing CLEAN over an empty corpus (55.729667ms)
+✔ 5. REVERSE CONTROL — the refusal reaches STDOUT, not stderr alone (F-2211-1) (28.087875ms)
+✔ 6. REVERSE CONTROL — `--limit N` consumes its value, so the number is not read as an option (3133.125833ms)
+✔ 7. REVERSE CONTROL — `--quiet` must NOT suppress the DROPPED blocks or the verdict (312.583208ms)
+✖ 8. REVERSE CONTROL — `--all` still lists the excluded shapes; the cure did not break advisory output (6019.016792ms)
+✔ 9. TEETH — on a board that IS LOST, every prescribed form answers with 1 and never refuses as 2 (376.2385ms)
+✔ 10. F-2673-1 — the UNBOUNDED walk announces its price BEFORE it walks, not after (182.513792ms)
+✔ 11. F-2673-1 — a caller who CHOSE a bound is not lectured (one population, not two) (274.462916ms)
+✔ 12. TEETH — remove the announcement and arm 10 goes blind, while nothing else moves (283.707333ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13856.673959
+
+✖ failing tests:
+
+test at scripts/status-archive-arg-guard.test.mjs:268:1
+✖ 8. REVERSE CONTROL — `--all` still lists the excluded shapes; the cure did not break advisory output (6019.016792ms)
+  AssertionError [ERR_ASSERTION]: --all must still add the ok-excluded listing (plain 392 B vs --all 392 B)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/status-archive-arg-guard.test.mjs:273:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
