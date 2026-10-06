@@ -1,0 +1,99 @@
+[
+  {
+    "rel": "tasks/BACKLOG.md",
+    "rows": [
+      {
+        "line": "🗄️ **LB-01 + FM-01 OCTOBER 6 COMPLETE (s2933, 2026-10-06):** Private ledger coverage is 44/44 days from August 24 through October 6. The strict push gate inspected 2,614 keys in 44 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s snapshot stays outside the public tree and was pushed to the verified PRIVATE archive, ledger-backups head `06d7f8734fcbb28e07e303497d63ede589d77b85`. FM-01 remains unchanged/current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2933/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 7; no database or fire-memory bytes entered this repository.",
+        "n": 3
+      },
+      {
+        "line": "📰 **TK-01 OCTOBER 5 COMPLETE (s2930, 2026-10-06 local):** `marketing/outbox/ticker-digest-2026-10-05.md` records no player-visible changes. UTC+07 census: 42 main updates, 42 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2930/day.json`.",
+        "n": 7
+      },
+      {
+        "line": "✅ **F-2742-1 — OWNER'S DESK (2026-09-28, from s2742): origin rejects the inheritance history's 108.21 MiB trace.** A normal `git push origin main` returned rc 1 / GH001: historical blob `6e329b47a526bb6ad14ee86877f98b2669ca7606` is 113,467,543 B, above GitHub's 100 MiB limit. Evidence commit `3614d705a` introduced it; `f1a4fb214` removed the file from the tree, but merge `a950f588d` still carries that ancestry. Live origin remains `0979de763`; deployed inheritance `c4953ac7` and subsequent local bookkeeping are not backed up there. The traces remain in git and the existing private local evidence directory. Recommendation: an attended archive-first clean re-land from the last accepted origin tip, preserving the rejected lineage before changing any main pointer, then ordinary push; no force-push and no deletion. GATE: owner authorizes that history repair, rejected lineage preservation is verified, the replacement passes its required gates and origin accepts it. Fires do not repeat unchanged rejected pushes or rewrite this history. Current tdi1 main verification and audio custody remain attended-owned. Decision and options: `docs/OWNER-DESK-2026-09-19.md` §8; evidence `artifacts/s2742/origin-push-failure.txt`, `artifacts/s2742/origin-large-blobs.json`. **Attended 2026-09-28T15:57Z: the clean re-land is BUILT and BACKED UP. In a scratch clone, `git filter-repo --invert-paths` dropped only the five oversized trace-results directories from the 53 unpublished commits since `0979de763`; the new tip's tree is byte-identical to main's, no blob over 100 MB remains, 53 commits preserved, and the lineage is pushed to origin as `candidate/main-repair-2026-09-28b` (tip `23f27b940`), so today's landings are on GitHub now. The rejected lineage is kept locally as `archive/main-rejected-2026-09-28`. The old→new commit map is at `~/.goldrush/repair/commit-map-2026-09-28b.txt`; the re-point pass over every cited id (the A3 precedent) is scripted and dry-run. What waits on your word: moving local `main` onto the candidate (an ordinary fast-forward push, no force-push), the re-point commit, and rebasing lane-b's three unlanded commits. Fires are held during the move.** **s2748 verification (2026-09-28):** live origin confirms candidate `23f27b940`, but its commit-map source is `280956864`, the early s2747 checkpoint. Both trees are `3df9cafafb5dd15b3ad2f7412e062f1d8de6cc35`; this is a backup through that checkpoint, not current main. The later accepted audio test drain `8d08a8c5f` (implementation `6c6c9c268`), its review/evidence and subsequent bookkeeping are absent from the candidate. Lane-b now has zero commits ahead of main; the earlier rebase/landing to-do is superseded. Attended repair must refresh against current main and preserve this accepted drain before any pointer move. Origin main remains `0979de763`; owner gate unchanged. Evidence: `artifacts/s2748/repair-boundary.json`, `artifacts/s2748/candidate-delta.txt`. **Attended refresh (2026-09-29T02:06Z):** candidate REFRESHED against current main as `candidate/main-repair-2026-09-29` (`d7f18e6c6`, 228 commits, tip tree identical to `c5709dcd5`, which carries the s2747 audio drain s2748 named; no blob over 40 MB; map `~/.goldrush/repair/commit-map-2026-09-29.txt`, 229 lines). Main moved again within the minute (s2789's two commits, then the trace-guard master), so the repair no longer consumes a pre-cut candidate: on the owner's **go** the script RE-CUTS from the current main under the fire hold, from a data-derived list (every `-results/` path under the incident dir that is absent from the tip: 25 today), verifies identical tree, same commit count and no blob over 40 MB, backs the cut up as `candidate/main-repair-go-<stamp>`, and only then moves `main` (ordinary push, no force). The cause is being cured at the source by `lane-evidence-trace-guard-1` (lane-d). Owner gate unchanged: go / wait. ✅ DISCHARGED 2026-09-29T06:49Z on the owner's word (\"yes, go, move it please\", 2026-09-29): `scripts/attended/repair-main.sh` held the fires 04:53Z to 05:59Z, re-cut the clean lineage from the then-current main (`65f128c8a`: identical tip tree, same commit count, no blob over 40 MB, backed up as `candidate/main-repair-go-20260929-0453`), moved `main` by `update-ref` with the old value as guard, re-pointed every cited commit id (commit `4cd9cfc61`: 332 files, 1,149 insertions / 1,022 deletions, same-length ids; 0 residual old prefixes on the ledger surfaces; all 1,127 `mergeHash` values in `tasks/goals.json` resolve in the new history), reset lane-a and lane-b onto the new main (they held only old-lineage commits; lane-c/d were already ancestors), and pushed with an ORDINARY push: `0979de763..4cd9cfc61 main -> main`; origin/main = main, 0 unpushed. The rejected lineage stays under `archive/main-rejected-2026-09-28`. Method note: the regex re-point crawled 1.46 GB of evidence text at ~13 files an hour; a `grep -lF` pre-filter of the 250 changed 7-char prefixes found the 15 unreached files in 33 minutes and `repoint-ids.py --files` finished them in seconds (the option is now in the script); the crawl had rewritten 319. The cause is cured at the source by `lane-evidence-trace-guard-1` (landed `d690cae28`, runner restarted).",
+        "n": 46
+      },
+      {
+        "line": "🔧 **TWO DRAIN FINDINGS TAKEN UP (attended 2026-09-03 14:4x).** F-2471-1 (pre-existing, control-proven: a half-stamped tape plays on the legacy watch path instead of being refused; `agent-reels.spec.ts:301` red on main): QUEUED lane-c `half-stamped-reel-refusal` (decide the era refusal before choosing the replay path; the red test turns green unweakened). F-2470-1 (the mirror-exposure guard skips tables without a `key` column silently; the refusals table is one): QUEUED lane-d `ledger-exposure-guard-declares-tables` (declare the inspected corpus on the happy path, name skips, harvest declared identity columns). The transfer board's F-2472-3 is already in the fire's own corrective (`transfer-board-v2-registry-outside-engine-corpus`, running lane-b on the held content).",
+        "n": 1254
+      },
+      {
+        "line": "✅ **TRANSFER BOARD — NOW MERGED (s2473 drain, `e1753192f`); THE HOLD BELOW IS DISCHARGED AND IS KEPT ONLY AS PROVENANCE.** The v2 corrective relocated the registry and `computeEngineHash` on the merged tree measures `2a06eb51…a5aecd47`, EQUAL to `assets/engine-era.json`'s era-5 declaration and byte-identical to main (control: main measures the same). No reel is refused `reel_not_current`; L1 ADDITIVE holds. RETIRED HEADLINE FOLLOWS — 🟡🔴 **TRANSFER BOARD — HELD, NOT MERGED (s2472 drain, F-2472-3), AND SUPERSEDED BY A ONE-MOVE CURE.** The lane-b runner STOPPED at its own honesty guard rather than returning READY-FOR-GATES, and it was RIGHT: `assets/contracts` is a WHOLE-DIRECTORY entry in `ENGINE_SOURCE_INPUTS` (`scripts/assay-replay-agent.mjs:38`), so the registry at `assets/contracts/rotation-seeds.json` enters the engine identity corpus. **Control-proven, single variable — exactly 1 of the lane's 13 files is in the corpus:** main `2a06eb51…` (which EQUALS `assets/engine-era.json`'s declared era-5 `engineHash`, so the control asserts its own validity) → with only that file added, `43f54a20…`. Merging as-is refuses **every existing verified reel** as `reel_not_current` and darkens the public board. That violates the ratified spec's own law **L1 ADDITIVE** (\"existing tapes, seeds, **eras** and ranking are untouched\"), so the path — an incidental choice in a scope list — loses to the law. 🛠️ **THE CURE IS CHEAPER THAN THE ONE THE RUNNER PROPOSED and needs no owner ruling:** it suggested narrowing `computeEngineHash`'s corpus (a judgement about what \"the engine\" is, and a live desk question). Measured instead: the same file at `assets/rotations/rotation-seeds.json` returns the hash to **`2a06eb51…`, byte-identical to base** — no corpus edit, no era bump, no re-pin. A rotation calendar is door/scheduling data; `assets/contracts` is in the corpus because contract *manifests* define sim behaviour. ➡️ **FIRE-AUTHORED corrective queued lane-b: `transfer-board-v2-registry-outside-engine-corpus.md`** — a **BUILD-ON-PREDECESSOR** master (F-2089-1) declaring all 13 held paths (predicate verified held ⊆ declared, 13/13, before queueing) so the lane's complete implementation is EXTENDED, never `reset --hard` over (Mistake #2). Scope: the `git mv`, its five measured readers (`rotation-mint.mjs` needs nothing — it writes to stdout), and a new guard asserting no rotation registry lives under any corpus entry AND that the computed hash equals the declared one, with a mutation proof. 🔎 **F-2472-4 (non-blocking, for whoever drains v2):** `scripts/skillmd-guard.test.mjs` is now a FOUR-time conflict site and `public/skill.md` gained generated fences this same fire (`9b9397c8e`) — parse the union and count top-level `test(` per line, never diff it (F-2469-1); keep any ROTATION section OUTSIDE the fences. ⚠️ **One attended line, blocking nothing:** `specs/transfer-board.md` still names the old path at `:15`/`:19` and should be amended — a fire does not edit a ratified spec's rulings. Review `reviews/transfer-board.md`.",
+        "n": 1256
+      }
+    ]
+  },
+  {
+    "rel": "tasks/backlog/closed-2026-07.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/closed-2026-08.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/e2-completion.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/lane-c.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/later.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/mp-07-ladder.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/multiplayer.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/owners-desk.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/s1070.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/s1071.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/s1073.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/s1074-fire.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/s1077.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/s1078.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/s1079.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/the-epoch-work-package-ladder.md",
+    "rows": []
+  },
+  {
+    "rel": "tasks/backlog/the-saga-build-plan.md",
+    "rows": []
+  }
+]
