@@ -1,0 +1,39 @@
+tokens used
+104,285
+READY-FOR-GATES.
+
+- Two Prospector strings now use `:` and `,`; all four blank markers use `·`, preserving aria-labels.
+- Guard catches all six requested encoded forms. Injected fixture fails; repaired guard passes.
+- TypeScript/build pass. Browser run: 40 passed, 1 skipped, 3 failures. Two reproduce on pre-task source; the intermittent consent failure passed on rerun.
+- Desktop/390 px screenshots verified; zero capture console/page errors.
+
+Commits: `f1b31ceec`, `114b56201`.
+
+[Report and remaining gate steps](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/emdash-entities-1/report.md>).
+[lane-runner-v3] withheld raw/oversized evidence: artifacts/emdash-entities-1/consent-recheck-results/.last-run.json
+[lane-runner-v3] withheld raw/oversized evidence: artifacts/emdash-entities-1/control-results/.last-run.json
+[lane-runner-v3] withheld raw/oversized evidence: artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/error-context.md
+[lane-runner-v3] withheld raw/oversized evidence: artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/error-context.md
+[lane-runner-v3] withheld factory accounting: logs/guard-stats.jsonl
+evidence-budget — the evidence bytes this landing adds
+  range    : 4cd9cfc6124c059dcee55f1e0d8860dcc45d7af0..INDEX
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 26 changed evidence path(s)
+  added    : 5.7 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 5.7 MB
+  limit    : 25.0 MB per landing (scripts/evidence-budget-baseline.json)
+          0.7 MB  A  artifacts/emdash-entities-1/field-book-mobile-390.png
+          0.7 MB  A  artifacts/emdash-entities-1/adjacent-panel-shots/revoked-ability-state.png
+          0.7 MB  A  artifacts/emdash-entities-1/adjacent-panel-shots/receipts-stack.png
+          0.7 MB  A  artifacts/emdash-entities-1/adjacent-panel-shots/panel-open-desktop.png
+          0.7 MB  A  artifacts/emdash-entities-1/prospector-desktop.png
+          0.6 MB  A  artifacts/emdash-entities-1/field-book-desktop.png
+          0.6 MB  A  artifacts/emdash-entities-1/adjacent-panel-shots/panel-open-mobile.png
+          0.5 MB  A  artifacts/emdash-entities-1/prospector-mobile-390.png
+      … and 17 more growing path(s)
+  tree     : 9427.5 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 5.7 MB added, inside the 25.0 MB ceiling.
+[lane-runner-v3] withheld 0 staged evidence budget path(s); 5660723 added byte(s) remain
+[lane-runner-v3] withheld 4 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20260929-154006-lane-b-emdash-entities-1.md-withheld-paths.txt
+[lane-runner-v3] withheld 1 factory-accounting path(s)
