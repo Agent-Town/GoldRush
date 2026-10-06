@@ -17,3 +17,5 @@ The test now extends the existing temporary fixture with one unarchived s101 sel
 Classification: direct fire-side correction of its required handoff gate, against main d909a5d5a; only scripts/status-archive-arg-guard.test.mjs changes executable code (10 net lines). No lane merge or conflicts. F-2932-1 is recorded and cured in this commit set; no corrective dispatch remains. Test cleanup follows the existing temporary-fixture lifecycle.
 
 Receipts: artifacts/s2932/first-ledger-guards.txt, status-archive-control.txt, status-archive-fixed.txt, status-archive-mutation.txt, status-audit-all.txt. The mutation replaces only if (showAll) with if (false) in a copied audit tool, never in main.
+
+s2933 retention correction: the copied mutation test is preserved byte-for-byte as `artifacts/s2932/all-listing-mutation/status-archive-arg-guard.test.mjs.txt`. Its former tracked test suffix made the caller audit classify the frozen experiment as an unwired live gate. Maintained tests and the mutation transcript are unchanged; see `reviews/s2933-retained-mutation-snapshot.md`.
