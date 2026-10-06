@@ -1,0 +1,129 @@
+{
+  "triage": {
+    "observedAt": "2026-10-06T22:12:54.608Z",
+    "direct": {
+      "worktrees/lane-a": {
+        "branch": "sol/open-findings-astra",
+        "ahead": "",
+        "dirty": ""
+      },
+      "worktrees/lane-b": {
+        "branch": "sol/wave-lane-b",
+        "ahead": "",
+        "dirty": ""
+      },
+      "worktrees/lane-c": {
+        "branch": "sol/map-art-campaign-2",
+        "ahead": "",
+        "dirty": ""
+      },
+      "worktrees/lane-d": {
+        "branch": "art/portraits-e5-e10-generated",
+        "ahead": "",
+        "dirty": ""
+      }
+    },
+    "queues": {
+      "main": [],
+      "lane-a": [],
+      "lane-b": [],
+      "lane-c": [],
+      "lane-d": [],
+      "art": []
+    },
+    "running": [],
+    "orders": [],
+    "failures": [
+      {
+        "path": "tasks/failed/shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md",
+        "mtime": "2026-09-20T06:53:51.129Z"
+      },
+      {
+        "path": "tasks/failed/shipped-s1065-20260708-095336-gt-04-sightlines-ebbb04de.md",
+        "mtime": "2026-09-20T06:53:51.129Z"
+      },
+      {
+        "path": "tasks/failed/shipped-s1065-20260707-143237-damage-orientation-e9fabff7.md",
+        "mtime": "2026-09-20T06:53:51.128Z"
+      }
+    ],
+    "runs": [
+      {
+        "path": "tasks/runs/20260929-154006-lane-b-emdash-entities-1.md.log",
+        "mtime": "2026-09-29T08:52:32.764Z"
+      },
+      {
+        "path": "tasks/runs/20260929-154006-lane-c-skill-door-unclaimed-refresh-1.md.log",
+        "mtime": "2026-09-29T08:51:14.944Z"
+      }
+    ]
+  },
+  "proof": {
+    "a5aad2abf": "ancestor",
+    "73b82dbfe": "ancestor",
+    "9a216a07d": "ancestor",
+    "40dbcf2f8": "ancestor"
+  },
+  "corpusFiles": 19,
+  "selectedRows": [
+    {
+      "at": "tasks/BACKLOG.md:3",
+      "text": "🗄️ **LB-01 + FM-01 OCTOBER 6 COMPLETE (s2933, 2026-10-06):** Private ledger coverage is 44/44 days from August 24 through October 6. The strict push gate inspected 2,614 keys in 44 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s snapshot stays outside the public tree and was pushed to the verified PRIVATE archive, ledger-backups head `06d7f8734fcbb28e07e303497d63ede589d77b85`. FM-01 remains unchanged/current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2933/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 7; no database or fire-memory bytes entered this repository."
+    },
+    {
+      "at": "tasks/BACKLOG.md:7",
+      "text": "📰 **TK-01 OCTOBER 5 COMPLETE (s2930, 2026-10-06 local):** `marketing/outbox/ticker-digest-2026-10-05.md` records no player-visible changes. UTC+07 census: 42 main updates, 42 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2930/day.json`."
+    },
+    {
+      "at": "tasks/BACKLOG.md:38",
+      "text": "🔧 **LANE EVIDENCE TRACE GUARD 1 LANDED — `lane-evidence-trace-guard-1` as `f19e79de3` (drained attended 2026-09-29).** Authored attended from F-2742-1 (the 108 MB `trace.zip` that GitHub refused for eleven hours). Astra on lane-d, two attempts (attempt 1 self-blocked on my clause, F-ATT-12; attempt 2 `00e7839ba`, 77,722 tokens, 02:28Z to 02:35Z; plus my 5-line review fix on the lane: the runner fixture now removes its `lane-evidence-receipt-*` scratch at test end, after six survived the first landing battery's fixture-teardown guard, F-TEG1-3): `commit_lane_delta` now withholds `**/test-results/**`, `**/*-results/**`, `**/trace.zip`, `**/*.webm`, `**/test-failed-*.png` and any regular `artifacts/**` file over 50,000,000 bytes (measured by `stat`), rename pairs together, each path logged `withheld …` and appended to `<run-log-stem>-withheld-paths.txt`; task-staged raw files are unstaged (baseline index entries untouched); before the commit the runner measures the index against `merge-base main HEAD` with the new `evidence-budget.mjs --staged` and withholds the largest staged `artifacts/**` blobs until the 25,000,000-byte task budget fits; a measurement error withholds the auto-commit itself with an explicit receipt (fail-closed, disk and index retained). Fixtures: 11 raw/oversized paths withheld incl. a 51,000,000-byte `big.bin`; a 26,000,006-byte staging trims its 17,000,000-byte largest file and commits 9,000,006 bytes; exactly 25,000,000 commits untouched; a rename into `x-results/` withheld both sides. `node --test scripts/evidence-budget.test.mjs` 21/21 (14 + 7 new); `runner-commit-decoupling-guard.test.sh` 13/13; `bash -n`, tsc, build green; `src/**` unchanged. Runn"
+    },
+    {
+      "at": "tasks/BACKLOG.md:43",
+      "text": "🎧 **AUDIO MUSIC TOGGLE 1 LANDED — `audio-music-toggle-1` as `176aff07c` (drained attended 2026-09-28).** From `reviews/audio-review-1.md` rank 1 (Opus 5.5, at the owner's word: users asked how to disable the music quickly). Astra on lane-b, three attempts (`a029c8f8e`, `bdd70d410`, `97a6a6493`; 348,776 tokens; the second completed profile registration after F-ATT-11, the third preserved the phone HUD census without re-baselining): a fourth per-profile key `gr.audio.music-off.v1` registered in `src/game/ProfileStorage.ts`; `SoundSystem` treats music-off like mute for music loops only (no fetch, live resume, SFX untouched, the Music Volume level preserved); a 44 px `music-toggle` beside pause in the run HUD, on the town bar, on the start menu and on the first-boot card; a Music checkbox beside the slider; one Gazette clause. Interactions to silence the music: a run 3 plus a scroll → 1 tap, town and menu 2 → 1, first boot none → 1; the pause slider needs a scroll on both devices (measured). New spec 10/10, six adjacent audio suites 44/44, zero console/page errors, evidence 7.7 MB. No new keyboard key and M unchanged (owner F-AUD-12). The fires' diff-selected wrapper could not finish the full Node battery inside its 900 s cap (F-2737-1, the fire's wrapper corrective handed to Astra), so the landing was done attended and pinned `reviews/audio-music-toggle-1.md`. **s2743 verification 2026-09-28:** merge `176aff07c`, pin `292434faa` and bookkeeping `a7410b05a` are on main; the goal is merged. Attended deployment verified `a7410b05` with ASSAYER SYNCED, first-town payload 34,353,396 / 52,000,000 B. Candidate browser 64/64 and release 30/30; its two pre-pin engine-registry failur"
+    },
+    {
+      "at": "tasks/BACKLOG.md:46",
+      "text": "✅ **F-2742-1 — OWNER'S DESK (2026-09-28, from s2742): origin rejects the inheritance history's 108.21 MiB trace.** A normal `git push origin main` returned rc 1 / GH001: historical blob `6e329b47a526bb6ad14ee86877f98b2669ca7606` is 113,467,543 B, above GitHub's 100 MiB limit. Evidence commit `3614d705a` introduced it; `f1a4fb214` removed the file from the tree, but merge `a950f588d` still carries that ancestry. Live origin remains `0979de763`; deployed inheritance `c4953ac7` and subsequent local bookkeeping are not backed up there. The traces remain in git and the existing private local evidence directory. Recommendation: an attended archive-first clean re-land from the last accepted origin tip, preserving the rejected lineage before changing any main pointer, then ordinary push; no force-push and no deletion. GATE: owner authorizes that history repair, rejected lineage preservation is verified, the replacement passes its required gates and origin accepts it. Fires do not repeat unchanged rejected pushes or rewrite this history. Current tdi1 main verification and audio custody remain attended-owned. Decision and options: `docs/OWNER-DESK-2026-09-19.md` §8; evidence `artifacts/s2742/origin-push-failure.txt`, `artifacts/s2742/origin-large-blobs.json`. **Attended 2026-09-28T15:57Z: the clean re-land is BUILT and BACKED UP. In a scratch clone, `git filter-repo --invert-paths` dropped only the five oversized trace-results directories from the 53 unpublished commits since `0979de763`; the new tip's tree is byte-identical to main's, no blob over 100 MB remains, 53 commits preserved, and the lineage is pushed to origin as `candidate/main-repair-2026-09-28b` (tip `23f27b940`), so "
+    },
+    {
+      "at": "tasks/BACKLOG.md:132",
+      "text": "🔧 **LANE EVIDENCE TRACE GUARD 1 — `lane-evidence-trace-guard-1` AUTHORED 2026-09-29, attempt 1 STOPPED on lane-d (Astra):** F-2742-1's cause, cured at the source: the lane runner's auto-commit withholds `**/test-results/**`, `**/*-results/**`, `trace.zip`, `*.webm`, `test-failed-*.png` and any `artifacts/**` file over 50 MB (listed, never deleted), a `--staged` mode of `evidence-budget.mjs` keeps a lane's staged evidence under the 25 MB task budget before the commit, guard tests with fixtures; scripts only; the runner's RETENTION epitaph pointers will rot by the inserted lines and the drain re-bases them (F-2319-1 lifecycle). GATE: the guard tests, the withhold list in the runner log, the epitaph shift reported. **s2790 verification 2026-09-29T02:16Z:** a444adb6b contains only a 57-line blocker report (40,431 tokens, 2 minutes); no scripts or tests changed. The task forbids edits during an active lane run, including its own, and lacks an exception for the inactive lane copy. Build PASS is lane-reported; requested guards 0/0, all implementation remains owed. Goal blocked/gate-side; no merge or re-queue. GATE: attended author clarifies inactive-copy scope or supplies a compliant execution window, preserves the report-only predecessor, then the existing implementation and its acceptance gates complete. The lane and stopped receipt remain intact. Review: reviews/lane-evidence-trace-guard-1-s2790.md; evidence artifacts/s2790/report.md. **Attended 2026-09-29T02:28Z: s2790's GATE SATISFIED — attempt 1 (run `20260929-090757`, 40,431 tokens, 02:07Z to 02:10Z) STOPPED with zero edits, report committed on lane-d as `a444adb6b`: my firewall's last sentence (\"do not edit the runner w"
+    },
+    {
+      "at": "tasks/BACKLOG.md:246",
+      "text": "🔺 **F-2299-1 — OWNER'S DESK (2026-09-24, from the rotation check after the owner's \"Ok, I updaed all the keys\"): the rotation's last mile: two new values into `.env.local`, and the Claude Code token still the exposed one.** VERIFIED 2026-09-24 read-only, no value printed or copied: the edge API token in `.env.local` is DEAD at its provider (the token-verify endpoint answers `1000 Invalid API Token`) and the voice key is DEAD (`HTTP 401` on the user endpoint), so both rotations happened at the providers; but `.env.local` was last written 2026-09-20, so the file `scripts/deploy.sh` sources still holds the dead values and **every deploy aborts at the wrangler auth until the owner pastes the new `CLOUDFLARE_API_TOKEN=` and `ELEVENLABS_API_KEY=` lines** (a failed deploy in a fire log until then is THIS, not a regression; do not file it). The fires' own credential, `CLAUDE_CODE_OAUTH_TOKEN` (the \"coding-agent subscription token\" of ruling 1), still authenticates through the fires' exact path (`claude auth status` under `~/.claude-fires` reads loggedIn; a one-word `-p` probe answered), so the value exposed on 2026-08-25 is STILL LIVE: the owner mints a new one (`claude setup-token`), pastes it as `CLAUDE_CODE_OAUTH_TOKEN=`, and revokes the old one in his account; the attended session re-probes and closes. The droplet holds no stray copy (`find / -name .env.local` empty, `/opt/goldrush/.env.local` absent, read-only over the deploy's own ssh path). The Codex login was refreshed today (`~/.codex/auth.json`, \"Logged in using ChatGPT\"). Retires when: both new values answer live to the same read-only calls, the Claude probe passes on a NEW value (`.env.local` rewritten) and the owner"
+    },
+    {
+      "at": "tasks/BACKLOG.md:510",
+      "text": "🔺 **F-2642-3 — OWNER: the registry deploy day is now ACTIONABLE, and the desk entry's own trigger condition has been met.** `docs/OWNER-DESK-2026-09-19.md:100–101` reads *\"Astra is landing the registry code behind a closed gate now (lane-b) … I bring you the checklist when the code lands.\"* **The code has landed (`fdfcab4d0`) and the checklist is `docs/ops/account-registry.md`** — five steps, each with its verification and its rollback sentence. ⚖️ **NOTHING DEPLOYED AND NOTHING MIGRATED, by construction and not by promise: the Pages binding ships as a COMMENTED block in `wrangler.toml` with `ACCOUNT_REGISTRY_SCOPE` deliberately unset, so both are absent and the door behaves byte-identically to main — which `closed-gate.test.mjs` asserts directly rather than by inspection.** Routine Pages deploys are unaffected. ⛔ **NO FIRE MAY ENABLE THIS**: the five steps need the owner's own deployment inventory, a quiesce of every identity writer including previews, an independently verified private export, a migration secret and a post-bootstrap smoke test of legacy saves — none of which the repo can know or automate. It is on the desk, not on the board."
+    },
+    {
+      "at": "tasks/BACKLOG.md:1254",
+      "text": "🔧 **TWO DRAIN FINDINGS TAKEN UP (attended 2026-09-03 14:4x).** F-2471-1 (pre-existing, control-proven: a half-stamped tape plays on the legacy watch path instead of being refused; `agent-reels.spec.ts:301` red on main): QUEUED lane-c `half-stamped-reel-refusal` (decide the era refusal before choosing the replay path; the red test turns green unweakened). F-2470-1 (the mirror-exposure guard skips tables without a `key` column silently; the refusals table is one): QUEUED lane-d `ledger-exposure-guard-declares-tables` (declare the inspected corpus on the happy path, name skips, harvest declared identity columns). The transfer board's F-2472-3 is already in the fire's own corrective (`transfer-board-v2-registry-outside-engine-corpus`, running lane-b on the held content)."
+    },
+    {
+      "at": "tasks/BACKLOG.md:1256",
+      "text": "✅ **TRANSFER BOARD — NOW MERGED (s2473 drain, `e1753192f`); THE HOLD BELOW IS DISCHARGED AND IS KEPT ONLY AS PROVENANCE.** The v2 corrective relocated the registry and `computeEngineHash` on the merged tree measures `2a06eb51…a5aecd47`, EQUAL to `assets/engine-era.json`'s era-5 declaration and byte-identical to main (control: main measures the same). No reel is refused `reel_not_current`; L1 ADDITIVE holds. RETIRED HEADLINE FOLLOWS — 🟡🔴 **TRANSFER BOARD — HELD, NOT MERGED (s2472 drain, F-2472-3), AND SUPERSEDED BY A ONE-MOVE CURE.** The lane-b runner STOPPED at its own honesty guard rather than returning READY-FOR-GATES, and it was RIGHT: `assets/contracts` is a WHOLE-DIRECTORY entry in `ENGINE_SOURCE_INPUTS` (`scripts/assay-replay-agent.mjs:38`), so the registry at `assets/contracts/rotation-seeds.json` enters the engine identity corpus. **Control-proven, single variable — exactly 1 of the lane's 13 files is in the corpus:** main `2a06eb51…` (which EQUALS `assets/engine-era.json`'s declared era-5 `engineHash`, so the control asserts its own validity) → with only that file added, `43f54a20…`. Merging as-is refuses **every existing verified reel** as `reel_not_current` and darkens the public board. That violates the ratified spec's own law **L1 ADDITIVE** (\"existing tapes, seeds, **eras** and ranking are untouched\"), so the path — an incidental choice in a scope list — loses to the law. 🛠️ **THE CURE IS CHEAPER THAN THE ONE THE RUNNER PROPOSED and needs no owner ruling:** it suggested narrowing `computeEngineHash`'s corpus (a judgement about what \"the engine\" is, and a live desk question). Measured instead: the same file at `assets/rotations/rotation-seeds.json` returns"
+    },
+    {
+      "at": "tasks/BACKLOG.md:1817",
+      "text": "🔺 **F-2299-1 OPEN, NARROWED 2026-09-24 to the Claude Code token and two local pastes (the desk row at the top) — OWNER (s2299 2026-08-25): THE DROPLET SYNC SHIPPED FIVE LIVE CREDENTIALS, AND THE LEAK WAS IN THE RUNBOOK'S OWN RECIPE, NOT THE NEW LEG — CURED ONE LINE, BUT A COPY MAY ALREADY BE ON THE BOX.** Executing F-2298-1's recommendation (a) on a dry board. **Measured LOCAL and READ-ONLY: no ssh to production, nothing deployed, no credential VALUE read, printed or committed.** 🔑 **CORRECTION 1 — THE PAYLOAD IS FIVE CREDENTIALS, NOT ONE.** `.env.local` (428 B, mode 600, untracked, `.gitignore:3`) carries `ELEVENLABS_API_KEY`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `OPENROUTER_API_KEY` and **`CLAUDE_CODE_OAUTH_TOKEN` — the factory's own Claude subscription credential, i.e. the thing that pays for every fire and every lane runner.** F-2298-1 priced this as \"a live Cloudflare token\"; the desk was under-informed by four keys. 🔑 **CORRECTION 2, AND IT IS THE ONE THAT MOVES THE DECISION — THE LEG IS NOT A DIVERGENCE FROM THE RUNBOOK.** F-2298-1 read `docs/ops/agenttown-server.md:40`'s allowlist and called the denylist a divergence. **The runbook contains BOTH recipes: an allowlist at `:40` and, at `:57`, a denylist that is BYTE-IDENTICAL to `deploy.sh:170` after normalising whitespace and `--timeout=60`** (verified by extracting both strings from their files and comparing, not by eye). ➡️ **So the exposure is NOT a defect the new leg introduced — it is a defect in the DOCUMENTED HAND RECIPE, which predates the leg and which the owner may have run at any time since the box was set up. The exposure window is therefore not \"since 12:21 today\"; it is UNKNOWN.** That "
+    }
+  ]
+}
+PID  PPID TTY      STAT STARTED                      COMM
+68091 56513 ??       Ss   Wed Oct  7 05:12:53 2026     /opt/homebrew/bin/node
+PID  PPID TTY      STAT STARTED                      COMM
+56513 56512 ??       S    Wed Oct  7 05:11:12 2026     /Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex
+PID  PPID TTY      STAT STARTED                      COMM
+56512 56462 ??       S    Wed Oct  7 05:11:12 2026     node
+PID  PPID TTY      STAT STARTED                      COMM
+56462     1 ??       S    Wed Oct  7 05:11:12 2026     /bin/bash
+PID  PPID TTY      STAT STARTED
+31360     1 ??       Ss   Tue Sep 29 10:47:38 2026
+semaphore 2026-10-06T22:11:12.136Z
+[fire-runner] 02:55:15 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 03:57:26 FIRE START (engine codex, model from ~/.codex config)
+[fire-runner] 04:11:10 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 05:11:12 FIRE START (engine codex, model from ~/.codex config)
