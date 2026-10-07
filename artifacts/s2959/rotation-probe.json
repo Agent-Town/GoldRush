@@ -1,0 +1,46 @@
+{
+  "observedAt": "2026-10-07T10:57:52.357Z",
+  "liveDocumentRotations": [
+    "r2026w37",
+    "r2026w38",
+    "r2026w39",
+    "r2026w40"
+  ],
+  "reads": [
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w41",
+      "status": 400,
+      "ok": false,
+      "error": "bad_rotation",
+      "message": "Rotation not accepted.",
+      "topLevelKeys": [
+        "ok",
+        "error",
+        "message"
+      ]
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w40",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "topLevelKeys": [
+        "ok",
+        "board",
+        "rotation",
+        "standings"
+      ]
+    }
+  ],
+  "scope": "Read-only public GETs; no standing submitted.",
+  "localRotations": [
+    "r2026w37",
+    "r2026w38",
+    "r2026w39",
+    "r2026w40",
+    "r2026w41",
+    "r2026w42"
+  ],
+  "liveOpenRotations": []
+}
