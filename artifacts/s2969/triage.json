@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-07T22:22Z",
+  "queues": {
+    "lane-a": [],
+    "art": [],
+    "lane-c": [],
+    "lane-d": [],
+    "lane-b": [],
+    "main": []
+  },
+  "running": [],
+  "orders": [],
+  "failed": [
+    {
+      "name": "shipped-s1065-20260708-095336-gt-04-sightlines-ebbb04de.md",
+      "mtime": "2026-09-20T06:53:51.128553+00:00"
+    },
+    {
+      "name": "shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md",
+      "mtime": "2026-09-20T06:53:51.128510+00:00"
+    },
+    {
+      "name": "shipped-s1065-20260708-095251-tr-01-continuous-ground-8aca6950.md",
+      "mtime": "2026-09-20T06:53:51.128464+00:00"
+    }
+  ],
+  "runs": [
+    {
+      "name": "20260929-154006-lane-b-emdash-entities-1.md.log",
+      "mtime": "2026-09-29T08:52:32.763515+00:00"
+    },
+    {
+      "name": "20260929-154006-lane-c-skill-door-unclaimed-refresh-1.md.log",
+      "mtime": "2026-09-29T08:51:14.944311+00:00"
+    }
+  ],
+  "lanes": {
+    "a": {
+      "branch": "sol/open-findings-astra",
+      "ahead": "",
+      "dirty": ""
+    },
+    "b": {
+      "branch": "sol/wave-lane-b",
+      "ahead": "",
+      "dirty": ""
+    },
+    "c": {
+      "branch": "sol/map-art-campaign-2",
+      "ahead": "",
+      "dirty": ""
+    },
+    "d": {
+      "branch": "art/portraits-e5-e10-generated",
+      "ahead": "",
+      "dirty": ""
+    }
+  }
+}

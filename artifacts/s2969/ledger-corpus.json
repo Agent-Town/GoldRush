@@ -1,0 +1,81 @@
+{
+  "files": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "bytes": 8693690
+    },
+    {
+      "rel": "tasks/backlog/closed-2026-07.md",
+      "bytes": 578262
+    },
+    {
+      "rel": "tasks/backlog/closed-2026-08.md",
+      "bytes": 128386
+    },
+    {
+      "rel": "tasks/backlog/e2-completion.md",
+      "bytes": 1955
+    },
+    {
+      "rel": "tasks/backlog/lane-c.md",
+      "bytes": 778
+    },
+    {
+      "rel": "tasks/backlog/later.md",
+      "bytes": 2199
+    },
+    {
+      "rel": "tasks/backlog/mp-07-ladder.md",
+      "bytes": 922
+    },
+    {
+      "rel": "tasks/backlog/multiplayer.md",
+      "bytes": 2642
+    },
+    {
+      "rel": "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+      "bytes": 33751
+    },
+    {
+      "rel": "tasks/backlog/owners-desk.md",
+      "bytes": 8427
+    },
+    {
+      "rel": "tasks/backlog/s1070.md",
+      "bytes": 2933
+    },
+    {
+      "rel": "tasks/backlog/s1071.md",
+      "bytes": 1886
+    },
+    {
+      "rel": "tasks/backlog/s1073.md",
+      "bytes": 1624
+    },
+    {
+      "rel": "tasks/backlog/s1074-fire.md",
+      "bytes": 1665
+    },
+    {
+      "rel": "tasks/backlog/s1077.md",
+      "bytes": 10271
+    },
+    {
+      "rel": "tasks/backlog/s1078.md",
+      "bytes": 18735
+    },
+    {
+      "rel": "tasks/backlog/s1079.md",
+      "bytes": 49952
+    },
+    {
+      "rel": "tasks/backlog/the-epoch-work-package-ladder.md",
+      "bytes": 7255
+    },
+    {
+      "rel": "tasks/backlog/the-saga-build-plan.md",
+      "bytes": 1128
+    }
+  ],
+  "top": "🗄️ **LB-01 + FM-01 OCTOBER 7 COMPLETE (s2953, 2026-10-07):** The source snapshot arrived after s2952's pending-supply check. Pulled October 7 outside the public tree; strict coverage is now 45/45 days, August 24–October 7. The push gate inspected 2,708 keys in 45 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Live archive verified PRIVATE; one new snapshot pushed to ledger-backups at `f88c5ae78218c779f1ed62f6c7cd9873728d1b51`. FM-01 was discharged by s2952 today and its live head remains `53d87470fb2670626fb4605d4dc0eb5bffd899fb`; no duplicate memory push. Evidence: `artifacts/s2953/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `private-heads.txt`. No private corpus entered this repository. Next coverage day October 8.\n\n🗓️ **RT-01 WEEK 42 MINTED (s2951, 2026-10-07):** `r2026w42` opens October 12 00:00 UTC and closes October 19 00:00 UTC; six seeds, the five earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-41 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w42.md`; evidence: `artifacts/s2951/`. Deployment remains deferred under the owner release hold. The next authorized attended runtime landing must carry weeks 41 and 42, then verify ASSAYER SYNCED; week 41 is already overdue and week 42 opens October 12. Live build 954bb2cd still serves weeks 37–40: week-41 GET 400 bad_rotation, week-40 control 200. No dispatch or deployment by this fire.\n\n📰 **TK-01 OCTOBER 6 COMPLETE (s2950, 2026-10-07 local):** `marketing/outbox/ticker-digest-2026-10-06.md` records no player-visible changes. UTC+07 census: 41 main updates, 41 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2950/day.json`.\n\n✅ **F-2933-1 — CURED (s2933, 2026-10-06): a retained mutation-test copy was classified as an unwired live gate.** The required closing ledger passed 1,262/1,263 and refused `artifacts/s2932/all-listing-mutation/status-archive-arg-guard.test.mjs`. The caller audit discovers tracked test suffixes, so the prior final commit admitted this frozen experiment into its subject set. Renamed the snapshot to `.test.mjs.txt`, preserving all 25,366 bytes and its SHA-256; the mutated companion and transcript remain. Isolated caller audit exits 1 before, 0 after the staged rename. No maintained test, assertion, audit rule, baseline or product behavior changed. Full corrected ledger receipt: `artifacts/s2933/ledger-result.json`; review: `reviews/s2933-retained-mutation-snapshot.md`. This is a correction exposed by the mandatory closing gate; no factory slice or dispatch authored.\n\n🗄️ **LB-01 + FM-01 OCTOBER 6 COMPLETE (s2933, 2026-10-06):** Private ledger coverage is 44/44 days from August 24 through October 6. The strict push gate inspected 2,614 keys in 44 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s snapshot stays outside the public tree and was pushed to the verified PRIVATE archive, ledger-backups head `06d7f8734fcbb28e07e303497d63ede589d77b85`. FM-01 remains unchanged/current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2933/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 7; no database or fire-memory bytes entered this repository.\n\n✅ **F-2932-1 — CURED (s2932, 2026-10-06): the mandatory ledger assumed its live 40-commit archive window contained an excluded rewrite.** The fire's prescribed closing battery exposed this gate defect: 1,262/1,263 passed; isolated unchanged guard 11/12, with plain and `--all` each 392 bytes because all 40 replacements lawfully had zero same-session exclusions. Arm 8 now builds one same-session rewrite in the existing temporary fixture, preserving every assertion. Focused guard 12/12; disabling the `--all` listing in a copied tool still fails that exact arm. No audit semantics, history, timeout or product code changed. Full closing ledger result: `artifacts/s2932/ledger-result.json`; review: `reviews/s2932-status-archive-exclusion-fixture.md`. This repairs the fire's own closing gate, not a new factory audit or dispatch.\n\n📰 **TK-01 OCTOBER 5 COMPLETE (s2930, 2026-10-06 local):** `marketing/outbox/ticker-digest-2026-10-05.md` records no player-visible changes. UTC+07 census: 42 main updates, 42 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2930/day.json`.\n\n🗄️ **LB-01 + FM-01 OCTOBER 5 COMPLETE (s2913, 2026-10-05):** The server snapshot is now available, superseding s2912’s pending-supply verdict. Private ledger coverage is 43/43 days from August 24 through October 5; strict push gate inspected 2,520 keys in 43 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s mirror stays outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `ac6a3160cd012f54f59f1d5ac16b1ee834b05703`. FM-01 remains unchanged/current, live head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2913/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 6; no database bytes entered the public tree.\n\n🗄️ **LB-01 + FM-01 OCTOBER 4 COMPLETE (s2893, 2026-10-04):** Private ledger coverage 42/42 days from August 24 through October 4; strict push gate inspected 2,426 keys, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s mirror remains outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `31819c2a96d37613670a16ce80bd4cbe1da17fed`. FM-01 reports unchanged and current; live fire-memory head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2893/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 5; no database bytes entered the public tree.\n\n📰 **TK-01 OCTOBER 4 COMPLETE (s2909, 2026-10-05 local):** `marketing/outbox/ticker-digest-2026-10-04.md` records no player-visible changes. UTC+07 census: 37 main updates, 37 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2909/day.json`.\n\n📰 **TK-01 OCTOBER 3 COMPLETE (s2890, 2026-10-04 local):** `marketing/outbox/ticker-digest-2026-10-03.md` records no player-visible changes. UTC+07 census: 44 main updates, 44 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2890/day.json`.\n\n🗄️ **LB-01 + FM-01 OCTOBER 3 COMPLETE (s2873, 2026-10-03):** Private ledger coverage 41/41 days from August 24 through October 3; strict push gate inspected 2,332 keys, zero account-class or unrecognized rows and zero unreadable mirrors. Today’s mirror remains outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `55a33dc5b63a68c16916ee138faa0380bb5de785`. FM-01 reports unchanged and current; live fire-memory head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2873/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 4; no database bytes entered the public tree.\n\n📰 **TK-01 OCTOBER 2 COMPLETE (s2870, 2026-10-03 local):** `marketing/outbox/ticker-digest-2026-10-02.md` records no player-visible changes. UTC+07 census: 40 main updates, 40 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2870/day.json`.\n\n🗄️ **LB-01 + FM-01 OCTOBER 2 COMPLETE (s2853, 2026-10-02):** Private ledger coverage 40/40 days from August 24 through October 2; strict push gate inspected 2,238 keys, zero account-class or unrecognized rows and zero unreadable mirrors. Today's mirror remains outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `b1419a535086b73a5353e34871d73bf5d26b31fd`. FM-01 reports unchanged and current; live fire-memory head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2853/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 3; no backup bytes entered the public tree.\n\n📰 **TK-01 OCTOBER 1 COMPLETE (s2850, 2026-10-02 local):** `marketing/outbox/ticker-digest-2026-10-01.md` records no player-visible changes. UTC+07 census: 42 main updates, 42 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2850/day.json`.\n\n🗄️ **LB-01 + FM-01 OCTOBER 1 COMPLETE (s2833, 2026-10-01):** Private ledger coverage 39/39 days from August 24 through October 1; strict push gate inspected 2,144 keys, zero account-class or unrecognized rows and zero unreadable mirrors. Today's mirror is outside this public repository and pushed to the verified PRIVATE archive; live ledger-backups head `75e5ddeda7c515ee2ed45a93fee351165e37305c`. FM-01 was discharged by s2832 today; its receipt and live head `53d87470fb2670626fb4605d4dc0eb5bffd899fb` re-verified, no duplicate mirror write. Supersedes s2832's pending-source state: the October 1 snapshot now exists and is backed up. Evidence: `artifacts/s2833/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `private-heads.txt`. Next coverage day October 2; no backup bytes entered the public tree.\n\n📰 **TK-01 SEPTEMBER 30 COMPLETE (s2830, 2026-10-01 local):** `marketing/outbox/ticker-digest-2026-09-30.md` covers the week-41 rotation mint `11534c554`, awaiting authorized deployment before October 5 00:00 UTC. UTC+07 census: 46 main updates, 46 pinned first-parent commits, one player-path update; September 25 busy-day control 136. Gazette draft already present; publication remains owner-only. Evidence: `artifacts/s2830/day.json`.\n\n🗄️ **LB-01 + FM-01 SEPTEMBER 30 COMPLETE (s2812, 2026-09-30):** Private ledger coverage 38/38 days from August 24 through September 30; 2,050 keys checked, zero account-class or unrecognized rows. Today's mirror is outside this public repository and pushed to the verified PRIVATE archive, ledger-backups head `251d175f15ebe662f0c259a7115952537c84adc9`. Fire memory is unchanged and current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Live remote heads verified. Evidence: `artifacts/s2812/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day is October 1; no backup bytes entered the public tree.\n\n📰 **TK-01 SEPTEMBER 29 COMPLETE (s2810, 2026-09-30 local):** `marketing/outbox/ticker-digest-2026-09-29.md` covers two player-visible landings over the UTC+07 day: the five first-secure credits and panel/Field Book punctuation. Census: 220 main updates, 223 pinned first-parent commits, two player-path updates; busy-day control 136. The one non-ancestral main update has byte-identical trees and adds no news. The week-41 mint `11534c554` has a September 30 ROUNDUP-CLASS Gazette draft. All publication stays owner-only. Evidence: `artifacts/s2810/day.json`.\n\n🗓️ **RT-01 WEEK 41 MINTED (s2810, 2026-09-30):** `r2026w41` opens October 5 00:00 UTC and closes October 12 00:00 UTC; six seeds, the four earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-40 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w41.md`; evidence: `artifacts/s2810/`. Deployment remains deferred under the owner release hold; next authorized runtime landing must carry week 41 before October 5 and verify ASSAYER SYNCED. **s2910 verification, 2026-10-05 00:18 UTC: the deployment deadline has PASSED.** Live build remains `954bb2cd`; the served skill registry ends at week 40 with no open window. Read-only week-41 transfer-board GET returns HTTP 400 `bad_rotation`, versus week-40 HTTP 200. A local selector control over the served registry chooses closed week-40 seeds for all six contracts; main chooses week 41. The existing standings window check implies `rotation_closed` for otherwise valid old-week submissions; no live standing was submitted. The unsigned owner SHIP/HOLD in `docs/release/verdict-954bb2cd.md` and attended handover 13z-106/107 retain the release hold. Next: authorized attended runtime deployment carrying week 41, then ASSAYER SYNCED and a fresh week-41 read. Evidence: `artifacts/s2910/live-release.json`, `rotation-probe.json` and `report.md`. This supersedes the future-tense deadline above; no deploy by this fire.\n\n✒️ **EMDASH ENTITIES 1 LANDED — `emdash-entities-1` as `a5aad2abf` (drained attended 2026-09-29).** From the THREAD-v3 review. Astra on lane-b (`f1b31ceec` + `114b56201` + the runner commit `f2a0903a6`, 104,285 tokens, 08:40Z to 08:54Z): `src/ui/ProspectorPanel.ts:12` \"acts with your approval: repairs, pickups\" and `:190` \"…, secured claims advance the Prospector\"; the four `&mdash;` blank markers in `src/encyclopedia/reader.ts` (`:811`, `:816`, `:909`, `:1129`) are a middle dot with every aria-label kept; `scripts/no-emdash-guard.test.mjs` scans with `/—|&(?:mdash|ndash|#821[12]|#x2014);|\\\\u2014/i` over source, human-text"
+}
