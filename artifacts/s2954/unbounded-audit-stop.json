@@ -1,0 +1,12 @@
+{
+  "pid": 92692,
+  "ppid": 91015,
+  "command": "node scripts/status-archive-audit.mjs",
+  "ancestry": [
+    92692,
+    91015,
+    52397
+  ],
+  "reason": "Accidentally invoked unbounded history audit; its own banner estimates 74.2 minutes and known excused legacy drops. Terminating only this owned auxiliary process. Original ledger battery includes the correct --limit 40 --quiet audit.",
+  "signal": "SIGTERM"
+}
