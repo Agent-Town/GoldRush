@@ -1,0 +1,39 @@
+{
+  "observedAt": "2026-10-07T00:48:15.095Z",
+  "load": [
+    68.77978515625,
+    69.80859375,
+    64.208984375
+  ],
+  "runnable": 7,
+  "highCpu": [
+    {
+      "pid": "523",
+      "ppid": "1",
+      "state": "Rs",
+      "cpu": "100.2",
+      "comm": "/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/FSEvents.framework/Versions/A/Support/fseventsd"
+    },
+    {
+      "pid": "73041",
+      "ppid": "72941",
+      "state": "R",
+      "cpu": "100.0",
+      "comm": "/Users/robin/Library/Application Support/svm/0.8.26/solc-0.8.26"
+    },
+    {
+      "pid": "74795",
+      "ppid": "74709",
+      "state": "R",
+      "cpu": "99.4",
+      "comm": "/Users/robin/Library/Application Support/svm/0.8.26/solc-0.8.26"
+    },
+    {
+      "pid": "81190",
+      "ppid": "1",
+      "state": "R",
+      "cpu": "59.4",
+      "comm": "/Applications/Sublime Text.app/Contents/MacOS/sublime_text"
+    }
+  ]
+}
