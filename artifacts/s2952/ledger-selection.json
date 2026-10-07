@@ -1,0 +1,217 @@
+{
+  "files": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "rows": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1,
+      "line": "🗓️ **RT-01 WEEK 42 MINTED (s2951, 2026-10-07):** `r2026w42` opens October 12 00:00 UTC and closes October 19 00:00 UTC; six seeds, the five earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-41 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w42.md`; evidence: `artifacts/s2951/`. Deployment remains deferred under the owner release hold. The next authorized attended runtime landing must carry weeks 41 and 42, then verify ASSAYER SYNCED; week 41 is already overdue and week 42 opens October 12. Live build 954bb2cd still serves weeks 37–40: week-41 GET 400 bad_rotation, week-40 control 200. No dispatch or deployment by this fire.",
+      "where": "1"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 2,
+      "line": "",
+      "where": "2"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 3,
+      "line": "📰 **TK-01 OCTOBER 6 COMPLETE (s2950, 2026-10-07 local):** `marketing/outbox/ticker-digest-2026-10-06.md` records no player-visible changes. UTC+07 census: 41 main updates, 41 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2950/day.json`.",
+      "where": "3"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 4,
+      "line": "",
+      "where": "4"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 5,
+      "line": "✅ **F-2933-1 — CURED (s2933, 2026-10-06): a retained mutation-test copy was classified as an unwired live gate.** The required closing ledger passed 1,262/1,263 and refused `artifacts/s2932/all-listing-mutation/status-archive-arg-guard.test.mjs`. The caller audit discovers tracked test suffixes, so the prior final commit admitted this frozen experiment into its subject set. Renamed the snapshot to `.test.mjs.txt`, preserving all 25,366 bytes and its SHA-256; the mutated companion and transcript remain. Isolated caller audit exits 1 before, 0 after the staged rename. No maintained test, assertion, audit rule, baseline or product behavior changed. Full corrected ledger receipt: `artifacts/s2933/ledger-result.json`; review: `reviews/s2933-retained-mutation-snapshot.md`. This is a correction exposed by the mandatory closing gate; no factory slice or dispatch authored.",
+      "where": "5"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 6,
+      "line": "",
+      "where": "6"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 7,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 6 COMPLETE (s2933, 2026-10-06):** Private ledger coverage is 44/44 days from August 24 through October 6. The strict push gate inspected 2,614 keys in 44 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s snapshot stays outside the public tree and was pushed to the verified PRIVATE archive, ledger-backups head `06d7f8734fcbb28e07e303497d63ede589d77b85`. FM-01 remains unchanged/current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2933/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 7; no database or fire-memory bytes entered this repository.",
+      "where": "7"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 8,
+      "line": "",
+      "where": "8"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 9,
+      "line": "✅ **F-2932-1 — CURED (s2932, 2026-10-06): the mandatory ledger assumed its live 40-commit archive window contained an excluded rewrite.** The fire's prescribed closing battery exposed this gate defect: 1,262/1,263 passed; isolated unchanged guard 11/12, with plain and `--all` each 392 bytes because all 40 replacements lawfully had zero same-session exclusions. Arm 8 now builds one same-session rewrite in the existing temporary fixture, preserving every assertion. Focused guard 12/12; disabling the `--all` listing in a copied tool still fails that exact arm. No audit semantics, history, timeout or product code changed. Full closing ledger result: `artifacts/s2932/ledger-result.json`; review: `reviews/s2932-status-archive-exclusion-fixture.md`. This repairs the fire's own closing gate, not a new factory audit or dispatch.",
+      "where": "9"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 10,
+      "line": "",
+      "where": "10"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 11,
+      "line": "📰 **TK-01 OCTOBER 5 COMPLETE (s2930, 2026-10-06 local):** `marketing/outbox/ticker-digest-2026-10-05.md` records no player-visible changes. UTC+07 census: 42 main updates, 42 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2930/day.json`.",
+      "where": "11"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 13,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 5 COMPLETE (s2913, 2026-10-05):** The server snapshot is now available, superseding s2912’s pending-supply verdict. Private ledger coverage is 43/43 days from August 24 through October 5; strict push gate inspected 2,520 keys in 43 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s mirror stays outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `ac6a3160cd012f54f59f1d5ac16b1ee834b05703`. FM-01 remains unchanged/current, live head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2913/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 6; no database bytes entered the public tree.",
+      "where": "13"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 15,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 4 COMPLETE (s2893, 2026-10-04):** Private ledger coverage 42/42 days from August 24 through October 4; strict push gate inspected 2,426 keys, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s mirror remains outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `31819c2a96d37613670a16ce80bd4cbe1da17fed`. FM-01 reports unchanged and current; live fire-memory head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2893/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 5; no database bytes entered the public tree.",
+      "where": "15"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 17,
+      "line": "📰 **TK-01 OCTOBER 4 COMPLETE (s2909, 2026-10-05 local):** `marketing/outbox/ticker-digest-2026-10-04.md` records no player-visible changes. UTC+07 census: 37 main updates, 37 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2909/day.json`.",
+      "where": "17"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 19,
+      "line": "📰 **TK-01 OCTOBER 3 COMPLETE (s2890, 2026-10-04 local):** `marketing/outbox/ticker-digest-2026-10-03.md` records no player-visible changes. UTC+07 census: 44 main updates, 44 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2890/day.json`.",
+      "where": "19"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 21,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 3 COMPLETE (s2873, 2026-10-03):** Private ledger coverage 41/41 days from August 24 through October 3; strict push gate inspected 2,332 keys, zero account-class or unrecognized rows and zero unreadable mirrors. Today’s mirror remains outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `55a33dc5b63a68c16916ee138faa0380bb5de785`. FM-01 reports unchanged and current; live fire-memory head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2873/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 4; no database bytes entered the public tree.",
+      "where": "21"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 23,
+      "line": "📰 **TK-01 OCTOBER 2 COMPLETE (s2870, 2026-10-03 local):** `marketing/outbox/ticker-digest-2026-10-02.md` records no player-visible changes. UTC+07 census: 40 main updates, 40 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2870/day.json`.",
+      "where": "23"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 25,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 2 COMPLETE (s2853, 2026-10-02):** Private ledger coverage 40/40 days from August 24 through October 2; strict push gate inspected 2,238 keys, zero account-class or unrecognized rows and zero unreadable mirrors. Today's mirror remains outside this public repository and was pushed to the verified PRIVATE archive, ledger-backups head `b1419a535086b73a5353e34871d73bf5d26b31fd`. FM-01 reports unchanged and current; live fire-memory head `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Evidence: `artifacts/s2853/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day October 3; no backup bytes entered the public tree.",
+      "where": "25"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 27,
+      "line": "📰 **TK-01 OCTOBER 1 COMPLETE (s2850, 2026-10-02 local):** `marketing/outbox/ticker-digest-2026-10-01.md` records no player-visible changes. UTC+07 census: 42 main updates, 42 pinned first-parent commits, zero player-path updates; September 25 busy-day control 136. No non-ancestral replacements. No new Gazette item; publication remains owner-only. Evidence: `artifacts/s2850/day.json`.",
+      "where": "27"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 29,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 1 COMPLETE (s2833, 2026-10-01):** Private ledger coverage 39/39 days from August 24 through October 1; strict push gate inspected 2,144 keys, zero account-class or unrecognized rows and zero unreadable mirrors. Today's mirror is outside this public repository and pushed to the verified PRIVATE archive; live ledger-backups head `75e5ddeda7c515ee2ed45a93fee351165e37305c`. FM-01 was discharged by s2832 today; its receipt and live head `53d87470fb2670626fb4605d4dc0eb5bffd899fb` re-verified, no duplicate mirror write. Supersedes s2832's pending-source state: the October 1 snapshot now exists and is backed up. Evidence: `artifacts/s2833/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `private-heads.txt`. Next coverage day October 2; no backup bytes entered the public tree.",
+      "where": "29"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 31,
+      "line": "📰 **TK-01 SEPTEMBER 30 COMPLETE (s2830, 2026-10-01 local):** `marketing/outbox/ticker-digest-2026-09-30.md` covers the week-41 rotation mint `11534c554`, awaiting authorized deployment before October 5 00:00 UTC. UTC+07 census: 46 main updates, 46 pinned first-parent commits, one player-path update; September 25 busy-day control 136. Gazette draft already present; publication remains owner-only. Evidence: `artifacts/s2830/day.json`.",
+      "where": "31"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 33,
+      "line": "🗄️ **LB-01 + FM-01 SEPTEMBER 30 COMPLETE (s2812, 2026-09-30):** Private ledger coverage 38/38 days from August 24 through September 30; 2,050 keys checked, zero account-class or unrecognized rows. Today's mirror is outside this public repository and pushed to the verified PRIVATE archive, ledger-backups head `251d175f15ebe662f0c259a7115952537c84adc9`. Fire memory is unchanged and current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`. Live remote heads verified. Evidence: `artifacts/s2812/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. Next coverage day is October 1; no backup bytes entered the public tree.",
+      "where": "33"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 35,
+      "line": "📰 **TK-01 SEPTEMBER 29 COMPLETE (s2810, 2026-09-30 local):** `marketing/outbox/ticker-digest-2026-09-29.md` covers two player-visible landings over the UTC+07 day: the five first-secure credits and panel/Field Book punctuation. Census: 220 main updates, 223 pinned first-parent commits, two player-path updates; busy-day control 136. The one non-ancestral main update has byte-identical trees and adds no news. The week-41 mint `11534c554` has a September 30 ROUNDUP-CLASS Gazette draft. All publication stays owner-only. Evidence: `artifacts/s2810/day.json`.",
+      "where": "35"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 37,
+      "line": "🗓️ **RT-01 WEEK 41 MINTED (s2810, 2026-09-30):** `r2026w41` opens October 5 00:00 UTC and closes October 12 00:00 UTC; six seeds, the four earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-40 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w41.md`; evidence: `artifacts/s2810/`. Deployment remains deferred under the owner release hold; next authorized runtime landing must carry week 41 before October 5 and verify ASSAYER SYNCED. **s2910 verification, 2026-10-05 00:18 UTC: the deployment deadline has PASSED.** Live build remains `954bb2cd`; the served skill registry ends at week 40 with no open window. Read-only week-41 transfer-board GET returns HTTP 400 `bad_rotation`, versus week-40 HTTP 200. A local selector control over the served registry chooses closed week-40 seeds for all six contracts; main chooses week 41. The existing standings window check implies `rotation_closed` for otherwise valid old-week submissions; no live standing was submitted. The unsigned owner SHIP/HOLD in `docs/release/verdict-954bb2cd.md` and attended handover 13z-106/107 retain the release hold. Next: authorized attended runtime deployment carrying week 41, then ASSAYER SYNCED and a fresh week-41 read. Evidence: `artifacts/s2910/live-release.json`, `rotation-probe.json` and `report.md`. This supersedes the future-tense deadline above; no deploy by this fire.",
+      "where": "37"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 256,
+      "line": "🧠 **FM-01 LANDED (attended 2026-09-24, owner ruling 16 \"mirror it into the private archive repository\"): `scripts/fire-memory-mirror.mjs` pushes the fires' memory (3.7 MB, secret-scanned) to the private archive remote on the branch `fire-memory`, one commit per changed day; the fire law carries it as the FM-01 duty beside LB-01. F-2660-1 CLOSED.**",
+      "where": "256"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 273,
+      "line": "🗓️ **RT-01 MINTED LATE (attended 2026-09-24): rotation `r2026w39` (opens 2026-09-21) was owed by the first fire after Sunday 2026-09-20 and no fire ran (F-FIRE-1); minted attended with `scripts/rotation-mint.mjs --week 2026-W39 --append`, the `public/skill.md` fenced block refreshed with the whole registry (F-2594-1), deployed with the next landing.** The county board ran three days into the week on the closed `r2026w38` seeds; whether any reel submitted 2026-09-21..24 rode a closed rotation is for the assayer ledger to say (not measured here).",
+      "where": "273"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 357,
+      "line": "🧭 **F-2665-3 — THE RT-01 CLAUSE'S `public/skill.md:367` CITATION IS ROTTED BY +4, AND ITS TRIGGER IS TOMORROW (measured and cured s2665).** The `:367` the law cites TWICE resolves today to `<!-- skillmd-guard:seeds:end -->` — a **SEEDS** fence marker — while the sentence it actually names, *\"Held out means withheld from development before opening, not secret after opening, and **closed rotations remain public history**\"*, now sits at **`:371`**. The rotations fence moved with it: `375–408`, where the clause quotes `371–404` (and `375–421` after the `r2026w39` mint, where it quotes `371–417`). **SUBSTANCE INTACT — the promise is unchanged, only its coordinate moved; I EYE-CHECKED `:371` by reading it back rather than trusting the re-grep.** ⚖️ **SEVERITY STATED HONESTLY AND DELIBERATELY NOT INFLATED: realised cost ZERO, NOT a false green, nothing is broken, and no mint was ever wrong — `skillmd-guard` asserts the fence by PARSED CONTENT (`deepEqual`), never by line number, so the gate could not have been fooled by this.** 🎯 **What earns it a row is WHEN it fires: **RT-01 is owed TOMORROW** (`r2026w39` opens `2026-09-21T00:00:00.000Z`; F-2568-1 forbids minting on the Sunday, and today IS Sunday). F-2594-1's cure — *fill the fence with the WHOLE registry, not just the minted rotation* — rests its entire argument on that one sentence, so a minting fire that follows the stale number lands on an unrelated fence marker, finds no promise about closed rotations, and has every reason to conclude the history requirement was retired. That is the DELETE-the-history direction F-2594-1 exists to prevent, reached by obeying F-2594-1.** 🔑 **AND THE RE-BASE HAD A SECOND, SHARPER REASON THAN TIDINESS: the guard reported BOTH `:367` citations as `NEW POINTER`, and `law-pointer-guard --update` **REBUILDS THE WHOLE BASELINE** (F-2595-1). Re-basing only the live one would have let `--update` PIN A FALSE COORDINATE — a stale pointer blessed into the baseline reds nothing ever again. Both were re-based, then the baseline diff was audited entry-by-entry (F-2639-1) rather than read off the summary: `87 → 87` entries, exactly **1 removed / 1 added / 0 changed**, and the added entry carries the **IDENTICAL fingerprint `a10cd718e923`** as the removed one — which is the proof that it is the same line renumbered and not a different line blessed. Guard re-run: **PASS**, 97 pointers, 0 rotten.** 🚫 **NO GUARD, and the restraint is INHERITED rather than re-argued: `law-pointer-guard` IS the mechanism and it worked — it named both coordinates, in its own output, unprompted. What failed is that nothing made a fire LOOK before the duty's dated trigger; the guard only speaks when a battery runs. The cure is this row plus the re-based citation at the site.** 💡 **REUSABLE, and it is a scheduling lesson rather than a measurement one: **a pointer into a file that a DATED DUTY is about to rewrite is the one most worth re-checking, and the worst possible moment to discover its rot is the moment the duty fires.** The fence at `375–408` grows `+13` lines EVERY WEEK by design, so every coordinate below it in `public/skill.md` is on a weekly rotting schedule that nothing else in this factory tracks. When a duty's trigger is on the calendar, re-grep its citations the fire BEFORE — not the fire OF.**",
+      "where": "357"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 792,
+      "line": "🗃️ **F-2562-2 — A BARE-DATE GIT WINDOW SLIDES WITH THE CLOCK, AND F-2391-1’S BUSY-DAY CONTROL PASSES WHILE AIMED AT THE WRONG DAY (measured s2562; amendment landed in `scripts/fire.md` §TK-01 and a comment at the site).** F-2391-1 cures the JS side of the window trap — build bounds by integer y/m/d arithmetic, never `Date` parsing — and prescribes one control: *\"before trusting a zero, run the same probe over a day whose count you already know is non-zero.\"* **I did both and was still wrong.** 🔑 **THE MECHANISM IS IN GIT, WHICH IS WHY THAT CURE CANNOT REACH IT: approxidate fills a BARE `YYYY-MM-DD` with the CURRENT TIME-OF-DAY, so `--since=D --until=D+1` means `[D@now, D+1@now)` — the window slides through the day and the SAME command returns different days’ commits depending on what o’clock a fire runs it.** 📊 **MEASURED BY PREDICTION, 5/5, at 16:03 local: bare `--since=D --until=D+1` returned exactly the commits in `[D@16:03, D+1@16:03)` — 08-27→`0`, 08-28→`68`, 09-11→`8`, 09-12→`2`, 09-13→`29`. GROUND TRUTH, built with NO window at all by bucketing every first-parent commit on its own `%cI`: 08-27→`1`, 08-28→`0`, 09-11→`0`, 09-12→`8`, 09-13→`2`. Every bare reading names a DIFFERENT DAY.** ✅ **The offset-explicit form reproduces F-2391-1’s OWN recorded judgement to the digit (08-27 = one fire lock line, 08-28 = none) — corroboration, not a second guess.** ⚖️ **SEVERITY STATED HONESTLY AND DELIBERATELY NOT INFLATED: realised cost ZERO, NOT a false green, and NO SHIPPED TOOL HAS THIS BUG — all four live users verified by READING, not inferred: `gazette-backfill-sweep.mjs`’s `normalizeSince` pins `T00:00:00` (its reason was UNDOCUMENTED until now and is a comment at the site as of this fire), `red-inventory-lookup.mjs:64` passes a full ISO `startTime`, `runner-processes.sh:31` and `start-lane-runner.sh:108` pass `@<epoch>`.** 🎯 **WHAT EARNS IT A CLAUSE IS THE DIRECTION, AND IT INVERTS F-2391-1’S: that defect returned `0` FOR EVERY DAY and failed toward doing NOTHING. This returns a PLAUSIBLE NON-ZERO COUNT FOR THE WRONG DAY and fails toward FABRICATING WORK. I read `08-28 → 68 commits, no digest` and `09-11 → 8 commits, no digest`, and was one step from compiling and committing an owner-facing ticker digest for a day with ZERO commits, and from publishing \"TK-01 has two holes\" as a finding. **What stopped it was recognising the 8 commits as the ones the 09-12 digest already reported — recognition, not method.**** ➡️ **CONTROL UPGRADED: build a ground truth that USES NO WINDOW and assert the windowed count equals it. A control that shares the window’s own mechanism cannot audit the window.** ⓘ **TK-01 re-measured with the corrected form and DISCHARGED: `61` digests spanning 2026-07-10 → 09-13; the single coverage day with no digest (08-27) holds one fire LOCK commit, correctly not news. The series is WHOLE.** 🚫 **NO GUARD, restraint INHERITED rather than re-argued: F-2391-1 already declined one because \"did a fire hand-type a correct date window?\" is unobservable to every battery (the F-1669-1 reason), and that holds identically for the sliding form.** 💡 **REUSABLE, a NEW AXIS: twenty-odd findings in this streak ask how a SUBJECT SET can be wrong — too narrow, wrong tree, wrong axis, a registry not a census, entries not files. **This one has the right subject set and a control that passes while AIMED ELSEWHERE.** F-2215-1 taught us to assert a control PRODUCED something; the rung below is to assert it produced something ABOUT THE RIGHT SUBJECT — and the only proof is a measurement taken by a method that could not have produced the same error.**",
+      "where": "792"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 842,
+      "line": "✅ **TK-01 September 7 DISCHARGED (s2555, 2026-09-08).** Owner-approval draft `marketing/outbox/ticker-digest-2026-09-07.md`: 139 first-parent commits, September 6 positive control 99; ten headlines checked against retained reviews. No publication or gameplay merge. Dry board and standing duties verified; receipts `artifacts/s2555-fire/report.md`.",
+      "where": "842"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1245,
+      "line": "🔄✅ **THE TRANSFER BOARD IS LIVE WITH ITS FIRST REAL ROTATION (attended 2026-09-03 18:09, build 16381350, assayer synced).** All six HarnessDev items now shipped and deployed. Rotation `r2026w37` opens 2026-09-07 00:00 UTC and closes 09-14, six fresh seeds minted with the OWNER-HELD salt at `~/.goldrush/rotation-salt` (mode 600, never committed; losing it only changes FUTURE weeks' seeds, committed rotations stay valid). `scripts/rotation-mint.mjs` gained `--append` (merge into the tracked registry, keep history); `public/skill.md`'s fenced rotation block refreshed; **RT-01 DUTY added to fire.md** (first fire after Sunday 00:00 UTC mints the coming week, re-pins skill.md, moves `CURRENT_ROTATION_ID` when a rotation opens). The lane's test registry (F-2473-1) is superseded by the real mint. Era-5 pin 16 appended for the corpus the half-stamped drain left unrecorded. Until Monday the transfer API answers `bad_rotation` for r2026w37 by design (the window is not open); the landing already shows \"This week's fresh seeds\". 🧪 **F-RT-1 (attended, NON-BLOCKING, INVESTIGATE):** under the attended shell's node 23 the `node-guards-timeout` self-test reds 1/2 consistently this evening (it passed 2/2 twice this morning) and `fixture-teardown` exceeds its 300 s budget while four lanes and a fire run; the fires' own node-26 batteries were green at their last handoffs. RESOLVED the same hour: under the repo's node 26 (`.nvmrc`, the fires' binary) both pass on a quiet machine (timeout self-test 2/2, fixture-teardown 1/1, zero concurrent processes); the reds are the attended shell's nvm node 23, exactly the version the self-test's own comment names. Environmental; no defect. Attended sessions gate with `/opt/homebrew/bin/node`.",
+      "where": "1245"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 2299,
+      "line": "🔬 **F-2119-1 (s2119 2026-08-21, DRY BOARD — A PREDECESSOR SCOPED ITS OWN OPEN CORNER TO WHERE THE CURE LANDED, NOT TO WHERE THE DEFECT LIVED. SWEPT BOTH SURFACES: NO SECOND INSTANCE. THE NEGATIVE IS THE DELIVERABLE.)** 📋 **WHY THIS RUN EXISTED.** Board re-measured independently, not inherited: six queues **EMPTY** · `tasks/running/` **EMPTY** · no `CODEX-WALL` · assayer pending **EMPTY** · newest `tasks/failed/` **2026-08-11** · newest done-move **2026-08-20**, already `drained-`/`stopped-`-prefixed · **no `src/`/`e2e/` dirt** (39 tracked-dirt files = `artifacts/*.png` + `logs/` churn, attended — left alone, never added) · runner **pid 451 ALIVE** · `lane/a` `ahead=0` USABLE, `lane/c` USABLE, `lane/d` USABLE, **`lane/b` HOLDS — NOT RESET** (F-2090-1 salvage, §3.0 asked before the tempting two-commit diff). **Nothing was waiting to drain and I did not manufacture one.** 🎯 **THE SUBJECT: s2118's item (E), the corner it opened in its own handoff and explicitly declined —** *\"the OTHER hardcoded file-lists in `scripts/*.test.mjs` have never been swept for the same 5-of-7 defect; how many guards still list what the tree already knows is unmeasured.\"* ⚖️ **THE ANSWER IS NO — AND A NEGATIVE IS ONLY WORTH RECORDING IF THE DETECTOR WAS PROVEN CAPABLE FIRST, SO THAT CAME BEFORE THE ZERO.** Run against `e2e/release-base-path.spec.ts` at **`e528a24f5^`** — the tree where the defect provably existed — the detector **fires**, naming exactly the five paths F-2118-1 recorded (`_accounts`, `_bugs`, `_multiplayer`, `stats`, `telemetry`); against the same file at `e528a24f5` it names **zero**. A detector never shown to hit reports a vacuous green, and this corpus has shipped that mistake five times under `gate-caller-audit`'s own name. 📊 **THE MEASUREMENT, BOTH SURFACES.** **`scripts/`** (79 `*.test.mjs`, 100+ other `*.mjs`, every `*.sh`): **27** candidate path-lists, **14** of them `tmp-`/`_s` one-shot scratch — retained evidence under the RETENTION LAW, explicitly out of scope, never swept. Of the **13 live** lists, **ZERO carry the defect**, each for a stated reason rather than by assumption: they either **DERIVE** the denominator (`null-floor-anchors` intersects `bench-seeds.json` with `supportedContractIds()`; `worker-type-coverage`, `script-tree-parse` and F-2118-1's own cure all walk `subject-tree.mjs`), **GRANDFATHER by name with the commit that proves it** (`claimed-spec-harness-guard.GRANDFATHERED`, 4 masters predating `395bc04be` — the endorsed discipline, the opposite of the defect), or name files for **BESPOKE per-file analysis where no denominator exists** (`same-game-audit` reads 8 named files with different logic each and its second \"list\" is per-buildable *search anchors*, not paths at all; `gr-sim-campaign` and `night-stall-census` are dynamic `ssrLoadModule` imports; `row-quote-currency`'s is a **synthetic fixture index** whose two off-disk paths are deliberately fake). **No shell guard enumerates a class at all** — each names a single spec. 🔍 **THE CLOSEST CALL, AND IT IS COMPLETE: `law-pointer-guard.SURFACES`** — a guard whose subject is *the law surfaces themselves*, hardcoded. My first scan reported it as **4** and I nearly filed it; **reading the file rather than the grep** showed **6**, because `CLAUDE.md` and `AGENTS.md` carry no slash and my path filter had silently dropped them. Verified against disk: `CLAUDE.md`, `AGENTS.md`, `scripts/fire.md` and the drain / author-task / playtest-intake `SKILL.md` files are **every `SKILL.md` that exists** (`find .claude/skills -name SKILL.md` = 3, `git ls-files` agrees). **6 of 6.** ⚠️ **A scan that under-reports a denominator produces a FALSE finding by exactly the mechanism the finding is about** — the claim-verification rule earning its keep on the one file where a wrong answer would have been most embarrassing. 🕳️ **THE REUSABLE HALF, WHICH IS THE SCOPE AND NOT THE RESULT: s2118 aimed its open corner at `scripts/*.test.mjs` — where its CURE landed — while the DEFECT it cured had lived in `e2e/`.** A sweep pointed at where the cure went looks in the one place the class has just been cleaned out of; the surface that actually grew the instance goes unexamined. I swept **`e2e/` (439 specs) too, and it is ZERO — but only because s2118's own cure removed the last one**, which is precisely the reading the narrow scope would have produced by accident and for the wrong reason. ➡️ **THE KEY: when a predecessor hands you an open corner, check whether it was scoped to where the CURE landed rather than to where the DEFECT lived. Re-derive the SURFACE, not just the subject** — the twelfth variation of s2118's own key, applied to s2118. 🚫 **NOTHING WAS MECHANISED, AND THE REFUSAL IS LOAD-BEARING.** The obvious cure is a guard that reds on a hardcoded path-list, and it must not be built: *\"a hardcoded list vs a deliberate enumeration\"* is a **judgement**, so such a guard fires on every legitimate grandfathered list — starting with `claimed-spec-harness-guard`'s, which is correct discipline — and is excused into uselessness within a week (the `cross-engine` label's fate, F-1460-1). The 14 scratch files would red forever under the RETENTION LAW. **A negative sweep's product is a written bound, not a new mechanism.** ✅ **WHERE IT LANDED SO IT IS NOT PAID FOR TWICE: the header of `scripts/function-cors-allowlist.test.mjs`** — the canonical example of the class, i.e. where the next reader of this question actually arrives — carrying the method, the control, the 13-live tally and the do-not-re-run instruction. 🐛 **AND MY OWN EDIT CARRIED A REAL BUG, CAUGHT BY CHECKING RATHER THAN BY ASSUMING:** the first draft wrote the scratch glob and the skills glob literally inside a `/** */` block, and **`*/` terminates the comment** — it would have broken the guard outright. `node --check` before `node --test`, both green after the repair. **A documentation-only edit is not a syntax-free edit.** 🧾 **GATES.** `node --check scripts/function-cors-allowlist.test.mjs` **rc=0** · that guard **2 tests / 2 pass / 0 fail, 39.9 ms** · `npx tsc --noEmit` **rc=0** · `test:ledger-guards` as the last act per F-1300-4. **No playwright run and I say so rather than skipping it silently:** I merged **zero** runtime code — this fire's entire code diff is a block comment. 📰 **GZ-01 SWEEP CLEAN: `reported 113 · dismissed 25 · candidates 0`; no item filed** — a comment and a ledger row render nothing to a player. 📅 **TK-01 NOT DUE, re-derived at the file's own commit rather than inherited from s2118's claim: `ticker-digest-2026-08-20.md` was compiled by s2111 at `82a6ace59 (archive: pruned by the A3 rewrite)` 2026-08-21T06:15+07, the first fire after 06:00 today. The 08-21 digest is owed after 06:00 on 08-22.** 🚫 **NO DEPLOY:** zero gameplay code merged. 🎨 **ART slot untouched, no audit claimed.**",
+      "where": "2299"
+    },
+    {
+      "rel": "tasks/backlog/closed-2026-07.md",
+      "n": 87,
+      "line": "✅ **TK-01 DISCHARGED s1243 — `marketing/outbox/ticker-digest-2026-07-29.md` compiled, closing a duty five consecutive fires had declined (s1238/s1239/s1240/s1241/s1242, each correctly on the 06:00 clock, each pushing it forward).** Compiled at **05:33 local** on the precedent that the 07-28 digest was itself compiled at **05:52 local** (its own header says so) and that coverage day 2026-07-29 closed 5.5 hours earlier, so its content is final and immutable. Same methodology as its predecessor: classified by **touched paths on main**, never by commit message (Mistake #16). **254 commits, 16 player-visible, 31 factory, 207 bookkeeping** (16+31+207=254, reconciled).",
+      "where": "tasks/backlog/closed-2026-07.md:87"
+    }
+  ]
+}
