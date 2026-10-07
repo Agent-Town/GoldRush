@@ -1,0 +1,12 @@
+file:///Users/robin/Claude/Projects/Gold%20Rush/artifacts/s2953/rotation-probe.mjs:4
+const readRegistry = text => JSON.parse(text.split('<!-- skillmd-guard:rotations:start -->')[1].split('<!-- skillmd-guard:rotations:end -->')[0].match(/```json\s*([\s\S]*?)```/)[1]);
+                                                                                               ^
+
+TypeError: Cannot read properties of undefined (reading 'split')
+    at readRegistry (file:///Users/robin/Claude/Projects/Gold%20Rush/artifacts/s2953/rotation-probe.mjs:4:96)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/artifacts/s2953/rotation-probe.mjs:5:22
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.4.0
