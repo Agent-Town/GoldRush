@@ -1,0 +1,56 @@
+✔ site/ is in the scan space — the public door is examined at all (F-2345-1) (0.481834ms)
+✔ a site/-only change is classified as a player path (0.13075ms)
+✔ the original player paths still match — the cure is additive, not a replacement (0.069084ms)
+✔ REVERSE CONTROL: factory surfaces are NOT player paths (0.068542ms)
+✔ REVERSE CONTROL: the prefixes are anchored at the start, not matched anywhere (0.074458ms)
+✔ REVERSE CONTROL: the dot in index.html is escaped (0.058584ms)
+✔ every declared prefix is load-bearing — the list drives the predicate (0.075708ms)
+✖ the scan space is DECLARED on stdout, naming every prefix (240006.695042ms)
+✔ the declaration prints on the emptiest happy path too (F-2208-1) (407.814208ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 8
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 240478.810125
+
+✖ failing tests:
+
+test at scripts/gazette-scan-space-guard.test.mjs:110:1
+✖ the scan space is DECLARED on stdout, naming every prefix (240006.695042ms)
+  Error: spawnSync node ETIMEDOUT
+      at Object.spawnSync (node:internal/child_process:1144:20)
+      at spawnSync (node:child_process:912:24)
+      at execFileSync (node:child_process:955:15)
+      at run (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gazette-scan-space-guard.test.mjs:40:13)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gazette-scan-space-guard.test.mjs:111:15)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12) {
+    errno: -60,
+    code: 'ETIMEDOUT',
+    syscall: 'spawnSync node',
+    path: 'node',
+    spawnargs: [ '/Users/robin/Claude/Projects/Gold Rush/scripts/gazette-backfill-sweep.mjs', '--since=2026-08-28' ],
+    error: Error: spawnSync node ETIMEDOUT
+        at Object.spawnSync (node:internal/child_process:1144:20)
+        at spawnSync (node:child_process:912:24)
+        at execFileSync (node:child_process:955:15)
+        at run (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gazette-scan-space-guard.test.mjs:40:13)
+        at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/gazette-scan-space-guard.test.mjs:111:15)
+        at Test.runInAsyncScope (node:async_hooks:226:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12),
+    status: null,
+    signal: 'SIGKILL',
+    output: [ null, '', '' ],
+    pid: 40819,
+    stdout: '',
+    stderr: ''
+  }
