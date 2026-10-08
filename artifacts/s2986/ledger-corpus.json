@@ -1,0 +1,112 @@
+{
+  "files": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "bytes": 8694920
+    },
+    {
+      "rel": "tasks/backlog/closed-2026-07.md",
+      "bytes": 578262
+    },
+    {
+      "rel": "tasks/backlog/closed-2026-08.md",
+      "bytes": 128386
+    },
+    {
+      "rel": "tasks/backlog/e2-completion.md",
+      "bytes": 1955
+    },
+    {
+      "rel": "tasks/backlog/lane-c.md",
+      "bytes": 778
+    },
+    {
+      "rel": "tasks/backlog/later.md",
+      "bytes": 2199
+    },
+    {
+      "rel": "tasks/backlog/mp-07-ladder.md",
+      "bytes": 922
+    },
+    {
+      "rel": "tasks/backlog/multiplayer.md",
+      "bytes": 2642
+    },
+    {
+      "rel": "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+      "bytes": 33751
+    },
+    {
+      "rel": "tasks/backlog/owners-desk.md",
+      "bytes": 8427
+    },
+    {
+      "rel": "tasks/backlog/s1070.md",
+      "bytes": 2933
+    },
+    {
+      "rel": "tasks/backlog/s1071.md",
+      "bytes": 1886
+    },
+    {
+      "rel": "tasks/backlog/s1073.md",
+      "bytes": 1624
+    },
+    {
+      "rel": "tasks/backlog/s1074-fire.md",
+      "bytes": 1665
+    },
+    {
+      "rel": "tasks/backlog/s1077.md",
+      "bytes": 10271
+    },
+    {
+      "rel": "tasks/backlog/s1078.md",
+      "bytes": 18735
+    },
+    {
+      "rel": "tasks/backlog/s1079.md",
+      "bytes": 49952
+    },
+    {
+      "rel": "tasks/backlog/the-epoch-work-package-ladder.md",
+      "bytes": 7255
+    },
+    {
+      "rel": "tasks/backlog/the-saga-build-plan.md",
+      "bytes": 1128
+    }
+  ],
+  "selected": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 8 COMPLETE (s2973, 2026-10-08):** Private ledger coverage is 46/46 days from August 24 through October 8. The strict push gate inspected 2,802 keys in 46 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s snapshot stays outside the public tree and was pushed to the verified PRIVATE archive, ledger-backups head `f4e9dca9d0be391f276b90ff892d676b06c780ee`. FM-01 reports unchanged and current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`; live remote heads verified. Evidence: `artifacts/s2973/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`. No private corpus entered this repository. Next coverage day October 9.",
+      "where": "1"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 3,
+      "line": "📰 **TK-01 OCTOBER 7 COMPLETE (s2970, 2026-10-08 local):** `marketing/outbox/ticker-digest-2026-10-07.md` records the week-42 seed preparation (`7b6aa0ece`), awaiting authorized deployment. UTC+07 census: 40 main updates, 40 pinned first-parent commits, one player-path update; September 25 busy-day control 136. No non-ancestral replacements. The existing Gazette roundup already covers the mint; publication remains owner-only. Evidence: `artifacts/s2970/day.json`.",
+      "where": "3"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 7,
+      "line": "🗓️ **RT-01 WEEK 42 MINTED (s2951, 2026-10-07):** `r2026w42` opens October 12 00:00 UTC and closes October 19 00:00 UTC; six seeds, the five earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-41 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w42.md`; evidence: `artifacts/s2951/`. Deployment remains deferred under the owner release hold. The next authorized attended runtime landing must carry weeks 41 and 42, then verify ASSAYER SYNCED; week 41 is already overdue and week 42 opens October 12. Live build 954bb2cd still serves weeks 37–40: week-41 GET 400 bad_rotation, week-40 control 200. No dispatch or deployment by this fire.",
+      "where": "7"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1264,
+      "line": "🔧 **TWO DRAIN FINDINGS TAKEN UP (attended 2026-09-03 14:4x).** F-2471-1 (pre-existing, control-proven: a half-stamped tape plays on the legacy watch path instead of being refused; `agent-reels.spec.ts:301` red on main): QUEUED lane-c `half-stamped-reel-refusal` (decide the era refusal before choosing the replay path; the red test turns green unweakened). F-2470-1 (the mirror-exposure guard skips tables without a `key` column silently; the refusals table is one): QUEUED lane-d `ledger-exposure-guard-declares-tables` (declare the inspected corpus on the happy path, name skips, harvest declared identity columns). The transfer board's F-2472-3 is already in the fire's own corrective (`transfer-board-v2-registry-outside-engine-corpus`, running lane-b on the held content).",
+      "where": "1264"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1266,
+      "line": "✅ **TRANSFER BOARD — NOW MERGED (s2473 drain, `e1753192f`); THE HOLD BELOW IS DISCHARGED AND IS KEPT ONLY AS PROVENANCE.** The v2 corrective relocated the registry and `computeEngineHash` on the merged tree measures `2a06eb51…a5aecd47`, EQUAL to `assets/engine-era.json`'s era-5 declaration and byte-identical to main (control: main measures the same). No reel is refused `reel_not_current`; L1 ADDITIVE holds. RETIRED HEADLINE FOLLOWS — 🟡🔴 **TRANSFER BOARD — HELD, NOT MERGED (s2472 drain, F-2472-3), AND SUPERSEDED BY A ONE-MOVE CURE.** The lane-b runner STOPPED at its own honesty guard rather than returning READY-FOR-GATES, and it was RIGHT: `assets/contracts` is a WHOLE-DIRECTORY entry in `ENGINE_SOURCE_INPUTS` (`scripts/assay-replay-agent.mjs:38`), so the registry at `assets/contracts/rotation-seeds.json` enters the engine identity corpus. **Control-proven, single variable — exactly 1 of the lane's 13 files is in the corpus:** main `2a06eb51…` (which EQUALS `assets/engine-era.json`'s declared era-5 `engineHash`, so the control asserts its own validity) → with only that file added, `43f54a20…`. Merging as-is refuses **every existing verified reel** as `reel_not_current` and darkens the public board. That violates the ratified spec's own law **L1 ADDITIVE** (\"existing tapes, seeds, **eras** and ranking are untouched\"), so the path — an incidental choice in a scope list — loses to the law. 🛠️ **THE CURE IS CHEAPER THAN THE ONE THE RUNNER PROPOSED and needs no owner ruling:** it suggested narrowing `computeEngineHash`'s corpus (a judgement about what \"the engine\" is, and a live desk question). Measured instead: the same file at `assets/rotations/rotation-seeds.json` returns the hash to **`2a06eb51…`, byte-identical to base** — no corpus edit, no era bump, no re-pin. A rotation calendar is door/scheduling data; `assets/contracts` is in the corpus because contract *manifests* define sim behaviour. ➡️ **FIRE-AUTHORED corrective queued lane-b: `transfer-board-v2-registry-outside-engine-corpus.md`** — a **BUILD-ON-PREDECESSOR** master (F-2089-1) declaring all 13 held paths (predicate verified held ⊆ declared, 13/13, before queueing) so the lane's complete implementation is EXTENDED, never `reset --hard` over (Mistake #2). Scope: the `git mv`, its five measured readers (`rotation-mint.mjs` needs nothing — it writes to stdout), and a new guard asserting no rotation registry lives under any corpus entry AND that the computed hash equals the declared one, with a mutation proof. 🔎 **F-2472-4 (non-blocking, for whoever drains v2):** `scripts/skillmd-guard.test.mjs` is now a FOUR-time conflict site and `public/skill.md` gained generated fences this same fire (`9b9397c8e`) — parse the union and count top-level `test(` per line, never diff it (F-2469-1); keep any ROTATION section OUTSIDE the fences. ⚠️ **One attended line, blocking nothing:** `specs/transfer-board.md` still names the old path at `:15`/`:19` and should be amended — a fire does not edit a ratified spec's rulings. Review `reviews/transfer-board.md`.",
+      "where": "1266"
+    }
+  ]
+}
