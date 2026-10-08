@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-08T19:34:03.570Z",
+  "results": [
+    {
+      "url": "https://agenttown.app/goldrush/",
+      "status": 429,
+      "exit": 0,
+      "title": null,
+      "bodyLength": 17,
+      "stderr": ""
+    },
+    {
+      "url": "https://agenttown.app/goldrush/version.json",
+      "status": 429,
+      "exit": 0,
+      "stderr": ""
+    },
+    {
+      "url": "https://agenttown.app/goldrush/skill.md",
+      "status": 429,
+      "exit": 0,
+      "rotations": [],
+      "stderr": ""
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w41",
+      "status": 400,
+      "exit": 0,
+      "ok": false,
+      "error": "bad_rotation",
+      "message": "Rotation not accepted.",
+      "stderr": ""
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w40",
+      "status": 200,
+      "exit": 0,
+      "ok": true,
+      "error": null,
+      "message": null,
+      "stderr": ""
+    }
+  ]
+}

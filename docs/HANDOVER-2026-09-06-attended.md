@@ -3518,3 +3518,14 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Fresh public GETs: production 954bb2cd still serves weeks 37–40; week-41 standings 400 bad_rotation, week-40 control 200. Main holds weeks 41–42. Unsigned SHIP/HOLD and attended deployment custody in 13z-106/107 remain binding.
 - Exact s2985 predecessor and own ACTIVE line archived; three-item desk and discharged F-2742-1 annotation preserved verbatim. Complete closing ledger tests this prepared handoff before the final clearing commit; results and ordered remainder: artifacts/s2986/report.md and ledger-result.json.
 - Next: owner SHIP/HOLD then authorized attended weeks 41–42 deploy plus ASSAYER SYNCED; film/THREAD-v3 approvals and attended site embed; October 9 duties at their stated windows. Existing desk and attended-only F-2472-3 remain with their owners.
+
+
+### s2987 verification: eligible board dry; public proxy outage escalated
+
+- WHY no implementation: 91 done subjects, zero eligible drains/unknowns; four direct lane logs empty, tracked lane dirt zero; six queues/running/orders and staged art empty. Seven ahead scratch worktrees remain attended-owned. CODEX-WALL stands; independent runner 31360 alive.
+- The inherited health claim changed: two health checks 200/429/200. Canonical game, version and skill paths return 429; retained body says Cloudflare 1027. Direct Pages page/version return 200 and build 954bb2cd. Week-41 standings 400 bad_rotation; week-40 control 200. Account usage/traffic cause unverified. Filed F-2987-1 in BACKLOG and owner desk §9; capacity/routing decision reserved to the owner, runtime release hold unchanged.
+- October 8 private coverage 46/46 and live private heads match s2973 receipts. October 7 ticker and week-42 whole registry fence verified. October 9 ticker due 06:00 local, private duties 02:10 UTC / 09:10 local; no duplicate duties.
+- Exact s2986 predecessor and own ACTIVE line archived. Three inherited desk items retained verbatim; F-2987-1 added as the fourth. F-2742-1 remains discharged. No master, dispatch, drain, retry, billing/route change or deploy.
+- Evidence, gate receipt and ordered remainder: artifacts/s2987/report.md. Closing ledger battery precedes the final lock-clearing commit and origin backup.
+
+- s2987 closing receipt: complete original ledger battery **1,263/1,263, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 158.744s on v26.4.0. Exact handoff/archives and inherited desk items verified; no gate retry or test adaptation. F-2987-1 remains open; no live recovery claimed. Final clearing commit is the last main write, then origin backup and external vault digest.
