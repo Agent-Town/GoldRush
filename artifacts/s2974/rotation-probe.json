@@ -1,0 +1,38 @@
+{
+  "observedAt": "2026-10-08T04:09:18.041Z",
+  "scope": "Read-only public GETs; no standing submitted.",
+  "results": [
+    {
+      "url": "https://agenttown.app/goldrush/version.json",
+      "status": 200,
+      "body": {
+        "build": "954bb2cd",
+        "builtAt": "2026-09-28T13:59:45Z"
+      }
+    },
+    {
+      "url": "https://agenttown.app/goldrush/skill.md",
+      "status": 200,
+      "rotations": [
+        "r2026w37",
+        "r2026w38",
+        "r2026w39",
+        "r2026w40"
+      ]
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w41",
+      "status": 400,
+      "ok": false,
+      "error": "bad_rotation",
+      "message": "Rotation not accepted."
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w40",
+      "status": 200,
+      "ok": true,
+      "error": null,
+      "message": null
+    }
+  ]
+}
