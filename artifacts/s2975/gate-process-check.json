@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-08T05:29:30.406Z",
+  "rows": [
+    {
+      "pid": 26785,
+      "present": true,
+      "summary": "26785 42337 S    05:18 /opt/homebrew/Cellar/node/26.4.0/bin/node --test-concurrency=0 --heap-prof-interval=524288 --tls-cipher-list=TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256:TLS_AES_128_GCM_SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA384:DHE-RSA-AES256-SHA384:ECDHE-RSA"
+    },
+    {
+      "pid": 92151,
+      "present": false,
+      "summary": "exited"
+    },
+    {
+      "pid": 34291,
+      "present": true,
+      "summary": "34291 26785 S    05:05 bash scripts/dashboard-gen.sh"
+    },
+    {
+      "pid": 77888,
+      "present": true,
+      "summary": "77888 34291 S    04:17 bash scripts/dashboard-gen.sh"
+    },
+    {
+      "pid": 77906,
+      "present": true,
+      "summary": "77906 77888 S    04:20 /opt/homebrew/bin/node /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-goals-jU9gvU/goal-tree.mjs"
+    }
+  ]
+}
