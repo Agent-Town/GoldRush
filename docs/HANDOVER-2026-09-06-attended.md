@@ -3529,3 +3529,13 @@ The first full battery passed while STATUS was ACTIVE. On the prepared handoff, 
 - Evidence, gate receipt and ordered remainder: artifacts/s2987/report.md. Closing ledger battery precedes the final lock-clearing commit and origin backup.
 
 - s2987 closing receipt: complete original ledger battery **1,263/1,263, zero failures/skips; all chained checks and factory kit 83/83; exit 0**, 158.744s on v26.4.0. Exact handoff/archives and inherited desk items verified; no gate retry or test adaptation. F-2987-1 remains open; no live recovery claimed. Final clearing commit is the last main write, then origin backup and external vault digest.
+
+
+### s2988 verification: eligible board dry; public game proxy incident persists
+
+- WHY no product change: 91 done subjects, 13 closed/blocked, 78 merged; zero eligible drains/unknowns. Four direct runner branch logs empty and zero tracked lane dirt; six queues/running/orders empty, staged art zero. Seven ahead scratch worktrees remain attended-owned; CODEX-WALL stands. Independent runner 31360 alive.
+- F-2987-1 rechecked: health 200/429/200, canonical game/version/skill all 429 with Cloudflare 1027. Direct Pages 200, build 954bb2cd; week-41 standings 400 bad_rotation, week-40 control 200. Existing desk decision and unsigned attended release gate remain. No new root-cause claim or duplicate desk item.
+- October 8 private coverage 46/46 and live private heads match completed receipts. Prior ticker and week-42 whole-registry fence verified. October 9 ticker is due after 06:00 local; private duties after 02:10 UTC / 09:10 local. No duplicate duty execution.
+- Exact predecessor and own ACTIVE line archived; four-item desk and discharged annotation preserved verbatim. Full closing ledger tests the prepared handoff before its final clearing commit; receipts and ordered remainder: artifacts/s2988/report.md. No drain, dispatch, re-queue, billing, routing or deployment change.
+
+- s2988 final receipt: **READY-FOR-GATES (fire bookkeeping; F-2987-1 remains open).** Complete original npm run test:ledger-guards finished 2026-10-08T20:46:08.193Z: **1,263/1,263 tests, zero failures/skips; every chained check and factory kit 83/83; exit 0**, 138.018 seconds on Node v26.4.0. No test retry, assertion change or source cure. Exact tested handoff, predecessor, own ACTIVE archive and four-item desk verified; main stayed 2cfcc93fb and the launcher semaphore remains present. The bounded status archive and attended-owed audits passed; F-2472-3 remains attended-only. This clearing commit is the final main write, followed by ordinary origin backup, read-only verification and an external vault digest.
