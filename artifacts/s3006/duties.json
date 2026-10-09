@@ -1,0 +1,34 @@
+{
+  "stamp": "2026-10-09T15:23:01.548Z",
+  "rotations": [
+    "r2026w37",
+    "r2026w38",
+    "r2026w39",
+    "r2026w40",
+    "r2026w41",
+    "r2026w42"
+  ],
+  "wholeRegistryFenceMatches": true,
+  "comingMonday": "2026-10-12T00:00:00.000Z",
+  "seeds": 6,
+  "ticker": "marketing/outbox/ticker-digest-2026-10-08.md",
+  "tickerTracked": true,
+  "apiLeaves": [
+    {
+      "id": "api-probe-json-1",
+      "title": "The edge probes stop reading a dead API as healthy: /api/stats must answer JSON (the capped Pages fallback serves HTML with 200), a rostered guard (F-CUT-1)",
+      "status": "merged",
+      "taskFile": "api-probe-json-1.md",
+      "lane": "lane-c (Astra, gpt-6-astra)",
+      "authoredAt": "2026-10-09",
+      "authoredBy": "attended (Fable), from F-CUT-1, 2026-10-09",
+      "queuedAt": "2026-10-09",
+      "mergeHash": "e0c536dcc13c2d3505c2001b17c17e68c85c46d1",
+      "mergedAt": "2026-10-09",
+      "review": "reviews/api-probe-json-1.md",
+      "drainedBy": "attended 2026-10-09 (scripts/attended/land-held.sh apj1; Astra on lane-c, the ChatGPT subscription)"
+    }
+  ],
+  "apiMergeAncestor": true,
+  "dischargedBackupFindingAncestor": true
+}
