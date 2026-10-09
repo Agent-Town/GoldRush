@@ -3188,3 +3188,10 @@ Six fresh claim seeds are ready for October 12–19 UTC. Earlier weeks stay in
 the registry, and the public agent instructions include all six rotations.
 merge `7b6aa0ece` · review `reviews/rotation-r2026w42.md`
 ROUNDUP-CLASS — 2026-W41; s2951 performs the October 7 RT-01 duty. On main, awaiting the next authorized attended deployment. Week 41 is already overdue; week 42 opens October 12 00:00 UTC. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — Keep unchanged game files ready for the next visit
+The next deployment will let browsers reuse unchanged game files between visits
+and map changes. The game page will still check for updates.
+merge `c7ad5dc24` · review `reviews/headers-asset-cache-1.md`
+ROUNDUP-CLASS — 2026-W41; s2998 records the attended October 9 cache landing. The fix is on main; public deployment and routing cutover are still pending. This does not claim recovery from the current game-route outage. Draft only; publication stays owner-only.
