@@ -1,0 +1,13 @@
+public/_headers "/*": 5 security headers, 10 CSP directives
+✔ public/_headers sends the five security headers on every path (2.379833ms)
+✔ the Cache-Control rules 058-device-tiers gates are still there (0.096459ms)
+✔ the bug-office report TTL and the number the fetch script prints are the same (1.27925ms)
+✔ the audit catches a deleted policy, a widened source and an enforcing flip (2.9235ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14.854709

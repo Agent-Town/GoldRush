@@ -1,0 +1,59 @@
+{
+  "stamp": "2026-10-09T07:08:26.051Z",
+  "head": "6854589eb529a209adbdb35be6065568f4388de1",
+  "lanes": {
+    "lane-a": {
+      "branch": "sol/open-findings-astra",
+      "log": "",
+      "trackedDirt": ""
+    },
+    "lane-b": {
+      "branch": "sol/wave-lane-b",
+      "log": "a6fc9c601 fix: the evidence copy of the headers guard no longer carries a .test.mjs name (the gate-caller audit read it as a guard with no caller; hac1 landing)\n41c224bd3 runner(lane-b): headers-asset-cache-1.md\n832445b65 fix: record asset cache validation and baseline control\nce59e7a84 fix: detach inherited no-cache from hashed game assets\n",
+      "trackedDirt": ""
+    },
+    "lane-c": {
+      "branch": "sol/map-art-campaign-2",
+      "log": "",
+      "trackedDirt": ""
+    },
+    "lane-d": {
+      "branch": "art/portraits-e5-e10-generated",
+      "log": "d8ecd3356 fix: roster scripts/goldrush-route-conf.test.mjs in test:node-guards (the gate-caller audit refuses a guard nothing calls; gsr1 landing battery)\n28417dd2f ops: normalize static route build evidence whitespace\nc8b41b00b ops: prepare nginx static game route and owner cutover gates\n",
+      "trackedDirt": ""
+    }
+  },
+  "queues": {
+    "tasks/queue/main": [],
+    "tasks/queue/lane-a": [],
+    "tasks/queue/lane-b": [],
+    "tasks/queue/lane-c": [],
+    "tasks/queue/lane-d": [],
+    "tasks/queue/art": [],
+    "tasks/running": [],
+    "assets/crafting-queue/pending": []
+  },
+  "goals": [
+    {
+      "id": "goldrush-static-route-1",
+      "title": "The game leaves the Worker: the droplet's nginx proxies /goldrush/ to the Pages alias (the /api/ pattern), a conf guard, a droplet-side verification script and the cutover runbook; the Worker route is deleted at cutover (owner 2026-10-09: 'Option B - lets fix this once and for all in a proper way'; F-2987-1)",
+      "status": "queued",
+      "taskFile": "goldrush-static-route-1.md",
+      "lane": "lane-d (Astra, gpt-6-astra)",
+      "authoredAt": "2026-10-09",
+      "authoredBy": "attended (Fable), on the owner's word, 2026-10-09",
+      "queuedAt": "2026-10-09"
+    },
+    {
+      "id": "headers-asset-cache-1",
+      "title": "Hashed game assets stop carrying no-cache (the Pages _headers merge put the catch-all's no-cache on every immutable asset since 2026-09-24, F-2987-2); the headers guard models the merge and learns the detach syntax",
+      "status": "queued",
+      "taskFile": "headers-asset-cache-1.md",
+      "lane": "lane-b (Astra, gpt-6-astra)",
+      "authoredAt": "2026-10-09",
+      "authoredBy": "attended (Fable), from F-2987-2, on the owner's Option B word, 2026-10-09",
+      "queuedAt": "2026-10-09"
+    }
+  ],
+  "runner": "  PID  PPID TTY      STAT STARTED\n31360     1 ??       Ss   Tue Sep 29 10:47:38 2026    \n"
+}

@@ -1,0 +1,167 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=475  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 475 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 23 file(s) main has moved that this lane lacks:
+          scripts/attended/README.md
+          scripts/attended/cutover-goldrush-route.sh
+          scripts/attended/landings/emd1-review.md
+          scripts/attended/landings/emd1.json
+          scripts/attended/landings/lvc3-review.md
+          scripts/attended/landings/lvc3.json
+          scripts/attended/landings/sdu1-review.md
+          scripts/attended/landings/sdu1.json
+          … and 15 more
+lane-b  sol/wave-lane-b  ahead=0  behind=467  paths=0  tracked-dirt=0  untracked=13
+    untracked (clean -fd) artifacts/emdash-entities-1/consent-recheck-results/.last-run.json
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/.last-run.json
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/error-context.md
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/error-context.md
+    untracked (clean -fd) artifacts/headers-asset-cache-1/control-results/.last-run.json
+    untracked (clean -fd) artifacts/headers-asset-cache-1/control-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/error-context.md
+    untracked (clean -fd) artifacts/headers-asset-cache-1/control-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/test-failed-1.png
+    untracked (clean -fd) artifacts/headers-asset-cache-1/control-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/trace.zip
+    untracked (clean -fd) artifacts/headers-asset-cache-1/playwright-results/.last-run.json
+    untracked (clean -fd) artifacts/headers-asset-cache-1/playwright-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/error-context.md
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/wave-lane-b is 467 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/wave-lane-b
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-b) — F-1320-2.
+     📋 run-surface drift: 19 file(s) main has moved that this lane lacks:
+          scripts/attended/README.md
+          scripts/attended/cutover-goldrush-route.sh
+          scripts/attended/landings/emd1-review.md
+          scripts/attended/landings/emd1.json
+          scripts/attended/landings/lvc3-review.md
+          scripts/attended/landings/lvc3.json
+          scripts/attended/landings/sdu1-review.md
+          scripts/attended/landings/sdu1.json
+          … and 11 more
+lane-c  sol/map-art-campaign-2  ahead=0  behind=783  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/map-art-campaign-2 is 783 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/map-art-campaign-2
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-c) — F-1320-2.
+     📋 run-surface drift: 56 file(s) main has moved that this lane lacks:
+          e2e/audio-integration.spec.ts
+          e2e/audio-music-toggle.spec.ts
+          e2e/e7-tape-toggle-phone-hit-target.spec.ts
+          scripts/attended/README.md
+          scripts/attended/cutover-goldrush-route.sh
+          scripts/attended/landings/ahr1-review.md
+          scripts/attended/landings/ahr1.json
+          scripts/attended/landings/amt1-review.md
+          … and 48 more
+lane-d  art/portraits-e5-e10-generated  ahead=3  behind=757  paths=26  tracked-dirt=0  untracked=1
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/build.log  (3216 of 3216 added lines absent from main)
+      "> gold-rush@0.1.0 build"
+      "> tsc && vite build && node scripts/asset-diet.mjs"
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/check-verifier.py  (62 of 62 added lines absent from main)
+      "\"\"\"Offline contract checks: mock only external nginx/curl; use the real bash/node.\"\"\""
+      "from pathlib import Path"
+      "import os"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/api-error.log  (9 of 9 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| PASS | nginx -t                     | configuration accepted |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/asset-html.log  (9 of 9 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| PASS | nginx -t                     | configuration accepted |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/bad-json.log  (9 of 9 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| PASS | nginx -t                     | configuration accepted |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/build-mismatch.log  (9 of 9 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| PASS | nginx -t                     | configuration accepted |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/cache-conflict.log  (9 of 9 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| PASS | nginx -t                     | configuration accepted |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/curl  (35 of 35 added lines absent from main)
+      "#!/usr/bin/env python3"
+      "import os, sys"
+      "args=sys.argv[1:]; url=args[-1]; scenario=os.environ['SCENARIO']"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/healthy.log  (9 of 9 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| PASS | nginx -t                     | configuration accepted |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/network-fails.log  (9 of 9 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| PASS | nginx -t                     | configuration accepted |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/nginx  (4 of 4 added lines absent from main)
+      "#!/usr/bin/env python3"
+      "import os, sys"
+      "assert sys.argv[1:] == ['-t']"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/nginx-fails.log  (3 of 3 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| FAIL | nginx -t                     | stop before cutover |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/no-asset.log  (9 of 9 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| PASS | nginx -t                     | configuration accepted |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/fixtures/skill-html.log  (9 of 9 added lines absent from main)
+      "| Result | Check                        | Detail |"
+      "| ------ | ---------------------------- | ------ |"
+      "| PASS | nginx -t                     | configuration accepted |"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/guard.log  (13 of 13 added lines absent from main)
+      "✔ Pages proxy uses request-time DNS, HTTPS, SNI and the Pages Host (0.403958ms)"
+      "✔ prefix rewrite stays in the proxy location and preserves paths and query strings (0.164875ms)"
+      "✔ bare game URL redirects on the canonical origin (1.018042ms)"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/implementation.diff  (261 of 261 added lines absent from main)
+      "diff --git a/docs/ops/agenttown-server.md b/docs/ops/agenttown-server.md"
+      "index 60829268d..cb0c9c263 100644"
+      "--- a/docs/ops/agenttown-server.md"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/prebuild.log  (3206 of 3206 added lines absent from main)
+      "> gold-rush@0.1.0 build"
+      "> tsc && vite build && node scripts/asset-diet.mjs"
+      "(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is plann…"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/report.md  (44 of 44 added lines absent from main)
+      "# Gold Rush static route — prepared for owner cutover"
+      "READY-FOR-GATES. Implementation complete; no live configuration, Worker route, Pages deployment or …"
+      "## Root cause and resulting change"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/scope-check.log  (3 of 3 added lines absent from main)
+      "Non-game nginx bytes identical"
+      "318 src files baseline=current SHA256 7e6eab5592d4489c0e47cde20723f1a10346f0cb345a3683680cd7ca60a8d…"
+      "Landing SHA256 d1c07cf55cb2382945ca9c2cf08dd257587ee85e754b967e3d687932da6ac399"
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/tsc.log  (0 of 0 added lines absent from main)
+    HELD LANE-ONLY  artifacts/goldrush-static-route-1/verifier-checks.log  (11 of 11 added lines absent from main)
+      "PASS healthy: exit 0"
+      "PASS nginx-fails: exit 1"
+      "PASS network-fails: exit 1"
+    HELD LANE-ONLY  docs/ops/agenttown-server.md  (49 of 56 added lines absent from main)
+      "## Static game route cutover — F-2987-1 (owner runbook, 2026-10-09)"
+      "**Prepared, not applied.** This section supersedes the historical `/goldrush` fallback in the map a…"
+      "The proxy uses the existing `/api/` request-time resolver pattern. An explicit `rewrite ... break` …"
+    HELD LANE-ONLY  ops/droplet/agenttown.app.nginx.conf  (5 of 11 added lines absent from main)
+      "    location = /goldrush {"
+      "        return 301 /goldrush/;"
+      "    location /goldrush/ {"
+    HELD LANE-ONLY  ops/droplet/verify-goldrush-route.sh  (69 of 69 added lines absent from main)
+      "#!/usr/bin/env bash"
+      "# Run on the droplet after nginx reload, BEFORE removing the Worker route."
+      "# Requires bash, curl, node and permission to run nginx -t. No credentials."
+    HELD LANE-ONLY  package.json  (1 of 1 added lines absent from main)
+      "    \"test:node-guards\": \"node scripts/run-node-guards.mjs scripts/river-assay.test.mjs scripts/live…"
+    HELD LANE-ONLY  scripts/goldrush-route-conf.test.mjs  (71 of 71 added lines absent from main)
+      "import assert from 'node:assert/strict';"
+      "import { readFileSync } from 'node:fs';"
+      "import test from 'node:test';"
+    untracked (clean -fd) node_modules
+  => HOLDS: drain or rule on the held paths first — never auto-reset over them
+
+worktree coverage: reported 4 of 70 registered — 66 NOT reported (8 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported

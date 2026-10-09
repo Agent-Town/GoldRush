@@ -1,0 +1,54 @@
+{
+  "stamp": "2026-10-09T07:26:34.783Z",
+  "results": [
+    {
+      "url": "https://agenttown.app/goldrush/",
+      "status": 429,
+      "bytes": 5571,
+      "error": "Cloudflare Error 1027"
+    },
+    {
+      "url": "https://agenttown.app/goldrush/version.json",
+      "status": 429,
+      "bytes": 5571,
+      "error": "Cloudflare Error 1027"
+    },
+    {
+      "url": "https://agenttown.app/goldrush/skill.md",
+      "status": 429,
+      "bytes": 5571,
+      "error": "Cloudflare Error 1027"
+    },
+    {
+      "url": "https://gold-rush-3in.pages.dev/version.json",
+      "status": 200,
+      "bytes": 54,
+      "version": {
+        "build": "954bb2cd",
+        "builtAt": "2026-09-28T13:59:45Z"
+      }
+    },
+    {
+      "url": "https://gold-rush-3in.pages.dev/skill.md",
+      "status": 200,
+      "bytes": 59895,
+      "rotationIds": [
+        "r2026w37",
+        "r2026w38",
+        "r2026w39",
+        "r2026w40"
+      ]
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w41",
+      "status": 400,
+      "bytes": 70,
+      "error": "{\"ok\":false,\"error\":\"bad_rotation\",\"message\":\"Rotation not accepted.\"}"
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w40",
+      "status": 200,
+      "bytes": 883
+    }
+  ]
+}

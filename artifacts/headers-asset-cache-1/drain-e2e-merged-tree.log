@@ -1,0 +1,114 @@
+(node:27374) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 48 tests using 1 worker
+
+
+(node:27440) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[1/48] [desktop-chrome] › e2e/058-device-tiers.spec.ts:81:1 › desktop Chrome tier proofs › Settings performance override persists and applies Lite render knobs
+[2/48] [desktop-chrome] › e2e/058-device-tiers.spec.ts:110:1 › desktop Chrome tier proofs › tier URL param does not recurse when the Start Menu re-renders
+[3/48] [desktop-chrome] › e2e/058-device-tiers.spec.ts:129:1 › desktop Chrome tier proofs › profile transfer excludes the device-local tier key and migrates old scoped values
+[4/48] [desktop-chrome] › e2e/058-device-tiers.spec.ts:175:1 › desktop Chrome tier proofs › iPad-class auto detection chooses Lite
+[5/48] [desktop-chrome] › e2e/058-device-tiers.spec.ts:195:1 › desktop Chrome tier proofs › tier switch is render-only for a deterministic economy slice
+  1) [desktop-chrome] › e2e/058-device-tiers.spec.ts:195:1 › desktop Chrome tier proofs › tier switch is render-only for a deterministic economy slice 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -15,11 +15,11 @@
+          "spent": 0,
+          "stolen": 0,
+        },
+        "hero": Object {
+          "x": -22,
+    -     "y": -0.09436554735065064,
+    +     "y": 0.527412042617798,
+          "z": -6.8,
+        },
+        "logLength": 6,
+        "terrain": Array [
+          Object {
+
+      207 |   await testInfo.attach('058-determinism-tier-report', { body, contentType: 'application/json' });
+      208 |
+    > 209 |   expect(full.signature).toEqual(lite.signature);
+          |                          ^
+      210 |   expect(full.diagnostics.performance.tier).toBe('full');
+      211 |   expect(lite.diagnostics.performance.tier).toBe('lite');
+      212 |   expect(lite.diagnostics.canvas.dpr).toBeLessThanOrEqual(full.diagnostics.canvas.dpr);
+        at /Users/robin/.goldrush/land/wt-hac1/e2e/058-device-tiers.spec.ts:209:26
+
+    attachment #2: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+
+(node:27650) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[6/48] [desktop-chrome] › e2e/058-device-tiers.spec.ts:216:1 › desktop Chrome tier proofs › FULL and LITE same-scene screenshots are captured
+[7/48] [desktop-chrome] › e2e/058-device-tiers.spec.ts:226:1 › desktop WebKit records FULL baseline and LITE wave-20 stress envelope
+[8/48] [desktop-chrome] › e2e/058-device-tiers.spec.ts:255:1 › built hashed assets have immutable cache headers and small-merge download estimate
+[9/48] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[10/48] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[11/48] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[12/48] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[13/48] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[14/48] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[15/48] [desktop-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[16/48] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[17/48] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[18/48] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[19/48] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[20/48] [desktop-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:28954) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[21/48] [mobile-chrome] › e2e/058-device-tiers.spec.ts:81:1 › desktop Chrome tier proofs › Settings performance override persists and applies Lite render knobs
+[22/48] [mobile-chrome] › e2e/058-device-tiers.spec.ts:110:1 › desktop Chrome tier proofs › tier URL param does not recurse when the Start Menu re-renders
+[23/48] [mobile-chrome] › e2e/058-device-tiers.spec.ts:129:1 › desktop Chrome tier proofs › profile transfer excludes the device-local tier key and migrates old scoped values
+[24/48] [mobile-chrome] › e2e/058-device-tiers.spec.ts:175:1 › desktop Chrome tier proofs › iPad-class auto detection chooses Lite
+[25/48] [mobile-chrome] › e2e/058-device-tiers.spec.ts:195:1 › desktop Chrome tier proofs › tier switch is render-only for a deterministic economy slice
+[26/48] [mobile-chrome] › e2e/058-device-tiers.spec.ts:216:1 › desktop Chrome tier proofs › FULL and LITE same-scene screenshots are captured
+[27/48] [mobile-chrome] › e2e/058-device-tiers.spec.ts:226:1 › desktop WebKit records FULL baseline and LITE wave-20 stress envelope
+[28/48] [mobile-chrome] › e2e/058-device-tiers.spec.ts:255:1 › built hashed assets have immutable cache headers and small-merge download estimate
+[29/48] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:111:1 › menu places a palisade and logs build_palisade spend
+[30/48] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:136:1 › build menu shows six ready icons and Balance-backed blurbs
+[31/48] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:178:1 › palisade footprint rejects overlap while allowing edge-touch chaining
+[32/48] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:205:1 › beacon cost curve stays intact through the menu
+[33/48] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:227:1 › single enemy slides around a finite palisade line without passing through
+[34/48] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:284:1 › 390px build menu is visible, tappable, and clear of HUD controls
+[35/48] [mobile-chrome] › e2e/m2-01-build-menu.spec.ts:329:1 › stress draw calls stay under 200 with palisades and beacons
+[36/48] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:105:1 › enemy crossing the river reaches the hero through the ford only
+[37/48] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:123:1 › scheduled waves never place enemies in deep river over three waves
+[38/48] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:139:1 › hero stops in the shallows and keeps weapons armed at the deep channel
+[39/48] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:181:1 › xp from a residual deep-water death is auto-banked with no mote
+[40/48] [mobile-chrome] › e2e/task-025-bandits-dont-swim.spec.ts:202:1 › far-bank sluice stays untouched when the river flank is open
+
+(node:30087) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[41/48] [desktop-webkit] › e2e/058-device-tiers.spec.ts:81:1 › desktop Chrome tier proofs › Settings performance override persists and applies Lite render knobs
+[42/48] [desktop-webkit] › e2e/058-device-tiers.spec.ts:110:1 › desktop Chrome tier proofs › tier URL param does not recurse when the Start Menu re-renders
+[43/48] [desktop-webkit] › e2e/058-device-tiers.spec.ts:129:1 › desktop Chrome tier proofs › profile transfer excludes the device-local tier key and migrates old scoped values
+[44/48] [desktop-webkit] › e2e/058-device-tiers.spec.ts:175:1 › desktop Chrome tier proofs › iPad-class auto detection chooses Lite
+[45/48] [desktop-webkit] › e2e/058-device-tiers.spec.ts:195:1 › desktop Chrome tier proofs › tier switch is render-only for a deterministic economy slice
+[46/48] [desktop-webkit] › e2e/058-device-tiers.spec.ts:216:1 › desktop Chrome tier proofs › FULL and LITE same-scene screenshots are captured
+[47/48] [desktop-webkit] › e2e/058-device-tiers.spec.ts:226:1 › desktop WebKit records FULL baseline and LITE wave-20 stress envelope
+[48/48] [desktop-webkit] › e2e/058-device-tiers.spec.ts:255:1 › built hashed assets have immutable cache headers and small-merge download estimate
+  1 failed
+    [desktop-chrome] › e2e/058-device-tiers.spec.ts:195:1 › desktop Chrome tier proofs › tier switch is render-only for a deterministic economy slice 
+  16 skipped
+  31 passed (2.6m)

@@ -10424,12 +10424,16 @@
         {
           "id": "headers-asset-cache-1",
           "title": "Hashed game assets stop carrying no-cache (the Pages _headers merge put the catch-all's no-cache on every immutable asset since 2026-09-24, F-2987-2); the headers guard models the merge and learns the detach syntax",
-          "status": "queued",
+          "status": "merged",
           "taskFile": "headers-asset-cache-1.md",
           "lane": "lane-b (Astra, gpt-6-astra)",
           "authoredAt": "2026-10-09",
           "authoredBy": "attended (Fable), from F-2987-2, on the owner's Option B word, 2026-10-09",
-          "queuedAt": "2026-10-09"
+          "queuedAt": "2026-10-09",
+          "mergeHash": "c7ad5dc24c7411d23fc4c5985cb5906a52332be0",
+          "mergedAt": "2026-10-09",
+          "review": "reviews/headers-asset-cache-1.md",
+          "drainedBy": "attended 2026-10-09 (scripts/attended/land-held.sh hac1; Astra on lane-b, the ChatGPT subscription)"
         }
       ]
     },
