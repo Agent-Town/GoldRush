@@ -1,0 +1,131 @@
+{
+  "stamp": "2026-10-09T07:43:09.486Z",
+  "directories": {
+    "tasks/queue/main": [],
+    "tasks/queue/lane-a": [],
+    "tasks/queue/lane-b": [],
+    "tasks/queue/lane-c": [],
+    "tasks/queue/lane-d": [],
+    "tasks/queue/art": [],
+    "tasks/running": [],
+    "assets/crafting-queue/pending": []
+  },
+  "failures": [
+    {
+      "name": "shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md",
+      "mtime": "2026-09-20T06:53:51.129Z"
+    },
+    {
+      "name": "shipped-s1065-20260708-095336-gt-04-sightlines-ebbb04de.md",
+      "mtime": "2026-09-20T06:53:51.129Z"
+    },
+    {
+      "name": "shipped-s1065-20260707-143237-damage-orientation-e9fabff7.md",
+      "mtime": "2026-09-20T06:53:51.128Z"
+    }
+  ],
+  "latestRuns": [
+    {
+      "name": "20261009-113013-lane-b-headers-asset-cache-1.md.log",
+      "mtime": "2026-10-09T04:35:32.710Z",
+      "tail": [
+        "",
+        "[Report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-b/artifacts/headers-asset-cache-1/report.md>)",
+        "",
+        "Remaining: resolve the pre-existing tier-switch failure separately, then integrate/deploy and verify live headers. No deployment performed.",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/emdash-entities-1/consent-recheck-results/.last-run.json",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/emdash-entities-1/control-results/.last-run.json",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/error-context.md",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/error-context.md",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/headers-asset-cache-1/control-results/.last-run.json",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/headers-asset-cache-1/control-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/error-context.md",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/headers-asset-cache-1/control-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/test-failed-1.png",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/headers-asset-cache-1/control-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/trace.zip",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/headers-asset-cache-1/playwright-results/.last-run.json",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/headers-asset-cache-1/playwright-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/error-context.md",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/headers-asset-cache-1/playwright-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/test-failed-1.png",
+        "[lane-runner-v3] withheld raw/oversized evidence: artifacts/headers-asset-cache-1/playwright-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/trace.zip",
+        "[lane-runner-v3] withheld factory accounting: logs/guard-stats.jsonl",
+        "evidence-budget — the evidence bytes this landing adds",
+        "  range    : d428568d73c8a30cc8cd2811236788967b64077f..INDEX",
+        "  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all",
+        "  files    : 21 changed evidence path(s)",
+        "  added    : 9.8 MB  (new blobs plus the growth of modified ones)",
+        "  removed  : 0.0 MB  (reported, never credited against the ceiling)",
+        "  net      : 9.8 MB",
+        "  limit    : 25.0 MB per landing (scripts/evidence-budget-baseline.json)",
+        "          1.7 MB  A  artifacts/headers-asset-cache-1/boot-desktop.png",
+        "          1.7 MB  A  artifacts/headers-asset-cache-1/boot-mobile.png",
+        "          1.5 MB  A  artifacts/headers-asset-cache-1/suite-evidence/056/mobile-390-build-menu-icons-blurb.png",
+        "          1.2 MB  A  artifacts/headers-asset-cache-1/suite-evidence/058/desktop-chrome-full.png",
+        "          1.1 MB  A  artifacts/headers-asset-cache-1/suite-evidence/058/desktop-chrome-lite.png",
+        "          1.1 MB  A  artifacts/headers-asset-cache-1/suite-evidence/056/desktop-build-menu-icons-blurb.png",
+        "          1.1 MB  A  artifacts/headers-asset-cache-1/suite-evidence/056/desktop-build-menu-palisade.png",
+        "          0.4 MB  A  artifacts/headers-asset-cache-1/build.log",
+        "      … and 12 more growing path(s)",
+        "  tree     : 9440.0 MB tracked under artifacts/ (no ceiling banked yet)",
+        "  PASS — 9.8 MB added, inside the 25.0 MB ceiling.",
+        "[lane-runner-v3] withheld 0 staged evidence budget path(s); 9828636 added byte(s) remain",
+        "[lane-runner-v3] withheld 12 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20261009-113013-lane-b-headers-asset-cache-1.md-withheld-paths.txt",
+        "[lane-runner-v3] withheld 1 factory-accounting path(s)",
+        ""
+      ]
+    },
+    {
+      "name": "20261009-112811-lane-d-goldrush-static-route-1.md.log",
+      "mtime": "2026-10-09T04:34:13.735Z",
+      "tail": [
+        "",
+        "[Report and evidence](/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/artifacts/goldrush-static-route-1/report.md)",
+        "",
+        "Remaining: verify the separate cache-header fix before cutover—the inspected main still contained conflicting `no-cache`. No deployment or live nginx/CDN verification was performed.",
+        "tokens used",
+        "78,867",
+        "READY-FOR-GATES — committed as `c8b41b00b`, with evidence cleanup in `28417dd2f`.",
+        "",
+        "Passed: 5 configuration guards, 10 verifier scenarios, shell syntax, TypeScript and build. Other nginx blocks, source files and landing remain unchanged.",
+        "",
+        "```nginx",
+        "    location = /goldrush {",
+        "        return 301 /goldrush/;",
+        "    }",
+        "    location /goldrush/ {",
+        "        resolver 127.0.0.53 1.1.1.1 valid=300s;",
+        "        set $pages_upstream gold-rush-3in.pages.dev;",
+        "        # A variable proxy_pass with a trailing slash would send every request to /.",
+        "        rewrite ^/goldrush/(.*)$ /$1 break;",
+        "        proxy_pass https://$pages_upstream;",
+        "        proxy_ssl_server_name on;",
+        "        proxy_set_header Host gold-rush-3in.pages.dev;",
+        "    }",
+        "```",
+        "",
+        "Owner’s five steps:",
+        "",
+        "1. Back up/copy configuration, run `nginx -t`, reload.",
+        "2. Run the local verifier while the Worker route remains.",
+        "3. Remove the Worker route; configure asset caching.",
+        "4. Verify public URLs, build identity, second-request HIT and browser behavior.",
+        "5. If needed, restore the Worker route.",
+        "",
+        "[Report and evidence](/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/artifacts/goldrush-static-route-1/report.md)",
+        "",
+        "Remaining: verify the separate cache-header fix before cutover—the inspected main still contained conflicting `no-cache`. No deployment or live nginx/CDN verification was performed.",
+        "[lane-runner-v3] withheld baseline-dirty path: node_modules",
+        "[lane-runner-v3] withheld 0 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20261009-112811-lane-d-goldrush-static-route-1.md-withheld-paths.txt",
+        "[lane-runner-v3] withheld 1 baseline ownership collision(s)",
+        ""
+      ]
+    }
+  ],
+  "lanes": {
+    "sol/open-findings-astra": [],
+    "sol/wave-lane-b": [],
+    "sol/map-art-campaign-2": [],
+    "art/portraits-e5-e10-generated": [
+      "d8ecd3356 fix: roster scripts/goldrush-route-conf.test.mjs in test:node-guards (the gate-caller audit refuses a guard nothing calls; gsr1 landing battery)",
+      "28417dd2f ops: normalize static route build evidence whitespace",
+      "c8b41b00b ops: prepare nginx static game route and owner cutover gates"
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "stamp": "2026-10-09T07:43:34.481Z",
+  "cacheMainAncestor": true,
+  "mainHeaderDetachCount": 3,
+  "processes": "  PID  PPID TTY      STAT STARTED\n31360     1 ??       Ss   Tue Sep 29 10:47:38 2026    \n42648 42624 ??       SN   Fri Oct  9 14:12:43 2026    \n68088 47588 ??       Ss   Fri Oct  9 14:04:26 2026    \n98680     1 ??       S    Fri Oct  9 14:40:58 2026    \n",
+  "landings": {
+    "hac1": {
+      "gates.txt": {
+        "mtime": "2026-10-09T07:19:04.631Z",
+        "tail": [
+          "main now 11a46dbab",
+          "   44c59238c..11a46dbab  main -> main",
+          "post-ff: law rc=0 | desk ℹ pass 57 ℹ fail 0 ",
+          "no deploy (config)",
+          ""
+        ],
+        "matches": [
+          "verdict: clean",
+          "main now 11a46dbab"
+        ]
+      },
+      "run.out": {
+        "mtime": "2026-10-09T07:12:45.519Z",
+        "tail": [
+          "fire hold on 07:12Z; landing hac1",
+          "land-queue: admitted at load { 24.14 17.03 13.02 } 07:12Z",
+          "release requested; tasks/.fire.lock gone",
+          "fire hold released at the verdict (verdict: clean) 07:12Z",
+          ""
+        ],
+        "matches": [
+          "fire hold released at the verdict (verdict: clean) 07:12Z"
+        ]
+      }
+    },
+    "gsr1": {
+      "gates.txt": {
+        "mtime": "2026-10-09T06:33:06.998Z",
+        "tail": [
+          "gsr1-PREP-DONE",
+          "battery reds: ✖ agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids (48481.448375ms)",
+          "verdict — needs hands",
+          "verdict: clean",
+          ""
+        ],
+        "matches": [
+          "verdict: clean"
+        ]
+      },
+      "run.out": {
+        "mtime": "2026-10-09T06:31:39.026Z",
+        "tail": [
+          "land-queue: admitted at load { 10.47 13.35 17.08 } 06:00Z",
+          "release requested; tasks/.fire.lock gone",
+          "fire hold released at the verdict () 06:31Z",
+          "landing wrapper exited rc=1 06:31Z",
+          ""
+        ],
+        "matches": []
+      }
+    }
+  }
+}

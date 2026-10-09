@@ -284,3 +284,6 @@ Astra: the map-art corrections campaign is COMPLETE (2026-09-22, all sixteen row
 
 
 **s2998 verification, 2026-10-09T07:26Z.** Cache slice `c7ad5dc24` is now an ancestor of main and its goal leaf is merged; the attended post-landing Node battery remains in progress. Routing remains unlanded and attended-owned, with three lane-D commits and a CLEAR policy check. Canonical game/version/skill still return 429 Error 1027; direct Pages is 200 at build `954bb2cd`, weeks 37–40; week 41 remains `bad_rotation`. Option B is RULED and no further owner capacity word is owed. This supersedes the prior unlanded-cache claim, not the pending public cutover acceptance. Evidence: `artifacts/s2998/landing-state.json`, `live-probe.json`, `report.md`.
+
+
+**s2999 attended completion receipt, 2026-10-09T07:44:21Z.** Cache hac1 now has `LAND-hac1-DONE`: post-landing main Node rc 0, 1,043 pass / 5 skips / zero failures; chained checks 89/89. This supersedes the prior still-running-cache observation. Routing remains an unlanded, policy-CLEAR, attended-owned drain; the authorized cutover and public acceptance remain pending. Canonical game/version/skill were still 429 Error 1027 at 07:43:35Z. No additional owner capacity choice is owed. Receipt: `artifacts/s2999/cache-completion.json`; live probe: `artifacts/s2999/live-probe.json`.
