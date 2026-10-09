@@ -1,0 +1,65 @@
+run surface: 9 base + gate leaves from main:package.json (+6: foundry ops playwright.preview.config.ts playwright.release-base.config.ts playwright.release.config.ts server)
+lane-a  sol/open-findings-astra  ahead=0  behind=457  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/open-findings-astra is 457 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/open-findings-astra
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-a) — F-1320-2.
+     📋 run-surface drift: 21 file(s) main has moved that this lane lacks:
+          scripts/attended/README.md
+          scripts/attended/landings/emd1-review.md
+          scripts/attended/landings/emd1.json
+          scripts/attended/landings/lvc3-review.md
+          scripts/attended/landings/lvc3.json
+          scripts/attended/landings/sdu1-review.md
+          scripts/attended/landings/sdu1.json
+          scripts/attended/ledger-gap.sh
+          … and 13 more
+lane-b  sol/wave-lane-b  ahead=0  behind=453  paths=0  tracked-dirt=2  untracked=12  BUSY
+    TRACKED-DIRT public/_headers
+    TRACKED-DIRT scripts/site-security-headers.test.mjs
+    untracked (clean -fd) artifacts/emdash-entities-1/consent-recheck-results/.last-run.json
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/.last-run.json
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-desktop-chrome/error-context.md
+    untracked (clean -fd) artifacts/emdash-entities-1/control-results/field-book-minds-and-rigs--260d3-out-changing-county-ranking-mobile-chrome/error-context.md
+    untracked (clean -fd) artifacts/headers-asset-cache-1/build.log
+    untracked (clean -fd) artifacts/headers-asset-cache-1/guard-after.log
+    untracked (clean -fd) artifacts/headers-asset-cache-1/playwright-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/error-context.md
+    untracked (clean -fd) artifacts/headers-asset-cache-1/playwright-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/test-failed-1.png
+    untracked (clean -fd) artifacts/headers-asset-cache-1/playwright-results/058-device-tiers-desktop-C-9defc-deterministic-economy-slice-desktop-chrome/trace.zip
+    untracked (clean -fd) artifacts/headers-asset-cache-1/playwright.log
+  => BUSY: a runner holds this slot — leave it alone
+     holder pid is ALIVE — a real runner is working here. Leave it alone.
+lane-c  sol/map-art-campaign-2  ahead=0  behind=765  paths=0  tracked-dirt=0  untracked=0
+  => USABLE: refill freely — a master pre-flight will find main..branch empty
+     ⚠️  but sol/map-art-campaign-2 is 765 commit(s) BEHIND main. USABLE does not mean CURRENT.
+     Before queueing, name the commit your task depends on and prove the lane has it:
+       git merge-base --is-ancestor <sha> sol/map-art-campaign-2
+     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane lane-c) — F-1320-2.
+     📋 run-surface drift: 54 file(s) main has moved that this lane lacks:
+          e2e/audio-integration.spec.ts
+          e2e/audio-music-toggle.spec.ts
+          e2e/e7-tape-toggle-phone-hit-target.spec.ts
+          scripts/attended/README.md
+          scripts/attended/landings/ahr1-review.md
+          scripts/attended/landings/ahr1.json
+          scripts/attended/landings/amt1-review.md
+          scripts/attended/landings/amt1.json
+          … and 46 more
+lane-d  art/portraits-e5-e10-generated  ahead=0  behind=739  paths=0  tracked-dirt=2  untracked=6  BUSY
+    TRACKED-DIRT docs/ops/agenttown-server.md
+    TRACKED-DIRT ops/droplet/agenttown.app.nginx.conf
+    untracked (clean -fd) artifacts/goldrush-static-route-1/guard.log
+    untracked (clean -fd) artifacts/goldrush-static-route-1/prebuild.log
+    untracked (clean -fd) artifacts/goldrush-static-route-1/tsc.log
+    untracked (clean -fd) node_modules
+    untracked (clean -fd) ops/droplet/verify-goldrush-route.sh
+    untracked (clean -fd) scripts/goldrush-route-conf.test.mjs
+  => BUSY: a runner holds this slot — leave it alone
+     holder pid is ALIVE — a real runner is working here. Leave it alone.
+
+worktree coverage: reported 4 of 68 registered — 64 NOT reported (7 ahead of main, 0 could-not-answer).
+    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached
+    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.
+    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing
+    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported
