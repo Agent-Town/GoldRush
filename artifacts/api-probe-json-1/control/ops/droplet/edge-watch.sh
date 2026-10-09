@@ -40,47 +40,11 @@ code() {  # -> 200 | 2xx-slow (answered, transfer missed the budget) | <code> | 
     *)   echo "$c" ;;
   esac
 }
-# A Pages SPA fallback can return 200 HTML while Functions are unavailable.
-api_code() {
-  local response rc meta c content_type body
-  response=$(curl -s -m 12 -w '\n%{http_code} %{content_type}' "$1" 2>/dev/null); rc=$?
-  meta=${response##*$'\n'}
-  c=${meta%% *}
-  [ -n "$c" ] || c=000
-  if [ "$rc" -ne 0 ]; then
-    case "$c" in
-      2??) echo "$c-incomplete" ;;
-      *) echo "$c" ;;
-    esac
-    return
-  fi
-  [ "$c" = 200 ] || { echo "$c"; return; }
-  content_type=$(printf '%s' "${meta#* }" | tr '[:upper:]' '[:lower:]')
-  case "$content_type" in
-    text/html|text/html\;*) echo 200-html; return ;;
-    application/json|application/json\;*) ;;
-    *) echo 200-notjson; return ;;
-  esac
-  body=${response%$'\n'*}
-  # Both the empty and populated payloads in functions/api/stats.ts carry these.
-  if printf '%s' "$body" | node -e '
-    let s=""; process.stdin.on("data", d => s += d).on("end", () => {
-      try {
-        const v = JSON.parse(s);
-        if (!v || v.ok !== true || !v.stats || typeof v.stats !== "object" || Array.isArray(v.stats)) throw Error();
-      } catch { process.exitCode = 1; }
-    });' 2>/dev/null; then
-    echo 200
-  else
-    echo 200-notjson
-  fi
-}
-
 # Three probes, three failure domains: landing (this box's nginx static), game
 # (Cloudflare edge worker -> pages.dev), api (this box's nginx -> ledger/forward).
 L=$(code https://agenttown.app/)
 G=$(code https://agenttown.app/goldrush/)
-A=$(api_code https://agenttown.app/api/stats)
+A=$(code https://agenttown.app/api/stats)
 DARK=""; SLOW=""
 for v in "$L" "$G" "$A"; do
   case "$v" in

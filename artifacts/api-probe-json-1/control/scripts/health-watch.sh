@@ -142,49 +142,11 @@ edge_one() {  # -> 200 | 2xx-slow (answered, transfer missed the budget) | <code
   esac
 }
 
-# A Pages SPA fallback can return 200 HTML while Functions are unavailable.
-api_code() {
-  local response rc meta c content_type body node_bin
-  response=$(curl -s -m 10 -w '\n%{http_code} %{content_type}' "$1" 2>/dev/null); rc=$?
-  meta=${response##*$'\n'}
-  c=${meta%% *}
-  [ -n "$c" ] || c=000
-  if [ "$rc" -ne 0 ]; then
-    case "$c" in
-      2??) echo "$c-incomplete" ;;
-      *) echo "$c" ;;
-    esac
-    return
-  fi
-  [ "$c" = 200 ] || { echo "$c"; return; }
-  content_type=$(printf '%s' "${meta#* }" | tr '[:upper:]' '[:lower:]')
-  case "$content_type" in
-    text/html|text/html\;*) echo 200-html; return ;;
-    application/json|application/json\;*) ;;
-    *) echo 200-notjson; return ;;
-  esac
-  body=${response%$'\n'*}
-  # Both the empty and populated payloads in functions/api/stats.ts carry these.
-  # launchd omits Homebrew from PATH on the Mac.
-  node_bin=$(command -v node) || node_bin=/opt/homebrew/bin/node
-  if printf '%s' "$body" | "$node_bin" -e '
-    let s=""; process.stdin.on("data", d => s += d).on("end", () => {
-      try {
-        const v = JSON.parse(s);
-        if (!v || v.ok !== true || !v.stats || typeof v.stats !== "object" || Array.isArray(v.stats)) throw Error();
-      } catch { process.exitCode = 1; }
-    });' 2>/dev/null; then
-    echo 200
-  else
-    echo 200-notjson
-  fi
-}
-
 edge_probe() {
   local l g a
   l=$(edge_one https://agenttown.app/)
   g=$(edge_one https://agenttown.app/goldrush/)
-  a=$(api_code https://agenttown.app/api/stats)
+  a=$(edge_one https://agenttown.app/api/stats)
   echo "landing=$l game=$g api=$a"
 }
 

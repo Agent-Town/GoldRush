@@ -1,0 +1,17 @@
+✔ [mac] a door that goes DARK after slow passes pages AT ONCE (3375.846208ms)
+✔ [mac] a DARK door from a cold state still pages at once (1195.489542ms)
+✔ [mac] SLOW still holds its fire for two passes and pages on the third (3328.152334ms)
+✔ [droplet] a door that goes DARK after slow passes mails AT ONCE (1218.333208ms)
+✔ [droplet] a DARK door from a cold state still mails at once, and a healthy door mails nothing (779.357959ms)
+✔ [droplet] SLOW still holds its fire for two passes and mails on the third (1169.563334ms)
+✔ [droplet] a legacy single-number state file cannot suppress a DARK mail (389.671833ms)
+✔ [droplet] recovery announces a paged episode and stays silent after an unpaged blip (1692.843833ms)
+✔ neither watcher increments a single shared tally before choosing its branch (0.765292ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13206.920917
