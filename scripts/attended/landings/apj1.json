@@ -1,0 +1,47 @@
+{
+  "tag": "apj1",
+  "branch": "sol/map-art-campaign-2",
+  "port": 5422,
+  "mergeMessage": "drain: merge sol/map-art-campaign-2 — api-probe-json-1 — the edge probes stop reading a dead API as healthy: /api/stats must answer 200 + application/json + {ok:true, stats:{}} (api=200-html / 200-notjson / 2xx-incomplete otherwise) in scripts/health-watch.sh and ops/droplet/edge-watch.sh; scripts/edge-probe-json.test.mjs (32 cases, rostered); the alarm-clock guard's stub answers the API healthily (attended); F-CUT-1 from the Option B cutover; scripts/ops only, hash unchanged",
+  "hash": "unchanged",
+  "gates": {
+    "releaseBuild": false,
+    "payload": false,
+    "halo": false,
+    "nullFloors": false,
+    "releaseSuite": false,
+    "functions": false,
+    "ledgerBattery": true,
+    "specs": [
+      "e2e/task-025-bandits-dont-swim.spec.ts",
+      "e2e/m2-01-build-menu.spec.ts"
+    ],
+    "allowedE2E": [],
+    "allowedBattery": [
+      "agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids",
+      "a reactive client can recover from rejected orders"
+    ],
+    "guards": [
+      "scripts/edge-probe-json.test.mjs",
+      "scripts/edge-alarm-clock-guard.test.mjs",
+      "scripts/edge-probe-composite-guard.test.mjs",
+      "scripts/gate-caller-audit.test.mjs"
+    ]
+  },
+  "review": {
+    "path": "reviews/api-probe-json-1.md",
+    "title": "Drain review: `api-probe-json-1`, the edge probes demand JSON from the API (the capped Pages fallback served HTML with a 200 and both probes called it healthy)",
+    "body": "scripts/attended/landings/apj1-review.md"
+  },
+  "bookkeeping": {
+    "taskFile": "api-probe-json-1.md",
+    "rowKey": "API PROBE JSON 1 LANDED",
+    "rowEmoji": "🩺",
+    "rowText": "F-CUT-1 (measured during the Option B cutover: with the daily cap exhausted, Pages served the SPA's HTML with HTTP 200 for `/api/stats` and both edge probes reported `api=200` for hours). Astra on lane-c (`c8ddf96b2` + `4ef388aa6`, 74,799 tokens, 08:30Z to 08:35Z): `scripts/health-watch.sh` and `ops/droplet/edge-watch.sh` gain `api_code`, which requires 200 + an `application/json` content type + a body parsing to `{ok:true, stats:{…}}` (the shape `functions/api/stats.ts` always returns) and otherwise reports `api=200-html`, `api=200-notjson` or `api=2xx-incomplete` as dark with the class in the value (the dashboard's `landing=… game=… api=…` shape kept); `scripts/edge-probe-json.test.mjs` 32 cases, rostered in `test:node-guards`; a bounded live capture of the HTML fallback kept as evidence. Attended fixes on the lane: `scripts/edge-alarm-clock-guard.test.mjs`'s curl stub now answers the API with healthy JSON in every scenario (its arms test landing/game transitions; 9/9), and a control copy of that guard under `artifacts/` renamed `.txt` (the gate-caller audit's orphan, the third time today). Evidence inside the budget. Landed attended, hash unchanged; the Mac probe is live on landing (launchd runs it from the repo); the droplet copy of `edge-watch.sh` is applied with the owner's word (a write on the box)",
+    "statusPhrase": "the edge probes demand JSON from the API and name the HTML-200 fallback as dark; the droplet copy waits on the owner's word",
+    "drainedBy": "attended 2026-10-09 (scripts/attended/land-held.sh apj1; Astra on lane-c, the ChatGPT subscription)"
+  },
+  "deploy": false,
+  "preview": false,
+  "evidenceDir": "artifacts/api-probe-json-1"
+}
