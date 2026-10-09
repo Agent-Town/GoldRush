@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+import os, sys
+args=sys.argv[1:]; url=args[-1]; scenario=os.environ['SCENARIO']
+assert '--noproxy' in args and '--max-time' in args
+if url.startswith('https://agenttown.app'):
+    assert '--resolve' in args and 'agenttown.app:443:127.0.0.1' in args
+assert not any(a in args for a in ['-L', '-k', '--insecure', '--location'])
+if url.startswith('http://127.0.0.1'):
+    assert 'Host: agenttown.app' in args
+    print('HTTP/1.1 301 Moved\r\nLocation: https://agenttown.app/goldrush/\r\n')
+    sys.exit(0)
+if scenario=='network-fails': sys.exit(7)
+head='-I' in args
+if '/assets/' in url:
+    assert url.endswith('/goldrush/assets/index-AbCd1234.js')
+    mime='application/javascript'; body='export {}'; cache='public, max-age=31536000, immutable'
+    if scenario=='cache-conflict': cache+=', no-cache'
+    if scenario=='asset-html': mime='text/html'
+elif url.endswith('/version.json'):
+    mime='application/json'; cache='no-cache'
+    build='abcdef123'
+    if scenario=='build-mismatch' and 'pages.dev' in url: build='123456789'
+    body='{"build":"'+build+'"}'
+    if scenario=='bad-json': body='<html>fallback</html>'
+elif url.endswith('/skill.md'):
+    mime='text/html' if scenario=='skill-html' else 'text/markdown'; body='# Skill'; cache='no-cache'
+elif url.endswith('/api/stats'):
+    mime='application/json'; cache='no-cache'; body='{"ok":true,"players":3}'
+    if scenario=='api-error': body='{"error":"broken"}'
+else:
+    assert url.endswith('/goldrush/')
+    mime='text/html'; cache='no-cache'; body='<script src="./assets/index-AbCd1234.js"></script>'
+    if scenario=='no-asset': body='<html>wrong landing</html>'
+if head: print('HTTP/2 200\r\nContent-Type: '+mime+'\r\nCache-Control: '+cache+'\r\n')
+else: print(body)

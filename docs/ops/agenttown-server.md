@@ -114,3 +114,83 @@ sudo systemctl start goldrush-ledger.service goldrush-assay.service
 curl -fsS 'https://agenttown.app/api/standings?contract=the-claim&epoch=epoch-1-frontier'
 sudo journalctl -u goldrush-ledger.service -n 30 --no-pager
 ```
+
+## Static game route cutover — F-2987-1 (owner runbook, 2026-10-09)
+
+**Prepared, not applied.** This section supersedes the historical `/goldrush` fallback in the map above once the owner completes step 3. Target flow: `agenttown.app/goldrush/*` → Cloudflare CDN → droplet nginx → production Pages alias `gold-rush-3in.pages.dev/*`. The browser keeps its canonical origin and saves. Static requests no longer invoke `goldrush-path-proxy`; existing Pages Functions under `/api/*` still consume their allowance. No game build is deployed by this procedure.
+
+The proxy uses the existing `/api/` request-time resolver pattern. An explicit `rewrite ... break` strips the prefix and retains query arguments; `proxy_pass` has **no trailing slash** because a URI on a variable-based upstream replaces the entire request URI. See [nginx proxy_pass semantics](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_pass). Cache-Control passes through untouched; no nginx cache or HTML TTL override is added.
+
+**Cache prerequisite:** the task records `public/_headers` as fixed on main on 2026-10-09 (F-2987-2), giving hashed assets `public, max-age=31536000, immutable` without `no-cache`. However, the lane and the inspected main snapshot at preparation time still contained the catch-all `/* Cache-Control: no-cache`. Treat the deployed Pages header as the acceptance criterion, not the task's assertion: step 2 must pass before removing the route. If assets contain both directives, arrange the separate F-2987-2 correction/deployment under its release authorization; do not hide the bad header in nginx or deploy a game build as part of this cutover.
+
+### 1. Stage the reviewed conf, test, then reload
+
+Owner transfers only `ops/droplet/agenttown.app.nginx.conf` and `ops/droplet/verify-goldrush-route.sh` from the integrated revision into the corresponding paths under `/opt/goldrush/`. On the droplet, compare the full mirrored conf with the active one: this mirror also includes earlier account/ledger/security changes. Reconcile any live drift before copying; this slice changes only the game locations.
+
+```bash
+cd /opt/goldrush
+CONF=$(readlink -f /etc/nginx/sites-enabled/agenttown.app.conf)
+BACKUP="$CONF.before-static-$(date -u +%Y%m%dT%H%M%SZ)"
+sudo cp -p "$CONF" "$BACKUP"
+sudo cp ops/droplet/agenttown.app.nginx.conf "$CONF"
+sudo nginx -t && sudo systemctl reload nginx
+# If nginx -t or reload fails, restore the saved config and test again:
+# sudo cp -p "$BACKUP" "$CONF"
+# sudo nginx -t && sudo systemctl reload nginx
+```
+
+Do not proceed if either command fails. Skipping the test/reload leaves an invalid or inactive proxy and makes route removal an outage. Record the backup path outside the shell session.
+
+### 2. Verify directly on the droplet while the Worker route still exists
+
+```bash
+cd /opt/goldrush
+sudo env PATH=/root/.nvm/versions/node/v26.4.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+  bash ops/droplet/verify-goldrush-route.sh
+```
+
+Require exit 0 and every table row PASS: nginx config, HTTP redirect, HTML, live build matching Pages, skill, discovered hashed JavaScript with immutable/no cache veto, and `/api/stats`. Save the output and discovered asset path for step 4. No credentials are required; sudo permits reading nginx's TLS config. The script needs the existing Node runtime, bash and curl.
+
+The requested plain HTTP probe `curl -sI -H 'Host: agenttown.app' http://127.0.0.1/goldrush/` correctly returns **301**, not 200: the unchanged port-80 server redirects all traffic to TLS. The script checks that redirect, then uses `--resolve agenttown.app:443:127.0.0.1` for 200 probes with certificate verification, SNI and Host intact. It never follows the redirect through public DNS into the Worker. Public game routing is unchanged until step 3; skipping this check can mistake a healthy Worker for a healthy nginx proxy.
+
+### 3. Remove only the Worker route
+
+In the `agenttown.app` Cloudflare zone, record the existing route, script assignment and failure mode, then delete **`agenttown.app/goldrush*` → `goldrush-path-proxy`** (Workers Routes in the zone dashboard; the owner may instead use their zone token). Keep the Worker script available for rollback. Do not change DNS, API routing, account plan or deploy Pages. Confirm no other Worker route/custom domain still intercepts the game path. Skipping route removal leaves every static request consuming the Worker allowance and the recurring 1027 outage unresolved.
+
+Before the cache acceptance in step 4, create a zone **Cache Rule**:
+
+```text
+(http.host eq "agenttown.app" and starts_with(http.request.uri.path, "/goldrush/assets/"))
+Cache eligibility: Eligible for cache
+Edge TTL: Use cache-control header if present, bypass cache if not
+Browser TTL: Respect origin TTL
+```
+
+Keep HTML, `version.json`, `skill.md` and `/api/*` outside this rule; do not override origin TTL or cache `no-cache` responses. Check rule order for conflicting overrides. Without this rule `.glb` and atlas `.json` responses are not normally CDN eligible, so repeated requests keep reaching the droplet. The task also listed `.bin` as excluded, but [Cloudflare's current default extension table](https://developers.cloudflare.com/cache/concepts/default-cache-behavior/#default-cached-file-extensions) includes BIN; the rule deliberately covers all assets consistently. See [Cache Rule settings](https://developers.cloudflare.com/cache/how-to/cache-rules/settings/) for origin TTL behavior.
+
+### 4. Verify publicly and record acceptance
+
+From outside the droplet, require **200** for each canonical URL, a version body matching the live build recorded in step 2, and healthy API JSON:
+
+```bash
+for URL in https://agenttown.app/goldrush/ \
+           https://agenttown.app/goldrush/version.json \
+           https://agenttown.app/goldrush/skill.md \
+           https://agenttown.app/api/stats; do
+  curl --connect-timeout 10 --max-time 30 -fsS -D - -o /dev/null "$URL" || break
+done
+curl --connect-timeout 10 --max-time 30 -fsS https://agenttown.app/goldrush/version.json
+# Replace this path with the exact hashed JS path printed by the local script.
+ASSET_PATH='/goldrush/assets/REPLACE-WITH-DISCOVERED-HASHED.js'
+for ATTEMPT in 1 2; do
+  curl --connect-timeout 10 --max-time 30 -fsS -D - -o /dev/null "https://agenttown.app$ASSET_PATH" || break
+done
+```
+
+The second identical asset GET must be 200 with `cf-cache-status: HIT` and `Cache-Control: ... immutable`, without `no-cache`, `private` or `no-store`. Repeat with a real `.glb` or atlas `.json` URL from the deployed game to exercise the Cache Rule beyond default JS caching. Do not use cache-busting query strings between the two requests. If HIT is absent, inspect rule matching/order and origin headers; cutover is not accepted yet. A Pages response can itself carry a cache-status header: corroborate the outer CDN HIT via Cloudflare cache analytics or nginx access logs (the second request should not reach the droplet). A HIT alone does not prove route removal; retain the dashboard route evidence from step 3.
+
+Finally smoke-test the game on desktop and at 390px, existing local saves, assets, and sign-in/account behavior; record health after the next UTC reset per owner desk §9. Skipping public checks misses CDN/TLS/rule failures that loopback cannot expose. None of these live checks were executed by the configuration author.
+
+### 5. Roll back if public acceptance fails
+
+Re-create **`agenttown.app/goldrush*` → `goldrush-path-proxy`** in the same zone with the recorded previous settings. Verify the three canonical URLs and `/api/stats` again. The retained nginx proxy can stay in place behind that route; if nginx itself caused a broader regression, restore the step-1 backup, `nginx -t`, then reload as well. Disable the new Cache Rule if implicated; purge only affected public URLs if stale objects obstruct verification. Skipping a prepared rollback prolongs an outage while reconstructing the route. This rollback restores the old serving path **and its Worker quota risk**; an already exhausted allowance may still return 1027, so rollback is not a capacity cure.

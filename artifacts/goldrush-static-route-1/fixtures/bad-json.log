@@ -1,0 +1,9 @@
+| Result | Check                        | Detail |
+| ------ | ---------------------------- | ------ |
+| PASS | nginx -t                     | configuration accepted |
+| PASS | local HTTP                   | 301 to HTTPS (expected) |
+| PASS | /goldrush/                   | 200 HTML; no-cache |
+| FAIL | /goldrush/version.json       | invalid or different build (local= Pages=) |
+| PASS | /goldrush/skill.md           | 200; not HTML fallback |
+| PASS | hashed JavaScript            | 200 immutable; /goldrush/assets/index-AbCd1234.js |
+| PASS | /api/stats                   | 200 JSON; no reported error |
