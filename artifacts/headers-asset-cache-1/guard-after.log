@@ -1,0 +1,20 @@
+public/_headers "/*": 5 security headers, 10 CSP directives
+{"path":"/index.html","headers":{"cache-control":"no-cache","x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","x-frame-options":"DENY","strict-transport-security":"max-age=2592000","content-security-policy-report-only":"default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://agenttown.app wss://agenttown.app; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"}}
+{"path":"/assets/x-abc123.js","headers":{"x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","x-frame-options":"DENY","strict-transport-security":"max-age=2592000","content-security-policy-report-only":"default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://agenttown.app wss://agenttown.app; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'","cache-control":"public, max-age=31536000, immutable"}}
+{"path":"/goldrush/assets/x-abc123.js","headers":{"x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","x-frame-options":"DENY","strict-transport-security":"max-age=2592000","content-security-policy-report-only":"default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://agenttown.app wss://agenttown.app; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'","cache-control":"public, max-age=31536000, immutable"}}
+{"path":"/","headers":{"cache-control":"no-cache","x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","x-frame-options":"DENY","strict-transport-security":"max-age=2592000","content-security-policy-report-only":"default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://agenttown.app wss://agenttown.app; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"}}
+{"path":"/goldrush/index.html","headers":{"cache-control":"no-cache","x-content-type-options":"nosniff","referrer-policy":"strict-origin-when-cross-origin","x-frame-options":"DENY","strict-transport-security":"max-age=2592000","content-security-policy-report-only":"default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://agenttown.app wss://agenttown.app; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'"}}
+✔ public/_headers sends the five security headers on every path (2.243041ms)
+✔ the Cache-Control rules 058-device-tiers gates are still there (0.118291ms)
+✔ Pages merge keeps immutable assets, no-cache HTML and all five security headers (0.813583ms)
+✔ Pages model accumulates, detaches case-insensitively and ignores nonmatching rules (0.157917ms)
+✔ the bug-office report TTL and the number the fetch script prints are the same (1.045375ms)
+✔ the audit catches a deleted policy, a widened source and an enforcing flip (2.0185ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 51.773
