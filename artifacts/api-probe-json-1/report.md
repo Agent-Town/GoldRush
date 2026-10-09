@@ -40,7 +40,7 @@ The Mac parser resolves Node from PATH with the installed `/opt/homebrew/bin/nod
 | Same unmodified alarm-clock guard on pre-task source | 9/9, exit 0 | alarm-baseline.log; control/ contains frozen inputs |
 | TypeScript | exit 0 | tsc.log |
 | Final production build | exit 0 | build.log |
-| Diff whitespace | exit 0 | `git diff --check` |
+| Implementation diff whitespace | exit 0 before artifacts were staged | `git diff --check` |
 | src unchanged | empty diff against starting commit | src tree `0ad2e09525f941a4d5d5c2e5176306c0efbbd4c0` |
 
 Combined test run: 87/93 pass, exit 1, entirely attributable to the six alarm-clock cases. The old fixture supplies only a status for every URL, never a JSON body/content type. Its GOOD_PASS therefore becomes dark correctly. Its SLOW_PASS sends an unfinished transfer for the API too; the task now requires that unverifiable API response to be dark, while landing/game still remain slow. Alarm-clock tests and mail logic were not modified. This is a change-induced fixture/contract incompatibility, not a pre-existing red.
@@ -61,4 +61,6 @@ One additional bounded request captured HTTP 200, `text/html; charset=utf-8`, an
 2. Restore the live API outside this task and rerun the live status acceptance. No SSH, deployment, live repairs, or mail sends were performed.
 3. Integrate and deploy the two probe changes through the normal gates after these blockers are resolved.
 
-Implementation and this report are committed together with prefix `fix:`; the final task response supplies the resulting commit hash.
+Implementation commit: `c8ddf96b2` (`fix: reject HTML fallback in API edge probes`). This final evidence clarification follows in a separate path-scoped report commit.
+
+The staged whole-artifact whitespace check warned on raw curl CRLF headers, captured test/build output, and embedded unified-diff context lines. These evidence bytes were preserved; implementation whitespace was clean.
