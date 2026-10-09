@@ -1,0 +1,24 @@
+branch art/portraits-e5-e10-generated tip d8ecd3356 2026-10-09 06:00Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/gsr1.json
+scratch store at the store's main 5793a96
+chain base faca9099f
+merged b3cb110c6
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817 (pinned 378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 143 ℹ fail 0 
+ledger battery start 06:01Z
+ledger battery: rc=0 ℹ tests 1263 ℹ pass 1260 ℹ fail 0 ℹ skipped 3 
+e2e start 06:04Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   24 passed (1.9m)  06:06Z
+battery start 06:06Z
+battery: rc=0 ℹ tests 1 ℹ pass 0 ℹ fail 1 ℹ skipped 0 ℹ tests 1048 ℹ pass 1043 ℹ fail 0 ℹ skipped 5 ℹ tests 92 ℹ pass 92 ℹ fail 0 ℹ skipped 0  06:31Z
+✖ agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids (48481.448375ms)
+dirt after battery: 0
+gsr1-PREP-DONE
+battery reds: ✖ agent reel validation reuses the door bounds and CLI tape content stays deterministic under unique ids (48481.448375ms)
+verdict — needs hands
+verdict: clean
+RESUME 2026-10-09 07:56Z: chain b3cb110c6, merge b3cb110c6, continuing at the pin
+hash at pin time: 378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817
+review: reviews/goldrush-static-route-1.md

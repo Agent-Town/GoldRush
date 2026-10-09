@@ -10410,12 +10410,16 @@
         {
           "id": "goldrush-static-route-1",
           "title": "The game leaves the Worker: the droplet's nginx proxies /goldrush/ to the Pages alias (the /api/ pattern), a conf guard, a droplet-side verification script and the cutover runbook; the Worker route is deleted at cutover (owner 2026-10-09: 'Option B - lets fix this once and for all in a proper way'; F-2987-1)",
-          "status": "queued",
+          "status": "merged",
           "taskFile": "goldrush-static-route-1.md",
           "lane": "lane-d (Astra, gpt-6-astra)",
           "authoredAt": "2026-10-09",
           "authoredBy": "attended (Fable), on the owner's word, 2026-10-09",
-          "queuedAt": "2026-10-09"
+          "queuedAt": "2026-10-09",
+          "mergeHash": "b3cb110c689ec69ec2141031ad556e7b4caad411",
+          "mergedAt": "2026-10-09",
+          "review": "reviews/goldrush-static-route-1.md",
+          "drainedBy": "attended 2026-10-09 (scripts/attended/land-held.sh gsr1; Astra on lane-d, the ChatGPT subscription)"
         },
         {
           "id": "headers-asset-cache-1",
