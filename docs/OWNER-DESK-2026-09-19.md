@@ -261,6 +261,8 @@ Astra: the map-art corrections campaign is COMPLETE (2026-09-22, all sixteen row
 
 
 ## 9. F-2987-1 — restore the public game route after Cloudflare 1027
+**s3002 verification, 2026-10-09T10:42Z:** The attended API landing now has LAND-apj1-DONE (receipt mtime 2026-10-09T09:51:22Z): post-landing main Node rc 0, 1,043 pass / 5 skips / zero failures; chained checks 126/126. This supersedes s3001's still-running observation. Fresh canonical game/version/skill remain 200 at 62403b1d with weeks 37–42; stats remains HTML-200 while sampled week-41/week-42 standings return valid JSON. The Mac probe correctly reports api=200-html. Droplet probe installation, Cache Rule and release/cutover acceptance remain in their existing attended/owner custody. Evidence: artifacts/s3002/api-completion.json, live-probe.json, report.md.
+
 **s3001 verification, 2026-10-09T09:30Z:** API probe corrective `e0c536dcc` is now a main ancestor with merged leaf and lane C ahead zero; the fresh Mac health check reports `landing=200 game=200 api=200-html`. Canonical game/version/skill remain 200 at `62403b1d`, weeks 37–42; stats is still HTML-200 and sampled week-41/week-42 standings remain valid JSON. The attended apj1 post-landing Node run is still active; its final completion is not claimed. The droplet probe copy, Cache Rule and release acceptance remain in attended/owner custody. Evidence: `artifacts/s3001/api-landing.json`, `ledger-selection.json`, `live-probe.json`, `report.md`. This supersedes the prior unmerged/pending-drain observation, not the remaining endpoint or release acceptance.
 
 
