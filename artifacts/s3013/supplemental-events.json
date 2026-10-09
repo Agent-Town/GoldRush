@@ -1,0 +1,76 @@
+[
+  {
+    "hash": "11a46dbab325cd5f2f286f71f12a6e374a54c38a",
+    "stamp": "2026-10-09T14:18:48+07:00",
+    "subject": "merge 11a46dbab325cd5f2f286f71f12a6e374a54c38a: Fast-forward",
+    "previous": "44c59238c2a12f7b1de9e151c49a596793df011d",
+    "files": [
+      "STATUS.md",
+      "public/_headers",
+      "reviews/headers-asset-cache-1.md",
+      "scripts/site-security-headers.test.mjs",
+      "tasks/BACKLOG.md",
+      "tasks/goals.json"
+    ],
+    "introduced": [
+      "11a46dbab 2026-10-09T14:18:48+07:00 drain: hac1 bookkeeping re-applied after the main merge",
+      "3d4ebded4 2026-10-09T14:18:48+07:00 drain: merge main into the hac1 chain (pass 1)",
+      "9276b1365 2026-10-09T14:12:44+07:00 drain: hac1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+      "c7ad5dc24 2026-10-09T13:31:50+07:00 drain: merge sol/wave-lane-b — headers-asset-cache-1 — hashed game assets stop carrying no-cache: public/_headers detaches the catch-all's Cache-Control in asset rules placed after it (the documented Pages merge semantics), HTML stays no-cache, every security header stays on every path; scripts/site-security-headers.test.mjs models the merge and asserts the resolved headers for HTML and assets (6/6); F-2987-2, the cache half of the owner's Option B; takes effect with the next deploy; public/scripts only, hash unchanged",
+      "a6fc9c601 2026-10-09T12:53:25+07:00 fix: the evidence copy of the headers guard no longer carries a .test.mjs name (the gate-caller audit read it as a guard with no caller; hac1 landing)",
+      "41c224bd3 2026-10-09T11:35:32+07:00 runner(lane-b): headers-asset-cache-1.md",
+      "832445b65 2026-10-09T11:35:23+07:00 fix: record asset cache validation and baseline control",
+      "ce59e7a84 2026-10-09T11:35:02+07:00 fix: detach inherited no-cache from hashed game assets"
+    ]
+  },
+  {
+    "hash": "62403b1d4805710b9152ce79ba92cf50a0849766",
+    "stamp": "2026-10-09T14:57:13+07:00",
+    "subject": "merge 62403b1d4805710b9152ce79ba92cf50a0849766: Fast-forward",
+    "previous": "c66a97a461ba65881026c52ee5061b3ef5f98f45",
+    "files": [
+      "STATUS.md",
+      "docs/ops/agenttown-server.md",
+      "ops/droplet/agenttown.app.nginx.conf",
+      "ops/droplet/verify-goldrush-route.sh",
+      "package.json",
+      "reviews/goldrush-static-route-1.md",
+      "scripts/goldrush-route-conf.test.mjs",
+      "tasks/BACKLOG.md",
+      "tasks/goals.json"
+    ],
+    "introduced": [
+      "62403b1d4 2026-10-09T14:57:13+07:00 drain: gsr1 bookkeeping re-applied after the main merge",
+      "e6230a9ff 2026-10-09T14:57:12+07:00 drain: merge main into the gsr1 chain (pass 1)",
+      "985492352 2026-10-09T14:56:56+07:00 drain: gsr1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+      "b3cb110c6 2026-10-09T13:00:06+07:00 drain: merge art/portraits-e5-e10-generated — goldrush-static-route-1 — the game leaves the Worker: the droplet's nginx gains `location /goldrush/` (request-time resolver, variable upstream, prefix rewrite, SNI, Host header, exactly the /api/ pattern) and `location = /goldrush` → 301; a droplet-side verification script; a five-step owner runbook with rollback; a conf guard (5/5); nothing live changed yet (the cutover follows on the owner's word); owner 2026-10-09 'Option B - lets fix this once and for all in a proper way' (F-2987-1); ops/docs/scripts only, hash unchanged",
+      "d8ecd3356 2026-10-09T12:20:28+07:00 fix: roster scripts/goldrush-route-conf.test.mjs in test:node-guards (the gate-caller audit refuses a guard nothing calls; gsr1 landing battery)",
+      "28417dd2f 2026-10-09T11:34:02+07:00 ops: normalize static route build evidence whitespace",
+      "c8b41b00b 2026-10-09T11:33:52+07:00 ops: prepare nginx static game route and owner cutover gates"
+    ]
+  },
+  {
+    "hash": "0a36cfcfe0bbe64c1f898a492aa35d1157b0c3b7",
+    "stamp": "2026-10-09T16:26:04+07:00",
+    "subject": "merge 0a36cfcfe0bbe64c1f898a492aa35d1157b0c3b7: Fast-forward",
+    "previous": "eb05e966c8cffe4dff7322512ff1515ccb63e5da",
+    "files": [
+      "STATUS.md",
+      "ops/droplet/edge-watch.sh",
+      "package.json",
+      "reviews/api-probe-json-1.md",
+      "scripts/edge-alarm-clock-guard.test.mjs",
+      "scripts/edge-probe-json.test.mjs",
+      "scripts/health-watch.sh",
+      "tasks/BACKLOG.md",
+      "tasks/goals.json"
+    ],
+    "introduced": [
+      "0a36cfcfe 2026-10-09T16:25:49+07:00 drain: apj1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+      "e0c536dcc 2026-10-09T15:51:47+07:00 drain: merge sol/map-art-campaign-2 — api-probe-json-1 — the edge probes stop reading a dead API as healthy: /api/stats must answer 200 + application/json + {ok:true, stats:{}} (api=200-html / 200-notjson / 2xx-incomplete otherwise) in scripts/health-watch.sh and ops/droplet/edge-watch.sh; scripts/edge-probe-json.test.mjs (32 cases, rostered); the alarm-clock guard's stub answers the API healthily (attended); F-CUT-1 from the Option B cutover; scripts/ops only, hash unchanged",
+      "782f9c548 2026-10-09T15:38:03+07:00 fix: the alarm-clock guard's curl stub answers the API probe with healthy JSON (the probe now demands JSON; the arms test landing/game transitions); the audit's orphan cleared",
+      "4ef388aa6 2026-10-09T15:35:12+07:00 fix: record API probe handoff evidence limits",
+      "c8ddf96b2 2026-10-09T15:34:58+07:00 fix: reject HTML fallback in API edge probes"
+    ]
+  }
+]

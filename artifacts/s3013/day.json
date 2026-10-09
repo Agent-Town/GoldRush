@@ -1,0 +1,37 @@
+{
+  "root": "56f5afcc4a95fc97d56729c5c95fc08290a99972",
+  "start": "2026-10-08T17:00:00.000Z",
+  "end": "2026-10-09T17:00:00.000Z",
+  "before": "e282c2e5741a3fb4d63c7a1d8584d5b379b8471a",
+  "final": "dcdd3b69b0323f1c7ddff3230c10308734674b75",
+  "mainUpdates": 78,
+  "firstParentCommits": 72,
+  "controlSeptember25": 136,
+  "replacements": [],
+  "playerEvents": 1,
+  "events": [
+    {
+      "hash": "11a46dbab325cd5f2f286f71f12a6e374a54c38a",
+      "stamp": "2026-10-09T14:18:48+07:00",
+      "time": 1791530328000,
+      "subject": "merge 11a46dbab325cd5f2f286f71f12a6e374a54c38a: Fast-forward",
+      "previous": "44c59238c2a12f7b1de9e151c49a596793df011d",
+      "playerFiles": [
+        "public/_headers"
+      ],
+      "reviews": [
+        "reviews/headers-asset-cache-1.md"
+      ],
+      "introduced": [
+        "11a46dbab 2026-10-09T14:18:48+07:00 drain: hac1 bookkeeping re-applied after the main merge",
+        "3d4ebded4 2026-10-09T14:18:48+07:00 drain: merge main into the hac1 chain (pass 1)",
+        "9276b1365 2026-10-09T14:12:44+07:00 drain: hac1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "c7ad5dc24 2026-10-09T13:31:50+07:00 drain: merge sol/wave-lane-b — headers-asset-cache-1 — hashed game assets stop carrying no-cache: public/_headers detaches the catch-all's Cache-Control in asset rules placed after it (the documented Pages merge semantics), HTML stays no-cache, every security header stays on every path; scripts/site-security-headers.test.mjs models the merge and asserts the resolved headers for HTML and assets (6/6); F-2987-2, the cache half of the owner's Option B; takes effect with the next deploy; public/scripts only, hash unchanged",
+        "a6fc9c601 2026-10-09T12:53:25+07:00 fix: the evidence copy of the headers guard no longer carries a .test.mjs name (the gate-caller audit read it as a guard with no caller; hac1 landing)",
+        "41c224bd3 2026-10-09T11:35:32+07:00 runner(lane-b): headers-asset-cache-1.md",
+        "832445b65 2026-10-09T11:35:23+07:00 fix: record asset cache validation and baseline control",
+        "ce59e7a84 2026-10-09T11:35:02+07:00 fix: detach inherited no-cache from hashed game assets"
+      ]
+    }
+  ]
+}

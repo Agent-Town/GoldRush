@@ -1,0 +1,88 @@
+{
+  "at": "2026-10-09T23:28:39.724Z",
+  "registry": [
+    {
+      "id": "r2026w37",
+      "opensAt": "2026-09-07T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w38",
+      "opensAt": "2026-09-14T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w39",
+      "opensAt": "2026-09-21T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w40",
+      "opensAt": "2026-09-28T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w41",
+      "opensAt": "2026-10-05T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w42",
+      "opensAt": "2026-10-12T00:00:00.000Z",
+      "seeds": 6
+    }
+  ],
+  "wholeRegistryFenceMatches": true,
+  "leaves": [
+    {
+      "id": "goldrush-static-route-1",
+      "title": "The game leaves the Worker: the droplet's nginx proxies /goldrush/ to the Pages alias (the /api/ pattern), a conf guard, a droplet-side verification script and the cutover runbook; the Worker route is deleted at cutover (owner 2026-10-09: 'Option B - lets fix this once and for all in a proper way'; F-2987-1)",
+      "status": "merged",
+      "taskFile": "goldrush-static-route-1.md",
+      "lane": "lane-d (Astra, gpt-6-astra)",
+      "authoredAt": "2026-10-09",
+      "authoredBy": "attended (Fable), on the owner's word, 2026-10-09",
+      "queuedAt": "2026-10-09",
+      "mergeHash": "b3cb110c689ec69ec2141031ad556e7b4caad411",
+      "mergedAt": "2026-10-09",
+      "review": "reviews/goldrush-static-route-1.md",
+      "drainedBy": "attended 2026-10-09 (scripts/attended/land-held.sh gsr1; Astra on lane-d, the ChatGPT subscription)"
+    },
+    {
+      "id": "headers-asset-cache-1",
+      "title": "Hashed game assets stop carrying no-cache (the Pages _headers merge put the catch-all's no-cache on every immutable asset since 2026-09-24, F-2987-2); the headers guard models the merge and learns the detach syntax",
+      "status": "merged",
+      "taskFile": "headers-asset-cache-1.md",
+      "lane": "lane-b (Astra, gpt-6-astra)",
+      "authoredAt": "2026-10-09",
+      "authoredBy": "attended (Fable), from F-2987-2, on the owner's Option B word, 2026-10-09",
+      "queuedAt": "2026-10-09",
+      "mergeHash": "c7ad5dc24c7411d23fc4c5985cb5906a52332be0",
+      "mergedAt": "2026-10-09",
+      "review": "reviews/headers-asset-cache-1.md",
+      "drainedBy": "attended 2026-10-09 (scripts/attended/land-held.sh hac1; Astra on lane-b, the ChatGPT subscription)"
+    },
+    {
+      "id": "api-probe-json-1",
+      "title": "The edge probes stop reading a dead API as healthy: /api/stats must answer JSON (the capped Pages fallback serves HTML with 200), a rostered guard (F-CUT-1)",
+      "status": "merged",
+      "taskFile": "api-probe-json-1.md",
+      "lane": "lane-c (Astra, gpt-6-astra)",
+      "authoredAt": "2026-10-09",
+      "authoredBy": "attended (Fable), from F-CUT-1, 2026-10-09",
+      "queuedAt": "2026-10-09",
+      "mergeHash": "e0c536dcc13c2d3505c2001b17c17e68c85c46d1",
+      "mergedAt": "2026-10-09",
+      "review": "reviews/api-probe-json-1.md",
+      "drainedBy": "attended 2026-10-09 (scripts/attended/land-held.sh apj1; Astra on lane-c, the ChatGPT subscription)"
+    }
+  ],
+  "ancestors": {
+    "e0c536dcc": true,
+    "40dbcf2f8": true,
+    "c7ad5dc24": true,
+    "b3cb110c6": true,
+    "a3b8a8216": true
+  },
+  "nextBackupDue": "2026-10-10T02:10:00Z"
+}
