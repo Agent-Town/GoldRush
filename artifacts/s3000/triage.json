@@ -1,0 +1,62 @@
+{
+  "stamp": "2026-10-09T08:34:33.795Z",
+  "directories": {
+    "tasks/queue/main": [],
+    "tasks/queue/lane-a": [],
+    "tasks/queue/lane-b": [],
+    "tasks/queue/lane-c": [],
+    "tasks/queue/lane-d": [],
+    "tasks/queue/art": [],
+    "tasks/running": [
+      "lane-c--20261009-153024-api-probe-json-1.md",
+      "lane-c.pid"
+    ],
+    "assets/crafting-queue/pending": []
+  },
+  "failures": [
+    {
+      "name": "shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md",
+      "mtime": "2026-09-20T06:53:51.129Z"
+    },
+    {
+      "name": "shipped-s1065-20260708-095336-gt-04-sightlines-ebbb04de.md",
+      "mtime": "2026-09-20T06:53:51.129Z"
+    },
+    {
+      "name": "shipped-s1065-20260707-143237-damage-orientation-e9fabff7.md",
+      "mtime": "2026-09-20T06:53:51.128Z"
+    }
+  ],
+  "latestRun": {
+    "name": "20261009-153024-lane-c-api-probe-json-1.md.log",
+    "mtime": "2026-10-09T08:34:08.870Z",
+    "tail": [
+      "+  esac",
+      "+}",
+      "+${source.slice(start, end)}",
+      "+${classification}",
+      "+printf '%s\\\\ndark=%s\\\\n' \"$EDGE\" \"${DARK:+yes}\"",
+      "+`], {",
+      "+        encoding: 'utf8', timeout: 10_000,",
+      "+        env: { ...process.env, FIXTURE_BODY: body, FIXTURE_TYPE: type, FIXTURE_CODE: code, FIXTURE_RC: rc },",
+      "+      });",
+      "+      assert.equal(result.status, 0, result.stderr || String(result.error));",
+      "+      assert.equal(result.stdout, `landing=200 game=200 api=${expected}\\ndark=${expected === '200' ? '' : 'yes'}\\n`);",
+      "+    });",
+      "+  }",
+      "+}",
+      "",
+      ""
+    ]
+  },
+  "lanes": {
+    "sol/open-findings-astra": [],
+    "sol/wave-lane-b": [],
+    "sol/map-art-campaign-2": [],
+    "art/portraits-e5-e10-generated": []
+  },
+  "runnerProcesses": [
+    "  PID  PPID TTY      STAT STARTED\n31360     1 ??       Ss   Tue Sep 29 10:47:38 2026    \n",
+    "  PID  PPID TTY      STAT STARTED\n69162 31360 ??       S    Fri Oct  9 15:30:24 2026    \n"
+  ]
+}

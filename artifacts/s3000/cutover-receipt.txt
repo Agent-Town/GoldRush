@@ -1,0 +1,25 @@
+[deploy] first-town payload: 34355212 / 52000000 bytes (17644788 bytes headroom)
+[deploy] ASSAYER SYNCED: droplet tree + pin 62403b1d, services restarted
+| PASS | nginx -t                     | configuration accepted |
+| PASS | local HTTP                   | 301 to HTTPS (expected) |
+| PASS | /goldrush/                   | 200 HTML; no-cache |
+| PASS | /goldrush/version.json       | 200; live build 62403b1d matches Pages |
+| PASS | /goldrush/skill.md           | 200; not HTML fallback |
+| PASS | hashed JavaScript            | 200 immutable; /goldrush/assets/index-CaKodwTw-diet-c2bea0ac.js |
+| FAIL | /api/stats                   | expected healthy 200 JSON |
+2026-10-09T08:26:55Z [verify-public] https://agenttown.app/goldrush/ → 429
+2026-10-09T08:26:55Z [verify-public] https://agenttown.app/goldrush/version.json → 429
+2026-10-09T08:26:56Z [verify-public] https://agenttown.app/goldrush/skill.md → 429
+2026-10-09T08:26:56Z [verify-public] https://agenttown.app/api/stats → 200
+2026-10-09T08:26:56Z [verify-public] version body: error code: 1027
+2026-10-09T08:26:56Z [verify-public] asset GET 1: HTTP/2 429  cache-control: private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0 
+2026-10-09T08:26:56Z [verify-public] asset GET 2: HTTP/2 429  cache-control: private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0 
+2026-10-09T08:26:58Z [verify-public] health: 
+2026-10-09T08:27:51Z [verify-public] https://agenttown.app/goldrush/ → 200
+2026-10-09T08:27:52Z [verify-public] https://agenttown.app/goldrush/version.json → 200
+2026-10-09T08:27:52Z [verify-public] https://agenttown.app/goldrush/skill.md → 200
+2026-10-09T08:27:53Z [verify-public] https://agenttown.app/api/stats → 200
+2026-10-09T08:27:53Z [verify-public] version body: {"build":"62403b1d","builtAt":"2026-10-09T08:24:08Z"}
+2026-10-09T08:27:54Z [verify-public] asset GET 1: HTTP/2 200  cache-control: public, max-age=31536000, immutable cf-cache-status: MISS 
+2026-10-09T08:27:54Z [verify-public] asset GET 2: HTTP/2 200  cache-control: public, max-age=31536000, immutable cf-cache-status: HIT 
+2026-10-09T08:27:56Z [verify-public] health: 

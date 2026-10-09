@@ -1,0 +1,17 @@
+{
+  "stamp": "2026-10-09T08:39:42.928Z",
+  "sourceTip": "782f9c548dc0efb4cbaaff7d8751a4949fe56b06",
+  "sourceCommits": [
+    "782f9c548 fix: the alarm-clock guard's curl stub answers the API probe with healthy JSON (the probe now demands JSON; the arms test landing/game transitions); the audit's orphan cleared",
+    "4ef388aa6 fix: record API probe handoff evidence limits",
+    "c8ddf96b2 fix: reject HTML fallback in API edge probes"
+  ],
+  "doneMoves": [
+    "20261009-153024-api-probe-json-1.md"
+  ],
+  "attendedCure": "782f9c548dc0efb4cbaaff7d8751a4949fe56b06\nClaude (Cowork orchestrator)\n2026-10-09T15:38:03+07:00\nfix: the alarm-clock guard's curl stub answers the API probe with healthy JSON (the probe now demands JSON; the arms test landing/game transitions); the audit's orphan cleared\n\n ...larm-clock-guard.test.mjs => edge-alarm-clock-guard.test.mjs.txt} | 0\n scripts/edge-alarm-clock-guard.test.mjs                              | 5 ++++-\n 2 files changed, 4 insertions(+), 1 deletion(-)",
+  "attendedProcess": "  PID  PPID TTY      STAT STARTED\n95225     1 ??       SN   Fri Oct  9 15:38:51 2026    \n",
+  "wrapper": "",
+  "runVerdict": "READY-FOR-GATES: NO — implementation complete within scope; firewall stop on an adjacent guard that needs updating.",
+  "cureGateStatus": "UNVERIFIED: attended landing process owns apj1; no fire drain or new corrective"
+}

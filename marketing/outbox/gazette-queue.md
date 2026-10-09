@@ -3195,3 +3195,10 @@ The next deployment will let browsers reuse unchanged game files between visits
 and map changes. The game page will still check for updates.
 merge `c7ad5dc24` · review `reviews/headers-asset-cache-1.md`
 ROUNDUP-CLASS — 2026-W41; s2998 records the attended October 9 cache landing. The fix is on main; public deployment and routing cutover are still pending. This does not claim recovery from the current game-route outage. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — The game keeps its address as its files leave the Worker
+The game page and its files now load through the static route at the same address.
+Unchanged game files can stay cached for the next visit.
+merge `b3cb110c6` · cutover `a3b8a8216` · review `reviews/goldrush-static-route-1.md`
+ROUNDUP-CLASS — 2026-W41; s3000 records the attended October 9 routing landing and cutover. Fresh public checks serve build 62403b1d and weeks 37–42; the sampled JavaScript asset returns an edge-cache HIT. The stats endpoint still returns HTML with HTTP 200 (F-CUT-1), while sampled standings reads return valid JSON. Browser/save/account and release approval remain separate. Draft only; publication stays owner-only.
