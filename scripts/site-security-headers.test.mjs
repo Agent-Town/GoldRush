@@ -70,34 +70,51 @@ const EXPECTED_CSP = {
 };
 
 /**
- * Parse a Cloudflare Pages `_headers` file into pattern -> [[name, value], ...].
- * Path patterns start at column 0; header lines are indented; `#` lines are comments.
+ * Parse a Cloudflare Pages `_headers` file into ordered [pattern, header entries] rules.
+ * A null value represents `! Name` (detach). Path patterns start at column 0;
+ * header lines are indented; `#` lines are comments.
  */
 export function parseHeaderFile(text) {
-  const rules = new Map();
-  let pattern = null;
+  const rules = [];
+  let entries = null;
   text.split('\n').forEach((raw, index) => {
     const line = raw.replace(/\r$/, '');
     if (!line.trim() || line.trimStart().startsWith('#')) return;
     if (!/^\s/.test(line)) {
-      pattern = line.trim();
-      if (!rules.has(pattern)) rules.set(pattern, []);
+      entries = [];
+      rules.push([line.trim(), entries]);
       return;
     }
+    const detach = /^\s+! ([A-Za-z0-9-]+)\s*$/.exec(line);
     const match = /^\s+([A-Za-z0-9-]+):[ \t]*(.*)$/.exec(line);
-    assert.ok(match, `${HEADERS_FILE}:${index + 1} is indented but is not a "Name: value" header line: ${line}`);
-    assert.ok(pattern, `${HEADERS_FILE}:${index + 1} is a header line before any path pattern: ${line}`);
-    rules.get(pattern).push([match[1], match[2]]);
+    assert.ok(match || detach, `${HEADERS_FILE}:${index + 1} is indented but is not a "Name: value" or "! Name" header line: ${line}`);
+    assert.ok(entries, `${HEADERS_FILE}:${index + 1} is a header line before any path pattern: ${line}`);
+    entries.push(detach ? [detach[1], null] : [match[1], match[2]]);
   });
   return rules;
 }
 
 function headersFor(text, rule) {
   const rules = parseHeaderFile(text);
-  const entries = rules.get(rule);
-  assert.ok(entries, `${HEADERS_FILE} has no "${rule}" rule; found ${[...rules.keys()].join(', ') || '(nothing)'}`);
+  const entries = rules.find(([pattern]) => pattern === rule)?.[1];
+  assert.ok(entries, `${HEADERS_FILE} has no "${rule}" rule; found ${rules.map(([pattern]) => pattern).join(', ') || '(nothing)'}`);
   assert.ok(entries.length > 0, `${HEADERS_FILE} rule "${rule}" carries no headers at all`);
   return new Map(entries);
+}
+
+// Model the path/splat rules used here; Pages accumulates matching headers in file order.
+export function resolveHeaders(text, path) {
+  const headers = new Map();
+  for (const [pattern, entries] of parseHeaderFile(text)) {
+    const expression = pattern.split('*').map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('.*');
+    if (!new RegExp(`^${expression}$`).test(path)) continue;
+    for (const [name, value] of entries) {
+      const key = name.toLowerCase();
+      if (value === null) headers.delete(key);
+      else headers.set(key, headers.has(key) ? `${headers.get(key)}, ${value}` : value);
+    }
+  }
+  return headers;
 }
 
 function directives(cspValue) {
@@ -147,10 +164,33 @@ test('public/_headers sends the five security headers on every path', () => {
 });
 
 test('the Cache-Control rules 058-device-tiers gates are still there', () => {
-  const rules = parseHeaderFile(liveHeaders);
-  assert.equal(rules.get('/assets/*')?.[0]?.[1], 'public, max-age=31536000, immutable');
+  const rules = new Map(parseHeaderFile(liveHeaders));
+  assert.equal(headersFor(liveHeaders, '/assets/*').get('Cache-Control'), 'public, max-age=31536000, immutable');
   assert.equal(new Map(rules.get('/*')).get('Cache-Control'), 'no-cache');
   assert.equal(new Map(rules.get('/*.html')).get('Cache-Control'), 'no-cache');
+});
+
+test('Pages merge keeps immutable assets, no-cache HTML and all five security headers', () => {
+  const paths = ['/index.html', '/assets/x-abc123.js', '/goldrush/assets/x-abc123.js', '/', '/goldrush/index.html'];
+  const security = { ...EXPECTED_SECURITY_HEADERS, [CSP_HEADER]: headersFor(liveHeaders, SITE_RULE).get(CSP_HEADER) };
+  for (const path of paths) {
+    const headers = resolveHeaders(liveHeaders, path);
+    assert.equal(headers.get('cache-control'), path.includes('/assets/') ? 'public, max-age=31536000, immutable' : 'no-cache', path);
+    for (const [name, value] of Object.entries(security)) assert.equal(headers.get(name.toLowerCase()), value, `${path}: ${name}`);
+    console.log(JSON.stringify({ path, headers: Object.fromEntries(headers) }));
+  }
+  // Without detach, the original contradictory merged value must reappear.
+  const withoutDetach = liveHeaders.replace(/^\s+! Cache-Control\s*$/gm, '');
+  assert.equal(resolveHeaders(withoutDetach, '/assets/x-abc123.js').get('cache-control'), 'no-cache, public, max-age=31536000, immutable');
+});
+
+test('Pages model accumulates, detaches case-insensitively and ignores nonmatching rules', () => {
+  const fixture = '/*\n  X-Test: first\n/a*\n  x-test: second\n/b*\n  ! X-Test\n/abc\n  ! x-TEST\n  X-Test: last\n';
+  assert.equal(resolveHeaders(fixture, '/another').get('x-test'), 'first, second');
+  assert.equal(resolveHeaders(fixture, '/abc').get('x-test'), 'last');
+  assert.equal(resolveHeaders(fixture, '/b').has('x-test'), false);
+  assert.equal(resolveHeaders(`${fixture}/*\n  X-Test: final\n`, '/abc').get('x-test'), 'last, final');
+  assert.equal(resolveHeaders('/*.html\n  X-Test: yes\n', '/indexXhtml').has('x-test'), false);
 });
 
 test('the bug-office report TTL and the number the fetch script prints are the same', () => {
