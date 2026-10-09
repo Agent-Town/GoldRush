@@ -56,4 +56,4 @@ Landing SHA256: `d1c07cf55cb2382945ca9c2cf08dd257587ee85e754b967e3d687932da6ac39
 2. Owner applies conf and runs the real droplet nginx/local gates.
 3. Owner removes Worker route, creates Cache Rule and records public/CDN/browser gates and next-UTC-reset health. No SSH, Cloudflare API, deploy or credentials used here.
 
-The commit containing this report is the single `ops:` task commit; obtain its hash with `git log -1 --format=%H -- artifacts/goldrush-static-route-1/report.md`. The final handoff includes the exact hash.
+Implementation commit: `c8b41b00b3d39c3a0255927098a4aea4bbd3d8a4`. A following evidence-only commit normalizes two Vite trailing-whitespace lines in build logs so the full committed diff passes whitespace validation; it changes no implementation. The final handoff includes both hashes.
