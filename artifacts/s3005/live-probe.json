@@ -1,0 +1,68 @@
+{
+  "stamp": "2026-10-09T14:13:02.895Z",
+  "results": [
+    {
+      "url": "https://agenttown.app/goldrush/",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 2100
+    },
+    {
+      "url": "https://agenttown.app/goldrush/version.json",
+      "status": 200,
+      "contentType": "application/json",
+      "bytes": 54,
+      "version": {
+        "build": "62403b1d",
+        "builtAt": "2026-10-09T08:24:08Z"
+      }
+    },
+    {
+      "url": "https://agenttown.app/goldrush/skill.md",
+      "status": 200,
+      "contentType": "text/markdown; charset=utf-8",
+      "bytes": 61188,
+      "rotations": [
+        "r2026w37",
+        "r2026w38",
+        "r2026w39",
+        "r2026w40",
+        "r2026w41",
+        "r2026w42"
+      ]
+    },
+    {
+      "url": "https://agenttown.app/api/stats",
+      "status": 200,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 2100,
+      "bodyClass": "HTML"
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w41",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 883,
+      "ok": true,
+      "jsonKeys": [
+        "ok",
+        "board",
+        "rotation",
+        "standings"
+      ]
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w42",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "bytes": 883,
+      "ok": true,
+      "jsonKeys": [
+        "ok",
+        "board",
+        "rotation",
+        "standings"
+      ]
+    }
+  ]
+}
