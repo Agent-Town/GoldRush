@@ -1,0 +1,11 @@
+PASS healthy: exit 0
+PASS nginx-fails: exit 1
+PASS network-fails: exit 1
+PASS cache-conflict: exit 1
+PASS asset-html: exit 1
+PASS build-mismatch: exit 1
+PASS bad-json: exit 1
+PASS skill-html: exit 1
+PASS api-error: exit 1
+PASS no-asset: exit 1
+10 verifier scenarios passed; no network or nginx process used.
