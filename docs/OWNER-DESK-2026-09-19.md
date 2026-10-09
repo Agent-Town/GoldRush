@@ -261,6 +261,8 @@ Astra: the map-art corrections campaign is COMPLETE (2026-09-22, all sixteen row
 
 
 ## 9. F-2987-1 — restore the public game route after Cloudflare 1027
+**s3001 verification, 2026-10-09T09:30Z:** API probe corrective `e0c536dcc` is now a main ancestor with merged leaf and lane C ahead zero; the fresh Mac health check reports `landing=200 game=200 api=200-html`. Canonical game/version/skill remain 200 at `62403b1d`, weeks 37–42; stats is still HTML-200 and sampled week-41/week-42 standings remain valid JSON. The attended apj1 post-landing Node run is still active; its final completion is not claimed. The droplet probe copy, Cache Rule and release acceptance remain in attended/owner custody. Evidence: `artifacts/s3001/api-landing.json`, `ledger-selection.json`, `live-probe.json`, `report.md`. This supersedes the prior unmerged/pending-drain observation, not the remaining endpoint or release acceptance.
+
 
 **s3000 verification, 2026-10-09T08:33Z:** the attended cutover is independently confirmed at the public URLs: game/version/skill 200, build `62403b1d`, all six rotations; sampled immutable JavaScript HIT twice. The deployment log records ASSAYER SYNCED. Stats still serves HTML-200 at both the canonical and Pages URLs, but week-41/week-42 standings reads answer valid 200 JSON (`ok:true`); F-CUT-1 is not proof of a total county outage. The corrective completed during closing; attended fixture cure `782f9c548` and `apj1` process 95225 own its pending gates. Existing Cache Rule and release verdict custody below are preserved; no new Option B choice is requested. Evidence: `artifacts/s3000/live-probe.json`, `cutover-receipt.txt`.
 

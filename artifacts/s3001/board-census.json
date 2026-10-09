@@ -1,0 +1,36 @@
+{
+  "observedAt": "2026-10-09T09:30Z",
+  "commands": [
+    "node scripts/lane-usable.mjs --all",
+    "node scripts/dry-board-probe.mjs"
+  ],
+  "exitCodes": [
+    0,
+    0
+  ],
+  "doneMoves": 1481,
+  "legacySkipped": 644,
+  "terminalSkipped": 743,
+  "subjects": 94,
+  "realDrains": 0,
+  "unknown": 0,
+  "closedOrBlocked": 13,
+  "merged": 81,
+  "laneAhead": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "laneTrackedDirt": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "registeredWorktrees": 69,
+  "reportedLanes": 4,
+  "unreportedAhead": 7,
+  "unreportedCustody": "attended-owned",
+  "note": "Summary transcribed from complete command output in this fire; this is not a raw transcript."
+}

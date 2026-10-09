@@ -1,0 +1,56 @@
+{
+  "stamp": "2026-10-09T09:28:57.475Z",
+  "directories": {
+    "tasks/queue/main": [],
+    "tasks/queue/lane-a": [],
+    "tasks/queue/lane-b": [],
+    "tasks/queue/lane-c": [],
+    "tasks/queue/lane-d": [],
+    "tasks/queue/art": [],
+    "tasks/running": [],
+    "assets/crafting-queue/pending": []
+  },
+  "lanes": {
+    "sol/open-findings-astra": [],
+    "sol/wave-lane-b": [],
+    "sol/map-art-campaign-2": [],
+    "art/portraits-e5-e10-generated": []
+  },
+  "runnerProcesses": {
+    "31360": "  PID  PPID TTY      STAT STARTED\n31360     1 ??       Ss   Tue Sep 29 10:47:38 2026    \n",
+    "61949": "  PID  PPID TTY      STAT STARTED\n61949 61937 ??       SN   Fri Oct  9 15:51:21 2026    \n",
+    "84205": "  PID  PPID TTY      STAT STARTED\n84205     1 ??       S    Fri Oct  9 16:26:05 2026    \n",
+    "84251": "  PID  PPID TTY      STAT STARTED\n84251 84205 ??       S    Fri Oct  9 16:26:06 2026    \n",
+    "84252": "  PID  PPID TTY      STAT STARTED\n84252 84251 ??       S    Fri Oct  9 16:26:06 2026    \n",
+    "95225": "  PID  PPID TTY      STAT STARTED\n95225     1 ??       SN   Fri Oct  9 15:38:51 2026    \n"
+  },
+  "newestFailed": {
+    "name": "shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md",
+    "mtime": "2026-09-20T06:53:51.129Z"
+  },
+  "latestRun": "tasks/runs/20261009-153024-lane-c-api-probe-json-1.md.log",
+  "latestRunTail": [
+    "+    });",
+    "+  }",
+    "+}",
+    "",
+    "tokens used",
+    "74,799",
+    "Implemented in `c8ddf96b2`; report finalized in `4ef388aa6`. Worktree clean.",
+    "",
+    "**READY-FOR-GATES: NO — blockers documented.**",
+    "",
+    "- New guard: **32/32**; gate-caller: **45/45**; TypeScript/build passed.",
+    "- API values: `200`, `200-html`, `200-notjson`, `2xx-incomplete`, or HTTP error code.",
+    "- Live result: `landing=200 game=200 api=200-html`.",
+    "",
+    "Remaining, in order:",
+    "",
+    "1. Update the out-of-scope alarm-clock guard: six fixtures now fail; baseline passed 9/9.",
+    "2. Restore the live API and repeat live acceptance.",
+    "",
+    "No deployment or SSH performed. [Full report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/api-probe-json-1/report.md>).",
+    "[lane-runner-v3] withheld 0 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20261009-153024-lane-c-api-probe-json-1.md-withheld-paths.txt",
+    ""
+  ]
+}
