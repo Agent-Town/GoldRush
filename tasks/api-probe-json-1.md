@@ -1,0 +1,24 @@
+# Task api-probe-json-1: the edge probes stop reading a dead API as healthy — /api/stats must answer JSON, not the SPA's HTML fallback (LANE-C, Astra, commit prefix "fix:")
+
+CODEX: model=gpt-6-astra
+
+You are Codex (gpt-6-astra), implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-c` (branch `sol/map-art-campaign-2`; the branch name is history, your commits are path-scoped). You do not touch STATUS.md, reviews, tasks or other lanes. Lane-c's `node_modules` is a symlink to the primary checkout: expected, not dirt; do NOT run `npm install`/`npm ci`.
+READ FIRST: AGENTS.md; `scripts/health-watch.sh` (the Mac probe: `edge_one` at about line 136 and the three URLs at 147–149, incl. `https://agenttown.app/api/stats`); `ops/droplet/edge-watch.sh` (the droplet twin: `code` at about line 35 and the three URLs at 45–47); `ops/droplet/verify-goldrush-route.sh` (its `/api/stats` row demands "healthy 200 JSON", the check this task generalizes); `functions/api/stats.ts` (what a healthy answer looks like: the content type and a key you can assert); `scripts/runner-restart-recipe.test.sh` or any `*.test.sh` under `scripts/` for the house style of a shell guard; and the gate-caller audit note below.
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL; the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B sol/map-art-campaign-2 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work; resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. EVIDENCE-ARTIFACT EXCEPTION (F-1266-1): changes confined to regenerated evidence (`artifacts/**`, `reviews/shots-*`, any `.png`) are NEVER work and NEVER a STOP; discard them and PROCEED, listing what you discarded. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything. Then `git -C worktrees/lane-c status --short` must be clean, with the FACTORY-CHURN EXCEPTION (F-1407-1): `logs/**`, `artifacts/**`, `reviews/shots-*` and any `.png` are always expected, never a STOP; what still STOPs is modified tracked `src/**`, `scripts/**`, `e2e/**`, `tasks/**`, `specs/**`, `reviews/*.md`.
+
+## Why (F-CUT-1, attended 2026-10-09, measured during the Option B cutover)
+When Cloudflare's daily Workers/Pages Functions cap is exhausted, Pages serves the SPA's `index.html` with HTTP **200** for `/api/stats`, so both probes reported `api=200` while the county's API was dead for hours; only the verifier's JSON demand caught it. A status-only probe is blind to this failure class on exactly the day it matters.
+
+## Scope
+1. `scripts/health-watch.sh` and `ops/droplet/edge-watch.sh`: the `/api/stats` check requires HTTP 200 AND a JSON content type AND a body that parses as JSON carrying the key `functions/api/stats.ts` always returns (name it from the source); anything else reports as dark with a distinct reason ("api=200-html", "api=200-notjson") so the dashboard and the mail name the class. Keep the landing and game checks as they are; keep the output shape the dashboard parses (`landing=… game=… api=…`) by putting the reason in the value, never a new field.
+2. A guard `scripts/edge-probe-json.test.sh` (or `.mjs`): feeds each probe a fake 200 HTML body and a fake 200 JSON body (a local server or a stubbed curl) and asserts dark vs up. ADD the new guard to the `test:node-guards` roster in `package.json` if it is `.mjs`, or to wherever `*.test.sh` guards are rostered (read `scripts/run-guards.mjs` GUARDS and the gate-caller audit's expectations); a guard nothing calls reds every landing battery.
+3. Report `artifacts/api-probe-json-1/report.md`: the diff, the guard counts, a captured example of the HTML-200 fallback if you can still observe one (do not generate load to provoke it). If you find yourself about to exit without changes, WRITE WHY into your report first.
+
+## Firewall
+Touch ONLY: `scripts/health-watch.sh` (the api check only), `ops/droplet/edge-watch.sh` (the api check only), the new guard file, `package.json` (the roster line only) or `scripts/run-guards.mjs` GUARDS (one entry only), `artifacts/api-probe-json-1/**`.
+NO changes to: `src/**`, `functions/**`, `ops/droplet/agenttown.app.nginx.conf`, the probes' landing/game checks and mail logic, `tasks/**`, `STATUS.md`, `reviews/*.md`; no live-county load tests; no ssh.
+
+## Self-check (evidence, not vibes)
+`bash -n` on both probes; the new guard green and rostered (`node --test scripts/gate-caller-audit.test.mjs` 45/45 proves the roster); `bash scripts/health-watch.sh status` still prints `landing=200 game=200 api=200` against the live county; `npx tsc --noEmit` and `npm run build` unchanged-green. No `src/**` change (hash unchanged landing).
+End: READY-FOR-GATES + the new api values as landed + guard counts + commit hash.
