@@ -67,7 +67,10 @@ function stubBin(code, rc) {
     fs.writeFileSync(path.join(bin, name), body);
     fs.chmodSync(path.join(bin, name), 0o755);
   };
-  w('curl', '#!/bin/bash\nprintf ' + JSON.stringify(String(code)) + '\nexit ' + rc + '\n');
+  // api-probe-json-1 (2026-10-09): the API probe now demands 200 + application/json + {ok:true, stats:{}}; these arms
+  // test the LANDING/GAME transitions, so the stub answers the API healthily whatever the scenario and keeps the
+  // scenario's code/rc for every other URL (the API's own classes are covered by scripts/edge-probe-json.test.mjs).
+  w('curl', '#!/bin/bash\ncase "$*" in *api/stats*) printf \'{"ok":true,"stats":{}}\\n200 application/json\'; exit 0;; esac\nprintf ' + JSON.stringify(String(code)) + '\nexit ' + rc + '\n');
   w('osascript', '#!/bin/bash\nexit 0\n');          // no desktop notification
   w('systemctl', '#!/bin/bash\nexit 0\n');          // every service healthy
   w('df', '#!/bin/bash\necho "Use%"\necho " 10%"\n'); // disk far below the 95% gate
