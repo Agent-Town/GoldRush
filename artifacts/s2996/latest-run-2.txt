@@ -1,0 +1,35 @@
+tasks/runs/20261009-112811-lane-d-goldrush-static-route-1.md.log
+78,867
+READY-FOR-GATES — committed as `c8b41b00b`, with evidence cleanup in `28417dd2f`.
+
+Passed: 5 configuration guards, 10 verifier scenarios, shell syntax, TypeScript and build. Other nginx blocks, source files and landing remain unchanged.
+
+```nginx
+    location = /goldrush {
+        return 301 /goldrush/;
+    }
+    location /goldrush/ {
+        resolver 127.0.0.53 1.1.1.1 valid=300s;
+        set $pages_upstream gold-rush-3in.pages.dev;
+        # A variable proxy_pass with a trailing slash would send every request to /.
+        rewrite ^/goldrush/(.*)$ /$1 break;
+        proxy_pass https://$pages_upstream;
+        proxy_ssl_server_name on;
+        proxy_set_header Host gold-rush-3in.pages.dev;
+    }
+```
+
+Owner’s five steps:
+
+1. Back up/copy configuration, run `nginx -t`, reload.
+2. Run the local verifier while the Worker route remains.
+3. Remove the Worker route; configure asset caching.
+4. Verify public URLs, build identity, second-request HIT and browser behavior.
+5. If needed, restore the Worker route.
+
+[Report and evidence](/Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/artifacts/goldrush-static-route-1/report.md)
+
+Remaining: verify the separate cache-header fix before cutover—the inspected main still contained conflicting `no-cache`. No deployment or live nginx/CDN verification was performed.
+[lane-runner-v3] withheld baseline-dirty path: node_modules
+[lane-runner-v3] withheld 0 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20261009-112811-lane-d-goldrush-static-route-1.md-withheld-paths.txt
+[lane-runner-v3] withheld 1 baseline ownership collision(s)

@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-09T05:23:47.191Z",
+  "rule": "scripts/fire.md section 0: attended drain ownership persists without a lock",
+  "cache": {
+    "pid": 22199,
+    "parentPid": 22197,
+    "command": "bash scripts/attended/land-held.sh hac1",
+    "state": "waiting for this fire directory to clear"
+  },
+  "routing": {
+    "earlierGateLog": ".goldrush/land/gsr1-gates.txt",
+    "earlierVerdict": "needs hands",
+    "guardRosterCorrection": "d8ecd3356",
+    "next": "attended parent 22197 schedules fresh gsr1 after hac1 verdict"
+  },
+  "fire": {
+    "launcherPid": 21203,
+    "codexPid": 21254,
+    "lock": "tasks/.fire.lock"
+  },
+  "runner": {
+    "pid": 31360,
+    "parentPid": 1
+  }
+}

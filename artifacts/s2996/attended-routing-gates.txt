@@ -1,0 +1,26 @@
+branch art/portraits-e5-e10-generated tip 28417dd2f 2026-10-09 04:45Z config /Users/robin/Claude/Projects/Gold Rush/scripts/attended/landings/gsr1.json
+scratch store at the store's main 5793a96
+chain base e0cd04bab
+merged 4710b6f5f
+law-pointer (pre): rc=0, no re-base needed
+engine hash merged: 378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817 (pinned 378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817)
+tsc/build/e1: 0 / 0 / 0
+law-pointer: rc=0 law-pointer-guard — do the law surfaces still point at what they claim?
+guards: ℹ pass 142 ℹ fail 1 
+✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (248.919959ms)
+✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (248.919959ms)
+ledger battery start 04:48Z
+ledger battery: rc=1 ℹ tests 1263 ℹ pass 1259 ℹ fail 1 ℹ skipped 3 
+✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (390.350917ms)
+e2e start 04:50Z: e2e/task-025-bandits-dont-swim.spec.ts e2e/m2-01-build-menu.spec.ts
+e2e: rc=0   24 passed (1.9m)  04:52Z
+battery start 04:52Z
+battery: rc=1 ℹ tests 45 ℹ pass 44 ℹ fail 1 ℹ skipped 0 ℹ tests 1048 ℹ pass 1042 ℹ fail 1 ℹ skipped 5  05:18Z
+✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (205.656125ms)
+✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (314.4305ms)
+dirt after battery: 0
+gsr1-PREP-DONE
+battery reds: ✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (205.656125ms) ; ✖ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (314.4305ms)
+named guards red
+ledger battery red
+verdict — needs hands

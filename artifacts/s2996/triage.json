@@ -1,0 +1,51 @@
+{
+  "time": "2026-10-09T05:23:30.058Z",
+  "done": [
+    {
+      "path": "tasks/done/20261009-112811-goldrush-static-route-1.md",
+      "exists": true
+    },
+    {
+      "path": "tasks/done/20261009-113013-headers-asset-cache-1.md",
+      "exists": true
+    }
+  ],
+  "queues": {
+    "art": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "main": []
+  },
+  "running": [],
+  "pending": [],
+  "laneAhead": {
+    "sol/open-findings-astra": [],
+    "sol/wave-lane-b": [
+      "41c224bd3 runner(lane-b): headers-asset-cache-1.md",
+      "832445b65 fix: record asset cache validation and baseline control",
+      "ce59e7a84 fix: detach inherited no-cache from hashed game assets"
+    ],
+    "sol/map-art-campaign-2": [],
+    "art/portraits-e5-e10-generated": [
+      "d8ecd3356 fix: roster scripts/goldrush-route-conf.test.mjs in test:node-guards (the gate-caller audit refuses a guard nothing calls; gsr1 landing battery)",
+      "28417dd2f ops: normalize static route build evidence whitespace",
+      "c8b41b00b ops: prepare nginx static game route and owner cutover gates"
+    ]
+  },
+  "failedLatest": [
+    {
+      "file": "shipped-s1065-20260708-095336-055-baron-kill-stop-0f5db4fe.md",
+      "mtime": "2026-09-20T06:53:51.129Z"
+    },
+    {
+      "file": "shipped-s1065-20260708-095336-gt-04-sightlines-ebbb04de.md",
+      "mtime": "2026-09-20T06:53:51.129Z"
+    },
+    {
+      "file": "shipped-s1065-20260707-143237-damage-orientation-e9fabff7.md",
+      "mtime": "2026-09-20T06:53:51.128Z"
+    }
+  ]
+}
