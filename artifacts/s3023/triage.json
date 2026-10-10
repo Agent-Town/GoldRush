@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-10T11:05:42.304Z",
+  "queues": {
+    "main": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "art": []
+  },
+  "running": [],
+  "pending": [],
+  "stagedArt": [],
+  "failedSincePredecessor": [],
+  "latestRun": {
+    "name": "20261009-153024-lane-c-api-probe-json-1.md.log",
+    "t": 1791534920821.1536
+  },
+  "interrupted": 0,
+  "tail": "+\n+for (const file of ['scripts/health-watch.sh', 'ops/droplet/edge-watch.sh']) {\n+  const source = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');\n+  const mac = file.startsWith('scripts/');\n+  const start = source.indexOf(mac ? 'edge_one() {' : 'code() {');\n+  const end = source.indexOf(mac ? 'dashboard() {' : 'SVC_BAD=\"\"', start);\n+  assert.ok(start >= 0 && end > start, `${file}: probe block missing`);\n+  const classification = mac\n+    ? `EDGE=\"$(edge_probe)\"\\n${source.match(/^EDGE_DARK=.*$/m)[0]}\\nDARK=\"$EDGE_DARK\"`\n+    : 'EDGE=\"landing=$L game=$G api=$A\"';\n+  for (const [name, type, body, expected, code = '200', rc = '0'] of cases) {\n+    test(`${file}: ${name}`, () => {\n+      const result = spawnSync('bash', ['-c', `\n+set -u\n+curl() {\n+  local url=\"\" format=\"\"\n+  while [ \"$#\" -gt 0 ]; do\n+    case \"$1\" in\n+      -w) format=\"$2\"; shift ;;\n+      https://*) url=\"$1\" ;;\n+    esac\n+    shift\n+  done\n+  case \"$url\" in\n+    */api/stats)\n+      if [[ \"$format\" == *content_type* ]]; then\n+        printf '%s\\\\n%s %s' \"$FIXTURE_BODY\" \"$FIXTURE_CODE\" \"$FIXTURE_TYPE\"\n+      else\n+        printf '%s' \"$FIXTURE_CODE\"\n+      fi\n+      return \"$FIXTURE_RC\" ;;\n+    *) printf 200 ;;\n+  esac\n+}\n+${source.slice(start, end)}\n+${classification}\n+printf '%s\\\\ndark=%s\\\\n' \"$EDGE\" \"${DARK:+yes}\"\n+`], {\n+        encoding: 'utf8', timeout: 10_000,\n+        env: { ...process.env, FIXTURE_BODY: body, FIXTURE_TYPE: type, FIXTURE_CODE: code, FIXTURE_RC: rc },\n+      });\n+      assert.equal(result.status, 0, result.stderr || String(result.error));\n+      assert.equal(result.stdout, `landing=200 game=200 api=${expected}\\ndark=${expected === '200' ? '' : 'yes'}\\n`);\n+    });\n+  }\n+}\n\ntokens used\n74,799\nImplemented in `c8ddf96b2`; report finalized in `4ef388aa6`. Worktree clean.\n\n**READY-FOR-GATES: NO — blockers documented.**\n\n- New guard: **32/32**; gate-caller: **45/45**; TypeScript/build passed.\n- API values: `200`, `200-html`, `200-notjson`, `2xx-incomplete`, or HTTP error code.\n- Live result: `landing=200 game=200 api=200-html`.\n\nRemaining, in order:\n\n1. Update the out-of-scope alarm-clock guard: six fixtures now fail; baseline passed 9/9.\n2. Restore the live API and repeat live acceptance.\n\nNo deployment or SSH performed. [Full report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/api-probe-json-1/report.md>).\n[lane-runner-v3] withheld 0 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20261009-153024-lane-c-api-probe-json-1.md-withheld-paths.txt\n"
+}
