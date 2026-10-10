@@ -1,0 +1,15 @@
+=== Gold Rush factory — 2026-10-11 02:00:14 ===
+edge   : landing=200 game=200 api=200-html   (200 = up; 2xx-slow = answered but missed the budget; anything else is dark — F-OUT-0829)
+runner : ALIVE
+fire   : RUNNING
+agents :
+  com.goldrush.dashboard:LOADED
+  com.goldrush.health:LOADED
+  com.goldrush.fire:LOADED
+lock   : ACTIVE 2026-10-10T19:00Z (s3030 fire) — verify eligible drains, standing duties and inherited live stats finding; CODE
+queued : 0 task(s)   in-flight: 0   pending-orders: 0
+lanes ahead of main (commit count — may be squash-merged dupes, verify by content):
+art staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)
+failed tail: superseded-s239-bt-00-demolish.md
+last fire log line: cat artifacts/s3030/health.txt artifacts/s3030/lanes.txt artifacts/s3030/dry-board.txt" in /Users/robin/Claude/Projects/
+
