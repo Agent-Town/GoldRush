@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-11T21:33:25.672Z",
+  "initial": {
+    "tests": 1263,
+    "pass": 1262,
+    "fail": 1,
+    "skipped": 0,
+    "durationSeconds": 325.752
+  },
+  "failure": "scripts/gazette-scan-space-guard.test.mjs:110, spawnSync node ETIMEDOUT at 240023.0835 ms",
+  "changedPremise": "Run the unchanged file alone after the full invocation exits; eliminate overlap with other ledger files. Root cause is not established.",
+  "unchanged": [
+    "assertions",
+    "timeouts",
+    "test membership",
+    "maintained source"
+  ]
+}
