@@ -1,0 +1,141 @@
+{
+  "at": "2026-10-11T15:19:00.435Z",
+  "rows": [
+    {
+      "pid": 5265,
+      "ppid": 45619,
+      "stat": "S",
+      "elapsed": "00:20",
+      "cpu": "11.0",
+      "command": "node"
+    },
+    {
+      "pid": 27060,
+      "ppid": 39752,
+      "stat": "R",
+      "elapsed": "00:00",
+      "cpu": "11.6",
+      "command": "(git)"
+    },
+    {
+      "pid": 27203,
+      "ppid": 5265,
+      "stat": "R",
+      "elapsed": "00:00",
+      "cpu": "0.0",
+      "command": "(git)"
+    },
+    {
+      "pid": 27255,
+      "ppid": 52085,
+      "stat": "S",
+      "elapsed": "00:00",
+      "cpu": "0.0",
+      "command": "(git)"
+    },
+    {
+      "pid": 27258,
+      "ppid": 58860,
+      "stat": "R",
+      "elapsed": "00:00",
+      "cpu": "0.0",
+      "command": "(git)"
+    },
+    {
+      "pid": 39747,
+      "ppid": 85727,
+      "stat": "S",
+      "elapsed": "01:37",
+      "cpu": "0.0",
+      "command": "bash"
+    },
+    {
+      "pid": 39752,
+      "ppid": 39747,
+      "stat": "S",
+      "elapsed": "01:37",
+      "cpu": "1.6",
+      "command": "/opt/homebrew/bin/node"
+    },
+    {
+      "pid": 45619,
+      "ppid": 89366,
+      "stat": "S",
+      "elapsed": "01:27",
+      "cpu": "0.0",
+      "command": "/opt/homebrew/Cellar/node/26.4.0/bin/node"
+    },
+    {
+      "pid": 52085,
+      "ppid": 89366,
+      "stat": "S",
+      "elapsed": "01:20",
+      "cpu": "3.4",
+      "command": "/opt/homebrew/Cellar/node/26.4.0/bin/node"
+    },
+    {
+      "pid": 58577,
+      "ppid": 89366,
+      "stat": "S",
+      "elapsed": "03:53",
+      "cpu": "0.0",
+      "command": "/opt/homebrew/Cellar/node/26.4.0/bin/node"
+    },
+    {
+      "pid": 58860,
+      "ppid": 58577,
+      "stat": "S",
+      "elapsed": "03:53",
+      "cpu": "4.7",
+      "command": "node"
+    },
+    {
+      "pid": 76576,
+      "ppid": 89366,
+      "stat": "S",
+      "elapsed": "03:26",
+      "cpu": "0.0",
+      "command": "/opt/homebrew/Cellar/node/26.4.0/bin/node"
+    },
+    {
+      "pid": 85727,
+      "ppid": 76576,
+      "stat": "S",
+      "elapsed": "03:13",
+      "cpu": "0.0",
+      "command": "bash"
+    },
+    {
+      "pid": 89227,
+      "ppid": 75050,
+      "stat": "Ss",
+      "elapsed": "05:54",
+      "cpu": "0.0",
+      "command": "/opt/homebrew/bin/node"
+    },
+    {
+      "pid": 89269,
+      "ppid": 89227,
+      "stat": "S",
+      "elapsed": "05:52",
+      "cpu": "0.0",
+      "command": "npm run test:ledger-guards"
+    },
+    {
+      "pid": 89362,
+      "ppid": 89269,
+      "stat": "S",
+      "elapsed": "05:48",
+      "cpu": "0.0",
+      "command": "sh"
+    },
+    {
+      "pid": 89366,
+      "ppid": 89362,
+      "stat": "S",
+      "elapsed": "05:48",
+      "cpu": "0.0",
+      "command": "node"
+    }
+  ]
+}

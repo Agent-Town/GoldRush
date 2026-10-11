@@ -1,0 +1,110 @@
+{
+  "at": "2026-10-11T15:48:21.754Z",
+  "load": [
+    50.77880859375,
+    31.95263671875,
+    18.7548828125
+  ],
+  "own": [
+    {
+      "pid": 88969,
+      "ppid": 88938,
+      "cpu": 0,
+      "stat": "S",
+      "command": "bash"
+    },
+    {
+      "pid": 91402,
+      "ppid": 88969,
+      "cpu": 0,
+      "stat": "S",
+      "command": "bash"
+    },
+    {
+      "pid": 99760,
+      "ppid": 91402,
+      "cpu": 0.3,
+      "stat": "S",
+      "command": "bash"
+    },
+    {
+      "pid": 99903,
+      "ppid": 99760,
+      "cpu": 0.7,
+      "stat": "R",
+      "command": "(bash)"
+    },
+    {
+      "pid": 99905,
+      "ppid": 99903,
+      "cpu": 0,
+      "stat": "?",
+      "command": "(sed)"
+    },
+    {
+      "pid": 99906,
+      "ppid": 99903,
+      "cpu": 0.2,
+      "stat": "R",
+      "command": "(tail)"
+    }
+  ],
+  "topCpu": [
+    {
+      "pid": 99840,
+      "ppid": 93799,
+      "cpu": 132.7,
+      "stat": "R",
+      "command": "node"
+    },
+    {
+      "pid": 523,
+      "ppid": 1,
+      "cpu": 100,
+      "stat": "Rs",
+      "command": "fseventsd"
+    },
+    {
+      "pid": 99887,
+      "ppid": 94019,
+      "cpu": 76.9,
+      "stat": "R",
+      "command": "(node)"
+    },
+    {
+      "pid": 93799,
+      "ppid": 93737,
+      "cpu": 35,
+      "stat": "R",
+      "command": "node"
+    },
+    {
+      "pid": 99562,
+      "ppid": 93799,
+      "cpu": 34.1,
+      "stat": "R",
+      "command": "node"
+    },
+    {
+      "pid": 99895,
+      "ppid": 89979,
+      "cpu": 21.8,
+      "stat": "R",
+      "command": "git"
+    },
+    {
+      "pid": 99583,
+      "ppid": 93799,
+      "cpu": 10.2,
+      "stat": "S",
+      "command": "node"
+    },
+    {
+      "pid": 99580,
+      "ppid": 93799,
+      "cpu": 9.9,
+      "stat": "S",
+      "command": "node"
+    }
+  ]
+}

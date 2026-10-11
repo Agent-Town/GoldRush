@@ -1,0 +1,196 @@
+Exact canonical suffix after the completed serial Node/prefix checks.
+bash scripts/lane-dispatch-safety-guard.test.sh && bash scripts/codex-client-floor.test.sh && bash scripts/runner-restart-recipe.test.sh && bash scripts/runner-commit-decoupling-guard.test.sh && node scripts/ledger-mirror-exposure.mjs && node scripts/nul-audit.mjs && node scripts/source-pointer-guard.mjs && bash foundry/kit/test-init.sh
+PASS(REFUSES-HOLDS): queue file stayed queued and held-path.txt was logged
+PASS(DISPATCHES-HOLDS-BUT-FULLY-ABSORBED): BOTH-MOVED path with zero residue dispatched and was logged
+PASS(REFUSES-HOLDS-WITH-REAL-RESIDUE): queue file stayed queued for unseen additions and mixed add/delete residue
+PASS(REFUSES-ON-RESIDUE-PROBE-FAILURE): inner probe failure kept the queue file queued
+PASS(DISPATCHES-AHEAD-BUT-ABSORBED): safe squash-dupe shape dispatched
+PASS(DISPATCHES-USABLE): clean ahead=0 lane dispatched
+PASS(DISPATCHES-DIRTY-RC2): DIRTY shares rc=2 but is not HOLDS
+PASS(DISPATCHES-PROBE-FAIL-OPEN): missing probe dispatched
+PASS(HONOURS-DECLARED-BUILD-ON-PREDECESSOR): a full declaration dispatched over a real HOLDS lane
+PASS(REFUSES-PARTIAL-DECLARATION): an undeclared second held path still refused
+PASS(HONOURS-SUPERSET-DECLARATION): declaring a path main already absorbed did not block dispatch
+PASS(REFUSES-DECLARATION-WITHOUT-OPT-IN): a path list alone is not an opt-in
+PASS(REFUSES-OPT-IN-WITHOUT-DECLARED-PATHS): the token alone is not a blank cheque
+PASS(RETRIES-THEN-NAMES-FAIL-OPEN): no-verdict probe was retried once, conceded in the log, and still dispatched
+PASS(RETRY-RECOVERS-REAL-HOLDS): a transient blip over a HOLDS lane was retried and then REFUSED
+codex-client-floor guard (F-1651-1)
+  ok   — lane-runner-v3.sh parses
+  ok   — floor check (line 506) precedes master consumption (line 514)
+  ok   — dispatch invokes "$codex_bin"
+  ok   — no bare-codex dispatch remains
+  ok   — 0.145.0 >= 0.144.1
+  ok   — 0.144.1 >= 0.144.1 (equal)
+  ok   — 0.144.0 < 0.144.1
+  ok   — 0.133.0 < 0.144.1
+  ok   — 1.0.0 >= 0.144.1 (major bump)
+  ok   — codex_ver parses 'codex-cli 0.145.0' -> 0.145.0
+  ok   — self-heals past a 0.133.0 PATH to the nvm 0.145.0 client
+  ok   — prefers a floor-meeting PATH client (no-op when healthy)
+  ok   — refuses (rc 1) when no client meets the floor
+RESULT: 0 failure(s)
+runner-restart-recipe guard (F-1652-1 / F-1653-1)
+  ok   — start-lane-runner.sh parses
+  ok   — health-watch.sh parses
+  ok   — runner-processes.sh parses
+  ok   — old broad pgrep goes red on the prompt carrier
+  ok   — shared discriminator rejects protocol prose
+  ok   — shared discriminator finds one absolute-path runner
+  ok   — runner self-exclusion leaves zero fixture runners
+  ok   — shared discriminator accepts a relative runner path
+  ok   — real helper launched its recorded PID at PPID 1 with no controlling terminal
+  ok   — helper rejects a substitute runner instead of verifying the wrong PID
+  ok   — rejected-runner cleanup waits for exit and has bounded KILL escalation
+/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/runner-processes.aNSAf1/stop-rejected-runner.sh: line 1: 13312 Killed: 9               IGNORE_TERM=1 bash "$isolated/lane-runner-v3.sh"
+  ok   — rejected-runner cleanup returns only after the runner is gone
+  ok   — health-watch.sh has no bare nohup restart of lane-runner-v3.sh
+  ok   — health-watch.sh routes its restart through start-lane-runner.sh
+  ok   — helper unsets CLAUDE_CONFIG_DIR and CLAUDECODE
+  ok   — helper prepends the resolved client's bin dir to PATH (carries node/npm/npx)
+  ok   — helper refuses when a runner is already alive
+  ok   — helper never rmdir's the runner lock
+  ok   — CODEX_FLOOR agrees: helper 0.144.1 == runner 0.144.1
+  ok   — staleness computation lives in the shared runner-processes.sh (one implementation)
+  ok   — health-watch's runner line calls runner_staleness_note (wired, not merely defined)
+  ok   — health-watch runner line goes STALE when the process predates the script
+  ok   — health-watch runner line is silent when the runner is current (no noise)
+  ok   — stale runner (process older than the newest runner-script commit) is REPORTED
+  ok   — fresh runner is reported as current (no false STALE alarm)
+  ok   — staleness report is WARN-only (rc 0 both arms) — never blocks a restart
+  ok   — staleness report is bounded (<=20 lines)
+RESULT: 0 failure(s)
+runner-commit-decoupling guard (F-1657-1, from F-1656-1)
+  ok   — lane-runner-v3.sh parses
+  ok   — DEFECT REPRODUCES: the compound form leaves HEAD at 'init' with work.txt stranded staged
+  ok   — CURE WORKS: the decoupled form commits the work and leaves the index clean
+  ok   — the ignored path did NOT leak into the decoupled commit
+  ok   — delta commit includes literal *.txt only; moved tracked/raw baseline dirt remains unstaged
+  ok   — factory accounting withheld; logs/session-scratch evidence and src still committed
+  ok   — no commit site is gated on the add's rc
+  ok   — both art routes keep the decoupled form and ordinary lanes use the delta boundary
+  ok   — the debris excludes are still in place on the lane commit site
+  ok   — red path fires — a runner with the `&&` restored is rejected
+  ok   — red path fires — restoring the old broad commit sweeps baseline dirt and is rejected
+  ok   — red path fires — a runner that sweeps logs/ accounting into lane commits is rejected
+  ok   — reverse control fires — a wholesale logs/ exclusion is rejected (retention hole)
+RESULT: 0 failure(s)
+LEDGER MIRROR EXPOSURE — LB-01 standing encryption gate
+
+  corpus                  : read (49 mirror(s), 49 read, 0 unreadable)
+  dir                     : /Users/robin/.goldrush/ledger-backups  (default)
+  tables inspected        : ledger-2026-08-24.db:kv[key]; ledger-2026-08-25.db:kv[key]; ledger-2026-08-26.db:kv[key]; ledger-2026-08-27.db:kv[key]; ledger-2026-08-28.db:kv[key]; ledger-2026-08-29.db:kv[key]; ledger-2026-08-30.db:kv[key]; ledger-2026-08-31.db:kv[key]; ledger-2026-09-01.db:kv[key]; ledger-2026-09-02.db:kv[key]; ledger-2026-09-03.db:kv[key]; ledger-2026-09-04.db:kv[key]; ledger-2026-09-04.db:refusals[anon_id,profile_name]; ledger-2026-09-04.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-05.db:kv[key]; ledger-2026-09-05.db:refusals[anon_id,profile_name]; ledger-2026-09-05.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-06.db:kv[key]; ledger-2026-09-06.db:refusals[anon_id,profile_name]; ledger-2026-09-06.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-07.db:kv[key]; ledger-2026-09-07.db:refusals[anon_id,profile_name]; ledger-2026-09-07.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-08.db:kv[key]; ledger-2026-09-08.db:refusals[anon_id,profile_name]; ledger-2026-09-08.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-09.db:kv[key]; ledger-2026-09-09.db:refusals[anon_id,profile_name]; ledger-2026-09-09.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-10.db:kv[key]; ledger-2026-09-10.db:refusals[anon_id,profile_name]; ledger-2026-09-10.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-11.db:kv[key]; ledger-2026-09-11.db:refusals[anon_id,profile_name]; ledger-2026-09-11.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-12.db:kv[key]; ledger-2026-09-12.db:refusals[anon_id,profile_name]; ledger-2026-09-12.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-13.db:kv[key]; ledger-2026-09-13.db:refusals[anon_id,profile_name]; ledger-2026-09-13.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-14.db:kv[key]; ledger-2026-09-14.db:refusals[anon_id,profile_name]; ledger-2026-09-14.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-15.db:kv[key]; ledger-2026-09-15.db:refusals[anon_id,profile_name]; ledger-2026-09-15.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-16.db:kv[key]; ledger-2026-09-16.db:refusals[anon_id,profile_name]; ledger-2026-09-16.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-17.db:kv[key]; ledger-2026-09-17.db:refusals[anon_id,profile_name]; ledger-2026-09-17.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-18.db:kv[key]; ledger-2026-09-18.db:refusals[anon_id,profile_name]; ledger-2026-09-18.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-19.db:kv[key]; ledger-2026-09-19.db:refusals[anon_id,profile_name]; ledger-2026-09-19.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-20.db:kv[key]; ledger-2026-09-20.db:refusals[anon_id,profile_name]; ledger-2026-09-20.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-21.db:kv[key]; ledger-2026-09-21.db:refusals[anon_id,profile_name]; ledger-2026-09-21.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-22.db:kv[key]; ledger-2026-09-22.db:refusals[anon_id,profile_name]; ledger-2026-09-22.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-23.db:kv[key]; ledger-2026-09-23.db:refusals[anon_id,profile_name]; ledger-2026-09-23.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-24.db:kv[key]; ledger-2026-09-24.db:refusals[anon_id,profile_name]; ledger-2026-09-24.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-25.db:kv[key]; ledger-2026-09-25.db:refusals[anon_id,profile_name]; ledger-2026-09-25.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-26.db:kv[key]; ledger-2026-09-26.db:refusals[anon_id,profile_name]; ledger-2026-09-26.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-27.db:kv[key]; ledger-2026-09-27.db:refusals[anon_id,profile_name]; ledger-2026-09-27.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-28.db:kv[key]; ledger-2026-09-28.db:refusals[anon_id,profile_name]; ledger-2026-09-28.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-29.db:kv[key]; ledger-2026-09-29.db:refusals[anon_id,profile_name]; ledger-2026-09-29.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-09-30.db:kv[key]; ledger-2026-09-30.db:refusals[anon_id,profile_name]; ledger-2026-09-30.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-01.db:kv[key]; ledger-2026-10-01.db:refusals[anon_id,profile_name]; ledger-2026-10-01.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-02.db:kv[key]; ledger-2026-10-02.db:refusals[anon_id,profile_name]; ledger-2026-10-02.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-03.db:kv[key]; ledger-2026-10-03.db:refusals[anon_id,profile_name]; ledger-2026-10-03.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-04.db:kv[key]; ledger-2026-10-04.db:refusals[anon_id,profile_name]; ledger-2026-10-04.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-05.db:kv[key]; ledger-2026-10-05.db:refusals[anon_id,profile_name]; ledger-2026-10-05.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-06.db:kv[key]; ledger-2026-10-06.db:refusals[anon_id,profile_name]; ledger-2026-10-06.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-07.db:kv[key]; ledger-2026-10-07.db:refusals[anon_id,profile_name]; ledger-2026-10-07.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-08.db:kv[key]; ledger-2026-10-08.db:refusals[anon_id,profile_name]; ledger-2026-10-08.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-09.db:kv[key]; ledger-2026-10-09.db:refusals[anon_id,profile_name]; ledger-2026-10-09.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-10.db:kv[key]; ledger-2026-10-10.db:refusals[anon_id,profile_name]; ledger-2026-10-10.db:sqlite_sequence[SKIPPED: no declared columns]; ledger-2026-10-11.db:kv[key]; ledger-2026-10-11.db:refusals[anon_id,profile_name]; ledger-2026-10-11.db:sqlite_sequence[SKIPPED: no declared columns]
+  keys inspected          : 3084
+  column-class verdicts   : refusals.anon_id, refusals.profile_name = county-standings by SCHEMA (account denylist still checked first)
+  account-class rows      : 0
+  unrecognised rows       : 0
+
+✅ CLEAN — every key in every mirror is county-standings class.
+   Nothing here carries account data; these mirrors are safe to commit.
+nul-audit: corpus 37152 text subject(s) — 36638 read, 514 empty.
+nul-audit: excluded 12465 known-binary, 243 UNCLASSIFIED of 49860 tracked file(s).
+  ⓘ  UNCLASSIFIED (not audited, not known-binary): .exit×126 .cpuprofile×29 (no extension)×14 .bak×14 .pid×11 .sha256×8 .summary×5 .viewlog×4 .stale×4 .req×4 .hold×3 .done×3 .stderr×2 .meta×2 .timer×2 .example×1 .stranded-1e057810×1 .body×1 .headers×1 .progress×1 .disabled×1 .blocked-seen×1 .salvaged×1 .sha×1 .probe×1 .cured×1 .mts×1
+     Add each to TEXT_EXT or BINARY_EXT — this list is how a new suffix
+     announces itself instead of silently leaving the corpus.
+nul-audit: CLEAN — no raw NUL bytes in tracked text sources.
+=== source-pointer-guard ===
+corpus                    : 690 source file(s) under /Users/robin/Claude/Projects/Gold Rush/scripts
+same-file citations checked: 5
+cross-file citations (not checkable here): 7
+PASS — every checkable source pointer still lands on its declaration.
+== 1. kit scripts parse (bash -n) ==
+  ok: bash -n fire-runner.sh
+  ok: bash -n lane-runner.sh
+  ok: bash -n dashboard-gen.sh
+  ok: bash -n health-watch.sh
+  ok: bash -n test-init.sh
+== 2. init scaffolds a fresh target ==
+  ok: init.mjs exited 0
+== 3. directory tree ==
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/queue/main
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/queue/lane-a
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/queue/lane-b
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/queue/lane-c
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/queue/lane-d
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/queue/art
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/done
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/failed
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/runs
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/running
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/tasks/janitor
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/reviews
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/specs
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/docs
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/logs
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/worktrees
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/scripts
+  ok: dir  /tmp/foundry-kit-test.XAUBs5/newgame/.claude
+== 4. every 09-template instantiated + seeds + scripts present ==
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/CLAUDE.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/AGENTS.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/STATUS.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/README.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/foundry.config.json
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/tasks/BACKLOG.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/tasks/goals.json
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/tasks/TEMPLATE-task-master.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/reviews/TEMPLATE-review.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/docs/TEMPLATE-specialist-queue.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/docs/TEMPLATES-INDEX.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/worktrees/README.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/.claude/settings.json
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/scripts/fire.md
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/scripts/fire-runner.sh
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/scripts/lane-runner.sh
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/scripts/dashboard-gen.sh
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/scripts/health-watch.sh
+  ok: file /tmp/foundry-kit-test.XAUBs5/newgame/scripts/com.test-game.fire.plist
+  ok: executable scripts/fire-runner.sh
+  ok: executable scripts/lane-runner.sh
+  ok: executable scripts/dashboard-gen.sh
+  ok: executable scripts/health-watch.sh
+== 5. name/path substitution ==
+  ok: /tmp/foundry-kit-test.XAUBs5/newgame/CLAUDE.md contains 'Test Game'
+  ok: /tmp/foundry-kit-test.XAUBs5/newgame/scripts/fire.md contains 'Test Game'
+  ok: /tmp/foundry-kit-test.XAUBs5/newgame/tasks/BACKLOG.md contains 'Test Game'
+  ok: derived 4 substitution token(s) from init.mjs instantiate() [DERIVED, not hand-listed]
+  ok: no unsubstituted tokens in CLAUDE.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in scripts/fire.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in tasks/TEMPLATE-task-master.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in reviews/TEMPLATE-review.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in docs/TEMPLATE-specialist-queue.md (checked 4 derived token(s))
+  ok: no unsubstituted tokens in docs/TEMPLATES-INDEX.md (checked 4 derived token(s))
+== 6. plist paths + label + cadence ==
+  ok: /tmp/foundry-kit-test.XAUBs5/newgame/scripts/com.test-game.fire.plist contains '<string>com.test-game.fire</string>'
+  ok: /tmp/foundry-kit-test.XAUBs5/newgame/scripts/com.test-game.fire.plist contains '<string>/tmp/foundry-kit-test.XAUBs5/newgame/scripts/fire-runner.sh</string>'
+  ok: /tmp/foundry-kit-test.XAUBs5/newgame/scripts/com.test-game.fire.plist contains '<string>/tmp/foundry-kit-test.XAUBs5/newgame</string>'
+  ok: /tmp/foundry-kit-test.XAUBs5/newgame/scripts/com.test-game.fire.plist contains '<integer>300</integer>'
+  ok: plutil -lint plist
+== 7. config is valid JSON with the contract fields ==
+  ok: foundry.config.json contract
+  ok: .claude/settings.json valid JSON
+== 8. scaffolded shell scripts parse (bash -n) ==
+  ok: bash -n dashboard-gen.sh
+  ok: bash -n fire-runner.sh
+  ok: bash -n health-watch.sh
+  ok: bash -n lane-runner.sh
+== 9. fire-runner --dry-run: exit 0, plans only, no side effects ==
+  ok: fire-runner --dry-run exit 0
+  ok: fire-runner prints DRY-RUN
+  ok: fire-runner reads model from config
+  ok: fire-runner sees protocol file
+  ok: no lock taken
+  ok: no log written
+== 10. lane-runner --dry-run: exit 0, flags missing worktrees, no side effects ==
+  ok: lane-runner --dry-run exit 0
+  ok: lane-runner prints DRY-RUN
+  ok: missing worktree flagged for lane-a
+  ok: main workdir resolves to root
+  ok: dry-run left the queue untouched
+  ok: no runner lock taken
+== 11. idempotency: re-run refuses loudly, overwrites nothing ==
+  ok: re-run exited nonzero
+  ok: refusal is loud (REFUSED)
+  ok: existing files untouched
+
+RESULT: 83 passed, 0 failed

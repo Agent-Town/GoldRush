@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-11T16:11:45.854Z",
+  "head": "6137af2c12a25ba8078dfecc69bf391aa87ac999",
+  "canonicalManifestUnchanged": true,
+  "exactTestedStatus": true,
+  "predecessorArchived": true,
+  "activeArchived": true,
+  "deskPreserved": true,
+  "launcherSemaphorePresent": true,
+  "gateVerdict": "PASS across the unchanged serial prefix and exact resumed suffix",
+  "nodeTests": {
+    "pass": 1263,
+    "fail": 0,
+    "skipped": 0
+  },
+  "factoryKit": {
+    "pass": 83,
+    "fail": 0
+  },
+  "suffixExit": 0,
+  "priorFullRunFailuresRetained": [
+    "ledger-initial-result.json",
+    "ledger-parallel4-result.json",
+    "ledger-serial-result.json"
+  ]
+}
