@@ -1,0 +1,25 @@
+{
+  "startedAt": "2026-10-11T20:18:34.578Z",
+  "head": "c4734b39c45e05548eb03093dddf4e92459d59ec",
+  "node": "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+  "version": "v26.4.0",
+  "args": [
+    "--test",
+    "--test-timeout=300000",
+    "--test-concurrency=1",
+    "scripts/desk-frozen-tree-unverifiable-guard.test.mjs",
+    "scripts/desk-status-single-read-guard.test.mjs",
+    "scripts/dry-board-probe.test.mjs",
+    "scripts/foundry-kit-token-derivation-guard.test.mjs",
+    "scripts/gazette-scan-space-guard.test.mjs",
+    "scripts/ghost-ladder-subject-set-guard.test.mjs",
+    "scripts/ghost-ladder-worktree-guard.test.mjs",
+    "scripts/guard-stats-persistence.test.mjs",
+    "scripts/health-watch-fire-line-guard.test.mjs"
+  ],
+  "packageHash": "dfcbb718d850d9fd389f0aac1ad166b1ae5b85695463e617095153db224e77a4",
+  "endedAt": "2026-10-11T20:19:58.782Z",
+  "seconds": 84.204,
+  "exitCode": 0,
+  "signal": null
+}

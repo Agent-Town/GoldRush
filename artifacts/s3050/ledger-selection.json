@@ -1,0 +1,60 @@
+{
+  "parts": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "rows": [
+    {
+      "key": "F-2987-1",
+      "rel": "tasks/BACKLOG.md",
+      "n": 12,
+      "line": "🛣️ **GOLDRUSH STATIC ROUTE 1 LANDED — `goldrush-static-route-1` as `b3cb110c6` (drained attended 2026-10-09).** Owner 2026-10-09: \"Option B - lets fix this once and for all in a proper way\" (F-2987-1). Astra on lane-d (`c8b41b00b` + `28417dd2f`, 78,867 tokens, 04:28Z to 04:34Z): `ops/droplet/agenttown.app.nginx.conf` replaces the `/goldrush` 302 fallback with `location = /goldrush { return 301 /goldrush/; }` and `location /goldrush/ { resolver 127.0.0.53 1.1.1.1 valid=300s; set $pages_upstream gold-rush-3in.pages.dev; rewrite ^/goldrush/(.*)$ /$1 break; proxy_pass https://$pages_upstream; proxy_ssl_server_name on; proxy_set_header Host gold-rush-3in.pages.dev; }` (the /api/ block's own pattern; the rewrite because a variable proxy_pass cannot carry a URI); `ops/droplet/verify-goldrush-route.sh` (prerequisites, nginx -t, the canonical paths through 127.0.0.1 with the Host header, an immutable asset, /api/stats; a PASS/FAIL table, no credentials); `docs/ops/agenttown-server.md` gains the five-step owner runbook (stage + nginx -t + reload; verify on the droplet while the Worker route still exists; remove only the Worker route; public verification incl. cf-cache-status; rollback); `scripts/goldrush-route-conf.test.mjs` 5/5. A real `nginx -t` is not available on the Mac and is not claimed: it is the runbook's first gate. Nothing live changed. Evidence 0.8 MB. Landed attended, hash unchanged; the cutover (deploy, droplet write on the owner's word, route deletion, public verification, Cache Rule) is the next act `reviews/goldrush-static-route-1.md`.",
+      "where": "12"
+    },
+    {
+      "key": "F-CUT-1",
+      "rel": "tasks/BACKLOG.md",
+      "n": 3,
+      "line": "📰 **TK-01 OCTOBER 10 COMPLETE (s3034, 2026-10-11 local):** `marketing/outbox/ticker-digest-2026-10-10.md` records zero player-visible changes. UTC+07 midnight census: 63 main updates, 63 pinned first-parent commits, zero player-path events or non-ancestral replacements; September 25 busy-day control 136. Complete subjects and changed paths reviewed for ops-only player changes and engine pins; none. No micro-headline, Gazette duplicate or publication. Stats still returns HTML-200 at canonical and direct Pages URLs; F-CUT-1 remains open. Evidence: `artifacts/s3034/day.json`, `day-commits.txt`, `live-probe.json`, `report.md`.",
+      "where": "3"
+    },
+    {
+      "key": "F-2642-3",
+      "rel": "tasks/BACKLOG.md",
+      "n": 547,
+      "line": "🔺 **F-2642-3 — OWNER: the registry deploy day is now ACTIONABLE, and the desk entry's own trigger condition has been met.** `docs/OWNER-DESK-2026-09-19.md:100–101` reads *\"Astra is landing the registry code behind a closed gate now (lane-b) … I bring you the checklist when the code lands.\"* **The code has landed (`fdfcab4d0`) and the checklist is `docs/ops/account-registry.md`** — five steps, each with its verification and its rollback sentence. ⚖️ **NOTHING DEPLOYED AND NOTHING MIGRATED, by construction and not by promise: the Pages binding ships as a COMMENTED block in `wrangler.toml` with `ACCOUNT_REGISTRY_SCOPE` deliberately unset, so both are absent and the door behaves byte-identically to main — which `closed-gate.test.mjs` asserts directly rather than by inspection.** Routine Pages deploys are unaffected. ⛔ **NO FIRE MAY ENABLE THIS**: the five steps need the owner's own deployment inventory, a quiesce of every identity writer including previews, an independently verified private export, a migration secret and a post-bootstrap smoke test of legacy saves — none of which the repo can know or automate. It is on the desk, not on the board.",
+      "where": "547"
+    },
+    {
+      "key": "F-2299-1",
+      "rel": "tasks/BACKLOG.md",
+      "n": 190,
+      "line": "🧭 **OWNER RULINGS 2026-09-26, THE DESK ANSWERED (verbatim: \"A1 - not sure, 2 - sure, lets do that, 3 - ok, lets do that, 4 - a, a, move it to the cradle's rim, its own sculpt pack, a, B5 - deploy, C6 - lets keep it as it is, 7 - slips is good, 8 - unnamed, 9 - sure, do it, D - as you recommend it, E - please cleand the test temp dirs do as you see fit here\"):** A1 parked (unsure, no spend); A2 the River's quiet pan writes the completed score; A3 the in-game county board reads the open week; A4 Regatta tie (a), disembark (a) and the Far Side cradle rim and the River raw route's own sculpt pack RE-AFFIRMED (all four had been ruled and LANDED on 2026-09-22; their ledger rows were ghosts, F-ATT-5), the Charter Press hides locked lands (the one fork that was open); B5 `localhost-cors-2` deploys; C the film: no Baron ride (it cuts on the arrival), printed slips, unnamed boards, the three public-site changes; D the ops-evening batch as recommended (F-KV1-7 (a), F-KV2-6 keep, F-KV1-3 default, F-2355-2 on the evening, F-2352-3 ordering, F-2299-1 re-probe); E the temp fixtures cleaned, the veto windows closed as the attended session saw fit (F-CW2-1 stands, F-RT40-1 stands, F-SGA1-2 accepted, F-CW1-2/F-CW2-4 art deferred, F-F2-39 as recommended, F-2350-3 allowlist widening deferred: the guard reddens). Every slice authored from these quotes the owner's words with this date.",
+      "where": "190"
+    },
+    {
+      "key": "b1-device-verdict-rows",
+      "rel": "tasks/BACKLOG.md",
+      "n": 490,
+      "line": "📱 **`b1-device-verdict-rows` (B1) — OWNER: ten minutes on your phone, and the device verdict rows are yours to fill.** The 2026-09-19 ruling decided 28 items and left exactly two things with you; this is the first. It is not a design question and nothing is blocked behind it — it wants the device in your pocket, not a decision. **Declared s2644** because the desk carried it unkeyed, which made `desk-carryforward-guard` unable to carry-check it and made the live desk count disagree with what the parser could read (5 declared vs 3 keyable). Keyed now as a backticked slug so it can be tracked across handoffs like any other item.",
+      "where": "490"
+    }
+  ]
+}
