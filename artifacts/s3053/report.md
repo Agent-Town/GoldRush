@@ -1,0 +1,37 @@
+# s3053 — October 11 ticker complete; stats JSON recovery sampled
+
+WHY no product landing: the prescribed board probe classified 94 subjects: zero eligible drains or unknowns, 81 merged and 13 closed/blocked. Actual runner branches have empty main-to-branch logs and tracked-clean worktrees. Seven ahead scratch worktrees retain attended custody (ahead counts 1, 1, 1, 1, 2, 43 and 51). All six queues, running tasks, new failures and pending crafting orders are empty; health reports zero staged art. CODEX-WALL bars fire refill/requeue. No scope was invented.
+
+## Verification of inherited claims
+
+- Launcher 70178 → 70222 → 70223 started 07:11:20 local and owns this semaphore. The actual launcher engine is Codex; no Opus execution is claimed. Independent runner 31360 is alive under parent 1. No takeover or restart. The main-slot semaphore predicate is scripts/lane-runner-v3.sh:322: ACTIVE without lock CLEARED. Evidence: processes.txt. A narrow argv pgrep failed to match the runner; the repository's fd-255 detector returned 31360, and the direct process probe confirmed it. No absence or restart was inferred from the failed argv query.
+- All 68 registered worktrees were covered. Four runner lanes have zero ahead commits; seven scratch worktrees ahead remain attended-owned. Refill advice does not lift the wall. Evidence: dry-board.txt, lanes.txt, lane-logs.json, unreported.txt and triage.json.
+- Latest runner output is api-probe-json-1, 74,799 tokens. Its merged leaf points to e0c536dcc, independently verified as a main ancestor. The retained tail's fixture blockers were addressed by the attended landing; no blind retry. Evidence: latest-run-tail.txt and latest-run-state.json.
+- Fresh bounded GETs at 00:12:40 and 00:13:11 UTC on October 12 return canonical and direct Pages stats as HTTP 200 application/json, 747 bytes, ok:true and a stats object; the repeat has empty:false. Mac health agrees api=200. Game/version/skill return 200 at build 62403b1d with weeks 37–42. These healthy samples supersede the prior HTML-fallback observation. Cause, exact recovery time, sustained health and other API-route health remain UNVERIFIED. Existing F-CUT-1 recurrence follow-up, droplet JSON-probe installation and release acceptance retain attended custody. HTTP checks do not establish browser, account or save acceptance. Evidence: live-probe.json, stats-recheck.json and health.txt; handover sections 13z-110/111. The existing backlog and desk incident preserve the history and now carry this verification.
+- October 11 private duties are current: strict coverage 49/49 days, August 24 through October 11. Both live archive heads match s3037: ledger-backups 4c33ec0858ffa8bda76c2ff2bf07bf4d6532e8a5 and fire-memory 53d87470fb2670626fb4605d4dc0eb5bffd899fb. Archive freshly verified PRIVATE. October 12 supply window opens at 02:10 UTC, after this fire's current clock. No duplicate pull/push and no private corpus entered this public repository. Evidence: mirror-freshness.txt, private-heads.txt, private-visibility.json and duties.json.
+- RT-01 discharged: all six rotation entries match the complete public skill fence, including week 42 opening October 12. Next weekly mint is after Wednesday October 14 00:00 UTC for week 43.
+- TK-01 discharged: this fire started after 06:00 local. The October 11 local window [October 10 17:00Z, October 11 17:00Z) contains 57 main updates and 57 pinned first-parent commits, zero player-path events or non-ancestral replacements. September 25 busy-day control is 136. Full subjects and changed-path census contain only status, handover, desk, ledger, previous ticker, evidence and generated logs. No player-visible or engine-pin change was omitted through the player-path filter. New ticker records zero headlines; no Gazette duplicate or publication. Evidence: day.mjs, day.json, day-summary.txt, day-commits.txt and day-paths.json.
+- Ledger read through scripts/ledger-corpus.mjs: 19 parts. No new product finding or task. Exact s3052 predecessor, own ACTIVE archive, three-item owner's desk and discharged acknowledgements are preserved.
+
+## Changes and validation
+
+Lock e104dd9ef; inherited dashboard bookkeeping d939cd786. This fire adds the October 11 ticker and reconciles the existing stats incident. No product source, assertions, engine inputs or pins changed. No product build or browser gate is claimed. Regenerated dashboard output remains with its existing writer.
+
+The complete closing npm run test:ledger-guards uses Homebrew Node v26.4.0 with its PATH passed to children. Command, manifest hash, start/end, duration and exit code are retained in ledger-start.json, ledger-guards.txt and ledger-result.json. The battery runs against the prepared handoff before its clearing commit, the final main write. Final outcome follows after completion.
+
+## Remaining list in order
+
+1. Attended F-CUT-1 recurrence follow-up and droplet JSON-probe installation; cause and sustained stats recovery unverified.
+2. Existing release acceptance: Cache Rule, phone run on 62403b1d, film verdict and thread approval. The three desk items remain account-registry deploy day, B1 device verdict rows and August Claude token revocation.
+3. Existing attended-only 002-transfer-board-spec-registry-path.md correction; closing audit will recheck its state. No fire spec edit.
+4. October 12 private backup/memory coverage after 02:10 UTC; next ticker October 12 after October 13 06:00 local; week 43 mint after October 14 00:00 UTC.
+
+## Initial timeout and changed retry premise
+
+The original complete npm invocation exited 1 after 301.410 seconds: 1,262/1,263 passed, one failed, zero skips. The Gazette history-scan subprocess reached its 240-second timeout (ETIMEDOUT, 240,012.608 ms). Original receipts are retained as ledger-initial-*. Root cause is unverified. Changed retry premise: rerun the unchanged Gazette file alone after the original battery has exited, removing overlap with other ledger files; if green, run the exact canonical chained suffix. No source, assertion, timeout or test-membership change. No uninterrupted original npm PASS will be claimed.
+
+The unchanged Gazette file passed in isolation: 9/9, zero failures/skips, 129.613 seconds (history arm 129.294 seconds). Main and package manifest remain unchanged. The exact canonical suffix now resumes at ghost-ladder-row-guard.
+
+## Final gate receipt
+
+READY-FOR-GATES (fire bookkeeping). All ledger checks PASS across the original successful Node checks, the unchanged Gazette file rerun alone, and the exact canonical suffix, completed 2026-10-12T00:23:38.238Z. Effective Node coverage: 1,263/1,263, zero unresolved failures/skips. Gazette 9/9 in 129.613 seconds (history arm 129.294 seconds); suffix rc 0 in 85.706 seconds, including factory kit 83/83. The original npm invocation remains a retained exit 1 (one 240-second history-scan timeout), so no uninterrupted original npm PASS is claimed. No maintained source, assertion, timeout or test-membership change. Main remained d939cd786; exact tested handoff, predecessor/ACTIVE archives, desk tail, manifest and live launcher semaphore verified. Closing audit confirms the existing attended-only 002-transfer-board-spec-registry-path.md correction remains open. Lock e104dd9ef; inherited bookkeeping d939cd786. This clearing commit is the final main write, followed by ordinary origin backup, read-only verification and an external vault digest. No product landing, deployment or release acceptance claimed.

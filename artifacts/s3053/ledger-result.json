@@ -1,0 +1,25 @@
+{
+  "command": "node scripts/ghost-ladder-row-guard.mjs --strict && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:citations && npm run test:desk-declaration && npm run test:desk-birth && node scripts/desk-carryforward-guard.mjs && node scripts/status-archive-audit.mjs --limit 40 --quiet && node scripts/attended-owed-audit.mjs && bash scripts/main-lock-gate-guard.test.sh && bash scripts/janitor-request-rejection.test.sh && bash scripts/lane-dispatch-safety-guard.test.sh && bash scripts/codex-client-floor.test.sh && bash scripts/runner-restart-recipe.test.sh && bash scripts/runner-commit-decoupling-guard.test.sh && node scripts/ledger-mirror-exposure.mjs && node scripts/nul-audit.mjs && node scripts/source-pointer-guard.mjs && bash foundry/kit/test-init.sh",
+  "scope": "Exact canonical test:ledger-guards suffix after initial Node test block",
+  "startedAt": "2026-10-12T00:22:12.517Z",
+  "node": "v26.4.0",
+  "main": "d939cd786f4f0693c7c8c55caaf565ea93b0223e",
+  "manifestSha256": "dfcbb718d850d9fd389f0aac1ad166b1ae5b85695463e617095153db224e77a4",
+  "statusSha256": "9cc73cd1fae01c1fb9724802349e62e0beb44f27f1d8e785ef3bfa278218068b",
+  "originalNpmExitCode": 1,
+  "initialNodePass": 1262,
+  "initialNodeTests": 1263,
+  "isolatedRetryPass": 9,
+  "isolatedRetryTests": 9,
+  "finishedAt": "2026-10-12T00:23:38.238Z",
+  "durationSeconds": 85.706,
+  "exitCode": 0,
+  "signal": null,
+  "effectiveNodeCoverage": {
+    "tests": 1263,
+    "pass": 1263,
+    "unresolvedFailures": 0,
+    "skipped": 0
+  },
+  "verificationMode": "Initial successful checks plus isolated unchanged failed file plus exact canonical suffix; original npm exit remains 1"
+}

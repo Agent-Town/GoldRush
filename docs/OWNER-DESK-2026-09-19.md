@@ -261,6 +261,10 @@ Astra: the map-art corrections campaign is COMPLETE (2026-09-22, all sixteen row
 
 
 ## 9. F-2987-1 — restore the public game route after Cloudflare 1027
+**s3053 verification, 2026-10-12T00:12–00:13Z: stats JSON delivery observed healthy again.** Canonical and direct Pages `/api/stats` each return HTTP 200 application/json, 747 bytes, `ok:true` and a stats object in two bounded GETs; the repeat reports `empty:false`, and the Mac probe agrees on landing=200 game=200 api=200. Game/version/skill remain 200 at build `62403b1d`, weeks 37–42. This supersedes the present-tense HTML observation carried by s3040–s3052; exact recovery time, cause, sustained health and other API-route health remain UNVERIFIED. F-CUT-1 recurrence follow-up, droplet JSON-probe installation and release acceptance retain attended custody. Option B is already ruled and cut over; no further capacity choice is requested. No fire deployment, route mutation or dispatch. Evidence: `artifacts/s3053/live-probe.json`, `stats-recheck.json`, `health.txt`, `report.md`.
+
+Historical observations follow.
+
 **s3040 recurrence, 2026-10-11T06:18Z:** Stats again returns HTTP 200 HTML instead of JSON at both canonical and direct Pages URLs: two bounded GETs each return text/html, 2,100 bytes, and two Mac health probes report landing=200 game=200 api=200-html. Game/version/skill remain 200 at build `62403b1d`, weeks 37–42. This supersedes the current healthy samples recorded by s3035–s3039; exact onset, cause, account usage and other API-route health remain UNVERIFIED. F-CUT-1 endpoint recovery and the attended droplet JSON-probe installation/release acceptance remain open. Option B is already ruled and cut over; no further capacity choice is requested. No fire deployment, route mutation or dispatch. Evidence: `artifacts/s3040/live-probe.json`, `stats-recheck.json`, `health.txt`, `health-recheck.txt`, `report.md`.
 
 Historical observations follow.
