@@ -1,0 +1,36 @@
+{
+  "command": "npm run test:ledger-guards (original) + unchanged Gazette file in isolation + exact canonical suffix",
+  "initialExitCode": 1,
+  "initialReceipt": "ledger-initial-result.json",
+  "isolation": {
+    "command": [
+      "node",
+      "--test",
+      "--test-timeout=300000",
+      "scripts/gazette-scan-space-guard.test.mjs"
+    ],
+    "startedAt": "2026-10-12T01:33:38.018Z",
+    "finishedAt": "2026-10-12T01:36:34.805Z",
+    "durationSeconds": 176.787,
+    "exitCode": 0,
+    "signal": null
+  },
+  "continuation": {
+    "command": [
+      "bash",
+      "-c",
+      "node scripts/ghost-ladder-row-guard.mjs --strict && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:citations && npm run test:desk-declaration && npm run test:desk-birth && node scripts/desk-carryforward-guard.mjs && node scripts/status-archive-audit.mjs --limit 40 --quiet && node scripts/attended-owed-audit.mjs && bash scripts/main-lock-gate-guard.test.sh && bash scripts/janitor-request-rejection.test.sh && bash scripts/lane-dispatch-safety-guard.test.sh && bash scripts/codex-client-floor.test.sh && bash scripts/runner-restart-recipe.test.sh && bash scripts/runner-commit-decoupling-guard.test.sh && node scripts/ledger-mirror-exposure.mjs && node scripts/nul-audit.mjs && node scripts/source-pointer-guard.mjs && bash foundry/kit/test-init.sh"
+    ],
+    "startedAt": "2026-10-12T01:36:34.807Z",
+    "finishedAt": "2026-10-12T01:38:20.269Z",
+    "durationSeconds": 105.462,
+    "exitCode": 0,
+    "signal": null
+  },
+  "main": "f37d758d3d842a7ba106b9a8346ff28c9ab9959f",
+  "manifestSha256": "dfcbb718d850d9fd389f0aac1ad166b1ae5b85695463e617095153db224e77a4",
+  "statusSha256": "d358ec7cb5db79175db8f91593ebaa504a4af895c34cc7d3a5b9145d1b1f7d42",
+  "finishedAt": "2026-10-12T01:38:20.269Z",
+  "retryDurationSeconds": 282.251,
+  "exitCode": 0
+}
