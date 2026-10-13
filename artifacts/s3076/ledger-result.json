@@ -1,0 +1,39 @@
+{
+  "finishedAt": "2026-10-13T03:09:06.578Z",
+  "verdict": "PASS across original successful Node checks, isolated unchanged Gazette retry, and exact canonical suffix",
+  "originalNpmCode": 1,
+  "originalNode": {
+    "tests": 1263,
+    "pass": 1262,
+    "fail": 1,
+    "skipped": 0
+  },
+  "originalFailure": "gazette-scan-space-guard.test.mjs:110 history-scan subprocess ETIMEDOUT after 240034.051 ms",
+  "isolatedRetry": {
+    "tests": 9,
+    "pass": 9,
+    "fail": 0,
+    "code": 0,
+    "elapsedSeconds": 76.536
+  },
+  "suffix": {
+    "code": 0,
+    "elapsedSeconds": 72.558,
+    "factoryKit": "83/83"
+  },
+  "effectiveNodeCoverage": {
+    "tests": 1263,
+    "pass": 1263,
+    "unresolvedFailures": 0,
+    "skipped": 0
+  },
+  "rootCause": "UNVERIFIED; scheduling contention is plausible, not proven",
+  "sourceAssertionsManifestTimeoutsChanged": false,
+  "node": "v26.4.0",
+  "testedHead": "ca704414cf3c81d86b132af72db22b8d4c6b0e51",
+  "testedHashes": {
+    "STATUS.md": "ae56245c3337d481cfe28fa1ac8e780bb495a11e5a07b2e77848a15581299d1f",
+    "tasks/BACKLOG.md": "d4735c81f0225b34595fb295bc9443605076a997fcf39bba90e9959b844c68f6",
+    "package.json": "dfcbb718d850d9fd389f0aac1ad166b1ae5b85695463e617095153db224e77a4"
+  }
+}
