@@ -1,0 +1,21 @@
+✔ 1. root, cure landed on main: LANDED-NOT-ARCHIVED at rc=1 (legacy behaviour intact) (184.068625ms)
+✔ 2. THE DEFECT: linked worktree, stale target, main carries the anchor -> reds, not OPEN (194.249917ms)
+✔ 3. REVERSE CONTROL: nothing landed anywhere -> plain OPEN at rc=0, no false red (167.973875ms)
+✔ 4. REVERSE CONTROL: a linked worktree whose main ALSO lacks the anchor must not red (219.279125ms)
+✔ 5. the declaration names the tree on the happy path too (F-2208-1) (163.765958ms)
+✔ 6. the declaration names a LINKED WORKTREE as the cause, breaking byte-identity (359.529333ms)
+✔ 7. a non-git fixture root is LAWFUL: git exit 128 must not refuse or crash (54.523208ms)
+✔ 8. --strict still reds a plain OPEN, and the stale arm reds in BARE mode (413.351166ms)
+✔ linked worktree declares exactly the two reached cross-checks as loud skips (203.38975ms)
+✔ repo-root verdict and rc are byte-identical to the pre-cure subject (675.363084ms)
+✔ manufactured pre-cure spawn reds exactly two arms in the linked worktree (316.925292ms)
+✔ manufactured forced-main cwd is caught by denominator parity (334.239167ms)
+✔ manufactured unconditional skip is caught at the repo root (506.504583ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3946.135208

@@ -1,0 +1,30 @@
+{
+  "finished": "2026-10-13T10:29:38.889Z",
+  "original": {
+    "exitCode": 1,
+    "pass": 1261,
+    "fail": 2,
+    "seconds": 436.523
+  },
+  "isolated": {
+    "exitCode": 0,
+    "pass": 13,
+    "fail": 0,
+    "seconds": 3.979,
+    "changedPremise": "Only the two affected files, serially; assertions and timeouts unchanged"
+  },
+  "suffix": {
+    "exitCode": 0,
+    "seconds": 69.645,
+    "factoryKitPass": 83,
+    "factoryKitFail": 0
+  },
+  "effectiveUniqueNodeTests": 1263,
+  "unresolvedFailures": 0,
+  "skipped": 0,
+  "rootCause": "Broad run reported an unverifiable Git fixture and an explicit Git ETIMEDOUT; both files pass unchanged in isolation. Scheduling contention plausible but not established.",
+  "sourceChanges": false,
+  "assertionChanges": false,
+  "guardedInputsUnchanged": true,
+  "mainHead": "7443bbb85021e3cdf00a6e190e24842fc8b21c60"
+}

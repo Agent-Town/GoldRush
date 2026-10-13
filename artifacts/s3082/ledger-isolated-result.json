@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-timeout=300000",
+    "scripts/attended-owed-anchor-tree-guard.test.mjs",
+    "scripts/block-class-guard-worktree.test.mjs"
+  ],
+  "started": "2026-10-13T10:28:06.412Z",
+  "finished": "2026-10-13T10:28:10.391Z",
+  "seconds": 3.979,
+  "exitCode": 0,
+  "signal": null
+}
