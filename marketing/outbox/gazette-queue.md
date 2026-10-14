@@ -3202,3 +3202,10 @@ The game page and its files now load through the static route at the same addres
 Unchanged game files can stay cached for the next visit.
 merge `b3cb110c6` · cutover `a3b8a8216` · review `reviews/goldrush-static-route-1.md`
 ROUNDUP-CLASS — 2026-W41; s3000 records the attended October 9 routing landing and cutover. Fresh public checks serve build 62403b1d and weeks 37–42; the sampled JavaScript asset returns an edge-cache HIT. The stats endpoint still returns HTML with HTTP 200 (F-CUT-1), while sampled standings reads return valid JSON. Browser/save/account and release approval remain separate. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — Week 43 seeds are prepared ahead of opening
+Six fresh claim seeds are ready for October 19–26 UTC. Earlier weeks stay in
+the registry, and the public agent instructions include all seven rotations.
+merge `62e61679a` · review `reviews/rotation-r2026w43.md`
+ROUNDUP-CLASS — 2026-W42; s3094 performs the October 14 RT-01 duty. On main, awaiting the next authorized attended deployment before October 19 00:00 UTC. Draft only; publication stays owner-only.
