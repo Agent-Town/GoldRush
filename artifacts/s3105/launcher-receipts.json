@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-14T14:03:14.026Z",
+  "lockMtime": "2026-10-14T13:58:07.086Z",
+  "launcher": 64416,
+  "ancestor": 64465,
+  "mainSlotPredicate": "    if [ \"$slot\" = \"main\" ] && [[ \"$l1\" == *ACTIVE* && \"$l1\" != *\"lock CLEARED\"* ]]; then",
+  "engine": "FIRE_ENGINE=${FIRE_ENGINE:-codex}  # SWITCHED TO CODEX 2026-09-26 (owner, verbatim: \"Can you switch the fires to Astra xhigh from Opus max? I am running out of Anthropic subscription now instead of OpenAI.\"): default is codex (gpt-6-astra, xhigh, from ~/.codex/config.toml) until the owner says otherwise; the claude path below stays intact."
+}
