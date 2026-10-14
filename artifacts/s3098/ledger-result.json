@@ -1,0 +1,25 @@
+{
+  "code": 0,
+  "signal": null,
+  "finished": "2026-10-14T05:02:49.131Z",
+  "seconds": 191.588,
+  "node": "v26.4.0",
+  "unchanged": true,
+  "headUnchanged": true,
+  "testSummary": [
+    "ℹ tests 1263",
+    "ℹ pass 1263",
+    "ℹ fail 0",
+    "ℹ skipped 0"
+  ],
+  "kitSummary": [
+    "✔ 3 — the corpus is declared on the HAPPY path too (F-2208-1) (911.082833ms)",
+    "✔ 6. --strict: a CHANGED set exits 1 (answered, and the answer is a change) (962.912583ms)",
+    "✔ client disconnect mid-stream leaves the shim available (183.323666ms)",
+    "PASS(REFUSES-ON-RESIDUE-PROBE-FAILURE): inner probe failure kept the queue file queued",
+    "PASS(DISPATCHES-PROBE-FAIL-OPEN): missing probe dispatched",
+    "PASS(RETRIES-THEN-NAMES-FAIL-OPEN): no-verdict probe was retried once, conceded in the log, and still dispatched",
+    "  ok: dir  /tmp/foundry-kit-test.v2S8W6/newgame/tasks/failed",
+    "RESULT: 83 passed, 0 failed"
+  ]
+}
