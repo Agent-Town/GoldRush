@@ -1,0 +1,4 @@
+The optional status-archive audit was initially invoked without --limit. Its output declared an unbounded walk over 6,885 STATUS commits, about 7.3 minutes, including known legacy drops. This was an invocation mistake, not a product defect or a hung process. Stopped only this fire-owned read-only audit (PID 180, parent 138, grandparent 84200) with SIGTERM after verifying ancestry. The required bounded regression check is already part of the closing ledger battery; no separate duplicate is needed. Exact predecessor and active lines were independently checked in the prepared STATUS.
+  PID  PPID TTY      STAT STARTED
+  138 84200 ??       Ss   Fri Oct 16 04:28:26 2026    
+  180   138 ??       S    Fri Oct 16 04:28:26 2026    
