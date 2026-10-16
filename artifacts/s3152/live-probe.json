@@ -1,0 +1,50 @@
+[
+  {
+    "url": "https://agenttown.app/",
+    "at": "2026-10-16T07:11:03.572Z",
+    "status": 200,
+    "contentType": "text/html",
+    "bytes": 17735
+  },
+  {
+    "url": "https://agenttown.app/api/stats",
+    "at": "2026-10-16T07:11:03.611Z",
+    "status": 200,
+    "contentType": "application/json; charset=utf-8",
+    "bytes": 747,
+    "ok": true,
+    "statsObject": true,
+    "empty": false
+  },
+  {
+    "url": "https://goldrush-3nb.pages.dev/api/stats",
+    "at": "2026-10-16T07:11:03.612Z",
+    "error": "fetch failed",
+    "name": "TypeError",
+    "cause": "getaddrinfo ENOTFOUND goldrush-3nb.pages.dev"
+  },
+  {
+    "url": "https://agenttown.app/goldrush/",
+    "at": "2026-10-16T07:11:03.612Z",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "bytes": 2100
+  },
+  {
+    "url": "https://agenttown.app/goldrush/version.json",
+    "at": "2026-10-16T07:11:03.613Z",
+    "status": 200,
+    "contentType": "application/json",
+    "bytes": 54,
+    "version": {
+      "build": "62403b1d",
+      "builtAt": "2026-10-09T08:24:08Z"
+    }
+  },
+  {
+    "url": "https://agenttown.app/skill.md",
+    "at": "2026-10-16T07:11:03.613Z",
+    "error": "The operation was aborted due to timeout",
+    "name": "TimeoutError"
+  }
+]
