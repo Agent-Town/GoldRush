@@ -1,0 +1,8 @@
+[fire-runner] 15:47:16 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 15:52:16 FIRE START (engine codex, model from ~/.codex config)
+[fire-runner] 16:01:37 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 16:06:37 FIRE START (engine codex, model from ~/.codex config)
+  PID  PPID TTY      STAT STARTED                      ARGS
+93105     1 ??       S    Fri Oct 16 16:06:37 2026     /bin/bash /Users/robin/Claude/Projects/Gold Rush/scripts/fire-runner.sh
+93146 93105 ??       S    Fri Oct 16 16:06:37 2026     node /Users/robin/.nvm/versions/node/v23.11.1/bin/codex exec --sandbox danger-full-access --skip-git-repo-check
+93149 93146 ??       S    Fri Oct 16 16:06:37 2026     /Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex exec --sandbox danger-full-access --skip-git-repo-check
