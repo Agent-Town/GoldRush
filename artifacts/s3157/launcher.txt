@@ -1,0 +1,9 @@
+  PID  PPID TTY      STAT STARTED                      COMMAND
+84275     1 ??       S    Fri Oct 16 15:23:26 2026     /bin/bash /Users/robin/Claude/Projects/Gold Rush/scripts/fire-runner.sh
+84318 84275 ??       S    Fri Oct 16 15:23:26 2026     node /Users/robin/.nvm/versions/node/v23.11.1/bin/codex exec --sandbox danger-full-access --skip-git-repo-check
+84319 84318 ??       S    Fri Oct 16 15:23:26 2026     /Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex exec --sandbox danger-full-access --skip-git-repo-check
+
+[fire-runner] 15:02:40 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 15:07:40 FIRE START (engine codex, model from ~/.codex config)
+[fire-runner] 15:18:26 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 15:23:26 FIRE START (engine codex, model from ~/.codex config)
