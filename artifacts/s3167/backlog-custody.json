@@ -1,0 +1,50 @@
+[
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 21,
+    "line": "📰 **TK-01 OCTOBER 11 COMPLETE (s3053, 2026-10-12 local):** `marketing/outbox/ticker-digest-2026-10-11.md` records zero player-visible changes. UTC+07 midnight census: 57 main updates, 57 pinned first-parent commits, zero player-path events or non-ancestral replacements; September 25 busy-day control 136. Complete subjects and changed paths reviewed for ops-only player changes and engine pins; none. No micro-headline, Gazette duplicate or publication. Current stats JSON recovery samples and their limits are recorded separately in the existing F-2987-1 row. Evidence: `artifacts/s3053/day.json`, `day-commits.txt`, `day-paths.json`, `report.md`.",
+    "where": "21"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 25,
+    "line": "📰 **TK-01 OCTOBER 10 COMPLETE (s3034, 2026-10-11 local):** `marketing/outbox/ticker-digest-2026-10-10.md` records zero player-visible changes. UTC+07 midnight census: 63 main updates, 63 pinned first-parent commits, zero player-path events or non-ancestral replacements; September 25 busy-day control 136. Complete subjects and changed paths reviewed for ops-only player changes and engine pins; none. No micro-headline, Gazette duplicate or publication. Stats still returns HTML-200 at canonical and direct Pages URLs; F-CUT-1 remains open. Evidence: `artifacts/s3034/day.json`, `day-commits.txt`, `live-probe.json`, `report.md`.",
+    "where": "25"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 31,
+    "line": "🩺 **API PROBE JSON 1 LANDED — `api-probe-json-1` as `e0c536dcc` (drained attended 2026-10-09).** F-CUT-1 (measured during the Option B cutover: with the daily cap exhausted, Pages served the SPA's HTML with HTTP 200 for `/api/stats` and both edge probes reported `api=200` for hours). Astra on lane-c (`c8ddf96b2` + `4ef388aa6`, 74,799 tokens, 08:30Z to 08:35Z): `scripts/health-watch.sh` and `ops/droplet/edge-watch.sh` gain `api_code`, which requires 200 + an `application/json` content type + a body parsing to `{ok:true, stats:{…}}` (the shape `functions/api/stats.ts` always returns) and otherwise reports `api=200-html`, `api=200-notjson` or `api=2xx-incomplete` as dark with the class in the value (the dashboard's `landing=… game=… api=…` shape kept); `scripts/edge-probe-json.test.mjs` 32 cases, rostered in `test:node-guards`; a bounded live capture of the HTML fallback kept as evidence. Attended fixes on the lane: `scripts/edge-alarm-clock-guard.test.mjs`'s curl stub now answers the API with healthy JSON in every scenario (its arms test landing/game transitions; 9/9), and a control copy of that guard under `artifacts/` renamed `.txt` (the gate-caller audit's orphan, the third time today). Evidence inside the budget. Landed attended, hash unchanged; the Mac probe is live on landing (launchd runs it from the repo); the droplet copy of `edge-watch.sh` is applied with the owner's word (a write on the box) `reviews/api-probe-json-1.md`.",
+    "where": "31"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 32,
+    "line": "📰 **GZ-01 ROUTING LANDING REPORTED (s3000, 2026-10-09 local):** One ROUNDUP-CLASS draft records the attended `goldrush-static-route-1` merge (`b3cb110c6`) and Option B cutover (`a3b8a8216`). Fresh HTTP evidence verifies restored static delivery and a cached asset; stats remains HTML-200 under F-CUT-1. Week 41 census: 0 standalone / 2 batched before, 0 / 3 after. Publication owner-only. Evidence: `artifacts/s3000/news-census.json`, `live-probe.json`, `report.md`.",
+    "where": "32"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 34,
+    "line": "🛣️ **GOLDRUSH STATIC ROUTE 1 LANDED — `goldrush-static-route-1` as `b3cb110c6` (drained attended 2026-10-09).** Owner 2026-10-09: \"Option B - lets fix this once and for all in a proper way\" (F-2987-1). Astra on lane-d (`c8b41b00b` + `28417dd2f`, 78,867 tokens, 04:28Z to 04:34Z): `ops/droplet/agenttown.app.nginx.conf` replaces the `/goldrush` 302 fallback with `location = /goldrush { return 301 /goldrush/; }` and `location /goldrush/ { resolver 127.0.0.53 1.1.1.1 valid=300s; set $pages_upstream gold-rush-3in.pages.dev; rewrite ^/goldrush/(.*)$ /$1 break; proxy_pass https://$pages_upstream; proxy_ssl_server_name on; proxy_set_header Host gold-rush-3in.pages.dev; }` (the /api/ block's own pattern; the rewrite because a variable proxy_pass cannot carry a URI); `ops/droplet/verify-goldrush-route.sh` (prerequisites, nginx -t, the canonical paths through 127.0.0.1 with the Host header, an immutable asset, /api/stats; a PASS/FAIL table, no credentials); `docs/ops/agenttown-server.md` gains the five-step owner runbook (stage + nginx -t + reload; verify on the droplet while the Worker route still exists; remove only the Worker route; public verification incl. cf-cache-status; rollback); `scripts/goldrush-route-conf.test.mjs` 5/5. A real `nginx -t` is not available on the Mac and is not claimed: it is the runbook's first gate. Nothing live changed. Evidence 0.8 MB. Landed attended, hash unchanged; the cutover (deploy, droplet write on the owner's word, route deletion, public verification, Cache Rule) is the next act `reviews/goldrush-static-route-1.md`.",
+    "where": "34"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 90,
+    "line": "🛣️ **GOLDRUSH STATIC ROUTE 1 — `goldrush-static-route-1` AUTHORED AND QUEUED 2026-10-09 on lane-d (Astra); owner verbatim: \"Option B - lets fix this once and for all in a proper way\" (F-2987-1):** the canonical game path leaves the Worker: the droplet's nginx replaces its `/goldrush` 302 fallback with a proxy to `gold-rush-3in.pages.dev` on the exact pattern of its `/api/` block (request-time resolver, variable upstream, `proxy_ssl_server_name on`, Host header, path stripped), cache headers passed through (F-2987-2 fixed them at the source); a Node guard on the conf; a droplet-side verification script (no credentials); the runbook: copy + `nginx -t` + reload, local verification while the route still exists, delete the Worker route `agenttown.app/goldrush*`, public verification incl. `cf-cache-status: HIT`, a Cache Rule for `/goldrush/assets/*` (non-default extensions), rollback = re-create the route. Astra produces; the cutover on the droplet and in the dashboard is the owner's or an owner-authorized attended hand. GATE: the guard green, the script and runbook landed; then the cutover's public verification.",
+    "where": "90"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 92,
+    "line": "🔎 **F-CUT-1 (attended 2026-10-09, measured during the Option B cutover) — A STATUS-ONLY EDGE PROBE READS A DEAD API AS HEALTHY.** When the daily Workers/Pages Functions cap is exhausted, Pages serves the SPA's `index.html` with HTTP 200 for `/api/stats`; `scripts/health-watch.sh` and `ops/droplet/edge-watch.sh` reported `api=200` for hours while the county's API was dark, and only the route verifier's JSON demand caught it. Corrective `api-probe-json-1` authored and queued (lane-c). **s3000 verification 08:33Z:** stats returns 200 HTML at the canonical and direct Pages URLs; sampled week-41/week-42 standings reads return valid 200 JSON, so the observed failure is specific to stats and is not evidence that every county endpoint is down. The corrective finished during closing; attended fixture cure `782f9c548` and `apj1` landing process 95225 own its remaining gates. `artifacts/s3000/live-probe.json`, `api-custody.json`.",
+    "where": "92"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 94,
+    "line": "🩺 **API PROBE JSON 1 — `api-probe-json-1` AUTHORED AND QUEUED 2026-10-09 on lane-c (Astra); F-CUT-1:** both edge probes require 200 + a JSON content type + a parsable body with the stats key for `/api/stats`, report `api=200-html`/`api=200-notjson` as dark with the reason in the value, a rostered guard with fake-200 fixtures. GATE: the guard green and rostered; `health-watch.sh status` still 200/200/200 live.",
+    "where": "94"
+  }
+]
