@@ -1,0 +1,22 @@
+{
+  "checked": "2026-10-16T13:10:25.703Z",
+  "lockMtime": "2026-10-16T13:07:25.261Z",
+  "ancestry": [
+    55667,
+    55713,
+    55714
+  ],
+  "processes": "  PID  PPID TTY      STAT STARTED                      COMM\n55667     1 ??       S    Fri Oct 16 20:07:25 2026     /bin/bash\n55713 55667 ??       S    Fri Oct 16 20:07:25 2026     node\n55714 55713 ??       S    Fri Oct 16 20:07:25 2026     /Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex\n",
+  "events": [
+    "[fire-runner] 17:57:48 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)",
+    "[fire-runner] 18:57:50 FIRE START (engine codex, model from ~/.codex config)",
+    "[fire-runner] 19:07:22 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)",
+    "[fire-runner] 20:07:25 FIRE START (engine codex, model from ~/.codex config)"
+  ],
+  "semaphore": [
+    {
+      "line": 322,
+      "text": "    if [ \"$slot\" = \"main\" ] && [[ \"$l1\" == *ACTIVE* && \"$l1\" != *\"lock CLEARED\"* ]]; then"
+    }
+  ]
+}

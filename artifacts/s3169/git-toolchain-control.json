@@ -1,0 +1,82 @@
+[
+  {
+    "bin": "/usr/bin/git",
+    "args": [
+      "--version"
+    ],
+    "developerDir": null,
+    "code": 69,
+    "stdout": "",
+    "stderr": "You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license."
+  },
+  {
+    "bin": "/usr/bin/git",
+    "args": [
+      "--exec-path"
+    ],
+    "developerDir": null,
+    "code": 69,
+    "stdout": "",
+    "stderr": "You have not agreed to the Xcode license agreements. Please run 'sudo xcodebuild -license' from within a Terminal window to review and agree to the Xcode and Apple SDKs license."
+  },
+  {
+    "bin": "/opt/homebrew/bin/git",
+    "args": [
+      "--version"
+    ],
+    "developerDir": null,
+    "code": 0,
+    "stdout": "git version 2.50.1 (Apple Git-155)",
+    "stderr": ""
+  },
+  {
+    "bin": "/opt/homebrew/bin/git",
+    "args": [
+      "--exec-path"
+    ],
+    "developerDir": null,
+    "code": 0,
+    "stdout": "/opt/homebrew/libexec/git-core",
+    "stderr": ""
+  },
+  {
+    "bin": "/usr/bin/git",
+    "args": [
+      "--version"
+    ],
+    "developerDir": "/Library/Developer/CommandLineTools",
+    "code": 0,
+    "stdout": "git version 2.50.1 (Apple Git-155)",
+    "stderr": ""
+  },
+  {
+    "bin": "/usr/bin/git",
+    "args": [
+      "--exec-path"
+    ],
+    "developerDir": "/Library/Developer/CommandLineTools",
+    "code": 0,
+    "stdout": "/Library/Developer/CommandLineTools/usr/libexec/git-core",
+    "stderr": ""
+  },
+  {
+    "bin": "/opt/homebrew/bin/git",
+    "args": [
+      "--version"
+    ],
+    "developerDir": "/Library/Developer/CommandLineTools",
+    "code": 0,
+    "stdout": "git version 2.50.1 (Apple Git-155)",
+    "stderr": ""
+  },
+  {
+    "bin": "/opt/homebrew/bin/git",
+    "args": [
+      "--exec-path"
+    ],
+    "developerDir": "/Library/Developer/CommandLineTools",
+    "code": 0,
+    "stdout": "/opt/homebrew/libexec/git-core",
+    "stderr": ""
+  }
+]
