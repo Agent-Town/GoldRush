@@ -1,0 +1,3 @@
+The initial standalone archive audit omitted --limit and began the entire historical walk. It was intentionally stopped by its own PID; no hang was inferred. The required bounded archive check is part of the closing ledger battery.
+  PID  PPID TTY      STAT STARTED                      COMMAND
+16178 16113 ??       R    Fri Oct 16 10:41:37 2026     node scripts/status-archive-audit.mjs
