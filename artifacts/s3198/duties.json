@@ -1,0 +1,78 @@
+{
+  "at": "2026-10-17T21:50:45.556Z",
+  "branchLogs": {
+    "sol/open-findings-astra": "",
+    "sol/wave-lane-b": "",
+    "sol/map-art-campaign-2": "",
+    "art/portraits-e5-e10-generated": ""
+  },
+  "ancestors": {
+    "e0c536dcc": true,
+    "40dbcf2f8": true
+  },
+  "wholeFenceMatches": true,
+  "registryKeys": [
+    "rotations"
+  ],
+  "rotations": [
+    {
+      "id": "r2026w37",
+      "opensAt": "2026-09-07T00:00:00.000Z",
+      "closesAt": "2026-09-14T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w38",
+      "opensAt": "2026-09-14T00:00:00.000Z",
+      "closesAt": "2026-09-21T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w39",
+      "opensAt": "2026-09-21T00:00:00.000Z",
+      "closesAt": "2026-09-28T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w40",
+      "opensAt": "2026-09-28T00:00:00.000Z",
+      "closesAt": "2026-10-05T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w41",
+      "opensAt": "2026-10-05T00:00:00.000Z",
+      "closesAt": "2026-10-12T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w42",
+      "opensAt": "2026-10-12T00:00:00.000Z",
+      "closesAt": "2026-10-19T00:00:00.000Z",
+      "seeds": 6
+    },
+    {
+      "id": "r2026w43",
+      "opensAt": "2026-10-19T00:00:00.000Z",
+      "closesAt": "2026-10-26T00:00:00.000Z",
+      "seeds": 6
+    }
+  ],
+  "tickerExists": true,
+  "tickerLedgerRows": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 3,
+      "line": "📰 **TK-01 OCTOBER 16 COMPLETE (s3178, 2026-10-17 local):** `marketing/outbox/ticker-digest-2026-10-16.md` records zero player-visible changes. UTC+07 midnight census: 97 main updates, 97 pinned first-parent commits, zero player-path events or non-ancestral replacements; September 25 busy-day control 136. All subjects and 1,080 distinct paths reviewed for ops-only player changes and engine pins; none. No micro-headline, Gazette duplicate or publication. Evidence: `artifacts/s3178/day.json`, `day-commits.txt`, `day-paths.json`, `report.md`.",
+      "where": "3"
+    }
+  ],
+  "backupLedgerRows": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 17 COMPLETE (s3181, 2026-10-17):** Private ledger coverage is 55/55 days from August 24 through October 17. The strict push gate inspected 3,648 keys in 55 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s snapshot stays outside the public tree and was pushed to the verified PRIVATE archive, ledger-backups head `d17493679430fe387d21ab7629b4bdd60625c7a7`. FM-01 reports unchanged and current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`; live remote heads verified. Evidence: `artifacts/s3181/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`, `private-visibility.json`. No private corpus entered this repository. Next coverage day October 18.",
+      "where": "1"
+    }
+  ]
+}

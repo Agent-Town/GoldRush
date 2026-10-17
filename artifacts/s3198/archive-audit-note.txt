@@ -1,0 +1,7 @@
+# s3198 supplemental archive-audit scope note
+
+The extra standalone command was invoked as node scripts/status-archive-audit.mjs without --limit. Its startup banner explicitly says it walks all 7,017 STATUS commits, estimates 6.3 minutes and reports previously measured, excused legacy drops. This was an unnecessarily broad invocation, not a new product finding or a reason to alter historical archives. No scripts or history were changed.
+
+The required ledger battery separately invokes node scripts/status-archive-audit.mjs --limit 40 --quiet. Its regression verdict and captured exit status are included in ledger-result.json and ledger-guards.txt. The standalone audit transcript is retained in status-archive-audit.txt; its raw exit status was not separately captured by the original multi-command shell, so none is claimed.
+
+The accidental supplemental walk was explicitly stopped with SIGTERM on owned PID 92063 after more than eight minutes. Parent chain 92063 -> 92037 -> 83600 confirms this fire owned it. The partial transcript contains its scope/legacy-debt warning only; no full-history verdict is claimed. Required bounded audit and the complete ledger battery had already passed, unchanged.
