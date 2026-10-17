@@ -1,0 +1,9 @@
+{
+  "processes": "  PID  PPID TTY      STAT STARTED\n31360     1 ??       Ss   Tue Sep 29 10:47:38 2026    \n32053     1 ??       S    Sun Oct 18 01:23:37 2026    \n32103 32053 ??       S    Sun Oct 18 01:23:37 2026    \n32105 32103 ??       S    Sun Oct 18 01:23:37 2026    \n",
+  "directoryMtime": "2026-10-17T18:23:37.329Z",
+  "fireStarts": [
+    "[fire-runner] 00:23:33 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)",
+    "[fire-runner] 01:23:37 FIRE START (engine codex, model from ~/.codex config)"
+  ],
+  "semaphore": "322:    if [ \"$slot\" = \"main\" ] && [[ \"$l1\" == *ACTIVE* && \"$l1\" != *\"lock CLEARED\"* ]]; then\n"
+}
