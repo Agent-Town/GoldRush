@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-17T16:06:21.645Z",
+  "branchLogs": {
+    "sol/open-findings-astra": "",
+    "sol/wave-lane-b": "",
+    "sol/map-art-campaign-2": "",
+    "art/portraits-e5-e10-generated": ""
+  },
+  "latestOutputMerged": true,
+  "dischargedDeskAncestor": true,
+  "wholeFenceMatches": true,
+  "rotationCount": 7,
+  "seedCount": 42,
+  "comingRotation": {
+    "id": "r2026w43",
+    "opensAt": "2026-10-19T00:00:00.000Z",
+    "closesAt": "2026-10-26T00:00:00.000Z",
+    "seeds": {
+      "the-claim": "e1-the-claim-r2026w43-7b92b9983135",
+      "e1-dry-gulch": "e1-dry-gulch-r2026w43-cc27ebe909da",
+      "e1-twin-banks": "e1-twin-banks-r2026w43-c2cc1bd42648",
+      "e1-night-shift": "e1-night-shift-r2026w43-eb64f645f28d",
+      "e2-hill-mine": "e2-hill-mine-r2026w43-0166feb2dd80",
+      "e1-baron": "e1-baron-r2026w43-2b07cb28babb"
+    }
+  },
+  "tickerExists": true,
+  "tickerLedgerRows": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 3,
+      "line": "📰 **TK-01 OCTOBER 16 COMPLETE (s3178, 2026-10-17 local):** `marketing/outbox/ticker-digest-2026-10-16.md` records zero player-visible changes. UTC+07 midnight census: 97 main updates, 97 pinned first-parent commits, zero player-path events or non-ancestral replacements; September 25 busy-day control 136. All subjects and 1,080 distinct paths reviewed for ops-only player changes and engine pins; none. No micro-headline, Gazette duplicate or publication. Evidence: `artifacts/s3178/day.json`, `day-commits.txt`, `day-paths.json`, `report.md`.",
+      "where": "3"
+    }
+  ],
+  "backupLedgerRows": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 17 COMPLETE (s3181, 2026-10-17):** Private ledger coverage is 55/55 days from August 24 through October 17. The strict push gate inspected 3,648 keys in 55 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Today’s snapshot stays outside the public tree and was pushed to the verified PRIVATE archive, ledger-backups head `d17493679430fe387d21ab7629b4bdd60625c7a7`. FM-01 reports unchanged and current at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`; live remote heads verified. Evidence: `artifacts/s3181/report.md`, `ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`, `private-visibility.json`. No private corpus entered this repository. Next coverage day October 18.",
+      "where": "1"
+    }
+  ]
+}
