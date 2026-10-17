@@ -1,0 +1,10 @@
+{
+  "processes": "  PID  PPID TTY      STAT STARTED\n27925     1 ??       S    Sun Oct 18 02:33:41 2026    \n27970 27925 ??       S    Sun Oct 18 02:33:41 2026    \n27971 27970 ??       S    Sun Oct 18 02:33:41 2026    \n31360     1 ??       Ss   Tue Sep 29 10:47:38 2026    \n",
+  "directoryMtime": "2026-10-17T19:33:41.676Z",
+  "fireStarts": [
+    "[fire-runner] 01:23:37 FIRE START (engine codex, model from ~/.codex config)",
+    "[fire-runner] 01:33:39 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)",
+    "[fire-runner] 02:33:41 FIRE START (engine codex, model from ~/.codex config)"
+  ],
+  "semaphore": "scripts/lane-runner-v3.sh:322:     if [ \"$slot\" = \"main\" ] && [[ \"$l1\" == *ACTIVE* && \"$l1\" != *\"lock CLEARED\"* ]]; then"
+}
