@@ -1,0 +1,34 @@
+{
+  "at": "2026-10-18T22:52:36.744Z",
+  "branchLogs": {
+    "sol/open-findings-astra": "",
+    "sol/wave-lane-b": "",
+    "sol/map-art-campaign-2": "",
+    "art/portraits-e5-e10-generated": ""
+  },
+  "ancestors": {
+    "e0c536dcc": true,
+    "40dbcf2f8": true
+  },
+  "wholeFenceMatches": true,
+  "rotationCount": 7,
+  "seedCount": 42,
+  "nextRotation": {
+    "id": "r2026w43",
+    "opensAt": "2026-10-19T00:00:00.000Z",
+    "closesAt": "2026-10-26T00:00:00.000Z",
+    "seeds": {
+      "the-claim": "e1-the-claim-r2026w43-7b92b9983135",
+      "e1-dry-gulch": "e1-dry-gulch-r2026w43-cc27ebe909da",
+      "e1-twin-banks": "e1-twin-banks-r2026w43-c2cc1bd42648",
+      "e1-night-shift": "e1-night-shift-r2026w43-eb64f645f28d",
+      "e2-hill-mine": "e2-hill-mine-r2026w43-0166feb2dd80",
+      "e1-baron": "e1-baron-r2026w43-2b07cb28babb"
+    }
+  },
+  "ticker": "# Ticker digest — 2026-10-17\n\nTK-01, compiled by s3199 on October 18 after 06:00 local (UTC+07). Draft for owner approval; publication remains owner-only.\n\nNo player-visible changes landed during the day. There is no micro-headline or new Gazette item.\n\nThe local October 17 window is `[2026-10-16T17:00Z, 2026-10-17T17:00Z)`. History is pinned at `543aa003245876851119485f8c032480b67a881a`. Main's reflog records **42 updates**, from predecessor `2126434fbb62b35675364e49b3129595c6a67c95` through `96f6be45b2547558b1a1fdc6067d99518c66dbc6`; the pinned first-parent walk also contains **42 commits**. The September 25 busy-day control reproduces **136 commits**. There are no non-ancestral replacements.\n\nEvery update was compared with its preceding tree using `isPlayerPath` from `scripts/gazette-backfill-sweep.mjs`: zero player-path events. All first-parent subjects and 425 distinct changed paths were reviewed for additional ops changes affecting players and engine pins. They comprise evidence, generated logs, status, handover, ledger and the prior ticker; none supplies a player headline. Reproducer and evidence: `artifacts/s3199/day.mjs`, `day.json`, `day-commits.txt` and `day-paths.json`.\n\nAt October 17 23:03 UTC, outside the day window, game/version/skill return HTTP 200 at build `62403b1d`, serving weeks 37–42. Week 43 is prepared locally for the next authorized attended deployment before October 19 00:00 UTC, followed by ASSAYER SYNCED verification. Canonical and direct Pages stats return 200 JSON, 747 bytes, `ok:true`, a stats object and `empty:false`. These samples do not establish recovery cause or sustained API health. F-CUT-1 follow-up, droplet probe installation and release acceptance retain their existing attended/owner custody. Evidence: `artifacts/s3199/live-probe.json`, `health.txt` and `duties.json`.\n",
+  "notYetDue": {
+    "ticker": "October 18 digest after October 19 06:00 local",
+    "private": "October 19 LB-01/FM-01 after 02:10 UTC"
+  }
+}
