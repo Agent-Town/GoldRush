@@ -1,0 +1,53 @@
+[
+  {
+    "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w43",
+    "at": "2026-10-19T00:01:51.098Z",
+    "status": 400,
+    "type": "application/json; charset=utf-8",
+    "bytes": 70,
+    "seconds": 0.289,
+    "summary": {
+      "ok": false,
+      "error": "bad_rotation",
+      "keys": [
+        "ok",
+        "error",
+        "message"
+      ]
+    }
+  },
+  {
+    "url": "https://gold-rush-3in.pages.dev/api/standings?board=transfer&rotation=r2026w43",
+    "at": "2026-10-19T00:01:50.926Z",
+    "status": 400,
+    "type": "application/json; charset=utf-8",
+    "bytes": 70,
+    "seconds": 0.08,
+    "summary": {
+      "ok": false,
+      "error": "bad_rotation",
+      "keys": [
+        "ok",
+        "error",
+        "message"
+      ]
+    }
+  },
+  {
+    "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w42",
+    "at": "2026-10-19T00:01:51.333Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 883,
+    "seconds": 0.487,
+    "summary": {
+      "ok": true,
+      "keys": [
+        "ok",
+        "board",
+        "rotation",
+        "standings"
+      ]
+    }
+  }
+]
