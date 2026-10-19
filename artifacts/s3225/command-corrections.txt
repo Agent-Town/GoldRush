@@ -1,0 +1,4 @@
+The initial scripts/unreported-commits.mjs invocation failed with MODULE_NOT_FOUND; the probe advisory documents node scripts/lane-usable.mjs --unreported, which succeeded and is retained in unreported.txt.
+An initial inline latest-run-tail reader had a stray closing brace and failed with SyntaxError before reading; the corrected heredoc reader succeeded.
+A guessed vault filename did not exist; the actual October 19 project note was located with a directory-name filter and read.
+Original command errors remain in logs/fire-20261019.log; no product finding or unresolved gate failure is inferred.
