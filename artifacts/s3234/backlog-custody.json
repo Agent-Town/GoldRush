@@ -1,0 +1,32 @@
+[
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 1,
+    "line": "🗄️ **LB-01 + FM-01 OCTOBER 19 COMPLETE (s3224, 2026-10-19T03:26Z):** Today’s snapshot was pulled and pushed to the verified PRIVATE archive; coverage is 57/57 days August 24–October 19. The strict push gate inspected 3,836 keys in 57 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Live ledger-backups head `0a92c31dbdde6d54e1461fa453829baadb9b8fe5`; FM-01 unchanged at `53d87470fb2670626fb4605d4dc0eb5bffd899fb`, both remote heads verified. Supersedes s3223’s supply-window observation: October 19 is discharged, next coverage day October 20. No private corpus enters the public tree. Evidence: `artifacts/s3224/ledger-pull.txt`, `ledger-push.txt`, `mirror-freshness.txt`, `fire-memory.txt`, `private-heads.txt`, `private-visibility.json`, `report.md`.",
+    "where": "1"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 5,
+    "line": "📰 **TK-01 OCTOBER 18 COMPLETE (s3221, 2026-10-19 local):** `marketing/outbox/ticker-digest-2026-10-18.md` records zero player-visible changes. UTC+07 midnight census: 42 main updates, 42 pinned first-parent commits, zero player-path events or non-ancestral replacements; September 25 busy-day control 136. All subjects and 445 distinct paths reviewed for ops-only player changes and engine pins; none. No micro-headline, Gazette duplicate or publication. Evidence: `artifacts/s3221/day.json`, `day-commits.txt`, `day-paths.json`, `report.md`.",
+    "where": "5"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 27,
+    "line": "🗓️ **RT-01 WEEK 43 MINTED (s3094, 2026-10-14):** `r2026w43` opens October 19 00:00 UTC and closes October 26 00:00 UTC; six seeds, all six earlier rotations preserved, whole seven-rotation registry refreshed in `public/skill.md`. Week-42 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w43.md`; evidence: `artifacts/s3094/`. The next authorized attended deployment must carry week 43 before October 19 and verify ASSAYER SYNCED. Live build 62403b1d already carries weeks 37–42. No dispatch or deployment by this fire. **s3221 verification, 2026-10-19T00:01Z: deployment is now OVERDUE.** Canonical and direct Pages transfer-board GETs for week 43 return HTTP 400 `bad_rotation`; week-42 canonical control returns 200. Live build remains `62403b1d` and the served skill registry ends at week 42. Main’s seven rotations/42 seeds match the whole skill fence exactly. This updates the deadline observation, not mint completion or deployment authority. Next: authorized attended deployment carrying week 43, then ASSAYER SYNCED and week-43 read verification. No fire deployment or live submission. Evidence: `artifacts/s3221/rotation-live.json`, `live-probe.json`, `duties.json`, `report.md`.",
+    "where": "27"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 47,
+    "line": "🩺 **API PROBE JSON 1 LANDED — `api-probe-json-1` as `e0c536dcc` (drained attended 2026-10-09).** F-CUT-1 (measured during the Option B cutover: with the daily cap exhausted, Pages served the SPA's HTML with HTTP 200 for `/api/stats` and both edge probes reported `api=200` for hours). Astra on lane-c (`c8ddf96b2` + `4ef388aa6`, 74,799 tokens, 08:30Z to 08:35Z): `scripts/health-watch.sh` and `ops/droplet/edge-watch.sh` gain `api_code`, which requires 200 + an `application/json` content type + a body parsing to `{ok:true, stats:{…}}` (the shape `functions/api/stats.ts` always returns) and otherwise reports `api=200-html`, `api=200-notjson` or `api=2xx-incomplete` as dark with the class in the value (the dashboard's `landing=… game=… api=…` shape kept); `scripts/edge-probe-json.test.mjs` 32 cases, rostered in `test:node-guards`; a bounded live capture of the HTML fallback kept as evidence. Attended fixes on the lane: `scripts/edge-alarm-clock-guard.test.mjs`'s curl stub now answers the API with healthy JSON in every scenario (its arms test landing/game transitions; 9/9), and a control copy of that guard under `artifacts/` renamed `.txt` (the gate-caller audit's orphan, the third time today). Evidence inside the budget. Landed attended, hash unchanged; the Mac probe is live on landing (launchd runs it from the repo); the droplet copy of `edge-watch.sh` is applied with the owner's word (a write on the box) `reviews/api-probe-json-1.md`.",
+    "where": "47"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 108,
+    "line": "🔎 **F-CUT-1 (attended 2026-10-09, measured during the Option B cutover) — A STATUS-ONLY EDGE PROBE READS A DEAD API AS HEALTHY.** When the daily Workers/Pages Functions cap is exhausted, Pages serves the SPA's `index.html` with HTTP 200 for `/api/stats`; `scripts/health-watch.sh` and `ops/droplet/edge-watch.sh` reported `api=200` for hours while the county's API was dark, and only the route verifier's JSON demand caught it. Corrective `api-probe-json-1` authored and queued (lane-c). **s3000 verification 08:33Z:** stats returns 200 HTML at the canonical and direct Pages URLs; sampled week-41/week-42 standings reads return valid 200 JSON, so the observed failure is specific to stats and is not evidence that every county endpoint is down. The corrective finished during closing; attended fixture cure `782f9c548` and `apj1` landing process 95225 own its remaining gates. `artifacts/s3000/live-probe.json`, `api-custody.json`.",
+    "where": "108"
+  }
+]
