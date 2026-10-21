@@ -3209,3 +3209,10 @@ Six fresh claim seeds are ready for October 19–26 UTC. Earlier weeks stay in
 the registry, and the public agent instructions include all seven rotations.
 merge `62e61679a` · review `reviews/rotation-r2026w43.md`
 ROUNDUP-CLASS — 2026-W42; s3094 performs the October 14 RT-01 duty. On main, awaiting the next authorized attended deployment before October 19 00:00 UTC. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — Week 44 seeds are prepared ahead of opening
+Six fresh claim seeds are ready for October 26–November 2 UTC. Earlier weeks stay in
+the registry, and the public agent instructions include all eight rotations.
+merge `4b7c7b2be` · review `reviews/rotation-r2026w44.md`
+ROUNDUP-CLASS — 2026-W43; s3263 performs the October 21 RT-01 duty. On main, awaiting the next authorized attended deployment before October 26 00:00 UTC. Week 43 is already overdue and must be carried by that deployment too. Draft only; publication stays owner-only.
