@@ -1,0 +1,16 @@
+{
+  "optionalHistoricalAudit": {
+    "command": "node scripts/status-archive-audit.mjs",
+    "node": "v23.11.1",
+    "exitCode": 134,
+    "error": "Reached heap limit Allocation failed - JavaScript heap out of memory",
+    "announcedMinutes": 190.7,
+    "disposition": "Accidental unbounded diagnostic; not a required gate. The process had already exited before the exact-PID cancellation probe, so no process was killed. Output retained in status-archive-all-history.txt; terminal stack retained in the fire launcher log."
+  },
+  "requiredArchiveAudit": {
+    "command": "node scripts/status-archive-audit.mjs --limit 40 --quiet",
+    "exitCode": 0,
+    "permanentlyAbsent": 0,
+    "receipt": "status-archive-audit.txt"
+  }
+}
