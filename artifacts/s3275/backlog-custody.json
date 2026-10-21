@@ -1,0 +1,26 @@
+[
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 1,
+    "line": "🗄️ **LB-01 + FM-01 OCTOBER 21 COMPLETE (s3266, 2026-10-21T03:31Z):** Today's snapshot was pulled and pushed to the verified PRIVATE archive; coverage is 59/59 days August 24–October 21. Strict push inspected 4,024 keys in 59 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Live ledger-backups head 9f26099427ab464c524fa2e2c0211e21fe4e3eeb; FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, both remote heads verified. Supersedes s3265's pending-source observation: October 21 is discharged; next coverage day October 22 after 02:10 UTC. No private corpus enters the public tree. Evidence: artifacts/s3266/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, report.md.",
+    "where": "1"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 5,
+    "line": "🗓️ **RT-01 WEEK 44 MINTED (s3263, 2026-10-21):** `r2026w44` opens October 26 00:00 UTC and closes November 2 00:00 UTC; six seeds, all seven earlier rotations preserved, whole eight-rotation registry refreshed in `public/skill.md`. Week-43 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w44.md`; evidence: `artifacts/s3263/`. The next authorized attended deployment must carry weeks 43 and 44 and verify ASSAYER SYNCED; week 43 remains overdue, week 44 opens October 26. Live build 62403b1d still carries weeks 37–42. No dispatch or deployment by this fire.",
+    "where": "5"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 7,
+    "line": "📰 **TK-01 OCTOBER 20 COMPLETE (s3263, 2026-10-21 local):** `marketing/outbox/ticker-digest-2026-10-20.md` records zero player-visible changes. UTC+07 midnight census: 43 main updates, 43 pinned first-parent commits, zero player-path events or non-ancestral replacements; September 25 busy-day control 136. All subjects and 478 distinct paths reviewed for ops-only player changes and engine pins; none. No micro-headline, Gazette duplicate or publication. Evidence: `artifacts/s3263/day.json`, `day-commits.txt`, `day-paths.json`, `report.md`.",
+    "where": "7"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 2046,
+    "line": "📜 **THE LEDGER MOVES TO THE SERVER (owner RULING 2026-08-23, verbatim: \"No, lets do this now. If we get some users the KV store will be full and nothing will work anymore. Lets move this to the server now.\") — SPEC RATIFIED, PROGRAM RUNNING.** specs/ops/ledger-on-droplet.md: standings/accounts/assay state move from Cloudflare KV to sqlite (`node:sqlite`) on the droplet; Cloudflare keeps the static game, the /goldrush proxy, DNS, MULTIPLAYER (out of scope), and the KV namespace demoted to rollback + nightly backup mirror. The 2026-08-22 §F.20 stay-on-KV REC is OVERRIDDEN by this ruling (decisions file updated). Slices: **L1** service core + ported suites (`tasks/l1-ledger-service-core.md`, lane-d codex, ✅ **MERGED s2233 `ca09d084e`** — tsc+build green, functions/**/*.ts type-checked 10/10, standings 111 KV + 111 SQLite, accounts 43 KV + 43 SQLite, ledger-worker HTTP contract 15, adjacent stats 87 + mp 466 unmodified-green, boot probe 6/6 desktop+390px zero console errors; edge path proven unmoved by a CONTROL run on main (111/43 identical). `reviews/l1-ledger-service-core.md`) → **L2** export/import + byte-parity gate (`tasks/l2-ledger-parity-and-import.md`, BANKED, sequencing-gated on L1's merge) → **L3** droplet install + one-line `GAME_API_ORIGIN` cutover (ATTENDED: node-26 upgrade on the box — it runs v18 —, systemd MemoryMax, nginx /api/* + multiplayer forward + honest 503, owner-quiet window + his go) → **L4** backup discipline (codex after L3). LAWS: parity before cutover; the endpoint contract is the spec (client changes ONE line, `src/app/GameApi.ts:1`); the relay default rides the same constant (`LockstepClient.ts:916`) so nginx MUST forward multiplayer paths; rollback = revert the one line, KV stays warm.",
+    "where": "2046"
+  }
+]
