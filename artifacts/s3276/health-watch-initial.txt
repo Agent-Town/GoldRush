@@ -1,0 +1,3 @@
+Initial invocation: node execFileSync bash scripts/health-watch.sh status with timeout 45000 ms.
+Reported: landing=200 game=200 api=200.
+Then ETIMEDOUT; child 39289 received SIGTERM from execFileSync. Full status did not complete.

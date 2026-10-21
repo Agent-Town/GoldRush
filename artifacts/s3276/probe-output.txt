@@ -1,0 +1,112 @@
+[
+  {
+    "url": "https://agenttown.app/",
+    "at": "2026-10-21T15:06:17.645Z",
+    "status": 200,
+    "type": "text/html",
+    "bytes": 17735,
+    "seconds": 4.182
+  },
+  {
+    "url": "https://agenttown.app/goldrush/",
+    "at": "2026-10-21T15:06:18.496Z",
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "bytes": 2100,
+    "seconds": 3.115
+  },
+  {
+    "url": "https://agenttown.app/goldrush/version.json",
+    "at": "2026-10-21T15:06:17.396Z",
+    "status": 200,
+    "type": "application/json",
+    "bytes": 54,
+    "seconds": 2.014,
+    "version": {
+      "build": "62403b1d",
+      "builtAt": "2026-10-09T08:24:08Z"
+    }
+  },
+  {
+    "url": "https://agenttown.app/goldrush/skill.md",
+    "at": "2026-10-21T15:06:18.149Z",
+    "status": 200,
+    "type": "text/markdown; charset=utf-8",
+    "bytes": 61188,
+    "seconds": 2.766,
+    "rotations": [
+      "r2026w37",
+      "r2026w38",
+      "r2026w39",
+      "r2026w40",
+      "r2026w41",
+      "r2026w42"
+    ]
+  },
+  {
+    "url": "https://agenttown.app/api/stats",
+    "at": "2026-10-21T15:06:17.901Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 747,
+    "seconds": 2.518,
+    "summary": {
+      "json": true,
+      "ok": true,
+      "statsObject": true,
+      "empty": false
+    }
+  },
+  {
+    "url": "https://gold-rush-3in.pages.dev/api/stats",
+    "at": "2026-10-21T15:06:18.124Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 747,
+    "seconds": 2.735,
+    "summary": {
+      "json": true,
+      "ok": true,
+      "statsObject": true,
+      "empty": false
+    }
+  },
+  {
+    "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w43",
+    "at": "2026-10-21T15:06:17.819Z",
+    "status": 400,
+    "type": "application/json; charset=utf-8",
+    "bytes": 70,
+    "seconds": 2.414,
+    "summary": {
+      "json": true,
+      "ok": false,
+      "error": "bad_rotation"
+    }
+  },
+  {
+    "url": "https://gold-rush-3in.pages.dev/api/standings?board=transfer&rotation=r2026w43",
+    "at": "2026-10-21T15:06:17.725Z",
+    "status": 400,
+    "type": "application/json; charset=utf-8",
+    "bytes": 70,
+    "seconds": 2.32,
+    "summary": {
+      "json": true,
+      "ok": false,
+      "error": "bad_rotation"
+    }
+  },
+  {
+    "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w42",
+    "at": "2026-10-21T15:06:18.496Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 883,
+    "seconds": 3.09,
+    "summary": {
+      "json": true,
+      "ok": true
+    }
+  }
+]

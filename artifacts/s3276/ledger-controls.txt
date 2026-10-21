@@ -1,0 +1,29 @@
+✔ GROUND TRUTH — with the panel intact, the closed-on-panel finding IS caught (40.238042ms)
+✔ THE DEFECT — the same board, with the panel truncating past the id, must REFUSE not PASS (38.964958ms)
+✔ REVERSE CONTROL — an EMPTY panel is lawful and must not refuse (34.063958ms)
+✔ REVERSE CONTROL — a panel row naming no F-ID is lawful while another row carries one (44.778875ms)
+✔ REVERSE CONTROL — --report stays advisory even on the unclassifiable board (36.73725ms)
+✔ the live root is unaffected — the cure is behaviour-neutral where it matters (297.2755ms)
+✔ a linked worktree never prints the earned-DRY banner in ADVISORY mode (247.20475ms)
+✔ a linked worktree exits 2 = "could not answer" under --strict, never 0 and never 1 (160.179042ms)
+✔ the corpus declaration names the staleness on stdout — the only channel advisory mode has (161.239792ms)
+✔ REVERSE CONTROL: a genuinely dry MAIN worktree still earns the word (225.764709ms)
+✔ REVERSE CONTROL: an ordinary SUBDIRECTORY of the main worktree is not a linked worktree (141.338583ms)
+✔ REVERSE CONTROL: a NON-GIT fixture root is unaffected — the sibling suites depend on it (95.882959ms)
+✔ site/ is in the scan space — the public door is examined at all (F-2345-1) (0.354ms)
+✔ a site/-only change is classified as a player path (0.092833ms)
+✔ the original player paths still match — the cure is additive, not a replacement (0.053583ms)
+✔ REVERSE CONTROL: factory surfaces are NOT player paths (0.049916ms)
+✔ REVERSE CONTROL: the prefixes are anchored at the start, not matched anywhere (0.044375ms)
+✔ REVERSE CONTROL: the dot in index.html is escaped (0.040625ms)
+✔ every declared prefix is load-bearing — the list drives the predicate (0.053791ms)
+✔ the scan space is DECLARED on stdout, naming every prefix (69216.145125ms)
+✔ the declaration prints on the emptiest happy path too (F-2208-1) (216.871584ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 71055.631833
