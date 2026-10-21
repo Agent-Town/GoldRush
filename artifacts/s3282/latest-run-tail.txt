@@ -1,0 +1,55 @@
+20261009-153024-lane-c-api-probe-json-1.md.log
++  for (const [name, type, body, expected, code = '200', rc = '0'] of cases) {
++    test(`${file}: ${name}`, () => {
++      const result = spawnSync('bash', ['-c', `
++set -u
++curl() {
++  local url="" format=""
++  while [ "$#" -gt 0 ]; do
++    case "$1" in
++      -w) format="$2"; shift ;;
++      https://*) url="$1" ;;
++    esac
++    shift
++  done
++  case "$url" in
++    */api/stats)
++      if [[ "$format" == *content_type* ]]; then
++        printf '%s\\n%s %s' "$FIXTURE_BODY" "$FIXTURE_CODE" "$FIXTURE_TYPE"
++      else
++        printf '%s' "$FIXTURE_CODE"
++      fi
++      return "$FIXTURE_RC" ;;
++    *) printf 200 ;;
++  esac
++}
++${source.slice(start, end)}
++${classification}
++printf '%s\\ndark=%s\\n' "$EDGE" "${DARK:+yes}"
++`], {
++        encoding: 'utf8', timeout: 10_000,
++        env: { ...process.env, FIXTURE_BODY: body, FIXTURE_TYPE: type, FIXTURE_CODE: code, FIXTURE_RC: rc },
++      });
++      assert.equal(result.status, 0, result.stderr || String(result.error));
++      assert.equal(result.stdout, `landing=200 game=200 api=${expected}\ndark=${expected === '200' ? '' : 'yes'}\n`);
++    });
++  }
++}
+
+tokens used
+74,799
+Implemented in `c8ddf96b2`; report finalized in `4ef388aa6`. Worktree clean.
+
+**READY-FOR-GATES: NO — blockers documented.**
+
+- New guard: **32/32**; gate-caller: **45/45**; TypeScript/build passed.
+- API values: `200`, `200-html`, `200-notjson`, `2xx-incomplete`, or HTTP error code.
+- Live result: `landing=200 game=200 api=200-html`.
+
+Remaining, in order:
+
+1. Update the out-of-scope alarm-clock guard: six fixtures now fail; baseline passed 9/9.
+2. Restore the live API and repeat live acceptance.
+
+No deployment or SSH performed. [Full report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-c/artifacts/api-probe-json-1/report.md>).
+[lane-runner-v3] withheld 0 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20261009-153024-lane-c-api-probe-json-1.md-withheld-paths.txt
