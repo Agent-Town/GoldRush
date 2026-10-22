@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-22T08:40:12.086Z",
+  "base": "d8ecd33569ac18cee0aba7c28763f35c0f195c1e",
+  "tip": "357cf6e7713205a20b839a336f6c1aaa27c962c5",
+  "main": "23ce523ed628874130da1226dd340d82fc1912db",
+  "commits": "357cf6e77 fix: pin assay Node 26.12.1 with cross-runtime replay proof",
+  "files": [
+    {
+      "path": "docs/ops/agenttown-server.md",
+      "classification": "LANE-TOUCHED only"
+    },
+    {
+      "path": "ops/droplet/goldrush-assay.service",
+      "classification": "LANE-TOUCHED only"
+    },
+    {
+      "path": "ops/droplet/goldrush-ledger-backup.service",
+      "classification": "LANE-TOUCHED only"
+    },
+    {
+      "path": "scripts/assay-replay-agent.mjs",
+      "classification": "LANE-TOUCHED only"
+    },
+    {
+      "path": "scripts/assay-worker.test.mjs",
+      "classification": "LANE-TOUCHED only"
+    }
+  ],
+  "evidenceFiles": 155,
+  "doneMove": "tasks/done/20261022-151639-assay-node-26-12-1.md",
+  "running": [],
+  "policy": "✅ CLEAR — assay-node-26-12-1.md [assay-node-26-12-1] status=\"queued\""
+}

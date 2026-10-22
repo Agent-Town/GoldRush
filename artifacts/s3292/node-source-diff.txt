@@ -1,0 +1,103 @@
+diff --git a/docs/ops/agenttown-server.md b/docs/ops/agenttown-server.md
+index cb0c9c263..fcb6142c0 100644
+--- a/docs/ops/agenttown-server.md
++++ b/docs/ops/agenttown-server.md
+@@ -30,14 +30,14 @@ Pages projects (account ec3f15bf…): `gold-rush` = the game (production = E1-on
+ RUNS:
+ - **nginx** — the landing + TLS (`/etc/nginx/sites-available/agenttown.app.conf`, copy in `ops/droplet/agenttown.app.nginx.conf`).
+ - **goldrush-assay.service** — the assay verification worker (systemd; unit copy in `ops/droplet/goldrush-assay.service`). Polls `/api/standings/assay-queue` on production every 15s, replays submitted tapes in headless chromium via the repo at `/opt/goldrush`, posts verdicts. Env at `/etc/goldrush-assay.env` (mode 600 — holds `ASSAY_WORKER_SECRET`, shared with the Pages project's secret of the same name; NEVER echo or commit values; rotate by generating a new value into both places and redeploying production so the Pages binding refreshes).
+-  - **Canonical replay environment:** Node **26.4.0 exactly**. The worker refuses to start on any other version and names both required and actual versions. The service unit already uses `/root/.nvm/versions/node/v26.4.0/bin/node`; preserve that exact path during upgrades until a separately assayed runtime replaces the law.
++  - **Canonical replay environment:** Node **26.12.1 exactly**. The worker refuses to start on any other version and names both required and actual versions. The service unit already uses `/root/.nvm/versions/node/v26.12.1/bin/node`; preserve that exact path during upgrades until a separately assayed runtime replaces the law.
+   - New headless-door tapes carry `meta.engineHash`, a SHA-256 over the replay instrument, package/lock/Vite/TypeScript configuration, contract/layer/terrain/crafted-upgrade JSON, and `src/**`. The worker compares this before commit identity. A docs-only worker deploy therefore does not skew a headless tape; any change inside that conservative engine surface does.
+   - Ops: `systemctl {status,restart} goldrush-assay` · logs: `journalctl -u goldrush-assay -f` · manual test: `node scripts/assay-worker.mjs --once --dry-run` (with the env file sourced).
+   - Slow-box budgets (in the env): `ASSAY_BOOT_TIMEOUT_MS=300000`, `ASSAY_PLAYBACK_TIMEOUT_MS=300000` — the first replay cold-transforms the whole game in vite on 1 vCPU.
+   - ⚠️ **`ASSAY_BUILD_ID` remains required on this git-less box for browser-origin tapes and as the legacy fallback for tapes that predate `engineHash` (F-2238-1).** Set it to the 7–16 character lowercase commit id declared by the deployed browser build. Headless tapes prefer the content-derived engine hash, so worker-only docs deploys no longer churn the pin; a new browser build still does until its recorder gains the same stamp in a separately authorized slice.
+ - RETIRED 2026-08-22 (owner: "retire it"): the February Portal experiment (`/root/code/Portal-main`, the pony-inbox/canvas/wallet landing) — processes stopped, errored PM2 entry deleted, **code left on disk untouched**.
+ 
+-DEPLOY/UPDATE the worker's engine copy: rsync the lean tree (`package*.json vite.config.ts index.html tsconfig* src/ scripts/ assets/ public/ site/`) to `/opt/goldrush/`, then `npm ci` if the lock moved. Keep `ASSAY_BUILD_ID` aligned with the deployed browser build; a worker-only docs sync does not change it. Restart with the exact Node 26.4.0 service and check the first journal line for no environment refusal. The landing alone: rsync `site/` and nothing else (nginx serves it directly; no restart needed).
++DEPLOY/UPDATE the worker's engine copy: rsync the lean tree (`package*.json vite.config.ts index.html tsconfig* src/ scripts/ assets/ public/ site/`) to `/opt/goldrush/`, then `npm ci` if the lock moved. Keep `ASSAY_BUILD_ID` aligned with the deployed browser build; a worker-only docs sync does not change it. Restart with the exact Node 26.12.1 service and check the first journal line for no environment refusal. The landing alone: rsync `site/` and nothing else (nginx serves it directly; no restart needed).
+ 
+ ## Cloudflare token (id c903a069…, in .env.local — value never committed)
+ Permissions as of 2026-08-22: Pages:Edit · Workers Scripts:Edit · **Workers KV Storage:Edit** · **Zone.Workers Routes:Edit (agenttown.app)** · **Zone.DNS:Edit (agenttown.app)** (the last three added by the owner 2026-08-22 to unblock the KV tape restore, the /goldrush retarget, and a future DNS→Pages flip).
+@@ -54,10 +54,10 @@ Standings boards live at `standings:s<season>:<epochId>:<contractId>` (season 1
+ `site/llms.txt` (the benchmark thesis, for answer engines) · `site/robots.txt` (AI crawlers welcomed by name + Sitemap) · `site/sitemap.xml` · JSON-LD in `site/index.html` (WebSite + VideoGame + the gauntlet as SoftwareApplication) · `public/llms.txt` + `public/robots.txt` (the game origin, pointing at /skill.md). Deployed to: production Pages (deploy.sh), the droplet (rsync site/), and the agenttown Pages project. Edge note: a pre-deploy 404-fallback of /robots.txt was cache-HIT for up to 4h after first ship.
+ 
+ ## KV budget (free tier) — incident 2026-08-22
+-Free tier: **100k reads / 1k writes / 1k deletes / 1k lists per day**, resets 00:00 UTC. The 50%-cap notification traced to the assay worker: `onRequestAssayQueue` read every board (41 contracts) per poll at the 15s default = ~236k reads/day idle. **Knob**: `ASSAY_POLL_MS` in `/etc/goldrush-assay.env` (set 180000 on 2026-08-22 → ~20k/day; latency ≤3 min). **Durable cure**: the `assay-queue-index` slice (c4) makes polls O(pending). **Launch note**: the sharper cliff is the WRITE cap — every submission + verdict is a KV write, so a launch day with a few hundred riders exceeds 1k/day; the $5/mo Workers Paid plan (10M reads / 1M writes monthly) is the recommended pre-announcement upgrade (owner decision, OWNER-DECISIONS §F). Worker code updates reach the droplet by rsync (no git on the box): `rsync -az --delete --exclude .env.local --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist ./ root@<droplet>:/opt/goldrush/`. ⚠️ **`--exclude .env.local` is load-bearing and was ADDED s2299 (F-2299-1): `rsync -a` sends dotfiles, so every run of this recipe as previously written shipped the five live credentials in `.env.local` to `/opt/goldrush/.env.local`. Nothing box-side reads that file — both services take `EnvironmentFile=/etc/goldrush-*.env`, outside the synced tree — so the exclude is strictly subtractive. Note that rsync PROTECTS excluded names from `--delete`, so this prevents future pushes but does NOT remove a copy an earlier run already placed on the box.** Keep legacy `ASSAY_BUILD_ID` aligned with the browser build, then `systemctl restart goldrush-assay`. The service ExecStart pins `/root/.nvm/versions/node/v26.4.0/bin/node`; the worker now enforces that exact version too.
++Free tier: **100k reads / 1k writes / 1k deletes / 1k lists per day**, resets 00:00 UTC. The 50%-cap notification traced to the assay worker: `onRequestAssayQueue` read every board (41 contracts) per poll at the 15s default = ~236k reads/day idle. **Knob**: `ASSAY_POLL_MS` in `/etc/goldrush-assay.env` (set 180000 on 2026-08-22 → ~20k/day; latency ≤3 min). **Durable cure**: the `assay-queue-index` slice (c4) makes polls O(pending). **Launch note**: the sharper cliff is the WRITE cap — every submission + verdict is a KV write, so a launch day with a few hundred riders exceeds 1k/day; the $5/mo Workers Paid plan (10M reads / 1M writes monthly) is the recommended pre-announcement upgrade (owner decision, OWNER-DECISIONS §F). Worker code updates reach the droplet by rsync (no git on the box): `rsync -az --delete --exclude .env.local --exclude .git --exclude node_modules --exclude worktrees --exclude artifacts --exclude logs --exclude tasks --exclude .claude --exclude .wrangler --exclude dist ./ root@<droplet>:/opt/goldrush/`. ⚠️ **`--exclude .env.local` is load-bearing and was ADDED s2299 (F-2299-1): `rsync -a` sends dotfiles, so every run of this recipe as previously written shipped the five live credentials in `.env.local` to `/opt/goldrush/.env.local`. Nothing box-side reads that file — both services take `EnvironmentFile=/etc/goldrush-*.env`, outside the synced tree — so the exclude is strictly subtractive. Note that rsync PROTECTS excluded names from `--delete`, so this prevents future pushes but does NOT remove a copy an earlier run already placed on the box.** Keep legacy `ASSAY_BUILD_ID` aligned with the browser build, then `systemctl restart goldrush-assay`. The service ExecStart pins `/root/.nvm/versions/node/v26.12.1/bin/node`; the worker now enforces that exact version too.
+ 
+ ## The ledger service (L3 cutover, 2026-08-23 — owner "go")
+-`goldrush-ledger.service`: nvm node 26 (`/root/.nvm/versions/node/v26.4.0/bin/node`), `WorkingDirectory=/opt/goldrush`, `server/ledger/serve.mjs`, `EnvironmentFile=/etc/goldrush-ledger.env` (600: PORT=8791, LEDGER_DB_PATH=/opt/goldrush-ledger/ledger.db, ASSAY_WORKER_SECRET shared with the assay env, ALLOWED_CORS_ORIGINS), `MemoryMax=320M`, binds 127.0.0.1 only. nginx routes `/api/standings*` to it (ledger down = honest `503 ledger_resting`); ALL other `/api/*` forwards to `gold-rush-3in.pages.dev` (accounts until the owner supplies RESEND_API_KEY + AUTH_CODE_PEPPER; multiplayer permanently). The client hits ONE origin (`GAME_API_ORIGIN = https://agenttown.app`, `src/app/GameApi.ts`); rollback = revert that line. First boot takes ~60s (runtime transform of the TS handlers — vite must be installed WITH dev deps: `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install`, and rolldown needs its platform binding at rolldown's EXACT version: `npm install "@rolldown/binding-linux-x64-gnu@$(node -p "require('rolldown/package.json').version")" --no-save` — a mismatched-latest binding crashes with a BindingBuiltinPluginName enum error; learned at cutover). The assay worker polls the ledger at `ASSAY_API_BASE=http://127.0.0.1:8791` (localhost, no edge round-trip). KV keeps the pre-cutover data untouched (retention + rollback); the sqlite ledger started EMPTY per the owner amendment.
++`goldrush-ledger.service`: nvm node 26 (`/root/.nvm/versions/node/v26.12.1/bin/node`), `WorkingDirectory=/opt/goldrush`, `server/ledger/serve.mjs`, `EnvironmentFile=/etc/goldrush-ledger.env` (600: PORT=8791, LEDGER_DB_PATH=/opt/goldrush-ledger/ledger.db, ASSAY_WORKER_SECRET shared with the assay env, ALLOWED_CORS_ORIGINS), `MemoryMax=320M`, binds 127.0.0.1 only. nginx routes `/api/standings*` to it (ledger down = honest `503 ledger_resting`); ALL other `/api/*` forwards to `gold-rush-3in.pages.dev` (accounts until the owner supplies RESEND_API_KEY + AUTH_CODE_PEPPER; multiplayer permanently). The client hits ONE origin (`GAME_API_ORIGIN = https://agenttown.app`, `src/app/GameApi.ts`); rollback = revert that line. First boot takes ~60s (runtime transform of the TS handlers — vite must be installed WITH dev deps: `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install`, and rolldown needs its platform binding at rolldown's EXACT version: `npm install "@rolldown/binding-linux-x64-gnu@$(node -p "require('rolldown/package.json').version")" --no-save` — a mismatched-latest binding crashes with a BindingBuiltinPluginName enum error; learned at cutover). The assay worker polls the ledger at `ASSAY_API_BASE=http://127.0.0.1:8791` (localhost, no edge round-trip). KV keeps the pre-cutover data untouched (retention + rollback); the sqlite ledger started EMPTY per the owner amendment.
+ 
+ ### Ledger backups
+ 
+@@ -103,7 +103,7 @@ To restore a real nightly copy on the droplet, first choose the dated file expli
+ ```bash
+ BACKUP=/opt/goldrush-ledger/backups/ledger-YYYY-MM-DD.db
+ sudo test -f "$BACKUP"
+-sudo /root/.nvm/versions/node/v26.4.0/bin/node --input-type=module -e 'import { DatabaseSync } from "node:sqlite"; const db = new DatabaseSync(process.argv[1], { readOnly: true }); const result = db.prepare("PRAGMA integrity_check").get(); db.close(); if (result.integrity_check !== "ok") throw new Error(JSON.stringify(result)); console.log("integrity_check: ok")' "$BACKUP"
++sudo /root/.nvm/versions/node/v26.12.1/bin/node --input-type=module -e 'import { DatabaseSync } from "node:sqlite"; const db = new DatabaseSync(process.argv[1], { readOnly: true }); const result = db.prepare("PRAGMA integrity_check").get(); db.close(); if (result.integrity_check !== "ok") throw new Error(JSON.stringify(result)); console.log("integrity_check: ok")' "$BACKUP"
+ sudo systemctl stop goldrush-assay.service goldrush-ledger.service
+ STAMP=$(date -u +%Y%m%dT%H%M%SZ)
+ PRESERVE=/opt/goldrush-ledger/pre-restore-$STAMP
+@@ -145,7 +145,7 @@ Do not proceed if either command fails. Skipping the test/reload leaves an inval
+ 
+ ```bash
+ cd /opt/goldrush
+-sudo env PATH=/root/.nvm/versions/node/v26.4.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
++sudo env PATH=/root/.nvm/versions/node/v26.12.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin \
+   bash ops/droplet/verify-goldrush-route.sh
+ ```
+ 
+diff --git a/ops/droplet/goldrush-assay.service b/ops/droplet/goldrush-assay.service
+index 1401e52a7..1e25ff691 100644
+--- a/ops/droplet/goldrush-assay.service
++++ b/ops/droplet/goldrush-assay.service
+@@ -6,7 +6,7 @@ Wants=network-online.target
+ [Service]
+ WorkingDirectory=/opt/goldrush
+ EnvironmentFile=/etc/goldrush-assay.env
+-ExecStart=/root/.nvm/versions/node/v26.4.0/bin/node scripts/assay-worker.mjs
++ExecStart=/root/.nvm/versions/node/v26.12.1/bin/node scripts/assay-worker.mjs
+ Restart=always
+ RestartSec=20
+ MemoryMax=750M
+diff --git a/ops/droplet/goldrush-ledger-backup.service b/ops/droplet/goldrush-ledger-backup.service
+index 52440d6b8..470ff3887 100644
+--- a/ops/droplet/goldrush-ledger-backup.service
++++ b/ops/droplet/goldrush-ledger-backup.service
+@@ -5,6 +5,6 @@ After=goldrush-ledger.service
+ [Service]
+ Type=oneshot
+ WorkingDirectory=/opt/goldrush
+-ExecStart=/root/.nvm/versions/node/v26.4.0/bin/node ops/droplet/ledger-backup.mjs
++ExecStart=/root/.nvm/versions/node/v26.12.1/bin/node ops/droplet/ledger-backup.mjs
+ MemoryMax=128M
+ UMask=0077
+diff --git a/scripts/assay-replay-agent.mjs b/scripts/assay-replay-agent.mjs
+index 31ce1a302..8f38ace9b 100644
+--- a/scripts/assay-replay-agent.mjs
++++ b/scripts/assay-replay-agent.mjs
+@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
+ import { createServer } from 'vite';
+ import fs from 'node:fs';
+ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+-export const CANONICAL_ASSAY_NODE_VERSION = '26.4.0';
++export const CANONICAL_ASSAY_NODE_VERSION = '26.12.1';
+ export const ENGINE_SOURCE_INPUTS = [
+   'scripts/assay-replay-agent.mjs',
+   'assets/contracts',
+diff --git a/scripts/assay-worker.test.mjs b/scripts/assay-worker.test.mjs
+index c64be6f3b..524ecbb03 100644
+--- a/scripts/assay-worker.test.mjs
++++ b/scripts/assay-worker.test.mjs
+@@ -248,7 +248,7 @@ test('an earlier pin in the current era remains assayable', async () => {
+ 
+ test('the worker environment law refuses every Node version except the exact canonical one', () => {
+   assert.doesNotThrow(() => assertCanonicalAssayNode(CANONICAL_ASSAY_NODE_VERSION));
+-  assert.throws(() => assertCanonicalAssayNode('26.4.1'), /requires Node 26\.4\.0 exactly; found 26\.4\.1/);
++  assert.throws(() => assertCanonicalAssayNode('26.4.0'), /requires Node 26\.12\.1 exactly; found 26\.4\.0/);
+ });
+ 
+ test('engine hash ignores a doc-only commit and moves on a Balance edit in a scratch worktree', async () => {

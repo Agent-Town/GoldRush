@@ -1,0 +1,60 @@
+20261022-151639-lane-d-assay-node-26-12-1.md.log
+
+exec
+/bin/zsh -lc "ps -Ao pid,ppid,etime,%cpu,command | rg '4842|gr-sim.mjs|scripts/assay-replay.mjs'" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d
+ succeeded in 0ms:
+ 4842  4839       01:23  53.1 /Users/robin/.nvm/versions/node/v26.4.0/bin/node scripts/assay-replay.mjs artifacts/gauntlet-heat14-e3949bfa/rides/e1-dry-gulch/watch-reel.json
+ 5891  4847       00:17  61.1 /Users/robin/.nvm/versions/node/v26.4.0/bin/node scripts/assay-replay.mjs /var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/gold-rush-assay-door-p8QRny/tampered.json
+ 6197  1554       00:00   0.0 /bin/zsh -c ps -Ao pid,ppid,etime,%cpu,command | rg '4842|gr-sim.mjs|scripts/assay-replay.mjs'
+ 6199  6197       00:00   0.0 rg 4842|gr-sim.mjs|scripts/assay-replay.mjs
+
+exec
+/bin/zsh -lc 'npx tsc --noEmit > artifacts/assay-node-26-12-1/tsc.log 2>&1' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d
+ succeeded in 19408ms:
+exec
+/bin/zsh -lc 'tail -10 artifacts/assay-node-26-12-1/comparison.log; tail -12 artifacts/assay-node-26-12-1/tests-26.4.0.log; ps -p 4842 -o etime,%cpu' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d
+ succeeded in 0ms:
+✔ rob's v1 live reel is retained but reported as unverifiable legacy (444.532375ms)
+✔ the browser arm of the assay instrument reports the purse held, not lifetime panning (0.424125ms)
+✔ the round-2 corpus hash remains byte-for-byte pinned (0.867208ms)
+✔ pre-era engine-stamped agent tapes are retired: the assayer refuses their plans (6385.717542ms)
+✔ the hill-mine libm divergence tape is retired, and the tape it was measured from is kept (6211.043875ms)
+✔ a securing door tape carries its start, its boundary answer, and replays to its own hash (75261.270125ms)
+ELAPSED  %CPU
+  01:59  64.0
+
+exec
+/bin/zsh -lc 'tail -8 artifacts/assay-node-26-12-1/comparison.log; tail -8 artifacts/assay-node-26-12-1/tests-26.4.0.log; ls -l artifacts/assay-node-26-12-1 | head -15' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d
+ succeeded in 0ms:
+✔ rob's v1 live reel is retained but reported as unverifiable legacy (444.532375ms)
+✔ the browser arm of the assay instrument reports the purse held, not lifetime panning (0.424125ms)
+✔ the round-2 corpus hash remains byte-for-byte pinned (0.867208ms)
+✔ pre-era engine-stamped agent tapes are retired: the assayer refuses their plans (6385.717542ms)
+✔ the hill-mine libm divergence tape is retired, and the tape it was measured from is kept (6211.043875ms)
+✔ a securing door tape carries its start, its boundary answer, and replays to its own hash (75261.270125ms)
+total 56
+-rw-r--r--  1 robin  staff   181 Oct 22 15:21 01-26.4.stderr
+-rw-r--r--  1 robin  staff   222 Oct 22 15:21 01-26.4.stdout
+-rw-r--r--  1 robin  staff  2227 Oct 22 15:18 compare.py
+-rw-r--r--  1 robin  staff     0 Oct 22 15:18 comparison.log
+-rw-r--r--  1 robin  staff  7506 Oct 22 15:18 corpus.json
+-rw-r--r--  1 robin  staff  1930 Oct 22 15:19 report.md
+-rw-r--r--  1 robin  staff   577 Oct 22 15:20 tests-26.4.0.log
+-rw-r--r--  1 robin  staff     0 Oct 22 15:20 tsc.log
+
+codex
+TypeScript checks passed. The first baseline replay completed successfully; these full-length tapes take several minutes each. The comparison and baseline assay tests are still running, with the runtime pin unchanged.
+ succeeded in 213422ms:
+exec
+/bin/zsh -lc 'tail -8 artifacts/assay-node-26-12-1/comparison.log; tail -8 artifacts/assay-node-26-12-1/tests-26.4.0.log; cat artifacts/assay-node-26-12-1/01-26.4.stdout' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d
+ succeeded in 0ms:
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 213494.788917
+{"eventLogHash":"fnv1a32:314a9b3c","outcome":{"secured":true,"waves":20,"gold":328,"timeAlive":600},"securedSnapshot":{"waves":20,"gold":328,"timeAlive":600},"ticks":18600,"engine":"headless-contract-sim","wallMs":169150}
+
