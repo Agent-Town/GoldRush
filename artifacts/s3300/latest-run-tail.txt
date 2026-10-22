@@ -1,0 +1,70 @@
+20261022-151639-lane-d-assay-node-26-12-1.md.log
+ create mode 100644 artifacts/assay-node-26-12-1/26-26.4.stderr
+ create mode 100644 artifacts/assay-node-26-12-1/26-26.4.stdout
+ create mode 100644 artifacts/assay-node-26-12-1/26-comparison.json
+ create mode 100644 artifacts/assay-node-26-12-1/27-26.12.stderr
+ create mode 100644 artifacts/assay-node-26-12-1/27-26.12.stdout
+ create mode 100644 artifacts/assay-node-26-12-1/27-26.4.stderr
+ create mode 100644 artifacts/assay-node-26-12-1/27-26.4.stdout
+ create mode 100644 artifacts/assay-node-26-12-1/27-comparison.json
+ create mode 100644 artifacts/assay-node-26-12-1/28-26.12.stderr
+ create mode 100644 artifacts/assay-node-26-12-1/28-26.12.stdout
+ create mode 100644 artifacts/assay-node-26-12-1/28-26.4.stderr
+ create mode 100644 artifacts/assay-node-26-12-1/28-26.4.stdout
+ create mode 100644 artifacts/assay-node-26-12-1/28-comparison.json
+ create mode 100644 artifacts/assay-node-26-12-1/29-26.12.stderr
+ create mode 100644 artifacts/assay-node-26-12-1/29-26.12.stdout
+ create mode 100644 artifacts/assay-node-26-12-1/29-26.4.stderr
+ create mode 100644 artifacts/assay-node-26-12-1/29-26.4.stdout
+ create mode 100644 artifacts/assay-node-26-12-1/29-comparison.json
+ create mode 100644 artifacts/assay-node-26-12-1/build.log
+ create mode 100644 artifacts/assay-node-26-12-1/compare.py
+ create mode 100644 artifacts/assay-node-26-12-1/comparison.json
+ create mode 100644 artifacts/assay-node-26-12-1/comparison.log
+ create mode 100644 artifacts/assay-node-26-12-1/corpus.json
+ create mode 100644 artifacts/assay-node-26-12-1/engine-hash.txt
+ create mode 100644 artifacts/assay-node-26-12-1/report.md
+ create mode 100644 artifacts/assay-node-26-12-1/tests-26.12.1.log
+ create mode 100644 artifacts/assay-node-26-12-1/tests-26.4.0.log
+ create mode 100644 artifacts/assay-node-26-12-1/tsc.log
+ create mode 100644 artifacts/assay-node-26-12-1/wrong-runtime.json
+
+codex
+All 24 assay tests passed under 26.12.1, matching the 24/24 baseline result. The change is committed as `357cf6e77`. Attended work remains: register the new hash as a same-era pin, then perform the authorized droplet runtime switch.
+exec
+/bin/zsh -lc "git status --short; git rev-parse HEAD; git show --format= --name-only HEAD | python3 -c 'import sys; p=[x.strip() for x in sys.stdin if x.strip()]; allowed={\"scripts/assay-replay-agent.mjs\",\"scripts/assay-worker.test.mjs\",\"ops/droplet/goldrush-assay.service\",\"ops/droplet/goldrush-ledger-backup.service\",\"docs/ops/agenttown-server.md\"}; assert all(x in allowed or x.startswith(\"artifacts/assay-node-26-12-1/\") for x in p); print(\"Committed paths all within task firewall\")'" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d
+ succeeded in 133ms:
+?? node_modules
+357cf6e7713205a20b839a336f6c1aaa27c962c5
+Committed paths all within task firewall
+
+codex
+READY-FOR-GATES — committed `357cf6e77`.
+
+- Node pin updated to **26.12.1**.
+- **20 complete replay comparisons; 0 disagreements.**
+- **24/24 tests passed under each runtime**; TypeScript and build passed.
+- Historical replay failures and score drift documented separately.
+
+New engine hash: `b813de7b3a094a20ff8bc245bdbe7dddb4eb96c42a8c95b2312ee57455ddc932`
+
+[Full report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/assay-node-26-12-1/report.md>)
+
+Remaining: attended same-era pin registration, then droplet runtime switch. No deployment performed.
+tokens used
+124,876
+READY-FOR-GATES — committed `357cf6e77`.
+
+- Node pin updated to **26.12.1**.
+- **20 complete replay comparisons; 0 disagreements.**
+- **24/24 tests passed under each runtime**; TypeScript and build passed.
+- Historical replay failures and score drift documented separately.
+
+New engine hash: `b813de7b3a094a20ff8bc245bdbe7dddb4eb96c42a8c95b2312ee57455ddc932`
+
+[Full report](</Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/assay-node-26-12-1/report.md>)
+
+Remaining: attended same-era pin registration, then droplet runtime switch. No deployment performed.
+[lane-runner-v3] withheld baseline-dirty path: node_modules
+[lane-runner-v3] withheld 0 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20261022-151639-lane-d-assay-node-26-12-1.md-withheld-paths.txt
+[lane-runner-v3] withheld 1 baseline ownership collision(s)
