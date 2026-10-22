@@ -1,7 +1,7 @@
 {
   "era": 6,
   "name": "the Re-surveyed Claims",
-  "engineHash": "378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817",
+  "engineHash": "aa1435e29f312553b1fa9329ca6872bb1601a5b82b50741c400b95de8be895a3",
   "declaredAt": "2026-09-14",
   "note": "Era 6 opens with Astra's map campaign (sol/map-art-inventory-20260908 7c2744e5a) landed by maps-campaign-land-era6 on 2026-09-14: 17 contracts re-parameterised (tileParams on 13, twists on 3, briefings on 5), the door tightened to the contract's own research epoch, 66 src files, the map-rebuild-spike terrain, plaza props and flotilla models. Owner ruling 2026-09-13, verbatim: \"ah, that is all no problem. we don't have players yet so we can just keep going\" and \"we then have to make another run in the future but not immediately\"; the name ratified 2026-09-14 (\"the Re-surveye Claims\" is good for me). Every era-5 reel reads \"This reel rode era 5; the county accepts era 6\" and stands retired, counted. Heat 14 re-rides the boards on this era when the owner says so.",
   "viewSchema": {
@@ -538,6 +538,12 @@
       "engineHash": "378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817",
       "pinnedAt": "2026-09-29",
       "cause": "same era, pin #75: emdash-entities-1: src/ui/ProspectorPanel.ts two copy strings (no dash), src/encyclopedia/reader.ts four blank-cell markers (middle dot); no gameplay or sim value change The store unchanged at 5793a96. reviews/emdash-entities-1.md",
+      "aliases": []
+    },
+    {
+      "engineHash": "aa1435e29f312553b1fa9329ca6872bb1601a5b82b50741c400b95de8be895a3",
+      "pinnedAt": "2026-10-22",
+      "cause": "same era, pin #76: assay-node-26-12-1: scripts/assay-replay-agent.mjs CANONICAL_ASSAY_NODE_VERSION 26.4.0 → 26.12.1 (the constant is in ENGINE_SOURCE_INPUTS); no src/** change, no gameplay or sim value change; replay proven identical across runtimes on 20 verified tapes The store unchanged at 5793a96. reviews/assay-node-26-12-1.md",
       "aliases": []
     }
   ],
