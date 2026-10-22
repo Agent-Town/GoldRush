@@ -1,0 +1,95 @@
+{
+  "corpus": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "chosen": {
+    "F-2642-3": [
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 601,
+        "line": "🔺 **F-2642-3 — OWNER: the registry deploy day is now ACTIONABLE, and the desk entry's own trigger condition has been met.** `docs/OWNER-DESK-2026-09-19.md:100–101` reads *\"Astra is landing the registry code behind a closed gate now (lane-b) … I bring you the checklist when the code lands.\"* **The code has landed (`fdfcab4d0`) and the checklist is `docs/ops/account-registry.md`** — five steps, each with its verification and its rollback sentence. ⚖️ **NOTHING DEPLOYED AND NOTHING MIGRATED, by construction and not by promise: the Pages binding ships as a COMMENTED block in `wrangler.toml` with `ACCOUNT_REGISTRY_SCOPE` deliberately unset, so both are absent and the door behaves byte-identically to main — which `closed-gate.test.mjs` asserts directly rather than by inspection.** Routine Pages deploys are unaffected. ⛔ **NO FIRE MAY ENABLE THIS**: the five steps need the owner's own deployment inventory, a quiesce of every identity writer including previews, an independently verified private export, a migration secret and a post-bootstrap smoke test of legacy saves — none of which the repo can know or automate. It is on the desk, not on the board."
+      }
+    ],
+    "b1-device-verdict-rows": [
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 544,
+        "line": "📱 **`b1-device-verdict-rows` (B1) — OWNER: ten minutes on your phone, and the device verdict rows are yours to fill.** The 2026-09-19 ruling decided 28 items and left exactly two things with you; this is the first. It is not a design question and nothing is blocked behind it — it wants the device in your pocket, not a decision. **Declared s2644** because the desk carried it unkeyed, which made `desk-carryforward-guard` unable to carry-check it and made the live desk count disagree with what the parser could read (5 declared vs 3 keyable). Keyed now as a backticked slug so it can be tracked across handoffs like any other item."
+      }
+    ],
+    "F-2299-1": [
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 244,
+        "line": "🧭 **OWNER RULINGS 2026-09-26, THE DESK ANSWERED (verbatim: \"A1 - not sure, 2 - sure, lets do that, 3 - ok, lets do that, 4 - a, a, move it to the cradle's rim, its own sculpt pack, a, B5 - deploy, C6 - lets keep it as it is, 7 - slips is good, 8 - unnamed, 9 - sure, do it, D - as you recommend it, E - please cleand the test temp dirs do as you see fit here\"):** A1 parked (unsure, no spend); A2 the River's quiet pan writes the completed score; A3 the in-game county board reads the open week; A4 Regatta tie (a), disembark (a) and the Far Side cradle rim and the River raw route's own sculpt pack RE-AFFIRMED (all four had been ruled and LANDED on 2026-09-22; their ledger rows were ghosts, F-ATT-5), the Charter Press hides locked lands (the one fork that was open); B5 `localhost-cors-2` deploys; C the film: no Baron ride (it cuts on the arrival), printed slips, unnamed boards, the three public-site changes; D the ops-evening batch as recommended (F-KV1-7 (a), F-KV2-6 keep, F-KV1-3 default, F-2355-2 on the evening, F-2352-3 ordering, F-2299-1 re-probe); E the temp fixtures cleaned, the veto windows closed as the attended session saw fit (F-CW2-1 stands, F-RT40-1 stands, F-SGA1-2 accepted, F-CW1-2/F-CW2-4 art deferred, F-F2-39 as recommended, F-2350-3 allowlist widening deferred: the guard reddens). Every slice authored from these quotes the owner's words with this date."
+      },
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 337,
+        "line": "🔺 **F-2299-1 — OWNER'S DESK (2026-09-24, from the rotation check after the owner's \"Ok, I updaed all the keys\"): the rotation's last mile: two new values into `.env.local`, and the Claude Code token still the exposed one.** VERIFIED 2026-09-24 read-only, no value printed or copied: the edge API token in `.env.local` is DEAD at its provider (the token-verify endpoint answers `1000 Invalid API Token`) and the voice key is DEAD (`HTTP 401` on the user endpoint), so both rotations happened at the providers; but `.env.local` was last written 2026-09-20, so the file `scripts/deploy.sh` sources still holds the dead values and **every deploy aborts at the wrangler auth until the owner pastes the new `CLOUDFLARE_API_TOKEN=` and `ELEVENLABS_API_KEY=` lines** (a failed deploy in a fire log until then is THIS, not a regression; do not file it). The fires' own credential, `CLAUDE_CODE_OAUTH_TOKEN` (the \"coding-agent subscription token\" of ruling 1), still authenticates through the fires' exact path (`claude auth status` under `~/.claude-fires` reads loggedIn; a one-word `-p` probe answered), so the value exposed on 2026-08-25 is STILL LIVE: the owner mints a new one (`claude setup-token`), pastes it as `CLAUDE_CODE_OAUTH_TOKEN=`, and revokes the old one in his account; the attended session re-probes and closes. The droplet holds no stray copy (`find / -name .env.local` empty, `/opt/goldrush/.env.local` absent, read-only over the deploy's own ssh path). The Codex login was refreshed today (`~/.codex/auth.json`, \"Logged in using ChatGPT\"). Retires when: both new values answer live to the same read-only calls, the Claude probe passes on a NEW value (`.env.local` rewritten) and the owner says the old one is revoked. The original finding is the F-2299-1 row of s2299 below. ➡️ **UPDATE 2026-09-24 18:15 local (owner: \"I rotated all tokens in the .env.local file\", \"I rolled it again\"):** the owner rotated all three at the providers and minted a new Claude Code token, but pasted twice into the sibling folder's copy (`Gold Rush-history-local/.env.local`, the pre-rewrite local history), which nothing reads; the attended session found it by mtime, verified its values read-only (Cloudflare `active`, ElevenLabs `200`, the new Claude token answers through the fires' path, per-line hashes: the three rotated lines DIFFERENT, the account id, the router key and the droplet host identical), backed the old root file up outside every git tree (`~/.goldrush/env.local.bak-2026-09-24`, mode 600; a `.bak` beside `.env.local` would NOT be gitignored) and copied the edited file into the repo root; re-verified from the root: Cloudflare `active`, ElevenLabs `200`, Claude `ok`, `wrangler whoami` logged in. DEPLOYS UNBLOCKED. STILL OPEN: the Claude Code token exposed on 2026-08-25 still authenticated at 18:14 when probed from the old file, so it is not revoked; the desk item narrows to that one revocation (the owner's account settings), verified afterwards by the same probe against the backup. ➡️ **UPDATE 2026-09-24 23:2x local (owner, verbatim: \"I used the log out of all devices button in the web ui. Then I logged in again, logged in here, then did claude setup-token, copied it in .env.local and then told you done.\"):** MEASURED, not inferred: after that button, the August token (from the backup) and the 18:13 token (minted before the button) BOTH still answer through the fires' auth path; the button ends browser and CLI sessions (this CLI needed `/login`) but does not revoke long-lived `claude setup-token` tokens. The CLI cannot revoke either (`claude auth logout` clears local credentials only; the only revoke code in the binary is a bundled Google OAuth library; the account endpoints refuse the token with `permission_error`, so its e-mail cannot be read from the token; every login recorded on this Mac is `robin@brainstem.health`, and the fires' config dir dates from 2026-07-08, so the token was minted on or before that day). The newest token (23:16) had again gone to the sibling folder's file; copied into the repo root with the 18:15 root kept at `~/.goldrush/env.local.bak-2026-09-24-1815` (mode 600); root re-verified: Claude ok, Cloudflare active, ElevenLabs 200. REMAINING, owner-side: an Anthropic support request to revoke the Claude Code token minted on or before 2026-07-08 for `robin@brainstem.health` (the exposed one; the 2026-09-24 tokens stay), or its natural expiry; the attended session re-probes from the backup and closes the row when it fails. Exposure bound meanwhile: inference on the owner's subscription only (the account endpoints refuse it). ➡️ **SUPPORT REQUEST ISSUED (owner 2026-09-25, verbatim: \"support request is issued\"):** the revocation of the August Claude Code token is with Anthropic support; the attended session re-probes the backup token each session (`claude -p ok` under the fires' config from `~/.goldrush/env.local.bak-2026-09-24`) and closes this row, retires the desk item and removes both backup files (owner's word; `rm` prompts) on the first refusal. Until then: live, inference scope only. RULED 2026-09-26 (verbatim \"D - as you recommend it\"): the attended session keeps re-probing the backup token and retires this row, removing both backup files, on the first refusal."
+      },
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 349,
+        "line": "✅ **F-REV-1 — OWNER'S DESK (2026-09-24, from the outside review of the project): ten decisions the review leaves with you.** ✅ RULED 2026-09-24 (see the OWNER RULINGS row above)  The review (86 findings, three verification passes the same day; the verdicts in `docs/REVIEW-RESPONSE-2026-09-24.md`) is fair: the game code at C, the machinery at D. Done the same day: the fires cured (F-FIRE-1), the rotation minted, the address redacted, the desk file completed; four masters queued for Opus (sign-in hardening, entry robustness, the release gate on the deploy, headers and data hygiene). Yours: (1) rotate the three credentials with no record since 2026-08-25 (F-2299-1); (2) the live seed: humans play every contract on the seed `gold-rush` and never ride the weekly rotation, options rotation-per-contract / random-per-run / both, recommendation the rotation; (3) the era-bump day for seeding the browser's harvest from the run seed (the two engines disagree from tick 0, against your 2026-09-07 fairness ruling); (4) the Workers Paid plan for the KV budget (about $5 a month); (5) a droplet evening for root services, sandboxing and the real client IP; (6) the history rewrite for the nine commits carrying a personal address (0 forks today); (7) CI on your GitHub account (a three-step workflow); (8) the shape of the ledgers under the retention law (dated STATUS archives, a BACKLOG index plus per-epic files, anchors instead of line numbers); (9) evidence offload to the archive repo or a bucket; (10) the ten-minute phone measurement (B1). Details per item in `docs/OWNER-DESK-2026-09-19.md` (F-REV-1). (marker retired 2026-09-26: the row already carried its ruling.)"
+      }
+    ],
+    "F-CUT-1": [
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 57,
+        "line": "📰 **TK-01 OCTOBER 10 COMPLETE (s3034, 2026-10-11 local):** `marketing/outbox/ticker-digest-2026-10-10.md` records zero player-visible changes. UTC+07 midnight census: 63 main updates, 63 pinned first-parent commits, zero player-path events or non-ancestral replacements; September 25 busy-day control 136. Complete subjects and changed paths reviewed for ops-only player changes and engine pins; none. No micro-headline, Gazette duplicate or publication. Stats still returns HTML-200 at canonical and direct Pages URLs; F-CUT-1 remains open. Evidence: `artifacts/s3034/day.json`, `day-commits.txt`, `live-probe.json`, `report.md`."
+      },
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 63,
+        "line": "🩺 **API PROBE JSON 1 LANDED — `api-probe-json-1` as `e0c536dcc` (drained attended 2026-10-09).** F-CUT-1 (measured during the Option B cutover: with the daily cap exhausted, Pages served the SPA's HTML with HTTP 200 for `/api/stats` and both edge probes reported `api=200` for hours). Astra on lane-c (`c8ddf96b2` + `4ef388aa6`, 74,799 tokens, 08:30Z to 08:35Z): `scripts/health-watch.sh` and `ops/droplet/edge-watch.sh` gain `api_code`, which requires 200 + an `application/json` content type + a body parsing to `{ok:true, stats:{…}}` (the shape `functions/api/stats.ts` always returns) and otherwise reports `api=200-html`, `api=200-notjson` or `api=2xx-incomplete` as dark with the class in the value (the dashboard's `landing=… game=… api=…` shape kept); `scripts/edge-probe-json.test.mjs` 32 cases, rostered in `test:node-guards`; a bounded live capture of the HTML fallback kept as evidence. Attended fixes on the lane: `scripts/edge-alarm-clock-guard.test.mjs`'s curl stub now answers the API with healthy JSON in every scenario (its arms test landing/game transitions; 9/9), and a control copy of that guard under `artifacts/` renamed `.txt` (the gate-caller audit's orphan, the third time today). Evidence inside the budget. Landed attended, hash unchanged; the Mac probe is live on landing (launchd runs it from the repo); the droplet copy of `edge-watch.sh` is applied with the owner's word (a write on the box) `reviews/api-probe-json-1.md`."
+      },
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 64,
+        "line": "📰 **GZ-01 ROUTING LANDING REPORTED (s3000, 2026-10-09 local):** One ROUNDUP-CLASS draft records the attended `goldrush-static-route-1` merge (`b3cb110c6`) and Option B cutover (`a3b8a8216`). Fresh HTTP evidence verifies restored static delivery and a cached asset; stats remains HTML-200 under F-CUT-1. Week 41 census: 0 standalone / 2 batched before, 0 / 3 after. Publication owner-only. Evidence: `artifacts/s3000/news-census.json`, `live-probe.json`, `report.md`."
+      }
+    ],
+    "OWNER-PRIORITY": [],
+    "TK-01 OCTOBER 21 COMPLETE": [
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 1,
+        "line": "📰 **TK-01 OCTOBER 21 COMPLETE (s3283, 2026-10-22 local):** `marketing/outbox/ticker-digest-2026-10-21.md` records the week-44 seed preparation (`4b7c7b2be`), awaiting authorized deployment. UTC+07 census: 65 main updates, 65 pinned first-parent commits, one player-path event; September 25 busy-day control 136. All subjects and 571 distinct paths reviewed; no engine pin or non-ancestral replacement. The existing Gazette roundup covers the mint; publication remains owner-only. Evidence: `artifacts/s3283/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`."
+      }
+    ],
+    "LB-01 + FM-01 OCTOBER 21 COMPLETE": [
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 3,
+        "line": "🗄️ **LB-01 + FM-01 OCTOBER 21 COMPLETE (s3266, 2026-10-21T03:31Z):** Today's snapshot was pulled and pushed to the verified PRIVATE archive; coverage is 59/59 days August 24–October 21. Strict push inspected 4,024 keys in 59 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Live ledger-backups head 9f26099427ab464c524fa2e2c0211e21fe4e3eeb; FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, both remote heads verified. Supersedes s3265's pending-source observation: October 21 is discharged; next coverage day October 22 after 02:10 UTC. No private corpus enters the public tree. Evidence: artifacts/s3266/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, report.md."
+      }
+    ],
+    "RT-01 WEEK 44 MINTED": [
+      {
+        "rel": "tasks/BACKLOG.md",
+        "n": 7,
+        "line": "🗓️ **RT-01 WEEK 44 MINTED (s3263, 2026-10-21):** `r2026w44` opens October 26 00:00 UTC and closes November 2 00:00 UTC; six seeds, all seven earlier rotations preserved, whole eight-rotation registry refreshed in `public/skill.md`. Week-43 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w44.md`; evidence: `artifacts/s3263/`. The next authorized attended deployment must carry weeks 43 and 44 and verify ASSAYER SYNCED; week 43 remains overdue, week 44 opens October 26. Live build 62403b1d still carries weeks 37–42. No dispatch or deployment by this fire."
+      }
+    ]
+  }
+}
