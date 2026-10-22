@@ -1,0 +1,12 @@
+{
+  "command": "node scripts/status-archive-audit.mjs",
+  "runtime": "v23.11.1",
+  "verdict": null,
+  "error": "FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory",
+  "nodePid": 51521,
+  "reportedGcMilliseconds": 225014,
+  "corpusCommits": 7196,
+  "scope": "full history; not the bounded current-handoff regression gate",
+  "exitCode": null,
+  "exitCodeNote": "The initial compound shell ended with git diff, so its rc 0 is not an audit result. OOM stderr was returned by the tool and retained in the launcher log."
+}

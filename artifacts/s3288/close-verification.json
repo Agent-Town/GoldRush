@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-22T04:23Z",
+  "gateHead": "5292b2a70db04bca44ff947ad30446ac3ce1be76",
+  "ledgerCode": 0,
+  "inputsMatch": true,
+  "changeAfterGates": "STATUS line-1 lock/stamp envelope only; evidence output receipts added",
+  "deskPreserved": true,
+  "predecessorArchived": true,
+  "archiveBounded": {
+    "command": "node scripts/status-archive-audit.mjs --limit 40 --quiet",
+    "runtime": "v26.4.0",
+    "code": 0,
+    "signal": null
+  }
+}
