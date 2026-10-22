@@ -1,0 +1,71 @@
+823d79ae0dd5da269c2e0d931f9c89d4512e94c0 2026-10-22T23:21:18+07:00 s3298: verify dry board and stale standings — ledger green, lock CLEARED
+6aaa72f88314c3a0850aea04ea74f4cc1431e804 2026-10-22T23:15:31+07:00 s3298: preserve inherited dashboard bookkeeping
+470dfa6e0229e288ab7eb487eee09287a42a0477 2026-10-22T23:14:45+07:00 s3298: lock ACTIVE — verify drains and heartbeat duties
+e76cb1917781682f574af008d6c44e22b8139a0a 2026-10-22T22:12:54+07:00 s3297: verify dry board and stale standings — ledger green, lock CLEARED
+41383d05207bf9b42ed9265dd39d73c1d0d108c8 2026-10-22T22:06:59+07:00 s3297: preserve inherited dashboard bookkeeping
+570bee05deb4124d30fa3664fa9541f9f01d8cb6 2026-10-22T22:06:06+07:00 s3297: lock ACTIVE — verify board and heartbeat duties
+742d80c1ce54fad5eab8f2f46a41f95c609a6e55 2026-10-22T21:03:53+07:00 s3296: verify dry board and stale standings — ledger green, lock CLEARED
+9e9d8fcbbff6209a4fb2d76af6a89af8918de5c3 2026-10-22T20:57:51+07:00 s3296: preserve inherited dashboard bookkeeping
+c78120b17e03af0eae9d3ff29f985d2430e2390a 2026-10-22T20:56:42+07:00 s3296: lock ACTIVE — verify board and heartbeat duties
+7e778cc98091007876936fca80b75dc725c16d74 2026-10-22T19:54:43+07:00 s3295: verify dry board and stale standings — ledger green, lock CLEARED
+23dac9e50532f36b4ba6a25fea3246b9f1eaa7db 2026-10-22T19:48:26+07:00 s3295: preserve inherited dashboard bookkeeping
+f3a2b5b16f5b868f4fb058262286bc4e22aebcb5 2026-10-22T19:47:34+07:00 s3295: lock ACTIVE — verify board and heartbeat duties
+081b9f01701a346615b59680a0c9cf63514dc2c3 2026-10-22T18:45:55+07:00 s3294: verify dry board and stale standings — ledger green, lock CLEARED
+01701d795c150f3bb55dc05e5b15257a65aa2d6d 2026-10-22T18:39:31+07:00 s3294: preserve inherited dashboard and usage bookkeeping
+e0b5d040d42aa72c35720f891b75cba7a9ba53cf 2026-10-22T18:38:55+07:00 s3294: lock ACTIVE — verify board and heartbeat duties
+77e0dfbb219a6ae785467c8c8cedccd86841675f 2026-10-22T17:36:59+07:00 s3293: record stale canonical runtime and attended landing — ledger green, lock CLEARED
+cbda059ba7e97c004007693feded8a503680e56b 2026-10-22T17:30:30+07:00 s3293: preserve inherited dashboard and completed assay run bookkeeping
+12032191c9ed61aafacd51b28f7a716bc5574296 2026-10-22T17:28:38+07:00 s3293: lock ACTIVE — verify assay landing and triage remaining duties
+314d074bdec0807486d80a1250321048d0fcb95a 2026-10-22T17:07:06+07:00 ops: the droplet maintenance window ran on the owner's word — upgraded, TLS tidied, rebooted onto 6.8.0-147, under a minute dark (F-SRV-1); handover 13z-114
+90487be928567fb23104b11b97de5b5f772885b3 2026-10-22T16:50:28+07:00 docs: release verdict pre-filled for build 299b1db5; handover 13z-113 — the Node pin landed and deployed, F-ASN1-1, the droplet switch and the maintenance window on the owner's words
+299b1db58c95b8c499b04471a012df35b4fe157c 2026-10-22T16:27:46+07:00 drain: asn1 LANDED — review, leaf merged, ledger row, STATUS phrase
+5d6e46fb2a69e44384798fa21840a777c757d367 2026-10-22T16:27:45+07:00 era 6, same-era pin: asn1, measured on the merged tree with the store at 5793a96 (aa1435e29f312553b1fa9329ca6872bb1601a5b82b50741c400b95de8be895a3)
+2bbc6df0658f951d57301ceb1a38a13aea1d9d11 2026-10-22T15:53:17+07:00 drain: merge art/portraits-e5-e10-generated — assay-node-26-12-1 — the county's canonical Node moves from 26.4.0 to 26.12.1 (the July and October 2026 security releases) with the replay-determinism proof: 20 full replays of retained verified tapes byte-identical under both runtimes, zero disagreements (29 candidates); the pin, the two unit files, the ops doc and the worker's refusal fixture repointed; the three assay suites green under 26.12.1, 26.4.0 and 23.11.1; engine-pinned (same era, the constant lives in the engine corpus); the droplet switch follows on the owner's word (F-SRV-1)
+09ef87852cb3b3df35b332e996df69fabcad554f 2026-10-22T15:51:25+07:00 s3292: hand off completed Node proof — ledger 1263/1263, lock CLEARED
+23ce523ed628874130da1226dd340d82fc1912db 2026-10-22T15:25:59+07:00 s3292: preserve generated dashboard bookkeeping
+606f152da44bb22701c04fa1806ffd5c70a69d08 2026-10-22T15:21:40+07:00 s3292: lock ACTIVE — verify board and heartbeat duties
+dde59e70db381b23b20c52d0d75950448ecca109 2026-10-22T15:21:31+07:00 findings: F-SRV-2 — Node's October 2026 CVEs mapped to our code paths: no Brotli/zlib decoding anywhere, the ledger makes no outbound TLS; no emergency, 26.12.1 covers the residual
+73d4ee0e610c09a5f6d8a7ee833553f078c8cd7e 2026-10-22T15:16:20+07:00 findings: F-SRV-1 — the droplet's packages are current, the box has not rebooted since February (kernel/libc updates inert), Node 26.4.0 two security releases behind; assay-node-26-12-1 (lane-d, pinned) with the replay proof; scripts/attended/droplet-maintenance.sh; handover 13z-112
+b1e107a259bcbe268aae1ea13a7c9af774255ba2 2026-10-22T14:56:24+07:00 s3291: dry-board handoff — ledger 1263/1263, lock CLEARED
+02e00e861e4ceec5604396b14aab70a11ae4b292 2026-10-22T14:47:28+07:00 s3291: preserve inherited generated dashboard bookkeeping
+9c58e3b60c0c82d2d0817b3eb43197ad1e84d808 2026-10-22T14:46:36+07:00 s3291: lock ACTIVE — verify drain eligibility and heartbeat duties
+71d581ee69485b1bed87c062a0a4398c47dd924f 2026-10-22T13:43:10+07:00 s3290: dry-board handoff — ledger 1263/1263, lock CLEARED
+ac10a8e7f724e8e50c1c6920e621ba855b747c01 2026-10-22T13:35:09+07:00 s3290: preserve inherited factory dashboard bookkeeping
+4bc3a4f0ab24416799b50986fefaa87c93c49a69 2026-10-22T13:34:55+07:00 s3290: lock ACTIVE — verify board and heartbeat duties
+e879e95825227040a71ab331d1c2774303629930 2026-10-22T12:32:50+07:00 s3289: handoff lock CLEARED — dry board; ledger 1263/1263, kit 83/83
+512e505d24c61bdb726f576af9c5e975e405af9e 2026-10-22T12:25:42+07:00 s3289: preserve generated dashboard bookkeeping
+74f11f88751c68aa151b7a5363eb5b6543ff992f 2026-10-22T12:25:24+07:00 s3289: lock ACTIVE — verify triage and heartbeat duties
+35f7bc6614dd717fde67d147bbf0ca32641a7531 2026-10-22T11:23:18+07:00 s3288: verify dry board and duties — ledger 1263/1263, lock CLEARED
+5292b2a70db04bca44ff947ad30446ac3ce1be76 2026-10-22T11:13:26+07:00 s3288: preserve generated dashboard bookkeeping
+242750bf494b1bfdbcfcd6e08d0fefc2fd960f9f 2026-10-22T11:12:44+07:00 s3288: lock ACTIVE — verify drains and heartbeat duties
+71a656540e15638eef18a47f7b3a520afb0ff5d3 2026-10-22T10:11:18+07:00 s3287: complete October 22 private coverage — ledger 1263/1263, lock CLEARED
+57f5fefe1638770abedf655a1492ef127f1ef321 2026-10-22T10:03:26+07:00 s3287: preserve inherited dashboard bookkeeping
+a52825e4ffd608a0196d2ca6ba9802b01bca8d45 2026-10-22T10:03:05+07:00 s3287: lock ACTIVE — verify board and October 22 private duties
+d8dc202db48873fa0f0ec1fc2cafebdb0df8821d 2026-10-22T09:01:13+07:00 s3286: handoff — recover s3285, ledger 1263/1263 green, lock CLEARED
+7ac41576e0fd248e94e77ad380cf8f1f89c33c82 2026-10-22T08:52:47+07:00 s3286: preserve inherited dashboard bookkeeping
+c03d70928d95f3123cda8ccae4351daf4be97ceb 2026-10-22T08:52:23+07:00 s3286: preserve unfinished s3285 bookkeeping and partial validation
+f733fcf3536b0ecdbb24b490d3a77daeac9cc102 2026-10-22T08:51:58+07:00 s3286: lock ACTIVE — recover ended s3285 and verify duties
+c3a1135290d1fe2d84375d6b28006aedfff1c9c7 2026-10-22T08:42:27+07:00 s3285: preserve inherited dashboard bookkeeping
+af92f2d87fa4e48cf9cd7e209348d40bb95d3a29 2026-10-22T08:42:07+07:00 s3285: lock ACTIVE — verify board custody and due heartbeat duties
+4adc1be53e1cb219202d939b617c31795aba699b 2026-10-22T07:39:41+07:00 s3284: handoff — dry board verified, ledger green, lock CLEARED
+cee2f2df2821411eb8f1234452e2156203398f7b 2026-10-22T07:32:07+07:00 s3284: preserve inherited dashboard bookkeeping
+015a2dd126ff228b4f4056e9ead172a8c2f16462 2026-10-22T07:31:41+07:00 s3284: lock ACTIVE — verify board custody and heartbeat duties
+02b9f99930f4e99328d071af176174ed7bc782f2 2026-10-22T06:30:10+07:00 s3283: handoff lock CLEARED — ticker complete; ledger 1263/1263 and kit 83/83
+420561d37bd5d86c21531fbe85f9334e632baf57 2026-10-22T06:24:22+07:00 s3283: compile October 21 ticker — week 44 prepared, deployment pending
+d7c9433fbd39fe395f489e834d4d8aed60f96672 2026-10-22T06:23:16+07:00 s3283: preserve inherited dashboard bookkeeping
+141fdc9ea3d0944238004b2bf09d6ab7bbe02961 2026-10-22T06:22:48+07:00 s3283: lock ACTIVE — verify board custody and compile due ticker
+1b06c6e7490447d3f4d01259aa01ea76d9077a19 2026-10-22T05:21:06+07:00 s3282: handoff lock CLEARED — dry board; 1263 ledger tests and 83 kit checks pass
+c92493de06ab3f613e3907577ec77798aed1fff5 2026-10-22T05:15:26+07:00 s3282: preserve inherited dashboard bookkeeping
+098760e8e5f141d4d0b9fe2f2a7b12be94c900f6 2026-10-22T05:15:06+07:00 s3282: lock ACTIVE — verify board custody and due heartbeat duties
+524691ceb0c6accc4e38ac488497da1cc7d4dcd3 2026-10-22T04:13:13+07:00 s3281: handoff — dry board; ledger 1263/1263, lock CLEARED
+6c1a75b63f389b0e197ca22a09487520b72fcb10 2026-10-22T04:08:49+07:00 s3281: preserve inherited dashboard bookkeeping
+76db7cac22b0f26cee1d01addf292aa345286fb9 2026-10-22T04:08:39+07:00 s3281: lock ACTIVE — verify board custody and heartbeat duties
+cfd9e94357c699bfbe7de8cf4f4e47c61b648885 2026-10-22T03:07:00+07:00 s3280: handoff — dry board, duties verified; ledger 1263/1263, foundry 83/83
+7e0dd7187d470d77b0e08f34d32e7f434bc84cb9 2026-10-22T03:01:45+07:00 s3280: preserve inherited dashboard bookkeeping
+7b4adf8a79ce1baa11381f7a1d3985e62b5e4dee 2026-10-22T03:01:21+07:00 s3280: lock ACTIVE — verify board and daily duties
+34577e8e7115014dec77d7f465b7171f99dad069 2026-10-22T01:59:07+07:00 s3279: handoff — dry board; ledger 1263/1263 and shell 83/83 green
+dfc3ac4f620a359dc16233abf69e5025f1018c68 2026-10-22T01:54:11+07:00 s3279: preserve inherited dashboard bookkeeping
+5eaa76a153867fd893e8af18cc2811889d716acc 2026-10-22T01:53:27+07:00 s3279: lock ACTIVE — verify board custody and heartbeat duties
+3bad2d44e354e9e57f4ac5434f8ce05312e86863 2026-10-22T00:51:57+07:00 s3278: handoff lock CLEARED — dry board; ledger 1263/1263, kit 83/83
+cf1d4c67c51532c30d582f07a5db2dc76495df19 2026-10-22T00:46:54+07:00 s3278: preserve inherited dashboard bookkeeping
+274f8276880895f97cb454fa9eed6473dcac783c 2026-10-22T00:46:35+07:00 s3278: lock ACTIVE — verify board custody and heartbeat duties

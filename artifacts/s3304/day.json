@@ -1,0 +1,33 @@
+{
+  "root": "81aba5dfe63f0f0f7cf8e51c2a54bf1ee98315d5",
+  "start": "2026-10-21T17:00:00.000Z",
+  "end": "2026-10-22T17:00:00.000Z",
+  "before": "6c9b26a2419f0eda1981af5461d3491465f1caa3",
+  "final": "823d79ae0dd5da269c2e0d931f9c89d4512e94c0",
+  "mainUpdates": 69,
+  "firstParentCommits": 71,
+  "controlSeptember25": 136,
+  "replacements": [],
+  "playerEvents": 1,
+  "events": [
+    {
+      "hash": "299b1db58c95b8c499b04471a012df35b4fe157c",
+      "stamp": "2026-10-22T16:28:01+07:00",
+      "time": 1792661281000,
+      "subject": "merge 299b1db58c95b8c499b04471a012df35b4fe157c: Fast-forward",
+      "previous": "09ef87852cb3b3df35b332e996df69fabcad554f",
+      "playerFiles": [
+        "assets/engine-era.json"
+      ],
+      "reviews": [
+        "reviews/assay-node-26-12-1.md"
+      ],
+      "introduced": [
+        "299b1db58 2026-10-22T16:27:46+07:00 drain: asn1 LANDED — review, leaf merged, ledger row, STATUS phrase",
+        "5d6e46fb2 2026-10-22T16:27:45+07:00 era 6, same-era pin: asn1, measured on the merged tree with the store at 5793a96 (aa1435e29f312553b1fa9329ca6872bb1601a5b82b50741c400b95de8be895a3)",
+        "2bbc6df06 2026-10-22T15:53:17+07:00 drain: merge art/portraits-e5-e10-generated — assay-node-26-12-1 — the county's canonical Node moves from 26.4.0 to 26.12.1 (the July and October 2026 security releases) with the replay-determinism proof: 20 full replays of retained verified tapes byte-identical under both runtimes, zero disagreements (29 candidates); the pin, the two unit files, the ops doc and the worker's refusal fixture repointed; the three assay suites green under 26.12.1, 26.4.0 and 23.11.1; engine-pinned (same era, the constant lives in the engine corpus); the droplet switch follows on the owner's word (F-SRV-1)",
+        "357cf6e77 2026-10-22T15:37:07+07:00 fix: pin assay Node 26.12.1 with cross-runtime replay proof"
+      ]
+    }
+  ]
+}

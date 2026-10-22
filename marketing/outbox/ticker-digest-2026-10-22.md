@@ -1,0 +1,11 @@
+# Ticker digest — 2026-10-22
+
+TK-01, compiled by s3304 on October 23 after 06:00 local (UTC+07). Draft for owner approval; publication remains owner-only.
+
+- The replay runtime pin advances after 20 matching tape comparisons; server synchronization is still pending. Merge `2bbc6df06`; pin `5d6e46fb2`.
+
+The local October 22 window is `[2026-10-21T17:00Z, 2026-10-22T17:00Z)`. History is pinned at `81aba5dfe63f0f0f7cf8e51c2a54bf1ee98315d5`. Main's reflog records **69 updates**, from predecessor `6c9b26a2419f0eda1981af5461d3491465f1caa3` through `823d79ae0dd5da269c2e0d931f9c89d4512e94c0`; the pinned first-parent walk contains **71 commits**. The difference is the attended fast-forward that introduced the three-commit merge, pin and review chain in one update. The September 25 busy-day control reproduces **136 commits**. There are no non-ancestral replacements.
+
+Each update was compared with its preceding tree using `isPlayerPath` from `scripts/gazette-backfill-sweep.mjs`. The one player-path event changes `assets/engine-era.json`; an engine pin is news under the factory's news law. The review records twenty complete replay pairs with identical results across runtimes and two historical claims that fail identically under both. All 71 first-parent subjects and 808 distinct changed paths were reviewed; server maintenance and its runbook do not add a player feature. The existing Gazette roundup already cites the merge and pin, so no duplicate was appended. Reproducer and evidence: `artifacts/s3304/day.mjs`, `day.json`, `day-commits.txt`, `day-paths.json` and `news-census.json`.
+
+Current operational observation, outside that day window: at October 22 23:01 UTC, public build `299b1db5` serves weeks 37–44. Canonical week-43 transfer standings still returns HTTP 400 `bad_rotation`, while direct Pages week 43 and canonical week 42 return 200 JSON. Both stats endpoints return 200 JSON with `ok:true` and a stats object. The existing F-SRV-1 Node-switch decision and attended runtime synchronization remain next, with ASSAYER SYNCED and canonical week-43 acceptance required. This probe confirms the symptom; it does not re-establish server-side cause. Evidence: `artifacts/s3304/live-probe.json`.
