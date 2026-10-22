@@ -1,0 +1,54 @@
+1 e1-dry-gulch verified fnv1a32:314a9b3c IDENTICAL
+3 e10-ember-shore verified fnv1a32:d3959e47 IDENTICAL
+4 e2-pressure-garden verified fnv1a32:395a7a37 IDENTICAL
+7 e3-moth-season verified fnv1a32:ce9c8f35 IDENTICAL
+6 e3-fairground verified fnv1a32:092d72d8 IDENTICAL
+5 e3-blackout-ridge verified fnv1a32:88d63803 IDENTICAL
+8 e5-deepwater-claim verified fnv1a32:217967af IDENTICAL
+2 e1-twin-banks rejected fnv1a32:cd66d82b IDENTICAL
+9 e6-glow-mesa verified fnv1a32:b8a19332 IDENTICAL
+11 e7-relay-rush verified fnv1a32:56e85b88 IDENTICAL
+10 e6-picnic verified fnv1a32:fd3af43b IDENTICAL
+12 e7-relay-valley verified fnv1a32:ea3d1acc IDENTICAL
+14 e8-mare-claim verified fnv1a32:ddf3c5c6 IDENTICAL
+15 the-claim verified fnv1a32:79bb2437 IDENTICAL
+16 e1-dry-gulch rejected fnv1a32:036a109a IDENTICAL
+Traceback (most recent call last):
+  File "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/assay-node-26-12-1/compare.py", line 39, in <module>
+    results.append(future.result())
+                   ^^^^^^^^^^^^^^^
+  File "/Users/robin/.pyenv/versions/3.11.13/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/robin/.pyenv/versions/3.11.13/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/Users/robin/.pyenv/versions/3.11.13/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/robin/Claude/Projects/Gold Rush/worktrees/lane-d/artifacts/assay-node-26-12-1/compare.py", line 25, in compare
+    if r.returncode: raise RuntimeError(f'{item["file"]} on {version} exit {r.returncode}: {r.stderr}')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: artifacts/gauntlet-heat14-e3949bfa/rides/e8-far-side/watch-reel.json on 26.4.0 exit 1: (node:15931) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+assay replay failed: the run ended before tick 8793 of the order stream
+
+10 e6-picnic verified fnv1a32:fd3af43b IDENTICAL
+12 e7-relay-valley verified fnv1a32:ea3d1acc IDENTICAL
+11 e7-relay-rush verified fnv1a32:56e85b88 IDENTICAL
+14 e8-mare-claim verified fnv1a32:ddf3c5c6 IDENTICAL
+15 the-claim verified fnv1a32:79bb2437 IDENTICAL
+16 e1-dry-gulch rejected fnv1a32:036a109a IDENTICAL
+18 e2-incline unassayable assay replay failed: declared runStart is not installable by this door IDENTICAL
+19 e3-blackout-ridge unassayable assay replay failed: declared runStart is not installable by this door IDENTICAL
+20 e3-canyon-works unassayable assay replay failed: declared runStart is not installable by this door IDENTICAL
+21 e3-moth-season unassayable assay replay failed: declared runStart is not installable by this door IDENTICAL
+22 e4-gusher-county unassayable assay replay failed: declared runStart is not installable by this door IDENTICAL
+23 e7-dead-band unassayable assay replay failed: declared runStart is not installable by this door IDENTICAL
+24 e7-echo-canyon unassayable assay replay failed: declared runStart is not installable by this door IDENTICAL
+13 e8-far-side unassayable assay replay failed: the run ended before tick 8793 of the order stream IDENTICAL
+26 e5-regatta verified fnv1a32:f3a9c00c IDENTICAL
+27 e5-regatta verified fnv1a32:b92da1bf IDENTICAL
+25 the-claim verified fnv1a32:b131e18e IDENTICAL
+28 the-claim verified fnv1a32:b131e18e IDENTICAL
+17 e1-twin-banks unassayable assay replay failed: the run ended before tick 17614 of the order stream IDENTICAL
+29 the-claim verified fnv1a32:b131e18e IDENTICAL

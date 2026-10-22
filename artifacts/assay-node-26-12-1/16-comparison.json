@@ -1,0 +1,50 @@
+{
+  "file": "artifacts/gauntlet-heat13-569a41f9/rides/e1-dry-gulch/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat13-569a41f9/rides/e1-dry-gulch/verdict-slip.json",
+  "era": 5,
+  "contract": "e1-dry-gulch",
+  "sha256": "cc557c206e5e37456c4d5fce878e3fb2a65cd3d81f527d753e809169068b586a",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "rejected",
+      "replay": {
+        "eventLogHash": "fnv1a32:036a109a",
+        "outcome": {
+          "secured": true,
+          "waves": 20,
+          "gold": 199,
+          "timeAlive": 600
+        },
+        "securedSnapshot": {
+          "waves": 20,
+          "gold": 199,
+          "timeAlive": 600
+        },
+        "ticks": 18600,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "rejected",
+      "replay": {
+        "eventLogHash": "fnv1a32:036a109a",
+        "outcome": {
+          "secured": true,
+          "waves": 20,
+          "gold": 199,
+          "timeAlive": 600
+        },
+        "securedSnapshot": {
+          "waves": 20,
+          "gold": 199,
+          "timeAlive": 600
+        },
+        "ticks": 18600,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}

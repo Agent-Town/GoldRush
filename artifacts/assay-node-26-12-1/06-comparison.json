@@ -1,0 +1,50 @@
+{
+  "file": "artifacts/gauntlet-heat14-e3949bfa/rides/e3-fairground/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat14-e3949bfa/rides/e3-fairground/verdict-slip.json",
+  "era": 6,
+  "contract": "e3-fairground",
+  "sha256": "d1dac7a5b887564e22a9e87f1c39138a031cbd8c9209e1bf2c7b71ef24b9bfbf",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:092d72d8",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 62,
+          "timeAlive": 360
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 62,
+          "timeAlive": 360
+        },
+        "ticks": 11400,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:092d72d8",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 62,
+          "timeAlive": 360
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 62,
+          "timeAlive": 360
+        },
+        "ticks": 11400,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}

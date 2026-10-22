@@ -5,6 +5,6 @@ After=goldrush-ledger.service
 [Service]
 Type=oneshot
 WorkingDirectory=/opt/goldrush
-ExecStart=/root/.nvm/versions/node/v26.4.0/bin/node ops/droplet/ledger-backup.mjs
+ExecStart=/root/.nvm/versions/node/v26.12.1/bin/node ops/droplet/ledger-backup.mjs
 MemoryMax=128M
 UMask=0077

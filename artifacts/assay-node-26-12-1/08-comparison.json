@@ -1,0 +1,50 @@
+{
+  "file": "artifacts/gauntlet-heat14-e3949bfa/rides/e5-deepwater-claim/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat14-e3949bfa/rides/e5-deepwater-claim/verdict-slip.json",
+  "era": 6,
+  "contract": "e5-deepwater-claim",
+  "sha256": "77f8be7658735aa4379de9e27eece07902189c55d7a1d609c13f4853de7f7a38",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:217967af",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 200,
+          "timeAlive": 272
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 200,
+          "timeAlive": 272
+        },
+        "ticks": 8760,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:217967af",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 200,
+          "timeAlive": 272
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 200,
+          "timeAlive": 272
+        },
+        "ticks": 8760,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}

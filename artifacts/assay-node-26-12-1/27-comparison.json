@@ -1,0 +1,58 @@
+{
+  "file": "artifacts/gauntlet-heat15-cd24d12d/rides/r2/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat15-cd24d12d/rides/r2/verdict-slip.json",
+  "era": 6,
+  "contract": "e5-regatta",
+  "sha256": "ca36c695420c7af32eac57232f7e5226394f959e37c140799507d2c9c9e16b9b",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:b92da1bf",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 200,
+          "timeAlive": 272
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 200,
+          "timeAlive": 272
+        },
+        "mechanic": {
+          "id": "regatta-race",
+          "complete": true
+        },
+        "ticks": 8760,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:b92da1bf",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 200,
+          "timeAlive": 272
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 200,
+          "timeAlive": 272
+        },
+        "mechanic": {
+          "id": "regatta-race",
+          "complete": true
+        },
+        "ticks": 8760,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}

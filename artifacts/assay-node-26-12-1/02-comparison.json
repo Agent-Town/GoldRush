@@ -1,0 +1,50 @@
+{
+  "file": "artifacts/gauntlet-heat14-e3949bfa/rides/e1-twin-banks/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat14-e3949bfa/rides/e1-twin-banks/verdict-slip.json",
+  "era": 6,
+  "contract": "e1-twin-banks",
+  "sha256": "168a3eed625a4c38b24c3a537a452c64d7a14d84d1b140e2c9cdc2cb608aabc0",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "rejected",
+      "replay": {
+        "eventLogHash": "fnv1a32:cd66d82b",
+        "outcome": {
+          "secured": true,
+          "waves": 20,
+          "gold": 389,
+          "timeAlive": 600
+        },
+        "securedSnapshot": {
+          "waves": 20,
+          "gold": 389,
+          "timeAlive": 600
+        },
+        "ticks": 18600,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "rejected",
+      "replay": {
+        "eventLogHash": "fnv1a32:cd66d82b",
+        "outcome": {
+          "secured": true,
+          "waves": 20,
+          "gold": 389,
+          "timeAlive": 600
+        },
+        "securedSnapshot": {
+          "waves": 20,
+          "gold": 389,
+          "timeAlive": 600
+        },
+        "ticks": 18600,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}

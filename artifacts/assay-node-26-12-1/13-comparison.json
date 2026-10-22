@@ -1,0 +1,22 @@
+{
+  "file": "artifacts/gauntlet-heat14-e3949bfa/rides/e8-far-side/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat14-e3949bfa/rides/e8-far-side/verdict-slip.json",
+  "era": 6,
+  "contract": "e8-far-side",
+  "sha256": "52a3222067dc199b3f724495312e0be88dc8d9fa17ee386a7cbc3a8fc51eee9b",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "unassayable",
+      "error": "assay replay failed: the run ended before tick 8793 of the order stream",
+      "exit": 1
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "unassayable",
+      "error": "assay replay failed: the run ended before tick 8793 of the order stream",
+      "exit": 1
+    }
+  ],
+  "identical": true
+}

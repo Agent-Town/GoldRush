@@ -1,0 +1,5 @@
+{
+  "exit": 1,
+  "stdout": "",
+  "stderr": "file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/scripts/assay-replay-agent.mjs:50\n    throw new Error(`assay worker requires Node ${CANONICAL_ASSAY_NODE_VERSION} exactly; found ${version}`);\n          ^\n\nError: assay worker requires Node 26.12.1 exactly; found 26.4.0\n    at assertCanonicalAssayNode (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/scripts/assay-replay-agent.mjs:50:11)\n    at file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-d/scripts/assay-worker.mjs:13:1\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\nNode.js v26.4.0\n"
+}

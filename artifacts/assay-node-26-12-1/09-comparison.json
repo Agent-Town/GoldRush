@@ -1,0 +1,50 @@
+{
+  "file": "artifacts/gauntlet-heat14-e3949bfa/rides/e6-glow-mesa/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat14-e3949bfa/rides/e6-glow-mesa/verdict-slip.json",
+  "era": 6,
+  "contract": "e6-glow-mesa",
+  "sha256": "dd64cd665638ff3618c53f57c03f4f41d9ad5a3d2a3ca2eabaa7e25d08853841",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:b8a19332",
+        "outcome": {
+          "secured": true,
+          "waves": 15,
+          "gold": 109,
+          "timeAlive": 460.5
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 109,
+          "timeAlive": 460.5
+        },
+        "ticks": 14415,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:b8a19332",
+        "outcome": {
+          "secured": true,
+          "waves": 15,
+          "gold": 109,
+          "timeAlive": 460.5
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 109,
+          "timeAlive": 460.5
+        },
+        "ticks": 14415,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}
