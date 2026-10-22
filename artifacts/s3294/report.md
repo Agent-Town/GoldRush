@@ -1,0 +1,33 @@
+# s3294 — Dry lanes and stale canonical standings confirmed
+
+READY-FOR-GATES for bookkeeping. WHY no product landing: board DRY, 95 subjects, zero eligible/unknown; all four lane branches have zero unmerged commits. F-3293-1 remains: public build 299b1db5 serves weeks 37–44, but canonical week-43 standings returns 400 bad_rotation versus direct Pages 200; read-only droplet metadata retains weeks 37–42, the old engine pin and Node 26.4.0. October 22 private coverage verified 60/60; week 44 and October 21 ticker current. Next: existing attended Node-switch word and runtime synchronization with ASSAYER SYNCED. Evidence artifacts/s3294/report.md and ledger-result.json.
+
+## Board and custody
+
+The dry-board probe classifies 95 subjects: 82 merged, 13 closed/blocked, zero eligible and zero unknown. All four lane branch logs main..branch are empty. Six queues, running tasks and crafting pending are empty; none of 118 failures is new. The latest October 22 implementation is already on main. No product drain, dispatch, requeue, deployment or server write was performed. Existing CODEX-WALL exceptions do not authorize a new fire dispatch. The last successful run establishes that it served then; future subscription capacity is unverified.
+
+The lane fleet covers 4 of 68 registered worktrees. Seven ahead scratch trees remain attended-owned: wt-holds1-candidate (1), wt-holds2 (1), wt-tape (1), wt-audio (1), wt-holds1 (2), wt-control (43), wt-aif1 (51). Their complete paths and classification are in unreported.txt. They were left intact.
+
+## Existing product finding rechecked
+
+At 11:39 UTC, canonical version.json serves build 299b1db5 and public skill.md lists weeks 37–44. Canonical week-43 transfer standings returns HTTP 400 bad_rotation; direct Pages week 43 and canonical week-42 control return HTTP 200 JSON. Both stats endpoints return HTTP 200 JSON with ok:true and a stats object. These bounded samples establish responses, not sustained health.
+
+A fresh read-only metadata probe confirms the droplet retains only weeks 37–42, engine pin 378f9213f5a7d0f63e063262bd691f2eb0c64df30a9bb3e58061fb5a45f2a817 and canonical Node constant 26.4.0. Both services execute 26.4.0. This reproduces F-3293-1; no duplicate finding or new scope is authored. The exact failing synchronization substep and complete remote-file consistency remain unverified. Existing F-SRV-1/attended custody applies to the runtime switch and synchronization.
+
+Maintenance remains complete: installed and running kernel 6.8.0-147, no reboot required, zero services needing restart, six pending updates. No maintenance mutation was repeated.
+
+## Heartbeat duties
+
+October 22 private mirror coverage is 60/60 days from August 24. The live PRIVATE archive heads match completed s3287 receipts: ledger-backups 591a9d8dd55d8ed318fae4b8fa6d7f03decf899a, fire-memory 53d87470fb2670626fb4605d4dc0eb5bffd899fb. The completed pull and memory mirror were not repeated. No private database content entered this repository. Next coverage is October 23 after 02:10 UTC.
+
+RT-01 is discharged: week 44 opens October 26, and the whole eight-rotation registry matches the skill fence; 19/19 skillmd checks pass. The October 21 ticker exists with its completion row. The attended Node landing and engine pin already have their s3293 Gazette draft; no new player-visible merge occurred in this fire. Next ticker covers October 22 after October 23 06:00 local. Assayer pending is empty.
+
+Lock e0b5d040d; inherited dashboard/usage bookkeeping 01701d795. Own launcher 840 → 892 → 893 matches directory-lock mtime 11:37:43 UTC and FIRE START; actual engine Codex. Runner 31360 alive under parent 1. The main semaphore is scripts/lane-runner-v3.sh:322 (ACTIVE without lock CLEARED). Six queues, running tasks and pending crafting orders empty; none of 118 failed entries newer than predecessor. Latest October 22 run read; its 357cf6e77 and attended merge 2bbc6df06, pin 5d6e46fb2, deploy build commit 299b1db58 and maintenance record 314d074bd are main ancestors. CODEX-WALL observed; no dispatch/requeue and future subscription capacity UNVERIFIED. Seven ahead scratch trees retain attended custody (unreported.txt). Whole eight-rotation fence matches, skillmd guard 19/19. Private archive visibility PRIVATE and live heads match s3287 completed receipts; mirror freshness 60/60. No redundant pull. Stats returns valid healthy JSON at canonical and direct endpoints. Maintenance recheck: running/installed kernel 6.8.0-147, no reboot required, zero services requiring restart, six pending updates; both service runtimes remain 26.4.0. Exact predecessor and initial ACTIVE archived; three-item Owner's Desk and discharge acknowledgements preserved. Final unmodified ledger battery follows these documents and precedes the clearing commit, the last main write, then origin backup.
+
+## Validation and remaining list in order
+
+The final unmodified npm run test:ledger-guards runs under repository Node 26.4.0 with process-local DEVELOPER_DIR=/Library/Developer/CommandLineTools. ledger-manifest.json pins HEAD and all handoff inputs; ledger-result.json records the actual exit/counts and unchanged-input checks. After green, only the STATUS lock/stamp envelope changes; its clearing commit is the final main write. Product tsc/build/browser gates are not claimed because no product slice was changed.
+
+1. Existing attended F-SRV-1 Node-switch word, then complete runtime synchronization; require ASSAYER SYNCED, matching pins/rotations, canonical week-43 200 and fresh replay acceptance evidence (F-3293-1).
+2. Existing F-ASN1-1 historical replay drift follow-up, F-CUT-1 droplet JSON probe and device/release acceptance; retain the three Owner's Desk obligations.
+3. October 22 ticker after October 23 06:00 local; October 23 LB-01/FM-01 after 02:10 UTC.
