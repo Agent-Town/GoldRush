@@ -32,7 +32,7 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 import fs from 'node:fs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const CANONICAL_ASSAY_NODE_VERSION = '26.4.0';
+export const CANONICAL_ASSAY_NODE_VERSION = '26.12.1';
 export const ENGINE_SOURCE_INPUTS = [
   'scripts/assay-replay-agent.mjs',
   'assets/contracts',

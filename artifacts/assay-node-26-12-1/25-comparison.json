@@ -1,0 +1,50 @@
+{
+  "file": "artifacts/gauntlet-heat14-e3949bfa/probe/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat14-e3949bfa/probe/verdict-slip.json",
+  "era": 6,
+  "contract": "the-claim",
+  "sha256": "9de590df7669d14ea1874e820f8958c388cf7eb92c3a9643ccb3e5e24bd2abd4",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:b131e18e",
+        "outcome": {
+          "secured": true,
+          "waves": 10,
+          "gold": 335,
+          "timeAlive": 300
+        },
+        "securedSnapshot": {
+          "waves": 10,
+          "gold": 335,
+          "timeAlive": 300
+        },
+        "ticks": 9001,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:b131e18e",
+        "outcome": {
+          "secured": true,
+          "waves": 10,
+          "gold": 335,
+          "timeAlive": 300
+        },
+        "securedSnapshot": {
+          "waves": 10,
+          "gold": 335,
+          "timeAlive": 300
+        },
+        "ticks": 9001,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}

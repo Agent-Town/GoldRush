@@ -1,0 +1,22 @@
+{
+  "file": "artifacts/gauntlet-heat13-569a41f9/rides/e1-twin-banks/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat13-569a41f9/rides/e1-twin-banks/verdict-slip.json",
+  "era": 5,
+  "contract": "e1-twin-banks",
+  "sha256": "8cc6cfd285e6d4b0af8e4b885f0e3aac7f2d9190a0a9e7707abcf7129fe2d055",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "unassayable",
+      "error": "assay replay failed: the run ended before tick 17614 of the order stream",
+      "exit": 1
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "unassayable",
+      "error": "assay replay failed: the run ended before tick 17614 of the order stream",
+      "exit": 1
+    }
+  ],
+  "identical": true
+}

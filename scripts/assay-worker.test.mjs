@@ -248,7 +248,7 @@ test('an earlier pin in the current era remains assayable', async () => {
 
 test('the worker environment law refuses every Node version except the exact canonical one', () => {
   assert.doesNotThrow(() => assertCanonicalAssayNode(CANONICAL_ASSAY_NODE_VERSION));
-  assert.throws(() => assertCanonicalAssayNode('26.4.1'), /requires Node 26\.4\.0 exactly; found 26\.4\.1/);
+  assert.throws(() => assertCanonicalAssayNode('26.4.0'), /requires Node 26\.12\.1 exactly; found 26\.4\.0/);
 });
 
 test('engine hash ignores a doc-only commit and moves on a Balance edit in a scratch worktree', async () => {

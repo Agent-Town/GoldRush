@@ -1,0 +1,22 @@
+{
+  "file": "artifacts/gauntlet-heat13-569a41f9/rides/e7-dead-band/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat13-569a41f9/rides/e7-dead-band/verdict-slip.json",
+  "era": 5,
+  "contract": "e7-dead-band",
+  "sha256": "36fc4796a8412666a85f40089b2a008d2f85536d198063b5c68647cd039878c3",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "unassayable",
+      "error": "assay replay failed: declared runStart is not installable by this door",
+      "exit": 1
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "unassayable",
+      "error": "assay replay failed: declared runStart is not installable by this door",
+      "exit": 1
+    }
+  ],
+  "identical": true
+}

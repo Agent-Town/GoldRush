@@ -1,0 +1,50 @@
+{
+  "file": "artifacts/gauntlet-heat14-e3949bfa/rides/e2-pressure-garden/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat14-e3949bfa/rides/e2-pressure-garden/verdict-slip.json",
+  "era": 6,
+  "contract": "e2-pressure-garden",
+  "sha256": "96597a8f40c372884f7456712357795a5ec5a875eab59e3991bf14dbada13111",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:395a7a37",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 227,
+          "timeAlive": 360
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 227,
+          "timeAlive": 360
+        },
+        "ticks": 11400,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:395a7a37",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 227,
+          "timeAlive": 360
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 227,
+          "timeAlive": 360
+        },
+        "ticks": 11400,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}

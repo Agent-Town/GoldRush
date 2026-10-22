@@ -6,7 +6,7 @@ Wants=network-online.target
 [Service]
 WorkingDirectory=/opt/goldrush
 EnvironmentFile=/etc/goldrush-assay.env
-ExecStart=/root/.nvm/versions/node/v26.4.0/bin/node scripts/assay-worker.mjs
+ExecStart=/root/.nvm/versions/node/v26.12.1/bin/node scripts/assay-worker.mjs
 Restart=always
 RestartSec=20
 MemoryMax=750M

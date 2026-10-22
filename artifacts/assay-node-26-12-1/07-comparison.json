@@ -1,0 +1,50 @@
+{
+  "file": "artifacts/gauntlet-heat14-e3949bfa/rides/e3-moth-season/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat14-e3949bfa/rides/e3-moth-season/verdict-slip.json",
+  "era": 6,
+  "contract": "e3-moth-season",
+  "sha256": "dc26946a9e3c1ae77b4e6f2c797b7b821732aafc4b5d255de2faebab8bbd1ad6",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:ce9c8f35",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 455,
+          "timeAlive": 360
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 455,
+          "timeAlive": 360
+        },
+        "ticks": 11400,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:ce9c8f35",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 455,
+          "timeAlive": 360
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 455,
+          "timeAlive": 360
+        },
+        "ticks": 11400,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}

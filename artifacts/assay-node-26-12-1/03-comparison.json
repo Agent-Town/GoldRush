@@ -1,0 +1,50 @@
+{
+  "file": "artifacts/gauntlet-heat14-e3949bfa/rides/e10-ember-shore/watch-reel.json",
+  "slip": "artifacts/gauntlet-heat14-e3949bfa/rides/e10-ember-shore/verdict-slip.json",
+  "era": 6,
+  "contract": "e10-ember-shore",
+  "sha256": "4cb6a7637c2c33b27967b02d97b0a247cd396577db9e23aca3e05cbf85a1f4b7",
+  "runtimes": [
+    {
+      "version": "26.4.0",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:d3959e47",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 60,
+          "timeAlive": 360
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 60,
+          "timeAlive": 360
+        },
+        "ticks": 11400,
+        "engine": "headless-contract-sim"
+      }
+    },
+    {
+      "version": "26.12.1",
+      "verdict": "verified",
+      "replay": {
+        "eventLogHash": "fnv1a32:d3959e47",
+        "outcome": {
+          "secured": true,
+          "waves": 12,
+          "gold": 60,
+          "timeAlive": 360
+        },
+        "securedSnapshot": {
+          "waves": 12,
+          "gold": 60,
+          "timeAlive": 360
+        },
+        "ticks": 11400,
+        "engine": "headless-contract-sim"
+      }
+    }
+  ],
+  "identical": true
+}
