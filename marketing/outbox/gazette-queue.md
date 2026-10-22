@@ -3216,3 +3216,11 @@ Six fresh claim seeds are ready for October 26–November 2 UTC. Earlier weeks s
 the registry, and the public agent instructions include all eight rotations.
 merge `4b7c7b2be` · review `reviews/rotation-r2026w44.md`
 ROUNDUP-CLASS — 2026-W43; s3263 performs the October 21 RT-01 duty. On main, awaiting the next authorized attended deployment before October 26 00:00 UTC. Week 43 is already overdue and must be carried by that deployment too. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — The replay runtime advances after twenty matching comparisons
+The replay runtime pin moves to Node 26.12.1 after twenty complete tape comparisons
+produce identical results under both runtimes. Two historical claim mismatches remain
+recorded separately. The server runtime and engine synchronization are still pending.
+merge `2bbc6df06` · pin `5d6e46fb2` · review `reviews/assay-node-26-12-1.md`
+ROUNDUP-CLASS — 2026-W43; s3293 records the attended October 22 landing and same-era pin 76. Public build 299b1db5 is verified; the deploy reports ASSAYER SYNC FAILED and the droplet retains the older runtime tree (F-3293-1). Draft only; publication stays owner-only.
