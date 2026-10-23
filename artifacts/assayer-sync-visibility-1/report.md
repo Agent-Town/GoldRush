@@ -52,3 +52,7 @@ ASSAYER SYNC FAILED mid-step: half=rsync rsync exit=23 step exit=23; droplet may
 3. Any live deployment or remote repair remains attended-owned and was not authorized for this task.
 
 All implementation items are complete, but no delivery commit was created. Changes remain in the worktree; starting HEAD is `4cd9cfc6124c059dcee55f1e0d8860dcc45d7af0`. This is not a no-op: the implementation and evidence are preserved at the authorized paths.
+
+## s3307 integration update — 2026-10-23
+
+The earlier commit-blocked remainder is superseded: the verified stale index lock was preserved, delivery committed as 4fe2becb802a78136f3a5e4256897c2c8154e563, and the drain accepted in reviews/assayer-sync-visibility-1.md. Current-main edge-probe-json checks passed within the 126-test targeted battery. The original report above remains the implementer's completion record.
