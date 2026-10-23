@@ -1,0 +1,164 @@
+
+===== policy — rc=2 0.1s =====
+
+  ⛔ CANNOT VERIFY — DO NOT DRAIN, DO NOT QUEUE off this run
+    corpus tree     : LINKED WORKTREE — the board lives in /Users/robin/Claude/Projects/Gold Rush
+    cwd             : /Users/robin/.goldrush/fire-s3307/wt-assayer
+    tasks/goals.json and tasks/done/ are TRACKED, so this tree hands the check a
+    board FROZEN at that branch's commit. A master registered after the branch
+    point resolves to "? UNKNOWN" — which exits 0 — and a leaf the owner has
+    since unblocked still reads "blocked". Measured s2224: from worktrees/lane-c
+    an already-SHIPPED master answered "? UNKNOWN" rc=0 where the repo root
+    answered "⛔ ALREADY SHIPPED — DO NOT QUEUE" rc=1 (F-2223-1).
+    Re-run from the repo root. Do NOT re-run elsewhere until it goes green.
+
+
+
+===== tsc — rc=0 6.1s =====
+
+
+===== build — rc=0 26.4s =====
+| props | 62 | 30189152 | 3172404 | 89% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 7 | 26457976 | 4353216 | 84% | compress |
+| finale | 2 | 4597344 | 469860 | 90% | compress |
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 1.7s of this 3.1s build (53%).
+2 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+  - vite:asset load (2528 calls)
+  - vite:asset-import-meta-url transform (30 calls)
+See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+[asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png
+
+
+===== E1 build — rc=0 9.9s =====
+[asset-diet] Herald dev-path art 1158214 bytes (1500000 byte ceiling).
+[asset-diet] 60 manifest GLBs 119390904 -> 17043272 bytes (86% cut); 8 plate-class PNGs 26703061 -> 3744766 bytes (86% cut); herald spot cuts 375470 bytes.
+[asset-diet] GLB bytes by manifest family:
+| Family | GLBs | Before bytes | After bytes | Cut | Policy |
+| --- | ---: | ---: | ---: | ---: | --- |
+| terrain | 5 | 36156888 | 4406152 | 88% | compress |
+| landmarks | 25 | 49985436 | 6833280 | 86% | compress |
+| panoramas | 5 | 2510108 | 436048 | 83% | compress |
+| town-buildings | 8 | 16651832 | 2452664 | 85% | compress |
+| town-era-variants | 0 | 0 | 0 | 0% | compress |
+| props | 16 | 9763068 | 2020176 | 79% | compress |
+| rail-element | 1 | 35048 | 35048 | 0% | skip: Run3dPilot instances raw geometry without the node transform required by Meshopt quantization; preserve sleeper size and grounding until that consumer is fixed. |
+| bosses | 1 | 4323572 | 894952 | 79% | compress |
+| finale | 0 | 0 | 0 | 0% | compress |
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/crafting/CraftingQueueContract" without a file extension (vite.config.ts:20:8). Add the file extension
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 900 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+quantize: Skipping TEXCOORD_0; out of [0,1] range.
+[asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: twin-banks-landmarks-atlas-jwex6-r3-diet-c2bea0ac.png
+
+
+===== payload — rc=0 0.0s =====
+    2100135  cast  char-newsie-mei-sheet-walk8.png
+    1448922  cast  char-prospector-sheet-hover8.png
+    1375134  hero  char-hero-sheet-walkdiag8.png
+
+Save Data arm (advance stream drops dynamo-hall, stamp-mill): 34172136 bytes (-183160)
+excluded by declaration: 10 families, 5882455 bytes in this build
+     758234  char-hero-sheet-attack8-r2-east-clean-v1.png
+     320931  char-hero-sheet-work8-east-clean-v1.png
+     429930  char-hero-sheet-work8-north-clean-v1.png
+     956740  char-hero-sheet-work8-south-clean-v7.png
+     563224  char-hero-sheet-work8-west-recovered-v1.png
+        107  era-e1-frontier-loop.js
+    1800881  era-e1-frontier-loop.mp3
+      86344  the-claim-panorama.glb
+     966064  the-claim-terrain.glb
+          0  version.json (not emitted by this build)
+
+cue-window corpus cross-check: 2 files, 82 families observed, 2 undeclared
+  UNDECLARED (reported, not counted): char-hero-sheet-attack8.png
+  UNDECLARED (reported, not counted): char-hero-sheet-work8.png
+
+first-town payload demand-paged: 0 bytes
+first-town payload declared: 34355296 bytes
+first-town payload: 34355296 bytes
+
+
+===== slice and adjacent script guards — rc=0 20.1s =====
+✔ TEETH: dropping a test-<thing>.mjs from a live gate now REDS (the real silent-drop) (255.77225ms)
+✔ EDGE: a test file OUTSIDE scripts/ is REACHED when a gate calls it (189.785084ms)
+✔ ADMISSION CONTROL: a `test-` prefix in a DIRECTORY name does not admit the file (155.58225ms)
+✔ LAW ROOT: a battery only a LAW surface calls is REACHED, and so are its leaves (190.448166ms)
+✔ LAW ROOT TEETH: dropping a leaf from the chain now REDS — the whole point (116.991083ms)
+✔ LAW ROOT: a law citing a script package.json does NOT define confers nothing (138.595708ms)
+✔ RETENTION: --update-baseline SUPERSEDES a healed entry instead of deleting its reason (138.618667ms)
+✔ RETENTION: `superseded` excuses NOTHING — a re-orphaned gate reds as FRESH (127.6635ms)
+✔ a NON-guard-named step of a gate script is admitted as a subject (118.409417ms)
+✔ CONTROL: that same file, named by nothing and persisted nowhere, is invisible (121.732042ms)
+✔ DROPPING a persisted battery step from its battery reds as a NEW orphan (127.365542ms)
+✔ a dropped battery step can be grandfathered with a reason, like any orphan (139.685ms)
+✔ --update-baseline is ADDITIVE: a step no script names any longer is KEPT (134.856792ms)
+✔ a step of a NON-gate script (dev, census) is never admitted (123.738042ms)
+✔ REGRESSION: the real repo persists asset-diet.mjs as a battery step (0.698ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (352.629917ms)
+ℹ tests 126
+ℹ suites 0
+ℹ pass 126
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20036.985625
+
+
+===== diff-selected guards — rc=0 2456.9s =====
+run-guards: 11 file(s) changed since 231d1145d
+  base gate: test:node-guards, test:power-budget, test:task-guards, test:citations, test:gate-callers
+  (no path rule matched -- base gate only)
+
+PASS  rc=0  2453s  test:node-guards
+PASS  rc=0  0s  test:power-budget  p95=0.326ms
+PASS  rc=0  0s  test:task-guards
+PASS  rc=0  2s  test:citations
+PASS  rc=0  0s  test:gate-callers
+
+guards: 5/5 passed
+guard-stats: appended 5 record(s) to /Users/robin/.goldrush/fire-s3307/wt-assayer/logs/guard-stats.jsonl
+
+
+===== evidence budget — rc=0 0.2s =====
+evidence-budget — the evidence bytes this landing adds
+  range    : 231d1145d..HEAD
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 7 changed evidence path(s)
+  added    : 0.4 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 0.4 MB
+  limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+          0.4 MB  A  artifacts/assayer-sync-visibility-1/build.txt
+          0.0 MB  A  artifacts/assayer-sync-visibility-1/guards.txt
+          0.0 MB  A  artifacts/assayer-sync-visibility-1/report.md
+          0.0 MB  A  artifacts/assayer-sync-visibility-1/deploy-contract.txt
+          0.0 MB  A  artifacts/assayer-sync-visibility-1/new-guard.txt
+          0.0 MB  A  artifacts/assayer-sync-visibility-1/deploy-site-contract.txt
+  tree     : 9637.9 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 0.4 MB added, inside the 40.0 MB ceiling.
+
+
+SUMMARY {"policy":2,"tsc":0,"build":0,"E1 build":0,"payload":0,"slice and adjacent script guards":0,"diff-selected guards":0,"evidence budget":0}
+OVERALL rc=1
+transcript -> artifacts/s3307/drain-gates.txt

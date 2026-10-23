@@ -1,0 +1,60 @@
+[
+  [
+    "policy",
+    "node",
+    "scripts/drain-block-check.mjs",
+    "--strict",
+    "tasks/assayer-sync-visibility-1.md"
+  ],
+  [
+    "tsc",
+    "npx",
+    "tsc",
+    "--noEmit"
+  ],
+  [
+    "build",
+    "npm",
+    "run",
+    "build"
+  ],
+  [
+    "E1 build",
+    "env",
+    "GR_RELEASE=e1",
+    "npm",
+    "run",
+    "build"
+  ],
+  [
+    "payload",
+    "node",
+    "scripts/first-town-payload.mjs"
+  ],
+  [
+    "slice and adjacent script guards",
+    "node",
+    "--test",
+    "scripts/assayer-sync-visibility.test.mjs",
+    "scripts/gate-caller-audit.test.mjs",
+    "scripts/edge-alarm-clock-guard.test.mjs",
+    "scripts/edge-probe-json.test.mjs",
+    "scripts/edge-probe-composite-guard.test.mjs",
+    "scripts/deploy-budget.test.mjs",
+    "scripts/deploy-mirror-allowlist.test.mjs"
+  ],
+  [
+    "diff-selected guards",
+    "node",
+    "scripts/run-guards.mjs",
+    "--changed-since",
+    "231d1145d"
+  ],
+  [
+    "evidence budget",
+    "node",
+    "scripts/evidence-budget.mjs",
+    "231d1145d",
+    "HEAD"
+  ]
+]

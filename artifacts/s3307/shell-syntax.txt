@@ -1,0 +1,18 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-10-23T02:27:27.363Z — s3307 shell syntax ########
+cwd=/Users/robin/.goldrush/fire-s3307/wt-assayer
+
+===== deploy syntax =====
+$ bash -n scripts/deploy.sh
+rc=0 0.0s
+
+
+===== health syntax =====
+$ bash -n scripts/health-watch.sh
+rc=0 0.0s
+
+
+SUMMARY {"deploy syntax":0,"health syntax":0}
+OVERALL rc=0

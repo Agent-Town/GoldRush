@@ -1,0 +1,19 @@
+evidence-budget — the evidence bytes this landing adds
+  range    : 5198186d2d35e79699d0c0f4a8eddcedd3a94d11..HEAD
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 23 changed evidence path(s)
+  added    : 4.0 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 4.0 MB
+  limit    : 40.0 MB per landing (scripts/evidence-budget-baseline.json)
+          1.9 MB  A  artifacts/assayer-sync-visibility-1/drain-s3307/mobile-chrome-plain.png
+          1.2 MB  A  artifacts/assayer-sync-visibility-1/drain-s3307/desktop-chrome-plain.png
+          0.5 MB  A  artifacts/assayer-sync-visibility-1/drain-s3307/drain-gates.txt
+          0.4 MB  A  artifacts/assayer-sync-visibility-1/build.txt
+          0.0 MB  A  artifacts/assayer-sync-visibility-1/guards.txt
+          0.0 MB  A  artifacts/assayer-sync-visibility-1/drain-s3307/browser-gates.txt
+          0.0 MB  A  artifacts/assayer-sync-visibility-1/report.md
+          0.0 MB  A  artifacts/assayer-sync-visibility-1/drain-s3307/deploy-contract-gates.txt
+      … and 14 more growing path(s)
+  tree     : 9641.5 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 4.0 MB added, inside the 40.0 MB ceiling.

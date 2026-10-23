@@ -1,0 +1,227 @@
+assert.match(fx.sync(), /ASSAYER SYNCED/);
+  assert.equal(fs.existsSync(fx.marker), false);
+});
+
+test('health alerts immediately, hourly, and resets after recovery', t => {
+  const fx = fixture(t);
+  assert.equal(fx.health(10000), '');
+  fx.sync({ RSYNC_RC: '23' });
+  assert.match(fx.health(10000), /ASSAYER BEHIND:.*build abcdef12 at 2026-10-23T02:00:00Z; run bash scripts\\/attended\\/droplet-maintenance.sh status and the runbook sync/);
+  assert.equal(fx.health(13599), '');
+  assert.match(fx.health(13600), /ASSAYER BEHIND/);
+  fx.sync();
+  assert.equal(fx.health(13601), '');
+  fx.sync({ RSYNC_RC: '23' });
+  assert.match(fx.health(13602), /ASSAYER BEHIND/);
+});
+EOF
+mkdir -p artifacts/assayer-sync-visibility-1
+node --test scripts/assayer-sync-visibility.test.mjs > artifacts/assayer-sync-visibility-1/new-guard.txt 2>&1
+cat artifacts/assayer-sync-visibility-1/new-guard.txt" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 0ms:
+✖ rsync failure prints only its last ten scrubbed diagnostics and records drift (7.442917ms)
+✖ remote sed/restart failure identifies its half and preserves rsync exit zero (4.969958ms)
+✖ successful sync removes an earlier drift marker (5.2125ms)
+✖ health alerts immediately, hourly, and resets after recovery (14.424875ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 71.042084
+
+✖ failing tests:
+
+test at scripts/assayer-sync-visibility.test.mjs:37:1
+✖ rsync failure prints only its last ten scrubbed diagnostics and records drift (7.442917ms)
+  AssertionError [ERR_ASSERTION]: bash: line 6: MIRROR_FILTERS[@]: unbound variable
+  
+  
+  127 !== 0
+  
+      at run (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:27:12)
+      at Object.sync (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:32:25)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:39:21)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.start (node:internal/test_runner/test:944:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:297:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 127,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+test at scripts/assayer-sync-visibility.test.mjs:50:1
+✖ remote sed/restart failure identifies its half and preserves rsync exit zero (4.969958ms)
+  AssertionError [ERR_ASSERTION]: bash: line 6: MIRROR_FILTERS[@]: unbound variable
+  
+  
+  127 !== 0
+  
+      at run (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:27:12)
+      at Object.sync (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:32:25)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:52:21)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:297:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 127,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+test at scripts/assayer-sync-visibility.test.mjs:59:1
+✖ successful sync removes an earlier drift marker (5.2125ms)
+  AssertionError [ERR_ASSERTION]: bash: line 6: MIRROR_FILTERS[@]: unbound variable
+  
+  
+  127 !== 0
+  
+      at run (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:27:12)
+      at Object.sync (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:32:25)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:61:6)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 127,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+test at scripts/assayer-sync-visibility.test.mjs:66:1
+✖ health alerts immediately, hourly, and resets after recovery (14.424875ms)
+  AssertionError [ERR_ASSERTION]: bash: line 6: MIRROR_FILTERS[@]: unbound variable
+  
+  
+  127 !== 0
+  
+      at run (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:27:12)
+      at Object.sync (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:32:25)
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/worktrees/lane-a/scripts/assayer-sync-visibility.test.mjs:69:6)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1047:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+      at Test.postRun (node:internal/test_runner/test:1173:19)
+      at Test.run (node:internal/test_runner/test:1101:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:744:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 127,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+exec
+/bin/zsh -lc "python3 - <<'PY'
+from pathlib import Path
+p=Path('scripts/assayer-sync-visibility.test.mjs'); s=p.read_text().replace('MIRROR_FILTERS=();','MIRROR_FILTERS=(\"--filter=-s *\");');p.write_text(s)
+PY
+node --test scripts/assayer-sync-visibility.test.mjs > artifacts/assayer-sync-visibility-1/new-guard.txt 2>&1
+rc="'$?
+cat artifacts/assayer-sync-visibility-1/new-guard.txt
+exit "$rc"' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 2240ms:
+✔ rsync failure prints only its last ten scrubbed diagnostics and records drift (835.823583ms)
+✔ remote sed/restart failure identifies its half and preserves rsync exit zero (613.71825ms)
+✔ successful sync removes an earlier drift marker (389.364334ms)
+✔ health alerts immediately, hourly, and resets after recovery (451.451042ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2329.814542
+
+exec
+/bin/zsh -lc 'node --test scripts/gate-caller-audit.test.mjs scripts/edge-alarm-clock-guard.test.mjs scripts/edge-probe-composite-guard.test.mjs scripts/deploy-budget.test.mjs scripts/deploy-mirror-allowlist.test.mjs > artifacts/assayer-sync-visibility-1/guards.txt 2>&1' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+exec
+/bin/zsh -lc 'bash -n scripts/deploy.sh && bash -n scripts/health-watch.sh && npx tsc --noEmit > artifacts/assayer-sync-visibility-1/tsc.txt 2>&1 && npm run build > artifacts/assayer-sync-visibility-1/build.txt 2>&1' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+exec
+/bin/zsh -lc 'bash scripts/test-deploy-contract.sh > artifacts/assayer-sync-visibility-1/deploy-contract.txt 2>&1 && bash scripts/test-deploy-site-contract.sh > artifacts/assayer-sync-visibility-1/deploy-site-contract.txt 2>&1' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 7115ms:
+ succeeded in 18363ms:
+exec
+/bin/zsh -lc "python3 - <<'PY'
+from pathlib import Path
+p=Path('scripts/assayer-sync-visibility.test.mjs');s=p.read_text();s=s.replace(\"  stub('date',\", \"  stub('osascript', 'exit 0');\\n  stub('date',\")
+s=s.replace(\"  const health = now => run('STATE=\\\""'$HOME/state'"\\\"; touch \\\""'$STATE'"\\\"; alert() { printf \\\"ALERT: %s\\\\\\\\n\\\" \\\""'$*'"\\\"; };\\\\n' + block('scripts/health-watch.sh', 'ASSAYER_DRIFT_CHECK'), { NOW: String(now) });\", \"  const healthSource = fs.readFileSync(new URL('scripts/health-watch.sh', root), 'utf8');\\n  const notifier = healthSource.slice(healthSource.indexOf('ts() {'), healthSource.indexOf('runner_alive()'));\\n  assert.match(notifier, /osascript/);\\n  const health = now => run('STATE=\\\""'$HOME/state'"\\\"; LOG=\\\""'$HOME/health.log'"\\\"; touch \\\""'$STATE'"\\\"; : > \\\""'$LOG'"\\\";\\\\n' + notifier + block('scripts/health-watch.sh', 'ASSAYER_DRIFT_CHECK') + '\\\\ncat \\\""'$LOG'"\\\"', { NOW: String(now) });\")
+p.write_text(s)
+PY
+rg -n 'healthSource|const health' scripts/assayer-sync-visibility.test.mjs
+node --test scripts/assayer-sync-visibility.test.mjs > artifacts/assayer-sync-visibility-1/new-guard.txt 2>&1
+rc="'$?
+tail -10 artifacts/assayer-sync-visibility-1/new-guard.txt
+exit "$rc"' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 1684ms:
+✔ successful sync removes an earlier drift marker (387.98025ms)
+✔ health alerts immediately, hourly, and resets after recovery (652.545791ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1767.333625
+
+exec
+/bin/zsh -lc 'git diff --stat; tail -16 artifacts/assayer-sync-visibility-1/guards.txt; tail -4 artifacts/assayer-sync-visibility-1/deploy-contract.txt; tail -4 artifacts/assayer-sync-visibility-1/deploy-site-contract.txt' in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 0ms:
+ package.json            |  2 +-
+ scripts/deploy.sh       | 35 ++++++++++++++++++++++++++++++++---
+ scripts/health-watch.sh | 19 +++++++++++++++++++
+ 3 files changed, 52 insertions(+), 4 deletions(-)
+✔ a NON-guard-named step of a gate script is admitted as a subject (118.468958ms)
+✔ CONTROL: that same file, named by nothing and persisted nowhere, is invisible (118.703417ms)
+✔ DROPPING a persisted battery step from its battery reds as a NEW orphan (118.674125ms)
+✔ a dropped battery step can be grandfathered with a reason, like any orphan (116.707208ms)
+✔ --update-baseline is ADDITIVE: a step no script names any longer is KEPT (120.406125ms)
+✔ a step of a NON-gate script (dev, census) is never admitted (115.564958ms)
+✔ REGRESSION: the real repo persists asset-diet.mjs as a battery step (0.655416ms)
+✔ POSITIVE CONTROL: the real repo passes, with a non-empty measured subject (267.041333ms)
+ℹ tests 90
+ℹ suites 0
+ℹ pass 90
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18473.438833
+[deploy] 2026-10-23 09:01:19 FAILED: pages deploy — wrangler exited 0 but published no URL — see logs/deploy.log
+PASS alias-whitespace-sleeps (rc=0, 0s)
+PASS default verify schedule (7 attempts; sleeps 10/15/20/30/45/60; ~180s)
+deploy contract PASS (production alias current/stale/500/retry/late-promotion/whitespace-sleeps/no-url; strict 0/2/3/4/7; default failures return 0)
+  ran poisoned-but-real (DEPLOYED ok x1, FAILED x0)
+  ran skip-no-wrangler
+  ran skip-no-token
+deploy-site contract PASS (no-url, real-url, wrangler-red, poisoned-log, poisoned-but-real, 2 skips)
+
+ succeeded in 25745ms:
+codex
+The four new fixture tests pass, including both failure halves, address scrubbing, marker removal, and hourly alerts. The 90 existing guards and both deploy contract suites also pass. The final build is still running; afterward I’ll record the evidence and commit the scoped changes.
+
+exec
+/bin/zsh -lc "git diff -- scripts/deploy.sh scripts/health-watch.sh; git status --short; rg -c '"'^PASS '"' artifacts/assayer-sync-visibility-1/deploy-contract.txt" in /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a
+ succeeded in 178ms:
+ M package.json
+ M scripts/deploy.sh
+ M scripts/health-watch.sh
+?? artifacts/assayer-sync-visibility-1/
+?? scripts/assayer-sync-visibility.test.mjs
+15
+

@@ -1,0 +1,14 @@
+gate battery transcript (append-only — see scripts/gate-battery.mjs)
+
+
+######## BATTERY 2026-10-23T02:10:21.308Z — s3307 live-board policy correction ########
+cwd=/Users/robin/Claude/Projects/Gold Rush
+
+===== live-root policy =====
+$ node scripts/drain-block-check.mjs --strict tasks/done/20261023-085857-assayer-sync-visibility-1.md
+rc=0 0.1s
+  ✅ CLEAR — assayer-sync-visibility-1.md [assayer-sync-visibility-1] status="queued"
+
+
+SUMMARY {"live-root policy":0}
+OVERALL rc=0
