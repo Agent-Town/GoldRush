@@ -1,0 +1,29 @@
+{
+  "verify": {
+    "4fe2becb8": {
+      "ancestor": true,
+      "subject": "fix: assayer sync diagnostics and persistent drift alert — fixtures 4/4, existing guards 90/90; tsc and build green"
+    },
+    "b5d6d3c32": {
+      "ancestor": true,
+      "subject": "fix: merge assayer sync visibility — preserve current guard roster and JSON-aware health probe"
+    },
+    "614f84ca5": {
+      "ancestor": true,
+      "subject": "fix: assayer sync visibility — gated drain record and ledger"
+    }
+  },
+  "leaves": [
+    {
+      "id": "assayer-sync-visibility-1",
+      "title": "A failed droplet sync during a deploy becomes diagnosable and loud: scrubbed stderr kept and printed, a drift marker, an hourly health alert while the box is behind, a rostered guard (F-SRV-3)",
+      "status": "merged",
+      "taskFile": "assayer-sync-visibility-1.md",
+      "lane": "lane-a (Astra, gpt-6-astra)",
+      "authoredAt": "2026-10-23",
+      "authoredBy": "attended (Opus 5.5), from F-SRV-3, 2026-10-23",
+      "queuedAt": "2026-10-23",
+      "mergeHash": "b5d6d3c3248fdf0c4f61c853c040b651c650cf4f"
+    }
+  ]
+}
