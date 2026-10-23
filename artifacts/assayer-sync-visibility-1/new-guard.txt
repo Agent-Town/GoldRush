@@ -1,0 +1,24 @@
+✔ rsync failure prints only its last ten scrubbed diagnostics and records drift (284.995167ms)
+ℹ ASSAYER SYNC FAILED mid-step: half=rsync rsync exit=23 step exit=23; droplet may be mixed-state — run the runbook sync by hand before trusting fresh verdicts
+  diagnostic-3 <ip> <ip> <ip>
+  diagnostic-4 <ip> <ip> <ip>
+  diagnostic-5 <ip> <ip> <ip>
+  diagnostic-6 <ip> <ip> <ip>
+  diagnostic-7 <ip> <ip> <ip>
+  diagnostic-8 <ip> <ip> <ip>
+  diagnostic-9 <ip> <ip> <ip>
+  diagnostic-10 <ip> <ip> <ip>
+  diagnostic-11 <ip> <ip> <ip>
+  diagnostic-12 <ip> <ip> <ip>
+
+✔ remote sed/restart failure identifies its half and preserves rsync exit zero (398.314958ms)
+✔ successful sync removes an earlier drift marker (434.425208ms)
+✔ health alerts immediately, hourly, and resets after recovery (654.742083ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1816.675417
