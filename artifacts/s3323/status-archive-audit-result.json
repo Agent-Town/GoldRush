@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-23T22:09:47.886Z",
+  "initial": {
+    "command": "node scripts/status-archive-audit.mjs",
+    "runtime": "v23.11.1",
+    "result": "Fatal heap exhaustion during unbounded history scan; wrapper cat masked shell status, no successful audit claimed",
+    "evidence": "status-archive-audit-unbounded.txt; complete stderr retained in launcher logs/fire-20261024.log"
+  },
+  "bounded": {
+    "command": "node scripts/status-archive-audit.mjs --limit 40 --quiet",
+    "runtime": "v26.4.0",
+    "code": 0,
+    "signal": null,
+    "seconds": 2.921
+  }
+}
