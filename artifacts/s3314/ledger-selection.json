@@ -1,0 +1,55 @@
+{
+  "corpus": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "rows": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 23 COMPLETE (s3307, 2026-10-23T03:02Z):** Today’s snapshot was pulled and pushed after 02:10 UTC to the verified PRIVATE archive; coverage is 61/61 days August 24–October 23. Strict exposure gate inspected 4,212 keys in 61 readable mirrors, zero account-class or unrecognised rows. Live ledger-backups head 659263e0616df47b2dc786084fb4e8aa3f6c79b9; FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, both remote heads verified. The server backup's first Node 26.12.1 run succeeded. No private corpus enters the public tree. Next coverage day October 24 after 02:10 UTC. Evidence: artifacts/s3307/ledger-pull.txt, ledger-push.txt, mirror-freshness-after.txt, fire-memory.txt, private-heads-after.txt, private-visibility.json, droplet-runtime.json, report.md.",
+      "where": "1"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 5,
+      "line": "📰 **TK-01 OCTOBER 22 COMPLETE (s3304, 2026-10-23 local):** `marketing/outbox/ticker-digest-2026-10-22.md` records the replay runtime landing (`2bbc6df06`) and same-era pin (`5d6e46fb2`), with server synchronization still pending. UTC+07 census: 69 main updates, 71 pinned first-parent commits (one fast-forward introduces a three-commit chain), one player-path event and one engine pin; September 25 busy-day control 136. All subjects and 808 distinct changed paths reviewed; no non-ancestral replacements. Existing Gazette coverage verified, publication owner-only. Evidence: `artifacts/s3304/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`.",
+      "where": "5"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 7,
+      "line": "🟢 **F-3293-1 CLOSED (s3307, 2026-10-23T03:02Z) — COUNTY RUNTIME AND WEEK-43 STANDINGS RECOVERED.** The attended Node switch is main commit 359052989 (handover 13z-115). Independent read-only checks: ledger and assay active on Node 26.12.1 with zero restarts, build 299b1db5, engine hash aa1435e29f312553b1fa9329ca6872bb1601a5b82b50741c400b95de8be895a3 identical to main and registered, whole weeks 37–44 rotation registry equal to main. Canonical week-43 transfer standings now returns 200 JSON with ok:true, matching direct Pages; week-42 control and both stats endpoints also return healthy JSON. The backup unit's first run on the new runtime ended at 02:02:32 UTC with status 0. This supersedes the October 22 stale-copy and bad_rotation observations; the existing Node-switch word has been executed and is no longer owed. No new player tape or production deployment by this fire. The historical mid-step failure's exact cause is unknown; its diagnostics corrective is separately landed as assayer-sync-visibility-1. Evidence: artifacts/s3307/droplet-runtime.json, live-probe.json, final-probe/live-probe.json, engine-main.json, report.md.",
+      "where": "7"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 145,
+      "line": "🔔 **ASSAYER SYNC VISIBILITY 1 — `assayer-sync-visibility-1` SHIPPED (s3307, 2026-10-23), merge `b5d6d3c3248fdf0c4f61c853c040b651c650cf4f`; F-SRV-3.** The deploy captures and scrubs both sync halves, records drift after a mid-step failure, clears it on success, and the health watcher alerts at most hourly. Gates: tsc and both builds exit 0; E1 payload 34,355,296 B; targeted guards 126/126; diff-selected batteries 5/5 (full Node exit 0); both deploy contracts; 34/34 adjacent browser checks and 2/2 plain boots with zero console/page errors. Engine hash unchanged. Review: reviews/assayer-sync-visibility-1.md; evidence: artifacts/assayer-sync-visibility-1/drain-s3307/. No public deployment by this fire.",
+      "where": "145"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 355,
+      "line": "🔺 **F-2299-1 — OWNER'S DESK (2026-09-24, from the rotation check after the owner's \"Ok, I updaed all the keys\"): the rotation's last mile: two new values into `.env.local`, and the Claude Code token still the exposed one.** VERIFIED 2026-09-24 read-only, no value printed or copied: the edge API token in `.env.local` is DEAD at its provider (the token-verify endpoint answers `1000 Invalid API Token`) and the voice key is DEAD (`HTTP 401` on the user endpoint), so both rotations happened at the providers; but `.env.local` was last written 2026-09-20, so the file `scripts/deploy.sh` sources still holds the dead values and **every deploy aborts at the wrangler auth until the owner pastes the new `CLOUDFLARE_API_TOKEN=` and `ELEVENLABS_API_KEY=` lines** (a failed deploy in a fire log until then is THIS, not a regression; do not file it). The fires' own credential, `CLAUDE_CODE_OAUTH_TOKEN` (the \"coding-agent subscription token\" of ruling 1), still authenticates through the fires' exact path (`claude auth status` under `~/.claude-fires` reads loggedIn; a one-word `-p` probe answered), so the value exposed on 2026-08-25 is STILL LIVE: the owner mints a new one (`claude setup-token`), pastes it as `CLAUDE_CODE_OAUTH_TOKEN=`, and revokes the old one in his account; the attended session re-probes and closes. The droplet holds no stray copy (`find / -name .env.local` empty, `/opt/goldrush/.env.local` absent, read-only over the deploy's own ssh path). The Codex login was refreshed today (`~/.codex/auth.json`, \"Logged in using ChatGPT\"). Retires when: both new values answer live to the same read-only calls, the Claude probe passes on a NEW value (`.env.local` rewritten) and the owner says the old one is revoked. The original finding is the F-2299-1 row of s2299 below. ➡️ **UPDATE 2026-09-24 18:15 local (owner: \"I rotated all tokens in the .env.local file\", \"I rolled it again\"):** the owner rotated all three at the providers and minted a new Claude Code token, but pasted twice into the sibling folder's copy (`Gold Rush-history-local/.env.local`, the pre-rewrite local history), which nothing reads; the attended session found it by mtime, verified its values read-only (Cloudflare `active`, ElevenLabs `200`, the new Claude token answers through the fires' path, per-line hashes: the three rotated lines DIFFERENT, the account id, the router key and the droplet host identical), backed the old root file up outside every git tree (`~/.goldrush/env.local.bak-2026-09-24`, mode 600; a `.bak` beside `.env.local` would NOT be gitignored) and copied the edited file into the repo root; re-verified from the root: Cloudflare `active`, ElevenLabs `200`, Claude `ok`, `wrangler whoami` logged in. DEPLOYS UNBLOCKED. STILL OPEN: the Claude Code token exposed on 2026-08-25 still authenticated at 18:14 when probed from the old file, so it is not revoked; the desk item narrows to that one revocation (the owner's account settings), verified afterwards by the same probe against the backup. ➡️ **UPDATE 2026-09-24 23:2x local (owner, verbatim: \"I used the log out of all devices button in the web ui. Then I logged in again, logged in here, then did claude setup-token, copied it in .env.local and then told you done.\"):** MEASURED, not inferred: after that button, the August token (from the backup) and the 18:13 token (minted before the button) BOTH still answer through the fires' auth path; the button ends browser and CLI sessions (this CLI needed `/login`) but does not revoke long-lived `claude setup-token` tokens. The CLI cannot revoke either (`claude auth logout` clears local credentials only; the only revoke code in the binary is a bundled Google OAuth library; the account endpoints refuse the token with `permission_error`, so its e-mail cannot be read from the token; every login recorded on this Mac is `robin@brainstem.health`, and the fires' config dir dates from 2026-07-08, so the token was minted on or before that day). The newest token (23:16) had again gone to the sibling folder's file; copied into the repo root with the 18:15 root kept at `~/.goldrush/env.local.bak-2026-09-24-1815` (mode 600); root re-verified: Claude ok, Cloudflare active, ElevenLabs 200. REMAINING, owner-side: an Anthropic support request to revoke the Claude Code token minted on or before 2026-07-08 for `robin@brainstem.health` (the exposed one; the 2026-09-24 tokens stay), or its natural expiry; the attended session re-probes from the backup and closes the row when it fails. Exposure bound meanwhile: inference on the owner's subscription only (the account endpoints refuse it). ➡️ **SUPPORT REQUEST ISSUED (owner 2026-09-25, verbatim: \"support request is issued\"):** the revocation of the August Claude Code token is with Anthropic support; the attended session re-probes the backup token each session (`claude -p ok` under the fires' config from `~/.goldrush/env.local.bak-2026-09-24`) and closes this row, retires the desk item and removes both backup files (owner's word; `rm` prompts) on the first refusal. Until then: live, inference scope only. RULED 2026-09-26 (verbatim \"D - as you recommend it\"): the attended session keeps re-probing the backup token and retires this row, removing both backup files, on the first refusal.",
+      "where": "355"
+    }
+  ]
+}
