@@ -1,0 +1,9 @@
+deploy-site contract — script under test: /Users/robin/Claude/Projects/Gold Rush/worktrees/lane-a/scripts/deploy-site.sh
+  ran no-url (DEPLOYED ok x0, FAILED x1)
+  ran real-url (DEPLOYED ok x1, FAILED x0)
+  ran wrangler-red (DEPLOYED ok x0, FAILED x1)
+  ran poisoned-log (DEPLOYED ok x0, FAILED x1)
+  ran poisoned-but-real (DEPLOYED ok x1, FAILED x0)
+  ran skip-no-wrangler
+  ran skip-no-token
+deploy-site contract PASS (no-url, real-url, wrangler-red, poisoned-log, poisoned-but-real, 2 skips)

@@ -477,8 +477,25 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
         "--filter=-s *"
       )
       # MIRROR_FILTERS_END
-      if rsync -az --copy-unsafe-links --delete --timeout=60 "${MIRROR_FILTERS[@]}" ./ ${GR_DROPLET_HOST}:/opt/goldrush/ 2>/dev/null \
-        && ssh -o BatchMode=yes ${GR_DROPLET_HOST} "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" 2>/dev/null; then
+      # ASSAYER_SYNC_CAPTURE_BEGIN — exercised with offline command fixtures.
+      ASSAYER_ERR="$(mktemp "${TMPDIR:-/tmp}/gold-rush-assayer.XXXXXX")"
+      ASSAYER_HALF=rsync
+      ASSAYER_RSYNC_RC=not-run
+      ASSAYER_RC=1
+      if [ -n "$ASSAYER_ERR" ]; then
+        rsync -az --copy-unsafe-links --delete --timeout=60 "${MIRROR_FILTERS[@]}" ./ "${GR_DROPLET_HOST}:/opt/goldrush/" >"$ASSAYER_ERR" 2>&1
+        ASSAYER_RSYNC_RC=$?
+        ASSAYER_RC=$ASSAYER_RSYNC_RC
+        if [ "$ASSAYER_RC" -eq 0 ]; then
+          ASSAYER_HALF=remote-sed/restart
+          ssh -o BatchMode=yes "$GR_DROPLET_HOST" "sed -i 's/^ASSAY_BUILD_ID=.*/ASSAY_BUILD_ID=$PUBLISHED_BUILD/' /etc/goldrush-assay.env && systemctl restart goldrush-ledger goldrush-assay" >>"$ASSAYER_ERR" 2>&1
+          ASSAYER_RC=$?
+        fi
+      else
+        ASSAYER_HALF=diagnostic-capture
+      fi
+      if [ "$ASSAYER_RC" -eq 0 ]; then
+        rm -f "$HOME/.goldrush/assayer-drift"
         note "ASSAYER SYNCED: droplet tree + pin $PUBLISHED_BUILD, services restarted"
         # F-DISK-0902: the first allowlisted sync measured 1,456 MB including protected node_modules;
         # 2,184 MB is that measured runtime weight plus 50% headroom.
@@ -487,8 +504,20 @@ for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
           if [ "$MIRROR_MB" -gt 2184 ]; then note "MIRROR-BLOAT: /opt/goldrush is ${MIRROR_MB} MB after sync (ceiling 2184) — the runtime mirror exceeded its measured weight plus 50%; check the allowlist before the next deploy"; else note "mirror weight after sync: ${MIRROR_MB} MB"; fi
         fi
       else
-        note "ASSAYER SYNC FAILED mid-step: droplet may be mixed-state — run the runbook sync by hand before trusting fresh verdicts"
+        note "ASSAYER SYNC FAILED mid-step: half=$ASSAYER_HALF rsync exit=$ASSAYER_RSYNC_RC step exit=$ASSAYER_RC; droplet may be mixed-state — run the runbook sync by hand before trusting fresh verdicts"
+        if [ -n "$ASSAYER_ERR" ]; then
+          # Scrub IPv4 and IPv6, including compressed and IPv4-mapped addresses,
+          # before any diagnostic reaches the console or persistent deploy log.
+          while IFS= read -r row || [ -n "$row" ]; do note "  $row"; done < <(
+            tail -n 10 "$ASSAYER_ERR" | sed -E 's/([[:xdigit:]]{0,4}:){2,}([[:xdigit:]]{0,4}|[0-9]{1,3}(\.[0-9]{1,3}){3})?(%[[:alnum:]_.-]+)?/<ip>/g; s/[0-9]{1,3}(\.[0-9]{1,3}){3}/<ip>/g'
+          )
+        fi
+        if ! { mkdir -p "$HOME/.goldrush" && printf '%s %s\n' "$PUBLISHED_BUILD" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > "$HOME/.goldrush/assayer-drift"; }; then
+          note "ASSAYER DRIFT MARKER FAILED: health-watch cannot report this drift"
+        fi
       fi
+      [ -z "$ASSAYER_ERR" ] || rm -f "$ASSAYER_ERR"
+      # ASSAYER_SYNC_CAPTURE_END
     else
       note "ASSAYER NOT SYNCED (box unreachable): fresh tapes will be unassayable until the runbook sync runs"
     fi

@@ -404,6 +404,25 @@ grep -v -e '^edgebad=' -e '^edgedark=' -e '^edgeslow=' "$STATE" > "$STATE.tmp" 2
 echo "edgedark=$DARKN" >> "$STATE"
 echo "edgeslow=$SLOWN" >> "$STATE"
 
+# ASSAYER_DRIFT_CHECK_BEGIN — wall-clock throttle, independent of edge alarms.
+ASSAYER_LAST=$(grep '^assayeralert=' "$STATE" 2>/dev/null | tail -1 | cut -d= -f2)
+case "$ASSAYER_LAST" in ''|*[!0-9]*) ASSAYER_LAST=0 ;; esac
+if [ -f "$HOME/.goldrush/assayer-drift" ]; then
+  ASSAYER_BUILD=unknown
+  ASSAYER_TIME=unknown
+  read -r ASSAYER_BUILD ASSAYER_TIME < "$HOME/.goldrush/assayer-drift" || :
+  ASSAYER_NOW=$(date +%s)
+  if [ "$ASSAYER_LAST" -eq 0 ] || [ "$((ASSAYER_NOW - ASSAYER_LAST))" -ge 3600 ] || [ "$ASSAYER_NOW" -lt "$ASSAYER_LAST" ]; then
+    alert "ASSAYER BEHIND: the droplet's engine copy did not sync for build ${ASSAYER_BUILD:-unknown} at ${ASSAYER_TIME:-unknown}; run bash scripts/attended/droplet-maintenance.sh status and the runbook sync"
+    ASSAYER_LAST=$ASSAYER_NOW
+  fi
+else
+  ASSAYER_LAST=0
+fi
+grep -v '^assayeralert=' "$STATE" > "$STATE.tmp" 2>/dev/null; mv "$STATE.tmp" "$STATE" 2>/dev/null || : > "$STATE"
+echo "assayeralert=$ASSAYER_LAST" >> "$STATE"
+# ASSAYER_DRIFT_CHECK_END
+
 PASS=ok
 AGENT_FAILURES=""
 if [ -n "$AGENT_MISSING" ]; then
