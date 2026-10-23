@@ -1,0 +1,28 @@
+{
+  "day": "2026-10-23",
+  "mainUpdates": 66,
+  "firstParentCommits": 66,
+  "distinctPaths": 633,
+  "playerPathEvents": 0,
+  "enginePins": 0,
+  "opsPlayerVisible": [
+    {
+      "hash": "3590529894cd69e637c83f2754e5e786477a0657",
+      "reason": "Week 43 standings recovered after the attended runtime and engine copy update",
+      "evidence": [
+        "docs/HANDOVER-2026-09-06-attended.md#13z-115",
+        "artifacts/s3307/report.md",
+        "artifacts/s3324/live-probe.json"
+      ]
+    }
+  ],
+  "excludedOps": [
+    {
+      "hash": "b5d6d3c3248fdf0c4f61c853c040b651c650cf4f",
+      "reason": "Review explicitly says operations-only; existing gameplay in a plain boot, diagnostics await next authorized deployment"
+    }
+  ],
+  "gazetteAlreadyCovered": true,
+  "headline": "Week 43 standings are available again after the replay server caught up. `359052989`.",
+  "headlineCharacters": 85
+}
