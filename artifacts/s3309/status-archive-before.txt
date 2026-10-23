@@ -1,0 +1,66 @@
+board corpus     : STATUS.md + 2 archive month(s): archive/status/2026-08.md, archive/status/2026-07.md
+UNBOUNDED WALK (no --limit): every STATUS.md commit is examined before anything prints.
+  corpus   : 7241 STATUS.md commit(s); the board is 21.2 MB across 3 file(s) (STATUS.md + 2 rotated month(s))
+  price    : ~39 ms per blob read x 2 per commit = ~9.4 min before a verdict
+  ANSWER ALREADY KNOWN (live board): this ends rc=1 over ~81 legacy drops predating
+             §4's archive law -- measured s2224, analysed at :41-50, known and EXCUSED.
+  The REGRESSION question is the bounded one: --limit 40 --quiet (the battery leg).
+
+<--- Last few GCs --->
+
+[92390:0xb5b800000]    97891 ms: Mark-Compact (reduce) 4101.1 (4108.7) -> 4101.0 (4105.7) MB, pooled: 0 MB, 0.62 / 0.00 ms  (+ 0.0 ms in 0 steps since start of marking, biggest step 0.0 ms, walltime since start of marking 28 ms) (average mu = 0.994, curre
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0x1046e79c0 node::OOMErrorHandler(char const*, v8::OOMDetails const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 2: 0x1048bf020 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 3: 0x104ae865c v8::internal::Heap::stack() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 4: 0x104ae68bc v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 5: 0x104a6d55c v8::internal::StackGuard::HandleInterrupts(v8::internal::StackGuard::InterruptLevel) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 6: 0x104ef01f0 v8::internal::Runtime_StackGuard(int, unsigned long*, v8::internal::Isolate*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 7: 0x10559f9f4 Builtins_CEntry_Return1_ArgvOnStack_NoBuiltinExit [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 8: 0x105540e4c Builtins_ArrayPrototypePush [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+ 9: 0x10fde4268 
+10: 0x10fde9eec 
+11: 0x10fdd61e4 
+12: 0x10fde1034 
+13: 0x10fddb240 
+14: 0x1055482c4 Builtins_GeneratorPrototypeNext [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+15: 0x10550650c Builtins_JSEntryTrampoline [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+16: 0x1055061b0 Builtins_JSEntry [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+17: 0x104a3c04c v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+18: 0x104a3c8ac v8::internal::(anonymous namespace)::InvokeWithTryCatch(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+19: 0x104a3c978 v8::internal::Execution::TryCall(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, int, v8::internal::Handle<v8::internal::Object>*, v8::internal::Execution::MessageHandling, v8::internal::MaybeHandle<v8::internal::Object>*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+20: 0x104df1c3c v8::internal::SourceTextModule::ExecuteModule(v8::internal::Isolate*, v8::internal::Handle<v8::internal::SourceTextModule>, v8::internal::MaybeHandle<v8::internal::Object>*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+21: 0x104df1590 v8::internal::SourceTextModule::InnerModuleEvaluation(v8::internal::Isolate*, v8::internal::Handle<v8::internal::SourceTextModule>, v8::internal::ZoneForwardList<v8::internal::Handle<v8::internal::SourceTextModule>>*, unsigned int*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+22: 0x104df10ac v8::internal::SourceTextModule::Evaluate(v8::internal::Isolate*, v8::internal::Handle<v8::internal::SourceTextModule>) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+23: 0x104dace5c v8::internal::Module::Evaluate(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Module>) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+24: 0x1048c66c0 v8::Module::Evaluate(v8::Local<v8::Context>) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+25: 0x10469ad64 node::loader::ModuleWrap::Evaluate(v8::FunctionCallbackInfo<v8::Value> const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+26: 0x10550a978 Builtins_CallApiCallbackGeneric [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+27: 0x105508838 Builtins_InterpreterEntryTrampoline [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+28: 0x105545e20 Builtins_AsyncFunctionAwaitResolveClosure [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+29: 0x105613298 Builtins_PromiseFulfillReactionJob [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+30: 0x105535214 Builtins_RunMicrotasks [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+31: 0x1055063f0 Builtins_JSRunMicrotasksEntry [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+32: 0x104a3c00c v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+33: 0x104a3c8ac v8::internal::(anonymous namespace)::InvokeWithTryCatch(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+34: 0x104a3c9e4 v8::internal::Execution::TryRunMicrotasks(v8::internal::Isolate*, v8::internal::MicrotaskQueue*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+35: 0x104a6b408 v8::internal::MicrotaskQueue::RunMicrotasks(v8::internal::Isolate*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+36: 0x104a6bcac v8::internal::MicrotaskQueue::PerformCheckpoint(v8::Isolate*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+37: 0x1045e99a8 node::InternalCallbackScope::Close() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+38: 0x1045e9474 node::InternalCallbackScope::~InternalCallbackScope() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+39: 0x1046eb974 node::fs::FileHandle::CloseReq::Resolve() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+40: 0x104706788 node::fs::FileHandle::ClosePromise()::$_0::__invoke(uv_fs_s*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+41: 0x1046dff0c node::MakeLibuvRequestCallback<uv_fs_s, void (*)(uv_fs_s*)>::Wrapper(uv_fs_s*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+42: 0x1054e1760 uv__work_done [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+43: 0x1054e5478 uv__async_io [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+44: 0x1054f924c uv__io_poll [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+45: 0x1054e59e0 uv_run [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+46: 0x1045ea508 node::SpinEventLoopInternal(node::Environment*) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+47: 0x104731250 node::NodeMainInstance::Run() [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+48: 0x1046a35f4 node::Start(int, char**) [/Users/robin/.nvm/versions/node/v23.11.1/bin/node]
+49: 0x1808904e4 start [/usr/lib/dyld]
