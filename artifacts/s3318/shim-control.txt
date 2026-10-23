@@ -1,0 +1,14 @@
+✔ streaming completion emits role, content, finish usage, and DONE (44.647167ms)
+✔ client abort terminates the codex child process (471.776ms)
+✔ client disconnect mid-stream leaves the shim available (117.117667ms)
+ℹ abort_bytes=65536 followup_status=200
+✔ developer messages and function calls survive the compatibility boundary (3.450958ms)
+✔ browser-origin requests cannot spend subscription quota (2.411625ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1013.186625
