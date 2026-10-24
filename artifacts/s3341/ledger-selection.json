@@ -1,0 +1,135 @@
+{
+  "files": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "hits": [
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1,
+      "text": "🗄️ **LB-01 + FM-01 OCTOBER 24 COMPLETE (s3327, 2026-10-24T03:06Z):** Today’s snapshot was pulled and pushed after 02:10 UTC to the verified PRIVATE archive; coverage is 62/62 days August 24–October 24. Strict push inspected 4,306 keys in 62 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Live ledger-backups head 39b668ba2b026230c97fe7ac37f2ca42a0ac581c; FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, both remote heads verified. No private corpus enters the public tree. Next coverage day October 25 after 02:10 UTC. Evidence: artifacts/s3327/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, report.md."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3,
+      "text": "📰 **TK-01 OCTOBER 23 COMPLETE (s3324, 2026-10-24 local):** `marketing/outbox/ticker-digest-2026-10-23.md` records week-43 standings recovery after the attended server update (`359052989`). UTC+07 census: 66 main updates, 66 pinned first-parent commits, zero player-path events; all subjects and 633 distinct paths reviewed, yielding one player-visible operations recovery. September 25 busy-day control 136; no engine pin or non-ancestral replacement. The assayer diagnostics drain is operations-only by its review. Existing Gazette coverage verified; no duplicate or publication. Evidence: `artifacts/s3324/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `live-probe.json`, `report.md`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5,
+      "text": "🗄️ **LB-01 + FM-01 OCTOBER 23 COMPLETE (s3307, 2026-10-23T03:02Z):** Today’s snapshot was pulled and pushed after 02:10 UTC to the verified PRIVATE archive; coverage is 61/61 days August 24–October 23. Strict exposure gate inspected 4,212 keys in 61 readable mirrors, zero account-class or unrecognised rows. Live ledger-backups head 659263e0616df47b2dc786084fb4e8aa3f6c79b9; FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, both remote heads verified. The server backup's first Node 26.12.1 run succeeded. No private corpus enters the public tree. Next coverage day October 24 after 02:10 UTC. Evidence: artifacts/s3307/ledger-pull.txt, ledger-push.txt, mirror-freshness-after.txt, fire-memory.txt, private-heads-after.txt, private-visibility.json, droplet-runtime.json, report.md."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 6,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 7,
+      "text": "📰 **GZ-01 COUNTY RUNTIME RECOVERY REPORTED (s3307, 2026-10-23):** One draft records attended server update 359052989 and the freshly verified recovery of canonical week-43 standings. Publication remains owner-only. October 22 TK-01 digest remains complete; no duplicate digest. Evidence: marketing/outbox/gazette-queue.md and artifacts/s3307/final-probe/live-probe.json."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 8,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 9,
+      "text": "📰 **TK-01 OCTOBER 22 COMPLETE (s3304, 2026-10-23 local):** `marketing/outbox/ticker-digest-2026-10-22.md` records the replay runtime landing (`2bbc6df06`) and same-era pin (`5d6e46fb2`), with server synchronization still pending. UTC+07 census: 69 main updates, 71 pinned first-parent commits (one fast-forward introduces a three-commit chain), one player-path event and one engine pin; September 25 busy-day control 136. All subjects and 808 distinct changed paths reviewed; no non-ancestral replacements. Existing Gazette coverage verified, publication owner-only. Evidence: `artifacts/s3304/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 10,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 11,
+      "text": "🟢 **F-3293-1 CLOSED (s3307, 2026-10-23T03:02Z) — COUNTY RUNTIME AND WEEK-43 STANDINGS RECOVERED.** The attended Node switch is main commit 359052989 (handover 13z-115). Independent read-only checks: ledger and assay active on Node 26.12.1 with zero restarts, build 299b1db5, engine hash aa1435e29f312553b1fa9329ca6872bb1601a5b82b50741c400b95de8be895a3 identical to main and registered, whole weeks 37–44 rotation registry equal to main. Canonical week-43 transfer standings now returns 200 JSON with ok:true, matching direct Pages; week-42 control and both stats endpoints also return healthy JSON. The backup unit's first run on the new runtime ended at 02:02:32 UTC with status 0. This supersedes the October 22 stale-copy and bad_rotation observations; the existing Node-switch word has been executed and is no longer owed. No new player tape or production deployment by this fire. The historical mid-step failure's exact cause is unknown; its diagnostics corrective is separately landed as assayer-sync-visibility-1. Evidence: artifacts/s3307/droplet-runtime.json, live-probe.json, final-probe/live-probe.json, engine-main.json, report.md."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 12,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 13,
+      "text": "📰 **GZ-01 ASSAY RUNTIME LANDING REPORTED (s3293, 2026-10-22):** One ROUNDUP-CLASS draft records attended merge 2bbc6df06 and same-era pin 5d6e46fb2 (pin 76). Twenty complete runtime pairs matched; two historical claims drift identically. Public build 299b1db5 verified; assayer sync remains incomplete, F-3293-1. Publication owner-only; weekly census in artifacts/s3293/news-census.json."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 14,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 15,
+      "text": "🔁 **ASSAY NODE 26.12.1 LANDED — `assay-node-26-12-1` as `2bbc6df06` (drained attended 2026-10-22).** F-SRV-1. Astra on lane-d (`357cf6e77`, 124,876 tokens, 08:16Z to 08:37Z): Node 26.12.1 installed with nvm beside 26.4.0; 29 retained tapes with verified slips selected (heat 14, then heat 13), 20 full replay pairs byte-identical under both runtimes (verdict, secured score, final gold, final wave, secure snapshot, replay content hash), zero disagreements; two of the twenty are rejected identically by BOTH runtimes against their historical claims (heat-14 Twin Banks 556 claimed / 389 replayed; a heat-13 Dry Gulch), a pre-existing engine drift against those retained slips, not a runtime effect (F-ASN1-1, recorded); `CANONICAL_ASSAY_NODE_VERSION` 26.4.0 → 26.12.1, `ops/droplet/goldrush-assay.service` and `goldrush-ledger-backup.service` ExecStart repointed, the ops doc's law sentence and paths updated, the worker's refusal fixture now expects 26.12.1 and refuses 26.4.0 (proven: `--once --dry-run` under 26.4.0 exits 1 naming both versions); the three assay suites 9/12/3 green under 26.12.1 (re-run attended), and under the Mac's 26.4.0 and 23.11.1 (the worker test resolves the canonical runtime from nvm). Pre-change engine hash `2d180e6b…`, new `b813de7b…`: PINNED, same era. Evidence 0.5 MB. Landed attended and deployed; the droplet switch (`scripts/attended/droplet-maintenance.sh node 26.12.1`: nvm install, the three units repointed, ledger and assay restarted) waits on the owner's word `reviews/assay-node-26-12-1.md`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 16,
+      "text": "🗄️ **LB-01 + FM-01 OCTOBER 22 COMPLETE (s3287, 2026-10-22T03:05Z):** Today's snapshot was pulled and pushed to the verified PRIVATE archive; coverage is 60/60 days August 24–October 22. Strict push inspected 4,118 keys in 60 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Live ledger-backups head 591a9d8dd55d8ed318fae4b8fa6d7f03decf899a; FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, both remote heads verified. October 22 is discharged; next coverage day October 23 after 02:10 UTC. No private corpus enters the public tree. Evidence: artifacts/s3287/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, report.md."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 17,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 18,
+      "text": "📰 **TK-01 OCTOBER 21 COMPLETE (s3283, 2026-10-22 local):** `marketing/outbox/ticker-digest-2026-10-21.md` records the week-44 seed preparation (`4b7c7b2be`), awaiting authorized deployment. UTC+07 census: 65 main updates, 65 pinned first-parent commits, one player-path event; September 25 busy-day control 136. All subjects and 571 distinct paths reviewed; no engine pin or non-ancestral replacement. The existing Gazette roundup covers the mint; publication remains owner-only. Evidence: `artifacts/s3283/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 19,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 20,
+      "text": "🗄️ **LB-01 + FM-01 OCTOBER 21 COMPLETE (s3266, 2026-10-21T03:31Z):** Today's snapshot was pulled and pushed to the verified PRIVATE archive; coverage is 59/59 days August 24–October 21. Strict push inspected 4,024 keys in 59 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Live ledger-backups head 9f26099427ab464c524fa2e2c0211e21fe4e3eeb; FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, both remote heads verified. Supersedes s3265's pending-source observation: October 21 is discharged; next coverage day October 22 after 02:10 UTC. No private corpus enters the public tree. Evidence: artifacts/s3266/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, report.md."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 21,
+      "text": ""
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 22,
+      "text": "🗄️ **LB-01 OCTOBER 21 SUPPLY WINDOW OBSERVED — SUPERSEDED BY s3266; FM-01 CURRENT (s3265, 2026-10-21T02:20Z):** The bounded pull after 02:10 UTC returned NOT DISCHARGED: October 21's snapshot does not yet exist on the droplet. Its timer randomizes within 02:00–03:00 UTC; retry next fire. Coverage remains 58/58 days August 24–October 20. Strict private push inspected 3,930 keys in 58 readable mirrors, zero account-class/unrecognised rows and zero unreadable mirrors, then reported unchanged. FM-01 unchanged. Archive visibility PRIVATE; ledger-backups head 9f248832d1e5302a45da9c68b4686bbc524fe8a0 and fire-memory 53d87470fb2670626fb4605d4dc0eb5bffd899fb verified. October 21 LB-01 remains owed; the freshness advisory's tolerance for yesterday does not discharge today. No private corpus enters the public tree. Evidence: artifacts/s3265/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, report.md."
+    }
+  ]
+}
