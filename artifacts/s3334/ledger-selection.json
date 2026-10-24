@@ -1,0 +1,43 @@
+{
+  "files": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "rows": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1,
+      "line": "🗄️ **LB-01 + FM-01 OCTOBER 24 COMPLETE (s3327, 2026-10-24T03:06Z):** Today’s snapshot was pulled and pushed after 02:10 UTC to the verified PRIVATE archive; coverage is 62/62 days August 24–October 24. Strict push inspected 4,306 keys in 62 readable mirrors, zero account-class or unrecognised rows and zero unreadable mirrors. Live ledger-backups head 39b668ba2b026230c97fe7ac37f2ca42a0ac581c; FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, both remote heads verified. No private corpus enters the public tree. Next coverage day October 25 after 02:10 UTC. Evidence: artifacts/s3327/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, report.md.",
+      "where": "1"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 3,
+      "line": "📰 **TK-01 OCTOBER 23 COMPLETE (s3324, 2026-10-24 local):** `marketing/outbox/ticker-digest-2026-10-23.md` records week-43 standings recovery after the attended server update (`359052989`). UTC+07 census: 66 main updates, 66 pinned first-parent commits, zero player-path events; all subjects and 633 distinct paths reviewed, yielding one player-visible operations recovery. September 25 busy-day control 136; no engine pin or non-ancestral replacement. The assayer diagnostics drain is operations-only by its review. Existing Gazette coverage verified; no duplicate or publication. Evidence: `artifacts/s3324/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `live-probe.json`, `report.md`.",
+      "where": "3"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 24,
+      "line": "🗓️ **RT-01 WEEK 44 MINTED (s3263, 2026-10-21):** `r2026w44` opens October 26 00:00 UTC and closes November 2 00:00 UTC; six seeds, all seven earlier rotations preserved, whole eight-rotation registry refreshed in `public/skill.md`. Week-43 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w44.md`; evidence: `artifacts/s3263/`. The next authorized attended deployment must carry weeks 43 and 44 and verify ASSAYER SYNCED; week 43 remains overdue, week 44 opens October 26. Live build 62403b1d still carries weeks 37–42. No dispatch or deployment by this fire.",
+      "where": "24"
+    }
+  ]
+}
