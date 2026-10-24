@@ -1,0 +1,12 @@
+{
+  "pid": 39101,
+  "at": "2026-10-24T23:40:18.742Z",
+  "ancestry": [
+    "  PID  PPID TTY      STAT STARTED\n39101 39092 ??       S    Sun Oct 25 06:38:35 2026    \n",
+    "  PID  PPID TTY      STAT STARTED\n39092 16338 ??       Ss   Sun Oct 25 06:38:35 2026    \n",
+    "  PID  PPID TTY      STAT STARTED\n16338 16337 ??       S    Sun Oct 25 06:34:43 2026    \n",
+    "  PID  PPID TTY      STAT STARTED\n16337 16293 ??       S    Sun Oct 25 06:34:43 2026    \n",
+    "  PID  PPID TTY      STAT STARTED\n16293     1 ??       S    Sun Oct 25 06:34:42 2026    \n"
+  ],
+  "reason": "Redundant unbounded audit announced 7309 commits, about 16.8 minutes and known excused legacy drops. Stopped only this invocation-owned optional process. Required bounded --limit 40 --quiet regression check remains in the unchanged closing ledger battery."
+}
