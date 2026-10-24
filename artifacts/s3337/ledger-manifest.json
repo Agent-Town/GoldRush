@@ -1,0 +1,27 @@
+{
+  "command": "npm run test:ledger-guards",
+  "source": "package.json scripts.test:ledger-guards",
+  "schedulingChange": "test-runtime/node injects --test-concurrency=1 only into the package ledger node --test --test-timeout=300000 entry; assertions and timeouts unchanged",
+  "started": "2026-10-24T16:19:45.673Z",
+  "head": "3accbb822e7a8d4b2e25c9d3127b4093800f7089",
+  "node": "v26.4.0",
+  "hashes": {
+    "STATUS.md": "2d6acab66afacfbb1392a3e820dbf260be30e9751c70f40ee2964a4d451a753a",
+    "docs/HANDOVER-2026-09-06-attended.md": "0c67e11d13243c298c4ffea4e7c8720c3c0eff9273d1afc203440f9fcd1e8b87",
+    "tasks/BACKLOG.md": "b90192db4f52fcee2902c6f45b851a47bf8879026a32e396af77cb92c86e2fe0",
+    "tasks/goals.json": "8fadd54b2f62a95250c8104fccf14ef17db0f7225fe9944f0e93169876e87df9",
+    "tasks/CODEX-WALL": "8436777d9a6947bfe0bc5bda91564652a59955ba25d50750626ceaef8e240b27",
+    "tasks/assay-node-26-12-1.md": "1fbb4c7e317d503b4a341924c75d18af75e61bc1ac9db9cb46885883055df88d",
+    "reviews/rotation-r2026w44.md": "6ac5108c31d6ea532c5158bc45d12e824f928763f9fdfb5f80e2d7c8f4f9291b",
+    "reviews/assay-node-26-12-1.md": "c3d9c93c02a87336112bb913900916f516b14752f0ab5b1f4dd098df46ac550e",
+    "assets/engine-era.json": "59e66f137f62e7de8e0b5f9bd9720edd4ffc63e25b1eb4dd6e6eaad13a44eec0",
+    "marketing/outbox/gazette-queue.md": "81064079f74c41023130d2a605b080463e5b2ddc5b74a043f008cb6882899e41",
+    "package.json": "bf74d1bfc9c8a44b1e914b5964511a04194fefaeaa7c1b978cf4a47433848568",
+    "assets/rotations/rotation-seeds.json": "6a3ceac473192c53848a22b31dfef3ee827e74cbf506a3f2b2b77929276c007a",
+    "public/skill.md": "6ac6adf8683e610ce68f6910a34deaaa468e2f61bc4d47ee9290ed6c5ee24988",
+    "marketing/outbox/ticker-digest-2026-10-23.md": "57a7c6ccf9d36b14c501393eb9c65da297f714bee44fb9168748c64124d92ad2",
+    "artifacts/s3337/report.md": "fdfd2a50aad53d55ef55cd8dabd9c099ae860b48ad7db29f36848c5e25fda39b",
+    "artifacts/s3337/run-ledger.mjs": "9d5c2c75015d6a6597fda2475e9ae24d3d71bdabaef79c433e7ce9a785806085",
+    "artifacts/s3337/test-runtime/node": "be7f4ff2e708fc9afb08e6aa33e24b94920ac19cd1f7d0cac5e1a6f6811f3024"
+  }
+}
