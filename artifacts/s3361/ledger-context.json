@@ -1,0 +1,880 @@
+{
+  "files": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "matches": [
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 28,
+      "text": "🗓️ **RT-01 WEEK 44 MINTED (s3263, 2026-10-21):** `r2026w44` opens October 26 00:00 UTC and closes November 2 00:00 UTC; six seeds, all seven earlier rotations preserved, whole eight-rotation registry refreshed in `public/skill.md`. Week-43 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w44.md`; evidence: `artifacts/s3263/`. The next authorized attended deployment must carry weeks 43 and 44 and verify ASSAYER SYNCED; week 43 remains overdue, week 44 opens October 26. Live build 62403b1d still carries weeks 37–42. No dispatch or deployment by this fire."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 60,
+      "text": "📰 **TK-01 OCTOBER 14 COMPLETE (s3113, 2026-10-15 local):** `marketing/outbox/ticker-digest-2026-10-14.md` records one headline: week 43 seeds prepared for October 19–26 UTC, deployment pending (`62e61679a`). UTC+07 midnight census: 61 main updates, 61 pinned first-parent commits, one player-path event, zero non-ancestral replacements; September 25 busy-day control 136. All subjects and changed paths reviewed; no other headline. Existing Gazette entry verified, no duplicate or publication. Live build 62403b1d still serves weeks 37–42; next authorized attended deployment carries week 43 before October 19 and verifies ASSAYER SYNCED. Evidence: `artifacts/s3113/day.json`, `day-commits.txt`, `day-paths.json`, `live-probe.json`, `report.md`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 64,
+      "text": "🗓️ **RT-01 WEEK 43 MINTED (s3094, 2026-10-14):** `r2026w43` opens October 19 00:00 UTC and closes October 26 00:00 UTC; six seeds, all six earlier rotations preserved, whole seven-rotation registry refreshed in `public/skill.md`. Week-42 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w43.md`; evidence: `artifacts/s3094/`. The next authorized attended deployment must carry week 43 before October 19 and verify ASSAYER SYNCED. Live build 62403b1d already carries weeks 37–42. No dispatch or deployment by this fire. **s3221 verification, 2026-10-19T00:01Z: deployment is now OVERDUE.** Canonical and direct Pages transfer-board GETs for week 43 return HTTP 400 `bad_rotation`; week-42 canonical control returns 200. Live build remains `62403b1d` and the served skill registry ends at week 42. Main’s seven rotations/42 seeds match the whole skill fence exactly. This updates"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 93,
+      "text": "✅ **F-2987-1 — OPTION B CUT OVER 2026-10-09; public static delivery verified by s3000.** **s3053 verification, 2026-10-12T00:12–00:13Z: stats JSON delivery observed healthy again.** Canonical and direct Pages `/api/stats` each return HTTP 200 application/json, 747 bytes, `ok:true` and a stats object in two bounded GETs; the repeat reports `empty:false`, and the Mac probe agrees on landing=200 game=200 api=200. Game/version/skill remain 200 at build `62403b1d`, weeks 37–42. This supersedes the present-tense HTML observation carried by s3040–s3052; exact recovery time, cause, sustained health and other API-route health remain UNVERIFIED. F-CUT-1 recurrence follow-up, droplet JSON-probe installation and release acceptance retain attended custody. Option B is already ruled and cut over; no further capacity choice is requested. No fire deployment, route mutation or dispatch. Evidence: `artifacts/s3053/live-probe.json`, `stats-recheck.json`, `health.txt`, `report.md`. Historical observations"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 103,
+      "text": "🗓️ **RT-01 WEEK 42 MINTED (s2951, 2026-10-07):** `r2026w42` opens October 12 00:00 UTC and closes October 19 00:00 UTC; six seeds, the five earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-41 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w42.md`; evidence: `artifacts/s2951/`. Deployment remains deferred under the owner release hold. The next authorized attended runtime landing must carry weeks 41 and 42, then verify ASSAYER SYNCED; week 41 is already overdue and week 42 opens October 12. Live build 954bb2cd still serves weeks 37–40: week-41 GET 400 bad_rotation, week-40 control 200. No dispatch or deployment by this fire."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 139,
+      "text": "🗓️ **RT-01 WEEK 41 MINTED (s2810, 2026-09-30):** `r2026w41` opens October 5 00:00 UTC and closes October 12 00:00 UTC; six seeds, the four earlier rotations preserved, whole registry refreshed in `public/skill.md`. Existing week-40 salt control matches 6/6. Named guards 36/36, tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w41.md`; evidence: `artifacts/s2810/`. Deployment remains deferred under the owner release hold; next authorized runtime landing must carry week 41 before October 5 and verify ASSAYER SYNCED. **s2910 verification, 2026-10-05 00:18 UTC: the deployment deadline has PASSED.** Live build remains `954bb2cd`; the served skill registry ends at week 40 with no open window. Read-only week-41 transfer-board GET returns HTTP 400 `bad_rotation`, versus week-40 HTTP 200. A local selector control over the served registry chooses closed week-40 seeds for all six contracts; main chooses week 41. The existing standin"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 152,
+      "text": "🔕 **F-SRV-3 CLOSED (s3307, 2026-10-23) — FAILED SYNC DIAGNOSTICS AND PERSISTENT ALERTS LANDED.** Corrective `assayer-sync-visibility-1` landed in `b5d6d3c3248fdf0c4f61c853c040b651c650cf4f`; review reviews/assayer-sync-visibility-1.md. Both rsync and remote sed/restart failures preserve scrubbed diagnostic tails and a build/time drift marker; the existing health alert repeats at most hourly until recovery. Original October 22 failure: build 299b1db5's deploy printed ASSAYER SYNC FAILED while discarding stderr; the worker kept its previous engine copy for about sixteen hours until the attended Node switch. The exact historical failure remains unknowable. Existing missing-host/unreachable prechecks retain their prior behavior; this slice covers the task's two mid-step failure halves."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 153,
+      "text": "🔔 **ASSAYER SYNC VISIBILITY 1 — `assayer-sync-visibility-1` SHIPPED (s3307, 2026-10-23), merge `b5d6d3c3248fdf0c4f61c853c040b651c650cf4f`; F-SRV-3.** The deploy captures and scrubs both sync halves, records drift after a mid-step failure, clears it on success, and the health watcher alerts at most hourly. Gates: tsc and both builds exit 0; E1 payload 34,355,296 B; targeted guards 126/126; diff-selected batteries 5/5 (full Node exit 0); both deploy contracts; 34/34 adjacent browser checks and 2/2 plain boots with zero console/page errors. Engine hash unchanged. Review: reviews/assayer-sync-visibility-1.md; evidence: artifacts/assayer-sync-visibility-1/drain-s3307/. No public deployment by this fire."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 154,
+      "text": "🧹 **F-STO-1 (attended 2026-10-25; the owner: \"Can you help clean up the storage needed by Gold Rush … I think Gold Rush uses 600 GB\") — THE DISK HELD 1,312 GB OF GOLD RUSH, 86 GB FREE OF 3.6 TB; EVERY SCRATCH WORKTREE CARRIES THE 9–11 GB TRACKED `artifacts/` TREE, SO CHECKOUTS WERE THE MULTIPLIER. Group A (regenerable scratch, no history) removed on the owner's \"clean A\": 30 merged sibling worktrees `~/Claude/Projects/wt-*` (~300 GB), 21 fire/attended arena checkouts under `~/.goldrush/` (their logs kept), the `land/wt-preview-pub` rsync staging copy (86 GB), four re-land clones in `~/.goldrush/repair` whose tips equal the `candidate/*` branches on GitHub (53 GB; commit maps kept), two old gate worktrees in the primary, eight orphan lane copies inside the history clone whose `.git` files pointed at the primary's live lanes (their 94 untracked unique files, 354 MB of July marketing reels and raw media, archived first to `~/.goldrush/archive/history-local-worktrees-untracked-2026-10-25/"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 157,
+      "text": "🎧 **AUDIO HARSHNESS 1 LANDED — `audio-harshness-1` as `e277f077d` (drained attended 2026-09-28).** From `reviews/audio-review-1.md` ranks 2 to 4. Astra on lane-b (168,590 tokens; commits `53fb39384` to `488a95c4d`): 41 one-shot mp3s normalized in place to the LEDGER's -14 LUFS / -1 dBTP (byte-for-byte reproducible by `artifacts/audio-harshness-1/normalize.py`; git keeps the old versions), the manifest re-balanced by re-running the review's `simulate.py`: early Spark Rig SFX energy above 2 kHz 68.2% → 28.4%, SFX over music +2.6 → +1.7 LU (late Spark Rig +4.2 → +2.9), the four loud cues about 6 LU quieter, the two hits within 2 LU of the music, mix peaks lower at default and maximum settings; a gentle SFX high-shelf and distance attenuation for beacon and turret shots; every gain write ramped; music loops fade in and out and cross the seam through two alternating sources; no limiter (the review measured no clipping), no music content change (F-AUD-13/14 are the owner's). Listen clips: `"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 161,
+      "text": "🎧 **AUDIO MUSIC TOGGLE 1 LANDED — `audio-music-toggle-1` as `176aff07c` (drained attended 2026-09-28).** From `reviews/audio-review-1.md` rank 1 (Opus 5.5, at the owner's word: users asked how to disable the music quickly). Astra on lane-b, three attempts (`a029c8f8e`, `bdd70d410`, `97a6a6493`; 348,776 tokens; the second completed profile registration after F-ATT-11, the third preserved the phone HUD census without re-baselining): a fourth per-profile key `gr.audio.music-off.v1` registered in `src/game/ProfileStorage.ts`; `SoundSystem` treats music-off like mute for music loops only (no fetch, live resume, SFX untouched, the Music Volume level preserved); a 44 px `music-toggle` beside pause in the run HUD, on the town bar, on the start menu and on the first-boot card; a Music checkbox beside the slider; one Gazette clause. Interactions to silence the music: a run 3 plus a scroll → 1 tap, town and menu 2 → 1, first boot none → 1; the pause slider needs a scroll on both devices (measure"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 162,
+      "text": "✅ **F-AUD-15 — OWNER'S DESK (2026-09-28, the harshness re-balance from `reviews/audio-review-1.md` ranks 2 to 4): LISTEN, then say keep or revert.** The re-balance landed attended and deployed as `420264a5` with ASSAYER SYNCED (one revert landing remains available); the source measurements move toward the review's targets: the early Spark Rig's sound-effect energy above 2 kHz 68.2% → 28.4%, effects over music +2.6 → +1.7 LU, the four loud cues about 6 LU quieter, the hit sounds audible again, mix peaks lower. Thirty seconds of the early Spark Rig scenario before and after: `artifacts/audio-harshness-1/listen-before.ogg` and `listen-after.ogg`. The clips are now on main; s2746 verified the completed attended final main gate and deployment receipt. Recommendation after listening: keep, then decide F-AUD-14 (process only or darker takes) with your own ears. ✅ RULED 2026-09-29, owner verbatim after listening to the Desktop clips (`spark-rig-before.m4a` / `spark-rig-after.m4a`): \"yes, this "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 165,
+      "text": "✅ **F-2737-1 — RESOLVED (s2742, 2026-09-28T11:46Z): the watchdog corrective has completed its final main gate.** Merge `3717fb210` is an ancestor of main and its goal is merged. The literal candidate wrapper completed in 1181.895 s with its linked-worktree refusal controlled on the unchanged base; the attended landing then passed its full candidate and final main npm batteries: 1035 pass / 5 skips / zero fail, plus 87/87 chained checks. `LAND-rgw1-DONE` is present at 11:35Z. The policy at `scripts/run-guards.mjs:257` is 3600 s for the full Node child and 900 s for other guards. This closes the wrapper blocker only: audio remains unlanded and attended-owned. Inheritance `a950f588d` has landed and deployed with ASSAYER SYNCED; its final main battery remains with the live attended owner. Three audio done-moves remain; no fire dispatch or drain. Evidence `artifacts/s2742/report.md`, `reviews/run-guards-node-watchdog-1.md`. **CLOSED 2026-09-28T13:06Z: `run-guards-node-watchdog-1` landed att"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 181,
+      "text": "✅ **F-2693-1 RESOLVED — direct full Node completed in s2694 (2026-09-27); candidate accepted; s2696 landing recorded below.** The preserved candidate was advanced to `7875d9a8a` by merging current main bookkeeping only. Node 26.4.0, file concurrency 1: 1040 tests, 1030 pass, 2 expected pre-pin identity failures, 8 skips, 0 cancelled, 2349.6 s; fixture teardown PASS across 162 owners in 940.8 s. The same identity specs PASS 9/9 on clean main; the exact npm chained tail PASS (31.3 s, final leg 87/87). No watchdog fired or limit changed. This closes the interrupted-battery finding only: s2695 has now completed the floors, browser/release/plain-boot gates and final same-era pin; s2696 lands the candidate; post-landing full Node and deploy are recorded in its report. Candidate retained at `~/.goldrush/fire-s2693/wt-tpf1`; no redispatch. Evidence `artifacts/s2694/report.md`, `artifacts/s2694/full-node.txt`, `artifacts/s2694/node-tail.txt`; review `reviews/tape-pause-fix-1.md`. **s2696 comple"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 233,
+      "text": "✅ **F-RVA1-6 RESOLVED — replay pause cure LANDED and DEPLOYED by s2696 (2026-09-27).** The original defect, measured September 26 on every contract, recorded each pause as set_pause paused:true with no recorded resume, stopping the paused River reel at tick 51 and the historical seed-run reel at tick 274. Replay-only pause skipping in `tape-pause-fix-1` preserves live pause, the recorder and multiplayer; old and fresh paused River reels verify, the three-pause Claim death reel reproduces its hash, and the historical seed-run reaches tick 18,000 but remains rejected for its old movement divergence. Landing records `df0f305b9`, era 6 pin #71 `2d180e6b`; production `198fae78` verified with ASSAYER SYNCED. Main full Node rc 0: 1032 pass, 8 existing skips, 0 fail; chained tail 87/87. Optional re-assay of old player standings remains an attended operations choice; no player data was changed by this fire. `reviews/tape-pause-fix-1.md`; `artifacts/s2696/report.md`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 234,
+      "text": "🩹 **TAPE PAUSE FIX 1 SHIPPED — `tape-pause-fix-1` landing records `df0f305b9`, content merge `28272092e` (s2696, 2026-09-27).** Replay skips recorded pauses; live pause, recorder, multiplayer and sim rules unchanged. Era 6 pin #71 `2d180e6b`; art store unchanged. Candidate gates: tsc/build/E1 PASS; 83/83 floors; halo PASS; release 30/30; slice/adjacents 72/72; plain boots 2/2, zero console/page errors; post-pin identities 9/9. Fresh full Node on main rc 0 in 2524.4 s: 1032 pass, 8 existing skips, 0 fail; chained tail 87/87; 162 fixture owners clean. Production `198fae78` verified, ASSAYER SYNCED, payload 34,350,580 / 52,000,000 B; an occupied-port probe refusal was cured on port 62736, both viewports 15,180,965 / 30,000,000 B, zero watched errors. Goal merged, done-move closed, Gazette draft appended. F-RVA1-6 resolved. `reviews/tape-pause-fix-1.md`; `artifacts/s2696/report.md`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 529,
+      "text": "🗺️ ✅ **THE MAP-ART CORRECTIONS CAMPAIGN — COMPLETE 2026-09-22 (runs 1–4; run 4 uncapped landed all sixteen remaining rows in six slices, final `8caf92212`, pin #28 `4374cdbf`, production 8caf9221; the residue is F-CORR4-2 on the desk). History of this row: RUN 3 QUEUED lane-c as `sol-map-art-corrections-1` (attended 2026-09-20; owner 2026-09-20, verbatim: \"correct all the 23 UNACCEPTED maps, one after the other, the Last Claim verdict goes back to Astra\").** Astra (gpt-6-astra xhigh, the owner's ChatGPT subscription, `tasks/CODEX-WALL` lift of 2026-09-20) re-verdicts the Last Claim first (F-MAC2B-1 closed by the run), then corrects the 23 UNACCEPTED rows of `reviews/sol-map-art-current-status-20260909.md` in epoch order, E1 first (Night Shift, Twin Banks, the Baron; the Trestle, the Pressure Garden, the Incline; the Canyon Works; the Dust Flats, the Long Road, Gusher County, the Boneyard; the Glow Mesa, Half-Life Hollow, the Picnic; the Dead Band, Relay Rush; the Far Side, Low Orbit; "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 966,
+      "text": "✅ **F-2549-1 RESOLVED — full Node was cut off by the diff-guard wrapper (s2549, 2026-09-08).** Gate-side, fire-owned. **s2550 resolution:** the direct command completed naturally (1374.5 s), producing a real red rather than a wrapper interruption; acceptance remains held on separately reproduced F-2550-1 below. The remainder of this row records s2549 history. `run-guards.mjs` kills its npm child at 15 minutes; the current gold candidate reached that limit while simulation work was active, with no terminal counts or chained-tail result. Focused gold 4/4, retirement 2/2, tsc/build and the other four selected guards pass. No source merged. NEXT: resume `save/board-gold-current-grammar-s2547` via the existing MAIN task and run full `npm run test:node-guards` directly through `gate-battery.mjs` (one-job list `artifacts/s2549-fire/full-node-next-jobs.json`), Node 26.4.0, FIRE serialization, then inspect all fixture subjects and the complete npm tail. Do not retry the capped wrapper, redispat"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 968,
+      "text": "✅ **F-2546-1 CLOSED — both process captures bounded at 64 MiB (s2548, 2026-09-07).** Drained `lane-a-node-guards-ps-capture` at `ba5b03ebec07e45efd5c03cf6aace0d9546346a8`. Real-classifier oversized regression and both mutation arms verified by the runner; current-base focused 1/1, tsc/build, power/task/citations/caller gates pass. Full Node alone: 742 tests, 736 pass / 1 known F-2541-1 malformed gold-fixture failure / 5 skips, zero ENOBUFS; contention passes. Current unchanged-base control repeats 0/3; fixture sweep visited 20/128, six npm tail commands separately completed (desk SKIP under lock, closing gate owed). NEXT: drain preserved MAIN gold corrective, then chapter evidence, serially; no redispatch or runtime change. Review `reviews/node-guards-ps-capture.md`; evidence `artifacts/s2548-fire/report.md`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 982,
+      "text": "🚀✅ **DEPLOYED 92358832 (attended 2026-09-07 ~17:55; the evening chain) — THE ELDER WALKS AS A WOMAN, THE YOUNGSTERS AGE, THE 1:1 GRAMMAR IS LIVE, THE TEN RETIRED-VERB ROWS GO TO THE ASSAYER, HEAT 13 RIDES.** Main `923588327` (the chain: elder-walk8-regeneration `6eb8a8093`, youngsters-rechain-batch `fc6bc118d`, rider-parity-grammar all stages `9912785f7`, low-orbit-second-build-line measurement `f4210de6a`, their bookkeeping, main's fire commits merged in, the chain's era pin `09838c35…` beside each slice's own) fast-forwarded onto main in one move after fire s2536 cleared. Production `https://agenttown.app/goldrush/` = `92358832` (the first upload died on a Cloudflare \"fetch failed\" after the gate passed; the retry verified), assayer synced with pin `92358832`; payload GATE PASS 33,851,205 / 35,000,000 B (1,148,795 B headroom, F-EW8-7), tripwire 16,171,684 / 30,000,000. THE BATTERY ON MAIN at `923588327`: `test:node-guards` 738/742 with only the contention advisory and its sweep red "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 986,
+      "text": "🔺⚖️ **low-orbit-second-build-line MEASURED, READY-FOR-GATES → ✅ MERGED AS MEASUREMENT f4210de6a (drained; see the row above) — NO LEVER SHIPPED; THE FORK RETURNS TO OWNER'S DESK A9 (Claude Opus 5 on scratch `wt-lo`, branch `fix/low-orbit-second-build-line`, port 5313, 2026-09-07).** Owner ruling, verbatim: \"A9 - second build line\". **The second build line does not win Low Orbit, and the map's own ground is why.** Measured first, on this tree, reproducing `e8-air-logical` exactly: the prover loses w19 / **585.100 s** / `fnv1a32:6e97b13b` twice byte-identical; the air-ignoring control dies w14 / 420.633 s (`943f688e`); the no-sortie control outlives the gate at w22 / 660 s (`8ac741b3`) **and finishes its fort — four TIER-2 turrets and six beacons** against the sortie ride's four tier-1 and five, so the crossings cost the run its fort, not its air. **Seed -02, which nobody had ridden under the human suit, loses at w12 / 366.233 s with ONE beacon standing** — 219 s short, not 14.9. **The "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 988,
+      "text": "⚖️✅ **rider-parity-grammar + rider-parity-grammar-stage3 SHIPPED 9912785f7 (attended drain 2026-09-07 ~17:00; two Claude Opus 5 implementers on scratch `wt-grammar`; merged and gated in the worktree detached at main, landed by fast-forward) — THE 1:1 DOOR GRAMMAR IS LAW IN THE ENGINE (ADR-005; owner A2, D1 \"fairness is crucial\", D2 \"re-ride it yes\").** The nine ACTION reach tests read the hero; `REPAIR_UNDER` bounded to the human radius; the E5 deck a plain-boot human control; `MOVE_TO`/`HOLD`/`FALLBACK_IF` removed (an unknown verb refuses at submission); `CONTEXT_ACTION`'s four human-only targets given to the rider through the human's own reach test; `syncProgramSuspension` and the E8 crossing chip on the hero. Controls table **15 equal / 0 agent-only / 0 human-richer**. Retirement ledger 57 tapes / 22 of 24 scored heat-12 rows, byte-identical against the landed door, held by `rider-parity-retirement` 2/2. Every moved hash and pin carries its cause (the E4 floors, Moth Season, e10-pre"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1000,
+      "text": "🎯 **rider-parity-grammar-stage3 A0 LANDED — the branch's own battery green, all eleven of the drain's reds cured by re-planning rather than by loosening a pin (2026-09-07).** The drain returned the slice at 726/741. Every red is gone: the four E4 floor rides re-planned to `MOVE_HERO` with an AIM LADDER (three of the four errand stops are ground NO HERO CAN STAND ON, so a plan aims beside them and the first standable rung wins), Moth Season's fixture re-recorded on the surviving grammar, the heat-5 hill-mine pin re-derived (its HASH did not move and could not — `agentOrdersEventLogHash` hashes the SUBMISSIONS; its outcome moved under stage 2's bounded `REPAIR_UNDER`), one em dash removed. All four IDLE rows byte-unchanged. **F-RPG-10**: `e4-long-road`'s convoy errand cannot be landed by any body a human positions — the arrival test demands the Hauler rest EXACTLY on `(190,0)` and that ground is not walkable, with the standable ground beyond an impassable block; pinned honestly rather t"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1028,
+      "text": "🎨✅ **canon-calls-a8-batch SHIPPED dcc762587 (attended drain 2026-09-07 ~15:00; Claude Opus 5 on scratch `wt-a8`; merged and gated in the worktree detached at main, landed by fast-forward) — THE ELDER IS A WOMAN IN HER PORTRAITS AND THE OLD DIGGER'S PORTRAIT IS THE MACHINE (owner A8, verbatim: \"F-AGE1: has to be adapted to be woman\", \"F-AGE3: … a robot gets reprogrammed, that does not change its visual appearance\").** `townsfolk-elder.png` + `townsfolk-elder-e2.png` replaced by the batch-3 woman (E1 138.6, E2 131.2 corner means; one person across the eras at 384 px, the 74×90 crop and 120 px), `townsfolk-old-digger.png` new (144.0) with the 88th speaker `old-digger`; 0 of 4 `e9-digger-*` beats re-keyed (each is another speaker's words; table in LEDGER row 77); halo 1394 → 1395; the recipe proved byte-identical on three shipped plates first. Attended gates on the merged tree: tsc/build green; era pinned `8e3fe217…`; no-emdash 1/1, scan-space 8/8, citation-title 18/18, halo PASS; `ss-10`"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1100,
+      "text": "🌑✅ **eclipse-winnable SHIPPED 80bb08b59 (attended drain 2026-09-06 ~23:55; Claude Opus 5 on scratch `wt-eclipse`) — THE ECLIPSE IS WON BY PLAY, NOT BY TUNING; NO LEVER SHIPPED; F-EAWA-1 CORRECTED (F-ECW-1).** MEASURED tick for tick: heat 12's promoted attempt LOST w19 / 585.2 s with the full fort standing by t ≈ 449 s (four turrets all tier 2 by 550 s) and the purse pinned at 190 of 200 from t = 435 s to death (150 s in which 314 kills' income was refused, `Economy.ts:266`); the air-wall prover LOST w19 / 588.7 s with the hero untouched at 175 until wave 16. The binding constraint: the fort's damage ceiling over a purse smaller than its own last rung (`turret.maxCount` 4, `beacon.maxCount` 6, `tiers.turret[2].cost` 300 vs `bankCap` 200), and the deficit was 11.3 s of a 600 s gate. THE FINDING: `MOVE_HERO` landed the same day and the air-wall prover predates it, leaving the hero at (0, 12), six units north of every gun the map allows; one `MOVE_HERO` to (0, 4), the centroid of the ten "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1123,
+      "text": "🔬 **THE RELAY RUSH ROW RETIRED CORRECTLY, AND THE MAP IS STILL WON — READY-FOR-GATES on `fix/relay-rush-replays-again` (Claude Opus 5 implementer, scratch worktree, base `37c8beda6`, 2026-09-06).** VERDICT: **INTENDED**, not a leak; NO map change was made and none is needed. FIRST, THE ROW IS NOT HEAT 12's (F-RRR-2): `artifacts/reassay-county-2026-09-06/before.json` names the retired reel `agent-bf8cd86d…`, dated `2026-09-04T23:17:57Z` — **heat 11's** Opus ride. Heat 12's reel (`agent-e8c4f218…`, 2026-09-05) replays GREEN on today's tree to its declared score and its declared hash `fnv1a32:d381ebe2`. THE BISECT, by instrument, one replay per commit (`artifacts/relay-rush-replays-again/bisect/ledger.txt`, 12 probes): green at `a8498c181`, red at **`0a2a6fdcf`** — `merge: lane/b e7-playbook-rows`, landed 09-05 07:24 local, **67 minutes after the reel was verified**. THE WHY, in one line: that slice made the era's own errand the price of the claim — `autoSecureWaveForRun` gained `|| !thi"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1134,
+      "text": "🎨 **TEN TOWNSFOLK PLATES GENERATED ON HIGGSFIELD (attended 2026-09-06 16:00-16:40; owner, verbatim: \"if there are still higgsfield credits, use them, I think they will expire soon\") — E5 HAS A CAST, E8 ITS HE-3 ASSAYER, E10 ITS HEIR, ITS BARON, ITS QUACK AND ITS CHARTER-KEEPER.** GPT Image 2 (`gpt_image_2`, 1:1, 1k, quality high) through the `higgsfield` CLI on the ultra plan: 3,690.99 → 3,603.49 credits (87.5 spent over 13 generations: three calibration tests and retakes). Every prompt carried the style anchor verbatim plus the parchment clause the E9 batch wrote (F-1166-3) plus a 'weak tea' clause; the first calibration test measured a corner-mean R−B of 82.9 (paper too cool) and the clause fixed it at 140.6. Kept, all in the 124–145 band with both corners above 120 and native (no channel arithmetic): `tf-tide-teller-e5` 140.6 · `tf-cannery-hand-e5` 130.0 · `tf-harbormaster-e5` 126.1 · `tf-shipwright-e5` (attempt 7: two at 145.0/145.7 retaken as over-band, four transient request fai"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1138,
+      "text": "🚀✅ **e10s-4-ember-shore-door SHIPPED 71bf69b09 (attended drain 2026-09-06; Claude Opus 5 on lane-a) — THE E10S LADDER IS COMPLETE: THE EMBER SHORE IS ADMITTED ON MEASURED EVIDENCE (owner: 'then lets do the E10S ladder').** ANCHORS re-landed verbatim from the parked E10S-1c payload, reach by an 8-connected grid search over `Terrain.sample` (the vent altar is a 4.2×3.5 wu blocker on the stake): (-6,-24) 9.7 wu from the vent site, (-20,-34) 25.5, (-38,-22) 38.5, (-54,-12) 52.0; 54–82 wu from the titan mount; 398 standable cells in the stoke disc. LAW 2: both seeds LOSE idle, `vent_guttered` w3 / 93,000 ms / 43 kills, twice each (`1b73c4b7`, `5c8b38ac`), floors 81 rows / 35 contracts, 0 `secured:true`, `--check` 81/81. THE PROVER (`artifacts/e10s-4-door/prover.mjs`, door grammar only: HARVEST · MOVE_TO · CONTEXT_ACTION stoke · HOLD · SECURE_CHOICE, no admission probe, no minted gold: 12 stokes × 15 g panned first) SECURES `-01` w12 / 360,000 ms `fnv1a32:84aace38` (414 kills, 29 calls) and"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1143,
+      "text": "🚀✅ **e10s-3-preserve-consumer SHIPPED ec7daff20 (attended drain 2026-09-06 morning; Claude Opus 5 on lane-a) — THE EMBER SHORE HAS ITS VENT: warmth, stoke, loss and the secure latch in both engines; and the honesty guard says the vent cannot be kept until its anchors land (E10S-4, dispatched in this commit).** `src/systems/E10PreserveSystem.ts` (private ctor + create, refuse-to-arm, fixed-step, presentation-stripped): the `last-warm-vent` as structure-state, WARMTH 100 decaying only while the squall blows at the authored 4/s; STOKE as a targetless `CONTEXT_ACTION {action: 'stoke'}` (`StandingOrders.ts:635`, one machine-derived grammar line in `public/skill.md`) at `twist.emberShore.preserve.stoke.goldCost`; the LOSS terminal `vent_guttered`; the doubled mote pressure APPLIED during the squall; the secure latch = vent alight at the check AND one whole squall survived; the view row `now.emberShore.preserve` (not `now.preserve`, which is `e10-last-claim`'s damageable vent, F-E10S3-3; the"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1158,
+      "text": "🎨 **portraits-e5-e10-batch BUILT ON `art/portraits-e5-e10` (Claude Opus 5 implementer, scratch worktree lane-c, base `0a120edd3`, 2026-09-06) — THE ERA CAST HAS PORTRAITS AND SPEAKER IDS; THE RE-KEY IS ONE BEAT, NOT SIX, AND THE BLOCKER IS THE COPY.** 21 processed portraits (every `tf-*-e{6,7,8,9}` plate on disk) + 21 `StorySpeakerId` rows + `e9-water-ledger-opened` re-keyed `clerk` → `canal-reeve-e9` with copy and citation byte-identical. **F-PORT-1 (premise correction, MEASURED):** the task asked for \"the same extraction as the existing seven\" and that is impossible — the seven come from `assets/raw/townsfolk-*.png`, 768² plates that are **46.22% `#8a8a8a`**; the `tf-*` plates are row 60's full-bleed convention, **0.00%** at the same key, and the repo's own extractor at its default recipe keys **0 / 147,456 px** on them. Processed full-bleed at 384² instead, the profile `char-prospector-portrait.png` — itself one of the registered seven — already ships. 21/21 measure `0` transparent"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1159,
+      "text": "🚀✅ **e10s-2-squall-scheduler SHIPPED c3a84d7cb (attended drain 2026-09-06 morning; Claude Opus 5 on lane-a) — THE E10S LADDER'S FIRST RUNG: THE EMBER SHORE'S STATIC SQUALL IS A PHASE MACHINE BOTH ENGINES RUN.** calm 60 s → telegraph 8 s → squall 25 s → recover 8 s (a 101 s cycle of 3,030 ticks; transitions event-logged at ticks 0 / 1801 / 2041 / 2791 / 3031), `src/systems/E10SquallScheduler.ts` in `InterferenceFrontSystem`'s shape (private ctor + `create()`, refuse-to-arm, fixed-step, presentation-stripped diagnostics, zero render imports) and deliberately not its band geometry; a render-side vignette/desaturation stub and a REAL ambience duck (`E10SquallPresentation.gain`, exactly 1 on every other map); the phase on the view and in the mechanics rule; the doubled mote pressure derived and published but NOT applied (E10S-3 wires it). DETERMINISM: two headless 3,100-tick runs identical; two idle-to-terminal runs identical at `fnv1a32:30b18787` (w3, 112.5 s, 55 kills, not secured: Law 2"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1162,
+      "text": "✅ **canyon-works-second-lever BUILT AND PROVEN — BOTH LEVERS IN, AND THE CANYON WORKS SECURES HEADLESS FOR THE FIRST TIME (Claude Opus 5, scratch worktree, branch `fix/canyon-works-second-lever`, base `0a120edd3`, 2026-09-06).** OWNER RULING, verbatim: \"lets adjust the policy so the hard levels can be won\" — the attended recommendation (c), both levers at once. DATA, `e3-canyon-works` only: `twist.powerGrid.connect.byWave` **6 → 8**, and a new authored `twist.economy.beaconLadder` **[25, 30, 35, 45, 50, 55] = 240 g** against the default 330 g (25+35+45+55+75+95). MECHANISM: one pricing site, `buildableCostAt` (`src/game/buildables.ts`), reached by `BuildSystem.costFor` in BOTH engines and by `MechanicsManifest`; the ladder travels as an ARGUMENT, never module state, because `deriveMechanicsManifest` prices contracts that are not the one being played. Each engine calls `BuildSystem.setContractBeaconLadder` exactly once (`Game.applyContractBeaconLadder`; the `run_reset` line in `Headless"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1204,
+      "text": "📊 **perf-optimization-survey READY-FOR-GATES → ✅ SHIPPED 5bba45fb6 (attended drain 2026-09-06 early; see the SHIPPED row above) (lane/b, 2026-09-05; Claude Opus 5 implementer, resumed from the codex run that died at 41 min on 'Selected model is at capacity') — SURVEY COMPLETE WITH NAMED GAPS, no game code changed.** Report `docs/reviews/2026-09-05-perf-survey.md`; instruments `scripts/perf-survey/*.mjs`; evidence `artifacts/perf-survey/**` (126 MB, largest file 4.5 MB); `node scripts/perf-survey/validate.mjs` PASSES on all 227 rows (schema + every published quantile re-derived from the raw per-frame samples + wave/contract/tier identity + tracked firewall). **Coverage 40 of 43 targets** (42 board contracts + town), 215 measured rows, **zero console/page/network errors**; the 12 failures are all F-PERF-11. **Two master premises corrected: the board holds 42 contracts, not 36** (the six the older count missed are the `terrainMesh: off` boards — four Deepwater, `e10-last-claim`, `e10-riv"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1220,
+      "text": "📖 **THE STORY LADDER SS-05..SS-11 AUTHORED (attended, 2026-09-05 evening; owner: \"How do we get all the contracts to finish? … how do we get them all playable for me to test? … push hard while I sleep\").** Seven chapter-as-data masters from `lore/STORYBOOK.md`'s DESIGN-LOCKED chapters, each the exact shape of the shipped `ss-04-e3-beats`: `ss-05-e4-beats` (lane-a, THE MOTOR FRONTIER), `ss-06-e5-beats` (lane-c, THE DEEPWATER CLAIM), `ss-07-e6-beats` (lane-d, THE ATOMIC HOMESTEAD), `ss-08-e7-beats` (lane-a, THE SIGNAL ERA), `ss-09-e8-beats` (lane-c, THE ORBITAL FRONTIER), `ss-10-e9-beats` (lane-d, THE RED FIELDS), `ss-11-e10-beats` (lane-a, THE DEEP SKY). Beats + tavern tales + Gazette headlines + the runtime switch + a plain-boot spec each; ceremonies stay separate tasks. Dispatched to Claude Opus agents three lanes at a time as the survey frees the board; drained attended overnight."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1259,
+      "text": "⏸️ **perf-optimization-survey STOPPED attended 6 min in (2026-09-05 12:02) — the instrument was overloaded.** Host load 35–280 with four gpt-6-astra implementers and their gate batteries running; a frame/tick/time-to-first-frame census under that load is noise. Leaf back to `planned`. 🟡 **NEXT: re-queue when the board is quiet (load < 8, no other implementer live) — the first quiet window after the Astra fix wave drains.** The master itself is unchanged."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1264,
+      "text": "📏 **perf-optimization-survey AUTHORED (attended, 2026-09-05; owner: \"a GPT-6 xhigh task that analyses for optimizations in the maps, 3D and generally to optimze the game performance? I think there is a lot of room there\").** A measurement SURVEY on gpt-6-astra xhigh: per-map render census (36 contracts + town, full/lite, desktop/390px), per-system attribution on the six worst maps, sim tick cost + replay throughput per map, delivery (chunks, per-map first-load bytes, throttled time-to-first-frame, the 25 MB composition, first-visit vs prefetch out of the 589 MB dist), leak cycles, per-map object budgets and terrain-triangle-on-screen; deliverable `docs/reviews/2026-09-05-perf-survey.md` with a top-10 table and a proposed fix ladder. Firewall: new files only, no src. 🟡 **NEXT: queue into the first lane whose Astra slice is DRAINED** (header/pre-flight written for lane-b; rewrite the lane letters before the cp if another lane frees first). Leaf `planned`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1291,
+      "text": "🟡 **e7-playbook-rows READY-FOR-GATES → ✅ SHIPPED 0a2a6fdcf (attended drain 2026-09-05; see the SHIPPED row above) on `lane/b` (2026-09-05, Claude implementer; NOT drained).** All FOUR of the 2026-09-02 audit's E7 rows (2 RESKIN + 2 PARTIAL) are cured on the lane by ONE additive rider verb, `PLAYBOOK_USE {name}` at rung 2 (`StandingOrders.ts:68`, the browser's own `Balance.e7Playbook.requiredPermissionLevel`). Name-only for three stated reasons: the player's loop produces a NAME (`Game.startNamedPlaybookReplay`), the skill.md grammar guard can only expand scalars (`skillmd-guard.test.mjs:180`), and a verb carrying orders is a verb an order can carry (unbounded recursion, Mistake #14). **THE LOOP IS RECORD-NAME-DELEGATE IN ONE VERB:** an unseen name banks the rider's accepted submissions as a canonical tape — the exact shape `gr-sim.mjs:279` already writes and `BroadcastMirror.shapeOfTape` already reads — then USES it; a known name is a REPEAT (which is what the Echo's ratified +10%/rep"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1296,
+      "text": "🏇 **THE RESKIN LADDER, WAVE 2 (owner 2026-09-05: \"things are reset, lets go!\").** Four Claude implementers, attended-dispatched, lanes a/b/c/d HELD (fires: no refills into them until their leaves flip): `e3-moth-season-grid`, `e7-playbook-rows` (four E7 rows in one lane), `e5-stillwater-storm`, `e8-remaining-maps` (three E8 rows). After these, the audit's RESKIN list is down to `e9-dome-basin` (the E9 stage snapshot, owner-ruled design) and E2's pressure line. Heat 11's five refused-but-won tapes are being resubmitted under the fencepost fix."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1315,
+      "text": "🏇✅ **HEAT 11 COMPLETE — 32 UNCLAIMED CONTRACTS → 9; TWENTY-THREE FIRST SECURES, AND F-HEAT11-1 (a one-tick envelope off-by-one) IS THE FINDING (attended Claude operator, 2026-09-03 12:46Z → 2026-09-04 04:55Z, ~16 h of a 20 h budget).** Measured from the live API over the ORIGINAL 32 targets (`artifacts/gauntlet-heat11-20260903/receipts-after-32.json`, verified rows only): **23 claimed, 9 unclaimed.** Rigs: Claude Opus 5 + Claude Fable 5 via `claude -p` 2.1.257 from two era-gated, skew-probed arenas (Arena A `16381350`/`a607a81f…`; Arena B `a72c1ee7`/`49c34f8b…` cut for E4+E8 after the two era slices landed — the byte-identical claim for E1 was VERIFIED, not trusted: the same orders replayed through both arenas produced `fnv1a32:a93d1bbc` identically). **F-HEAT11-1 (VERIFIED in source + measured on 8 reels, write-up `artifacts/gauntlet-heat11-20260903/envelope-finding.md`):** `src/playbook/PlaybookFormat.ts:63` computes its inclusive-endpoint `+2` slack ONLY inside `if (twist?.secureWa"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1319,
+      "text": "🚀✅ **e4-vehicles-plain-boot SHIPPED `49370319b` (s2497 drain, 2026-09-04).** F-E4-3 closed and CAPABILITY-LADDER L7 honoured on the Motor Frontier: every `twist.motorFrontier` contract mounts its Hauler and tar in a PLAIN boot, through the same composition `?debug&vehicles` used; the flag survives only as a non-Motor override. Confirm grades at a survey stake and otherwise calls the Hauler (Upgrade stays the direct grade input), and both actions are recorded in `RunTape.inputLog.motorActions` so human Motor tapes replay. Merged-tree gates (detached gate worktree, `--workers=1`): tsc clean · build green 2.83s · E4 node **11/11** · E4 browser **8/8** desktop + 390px with ZERO console/page errors · all four Motor reels `claimed=node=browser` · plain-boot replay slip matched the tape hash and `durationTicks` · sibling parity + `e4-vehicles-fuel` green · screenshots regenerated on the merged tree. **ENGINE PIN: era 5 pin 20 `41583818b1b6…`** — a same-era append (all four reels replay uncha"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1385,
+      "text": "📚✅ **HARNESSDEV LADDER APPROVED AND QUEUED (owner 2026-09-03, verbatim: \"Ok, this makes sense for 1, 3, 4, 5, 6 - if we add 2 then we have to change everything and all tapes become obsolete?\").** Five masters: lane-b `harness-receipts` (A), lane-c `cost-column` (C), lane-d `self-unified-grid` (D, analysis) then `refusal-taxonomy` (F), main `checkpoint-by-tape` (E, docs). ON 2 (the transfer board): ANSWERED - it is ADDITIVE, nothing becomes obsolete: a fresh seed is only a new seed id on the same contract through the same door (bench-seeds.json already lists five seeds per E1 contract), tapes reference their own contract+seed and stay valid, the engine and era do not move, and the public boards keep their meaning; a seed changes seam placement, wave rolls, upgrade offers and boss volleys (`HeadlessContractSim.ts` RNG streams :708/:994/:1026/:1799), so a held-out seed is a genuinely fresh instance of the same map. Cost is a rotation schedule + a time-boxed seed id + one extra column. ✅ "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1402,
+      "text": "📚 **HARNESSDEV (arXiv:2609.01437) RELATED TO THE COUNTY (attended 2026-09-03, owner: \"I found this great paper today about harness engineering/evolution - can you check it out and help me relate it to our project?\"; note `docs/research/2026-09-03-harnessdev-and-the-county.md`).** The county is a HarnessDev instance (rider = harness + model; skill.md = the weak seed; heats = Creation; the commons loop = Evolution; the assay = their isolated score path, stricter). Two things they have that we lack: a frozen harness artifact per result and a held-out split. LADDER, FIRE-AUTHORABLE inside ratified laws: **A harness receipts ✅ MERGED (s2469, `b1a5be384`)** (rider-side digest beside engineHash, almanac freezes charter+notebook), **C the cost column** (🚧 lane-c implementation `cost-column`: orders/calls/duration on standings; cost-vs-waves on the landing), **D the Self/Unified grid** from the almanac (analysis page), **E checkpoint-by-tape** (skill.md), **F refusal taxonomy per rider** (alm"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1420,
+      "text": "📖✅ **ss-04-e3-beats MERGED (s2460, 2026-09-03, `e736c0c75`) — the Voltage Age has a chapter, and only the Voltage Age hears it.** `E3_STORY_BEATS` (10 beats) carries the Canyon Works arrival, the two company representatives, the Gazette two-offers headline, the first night round, the brown-out ledger reveal, the Moth Season, the saboteur night, the twins' defection tavern tale, the ledger-reveal headline and the Refinery exit hook; `StoryRuntime.ts` loads the table only when `activeEpochId() === 'epoch-3-voltage'`, so E1 and E2 rides are untouched. CAPABILITY-LADDER L4 (the human path is never cut) — the benchmark did not need this; the player did. Every beat carries a `lore/STORYBOOK.md:NNN` citation in source (the lore law: uncited lore is a proposal), reuses the E2 trigger vocabulary, and sets `artKey` only for the two beats whose plates exist on disk. **Gates on the merged tree in a detached worktree (`gate-s2460`): tsc rc=0 · build green (2.23 s) · own spec 8/8 desktop AND 390px "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1430,
+      "text": "✅ **e10-preserve-objective MERGED (s2459, 2026-09-03, `ec6e3ba82`) — the Last Claim secures by keeping the warm vent alight.** `e10-last-claim` gains `twist.preserve` (`warm_vent`) and `twist.secureWave`: the vent is placed at contract start as a work the rider cannot build, rebuild, demolish or fund, the Static's siegers target it first, `secured` now requires it ALIVE at `secureWave`, and its fall ends the ride with reason `preserve_fell`. Headless and browser decide identically. The rider learns it through two ADDITIVE view fields (`now.preserve`, `stablePrefix.objective`), documented in skill.md. Ranking deliberately untouched (desk Q2). This is CAPABILITY-LADDER §2 E10 line made real. Gates on the merged tree in a detached worktree: tsc rc=0 - build rc=0 - **e2e 4/4 desktop AND mobile with ZERO console/page errors** - engine-era + view-schema + e10 node tests 9/9. 🔧 **THREE drain duties the master firewall RESERVED for the drain, all discharged: (1) engine pin `a6e9fc02` appended"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1442,
+      "text": "📜✅ **THREE DESK RULINGS EXECUTED (owner 2026-09-02, verbatim: \"sure, start all of them - unfortunate that we lost work\").** Q1 co-op: VERIFIED ALREADY SHIPPED (August: `coop-milestone`, `mp-ride-lobby`, `mp-07c-1..4`, `f-mpkv-1`; mixed parties live in a plain boot via the tavern-board claim word + `gr-sim --room`, skill.md:432): nothing to start; the announcement copy corrected (THREAD-v2 Post 7 said \"coming next\"; my earlier claim that Ride Together sat behind `?mp=dev` was WRONG, `src/main.ts:240` gates only the escort mode); ladder S7 corrected. Q2 preservation ranking: `e10-preserve-objective` ran before the ruling (done-move 22:23, ranking untouched by its own firewall) so the ruled half is `e10-preserve-ranking` (lane-a, SEQUENCED after the objective merges). Q3 unclaimed markers: `unclaimed-contracts-public` (lane-a). ON \"LOST WORK\": no code lost (the token-killed parity run was salvaged in full and shipped; the duplicate T3 master never dispatched); spent: two aborted runs' to"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1456,
+      "text": "🗺️ **F-2457-4 — L1 ERA MECHANIC AUDIT DRAINED (fire s2457, `28e7984251d8263f8609058d8a5a9f330999654f`), AND ITS RESULT IS A LADDER-SCOPE QUESTION FOR THE OWNER.** Every admitted E3–E10 door contract was ridden once through `gr-sim` and judged against its era's signature mechanic: **9 EXERCISES · 3 PARTIAL · 14 RESKIN · 6 UNRIDDEN** over 32 contracts (26 door-admitted; the 6 absent are exactly the 6 `gr-sim` refusals, each preserved verbatim rather than guessed). 🔑 **THE AUDIT REFUTED ITS OWN TASK'S PREMISE, WHICH IS THE MOST VALUABLE THING IN IT: the inherited belief that E4, E8 and E9 have \"no engine system\" is STALE.** They exist and are cited by file:line — `ConvoyBehavior`, `RoadNetwork`, `WeatherSystem` (E4), `E8PhysicsSystem` (E8), `SeedCaravanSystem`, `CanalChoiceSystem`, `ScheduledRelocationSystem`, `E9CanalSystem` (E9). **The real defect is COMPOSITION:** `HeadlessContractSim` imports and composes none of the E4 transport/weather systems and no `E8PhysicsSystem`, and compose"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1459,
+      "text": "📋🔥 **THE LADDER + STORY BATCH AUTHORED AND QUEUED (attended 2026-09-02, owner: \"Did you create the task for all the story as well as the other missing or issues...?\" - answered: no, so now yes).** Eight masters, each with a goal leaf: lane-a `winnability-receipts-and-kit-guard` (S1, L2) then `e10-preserve-objective` (S3; spec `specs/e10-preserve-objective.md`; ranking basis waits on desk Q2; SEQUENCED after S1); lane-b `view-schema-versioning` (S2, L3); lane-c `ss-04-e3-beats` (the E3 chapter's story as data); ⛔ `t3-refinery-ceremony` RETRACTED before dispatch: the pre-queue gate's `Others:` line showed `t3-refinery` already MERGED b5de53704 (the valve ceremony shipped; successor-master collision caught, no run burned); the E3 story loop still owes the E3 town era pass (attended next); lane-d `era-mechanic-audit` (L1, report-only: which E3-E10 contracts truly exercise their mechanic; no engine system found by name for E4 vehicles, E8 gravity/air, E9 persistence) then `human-tape-true"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1467,
+      "text": "🚨 **F-PT16-1 (owner playtest 16, 2026-09-02, VERIFIED, THE SAME LAWS): `pan_at` grants a full pan tick instantly on arrival in BOTH engines (`HeadlessContractSim.ts:2171-2210`, `Game.ts:7465-7492`, from `StandingOrders.ts:353`); a HARVEST order pays travel but not time (5 gold per order vs 5 gold per 1.5 s for a human). Owner verbatim: \"The laws for human and AI players have to be the same.\" LAW: CAPABILITY-LADDER L7. CORRECTIVE lane-d `same-laws-harvest-parity`: ⚠️ REVERSED WITHIN THE HOUR by the owner (verbatim: \"It is ok that the Prospector can do that - it just has to work for the human, too.\"): the Prospector keeps its tick; the PLAYER gets the same dispatch command through the same `pan_at`, recorded in the human tape; NO era bump, boards stand. v1 (strip + bump) stopped at rc143 before editing; v2 re-queued, implemented the slice over 114 min and died token-revoked in its gate phase (F-2453-3), then was FINISHED ATTENDED on lane/d (2026-09-02, session_01Rpu6VBzeT24Kk8jHuRHkpQ: "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1469,
+      "text": "📜✅ **CAPABILITY-LADDER RATIFIED (attended 2026-09-02, Fable 5.1, `specs/epoch-saga/CAPABILITY-LADDER.md`).** Owner verbatim: \"Ok, please do that - E9, yes, that is the idea. I agree with your design calls.\" + the HUMAN REFERENCE directive (\"I would love to be able to play the story as well - the Baron was only beaten after the agents saw my tape of beating it... humans - and especially me - can test the game\") + the arena vision (\"a community of users that start a battle between their agents and the players or in multiplayer even combinations of them\"). SIX LAWS: L1 ladder (one era, one mechanic, one reasoning problem), L2 winnability (every door contract winnable from its own kit; generalizes the railcar ruling), L3 view-schema (additive-only, version-stamped in the era registry; skill.md carries NO version field today), L4 human reference (story loop never cut; owner's played verdict stays the era gate; owner tapes are reference tapes), L5 two spines one engine (mechanic + contracts"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1490,
+      "text": "🧭 **F-2446-1 — THE E10S LADDER SKIPS TWO RATIFIED SPEC SLICES THAT HAVE NO GOAL LEAF, SO NO INSTRUMENT CAN EVER OFFER THEM (s2446, 2026-09-02).** 📊 **MEASURED TWO INDEPENDENT WAYS, not inferred: walking every node of `tasks/goals.json` for `/e10s|ember-shore/`, and a raw `grep -o '\"e10s-[a-z0-9-]*\"'`, both return the same four ids — `e10s-1` (superseded), `e10s-1b` (merged), `e10s-1c` (merged), `e10s-4` (planned). There is NO leaf for E10S-2 or E10S-3.** ⚙️ **BOTH ARE REAL, RATIFIED SLICES WITH THEIR OWN GATES**, written at `specs/agent-play/e10-ember-shore-preserve.md:26-27`: E10S-2 the squall scheduler + presentation-thin desat, E10S-3 the preserve consumer (warmth/stoke/loss + secure latch). 🎯 **AND THE ONE E10S LEAF THAT DOES EXIST NAMES THEM AS ITS OWN BLOCKER** — `e10s-4-ember-shore-door`'s note reads *\"Not authorable until E10S-2/E10S-3 land: the census names ember-shore-preserve-consumers as the missing engine dependency and E10S-3 builds it.\"* So the ladder's next two rungs"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1753,
+      "text": "💾 **F-DEPLOY-0829 — THE DEPLOY RSYNC SHIPPED THE MAC'S GATE-WORKTREE SCRATCH TO THE DROPLET AND FILLED ITS DISK TO 100% (attended 2026-08-29, surfaced by the owner-ordered deploy of the merged door fixes).** deploy.sh's assayer-leg rsync exclude list never covered `gate-s*` (the fires' transient gate-battery worktrees at the repo root), so every deploy since they existed shipped full repo copies to `/opt/goldrush/` - 3.4 GB in `gate-s2326` alone; the disk hit 100% (816 KB free) mid-rsync and the leg failed exactly as designed (fail-open, \"ASSAYER SYNC FAILED mid-step\"). With zero headroom the ledger could not have safely accepted new submissions. CURED: ① owner-approved deletion of the two mirror copies (gate worktrees are disposable BY DESIGN - the drain law itself writes evidence outside them because they die; Mac originals untouched) → disk 100% → 86%, 3.4 GB free; ② `--exclude 'gate-s*'` added to deploy.sh:175 so the class is closed; ③ the assayer leg re-run by hand to completion:"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1920,
+      "text": "🔧🏇 **F-HEAT6-SKEW: THE DEPLOY THAT FORGOT ITS ASSAYER — CURED IN THE PIPELINE, PARITY RE-PROVEN, HEAT 6 RE-ARMED (attended 2026-08-25).** Both heat-6 masters stopped correctly at their early skew probes: a fire deploy had moved production (5109241a8) without the droplet resync the runbook keeps manual, and the NEW engineHash honesty (this morning's merge, working as designed) refused every fresh tape with 64-hex engine-skew verdicts. STRUCTURAL CURE: scripts/deploy.sh gains the ASSAYER LEG - after VERIFY, rsync the box + re-pin + restart services, fail-open with a loud note if the box is unreachable (a dead box must never red a good deploy). Proven live: deploy 2701f6b5 synced in one breath; a fresh dry-gulch ride submitted and VERIFIED end-to-end. TWO DOOR FINDINGS BANKED ALONG THE WAY: ① the board retains TOP-15 rows and a below-fold submission answers stored:true then trims honestly (queue locator self-prunes) - the RESPONSE misleads and should say so (fold into the next door batc"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1922,
+      "text": "📚 **THE ALMANAC OF PLAY SHIPS INTO THE GAUNTLET REPO + THE 21-COMMIT RESCUE (owner 2026-08-25, verbatim: \"yes, we can make a new repository for that... I thought our memory repository would go in this direction already? Maybe adapt that so everything is in one place?\") — HIS MEMORY RIGHT A THIRD TIME.** Agent-Town/goldrush-gauntlet WAS the memory repo (memories/ per-rig, the baron-campaign war-room, PROTOCOL/HARNESSES/adapter) - adapted, not duplicated: `almanac/` added (the war-room pattern generalized: charter + six seeded contract pages with credited insights, dead hypotheses, era stamps), README extended, PROTOCOL era-bannered (assay era, canonical origin, equalized door - skill.md rules where they disagree), BOARD.md era-noted (pre-cure streams dead, strategies teach). ⚠️ RESCUE: the local checkout sat 21 COMMITS AHEAD of origin for 12 days - rob's w30 reference win, campaign r1-r20, the de-spoiler ruling - one disk from gone (Mistake #11's shape); a 175MB harness log blocked the"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1923,
+      "text": "✅ **F-2289-1 CURED + DRAINED s2293 at `66e3d954` — THE RECORDER AND THE ASSAYER NOW HASH THE SAME MODULE, AND THE BATTERY THAT PROVES IT WAS ACTUALLY RUN.** `HeadlessContractSim.standingOrdersSnapshot()` replaces the late `ssrLoadModule` at the hashing boundary in both `scripts/gr-sim.mjs` and `scripts/assay-replay-agent.mjs`; the global fallback and `agentOrdersEventLogHash()` are untouched, because the lever proof established that a bound executor with ZERO submissions hashes identically to the fallback. Gated on the MERGED tree (§3.0b): tsc rc=0 · build green 3.40 s · **`test:node-guards` 546 tests / 540 pass / 1 fail / 5 skipped**, the one failure being the pre-existing `fixture-teardown` leak this fire measured on main (**F-2293-1**) — **slice differential ZERO**. The slice regression passes with its safety and control arms. ⚖️ **The refused Hill Mine standing was NOT re-admitted** (it would now hash `fnv1a32:85cb8a01`); the Night Shift control still agrees at `fnv1a32:889d9357`. "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1931,
+      "text": "🔺 **F-2296-1 OPEN — OWNER (s2296 2026-08-25): THE LIVE ASSAYER'S ENGINE IDENTITY MATCHES NO RECENT MAIN TREE, SO THE COUNTY CANNOT VERIFY ANY SUBMISSION.** Both HEAT 6 slices (`gauntlet-heat6-almanac-era` lane-c, `gauntlet-heat6-guests` lane-b) stopped at this one gate and neither could act on it — the assayer is deployed infrastructure, outside every lane firewall. Their masters bind `skew -> STOP`, and both runners obeyed rather than minting rows the assayer cannot verify: a firewall SUCCESS, not a Silent No-Op, and both wrote WHY. 📊 **MEASURED s2296, NOT INHERITED** (`computeEngineHash` from `scripts/assay-replay-agent.mjs`, 11 source inputs, run against materialised worktrees): the live advertised build `5109241a8` hashes **`d48987df2d50c643e854a2bf8a23b7f34b81c3de1cfd2e54999129b5660f7494`** — **byte-identical to the tape the rider submitted** — and main HEAD after the drain hashes the SAME, no engine input having moved since the deploy. The live assayer reports **`0be37691327931"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1933,
+      "text": "🔺 **F-2298-1 OPEN — OWNER (s2298 2026-08-25): THE FRESHLY-LANDED ASSAYER DEPLOY LEG PUSHES 7.73 GB AND A LIVE API TOKEN TO THE DROPLET.** Measured READ-ONLY on a dry board five minutes after `3ff1eb606` landed the F-2297-1(b) cure — the leg is ONE COMMIT OLD, has never executed, and DEPLOY LAW fires it automatically on the next gameplay-affecting merge (two heat-6 r2 runs were live on lanes b/c as this was written, so its first run is imminent). 📐 **THE DIVERGENCE: `docs/ops/agenttown-server.md:40` prescribes an ALLOWLIST of nine lean paths; the leg ships a DENYLIST — `rsync -az --delete ./` minus nine names — and `deploy.sh:6–7` cds to the repo root, with the only other `cd` (`:65`) inside a subshell, so `./` IS the whole repo (verified by reading).** 📊 **MEASURED: 165 top-level entries sent, 155 outside the runbook allowlist, `7,729.9 MB` of extra payload — `e1-review-video` 3,281.6 MB and `gate-s1662` 1,576.6 MB are GITIGNORED LOCAL DEBRIS (4.86 GB that exists only on Robin's dis"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1936,
+      "text": "🔺 **F-2329-1 OPEN — OWNER (s2329 2026-08-26): A VERIFIED, LIVE DEPLOY IS RECORDED AS `interrupted` IN THE ONLY MACHINE-READABLE CHANNEL, AND THE ASSAYER LEG DIED SILENTLY INSIDE IT — SO THE ENGINE/ASSAYER SKEW F-2296-1 NAMES MAY BE LIVE RIGHT NOW.** Measured LOCAL and READ-ONLY on a dry board: no ssh to production, nothing deployed, no credential value read. 📊 **THE TWO CHANNELS DISAGREE, AND ONLY ONE IS MACHINE-READABLE.** `logs/deploy.log` records `08:40:24 DEPLOYED ok https://655390f8.gold-rush-3in.pages.dev`, then `08:40:26 VERIFY attempt 1/7: … says ccedf620`, then `08:40:26 VERIFIED published ccedf620 at https://gold-rush-3in.pages.dev` — that is s2327’s handoff commit `ccedf6200`, live and confirmed against the production alias. `logs/deploy-result.json` records `{\"outcome\":\"interrupted\",\"url\":\"\",\"publishedBuild\":\"ccedf620\",\"commit\":\"ccedf6200…\",\"ts\":\"2026-08-26T01:43:06Z\"}`. ⏱️ **The timestamps are in DIFFERENT ZONES and both are correct, which is why this is easy to misread:"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1954,
+      "text": "📋 **LADDER (lane-a) — `f2289-1-recorder-assayer-hash-divergence` AUTHORED + QUEUED s2290 (FIRE-AUTHORED, attended review welcome).** Executes F-2289-1, which s2289 priced as *\"the best-priced real defect on the board and fire-authorable as a DIAGNOSTIC, not a cure.\"* 🔑 **The premise was VERIFIED against main at authoring time rather than inherited, and it narrows the task from a search into a diff: BOTH endpoints call the SAME function on the SAME input** — `agentOrdersEventLogHash(snapshotStandingOrders())` at `scripts/gr-sim.mjs:260` (writer) and `scripts/assay-replay-agent.mjs:174` (reader), the function being `src/game/RunTape.ts:271`, which hashes **only** `orders_replaced` entries with `at`/`seq` stripped. **So this is NOT two hash implementations disagreeing — one function on one input shape producing two results means `snapshotStandingOrders()` is returning different content in the two contexts, and the task is to dump both sequences and diff them.** Four hypotheses ride with"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1956,
+      "text": "✅ **HEAT-5B RE-EARN MERGED s2290 at `81729ab9b` — both standings are on main, and the drain filed the two findings its predecessor could not write.** s2289 gated this slice green and deliberately did NOT merge it: a live attended session held `tasks/BACKLOG.md` — the one file the slice also touches — dirty for that fire's whole duration, so git refused, and forcing would have meant committing another writer's index (F-1589-5 / F-1295-1, in the one direction that is unambiguously forbidden). It preserved the gated tree as tag `s2289-gate-merge` → `1672a0cc2` so its successor could **verify rather than re-derive**, and s2290 did exactly that rather than take a stale green on trust: **all 68 artifact blobs in the merge are BYTE-IDENTICAL to the gated tree (68/68 — the control asserted its own non-zero denominator first, per F-2215-1), 0 divergent**, the only other path being `tasks/BACKLOG.md`. That file conflicted purely by **adjacency** — main had gained two attended rows ABOVE the row "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2122,
+      "text": "🟢 **F-2223-1 (s2223 2026-08-23 MEASURED · s2224 2026-08-23 CURED — the TWENTY-FIRST consecutive dry-board fire to execute its predecessor's cure rather than admire it. The FINDING was s2223's; this row records the CURE. GATE: none — this row is a completion.)** ✅ **THE AIM WAS TESTED BEFORE IT WAS SPENT ON, per this streak's rule that an inherited aim is a CLAIM (Mistake #4), AND IT REPRODUCED EXACTLY** — `--all` reads `594` goal leaves from the repo root and `591` from `worktrees/lane-c`, at identical rc and identical `7371` bytes, ONE diverging line out of 56. **That makes two fires running where the tested aim survived intact; the check cost ~4 minutes and the two that did NOT survive would each have cost a fire.** 🎯 **BUT THE PRICE WAS AN UNDER-STATEMENT, AND THAT IS THE REUSABLE HALF OF THIS ROW: s2223 priced the harm as `? UNKNOWN` where the root says `✅ CLEAR` — a bookkeeping-shaped miss, cheap-sounding. THE `--queue` ARM CARRIES THE MISTAKE #8 POLARITY.** Leaf loss is MONOTON"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2123,
+      "text": "🟢 **F-2222-1 (s2222 2026-08-23, FOUND AND CURED THE SAME FIRE ON A DRY BOARD — THE NINETEENTH CONSECUTIVE FIRE TO FIND A LIVE INSTANCE OF F-2204-1'S CLASS. GATE: none — this row is a completion.)** 🎯 **WHY I WENT LOOKING:** s2221 landed ~9 min before me, so the dry-board work was to EXECUTE its cure rather than admire it — and, per its own hard-won rule, to TEST THE INHERITED AIM FIRST. It handed forward two: (C) a \"banner vs corpus\" question-shape, and (D) widening `collection-guards-cwd-invariance.test.mjs`. ⛔ **(D) IS A TRAP AS DRAWN, and reading the file was enough to see it: that guard runs its subjects from `os.tmpdir()` and asserts `rc === 0` — BOTH parameterisations its own domain has already proven wrong (s2220 measured that outside-the-repo fails LOUD so the sweep misses the defect, and that an rc-equality test cannot tell *correct-from-anywhere* from *silently narrowed*). Widening its subject set in that shape would have MANUFACTURED blind spots, not closed them.** ✅ **So "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2130,
+      "text": "🟢 **F-2218-1 (s2218 2026-08-23, FOUND AND CURED THE SAME FIRE ON A DRY BOARD — THE FIFTEENTH CONSECUTIVE FIRE TO FIND A LIVE INSTANCE OF F-2204-1'S CLASS. GATE: none — this row is a completion.)** 🎯 **WHY I WENT LOOKING:** s2217 landed its cure ~10 min before me, so per the streak's rule the dry-board work was to EXECUTE F-2217-1, not admire it. Its aim was explicit and it was the right aim: *\"stop widening the RESOLUTION and start widening the SUBJECT SET — ask which handlers stand between a tool and its CORPUS.\"* It named six enumerating instruments to sweep and told me to re-measure rather than inherit the list. ✅ **RE-MEASURED, AND THE LIST WAS THE WRONG SHAPE — NOT WRONG IN ITS MEMBERS, WRONG IN ITS KEY.** 🔑 **THE FINDING IS THE CENSUS METHOD ITSELF: THE SWALLOW NEED NOT BE A `catch`, AND SIX CONSECUTIVE FRAMINGS ARE KEYED ON ONE.** s2212 `grep -c catch` (file-level) · s2213 spawn lexically inside a `try` · s2214 same-file wrapper · s2215 handler polarity LOUD vs SILENT · s2216"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2131,
+      "text": "🟢 **F-2217-1 (s2217 2026-08-23, FOUND AND CURED THE SAME FIRE ON A DRY BOARD — THE FOURTEENTH CONSECUTIVE FIRE TO FIND A LIVE INSTANCE OF F-2204-1'S CLASS. GATE: none — this row is a completion.)** 🎯 **WHY I WENT LOOKING:** s2216 landed its cure ~10 min before me, so per the streak's rule the dry-board work was to EXECUTE F-2216-1, not admire it. Its aim was explicit: *\"I resolved same-file wrappers on the HANDLER once … I did NOT resolve IMPORTED helpers on the handler side, and I did not re-sweep the 71 true-SILENT handlers — re-measure my 102/28/75/4 rather than inheriting it.\"* ✅ **RE-MEASURED: `98` non-test `scripts/*.mjs` importing `child_process`, `100` catch handlers — `26` LOUD directly, `4` LOUD only via a same-file wrapper, **`70` TRUE SILENT**. The four false-SILENT COORDINATES reproduce EXACTLY, which is the figure that mattered; the totals differ by a two-handler boundary, not a disagreement.** 🕳️ **THE DEFECT IS IN `dry-board-probe.mjs`'s `selectSubjects` — the tool §"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2205,
+      "text": "🔎 **F-2180-1 (s2180 2026-08-22, ATTENDED-OWED — OVER-CLAIM HALF CURED s2181 (F-2181-1); THE `authoringBlock` HALF REMAINS OWED — THE AUTHORABLE CENSUS'S DENOMINATOR IS NARROWER THAN ITS OWN HEADER CLAIMS: `building` LEAVES ARE RESOLVED BY *NEITHER* FACTORY INSTRUMENT. THE ANSWER IS RIGHT TODAY; NOTHING PROVES IT.)** 🎯 **THE CLAIM I SET OUT TO TEST.** Eleven consecutive dry boards have each recited `13 planned — 0 fire-authorable` from `scripts/authorable-candidates.mjs`, and s2179 handed off the instruction to *\"pick the one carried CLAIM that nobody has re-measured and measure it.\"* The claim I picked is not the count but its **denominator**: is `planned` really the whole candidate space? 📊 **MEASURED AT THE GOAL TREE — 874 nodes carrying `id`+`status`:** `merged=744 · shipped=57 · superseded=33 · **planned=13** · verified-by-owner=11 · stopped=8 · **building=5** · blocked=3. 🔬 **WHICH INSTRUMENT RESOLVES WHICH STATUS, READ FROM THE CODE AND NOT FROM EITHER HEADER (Mistake #4).** "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2244,
+      "text": "🟢 **E2 IS FINISHED — BOTH RAILCAR MAPS THROUGH THE DOOR, THE EPOCH 4/4 (2026-08-22, headless Opus agent on `worktree-agent-a383c2ed5dd452ebd`, base `0251deeb1`; PROPOSED, not yet drained).** Owner, verbatim: **\"yes, I want to admit it, E2 should be finished as well\"** — approving [F-1608-2]'s priced `hpScale` 30 → 12.5 railcar cut and stating the intent. 🪜 **A FOUR-STEP PROGRAMME, EACH STEP MEASURED ALONE BEFORE THE NEXT WAS TAKEN:** ⑴ the pressure LINE (2026-08-21) → arsenal fires, neither secures · ⑵ the COAL, `twist.coalSeams` (2026-08-21) → fuel delivered doubles, neither secures · ⑶ the RAILCAR CUT (this ruling) → **measured to change NOTHING** · ⑷ the CADENCE, `twist.waveCadenceMult` → **both maps secure on every path**. ⭐ **STEP 3 IS THE FINDING [F-E2F-1]: A BOSS-HP DIAL CANNOT REACH A CLAIM THAT NEVER MEETS THE BOSS.** Applying the ruled cut ALONE and re-running the exact blocking configs returned **byte-identical event logs** — `e6fe4301`, `74a94d27`, `17116d57`, `2207a312` "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2559,
+      "text": "🔬 **F-2073-1 (s2073 2026-08-20, ELEVENTH DRY BOARD — F-1193-3's DECISION PREMISE RE-MEASURED: THE ABSENCE IS REAL AND STRONGER THAN THE ROW CLAIMS, THE ROW'S STATED REASON FOR IT IS NOT LOAD-BEARING, AND OPTION (b) COSTS MORE THAN THE ROW SAYS.)** Non-blocking; a measurement, no owner word owed beyond the one already parked. 📐 **SELECTION.** s2072's (B) named **F-1193-3** as the oldest untouched desk premise and added the rule *prefer a premise that asserts an ABSENCE*. This row asserts one, twice — *\"the diagonal raws are still referenced nowhere in `src/` or `e2e/`, so an unrepaired sheet costs the player nothing today\"* — and it is the sentence the **RECOMMENDATION (a)** rests on, inherited unchanged across s1193 → s1582 → s1608. ⚖️ **UNLIKE F-E2S-3, THE GATE IS CURRENT AND CORRECTLY OWNER-HELD.** `BACKLOG:408` still reads *\"GATE: owner picks (a) or (b)\"* and that line IS discharged — the owner ruled **2026-08-09** *\"Spend one more batch\"*, appended to the same row — but s1608 the"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2588,
+      "text": "🟢 **F-2055-1 CURED s2055 — THE 191-FIRE NO-OP LOOP HAD AN EXIT REACHABLE FROM INSIDE THE WHOLE TIME: THE IMPLEMENTER PROCESS WAS DEAD, AND NO TRIAGE STEP EVER ASKS.** 📏 **WHAT WAS ACTUALLY WRONG, measured before touching anything:** `pgrep -fl lane-runner-v3.sh` → **rc=1, no process**; `logs/runner-headless.log`'s last dispatch is **2026-08-15 20:13**; `tasks/.runner.lock` sat held since **Aug 15 21:41** with no owner. Meanwhile `tasks/queue/lane-d/assay-worker-loop.md` had been correctly `cp`'d into the queue at **Aug 15 22:50** and never consumed. **The factory had no implementer for ~3 days and 191 consecutive fires reported a \"dry board\" instead.** ✓ **THE QUEUED MASTER WAS LAWFUL ON EVERY AXIS I COULD CHECK, which is what makes the stall expensive rather than merely untidy** — `drain-block-check` → **CLEAR** (not blocked, no owner fork); its own stated gate is *\"QUEUE ONLY AFTER assay-replay-fidelity MERGES\"* and that predecessor's leaf reads **`status:\"merged\"`**; its spec `spe"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2628,
+      "text": "✅ **F-RIDE-4 CLOSED s1787 (`0c4acd6f0550e86b293acb0c7de3085f4980f4dc`) — SEAM PANNING NOW FOLLOWS THE RIDER HOLDING THE HARVEST CHANNEL.** The mixed human+AI ride put the browser in slot 1 while the transient action slot returned to slot 0, leaving the collecting rider idle. The renderer now asks the existing per-rider harvest snapshot instead of adding parallel state. Gates: policy CLEAR; tsc/build/asset diet green; Playwright 39 passed + 1 expected mobile multiplayer skip across focused, adjacent, and plain-boot coverage. Review: `reviews/investigate-seam-anim-mp.md`; evidence: `artifacts/seam-anim-mp/`. F-RIDE-5 remains recorded without a master; F-RIDE-6 is closed above. OPEN with owner: is the remote rider's dark-green tint intended? LADDER LAW: one lane-c queue slot at a time, refill on merge."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2695,
+      "text": "**(1) THE REAL FINDING, AND IT IS A PROCESS ONE: F-1678-1’s CORRECTION NEVER REACHED THE CARRIED INSTRUCTION.** F-1678-1 landed in `tasks/BACKLOG.md` and stopped there. The **carried `NEXT:` block** — the thing each fire actually executes — still transmits F-1677-1’s **uncontrolled** predicate verbatim, through s1679…s1686, **nine handoffs**, ending at s1686’s *“(iii) … `grep -c \"Not classified\"` on the merged copy — non-zero ⇒ leave the leaf `queued`”*, with **no control arm and no mention of F-1678-1**. **A finding filed in the ledger but absent from the instruction is a finding the factory does not have.** That is the defect worth fixing, and it is not the one I originally filed."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2701,
+      "text": "💡 **THE REUSABLE HALF, AND IT IS NOT THE ONE I WROTE BELOW.** The lesson “control your probe against the baseline” was **already learned, already filed, and still failed to reach the fire that needed it** — so the binding lesson here is about **transmission, not measurement**: ➡ **when you correct an inherited instruction, correct THE INSTRUCTION, not just the ledger.** A finding’s home is the carried `NEXT:` block if a future fire must act on it; BACKLOG alone is an archive, and archives do not execute. ⚠ **Corollary for readers of this entry: the novelty of a finding is a claim about the corpus, and it is checked by grepping the corpus — one command, before writing the word “finding”.**"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2727,
+      "text": "🔢 **F-1676-1 (s1676 2026-08-11, MEASURED ON THE EIGHTH CONSECUTIVE HELD FIRE — I ALMOST FILED A FALSE FINDING AGAINST TWO CORRECT PREDECESSORS BECAUSE I GREPPED A DIGIT-GROUPED NUMBER WITHOUT ITS COMMA. THE LIVENESS LADDER READS `1,706`, AND `grep 1706` RETURNS ZERO HITS ON A FILE CONTAINING TWENTY-FIVE. NOT AN OWNER QUESTION; DOES NOT JOIN THE DESK.)** 📋 **BOARD:** dry and held for the eighth fire running — `find tasks/queue -type f` → **0** · no `tasks/CODEX-WALL` · assayer `pending/` EMPTY · every `tasks/done/` head entry `drained-`/`stopped-` · lanes b/c/d `ahead=0` USABLE and idle · lane-a **BUSY** throughout. Branch (B) applied, grounds cited not re-derived (F-1670-1). 🪤 **HOW IT SURFACED — ON MYSELF, AND THAT IS THE POINT.** Verifying the hold with F-1673-1's instrument, I took the denominator from s1675's handoff prose (*\"ladder read 397 → 421 → 494 of 1,706\"*) and ran the obvious probe: `grep -c '1706' <the live lane-a log>` → **0**. I widened it: **0** across all four rece"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2763,
+      "text": "🔺 **F-1653-2 (s1653 2026-08-11 — OWNER'S DESK, and it is THREE ratification questions, not a design conversation). THE THIRD CONSECUTIVE \"NEXT AUTHORABLE RUNG\" TURNED OUT NOT TO BE ONE, EACH FOR A DIFFERENT REASON — AT THAT POINT IT IS NOT THREE ACCIDENTS, IT IS A LADDER THAT HAS OUTRUN ITS RATIFICATION.** 📋 **THE RUN: s1649 probed AP-16-6 and found its own slice's premise refuted by its implementation surface (F-1649-1) · s1650 probed AP-03 and found its named deliverable already shipped under another slice's gate (F-1650-1) · s1653 probed AP-15 slice 2 and found it gated below.** Every one of them looked authorable from every surface a refilling fire reads — spec exists, predecessor merged, lanes idle — and only the implementation or ratification surface said otherwise. **Three fires have now each spent their authoring budget proving a negative.** 🔬 **AP-15 SLICE 2 SPECIFICALLY, measured s1653 rather than assumed.** `specs/agent-play/ap-15-assay-of-minds.md` is **`Status: DRAFT 20"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2790,
+      "text": "🔵 **F-1646-2 (s1646 2026-08-11 — CURED IN THE SAME FIRE, filed for the class not the instance): a GHOST LADDER ROW sat `planned` while the work it names had shipped in full, and the guard built for ghost rows could not see it.** `tasks/goals.json`'s `ap16-5-build-rotation` — *\"AP-16-5: BUILD gains rotationSteps parity (audit class 7)\"* — was the **ladder-plan** row for AP-16-5, and it was still `planned` after the work landed under **two** implementation leaves: `ap16-5-rotation-parity` (`73de3dec`, the standing-orders door) and `ap16-5b-seat-rotation-parity` (`37dd8a6a`, the seat). Retired s1646 to `superseded` + `supersededBy: ap16-5-rotation-parity`, with the pointer **WALKED, not assumed** (the titles and hashes were read and matched before the flip). ⚠️ **Why it is worth a row even though it is fixed: left alone it is a Mistake #8 magnet** — a fire reading the ladder sees an OPEN rung for fully-shipped work and can queue a master against it, which is the 824k-token flail shape, a"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2804,
+      "text": "✅ **F-1645-2 CLOSED s1646 `37dd8a6a` — the seat now expresses rotation and no longer refuses the whole order; see the SHIPPED row above. ORIGINAL FINDING (s1645 2026-08-11, found by the ap16-5 runner under its master's FIREWALL LIFT clause, then VERIFIED AT SOURCE by the drain — REAL, NON-BLOCKING, LADDER not desk): `src/sim/SeatOrders.ts` — the multiplayer seat's build path — cannot express rotation, and REJECTS THE WHOLE ORDER rather than ignoring the field.** `SeatBuildOrder` omits `rotationSteps`; `parseSeatOrder` gates on `exactKeys(value, BUILD_KEYS)`, so an unknown key is a **schema error**; and `buildActions()` hardcodes `rotationSteps: 0`. Consequence: an agent that learns `rotationSteps` from `public/skill.md` (which AP-16-5 just taught it) and sends it through the **seat** — `specs/multiplayer/mp-07-one-engine-at-the-table.md`, consumed by `SeatedLockstepSim.ts` — gets an `INVALID_ARGS` refusal of the *entire* order. ⚖️ **Why this is a RUNG and NOT a blocker, written down so"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2889,
+      "text": "🟢 **F-1610-2 (s1610 2026-08-10, MEASURED ROW BY ROW RATHER THAN INHERITED FROM THE HANDOFF — THE F-1601-1 WORK-ACT LADDER IS SPENT, AND THE \"REMAINING\" LIST TWO FIRES HAVE BEEN WORKING FROM IS STALE).** Non-blocking; this is a routing correction, not a defect in anyone's cure. ✓ **WHY I CHECKED AT ALL:** s1609's handoff named four work-acts still available — *\"F-1587-2 · F-1591-1 · F-1507-1 · F-DOOR-6\"* — and the §2E dry-board amendment let me author a second master, so the list was about to decide this fire's work. **I opened all nine rows instead of trusting the list.** 📊 **THE NINE, EACH READ FROM ITS OWN ROW (line numbers as of this commit):** **F-1587-1** `:67` ✅ CURED s1601 · **F-1589-2** `:62` ✅ CURED s1602 · **F-1588-2** `:65` ✅ CURED s1603 · **F-1591-1** `:50` **✅ GATE MET s1592** (Arm 0 merged `5936ec48e…`, PARTIALLY CONFIRMED verdict, `81/fps` column present) · **F-1510-1** `:277` mechanical gate MET s1609 (4/4 both projects at `--workers=1`) · **F-1536-2** `:231` census d"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2965,
+      "text": "🔺 **F-1193-3 (s1193, OPEN — RE-DECLARED s1582 AFTER FALLING OFF BOTH BOARDS: TWO E2 ENEMY SHEETS STILL CARRY A WRONG DIAGONAL ROW, THREE GENERATION PREMISES ARE SPENT ON EACH, AND A CONTENT LADDER IS STOPPED BEHIND IT.)** **THE DEFECT:** `char-coalthief-sheet-walkdiag4-a.png` row 0 is a duplicate `se` — its **southwest row is missing outright** — and `char-steamwrecker-sheet-walkdiag4-a.png` row 1 still reads **2,2,2,2 cyan clusters** where a lawful `se` carries one tank (F-1189-2). ✓ **RE-VERIFIED AT THE BYTES s1582, NOT INHERITED:** `git log --oneline -- assets/raw/char-coalthief-sheet-walkdiag4-a.png` returns **exactly ONE commit, `d7a9d326f`** (the original THE EIGHT WINDS batch 3, 2026-07-28) — that sheet has never been touched since it was minted, so the gap is live rather than a stale belief. The s1193 art batch (`305af1f4a`) shipped an explicit **PARTIAL**: the 2 rows it landed were Steam Wrecker row 2 `nw` and Rail Tough row 1 `se`; these 2 are the ones it could not. 📉 **WHY"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2970,
+      "text": "✅ **F-1579-1 (s1579 2026-08-09, CLOSED s1580, FIRE-AUTHORABLE — THE FIXED-PHASE HARNESS SUPPRESSES THE VERY OSCILLATION IT WAS BUILT TO LOCATE, SO ITS NEGATIVE RESULT IS ABOUT THE INSTRUMENT'S REGIME AND ITS MARGIN IS NOT TRANSFERABLE.)** Found gating f1577-3 (merged `3dd3dea3f26de5a5ddf0a21e7820b1d8682cde9b`). That slice pinned `simulation.tick` at P=35/39/43/47, swept 70 windows × 3 runs × 2 projects, and correctly reported **no `driftAbs` reached `0.4` anywhere** — plus, unprompted, the hidden axis: at `timescale=4` the live loop advances `timeAlive` **4×** faster than `advanceSim` does, while `Embodiment.ts` drives the idle oscillation from `timeAlive`. **The runner's report is honest and its hedge is correct; this row follows that mechanism through to the consequence, because the review's \"Named target\" section can otherwise be read as a ready-to-use cure parameter.** ✓ **MEASURED AT THE GATE over all 24 raw files / 1,656 sample-to-sample transitions, not inferred:** `driftAbs` is"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2980,
+      "text": "✅ **F-1575-1 (s1575 2026-08-08 — ANSWERED s1577, VERDICT (A) CONFIRMED, MERGED at `f759cbe85ea7ea577ef4cf14d0f4a0a6838a52f0`).** ➡️ **THE ANSWER, s1577:** the runner named **(A)** and the drain gate independently reproduced it on a differently-loaded shell. `tickDelta` varies **23–26** across 24 banked full-spec runs; controlled sweeps cross `driftAbs=0.4` at **36–42** (desktop) and **43–44** (mobile). The window is `11 + round-trip cost`, and the round-trip term is machine load. **The bound is a race, exactly as predicted — the seven-rung \"deterministic window\" description was wrong and is now retired.** ✓ **THE BIT-IDENTICAL RECURRENCE IS EXPLAINED (F-1577-4):** the drain's mobile gate run reproduced `driftAbs=0.3722002149381437` carrying `tickDelta=24` — the **modal** tick count (11 of 24 runs). The master's guess *\"a modal tick count reached by a modal round-trip cost\"* is now a measurement. 🔑 **AND THE LADDER GOT ITS FIRST INSTRUMENTED BREACH ON THE VERY FIRST GATE RUN (F-1577-2)"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 2988,
+      "text": "🔬 **F-1572-1 (s1572 2026-08-08, OPEN, FIRE-AUTHORABLE — THE LADDER LOCALISED THE 0.4 DRIFT BREACH TO THE FIRE SHELL, AND THE TWO SHELLS HAVE NOW SWAPPED SIDES.)** ✅ **THE FIRE ARM WAS RUN THE SAME FIRE — see the closure note on F-1571-1 below and `artifacts/f1572-1-fire-shell-drift/measurement.md`: 12 fire-shell desktop observations, 0 breaches, max `0.3722002149381437`, which is BIT-FOR-BIT F-1564-1's lane-shell maximum over 24 observations. The localisation is refuted; what remains open is the paired LANE arm at the same n.** F-1564-1 closed F-1563-3 with **24 lane-shell observations, 0 breaches, max `0.3722002149381437`**, and concluded — reasonably, on that evidence — that the breach is *\"localised to the FIRE shell, making the gate instrument the subject rather than the game\"*. ⚠️ **Both halves of that conclusion just came back inverted, in one drain.** The f1571-1 runner, in the **LANE** shell, produced a genuine breach: `driftAbs=0.4096828041302199` against the unchanged `0.4` "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3051,
+      "text": "🔬 **F-1557-1 (s1557 2026-08-08, THE DRY-LADDER VERDICT WAS RIGHT AND ITS METHOD COULD NOT HAVE KNOWN THAT — AN AUDIT'S FILTER IS ITS DENOMINATOR, AND s1556's SAW 4 ROWS OF ~40. DISCHARGED IN THE SAME COMMIT).** F-1556-1 concluded *\"the authorable ladder is exhausted\"* and *\"WHAT REMAINS is NOT fire-authorable\"* from a scan of the **4** BACKLOG rows marked `FIRE-AUTHORABLE` **+ `GATE: none`**. ✓ **RE-DERIVED s1557 rather than inherited (Mistake #4): `FIRE-AUTHORABLE` appears on 40 lines; after a FULL-LINE scan for dead-markers (CURED/CLOSED/SUPERSEDED/STRUCK/ABSORBED/DISCHARGED/NOT-FIRE-AUTHORABLE), 9 rows carry no retirement marker anywhere on the line.** So the filter that produced the verdict could see **4 of 9 live rows, out of 40 mentions** — and `GATE: none` is precisely the wrong discriminator, because **a SATISFIED conditional gate is exactly as authorable as an absent one** (the \"count the CONJUNCTS / read a CLOSING gate's disjuncts\" class). ⚠️ **MATERIALITY PROVED, not assert"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3053,
+      "text": "🔧 **F-1556-1 (s1556 2026-08-08, THE AUTHORABLE LADDER IS EXHAUSTED AND THREE OF ITS FOUR REMAINING ADVERTISEMENTS ARE STALE — THE FACTORY'S BOTTLENECK HAS MOVED FROM LANES TO AUTHORING. DISCHARGED IN THE SAME COMMIT).** ✓ VERIFIED s1556 on a fully idle board: **all four lanes `ahead=0 USABLE`, six queues EMPTY, zero undrained done-moves** — and **zero banked masters**. The goal tree holds exactly ONE leaf in `queued`/`planned`/`ready`, and it is the one this fire authored; `tasks/` holds no never-run master. So §2E's cheap refill path — *\"`cp` the top unblocked item from the ladder\"* — **has nothing to copy**, and every refill now costs an authoring slot, of which a fire has exactly ONE. **Three idle USABLE lanes could not be filled by any fire obeying the law.** ⚠️ **The compounding half, and the reason this is a finding rather than an observation: of the 4 BACKLOG rows still marked `FIRE-AUTHORABLE` + `GATE: none`, THREE are already CURED** — F-1554-2 (transcript tracked `701fc221d "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3100,
+      "text": "🔺 **F-1541-1 (s1541 2026-08-08, MEASURED BY INTERSECTING ALL FIVE BANKED `Touch ONLY` LISTS — EVERY SEQUENCING LAW IN THE MP-07 LADDER IS SCOPED “ON THIS LANE”, AND TWO OF ITS FILES ARE WRITTEN ACROSS LANES. CURED IN THE MASTERS THE SAME FIRE).** s1540 audited dispatch order *within* a lane; this is the other axis — **what the two lanes SHARE**. Write-set intersection of all six cross-lane pairs (lane-b × lane-d): `mp-07a × mp-07b` = **∅** · `f-door-1 × mp-07b` = **∅** · `f-door-2 × mp-07b` = **∅** · `f-door-1 × f-e2s-1` = `public/skill.md` · `f-door-2 × f-e2s-1` = `public/skill.md` · **`mp-07a × f-e2s-1` = `scripts/gr-sim.mjs` AND `public/skill.md` — the only CODE collision on the board.** `public/skill.md` is in **four of the five** TOUCH-ONLY lists. ⚠️ **And every declared dependency is same-lane scoped:** f-door-1 “if mp-07a has ALREADY landed on **this lane**”, f-door-2 “may land on **this lane** first”, f-e2s-1 “may have landed on **this lane** or on main first — **No other depe"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3151,
+      "text": "🟢 **s1533 NEGATIVE RESULT, RECORDED SO IT COSTS NOBODY ELSE A FIRE: THE \"24 UNDESKED LEDGER ROWS\" NUMBER THIS FIRE FIRST MEASURED IS AN ARTIFACT, AND THE ARTIFACT IS INSTRUCTIVE.** A first pass asked \"which BACKLOG rows declare an open OWNER'S DESK item and are absent from the live desk?\" and got **26 of 29** — a board-reddening rate, and exactly the F-1334-1 shape (*a proposed desk guard that fires on 24 of 35 items has a false premise, not a full board*). A second pass then asked when each was last on a desk and appeared to find **14 items dropping simultaneously at s1414** — which is **also false**. Both numbers come from the same instrument error: the tail-slice heuristic takes everything after the last desk word, and across the **headerless era s1415–s1469 (F-1472-1: 55 fires with no desk header at all)** that scoops an entire `NEXT:` paragraph, reporting desks of **135–145 ids**. ⓘ **That 145 is the same wrong number F-1471-3 recorded when the old guard fell through to an archiv"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3306,
+      "text": "- 🔺 **F-1481-2 (s1481, MEASURED — F-1475-1 IS NOT ONE BLOCKED SOCKET; IT IS THE GATE ON **30 OF 42** CONTRACTS, AND THE ENTIRE REMAINING ERA-SOCKET LADDER SITS BEHIND IT).** 🧭 **HOW I FOUND IT:** the board was dry and the last handoff named the per-epoch ERA-SOCKET masters for **E7/E8/E9** as the natural successors to the completed ER-01 census ladder, so I went to author one. Before writing scope I asked whether the harness could be constructed at all — the lesson of the s1475 run that spent **124,606 tokens for zero repo changes**. 📐 **THE MEASUREMENT (read from the code, not inherited):** `src/sim/HeadlessContractSim.ts:41` defines `SUPPORTED_CONTRACTS` with **exactly 12 ids — every one E1, E2 or E3**; `:184` throws unless the id is in that set **or** the contract declares a `mode`. Across all 42 shipped contracts: **12 admitted · 0 with a mode escape · 30 that THROW.** The walled 30 are all four contracts of **E4, E5, E6, E7, E8, E9 and E10**, plus `e3-fairground` and `e1-drill-"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3622,
+      "text": "🟢 **F-1395-1 (s1395, MEASURED — THE CENSUS DOC EXISTS; THE LADDER'S REAL GATE IS POST-LAUNCH).** F-1394-2 declared all four lanes PIPELINE-DRY because the F-CEN ladder's `READ-FIRST = the census doc` was \"not in the repo\", and put a cheap-and-unblocking ask on the owner's desk. **Both halves are wrong, and the second is the expensive one.** 📄 **(1) THE DOCUMENT IS TRACKED AND ALWAYS WAS:** `docs/bench/agent-playability-census.md` — 26 lines, 5,322 bytes, committed **`8e2c9c2b`** *\"census: the agent-playability census — 41 contracts compiled (1 ready, 40 data-gap, 0 broken) + action ladder\"*, last touched `90003628`; never deleted, never renamed (`--diff-filter=D` and `-R` over 200 commits surface only unrelated *map-census* queue retirements). **I did not take the finder's word for it — I read the file and mapped all eight rungs to their source lines:** F-CEN-1←`:16` (*\"5 of 8 cannot boot even in a browser (empty harvestAnchors → silent decline to The Claim, contradicting live dispat"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3624,
+      "text": "⛔ **F-1394-2 SUPERSEDED s1395 BY F-1395-1 — ITS CENTRAL FACTUAL CLAIM IS FALSE AND ITS OWNER ASK IS WITHDRAWN. The census doc EXISTS at `docs/bench/agent-playability-census.md` (tracked, committed `8e2c9c2b`, never deleted or renamed); s1394's own first probe HIT it and misclassified it as unrelated. Do NOT act on the ask below. The ladder is genuinely parked, but on the POST-LAUNCH gate — see F-1395-1. ORIGINAL ROW PRESERVED VERBATIM BELOW.** 🔺 **F-1394-2 (s1394, PIPELINE — THE CENSUS LADDER IS LABELLED \"FIRE-AUTHORABLE\" BUT ITS `READ-FIRST` SOURCE IS NOT IN THE REPO, SO NO FIRE CAN AUTHOR A RUNG OF IT).** With **all six queues empty and every goal leaf either merged, owner-gated, or STOPPED-do-not-requeue**, the board's only remaining authorable work is the census action-ladder — **F-CEN-1** (E7/E8 bootability, 5 empty-anchor contracts vs live dispatches) through **F-CEN-8** (escort-mode-as-data) — which this ledger marks *\"fire-authorable in census action-ladder order, **READ-FIRST"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3668,
+      "text": "🟢 **F-1373-1 (s1373, MEASURED — NEGATIVE RESULT: PIPELINE-DRY IS STRUCTURAL, RE-DERIVED AT THE GOAL TREE INSTEAD OF THE QUEUE DIRECTORIES — AND THE ONE THING THAT NEARLY WENT WRONG IS THAT A GATE'S RELEASE CONDITION AND THE COMMAND THAT LOOKS LIKE IT TESTS IT ARE DENOMINATED IN DIFFERENT THINGS.)** 🧭 **THE PROBE, AND WHY IT IS NOT A FIFTH ID-JOIN AUDIT.** s1372 §L(3) handed forward no hypothesis and explicitly discouraged minting a fourth join on a minted token, offering instead: *ask a question the ledger IS keyed on.* **§2E — the refill duty — is exactly that question, and it is a standing duty rather than an invented audit.** Thirty-three fires have answered it by counting `tasks/queue/**/*.md` = 0, which proves only that nothing IS queued; **it never asks what COULD be.** The goal tree answers that directly, because a leaf's `status` **is** the key — no join, no namespace, no denominator to derive. 📐 **THE MEASUREMENT: 523 leaves; 505 terminal** (`merged` 431 · `shipped` 49 · `s"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4322,
+      "text": "🔴 **F-1158-3 (s1158) — 🆕 NEW, AND IT WAS INVISIBLE FOR 20 DAYS BEHIND F-1158-2. ⚠️ FIXING THE STALE TEXT DID NOT TURN THE TEST GREEN ON MOBILE — IT ADVANCED IT TO A DEEPER RED.** `e2-stamp-mill.spec.ts:157` now runs the **full** test on desktop-chrome (✅ green) but fails on **mobile-chrome (390px)** at `:145` via `:216`. ✓ **CONTROL-PROVEN PRE-EXISTING, not mine:** I restored the old string and re-ran mobile → **identical `:202` stale-text failure**, so mobile was red at `:202` too and **the path past `:202` has not been exercised on mobile for 20 days**. Measured, `fundStage(page, 0)` with `STAGE_COSTS[0] = 90`: `expect(economy.gold).toBe(beforeGold - cost)` → **Expected `-90`, Received `0`**. `Expected: -90` means **`beforeGold` read as `0`** on the line immediately after `grantGold(90)` (`:140`→`:141`); post-funding gold is also `0` and `site.funded` did flip true. So on mobile the grant is not visible to the very next read; on desktop it is. ⛔ **NOT diagnosed further, deliberatel"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4386,
+      "text": "6. ✅ **SHIPPED s1391 (`34800b22`) — rider 16 MERGED; 221 ties = 221 InstancedMesh instances, one draw call, one GLB fetch, plain boot unchanged. Review `reviews/run3d-16.md`. The next rung of this ladder is UNAUTHORED — `run3d-17-megaproject-site-stages` is NOT fire-authorable (F-1387-1 measured it as an attended design fork).** ORIGINAL LADDER LINE FOLLOWS. 🔨 **`run3d-16-rail-elements` QUEUED s1389 (FIRE-AUTHORED, attended review welcome; lane-c).** Rider 16 of the run-3d ladder, authorised verbatim by `specs/town-3d/RUN-RECIPE.md:20` (\"Later riders (**fire-authorable once 07 lands**): **rail elements**, gold nodes, megaproject site stages\"). **Authorable only now** — F-1387-1 held lane-c closed until gold-nodes merged, because a master written against the pre-rename shape would have landed as a stale-base graft; every banked coordinate was **re-verified at source against merged main `f554d78a`** rather than inherited. ⭐ **Four design points are SETTLED in the master, not left to the"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4388,
+      "text": "5. ✅ **SHIPPED s1389 (`f554d78a`) — after a REJECT-then-corrective cycle (F-1387-3 → `run3d-15b`). Next rung is rider 16, queued to lane-c this same fire.** ORIGINAL LADDER LINE FOLLOWS. 🔨 **`run3d-15-gold-nodes` QUEUED s1386 (FIRE-AUTHORED, attended review welcome; lane-a).** The first RIDER of the run-3d contract-buildables ladder. **Authorised by the ratified spec itself, not by a fire’s judgement:** `specs/town-3d/RUN-RECIPE.md:24` slice order reads verbatim “Later riders (**fire-authorable once 07 lands**): rail elements, **gold nodes**, megaproject site stages”, under the owner order of 2026-07-13 (“all other 3D objects that we have in game”). **GATE VERIFIED BY READING CODE, not by trusting the ladder:** 07 sluice landed (`src/game/Run3dPilot.ts:13`) and the entire 07–14 arm is on main — 8 registry entries, 9 `e2e/run3d-*.spec.ts`. Gold nodes were chosen over the other two named riders because their lifecycle maps cleanly onto R4 (nodes deplete and respawn, so mount/unmount is "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4414,
+      "text": "2. ✅ **PERF LADDER COMPLETE** — perf-03 instancing (s201) → m5-03 stat-sim-harness (s204 `27814c7`) → perf-04 determinism-harness (s212 `7de9ddb`, read-race corrective CLOSED s227) → perf-05 startup-pass (s216 `4afb57f`) ALL SHIPPED (full detail in the lane-d header above; reviews in `reviews/perf-0*.md`). No further perf rung is specced. **lane-d next work is owner/attended-gated:** GT-06 (flatten-cost economy mechanic — NOT fire-authorable), GT-07 flavor (owner-ratified, flavor open), E2 content enemies/boss (owner F-054-2). Do NOT re-queue any perf master — all on main (Mistake #8 guard). *(s251 ghost-line retirement: this arrow predated the ships recorded in the header.)*"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4420,
+      "text": "- **⚠️ MP-02 lockstep REGRESSION on main + fix 067 STALLED (flag, s283 2026-07-10):** `e2e/mp-02-lockstep.spec.ts:67` (\"hash mismatch … restores from relay snapshot\") FAILS on main — after injected desync `paused` stays true, wire card forever (root `src/mp/LockstepClient.ts:227`: unpause requires Game `onSnapshot`→`true`, which returns false restoring 2+ hero-actor state; arrived UNGATED via art-runner broad-add `4a5278a`, per `reviews/night-drain-2026-07-10.md`; caught by attended retro-gate). Fix master `tasks/failed/rc1-20260710-063429-067-mp-resync-two-actors.md` (lane-d) **failed 2× (rc1 06:07+06:34; run-logs rotated → cause unclassifiable, wall-casualty vs real)** → per fire.md §2C STOP + flag, NO blind 3rd retry. NEXT: attended (or a healthy fire) re-queues 067 ONCE with eyes / decomposes; a shipped MP-02 feature stays red on main until then."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4426,
+      "text": "## 🏗 TOWN-3D LADDER (owner order 2026-07-12: \"3D models for all buildings in town and the contracts\"; ADR-004 + specs/town-3d/README.md + specs/town-3d/RECIPE.md are law): slice 0 RECIPE ✅ LANDED s415 (`specs/town-3d/RECIPE.md`, re-export gate byte-identical `fa3e057e`; review `reviews/town3d-00-recipe.md`) → LADDER NOW FIRE-AUTHORABLE, ONE BUILDING PER LANE TASK, refill-on-merge, from RECIPE.md: 1 general_store ✅ **SHIPPED (attended self-graft ~Jul 12) — GHOST-LINE RETIRED s477 (Mistake #8 guard).** VERIFIED on main `976c537f` by FILE-PROBE: `assets/pilots/general-store-3d/general-store.{blend,glb}` + `e2e/town-general-store-blender.spec.ts` all tracked; siblings town3d-02..06b shipped with reviews. **The HELD master `tasks/town3d-01-general-store.md` STILL EXISTS on disk = a re-queue trap — DO NOT `cp` it to any queue** (blind-queuing = re-derive an already-merged diff). Owed (permitted session, `mv`/`git rm` fire-gated): `mv tasks/town3d-01-general-store.md tasks/failed/shipped-tow"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4454,
+      "text": "- **🎞 CAST MOTION LADDER — VERDICT PASS (owner 2026-07-09 verbatim: \"These moves look much better - this is the way to go. We just need them for the new reference characters now.\"):** Seedance walk-video pipeline is THE sprite-motion path. **ECONOMICS (corrected from the pilot's real spend): 18 cr per 4s motion video → 72 cr/character (4 dirs) + ~25% retake margin ≈ 90 · 22.5 cr per 5s marketing chain segment · **TOP-UPS: 2026-07-09 ULTRA 2982cr · 2026-07-11 +2000 (~2024 measured after the overnight burn) — ⚠ IMAGE LAW now in AGENTS.md: stills NEVER via higgsfield (Codex image_gen is free); higgsfield = VIDEO ONLY** (\"I will get more credits so we don't have to stop\") — M-2/M-3 + the full chain + multi-take retakes ALL unblocked on budget; 16:9 chains ≈58.5 cr each, 1:1 motion 18 cr (verify per-job in transactions when logging the LEDGER) · owner 2026-07-09: \"I will get more credits so we don't have to stop while we are rolling.\"** Phases: **M-1 the combat trio + THE PROSPECTOR (owner"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4466,
+      "text": "⚗️ **IS THE E8 He-3 ASSAYER THE SAME MAN, OR HIS LINEAGE’S SUCCESSOR? — the one thing standing between the E8 portrait batch and a 5th file, plus the whole `<existing-tf-id>-e8` aging edit (F-1161-3, s1161 2026-07-28).** ✓ Verified at source, not inherited: `specs/epoch-saga/e8-orbital-bundle.md:11` names *“the He-3 assayer **(assay lineage)**”* and `lore/STORYBOOK.md:486` adds *“assay lineage, one era from its Press destiny”*. **The lineage already has a shipped FACE** — `tf-assay-clerk.png` (E1), continued as `tf-depot-clerk-e6.png`, which `assets/LEDGER.md` row 61 records as an **identity-preserving aging edit of the same man** (*“the exact Assay Clerk spectacles, moustache, hair pattern, expression, head angle and framing”*). So “lineage” has been rendered once already as **one person, aged**. ⚠️ **But the saga’s OTHER multi-era trade is explicitly generational:** `lore/characters.md:36` gives the clerk line as *“youngster-a’s face runs whatever each era moves”* and `lore/STORYBOOK"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4490,
+      "text": "OWNER: science pacing — DATA POINT banked (5 steps, 1-to-Steamworks in one 35-wave run = threshold 6 fills in ~1.2 deep runs; fine for now, re-judge at the epoch-2 transition)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4501,
+      "text": "## 🏭 THE EPOCH WORK-PACKAGE LADDER (owner order 2026-07-07 ~11:20: \"make all epochs E2–E10 into work packages so we can start queueing\") — fires AUTO-FIRE each package the moment its GATE opens; packages are sequential BY DESIGN (each era consumes the previous one's engine + megaproject). Bundles = specs/epoch-saga/e<N>-*.md; author tasks FROM them via /author-task; per-asset art QA finalizes one-epoch-ahead (Template Law)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4504,
+      "text": "- **PLAYTEST WAVE 0707-noon (owner live on the hosted build — 6 findings in 15 min):** `lane-c-edge-read-correctives` (F-0707-11 vista wall-read + F-0707-12 dark scatter) QUEUED · `046-territory-ring-pacing` (F-0707-13, earned ring must not slow the game; ±25% contact-time gate) QUEUED main · `lane-a-meta-presence` (F-0707-14 invisible meta → provenance badges, \"the claim remembers\" recap, pause meta panel) RUNNING · `lane-a-research-chart` (owner ask: full tree overview — the Elder's Survey Chart: states, requirement tracing, PIN-a-target planner, next-epoch silhouette) QUEUED behind it. **RESPEC/redistribution = owner-flagged LATER** → LATER ladder: design questions when its turn comes (cost model? full vs partial? interplay with banked steps + epoch transitions?). **PHASE-WEIGHTED OFFERS = owner-parked LATER too (2026-07-07 ~18:05, wave-41 run: \"Upgrades felt very stale. I don't want faster gold… I am trying not to die… official cutoff is at 20, so probably rather focus on the next "
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4505,
+      "text": "- **📣 MKT LADDER → superseded by docs/marketing/FEVER-CAMPAIGN.md + BRAND-BOOK (2026-07-14); the ONLY open gate is OWNER caption approval. (was: campaign RATIFIED 2026-07-07 ~16:45 — `specs/marketing/README.md`: Agent Town brand revival, agenttown.app landing, \"Gold Rush — an Agent Town tale\", Higgsfield-w/-Seedance @ ~$50 cap):** Stage-0 QUEUED all-free: mkt-01 footage rig (lane-c, 7-shot list, capture-profile privacy law) · mkt-02 agenttown.app landing (lane-d, mines agent-town-branding repos, own CF Pages project, NO DNS until owner approves preview) · art-batch-012 key art (the player + the Prospector on the ridge). Stage-1 teaser GATE✅ owner confirms visual pass settled + Higgsfield signup (owner one-time, cap $50). Stage-2 maintain-loop: fires author mkt- capture tasks on notable merges → marketing/outbox/ → **OWNER APPROVES EVERY POST, always** (publishing = owner-gated law). X: @agenttown (450 followers) — ⭐ FINGER LIFTED 2026-07-10 (owner verbatim: 'revive @agenttown'); first"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4508,
+      "text": "- **🗺 TERRAIN-RENDER v2 LADDER (owner ruling 2026-07-08, verbatim in `specs/terrain-render/`: tiles = temporary, \"edges clearly visible… looks cheap/easy… improving that going forward is important\"):** TILE-IDENTITY PASS QUEUED lane-c (Gulch→mesa/arroyos+spring basin · Twin Banks→braided bars+marsh · Night Shift→dusk mark · Claim untouched) — geography variety NOW on current machinery. **TR-01 continuous ground mesh (flagged, DEFAULT-OFF) ✅ SHIPPED s194** (drain lane/polish `9c9dba3` path-scoped onto main — none of tr-01's files moved on main since merge-base ecc7005, so bookkeeping-only branch drift not taken; review `reviews/tr-01.md`; gate tsc+build; tr-01 4/4 + adjacent w1-01..07/m1-01/m2-01/task-025 = 62/62 under `npm run dev`; ground = 1 draw call both flags, flag-off↔on p95 delta ≈0.1ms; F-tr-01-2 = pre-existing preview-harness w1-07 red, proven not-tr-01 via revert-run; owner-eye gates the default-on flip via `artifacts/tr-01/` side-by-sides). Then TR-02 splat blending + noise"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4509,
+      "text": "- **⭐ E1-CONTRACTS LADDER (RATIFIED 2026-07-07 ~15:25, owner: \"spec them out fully with art and everything and add them to the queue\" — `specs/e1-contracts/README.md` = full mechanics/knobs/gates/art):** art-batch-011 Baron+props QUEUED art (E2 drip renumbers 012+) · **C3 Dry Gulch QUEUED lane-d NOW** (builds the `?contract=` loader C4/C5/C6 reuse; default-claim byte-identical asserted) · **C5 Night Shift ✅ SHIPPED s137 `238573a`** (review `reviews/e1-night-shift.md`) · **C4 Twin Banks ✅ SHIPPED s138** (drain lane/perf `ee20624` 3-way onto clean main, review `reviews/e1-twin-banks.md`; e2e 10/10 both projects + adjacent 32/32; two fords / two banks / one loss stake + one non-loss north marker) · C6 Baron → lane-b after town chain (placeholder-first if batch-011 unprocessed). Board rows activate with Town T3; `?contract=` is the test door until then. GATE for the roster being DONE: all six on the board, each spec-green + owner-played once. Replay Law: E1 stays on the board forever."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4521,
+      "text": "- **🎵 MUSIC LADDER (owner order 2026-07-09, LOW PRIORITY by his word: \"I was wondering as well about some music - a soundtrack for each Epoch and a title track or something. But make a note about this, this is not the highest priority.\"):** a TITLE track + one soundtrack per epoch (E1..E10), each era's musical grammar derived from its bundle palette note (frontier warmth → night-grid hum → chrome-pastel swing → quiet green rebirth → the ten-era medley aboard the Ark; the Static = the music desaturating). Generator pilot when picked up: ElevenLabs music (key in .env) vs `sonilo_music` — one era track each, owner picks. Era loops in-game + title on the menu + marketing reuse (trailer beds, reels). PARKS until the owner raises it."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4546,
+      "text": "## 2026-07-13 — TOWN-3D LADDER OPEN (owner calibration verdict: \"amazing... let it do all the houses and all other 3D objects\")"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4551,
+      "text": "- QUEUED: town3d-06-stamp-mill (lane-a) · town3d-06b-dynamo-hall (lane-b) · run3d-07-sluice GRAMMAR (lane-c) · run3d-08-palisade (lane-a) · run3d-09-turret (lane-b) · run3d-10-stockpile (lane-c) · run3d-11-sentry-beacon (lane-d) · run3d-12-boiler-house (lane-c) · run3d-13-assay-bench (lane-d) · run3d-14-lantern-post (lane-a) · town3d-15-plaza-props (lane-d). RUN-RECIPE.md ratified (the buildables seam; parallelization-safe). LADDER-STALL re-queues pre-authorized (HANDOVER §4-appendix)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4570,
+      "text": "## 2026-07-13 — FORWARD LADDER OPENS (owner: \"I would love to keep pushing forward\")"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4639,
+      "text": "- LADDERED NEXT: **e3-fairground** (the Ferris wheel — generator/watchtower/joy; meatier: new entity; authors after the first three drain) · **cw-02-escort mode** (tram + capacitor crate on canyon works) · E3 townsfolk/aging art batch."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4660,
+      "text": "- **THE LANDMARK SOURCE LADDER ruled** (reuse GLB > derive from painted art > build new from era plates; era-stamped per map; ~⅓ of all mount ids already have existing 3D bodies) — 3D-D's landmark wave proceeds under it."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4664,
+      "text": "NIGHT LADDER: lane-b canyon(3rd)→e4-01→e5-01 · lane-c garden→incline→crawler · lane-a e4-04-orbit-road→fix-curator-pool · lane-d blackout→mask-tables · art e3-batch-013. DRAINED TONIGHT BEFORE LOADING: seams-fix + e4-02 + e4-03 + town-era-switch (all gated green)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4665,
+      "text": "FIRES: drain per the 45-min SLO (attended is GONE for the night — no coexistence holds needed); LADDER-STALL re-queues pre-authorized; DEPLOY stays exec-gated (owed in the morning); watch the codex wall (re-probe before re-queuing wall-class failures)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4674,
+      "text": "- **✅ SHIPPED — `pressure-generalize-engine` (s580 drain, `3c333eae`):** the engine block is GONE. The 3 hardcoded `activeContract.id === 'e2-hill-mine'` guards (`Game.ts:904`/`:3825`/`:3918`) now read `activeContract.twist.pressureEnabled === true`; `ContractManifest.twist` gains `pressureEnabled?: boolean`; e2-hill-mine's twist sets `pressureEnabled: true` (byte-identical behavior). Gated: tsc+build clean; **e2-pressure-in-run 4/4 both projects isolated** (boilers stay Hill-Mine-only, PRESSURIZE completes); e2-hill-mine + run3d-boiler-house + e2-trestle green; adjacent reds pre-existing (pressure-economy:94 fingerprint-matched F-1; sci-04:59/123 revert-proven). Review `reviews/pressure-generalize-engine.md`. Drained from `lane/m3` @983ed062. **THE E2-DRIP LADDER IS NOW UNBLOCKED.**"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4675,
+      "text": "- **✅ SHIPPED — `e2-drip-02-pressure-garden` + `e2-drip-03-incline` (s586 RE-LAND drain):** both E2 contracts + real `mask-tables/{e2-pressure-garden,e2-incline}.json` + honest board-launch specs re-landed onto main from the `lane/perf @abb584e9` audit stack (base 122 behind — Mistake #15 stale-base RE-LAND, NOT a blind merge). `assets/contracts/epoch-2-steamworks/contracts.json` diff vs main = **390 insertions, 0 deletions** (pure append; main's hill-mine `pressureEnabled:true` preserved through the 3-way). `Terrain3dClaimPilot.ts` + `terrain3d-registry.spec.ts` from the stack SKIPPED (main's `wire-landmark-mounts` copies are newer — landing the lane's would have reverted `onVisualHeightSourceInstalled` + deleted a rails test). Gated: tsc+build clean; **e2-pressure-garden + e2-incline 4/4 both projects**; **board-gating-and-profiles 2/2** after its fixture fix. board-gating: muted teasers `3→1` (BOTH garden+incline graduate — s585's predicted `3→2` was wrong; incline also carries a bo"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4681,
+      "text": "  - **s579 UPDATE — QUEUED to `tasks/queue/lane-a/` (fire-executed, veto window open):** s578's \"may be SUPERSEDED by attended's truth-correction re-arm\" hedge is now DISPROVEN by ground truth — both re-armed E2 drips ran to completion on lane-c (13:10/13:13) and self-blocked ON THIS EXACT ENGINE: `artifacts/e2-pressure-garden/report.md` (`416dfc7b`, report-only) = \"BLOCKED: prerequisite engine slice authored but not landed … Land the owner-gated pressure-generalization engine slice first, then rerun unchanged\" and re-verified the 3 hardcodes still live on `ef7209c7` (`Game.ts:904` PressureSystem / `:3825` boiler_house / `:3918` PRESSURIZE, all `=== 'e2-hill-mine'`); `artifacts/e2-incline/report.md` (`6f552500`, report-only) = \"LADDER-STALL: waiting on Pressure Garden\". Master NON-STALE (its anchors == the drip's re-verified anchors). s577 NEXT-FIRE + s578 item-C gate ALL met & fresh-verified: runner idle (no `codex exec`, lane-runner-v3 pid alive but between tasks), lane-c queue empty"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4684,
+      "text": "- **SOL DOUBLE-WAVE MERGED+DEPLOYED 2026-07-15**: 3D-D Crawler model (11,980 tris, named damage components — factory wires it next) + Canyon/Moth-Season terrain+panorama pairs (pylon sites buildable-flat) · 3D-C E3 town WIDE (all buildings, strengthened tavern, voltage accessories). FACTORY OWES: (1) F-3DD-rail — canyon aggregate contract expects a 2nd rail absent from the published mask table (reconcile tileParams↔table) — **✅ SHIPPED s636 `64faec0f`** (chore-rail-mask-reconcile: canyon-works.json west-rim line copied from shipped tileParams — TABLE was wrong not contract; blackout-ridge.json published; dust-flats confirmed already at E4 path [stale premise]; node test 5/5; review `reviews/chore-rail-mask-reconcile.md`); (2) ratify+mount era-props.e3.json — ✅ SHIPPED (ratified `59a5c04d`, `assets/pilots/plaza-props-3d/era-props.e3.json` on main); (3) wire-crawler-3d — ✅ SHIPPED s592 (`358b326c`, GZ `a3d0d5e2 (archive: pruned by the A3 rewrite)`, queue-retired s593 `c5f00158`) [s633 co"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4695,
+      "text": "LADDERED (fire-queue on drain, masters ON DISK): e7-01/e8-01/e9-01/e10-01 research trees (lane-b chain, one per drain) · then per-era: art batches from bundles, boss choreographies (storybook), contract data slices — the pattern is banked in these masters."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4702,
+      "text": "## 2026-07-15 evening — PIPES REFILLED: wire-crawler-3d (a) · e7-01 chart (b) · fairground re-queue (c; verify-or-build) · e5-02 water re-queue (d; verify-or-build). NEXT LADDER (fires feed on drain): e8-01→e9-01→e10-01 charts (b) · e4 mask-table publication · e5 art batch · E4 era-gate · wire-e3-props verdict follow-up. All masters on disk carry the three laws (gate-authorship, ground-truth, CODEX-format)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4703,
+      "text": "  - **✅ ALL REFILLS + CHART LADDER MERGED (s591–s598, content-probed s633):** wire-crawler-3d `358b326c` (s592) · e7-01 `b9b04d8f` (s591) · e3-fairground + e5-02 (s591–s592, retired s593 `c5f00158`) · e8-01 `f325092c` (s594) · e9-01 `dc453dfd` (s595) · e10-01 `d437a385` (s598, **research ladder EXHAUSTED**). RESIDUAL still-owed (unverified, not authorable mid-dry): e5 art batch · E4 era-gate · wire-e3-props verdict follow-up. (**F-3DD-rail + e4 mask-table publication [blackout-ridge] ✅ SHIPPED s636 `64faec0f`.**) → THE current PIPELINE-DRY."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4708,
+      "text": "## 2026-07-16 midday wave: goal-tracker (owner's tree, REGISTRATION LAW) · era-anchor emitters (arc/dust) · E5 Deepwater tile (the Claim-Boat) · mask debts chore · e5 art batch. LADDERED NEXT: E4 era-gate · e5 boss (Dredge Queen choreography from plate) · E6 engine spikes per bundle · impact-law verify."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4747,
+      "text": "## 2026-07-16 night — DREDGE-QUEEN RATIFIED (owner, while reading): E5 BOSS LADDER UNBLOCKED"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4750,
+      "text": "- LADDERED (next art batch, fire-authorable): **boss-dredge-queen.png + -damage.png** plates per bundle §4 (corsair flag-barge, claw/paddles/hold zones readable) — wires into the placeholder like the railcar's did. Boss choreography ships factory-side; the painted plate + 3D body wire in later."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4772,
+      "text": "## 2026-07-17 — THE E6 LADDER OPENS (owner: \"What about E6 - E10? What is stopping us from that?\")"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4775,
+      "text": "- LADDERED NEXT (author after framework merges): e6-glow-mesa contract+tile slice (consumes the scheduler: decay puddles, night veins) · e6 mask table · wrangle/capture verb slice · art batches 022-024 per bundle §A batching. OWED (attended, 2026-07-17): E7 determinism-audit spec + E9 persistence-substrate spec."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4786,
+      "text": "- **FORWARD LADDERS written into both Sol queue docs**: 3D-D gets E6→E10 sculpt grants (activation-gated on mask files; E8 style-gate + E9 persistence-design-gate flagged); 3D-C gets road-wear → DQ model (4 component sub-meshes) → THE MESA TOWN (E6-E7 major arc) → dome → basin → Ark, plus **THE TOWN-SITES LADDER (DRAFT, one owner nod ratifies)**: square → drowned square → mesa ×2 → dome → basin rim → Ark plaza."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4800,
+      "text": "- **✅ MERGED — sol/town-road-wear-v2** (F-3DC-04 closed; texture-only). **3D-C LADDER EXTENDED** (queue doc): basin rim → BOSS FLEET (Land-Yacht model READY NOW, plates banked; Homemaker banks ahead) → E8/E9 building populations → THE ARK + Long Table hall → F-3DC-05 interleave."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4813,
+      "text": "## 2026-07-17 — THE ARK LADDER LANDS (8 merges) + E9 DESIGN RULED + final gates queued"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4818,
+      "text": "## 2026-07-17 — THE TERRAIN LADDER COMPLETE: E9 + E10 MERGED — all 19 run tiles sculpted, E1→E10"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4832,
+      "text": "- **LADDERED (fire-authorable, DQ master = template, all models BANKED, arenas SCULPTED):** the three remaining boss SYSTEMS — E6 Homemaker-9000 (VAC/RACK/CORE, tidy-targeting, chair ending) · E8 Salvage Claw (descend-in-stages, dread-is-paperwork) · E9 Old Digger (no kill path — board-and-reprogram, playbook verb). Inert until eras arm; storybook choreographies are ratified law; spec-boot pattern per DQ precedent."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4855,
+      "text": "- **✅ CAMPAIGN SCULPT #1 MERGED — E5 Regatta (7e93ec43);** flotilla/stillwater = tileId-reuse variants ✓. FINDING: sculpt shipped WITHOUT mount records (freeze-era habit) → **MOUNT INTERLOCK LAW landed both queue docs** (sculpts ship with mounts, empty asset fields; 3D-D backfills regatta next boundary; 3D-C starts regatta BODIES mount-agnostic now, publishes its id list). 3D-C ACTIVATED. LADDERED: wire-e5-extras (regatta registry entry + variant-contract aliases) once lane-c's queue shallows."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4896,
+      "text": "- LANES (full): homemaker (a) · claw (b) · wrangle→wire-campaign-extras (c) · digger-spec (d). LADDERED as they drain: **the WD dispatch DELIVERY engine** (WD-02 Mei barks / WD-03 ledger pages / WD-04 postscripts — the content is complete E1-E10 and wireable; the engine was never built; three lane masters, attended-owed) · PB-04 corruption transform · the pen UI · CP-05 THE RIVER."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4906,
+      "text": "- **✅ THE CEREMONY FRAMEWORK MERGED (1cd9d169 → main, re-gated 10/10 + tsc + build):** played-not-watched is engine law; T4 THE BOAT + T5 THE DEEP REACTOR built inert; the truth table exposed **F-CER-1: E3→E4 WAS UNREACHABLE** (no megaproject build path for E3+ — the \"E4 era-gate\" blocker was a missing engine seam all along). → QUEUED lane-c: **t3-refinery-ceremony** (the generalized megaproject consumer + the valve ceremony — THE E4 UNLOCK). LADDERED: F-CER-3 kept-image ledger wiring · F-CER-4 072-era-activation pre-existing reds corrective. Dead-fire s735's drain completed attended (entangled-index, honest commit e886d339)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4917,
+      "text": "- **HARVEST LADDER (3 masters authored, refs kept until harvest merges)**: harvest-audit-correctives (lane-b) · harvest-town-menu-upgrades (lane-c) · harvest-perf-chunk-atlas (lane-d). GATE✅ per-item LANDED/ALREADY-ON-MAIN/DROPPED-STALE table. Queue on drain (lanes deep; refill-on-merge)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4940,
+      "text": "- **THE ARSENAL WAVE ARMED** (largest ratified-unarmed block; design = the storybook grid, CURE-ARMS law): 5 masters authored from the book's named weapons (E5 harpoon-ballista/depth-charge one-munition-two-schools · E6 sunline/caltrops/tongs · E7 playbook-slaved rig · E8 magnet-grapple/seals/light-law · E9 storm-lance/storm-fence). **QUEUED: e5→a, e6→b, e7→c, e8→d; e9 LADDERED** (queue on next free slot). **CP-05 THE RIVER queued (lane-a #1)** — unblocked by CP-04; stages the post-credits hook, never wires the unveiling (law 6). **art-batch-026 (Claw+Digger plates) queued to ART slot** (tracked-clean discipline)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4941,
+      "text": "- **STILL-MISSING LADDER (authoring wave 2, from banked bundles)**: e7-signal-systems · e7-playbook-surface · e8-physics · e9-canal-stages · e10 cluster (boss THE STATIC, ark-scene, static-reink, art) — engine slices; author from specs/epoch-saga/e7..e10 bundles as lanes free. Era ART sets e6..e10 behind the art slot's runner fix. audio-batch-02 waits on OWNER-LISTEN of batch 01."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4956,
+      "text": "- **THE CO-OP LADDER, armed in dependency order**: ① **mp-03-second-hero-reland QUEUED lane-d** (existing s279/s280 fire master, amended with shipped-since notes: mp-04 + snapshot v2 + TP chain landed; salvage save/mp-03-second-hero@8cca08f6 verified) → ② **mp-r2-reconnect-reland** (2.4k ins salvage; its snapshot park-reason SHIPPED at 965155ad) → ③ **mp-r3-arsenal-reland** (per-rider loadouts; credit law: \"both get credited\") → ④ **mp-r4-four-rider-gate** (party 2→4). ②-④ authored as LADDER masters, queue lane-c as prereqs merge. The 4 parked branches are now ACTIVE salvage refs — they delete as each re-land merges."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 4994,
+      "text": "- Owner asked \"anything else missing?\" — census: 223 done / 25 open, of which 13 unarmed. **ALL NINE wave-2 engine masters authored from the banked bundles**: e9-canal-stages (queued a — the playtest's F-E9-CARD promise made real) · water-mask-engine (queued b — unblocks Twin Banks + the braid) · e7-signal-systems (queued c) · e6-tile-consumers (queued d) · LADDERED: e7-playbook-surface, e7-boss, e8-physics, e10-static-boss (THE FINALE), e10-finale-staging (Ark + re-ink + post-credits RIVER wiring). Era 2D art sets e6-e10 remain art-slot ladder (one-in-flight law). After these + rosters + ALPHA's last two packs: the tree is owner-gates only."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5003,
+      "text": "- **✅ THE CRAFTBOOKS drained** (a5e495b4): docs/SOL-3D-C-CRAFTBOOK.md (ALPHA 22-of-29-packs/125-bodies + BETA halves) + docs/SOL-3D-D-CRAFTBOOK.md. **All three sessions DORMANT WITH HONOR.** ADOPTED AS LAW (memory + this line): **THE CLAIM-REVISION LAW** — a reassignment is inactive until the claimant acknowledges release; fresh-reference ≠ fresh-authority; territory wants a main-tree ownership ledger. LADDERED: fold the craftbooks into the Foundry kit as the co-agent 3D-pipeline chapter (attended, small)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5008,
+      "text": "- **THE WHOLE REMAINING LADDER QUEUED (8)**: a[e10-static-boss, e10-finale-staging] b[e7-playbook-surface, e8-physics] c[e7-signal-systems, e7-boss] d[e6-tile-consumers, mp-r4]. When these drain: engine COMPLETE except art batches."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5013,
+      "text": "- **✅ TOWN 3D PROMOTION shipped attended** (b6490ccc): town3dPilot defaults 'all' (shared `terrain2d` opt-out; lite fallback intact). Owner caught the third gate (run-terrain/run-buildings flipped, town hadn't). PROOF via real-path probe: pilot/plate loaded, src=glb, 88 GLBs, zero errors. **DEPLOYED https://9ce049a4.gold-rush-3in.pages.dev — the true playthrough build.** Town blender specs: STALE-FLOW reds (pre-existing: create→enter flow changed under the UX harvest; they wait for a button that no longer exists) → fix-town-spec-flow LADDERED."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5024,
+      "text": "- Diagnosis: the dashboard lists any BACKLOG line containing the literal GATE token (colon-suffixed) as a blocker FOREVER — 19 resolved lines still carried the token (Mistake #5 at scale, accumulated through the mega-days). **Probe-verified before retiring** (CrawlerBossSystem ✓ · blackout/dust/canyon in registry ✓ · mu-03 shipped 04434e48 ✓ · fairground mask f0878140 ✓ · WP-E3..E9 gates all met by the era waves): **19 lines detokenized, 11 marked GHOST-RETIRED.** F-tsfac-3 cleanup executed (logs/_s285-* git-rm'd). Genuinely live remainder kept as the only tracked blockers: **F-2 fixture-refresh master (e2-contract-board reds — authored, unqueued) + town-plate tri-count (folds into fix-town-spec-flow)** — both LADDER, neither blocks a lane."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5033,
+      "text": "- **✅ P0 run3d-interaction** (planar picking law + previews ride terrain + sluice-at-river proven through the real click path, 12/12) · **✅ MP-R4 four riders — THE CO-OP LADDER IS COMPLETE** (real actors, own arsenals, exact-tick reconnect, per-rider credit, party of 4) · **✅ E10 THE STATIC** (the finale boss exists: preservation verbs, recession victory) · **✅ river-boot-guard** (F-SMOKE-1 closed) · **✅ freed-water** (earlier). TSC-0, build, battery 12/12. **DEPLOYED https://187c24e9.gold-rush-3in.pages.dev.**"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5042,
+      "text": "- **MQ-7 goes to the source (owner, Twin Banks: \"Secure the south claim…\"? — \"I just built my base somewhere, not need to secure anything?\"):** the card is design-fiction; instead of another instance-fix → **lane-card-truth-audit LADDER-HIGH**: all 41 cards line-audited vs engine truth, untrue lines REWORDED to what the map really plays, build-worthy fictions ranked as CANDIDATES for owner/attended selection (the e9-canal precedent). Cards stop lying this week."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5048,
+      "text": "- ⏸️ **STALE BOARD SNAPSHOT — retired s1031 (ghost-line pass).** This line was a point-in-time queue photograph from the s74x era and has read as LIVE QUEUE STATE ever since; a reader in 2026-07 sees \"QUEUED / running\" and believes it. **The named items are shipped, file-probed:** `reviews/lane-board-era-chapters.md` + `reviews/board-era-v2.md` (goal leaf merged `209c1a51`), `reviews/card-truth-audit.md`, and `e8-physics` landed on `lane/m4`'s ladder. **Live queue state lives in `tasks/queue/<slot>/` and on the dashboard — NEVER in a dated BACKLOG line.** (history:) QUEUED: board-era-chapters (b) · plates-028 E4-E5 (art) · running: healthbar (a), card-truth-audit (c), baron (d), e8-physics (b, hour 13). LADDER remains: F-2 fixture (attended careful session), town-plate tri, roster-ART masters (author after plates cycle), era-art e6-e10, plates-029-031, foundry fold-in. ✅ RETIRED: research-copy-truth, pause-goal, crossing-armed (all shipped s748), save-compat-guard (shipped s750 `40cdb0"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5051,
+      "text": "- **ROSTER WIRING LADDER (per-era, NO-BLOCKER law — placeholder-first, owner corrects post-hoc). E6 wired s754 (`74a10b8c`) + real art s762 (`d7b19b69`).** ✅ **E7-01 SHIPPED — the `⏳ AUTHORED → queued lane-d` marker below is RETIRED s1031 (ghost-line pass); it had read as pending work for weeks.** File-probed on main: `reviews/lane-roster-wiring-e7-01.md` present (as are `-e8-01` and `-e9-01`), and the very next ledger line records E7-01 SHIPPED s764 `9b782ac8`. **The genuinely open successors named in this line are E7-02 (corrupted-replay + `static_hare`) and `lane-e7-boss.md` — those are NOT shipped and remain the real rungs here.** (history:) ⏳ **`lane-roster-wiring-e7-01` AUTHORED s763 → queued lane-d** (FIRE-AUTHORED, decomposed per §7.5): the DATA-SHAPED E7 scaffold — `rogue_automaton` (plain lane) + `data_rustler` (lane+thief) as roster rows across the 4 E7 contracts, mirroring `74a10b8c` id-for-id; pins the `char-e7-*-sheet-walk8` filename convention for Batch R-E7 art. **DEFER"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5052,
+      "text": "- **ROSTER WIRING LADDER (cont.) — E7-01 SHIPPED s764 (`9b782ac8`) + R-E7 art EXTRACTED+WIRED s765 (`0e6e09de`).** ✅ **`lane-roster-wiring-e8-01` MERGED s767** (drain lane/perf `1a265263` → clean main; review `reviews/lane-roster-wiring-e8-01.md`): the DATA-SHAPED E8 scaffold — `scrap_corsair` (orbit→chase, tint `#7fa0a8`, 1.1x) + `sun_glare_shambler` (chase, tint `#caa25a`, 0.8x) as `twist.enemyRoster` rows across the 4 E8 contracts; pins the `char-e8-*-sheet-walk8` convention for Batch R-E8. Gates: tsc✓ build✓935ms · e8-roster **6/6** both projects · e7+e6-roster **12/12** (no regression) · draw-call lazy-guard + `renderer.calls<=200` green · zero console. `descending repossession` / `salvage_kings_claw` boss (`7f633f9b`) / `debris_rain` hazard left byte-intact. **⚠ F-1 (non-blocking now, REQUIRED before E8 goes live — OWNER FORK below):** the roster `scrap_corsair` shares `variantId`+`variantLabel` with the Salvage Claw boss's own rappelling crew, so in `e8-mare-claim` (the one boss"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5054,
+      "text": "- **ROSTER WIRING LADDER (cont.) — E9.** ✅ **`lane-roster-wiring-e9-01` MERGED s769** (drain lane/perf `d3a14aff` → clean main; review `reviews/lane-roster-wiring-e9-01.md`): gates tsc✓ build✓862ms · e9-roster **6/6** both projects (siege/thief flags, era-gating, plain Red-Fields boot) · e8+e7+e6-roster **18/18** (no regression) · draw-call lazy-guard held · zero console. **NO F-1 collision confirmed** (`OldDiggerBossSystem.ts`/`E9CanalSystem.ts` byte-intact in the drain diff — `maintenance_drone` crew id disjoint from both roster ids). generated.ts merge conflict (e8-art-drain vs e9-placeholder add) resolved keeping real e8 sprites + new e9 bandit-placeholders. The FIRE-AUTHORED s768 scaffold: the DATA-SHAPED E9 Red Fields scaffold — `feral_terraformer` (siege via `wrecker`, 1.8x, tint `#b06a3a`) + `claim_jump_prospect_drone` (orbit[contract-deferred]+`thief`, 0.45x, tint `#9a8b57`) as `twist.enemyRoster` rows across the 4 E9 contracts (dome-basin/seed-run: both; devils-alley: drone o"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5059,
+      "text": "- **ERA-ART AUDIT LANDED (the truth is big): E6-E10 bundles' §A = ~170 runtime atoms, 1-2 SHIPPED per era** (plates/models are conditioning, not runtime sheets). The audit ships an ORDERED batch plan (3-8 files each, one-in-flight law) → **art-e6-buildings-terrain-a DRAINED `123d527c` (LEDGER 44)** (reactor dome, isotope kitchen, appliance pen, decay clock, catalog warehouse, glow-mesa atlas, decay puddles); **art-e6-buildings-terrain-b DRAINED s772 (LEDGER 45)** — 5 files: `prop-crates` (fresh gen) + `bld-{tavern,signal-turret,palisade,schoolhouse}-e6` (era-transform image-EDITS of the shipped base sheets, same-silhouette law; drain QA PASS: silhouettes/footprints preserved, no letters/firearms/gore, sun-mirror reads as instrument, crates read as supply; reference-tier copy→QA→LEDGER, application unwired until the E6 building-transform slice). **NEXT batch: art-e6-town-icons (batch 3/5) — ✅ BLOCKER RETIRED s1153; AUTHORED + QUEUED (`tasks/art-e6-town-icons.md`, goal leaf `e6-art-town-"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5132,
+      "text": "- **POST-GATE PROGRAM (owner: 'time to work on the remaining maps'): THE ERA-DEPTH LADDER begins — E2 first to E1 depth (masters author after owner's login switch); art pipeline continues (roster-e8 art re-queued + e9 queued, wiring-e8 queued placeholder-first). Owner switching THIS session + the fires to the reserve subscription via /login (alt standing order → MAIN ENGINE on his word).**"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5154,
+      "text": "- ~~**F-1026-1 — ✅ CLOSED, see L1237; struck s1261 as measured STALE by `artifacts/findings-state-vocabulary-triage.md` (s1260, `637e156e (archive: pruned by the A3 rewrite)`) — merge `386cce80`; `e2e/asset-diet.spec.ts` now gates the whole suite on the built bundle at file level — `test.skip(process.env.GR_ASSET_DIET_BUNDLE !== '1', BUILT_BUNDLE_ONLY)` — and `package.json:12` runs the preview-backed suite, so the pin this row asks for exists. Reasoning retained per the Retention Law.** **F-1026-1 (corrective, small) — pin `e2e/asset-diet.spec.ts` to the production bundle.** It asserts `townResponses < 25MB`, but playwright's default `webServer` is `npm run dev`, which serves the **undieted originals** — so the suite is structurally red on the dev server and reads as a regression to every fire that touches `AssetLoading.ts`. Measured, not argued: baseline main **36,244,224 B** vs merged **36,253,834 B** (the prefetch adds ~9.6KB, 0.03%, against an 11MB pre-existing overshoot); the same"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5225,
+      "text": "## 2026-07-25 evening — THE LADDERS ARE EXHAUSTED, AND THAT IS A FINDING, NOT A STALL (s1047 fire)"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5724,
+      "text": "- THE EIGHT WINDS program (owner 2026-07-28, verbatim in gr-task-anim-pass/TASK-8DIR.md): walking animations 4→8 directions via diagonal sibling sheets (walkdiag convention, never-modify-existing), Opus-5 max + gpt-image-2 arm. ACT 1 = tail shift (live) · ACT 2 = eight-winds shift (auto-launches on tail exit via attended monitor; DEAD-MAN: if no anim shift is running and TASK-8DIR.md exists unexecuted, relaunch per its header). LADDER (fire-authorable AFTER art lands + wiring spec exists): EIGHT-WINDS-WIRING — 8-way facing quantization + diagonal-sheet binding behind a flag, READ-FIRST reviews/eight-winds-wiring-spec.md; supersedes/absorbs ANIM-8FRAME where diagonal sheets ship 8-frame rows. ⛔ **~~NOT AUTHORABLE YET~~ **✅ GATE MET AND RETIRED s1183** — s1162 verified the gate rather than assuming it, and at the time it held: `reviews/eight-winds-wiring-spec.md` existed in NEITHER the repo NOR `gr-task-anim-pass/reviews/`. **That file has since landed on main** (read by s1183), and `BAC"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5729,
+      "text": "- THE VOTE IS LIVE (owner 2026-07-28: \"I posted the content on X, lets see.\"): duel community polls posted pre-launch per ruling. NEXT: when polls close (~24-48h), owner fires the reveal post (drafted in marketing/outbox/duel-community-vote/POST.md — fill vote results + maker names); winner-per-boss ships per rubric (perf=tie, so fidelity+craft+eyes decide); post URL to be recorded here when owner shares it."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5744,
+      "text": "- GAZETTE-ART ladder item (owner 2026-07-28: \"for the news paper images would be amazing - not urgent but would add a lot the atmosphere\"): THE CLAIM HERALD gains engraved spot illustrations — a small REUSABLE set by headline class (board/trail/river/schoolhouse/ledger/boss/town-growth), not per-item; gpt-image-2 art-slot batch, style-anchored to the plates; wire = tiny Herald renderer change mapping class→engraving. Fire-authorable AFTER art-e7-town-icons completes (one batch in flight law). **✅ GATE SATISFIED + AUTHORED + QUEUED s1182** — `art-e7-town-icons` shipped `46d29c95` (LEDGER row 62) and `git merge-base --is-ancestor 46d29c95 main` = true; art queue + `tasks/running/` both empty, so one-batch-in-flight is clear. ⚠️ **This gate had been dead ~11h while s1181's handoff still carried GAZETTE-ART as \"blocked behind art-e7-town-icons\"** — Mistake #4/#16 shape, re-derived by ancestry not by message-grep. Master `tasks/art-gazette-engravings.md` (FIRE-AUTHORED s1182), goal leaf `ga"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5749,
+      "text": "- 🎨 **GG-04 ART LADDER (owed, placeholder-first per scope 4):** mint a bespoke `gazette-panel-prospectors-hands` engraving. Panel 7 currently **reuses the THE ARMS plate** — correct by the placeholder-first law, but a visible duplicate in the issue. One ART-slot batch line, no gameplay dependency."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5811,
+      "text": "- AP-10b specced (owner 2026-07-31): LESSON FORMAT (tape + graftable playbook fragment + transfer receipt) + IMPROVEMENT LADDER (in-context graft = free default for all models; LoRA via prime-rl/GRPO rails for open weights, adapter declared in stack + transfer-metric'd; full training out of scope by law). Corollary benchmark question banked: graph vs weights, head-to-head on sealed seeds. GOAL-LEAF DEBT when sliced."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5833,
+      "text": "- 🚨 **F-1333-1 (s1333, MEASURED — THE lane-a LADDER ADVERTISED TWO MERGED ITEMS AS ITS \"NEXT RUNG\", AND BOTH WERE PROPOSED BACK TO ME THIS FIRE. STALE-LEDGER-LINE LAW, DEMONSTRATED.)** Refilling three empty lanes, I sent three independent agents to walk the ladders. **All three came back with proposals, and every one was wrong — each in a different way, and each faithfully following what the ledger said.** ✓ **The two lane-a ghosts, both ancestor-probed on main this fire and both now retired in place** (original text retained per §4.10b): (1) the section header's *\"NEXT lane-a RUNG — AUTHORED **AND** QUEUED s1037 … status `queued`, attempts 0\"* — `perf-05-startup-attribution` **shipped s1039 `c5dfbad7`**, leaf `shipped`/attempts 1; the line froze at authoring time and never retired, advertising merged code for ~294 fires. (2) L772's *\"NEXT: SCI-03\"* — **shipped s106 `db87f48`**, all three parts datum-verified on main; it read open only because `db87f48` is a tip-graft merge whose `--s"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5859,
+      "text": "- CENSUS FLAW CLEANUP WAVE (owner 2026-08-02: \"have these flaws been handled? If not, please work on that.\"): HANDLED already = AP-11 laws, manifest deriver (d97bc4d5), survive-copy (ef1db83c), heroStart rename (8efae704). ✅ **ALL 5 MASTERS SHIPPED — WAVE'S QUEUED HALF IS CLOSED (re-verified s1395 by `git merge-base --is-ancestor <hash> main`, all five true, not inherited from any handoff):** lane-seam-yield-single-source (a) `75b07024` · lane-claim-geometry-declared (b) `f2aa4d2c` · lane-dead-fields-sweep (c) `2258daf3` · lane-authored-bundle-validation (d, xhigh — the press-era load-bearing gap: ALL bundles validated, fleet typed, engineDependencies ENFORCED) `9a95f99d` · lane-headless-the-claim (b 2nd, xhigh — bench driver pattern-setter, LADDER-WAIT gated on geometry) `1352ef45`. LADDERED post-launch (fire-authorable in census action-ladder order, READ-FIRST = the census doc): F-CEN-1 E7/E8 bootability (5 empty-anchor contracts vs live dispatches) · F-CEN-2 DustFlatsTile wiring (E4"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5860,
+      "text": "- E1-AND-SO-ON WAVE (owner 2026-08-02: \"How about the other maps? Are they getting updated as well?\"): E1 COMPLETION queued — lane-headless-twin-banks (a) + lane-headless-baron (c, xhigh: first BOSS driver, meta-mint asserted OFF headless) → E1 bench = 5/5 when drained. E2 PREREQUISITE queued — lane-escort-mode-as-data (d, F-CEN-8 promoted). LADDER SEQUENCE after these: E2 drivers ×4 (hill-mine/trestle/pressure-garden/incline — richest declarations in the fleet, driver-ready once mode-as-data lands) + manifest fixtures extended to E2 → then the F-CEN post-launch content repairs (E3-E10) in census order. ✅ **GOAL-LEAF DEBT DISCHARGED s1398** — all three masters now carry leaves (e1-headless-twin-banks + e1-headless-baron under e1-frontier, e2-escort-mode-as-data under e2-steamworks), each status \"building\" because the runner had already consumed the queue copies when s1398 measured them (tasks/running/ held all three plus live .pid files at 18:22). Registered, NOT authored or gated by t"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5866,
+      "text": "- OWNER WALK INTAKE (2026-08-03 morning): F-BW-1 \"person's head stuck in the Complaints Desk house\" (assay clerk embedded in her office at the door; zoom+grounding made an old hover-clip brutal) → lane-actor-building-clip AUTHORED+QUEUED lane-b (full clearance census, actors move, buildings never). F-BW-2 the desk 503'd for the owner (\"complaints ledger is off the desk\") at the EXACT minutes of the morning production deploy — endpoint healthy on probe minutes later; root = deploy swapped function env under a live tester. LAW SHARPENED (quiet-window v2): no owner-facing deploys during his ACTIVE HOURS without an explicit go — \"not mid-run\" is not \"not testing\"; morning boundary deploys now require his word or clear idle evidence (>2h no activity). LADDER: desk client gains one polite auto-retry ~8s on 503 (the clerk already keeps the text) — fire-authorable. Owner's complaint REGISTERED HERE by hand since the desk refused it: text verbatim above, screenshot in his message, The Claim wav"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5867,
+      "text": "- GG-04 CONTROLS PANEL authored (owner playtest praise + gap 2026-08-03, verbatim in master): Gazette panel 7 \"THE PROSPECTOR'S HANDS\" — input-aware (keyboard vs touch), DRIFT-PROOF (derives from a single bindings table InputController itself consumes; hardcoded key lists forbidden), inline Q/blast-charge + B/build mentions in panels 3-4. QUEUED lane-c. LADDER: trail-guide first-use key barks (in-moment teaching: first blast charge available → bark names the key) · art slot mints a hands-engraving for panel 7. GOAL-LEAF DEBT next fire."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5872,
+      "text": "- THE ALT FAREWELL BURN (2026-08-03; CORRECTION: the ALT dies TOMORROW Aug 4 — primary lives to the 6th; my earlier mapping was flipped): alt post-reset at 23%/Fable-0% → FOUR shifts launched: beauty2/ns-r2 (Opus-5: finish night-shift U4/U5 through the pipeline defect) · beauty2/atmos (Opus-5: TOWN SKY AS THREE FLAG-GATED OPTIONS for owner pick + baron/gulch panorama second attempts) · beauty2/pools (FABLE: the pool exposure treatment F-BEAUTY-2 — precision seam, specs green law) · beauty2/e2-director (FABLE: four E2 beauty briefs in the E1 format + launch order). NEXT: on director exit, auto-drain briefs (doc-additive) + launch four E2 map shifts tonight — the Steamworks era gets its beauty night before the subscription dies. Fires stay on primary through the 6th; post-6th fire-engine question STILL on the owner's desk."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5951,
+      "text": "- 🚂 **THE E2 RE-LAND LADDER (attended ruling 2026-08-05, Mistake #15 applied): trestle/pressure-garden/incline DO NOT hand-merge — each carries 14–17 pilot hunks vs ~25 merges of drift, and trestle's is a full water-dressing REFACTOR that collided with hill-mine's landed rows (one blind-union attempt produced a broken type table and was abandoned unpushed).** Order restored to the director's serial intent: ① `lane-e2-trestle-reland` **READY-FOR-GATES lane-c 2026-08-05** (keeper dressing table ported; Hill Mine 0.11/5.9 preserved; tsc + app/E1 release builds + Trestle/night both projects green; unchanged Hill suite 10 pass / 2 skip / 2 baseline F-BHM-3 reds) → ② pressure-garden re-land (authors after ① merges, adopts the dressing table) → ③ incline re-land. Branches stay as salvage refs until each re-land merges. The owner's E2 READINESS CENSUS (agents sweep E2 before he plays) authors next — E2 opens per his \"ok, lets go\" (2026-08-05)."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5991,
+      "text": "- 🟡 **F-1472-1 (s1472, MEASURED — ENFORCED THIS FIRE UNDER AN OPEN VETO WINDOW) — THE OWNER'S-DESK HEADER IS A LAPSED CONVENTION: OF 1249 LINE-1s IN `STATUS.md`, 617 CARRY A DESK WORD AND 632 DO NOT — AND AMONG THE LAST ~55 FIRES ONLY ABOUT 5 WROTE ONE.** Curing F-1471-3 meant reading every line-1 the factory has ever written, and the parser bug turned out to be the *smaller* half of what that measurement found. The other 632 route owner items as bare **`🔺 **F-xxxx-x OPEN**`** runs inside a `NEXT: (A)/(B)/(C)` paragraph — sampled directly at s1469, s1468, s1466, s1465, s1464, s1463, s1461, s1450, none of which carry any desk header at all — **so for most of this guard's life there was no live desk on line-1 for it to find.** 🎯 **THE TWO DEFECTS HID EACH OTHER, WHICH IS THE REUSABLE PART:** the parser fell through to an archived desk *because* line-1 usually had none, and the fall-through always looked clean *because* archived desks are by construction already declared. Neither could"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 6076,
+      "text": "- 🟩 **F-1530-1 (s1530, MEASURED — THE DRY BOARD IS REAL, AND IT IS NOW PROVED ACROSS FOUR SURFACES INSTEAD OF ASSERTED ABOUT ONE LADDER).** s1529 handed forward *“PIPELINE-DRY: lane-a, lane-c, lane-d”* with the reason *“the ladder’s remaining ER-02 items are owner-gated”* — true, but scoped to ER-02 alone, and three consecutive fires have now spent effort re-deriving the same question. VERIFY-DON’T-INHERIT (Mistake #4) says re-run the command; this row records the answer so the next fire does not pay for it again. ✓ **(1) QUEUES:** all six (`main`, `lane-a..d`, `art`) empty; `lane-b` **BUSY** with `f1529-1` (tracked dirt in `scripts/gr-sim.test.mjs` + `src/agent/StandingOrders.ts` = a live, progressing run, not a hang). ✓ **(2) GOAL TREE:** 675 leaves — **1 `queued`** (`f1529-1`, the in-flight one) and **no `authorable`/ready state exists at all**; work here is authored from findings and specs, so an empty tree is not itself a refill source. ✓ **(3) BLOCKED LEAVES: 6, and ZERO are fir"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 6079,
+      "text": "## MP-07 LADDER (authored attended 2026-08-08, behind CODEX-WALL until 11:00 — fires refill from here after the wall lifts)"
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 6147,
+      "text": "- 🔴 **[F-1625-1] THE LADDER WAS ADVERTISING SEVEN FINISHED MASTERS AS OPEN WORK, AND THE §2E REFILL PATH HAS NO INSTRUMENT THAT ASKS \"IS THIS ALREADY DONE?\" (measured s1625 on a dry board, ROWS RETIRED IN THIS COMMIT).** Arriving with lanes c/d idle and all six queues empty, I went to the ladder for a refill candidate and found what looked like a healthy set. It was not. **Measured over `tasks/BACKLOG.md`: 10 rows whose LEADING marker is 📋 name a task file; 7 of them had already MERGED; exactly 2 were genuinely open — `f1623-1` and `f1624-1`, i.e. the two tasks running in lanes a and b AT THAT MOMENT.** The ladder held **zero** available work for the two idle lanes while appearing to hold nine. ⚠️ **THE NEAR-MISS IS THE POINT: I picked `f-mp503-1` (L3596) as lane-c’s refill and was saved only by READING, not by any tool refusing.** `drain-block-check` returned **✅ CLEAR** for it — correctly, because its question is *is it ALLOWED?*, never *is it ALREADY DONE?* — and the word `status="
+    },
+    {
+      "file": "tasks/backlog/closed-2026-07.md",
+      "line": 18,
+      "text": "✅ **F-1344-1 (s1344, MEASURED + REPAIRED — THE ONE RUNG THE SIX SLOT LADDERS OFFERED AS FIRE-AUTHORABLE HAD BEEN SHIPPED FOR 21 DAYS, AND A SUBAGENT READING §2E CORRECTLY WALKED STRAIGHT INTO IT).** Sent to test the inherited `PIPELINE-DRY` claim rather than repeat it a fifth fire, I swept all six `## <slot>` ladders. Every rung is shipped, guarded do-not-queue, or owner-gated **except one**: lane-c's *\"The 2 clean opts … could ship as a trivial 079a\"*, sitting under ⛔ *\"079-render-micro-perf — NOT MERGED, RE-LAND ruled s291\"*. ✓ **BOTH HALVES ARE FALSE, re-derived at source:** `git merge-base --is-ancestor c1dd5bd main` = **YES**, `git log main..save/079-render-micro-perf` = **EMPTY**; it landed `3385c0c1` → `56f8e29b` *\"drain: 079 re-land — 19/19 green\"* on **2026-07-11T03:49**, ~4 h after s291 ruled RE-LAND. The merge carried **all four** files, and both \"clean opts\" are live on main HEAD: `src/world/LightRig.ts:81-88` + `.copy()` at `:288-332`, and `src/assets/SpriteAnimator.ts:840"
+    },
+    {
+      "file": "tasks/backlog/closed-2026-07.md",
+      "line": 151,
+      "text": "- ✅ **SHIPPED — retired s1031 (ghost-line pass, Mistake #5).** The owner directive stands as canon; the WORK it asked for is done and this line's \"queue at first free lane\" instruction is spent. **File-probed twice, never by commit-message grep (Mistake #16):** `reviews/board-era-v2.md` and `reviews/lane-board-era-chapters.md` are both present on main, and the goal leaf `board-era-chapters` reads **merged `209c1a51`**. (history:) **OWNER DIRECTIVE (verbatim in master): the Contract Board reorganizes into ERA CHAPTERS; unreached epochs \"are not spilling their secrets, they stay hidden\"** → lane-board-era-chapters authored + LADDERED (queue at first free lane; DOM-absent secrecy law; debug shows all)."
+    },
+    {
+      "file": "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+      "line": 19,
+      "text": "✅ **ASSAYER ENVIRONMENT HONESTY CURED (lane-a, 2026-08-24).** The Hill Mine split was a proven platform-libm determinism leak: at the first raw divergent step (10581), Darwin and Linux Node 26.4.0 returned adjacent doubles for `Math.sin(0.5789029878078356)` (`...9083` vs `...9082`) inside `resolveTerrainMove`'s cliff-slide candidate; the one-ulp position/velocity difference accumulated until the rounded tick hash split at step 10638 and Linux died before order tick 12561. The sim now canonicalizes only that trig-derived movement candidate at 1e-15, and the same tape produces `fnv1a32:53d07e8d`, wave 16 / 27g / unsecured / 508.967s / 15,269 steps on both Darwin and the live Linux host. Its historical `fnv1a32:017e4c97` winning claim therefore cannot re-verify under the cured engine and honestly remains **unassayable**. New headless tapes carry `meta.engineHash`; the worker prefers it to legacy `ASSAY_BUILD_ID`, whose fallback remains for browser and old tapes. The SHA-256 covers package"
+    },
+    {
+      "file": "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+      "line": 20,
+      "text": "✅ **ASSAYER ENVIRONMENT HONESTY DRAINED s2281 at `d141861e6`** — gated in detached `gate-s2281/` (§3.0b), merging the GATED COMMIT ITSELF so the landed tree is byte-identical to the measured one. Gates: tsc **rc=0**, build **green 1.23 s**, `test-standings` green on **BOTH arms (kv 136 / sqlite 136)**, `test-stats` 87, `test-ledger-worker` 15, assay worker+replay **13/13**, and the F-1460-1 mandatory `test:node-guards` (slice touches `src/sim/`) run **ALONE** at **566.5 s / 82 files**. 🔍 **Its ONE root red is INHERITED and I proved it rather than inheriting the proof (Mistake #4): `blocker-panel-closed-guard`'s defect arm fails `0 !== 1` (`panel rows 7 · closed-on-panel 0`) BYTE-IDENTICALLY on clean main, a tree this slice never touched — F-2280-4, diagnosed one fire ago. `fixture-teardown` is a CASCADE of that same child, not a second defect.** 🔑 **THE MERGE CLASSIFICATION WAS THE REAL WORK: the lane branched BEFORE s2280's `door-tick-ceiling-v2` (`db65524d`) and both slices touch `"
+    },
+    {
+      "file": "tasks/backlog/s1070.md",
+      "line": 11,
+      "text": "- ✅ **F-1070-3 — MAIN'S LADDER GHOST RETIRED: `fix-037-panGold-flake v2` shipped 19 days ago and item 2 has been asking for its drain ever since.** Content-probed, not message-grepped: main's `e2e/task-037-assay-bench-ungate.spec.ts:160` carries the master's exact repair (`assay-text` filled before the `/Posted|JSON ready/` assertion), landed `3fd467a7` (2026-07-07T07:05), realigned since at `da5bd70b`. Corroborating negative: the slot branch `main--20260707-054207-fix-037-pangold-flake-v2` is **0 ahead and changed no files** — the content went straight to main, so no lane drain was ever owed. Line 20 retired in place. **The `## main` ladder now has no live rung.**"
+    },
+    {
+      "file": "tasks/backlog/s1079.md",
+      "line": 16,
+      "text": "✅ **F-1081-3 SHIPPED — rf-26 DRAINED s1088, merged as `38795ba051a9678df6bc67e4261b75128ea3c941`, review `reviews/rf-26.md`, goal leaf `rf-26-entry-damage-net` flipped `merged` in the drain commit.** The ladder tune now has a net: `scripts/entry-damage-table.test.mjs`, 6 assertions importing the REAL `Balance.waves.entryDamageScale`, wired into `test:node-guards` (43 → **49 tests, 49 pass**, the new 6 visible ⇒ it is genuinely invoked by the lane, not merely added). Gates: tsc 0 · build 0 (1934 modules) · guard 6/6 · node-guards `node --test` phase 49/49 **twice** · serial `--test-concurrency=1` 49/49 rc 0. **No playwright and that is a ruling, not an omission** — `src/game/Balance.ts` ends blob-identical to main (`0d918dc1`) and the diff is one `scripts/` file plus one `package.json` line, so the slice has **zero runtime surface**. 🔬 **THREE mutation controls re-run BY HAND (the runner's two, plus one of mine on the sign-inversion assertion, which was otherwise a green nobody had wat"
+    },
+    {
+      "file": "tasks/backlog/s1079.md",
+      "line": 28,
+      "text": "✅ **CLOSED s1088 — the net shipped as rf-26, `38795ba051a9678df6bc67e4261b75128ea3c941` (see the SHIPPED line above; residual `spawnAt` risk re-homed onto F-1077-3).** 🟡 **F-1081-3 — THE E1 LADDER TUNE HAS NO REGRESSION NET (owner-visible risk, small).** `Balance.waves.entryDamageScale` + `applyEntryDamageScale` shipped in `1dbd0120` with **no spec asserting any of it**. The only proof the opening is now walkable is a manual `rehearsal/segments/e1-depth-play.mjs` run (Night Shift died wave 9→11, Baron 3→16). So: reorder `spawnAt`'s parameters, mistype a contract id, or drop the table and **nothing goes red** — the two named contracts would quietly return to killing a new player in the first minutes, which is precisely the release-blocking symptom this slice existed to fix. s1081 merged it anyway because the wiring was verified by reading all six `spawnAt` call sites (only the debug `spawnStressEnemies` opts out) and the table indices check out 1-based. ➡️ **Owed: a cheap spec assertin"
+    }
+  ]
+}
