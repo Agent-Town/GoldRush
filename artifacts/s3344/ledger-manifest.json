@@ -1,0 +1,27 @@
+{
+  "command": "npm run test:ledger-guards",
+  "source": "package.json scripts.test:ledger-guards",
+  "schedulingChange": "test-runtime/node injects --test-concurrency=1 only into the package ledger node --test --test-timeout=300000 entry; assertions and timeouts unchanged",
+  "started": "2026-10-25T00:52:37.956Z",
+  "head": "7eaf0d1f79207edbe6ef8b4dcef10841a1a5a39e",
+  "node": "v26.4.0",
+  "hashes": {
+    "STATUS.md": "b0316ba5830ce65ef4dc095f7331b90933f7420f07b750a201095066a2eda19f",
+    "docs/HANDOVER-2026-09-06-attended.md": "eafe0284aaab0dccad7f7d8462ca890eb5e1beaf97aa623b50068e341a061c23",
+    "tasks/BACKLOG.md": "1a5c57a0d4246b369e3af878ce1b8d4887a93c5fa7c5658fc1ab4786b69b0649",
+    "tasks/goals.json": "8fadd54b2f62a95250c8104fccf14ef17db0f7225fe9944f0e93169876e87df9",
+    "tasks/CODEX-WALL": "8436777d9a6947bfe0bc5bda91564652a59955ba25d50750626ceaef8e240b27",
+    "tasks/assay-node-26-12-1.md": "1fbb4c7e317d503b4a341924c75d18af75e61bc1ac9db9cb46885883055df88d",
+    "reviews/rotation-r2026w44.md": "6ac5108c31d6ea532c5158bc45d12e824f928763f9fdfb5f80e2d7c8f4f9291b",
+    "reviews/assay-node-26-12-1.md": "c3d9c93c02a87336112bb913900916f516b14752f0ab5b1f4dd098df46ac550e",
+    "assets/engine-era.json": "59e66f137f62e7de8e0b5f9bd9720edd4ffc63e25b1eb4dd6e6eaad13a44eec0",
+    "marketing/outbox/gazette-queue.md": "81064079f74c41023130d2a605b080463e5b2ddc5b74a043f008cb6882899e41",
+    "package.json": "bf74d1bfc9c8a44b1e914b5964511a04194fefaeaa7c1b978cf4a47433848568",
+    "assets/rotations/rotation-seeds.json": "6a3ceac473192c53848a22b31dfef3ee827e74cbf506a3f2b2b77929276c007a",
+    "public/skill.md": "6ac6adf8683e610ce68f6910a34deaaa468e2f61bc4d47ee9290ed6c5ee24988",
+    "marketing/outbox/ticker-digest-2026-10-24.md": "342e88a829ba2a705c6b52c19729f6484fe178806ccbc58d5a5dd71e231e3b81",
+    "artifacts/s3344/report.md": "0bbec08e90bc915f97a8c9de5491d43b146b7f9afb53c3989939abdaeb0acbac",
+    "artifacts/s3344/run-ledger.mjs": "9e0e8d3cb497afc17bdfdff195b740019bd28fa40a07aedf2d62e520fcd70b9b",
+    "artifacts/s3344/test-runtime/node": "bd7290f2538e7b2f0ca3b672410d8937a9002ea879296310a25dd339ad7715fa"
+  }
+}
