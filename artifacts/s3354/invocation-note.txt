@@ -1,0 +1,1 @@
+The first freshness invocation used the nonexistent scripts/ledger-mirror-freshness-guard.mjs and returned MODULE_NOT_FOUND under ambient Node v23.11.1. Corrected to the discovered scripts/ledger-mirror-freshness.mjs, run with .nvmrc Node v26.4.0; output is mirror-freshness.txt. No maintained source was changed. Triage reads used ambient Node; final gates explicitly use .nvmrc.
