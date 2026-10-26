@@ -1,0 +1,29 @@
+{
+  "command": "npm run test:ledger-guards",
+  "source": "package.json scripts.test:ledger-guards",
+  "schedulingChange": "test-runtime/node injects --test-concurrency=1 only into the package ledger node --test --test-timeout=300000 entry; assertions and timeouts unchanged",
+  "started": "2026-10-26T03:43:03.662Z",
+  "path": "/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+  "lsof": "/usr/sbin/lsof",
+  "head": "df505fc7023ee3a44c02ae950a2eecc543824352",
+  "node": "v26.4.0",
+  "hashes": {
+    "STATUS.md": "7e70abb70c738e758bc046f280c5c66e73a306c921b3ae629495e21b3aa3b943",
+    "docs/HANDOVER-2026-09-06-attended.md": "939bc58b0b653db9727256db123a054428916ad5f12244f158fd4ab84ad2041c",
+    "tasks/BACKLOG.md": "d05008bee5228e3fe0516c58f6daa8dcbb2919757fb27c7359578afa44a2540a",
+    "tasks/goals.json": "8fadd54b2f62a95250c8104fccf14ef17db0f7225fe9944f0e93169876e87df9",
+    "tasks/CODEX-WALL": "8436777d9a6947bfe0bc5bda91564652a59955ba25d50750626ceaef8e240b27",
+    "tasks/assay-node-26-12-1.md": "1fbb4c7e317d503b4a341924c75d18af75e61bc1ac9db9cb46885883055df88d",
+    "reviews/rotation-r2026w44.md": "6ac5108c31d6ea532c5158bc45d12e824f928763f9fdfb5f80e2d7c8f4f9291b",
+    "reviews/assay-node-26-12-1.md": "c3d9c93c02a87336112bb913900916f516b14752f0ab5b1f4dd098df46ac550e",
+    "assets/engine-era.json": "59e66f137f62e7de8e0b5f9bd9720edd4ffc63e25b1eb4dd6e6eaad13a44eec0",
+    "marketing/outbox/gazette-queue.md": "81064079f74c41023130d2a605b080463e5b2ddc5b74a043f008cb6882899e41",
+    "package.json": "bf74d1bfc9c8a44b1e914b5964511a04194fefaeaa7c1b978cf4a47433848568",
+    "assets/rotations/rotation-seeds.json": "6a3ceac473192c53848a22b31dfef3ee827e74cbf506a3f2b2b77929276c007a",
+    "public/skill.md": "6ac6adf8683e610ce68f6910a34deaaa468e2f61bc4d47ee9290ed6c5ee24988",
+    "marketing/outbox/ticker-digest-2026-10-25.md": "4eee46239297f792e0fa3a1d0e5f9772039d99aa192259e8320f7577d2d8a659",
+    "artifacts/s3366/report.md": "2505fc9e8313c17fa1bd5b1b4c6684019826002e43e52bf5fe76be3cce0a73c5",
+    "artifacts/s3366/run-ledger.mjs": "14dc7ed0be44095a1f5052cb1e4f47a5136c3d05c56b40f90bdecc283dd20b50",
+    "artifacts/s3366/test-runtime/node": "a4b786ca0b66f547335ce0eb0ce00afba86136c72283d2a2bd4914a254a1cc37"
+  }
+}
