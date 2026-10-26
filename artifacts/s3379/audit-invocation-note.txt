@@ -1,0 +1,6 @@
+Initial invocation: node scripts/status-archive-audit.mjs (unbounded)
+Observed stderr: FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+Runtime: /Users/robin/.nvm/versions/node/v23.11.1/bin/node
+PID 30885 exited before the attempted PID validation; ps exited 1 and no kill command ran.
+Corrected invocation: node scripts/status-archive-audit.mjs --limit 40 --quiet
+Corrected command exited 0. Output: status-archive-bounded.txt.
