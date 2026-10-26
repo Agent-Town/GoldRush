@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-26T00:15:38.516Z",
+  "initialCheck": "git diff --cached --check",
+  "initialExit": 2,
+  "diagnostics": [
+    "health-watch.txt lines 11 and 16 have original command-output trailing spaces",
+    "worktrees.txt preserves git worktree list --porcelain final separator"
+  ],
+  "resolution": "Preserved raw command output byte-for-byte. Maintained documents and non-text evidence passed the whitespace check; only raw .txt receipts excluded. Tested ACTIVE envelope restored and all manifest input hashes reverified before final clearing.",
+  "manifestInputsReverified": true
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-26T00:13:11.417Z",
+  "pid": 54436,
+  "parent": 54425,
+  "action": "SIGTERM of own redundant unbounded audit",
+  "reason": "Default audit declared all 7349 STATUS commits and historical excused drops; the regression command is --limit 40 --quiet, also present in the unchanged ledger battery.",
+  "initialOutput": "status-archive-unbounded.txt",
+  "replacement": "status-archive.txt",
+  "replacementExitCode": 0
+}
