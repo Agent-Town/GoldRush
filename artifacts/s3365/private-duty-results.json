@@ -1,0 +1,55 @@
+[
+  {
+    "name": "ledger-pull",
+    "cmd": "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+    "args": [
+      "scripts/ledger-backup-pull.mjs"
+    ],
+    "started": "2026-10-26T02:28:37.135Z",
+    "finished": "2026-10-26T02:28:40.364Z",
+    "code": 0
+  },
+  {
+    "name": "ledger-push",
+    "cmd": "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+    "args": [
+      "scripts/ledger-mirror-push.mjs"
+    ],
+    "started": "2026-10-26T02:28:40.366Z",
+    "finished": "2026-10-26T02:28:55.696Z",
+    "code": 0
+  },
+  {
+    "name": "fire-memory",
+    "cmd": "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+    "args": [
+      "scripts/fire-memory-mirror.mjs"
+    ],
+    "started": "2026-10-26T02:28:55.696Z",
+    "finished": "2026-10-26T02:29:01.152Z",
+    "code": 0
+  },
+  {
+    "name": "mirror-freshness",
+    "cmd": "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+    "args": [
+      "scripts/ledger-mirror-freshness.mjs"
+    ],
+    "started": "2026-10-26T02:29:01.152Z",
+    "finished": "2026-10-26T02:29:01.234Z",
+    "code": 0
+  },
+  {
+    "name": "private-heads",
+    "cmd": "git",
+    "args": [
+      "ls-remote",
+      "archive",
+      "refs/heads/ledger-backups",
+      "refs/heads/fire-memory"
+    ],
+    "started": "2026-10-26T02:29:01.235Z",
+    "finished": "2026-10-26T02:29:04.562Z",
+    "code": 0
+  }
+]
