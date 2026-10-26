@@ -1,0 +1,59 @@
+{
+  "ancestors": {
+    "4fe2becb8": true,
+    "b5d6d3c32": true,
+    "614f84ca5": true,
+    "7b619795b": true,
+    "a91b3d9f8": true
+  },
+  "goal": [
+    {
+      "id": "assayer-sync-visibility-1",
+      "title": "A failed droplet sync during a deploy becomes diagnosable and loud: scrubbed stderr kept and printed, a drift marker, an hourly health alert while the box is behind, a rostered guard (F-SRV-3)",
+      "status": "merged",
+      "taskFile": "assayer-sync-visibility-1.md",
+      "lane": "lane-a (Astra, gpt-6-astra)",
+      "authoredAt": "2026-10-23",
+      "authoredBy": "attended (Opus 5.5), from F-SRV-3, 2026-10-23",
+      "queuedAt": "2026-10-23",
+      "mergeHash": "b5d6d3c3248fdf0c4f61c853c040b651c650cf4f"
+    }
+  ],
+  "rotations": [
+    {
+      "id": "r2026w37",
+      "opensAt": "2026-09-07T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w38",
+      "opensAt": "2026-09-14T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w39",
+      "opensAt": "2026-09-21T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w40",
+      "opensAt": "2026-09-28T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w41",
+      "opensAt": "2026-10-05T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w42",
+      "opensAt": "2026-10-12T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w43",
+      "opensAt": "2026-10-19T00:00:00.000Z"
+    },
+    {
+      "id": "r2026w44",
+      "opensAt": "2026-10-26T00:00:00.000Z"
+    }
+  ],
+  "recentHistory": "556b95e50 s3381: preserve inherited dashboard bookkeeping\n50e434038 s3381: lock ACTIVE — verify board and heartbeat duties\n02fe0e6c8 s3380: handoff lock CLEARED — board DRY; ledger 1263 and kit 83 green\nc7cd2bb1e s3380: retain inherited dashboard bookkeeping\nc06b7333e s3380: lock ACTIVE — verify board and heartbeat duties\n6802f7f69 s3379: handoff lock CLEARED — dry board; 1263 ledger tests and 83 kit checks green\n281be0504 s3379: preserve inherited factory bookkeeping and prior handoff\n",
+  "runtime": "v26.4.0",
+  "nvmrc": "26.4.0"
+}
