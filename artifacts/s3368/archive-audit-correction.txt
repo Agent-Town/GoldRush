@@ -1,0 +1,5 @@
+  PID  PPID TTY      STAT STARTED                      COMM
+95805 81484 ??       Ss   Mon Oct 26 14:08:42 2026     /bin/zsh
+95827 95805 ??       R    Mon Oct 26 14:08:42 2026     node
+
+Standalone archive audit accidentally omitted --limit 40 --quiet and selected an unbounded historical walk. No verdict obtained. Terminated only its verified shell and node process by number before the shell could launch the ledger battery. The bounded audit is the relevant regression check; evidence is retained.
