@@ -1,0 +1,15 @@
+=== desk-birth-guard ===
+corpus tree               : main
+window start              : f0b44f07 (s2668 handoff)
+owner-gated rows filed    : 2
+  ├ by an owner GATE clause : 2
+  └ by an owner-ACT declaration, no gate clause : 0  (+1 suppressed as closure records)
+unexamined by the parser  : 2
+   | 🔁 **ASSAY NODE 26.12.1 — `assay-node-26-12-1` AUTHORED AND QUEUED 2026-10-22 on lane-d (Astra); F-SRV-1:** `CANONICAL_ASSAY_NODE_VERSION` 26.4.0 → 26.12.1 (a P
+   | 🐛 **debug-spawn-gate-1 (TO AUTHOR, attended; F-SGA1-5, 2026-09-25, inferred from reading, not run):** the debug-spawn key T may be ungated on the lockstep acti
+   ⓘ ADVISORY, not a failure: each line above carries an owner gate and a key but
+     leads with neither an admitted glyph nor `**F-`, so this guard never examined
+     it. Widening membership was measured and manufactures false reds out of
+     closure rows (F-2259-1) — read these by hand and desk any that are real.
+of those, undesked        : 0
+PASS — every owner-gated row filed this window reached the desk.

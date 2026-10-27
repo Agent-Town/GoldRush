@@ -1,0 +1,7 @@
+# Final handoff validation
+
+The complete ledger battery passed 1,263 tests and all chained checks. Its three desk guards intentionally skipped the live ACTIVE line. After it finished, only the line-1 lock/stamp envelope was changed to the exact final handoff. The declaration, birth, carry-forward, state and bounded archive checks then ran on main and returned 0; the process lock remained present and all queues/running tasks were empty. See handoff-envelope-validation.json and final-*.txt. No maintained guard was changed.
+
+The birth guard selected the broad historical window from s2668 because its commit-subject matcher does not admit the intervening colon-form subjects. Its two unexamined row shapes were read manually through ledger-corpus.mjs: assay-node-26-12-1 has already landed, with the remaining droplet switch in attended custody; debug-spawn-gate-1 is expressly deferred by the September 26 owner ruling. No newly authored owner-gated row exists in this fire. The state audit labels the B1 slug UNRECORDED, while the declaration guard resolves all three items to ledger rows; the unchanged B1 desk remains owner-held. These instrument limits are recorded without opening factory scope on a dry board.
+
+The final desk equals s3397 byte for byte, with zero drops. The archive audit reports zero missing or abridged handoffs in its last-40-commit window. Dashboard churn is left with its writer.

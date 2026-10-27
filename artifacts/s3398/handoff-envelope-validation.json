@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-27T18:46:59.508Z",
+  "reason": "ACTIVE intentionally skips desk guards. After full battery success, only the lock/stamp envelope was changed to the final handoff, then all desk guards and the bounded archive audit ran before committing lock CLEARED. The process lock remains held and queues/running were empty.",
+  "checks": [
+    {
+      "name": "desk-declaration",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "desk-birth",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "desk-carryforward",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "desk-state",
+      "code": 0,
+      "signal": null
+    },
+    {
+      "name": "status-archive",
+      "code": 0,
+      "signal": null
+    }
+  ],
+  "statusHash": "e60a66530ed798e35b096b80f95a88501d1b3bc141a565fec73de8c475ce04b7",
+  "unchanged": true,
+  "deskPreserved": true,
+  "ledgerReceipt": "ledger-result.json"
+}
