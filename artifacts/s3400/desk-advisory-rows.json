@@ -1,0 +1,12 @@
+[
+  {
+    "path": "tasks/BACKLOG.md",
+    "line": 31,
+    "text": "🔁 **ASSAY NODE 26.12.1 LANDED — `assay-node-26-12-1` as `2bbc6df06` (drained attended 2026-10-22).** F-SRV-1. Astra on lane-d (`357cf6e77`, 124,876 tokens, 08:16Z to 08:37Z): Node 26.12.1 installed with nvm beside 26.4.0; 29 retained tapes with verified slips selected (heat 14, then heat 13), 20 full replay pairs byte-identical under both runtimes (verdict, secured score, final gold, final wave, secure snapshot, replay content hash), zero disagreements; two of the twenty are rejected identically by BOTH runtimes against their historical claims (heat-14 Twin Banks 556 claimed / 389 replayed; a heat-13 Dry Gulch), a pre-existing engine drift against those retained slips, not a runtime effect (F-ASN1-1, recorded); `CANONICAL_ASSAY_NODE_VERSION` 26.4.0 → 26.12.1, `ops/droplet/goldrush-assay.service` and `goldrush-ledger-backup.service` ExecStart repointed, the ops doc's law sentence and paths updated, the worker's refusal fixture now expects 26.12.1 and refuses 26.4.0 (proven: `--once --dry-run` under 26.4.0 exits 1 naming both versions); the three assay suites 9/12/3 green under 26.12.1 (re-run attended), and under the Mac's 26.4.0 and 23.11.1 (the worker test resolves the canonical runtime from nvm). Pre-change engine hash `2d180e6b…`, new `b813de7b…`: PINNED, same era. Evidence 0.5 MB. Landed attended and deployed; the droplet switch (`scripts/attended/droplet-maintenance.sh node 26.12.1`: nvm install, the three units repointed, ledger and assay restarted) waits on the owner's word `reviews/assay-node-26-12-1.md`."
+  },
+  {
+    "path": "tasks/BACKLOG.md",
+    "line": 162,
+    "text": "🔁 **ASSAY NODE 26.12.1 — `assay-node-26-12-1` AUTHORED AND QUEUED 2026-10-22 on lane-d (Astra); F-SRV-1:** `CANONICAL_ASSAY_NODE_VERSION` 26.4.0 → 26.12.1 (a PINNED landing: `scripts/assay-replay-agent.mjs` is in the engine corpus), the three unit files and the ops doc repointed, and the proof the pin exists for: at least twenty verified tapes replayed under both runtimes with byte-identical verdict, score, wave and content hash (one disagreement = STOP). GATE: the proof table with zero disagreements; the three assay suites green under 26.12.1; then the attended droplet switch on the owner's word."
+  }
+]
