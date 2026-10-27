@@ -1,0 +1,26 @@
+[
+  {
+    "name": "mirror-freshness",
+    "code": 0
+  },
+  {
+    "name": "private-heads",
+    "code": 0
+  },
+  {
+    "name": "private-visibility",
+    "code": 0
+  },
+  {
+    "name": "skillmd-tests",
+    "code": 1,
+    "error": "spawnSync node ETIMEDOUT"
+  },
+  {
+    "name": "skillmd-canonical-tests",
+    "code": 0,
+    "node": "v26.4.0",
+    "adaptation": "Removed erroneous 30-second outer wrapper; existing suite timeout unchanged",
+    "previous": "skillmd-tests.txt preserves the bounded, incomplete first attempt"
+  }
+]
