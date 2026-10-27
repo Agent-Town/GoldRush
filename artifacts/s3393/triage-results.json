@@ -1,0 +1,29 @@
+[
+  {
+    "name": "dry-board-final",
+    "command": [
+      "node",
+      "scripts/dry-board-probe.mjs"
+    ],
+    "code": 0
+  },
+  {
+    "name": "lane-usable-final",
+    "command": [
+      "node",
+      "scripts/lane-usable.mjs",
+      "--all"
+    ],
+    "code": 0
+  },
+  {
+    "name": "status-archive",
+    "command": [
+      "node",
+      "scripts/status-archive-audit.mjs",
+      "--limit",
+      "40"
+    ],
+    "code": 0
+  }
+]
