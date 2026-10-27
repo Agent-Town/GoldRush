@@ -1,0 +1,25 @@
+20261023-085857-lane-a-assayer-sync-visibility-1.md.log
+No commit created: a pre-existing Git `index.lock` blocks committing. Resolving it is outside the task firewall. Changes remain preserved. The requested `edge-probe-json` test is absent; the existing composite guard passed.
+fatal: Unable to create '/Users/robin/Claude/Projects/Gold Rush/.git/worktrees/lane-a/index.lock': File exists.
+
+Another git process seems to be running in this repository, or the lock file may be stale
+evidence-budget — the evidence bytes this landing adds
+  range    : 4cd9cfc6124c059dcee55f1e0d8860dcc45d7af0..INDEX
+  prefixes : artifacts/ reviews/shots- — a path outside these is not counted at all
+  files    : 0 changed evidence path(s)
+  added    : 0.0 MB  (new blobs plus the growth of modified ones)
+  removed  : 0.0 MB  (reported, never credited against the ceiling)
+  net      : 0.0 MB
+  limit    : 25.0 MB per landing (scripts/evidence-budget-baseline.json)
+  tree     : 9424.6 MB tracked under artifacts/ (no ceiling banked yet)
+  PASS — 0.0 MB added, inside the 25.0 MB ceiling.
+[lane-runner-v3] withheld 0 staged evidence budget path(s); 0 added byte(s) remain
+error: pathspec 'artifacts/assayer-sync-visibility-1/build.txt' did not match any file(s) known to git
+error: pathspec 'artifacts/assayer-sync-visibility-1/deploy-contract.txt' did not match any file(s) known to git
+error: pathspec 'artifacts/assayer-sync-visibility-1/deploy-site-contract.txt' did not match any file(s) known to git
+error: pathspec 'artifacts/assayer-sync-visibility-1/guards.txt' did not match any file(s) known to git
+error: pathspec 'artifacts/assayer-sync-visibility-1/new-guard.txt' did not match any file(s) known to git
+error: pathspec 'artifacts/assayer-sync-visibility-1/report.md' did not match any file(s) known to git
+error: pathspec 'artifacts/assayer-sync-visibility-1/tsc.txt' did not match any file(s) known to git
+error: pathspec 'scripts/assayer-sync-visibility.test.mjs' did not match any file(s) known to git
+[lane-runner-v3] withheld 0 raw/oversized evidence path(s); receipt: /Users/robin/Claude/Projects/Gold Rush/tasks/runs/20261023-085857-lane-a-assayer-sync-visibility-1.md-withheld-paths.txt

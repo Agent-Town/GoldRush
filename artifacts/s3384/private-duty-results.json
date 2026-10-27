@@ -1,0 +1,66 @@
+[
+  {
+    "name": "ledger-pull",
+    "cmd": "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+    "args": [
+      "scripts/ledger-backup-pull.mjs"
+    ],
+    "started": "2026-10-27T02:13:39.212Z",
+    "finished": "2026-10-27T02:13:48.190Z",
+    "code": 0
+  },
+  {
+    "name": "ledger-push",
+    "cmd": "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+    "args": [
+      "scripts/ledger-mirror-push.mjs"
+    ],
+    "started": "2026-10-27T02:13:48.190Z",
+    "finished": "2026-10-27T02:14:05.182Z",
+    "code": 0
+  },
+  {
+    "name": "fire-memory",
+    "cmd": "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+    "args": [
+      "scripts/fire-memory-mirror.mjs"
+    ],
+    "started": "2026-10-27T02:14:05.182Z",
+    "finished": "2026-10-27T02:14:10.198Z",
+    "code": 0
+  },
+  {
+    "name": "mirror-exposure",
+    "cmd": "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+    "args": [
+      "scripts/ledger-mirror-exposure.mjs",
+      "--strict"
+    ],
+    "started": "2026-10-27T02:14:10.198Z",
+    "finished": "2026-10-27T02:14:10.238Z",
+    "code": 0
+  },
+  {
+    "name": "mirror-freshness",
+    "cmd": "/Users/robin/.nvm/versions/node/v23.11.1/bin/node",
+    "args": [
+      "scripts/ledger-mirror-freshness.mjs"
+    ],
+    "started": "2026-10-27T02:14:10.239Z",
+    "finished": "2026-10-27T02:14:10.268Z",
+    "code": 0
+  },
+  {
+    "name": "private-heads",
+    "cmd": "git",
+    "args": [
+      "ls-remote",
+      "archive",
+      "refs/heads/ledger-backups",
+      "refs/heads/fire-memory"
+    ],
+    "started": "2026-10-27T02:14:10.268Z",
+    "finished": "2026-10-27T02:14:13.594Z",
+    "code": 0
+  }
+]
