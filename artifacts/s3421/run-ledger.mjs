@@ -1,0 +1,27 @@
+import fs from 'node:fs';
+import { createHash } from 'node:crypto';
+import { execFileSync, spawn } from 'node:child_process';
+const dir = 'artifacts/s3421';
+const files = ['STATUS.md', 'docs/HANDOVER-2026-09-06-attended.md', 'tasks/BACKLOG.md', 'tasks/goals.json', 'tasks/CODEX-WALL', 'tasks/assay-node-26-12-1.md', 'reviews/rotation-r2026w45.md', 'reviews/assay-node-26-12-1.md', 'assets/engine-era.json', 'marketing/outbox/gazette-queue.md', 'package.json', 'assets/rotations/rotation-seeds.json', 'public/skill.md', 'marketing/outbox/ticker-digest-2026-10-27.md', `${dir}/report.md`, `${dir}/run-ledger.mjs`, `${dir}/test-runtime/node`];
+const hashes = () => Object.fromEntries(files.map(p => [p, createHash('sha256').update(fs.readFileSync(p)).digest('hex')]));
+const head = () => execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const packageScript = JSON.parse(fs.readFileSync('package.json', 'utf8')).scripts['test:ledger-guards'];
+if (!packageScript.startsWith('node --test ')) throw Error('Unexpected ledger script entry point');
+const command = 'npm run test:ledger-guards';
+const lsof = execFileSync('bash', ['-c', 'command -v lsof'], { encoding: 'utf8' }).trim();
+if (lsof !== '/usr/sbin/lsof') throw Error('macOS lsof is unavailable on the test PATH');
+const manifest = { command, source: 'package.json scripts.test:ledger-guards', schedulingChange: 'test-runtime/node injects --test-concurrency=1 only into the package ledger node --test --test-timeout=300000 entry; assertions and timeouts unchanged', started: new Date().toISOString(), path: process.env.PATH, lsof, head: head(), node: process.version, hashes: hashes() };
+if (process.version !== 'v26.4.0') throw Error('Interpreter must match .nvmrc');
+fs.writeFileSync(`${dir}/ledger-manifest.json`, JSON.stringify(manifest, null, 2));
+const fd = fs.openSync(`${dir}/ledger-guards.txt`, 'a');
+const start = Date.now();
+const child = spawn('bash', ['-c', command], { env: { ...process.env, PATH: `${process.cwd()}/${dir}/test-runtime:/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:${process.env.PATH}` }, stdio: ['ignore', fd, fd] });
+child.on('error', e => { fs.closeSync(fd); throw e; });
+child.on('close', (code, signal) => {
+  fs.closeSync(fd);
+  const output = fs.readFileSync(`${dir}/ledger-guards.txt`, 'utf8');
+  const receipt = { code, signal, finished: new Date().toISOString(), seconds: (Date.now() - start) / 1000, node: process.version, unchanged: JSON.stringify(hashes()) === JSON.stringify(manifest.hashes), headUnchanged: head() === manifest.head, testSummary: output.split('\n').filter(l => /^ℹ (tests|pass|fail|cancelled|skipped)/.test(l)), kitSummary: output.split('\n').filter(l => /^RESULT:/.test(l)) };
+  fs.writeFileSync(`${dir}/ledger-result.json`, JSON.stringify(receipt, null, 2));
+  console.log(JSON.stringify(receipt, null, 2));
+  process.exitCode = code === 0 && receipt.unchanged && receipt.headUnchanged ? 0 : 1;
+});
