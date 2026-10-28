@@ -1,0 +1,15 @@
+{
+  "started": "2026-10-28T00:23:07.840Z",
+  "finished": "2026-10-28T00:23:25.204Z",
+  "args": [
+    "--test",
+    "--test-concurrency=1",
+    "scripts/skillmd-guard.test.mjs",
+    "scripts/landing-rotation-derivation.test.mjs",
+    "scripts/live-seed-rotation.test.mjs",
+    "scripts/bench-seeds.test.mjs"
+  ],
+  "code": 0,
+  "signal": null,
+  "reason": "Repeat unchanged checks to capture the test process exit directly; initial shell printed a tail after the test."
+}
