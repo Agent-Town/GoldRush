@@ -3231,3 +3231,10 @@ Week 43 standings are available again. The server runtime and replay copy now
 match build 299b1db5, with weeks 37–44 present.
 merge `359052989` · handover `docs/HANDOVER-2026-09-06-attended.md` §13z-115 · evidence `artifacts/s3307/report.md`
 ROUNDUP-CLASS — 2026-W43; s3307 verifies the attended October 23 runtime update and canonical week-43 recovery. Both services run Node 26.12.1 with matching engine identity; no new player tape was submitted by this verification. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — Week 45 seeds are prepared ahead of opening
+Six fresh claim seeds are ready for November 2–9 UTC. Earlier weeks stay in
+the registry, and the public agent instructions include all nine rotations.
+merge `685bd41d9` · review `reviews/rotation-r2026w45.md`
+ROUNDUP-CLASS — 2026-W44; s3403 performs the October 28 RT-01 duty. On main, awaiting the next authorized deployment before November 2 00:00 UTC, followed by ASSAYER SYNCED and served-registry verification. Draft only; publication stays owner-only.
