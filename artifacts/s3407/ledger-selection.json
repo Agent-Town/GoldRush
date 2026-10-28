@@ -1,0 +1,45 @@
+{
+  "files": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "selected": [
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 1,
+      "text": "🗄️ **LB-01 + FM-01 OCTOBER 28 COMPLETE (s3405, 2026-10-28T02:42Z):** Today's snapshot was pulled after 02:10 UTC and the strict private push added one file. Coverage is 66/66 days August 24–October 28. The complete direct-file exposure check inspected 4,682 keys across 66 readable mirrors, zero unreadable mirrors and zero account-class or unrecognised rows. Archive visibility PRIVATE; live ledger-backups head eb74b13da3da715dc6553d4aea2e23fe48edcbed verified. FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, live head verified. Private data remains outside the public tree. Next coverage day October 29 after 02:10 UTC. Evidence: artifacts/s3405/ledger-pull.txt, ledger-push.txt, mirror-exposure-node26.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, private-duty-results.json, report.md."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 3,
+      "text": "🗓️ **RT-01 WEEK 45 MINTED (s3403, 2026-10-28):** `r2026w45` opens November 2 00:00 UTC and closes November 9 00:00 UTC; six seeds, all eight earlier rotations preserved, whole nine-rotation registry refreshed in `public/skill.md`. Week-44 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w45.md`; evidence: `artifacts/s3403/`. Carry week 45 with the next authorized deployment before November 2 00:00 UTC, then require ASSAYER SYNCED and served-registry verification. Public build 299b1db5 currently advertises weeks 37–44, with sampled week-44 standings healthy. No dispatch or deployment by this fire."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 5,
+      "text": "📰 **TK-01 OCTOBER 27 COMPLETE (s3402, 2026-10-28 local):** `marketing/outbox/ticker-digest-2026-10-27.md` records no player-visible change. UTC+07 census: 61 main updates, 61 pinned first-parent commits, 667 distinct changed paths, zero player-path events or engine pins; all subjects and non-evidence paths reviewed. September 25 busy-day control 136; no non-ancestral replacement. Maintenance only; no Gazette duplicate or publication. Evidence: `artifacts/s3402/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`."
+    },
+    {
+      "file": "tasks/BACKLOG.md",
+      "line": 172,
+      "text": "🧹 **F-STO-1 (attended 2026-10-25; the owner: \"Can you help clean up the storage needed by Gold Rush … I think Gold Rush uses 600 GB\") — THE DISK HELD 1,312 GB OF GOLD RUSH, 86 GB FREE OF 3.6 TB; EVERY SCRATCH WORKTREE CARRIES THE 9–11 GB TRACKED `artifacts/` TREE, SO CHECKOUTS WERE THE MULTIPLIER. Group A (regenerable scratch, no history) removed on the owner's \"clean A\": 30 merged sibling worktrees `~/Claude/Projects/wt-*` (~300 GB), 21 fire/attended arena checkouts under `~/.goldrush/` (their logs kept), the `land/wt-preview-pub` rsync staging copy (86 GB), four re-land clones in `~/.goldrush/repair` whose tips equal the `candidate/*` branches on GitHub (53 GB; commit maps kept), two old gate worktrees in the primary, eight orphan lane copies inside the history clone whose `.git` files pointed at the primary's live lanes (their 94 untracked unique files, 354 MB of July marketing reels and raw media, archived first to `~/.goldrush/archive/history-local-worktrees-untracked-2026-10-25/`), the stray `Gold%20Rush` folder. Every removal through `git worktree remove` after a merged-branch check and an evidence-only dirt check; 14 items the checks held back were examined by hand (stale checkouts: files equal to blobs of 2026-09-20 / 2026-07-05 commits; a gate worktree whose edits equal main's; control arenas differing only in the pilots symlink) and removed in a second pass. Result: free 86 GB → 782 GB. KEPT AS HISTORY: the history clone's `.git` (106 GB, the only full copy of the private history archive: 443 of its 613 refs are not on GitHub), the film's 23 takes (24 GB), `GoldRush-assets` (13 GB), the primary's `artifacts/`, `logs/`, `tasks/runs` (17 GB), `gr-worktree-evidence`, the run logs. OPEN FOR THE OWNER: `gr-gauntlet` (290 GB: four rider arenas with 19 GB duplicate `.git` copies, ~9 GB dependencies, ~100 GB tracked checkouts, ~40 GB heat evidence to keep), `goldrush-gauntlet` carries 22 unpushed commits (agent memories of heats 11–12), an external drive for the ~200 GB of history, and the structural cure (sparse checkouts without `artifacts/` for scratch worktrees). Log: `~/.goldrush/maintenance/cleanup-2026-10-25.log`."
+    }
+  ]
+}
