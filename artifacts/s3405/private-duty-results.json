@@ -1,0 +1,54 @@
+[
+  {
+    "file": "ledger-pull",
+    "command": [
+      "node",
+      "scripts/ledger-backup-pull.mjs"
+    ],
+    "start": "2026-10-28T02:41:02.664Z",
+    "exit": 0,
+    "signal": null
+  },
+  {
+    "file": "ledger-push",
+    "command": [
+      "node",
+      "scripts/ledger-mirror-push.mjs"
+    ],
+    "start": "2026-10-28T02:41:12.107Z",
+    "exit": 0,
+    "signal": null
+  },
+  {
+    "file": "mirror-exposure",
+    "command": [
+      "node",
+      "scripts/ledger-mirror-exposure.mjs",
+      "--strict"
+    ],
+    "start": "2026-10-28T02:41:29.333Z",
+    "exit": 0,
+    "signal": null
+  },
+  {
+    "file": "mirror-freshness",
+    "command": [
+      "node",
+      "scripts/ledger-mirror-freshness.mjs",
+      "--strict"
+    ],
+    "start": "2026-10-28T02:41:29.378Z",
+    "exit": 0,
+    "signal": null
+  },
+  {
+    "file": "fire-memory",
+    "command": [
+      "node",
+      "scripts/fire-memory-mirror.mjs"
+    ],
+    "start": "2026-10-28T02:41:29.411Z",
+    "exit": 0,
+    "signal": null
+  }
+]
