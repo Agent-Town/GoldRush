@@ -1,0 +1,38 @@
+{
+  "files": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "topRows": [
+    "🗄️ **LB-01 + FM-01 OCTOBER 28 COMPLETE (s3405, 2026-10-28T02:42Z):** Today's snapshot was pulled after 02:10 UTC and the strict private push added one file. Coverage is 66/66 days August 24–October 28. The complete direct-file exposure check inspected 4,682 keys across 66 readable mirrors, zero unreadable mirrors and zero account-class or unrecognised rows. Archive visibility PRIVATE; live ledger-backups head eb74b13da3da715dc6553d4aea2e23fe48edcbed verified. FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, live head verified. Private data remains outside the public tree. Next coverage day October 29 after 02:10 UTC. Evidence: artifacts/s3405/ledger-pull.txt, ledger-push.txt, mirror-exposure-node26.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, private-duty-results.json, report.md.",
+    "",
+    "🗓️ **RT-01 WEEK 45 MINTED (s3403, 2026-10-28):** `r2026w45` opens November 2 00:00 UTC and closes November 9 00:00 UTC; six seeds, all eight earlier rotations preserved, whole nine-rotation registry refreshed in `public/skill.md`. Week-44 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w45.md`; evidence: `artifacts/s3403/`. Carry week 45 with the next authorized deployment before November 2 00:00 UTC, then require ASSAYER SYNCED and served-registry verification. Public build 299b1db5 currently advertises weeks 37–44, with sampled week-44 standings healthy. No dispatch or deployment by this fire.",
+    "",
+    "📰 **TK-01 OCTOBER 27 COMPLETE (s3402, 2026-10-28 local):** `marketing/outbox/ticker-digest-2026-10-27.md` records no player-visible change. UTC+07 census: 61 main updates, 61 pinned first-parent commits, 667 distinct changed paths, zero player-path events or engine pins; all subjects and non-evidence paths reviewed. September 25 busy-day control 136; no non-ancestral replacement. Maintenance only; no Gazette duplicate or publication. Evidence: `artifacts/s3402/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`.",
+    "",
+    "🗄️ **LB-01 + FM-01 OCTOBER 27 COMPLETE (s3384, 2026-10-27T02:16Z):** Today's snapshot was pulled after 02:10 UTC and the strict private push added one file. Coverage is 65/65 days August 24–October 27. Separate strict exposure inspected 4,588 keys across 65 readable mirrors, zero unreadable mirrors and zero account-class or unrecognised rows. Archive visibility PRIVATE; live ledger-backups head 7c35ab16200f1961f49b50ab03bdbb60bc4954fa verified. FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, its live head verified. No private corpus enters the public tree. October 28 discharged by s3405 above. Evidence: artifacts/s3384/ledger-pull.txt, ledger-push.txt, mirror-exposure.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, private-duty-results.json, report.md.",
+    "",
+    "📰 **TK-01 OCTOBER 26 COMPLETE (s3382, 2026-10-27 local):** `marketing/outbox/ticker-digest-2026-10-26.md` records no player-visible change. UTC+07 census: 61 main updates, 61 pinned first-parent commits, 600 distinct changed paths, zero player-path events or engine pins; all subjects and non-evidence paths reviewed. September 25 busy-day control 136; no non-ancestral replacement. Maintenance and idle runner recovery only; no Gazette duplicate or publication. Evidence: `artifacts/s3382/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`.",
+    "",
+    "🟢 **RUNNER RECOVERED (s3367, 2026-10-26T05:55Z):** Health-watch and process scan found no live lane runner. The prescribed start-lane-runner.sh helper, invoked through node, exited 0; PID 26518 started 2026-10-26 12:52:54 local, PPID 1, TTY ??, and the runner self-healed its stale lock. Subsequent ps and health-watch confirm ALIVE. The automatic attempts logged no usable Codex client/node; this invocation resolved Codex 0.157.0 and Node 23.11.1 from nvm. Cause of the original runner exit remains unknown. No dispatch or refill; all six queues empty, CODEX-WALL and attended custody preserved. Evidence: artifacts/s3367/runner-restart.txt, launcher.json, runner-log-tail.txt, health-watch.txt and report.md."
+  ],
+  "latestAttendedSection": "13z-116",
+  "latestRun": "20261023-085857-lane-a-assayer-sync-visibility-1.md.log"
+}

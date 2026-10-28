@@ -1,0 +1,15 @@
+{
+  "readOnlyCommandCorrections": [
+    "Initial latest-run selector had an extra closing brace; corrected before it wrote any file.",
+    "Freshness command initially used the test-file basename without .test; resolved scripts/ledger-mirror-freshness.mjs through rg --files and reran."
+  ],
+  "priorLedger": {
+    "session": "s3411",
+    "code": 1,
+    "pass": 23,
+    "failedFile": 1,
+    "cancelled": 120,
+    "reason": "owned stop; root cause unverified"
+  },
+  "scope": "No source, assertion, timeout, goal, backlog or law changes."
+}
