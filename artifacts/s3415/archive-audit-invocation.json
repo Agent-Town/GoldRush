@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-28T15:09:15.081Z",
+  "unbounded": {
+    "command": "node scripts/status-archive-audit.mjs",
+    "exit": 134,
+    "node": "v23.11.1",
+    "diagnostic": "FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory"
+  },
+  "stopAttempt": {
+    "matchedProcesses": 0,
+    "signalsSent": 0
+  },
+  "bounded": {
+    "command": "node scripts/status-archive-audit.mjs --limit 40 --quiet",
+    "evidence": "status-archive-bounded.txt"
+  },
+  "scope": "Unnecessary unbounded history walk failed. Bounded recent-history check is the applicable archive regression gate and is also in the closing ledger battery. No product defect established."
+}
