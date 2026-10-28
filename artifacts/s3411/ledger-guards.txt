@@ -1,0 +1,647 @@
+
+> gold-rush@0.1.0 test:ledger-guards
+> node --test --test-timeout=300000 scripts/guard-stats-persistence.test.mjs scripts/health-watch-fire-line-guard.test.mjs scripts/guard-stats-test-isolation-guard.test.mjs scripts/vite-only-import-reachability-guard.test.mjs scripts/finding-id-pattern-guard.test.mjs scripts/nul-audit-corpus-guard.test.mjs scripts/art-staging-corpus-header-guard.test.mjs scripts/withheld-evidence-audit-guard.test.mjs scripts/gazette-weekly-budget-guard.test.mjs scripts/modified-tracked-evidence-census-guard.test.mjs scripts/census-bucket-ownership-guard.test.mjs scripts/census-could-not-answer-split-guard.test.mjs scripts/worktree-registry-ledger-guard.test.mjs scripts/untracked-evidence-durability-guard.test.mjs scripts/null-floor-compare-guard.test.mjs scripts/goal-tracker.test.mjs scripts/goal-closure-reason.test.mjs scripts/ruling-propagation-guard.test.mjs scripts/law-pointer-guard.test.mjs scripts/law-pointer-surface-count-guard.test.mjs scripts/gate-caller-audit.test.mjs scripts/block-class-guard.test.mjs scripts/block-class-guard-worktree.test.mjs scripts/banked-master-preflight-guard.test.mjs scripts/stale-hold-verdict-guard.test.mjs scripts/claimed-spec-harness-guard.test.mjs scripts/stale-ready-for-gates-guard.test.mjs scripts/stale-successor-pointer-guard.test.mjs scripts/stopped-leaf-supersession-guard.test.mjs scripts/desk-carryforward-guard.test.mjs scripts/desk-birth-guard.test.mjs scripts/desk-state-audit.test.mjs scripts/desk-unrecorded-mention-guard.test.mjs scripts/ghost-ladder-row-guard.test.mjs scripts/authorable-candidates.test.mjs scripts/authorable-unpriced-block-guard.test.mjs scripts/authorable-single-read-guard.test.mjs scripts/fixture-corpus-copy-guard.test.mjs scripts/salvage-art-staging-reach.test.mjs scripts/dry-board-probe.test.mjs scripts/dry-board-advisory-prescription-guard.test.mjs scripts/dry-board-probe-corpus-guard.test.mjs scripts/dry-board-probe-worktree-guard.test.mjs scripts/dry-board-bucket-verdict-guard.test.mjs scripts/dry-board-sibling-refusal-guard.test.mjs scripts/dry-board-sibling-refusal-banner-guard.test.mjs scripts/dry-board-detached-head-guard.test.mjs scripts/drain-block-ancestry-guard.test.mjs scripts/master-shipped-review-source-guard.test.mjs scripts/master-shipped-crash-exit-guard.test.mjs scripts/review-evidence-crash-exit-guard.test.mjs scripts/review-evidence-scan-space-guard.test.mjs scripts/art-staging-local-only-source-guard.test.mjs scripts/art-staging-gitdir-link-guard.test.mjs scripts/dispatch-corpus-guard.test.mjs scripts/master-shipped-goals-source-guard.test.mjs scripts/lane-usable-pathspec-root-guard.test.mjs scripts/lane-usable-gate-leaf-surface-guard.test.mjs scripts/lane-usable-stale-pid-guard.test.mjs scripts/lane-usable-untracked-files-guard.test.mjs scripts/lane-usable-fleet-coverage-guard.test.mjs scripts/lane-usable-dirt-durability-guard.test.mjs scripts/master-shipped-worktree-guard.test.mjs scripts/drain-block-worktree-guard.test.mjs scripts/drain-block-subject-divergence-guard.test.mjs scripts/drain-block-queue-nearmiss-guard.test.mjs scripts/attended-owed-anchor-tree-guard.test.mjs scripts/ghost-ladder-worktree-guard.test.mjs scripts/ghost-ladder-subject-set-guard.test.mjs scripts/collection-guards-subject-set-guard.test.mjs scripts/desk-family-worktree-guard.test.mjs scripts/desk-lock-predicate-guard.test.mjs scripts/desk-tail-anchor-guard.test.mjs scripts/desk-row-key-token-guard.test.mjs scripts/desk-birth-prefix-token-guard.test.mjs scripts/desk-carryforward-ack-token-guard.test.mjs scripts/desk-carryforward-worktree-guard.test.mjs scripts/battery-manifest-attribution-guard.test.mjs scripts/desk-frozen-tree-unverifiable-guard.test.mjs scripts/corpus-tree-unverifiable-guard.test.mjs scripts/desk-detached-head-guard.test.mjs scripts/detached-head-instruments-guard.test.mjs scripts/attended-owed-cross-check-value-guard.test.mjs scripts/ghost-ladder-evidence-source-guard.test.mjs scripts/nul-audit-subject-scope-guard.test.mjs scripts/refusal-reason-corpus-guard.test.mjs scripts/desk-birth-gate-distance-guard.test.mjs scripts/desk-declaration-segment-denominator-guard.test.mjs scripts/desk-birth-row-denominator-guard.test.mjs scripts/desk-birth-gateless-row-guard.test.mjs scripts/guard-source-snapshot-race-guard.test.mjs scripts/desk-birth-window-start-guard.test.mjs scripts/desk-status-single-read-guard.test.mjs scripts/status-line1-desk-displacement-guard.test.mjs scripts/status-line1-future-stamp-scope-guard.test.mjs scripts/status-archive-arg-guard.test.mjs scripts/status-archive-empty-corpus-guard.test.mjs scripts/status-archive-supersession-guard.test.mjs scripts/status-archive-abridged-declaration-guard.test.mjs scripts/terrain-canonicalization-domain-guard.test.mjs scripts/terrain-comparator-margin-guard.test.mjs scripts/reaching-contract-extent-guard.test.mjs scripts/foundry-kit-token-derivation-guard.test.mjs scripts/bash-leg-misuse-code-guard.test.mjs scripts/cross-engine-engine-source-guard.test.mjs scripts/desk-word-single-source-guard.test.mjs scripts/blocker-panel-classifiable-guard.test.mjs scripts/source-pointer-guard.test.mjs scripts/start-lane-runner-citation-guard.test.mjs scripts/law-bash-prescription-guard.test.mjs scripts/runner-env-provenance-guard.test.mjs scripts/gazette-scan-space-guard.test.mjs scripts/no-emdash-scan-space-guard.test.mjs scripts/ledger-mirror-freshness-guard.test.mjs scripts/ledger-pull-supply-window-guard.test.mjs scripts/ledger-backup-fill-gaps-guard.test.mjs scripts/ledger-mirror-exposure-guard.test.mjs scripts/ledger-mirror-column-class-guard.test.mjs scripts/edge-probe-composite-guard.test.mjs scripts/edge-alarm-clock-guard.test.mjs scripts/triage-instrument-spawn-bound-guard.test.mjs scripts/spawn-census-mask-regex-guard.test.mjs server/codex-shim/serve.test.mjs && node scripts/ghost-ladder-row-guard.mjs --strict && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:citations && npm run test:desk-declaration && npm run test:desk-birth && node scripts/desk-carryforward-guard.mjs && node scripts/status-archive-audit.mjs --limit 40 --quiet && node scripts/attended-owed-audit.mjs && bash scripts/main-lock-gate-guard.test.sh && bash scripts/janitor-request-rejection.test.sh && bash scripts/lane-dispatch-safety-guard.test.sh && bash scripts/codex-client-floor.test.sh && bash scripts/runner-restart-recipe.test.sh && bash scripts/runner-commit-decoupling-guard.test.sh && node scripts/ledger-mirror-exposure.mjs && node scripts/nul-audit.mjs && node scripts/source-pointer-guard.mjs && bash foundry/kit/test-init.sh
+
+[s3411] ledger scheduling: --test-concurrency=1; assertions and timeouts unchanged
+✔ REVERSE CONTROL — a genuinely clean board still reports AT RISK 0 with a POPULATED header (no manufactured alarm) (40815.726ms)
+✔ validity — the healthy arm really does see a file whose bytes are in no object database (43941.973958ms)
+✔ THE HARM — an ABSENT staging root is byte-identical to a clean board on BOTH buckets the ART-SLOT LAW prescribes (41653.412875ms)
+✔ THE DISCRIMINATOR — the corpus header DOES separate an emptied scan set from a clean one (41619.282375ms)
+✔ the declaration is printed on the HAPPY path too — one that appears only on failure re-creates the ambiguity it removes (F-2208-1) (18416.780875ms)
+✔ REVERSE CONTROL — the header COUNTS track the real scan set; they are not a constant (26339.995542ms)
+✔ THE LAW must tell a fire to read the discriminator, not only the two buckets that cannot (F-2449-1) (0.786625ms)
+✔ 1. a cp -R copy of a linked worktree is classified `shared` and names its owner (11632.501833ms)
+✔ 2. the human channel names the borrowed lane ON THE ROW, not merely somewhere (13107.140334ms)
+✔ 3. the hazard paragraph prints when any tree is shared (12099.986875ms)
+✔ 4. REVERSE CONTROL — a self-contained tree with no .git is NOT shared (17752.237375ms)
+✔ 5. REVERSE CONTROL — a gitdir no registered worktree owns is `orphan`, not `shared` (20114.115875ms)
+✔ 6. REVERSE CONTROL — an independent repository is `own-repo`, not `shared` (12751.783166ms)
+✔ 7. a .git that cannot be parsed is `unverifiable` — declared, never assumed benign (22047.871459ms)
+✔ 8. REVERSE CONTROL — it DECLARES and does not REFUSE: a shared tree moves NO exit code (105481.601833ms)
+✔ 9. REVERSE CONTROL — a REGISTERED worktree never enters the unowned list at all (19242.981583ms)
+✔ 10. F-2208-1 — the link is declared on EVERY row, including the benign ones (24359.512583ms)
+✔ REVERSE CONTROL — real unpushed content refuses with 1, not 2 (a cure that collapses the two codes is caught here) (53507.211625ms)
+✔ origin/main ref unavailable while the remote and its other refs are present — --strict refuses with 2, never 0 (52947.362125ms)
+✔ a transient failure of that one call, origin/main present — declared distinctly, --strict refuses with 2 (46075.794ms)
+✔ the advisory default still exits 0 even when the source did not run — a routine audit must never block a drain (42815.689792ms)
+✔ REVERSE CONTROL — the declaration is printed on the HAPPY path too, so "asked and empty" is distinguishable from "never asked" (36445.341666ms)
+✔ REVERSE CONTROL — a genuinely clean board stays quiet in both modes (a cure that manufactures an alarm is caught here) (50870.115458ms)
+✖ scripts/art-staging-local-only-source-guard.test.mjs (284327.196042ms)
+
+Interrupted while running:
+
+⚠ scripts/attended-owed-anchor-tree-guard.test.mjs (scripts/attended-owed-anchor-tree-guard.test.mjs:1:1)
+✖ scripts/attended-owed-anchor-tree-guard.test.mjs (489.995334ms)
+✖ scripts/attended-owed-cross-check-value-guard.test.mjs
+✖ scripts/authorable-candidates.test.mjs
+✖ scripts/authorable-single-read-guard.test.mjs
+✖ scripts/authorable-unpriced-block-guard.test.mjs
+✖ scripts/banked-master-preflight-guard.test.mjs
+✖ scripts/bash-leg-misuse-code-guard.test.mjs
+✖ scripts/battery-manifest-attribution-guard.test.mjs
+✖ scripts/block-class-guard-worktree.test.mjs
+✖ scripts/block-class-guard.test.mjs
+✖ scripts/blocker-panel-classifiable-guard.test.mjs
+✖ scripts/census-bucket-ownership-guard.test.mjs
+✖ scripts/census-could-not-answer-split-guard.test.mjs
+✖ scripts/claimed-spec-harness-guard.test.mjs
+✖ scripts/collection-guards-subject-set-guard.test.mjs
+✖ scripts/corpus-tree-unverifiable-guard.test.mjs
+✖ scripts/cross-engine-engine-source-guard.test.mjs
+✖ scripts/desk-birth-gate-distance-guard.test.mjs
+✖ scripts/desk-birth-gateless-row-guard.test.mjs
+✖ scripts/desk-birth-guard.test.mjs
+✖ scripts/desk-birth-prefix-token-guard.test.mjs
+✖ scripts/desk-birth-row-denominator-guard.test.mjs
+✖ scripts/desk-birth-window-start-guard.test.mjs
+✖ scripts/desk-carryforward-ack-token-guard.test.mjs
+✖ scripts/desk-carryforward-guard.test.mjs
+✖ scripts/desk-carryforward-worktree-guard.test.mjs
+✖ scripts/desk-declaration-segment-denominator-guard.test.mjs
+✖ scripts/desk-detached-head-guard.test.mjs
+✖ scripts/desk-family-worktree-guard.test.mjs
+✖ scripts/desk-frozen-tree-unverifiable-guard.test.mjs
+✖ scripts/desk-lock-predicate-guard.test.mjs
+✖ scripts/desk-row-key-token-guard.test.mjs
+✖ scripts/desk-state-audit.test.mjs
+✖ scripts/desk-status-single-read-guard.test.mjs
+✖ scripts/desk-tail-anchor-guard.test.mjs
+✖ scripts/desk-unrecorded-mention-guard.test.mjs
+✖ scripts/desk-word-single-source-guard.test.mjs
+✖ scripts/detached-head-instruments-guard.test.mjs
+✖ scripts/dispatch-corpus-guard.test.mjs
+✖ scripts/drain-block-ancestry-guard.test.mjs
+✖ scripts/drain-block-queue-nearmiss-guard.test.mjs
+✖ scripts/drain-block-subject-divergence-guard.test.mjs
+✖ scripts/drain-block-worktree-guard.test.mjs
+✖ scripts/dry-board-advisory-prescription-guard.test.mjs
+✖ scripts/dry-board-bucket-verdict-guard.test.mjs
+✖ scripts/dry-board-detached-head-guard.test.mjs
+✖ scripts/dry-board-probe-corpus-guard.test.mjs
+✖ scripts/dry-board-probe-worktree-guard.test.mjs
+✖ scripts/dry-board-probe.test.mjs
+✖ scripts/dry-board-sibling-refusal-banner-guard.test.mjs
+✖ scripts/dry-board-sibling-refusal-guard.test.mjs
+✖ scripts/edge-alarm-clock-guard.test.mjs
+✖ scripts/edge-probe-composite-guard.test.mjs
+✖ scripts/finding-id-pattern-guard.test.mjs
+✖ scripts/fixture-corpus-copy-guard.test.mjs
+✖ scripts/foundry-kit-token-derivation-guard.test.mjs
+✖ scripts/gate-caller-audit.test.mjs
+✖ scripts/gazette-scan-space-guard.test.mjs
+✖ scripts/gazette-weekly-budget-guard.test.mjs
+✖ scripts/ghost-ladder-evidence-source-guard.test.mjs
+✖ scripts/ghost-ladder-row-guard.test.mjs
+✖ scripts/ghost-ladder-subject-set-guard.test.mjs
+✖ scripts/ghost-ladder-worktree-guard.test.mjs
+✖ scripts/goal-closure-reason.test.mjs
+✖ scripts/goal-tracker.test.mjs
+✖ scripts/guard-source-snapshot-race-guard.test.mjs
+✖ scripts/guard-stats-persistence.test.mjs
+✖ scripts/guard-stats-test-isolation-guard.test.mjs
+✖ scripts/health-watch-fire-line-guard.test.mjs
+✖ scripts/lane-usable-dirt-durability-guard.test.mjs
+✖ scripts/lane-usable-fleet-coverage-guard.test.mjs
+✖ scripts/lane-usable-gate-leaf-surface-guard.test.mjs
+✖ scripts/lane-usable-pathspec-root-guard.test.mjs
+✖ scripts/lane-usable-stale-pid-guard.test.mjs
+✖ scripts/lane-usable-untracked-files-guard.test.mjs
+✖ scripts/law-bash-prescription-guard.test.mjs
+✖ scripts/law-pointer-guard.test.mjs
+✖ scripts/law-pointer-surface-count-guard.test.mjs
+✖ scripts/ledger-backup-fill-gaps-guard.test.mjs
+✖ scripts/ledger-mirror-column-class-guard.test.mjs
+✖ scripts/ledger-mirror-exposure-guard.test.mjs
+✖ scripts/ledger-mirror-freshness-guard.test.mjs
+✖ scripts/ledger-pull-supply-window-guard.test.mjs
+✖ scripts/master-shipped-crash-exit-guard.test.mjs
+✖ scripts/master-shipped-goals-source-guard.test.mjs
+✖ scripts/master-shipped-review-source-guard.test.mjs
+✖ scripts/master-shipped-worktree-guard.test.mjs
+✖ scripts/modified-tracked-evidence-census-guard.test.mjs
+✖ scripts/no-emdash-scan-space-guard.test.mjs
+✖ scripts/nul-audit-corpus-guard.test.mjs
+✖ scripts/nul-audit-subject-scope-guard.test.mjs
+✖ scripts/null-floor-compare-guard.test.mjs
+✖ scripts/reaching-contract-extent-guard.test.mjs
+✖ scripts/refusal-reason-corpus-guard.test.mjs
+✖ scripts/review-evidence-crash-exit-guard.test.mjs
+✖ scripts/review-evidence-scan-space-guard.test.mjs
+✖ scripts/ruling-propagation-guard.test.mjs
+✖ scripts/runner-env-provenance-guard.test.mjs
+✖ scripts/salvage-art-staging-reach.test.mjs
+✖ scripts/source-pointer-guard.test.mjs
+✖ scripts/spawn-census-mask-regex-guard.test.mjs
+✖ scripts/stale-hold-verdict-guard.test.mjs
+✖ scripts/stale-ready-for-gates-guard.test.mjs
+✖ scripts/stale-successor-pointer-guard.test.mjs
+✖ scripts/start-lane-runner-citation-guard.test.mjs
+✖ scripts/status-archive-abridged-declaration-guard.test.mjs
+✖ scripts/status-archive-arg-guard.test.mjs
+✖ scripts/status-archive-empty-corpus-guard.test.mjs
+✖ scripts/status-archive-supersession-guard.test.mjs
+✖ scripts/status-line1-desk-displacement-guard.test.mjs
+✖ scripts/status-line1-future-stamp-scope-guard.test.mjs
+✖ scripts/stopped-leaf-supersession-guard.test.mjs
+✖ scripts/terrain-canonicalization-domain-guard.test.mjs
+✖ scripts/terrain-comparator-margin-guard.test.mjs
+✖ scripts/triage-instrument-spawn-bound-guard.test.mjs
+✖ scripts/untracked-evidence-durability-guard.test.mjs
+✖ scripts/vite-only-import-reachability-guard.test.mjs
+✖ scripts/withheld-evidence-audit-guard.test.mjs
+✖ scripts/worktree-registry-ledger-guard.test.mjs
+✖ server/codex-shim/serve.test.mjs
+ℹ tests 144
+ℹ suites 0
+ℹ pass 23
+ℹ fail 1
+ℹ cancelled 120
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 762160.279
+
+✖ failing tests:
+
+test at scripts/art-staging-local-only-source-guard.test.mjs:1:1
+✖ scripts/art-staging-local-only-source-guard.test.mjs (284327.196042ms)
+  'test failed'
+
+test at scripts/attended-owed-anchor-tree-guard.test.mjs:1:1
+✖ scripts/attended-owed-anchor-tree-guard.test.mjs (489.995334ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/attended-owed-cross-check-value-guard.test.mjs:1:1
+✖ scripts/attended-owed-cross-check-value-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/authorable-candidates.test.mjs:1:1
+✖ scripts/authorable-candidates.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/authorable-single-read-guard.test.mjs:1:1
+✖ scripts/authorable-single-read-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/authorable-unpriced-block-guard.test.mjs:1:1
+✖ scripts/authorable-unpriced-block-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/banked-master-preflight-guard.test.mjs:1:1
+✖ scripts/banked-master-preflight-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/bash-leg-misuse-code-guard.test.mjs:1:1
+✖ scripts/bash-leg-misuse-code-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/battery-manifest-attribution-guard.test.mjs:1:1
+✖ scripts/battery-manifest-attribution-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/block-class-guard-worktree.test.mjs:1:1
+✖ scripts/block-class-guard-worktree.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/block-class-guard.test.mjs:1:1
+✖ scripts/block-class-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/blocker-panel-classifiable-guard.test.mjs:1:1
+✖ scripts/blocker-panel-classifiable-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/census-bucket-ownership-guard.test.mjs:1:1
+✖ scripts/census-bucket-ownership-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/census-could-not-answer-split-guard.test.mjs:1:1
+✖ scripts/census-could-not-answer-split-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/claimed-spec-harness-guard.test.mjs:1:1
+✖ scripts/claimed-spec-harness-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/collection-guards-subject-set-guard.test.mjs:1:1
+✖ scripts/collection-guards-subject-set-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/corpus-tree-unverifiable-guard.test.mjs:1:1
+✖ scripts/corpus-tree-unverifiable-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/cross-engine-engine-source-guard.test.mjs:1:1
+✖ scripts/cross-engine-engine-source-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-birth-gate-distance-guard.test.mjs:1:1
+✖ scripts/desk-birth-gate-distance-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-birth-gateless-row-guard.test.mjs:1:1
+✖ scripts/desk-birth-gateless-row-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-birth-guard.test.mjs:1:1
+✖ scripts/desk-birth-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-birth-prefix-token-guard.test.mjs:1:1
+✖ scripts/desk-birth-prefix-token-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-birth-row-denominator-guard.test.mjs:1:1
+✖ scripts/desk-birth-row-denominator-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-birth-window-start-guard.test.mjs:1:1
+✖ scripts/desk-birth-window-start-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-carryforward-ack-token-guard.test.mjs:1:1
+✖ scripts/desk-carryforward-ack-token-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-carryforward-guard.test.mjs:1:1
+✖ scripts/desk-carryforward-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-carryforward-worktree-guard.test.mjs:1:1
+✖ scripts/desk-carryforward-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-declaration-segment-denominator-guard.test.mjs:1:1
+✖ scripts/desk-declaration-segment-denominator-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-detached-head-guard.test.mjs:1:1
+✖ scripts/desk-detached-head-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-family-worktree-guard.test.mjs:1:1
+✖ scripts/desk-family-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-frozen-tree-unverifiable-guard.test.mjs:1:1
+✖ scripts/desk-frozen-tree-unverifiable-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-lock-predicate-guard.test.mjs:1:1
+✖ scripts/desk-lock-predicate-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-row-key-token-guard.test.mjs:1:1
+✖ scripts/desk-row-key-token-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-state-audit.test.mjs:1:1
+✖ scripts/desk-state-audit.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-status-single-read-guard.test.mjs:1:1
+✖ scripts/desk-status-single-read-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-tail-anchor-guard.test.mjs:1:1
+✖ scripts/desk-tail-anchor-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-unrecorded-mention-guard.test.mjs:1:1
+✖ scripts/desk-unrecorded-mention-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-word-single-source-guard.test.mjs:1:1
+✖ scripts/desk-word-single-source-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/detached-head-instruments-guard.test.mjs:1:1
+✖ scripts/detached-head-instruments-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dispatch-corpus-guard.test.mjs:1:1
+✖ scripts/dispatch-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/drain-block-ancestry-guard.test.mjs:1:1
+✖ scripts/drain-block-ancestry-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/drain-block-queue-nearmiss-guard.test.mjs:1:1
+✖ scripts/drain-block-queue-nearmiss-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/drain-block-subject-divergence-guard.test.mjs:1:1
+✖ scripts/drain-block-subject-divergence-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/drain-block-worktree-guard.test.mjs:1:1
+✖ scripts/drain-block-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-advisory-prescription-guard.test.mjs:1:1
+✖ scripts/dry-board-advisory-prescription-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-bucket-verdict-guard.test.mjs:1:1
+✖ scripts/dry-board-bucket-verdict-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-detached-head-guard.test.mjs:1:1
+✖ scripts/dry-board-detached-head-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-probe-corpus-guard.test.mjs:1:1
+✖ scripts/dry-board-probe-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-probe-worktree-guard.test.mjs:1:1
+✖ scripts/dry-board-probe-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-probe.test.mjs:1:1
+✖ scripts/dry-board-probe.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-sibling-refusal-banner-guard.test.mjs:1:1
+✖ scripts/dry-board-sibling-refusal-banner-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-sibling-refusal-guard.test.mjs:1:1
+✖ scripts/dry-board-sibling-refusal-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/edge-alarm-clock-guard.test.mjs:1:1
+✖ scripts/edge-alarm-clock-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/edge-probe-composite-guard.test.mjs:1:1
+✖ scripts/edge-probe-composite-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/finding-id-pattern-guard.test.mjs:1:1
+✖ scripts/finding-id-pattern-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/fixture-corpus-copy-guard.test.mjs:1:1
+✖ scripts/fixture-corpus-copy-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/foundry-kit-token-derivation-guard.test.mjs:1:1
+✖ scripts/foundry-kit-token-derivation-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/gate-caller-audit.test.mjs:1:1
+✖ scripts/gate-caller-audit.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/gazette-scan-space-guard.test.mjs:1:1
+✖ scripts/gazette-scan-space-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/gazette-weekly-budget-guard.test.mjs:1:1
+✖ scripts/gazette-weekly-budget-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ghost-ladder-evidence-source-guard.test.mjs:1:1
+✖ scripts/ghost-ladder-evidence-source-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ghost-ladder-row-guard.test.mjs:1:1
+✖ scripts/ghost-ladder-row-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ghost-ladder-subject-set-guard.test.mjs:1:1
+✖ scripts/ghost-ladder-subject-set-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ghost-ladder-worktree-guard.test.mjs:1:1
+✖ scripts/ghost-ladder-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/goal-closure-reason.test.mjs:1:1
+✖ scripts/goal-closure-reason.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/goal-tracker.test.mjs:1:1
+✖ scripts/goal-tracker.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/guard-source-snapshot-race-guard.test.mjs:1:1
+✖ scripts/guard-source-snapshot-race-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/guard-stats-persistence.test.mjs:1:1
+✖ scripts/guard-stats-persistence.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/guard-stats-test-isolation-guard.test.mjs:1:1
+✖ scripts/guard-stats-test-isolation-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/health-watch-fire-line-guard.test.mjs:1:1
+✖ scripts/health-watch-fire-line-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-dirt-durability-guard.test.mjs:1:1
+✖ scripts/lane-usable-dirt-durability-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-fleet-coverage-guard.test.mjs:1:1
+✖ scripts/lane-usable-fleet-coverage-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-gate-leaf-surface-guard.test.mjs:1:1
+✖ scripts/lane-usable-gate-leaf-surface-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-pathspec-root-guard.test.mjs:1:1
+✖ scripts/lane-usable-pathspec-root-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-stale-pid-guard.test.mjs:1:1
+✖ scripts/lane-usable-stale-pid-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-untracked-files-guard.test.mjs:1:1
+✖ scripts/lane-usable-untracked-files-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/law-bash-prescription-guard.test.mjs:1:1
+✖ scripts/law-bash-prescription-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/law-pointer-guard.test.mjs:1:1
+✖ scripts/law-pointer-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/law-pointer-surface-count-guard.test.mjs:1:1
+✖ scripts/law-pointer-surface-count-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-backup-fill-gaps-guard.test.mjs:1:1
+✖ scripts/ledger-backup-fill-gaps-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-mirror-column-class-guard.test.mjs:1:1
+✖ scripts/ledger-mirror-column-class-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-mirror-exposure-guard.test.mjs:1:1
+✖ scripts/ledger-mirror-exposure-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-mirror-freshness-guard.test.mjs:1:1
+✖ scripts/ledger-mirror-freshness-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-pull-supply-window-guard.test.mjs:1:1
+✖ scripts/ledger-pull-supply-window-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/master-shipped-crash-exit-guard.test.mjs:1:1
+✖ scripts/master-shipped-crash-exit-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/master-shipped-goals-source-guard.test.mjs:1:1
+✖ scripts/master-shipped-goals-source-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/master-shipped-review-source-guard.test.mjs:1:1
+✖ scripts/master-shipped-review-source-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/master-shipped-worktree-guard.test.mjs:1:1
+✖ scripts/master-shipped-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/modified-tracked-evidence-census-guard.test.mjs:1:1
+✖ scripts/modified-tracked-evidence-census-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/no-emdash-scan-space-guard.test.mjs:1:1
+✖ scripts/no-emdash-scan-space-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/nul-audit-corpus-guard.test.mjs:1:1
+✖ scripts/nul-audit-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/nul-audit-subject-scope-guard.test.mjs:1:1
+✖ scripts/nul-audit-subject-scope-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/null-floor-compare-guard.test.mjs:1:1
+✖ scripts/null-floor-compare-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/reaching-contract-extent-guard.test.mjs:1:1
+✖ scripts/reaching-contract-extent-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/refusal-reason-corpus-guard.test.mjs:1:1
+✖ scripts/refusal-reason-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/review-evidence-crash-exit-guard.test.mjs:1:1
+✖ scripts/review-evidence-crash-exit-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/review-evidence-scan-space-guard.test.mjs:1:1
+✖ scripts/review-evidence-scan-space-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ruling-propagation-guard.test.mjs:1:1
+✖ scripts/ruling-propagation-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/runner-env-provenance-guard.test.mjs:1:1
+✖ scripts/runner-env-provenance-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/salvage-art-staging-reach.test.mjs:1:1
+✖ scripts/salvage-art-staging-reach.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/source-pointer-guard.test.mjs:1:1
+✖ scripts/source-pointer-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/spawn-census-mask-regex-guard.test.mjs:1:1
+✖ scripts/spawn-census-mask-regex-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/stale-hold-verdict-guard.test.mjs:1:1
+✖ scripts/stale-hold-verdict-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/stale-ready-for-gates-guard.test.mjs:1:1
+✖ scripts/stale-ready-for-gates-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/stale-successor-pointer-guard.test.mjs:1:1
+✖ scripts/stale-successor-pointer-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/start-lane-runner-citation-guard.test.mjs:1:1
+✖ scripts/start-lane-runner-citation-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-archive-abridged-declaration-guard.test.mjs:1:1
+✖ scripts/status-archive-abridged-declaration-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-archive-arg-guard.test.mjs:1:1
+✖ scripts/status-archive-arg-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-archive-empty-corpus-guard.test.mjs:1:1
+✖ scripts/status-archive-empty-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-archive-supersession-guard.test.mjs:1:1
+✖ scripts/status-archive-supersession-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-line1-desk-displacement-guard.test.mjs:1:1
+✖ scripts/status-line1-desk-displacement-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-line1-future-stamp-scope-guard.test.mjs:1:1
+✖ scripts/status-line1-future-stamp-scope-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/stopped-leaf-supersession-guard.test.mjs:1:1
+✖ scripts/stopped-leaf-supersession-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/terrain-canonicalization-domain-guard.test.mjs:1:1
+✖ scripts/terrain-canonicalization-domain-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/terrain-comparator-margin-guard.test.mjs:1:1
+✖ scripts/terrain-comparator-margin-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/triage-instrument-spawn-bound-guard.test.mjs:1:1
+✖ scripts/triage-instrument-spawn-bound-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/untracked-evidence-durability-guard.test.mjs:1:1
+✖ scripts/untracked-evidence-durability-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/vite-only-import-reachability-guard.test.mjs:1:1
+✖ scripts/vite-only-import-reachability-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/withheld-evidence-audit-guard.test.mjs:1:1
+✖ scripts/withheld-evidence-audit-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/worktree-registry-ledger-guard.test.mjs:1:1
+✖ scripts/worktree-registry-ledger-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at server/codex-shim/serve.test.mjs:1:1
+✖ server/codex-shim/serve.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'

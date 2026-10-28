@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-28T10:15:42.603Z",
+  "reason": "Fire approaches ~35-minute budget; ledger still incomplete with 17 emitted passing checks after more than 13 minutes. Preserve partial evidence; no green verdict or product landing. Stop only verified owned test descendants by numeric PID, retain harness for receipt.",
+  "harness": "60648",
+  "results": [
+    {
+      "pid": "72669",
+      "parent": "72611",
+      "snapshot": "72669 72611 R          00:01   0:00.00",
+      "status": 1,
+      "stderr": "kill: 72669: No such process\n"
+    },
+    {
+      "pid": "72611",
+      "parent": "69627",
+      "snapshot": "72611 69627 R          00:05   0:00.05",
+      "status": 0,
+      "stderr": ""
+    },
+    {
+      "pid": "69627",
+      "parent": "60827",
+      "snapshot": "69627 60827 S          04:42   0:00.41",
+      "status": 0,
+      "stderr": ""
+    },
+    {
+      "pid": "60827",
+      "parent": "60826",
+      "snapshot": "60827 60826 S          12:41   0:00.11",
+      "status": 0,
+      "stderr": ""
+    },
+    {
+      "pid": "60826",
+      "parent": "60735",
+      "snapshot": "60826 60735 S          12:42   0:00.01",
+      "status": 1,
+      "stderr": "kill: 60826: No such process\n"
+    },
+    {
+      "pid": "60735",
+      "parent": "60648",
+      "snapshot": "60735 60648 S          12:55   0:00.20",
+      "status": 1,
+      "stderr": "kill: 60735: No such process\n"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-28T09:57:30.596Z",
+  "reason": "Optional direct invocation remained in module loading for about ten minutes with no further output; not a passing test.",
+  "runtime": "/opt/homebrew/Cellar/node/26.4.0/bin/node",
+  "version": "26.4.0",
+  "developerDir": "unset",
+  "stat": "  PID  PPID TTY      STAT STARTED                           TIME  %CPU\n41788 36820 ??       Ss   Wed Oct 28 16:47:14 2026       0:16.91   0.0\n",
+  "action": "SIGTERM only the owned test PID 41788; retain log, retry using previous successful fire runtime/environment.",
+  "cleanup": "SIGTERM left the owned process sleeping after more than one minute; SIGKILL sent only to PID 41788. Retry had begun before exit was confirmed; brief overlap is retained as an execution limitation, no product gate claimed from that interval."
+}

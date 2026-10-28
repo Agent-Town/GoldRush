@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-28T10:10:11.408Z",
+  "reason": "First ledger cases took 40s versus 0.3-0.5s in s3410; move only verified owned ledger process tree out of PRIO_DARWIN_BG. Worker count, assertions and timeouts unchanged. Cause remains an inference until observed.",
+  "root": "60648",
+  "parent": "36820",
+  "results": [
+    {
+      "pid": "60648",
+      "status": null
+    },
+    {
+      "pid": "60735",
+      "status": null
+    },
+    {
+      "pid": "60826",
+      "status": null
+    },
+    {
+      "pid": "60827",
+      "status": null
+    },
+    {
+      "pid": "64504",
+      "status": null
+    }
+  ]
+}
