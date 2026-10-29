@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-29T10:13:09.352Z",
+  "process": 70055,
+  "parent": 69864,
+  "owner": 49345,
+  "action": "Stopped our own accidental unbounded historical archive scan with TERM by exact PID",
+  "correctCommand": "node scripts/status-archive-audit.mjs --limit 40 --quiet"
+}
