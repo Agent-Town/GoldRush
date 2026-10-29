@@ -1,0 +1,89 @@
+{
+  "parts": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "selected": [
+    {
+      "key": "F-2642-3",
+      "row": {
+        "file": "tasks/BACKLOG.md",
+        "line": 650,
+        "text": "🔺 **F-2642-3 — OWNER: the registry deploy day is now ACTIONABLE, and the desk entry's own trigger condition has been met.** `docs/OWNER-DESK-2026-09-19.md:100–101` reads *\"Astra is landing the registry code behind a closed gate now (lane-b) … I bring you the checklist when the code lands.\"* **The code has landed (`fdfcab4d0`) and the checklist is `docs/ops/account-registry.md`** — five steps, each with its verification and its rollback sentence. ⚖️ **NOTHING DEPLOYED AND NOTHING MIGRATED, by construction and not by promise: the Pages binding ships as a COMMENTED block in `wrangler.toml` with `ACCOUNT_REGISTRY_SCOPE` deliberately unset, so both are absent and the door behaves byte-identically to main — which `closed-gate.test.mjs` asserts directly rather than by inspection.** Routine Pages deploys are unaffected. ⛔ **NO FIRE MAY ENABLE THIS**: the five steps need the owner's own deployment inventory, a quiesce of every identity writer including previews, an independently verified private export, a migration secret and a post-bootstrap smoke test of legacy saves — none of which the repo can know or automate. It is on the desk, not on the board."
+      }
+    },
+    {
+      "key": "F-2299-1",
+      "row": {
+        "file": "tasks/BACKLOG.md",
+        "line": 293,
+        "text": "🧭 **OWNER RULINGS 2026-09-26, THE DESK ANSWERED (verbatim: \"A1 - not sure, 2 - sure, lets do that, 3 - ok, lets do that, 4 - a, a, move it to the cradle's rim, its own sculpt pack, a, B5 - deploy, C6 - lets keep it as it is, 7 - slips is good, 8 - unnamed, 9 - sure, do it, D - as you recommend it, E - please cleand the test temp dirs do as you see fit here\"):** A1 parked (unsure, no spend); A2 the River's quiet pan writes the completed score; A3 the in-game county board reads the open week; A4 Regatta tie (a), disembark (a) and the Far Side cradle rim and the River raw route's own sculpt pack RE-AFFIRMED (all four had been ruled and LANDED on 2026-09-22; their ledger rows were ghosts, F-ATT-5), the Charter Press hides locked lands (the one fork that was open); B5 `localhost-cors-2` deploys; C the film: no Baron ride (it cuts on the arrival), printed slips, unnamed boards, the three public-site changes; D the ops-evening batch as recommended (F-KV1-7 (a), F-KV2-6 keep, F-KV1-3 default, F-2355-2 on the evening, F-2352-3 ordering, F-2299-1 re-probe); E the temp fixtures cleaned, the veto windows closed as the attended session saw fit (F-CW2-1 stands, F-RT40-1 stands, F-SGA1-2 accepted, F-CW1-2/F-CW2-4 art deferred, F-F2-39 as recommended, F-2350-3 allowlist widening deferred: the guard reddens). Every slice authored from these quotes the owner's words with this date."
+      }
+    },
+    {
+      "key": "F-STO-1",
+      "row": {
+        "file": "tasks/BACKLOG.md",
+        "line": 176,
+        "text": "🧹 **F-STO-1 (attended 2026-10-25; the owner: \"Can you help clean up the storage needed by Gold Rush … I think Gold Rush uses 600 GB\") — THE DISK HELD 1,312 GB OF GOLD RUSH, 86 GB FREE OF 3.6 TB; EVERY SCRATCH WORKTREE CARRIES THE 9–11 GB TRACKED `artifacts/` TREE, SO CHECKOUTS WERE THE MULTIPLIER. Group A (regenerable scratch, no history) removed on the owner's \"clean A\": 30 merged sibling worktrees `~/Claude/Projects/wt-*` (~300 GB), 21 fire/attended arena checkouts under `~/.goldrush/` (their logs kept), the `land/wt-preview-pub` rsync staging copy (86 GB), four re-land clones in `~/.goldrush/repair` whose tips equal the `candidate/*` branches on GitHub (53 GB; commit maps kept), two old gate worktrees in the primary, eight orphan lane copies inside the history clone whose `.git` files pointed at the primary's live lanes (their 94 untracked unique files, 354 MB of July marketing reels and raw media, archived first to `~/.goldrush/archive/history-local-worktrees-untracked-2026-10-25/`), the stray `Gold%20Rush` folder. Every removal through `git worktree remove` after a merged-branch check and an evidence-only dirt check; 14 items the checks held back were examined by hand (stale checkouts: files equal to blobs of 2026-09-20 / 2026-07-05 commits; a gate worktree whose edits equal main's; control arenas differing only in the pilots symlink) and removed in a second pass. Result: free 86 GB → 782 GB. KEPT AS HISTORY: the history clone's `.git` (106 GB, the only full copy of the private history archive: 443 of its 613 refs are not on GitHub), the film's 23 takes (24 GB), `GoldRush-assets` (13 GB), the primary's `artifacts/`, `logs/`, `tasks/runs` (17 GB), `gr-worktree-evidence`, the run logs. OPEN FOR THE OWNER: `gr-gauntlet` (290 GB: four rider arenas with 19 GB duplicate `.git` copies, ~9 GB dependencies, ~100 GB tracked checkouts, ~40 GB heat evidence to keep), `goldrush-gauntlet` carries 22 unpushed commits (agent memories of heats 11–12), an external drive for the ~200 GB of history, and the structural cure (sparse checkouts without `artifacts/` for scratch worktrees). Log: `~/.goldrush/maintenance/cleanup-2026-10-25.log`."
+      }
+    },
+    {
+      "key": "F-CUT-1",
+      "row": {
+        "file": "tasks/BACKLOG.md",
+        "line": 100,
+        "text": "📰 **TK-01 OCTOBER 10 COMPLETE (s3034, 2026-10-11 local):** `marketing/outbox/ticker-digest-2026-10-10.md` records zero player-visible changes. UTC+07 midnight census: 63 main updates, 63 pinned first-parent commits, zero player-path events or non-ancestral replacements; September 25 busy-day control 136. Complete subjects and changed paths reviewed for ops-only player changes and engine pins; none. No micro-headline, Gazette duplicate or publication. Stats still returns HTML-200 at canonical and direct Pages URLs; F-CUT-1 remains open. Evidence: `artifacts/s3034/day.json`, `day-commits.txt`, `live-probe.json`, `report.md`."
+      }
+    },
+    {
+      "key": "b1-device-verdict-rows",
+      "row": {
+        "file": "tasks/BACKLOG.md",
+        "line": 593,
+        "text": "📱 **`b1-device-verdict-rows` (B1) — OWNER: ten minutes on your phone, and the device verdict rows are yours to fill.** The 2026-09-19 ruling decided 28 items and left exactly two things with you; this is the first. It is not a design question and nothing is blocked behind it — it wants the device in your pocket, not a decision. **Declared s2644** because the desk carried it unkeyed, which made `desk-carryforward-guard` unable to carry-check it and made the live desk count disagree with what the parser could read (5 declared vs 3 keyable). Keyed now as a backticked slug so it can be tracked across handoffs like any other item."
+      }
+    },
+    {
+      "key": "LB-01 + FM-01 OCTOBER 29 COMPLETE",
+      "row": {
+        "file": "tasks/BACKLOG.md",
+        "line": 1,
+        "text": "🗄️ **LB-01 + FM-01 OCTOBER 29 COMPLETE (s3425, 2026-10-29T02:40Z):** Today's snapshot was pulled after 02:10 UTC and the strict private push added one file. Coverage is 67/67 days August 24–October 29. Exposure inspected 4,776 keys across 67 readable mirrors, zero unreadable mirrors and zero account-class or unrecognised rows. Archive visibility PRIVATE; live ledger-backups head 88b12b8235db77f95025a5f585e8379f5dc496bb verified. FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, live head verified. Private data remains outside the public tree. Next coverage day October 30 after 02:10 UTC. Evidence: artifacts/s3425/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, private-duty-results.json, report.md."
+      }
+    },
+    {
+      "key": "TK-01 OCTOBER 28 COMPLETE",
+      "row": {
+        "file": "tasks/BACKLOG.md",
+        "line": 3,
+        "text": "📰 **TK-01 OCTOBER 28 COMPLETE (s3422, 2026-10-29 local):** `marketing/outbox/ticker-digest-2026-10-28.md` records the week-45 rotation preparation (`685bd41d9`), awaiting authorized deployment before November 2. UTC+07 census: 62 main updates, 62 pinned first-parent commits, 663 distinct changed paths, one player-path event and zero engine pins; all subjects and non-evidence paths reviewed. September 25 busy-day control 136; no non-ancestral replacement. Existing Gazette roundup verified; no duplicate or publication. Evidence: `artifacts/s3422/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`."
+      }
+    },
+    {
+      "key": "RT-01 WEEK 45 MINTED",
+      "row": {
+        "file": "tasks/BACKLOG.md",
+        "line": 7,
+        "text": "🗓️ **RT-01 WEEK 45 MINTED (s3403, 2026-10-28):** `r2026w45` opens November 2 00:00 UTC and closes November 9 00:00 UTC; six seeds, all eight earlier rotations preserved, whole nine-rotation registry refreshed in `public/skill.md`. Week-44 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w45.md`; evidence: `artifacts/s3403/`. Carry week 45 with the next authorized deployment before November 2 00:00 UTC, then require ASSAYER SYNCED and served-registry verification. Public build 299b1db5 currently advertises weeks 37–44, with sampled week-44 standings healthy. No dispatch or deployment by this fire."
+      }
+    }
+  ]
+}
