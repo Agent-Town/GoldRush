@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-29T07:48:09.694Z",
+  "initialCommand": "node scripts/status-archive-audit.mjs",
+  "stoppedPid": 23717,
+  "ppid": 23661,
+  "owner": "65156",
+  "reason": "Unbounded invocation announced 7499 commits, about 11 minutes and known legacy drops. Correct regression command is --limit 40 --quiet.",
+  "signal": "SIGTERM",
+  "replacement": "node scripts/status-archive-audit.mjs --limit 40 --quiet"
+}
