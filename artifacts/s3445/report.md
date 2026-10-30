@@ -1,0 +1,33 @@
+# s3445 fire — dry board and October 30 private duties
+
+READY-FOR-GATES for bookkeeping closeout. Acceptance requires ledger-result.json code 0, unchanged true and headUnchanged true.
+
+WHY no product landing: board DRY (95 subjects, zero eligible/unknown), four absorbed lanes. October 30 LB-01 attempted: source snapshot not supplied yet; coverage 67/67 through October 29. FM-01 current; nine public GETs 200; skill checks 19/19. Evidence artifacts/s3445/report.md and ledger-result.json. Next: retry October 30 LB-01 after source supply; authorized week-45 deployment before November 2.
+
+## Fresh verification
+
+- Board: 1,483 done-moves; 95 subjects resolve to 82 merged and 13 closed/blocked, zero eligible or unknown. Four empty main..lane histories and no tracked lane dirt. Five registered worktrees, zero unreported ahead or could-not-answer. All six queues, running tasks and pending crafting orders empty. None of 118 historical failed entries is newer than s3444. Evidence: dry-board.txt, lanes.txt, queue-state.json, duties.json.
+- Latest implementer log is tasks/runs/20261023-085857-lane-a-assayer-sync-visibility-1.md.log. Its index-lock obstruction is historical: delivery 4fe2becb8, drain b5d6d3c32 and record 614f84ca5 are main ancestors; its goal leaf is merged. No retry due. Lane usability does not establish subscription capacity; future authorized dispatch needs a dependency-aware lane refresh. Evidence: latest-run-resolution.json; raw tail stays disk-local.
+- Launcher 86089 → 86133 → 86134 owns this run's process lock (mtime 2026-10-30T02:09:19.267Z, matching 09:09:19 local FIRE START). Actual launcher uses Codex. Runner 26518 is alive under parent 1, verified by ps and health-watch. The runner PID helper returns 1 despite printing that live PID; the process check resolves its meaning. Main-slot semaphore is ACTIVE and not lock CLEARED at scripts/lane-runner-v3.sh:322. No predecessor lock displaced; launcher cleanup owns tasks/.fire.lock. Evidence: launcher.json, runner-scan.json, health-raw.txt.
+- Nine bounded public GETs returned HTTP 200 in 0.274–1.081 seconds; all five API bodies parsed as ok:true, both stats objects empty:false. Served build 299b1db5 advertises weeks 37–44. These samples do not establish browser gameplay, fresh replay acceptance, server runtime metadata or sustained health. Evidence: live-probe.json.
+- RT-01 discharged: local r2026w45 opens November 2 and closes November 9 at 00:00 UTC; mint 685bd41d9 is a main ancestor. Whole nine-rotation skill fence equals the registry; skill tests 19/19 under .nvmrc Node 26.4.0. Carry week 45 with the next authorized attended deployment before opening, then verify ASSAYER SYNCED and served-registry parity. No deployment attempted: release custody remains attended. Evidence: duties.json, skillmd-tests.txt.
+- TK-01 October 29 draft and completion row read. Historical census not repeated; no duplicate digest, Gazette item or publication. Next ticker is October 30, due October 31 after 06:00 local. No player-visible change or engine pin landed this fire.
+- LB-01 October 30 bounded pull ran after 02:10 UTC and reports NOT DISCHARGED: the source has not supplied today's file within its documented 02:00–03:00 UTC window. This is pending source supply, not a connection failure. Strict mirror census confirms 67/67 days August 24–October 29. Strict private push unchanged; a separate complete direct-file exposure check inspected 4,776 keys across 67 readable mirrors with zero unreadable, account-class or unrecognised rows. FM-01 ran unchanged for October 30. Live PRIVATE archive heads are ledger-backups 88b12b8235db77f95025a5f585e8379f5dc496bb and fire-memory 53d87470fb2670626fb4605d4dc0eb5bffd899fb. No private corpus entered this tree. Evidence: ledger-pull.txt, ledger-push-direct.txt and its result, mirror-exposure-direct.txt, mirror-freshness-verified.txt, fire-memory.txt, private-heads.txt, private-visibility.json, duty-verification.json.
+- Consulted the 19-file ledger through ledger-corpus.mjs, current duties/custody, attended handover §13z-116, Owner's Desk, vault MOC and recent project notes. F-STO-1/F-CUT-1 remain attended-owned; storage not remeasured. CODEX-WALL remains: no refill, retry or dispatch. No new product finding established.
+
+## Adaptations and commits
+
+Lock d280b3299; inherited dashboard bookkeeping 8f0086af5. The write-docs skill guided this report and handoff. Prior evidence-local heartbeat and ledger harnesses were read and adapted for this session. No source change, drain, engine pin or art landing; drain-only build/browser gates do not apply.
+
+The initial freshness invocation used a nonexistent `ledger-mirror-freshness-guard.mjs`; its MODULE_NOT_FOUND receipt is retained in mirror-freshness-wrong-command.txt and private-duty-results.json. Correct `scripts/ledger-mirror-freshness.mjs --strict` then exited 0, with the full result in mirror-freshness-verified.txt. Initial piped exposure output ended inside the long table list; a direct-file rerun supplies the complete verdict. The idempotent push was rerun to a direct file to preserve its UNCHANGED receipt. Maintained scripts are untouched.
+
+The closing npm run test:ledger-guards uses .nvmrc Node 26.4.0, an evidence-local adapter injecting --test-concurrency=1 only at the ledger node-test entry, /usr/sbin for lsof, and DEVELOPER_DIR=/Library/Developer/CommandLineTools. Maintained scripts, test roster, assertions and timeouts are unchanged. Archive verification uses --limit 40 --quiet.
+
+The battery follows this report, ledger row and prepared handoff, before the clearing commit. Manifest inputs and HEAD must remain unchanged during it. After green only the tested STATUS lock/stamp envelope changes; the clearing commit is the last main write, followed by origin backup. Exact predecessor and initial lock archived; Owner's Desk tail and acknowledgements preserved verbatim. Final hash is discoverable with git log --all --grep='s3445: handoff'. Later dashboard churn belongs to its live writer.
+
+## REMAINING LIST IN ORDER
+
+1. Retry October 30 LB-01 after source supply (documented 02:00–03:00 UTC timer window), then strict private push and live-head verification. FM-01 is already current for October 30.
+2. Carry r2026w45 with the next authorized attended deployment before November 2 00:00 UTC; verify ASSAYER SYNCED and served-registry parity.
+3. Compile October 30's ticker October 31 after 06:00 local; next FM-01 coverage day October 31.
+4. Existing Owner's Desk: account-registry deploy day, B1 phone verdict rows, token-revocation support follow-up. F-STO-1/F-CUT-1 remain attended-owned; CODEX-WALL remains.
