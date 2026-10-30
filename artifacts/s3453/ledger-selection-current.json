@@ -1,0 +1,62 @@
+[
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 1,
+    "line": "🗄️ **LB-01 + FM-01 OCTOBER 30 COMPLETE (s3446, 2026-10-30T03:20Z):** Today's snapshot was pulled and the strict private push added one file. Coverage is 68/68 days August 24–October 30. Exposure inspected 4,870 keys across 68 readable mirrors, zero unreadable mirrors and zero account-class or unrecognised rows. Archive visibility PRIVATE; live ledger-backups head 028a37e5dc95e6ea9c4b1e499e77a218c51c443c verified. FM-01 was already completed by s3445 today; its live head remains 53d87470fb2670626fb4605d4dc0eb5bffd899fb. Private data remains outside the public tree. This discharges s3445's source-supply wait. Next coverage day October 31 after 02:10 UTC. Evidence: artifacts/s3446/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, private-heads.txt, private-visibility.txt, private-duty-results.json, duty-verification.json, report.md.",
+    "where": "1"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 3,
+    "line": "🗄️ **LB-01 OCTOBER 30 SUPPLY WINDOW OBSERVED; FM-01 CURRENT (s3445, 2026-10-30T02:12Z):** The bounded pull after 02:10 UTC reports NOT DISCHARGED: today’s snapshot is not supplied yet within the documented 02:00–03:00 UTC source timer window. Coverage remains 67/67 days August 24–October 29. The strict private push is unchanged; separate direct-file exposure inspected 4,776 keys across 67 readable mirrors, zero unreadable mirrors and zero account-class or unrecognised rows. Archive visibility PRIVATE; live ledger-backups 88b12b8235db77f95025a5f585e8379f5dc496bb and fire-memory 53d87470fb2670626fb4605d4dc0eb5bffd899fb verified. FM-01 ran unchanged for October 30. Historical observation: the source-supply wait was discharged by s3446 above; today’s backup is now complete. Evidence: artifacts/s3445/ledger-pull.txt, ledger-push-direct.txt, mirror-exposure-direct.txt, mirror-freshness-verified.txt, fire-memory.txt, private-heads.txt, duty-verification.json, report.md.",
+    "where": "3"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 5,
+    "line": "📰 **TK-01 OCTOBER 29 COMPLETE (s3443, 2026-10-30 local):** `marketing/outbox/ticker-digest-2026-10-29.md` records no player-visible change. UTC+07 census: 60 main updates, 60 pinned first-parent commits, 536 distinct changed paths, zero player-path events or engine pins; all subjects and non-evidence paths reviewed. September 25 busy-day control 136; no non-ancestral replacement. No micro-headline, Gazette duplicate or publication. Evidence: `artifacts/s3443/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`.",
+    "where": "5"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 7,
+    "line": "🗄️ **LB-01 + FM-01 OCTOBER 29 COMPLETE (s3425, 2026-10-29T02:40Z):** Today's snapshot was pulled after 02:10 UTC and the strict private push added one file. Coverage is 67/67 days August 24–October 29. Exposure inspected 4,776 keys across 67 readable mirrors, zero unreadable mirrors and zero account-class or unrecognised rows. Archive visibility PRIVATE; live ledger-backups head 88b12b8235db77f95025a5f585e8379f5dc496bb verified. FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, live head verified. Private data remains outside the public tree. Next coverage day October 30 after 02:10 UTC. Evidence: artifacts/s3425/ledger-pull.txt, ledger-push.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, private-duty-results.json, report.md.",
+    "where": "7"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 9,
+    "line": "📰 **TK-01 OCTOBER 28 COMPLETE (s3422, 2026-10-29 local):** `marketing/outbox/ticker-digest-2026-10-28.md` records the week-45 rotation preparation (`685bd41d9`), awaiting authorized deployment before November 2. UTC+07 census: 62 main updates, 62 pinned first-parent commits, 663 distinct changed paths, one player-path event and zero engine pins; all subjects and non-evidence paths reviewed. September 25 busy-day control 136; no non-ancestral replacement. Existing Gazette roundup verified; no duplicate or publication. Evidence: `artifacts/s3422/day.json`, `day-commits.txt`, `day-paths.json`, `news-census.json`, `report.md`.",
+    "where": "9"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 11,
+    "line": "🗄️ **LB-01 + FM-01 OCTOBER 28 COMPLETE (s3405, 2026-10-28T02:42Z):** Today's snapshot was pulled after 02:10 UTC and the strict private push added one file. Coverage is 66/66 days August 24–October 28. The complete direct-file exposure check inspected 4,682 keys across 66 readable mirrors, zero unreadable mirrors and zero account-class or unrecognised rows. Archive visibility PRIVATE; live ledger-backups head eb74b13da3da715dc6553d4aea2e23fe48edcbed verified. FM-01 unchanged at 53d87470fb2670626fb4605d4dc0eb5bffd899fb, live head verified. Private data remains outside the public tree. October 29 discharged by s3425 above. Evidence: artifacts/s3405/ledger-pull.txt, ledger-push.txt, mirror-exposure-node26.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.json, private-duty-results.json, report.md.",
+    "where": "11"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 13,
+    "line": "🗓️ **RT-01 WEEK 45 MINTED (s3403, 2026-10-28):** `r2026w45` opens November 2 00:00 UTC and closes November 9 00:00 UTC; six seeds, all eight earlier rotations preserved, whole nine-rotation registry refreshed in `public/skill.md`. Week-44 salt continuity control matches 6/6. Named guards 36/36; tsc and both builds exit 0; E1 first-town payload 34,355,296 B below 52,000,000 B. Review: `reviews/rotation-r2026w45.md`; evidence: `artifacts/s3403/`. Carry week 45 with the next authorized deployment before November 2 00:00 UTC, then require ASSAYER SYNCED and served-registry verification. Public build 299b1db5 currently advertises weeks 37–44, with sampled week-44 standings healthy. No dispatch or deployment by this fire.",
+    "where": "13"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 112,
+    "line": "🩺 **API PROBE JSON 1 LANDED — `api-probe-json-1` as `e0c536dcc` (drained attended 2026-10-09).** F-CUT-1 (measured during the Option B cutover: with the daily cap exhausted, Pages served the SPA's HTML with HTTP 200 for `/api/stats` and both edge probes reported `api=200` for hours). Astra on lane-c (`c8ddf96b2` + `4ef388aa6`, 74,799 tokens, 08:30Z to 08:35Z): `scripts/health-watch.sh` and `ops/droplet/edge-watch.sh` gain `api_code`, which requires 200 + an `application/json` content type + a body parsing to `{ok:true, stats:{…}}` (the shape `functions/api/stats.ts` always returns) and otherwise reports `api=200-html`, `api=200-notjson` or `api=2xx-incomplete` as dark with the class in the value (the dashboard's `landing=… game=… api=…` shape kept); `scripts/edge-probe-json.test.mjs` 32 cases, rostered in `test:node-guards`; a bounded live capture of the HTML fallback kept as evidence. Attended fixes on the lane: `scripts/edge-alarm-clock-guard.test.mjs`'s curl stub now answers the API with healthy JSON in every scenario (its arms test landing/game transitions; 9/9), and a control copy of that guard under `artifacts/` renamed `.txt` (the gate-caller audit's orphan, the third time today). Evidence inside the budget. Landed attended, hash unchanged; the Mac probe is live on landing (launchd runs it from the repo); the droplet copy of `edge-watch.sh` is applied with the owner's word (a write on the box) `reviews/api-probe-json-1.md`.",
+    "where": "112"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 175,
+    "line": "🩺 **API PROBE JSON 1 — `api-probe-json-1` AUTHORED AND QUEUED 2026-10-09 on lane-c (Astra); F-CUT-1:** both edge probes require 200 + a JSON content type + a parsable body with the stats key for `/api/stats`, report `api=200-html`/`api=200-notjson` as dark with the reason in the value, a rostered guard with fake-200 fixtures. GATE: the guard green and rostered; `health-watch.sh status` still 200/200/200 live.",
+    "where": "175"
+  },
+  {
+    "rel": "tasks/BACKLOG.md",
+    "n": 182,
+    "line": "🧹 **F-STO-1 (attended 2026-10-25; the owner: \"Can you help clean up the storage needed by Gold Rush … I think Gold Rush uses 600 GB\") — THE DISK HELD 1,312 GB OF GOLD RUSH, 86 GB FREE OF 3.6 TB; EVERY SCRATCH WORKTREE CARRIES THE 9–11 GB TRACKED `artifacts/` TREE, SO CHECKOUTS WERE THE MULTIPLIER. Group A (regenerable scratch, no history) removed on the owner's \"clean A\": 30 merged sibling worktrees `~/Claude/Projects/wt-*` (~300 GB), 21 fire/attended arena checkouts under `~/.goldrush/` (their logs kept), the `land/wt-preview-pub` rsync staging copy (86 GB), four re-land clones in `~/.goldrush/repair` whose tips equal the `candidate/*` branches on GitHub (53 GB; commit maps kept), two old gate worktrees in the primary, eight orphan lane copies inside the history clone whose `.git` files pointed at the primary's live lanes (their 94 untracked unique files, 354 MB of July marketing reels and raw media, archived first to `~/.goldrush/archive/history-local-worktrees-untracked-2026-10-25/`), the stray `Gold%20Rush` folder. Every removal through `git worktree remove` after a merged-branch check and an evidence-only dirt check; 14 items the checks held back were examined by hand (stale checkouts: files equal to blobs of 2026-09-20 / 2026-07-05 commits; a gate worktree whose edits equal main's; control arenas differing only in the pilots symlink) and removed in a second pass. Result: free 86 GB → 782 GB. KEPT AS HISTORY: the history clone's `.git` (106 GB, the only full copy of the private history archive: 443 of its 613 refs are not on GitHub), the film's 23 takes (24 GB), `GoldRush-assets` (13 GB), the primary's `artifacts/`, `logs/`, `tasks/runs` (17 GB), `gr-worktree-evidence`, the run logs. OPEN FOR THE OWNER: `gr-gauntlet` (290 GB: four rider arenas with 19 GB duplicate `.git` copies, ~9 GB dependencies, ~100 GB tracked checkouts, ~40 GB heat evidence to keep), `goldrush-gauntlet` carries 22 unpushed commits (agent memories of heats 11–12), an external drive for the ~200 GB of history, and the structural cure (sparse checkouts without `artifacts/` for scratch worktrees). Log: `~/.goldrush/maintenance/cleanup-2026-10-25.log`.",
+    "where": "182"
+  }
+]
