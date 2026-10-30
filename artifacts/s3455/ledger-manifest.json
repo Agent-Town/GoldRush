@@ -1,0 +1,32 @@
+{
+  "command": "npm run test:ledger-guards",
+  "source": "package.json scripts.test:ledger-guards",
+  "schedulingChange": "test-runtime/node injects --test-concurrency=1 only into the package ledger node --test --test-timeout=300000 entry; assertions and timeouts unchanged",
+  "started": "2026-10-30T12:39:49.747Z",
+  "path": "/Users/robin/.nvm/versions/node/v26.4.0/bin:/opt/homebrew/bin:/usr/sbin:/Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/codex-path:/Users/robin/.hermes/hermes-agent/venv/bin:/Users/robin/.pyenv/shims:/Users/robin/.antigravity/antigravity/bin:/opt/homebrew/opt/postgresql@17/bin:/opt/homebrew/opt/postgresql@16/bin:/opt/homebrew/opt/openjdk@17/bin:/opt/homebrew/opt/openjdk/bin:/opt/homebrew/anaconda3/bin:/opt/homebrew/anaconda3/condabin:/Users/robin/Library/pnpm:/Users/robin/.nvm/versions/node/v23.11.1/bin:/opt/homebrew/opt/ruby/bin:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/pkg/env/global/bin:/Library/Apple/usr/bin:/Users/robin/.cargo/bin:/Users/robin/.codex/tmp/arg0/codex-arg0bMkV0J:/Users/robin/.foundry/bin",
+  "lsof": "/usr/sbin/lsof",
+  "head": "55402be60a4379df53ae15da140b4949c8d5b297",
+  "node": "v26.4.0",
+  "hashes": {
+    "STATUS.md": "81b3cb2875152deaf4cd8b2e4be12d99033a2dde93517e4c64fa8e7bd45cb855",
+    "docs/HANDOVER-2026-09-06-attended.md": "2f4c8689be6cefc413f013868bc56188ce711d120125176fbc5f66c4c74ca56f",
+    "tasks/BACKLOG.md": "e1ac19e793badb29d1330318cc57d45d3c1f5f8511dd61a0acbe191d4b952e62",
+    "tasks/goals.json": "8fadd54b2f62a95250c8104fccf14ef17db0f7225fe9944f0e93169876e87df9",
+    "tasks/CODEX-WALL": "8436777d9a6947bfe0bc5bda91564652a59955ba25d50750626ceaef8e240b27",
+    "tasks/assay-node-26-12-1.md": "1fbb4c7e317d503b4a341924c75d18af75e61bc1ac9db9cb46885883055df88d",
+    "reviews/rotation-r2026w45.md": "958918d32d33fcfdc08b7ba340499c74c2e7dc392e2fb547c90bf85c4c17320d",
+    "reviews/assay-node-26-12-1.md": "c3d9c93c02a87336112bb913900916f516b14752f0ab5b1f4dd098df46ac550e",
+    "assets/engine-era.json": "59e66f137f62e7de8e0b5f9bd9720edd4ffc63e25b1eb4dd6e6eaad13a44eec0",
+    "marketing/outbox/gazette-queue.md": "6c184a0841275066fe50672896aa20f5ecfeaa909900bb3c352b42d809715858",
+    "package.json": "bf74d1bfc9c8a44b1e914b5964511a04194fefaeaa7c1b978cf4a47433848568",
+    "assets/rotations/rotation-seeds.json": "45714bf8f435f31ab23e44744623aee6275a20e23945272f4f7ba8df0bcc2dd5",
+    "public/skill.md": "c35db9057872ad3bc8162d1a22b19e21127c17d6414244ecaff5698a9ed4ed06",
+    "marketing/outbox/ticker-digest-2026-10-29.md": "7a3da464b61ae369e38e9f1a083f6c5185a0a33998782d7da7d094289f10a729",
+    "artifacts/s3455/report.md": "16d1f910b2119983f0d10acba3a04fbd09e3d006a4d4ea247cf4676d6d99e8e7",
+    "artifacts/s3455/duty-verification.json": "ad1a26c6a427e0768a68df5fd1f9b3568b0327a61d3ce52147920b491f993570",
+    "artifacts/s3455/private-heads.txt": "9d6f42ddaf0b3d722af63402772ba92157d9ddeacbd28a45f34f5635fca4c00a",
+    "artifacts/s3455/private-visibility.txt": "80ba1b8d1b45445205d4ea1a8bae7b063380403d4334bd0c5ba8f1548728b781",
+    "artifacts/s3455/run-ledger.mjs": "3905766d80bb36444f8a7bdf658531c0191679fde283213e8e202645c9506871",
+    "artifacts/s3455/test-runtime/node": "187431ec52082047a50421bd026f94326531d04a90eff773fc718b0c1ce7604d"
+  }
+}

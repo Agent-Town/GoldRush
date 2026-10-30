@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-30T12:39Z",
+  "previousSession": "s3454",
+  "previousLock": "2026-10-30T12:30Z",
+  "launcherLog": "logs/fire-20261030.log",
+  "end": "[fire-runner] 19:30:36 FIRE END rc=1 (codex; ALT fallback is claude-only, skipped)",
+  "cause": "The prior fire log reports a usage-limit error immediately before exit. No ledger manifest, transcript or result exists for s3454.",
+  "currentStart": "[fire-runner] 19:35:37 FIRE START (engine codex, model from ~/.codex config)",
+  "currentLauncherPid": 48202,
+  "ledgerStartedByPreviousFire": false,
+  "inheritedLockCommit": "864819dfd",
+  "inheritedBookkeepingCommit": "d7f91d819",
+  "recoveryLockCommit": "d288c5483",
+  "preservedHandoffCommit": "89adc194e",
+  "bookkeepingCommit": "55402be60"
+}
