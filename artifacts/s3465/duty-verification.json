@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-31T02:33:20.532Z",
+  "visibility": {
+    "nameWithOwner": "Agent-Town/GoldRush-archive",
+    "visibility": "PRIVATE"
+  },
+  "archiveHeads": "53d87470fb2670626fb4605d4dc0eb5bffd899fb\trefs/heads/fire-memory\n028a37e5dc95e6ea9c4b1e499e77a218c51c443c\trefs/heads/ledger-backups",
+  "coverage": {
+    "start": "2026-08-24",
+    "end": "2026-10-30",
+    "present": 68,
+    "expectedThroughNewest": 68
+  },
+  "todaySnapshotPresent": false,
+  "todayDutyDischarged": false,
+  "reason": "Source has not supplied October 31 snapshot within its documented 02:00–03:00 UTC randomized timer window.",
+  "exposure": {
+    "readableMirrors": 68,
+    "unreadable": 0,
+    "keys": 4870,
+    "accountClass": 0,
+    "unrecognised": 0,
+    "proof": "ledger-push.txt"
+  },
+  "fireMemory": {
+    "completedToday": true,
+    "unchanged": true,
+    "liveHeadVerified": "53d87470fb2670626fb4605d4dc0eb5bffd899fb",
+    "proof": "fire-memory.txt"
+  },
+  "commands": [
+    {
+      "name": "private-visibility",
+      "status": 0,
+      "signal": null,
+      "seconds": 0.642
+    },
+    {
+      "name": "ledger-pull",
+      "status": 0,
+      "signal": null,
+      "seconds": 3.437
+    },
+    {
+      "name": "ledger-push",
+      "status": 0,
+      "signal": null,
+      "seconds": 12.584
+    },
+    {
+      "name": "fire-memory",
+      "status": 0,
+      "signal": null,
+      "seconds": 5.088
+    },
+    {
+      "name": "mirror-freshness",
+      "status": 0,
+      "signal": null,
+      "seconds": 0.03
+    },
+    {
+      "name": "private-heads",
+      "status": 0,
+      "signal": null,
+      "seconds": 3.487
+    }
+  ]
+}
