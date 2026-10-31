@@ -1,0 +1,91 @@
+{
+  "requestedRoot": "/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s3477-stale-path-wyGkU6",
+  "physicalRoot": "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s3477-stale-path-wyGkU6",
+  "setup": [
+    {
+      "args": [
+        "init",
+        "-q"
+      ],
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "config",
+        "user.email",
+        "fixture@example.invalid"
+      ],
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "config",
+        "user.name",
+        "Fixture"
+      ],
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "add",
+        "--",
+        "runner.sh"
+      ],
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "commit",
+        "-qm",
+        "fixture"
+      ],
+      "status": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "relative": {
+    "args": [
+      "log",
+      "-1",
+      "--format=%ct",
+      "--",
+      "runner.sh"
+    ],
+    "status": 0,
+    "stdout": "1793464447",
+    "stderr": ""
+  },
+  "logicalAbsolute": {
+    "args": [
+      "log",
+      "-1",
+      "--format=%ct",
+      "--",
+      "/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s3477-stale-path-wyGkU6/runner.sh"
+    ],
+    "status": 0,
+    "stdout": "1793464447",
+    "stderr": ""
+  },
+  "physicalAbsolute": {
+    "args": [
+      "log",
+      "-1",
+      "--format=%ct",
+      "--",
+      "/private/var/folders/cd/p02kvf6s5qgfn47w85hhtzjc0000gn/T/s3477-stale-path-wyGkU6/runner.sh"
+    ],
+    "status": 0,
+    "stdout": "1793464447",
+    "stderr": ""
+  }
+}
