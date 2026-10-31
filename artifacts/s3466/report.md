@@ -1,0 +1,25 @@
+# s3466 fire — October 31 private coverage complete
+
+READY-FOR-GATES for bookkeeping closeout. WHY no product landing: no eligible drain exists under current authorization. The closing result belongs to ledger-result.json; this report does not anticipate an unrun gate.
+
+## Fresh verification
+
+Board: 1,483 done-moves, 95 subjects (82 merged, 13 closed/blocked), zero eligible or unknown. Four empty main..lane histories and zero tracked lane dirt; five registered worktrees, none unreported ahead. Six empty queues, no running tasks or pending crafting orders, no newer failure among 118 historical failures. Latest implementer log is tasks/runs/20261023-085857-lane-a-assayer-sync-visibility-1.md.log: its historical index-lock obstruction is resolved by fresh ancestry checks of 4fe2becb8, b5d6d3c32 and 614f84ca5 plus its merged goal leaf. No retry due. Runner 26518 alive under parent 1. Launcher 90746 → 90801 → 90803 owns this process lock; its 10:39:09 local start matches the 03:39:09 UTC directory mtime. Main semaphore verified in scripts/lane-runner-v3.sh:322 (ACTIVE and not lock CLEARED). No abandoned lock displaced; launcher cleanup owns tasks/.fire.lock. CODEX-WALL bars fire dispatch and refill. Lane usability does not establish subscription capacity or current dependencies.
+
+Evidence: dry-board.txt, lanes.txt, queue-state.json, duties.json, latest-run-resolution.json, launcher.json, runner-scan.json, health.txt. Raw run-log excerpt remains disk-local.
+
+Nine bounded public GETs returned 200 in 0.295–0.648 seconds; five API bodies parse as ok:true and both stats objects report empty:false. Served build 299b1db5 advertises weeks 37–44. These are HTTP samples, not browser gameplay, fresh replay acceptance or sustained-health proof. Local r2026w45 opens November 2 at 00:00 UTC; mint 685bd41d9 is a main ancestor and the whole nine-rotation skill fence matches. Skill checks passed 19/19 under .nvmrc Node 26.4.0. RT-01 mint duty is discharged; carry week 45 with the next authorized attended deployment before opening, then require ASSAYER SYNCED and served-registry parity. No deployment attempted under the existing publication gate. October 30 ticker and completion row read; historical census not rerun. No new player-visible merge or engine pin, so no Gazette duplicate. Next ticker covers October 31, due November 1 after 06:00 local. LB-01 now complete: 69/69 days, strict exposure 4,964 keys, zero account-class/unrecognised rows and zero unreadable mirrors; one snapshot pushed to PRIVATE archive e4ba6c09b27aa12da081dab196ccae572909594b. FM-01 already discharged today by s3465; its receipt read and live head 53d87470fb2670626fb4605d4dc0eb5bffd899fb verified without duplicate execution.
+
+Evidence: live-probe.json, duties.json, skillmd-tests.txt, ledger-pull.txt, ledger-push.txt, mirror-exposure.txt, mirror-freshness.txt, fire-memory.txt, private-heads.txt, private-visibility.txt, private-duty-results.json, duty-verification.json. No database or fire-memory content entered this public tree.
+
+Consulted the 19-part ledger through ledger-corpus.mjs, newest handover, Owner's Desk and vault context. F-STO-1/F-CUT-1 retain attended custody; storage not remeasured. Existing attended landing configs, paused queue and local run logs remain in their custody. No new product finding or scope invented. Evidence: ledger-selection.json, main-state.json.
+
+## Adaptations, commits and closing gate
+
+Lock 6cbe211b6; inherited dashboard bookkeeping a694d2102. The write-docs skill guided this report. Read and adapted prior evidence-local probe, ledger harness and closeout scripts; a direct strict exposure run preserves the complete output beyond the long child transcript. No maintained source, assertions, art or engine pin changed; drain-only TypeScript/build/browser gates do not apply. Closing npm run test:ledger-guards uses .nvmrc Node 26.4.0, /usr/sbin for lsof, DEVELOPER_DIR=/Library/Developer/CommandLineTools, and the evidence-local adapter that injects --test-concurrency=1 only at the ledger node-test entry. Maintained roster, assertions and timeouts unchanged. Archive audit uses --limit 40 --quiet. This report, ledger row and handoff are prepared under ACTIVE before the battery. Acceptance requires ledger-result.json code 0, unchanged true and headUnchanged true. After green, only the tested STATUS lock/stamp envelope changes. The clearing commit is the last write to main, followed by origin backup. Exact predecessor and initial lock archived; Owner's Desk tail and acknowledgements preserved verbatim. Final hash: git log --all --grep='s3466: handoff'. Later generated dashboard/usage/goal-tree churn belongs to its live writer.
+
+## REMAINING LIST IN ORDER
+
+1. Carry r2026w45 with the next authorized attended deployment before November 2 00:00 UTC; require ASSAYER SYNCED and served-registry parity.
+2. Compile October 31's ticker November 1 after 06:00 local; run November 1 private duties after 02:10 UTC.
+3. Existing Owner's Desk: account-registry deploy day, B1 phone verdict rows, token-revocation support follow-up. F-STO-1/F-CUT-1 retain attended custody; CODEX-WALL remains.
