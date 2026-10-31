@@ -1,0 +1,7 @@
+#!/bin/sh
+# Scheduling-only adapter for s3473; the maintained package script is unchanged.
+if [ "$1" = "--test" ] && [ "$2" = "--test-timeout=300000" ]; then
+  echo "[s3473] ledger scheduling: --test-concurrency=1; assertions and timeouts unchanged" >&2
+  exec /Users/robin/.nvm/versions/node/v26.4.0/bin/node --test-concurrency=1 "$@"
+fi
+exec /Users/robin/.nvm/versions/node/v26.4.0/bin/node "$@"
