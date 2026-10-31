@@ -186,6 +186,13 @@ Its trigger condition has been MET, so it is actionable rather than theoretical;
 
 ## 3. Ops — actions that need you or your word
 
+### F-SRV-4 — the leftover landing on port 4173 (found 2026-10-31)
+**What I found while re-checking the server:** everything Gold Rush runs is current (packages, kernel, nginx 7.19 from 2026-10-24, Node 26.12.1, zero npm advisories). The box also still runs the FIRST Agent Town landing ("Onboard to Agent Town beta", Express) under pm2 as root, on Ubuntu's Node 18.19.1 (end of life upstream, nine open CVEs untriaged on Ubuntu), bound to every interface on port 4173 and answering the internet over plain HTTP. Its dependencies carry five advisories, one critical. Nothing has used it since 2026-02-02 and the live agenttown.app root is Gold Rush from nginx.
+**Options:** (a) **stop it** — `landing go`: I run `GR_OWNER_APPLY=1 bash scripts/attended/droplet-maintenance.sh landing-stop` (pm2 de-registers it, the service is disabled, code and a stamped pm2 dump stay on disk, rollback is `pm2 resurrect`); (b) keep it, but behind nginx on loopback under a path and on Node 26 (a lane task, about an hour of Astra); (c) leave it. **Recommendation: (a), and `firewall go` with it** (`… firewall`: ufw allows only 22, 80 and 443, outbound open; rollback `ufw disable`). Both phases are in the repo, gated on your word, because this is your other project's server process, not the county's.
+
+### F-SRV-5 — attach Ubuntu Pro (free), for livepatch and universe fixes
+The droplet is not attached to Ubuntu Pro, so there is no kernel livepatch and no security maintenance for its 410 universe packages. Pro is free for five personal machines; it needs your Ubuntu One login once: take the token from ubuntu.com/pro/dashboard and run `pro attach <token>` then `pro enable livepatch esm-apps` on the box (or paste the token to me in the terminal, never in a file). Recommendation: do it at leisure; nothing the county runs depends on a universe package once F-SRV-4 is stopped.
+
 ### The account-registry deploy day (later)
 **What.** Astra is landing the registry code behind a closed gate now (lane-b). The deploy is five steps you run in one evening: quiesce the old writers, the verified KV export, deploy the worker with a secret, bootstrap, then the Pages binding. The checklist is ready: **the code landed 2026-09-19 (`fdfcab4d0`, s2642) and the five steps are `docs/ops/account-registry.md`**, each with its verification and its rollback sentence. Nothing deployed and nothing migrated — the Pages binding ships commented and the scope is unset, so the door behaves exactly as it does today. *No word today; this waits for an evening you pick.*
 

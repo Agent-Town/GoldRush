@@ -6,9 +6,11 @@
 #   reboot     GR_OWNER_APPLY=1: reboot the droplet (about two minutes of downtime), then wait and print health
 #   node       GR_OWNER_APPLY=1: nvm install <ver>, sync the engine copy (deploy.sh's mirror, rollback dir), repoint the three units, align
 #              ASSAY_BUILD_ID, ledger then worker restart, gates (runtime, no refusal, engine hash = main's), automatic rollback
+#   landing-stop GR_OWNER_APPLY=1: stop and de-register the leftover pm2 landing on *:4173 (F-SRV-4, 2026-10-31); code and a stamped pm2 dump stay on disk
+#   firewall   GR_OWNER_APPLY=1: ufw deny incoming except 22/80/443, outbound open, enable (F-SRV-4, 2026-10-31)
 # Never prints the host; remote output is IP-scrubbed; the log is ~/.goldrush/maintenance/maintenance.log.
 set -u; export PATH=/opt/homebrew/bin:$PATH; R="/Users/robin/Claude/Projects/Gold Rush"; cd "$R" || exit 1
-PH=${1:?phase: status|upgrade|tls-tidy|reboot|node}; VER=${2:-26.12.1}; OUT=~/.goldrush/maintenance; mkdir -p "$OUT"; LOG="$OUT/maintenance.log"
+PH=${1:?phase: status|upgrade|tls-tidy|reboot|node|landing-stop|firewall}; VER=${2:-26.12.1}; OUT=~/.goldrush/maintenance; mkdir -p "$OUT"; LOG="$OUT/maintenance.log"
 scrub() { sed -E 's/[0-9]{1,3}(\.[0-9]{1,3}){3}/<ip>/g'; }
 log() { echo "$(date -u '+%Y-%m-%dT%H:%M:%SZ') [$PH] $*" | tee -a "$LOG"; }
 H=$(grep -E '^GR_DROPLET_HOST=' .env.local | cut -d= -f2- | tr -d '"'); [ -n "$H" ] || { log "no droplet host"; exit 1; }
@@ -39,6 +41,21 @@ case "$PH" in
       R=\$(journalctl -u goldrush-assay --since \"\$T0\" --no-pager | grep -c 'requires Node'); B=\$(journalctl -u goldrush-assay --since \"\$T0\" --no-pager | grep -c api_backoff); echo \"refusals \$R, backoffs \$B\"; [ \"\$R\" = 0 ] && [ \"\$B\" -le 1 ] || OK=0
       BH=\$(cd /opt/goldrush && /root/.nvm/versions/node/v$VER/bin/node --input-type=module -e \"import { computeEngineHash } from './scripts/assay-replay-agent.mjs'; console.log(await computeEngineHash('/opt/goldrush'))\" 2>/dev/null | tail -1); echo \"box engine \$BH\"; [ \"\$BH\" = '$LH' ] || OK=0
       if [ \$OK = 1 ]; then echo VERIFIED; else echo 'FAILED: rolling back'; for u in goldrush-assay goldrush-ledger goldrush-ledger-backup; do cp -p /etc/systemd/system/\$u.service.before-node-\$ST /etc/systemd/system/\$u.service; done; cp -p /etc/goldrush-assay.env.before-node-\$ST /etc/goldrush-assay.env; rsync -a /opt/goldrush-prev-\$ST/ /opt/goldrush/; systemctl daemon-reload; systemctl restart goldrush-ledger; sleep 5; systemctl restart goldrush-assay; sleep 10; echo \"after rollback: ledger \$(systemctl is-active goldrush-ledger), assay \$(systemctl is-active goldrush-assay)\"; fi"
+    log "public health: $(bash scripts/health-watch.sh status 2>/dev/null | grep -oE 'landing=[0-9]+ game=[0-9]+ api=[0-9a-z-]+' | head -1)";;
+  landing-stop) gate; log "stopping the leftover pm2 landing on :4173 (F-SRV-4, 2026-10-31); its code and the pm2 dump stay on disk"
+    # Found 2026-10-31: pm2-root.service resurrects /root/code/landing-main/server/index.js (Express 4, five npm advisories,
+    # one critical) on the system Node 18.19.1 (universe, no ESM here), as root, bound to *:4173 and reachable from the
+    # internet over plain HTTP. Nothing uses it: data/store.json unchanged since 2026-02-02, seven log lines, zero connections;
+    # agenttown.app's root is served by nginx from /opt/goldrush/site. Rollback: pm2 resurrect from the stamped dump copy.
+    rssh 'export LC_ALL=C; ST=$(date -u +%Y%m%dT%H%M%SZ); cp -p /root/.pm2/dump.pm2 "/root/.pm2/dump.pm2.before-landing-$ST" 2>/dev/null; bash -lc "pm2 delete index >/dev/null 2>&1; pm2 save --force >/dev/null 2>&1"; systemctl disable --now pm2-root >/dev/null 2>&1; sleep 2; echo "pm2-root: $(systemctl is-enabled pm2-root 2>&1)/$(systemctl is-active pm2-root 2>&1); listeners on :4173: $(ss -Hltn "sport = :4173" | wc -l); dump backup /root/.pm2/dump.pm2.before-landing-$ST (rollback: bash -lc \"pm2 resurrect\" after copying it back, then systemctl enable --now pm2-root)"'
+    log "outside probe on :4173: http $(curl -s -o /dev/null -m 8 -w '%{http_code}' "http://$H:4173/" 2>/dev/null) (000 = closed)"
+    log "public health: $(bash scripts/health-watch.sh status 2>/dev/null | grep -oE 'landing=[0-9]+ game=[0-9]+ api=[0-9a-z-]+' | head -1)";;
+  firewall) gate; log "ufw: deny incoming except 22, 80, 443; outbound open (F-SRV-4, 2026-10-31)"
+    # ufw was inactive and no cloud firewall fronts the droplet (an outside probe reached :4173). Allow ssh BEFORE enabling;
+    # ufw keeps established sessions. IPv6 follows via /etc/default/ufw IPV6=yes. Rollback: ufw disable.
+    rssh 'export LC_ALL=C; ufw default deny incoming >/dev/null && ufw default allow outgoing >/dev/null && ufw allow 22/tcp >/dev/null && ufw allow 80/tcp >/dev/null && ufw allow 443/tcp >/dev/null && ufw logging low >/dev/null && ufw --force enable; ufw status verbose | head -14'
+    rssh 'echo "ssh still answers after enable: $(uname -r), up $(uptime -p)"'
+    log "outside probe on :4173: http $(curl -s -o /dev/null -m 8 -w '%{http_code}' "http://$H:4173/" 2>/dev/null) (000 = closed); :443 $(curl -s -o /dev/null -m 8 -w '%{http_code}' -k "https://$H/" 2>/dev/null)"
     log "public health: $(bash scripts/health-watch.sh status 2>/dev/null | grep -oE 'landing=[0-9]+ game=[0-9]+ api=[0-9a-z-]+' | head -1)";;
   *) log "unknown phase"; exit 1;;
 esac
