@@ -1,0 +1,32 @@
+{
+  "at": "2026-10-31T14:14:34.658Z",
+  "visibility": {
+    "nameWithOwner": "Agent-Town/GoldRush-archive",
+    "visibility": "PRIVATE"
+  },
+  "ledgerHead": "e4ba6c09b27aa12da081dab196ccae572909594b",
+  "memoryHead": "53d87470fb2670626fb4605d4dc0eb5bffd899fb",
+  "coverage": {
+    "start": "2026-08-24",
+    "end": "2026-10-31",
+    "present": 69,
+    "expected": 69
+  },
+  "todayDutyDischarged": true,
+  "verification": "Completed LB-01 receipt s3466 and FM-01 receipt s3465 checked against current coverage and live PRIVATE remote heads. No duplicate daily execution.",
+  "historicalExposure": {
+    "source": "artifacts/s3466/mirror-exposure.txt",
+    "remeasuredThisFire": false,
+    "readableMirrors": 69,
+    "unreadable": 0,
+    "keys": 4964,
+    "accountClass": 0,
+    "unrecognised": 0,
+    "proof": "mirror-exposure.txt"
+  },
+  "ticker": {
+    "source": "marketing/outbox/ticker-digest-2026-10-30.md",
+    "historicalCensusRerun": false,
+    "next": "October 31 digest due November 1 after 06:00 local"
+  }
+}
