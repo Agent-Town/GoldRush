@@ -8670,3 +8670,12 @@ Remaining list: artifacts/s3502/report.md.
 Fresh probes and inherited claims are itemized in artifacts/s3503/report.md with their evidence files. Main semaphore: scripts/lane-runner-v3.sh:322; own launcher 79205 → 79251 → 79252; runner 26518 alive. All six queues and the crafting inbox are empty, no newer failures; the latest run is already merged. CODEX-WALL and attended custody remain. Owner desk and predecessor are preserved verbatim. Final acceptance: artifacts/s3503/ledger-result.json; this pre-gate entry does not anticipate the result.
 
 Remaining list: artifacts/s3503/report.md.
+
+
+### s3504 verification: November 1 ticker and dry board
+
+2026-11-01T23:38Z. WHY no product landing: DRY (95 subjects, zero eligible/unknown), four absorbed lanes. November 1 ticker complete: 64 updates, no player news. Private coverage 70/70 through November 1. Nine public GETs 200; skill checks 19/19. Evidence artifacts/s3504/report.md and ledger-result.json. Next: authorized week-45 deployment before November 2 00:00 UTC; November 2 private duties after 02:10 UTC.
+
+Fresh probes and inherited claims are itemized in artifacts/s3504/report.md. Main semaphore: scripts/lane-runner-v3.sh:322; own launcher 15576 → 15624 → 15625; runner 26518 alive. Queues and crafting inbox empty, no newer failures; latest run already merged. November 1 census: 64 updates, 64 commits, 755 paths, no player news or engine pins; September 25 control 136. CODEX-WALL and attended custody remain. Owner desk and predecessor preserved verbatim. Final acceptance: artifacts/s3504/ledger-result.json; this pre-gate entry does not anticipate the result.
+
+Remaining list: artifacts/s3504/report.md.

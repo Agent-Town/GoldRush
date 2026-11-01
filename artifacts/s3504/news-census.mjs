@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+import{execFileSync}from 'node:child_process';
+import{isPlayerPath}from '../../scripts/gazette-backfill-sweep.mjs';
+const dir='artifacts/s3504';
+const day=JSON.parse(fs.readFileSync(dir+'/day.json','utf8'));
+const git=(...args)=>execFileSync('git',args,{encoding:'utf8',maxBuffer:64e6}).trim();
+const hashes=git('rev-list','--reverse','--first-parent',`${day.before}..${day.final}`).split('\n');
+const subjects=hashes.map(h=>git('show','-s','--format=%h %cI %s',h)).join('\n');
+const rows=hashes.map(hash=>({hash,files:git('diff-tree','--no-commit-id','--name-only','-r',hash).split('\n').filter(Boolean)}));
+const paths=[...new Set(rows.flatMap(r=>r.files))].sort();
+const nonEvidence=paths.filter(p=>! /^(artifacts\/|logs\/|reviews\/shots-|tasks\/runs\/)/.test(p));
+const result={commits:hashes.length,distinctPaths:paths.length,nonEvidence,playerPaths:paths.filter(isPlayerPath),enginePins:rows.filter(r=>r.files.includes('assets/engine-era.json'))};
+fs.writeFileSync(dir+'/day-commits.txt',subjects+'\n');
+fs.writeFileSync(dir+'/day-paths.json',JSON.stringify(rows,null,2)+'\n');
+fs.writeFileSync(dir+'/news-census.json',JSON.stringify(result,null,2)+'\n');
+console.log(subjects);console.log(JSON.stringify(result,null,2));
