@@ -8607,3 +8607,12 @@ Nine bounded public GETs returned 200 in 0.335–2.428 seconds; five API bodies 
 Lock 1e43bb2c1; inherited dashboard bookkeeping 8ed265e6e. The write-docs skill guided this handoff; prior evidence-local probes and gate harnesses were read and adapted. All 19 ledger parts were consulted through ledger-corpus.mjs. The five-item Owner's Desk and prior acknowledgements are byte-preserved. Initial lock archival and predecessor retention are verified by the bounded status audit. F-SRV-4's stop remains an attended report, not re-audited; firewall go remains owed. F-STO-1 and F-CUT-1 retain attended custody. F-ATT-13 remains open: capture recurrence before choosing a cure; no root cause established here. No product source, assertion, art or engine pin changed, so drain-only build/browser gates do not apply. Final acceptance requires ledger-result.json to report code 0, unchanged true and headUnchanged true; no gate outcome is anticipated here. The closing npm run test:ledger-guards uses Node 26.4.0, /usr/sbin lsof, DEVELOPER_DIR=/Library/Developer/CommandLineTools, and an evidence-local adapter adding --test-concurrency=1 only at the ledger entry; assertions and timeouts unchanged. Report, handoff and vault digest are prepared under ACTIVE before the battery; only the verified lock/stamp envelope changes afterward. The clearing commit is the last main write, followed by origin backup. Later generated dashboard churn belongs to its live writer.
 
 Remaining list: artifacts/s3496/report.md.
+
+
+### s3497 verification: dry board and current heartbeat receipts
+
+2026-11-01T15:38Z. WHY no product landing: DRY (95 subjects, zero eligible/unknown), four absorbed lanes. Private coverage 70/70 through November 1; October 31 ticker complete. Nine public GETs 200; skill checks 19/19. Evidence artifacts/s3497/report.md and ledger-result.json. Next: authorized week-45 deployment before November 2; November 2 private duties after 02:10 UTC.
+
+Fresh probes and inherited claims are itemized in artifacts/s3497/report.md with their evidence files. Main semaphore: scripts/lane-runner-v3.sh:322; own launcher 45474 → 45525 → 45527; runner 26518 alive. All six queues and the crafting inbox are empty, no newer failures; the latest run is already merged. CODEX-WALL and attended custody remain. Owner desk and predecessor are preserved verbatim. Final acceptance: artifacts/s3497/ledger-result.json; this pre-gate entry does not anticipate the result.
+
+Remaining list: artifacts/s3497/report.md.
