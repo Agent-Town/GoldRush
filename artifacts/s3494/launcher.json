@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-01T12:07:43.186Z",
+  "ancestors": [
+    "PID  PPID TTY      STAT STARTED\n87373 81190 ??       Ss   Sun Nov  1 19:07:41 2026",
+    "PID  PPID TTY      STAT STARTED\n81190 81180 ??       S    Sun Nov  1 19:05:50 2026",
+    "PID  PPID TTY      STAT STARTED\n81180 81088 ??       S    Sun Nov  1 19:05:50 2026",
+    "PID  PPID TTY      STAT STARTED\n81088     1 ??       S    Sun Nov  1 19:05:46 2026"
+  ],
+  "lockMtime": "2026-11-01T12:05:46.310Z",
+  "runner": [
+    "PID  PPID TTY      STAT STARTED\n26518     1 ??       Ss   Mon Oct 26 12:52:54 2026"
+  ],
+  "fireStart": [
+    "[fire-runner] 19:05:50 FIRE START (engine codex, model from ~/.codex config)"
+  ],
+  "mainSemaphore": {
+    "file": "scripts/lane-runner-v3.sh",
+    "line": 322,
+    "predicate": "ACTIVE and not lock CLEARED"
+  }
+}
