@@ -1,0 +1,74 @@
+{
+  "at": "2026-11-02T02:10:53.004Z",
+  "visibility": {
+    "nameWithOwner": "Agent-Town/GoldRush-archive",
+    "visibility": "PRIVATE"
+  },
+  "ledgerHead": "bd72213685afaa34b8d85bd6424d80adeceae034",
+  "memoryHead": "53d87470fb2670626fb4605d4dc0eb5bffd899fb",
+  "coverage": {
+    "start": "2026-08-24",
+    "end": "2026-11-02",
+    "present": 71,
+    "expected": 71
+  },
+  "todayDutyDischarged": true,
+  "exposure": {
+    "source": "artifacts/s3506/mirror-exposure.txt",
+    "remeasuredThisFire": true,
+    "readableMirrors": 71,
+    "unreadable": 0,
+    "keys": 5152,
+    "accountClass": 0,
+    "unrecognised": 0
+  },
+  "fireMemory": {
+    "completedTodayBy": "s3506",
+    "unchanged": true,
+    "liveHeadVerified": "53d87470fb2670626fb4605d4dc0eb5bffd899fb"
+  },
+  "commands": [
+    {
+      "name": "ledger-pull",
+      "status": 0,
+      "signal": null,
+      "started": "2026-11-02T02:10:09.375Z",
+      "seconds": 10.317
+    },
+    {
+      "name": "ledger-push",
+      "status": 0,
+      "signal": null,
+      "started": "2026-11-02T02:10:19.693Z",
+      "seconds": 17.98
+    },
+    {
+      "name": "fire-memory",
+      "status": 0,
+      "signal": null,
+      "started": "2026-11-02T02:10:37.673Z",
+      "seconds": 5.136
+    },
+    {
+      "name": "mirror-exposure",
+      "status": 0,
+      "signal": null,
+      "started": "2026-11-02T02:10:42.809Z",
+      "seconds": 0.04
+    },
+    {
+      "name": "mirror-freshness",
+      "status": 0,
+      "signal": null,
+      "started": "2026-11-02T02:10:42.850Z",
+      "seconds": 0.028
+    },
+    {
+      "name": "private-heads",
+      "status": 0,
+      "signal": null,
+      "started": "2026-11-02T02:10:42.878Z",
+      "seconds": 3.473
+    }
+  ]
+}
