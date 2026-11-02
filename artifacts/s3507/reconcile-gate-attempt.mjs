@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+const dir = 'artifacts/s3507';
+const result = JSON.parse(fs.readFileSync(`${dir}/ledger-result.json`, 'utf8'));
+if (result.code !== 0 || result.unchanged || !result.headUnchanged) throw Error('Unexpected first-attempt result; inspect before retry');
+for (const [from, to] of [['ledger-manifest.json','ledger-attempt1-manifest.json'],['ledger-result.json','ledger-attempt1-result.json'],['ledger-guards.txt','ledger-attempt1.txt']]) fs.renameSync(`${dir}/${from}`, `${dir}/${to}`);
+const note = 'Closeout correction: the standalone status-archive command was inadvertently invoked without --limit. It announced a roughly eight-minute historical scan, so only our scan PID 63722 was stopped with TERM; its partial output is retained in status-archive.txt, with no verdict claimed. The first ledger battery was started before that preceding shell finished updating closeout.mjs, so its immutable manifest correctly rejects the attempt (unchanged:false). Its tests passed, but its receipt is not acceptance; ledger-attempt1-* and ledger-attempt1.txt retain it. The final battery is run only after these evidence edits settle and includes the maintained bounded archive regression check. No maintained test or timeout changed.';
+const path = `${dir}/report.md`;
+let report = fs.readFileSync(path,'utf8');
+report = report.replace('no process was restarted or terminated.', 'no factory process was restarted or terminated; the evidence-only archive scan described below was stopped.');
+report = report.replace('## REMAINING LIST IN ORDER', note + '\n\n## REMAINING LIST IN ORDER');
+fs.writeFileSync(path,report);
+fs.appendFileSync('docs/HANDOVER-2026-09-06-attended.md', `\nVerification correction: s3507's first ledger attempt is retained but not accepted because the closeout script changed before its manifest was checked. The final attempt follows all evidence edits and is the acceptance receipt. The unbounded standalone archive scan was stopped by its own numeric PID without claiming a verdict; the ledger battery supplies the bounded regression check. Details: artifacts/s3507/report.md.\n`);
+console.log(note);
