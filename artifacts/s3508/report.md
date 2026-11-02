@@ -1,0 +1,24 @@
+# s3508 fire — dry board and overdue week-45 deployment
+
+READY-FOR-GATES for bookkeeping closeout. WHY no product landing: no eligible authorized drain exists. Final acceptance is ledger-result.json; this prepared report does not anticipate its result.
+
+Fresh verification at 04:33 UTC: canonical and direct Pages week-45 standings both return HTTP 400 bad_rotation. Week-44 controls return 200; served build 299b1db5 carries weeks 37–44. Main's week-45 mint 685bd41d9 is an ancestor and the whole nine-rotation skill fence matches; skill tests passed 19/19. The existing deployment mismatch persists. Earlier seed-selector findings were read in the ledger, not rerun; no live submission. The current handoff and FIRE publish gate retain attended deployment custody; no new owner decision is needed.
+
+Board: 1,483 done-moves, 95 subjects, 82 merged, 13 closed/blocked, zero eligible or unknown. All four main..lane histories are empty and have zero tracked dirt; they remain stale behind main. All six queues, running tasks and crafting inbox are empty; no failures among 118 entries newer than the predecessor. The latest run 20261023-085857-lane-a-assayer-sync-visibility-1.md.log contains an old index-lock failure, but its goal is merged and delivery 4fe2becb8, landing b5d6d3c32 and record 614f84ca5 are verified main ancestors. No retry is owed. CODEX-WALL bars refill and dispatch. Lane absorption does not establish future subscription capacity.
+
+Process ownership: 14434 → 14603 → 14605 is this fire's parent chain, matching directory creation 2026-11-02T04:32:00Z and local FIRE START 11:32:00. The launcher is scripts/fire-runner.sh and the actual engine is Codex despite the supplied Claude-edition heading. Runner 26518 is alive under parent 1. Main semaphore verified at scripts/lane-runner-v3.sh:322: ACTIVE and not lock CLEARED. The launcher owns directory cleanup; no process was restarted or terminated.
+
+Private duties: s3506's November 2 pull, strict private push and FM-01 receipts were read, each exit 0. Fresh strict coverage is 71/71 days August 24–November 2. Fresh archive heads match those receipts: ledger-backups bd72213685afaa34b8d85bd6424d80adeceae034; fire-memory 53d87470fb2670626fb4605d4dc0eb5bffd899fb. Those daily pull/push duties and the standalone exposure scan were not repeated; the final ledger battery includes the exposure guard. the prior 5,152-key exposure measurement and archive-visibility check are s3506 evidence, not fresh measurements here. Private bytes stay outside the public tree. Next private duties November 3 after 02:10 UTC.
+
+Nine other public reads returned HTTP 200 in 0.303–1.104 seconds; both stats responses are JSON ok:true and empty:false. These samples do not establish browser gameplay, fresh replay acceptance or sustained health. RT-01 mint duty is discharged; week 46 is not yet due (Wednesday trigger). November 1 ticker and completion row were read; the historical census was not repeated. No real-change merge or engine pin occurred, so no Gazette item is due.
+
+Lock commit 8db007c4043bff48f258070f7b1eec48ef9265fa; inherited dashboard bookkeeping 1999e2985611ffb809edad12b525a12beddfe99c. The write-docs skill guided the report and handoff; the preceding probe and ledger harness were read and adapted. All 19 ledger files were consulted through ledger-corpus.mjs. The five-item desk, acknowledgements, predecessor and initial lock are preserved verbatim. F-STO-1 and F-CUT-1 retain attended custody; storage and F-SRV-4's stopped-service claim were not re-audited. F-ATT-13's cause remains unverified; capture it if the guard fails again. No product source, art, assertions or engine pin changed; drain-only build/browser gates do not apply. No new BACKLOG row or goal event is invented for this dry fire.
+
+The final npm run test:ledger-guards uses .nvmrc Node 26.4.0, /usr/sbin/lsof and DEVELOPER_DIR=/Library/Developer/CommandLineTools. The evidence-local scheduling adapter adds only --test-concurrency=1 at the ledger entry, preserving assertions and timeouts. The immutable manifest must report code 0, unchanged true and headUnchanged true. Only the verified STATUS lock/stamp envelope changes afterward; the clearing commit is the last write to main, followed by origin backup. Later generated dashboard churn belongs to its live writer.
+
+## REMAINING LIST IN ORDER
+
+1. Complete the overdue week-45 deployment in the authorized attended session; require ASSAYER SYNCED, a served registry including r2026w45 and canonical/direct week-45 standings HTTP 200.
+2. Next private duties November 3 after 02:10 UTC.
+3. Preserve the five Owner's Desk items: account-registry deploy day, B1 phone verdicts, token revocation follow-up, firewall go and Ubuntu Pro attachment.
+4. Capture F-ATT-13's intermittent stale-runner failure if it recurs before selecting a cure.

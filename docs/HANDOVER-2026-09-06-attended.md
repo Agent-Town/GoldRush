@@ -8702,3 +8702,10 @@ Fresh checks and inherited-claim limits: artifacts/s3506/report.md. Runner 26518
 Fresh checks and inherited-claim limits: artifacts/s3507/report.md. Runner 26518 alive; own launcher 51162 → 51210 → 51212. CODEX-WALL, attended custody and the five-item desk are preserved. Daily private receipts read, coverage and remote heads freshly verified; no repeated private writes. Final acceptance is artifacts/s3507/ledger-result.json, not anticipated here.
 
 Verification correction: s3507's first ledger attempt is retained but not accepted because the closeout script changed before its manifest was checked. The final attempt follows all evidence edits and is the acceptance receipt. The unbounded standalone archive scan was stopped by its own numeric PID without claiming a verdict; the ledger battery supplies the bounded regression check. Details: artifacts/s3507/report.md.
+
+
+### s3508 verification: dry board and week-45 deployment overdue
+
+2026-11-02T04:34Z. WHY no product landing: DRY (95 subjects, zero eligible/unknown), four absorbed lanes. Week-45 deployment remains OVERDUE: both public standings reads return 400 bad_rotation; build 299b1db5 ends at week 44. Private coverage 71/71 through November 2; daily duties and November 1 ticker already complete. Evidence artifacts/s3508/report.md and ledger-result.json. Next: authorized attended deployment with ASSAYER SYNCED; November 3 private duties after 02:10 UTC.
+
+Fresh checks and inherited-claim limits: artifacts/s3508/report.md. Runner 26518 alive; own launcher 14434 → 14603 → 14605. CODEX-WALL, attended custody and the five-item desk are preserved. Daily private receipts read, coverage and remote heads freshly verified; no repeated private writes. Final acceptance is artifacts/s3508/ledger-result.json, not anticipated here.
