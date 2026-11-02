@@ -1,0 +1,94 @@
+{
+  "at": "2026-11-02T00:47:38.120Z",
+  "openLocal": "r2026w45",
+  "opensAt": "2026-11-02T00:00:00.000Z",
+  "servedRotations": [
+    "r2026w37",
+    "r2026w38",
+    "r2026w39",
+    "r2026w40",
+    "r2026w41",
+    "r2026w42",
+    "r2026w43",
+    "r2026w44"
+  ],
+  "localRotations": [
+    "r2026w37",
+    "r2026w38",
+    "r2026w39",
+    "r2026w40",
+    "r2026w41",
+    "r2026w42",
+    "r2026w43",
+    "r2026w44",
+    "r2026w45"
+  ],
+  "sourceDiffFromServedBuild": "",
+  "controls": [
+    {
+      "contract": "the-claim",
+      "servedRotation": "r2026w44",
+      "servedWindowClosed": true,
+      "localRotation": "r2026w45"
+    },
+    {
+      "contract": "e1-dry-gulch",
+      "servedRotation": "r2026w44",
+      "servedWindowClosed": true,
+      "localRotation": "r2026w45"
+    },
+    {
+      "contract": "e1-twin-banks",
+      "servedRotation": "r2026w44",
+      "servedWindowClosed": true,
+      "localRotation": "r2026w45"
+    },
+    {
+      "contract": "e1-night-shift",
+      "servedRotation": "r2026w44",
+      "servedWindowClosed": true,
+      "localRotation": "r2026w45"
+    },
+    {
+      "contract": "e2-hill-mine",
+      "servedRotation": "r2026w44",
+      "servedWindowClosed": true,
+      "localRotation": "r2026w45"
+    },
+    {
+      "contract": "e1-baron",
+      "servedRotation": "r2026w44",
+      "servedWindowClosed": true,
+      "localRotation": "r2026w45"
+    }
+  ],
+  "probes": [
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w45",
+      "at": "2026-11-02T00:47:38.827Z",
+      "status": 400,
+      "ok": false,
+      "error": "bad_rotation"
+    },
+    {
+      "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w44",
+      "at": "2026-11-02T00:47:39.244Z",
+      "status": 200,
+      "ok": true
+    },
+    {
+      "url": "https://gold-rush-3in.pages.dev/api/standings?board=transfer&rotation=r2026w45",
+      "at": "2026-11-02T00:47:39.288Z",
+      "status": 400,
+      "ok": false,
+      "error": "bad_rotation"
+    },
+    {
+      "url": "https://gold-rush-3in.pages.dev/api/standings?board=transfer&rotation=r2026w44",
+      "at": "2026-11-02T00:47:39.342Z",
+      "status": 200,
+      "ok": true
+    }
+  ],
+  "inference": "With the served registry, the unchanged seed selector chooses closed week 44 for six rotation contracts; the unchanged submission window check rejects otherwise valid old-week submissions with rotation_closed. No live submission was made."
+}

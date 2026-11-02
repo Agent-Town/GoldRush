@@ -8679,3 +8679,10 @@ Remaining list: artifacts/s3503/report.md.
 Fresh probes and inherited claims are itemized in artifacts/s3504/report.md. Main semaphore: scripts/lane-runner-v3.sh:322; own launcher 15576 → 15624 → 15625; runner 26518 alive. Queues and crafting inbox empty, no newer failures; latest run already merged. November 1 census: 64 updates, 64 commits, 755 paths, no player news or engine pins; September 25 control 136. CODEX-WALL and attended custody remain. Owner desk and predecessor preserved verbatim. Final acceptance: artifacts/s3504/ledger-result.json; this pre-gate entry does not anticipate the result.
 
 Remaining list: artifacts/s3504/report.md.
+
+
+### s3505 verification: week-45 deployment overdue; board dry
+
+2026-11-02T00:49Z. WHY no product landing: DRY (95 subjects, zero eligible/unknown), four absorbed lanes. Week-45 deployment OVERDUE: both public standings reads return 400 bad_rotation; build 299b1db5 ends at week 44. Evidence artifacts/s3505/report.md, rotation-recheck.json and ledger-result.json. Private coverage 70/70 through November 1; November 1 ticker complete. Next: authorized attended deployment with ASSAYER SYNCED; November 2 private duties after 02:10 UTC.
+
+Fresh verification and remaining list: artifacts/s3505/report.md. Week-45 GETs return 400 bad_rotation twice per host, with week-44 200 controls; six selector controls choose closed week 44 using the served registry and open week 45 using main. No live submission. Existing RT-01 row updated; deployment retains attended custody. Runner 26518 alive; own launcher 79140 → 79184 → 79185. Queues and crafting inbox empty, no newer failures; latest run merged. Private heads and 70/70 coverage freshly verified; November 1 ticker read, historical census not repeated. CODEX-WALL and five-item desk preserved. Final acceptance is artifacts/s3505/ledger-result.json; this entry does not anticipate it.

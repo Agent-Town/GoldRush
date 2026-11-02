@@ -1,0 +1,31 @@
+{
+  "at": "2026-11-02T00:49:03.373Z",
+  "visibility": {
+    "visibility": "PRIVATE"
+  },
+  "ledgerHead": "660031c3804bf8f1d6362b22e37f5c1152e4f78a",
+  "memoryHead": "53d87470fb2670626fb4605d4dc0eb5bffd899fb",
+  "coverage": {
+    "start": "2026-08-24",
+    "end": "2026-11-01",
+    "present": 70,
+    "expected": 70
+  },
+  "coverageDay": "2026-11-01",
+  "verification": "Completed November 1 receipts match fresh coverage and live private heads; no duplicate execution.",
+  "nextPrivateDutiesNotBefore": "2026-11-02T02:10:00Z",
+  "historicalExposure": {
+    "source": "artifacts/s3486/mirror-exposure.txt",
+    "remeasuredThisFire": false
+  },
+  "ticker": {
+    "source": "marketing/outbox/ticker-digest-2026-11-01.md",
+    "compiledThisFire": false,
+    "historicalCensusRerun": false
+  },
+  "rotation": {
+    "source": "artifacts/s3505/rotation-recheck.json",
+    "minted": true,
+    "deploymentOverdue": true
+  }
+}
