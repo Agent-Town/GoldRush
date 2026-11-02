@@ -1,0 +1,85 @@
+{
+  "at": "2026-11-02T06:24:03.120Z",
+  "reason": "Fire execution budget exceeded; ledger already failed a bounded Gazette scan and the later dashboard fixture is still incomplete. Stop only this fire-owned gate tree; retain wrapper to write its result.",
+  "root": 4681,
+  "processes": [
+    {
+      "pid": 25784,
+      "ppid": 96519,
+      "line": "25784 96519       00:02   0:00.02   3.1 R    (git)"
+    },
+    {
+      "pid": 96519,
+      "ppid": 96518,
+      "line": "96519 96518       10:23   0:01.17   0.0 S    /Users/robin/.nvm/versions/node/v26.4.0/bin/node"
+    },
+    {
+      "pid": 96518,
+      "ppid": 86804,
+      "line": "96518 86804       10:23   0:00.00   0.0 S    bash"
+    },
+    {
+      "pid": 86804,
+      "ppid": 86593,
+      "line": "86804 86593       11:34   0:00.23   0.0 S    bash"
+    },
+    {
+      "pid": 86593,
+      "ppid": 4720,
+      "line": "86593  4720       11:41   0:00.11   0.0 S    /Users/robin/.nvm/versions/node/v26.4.0/bin/node"
+    },
+    {
+      "pid": 4720,
+      "ppid": 4719,
+      "line": " 4720  4719       21:19   0:00.25   0.0 R    /Users/robin/.nvm/versions/node/v26.4.0/bin/node"
+    },
+    {
+      "pid": 4719,
+      "ppid": 4704,
+      "line": " 4719  4704       21:19   0:00.00   0.0 S    sh"
+    },
+    {
+      "pid": 4704,
+      "ppid": 4681,
+      "line": " 4704  4681       21:19   0:00.12   0.0 R    npm run test:ledger-guards"
+    }
+  ],
+  "signals": [
+    {
+      "pid": 25784,
+      "action": "skip: exited or parent changed"
+    },
+    {
+      "pid": 96519,
+      "action": "TERM",
+      "status": 0
+    },
+    {
+      "pid": 96518,
+      "action": "skip: exited or parent changed"
+    },
+    {
+      "pid": 86804,
+      "action": "TERM",
+      "status": 0
+    },
+    {
+      "pid": 86593,
+      "action": "skip: exited or parent changed"
+    },
+    {
+      "pid": 4720,
+      "action": "TERM",
+      "status": 0
+    },
+    {
+      "pid": 4719,
+      "action": "skip: exited or parent changed"
+    },
+    {
+      "pid": 4704,
+      "action": "TERM",
+      "status": 1
+    }
+  ]
+}

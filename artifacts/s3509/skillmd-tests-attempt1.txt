@@ -1,0 +1,50 @@
+✔ score screen, landing, and rider protocol carry one county ranking rule (175.265709ms)
+(node:86526) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ skill.md pins the lawful world-model disclosure (27.386ms)
+✔ skill.md pins the operator-probe ranking law (0.329459ms)
+✔ skill.md pins the E10 preserve ranking law (0.117ms)
+✔ skill.md pins the Regatta mechanic-first ranking law (1.240167ms)
+✔ the door mirrors the engine's mechanic contracts (3.976667ms)
+✔ skill.md pins optional declared tokens outside ranking (0.291375ms)
+✔ skill.md pins the harness receipt law (0.175167ms)
+✔ every standings submission refusal branch is enumerated (14.436084ms)
+✔ skill.md refusal list matches the executable taxonomy (109.666541ms)
+✔ the refusal enumeration BITES an unrecorded branch (186269.320583ms)
+✔ skill.md pins the tape checkpoint command (0.144ms)
+✔ skill.md grammar matches every StandingOrder source form (13.69175ms)
+✔ skill.md buildables match BuildableId (0.360458ms)
+✔ skill.md bench seeds match the source registry (0.283792ms)
+✔ skill.md rotations match the source registry (0.279791ms)
+✔ skill.md door-contracts match SUPPORTED_CONTRACTS in HeadlessContractSim (0.473542ms)
+✖ the guard BITES a drifted skill.md (positive control, manufactured defect) (240299.586125ms)
+✔ the Regatta paragraph publishes terminal seconds and the standable-ground query (0.546291ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 18
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 865122.909291
+
+✖ failing tests:
+
+test at scripts/skillmd-guard.test.mjs:160:1
+✖ the guard BITES a drifted skill.md (positive control, manufactured defect) (240299.586125ms)
+  AssertionError [ERR_ASSERTION]: the guard reddened, but not on the grammar test — this control is measuring the wrong failure
+      at TestContext.<anonymous> (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/skillmd-guard.test.mjs:187:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '✔ score screen, landing, and rider protocol carry one county ranking rule (12.576ms)\n(node:98051) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.\n(Use `node --trace-warnings ...` to show where the warning was created)\n',
+    expected: /grammar matches every StandingOrder source form/,
+    operator: 'match',
+    diff: 'simple'
+  }

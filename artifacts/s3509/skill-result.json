@@ -1,0 +1,12 @@
+{
+  "code": 0,
+  "signal": null,
+  "seconds": 30.574,
+  "command": [
+    "--test",
+    "--test-concurrency=1",
+    "scripts/skillmd-guard.test.mjs"
+  ],
+  "at": "2026-11-02T06:01:57.395Z",
+  "premise": "Explicit documented runtime PATH and DEVELOPER_DIR; serialized scheduling; test assertions and child timeout unchanged"
+}

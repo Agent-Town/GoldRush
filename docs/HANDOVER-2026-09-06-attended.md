@@ -8709,3 +8709,17 @@ Verification correction: s3507's first ledger attempt is retained but not accept
 2026-11-02T04:34Z. WHY no product landing: DRY (95 subjects, zero eligible/unknown), four absorbed lanes. Week-45 deployment remains OVERDUE: both public standings reads return 400 bad_rotation; build 299b1db5 ends at week 44. Private coverage 71/71 through November 2; daily duties and November 1 ticker already complete. Evidence artifacts/s3508/report.md and ledger-result.json. Next: authorized attended deployment with ASSAYER SYNCED; November 3 private duties after 02:10 UTC.
 
 Fresh checks and inherited-claim limits: artifacts/s3508/report.md. Runner 26518 alive; own launcher 14434 → 14603 → 14605. CODEX-WALL, attended custody and the five-item desk are preserved. Daily private receipts read, coverage and remote heads freshly verified; no repeated private writes. Final acceptance is artifacts/s3508/ledger-result.json, not anticipated here.
+
+
+### s3509 verification: dry board and week-45 deployment overdue
+
+2026-11-02T06:02Z. WHY no product landing: DRY (95 subjects, zero eligible/unknown), four absorbed lanes. Week-45 deployment remains OVERDUE: both public standings reads return 400 bad_rotation; build 299b1db5 ends at week 44. Private coverage 71/71 through November 2; daily duties and November 1 ticker already complete. Evidence artifacts/s3509/report.md and ledger-result.json. Next: authorized attended deployment with ASSAYER SYNCED; November 3 private duties after 02:10 UTC.
+
+Fresh checks and inherited-claim limits: artifacts/s3509/report.md. Runner 26518 alive; own launcher 79801 → 81002 → 81314. CODEX-WALL, attended custody and the five-item desk are preserved. Daily private receipts read, coverage and remote heads freshly verified; no repeated private writes. Final acceptance is artifacts/s3509/ledger-result.json, not anticipated here.
+
+
+### s3509 closeout BLOCKED: ledger timeout and retained ACTIVE lock
+
+2026-11-02T06:25Z. This supersedes the pending acceptance in the s3509 entry above. Ledger attempt: 1281.829s; 688 pass, 2 fail, 55 cancelled. The Gazette scan timed out, and the later dashboard fixture exceeded eleven minutes; only the fire-owned gate descendants were stopped by numeric PID. No product regression or slowdown root cause is established. The 19/19 skill retry is green, but the complete ledger is NOT accepted.
+
+The fire exits after committing and backing up this blocked handoff, without lock CLEARED. FIRE §4's failed-gate boundary remains in force. The next fire must verify the launcher's FIRE END and take over under §1, then rerun the complete ledger battery when host capacity permits. Report and ordered remaining work: artifacts/s3509/report.md. All five desk items and the predecessor remain verbatim; no new BACKLOG row, goal event, dispatch or deployment.
