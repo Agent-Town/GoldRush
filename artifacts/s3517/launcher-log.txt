@@ -1,0 +1,35 @@
+
+
+**s2999 attended completion receipt, 2026-10-09T07:44:21Z.** Cache hac1 now has `LAND-hac1-DONE`: post-landing main Node rc 0, 1,043 pass / 5 skips / zero failures; chained checks 89/89. This supersedes the prior still-running-cache observation. Routing remains an unlanded, policy-CLEAR, attended-owned drain; the authorized cutover and public acceptance remain pending. Canonical game/version/skill were still 429 Error 1027 at 07:43:35Z. No additional owner capacity choice is owed. Receipt: `artifacts/s2999/cache-completion.json`; live probe: `artifacts/s2999/live-probe.json`.
+
+codex
+I’m using the write-docs skill for the report and handoff. I’ll check eligible work, runner health and due duties, and preserve the seven-item Owner’s Desk verbatim.
+
+exec
+/bin/zsh -lc "node --input-type=module <<'NODE'
+import fs from 'node:fs';
+import {execFileSync} from 'node:child_process';
+const run=(c,a)=>execFileSync(c,a,{encoding:'utf8'}).trim();
+const dir='artifacts/s3517';
+const status=fs.readFileSync('STATUS.md','utf8'), prior=status.split('\\n')[0];
+if("'!prior.includes('"'s3516 handoff, lock CLEARED')) throw Error('Predecessor changed');
+if(run('git',['branch','--show-current'])"'!=='"'main'||run('git',['diff','--cached','--name-only'])) throw Error('Unexpected branch or index');
+const rows=run('ps',['-eo','pid,ppid,tty,stat,lstart,command']).split('\\n');
+let pid=process.pid, ancestry=[];
+for(let i=0;i<12&&pid>1;i++){const row=rows.find(l=>Number(l.trim().split(/\\s+/)[0])===pid);if("'!row)break;const parts=row.trim().split(/'"\\s+/);ancestry.push({pid,ppid:Number(parts[1]),fireLauncher:row.includes('scripts/fire-runner.sh'),codex:row.includes('codex')});pid=Number(parts[1]);}
+if("'!ancestry.some(p=>p.fireLauncher))throw Error('"'Not descended from lock-owning fire launcher');
+fs.mkdirSync(dir,{recursive:false});
+fs.writeFileSync(dir+'/predecessor.txt',prior+'\\n');
+fs.writeFileSync(dir+'/entry-head.txt',run('git',['rev-parse','HEAD'])+'\\n');
+fs.writeFileSync(dir+'/launcher.json',JSON.stringify({time:run('date',['-u','+%Y-%m-%dT%H:%M:%SZ']),lockMtime:fs.statSync('tasks/.fire.lock').mtime.toISOString(),ancestry},null,2)+'\\n');
+const lines=fs.readFileSync('logs/fire-20261110.log','utf8').split('\\n');
+fs.writeFileSync(dir+'/launcher-log.txt',lines.slice(-35).join('\\n')+'\\n');
+const stamp=run('date',['-u','+%Y-%m-%dT%H:%MZ']);
+const lock="'`ACTIVE ${stamp} (s3517 fire) — verify drain eligibility and heartbeat duties; preserve attended custody`;
+fs.writeFileSync(dir+'"'/lock.txt',lock+'\\n');
+fs.writeFileSync('STATUS.md',lock+status.slice(prior.length));
+console.log(run('git',['add','--','STATUS.md']));
+console.log(run('git',['commit','-m','s3517: lock ACTIVE — verify drains and heartbeat duties']));
+console.log(JSON.stringify(ancestry));
+NODE" in /Users/robin/Claude/Projects/Gold Rush
+
