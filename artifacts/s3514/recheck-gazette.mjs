@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import {execFileSync,spawn} from 'node:child_process';
+const dir='artifacts/s3514',read=p=>fs.readFileSync(p,'utf8');
+const first=JSON.parse(read(`${dir}/ledger-result.json`));if(first.code!==1||!first.unchanged||!first.headUnchanged)throw Error('Unexpected first-attempt receipt');
+for(const [a,b] of [['ledger-guards.txt','ledger-attempt-1.txt'],['ledger-result.json','ledger-attempt-1-result.json'],['ledger-manifest.json','ledger-attempt-1-manifest.json']])fs.renameSync(`${dir}/${a}`,`${dir}/${b}`);
+const stamp=execFileSync('date',['-u','+%Y-%m-%dT%H:%MZ'],{encoding:'utf8'}).trim(),now=execFileSync('date',['-u','+%Y-%m-%dT%H:%M:%SZ'],{encoding:'utf8'}).trim();
+const status=read('STATUS.md'),tested=read(`${dir}/tested-line1.txt`).trimEnd();if(status.split('\n')[0]!==tested)throw Error('STATUS changed externally');
+const line=`ACTIVE ${stamp} (s3514 fire) — ${read(`${dir}/handoff-body.txt`).trimEnd()}`;
+fs.writeFileSync('STATUS.md',line+status.slice(tested.length));fs.writeFileSync(`${dir}/tested-line1.txt`,line+'\n');
+fs.utimesSync('tasks/.fire.lock',new Date(now),new Date(now));
+const entry=read(`${dir}/entry-head.txt`).trim();const paths=['scripts/gazette-scan-space-guard.test.mjs','scripts/gazette-backfill-sweep.mjs','package.json','.nvmrc','marketing/outbox/gazette-queue.md'];
+const changed=execFileSync('git',['diff','--name-only',entry,'--',...paths],{encoding:'utf8'}).trim();if(changed)throw Error('Test inputs changed: '+changed);
+const env={...process.env,PATH:`/Users/robin/.nvm/versions/node/v26.4.0/bin:/Library/Developer/CommandLineTools/usr/bin:/opt/homebrew/bin:${process.env.PATH}`};
+const args=['--test','--test-concurrency=1','--test-timeout=300000','scripts/gazette-scan-space-guard.test.mjs'];
+const context={at:now,firstAttempt:first,unchangedSince:entry,paths,command:['node',...args],changeOfPremise:'Isolated run after the full battery ended and fresh process sampling no longer showed the earlier high-CPU Git activity. No assertion, timeout, test source or sweep source changes.',lockDirectoryRefreshedByOwner:true};
+fs.writeFileSync(`${dir}/gazette-recheck-context.json`,JSON.stringify(context,null,2));
+const fd=fs.openSync(`${dir}/gazette-recheck.txt`,'a');const start=Date.now();const child=spawn('/Users/robin/.nvm/versions/node/v26.4.0/bin/node',args,{env,stdio:['ignore',fd,fd]});child.on('close',(code,signal)=>{fs.closeSync(fd);const result={code,signal,seconds:(Date.now()-start)/1000,finished:new Date().toISOString()};fs.writeFileSync(`${dir}/gazette-recheck-result.json`,JSON.stringify(result,null,2));console.log(JSON.stringify(result));process.exitCode=code??1;});
