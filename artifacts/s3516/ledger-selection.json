@@ -1,0 +1,73 @@
+{
+  "files": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "selected": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 1,
+      "line": "🗓️ **RT-01 WEEK 46 MINTED LATE (s3511, 2026-11-10):** r2026w46 opens November 9 00:00 UTC and closes November 16 00:00 UTC; six seeds, all nine earlier rotations preserved, whole ten-rotation registry refreshed in public/skill.md. Week-45 continuity control matches 6/6. Canonical guards 36/36; tsc and both builds exit 0; E1 payload 34355296 B below 52,000,000 B. Review: reviews/rotation-r2026w46.md; evidence artifacts/s3511/. Public build 299b1db5 still ends at week 44, with both week-46 standings reads returning 400 bad_rotation and week-44 controls 200. The authorized attended deployment is OVERDUE and must carry the entire registry, then require ASSAYER SYNCED and served-registry/standings parity. No fire deployment or new owner decision. Next mint: week 47 on Wednesday November 11 00:00 UTC.",
+      "where": "1"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 3,
+      "line": "🗄️ **LB-01 + FM-01 NOVEMBER 10 COMPLETE (s3511, 2026-11-10):** Today's private snapshot and all seven missed November 3–9 snapshots recovered; coverage 79/79 days August 24–November 10. One rsync timeout interrupted gap recovery after November 5; the bounded retry copied the remaining four dates and passed exposure. Strict exposure inspected 5,904 keys in 79 readable mirrors: zero unreadable mirrors, account-class rows or unrecognised rows. Verified PRIVATE archive ledger-backups head c4585cfe7bef44dcded714b3ccb344846c471d75; FM-01 unchanged at verified 53d87470fb2670626fb4605d4dc0eb5bffd899fb. Private bytes remain outside this public repo. Next private duties November 11 after 02:10 UTC. Evidence: artifacts/s3511/private-duty-results.json, private-resume-results.json, ledger-fill-gaps-retry.txt, mirror-exposure.txt, mirror-freshness.txt, private-heads.txt and private-visibility.txt.",
+      "where": "3"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 5,
+      "line": "📰 **TK-01 NOVEMBER 2–9 COMPLETE (s3511, 2026-11-10 local):** Eight daily ticker drafts recover the missed UTC+07 windows. November 2 contains 36 main updates and 36 pinned first-parent commits; November 3–9 each contain zero in both sources. All subjects and changed paths inspected: zero player events or engine pins. September 25 busy-day control reproduces 136 commits; no non-ancestral updates. No Gazette item or publication for these historical days. Evidence: artifacts/s3511/ticker-census.json, ticker-census-summary.txt and marketing/outbox/ticker-digest-2026-11-02.md through ticker-digest-2026-11-09.md.",
+      "where": "5"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 7,
+      "line": "🟢 **RUNNER RECOVERED (s3511, 2026-11-10):** Fresh process scan and health-watch found no lane runner. The prescribed start-lane-runner.sh helper resolved Codex 0.157.0 and Node 23.11.1 but exceeded the fire's 120-second caller bound before its success banner. The child survived detached: PID 33370, PPID 1, TTY ??, started November 10 10:06:33 local. Fresh ps and runner log confirm it alive and watching after self-healing its stale lock. No dispatch or refill; all six queues empty, CODEX-WALL preserved. Original runner-exit cause unverified. Evidence: artifacts/s3511/runner-before.json, runner-restart.txt, runner-after.txt and runner-log-tail.txt.",
+      "where": "7"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 43,
+      "line": "🟢 **RUNNER RECOVERED (s3367, 2026-10-26T05:55Z):** Health-watch and process scan found no live lane runner. The prescribed start-lane-runner.sh helper, invoked through node, exited 0; PID 26518 started 2026-10-26 12:52:54 local, PPID 1, TTY ??, and the runner self-healed its stale lock. Subsequent ps and health-watch confirm ALIVE. The automatic attempts logged no usable Codex client/node; this invocation resolved Codex 0.157.0 and Node 23.11.1 from nvm. Cause of the original runner exit remains unknown. No dispatch or refill; all six queues empty, CODEX-WALL and attended custody preserved. Evidence: artifacts/s3367/runner-restart.txt, launcher.json, runner-log-tail.txt, health-watch.txt and report.md.",
+      "where": "43"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 203,
+      "line": "🔔 **ASSAYER SYNC VISIBILITY 1 — `assayer-sync-visibility-1` SHIPPED (s3307, 2026-10-23), merge `b5d6d3c3248fdf0c4f61c853c040b651c650cf4f`; F-SRV-3.** The deploy captures and scrubs both sync halves, records drift after a mid-step failure, clears it on success, and the health watcher alerts at most hourly. Gates: tsc and both builds exit 0; E1 payload 34,355,296 B; targeted guards 126/126; diff-selected batteries 5/5 (full Node exit 0); both deploy contracts; 34/34 adjacent browser checks and 2/2 plain boots with zero console/page errors. Engine hash unchanged. Review: reviews/assayer-sync-visibility-1.md; evidence: artifacts/assayer-sync-visibility-1/drain-s3307/. No public deployment by this fire.",
+      "where": "203"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 208,
+      "line": "💾 **F-BKP-1 (attended 2026-11-10T07:17Z; owner verbatim: \"this machine got water damaged and I have to backup things. Can you take care of that for Gold Rush?\" / \"just for your projects, for Gold Rush.\" / \"ok - if things are too large, then I have to get an USB drive. Make sure we separate code and generated other artefacts.\") — DISK RESCUE: CODE STAYS IN THE GIT REPOS ON GITHUB, GENERATED ARTEFACTS GO TO A SEPARATE PRIVATE STORE, THE OVERSIZE SETS WAIT FOR THE USB DRIVE.** Found safe already: GoldRush main and every lane branch by sha, GoldRush-assets main, GoldRush-history main a32e5a07c, GoldRush-archive (559 heads); no Time Machine destination, no external volume. Done on the owner's word: GoldRush-assets `fix/f-fc2-5` pushed; the gauntlet's 22 unpushed commits pushed whole (plus 239 MB LFS) to the PRIVATE GoldRush-archive as `backup/goldrush-gauntlet/main` (the public gauntlet repo stays unpushed, his standing hesitation); the refs GitHub refuses as pushes (GH001, blobs over 100 MB: the 2026-09-28 rejected lineage and two `save/*` of the working repo; six private-history refs, the stash, the codex snapshots) bundled (164 MB + 577 MB, scanned clean of credentials) and pushed as 90 MB parts to GoldRush-archive `backup/2026-11-10/bundles` with a restore README; a NEW private repo `Agent-Town/GoldRush-artefacts` receives the generated set (run logs, mirrors, untracked artifacts, ~/.goldrush evidence and ledger backups, memory notes, vault notes: 8.3 GB, 14,366 files, seven files over 95 MB split) in batched pushes. Quarantined from GitHub, USB only: 52 run logs whose text carries credential assignments (see F-BKP-2), `.env.local` and its backups, the rotation salt. The USB-ready folder is `~/GoldRush-backup-2026-11-10/` (bundles, credential logs, secrets at mode 600, `USB-COPY.sh`). USB-only by size: `Gold Rush-history-local/.git` 106 GB (85 GB of it Codex `refs/codex/turn-diffs` checkpoints; the three sprite-roster refs share 18.5 GB of `artifacts/sol/*` traces with nine blobs over 100 MB, extracted as files by the script), `~/.goldrush/launch-video` 26 GB, `gr-gauntlet` 199 GB without node_modules, the session transcripts 1.4 GB; about 380 GB in all. Measurement gotchas recorded in the vault note \"Gold Rush — disk rescue 2026-11-10 …\". **GATE: owner word — the USB drive (1 TB) mounted; then `bash ~/GoldRush-backup-2026-11-10/USB-COPY.sh /Volumes/<drive>` copies code/, artefacts/ and secrets/ separately.**",
+      "where": "208"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "n": 209,
+      "line": "🔑 **F-BKP-2 (attended 2026-11-10T07:17Z) — THE CURRENT OPENROUTER_API_KEY VALUE SITS IN TWO DISK-LOCAL RUN LOGS.** The rescue's credential scan (ripgrep, `NAME=value` with 24+ characters) flagged 52 run logs under `tasks/runs` and `logs/runs-archive` carrying assignments of AUTH_TOKEN, CLOUDFLARE_API_TOKEN, ELEVENLABS_API_KEY, OPENROUTER_API_KEY, ASSAY_WORKER_SECRET, CLAUDE_CODE_MESSAGING_TOKEN and BUG_OFFICE_TOKEN; compared by sha256 against `.env.local` (never printed), every value but one differs from today's (rotated 2026-09-24); the OPENROUTER_API_KEY value is CURRENT, in the 2026-08-10 lane-d upgrade-clock log and the 2026-08-23 art jumper-rotation-retake log. The logs were never pushed (disk-local by the 2026-08-26 ruling) and are quarantined from the artefact repo; they go to the USB drive only. **GATE: owner word — rotate the OpenRouter key (openrouter.ai/settings/keys) and put the new value in `.env.local` (recommended, five minutes), or rule the disk-local exposure acceptable.**",
+      "where": "209"
+    }
+  ]
+}
