@@ -1,0 +1,27 @@
+destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+remote /opt/goldrush-ledger/backups/ : 15 dated backup(s) (14-day window)
+local  /Users/robin/.goldrush/ledger-backups : 72 dated mirror(s)
+recoverable gap(s)    : 7
+  gap: ledger-2026-11-03.db
+  gap: ledger-2026-11-04.db
+  gap: ledger-2026-11-05.db
+  gap: ledger-2026-11-06.db
+  gap: ledger-2026-11-07.db
+  gap: ledger-2026-11-08.db
+  gap: ledger-2026-11-09.db
+filled: /Users/robin/.goldrush/ledger-backups/ledger-2026-11-03.db
+filled: /Users/robin/.goldrush/ledger-backups/ledger-2026-11-04.db
+filled: /Users/robin/.goldrush/ledger-backups/ledger-2026-11-05.db
+file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/ledger-backup-pull.mjs:205
+  if (result.status !== 0) throw new Error(`${command} failed (${result.status}): ${result.stderr.trim()}`);
+                                 ^
+
+Error: rsync failed (12): rsync(34599): error: poll: timeout
+    at run (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/ledger-backup-pull.mjs:205:34)
+    at fillRemoteGaps (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/ledger-backup-pull.mjs:144:5)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/ledger-backup-pull.mjs:33:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.4.0

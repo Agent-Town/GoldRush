@@ -3238,3 +3238,10 @@ Six fresh claim seeds are ready for November 2–9 UTC. Earlier weeks stay in
 the registry, and the public agent instructions include all nine rotations.
 merge `685bd41d9` · review `reviews/rotation-r2026w45.md`
 ROUNDUP-CLASS — 2026-W44; s3403 performs the October 28 RT-01 duty. On main, awaiting the next authorized deployment before November 2 00:00 UTC, followed by ASSAYER SYNCED and served-registry verification. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — Week 46 seeds are prepared for deployment
+Six claim seeds are ready for November 9–16 UTC. The complete ten-week
+registry preserves earlier weeks and is included in the agent instructions.
+merge `00ace4dee` · review `reviews/rotation-r2026w46.md`
+ROUNDUP-CLASS — 2026-W46; s3511 recovers the missed RT-01 mint. Prepared on main; current public week-46 standings still return bad_rotation. Awaiting authorized attended deployment and ASSAYER SYNCED. Draft only; publication stays owner-only.
