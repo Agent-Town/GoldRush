@@ -8744,3 +8744,10 @@ Verification and inherited-claim limits: artifacts/s3511/report.md. Week-46 mint
 2026-11-10T04:41Z. WHY no product landing: DRY, 95 subjects and four absorbed lanes; runner 33370 alive. Week-46 standings still return 400 bad_rotation on both hosts; public build 299b1db5 ends at week 44. Private coverage 79/79 through November 10; daily duties and November 9 ticker already complete. Evidence artifacts/s3512/report.md and ledger-result.json. Next: overdue attended deployment with ASSAYER SYNCED; week-47 mint November 11 00:00 UTC; next private duties November 11 after 02:10 UTC.
 
 Fresh checks and inherited-claim limits: artifacts/s3512/report.md. Runner 33370 alive; launcher 42745 → 42794 → 42796. CODEX-WALL, attended custody and the five-item desk are preserved. Daily receipts read, coverage and private heads freshly verified; no repeated private writes. November 9 ticker read without repeating its historical census. Final acceptance is artifacts/s3512/ledger-result.json; this entry does not anticipate it.
+
+
+### s3513 verification: dry board and current duties
+
+2026-11-10T06:12Z. WHY no product landing: DRY, 95 subjects and four absorbed lanes; runner 33370 alive. Week-46 standings still return 400 bad_rotation on both hosts; public build 299b1db5 ends at week 44. Private coverage 79/79 through November 10; daily duties and November 9 ticker already complete. Evidence artifacts/s3513/report.md and ledger-result.json. Next: overdue attended deployment with ASSAYER SYNCED; week-47 mint November 11 00:00 UTC; next private duties November 11 after 02:10 UTC.
+
+Fresh checks and inherited-claim limits: artifacts/s3513/report.md. Runner 33370 alive; launcher 56292 → 56680 → 56710. CODEX-WALL, attended custody and the five-item desk are preserved. Daily receipts read, coverage and private heads freshly verified; no repeated private writes. November 9 ticker read without repeating its historical census. Final acceptance is artifacts/s3513/ledger-result.json; this entry does not anticipate it.

@@ -1,0 +1,21 @@
+{
+  "at": "2026-11-10T06:11:47.789Z",
+  "ancestors": [
+    "PID  PPID TTY      STAT STARTED\n56710 56680 ??       S    Tue Nov 10 13:06:35 2026",
+    "PID  PPID TTY      STAT STARTED\n56680 56292 ??       S    Tue Nov 10 13:06:09 2026",
+    "PID  PPID TTY      STAT STARTED\n56292     1 ??       S    Tue Nov 10 12:58:53 2026"
+  ],
+  "lockMtime": "2026-11-10T05:59:14.033Z",
+  "runner": [
+    "PID  PPID TTY      STAT STARTED\n33370     1 ??       Ss   Tue Nov 10 10:06:33 2026"
+  ],
+  "fireStart": [
+    "[fire-runner] 13:06:08 FIRE START (engine codex, model from ~/.codex config)"
+  ],
+  "mainSemaphore": {
+    "file": "scripts/lane-runner-v3.sh",
+    "line": 322,
+    "predicate": "ACTIVE and not lock CLEARED"
+  },
+  "ownerProof": "Current agent 56710 is child of Codex launcher 56680, child of fire-runner.sh PID 56292; ps command verification confirms scripts/fire-runner.sh. Lock directory belongs to this launcher."
+}
