@@ -1,0 +1,16 @@
+{
+  "started": "2026-11-10T03:12:20.861Z",
+  "finished": "2026-11-10T03:15:29.701Z",
+  "node": "/Users/robin/.nvm/versions/node/v26.4.0/bin/node",
+  "args": [
+    "--test",
+    "--test-concurrency=1",
+    "scripts/skillmd-guard.test.mjs",
+    "scripts/landing-rotation-derivation.test.mjs",
+    "scripts/live-seed-rotation.test.mjs",
+    "scripts/bench-seeds.test.mjs"
+  ],
+  "code": 0,
+  "signal": null,
+  "reason": "Use the existing RT-01 guard set and .nvmrc Node binary; initial invocation named a nonexistent mint test and used Homebrew Node."
+}
