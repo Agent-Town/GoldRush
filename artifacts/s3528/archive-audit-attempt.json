@@ -1,0 +1,8 @@
+{
+  "command": "node scripts/status-archive-audit.mjs",
+  "timeoutMs": 60000,
+  "result": "ETIMEDOUT",
+  "signal": "SIGTERM",
+  "stdoutSummary": "Unbounded walk selected 7710 STATUS commits, estimated 18.2 minutes, and advised --limit 40 --quiet for the regression question.",
+  "adaptation": "Run maintained bounded regression scope; preserve the exact predecessor line separately."
+}
