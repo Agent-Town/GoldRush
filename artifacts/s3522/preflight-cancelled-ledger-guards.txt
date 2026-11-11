@@ -1,0 +1,779 @@
+
+> gold-rush@0.1.0 test:ledger-guards
+> node --test --test-timeout=300000 scripts/guard-stats-persistence.test.mjs scripts/health-watch-fire-line-guard.test.mjs scripts/guard-stats-test-isolation-guard.test.mjs scripts/vite-only-import-reachability-guard.test.mjs scripts/finding-id-pattern-guard.test.mjs scripts/nul-audit-corpus-guard.test.mjs scripts/art-staging-corpus-header-guard.test.mjs scripts/withheld-evidence-audit-guard.test.mjs scripts/gazette-weekly-budget-guard.test.mjs scripts/modified-tracked-evidence-census-guard.test.mjs scripts/census-bucket-ownership-guard.test.mjs scripts/census-could-not-answer-split-guard.test.mjs scripts/worktree-registry-ledger-guard.test.mjs scripts/untracked-evidence-durability-guard.test.mjs scripts/null-floor-compare-guard.test.mjs scripts/goal-tracker.test.mjs scripts/goal-closure-reason.test.mjs scripts/ruling-propagation-guard.test.mjs scripts/law-pointer-guard.test.mjs scripts/law-pointer-surface-count-guard.test.mjs scripts/gate-caller-audit.test.mjs scripts/block-class-guard.test.mjs scripts/block-class-guard-worktree.test.mjs scripts/banked-master-preflight-guard.test.mjs scripts/stale-hold-verdict-guard.test.mjs scripts/claimed-spec-harness-guard.test.mjs scripts/stale-ready-for-gates-guard.test.mjs scripts/stale-successor-pointer-guard.test.mjs scripts/stopped-leaf-supersession-guard.test.mjs scripts/desk-carryforward-guard.test.mjs scripts/desk-birth-guard.test.mjs scripts/desk-state-audit.test.mjs scripts/desk-unrecorded-mention-guard.test.mjs scripts/ghost-ladder-row-guard.test.mjs scripts/authorable-candidates.test.mjs scripts/authorable-unpriced-block-guard.test.mjs scripts/authorable-single-read-guard.test.mjs scripts/fixture-corpus-copy-guard.test.mjs scripts/salvage-art-staging-reach.test.mjs scripts/dry-board-probe.test.mjs scripts/dry-board-advisory-prescription-guard.test.mjs scripts/dry-board-probe-corpus-guard.test.mjs scripts/dry-board-probe-worktree-guard.test.mjs scripts/dry-board-bucket-verdict-guard.test.mjs scripts/dry-board-sibling-refusal-guard.test.mjs scripts/dry-board-sibling-refusal-banner-guard.test.mjs scripts/dry-board-detached-head-guard.test.mjs scripts/drain-block-ancestry-guard.test.mjs scripts/master-shipped-review-source-guard.test.mjs scripts/master-shipped-crash-exit-guard.test.mjs scripts/review-evidence-crash-exit-guard.test.mjs scripts/review-evidence-scan-space-guard.test.mjs scripts/art-staging-local-only-source-guard.test.mjs scripts/art-staging-gitdir-link-guard.test.mjs scripts/dispatch-corpus-guard.test.mjs scripts/master-shipped-goals-source-guard.test.mjs scripts/lane-usable-pathspec-root-guard.test.mjs scripts/lane-usable-gate-leaf-surface-guard.test.mjs scripts/lane-usable-stale-pid-guard.test.mjs scripts/lane-usable-untracked-files-guard.test.mjs scripts/lane-usable-fleet-coverage-guard.test.mjs scripts/lane-usable-dirt-durability-guard.test.mjs scripts/master-shipped-worktree-guard.test.mjs scripts/drain-block-worktree-guard.test.mjs scripts/drain-block-subject-divergence-guard.test.mjs scripts/drain-block-queue-nearmiss-guard.test.mjs scripts/attended-owed-anchor-tree-guard.test.mjs scripts/ghost-ladder-worktree-guard.test.mjs scripts/ghost-ladder-subject-set-guard.test.mjs scripts/collection-guards-subject-set-guard.test.mjs scripts/desk-family-worktree-guard.test.mjs scripts/desk-lock-predicate-guard.test.mjs scripts/desk-tail-anchor-guard.test.mjs scripts/desk-row-key-token-guard.test.mjs scripts/desk-birth-prefix-token-guard.test.mjs scripts/desk-carryforward-ack-token-guard.test.mjs scripts/desk-carryforward-worktree-guard.test.mjs scripts/battery-manifest-attribution-guard.test.mjs scripts/desk-frozen-tree-unverifiable-guard.test.mjs scripts/corpus-tree-unverifiable-guard.test.mjs scripts/desk-detached-head-guard.test.mjs scripts/detached-head-instruments-guard.test.mjs scripts/attended-owed-cross-check-value-guard.test.mjs scripts/ghost-ladder-evidence-source-guard.test.mjs scripts/nul-audit-subject-scope-guard.test.mjs scripts/refusal-reason-corpus-guard.test.mjs scripts/desk-birth-gate-distance-guard.test.mjs scripts/desk-declaration-segment-denominator-guard.test.mjs scripts/desk-birth-row-denominator-guard.test.mjs scripts/desk-birth-gateless-row-guard.test.mjs scripts/guard-source-snapshot-race-guard.test.mjs scripts/desk-birth-window-start-guard.test.mjs scripts/desk-status-single-read-guard.test.mjs scripts/status-line1-desk-displacement-guard.test.mjs scripts/status-line1-future-stamp-scope-guard.test.mjs scripts/status-archive-arg-guard.test.mjs scripts/status-archive-empty-corpus-guard.test.mjs scripts/status-archive-supersession-guard.test.mjs scripts/status-archive-abridged-declaration-guard.test.mjs scripts/terrain-canonicalization-domain-guard.test.mjs scripts/terrain-comparator-margin-guard.test.mjs scripts/reaching-contract-extent-guard.test.mjs scripts/foundry-kit-token-derivation-guard.test.mjs scripts/bash-leg-misuse-code-guard.test.mjs scripts/cross-engine-engine-source-guard.test.mjs scripts/desk-word-single-source-guard.test.mjs scripts/blocker-panel-classifiable-guard.test.mjs scripts/source-pointer-guard.test.mjs scripts/start-lane-runner-citation-guard.test.mjs scripts/law-bash-prescription-guard.test.mjs scripts/runner-env-provenance-guard.test.mjs scripts/gazette-scan-space-guard.test.mjs scripts/no-emdash-scan-space-guard.test.mjs scripts/ledger-mirror-freshness-guard.test.mjs scripts/ledger-pull-supply-window-guard.test.mjs scripts/ledger-backup-fill-gaps-guard.test.mjs scripts/ledger-mirror-exposure-guard.test.mjs scripts/ledger-mirror-column-class-guard.test.mjs scripts/edge-probe-composite-guard.test.mjs scripts/edge-alarm-clock-guard.test.mjs scripts/triage-instrument-spawn-bound-guard.test.mjs scripts/spawn-census-mask-regex-guard.test.mjs server/codex-shim/serve.test.mjs && node scripts/ghost-ladder-row-guard.mjs --strict && npm run test:findings-state && npm run test:blocker-panel && npm run test:ruling-propagation && npm run test:citations && npm run test:desk-declaration && npm run test:desk-birth && node scripts/desk-carryforward-guard.mjs && node scripts/status-archive-audit.mjs --limit 40 --quiet && node scripts/attended-owed-audit.mjs && bash scripts/main-lock-gate-guard.test.sh && bash scripts/janitor-request-rejection.test.sh && bash scripts/lane-dispatch-safety-guard.test.sh && bash scripts/codex-client-floor.test.sh && bash scripts/runner-restart-recipe.test.sh && bash scripts/runner-commit-decoupling-guard.test.sh && node scripts/ledger-mirror-exposure.mjs && node scripts/nul-audit.mjs && node scripts/source-pointer-guard.mjs && bash foundry/kit/test-init.sh
+
+[s3522] ledger scheduling: --test-concurrency=1; assertions and timeouts unchanged
+✔ REVERSE CONTROL — a genuinely clean board still reports AT RISK 0 with a POPULATED header (no manufactured alarm) (508.025792ms)
+✔ validity — the healthy arm really does see a file whose bytes are in no object database (489.294208ms)
+✔ THE HARM — an ABSENT staging root is byte-identical to a clean board on BOTH buckets the ART-SLOT LAW prescribes (927.625208ms)
+✔ THE DISCRIMINATOR — the corpus header DOES separate an emptied scan set from a clean one (916.762167ms)
+✔ the declaration is printed on the HAPPY path too — one that appears only on failure re-creates the ambiguity it removes (F-2208-1) (477.694916ms)
+✔ REVERSE CONTROL — the header COUNTS track the real scan set; they are not a constant (675.254333ms)
+✔ THE LAW must tell a fire to read the discriminator, not only the two buckets that cannot (F-2449-1) (1.6275ms)
+✔ 1. a cp -R copy of a linked worktree is classified `shared` and names its owner (309.972834ms)
+✔ 2. the human channel names the borrowed lane ON THE ROW, not merely somewhere (309.6695ms)
+✔ 3. the hazard paragraph prints when any tree is shared (302.956584ms)
+✔ 4. REVERSE CONTROL — a self-contained tree with no .git is NOT shared (450.86425ms)
+✔ 5. REVERSE CONTROL — a gitdir no registered worktree owns is `orphan`, not `shared` (461.563791ms)
+✔ 6. REVERSE CONTROL — an independent repository is `own-repo`, not `shared` (324.349458ms)
+✔ 7. a .git that cannot be parsed is `unverifiable` — declared, never assumed benign (457.31125ms)
+✔ 8. REVERSE CONTROL — it DECLARES and does not REFUSE: a shared tree moves NO exit code (1877.61425ms)
+✔ 9. REVERSE CONTROL — a REGISTERED worktree never enters the unowned list at all (308.086708ms)
+✔ 10. F-2208-1 — the link is declared on EVERY row, including the benign ones (326.916334ms)
+✔ REVERSE CONTROL — real unpushed content refuses with 1, not 2 (a cure that collapses the two codes is caught here) (830.048958ms)
+✔ origin/main ref unavailable while the remote and its other refs are present — --strict refuses with 2, never 0 (780.545541ms)
+✔ a transient failure of that one call, origin/main present — declared distinctly, --strict refuses with 2 (1237.799333ms)
+✔ the advisory default still exits 0 even when the source did not run — a routine audit must never block a drain (897.796708ms)
+✔ REVERSE CONTROL — the declaration is printed on the HAPPY path too, so "asked and empty" is distinguishable from "never asked" (692.0345ms)
+✔ REVERSE CONTROL — a genuinely clean board stays quiet in both modes (a cure that manufactures an alarm is caught here) (872.634416ms)
+✔ 1. root, cure landed on main: LANDED-NOT-ARCHIVED at rc=1 (legacy behaviour intact) (297.099584ms)
+✔ 2. THE DEFECT: linked worktree, stale target, main carries the anchor -> reds, not OPEN (321.801542ms)
+✔ 3. REVERSE CONTROL: nothing landed anywhere -> plain OPEN at rc=0, no false red (253.160458ms)
+✔ 4. REVERSE CONTROL: a linked worktree whose main ALSO lacks the anchor must not red (249.627ms)
+✔ 5. the declaration names the tree on the happy path too (F-2208-1) (258.391334ms)
+✔ 6. the declaration names a LINKED WORKTREE as the cause, breaking byte-identity (548.356708ms)
+✔ 7. a non-git fixture root is LAWFUL: git exit 128 must not refuse or crash (96.5885ms)
+✔ 8. --strict still reds a plain OPEN, and the stale arm reds in BARE mode (653.515875ms)
+✔ 1. THE DEFECT: a frozen tree whose cross-check could not run must SAY SO, not print plain OPEN (596.497542ms)
+✔ 2. the uncross-checked arm is NOT byte-identical to a genuinely clean board (596.085584ms)
+✔ 3. --strict separates 2 ("could not answer") from 1 ("answered, and refuses") (588.626542ms)
+✔ 4. REVERSE CONTROL: an uncross-checked item must NOT red BARE mode (359.928458ms)
+✔ 5. REVERSE CONTROL: a non-git fixture root stays silent and green (96.811ms)
+✔ 6. REVERSE CONTROL: from the MAIN worktree the cross-check is inert — do not declare (268.084042ms)
+✔ 7. the landed-on-main branch still fires: a healthy frozen tree reds STALE-TREE-OPEN (295.159ms)
+✔ 8. the count is declared on the happy path too (F-2208-1) (248.4175ms)
+✔ an UNPRICED planned leaf is reported and fails --strict (69.803667ms)
+✔ the default stays advisory — an unpriced leaf must not red the board (69.486333ms)
+✔ a structured authoringBlock is classified, cited, and priced (71.437417ms)
+✔ attended-owed is reported as its own class, never folded into owner-gated (65.091833ms)
+✔ an UNKNOWN declared class degrades to unclassified and says so, rather than being trusted (69.298459ms)
+✔ a legacy prose key counts as priced but is marked class-unreadable (69.291291ms)
+✔ the note_sNNNN family resolves — a reason must not be missed for its spelling (0.579041ms)
+✔ an authoringBlock WITHOUT a reason is not a price — it falls through (0.346458ms)
+✔ non-planned leaves are outside the denominator (1.159375ms)
+✔ planned leaves are found at any depth, through subgoals AND tasks (0.328166ms)
+✔ a leaf in a status NO instrument resolves is named in the residue (69.397834ms)
+✔ the residue is ADVISORY — an unresolved status must not trip --strict (83.325209ms)
+✔ statuses SOME instrument resolves stay out of the residue (67.876541ms)
+✔ the mirrored status set does not drift from drain-block-check own literals (1.385417ms)
+✔ unresolvedStatuses finds residue at any depth and sorts by count (0.543583ms)
+✔ the corpus is read exactly ONCE per verdict (the property, not a message) (1.127334ms)
+✔ the residue consumes the SAME parsed object the rows came from (0.506667ms)
+✔ DEFECT ARM: a splice that COMPLETES cannot move the residue (140.335625ms)
+✔ DEFECT ARM: a splice that TRUNCATES cannot vanish the residue (142.787708ms)
+✔ PRE-CURE restored verbatim: the completing splice DIVERGES (proves these arms have teeth) (154.337791ms)
+✔ PRE-CURE restored verbatim: the truncating splice loses the residue at a COMPLETE headline (70.902958ms)
+✔ REVERSE CONTROL: a genuinely healthy board is unchanged — verdict, counts and rc (69.454917ms)
+✔ REVERSE CONTROL: reading once must not silence UNPRICED — the verdict still reds (68.0945ms)
+✔ REVERSE CONTROL: auditRoot keeps its signature and behaviour for the legacy suite (5.892834ms)
+✔ the two UNPRICED branches are not byte-identical — the conflation itself (79.208709ms)
+✔ an unreadable block names the evidence it still carries (78.837917ms)
+✔ an unreadable block does NOT tell the reader to measure it themselves (76.5945ms)
+✔ the ABSENT branch is declared too, not left silent (F-2208-1) (76.276625ms)
+✔ an unreadable block with nothing salvageable says repair, not re-measure (75.156125ms)
+✔ REVERSE CONTROL: verdict and counts are unchanged — no new class invented (75.387ms)
+✔ REVERSE CONTROL: a readable block is still priced, with its class and reason (76.387542ms)
+✔ REVERSE CONTROL: it DECLARES and does not refuse — advisory still exits 0 (155.821208ms)
+✔ REVERSE CONTROL: a prose key still wins over an unreadable block (0.526666ms)
+✔ the readability predicate is DERIVED, not re-typed (F-2227-1) (0.704458ms)
+✔ blockState is a STRING, so a careless truthiness test errs toward noticing (F-2212-1) (0.203625ms)
+✔ a non-object authoringBlock is PRESENT, not absent (78.518375ms)
+✔ every banked master carries the current main-slot pre-flight exception (17.085292ms)
+✔ MANUFACTURED: a master that disclaims a pre-flight is not treated as declaring one (0.438542ms)
+✔ CONTROL: an affirmative pre-flight is still a declaration, in every form the corpus uses (0.1805ms)
+✔ the negation is scoped — a master that disclaims one pre-flight but declares another still counts (0.187792ms)
+✔ MANUFACTURED: an affirmative pre-flight WITHOUT the cure is still an offender (0.182583ms)
+✔ every banked lane master resets the branch its own worktree is actually on (29.883625ms)
+✔ the derived leg set covers the contract floor (a leg removed reds by name) (0.917166ms)
+✔ every bash leg refuses an ABSENT subject with MISUSE and exit 2 (122.456667ms)
+✔ REVERSE CONTROL: a PRESENT but unparseable subject still exits 1 and still says "does not parse" (29.705959ms)
+✔ REVERSE CONTROL: a healthy board prints no MISUSE (the precondition cannot decay into a banner) (942.611209ms)
+✔ a test file named by a NON-node-guards battery is attributed to its file (88.829458ms)
+✔ PRE-CURE CONTROL: the single-battery roster leaves the other battery unattributed (82.564709ms)
+✔ unattributed rows are COUNTED, not merely marked <unknown> row by row (88.169708ms)
+✔ the declaration is present on the HAPPY path, not only when something is wrong (81.904458ms)
+✔ an unreadable package.json DECLARES log-only rather than pretending to a roster (70.317ms)
+✔ --diff flags a DEGRADED comparison when either side has unattributed rows (222.348417ms)
+✔ REVERSE CONTROL: a fully attributed diff carries NO attribution line (232.599167ms)
+✔ REVERSE CONTROL: widening the roster does not re-point a name shared by two files (85.069042ms)
+✔ linked worktree declares exactly the two reached cross-checks as loud skips (365.773291ms)
+✔ repo-root verdict and rc are byte-identical to the pre-cure subject (1207.502958ms)
+✔ manufactured pre-cure spawn reds exactly two arms in the linked worktree (569.586125ms)
+✔ manufactured forced-main cwd is caught by denominator parity (592.1545ms)
+✔ manufactured unconditional skip is caught at the repo root (879.913334ms)
+✔ every blocked leaf declares a valid blockClass (13.783292ms)
+✔ disputed leaves are surfaced, not silently accumulated (9.2155ms)
+✔ every blocked leaf is visible to the §3.0 drain guard (denominator parity) (137.176208ms)
+✔ every blocked leaf refuses the drain under the name a fire would type (736.224625ms)
+✔ drain-block-check prints class-specific verdicts, and gate-side is not called owner debt (198.331833ms)
+✔ GROUND TRUTH — with the panel intact, the closed-on-panel finding IS caught (124.456042ms)
+✔ THE DEFECT — the same board, with the panel truncating past the id, must REFUSE not PASS (110.837291ms)
+✔ REVERSE CONTROL — an EMPTY panel is lawful and must not refuse (100.705917ms)
+✔ REVERSE CONTROL — a panel row naming no F-ID is lawful while another row carries one (133.176375ms)
+✔ REVERSE CONTROL — --report stays advisory even on the unclassifiable board (129.242459ms)
+✔ the live root is unaffected — the cure is behaviour-neutral where it matters (1009.868291ms)
+✔ control: the fixture census really ran and classified subjects (418.896375ms)
+✔ the per-bucket ownership section is printed (207.789667ms)
+✔ every non-SAFE bucket carries its own FACTORY-SIDE/attended split (213.956084ms)
+✔ a FACTORY-SIDE LOCAL-REF-ONLY row is NAMED — the arm the live board can never reach (205.679458ms)
+✔ the declaration prints on the ALL-CLEAR too, not only when something is wrong (F-2208-1) (205.1795ms)
+✔ the section warns that a non-SAFE verdict is not by itself an owed act (F-2570-1/F-2571-1) (209.744334ms)
+✔ --json carries the same fact, for every non-SAFE bucket (213.398417ms)
+✔ --json still carries the pre-existing desk keys (behaviour-neutral, F-1274-2) (206.310375ms)
+✔ REVERSE CONTROL: --strict still keys on FACTORY-SIDE AT RISK alone (823.326541ms)
+✔ the ownership predicate is the subject's own isFactorySide, not a second copy (F-1261-1) (0.674708ms)
+✔ 1. evidenceFileCount is exported (17.035584ms)
+✔ 2. an evidence directory holding no files counts zero, and is NOT null (2.380958ms)
+✔ 3. surviving evidence files are counted with their bytes (6.959834ms)
+✔ 4. a symlinked directory is NOT followed — it would count another tree (9.055084ms)
+✔ 5. an unreadable evidence directory returns null, not a zero (2.162875ms)
+✔ 6. the split declaration prints, and prints on the all-hollow path too (392.798041ms)
+✔ 7. a gitless tree that still holds evidence is named with its count (395.222958ms)
+✔ 8. the remedy names the two runnable git commands beside the alarm (382.811333ms)
+✔ 9. REVERSE CONTROL: with nothing unreadable, neither the bucket nor the split prints (399.364208ms)
+✔ 10. REVERSE CONTROL: a HOLDING tree declares and does not refuse (398.330541ms)
+✔ 11. hollow and holding are separated within a single board (446.246666ms)
+✔ 12. the forward pointer prints ABOVE the split block it names (387.239125ms)
+✔ 13. the forward pointer names the count and the bytes it is protecting (398.4ms)
+✔ 14. REVERSE CONTROL: no pointer when there is nothing unreadable, nor when all-hollow (871.536417ms)
+✔ the claimed-spec -> owning-config map is DERIVED, not tabulated (5.548958ms)
+✔ derivation REFUSES rather than silently measuring nothing if the array is renamed (2.691792ms)
+✔ MANUFACTURED: a claimed spec whose owning config has NO npm caller is named (2.820375ms)
+✔ a runnerless harness WARNS and never changes the exit code (82.010084ms)
+✔ NO package.json is not the same as no caller — a synthetic root must stay silent (78.87275ms)
+✔ MANUFACTURED: a bare playwright command naming a claimed spec FAILS the guard (76.621917ms)
+✔ MANUFACTURED: a CHECKLIST-form adjacent-suite line FAILS the guard (why arm (b), not (a)) (77.917875ms)
+✔ MANUFACTURED: a mention inside the SELF-CHECK region FAILS the guard (80.37725ms)
+✔ a DESCRIPTIVE mention outside any gate region is NOT an offender (why not arm (c)) (79.567125ms)
+✔ naming the owning CONFIG clears the master (85.697792ms)
+✔ naming the npm ALIAS clears the master (75.7395ms)
+✔ the guard actually RUNS when invoked as a script (entrypoint is not a silent no-op) (365.637042ms)
+✔ the live board has no LIVE offender (252.31125ms)
+✔ every grandfathered file is still a real offender (no stale excuses) (252.078625ms)
+✔ the guard sets process.exitCode and never force-exits (F-2098-1) (1.094375ms)
+✔ 1. the live subject set is derived, non-empty, and holds both known collection guards (98.765584ms)
+✔ 2. every file that spawns playwright list-mode carries the marker, or is exempt by name (71.115375ms)
+✔ 3. self-extension: a NEW marked subject is picked up with no edit to the guard (784.723625ms)
+✔ 4. TEETH: a marked subject with a cwd-relative corpus root REDS the guard (639.425625ms)
+✔ 5. reverse control: an UNMARKED playwright-mentioning file is not selected, and the empty set REFUSES (183.457583ms)
+✔ 6. a marked file is excluded from its OWN subject set — no guard can spawn itself (3.767291ms)
+✔ 7. TEETH: the census sees a guard that spawns via execFileSync, not only via `spawn` (0.343625ms)
+✔ 8. reverse control: widening did not reach into prose that merely QUOTES list-mode (0.334917ms)
+✔ 9. reverse control: the by-name exemption is load-bearing and swallows no real subject (20.328333ms)
+✔ desk-declaration-guard: an UNIDENTIFIABLE tree must REFUSE, not PASS (955.822458ms)
+✔ desk-birth-guard: an UNIDENTIFIABLE tree must REFUSE, not PASS (525.839833ms)
+✔ desk-carryforward-guard: an UNIDENTIFIABLE tree must REFUSE, not PASS (470.932375ms)
+✔ the tree refusal is distinct from the COMPARISON refusal — they owe different acts (750.002667ms)
+✔ the tree refusal does not ASSERT a linked worktree it never established (384.804666ms)
+✔ REVERSE CONTROL: a non-git root is LAWFUL and must still PROCEED (102.661625ms)
+✔ REVERSE CONTROL: a genuinely clean MAIN with healthy git still passes (335.437167ms)
+✔ a MAIN tree whose probe FAILED must refuse too — you cannot know it is main (375.486709ms)
+✔ frozenTreeCheck tests the failure value EXPLICITLY, not by inequality alone (1.29125ms)
+✔ both cross-engine consumers read the engine list from the shared module (2.896708ms)
+✔ no consumer keeps a private copy of an engine path (0.550292ms)
+✔ the shared resolver drops candidates that are not installed (0.893042ms)
+✔ the declared candidate list can still support a cross-engine comparison (34.323458ms)
+✔ both consumers see the same engine count — it is the argument the ruling turns on (1.389375ms)
+✔ a GATE: OWNER row is decided at the gate marker itself, not somewhere downstream (2.2015ms)
+✔ a positive owner verb is reported AT ITS OFFSET, not as a bare boolean (1.994584ms)
+✔ a NON-owner gate reports -1 — the two functions must agree in both directions (0.22125ms)
+✔ a NEGATED owner verb does not decide (F-1551-4 disclaimer handling is preserved) (0.172167ms)
+✔ the NEAREST admission wins when both forms match — a far incidental cite must not mask a real gate (0.326292ms)
+✔ THE LIVE FALSE-POSITIVE SHAPE: `GATE: none` admitted by a distant recorded ruling reports a large offset (0.321083ms)
+✔ REVERSE CONTROL: a far-decided row still QUALIFIES — the distance must never gate membership (1.165417ms)
+✔ REVERSE CONTROL: a NEAR-decided row is unaffected — the cure is additive, not selective (0.343417ms)
+✔ THE SEAM (F-2209-1): analyse() attaches decidedAt to EVERY qualifying row (0.292ms)
+✔ F-2331-1: a QUOTED gate clause is admitted, and reports the same offset 0 as a real one (0.251958ms)
+✔ F-2331-1: analyse() acts on it — a quoted gate reaches `missing` and reds the fire (0.17475ms)
+✔ F-2331-1 REVERSE CONTROL: the backtick-skip cure flips verdicts BOTH ways, so it is refused (0.559292ms)
+✔ AGREEMENT INVARIANT over the LIVE ledger: decidedAt !== -1 exactly when isOwnerGate is true (73.576792ms)
+✔ 1 — a gateless row declaring an owner ACT is admitted and, undesked, FAILS (3.230125ms)
+✔ 2 — the same row, DESKED, is admitted and does NOT fail (reverse control) (1.381125ms)
+✔ 3 — the row really has no gate clause, so the OLD selector could not see it (0.475542ms)
+✔ 4 — a NEGATED owner ask is not an owner ask (F-1551-4, same sentence scope) (0.272417ms)
+✔ 5 — a CLOSURE record declaring an owner act is SUPPRESSED, not flagged (0.210375ms)
+✔ 6 — suppression is COUNTED, never silent (F-2259-1: declare the denominator) (0.179458ms)
+✔ 7 — closureMarked keys on the vocabulary, glyph or word (0.322583ms)
+✔ 8 — main() DECLARES the arm on the happy path, not only on failure (421.38775ms)
+✔ 9 — PRE-CURE analyse (gate arm only) misses the row entirely (122.909834ms)
+✔ 10 — REVERSE CONTROL: dropping the closure filter re-admits closure records (116.928458ms)
+✔ 11 — REVERSE CONTROL: an ACT arm that ignores an existing gate clause over-reaches (126.100416ms)
+✔ 12 — REVERSE CONTROL: the FAIL text for an ACT row must not cite a "GATE:" offset (373.673625ms)
+✔ the SELECTOR admits an owner ACT and refuses a gate that merely says the word (3.491083ms)
+✔ a NEGATED owner gate is a disclaimer and must NOT flag (F-1551-4) (0.788542ms)
+✔ negation handling does not disarm the guard — every positive still flags (0.203833ms)
+✔ a negation is scoped to its own sentence, so a mixed gate keeps its owner half (0.158916ms)
+✔ the selector reads the other real owner-gate phrasings on the board (0.180292ms)
+✔ and refuses the fire-actionable phrasings that sit beside them (0.172042ms)
+✔ a row is keyed by the id it INTRODUCES, not one its prose cites (0.3275ms)
+✔ gateOf takes the LAST gate clause, since row prose quotes earlier ones (0.133666ms)
+✔ MANUFACTURED DEFECT — an owner-gated row filed with no desk mention is named (1.429209ms)
+✔ THE REAL s1540->s1541 EVENT: both undesked owner rows are caught, the six others are not (0.5665ms)
+✔ ...and once they are ON the desk, the same window passes (0.272667ms)
+✔ the desk is the LAST desk word, so an upstream PROSE mention does not satisfy it (0.197375ms)
+✔ DESK-NOT-OWED excuses an id, and is scoped so it cannot cover an unrelated one (0.381875ms)
+✔ SKIPS mid-fire on an ACTIVE lock, so drain batteries are unaffected (0.151959ms)
+✔ REFUSES rather than greening when line-1 carries no desk at all (0.11975ms)
+✔ the backtick header is readable here too — the three desk parsers stay in step (0.206542ms)
+✔ addedRows reads the ledger glyphs and ignores diff noise (0.296333ms)
+✔ control: an ordinary owner-gated row already on the desk reaches the verdict path and passes (7.834667ms)
+✔ THE DEFECT (truncation): a row keyed by a SUB-ID is not answered for by its PARENT (0.910458ms)
+✔ THE DEFECT (shadow): a row keyed by a PARENT is not answered for by a longer SUB-ID (0.3985ms)
+✔ a sub-id genuinely ON the desk keys ITSELF and is not flagged (0.374541ms)
+✔ an id genuinely ABSENT from the desk is still flagged (0.395958ms)
+✔ ordinary desk markup still satisfies the containment — no over-strict boundary (0.635708ms)
+✔ the TRAILING hyphen exclusion is load-bearing on the multi-segment alpha families (0.37375ms)
+✔ DESK-NOT-OWED of a LONGER id does not excuse a distinct shorter row key (0.450458ms)
+✔ DESK-NOT-OWED of the EXACT id still excuses it — the escape hatch survives (0.328542ms)
+✔ TEETH: the pre-cure source reds the defect arms and leaves the reverse controls green (6.616417ms)
+✔ TEETH: the REFUTED ledger-anchored grammar makes a sub-id row VANISH (5.774125ms)
+✔ TEETH: curing only the KEY side leaves the shadow hazard live (5.536916ms)
+✔ TEETH: reverting only the DESK-NOT-OWED site leaves that hatch leaking (6.267625ms)
+✔ TEETH: excluding the hyphen on the LEADING side reds the ordinary-markup arm (5.38ms)
+✔ TEETH: dropping the hyphen from the TRAILING side re-opens the multi-segment shadow (7.301542ms)
+✔ TEETH: a helper loosened until nothing reds is caught by the absent-id arm (5.727541ms)
+✔ TEETH: a helper tightened until nothing passes is caught by the control (6.30275ms)
+✔ 1 — a row using BOTH house conventions at once escapes the parser and is NAMED (3.085542ms)
+✔ 2 — a bare-glyph row is ADMITTED, so it must NOT be reported (reverse control) (0.83625ms)
+✔ 3 — a bullet row with a BARE **F- key is ADMITTED too (the other convention) (0.21175ms)
+✔ 4 — an excluded row with NO owner gate is NOT reported (qualifying set, not corpus) (0.628709ms)
+✔ 5 — an excluded row with an owner gate but NO key is NOT reported (0.193875ms)
+✔ 6 — a glyph outside the admitted four escapes and is reported (0.182458ms)
+✔ 7 — CLI: an escaping UNDESKED owner fork is NAMED and still exits 0 (declare, do not refuse) (288.862917ms)
+✔ 8 — CLI: the denominator is declared on the HAPPY path too (F-2208-1) (298.277458ms)
+✔ 9 — CLI: the VERDICT is unchanged — an admitted undesked owner row still FAILS (267.088417ms)
+✔ 10 — CLI: an escaping row does not inflate the owner-gated count it sits under (278.115958ms)
+✔ 1 — an ADDENDUM does not collapse the window onto this fire: the undesked row still FAILS (306.104958ms)
+✔ 2 — the window start names the PREVIOUS FIRE, not this one (327.847458ms)
+✔ 3 — an ordinary fire with NO addendum is untouched (reverse control) (275.751542ms)
+✔ 4 — MULTIPLE addenda are all skipped, not just the first (341.174792ms)
+✔ 5 — a genuinely clean board WITH an addendum still PASSES (reverse control) (318.489167ms)
+✔ 6 — nothing is declared when nothing was skipped (reverse control) (273.662334ms)
+✔ 7 — the skip IS declared when it happens, and says how many (368.76425ms)
+✔ 8 — with NO earlier FIRE at all, it REFUSES rather than passing over nothing (397.350584ms)
+✔ a sub-id acknowledgement does NOT excuse the parent it merely prefixes (3.596125ms)
+✔ a prose inflection of an id does NOT excuse that id (0.469209ms)
+✔ REVERSE CONTROL — a genuine acknowledgement of the exact id still excuses it (0.289334ms)
+✔ REVERSE CONTROL — ordinary desk markup around the id must still count as named (0.443375ms)
+✔ REVERSE CONTROL — a backticked SLUG item is excused by naming it, not by a longer slug (0.354292ms)
+✔ F-2231-2 RESIDUE, DELIBERATE — a cross-reference in another clause still excuses (0.224667ms)
+✔ acknowledged() uses the SHARED whole-token predicate, not a private copy (0.221833ms)
+✔ the window bound still applies — a mark cannot reach an id 400+ chars away (0.16975ms)
+✔ deskItems reproduces the counts the fires wrote in their own headers (1.716875ms)
+✔ the desk is the LAST desk word on the line, so an upstream mention loses (0.819958ms)
+✔ a clean carry-forward passes (0.700792ms)
+✔ the newest archived desk wins even when archive rows are out of order (0.209958ms)
+✔ MANUFACTURED DEFECT — a silently dropped item is caught (0.912792ms)
+✔ GROUND TRUTH — the real s1526 -> s1527 event reds, and names ten, not thirteen (1.168666ms)
+✔ GROUND TRUTH — the real s1529 backtick header is read, not scored as a mass drop (0.221667ms)
+✔ a BACKLOG closure row excuses a drop, in the wide vocabulary (0.24475ms)
+✔ acknowledgement is scoped — a DESK-DROPPED elsewhere does not cover any id (0.202625ms)
+✔ SKIPS mid-fire on an ACTIVE lock, so drain batteries are unaffected (0.233792ms)
+✔ REFUSES rather than greening over an unreadable previous desk (0.269875ms)
+✔ citation-only closure cannot silently excuse a dropped desk item (92.885458ms)
+✔ subject-led closure still excuses a dropped desk item (103.416583ms)
+✔ DESK-DROPPED remains an independent lawful exit (102.435958ms)
+✔ REFUSES both absent and empty previous desks at the CLI boundary (181.078959ms)
+✔ ACTIVE line-1 still skips mid-fire (92.979917ms)
+✔ live declared count delta 0 passes (103.252375ms)
+✔ s1533 protection — live declared count deltas +1 and -1 pass (235.325834ms)
+✔ s1585 live delta +4 refuses and names its four real unkeyed slugs (95.017625ms)
+✔ s1583 dot-separated live delta +22 refuses (89.257458ms)
+✔ a live desk with no declared count still passes (98.042666ms)
+✔ a live ACTIVE lock still skips before declared-count evaluation (90.861291ms)
+✔ a collapsed previous desk remains advisory when the live desk is clean (104.258042ms)
+✔ F-1588-2 — a doubly-broken desk reports BOTH defects in one run (94.387375ms)
+✔ F-1588-2 — an unkeyed segment can FAKE a drop, so the drop list says so (92.233792ms)
+✔ CONTROL — a real drop on a fully-keyed desk carries NO phantom caveat (90.327917ms)
+✔ the previous desk is found in an ARCHIVED month when STATUS.md carries no bullet (191.854542ms)
+✔ previousDesk prefers the HIGHEST session wherever it lives, board or archive (0.565291ms)
+✔ a closure row in a SPLIT PART still excuses a dropped desk item (188.752917ms)
+
+Interrupted while running:
+
+⚠ scripts/desk-carryforward-worktree-guard.test.mjs (scripts/desk-carryforward-worktree-guard.test.mjs:1:1)
+✖ scripts/desk-carryforward-worktree-guard.test.mjs (833.096334ms)
+✖ scripts/desk-declaration-segment-denominator-guard.test.mjs
+✖ scripts/desk-detached-head-guard.test.mjs
+✖ scripts/desk-family-worktree-guard.test.mjs
+✖ scripts/desk-frozen-tree-unverifiable-guard.test.mjs
+✖ scripts/desk-lock-predicate-guard.test.mjs
+✖ scripts/desk-row-key-token-guard.test.mjs
+✖ scripts/desk-state-audit.test.mjs
+✖ scripts/desk-status-single-read-guard.test.mjs
+✖ scripts/desk-tail-anchor-guard.test.mjs
+✖ scripts/desk-unrecorded-mention-guard.test.mjs
+✖ scripts/desk-word-single-source-guard.test.mjs
+✖ scripts/detached-head-instruments-guard.test.mjs
+✖ scripts/dispatch-corpus-guard.test.mjs
+✖ scripts/drain-block-ancestry-guard.test.mjs
+✖ scripts/drain-block-queue-nearmiss-guard.test.mjs
+✖ scripts/drain-block-subject-divergence-guard.test.mjs
+✖ scripts/drain-block-worktree-guard.test.mjs
+✖ scripts/dry-board-advisory-prescription-guard.test.mjs
+✖ scripts/dry-board-bucket-verdict-guard.test.mjs
+✖ scripts/dry-board-detached-head-guard.test.mjs
+✖ scripts/dry-board-probe-corpus-guard.test.mjs
+✖ scripts/dry-board-probe-worktree-guard.test.mjs
+✖ scripts/dry-board-probe.test.mjs
+✖ scripts/dry-board-sibling-refusal-banner-guard.test.mjs
+✖ scripts/dry-board-sibling-refusal-guard.test.mjs
+✖ scripts/edge-alarm-clock-guard.test.mjs
+✖ scripts/edge-probe-composite-guard.test.mjs
+✖ scripts/finding-id-pattern-guard.test.mjs
+✖ scripts/fixture-corpus-copy-guard.test.mjs
+✖ scripts/foundry-kit-token-derivation-guard.test.mjs
+✖ scripts/gate-caller-audit.test.mjs
+✖ scripts/gazette-scan-space-guard.test.mjs
+✖ scripts/gazette-weekly-budget-guard.test.mjs
+✖ scripts/ghost-ladder-evidence-source-guard.test.mjs
+✖ scripts/ghost-ladder-row-guard.test.mjs
+✖ scripts/ghost-ladder-subject-set-guard.test.mjs
+✖ scripts/ghost-ladder-worktree-guard.test.mjs
+✖ scripts/goal-closure-reason.test.mjs
+✖ scripts/goal-tracker.test.mjs
+✖ scripts/guard-source-snapshot-race-guard.test.mjs
+✖ scripts/guard-stats-persistence.test.mjs
+✖ scripts/guard-stats-test-isolation-guard.test.mjs
+✖ scripts/health-watch-fire-line-guard.test.mjs
+✖ scripts/lane-usable-dirt-durability-guard.test.mjs
+✖ scripts/lane-usable-fleet-coverage-guard.test.mjs
+✖ scripts/lane-usable-gate-leaf-surface-guard.test.mjs
+✖ scripts/lane-usable-pathspec-root-guard.test.mjs
+✖ scripts/lane-usable-stale-pid-guard.test.mjs
+✖ scripts/lane-usable-untracked-files-guard.test.mjs
+✖ scripts/law-bash-prescription-guard.test.mjs
+✖ scripts/law-pointer-guard.test.mjs
+✖ scripts/law-pointer-surface-count-guard.test.mjs
+✖ scripts/ledger-backup-fill-gaps-guard.test.mjs
+✖ scripts/ledger-mirror-column-class-guard.test.mjs
+✖ scripts/ledger-mirror-exposure-guard.test.mjs
+✖ scripts/ledger-mirror-freshness-guard.test.mjs
+✖ scripts/ledger-pull-supply-window-guard.test.mjs
+✖ scripts/master-shipped-crash-exit-guard.test.mjs
+✖ scripts/master-shipped-goals-source-guard.test.mjs
+✖ scripts/master-shipped-review-source-guard.test.mjs
+✖ scripts/master-shipped-worktree-guard.test.mjs
+✖ scripts/modified-tracked-evidence-census-guard.test.mjs
+✖ scripts/no-emdash-scan-space-guard.test.mjs
+✖ scripts/nul-audit-corpus-guard.test.mjs
+✖ scripts/nul-audit-subject-scope-guard.test.mjs
+✖ scripts/null-floor-compare-guard.test.mjs
+✖ scripts/reaching-contract-extent-guard.test.mjs
+✖ scripts/refusal-reason-corpus-guard.test.mjs
+✖ scripts/review-evidence-crash-exit-guard.test.mjs
+✖ scripts/review-evidence-scan-space-guard.test.mjs
+✖ scripts/ruling-propagation-guard.test.mjs
+✖ scripts/runner-env-provenance-guard.test.mjs
+✖ scripts/salvage-art-staging-reach.test.mjs
+✖ scripts/source-pointer-guard.test.mjs
+✖ scripts/spawn-census-mask-regex-guard.test.mjs
+✖ scripts/stale-hold-verdict-guard.test.mjs
+✖ scripts/stale-ready-for-gates-guard.test.mjs
+✖ scripts/stale-successor-pointer-guard.test.mjs
+✖ scripts/start-lane-runner-citation-guard.test.mjs
+✖ scripts/status-archive-abridged-declaration-guard.test.mjs
+✖ scripts/status-archive-arg-guard.test.mjs
+✖ scripts/status-archive-empty-corpus-guard.test.mjs
+✖ scripts/status-archive-supersession-guard.test.mjs
+✖ scripts/status-line1-desk-displacement-guard.test.mjs
+✖ scripts/status-line1-future-stamp-scope-guard.test.mjs
+✖ scripts/stopped-leaf-supersession-guard.test.mjs
+✖ scripts/terrain-canonicalization-domain-guard.test.mjs
+✖ scripts/terrain-comparator-margin-guard.test.mjs
+✖ scripts/triage-instrument-spawn-bound-guard.test.mjs
+✖ scripts/untracked-evidence-durability-guard.test.mjs
+✖ scripts/vite-only-import-reachability-guard.test.mjs
+✖ scripts/withheld-evidence-audit-guard.test.mjs
+✖ scripts/worktree-registry-ledger-guard.test.mjs
+✖ server/codex-shim/serve.test.mjs
+ℹ tests 380
+ℹ suites 0
+ℹ pass 285
+ℹ fail 0
+ℹ cancelled 95
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57177.222791
+
+✖ failing tests:
+
+test at scripts/desk-carryforward-worktree-guard.test.mjs:1:1
+✖ scripts/desk-carryforward-worktree-guard.test.mjs (833.096334ms)
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-declaration-segment-denominator-guard.test.mjs:1:1
+✖ scripts/desk-declaration-segment-denominator-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-detached-head-guard.test.mjs:1:1
+✖ scripts/desk-detached-head-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-family-worktree-guard.test.mjs:1:1
+✖ scripts/desk-family-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-frozen-tree-unverifiable-guard.test.mjs:1:1
+✖ scripts/desk-frozen-tree-unverifiable-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-lock-predicate-guard.test.mjs:1:1
+✖ scripts/desk-lock-predicate-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-row-key-token-guard.test.mjs:1:1
+✖ scripts/desk-row-key-token-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-state-audit.test.mjs:1:1
+✖ scripts/desk-state-audit.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-status-single-read-guard.test.mjs:1:1
+✖ scripts/desk-status-single-read-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-tail-anchor-guard.test.mjs:1:1
+✖ scripts/desk-tail-anchor-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-unrecorded-mention-guard.test.mjs:1:1
+✖ scripts/desk-unrecorded-mention-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/desk-word-single-source-guard.test.mjs:1:1
+✖ scripts/desk-word-single-source-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/detached-head-instruments-guard.test.mjs:1:1
+✖ scripts/detached-head-instruments-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dispatch-corpus-guard.test.mjs:1:1
+✖ scripts/dispatch-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/drain-block-ancestry-guard.test.mjs:1:1
+✖ scripts/drain-block-ancestry-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/drain-block-queue-nearmiss-guard.test.mjs:1:1
+✖ scripts/drain-block-queue-nearmiss-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/drain-block-subject-divergence-guard.test.mjs:1:1
+✖ scripts/drain-block-subject-divergence-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/drain-block-worktree-guard.test.mjs:1:1
+✖ scripts/drain-block-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-advisory-prescription-guard.test.mjs:1:1
+✖ scripts/dry-board-advisory-prescription-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-bucket-verdict-guard.test.mjs:1:1
+✖ scripts/dry-board-bucket-verdict-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-detached-head-guard.test.mjs:1:1
+✖ scripts/dry-board-detached-head-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-probe-corpus-guard.test.mjs:1:1
+✖ scripts/dry-board-probe-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-probe-worktree-guard.test.mjs:1:1
+✖ scripts/dry-board-probe-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-probe.test.mjs:1:1
+✖ scripts/dry-board-probe.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-sibling-refusal-banner-guard.test.mjs:1:1
+✖ scripts/dry-board-sibling-refusal-banner-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/dry-board-sibling-refusal-guard.test.mjs:1:1
+✖ scripts/dry-board-sibling-refusal-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/edge-alarm-clock-guard.test.mjs:1:1
+✖ scripts/edge-alarm-clock-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/edge-probe-composite-guard.test.mjs:1:1
+✖ scripts/edge-probe-composite-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/finding-id-pattern-guard.test.mjs:1:1
+✖ scripts/finding-id-pattern-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/fixture-corpus-copy-guard.test.mjs:1:1
+✖ scripts/fixture-corpus-copy-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/foundry-kit-token-derivation-guard.test.mjs:1:1
+✖ scripts/foundry-kit-token-derivation-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/gate-caller-audit.test.mjs:1:1
+✖ scripts/gate-caller-audit.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/gazette-scan-space-guard.test.mjs:1:1
+✖ scripts/gazette-scan-space-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/gazette-weekly-budget-guard.test.mjs:1:1
+✖ scripts/gazette-weekly-budget-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ghost-ladder-evidence-source-guard.test.mjs:1:1
+✖ scripts/ghost-ladder-evidence-source-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ghost-ladder-row-guard.test.mjs:1:1
+✖ scripts/ghost-ladder-row-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ghost-ladder-subject-set-guard.test.mjs:1:1
+✖ scripts/ghost-ladder-subject-set-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ghost-ladder-worktree-guard.test.mjs:1:1
+✖ scripts/ghost-ladder-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/goal-closure-reason.test.mjs:1:1
+✖ scripts/goal-closure-reason.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/goal-tracker.test.mjs:1:1
+✖ scripts/goal-tracker.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/guard-source-snapshot-race-guard.test.mjs:1:1
+✖ scripts/guard-source-snapshot-race-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/guard-stats-persistence.test.mjs:1:1
+✖ scripts/guard-stats-persistence.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/guard-stats-test-isolation-guard.test.mjs:1:1
+✖ scripts/guard-stats-test-isolation-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/health-watch-fire-line-guard.test.mjs:1:1
+✖ scripts/health-watch-fire-line-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-dirt-durability-guard.test.mjs:1:1
+✖ scripts/lane-usable-dirt-durability-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-fleet-coverage-guard.test.mjs:1:1
+✖ scripts/lane-usable-fleet-coverage-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-gate-leaf-surface-guard.test.mjs:1:1
+✖ scripts/lane-usable-gate-leaf-surface-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-pathspec-root-guard.test.mjs:1:1
+✖ scripts/lane-usable-pathspec-root-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-stale-pid-guard.test.mjs:1:1
+✖ scripts/lane-usable-stale-pid-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/lane-usable-untracked-files-guard.test.mjs:1:1
+✖ scripts/lane-usable-untracked-files-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/law-bash-prescription-guard.test.mjs:1:1
+✖ scripts/law-bash-prescription-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/law-pointer-guard.test.mjs:1:1
+✖ scripts/law-pointer-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/law-pointer-surface-count-guard.test.mjs:1:1
+✖ scripts/law-pointer-surface-count-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-backup-fill-gaps-guard.test.mjs:1:1
+✖ scripts/ledger-backup-fill-gaps-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-mirror-column-class-guard.test.mjs:1:1
+✖ scripts/ledger-mirror-column-class-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-mirror-exposure-guard.test.mjs:1:1
+✖ scripts/ledger-mirror-exposure-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-mirror-freshness-guard.test.mjs:1:1
+✖ scripts/ledger-mirror-freshness-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ledger-pull-supply-window-guard.test.mjs:1:1
+✖ scripts/ledger-pull-supply-window-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/master-shipped-crash-exit-guard.test.mjs:1:1
+✖ scripts/master-shipped-crash-exit-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/master-shipped-goals-source-guard.test.mjs:1:1
+✖ scripts/master-shipped-goals-source-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/master-shipped-review-source-guard.test.mjs:1:1
+✖ scripts/master-shipped-review-source-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/master-shipped-worktree-guard.test.mjs:1:1
+✖ scripts/master-shipped-worktree-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/modified-tracked-evidence-census-guard.test.mjs:1:1
+✖ scripts/modified-tracked-evidence-census-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/no-emdash-scan-space-guard.test.mjs:1:1
+✖ scripts/no-emdash-scan-space-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/nul-audit-corpus-guard.test.mjs:1:1
+✖ scripts/nul-audit-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/nul-audit-subject-scope-guard.test.mjs:1:1
+✖ scripts/nul-audit-subject-scope-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/null-floor-compare-guard.test.mjs:1:1
+✖ scripts/null-floor-compare-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/reaching-contract-extent-guard.test.mjs:1:1
+✖ scripts/reaching-contract-extent-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/refusal-reason-corpus-guard.test.mjs:1:1
+✖ scripts/refusal-reason-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/review-evidence-crash-exit-guard.test.mjs:1:1
+✖ scripts/review-evidence-crash-exit-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/review-evidence-scan-space-guard.test.mjs:1:1
+✖ scripts/review-evidence-scan-space-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/ruling-propagation-guard.test.mjs:1:1
+✖ scripts/ruling-propagation-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/runner-env-provenance-guard.test.mjs:1:1
+✖ scripts/runner-env-provenance-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/salvage-art-staging-reach.test.mjs:1:1
+✖ scripts/salvage-art-staging-reach.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/source-pointer-guard.test.mjs:1:1
+✖ scripts/source-pointer-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/spawn-census-mask-regex-guard.test.mjs:1:1
+✖ scripts/spawn-census-mask-regex-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/stale-hold-verdict-guard.test.mjs:1:1
+✖ scripts/stale-hold-verdict-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/stale-ready-for-gates-guard.test.mjs:1:1
+✖ scripts/stale-ready-for-gates-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/stale-successor-pointer-guard.test.mjs:1:1
+✖ scripts/stale-successor-pointer-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/start-lane-runner-citation-guard.test.mjs:1:1
+✖ scripts/start-lane-runner-citation-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-archive-abridged-declaration-guard.test.mjs:1:1
+✖ scripts/status-archive-abridged-declaration-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-archive-arg-guard.test.mjs:1:1
+✖ scripts/status-archive-arg-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-archive-empty-corpus-guard.test.mjs:1:1
+✖ scripts/status-archive-empty-corpus-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-archive-supersession-guard.test.mjs:1:1
+✖ scripts/status-archive-supersession-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-line1-desk-displacement-guard.test.mjs:1:1
+✖ scripts/status-line1-desk-displacement-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/status-line1-future-stamp-scope-guard.test.mjs:1:1
+✖ scripts/status-line1-future-stamp-scope-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/stopped-leaf-supersession-guard.test.mjs:1:1
+✖ scripts/stopped-leaf-supersession-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/terrain-canonicalization-domain-guard.test.mjs:1:1
+✖ scripts/terrain-canonicalization-domain-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/terrain-comparator-margin-guard.test.mjs:1:1
+✖ scripts/terrain-comparator-margin-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/triage-instrument-spawn-bound-guard.test.mjs:1:1
+✖ scripts/triage-instrument-spawn-bound-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/untracked-evidence-durability-guard.test.mjs:1:1
+✖ scripts/untracked-evidence-durability-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/vite-only-import-reachability-guard.test.mjs:1:1
+✖ scripts/vite-only-import-reachability-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/withheld-evidence-audit-guard.test.mjs:1:1
+✖ scripts/withheld-evidence-audit-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at scripts/worktree-registry-ledger-guard.test.mjs:1:1
+✖ scripts/worktree-registry-ledger-guard.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
+
+test at server/codex-shim/serve.test.mjs:1:1
+✖ server/codex-shim/serve.test.mjs
+  'Promise resolution is still pending but the event loop has already resolved'
