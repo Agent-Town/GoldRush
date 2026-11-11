@@ -1,0 +1,65 @@
+{
+  "parts": [
+    "tasks/BACKLOG.md",
+    "tasks/backlog/closed-2026-07.md",
+    "tasks/backlog/closed-2026-08.md",
+    "tasks/backlog/e2-completion.md",
+    "tasks/backlog/lane-c.md",
+    "tasks/backlog/later.md",
+    "tasks/backlog/mp-07-ladder.md",
+    "tasks/backlog/multiplayer.md",
+    "tasks/backlog/owner-rulings-2026-08-08-morning.md",
+    "tasks/backlog/owners-desk.md",
+    "tasks/backlog/s1070.md",
+    "tasks/backlog/s1071.md",
+    "tasks/backlog/s1073.md",
+    "tasks/backlog/s1074-fire.md",
+    "tasks/backlog/s1077.md",
+    "tasks/backlog/s1078.md",
+    "tasks/backlog/s1079.md",
+    "tasks/backlog/the-epoch-work-package-ladder.md",
+    "tasks/backlog/the-saga-build-plan.md"
+  ],
+  "rows": [
+    {
+      "rel": "tasks/BACKLOG.md",
+      "line": 210,
+      "text": "🛡️ **F-SRV-4 (attended 2026-10-31; the owner: \"Can you check that the server is up to date? There were a lot of security issues (CVEs) recently\") — THE GOLD RUSH SERVICES ARE CURRENT; THE ONE EXPOSURE ON THE BOX IS A LEFTOVER: THE OLD AGENT TOWN LANDING, PUBLIC ON PORT 4173, AS ROOT, ON NODE 18.** Measured read-only over ssh at 15:35Z: apt zero pending (security and updates); unattended-upgrades took nginx 1.24.0-2ubuntu7.19 on 2026-10-24 by itself (CVE-2026-15176, CVE-2026-93479, CVE-2026-97205 and the session-ticket forgery CVE-2026-97629; 7.18 had closed CVE-2026-42533 and CVE-2026-95101); kernel 6.8.0-147 running and newest, no reboot flag; OpenSSL 3.0.13-0ubuntu3.16 carries the high DT"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "line": 211,
+      "text": "🔕 **F-SRV-4 CLOSED (attended 2026-10-31T17:08Z; owner verbatim: \"no, I mean on the server - can you fix the security hole? we don't have to run that service at all anymore.\") — THE LEFTOVER LANDING IS STOPPED AND DE-REGISTERED.** `droplet-maintenance.sh landing-stop` ran at 17:08:21Z: pm2 deleted `index` and saved an empty dump, `pm2-root.service` is disabled and inactive, a pm2 daemon that the verification's own `pm2 jlist` had respawned was killed (`pm2 kill`, 0 daemons after). Verified independently: non-loopback listeners are 22, 80 and 443 only; an outside probe of :4173 returns 000; Gold Rush health landing=200 game=200 api=200; nginx, ledger and assayer active. Kept on disk, nothing "
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "line": 212,
+      "text": "🛡️ **F-SRV-5 (attended 2026-10-31) — THE DROPLET IS NOT ATTACHED TO UBUNTU PRO: NO LIVEPATCH, NO EXPANDED SECURITY MAINTENANCE FOR ITS 410 UNIVERSE PACKAGES.** `pro status` on an unattached machine prints SERVICE/AVAILABLE, so its \"livepatch yes\" reads as enabled and is not (`is_attached: false`, the canonical-livepatch snap is absent). Main and restricted packages (nginx, openssl, openssh, the kernel) keep receiving fixes until 2029 regardless, and kernel fixes still need the reboot the `status` phase reports. Ubuntu Pro is free for five personal machines and needs the owner's Ubuntu One login once (`pro attach <token>` with the token from ubuntu.com/pro/dashboard), then `pro enable livepa"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "line": 213,
+      "text": "🧪 **F-ATT-13 (attended 2026-10-31) — `scripts/runner-restart-recipe.test.sh` REDS INTERMITTENTLY ON ITS F-2137-1 STALE-RUNNER ARM, INDEPENDENT OF THE TREE.** Seen while re-running `test:ledger-guards` after the F-SRV-4 commits: the first full battery at 15:49Z passed it; the batteries at 15:53Z and three runs of the guard alone through 16:05Z red both stale-runner assertions (\"stayed silent on a stale runner\" and \"stale runner NOT reported … no inert commits\"). A control run of the same guard from an export of the pre-commit scripts (`ca91b8bfe`) reds identically, and the two commits touched only STATUS, docs, the ledger and `scripts/attended/droplet-maintenance.sh`, none of which the guard"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "line": 214,
+      "text": "💾 **F-BKP-1 (attended 2026-11-10T07:17Z; owner verbatim: \"this machine got water damaged and I have to backup things. Can you take care of that for Gold Rush?\" / \"just for your projects, for Gold Rush.\" / \"ok - if things are too large, then I have to get an USB drive. Make sure we separate code and generated other artefacts.\") — DISK RESCUE: CODE STAYS IN THE GIT REPOS ON GITHUB, GENERATED ARTEFACTS GO TO A SEPARATE PRIVATE STORE, THE OVERSIZE SETS WAIT FOR THE USB DRIVE.** Found safe already: GoldRush main and every lane branch by sha, GoldRush-assets main, GoldRush-history main a32e5a07c, GoldRush-archive (559 heads); no Time Machine destination, no external volume. Done on the owner's wo"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "line": 215,
+      "text": "🔑 **F-BKP-2 (attended 2026-11-10T07:17Z) — THE CURRENT OPENROUTER_API_KEY VALUE SITS IN TWO DISK-LOCAL RUN LOGS.** The rescue's credential scan (ripgrep, `NAME=value` with 24+ characters) flagged 52 run logs under `tasks/runs` and `logs/runs-archive` carrying assignments of AUTH_TOKEN, CLOUDFLARE_API_TOKEN, ELEVENLABS_API_KEY, OPENROUTER_API_KEY, ASSAY_WORKER_SECRET, CLAUDE_CODE_MESSAGING_TOKEN and BUG_OFFICE_TOKEN; compared by sha256 against `.env.local` (never printed), every value but one differs from today's (rotated 2026-09-24); the OPENROUTER_API_KEY value is CURRENT, in the 2026-08-10 lane-d upgrade-clock log and the 2026-08-23 art jumper-rotation-retake log. The logs were never push"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "line": 3132,
+      "text": "📋 **F-1547-2 (s1547 2026-08-08, THE GZ-01 BACKFILL SWEEP RAN FOR THE FIRST TIME SINCE IT WAS WRITTEN 20 MINUTES EARLIER, AND IT HAS A BACKLOG AND NO WORKING JOIN KEY).** s1546 re-keyed GZ-01 to \"every real-change merge ON MAIN, whoever landed it\" and folded in a standing sweep described as *\"`grep` the hash — that is the whole check, and it costs one command\"*. **Executed s1547: the hash is not a working join key, and the sweep needs its method written down before its result can be trusted.** 🔬 **TWO KEYS TRIED, BOTH FALSE, AND THE FAILURES ARE THE REUSABLE PART.** (1) **Sweeping COMMITS** (`git log --since` filtered to `feat|fix|perf`) reported 30 of 37 absent — wrong, because the gazette"
+    },
+    {
+      "rel": "tasks/BACKLOG.md",
+      "line": 3181,
+      "text": "🔺 **F-1536-2 (s1536; STILL OPEN — THE LEDGER CALL IS THE RENAME. RE-MEASURED s2115: 55 OF 71 `save/*` REFS ARE ANCESTORS OF MAIN AND OWED AN `archive/*` RENAME; 16 ARE NOT ANCESTORS AND ONLY **4 OF THOSE GENUINELY HOLD A FILE MAIN HAS NEVER SEEN** — all four art-staging. Header figures RESTATED not deleted: s1608 read *54 of 67, only 13 genuinely hold*; s2068 read 55 of 72 / 17 — both superseded, see F-2115-1 at the end of this row).** While curing F-1536-1 I read the rest of `dashboard-gen.sh:280`, which also polls three hardcoded salvage refs: `save/w1-04-scatter`, `save/demo-profiles-v1`, `save/m4-embodiment-voice-v1`. ⚠️ **All three are GONE** (`git rev-parse` fails on each) — **while 6"
+    }
+  ]
+}
