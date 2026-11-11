@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import {spawnSync} from 'node:child_process';
+const dir='artifacts/s3519';
+const node='/Users/robin/.nvm/versions/node/v26.4.0/bin/node';
+const args=['--test','--test-concurrency=1','scripts/skillmd-guard.test.mjs','scripts/landing-rotation-derivation.test.mjs','scripts/live-seed-rotation.test.mjs','scripts/bench-seeds.test.mjs'];
+const started=new Date().toISOString(),fd=fs.openSync(dir+'/rotation-guards.txt','w');
+const r=spawnSync(node,args,{stdio:['ignore',fd,fd]});fs.closeSync(fd);
+const receipt={started,finished:new Date().toISOString(),node,args,code:r.status,signal:r.signal};fs.writeFileSync(dir+'/rotation-guard-result.json',JSON.stringify(receipt,null,2));console.log(receipt);
+if(r.status!==0)process.exit(r.status??1);
+const b=spawnSync(node,[dir+'/build.mjs'],{stdio:'inherit'});process.exit(b.status??1);
