@@ -1,0 +1,55 @@
+{
+  "at": "2026-11-12T05:33:46.669Z",
+  "coverage": {
+    "first": "2026-08-24",
+    "last": "2026-11-12",
+    "observed": 81,
+    "expected": 81,
+    "missing": []
+  },
+  "ledger": {
+    "alreadyCompletedToday": true,
+    "receipt": "artifacts/s3533/private-duty-results.json",
+    "result": [
+      {
+        "name": "ledger-pull",
+        "started": "2026-11-12T04:12:35.221Z",
+        "finished": "2026-11-12T04:12:44.412Z",
+        "status": 0,
+        "signal": null
+      },
+      {
+        "name": "ledger-push",
+        "started": "2026-11-12T04:12:44.416Z",
+        "finished": "2026-11-12T04:13:06.729Z",
+        "status": 0,
+        "signal": null
+      }
+    ],
+    "pushReceiptPassed": true,
+    "liveHeadMatches": true
+  },
+  "fireMemory": {
+    "alreadyCompletedToday": true,
+    "receipt": "artifacts/s3532/private-duty-results.json",
+    "result": {
+      "name": "fire-memory",
+      "started": "2026-11-12T02:36:36.535Z",
+      "finished": "2026-11-12T02:36:41.928Z",
+      "status": 0,
+      "signal": null
+    },
+    "unchanged": true,
+    "liveHeadMatches": true
+  },
+  "ticker": {
+    "path": "marketing/outbox/ticker-digest-2026-11-11.md",
+    "commit": "28f98b092",
+    "ancestor": true,
+    "read": true,
+    "censusRerun": false
+  },
+  "week47Prepared": true,
+  "wholeFenceMatches": true,
+  "diagnostic": "Initial freshness command used a nonexistent -guard entry; corrected to maintained ledger-mirror-freshness.mjs. Original diagnostic retained. No repository defect."
+}
