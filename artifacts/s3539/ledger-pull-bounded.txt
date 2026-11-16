@@ -1,0 +1,14 @@
+destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/ledger-backup-pull.mjs:205
+  if (result.status !== 0) throw new Error(`${command} failed (${result.status}): ${result.stderr.trim()}`);
+                                 ^
+
+Error: rsync failed (255): rsync(94496): error: poll: timeout
+Timeout, server [PRIVATE HOST] not responding.
+    at run (file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/ledger-backup-pull.mjs:205:34)
+    at file:///Users/robin/Claude/Projects/Gold%20Rush/scripts/ledger-backup-pull.mjs:97:1
+    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)
+    at async node:internal/modules/esm/loader:646:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.4.0

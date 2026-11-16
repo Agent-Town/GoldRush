@@ -1,0 +1,57 @@
+[
+  {
+    "date": "2026-11-15",
+    "root": "9499e9e18cd274ae200460470d71636a00150c0f",
+    "start": "2026-11-14T17:00:00.000Z",
+    "end": "2026-11-15T17:00:00.000Z",
+    "before": "892341d6d0825a805c1aabadb4129bdf4e9fb28e",
+    "final": "c541cf14b707f4fed2634b09d6457c82abd59e46",
+    "mainUpdates": 2,
+    "firstParentCommits": 2,
+    "controlSeptember25": 136,
+    "commits": [
+      {
+        "hash": "c541cf14b707f4fed2634b09d6457c82abd59e46",
+        "stamp": "2026-11-15T12:24:58+07:00",
+        "subject": "s3538: preserve inherited generated factory bookkeeping",
+        "time": 1794720298000
+      },
+      {
+        "hash": "22208951331a32e291c83a275204d214f56915c0",
+        "stamp": "2026-11-15T09:28:32+07:00",
+        "subject": "s3538: lock ACTIVE — recover stale handoff and verify daily duties",
+        "time": 1794709712000
+      }
+    ],
+    "changes": [
+      {
+        "hash": "22208951331a32e291c83a275204d214f56915c0",
+        "stamp": "2026-11-15T09:28:32+07:00",
+        "time": 1794709712000,
+        "subject": "commit: s3538: lock ACTIVE — recover stale handoff and verify daily duties",
+        "previous": "892341d6d0825a805c1aabadb4129bdf4e9fb28e",
+        "files": [
+          "STATUS.md"
+        ],
+        "playerFiles": []
+      },
+      {
+        "hash": "c541cf14b707f4fed2634b09d6457c82abd59e46",
+        "stamp": "2026-11-15T12:24:58+07:00",
+        "time": 1794720298000,
+        "subject": "commit: s3538: preserve inherited generated factory bookkeeping",
+        "previous": "22208951331a32e291c83a275204d214f56915c0",
+        "files": [
+          "logs/dashboard.html",
+          "logs/factory-usage.json"
+        ],
+        "playerFiles": []
+      }
+    ],
+    "nonEvidence": [
+      "STATUS.md"
+    ],
+    "playerPaths": [],
+    "enginePins": []
+  }
+]

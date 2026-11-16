@@ -1,0 +1,5 @@
+#!/bin/sh
+if [ "$1" = "--test" ] && [ "$2" = "--test-timeout=300000" ]; then
+  exec /Users/robin/.nvm/versions/node/v26.4.0/bin/node --test-concurrency=2 "$@"
+fi
+exec /Users/robin/.nvm/versions/node/v26.4.0/bin/node "$@"

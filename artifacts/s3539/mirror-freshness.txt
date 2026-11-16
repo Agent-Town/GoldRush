@@ -1,0 +1,18 @@
+LEDGER MIRROR FRESHNESS — LB-01, advisory
+  destination : /Users/robin/.goldrush/ledger-backups  (default: private, outside the public repo)
+
+  corpus                  : read (82 entries, 82 dated)
+  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus
+  newest                  : ledger-2026-11-15.db  (yesterday)
+  span                    : 2026-08-24 -> 2026-11-15  (82/84 day(s) present, left edge from the anchor)
+
+  ⚠️  MISSING COVERAGE DAY(S): 2
+     LB-01's discharge test asks only whether TODAY's file exists, so these
+     are invisible to it forever — a hole never becomes today again.
+       2026-11-13
+       2026-11-14
+
+     A hole is often LAWFUL (box down, machine asleep, a fire spent on a drain)
+     and the mirror is a CUMULATIVE sqlite DB, so a bracketed hole usually costs
+     nothing. Judge it, record the judgement, do not reflexively backfill:
+     the droplet keeps only its own retention window and may no longer hold it.
