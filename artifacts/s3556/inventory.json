@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-18T20:44:21.842Z",
+  "queues": {
+    "main": [],
+    "lane-a": [],
+    "lane-b": [],
+    "lane-c": [],
+    "lane-d": [],
+    "art": []
+  },
+  "running": [],
+  "crafting": [],
+  "failedMarkdown": 117,
+  "failedSincePrevious": [],
+  "latestRun": {
+    "name": "20261023-085857-lane-a-assayer-sync-visibility-1.md.log",
+    "mtime": "2026-10-23T02:03:19.321Z"
+  },
+  "processes": "  PID  PPID TTY      STAT STARTED\n33370     1 ??       Ss   Tue Nov 10 10:06:33 2026    \n58034     1 ??       S    Thu Nov 19 03:41:58 2026    \n58090 58034 ??       S    Thu Nov 19 03:41:59 2026    \n58091 58090 ??       S    Thu Nov 19 03:41:59 2026    \n",
+  "fireLockMtime": "2026-11-18T20:41:58.323Z",
+  "launcherLines": [
+    "[fire-runner] 02:14:08 FIRE START (engine codex, model from ~/.codex config)",
+    "[fire-runner] 23:53:01 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)",
+    "[fire-runner] 02:41:51 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)",
+    "[fire-runner] 03:41:59 FIRE START (engine codex, model from ~/.codex config)"
+  ],
+  "latestRunSignal": [
+    "READY-FOR-GATES — implementation complete; commit blocked.",
+    "No commit created: a pre-existing Git `index.lock` blocks committing. Resolving it is outside the task firewall. Changes remain preserved. The requested `edge-probe-json` test is absent; the existing composite guard passed.",
+    "READY-FOR-GATES — implementation complete; commit blocked.",
+    "No commit created: a pre-existing Git `index.lock` blocks committing. Resolving it is outside the task firewall. Changes remain preserved. The requested `edge-probe-json` test is absent; the existing composite guard passed.",
+    "fatal: Unable to create '/Users/robin/Claude/Projects/Gold Rush/.git/worktrees/lane-a/index.lock': File exists.",
+    "error: pathspec 'artifacts/assayer-sync-visibility-1/build.txt' did not match any file(s) known to git",
+    "error: pathspec 'artifacts/assayer-sync-visibility-1/deploy-contract.txt' did not match any file(s) known to git",
+    "error: pathspec 'artifacts/assayer-sync-visibility-1/deploy-site-contract.txt' did not match any file(s) known to git",
+    "error: pathspec 'artifacts/assayer-sync-visibility-1/guards.txt' did not match any file(s) known to git",
+    "error: pathspec 'artifacts/assayer-sync-visibility-1/new-guard.txt' did not match any file(s) known to git",
+    "error: pathspec 'artifacts/assayer-sync-visibility-1/report.md' did not match any file(s) known to git",
+    "error: pathspec 'artifacts/assayer-sync-visibility-1/tsc.txt' did not match any file(s) known to git",
+    "error: pathspec 'scripts/assayer-sync-visibility.test.mjs' did not match any file(s) known to git"
+  ]
+}
