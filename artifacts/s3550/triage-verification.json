@@ -1,0 +1,39 @@
+{
+  "at": "2026-11-18T12:31:54.064Z",
+  "laneProbe": "node scripts/lane-usable.mjs --all completed exit 0; four usable lanes, zero ahead; five registered worktrees, one unreported and zero ahead",
+  "mainSemaphore": "scripts/lane-runner-v3.sh:322",
+  "wall": "No refills or fire dispatch; attended exceptions retain custody.",
+  "latestRun": "tasks/runs/20261023-085857-lane-a-assayer-sync-visibility-1.md.log",
+  "latestRunLeaf": {
+    "id": "assayer-sync-visibility-1",
+    "title": "A failed droplet sync during a deploy becomes diagnosable and loud: scrubbed stderr kept and printed, a drift marker, an hourly health alert while the box is behind, a rostered guard (F-SRV-3)",
+    "status": "merged",
+    "taskFile": "assayer-sync-visibility-1.md",
+    "lane": "lane-a (Astra, gpt-6-astra)",
+    "authoredAt": "2026-10-23",
+    "authoredBy": "attended (Opus 5.5), from F-SRV-3, 2026-10-23",
+    "queuedAt": "2026-10-23",
+    "mergeHash": "b5d6d3c3248fdf0c4f61c853c040b651c650cf4f"
+  },
+  "branchLogs": {
+    "sol/open-findings-astra": "",
+    "sol/wave-lane-b": "",
+    "sol/map-art-campaign-2": "",
+    "art/portraits-e5-e10-generated": ""
+  },
+  "health": {
+    "landing": 200,
+    "game": 200,
+    "api": 200,
+    "runner": "ALIVE",
+    "fire": "RUNNING"
+  },
+  "custody": {
+    "launcher": 16956,
+    "node": 17004,
+    "fire": 17006,
+    "predecessorEnded": "2026-11-18T12:22:35Z",
+    "currentStarted": "2026-11-18T12:27:36Z",
+    "log": "logs/fire-20261118.log"
+  }
+}

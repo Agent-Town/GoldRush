@@ -9018,3 +9018,12 @@ Fresh checks: artifacts/s3549/report.md. Launcher 4538 → 4585 → current fire
 ### s3549 closing gate blocked — 2026-11-18T12:21Z
 
 The preceding verification paragraph is not a clearance. Complete ledger: 1,262/1,263; isolated Gazette scan control: 8/9, the same 240-second ETIMEDOUT. Underlying slowdown unproven, source unchanged from entry main, no third unchanged retry. STATUS remains ACTIVE. Evidence: artifacts/s3549/closeout-blocked.json and report.md. Resolve this timeout under a changed premise and pass the full ledger before clearing; deployment and daily-duty next steps above remain. No new owner item.
+
+
+### s3550 verification: Gazette control recovered with direct Git
+
+2026-11-18T12:34Z. Recovered ended s3549 lock. Gazette control 9/9 in 185.0s with direct Apple Git; complete ledger receipt artifacts/s3550/ledger-result.json determines clearance. WHY no product landing: DRY, 95 subjects, zero eligible/unknown; four absorbed lanes, six empty queues. November 18 private coverage 87/87, FM-01, week 48 and November 17 ticker complete. Evidence artifacts/s3550/report.md. Next: attended deployment through week 48 with ASSAYER SYNCED; November 19 duties; week-49 mint November 25. Seven-item desk preserved.
+
+Fresh verification: 1,483 done-moves, 95 subjects (82 merged, 13 closed/blocked); all four main..lane histories empty, runner 33370 alive, no new failed run or pending crafting order. November 18 duty receipts and both private branch heads match; whole rotation fence matches twelve entries. Live week-47 standings still reject bad_rotation on both hosts; week-44 controls pass.
+
+The s3549 fire ended at 12:22:35 UTC with its gate blocked. This invocation owns launcher 16956 → Node 17004 → fire 17006. The exact inherited lock and seven-item desk are preserved. The 30-commit comparison returned byte-identical file lists through both Git paths: launcher 1.624s, direct binary 1.168s. The changed-premise isolated guard passes 9/9 in 185.0s. For the closing gate put /Library/Developer/CommandLineTools/usr/bin BEFORE /usr/bin in PATH; artifacts/s3550/final-gate.mjs records the full environment. No assertions, window, timeout, package script or product source changed. This is a measured environment mitigation, not proof that historical sweep cost cannot recur as history grows. Final acceptance is ledger-result.json; only exit 0 with unchanged input/HEAD fingerprints permits lock CLEARED.
