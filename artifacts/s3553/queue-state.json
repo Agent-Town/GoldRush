@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-18T16:35:04.140Z",
+  "directories": {
+    "tasks/queue/main": [],
+    "tasks/queue/lane-a": [],
+    "tasks/queue/lane-b": [],
+    "tasks/queue/lane-c": [],
+    "tasks/queue/lane-d": [],
+    "tasks/queue/art": [],
+    "tasks/running": [],
+    "assets/crafting-queue/pending": []
+  },
+  "failures": {
+    "allEntries": 118,
+    "total": 117,
+    "newEntriesSinceLastHandoff": []
+  },
+  "latestRun": {
+    "path": "tasks/runs/20261023-085857-lane-a-assayer-sync-visibility-1.md.log",
+    "mtime": 1792720999321.2961
+  },
+  "runner": "  PID  PPID TTY      STAT STARTED\n33370     1 ??       Ss   Tue Nov 10 10:06:33 2026    \n",
+  "ownerAncestry": [
+    "  PID  PPID TTY      STAT STARTED\n44017     1 ??       S    Wed Nov 18 23:33:09 2026    \n",
+    "  PID  PPID TTY      STAT STARTED\n44061 44017 ??       S    Wed Nov 18 23:33:10 2026    \n",
+    "  PID  PPID TTY      STAT STARTED\n44062 44061 ??       S    Wed Nov 18 23:33:10 2026    \n"
+  ],
+  "fireLockMtime": "2026-11-18T16:33:10.000Z",
+  "launchEvents": [
+    "[fire-runner] 22:33:03 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)",
+    "[fire-runner] 23:33:10 FIRE START (engine codex, model from ~/.codex config)",
+    "[fire-runner] 22:33:03 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)",
+    "[fire-runner] 23:33:10 FIRE START (engine codex, model from ~/.codex config)"
+  ]
+}
