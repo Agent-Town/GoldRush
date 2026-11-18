@@ -1,0 +1,240 @@
+[
+  {
+    "date": "2026-11-16",
+    "root": "8549f21f9322bc15ae1677deb704def26b804dd9",
+    "start": "2026-11-15T17:00:00.000Z",
+    "end": "2026-11-16T17:00:00.000Z",
+    "before": "c541cf14b707f4fed2634b09d6457c82abd59e46",
+    "final": "ee21f1b73d91a565b7ddebc9bddb82a05ed8d8bc",
+    "mainUpdates": 4,
+    "firstParentCommits": 4,
+    "controlSeptember25": 136,
+    "commits": [
+      {
+        "hash": "ee21f1b73d91a565b7ddebc9bddb82a05ed8d8bc",
+        "stamp": "2026-11-16T23:16:50+07:00",
+        "subject": "s3539: preserve dashboard refresh before final verification",
+        "time": 1794845810000
+      },
+      {
+        "hash": "e5be3fbe9168e35e9dc94fb22baadb6acdd5dbd5",
+        "stamp": "2026-11-16T16:42:16+07:00",
+        "subject": "s3539: preserve inherited generated factory bookkeeping",
+        "time": 1794822136000
+      },
+      {
+        "hash": "0b78acb1c919ade1c929b3b591220d9e89f16f6a",
+        "stamp": "2026-11-16T16:41:11+07:00",
+        "subject": "s3539: lock ACTIVE — recover blocked handoff and verify daily duties",
+        "time": 1794822071000
+      },
+      {
+        "hash": "9499e9e18cd274ae200460470d71636a00150c0f",
+        "stamp": "2026-11-16T07:15:52+07:00",
+        "subject": "s3538: blocked handoff — recover records; ledger acceptance pending",
+        "time": 1794788152000
+      }
+    ],
+    "changes": [
+      {
+        "hash": "9499e9e18cd274ae200460470d71636a00150c0f",
+        "stamp": "2026-11-16T07:15:52+07:00",
+        "time": 1794788152000,
+        "subject": "commit: s3538: blocked handoff — recover records; ledger acceptance pending",
+        "previous": "c541cf14b707f4fed2634b09d6457c82abd59e46",
+        "files": [
+          "STATUS.md",
+          "artifacts/s3537/ticker-census-summary.txt",
+          "artifacts/s3537/ticker-census.json",
+          "artifacts/s3537/tickers.mjs",
+          "artifacts/s3538/archive-audit.txt",
+          "artifacts/s3538/bookkeeping.diff",
+          "artifacts/s3538/caffeinate-pid.txt",
+          "artifacts/s3538/closeout.mjs",
+          "artifacts/s3538/desk-tail.txt",
+          "artifacts/s3538/dry-board.txt",
+          "artifacts/s3538/duties.json",
+          "artifacts/s3538/entry-head.txt",
+          "artifacts/s3538/fire-memory.txt",
+          "artifacts/s3538/gap-pull-hang.txt",
+          "artifacts/s3538/handoff-body.txt",
+          "artifacts/s3538/lane-usable.txt",
+          "artifacts/s3538/latest-run-resolution.json",
+          "artifacts/s3538/latest-run-tail.txt",
+          "artifacts/s3538/ledger-attempt1-manifest.json",
+          "artifacts/s3538/ledger-attempt1-result.json",
+          "artifacts/s3538/ledger-attempt1.txt",
+          "artifacts/s3538/ledger-fill-gaps.txt",
+          "artifacts/s3538/ledger-guards.txt",
+          "artifacts/s3538/ledger-manifest.json",
+          "artifacts/s3538/ledger-pull.txt",
+          "artifacts/s3538/ledger-push.txt",
+          "artifacts/s3538/ledger-result.json",
+          "artifacts/s3538/live-probe.json",
+          "artifacts/s3538/lock.txt",
+          "artifacts/s3538/mirror-freshness.txt",
+          "artifacts/s3538/predecessor.txt",
+          "artifacts/s3538/prepare-handoff.mjs",
+          "artifacts/s3538/private-duty-results.json",
+          "artifacts/s3538/private-heads.txt",
+          "artifacts/s3538/private-visibility.json",
+          "artifacts/s3538/probe-output.txt",
+          "artifacts/s3538/probe.mjs",
+          "artifacts/s3538/process-verification.json",
+          "artifacts/s3538/queue-state.json",
+          "artifacts/s3538/report.md",
+          "artifacts/s3538/run-ledger.mjs",
+          "artifacts/s3538/runner-scan.json",
+          "artifacts/s3538/test-runtime/node",
+          "artifacts/s3538/tested-line1.txt",
+          "artifacts/s3538/ticker-census-summary.txt",
+          "artifacts/s3538/ticker-census.json",
+          "artifacts/s3538/tickers.mjs",
+          "docs/HANDOVER-2026-09-06-attended.md",
+          "marketing/outbox/ticker-digest-2026-11-12.md",
+          "marketing/outbox/ticker-digest-2026-11-13.md",
+          "marketing/outbox/ticker-digest-2026-11-14.md",
+          "tasks/BACKLOG.md"
+        ],
+        "playerFiles": []
+      },
+      {
+        "hash": "0b78acb1c919ade1c929b3b591220d9e89f16f6a",
+        "stamp": "2026-11-16T16:41:11+07:00",
+        "time": 1794822071000,
+        "subject": "commit: s3539: lock ACTIVE — recover blocked handoff and verify daily duties",
+        "previous": "9499e9e18cd274ae200460470d71636a00150c0f",
+        "files": [
+          "STATUS.md"
+        ],
+        "playerFiles": []
+      },
+      {
+        "hash": "e5be3fbe9168e35e9dc94fb22baadb6acdd5dbd5",
+        "stamp": "2026-11-16T16:42:16+07:00",
+        "time": 1794822136000,
+        "subject": "commit: s3539: preserve inherited generated factory bookkeeping",
+        "previous": "0b78acb1c919ade1c929b3b591220d9e89f16f6a",
+        "files": [
+          "logs/dashboard.html",
+          "logs/factory-usage.json"
+        ],
+        "playerFiles": []
+      },
+      {
+        "hash": "ee21f1b73d91a565b7ddebc9bddb82a05ed8d8bc",
+        "stamp": "2026-11-16T23:16:50+07:00",
+        "time": 1794845810000,
+        "subject": "commit: s3539: preserve dashboard refresh before final verification",
+        "previous": "e5be3fbe9168e35e9dc94fb22baadb6acdd5dbd5",
+        "files": [
+          "logs/dashboard.html"
+        ],
+        "playerFiles": []
+      }
+    ],
+    "nonEvidence": [
+      "STATUS.md",
+      "docs/HANDOVER-2026-09-06-attended.md",
+      "marketing/outbox/ticker-digest-2026-11-12.md",
+      "marketing/outbox/ticker-digest-2026-11-13.md",
+      "marketing/outbox/ticker-digest-2026-11-14.md",
+      "tasks/BACKLOG.md"
+    ],
+    "playerPaths": [],
+    "enginePins": []
+  },
+  {
+    "date": "2026-11-17",
+    "root": "8549f21f9322bc15ae1677deb704def26b804dd9",
+    "start": "2026-11-16T17:00:00.000Z",
+    "end": "2026-11-17T17:00:00.000Z",
+    "before": "ee21f1b73d91a565b7ddebc9bddb82a05ed8d8bc",
+    "final": "8549f21f9322bc15ae1677deb704def26b804dd9",
+    "mainUpdates": 1,
+    "firstParentCommits": 1,
+    "controlSeptember25": 136,
+    "commits": [
+      {
+        "hash": "8549f21f9322bc15ae1677deb704def26b804dd9",
+        "stamp": "2026-11-17T03:34:08+07:00",
+        "subject": "s3539: blocked handoff — preserve duty evidence and ledger failures",
+        "time": 1794861248000
+      }
+    ],
+    "changes": [
+      {
+        "hash": "8549f21f9322bc15ae1677deb704def26b804dd9",
+        "stamp": "2026-11-17T03:34:08+07:00",
+        "time": 1794861248000,
+        "subject": "commit: s3539: blocked handoff — preserve duty evidence and ledger failures",
+        "previous": "ee21f1b73d91a565b7ddebc9bddb82a05ed8d8bc",
+        "files": [
+          "STATUS.md",
+          "artifacts/s3539/bounded-duty-results.json",
+          "artifacts/s3539/desk-tail.txt",
+          "artifacts/s3539/dry-board-final.txt",
+          "artifacts/s3539/dry-board-recheck.txt",
+          "artifacts/s3539/dry-board-result.json",
+          "artifacts/s3539/dry-board.txt",
+          "artifacts/s3539/duties.json",
+          "artifacts/s3539/entry-head.txt",
+          "artifacts/s3539/final-gate.mjs",
+          "artifacts/s3539/fire-memory-bounded.txt",
+          "artifacts/s3539/ghostvalid-recheck.txt",
+          "artifacts/s3539/handoff-body.txt",
+          "artifacts/s3539/health-result.json",
+          "artifacts/s3539/health.txt",
+          "artifacts/s3539/holds4-recheck.txt",
+          "artifacts/s3539/lanes-result.json",
+          "artifacts/s3539/lanes.txt",
+          "artifacts/s3539/latest-run-resolution.json",
+          "artifacts/s3539/latest-run-tail.txt",
+          "artifacts/s3539/ledger-fill-gaps-bounded.txt",
+          "artifacts/s3539/ledger-guards.txt",
+          "artifacts/s3539/ledger-manifest.json",
+          "artifacts/s3539/ledger-pull-bounded.txt",
+          "artifacts/s3539/ledger-push-bounded.txt",
+          "artifacts/s3539/ledger-result.json",
+          "artifacts/s3539/live-probe.json",
+          "artifacts/s3539/mirror-freshness.txt",
+          "artifacts/s3539/parity-control-result.json",
+          "artifacts/s3539/parity-control.txt",
+          "artifacts/s3539/power-assertions.txt",
+          "artifacts/s3539/power-batt.txt",
+          "artifacts/s3539/predecessor.txt",
+          "artifacts/s3539/prepare-handoff.mjs",
+          "artifacts/s3539/private-duty-results.json",
+          "artifacts/s3539/private-heads.txt",
+          "artifacts/s3539/private-visibility.txt",
+          "artifacts/s3539/probe.mjs",
+          "artifacts/s3539/probes-result.json",
+          "artifacts/s3539/probes.txt",
+          "artifacts/s3539/process-verification.json",
+          "artifacts/s3539/queue-state.json",
+          "artifacts/s3539/report.md",
+          "artifacts/s3539/runner-scan.json",
+          "artifacts/s3539/stalled-pull-stop.json",
+          "artifacts/s3539/standing-corrections.json",
+          "artifacts/s3539/test-runtime/node",
+          "artifacts/s3539/tested-line1.txt",
+          "artifacts/s3539/ticker-census-summary.txt",
+          "artifacts/s3539/ticker-census.json",
+          "artifacts/s3539/tickers.mjs",
+          "docs/HANDOVER-2026-09-06-attended.md",
+          "marketing/outbox/ticker-digest-2026-11-15.md",
+          "tasks/BACKLOG.md"
+        ],
+        "playerFiles": []
+      }
+    ],
+    "nonEvidence": [
+      "STATUS.md",
+      "docs/HANDOVER-2026-09-06-attended.md",
+      "marketing/outbox/ticker-digest-2026-11-15.md",
+      "tasks/BACKLOG.md"
+    ],
+    "playerPaths": [],
+    "enginePins": []
+  }
+]

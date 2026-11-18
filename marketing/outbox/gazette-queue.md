@@ -3252,3 +3252,10 @@ Six claim seeds are ready for November 16–23 UTC. The complete eleven-week
 registry preserves earlier weeks and is included in the agent instructions.
 merge `bbbff3517` · review `reviews/rotation-r2026w47.md`
 ROUNDUP-CLASS — 2026-W46; s3519 performs the November 11 RT-01 duty. Prepared on main; current public week-46 standings still return bad_rotation. Awaiting authorized attended deployment and ASSAYER SYNCED. Draft only; publication stays owner-only.
+
+
+## ROUNDUP — Week 48 seeds are prepared for deployment
+Six claim seeds are ready for November 23–30 UTC. The complete twelve-week
+registry preserves earlier weeks and is included in the agent instructions.
+merge `3198ba417` · review `reviews/rotation-r2026w48.md`
+ROUNDUP-CLASS — 2026-W47; s3540 performs the November 18 RT-01 duty. Prepared on main; current public week-47 standings still return bad_rotation. Awaiting attended deployment and ASSAYER SYNCED. Draft only; publication stays owner-only.
