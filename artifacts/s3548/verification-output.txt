@@ -1,0 +1,127 @@
+{"corpus":19,"branches":{"sol/open-findings-astra":"","sol/wave-lane-b":"","sol/map-art-campaign-2":"","art/portraits-e5-e10-generated":""},"latestRunMerged":true,"latestRunLeaf":"merged","wholeFenceMatches":true,"rotationCommitAncestor":true,"predecessorGate":0,"privateDutyReceipt":[{"name":"ledger-pull","began":"2026-11-18T02:36:56.928Z","finished":"2026-11-18T02:37:07.107Z","code":0,"signal":null},{"name":"ledger-push","began":"2026-11-18T02:37:07.110Z","finished":"2026-11-18T02:37:38.108Z","code":0,"signal":null},{"name":"fire-memory","began":"2026-11-18T02:37:38.109Z","finished":"2026-11-18T02:37:44.122Z","code":0,"signal":null},{"name":"mirror-freshness","began":"2026-11-18T02:37:44.123Z","finished":"2026-11-18T02:37:44.187Z","code":0,"signal":null}]}
+[
+  {
+    "url": "https://agenttown.app/",
+    "at": "2026-11-18T10:34:54.129Z",
+    "status": 200,
+    "type": "text/html",
+    "bytes": 17735,
+    "seconds": 0.452
+  },
+  {
+    "url": "https://agenttown.app/goldrush/",
+    "at": "2026-11-18T10:34:54.152Z",
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "bytes": 2100,
+    "seconds": 0.369
+  },
+  {
+    "url": "https://agenttown.app/goldrush/version.json",
+    "at": "2026-11-18T10:34:54.176Z",
+    "status": 200,
+    "type": "application/json",
+    "bytes": 54,
+    "seconds": 0.39,
+    "version": {
+      "build": "299b1db5",
+      "builtAt": "2026-10-22T09:28:27Z"
+    }
+  },
+  {
+    "url": "https://agenttown.app/goldrush/skill.md",
+    "at": "2026-11-18T10:34:54.192Z",
+    "status": 200,
+    "type": "text/markdown; charset=utf-8",
+    "bytes": 62226,
+    "seconds": 0.404,
+    "rotations": [
+      "r2026w37",
+      "r2026w38",
+      "r2026w39",
+      "r2026w40",
+      "r2026w41",
+      "r2026w42",
+      "r2026w43",
+      "r2026w44"
+    ]
+  },
+  {
+    "url": "https://agenttown.app/api/stats",
+    "at": "2026-11-18T10:34:54.348Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 747,
+    "seconds": 0.558,
+    "summary": {
+      "json": true,
+      "ok": true,
+      "statsObject": true,
+      "empty": false
+    }
+  },
+  {
+    "url": "https://gold-rush-3in.pages.dev/api/stats",
+    "at": "2026-11-18T10:34:54.397Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 747,
+    "seconds": 0.604,
+    "summary": {
+      "json": true,
+      "ok": true,
+      "statsObject": true,
+      "empty": false
+    }
+  },
+  {
+    "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w44",
+    "at": "2026-11-18T10:34:54.348Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 883,
+    "seconds": 0.553,
+    "summary": {
+      "json": true,
+      "ok": true
+    }
+  },
+  {
+    "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w47",
+    "at": "2026-11-18T10:34:54.352Z",
+    "status": 400,
+    "type": "application/json; charset=utf-8",
+    "bytes": 70,
+    "seconds": 0.554,
+    "summary": {
+      "json": true,
+      "ok": false,
+      "error": "bad_rotation"
+    }
+  },
+  {
+    "url": "https://gold-rush-3in.pages.dev/api/standings?board=transfer&rotation=r2026w44",
+    "at": "2026-11-18T10:34:54.336Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 883,
+    "seconds": 0.535,
+    "summary": {
+      "json": true,
+      "ok": true
+    }
+  },
+  {
+    "url": "https://gold-rush-3in.pages.dev/api/standings?board=transfer&rotation=r2026w47",
+    "at": "2026-11-18T10:34:54.052Z",
+    "status": 400,
+    "type": "application/json; charset=utf-8",
+    "bytes": 70,
+    "seconds": 0.248,
+    "summary": {
+      "json": true,
+      "ok": false,
+      "error": "bad_rotation"
+    }
+  }
+]
