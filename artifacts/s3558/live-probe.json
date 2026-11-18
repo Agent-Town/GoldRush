@@ -1,0 +1,100 @@
+[
+  {
+    "url": "https://agenttown.app/",
+    "at": "2026-11-18T23:27:55.302Z",
+    "status": 200,
+    "type": "text/html",
+    "bytes": 17735,
+    "seconds": 4.311
+  },
+  {
+    "url": "https://agenttown.app/goldrush/",
+    "at": "2026-11-18T23:27:55.848Z",
+    "status": 200,
+    "type": "text/html; charset=utf-8",
+    "bytes": 2100,
+    "seconds": 4.77
+  },
+  {
+    "url": "https://agenttown.app/goldrush/version.json",
+    "error": "TimeoutError: The operation was aborted due to timeout"
+  },
+  {
+    "url": "https://agenttown.app/goldrush/skill.md",
+    "at": "2026-11-18T23:27:53.432Z",
+    "status": 200,
+    "type": "text/markdown; charset=utf-8",
+    "bytes": 62226,
+    "seconds": 2.342,
+    "rotations": [
+      "r2026w37",
+      "r2026w38",
+      "r2026w39",
+      "r2026w40",
+      "r2026w41",
+      "r2026w42",
+      "r2026w43",
+      "r2026w44"
+    ]
+  },
+  {
+    "url": "https://agenttown.app/api/stats",
+    "at": "2026-11-18T23:28:00.078Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 747,
+    "seconds": 8.987,
+    "summary": {
+      "json": true,
+      "ok": true,
+      "statsObject": true,
+      "empty": false
+    }
+  },
+  {
+    "url": "https://gold-rush-3in.pages.dev/api/stats",
+    "error": "TimeoutError: The operation was aborted due to timeout"
+  },
+  {
+    "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w44",
+    "error": "TimeoutError: The operation was aborted due to timeout"
+  },
+  {
+    "url": "https://agenttown.app/api/standings?board=transfer&rotation=r2026w47",
+    "at": "2026-11-18T23:28:05.261Z",
+    "status": 400,
+    "type": "application/json; charset=utf-8",
+    "bytes": 70,
+    "seconds": 13.973,
+    "summary": {
+      "json": true,
+      "ok": false,
+      "error": "bad_rotation"
+    }
+  },
+  {
+    "url": "https://gold-rush-3in.pages.dev/api/standings?board=transfer&rotation=r2026w44",
+    "at": "2026-11-18T23:27:58.824Z",
+    "status": 200,
+    "type": "application/json; charset=utf-8",
+    "bytes": 883,
+    "seconds": 7.534,
+    "summary": {
+      "json": true,
+      "ok": true
+    }
+  },
+  {
+    "url": "https://gold-rush-3in.pages.dev/api/standings?board=transfer&rotation=r2026w47",
+    "at": "2026-11-18T23:27:51.825Z",
+    "status": 400,
+    "type": "application/json; charset=utf-8",
+    "bytes": 70,
+    "seconds": 0.535,
+    "summary": {
+      "json": true,
+      "ok": false,
+      "error": "bad_rotation"
+    }
+  }
+]
