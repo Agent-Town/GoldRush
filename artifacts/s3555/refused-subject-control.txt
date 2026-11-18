@@ -1,0 +1,13 @@
+
+  ⛔ CLOSED — DO NOT DRAIN: lane-d-ap16-6b-final-verbs-reland.md [ap16-6b-final-verbs-reland]
+    refusal arm     : status="superseded" (terminal-closed; the drain path now
+                      consults the same set as --queue — F-1248-1)
+    leaf title      : AP-16-6b RE-LAND: final verbs share one blast cooldown and one runtime rush path, freeze every non-choice action at secure, and work through every advertised door
+    stopNote: STOPPED s1697 at the drain gate, never merged. Candidate tip 9cf0bad00fd626c86fda3132d1a3696fc2e5ee66 is preserved on save/ap16-6b-s1697-9cf0bad0. Repo-pinned Node 26.4.0 test:node-guards reproduced two deterministic held-vs-secured failures; review reviews/ap16-6b-final-verbs-reland.md; transcript artifacts/ap16-6b-gate-s1697.txt.
+
+  A lawful STOP ships no work, so there is usually nothing here to land — and when
+  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question
+  that stopped it is the thing to settle first, not the merge. If the stop is stale
+  because a successor landed, retire THIS leaf (superseded) in the same commit as
+  that event — do not merge past it.
+

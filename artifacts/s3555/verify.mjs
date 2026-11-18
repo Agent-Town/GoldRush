@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import {execFileSync,spawnSync} from 'node:child_process';
+import {backlogFiles} from '../../scripts/ledger-corpus.mjs';
+const dir='artifacts/s3555';
+const git=(...a)=>execFileSync('git',a,{encoding:'utf8',timeout:30000}).trim();
+const read=p=>fs.readFileSync(p,'utf8');
+const branches=['sol/open-findings-astra','sol/wave-lane-b','sol/map-art-campaign-2','art/portraits-e5-e10-generated'];
+const registry=JSON.parse(read('assets/rotations/rotation-seeds.json'));
+const fence=JSON.parse(read('public/skill.md').split('skillmd-guard:rotations:start')[1].split('skillmd-guard:rotations:end')[0].match(/```json\s*([\s\S]*?)```/)[1]);
+const goals=JSON.parse(read('tasks/goals.json'));let latest;
+function visit(o){if(!o||typeof o!=='object')return;if(o.id==='assayer-sync-visibility-1')latest=o;for(const v of Object.values(o))if(v&&typeof v==='object')visit(v);}visit(goals);
+const result={at:new Date().toISOString(),backlogCorpus:backlogFiles().map(file=>({file,bytes:Buffer.byteLength(read(file))})),branchLogs:Object.fromEntries(branches.map(b=>[b,git('log','--oneline',`main..${b}`)])),latestRunResolution:latest,latestRunMerged:latest?.mergeHash?spawnSync('git',['merge-base','--is-ancestor',latest.mergeHash,'main']).status===0:false,wholeFenceMatches:JSON.stringify(registry)===JSON.stringify(fence),registry,rotationCommitAncestor:spawnSync('git',['merge-base','--is-ancestor','3198ba417','main']).status===0,ticker:read('marketing/outbox/ticker-digest-2026-11-17.md'),predecessorGate:JSON.parse(read('artifacts/s3554/ledger-result.json')),privateDutyReceipt:JSON.parse(read('artifacts/s3542/private-duty-results.json')).filter(x=>['ledger-pull','ledger-push','fire-memory','mirror-freshness'].includes(x.name)),notBefore:'2026-11-19T02:10:00Z'};
+fs.writeFileSync(dir+'/verification.json',JSON.stringify(result,null,2));
+console.log(JSON.stringify({corpus:result.backlogCorpus.length,branches:result.branchLogs,latestRunMerged:result.latestRunMerged,latestRunLeaf:latest?.status,wholeFenceMatches:result.wholeFenceMatches,rotationCommitAncestor:result.rotationCommitAncestor,predecessorGate:result.predecessorGate.code,privateDutyReceipt:result.privateDutyReceipt}));
+const urls=['https://agenttown.app/','https://agenttown.app/goldrush/','https://agenttown.app/goldrush/version.json','https://agenttown.app/goldrush/skill.md','https://agenttown.app/api/stats','https://gold-rush-3in.pages.dev/api/stats',...['https://agenttown.app','https://gold-rush-3in.pages.dev'].flatMap(host=>['r2026w44','r2026w47'].map(r=>`${host}/api/standings?board=transfer&rotation=${r}`))];
+const live=await Promise.all(urls.map(async url=>{const start=Date.now();try{const r=await fetch(url,{signal:AbortSignal.timeout(15000)});const body=await r.text();const row={url,at:new Date().toISOString(),status:r.status,type:r.headers.get('content-type'),bytes:Buffer.byteLength(body),seconds:(Date.now()-start)/1000};if(url.endsWith('/version.json'))row.version=JSON.parse(body);if(url.endsWith('/skill.md'))row.rotations=[...new Set(body.match(/r2026w\d+/g))];if(url.includes('/api/')){let j;try{j=JSON.parse(body);}catch{}row.summary={json:!!j,ok:j?.ok,error:j?.error};if(url.endsWith('/stats'))Object.assign(row.summary,{statsObject:!!j?.stats&&typeof j.stats==='object'&&!Array.isArray(j.stats),empty:j?.empty??false});}return row;}catch(e){return{url,error:String(e)}}}));
+fs.writeFileSync(dir+'/live-probe.json',JSON.stringify(live,null,2));console.log(JSON.stringify(live,null,2));
