@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import {spawn,execFileSync} from 'node:child_process';
+const dir='artifacts/s3549';
+const raw=process.env.HOME+'/.goldrush/fire-evidence/s3549/gazette-isolated.txt';
+const awake=spawn('/usr/bin/caffeinate',['-i','-w',String(process.pid)],{stdio:'ignore'});
+process.on('exit',()=>{try{awake.kill('SIGTERM')}catch{}});
+const started=Date.now();const fd=fs.openSync(raw,'a',0o600);
+const runtime='/Users/robin/.nvm/versions/node/v26.4.0/bin';
+const child=spawn(runtime+'/node',['--test','--test-concurrency=1','--test-timeout=300000','scripts/gazette-scan-space-guard.test.mjs'],{env:{...process.env,PATH:runtime+':'+process.env.PATH},stdio:['ignore',fd,fd]});
+console.log(JSON.stringify({pid:child.pid,command:'node --test --test-concurrency=1 --test-timeout=300000 scripts/gazette-scan-space-guard.test.mjs'}));
+child.on('close',(code,signal)=>{fs.closeSync(fd);let output=fs.readFileSync(raw,'utf8');for(const l of fs.readFileSync('.env.local','utf8').split('\n')){const i=l.indexOf('=');if(i<0)continue;const v=l.slice(i+1).trim().replace(/^['"]|['"]$/g,'');if(v.length>7)output=output.split(v).join('[REDACTED]');}fs.writeFileSync(dir+'/gazette-isolated.txt',output);const result={code,signal,seconds:(Date.now()-started)/1000,finished:execFileSync('date',['-u','+%Y-%m-%dT%H:%MZ'],{encoding:'utf8'}).trim(),summary:output.split('\n').filter(l=>/^(ℹ|✖|✔)/.test(l))};fs.writeFileSync(dir+'/gazette-isolated-result.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));process.exitCode=code??1;});

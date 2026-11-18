@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-18T12:21Z",
+  "base": "60a4b794c",
+  "sourceAndPackageUnchanged": true,
+  "fullBattery": {
+    "tests": 1263,
+    "pass": 1262,
+    "fail": 1,
+    "exit": 1
+  },
+  "isolated": {
+    "tests": 9,
+    "pass": 8,
+    "fail": 1,
+    "exit": 1
+  },
+  "confirmed": "Gazette historical sweep subprocess exceeds its existing 240-second limit in both the complete two-worker run and the isolated single-worker control.",
+  "cause": "Underlying slowdown unproven; concurrency alone is insufficient to explain it.",
+  "decision": "No third unchanged attempt; no timeout, assertion, scan-window or production-source change. STATUS remains ACTIVE. No new owner desk item or factory scope authored."
+}

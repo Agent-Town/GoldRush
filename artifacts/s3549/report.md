@@ -1,6 +1,6 @@
 # s3549 fire — dry board and completed daily duties
 
-READY-FOR-GATES: verification complete. Closing acceptance is recorded in ledger-result.json; this report does not anticipate it.
+READY-FOR-GATES: NO. Closing ledger failed 1,262/1,263; isolated Gazette control failed 8/9. STATUS remains ACTIVE. See closeout-blocked.json.
 
 WHY no product landing: DRY, 95 subjects, zero eligible or unknown; four absorbed lanes, six empty queues and no crafting orders. November 18 private coverage 87/87; backup, FM-01, week 48 and November 17 ticker already complete. Runner 33370 alive. Live week-47 standings still 400 bad_rotation; build 299b1db5 serves weeks 37–44. Evidence artifacts/s3549/report.md and ledger-result.json. Next: attended deployment through week 48 with ASSAYER SYNCED; November 19 daily duties; week-49 mint November 25. Seven-item desk preserved.
 
@@ -23,7 +23,7 @@ WHY no product landing: DRY, 95 subjects, zero eligible or unknown; four absorbe
 
 ## REMAINING LIST IN ORDER
 
-1. Read ledger-result.json for mandatory closing acceptance; a red keeps STATUS ACTIVE.
+1. Resolve the reproduced Gazette historical-sweep timeout under a changed premise, then pass the complete ledger battery before clearing STATUS. No third identical attempt.
 2. Attended deployment through week 48, then ASSAYER SYNCED, served-registry parity and week-47 standings HTTP 200 on both hosts.
 3. November 19 ticker after 06:00 local and private duties after 02:10 UTC; week-49 mint November 25 00:00 UTC.
 4. Seven existing owner items, unchanged. No new owner decision requested.
@@ -32,3 +32,14 @@ WHY no product landing: DRY, 95 subjects, zero eligible or unknown; four absorbe
 ## BLOCKED CLOSEOUT — 2026-11-18T12:14Z
 
 READY-FOR-GATES: NO. Complete ledger returned 1, signal null. See ledger-result.json and ledger-guards.txt. Downstream chained checks may not have run. STATUS remains ACTIVE. No identical full retry under an unchanged premise.
+
+
+## Final blocked handoff — 2026-11-18T12:21Z
+
+The only full-battery failure is scripts/gazette-scan-space-guard.test.mjs:110: the historical scan launched with --since=2026-08-28 exceeds the existing 240,000 ms execFileSync bound (ETIMEDOUT). The isolated unchanged test reproduces this at 240,036 ms; 8/9 checks pass. Both scripts and package.json are byte-unchanged from entry commit 60a4b794c. Concurrency alone does not explain the failure; the underlying slowdown remains unproven. No test limit, assertion, scan window or product source was changed. No third unchanged retry and no new factory task or owner decision.
+
+The first result, report and inherited-claim evidence were committed and pushed as 17ea802b3 with input/HEAD parity verified. The chained ledger checks after the failed Node test stage did not run. The earlier READY-FOR-GATES wording and anticipated closeout are superseded by this result; a passing isolated control was not obtained. The final continuation records the failure and keeps the lock ACTIVE; the launcher owns process-directory cleanup on exit.
+
+Temporary sleep-guard handles kept the completed wrappers alive; after verifying ownership and completion, only those two caffeinate children (10742 and 75728) were stopped by PID. No test process was manually stopped, no running script was edited, and no factory daemon was stopped. Their process evidence is in completed-gate-process.txt.
+
+Existing next work remains attended deployment through week 48 (the current live week-47 rejection persists), November 19 duties and the November 25 week-49 mint. Seven owner items and both desk acknowledgements remain verbatim.

@@ -1,0 +1,9 @@
+  PID  PPID TTY      STAT STARTED
+10742 10732 ??       S    Wed Nov 18 19:03:57 2026    
+
+The first gate committed and pushed 17ea802b3, then remained alive because its referenced caffeinate child waited for that same parent. Stopped only owned sleep guard PID 10742 after the test result and backup receipt. The serial wrapper will unref its sleep guard.
+
+  PID  PPID TTY      STAT STARTED
+75728 75717 ??       S    Wed Nov 18 19:15:37 2026    
+
+Stopped only owned isolated-test sleep guard PID 75728 after its completed result.

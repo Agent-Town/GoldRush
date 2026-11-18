@@ -1,0 +1,27 @@
+{
+  "code": 1,
+  "signal": null,
+  "seconds": 241.302,
+  "finished": "2026-11-18T12:19Z",
+  "summary": [
+    "✔ site/ is in the scan space — the public door is examined at all (F-2345-1) (10.633959ms)",
+    "✔ a site/-only change is classified as a player path (0.621709ms)",
+    "✔ the original player paths still match — the cure is additive, not a replacement (0.552167ms)",
+    "✔ REVERSE CONTROL: factory surfaces are NOT player paths (9.907042ms)",
+    "✔ REVERSE CONTROL: the prefixes are anchored at the start, not matched anywhere (0.22675ms)",
+    "✔ REVERSE CONTROL: the dot in index.html is escaped (0.174333ms)",
+    "✔ every declared prefix is load-bearing — the list drives the predicate (0.195916ms)",
+    "✖ the scan space is DECLARED on stdout, naming every prefix (240036.231334ms)",
+    "✔ the declaration prints on the emptiest happy path too (F-2208-1) (652.726334ms)",
+    "ℹ tests 9",
+    "ℹ suites 0",
+    "ℹ pass 8",
+    "ℹ fail 1",
+    "ℹ cancelled 0",
+    "ℹ skipped 0",
+    "ℹ todo 0",
+    "ℹ duration_ms 241115.796375",
+    "✖ failing tests:",
+    "✖ the scan space is DECLARED on stdout, naming every prefix (240036.231334ms)"
+  ]
+}
