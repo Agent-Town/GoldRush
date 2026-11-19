@@ -1,0 +1,31 @@
+{
+  "reason": "Archive audit evidence completed after ledger fingerprint; cancel only our invalidated test descendants",
+  "at": "2026-11-19T09:03:11.194Z",
+  "processes": [
+    {
+      "pid": 43401,
+      "ppid": 43210,
+      "comm": "(git)"
+    },
+    {
+      "pid": 43210,
+      "ppid": 27608,
+      "comm": "/Users/robin/.nvm/versions/node/v26.4.0/bin/node"
+    },
+    {
+      "pid": 27608,
+      "ppid": 27607,
+      "comm": "/Users/robin/.nvm/versions/node/v26.4.0/bin/node"
+    },
+    {
+      "pid": 27607,
+      "ppid": 27324,
+      "comm": "sh"
+    },
+    {
+      "pid": 27324,
+      "ppid": 26999,
+      "comm": "npm run test:ledger-guards"
+    }
+  ]
+}
