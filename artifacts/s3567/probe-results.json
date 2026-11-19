@@ -1,0 +1,26 @@
+[
+  {
+    "name": "dry-board",
+    "code": 0,
+    "seconds": 17.518,
+    "tail": "      ready-for-gates-s1330-UNDRAINED-7c4f132f-leaf-blocked-20260801-122335-f1328-1-drill-yard-census-debt.md\n  MERGED (shipped-but-unrenamed ghost — cosmetic): 82\n\n  ✅ DRY — every subject resolves merged or closed. The word is earned.\n\n  Advisory: this reads tasks/done/ only. A lane branch can hold unabsorbed\n  content with no done-move at all — ask `node scripts/lane-usable.mjs --all` too.\n"
+  },
+  {
+    "name": "lane-usable",
+    "code": 0,
+    "seconds": 5.154,
+    "tail": "        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.\n\nworktree coverage: reported 4 of 5 registered — 1 NOT reported (0 ahead of main, 0 could-not-answer).\n    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached\n    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.\n    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing\n    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported\n"
+  },
+  {
+    "name": "health-status",
+    "code": 0,
+    "seconds": 7.49,
+    "tail": "- **s3565 handoff (line-1 arch\nqueued : 0 task(s)   in-flight: 0   pending-orders: 0\nlanes ahead of main (commit count — may be squash-merged dupes, verify by content):\nart staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)\nfailed tail: superseded-s239-bt-00-demolish.md\nlast fire log line: node artifacts/s3567/probe.mjs\" in /Users/robin/Claude/Projects/Gold Rush\n\n"
+  },
+  {
+    "name": "mirror-freshness",
+    "code": 0,
+    "seconds": 0.136,
+    "tail": "  series anchor           : 2026-08-24 (ops/ledger-series-anchor.json) — declared OUTSIDE the corpus\n  newest                  : ledger-2026-11-19.db  (today)\n  span                    : 2026-08-24 -> 2026-11-19  (88/88 day(s) present, left edge from the anchor)\n\n  ✅ WHOLE AND CURRENT — every calendar day from the DECLARED first coverage day\n     (2026-08-24, anchored outside the corpus) to the newest mirror is present,\n     and the newest is not behind. Nothing owed.\n"
+  }
+]
