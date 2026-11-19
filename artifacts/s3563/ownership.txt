@@ -1,0 +1,12 @@
+Process directory created 2026-11-19T06:08:55.785Z; launcher 78069 -> node 78116 -> this Codex fire 78117. Inherited line cleared; no foreign ACTIVE lock displaced.
+[fire-runner] 10:50:07 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 11:50:13 FIRE START (engine codex, model from ~/.codex config)
+[fire-runner] 12:08:50 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 13:08:56 FIRE START (engine codex, model from ~/.codex config)
+[fire-runner] 12:08:50 FIRE END rc=0 (codex; ALT fallback is claude-only, skipped)
+[fire-runner] 13:08:56 FIRE START (engine codex, model from ~/.codex config)
+  PID  PPID TTY      STAT STARTED                      COMM
+33370     1 ??       Ss   Tue Nov 10 10:06:33 2026     bash
+78069     1 ??       S    Thu Nov 19 13:08:55 2026     /bin/bash
+78116 78069 ??       S    Thu Nov 19 13:08:56 2026     node
+78117 78116 ??       S    Thu Nov 19 13:08:56 2026     /Users/robin/.nvm/versions/node/v23.11.1/lib/node_modules/@openai/codex/node_modules/@openai/codex-darwin-arm64/vendor/aarch64-apple-darwin/bin/codex
