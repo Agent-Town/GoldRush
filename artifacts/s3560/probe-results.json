@@ -1,0 +1,32 @@
+[
+  {
+    "name": "dry-board",
+    "code": 0,
+    "seconds": 16.41,
+    "tail": "      ready-for-gates-s1330-UNDRAINED-7c4f132f-leaf-blocked-20260801-122335-f1328-1-drill-yard-census-debt.md\n  MERGED (shipped-but-unrenamed ghost — cosmetic): 82\n\n  ✅ DRY — every subject resolves merged or closed. The word is earned.\n\n  Advisory: this reads tasks/done/ only. A lane branch can hold unabsorbed\n  content with no done-move at all — ask `node scripts/lane-usable.mjs --all` too.\n"
+  },
+  {
+    "name": "lanes",
+    "code": 0,
+    "seconds": 5.181,
+    "tail": "        main's, so a green here can mean less than a green on main. Diff it before trusting a gate.\n\nworktree coverage: reported 4 of 5 registered — 1 NOT reported (0 ahead of main, 0 could-not-answer).\n    fleet() selects on a `branch` line AND a path ending /worktrees/<name>, so detached\n    worktrees and off-convention paths (sol/*, gr-task-*, /tmp arenas) are NOT above.\n    Those are ATTENDED-OWNED and NOT yours to drain — an `ahead` count here is a thing\n    to REPORT, never to touch. List them: node scripts/lane-usable.mjs --unreported\n"
+  },
+  {
+    "name": "health",
+    "code": 0,
+    "seconds": 7.545,
+    "tail": "lock   : ACTIVE 2026-11-19T02:07Z (s3560 fire) — verify board and November 19 private duties; preserve attended deployment cust\nqueued : 0 task(s)   in-flight: 0   pending-orders: 0\nlanes ahead of main (commit count — may be squash-merged dupes, verify by content):\nart staged, in NO commit: 0 file(s)  (detail: node scripts/art-staging-audit.mjs)\nfailed tail: superseded-s239-bt-00-demolish.md\nlast fire log line: /Users/robin/.nvm/versions/node/v26.4.0/bin/node artifacts/s3560/probe.mjs' in /Users/robin/Claude/Projects/Gold Rush\n\n"
+  },
+  {
+    "name": "verification",
+    "code": 0,
+    "seconds": 2.759,
+    "tail": "    \"summary\": {\n      \"json\": true,\n      \"ok\": false,\n      \"error\": \"bad_rotation\"\n    }\n  }\n]\n"
+  },
+  {
+    "name": "private-visibility",
+    "code": 0,
+    "seconds": 1.946,
+    "tail": "{\"visibility\":\"PRIVATE\"}\n"
+  }
+]
